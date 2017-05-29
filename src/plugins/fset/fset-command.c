@@ -136,81 +136,94 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    ptr_fset_option = weechat_arraylist_get (fset_options,
-                                             fset_buffer_selected_line);
-    if (!ptr_fset_option)
-        WEECHAT_COMMAND_ERROR;
-    ptr_option = weechat_config_get (ptr_fset_option->name);
-    if (!ptr_option)
-        WEECHAT_COMMAND_ERROR;
-
-    if (weechat_strcasecmp (argv[1], "-toggle") == 0)
+    if (argv[1][0] == '-')
     {
-        if (strcmp (ptr_fset_option->type, "boolean") == 0)
-            weechat_config_option_set (ptr_option, "toggle", 1);
-        return WEECHAT_RC_OK;
-    }
+        ptr_fset_option = weechat_arraylist_get (fset_options,
+                                                 fset_buffer_selected_line);
+        if (!ptr_fset_option)
+            WEECHAT_COMMAND_ERROR;
+        ptr_option = weechat_config_get (ptr_fset_option->name);
+        if (!ptr_option)
+            WEECHAT_COMMAND_ERROR;
 
-    if (weechat_strcasecmp (argv[1], "-decrease") == 0)
-    {
-        if ((strcmp (ptr_fset_option->type, "integer") == 0)
-            || (strcmp (ptr_fset_option->type, "color") == 0))
+        if (weechat_strcasecmp (argv[1], "-toggle") == 0)
         {
-            weechat_config_option_set (ptr_option, "--1", 1);
+            if (strcmp (ptr_fset_option->type, "boolean") == 0)
+                weechat_config_option_set (ptr_option, "toggle", 1);
+            return WEECHAT_RC_OK;
         }
-        return WEECHAT_RC_OK;
-    }
 
-    if (weechat_strcasecmp (argv[1], "-increase") == 0)
-    {
-        if ((strcmp (ptr_fset_option->type, "integer") == 0)
-            || (strcmp (ptr_fset_option->type, "color") == 0))
+        if (weechat_strcasecmp (argv[1], "-decrease") == 0)
         {
-            weechat_config_option_set (ptr_option, "++1", 1);
+            if ((strcmp (ptr_fset_option->type, "integer") == 0)
+                || (strcmp (ptr_fset_option->type, "color") == 0))
+            {
+                weechat_config_option_set (ptr_option, "--1", 1);
+            }
+            return WEECHAT_RC_OK;
         }
-        return WEECHAT_RC_OK;
-    }
 
-    if (weechat_strcasecmp (argv[1], "-reset") == 0)
+        if (weechat_strcasecmp (argv[1], "-increase") == 0)
+        {
+            if ((strcmp (ptr_fset_option->type, "integer") == 0)
+                || (strcmp (ptr_fset_option->type, "color") == 0))
+            {
+                weechat_config_option_set (ptr_option, "++1", 1);
+            }
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "-reset") == 0)
+        {
+            weechat_config_option_reset (ptr_option, 1);
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "-unset") == 0)
+        {
+            weechat_config_option_unset (ptr_option);
+            return WEECHAT_RC_OK;
+        }
+
+        if ((weechat_strcasecmp (argv[1], "-set") == 0)
+            || (weechat_strcasecmp (argv[1], "-append") == 0))
+        {
+            append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
+            use_mute = weechat_config_boolean (fset_config_look_use_mute);
+            add_quotes = (ptr_fset_option->value
+                          && strcmp (ptr_fset_option->type, "string") == 0) ? 1 : 0;
+            snprintf (str_input, sizeof (str_input),
+                      "%s/set %s %s%s%s",
+                      (use_mute) ? "/mute " : "",
+                      ptr_fset_option->name,
+                      (add_quotes) ? "\"" : "",
+                      (ptr_fset_option->value) ? ptr_fset_option->value : FSET_OPTION_VALUE_NULL,
+                      (add_quotes) ? "\"" : "");
+            weechat_buffer_set (buffer, "input", str_input);
+            input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
+                5 +  /* "/set " */
+                weechat_utf8_strlen (ptr_fset_option->name) + 1 +
+                ((add_quotes) ? 1 : 0) +
+                ((append) ? weechat_utf8_strlen (
+                    (ptr_fset_option->value) ?
+                    ptr_fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
+            snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
+            weechat_buffer_set (buffer, "input_pos", str_pos);
+            return WEECHAT_RC_OK;
+        }
+
+        WEECHAT_COMMAND_ERROR;
+    }
+    else
     {
-        weechat_config_option_reset (ptr_option, 1);
-        return WEECHAT_RC_OK;
+        /* set new filter */
+        if (!fset_buffer)
+            fset_buffer_open ();
+        weechat_buffer_set (fset_buffer, "display", "1");
+        fset_option_filter_options (argv_eol[1]);
     }
 
-    if (weechat_strcasecmp (argv[1], "-unset") == 0)
-    {
-        weechat_config_option_unset (ptr_option);
-        return WEECHAT_RC_OK;
-    }
-
-    if ((weechat_strcasecmp (argv[1], "-set") == 0)
-        || (weechat_strcasecmp (argv[1], "-append") == 0))
-    {
-        append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
-        use_mute = weechat_config_boolean (fset_config_look_use_mute);
-        add_quotes = (ptr_fset_option->value
-                      && strcmp (ptr_fset_option->type, "string") == 0) ? 1 : 0;
-        snprintf (str_input, sizeof (str_input),
-                  "%s/set %s %s%s%s",
-                  (use_mute) ? "/mute " : "",
-                  ptr_fset_option->name,
-                  (add_quotes) ? "\"" : "",
-                  (ptr_fset_option->value) ? ptr_fset_option->value : FSET_OPTION_VALUE_NULL,
-                  (add_quotes) ? "\"" : "");
-        weechat_buffer_set (buffer, "input", str_input);
-        input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
-            5 +  /* "/set " */
-            weechat_utf8_strlen (ptr_fset_option->name) + 1 +
-            ((add_quotes) ? 1 : 0) +
-            ((append) ? weechat_utf8_strlen (
-                (ptr_fset_option->value) ?
-                ptr_fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
-        snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
-        weechat_buffer_set (buffer, "input_pos", str_pos);
-        return WEECHAT_RC_OK;
-    }
-
-    WEECHAT_COMMAND_ERROR;
+    return WEECHAT_RC_OK;
 }
 
 /*
