@@ -34,9 +34,6 @@ struct t_gui_buffer *fset_buffer = NULL;
 int fset_buffer_selected_line = 0;
 struct t_hashtable *fset_buffer_hashtable_pointers = NULL;
 struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
-char *fset_buffer_columns[] = { "name", "parent_name", "type", "default_value",
-                                "value", NULL };
-int fset_buffer_columns_default_size[] = { 64, 64, 8, 16, 16 };
 
 
 /*
