@@ -183,15 +183,53 @@ fset_option_set_value_string (struct t_config_option *option,
  */
 
 int
-fset_option_match_filters (const char *option_name)
+fset_option_match_filters (const char *config_name, const char *section_name,
+                           struct t_fset_option *fset_option)
 {
-    if (fset_option_filter
-        && !weechat_strcasestr (option_name, fset_option_filter))
-    {
-        return 0;
-    }
+    if (!fset_option_filter || !fset_option_filter[0])
+        return 1;
 
-    return 1;
+    if (strncmp (fset_option_filter, "f:", 2) == 0)
+    {
+        /* filter by config name */
+        return (weechat_strcasecmp (config_name, fset_option_filter + 2) == 0) ? 1 : 0;
+    }
+    else if (strncmp (fset_option_filter, "s:", 2) == 0)
+    {
+        /* filter by section name */
+        return (weechat_strcasecmp (section_name, fset_option_filter + 2) == 0) ? 1 : 0;
+    }
+    else if (strncmp (fset_option_filter, "d:", 2) == 0)
+    {
+        /* filter by modified values */
+        if (!fset_option_value_different_from_default (fset_option))
+            return 0;
+        if (fset_option_filter[2]
+            && !weechat_strcasestr (fset_option->name, fset_option_filter + 2))
+        {
+            return 0;
+        }
+        return 1;
+    }
+    else if (strncmp (fset_option_filter, "==", 2) == 0)
+    {
+        /* filter by exact value */
+        return (weechat_strcasecmp (
+                    (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+                    fset_option_filter + 2) == 0) ? 1 : 0;
+    }
+    else if (fset_option_filter[0] == '=')
+    {
+        /* filter by value */
+        return (weechat_strcasestr (
+                    (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+                    fset_option_filter + 1)) ? 1 : 0;
+    }
+    else
+    {
+        /* filter by option name */
+        return (weechat_strcasestr (fset_option->name, fset_option_filter)) ? 1 : 0;
+    }
 }
 
 /*
@@ -415,12 +453,6 @@ fset_option_alloc (struct t_config_file *config_file,
               ptr_section_name,
               ptr_option_name);
 
-    if (!fset_option_match_filters (option_name))
-    {
-        /* option does not match filters, ignore it */
-        goto end;
-    }
-
     new_fset_option = malloc (sizeof (*new_fset_option));
     if (new_fset_option)
     {
@@ -431,15 +463,22 @@ fset_option_alloc (struct t_config_file *config_file,
         new_fset_option->value = NULL;
         new_fset_option->parent_value = NULL;
         fset_option_set_values (new_fset_option, option);
+        if (!fset_option_match_filters (ptr_config_name, ptr_section_name,
+                                        new_fset_option))
+        {
+            /* option does not match filters, ignore it */
+            fset_option_free (new_fset_option);
+            new_fset_option = NULL;
+            goto end;
+        }
         fset_option_set_max_length_fields_option (new_fset_option);
+    }
+    else
+    {
+        free (option_name);
     }
 
 end:
-    if (!new_fset_option)
-    {
-        if (option_name)
-            free (option_name);
-    }
     return new_fset_option;
 }
 
@@ -526,15 +565,10 @@ fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
  */
 
 void
-fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
+fset_option_free (struct t_fset_option *fset_option)
 {
-    struct t_fset_option *fset_option;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) arraylist;
-
-    fset_option = (struct t_fset_option *)pointer;
+    if (!fset_option)
+        return;
 
     if (fset_option->name)
         free (fset_option->name);
@@ -550,6 +584,24 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
         free (fset_option->parent_value);
 
     free (fset_option);
+}
+
+/*
+ * Frees an fset option (arraylist callback).
+ */
+
+void
+fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
+{
+    struct t_fset_option *fset_option;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) arraylist;
+
+    fset_option = (struct t_fset_option *)pointer;
+
+    fset_option_free (fset_option);
 }
 
 
@@ -836,5 +888,10 @@ fset_option_end ()
     {
         weechat_hashtable_free (fset_option_max_length_field);
         fset_option_max_length_field = NULL;
+    }
+    if (fset_option_filter)
+    {
+        free (fset_option_filter);
+        fset_option_filter = NULL;
     }
 }
