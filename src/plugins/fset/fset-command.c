@@ -284,12 +284,15 @@ fset_command_init ()
            "of option (move the cursor at the end of value)\n"
            "  filter: set a new filter to see only matching options; allowed "
            "formats are:\n"
-           "             f:xxx  show only configuration file \"xxx\"\n"
-           "             s:xxx  show only section \"xxx\"\n"
-           "             d:     show only changed options\n"
-           "             d:xxx  show only changed options with \"xxx\" in name\n"
-           "             =xxx   show only options with \"xxx\" in value\n"
-           "             ==xxx  show only options with value \"xxx\""),
+           "             *       show all options (no filter)\n"
+           "             f:xxx   show only configuration file \"xxx\"\n"
+           "             s:xxx   show only section \"xxx\"\n"
+           "             d:      show only changed options\n"
+           "             d:xxx   show only changed options with \"xxx\" in name\n"
+           "             d=xxx   show only changed options with \"xxx\" in value\n"
+           "             d==xxx  show only changed options with exact value \"xxx\"\n"
+           "             =xxx    show only options with \"xxx\" in value\n"
+           "             ==xxx   show only options with exact value \"xxx\""),
         "-bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
@@ -301,6 +304,6 @@ fset_command_init ()
         " || -unset"
         " || -set"
         " || -append"
-        " || f:|s:|d:|=|==",
+        " || *|f:|s:|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
 }

@@ -199,6 +199,24 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         /* filter by section name */
         return (weechat_strcasecmp (section_name, fset_option_filter + 2) == 0) ? 1 : 0;
     }
+    else if (strncmp (fset_option_filter, "d==", 3) == 0)
+    {
+        /* filter by modified values, exact value */
+        if (!fset_option_value_different_from_default (fset_option))
+            return 0;
+        return (weechat_strcasecmp (
+                    (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+                    fset_option_filter + 3) == 0) ? 1 : 0;
+    }
+    else if (strncmp (fset_option_filter, "d=", 2) == 0)
+    {
+        /* filter by modified values, value */
+        if (!fset_option_value_different_from_default (fset_option))
+            return 0;
+        return (weechat_strcasestr (
+                    (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+                    fset_option_filter + 2)) ? 1 : 0;
+    }
     else if (strncmp (fset_option_filter, "d:", 2) == 0)
     {
         /* filter by modified values */
