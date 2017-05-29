@@ -784,12 +784,11 @@ fset_option_config_cb (const void *pointer,
             {
                 ptr_option = weechat_config_get (ptr_fset_option->name);
                 if (ptr_option)
-                {
                     fset_option_set_values (ptr_fset_option, ptr_option);
-                    fset_buffer_display_line (line, ptr_fset_option);
-                }
             }
         }
+        fset_option_set_max_length_fields_all ();
+        fset_buffer_refresh (1);
     }
 
     return WEECHAT_RC_OK;
