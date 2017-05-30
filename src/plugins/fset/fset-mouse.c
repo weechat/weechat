@@ -90,6 +90,8 @@ fset_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     weechat_hashtable_set (info, "fset_option_parent_value", ptr_fset_option->parent_value);
     weechat_hashtable_set (info, "fset_option_min", ptr_fset_option->min);
     weechat_hashtable_set (info, "fset_option_max", ptr_fset_option->max);
+    weechat_hashtable_set (info, "fset_option_description", ptr_fset_option->description);
+    weechat_hashtable_set (info, "fset_option_string_values", ptr_fset_option->string_values);
 
     return info;
 }

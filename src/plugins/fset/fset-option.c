@@ -259,6 +259,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
                         struct t_config_option *option)
 {
     const char *ptr_parent_name, *ptr_type, *ptr_description;
+    const char **ptr_string_values;
     void *ptr_default_value, *ptr_value;
     struct t_config_option *ptr_parent_option;
     int *ptr_min, *ptr_max;
@@ -358,6 +359,23 @@ fset_option_set_values (struct t_fset_option *fset_option,
     }
     ptr_description = weechat_config_option_get_string (option, "description");
     fset_option->description = strdup ((ptr_description) ? ptr_description : "");
+
+    /* string_values */
+    if (fset_option->string_values)
+    {
+        free (fset_option->string_values);
+        fset_option->string_values = NULL;
+    }
+    ptr_string_values = weechat_config_option_get_pointer (option, "string_values");
+    if (ptr_string_values)
+    {
+        fset_option->string_values = weechat_string_build_with_split_string (
+            ptr_string_values, ",");
+    }
+    else
+    {
+        fset_option->string_values = strdup ("");
+    }
 }
 
 /*
@@ -452,6 +470,10 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     /* description */
     fset_option_set_max_length_field (
         "description", weechat_strlen_screen (fset_option->description));
+
+    /* string_values */
+    fset_option_set_max_length_field (
+        "string_values", weechat_strlen_screen (fset_option->string_values));
 }
 
 /*
@@ -526,6 +548,7 @@ fset_option_alloc (struct t_config_file *config_file,
         new_fset_option->min = NULL;
         new_fset_option->max = NULL;
         new_fset_option->description = NULL;
+        new_fset_option->string_values = NULL;
         fset_option_set_values (new_fset_option, option);
         if (!fset_option_match_filters (ptr_config_name, ptr_section_name,
                                         new_fset_option))
@@ -652,6 +675,8 @@ fset_option_free (struct t_fset_option *fset_option)
         free (fset_option->max);
     if (fset_option->description)
         free (fset_option->description);
+    if (fset_option->string_values)
+        free (fset_option->string_values);
 
     free (fset_option);
 }
@@ -854,6 +879,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_fset_option, min, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, max, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, description, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_fset_option, string_values, STRING, 0, NULL, NULL);
     }
     return hdata;
 }
@@ -897,6 +923,8 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "description", fset_option->description))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "string_values", fset_option->description))
+        return 0;
 
     return 1;
 }
@@ -926,6 +954,7 @@ fset_option_print_log ()
         weechat_log_printf ("  min . . . . . . . . . : '%s'",  ptr_fset_option->min);
         weechat_log_printf ("  max . . . . . . . . . : '%s'",  ptr_fset_option->max);
         weechat_log_printf ("  description . . . . . : '%s'",  ptr_fset_option->description);
+        weechat_log_printf ("  string_values . . . . : '%s'",  ptr_fset_option->string_values);
     }
 }
 

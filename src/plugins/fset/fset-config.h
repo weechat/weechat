@@ -38,6 +38,7 @@ extern struct t_config_option *fset_config_color_min[2];
 extern struct t_config_option *fset_config_color_name[2];
 extern struct t_config_option *fset_config_color_parent_name[2];
 extern struct t_config_option *fset_config_color_quotes[2];
+extern struct t_config_option *fset_config_color_string_values[2];
 extern struct t_config_option *fset_config_color_type[2];
 extern struct t_config_option *fset_config_color_value[2];
 extern struct t_config_option *fset_config_color_value_diff[2];

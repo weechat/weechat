@@ -50,6 +50,7 @@ struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
 struct t_config_option *fset_config_color_parent_name[2];
 struct t_config_option *fset_config_color_quotes[2];
+struct t_config_option *fset_config_color_string_values[2];
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_value[2];
 struct t_config_option *fset_config_color_value_diff[2];
@@ -331,6 +332,22 @@ fset_config_init ()
         "quotes_selected", "color",
         N_("color for quotes around string values on the selected line"),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_string_values[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "string_values", "color",
+        N_("color for string values"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_string_values[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "string_values_selected", "color",
+        N_("color for string values on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
