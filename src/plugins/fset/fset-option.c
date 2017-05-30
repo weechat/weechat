@@ -175,6 +175,27 @@ fset_option_set_value_string (struct t_config_option *option,
 }
 
 /*
+ * Checks if a string matches a mask.
+ *
+ * If mask has no "*" inside, it just checks if "mask" is inside the "string".
+ * If mask has at least one "*" inside, the function weechat_string_match is
+ * used.
+ *
+ * Returns:
+ *   1: string matches mask
+ *   0: string does not match mask
+ */
+
+int
+fset_option_string_match (const char *string, const char *mask)
+{
+    if (strchr (mask, '*'))
+        return weechat_string_match (string, mask, 0);
+    else
+        return (weechat_strcasestr (string, mask)) ? 1 : 0;
+}
+
+/*
  * Checks if an option is matching current filter(s).
  *
  * Returns:
@@ -213,7 +234,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         /* filter by modified values, value */
         if (!fset_option_value_different_from_default (fset_option))
             return 0;
-        return (weechat_strcasestr (
+        return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
                     fset_option_filter + 2)) ? 1 : 0;
     }
@@ -223,7 +244,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         if (!fset_option_value_different_from_default (fset_option))
             return 0;
         if (fset_option_filter[2]
-            && !weechat_strcasestr (fset_option->name, fset_option_filter + 2))
+            && !fset_option_string_match (fset_option->name, fset_option_filter + 2))
         {
             return 0;
         }
@@ -239,14 +260,14 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     else if (fset_option_filter[0] == '=')
     {
         /* filter by value */
-        return (weechat_strcasestr (
+        return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
                     fset_option_filter + 1)) ? 1 : 0;
     }
     else
     {
         /* filter by option name */
-        return (weechat_strcasestr (fset_option->name, fset_option_filter)) ? 1 : 0;
+        return (fset_option_string_match (fset_option->name, fset_option_filter)) ? 1 : 0;
     }
 }
 
