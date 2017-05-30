@@ -4572,6 +4572,28 @@ API_FUNC(hdata_hashtable)
     return result_obj;
 }
 
+API_FUNC(hdata_compare)
+{
+    int case_sensitive, rc;
+
+    API_INIT_FUNC(1, "hdata_compare", "ssssi", API_RETURN_INT(0));
+
+    v8::String::Utf8Value hdata(args[0]);
+    v8::String::Utf8Value pointer1(args[1]);
+    v8::String::Utf8Value pointer2(args[2]);
+    v8::String::Utf8Value name(args[3]);
+    case_sensitive = args[4]->IntegerValue();
+
+    rc = weechat_hdata_compare (
+        (struct t_hdata *)API_STR2PTR(*hdata),
+        API_STR2PTR(*pointer1),
+        API_STR2PTR(*pointer2),
+        *name,
+        case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(hdata_update)
 {
     struct t_hashtable *hashtable;
@@ -4966,6 +4988,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);
     API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_compare);
     API_DEF_FUNC(hdata_update);
     API_DEF_FUNC(hdata_get_string);
     API_DEF_FUNC(upgrade_new);

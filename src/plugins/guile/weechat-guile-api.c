@@ -4632,6 +4632,27 @@ weechat_guile_api_hdata_hashtable (SCM hdata, SCM pointer, SCM name)
 }
 
 SCM
+weechat_guile_api_hdata_compare (SCM hdata, SCM pointer1, SCM pointer2,
+                                 SCM name, SCM case_sensitive)
+{
+    int rc;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    if (!scm_is_string (hdata) || !scm_is_string (pointer1)
+        || !scm_is_string (pointer2) || !scm_is_string (name)
+        || !scm_is_integer (case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    rc = weechat_hdata_compare (API_STR2PTR(API_SCM_TO_STRING(hdata)),
+                                API_STR2PTR(API_SCM_TO_STRING(pointer1)),
+                                API_STR2PTR(API_SCM_TO_STRING(pointer2)),
+                                API_SCM_TO_STRING(name),
+                                scm_to_int (case_sensitive));
+
+    API_RETURN_INT(rc);
+}
+
+SCM
 weechat_guile_api_hdata_update (SCM hdata, SCM pointer, SCM hashtable)
 {
     struct t_hashtable *c_hashtable;
@@ -4991,6 +5012,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hdata_pointer, 3);
     API_DEF_FUNC(hdata_time, 3);
     API_DEF_FUNC(hdata_hashtable, 3);
+    API_DEF_FUNC(hdata_compare, 5);
     API_DEF_FUNC(hdata_update, 3);
     API_DEF_FUNC(hdata_get_string, 2);
     API_DEF_FUNC(upgrade_new, 3);

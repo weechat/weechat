@@ -891,6 +891,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hdata_pointer = &hdata_pointer;
         new_plugin->hdata_time = &hdata_time;
         new_plugin->hdata_hashtable = &hdata_hashtable;
+        new_plugin->hdata_compare = &hdata_compare;
         new_plugin->hdata_set = &hdata_set;
         new_plugin->hdata_update = &hdata_update;
         new_plugin->hdata_get_string = &hdata_get_string;

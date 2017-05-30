@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * api: add function config_option_get_string()
+  * api: add functions config_option_get_string() and hdata_compare()
   * buflist: add keys kbd:[F1]/kbd:[F2], kbd:[Alt+F1]/kbd:[Alt+F2] to scroll the buflist bar
 
 Improvements::

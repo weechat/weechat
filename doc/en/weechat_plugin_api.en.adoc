@@ -16034,6 +16034,59 @@ for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
 ----
 
+==== hdata_compare
+
+_WeeChat ≥ 1.9._
+
+Compare a hdata variable of two objects.
+
+Prototype:
+
+[source,C]
+----
+int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2, const char *name, int case_sensitive);
+----
+
+Arguments:
+
+* _hdata_: hdata pointer
+* _pointer1_: pointer to first WeeChat/plugin object
+* _pointer2_: pointer to second WeeChat/plugin object
+* _name_: variable name; for arrays, the name can be "N|name" where N is
+  the index in array (starting at 0), for example: "2|name"
+* _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
+
+Return value:
+
+* -1 if variable1 < variable2
+* 0 if variable1 == variable2
+* 1 if variable1 > variable2
+
+C example:
+
+[source,C]
+----
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "freenode.#weechat-fr");
+weechat_printf (NULL, "number comparison = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+rc = weechat.hdata_compare(hdata, pointer1, pointer2, name, case_sensitive)
+
+# example
+hdata = weechat.hdata_get("buffer")
+buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
+buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")
+weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
+----
+
 ==== hdata_set
 
 _WeeChat ≥ 0.3.9._

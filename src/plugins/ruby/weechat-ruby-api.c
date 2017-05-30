@@ -5917,6 +5917,40 @@ weechat_ruby_api_hdata_hashtable (VALUE class, VALUE hdata, VALUE pointer,
 }
 
 static VALUE
+weechat_ruby_api_hdata_compare (VALUE class, VALUE hdata,
+                                VALUE pointer1, VALUE pointer2, VALUE name,
+                                VALUE case_sensitive)
+{
+    char *c_hdata, *c_pointer1, *c_pointer2, *c_name;
+    int c_case_sensitive, rc;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    if (NIL_P (hdata) || NIL_P (pointer1) || NIL_P (pointer2) || NIL_P (name)
+        || NIL_P (case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (hdata, T_STRING);
+    Check_Type (pointer1, T_STRING);
+    Check_Type (pointer2, T_STRING);
+    Check_Type (name, T_STRING);
+    Check_Type (case_sensitive, T_FIXNUM);
+
+    c_hdata = StringValuePtr (hdata);
+    c_pointer1 = StringValuePtr (pointer1);
+    c_pointer2 = StringValuePtr (pointer2);
+    c_name = StringValuePtr (name);
+    c_case_sensitive = FIX2INT (case_sensitive);
+
+    rc = weechat_hdata_compare (API_STR2PTR(c_hdata),
+                                API_STR2PTR(c_pointer1),
+                                API_STR2PTR(c_pointer2),
+                                c_name,
+                                c_case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
+static VALUE
 weechat_ruby_api_hdata_update (VALUE class, VALUE hdata, VALUE pointer,
                                VALUE hashtable)
 {
@@ -6351,6 +6385,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hdata_pointer, 3);
     API_DEF_FUNC(hdata_time, 3);
     API_DEF_FUNC(hdata_hashtable, 3);
+    API_DEF_FUNC(hdata_compare, 5);
     API_DEF_FUNC(hdata_update, 3);
     API_DEF_FUNC(hdata_get_string, 2);
     API_DEF_FUNC(upgrade_new, 3);

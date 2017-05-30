@@ -5221,6 +5221,33 @@ API_FUNC(hdata_hashtable)
     API_RETURN_OBJ(result_dict);
 }
 
+API_FUNC(hdata_compare)
+{
+    Tcl_Obj *objp;
+    char *hdata, *pointer1, *pointer2, *name;
+    int case_sensitive, rc, i;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    if (objc < 6)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = Tcl_GetStringFromObj (objv[1], &i);
+    pointer1 = Tcl_GetStringFromObj (objv[2], &i);
+    pointer2 = Tcl_GetStringFromObj (objv[3], &i);
+    name = Tcl_GetStringFromObj (objv[4], &i);
+
+    if (Tcl_GetIntFromObj (interp, objv[5], &case_sensitive) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    rc = weechat_hdata_compare (API_STR2PTR(hdata),
+                                API_STR2PTR(pointer1),
+                                API_STR2PTR(pointer2),
+                                name,
+                                case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(hdata_update)
 {
     Tcl_Obj *objp;
@@ -5692,6 +5719,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);
     API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_compare);
     API_DEF_FUNC(hdata_update);
     API_DEF_FUNC(hdata_get_string);
     API_DEF_FUNC(upgrade_new);

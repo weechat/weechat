@@ -126,6 +126,9 @@ extern time_t hdata_time (struct t_hdata *hdata, void *pointer,
                           const char *name);
 extern struct t_hashtable *hdata_hashtable (struct t_hdata *hdata,
                                             void *pointer, const char *name);
+extern int hdata_compare (struct t_hdata *hdata, void *pointer1,
+                          void *pointer2, const char *name,
+                          int case_sensitive);
 extern int hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
                       const char *value);
 extern int hdata_update (struct t_hdata *hdata, void *pointer,

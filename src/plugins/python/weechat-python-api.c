@@ -4851,6 +4851,30 @@ API_FUNC(hdata_hashtable)
     return result_dict;
 }
 
+API_FUNC(hdata_compare)
+{
+    char *hdata, *pointer1, *pointer2, *name;
+    int case_sensitive, rc;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    hdata = NULL;
+    pointer1 = NULL;
+    pointer2 = NULL;
+    name = NULL;
+    case_sensitive = 0;
+    if (!PyArg_ParseTuple (args, "ssssi", &hdata, &pointer1, &pointer2, &name,
+                           &case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    rc = weechat_hdata_compare (API_STR2PTR(hdata),
+                                API_STR2PTR(pointer1),
+                                API_STR2PTR(pointer2),
+                                name,
+                                case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(hdata_update)
 {
     char *hdata, *pointer;
@@ -5205,6 +5229,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),
     API_DEF_FUNC(hdata_hashtable),
+    API_DEF_FUNC(hdata_compare),
     API_DEF_FUNC(hdata_update),
     API_DEF_FUNC(hdata_get_string),
     API_DEF_FUNC(upgrade_new),
