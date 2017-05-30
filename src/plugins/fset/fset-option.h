@@ -32,6 +32,7 @@ struct t_fset_option
     char *parent_value;                  /* parent option value             */
     char *min;                           /* min value                       */
     char *max;                           /* max value                       */
+    char *description;                   /* option description              */
     struct t_fset_option *prev_option;   /* link to previous option         */
     struct t_fset_option *next_option;   /* link to next option             */
 };

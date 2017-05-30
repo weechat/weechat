@@ -44,6 +44,7 @@ struct t_config_option *fset_config_format_option_current;
 /* fset config, color section */
 
 struct t_config_option *fset_config_color_default_value[2];
+struct t_config_option *fset_config_color_description[2];
 struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
@@ -233,6 +234,22 @@ fset_config_init ()
         fset_config_file, ptr_section,
         "default_value_selected", "color",
         N_("color for default value on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_description[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "description", "color",
+        N_("color for description"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_description[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "description_selected", "color",
+        N_("color for description on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
