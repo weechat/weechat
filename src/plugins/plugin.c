@@ -728,6 +728,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_option_set_null = &config_file_option_set_null;
         new_plugin->config_option_unset = &config_file_option_unset;
         new_plugin->config_option_rename = &config_file_option_rename;
+        new_plugin->config_option_get_string = &config_file_option_get_string;
         new_plugin->config_option_get_pointer = &config_file_option_get_pointer;
         new_plugin->config_option_is_null = &config_file_option_is_null;
         new_plugin->config_option_default_is_null = &config_file_option_default_is_null;

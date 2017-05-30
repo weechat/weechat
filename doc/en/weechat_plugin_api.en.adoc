@@ -6055,6 +6055,47 @@ weechat.config_option_rename(option, new_name)
 weechat.config_option_rename(option, "new_name")
 ----
 
+==== config_option_get_string
+
+_WeeChat ≥ 1.9._
+
+Return string value of an option property.
+
+Prototype:
+
+[source,C]
+----
+const char *weechat_config_option_get_string (struct t_config_option *option,
+                                              const char *property);
+----
+
+Arguments:
+
+* _option_: option pointer
+* _property_: property name:
+** _name_: option name
+** _parent_name_: name of parent option
+** _type_: option type, one of:
+*** _boolean_
+*** _integer_
+*** _string_
+*** _color_
+** _description_: option description
+
+Return value:
+
+* string value of property
+
+C example:
+
+[source,C]
+----
+const char *type = weechat_config_option_get_string (option, "type");
+----
+
+[NOTE]
+This function is not available in scripting API.
+
 ==== config_option_get_pointer
 
 Return a pointer on an option property.

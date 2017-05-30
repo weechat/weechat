@@ -264,6 +264,8 @@ extern char *config_file_option_value_to_string (struct t_config_option *option,
                                                  int default_value,
                                                  int add_delimiters,
                                                  int use_colors);
+extern const char *config_file_option_get_string (struct t_config_option *option,
+                                                  const char *property);
 extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              const char *property);
 extern int config_file_option_is_null (struct t_config_option *option);

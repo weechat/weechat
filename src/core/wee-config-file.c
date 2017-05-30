@@ -1906,7 +1906,30 @@ config_file_option_value_to_string (struct t_config_option *option,
 }
 
 /*
- * Gets a pointer of an option property.
+ * Gets a string value of an option property.
+ */
+
+const char *
+config_file_option_get_string (struct t_config_option *option,
+                               const char *property)
+{
+    if (!option || !property)
+        return NULL;
+
+    if (string_strcasecmp (property, "name") == 0)
+        return option->name;
+    else if (string_strcasecmp (property, "parent_name") == 0)
+        return option->parent_name;
+    else if (string_strcasecmp (property, "type") == 0)
+        return config_option_type_string[option->type];
+    else if (string_strcasecmp (property, "description") == 0)
+        return option->description;
+
+    return NULL;
+}
+
+/*
+ * Gets a pointer on an option property.
  */
 
 void *

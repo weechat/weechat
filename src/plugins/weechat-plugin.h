@@ -59,7 +59,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20170401-01"
+#define WEECHAT_PLUGIN_API_VERSION "20170530-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -561,6 +561,8 @@ struct t_weechat_plugin
     int (*config_option_unset) (struct t_config_option *option);
     void (*config_option_rename) (struct t_config_option *option,
                                   const char *new_name);
+    const char *(*config_option_get_string) (struct t_config_option *option,
+                                             const char *property);
     void *(*config_option_get_pointer) (struct t_config_option *option,
                                         const char *property);
     int (*config_option_is_null) (struct t_config_option *option);
@@ -1492,6 +1494,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->config_option_unset)(__option)
 #define weechat_config_option_rename(__option, __new_name)              \
     (weechat_plugin->config_option_rename)(__option, __new_name)
+#define weechat_config_option_get_string(__option, __property)         \
+    (weechat_plugin->config_option_get_string)(__option, __property)
 #define weechat_config_option_get_pointer(__option, __property)         \
     (weechat_plugin->config_option_get_pointer)(__option, __property)
 #define weechat_config_option_is_null(__option)                         \
