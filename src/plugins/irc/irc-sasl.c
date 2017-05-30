@@ -292,6 +292,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         if (answer_base64)
             weechat_string_encode_base64 (string, length, answer_base64);
         free (string);
+        string = NULL;
     }
 
     if (string)
