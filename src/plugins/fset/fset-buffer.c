@@ -144,7 +144,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     if (default_value_undef)
         ptr_option_color_value = fset_config_color_value_undef[selected_line];
     else
-        ptr_option_color_value = fset_config_color_value[selected_line];
+        ptr_option_color_value = fset_config_color_default_value[selected_line];
     snprintf (str_field, sizeof (str_field),
               "%s", (ptr_field) ? ptr_field : FSET_OPTION_VALUE_NULL);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
