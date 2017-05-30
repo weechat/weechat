@@ -46,7 +46,6 @@ extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,
                                                          int *line);
 extern int fset_option_value_different_from_default (struct t_fset_option *option);
-extern void fset_option_set_filter (const char *filter);
 extern void fset_option_free (struct t_fset_option *fset_option);
 extern void fset_option_get_options ();
 extern void fset_option_filter_options (const char *search);

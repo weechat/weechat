@@ -627,6 +627,20 @@ fset_buffer_set_keys ()
 }
 
 /*
+ * Sets the local variable "filter" in the fset buffer.
+ */
+
+void
+fset_buffer_set_localvar_filter ()
+{
+    if (!fset_buffer)
+        return;
+
+    weechat_buffer_set (fset_buffer, "localvar_set_filter",
+                        (fset_option_filter) ? fset_option_filter : "*");
+}
+
+/*
  * Opens fset buffer.
  */
 

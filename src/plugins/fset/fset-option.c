@@ -750,28 +750,23 @@ fset_option_get_options ()
 }
 
 /*
- * Sets filter for fset options.
- */
-
-void
-fset_option_set_filter (const char *filter)
-{
-    if (fset_option_filter)
-        free (fset_option_filter);
-    fset_option_filter = (filter && (strcmp (filter, "*") != 0)) ?
-        strdup (filter) : NULL;
-}
-
-/*
  * Filters options.
  */
 
 void
-fset_option_filter_options (const char *search)
+fset_option_filter_options (const char *filter)
 {
     fset_buffer_selected_line = 0;
-    fset_option_set_filter (search);
+
+    if (fset_option_filter)
+        free (fset_option_filter);
+    fset_option_filter = (filter && (strcmp (filter, "*") != 0)) ?
+        strdup (filter) : NULL;
+
+    fset_buffer_set_localvar_filter ();
+
     fset_option_get_options ();
+
     fset_buffer_refresh (1);
 }
 
