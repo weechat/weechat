@@ -37,6 +37,33 @@ struct t_hashtable *fset_buffer_hashtable_extra_vars = NULL;
 
 
 /*
+ * Sets title of fset buffer.
+ */
+
+void
+fset_buffer_set_title ()
+{
+    int num_options;
+    char str_title[1024];
+
+    if (!fset_buffer)
+        return;
+
+    num_options = weechat_arraylist_size (fset_options);
+
+    snprintf (str_title, sizeof (str_title),
+              "%s | %d/%d | "
+              "Key(input): alt+'-'(-)=subtract 1, alt+'+'(+)=add 1, "
+              "alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, alt+enter(s)=set, "
+              "alt+f,alt+a(a)=append",
+              (fset_option_filter) ? fset_option_filter : "*",
+              (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
+              num_options);
+
+    weechat_buffer_set (fset_buffer, "title", str_title);
+}
+
+/*
  * Fills a field with spaces (according to max length in hashtable
  * "fset_option_max_length_field" for this field.
  */
@@ -336,7 +363,6 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 void
 fset_buffer_refresh (int clear)
 {
-    char str_title[1024];
     int num_options, i;
     struct t_fset_option *ptr_fset_option;
 
@@ -348,14 +374,13 @@ fset_buffer_refresh (int clear)
     if (clear)
         weechat_buffer_clear (fset_buffer);
 
-    snprintf (str_title, sizeof (str_title), _("Fast Set"));
-    weechat_buffer_set (fset_buffer, "title", str_title);
-
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
         fset_buffer_display_line (i, ptr_fset_option);
     }
+
+    fset_buffer_set_title ();
 }
 
 /*
@@ -378,6 +403,8 @@ fset_buffer_set_current_line (int line)
         fset_buffer_display_line (
             fset_buffer_selected_line,
             weechat_arraylist_get (fset_options, fset_buffer_selected_line));
+
+        fset_buffer_set_title ();
     }
 }
 
