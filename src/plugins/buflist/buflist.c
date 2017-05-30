@@ -129,87 +129,6 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
 }
 
 /*
- * Compares a hdata variable of two objects.
- *
- * Returns:
- *   -1: variable1 < variable2
- *    0: variable1 == variable2
- *    1: variable1 > variable2
- */
-
-int
-buflist_compare_hdata_var (struct t_hdata *hdata,
-                           void *pointer1, void *pointer2,
-                           const char *variable)
-{
-    int type, rc, int_value1, int_value2;
-    long long_value1, long_value2;
-    char char_value1, char_value2;
-    const char *pos, *str_value1, *str_value2;
-    void *ptr_value1, *ptr_value2;
-    time_t time_value1, time_value2;
-
-    rc = 0;
-
-    pos = strchr (variable, '|');
-    type = weechat_hdata_get_var_type (hdata, (pos) ? pos + 1 : variable);
-    switch (type)
-    {
-        case WEECHAT_HDATA_CHAR:
-            char_value1 = weechat_hdata_char (hdata, pointer1, variable);
-            char_value2 = weechat_hdata_char (hdata, pointer2, variable);
-            rc = (char_value1 < char_value2) ?
-                -1 : ((char_value1 > char_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_INTEGER:
-            int_value1 = weechat_hdata_integer (hdata, pointer1, variable);
-            int_value2 = weechat_hdata_integer (hdata, pointer2, variable);
-            rc = (int_value1 < int_value2) ?
-                -1 : ((int_value1 > int_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_LONG:
-            long_value1 = weechat_hdata_long (hdata, pointer1, variable);
-            long_value2 = weechat_hdata_long (hdata, pointer2, variable);
-            rc = (long_value1 < long_value2) ?
-                -1 : ((long_value1 > long_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_STRING:
-        case WEECHAT_HDATA_SHARED_STRING:
-            str_value1 = weechat_hdata_string (hdata, pointer1, variable);
-            str_value2 = weechat_hdata_string (hdata, pointer2, variable);
-            if (!str_value1 && !str_value2)
-                rc = 0;
-            else if (str_value1 && !str_value2)
-                rc = 1;
-            else if (!str_value1 && str_value2)
-                rc = -1;
-            else
-            {
-                rc = strcmp (str_value1, str_value2);
-                if (rc < 0)
-                    rc = -1;
-                else if (rc > 0)
-                    rc = 1;
-            }
-            break;
-        case WEECHAT_HDATA_POINTER:
-            ptr_value1 = weechat_hdata_pointer (hdata, pointer1, variable);
-            ptr_value2 = weechat_hdata_pointer (hdata, pointer2, variable);
-            rc = (ptr_value1 < ptr_value2) ?
-                -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_TIME:
-            time_value1 = weechat_hdata_time (hdata, pointer1, variable);
-            time_value2 = weechat_hdata_time (hdata, pointer2, variable);
-            rc = (time_value1 < time_value2) ?
-                -1 : ((time_value1 > time_value2) ? 1 : 0);
-            break;
-    }
-
-    return rc;
-}
-
-/*
  * Compares two inactive merged buffers.
  *
  * Buffers are sorted so that the active buffer and buffers immediately after
@@ -339,9 +258,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                 rc = -1;
             else
             {
-                rc = buflist_compare_hdata_var (buflist_hdata_hotlist,
-                                                pointer1, pointer2,
-                                                ptr_field + 8);
+                rc = weechat_hdata_compare (buflist_hdata_hotlist,
+                                            pointer1, pointer2,
+                                            ptr_field + 8,
+                                            1);
             }
         }
         else if (strncmp (ptr_field, "irc_server.", 11) == 0)
@@ -352,9 +272,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                                                  &ptr_server1, &ptr_channel1);
                 buflist_buffer_get_irc_pointers (pointer2,
                                                  &ptr_server2, &ptr_channel2);
-                rc = buflist_compare_hdata_var (hdata_irc_server,
-                                                ptr_server1, ptr_server2,
-                                                ptr_field + 11);
+                rc = weechat_hdata_compare (hdata_irc_server,
+                                            ptr_server1, ptr_server2,
+                                            ptr_field + 11,
+                                            1);
             }
         }
         else if (strncmp (ptr_field, "irc_channel.", 12) == 0)
@@ -365,16 +286,18 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                                                  &ptr_server1, &ptr_channel1);
                 buflist_buffer_get_irc_pointers (pointer2,
                                                  &ptr_server2, &ptr_channel2);
-                rc = buflist_compare_hdata_var (hdata_irc_channel,
-                                                ptr_channel1, ptr_channel2,
-                                                ptr_field + 12);
+                rc = weechat_hdata_compare (hdata_irc_channel,
+                                            ptr_channel1, ptr_channel2,
+                                            ptr_field + 12,
+                                            1);
             }
         }
         else
         {
-            rc = buflist_compare_hdata_var (buflist_hdata_buffer,
-                                            pointer1, pointer2,
-                                            ptr_field);
+            rc = weechat_hdata_compare (buflist_hdata_buffer,
+                                        pointer1, pointer2,
+                                        ptr_field,
+                                        1);
 
             /*
              * In case we are sorting on "active" flag and that both
