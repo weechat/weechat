@@ -69,6 +69,8 @@ fset_add_bar ()
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    const char *ptr_filter;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
@@ -108,6 +110,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     fset_mouse_init ();
 
     weechat_hook_config ("*", &fset_option_config_cb, NULL, NULL);
+
+    if (fset_buffer)
+    {
+        ptr_filter = weechat_buffer_get_string (fset_buffer, "localvar_filter");
+        if (ptr_filter)
+            fset_option_filter_options (ptr_filter);
+    }
 
     return WEECHAT_RC_OK;
 }
