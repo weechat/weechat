@@ -217,7 +217,7 @@ int
 buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                          void *pointer1, void *pointer2)
 {
-    int i, reverse, rc;
+    int i, reverse, case_sensitive, rc;
     const char *ptr_field;
     struct t_gui_hotlist *ptr_hotlist1, *ptr_hotlist2;
     struct t_irc_server *ptr_server1, *ptr_server2;
@@ -235,14 +235,15 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
     {
         rc = 0;
         reverse = 1;
-        if (buflist_config_sort_fields[i][0] == '-')
+        case_sensitive = 1;
+        ptr_field = buflist_config_sort_fields[i];
+        while ((ptr_field[0] == '-') || (ptr_field[0] == '~'))
         {
-            ptr_field = buflist_config_sort_fields[i] + 1;
-            reverse = -1;
-        }
-        else
-        {
-            ptr_field = buflist_config_sort_fields[i];
+            if (ptr_field[0] == '-')
+                reverse *= -1;
+            else if (ptr_field[0] == '~')
+                case_sensitive ^= 1;
+            ptr_field++;
         }
         if (strncmp (ptr_field, "hotlist.", 8) == 0)
         {
@@ -261,7 +262,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                 rc = weechat_hdata_compare (buflist_hdata_hotlist,
                                             pointer1, pointer2,
                                             ptr_field + 8,
-                                            1);
+                                            case_sensitive);
             }
         }
         else if (strncmp (ptr_field, "irc_server.", 11) == 0)
@@ -275,7 +276,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                 rc = weechat_hdata_compare (hdata_irc_server,
                                             ptr_server1, ptr_server2,
                                             ptr_field + 11,
-                                            1);
+                                            case_sensitive);
             }
         }
         else if (strncmp (ptr_field, "irc_channel.", 12) == 0)
@@ -289,7 +290,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                 rc = weechat_hdata_compare (hdata_irc_channel,
                                             ptr_channel1, ptr_channel2,
                                             ptr_field + 12,
-                                            1);
+                                            case_sensitive);
             }
         }
         else
@@ -297,7 +298,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
             rc = weechat_hdata_compare (buflist_hdata_buffer,
                                         pointer1, pointer2,
                                         ptr_field,
-                                        1);
+                                        case_sensitive);
 
             /*
              * In case we are sorting on "active" flag and that both

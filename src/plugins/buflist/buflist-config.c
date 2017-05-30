@@ -419,7 +419,10 @@ buflist_config_init ()
            "a hdata variable of buffer (\"var\"), a hdata variable of "
            "IRC server (\"irc_server.var\") or a hdata variable of "
            "IRC channel (\"irc_channel.var\"); "
-           "char \"-\" can be used before field to reverse order"),
+           "char \"-\" can be used before field to reverse order, "
+           "char \"~\" can be used to do a case insensitive comparison; "
+           "example: \"-~short_name\" for case insensitive and reverse "
+           "sort on buffer short name"),
         NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,

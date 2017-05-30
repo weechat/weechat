@@ -26,6 +26,7 @@ New features::
 Improvements::
 
   * core: allow index for hdata arrays in evaluation of expressions
+  * buflist: add support of char "~" in option buflist.look.sort for case insensitive comparison
   * buflist: add variable `${current_buffer}` (boolean "0" / "1") in bar item evaluation
 
 Bug fixes::
