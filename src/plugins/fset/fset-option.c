@@ -389,8 +389,7 @@ fset_option_set_values (struct t_fset_option *fset_option,
         fset_option->description = NULL;
     }
     ptr_description = weechat_config_option_get_string (option, "description");
-    fset_option->description = strdup (
-        (ptr_description && ptr_description[0]) ? _(ptr_description) : "");
+    fset_option->description = strdup ((ptr_description) ? ptr_description : "");
 
     /* string_values */
     if (fset_option->string_values)
@@ -516,6 +515,13 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
         "max", weechat_strlen_screen (fset_option->max));
 
     /* description */
+    fset_option_set_max_length_field (
+        "description",
+        weechat_strlen_screen (
+            (fset_option->description && fset_option->description[0]) ?
+            _(fset_option->description) : ""));
+
+    /* description_en */
     fset_option_set_max_length_field (
         "description", weechat_strlen_screen (fset_option->description));
 
@@ -984,7 +990,9 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "parent_name", fset_option->parent_name))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "type", fset_option_type_string[fset_option->type]))
+    if (!weechat_infolist_new_var_string (ptr_item, "type", _(fset_option_type_string[fset_option->type])))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "type_en", fset_option_type_string[fset_option->type]))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "default_value", fset_option->default_value))
         return 0;
@@ -996,7 +1004,11 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "max", fset_option->max))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "description", fset_option->description))
+    if (!weechat_infolist_new_var_string (ptr_item, "description",
+                                          (fset_option->description && fset_option->description[0]) ?
+                                          _(fset_option->description) : ""))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "description_en", fset_option->description))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "string_values", fset_option->description))
         return 0;

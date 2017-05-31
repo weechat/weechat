@@ -389,18 +389,35 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     /* description */
     ptr_field = weechat_hdata_string (fset_hdata_fset_option,
                                       fset_option, "description");
-    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s", (ptr_field && ptr_field[0]) ? _(ptr_field) : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__description", str_field);
     snprintf (str_field, sizeof (str_field),
               "%s%s",
               weechat_color (weechat_config_string (fset_config_color_description[selected_line])),
-              (ptr_field) ? ptr_field : "");
+              (ptr_field && ptr_field[0]) ? _(ptr_field) : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description", str_field);
     fset_buffer_fills_field (str_field, sizeof (str_field), "description", 64);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description", str_field);
+
+    /* description_en */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "description");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__description_en", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_description[selected_line])),
+              (ptr_field) ? ptr_field : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_description_en", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "description", 64);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "description_en", str_field);
 
     /* string_values */
     ptr_field = weechat_hdata_string (fset_hdata_fset_option,

@@ -134,7 +134,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
               ptr_fset_option->name,
               weechat_color ("bar_fg"),
               (ptr_fset_option->description && ptr_fset_option->description[0]) ?
-              ptr_fset_option->description : _("(no description)"),
+              _(ptr_fset_option->description) : _("(no description)"),
               weechat_color ("bar_delim"),
               weechat_color ("bar_fg"),
               weechat_color (weechat_config_string (fset_config_color_help_default_value)),
