@@ -164,15 +164,15 @@ fset_command_fset (const void *pointer, void *data,
 
         if (weechat_strcasecmp (argv[1], "-toggle") == 0)
         {
-            if (strcmp (ptr_fset_option->type, "boolean") == 0)
+            if (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN)
                 weechat_config_option_set (ptr_option, "toggle", 1);
             return WEECHAT_RC_OK;
         }
 
         if (weechat_strcasecmp (argv[1], "-add") == 0)
         {
-            if ((strcmp (ptr_fset_option->type, "integer") == 0)
-                || (strcmp (ptr_fset_option->type, "color") == 0))
+            if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
+                || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
             {
                 value = 1;
                 if (argc > 2)
@@ -212,7 +212,7 @@ fset_command_fset (const void *pointer, void *data,
             append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
             use_mute = weechat_config_boolean (fset_config_look_use_mute);
             add_quotes = (ptr_fset_option->value
-                          && strcmp (ptr_fset_option->type, "string") == 0) ? 1 : 0;
+                          && (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
             snprintf (str_input, sizeof (str_input),
                       "%s/set %s %s%s%s",
                       (use_mute) ? "/mute " : "",

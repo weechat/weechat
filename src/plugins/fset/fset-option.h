@@ -22,11 +22,21 @@
 
 #define FSET_OPTION_VALUE_NULL "null"
 
+enum t_fset_option_type
+{
+    FSET_OPTION_TYPE_BOOLEAN = 0,
+    FSET_OPTION_TYPE_INTEGER,
+    FSET_OPTION_TYPE_STRING,
+    FSET_OPTION_TYPE_COLOR,
+    /* number of option types */
+    FSET_OPTION_NUM_TYPES,
+};
+
 struct t_fset_option
 {
     char *name;                          /* option name                     */
     char *parent_name;                   /* parent option name              */
-    char *type;                          /* option type                     */
+    enum t_fset_option_type type;        /* option type                     */
     char *default_value;                 /* option default value            */
     char *value;                         /* option value                    */
     char *parent_value;                  /* parent option value             */
@@ -41,6 +51,9 @@ struct t_fset_option
 extern struct t_arraylist *fset_options;
 extern struct t_hashtable *fset_option_max_length_field;
 extern char *fset_option_filter;
+extern char *fset_option_type_string[];
+extern char *fset_option_type_string_short[];
+extern char *fset_option_type_string_tiny[];
 
 extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,

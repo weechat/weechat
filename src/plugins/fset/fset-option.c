@@ -34,6 +34,13 @@ struct t_arraylist *fset_options = NULL;
 struct t_hashtable *fset_option_max_length_field = NULL;
 char *fset_option_filter = NULL;
 
+char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
+{ N_("boolean"), N_("integer"), N_("string"), N_("color") };
+char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
+{ "bool", "int", "str", "col" };
+char *fset_option_type_string_tiny[FSET_OPTION_NUM_TYPES] =
+{ "b", "i", "s", "c" };
+
 
 /*
  * Checks if a fset option pointer is valid.
@@ -128,7 +135,7 @@ fset_option_value_is_changed (struct t_fset_option *fset_option)
 
 void
 fset_option_set_value_string (struct t_config_option *option,
-                              const char *type, void *value,
+                              enum t_fset_option_type type, void *value,
                               int default_value,
                               char **value_string)
 {
@@ -139,38 +146,38 @@ fset_option_set_value_string (struct t_config_option *option,
     {
         *value_string = NULL;
     }
-    else if (strcmp (type, "boolean") == 0)
-    {
-        *value_string = strdup (*((int *)value) ? "on" : "off");
-    }
-    else if (strcmp (type, "integer") == 0)
-    {
-        ptr_string_values = weechat_config_option_get_pointer (
-            option, "string_values");
-        if (ptr_string_values)
-        {
-            *value_string = strdup (
-                (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
-        }
-        else
-        {
-            snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
-            *value_string = strdup (str_value);
-        }
-    }
-    else if (strcmp (type, "string") == 0)
-    {
-        *value_string = strdup (
-            (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
-    }
-    else if (strcmp (type, "color") == 0)
-    {
-        *value_string = strdup (
-            (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
-    }
     else
     {
-        *value_string = strdup ("");
+        switch (type)
+        {
+            case FSET_OPTION_TYPE_BOOLEAN:
+                *value_string = strdup (*((int *)value) ? "on" : "off");
+                break;
+            case FSET_OPTION_TYPE_INTEGER:
+                ptr_string_values = weechat_config_option_get_pointer (
+                    option, "string_values");
+                if (ptr_string_values)
+                {
+                    *value_string = strdup (
+                        (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
+                }
+                else
+                {
+                    snprintf (str_value, sizeof (str_value), "%d", *((int *)value));
+                    *value_string = strdup (str_value);
+                }
+                break;
+            case FSET_OPTION_TYPE_STRING:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_string_default (option) : weechat_config_string (option));
+                break;
+            case FSET_OPTION_TYPE_COLOR:
+                *value_string = strdup (
+                    (default_value) ? weechat_config_color_default (option) : weechat_config_color (option));
+                break;
+            case FSET_OPTION_NUM_TYPES:
+                break;
+        }
     }
 }
 
@@ -287,11 +294,11 @@ void
 fset_option_set_values (struct t_fset_option *fset_option,
                         struct t_config_option *option)
 {
-    const char *ptr_parent_name, *ptr_type, *ptr_description;
+    const char *ptr_parent_name, *ptr_description;
     const char **ptr_string_values;
     void *ptr_default_value, *ptr_value;
     struct t_config_option *ptr_parent_option;
-    int *ptr_min, *ptr_max;
+    int *ptr_type, *ptr_min, *ptr_max;
     char str_value[64];
 
     /* parent name */
@@ -304,13 +311,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
     fset_option->parent_name = (ptr_parent_name) ? strdup (ptr_parent_name) : NULL;
 
     /* type */
-    if (fset_option->type)
-    {
-        free (fset_option->type);
-        fset_option->type = NULL;
-    }
-    ptr_type = weechat_config_option_get_string (option, "type");
-    fset_option->type = strdup ((ptr_type) ? ptr_type : "");
+    ptr_type = weechat_config_option_get_pointer (option, "type");
+    fset_option->type = *ptr_type;
 
     /* default value */
     if (fset_option->default_value)
@@ -442,13 +444,29 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
 
     /* type */
     fset_option_set_max_length_field (
-        "type", weechat_strlen_screen (fset_option->type));
+        "type",
+        weechat_strlen_screen (_(fset_option_type_string[fset_option->type])));
+
+    /* type_en */
+    fset_option_set_max_length_field (
+        "type_en",
+        weechat_strlen_screen (fset_option_type_string[fset_option->type]));
+
+    /* type_short */
+    fset_option_set_max_length_field (
+        "type_short",
+        weechat_strlen_screen (fset_option_type_string_short[fset_option->type]));
+
+    /* type_tiny */
+    fset_option_set_max_length_field (
+        "type_tiny",
+        weechat_strlen_screen (fset_option_type_string_tiny[fset_option->type]));
 
     /* default_value */
     if (fset_option->default_value)
     {
         length = weechat_strlen_screen (fset_option->default_value);
-        if (strcmp (fset_option->type, "string") == 0)
+        if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length += 2;
     }
     else
@@ -461,7 +479,7 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     if (fset_option->value)
     {
         length_value = weechat_strlen_screen (fset_option->value);
-        if (strcmp (fset_option->type, "string") == 0)
+        if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length_value += 2;
     }
     else
@@ -474,7 +492,7 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     if (fset_option->parent_value)
     {
         length_parent_value = weechat_strlen_screen (fset_option->parent_value);
-        if (strcmp (fset_option->type, "string") == 0)
+        if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length_parent_value += 2;
     }
     else
@@ -571,7 +589,7 @@ fset_option_alloc (struct t_config_file *config_file,
     {
         new_fset_option->name = option_name;
         new_fset_option->parent_name = NULL;
-        new_fset_option->type = NULL;
+        new_fset_option->type = 0;
         new_fset_option->default_value = NULL;
         new_fset_option->value = NULL;
         new_fset_option->parent_value = NULL;
@@ -691,8 +709,6 @@ fset_option_free (struct t_fset_option *fset_option)
         free (fset_option->name);
     if (fset_option->parent_name)
         free (fset_option->parent_name);
-    if (fset_option->type)
-        free (fset_option->type);
     if (fset_option->default_value)
         free (fset_option->default_value);
     if (fset_option->value)
@@ -931,7 +947,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
     {
         WEECHAT_HDATA_VAR(struct t_fset_option, name, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, parent_name, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_fset_option, type, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_fset_option, type, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, default_value, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, value, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, parent_value, STRING, 0, NULL, NULL);
@@ -968,7 +984,7 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "parent_name", fset_option->parent_name))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "type", fset_option->type))
+    if (!weechat_infolist_new_var_string (ptr_item, "type", fset_option_type_string[fset_option->type]))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "default_value", fset_option->default_value))
         return 0;
@@ -1006,7 +1022,9 @@ fset_option_print_log ()
         weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
         weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_fset_option->name);
         weechat_log_printf ("  parent_name . . . . . : '%s'",  ptr_fset_option->parent_name);
-        weechat_log_printf ("  type. . . . . . . . . : '%s'",  ptr_fset_option->type);
+        weechat_log_printf ("  type. . . . . . . . . : %d ('%s')",
+                            ptr_fset_option->type,
+                            fset_option_type_string[ptr_fset_option->type]);
         weechat_log_printf ("  default_value . . . . : '%s'",  ptr_fset_option->default_value);
         weechat_log_printf ("  value . . . . . . . . : '%s'",  ptr_fset_option->value);
         weechat_log_printf ("  parent_value. . . . . : '%s'",  ptr_fset_option->parent_value);

@@ -84,7 +84,7 @@ fset_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     weechat_hashtable_set (info, "fset_option", str_value);
     weechat_hashtable_set (info, "fset_option_name", ptr_fset_option->name);
     weechat_hashtable_set (info, "fset_option_parent_name", ptr_fset_option->parent_name);
-    weechat_hashtable_set (info, "fset_option_type", ptr_fset_option->type);
+    weechat_hashtable_set (info, "fset_option_type", fset_option_type_string[ptr_fset_option->type]);
     weechat_hashtable_set (info, "fset_option_default_value", ptr_fset_option->default_value);
     weechat_hashtable_set (info, "fset_option_value", ptr_fset_option->value);
     weechat_hashtable_set (info, "fset_option_parent_value", ptr_fset_option->parent_value);
@@ -173,14 +173,14 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
     {
         snprintf (str_command, sizeof (str_command),
                   "/fset %s",
-                  (strcmp (ptr_fset_option->type, "boolean") == 0) ? "-toggle" : "-set");
+                  (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN) ? "-toggle" : "-set");
         weechat_command (fset_buffer, str_command);
     }
     else if (weechat_string_match (ptr_key, "button2-gesture-left*", 1))
     {
         distance = fset_mouse_get_distance_x (hashtable);
-        if ((strcmp (ptr_fset_option->type, "integer") == 0)
-            || (strcmp (ptr_fset_option->type, "color") == 0))
+        if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
         {
             snprintf (str_command, sizeof (str_command),
                       "/fset -add -%d",
@@ -191,8 +191,8 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
     else if (weechat_string_match (ptr_key, "button2-gesture-right*", 1))
     {
         distance = fset_mouse_get_distance_x (hashtable);
-        if ((strcmp (ptr_fset_option->type, "integer") == 0)
-            || (strcmp (ptr_fset_option->type, "color") == 0))
+        if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
+            || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
         {
             snprintf (str_command, sizeof (str_command),
                       "/fset -add %d",
