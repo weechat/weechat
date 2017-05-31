@@ -689,7 +689,6 @@ fset_buffer_open ()
             return;
 
         weechat_buffer_set (fset_buffer, "type", "free");
-        weechat_buffer_set (fset_buffer, "title", _("Options"));
         fset_buffer_set_keys ();
         weechat_buffer_set (fset_buffer, "localvar_set_type", "option");
 
