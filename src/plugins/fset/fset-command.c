@@ -70,7 +70,7 @@ fset_command_fset (const void *pointer, void *data,
 
     if (weechat_strcasecmp (argv[1], "-bar") == 0)
     {
-        fset_bar_item_update ();
+        fset_add_bar ();
         return WEECHAT_RC_OK;
     }
 

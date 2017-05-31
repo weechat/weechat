@@ -32,4 +32,6 @@ extern struct t_hdata *fset_hdata_config_section;
 extern struct t_hdata *fset_hdata_config_option;
 extern struct t_hdata *fset_hdata_fset_option;
 
+extern void fset_add_bar ();
+
 #endif /* WEECHAT_FSET_H */
