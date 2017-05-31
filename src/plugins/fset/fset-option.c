@@ -99,15 +99,15 @@ fset_option_search_by_name (const char *name, int *line)
 }
 
 /*
- * Checks if the option value is different from the default value.
+ * Checks if the option value is changed (different from the default value).
  *
  * Returns:
- *   1: value is different from default value
+ *   1: value has been changed
  *   0: value is the same as default value
  */
 
 int
-fset_option_value_different_from_default (struct t_fset_option *fset_option)
+fset_option_value_is_changed (struct t_fset_option *fset_option)
 {
     if (!fset_option->value && !fset_option->default_value)
         return 0;
@@ -223,7 +223,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     else if (strncmp (fset_option_filter, "d==", 3) == 0)
     {
         /* filter by modified values, exact value */
-        if (!fset_option_value_different_from_default (fset_option))
+        if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (weechat_strcasecmp (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
@@ -232,7 +232,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     else if (strncmp (fset_option_filter, "d=", 2) == 0)
     {
         /* filter by modified values, value */
-        if (!fset_option_value_different_from_default (fset_option))
+        if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
@@ -241,7 +241,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     else if (strncmp (fset_option_filter, "d:", 2) == 0)
     {
         /* filter by modified values */
-        if (!fset_option_value_different_from_default (fset_option))
+        if (!fset_option_value_is_changed (fset_option))
             return 0;
         return fset_option_string_match (fset_option->name,
                                          fset_option_filter + 2) ? 1 : 0;
@@ -249,7 +249,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     else if (strcmp (fset_option_filter, "d") == 0)
     {
         /* filter by modified values */
-        return (fset_option_value_different_from_default (fset_option)) ? 1 : 0;
+        return (fset_option_value_is_changed (fset_option)) ? 1 : 0;
     }
     else if (strncmp (fset_option_filter, "==", 2) == 0)
     {

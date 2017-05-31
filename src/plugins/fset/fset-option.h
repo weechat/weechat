@@ -45,7 +45,7 @@ extern char *fset_option_filter;
 extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,
                                                          int *line);
-extern int fset_option_value_different_from_default (struct t_fset_option *option);
+extern int fset_option_value_is_changed (struct t_fset_option *option);
 extern void fset_option_free (struct t_fset_option *fset_option);
 extern struct t_arraylist *fset_option_get_arraylist_options ();
 extern struct t_hashtable *fset_option_get_hashtable_max_length_field ();

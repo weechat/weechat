@@ -61,7 +61,7 @@ struct t_config_option *fset_config_color_quotes[2];
 struct t_config_option *fset_config_color_string_values[2];
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_value[2];
-struct t_config_option *fset_config_color_value_diff[2];
+struct t_config_option *fset_config_color_value_changed[2];
 struct t_config_option *fset_config_color_value_undef[2];
 
 char *fset_config_eval_format_option_current = NULL;
@@ -495,18 +495,19 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_value_diff[0] = weechat_config_new_option (
+    fset_config_color_value_changed[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "value_diff", "color",
-        N_("color for value different from default"),
+        "value_changed", "color",
+        N_("color for value changed (different from default)"),
         NULL, 0, 0, "green", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_value_diff[1] = weechat_config_new_option (
+    fset_config_color_value_changed[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "value_diff_selected", "color",
-        N_("color for value different from default on the selected line"),
+        "value_changed_selected", "color",
+        N_("color for value changed (different from default) on the selected "
+           "line"),
         NULL, 0, 0, "lightgreen", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,

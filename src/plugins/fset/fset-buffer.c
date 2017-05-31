@@ -103,7 +103,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     char *line, str_field[4096];
     const char *ptr_field, *ptr_parent_value;
     int selected_line;
-    int default_value_undef, value_undef, value_diff;
+    int default_value_undef, value_undef, value_changed;
     int add_quotes, add_quotes_parent;
     struct t_config_option *ptr_option_color_value;
 
@@ -111,7 +111,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 
     default_value_undef = (fset_option->default_value == NULL) ? 1 : 0;
     value_undef = (fset_option->value == NULL) ? 1 : 0;
-    value_diff = (fset_option_value_different_from_default (fset_option)) ? 1 : 0;
+    value_changed = (fset_option_value_is_changed (fset_option)) ? 1 : 0;
 
     /* set pointers */
     weechat_hashtable_set (fset_buffer_hashtable_pointers,
@@ -197,8 +197,8 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     add_quotes = (ptr_field && (strcmp (fset_option->type, "string") == 0)) ? 1 : 0;
     if (value_undef)
         ptr_option_color_value = fset_config_color_value_undef[selected_line];
-    else if (value_diff)
-        ptr_option_color_value = fset_config_color_value_diff[selected_line];
+    else if (value_changed)
+        ptr_option_color_value = fset_config_color_value_changed[selected_line];
     else
         ptr_option_color_value = fset_config_color_value[selected_line];
     snprintf (str_field, sizeof (str_field),
@@ -375,8 +375,14 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 
     /* set other variables depending on the value */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "default_value_undef",
+                           (default_value_undef) ? "1" : "0");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "value_undef",
-                           (fset_option->value == NULL) ? "1" : "0");
+                           (value_undef) ? "1" : "0");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "value_changed",
+                           (value_changed) ? "1" : "0");
 
     /* build string for line */
     line = weechat_string_eval_expression (
