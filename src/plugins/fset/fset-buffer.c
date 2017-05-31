@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "fset.h"
 #include "fset-buffer.h"
+#include "fset-bar-item.h"
 #include "fset-config.h"
 #include "fset-option.h"
 
@@ -381,6 +382,7 @@ fset_buffer_refresh (int clear)
     }
 
     fset_buffer_set_title ();
+    fset_bar_item_update ();
 }
 
 /*
@@ -405,6 +407,7 @@ fset_buffer_set_current_line (int line)
             weechat_arraylist_get (fset_options, fset_buffer_selected_line));
 
         fset_buffer_set_title ();
+        fset_bar_item_update ();
     }
 }
 

@@ -56,10 +56,13 @@ struct t_hdata *fset_hdata_fset_option = NULL;
 void
 fset_add_bar ()
 {
-    weechat_bar_new (FSET_BAR_NAME, "on", "0", "window", "", "top",
-                     "horizontal", "vertical", "3", "3",
-                     "default", "cyan", "default", "on",
-                     FSET_BAR_ITEM_NAME);
+    weechat_bar_new (
+        FSET_BAR_NAME, "off", "0", "window",
+        "${fset.look.help_bar} "
+        "&& ${buffer.full_name} == " FSET_PLUGIN_NAME "." FSET_BAR_NAME,
+        "top", "horizontal", "vertical", "3", "3",
+        "default", "cyan", "default", "on",
+        FSET_BAR_ITEM_NAME);
 }
 
 /*

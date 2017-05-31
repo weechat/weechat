@@ -25,6 +25,7 @@
 #include "../weechat-plugin.h"
 #include "fset.h"
 #include "fset-config.h"
+#include "fset-bar-item.h"
 #include "fset-buffer.h"
 
 
@@ -33,6 +34,7 @@ struct t_config_file *fset_config_file = NULL;
 /* fset config, look section */
 
 struct t_config_option *fset_config_look_enabled;
+struct t_config_option *fset_config_look_help_bar;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
 
@@ -45,6 +47,11 @@ struct t_config_option *fset_config_format_option_current;
 
 struct t_config_option *fset_config_color_default_value[2];
 struct t_config_option *fset_config_color_description[2];
+struct t_config_option *fset_config_color_help_default_value;
+struct t_config_option *fset_config_color_help_description;
+struct t_config_option *fset_config_color_help_name;
+struct t_config_option *fset_config_color_help_quotes;
+struct t_config_option *fset_config_color_help_string_values;
 struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
@@ -58,6 +65,22 @@ struct t_config_option *fset_config_color_value_undef[2];
 
 char *fset_config_eval_format_option_current = NULL;
 
+
+/*
+ * Callback for changes on option "fset.look.help_bar".
+ */
+
+void
+fset_config_change_help_bar_cb (const void *pointer, void *data,
+                                struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    weechat_command (NULL, "/window refresh");
+}
 
 /*
  * Callback for changes on option "fset.look.use_keys".
@@ -98,6 +121,22 @@ fset_config_change_format (const void *pointer, void *data,
         weechat_config_string (fset_config_format_option));
 
     fset_buffer_refresh (0);
+}
+
+/*
+ * Callback for changes on help color options.
+ */
+
+void
+fset_config_change_help_color (const void *pointer, void *data,
+                               struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    fset_bar_item_update ();
 }
 
 /*
@@ -155,6 +194,15 @@ fset_config_init ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_help_bar = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_bar", "boolean",
+        N_("display help bar in fset buffer (description of option, "
+           "allowed values and default value)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_help_bar_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_use_keys = weechat_config_new_option (
         fset_config_file, ptr_section,
@@ -255,6 +303,46 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_color_help_default_value = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_default_value", "color",
+        N_("color for default value in help bar"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_help_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_help_description = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_description", "color",
+        N_("color for description in help bar"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_help_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_help_name = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_name", "color",
+        N_("color for name in help bar"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_help_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_help_quotes = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_quotes", "color",
+        N_("color for quotes around string values"),
+        NULL, 0, 0, "darkgray", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_help_string_values = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "help_string_values", "color",
+        N_("color for string values"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_color_max[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "max", "color",
@@ -321,7 +409,7 @@ fset_config_init ()
         NULL, NULL, NULL);
     fset_config_color_quotes[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "quote", "color",
+        "quotes", "color",
         N_("color for quotes around string values"),
         NULL, 0, 0, "darkgray", NULL, 0,
         NULL, NULL, NULL,

@@ -379,7 +379,8 @@ fset_option_set_values (struct t_fset_option *fset_option,
         fset_option->description = NULL;
     }
     ptr_description = weechat_config_option_get_string (option, "description");
-    fset_option->description = strdup ((ptr_description) ? ptr_description : "");
+    fset_option->description = strdup (
+        (ptr_description && ptr_description[0]) ? _(ptr_description) : "");
 
     /* string_values */
     if (fset_option->string_values)
