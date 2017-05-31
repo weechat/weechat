@@ -57,6 +57,7 @@ struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
 struct t_config_option *fset_config_color_parent_name[2];
+struct t_config_option *fset_config_color_parent_value[2];
 struct t_config_option *fset_config_color_quotes[2];
 struct t_config_option *fset_config_color_string_values[2];
 struct t_config_option *fset_config_color_type[2];
@@ -420,6 +421,22 @@ fset_config_init ()
         "parent_name_selected", "color",
         N_("color for parent name on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_parent_value[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "parent_value", "color",
+        N_("color for parent value"),
+        NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_parent_value[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "parent_value_selected", "color",
+        N_("color for parent value on the selected line"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
