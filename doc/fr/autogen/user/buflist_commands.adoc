@@ -40,5 +40,6 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)
     - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)
     - ${hotlist} : la hotlist brute
+    - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
     - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
 ----

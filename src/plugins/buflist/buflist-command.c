@@ -125,6 +125,8 @@ buflist_command_init ()
            "    - ${format_hotlist}: the formatted hotlist (evaluation "
            "of option buflist.format.hotlist)\n"
            "    - ${hotlist}: the raw hotlist\n"
+           "    - ${hotlist_priority}: \"none\", \"low\", \"message\", "
+           "\"private\" or \"highlight\"\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)"),
         "bar || refresh",

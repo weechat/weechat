@@ -40,5 +40,6 @@ The following variables can be used in these options:
     - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
     - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
     - ${hotlist}: the raw hotlist
+    - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
     - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
 ----
