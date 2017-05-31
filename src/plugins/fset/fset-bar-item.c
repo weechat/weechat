@@ -58,7 +58,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
 {
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
-    char str_help[8192], **string_values;
+    char str_help[8192], **default_and_values;
     const char **ptr_string_values;
     int i;
 
@@ -78,9 +78,44 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
     if (!ptr_fset_option)
         return NULL;
 
-    string_values = weechat_string_dyn_alloc (256);
-    if (!string_values)
+    default_and_values = weechat_string_dyn_alloc (256);
+    if (!default_and_values)
         return NULL;
+
+    weechat_string_dyn_concat (default_and_values, weechat_color ("bar_fg"));
+    weechat_string_dyn_concat (default_and_values, _("default:"));
+    weechat_string_dyn_concat (default_and_values, " ");
+    if (ptr_fset_option->default_value)
+    {
+        if (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)
+        {
+            weechat_string_dyn_concat (default_and_values,
+                                       weechat_color (
+                                           weechat_config_string (
+                                               fset_config_color_help_quotes)));
+            weechat_string_dyn_concat (default_and_values, "\"");
+        }
+        weechat_string_dyn_concat (
+            default_and_values,
+            weechat_color (weechat_config_string (fset_config_color_help_default_value)));
+        weechat_string_dyn_concat (default_and_values,
+                                   ptr_fset_option->default_value);
+        if (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)
+        {
+            weechat_string_dyn_concat (default_and_values,
+                                       weechat_color (
+                                           weechat_config_string (
+                                               fset_config_color_help_quotes)));
+            weechat_string_dyn_concat (default_and_values, "\"");
+        }
+    }
+    else
+    {
+        weechat_string_dyn_concat (
+            default_and_values,
+            weechat_color (weechat_config_string (fset_config_color_help_default_value)));
+        weechat_string_dyn_concat (default_and_values, FSET_OPTION_VALUE_NULL);
+    }
 
     if (ptr_fset_option->string_values && ptr_fset_option->string_values[0])
     {
@@ -91,59 +126,45 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
                 ptr_option, "string_values");
             if (ptr_string_values)
             {
-                weechat_string_dyn_concat (string_values,
+                weechat_string_dyn_concat (default_and_values,
                                            weechat_color ("bar_fg"));
-                weechat_string_dyn_concat (string_values, ", ");
-                weechat_string_dyn_concat (string_values, _("values:"));
-                weechat_string_dyn_concat (string_values, " ");
+                weechat_string_dyn_concat (default_and_values, ", ");
+                weechat_string_dyn_concat (default_and_values, _("values:"));
+                weechat_string_dyn_concat (default_and_values, " ");
                 for (i = 0; ptr_string_values[i]; i++)
                 {
                     if (i > 0)
                     {
-                        weechat_string_dyn_concat (string_values,
+                        weechat_string_dyn_concat (default_and_values,
                                                    weechat_color ("bar_fg"));
-                        weechat_string_dyn_concat (string_values, ", ");
+                        weechat_string_dyn_concat (default_and_values, ", ");
                     }
                     weechat_string_dyn_concat (
-                        string_values,
-                        weechat_color (
-                            weechat_config_string (
-                                fset_config_color_help_quotes)));
-                    weechat_string_dyn_concat (string_values, "\"");
-                    weechat_string_dyn_concat (
-                        string_values,
+                        default_and_values,
                         weechat_color (
                             weechat_config_string (
                                 fset_config_color_help_string_values)));
-                    weechat_string_dyn_concat (string_values,
+                    weechat_string_dyn_concat (default_and_values,
                                                ptr_string_values[i]);
-                    weechat_string_dyn_concat (
-                        string_values,
-                        weechat_color (
-                            weechat_config_string (
-                                fset_config_color_help_quotes)));
-                    weechat_string_dyn_concat (string_values, "\"");
                 }
             }
         }
     }
 
     snprintf (str_help, sizeof (str_help),
-              _("%s%s%s: %s %s[%sdefault: %s%s%s%s]%s"),
+              /* TRANSLATORS: "%s%s%s:" at beginning of string it the name of option */
+              _("%s%s%s: %s %s[%s%s]%s"),
               weechat_color (weechat_config_string (fset_config_color_help_name)),
               ptr_fset_option->name,
               weechat_color ("bar_fg"),
               (ptr_fset_option->description && ptr_fset_option->description[0]) ?
               _(ptr_fset_option->description) : _("(no description)"),
               weechat_color ("bar_delim"),
-              weechat_color ("bar_fg"),
-              weechat_color (weechat_config_string (fset_config_color_help_default_value)),
-              ptr_fset_option->default_value,
-              *string_values,
+              *default_and_values,
               weechat_color ("bar_delim"),
               weechat_color ("bar_fg"));
 
-    weechat_string_dyn_free (string_values, 1);
+    weechat_string_dyn_free (default_and_values, 1);
 
     return strdup (str_help);
 }
