@@ -106,6 +106,8 @@ buflist_command_init ()
            "(evaluation of option buflist.format.number)\n"
            "    - ${number}: indented number, for example \" 1\" if there "
            "are between 10 and 99 buffers\n"
+           "    - ${number_displayed}: \"1\" is the number is displayed, "
+           "otherwise \"0\"\n"
            "    - ${indent}: indentation for name (channel and private "
            "buffers are indented) (evaluation of "
            "option buflist.format.indent)\n"

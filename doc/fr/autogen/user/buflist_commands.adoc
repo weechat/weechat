@@ -31,6 +31,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
     - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
     - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
+    - ${number_displayed} : "1" si le numéro est affiché, sinon "0"
     - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
     - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)
     - ${color_nick_prefix} : la couleur du préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
