@@ -287,7 +287,7 @@ fset_command_init ()
            "             *       show all options (no filter)\n"
            "             f:xxx   show only configuration file \"xxx\"\n"
            "             s:xxx   show only section \"xxx\"\n"
-           "             d:      show only changed options\n"
+           "             d       show only changed options\n"
            "             d:xxx   show only changed options with \"xxx\" in name\n"
            "             d=xxx   show only changed options with \"xxx\" in value\n"
            "             d==xxx  show only changed options with exact value \"xxx\"\n"

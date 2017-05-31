@@ -243,12 +243,13 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         /* filter by modified values */
         if (!fset_option_value_different_from_default (fset_option))
             return 0;
-        if (fset_option_filter[2]
-            && !fset_option_string_match (fset_option->name, fset_option_filter + 2))
-        {
-            return 0;
-        }
-        return 1;
+        return fset_option_string_match (fset_option->name,
+                                         fset_option_filter + 2) ? 1 : 0;
+    }
+    else if (strcmp (fset_option_filter, "d") == 0)
+    {
+        /* filter by modified values */
+        return (fset_option_value_different_from_default (fset_option)) ? 1 : 0;
     }
     else if (strncmp (fset_option_filter, "==", 2) == 0)
     {
