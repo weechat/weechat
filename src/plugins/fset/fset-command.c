@@ -420,7 +420,35 @@ fset_command_init ()
            "             d=xxx   show only changed options with \"xxx\" in value\n"
            "             d==xxx  show only changed options with exact value \"xxx\"\n"
            "             =xxx    show only options with \"xxx\" in value\n"
-           "             ==xxx   show only options with exact value \"xxx\""),
+           "             ==xxx   show only options with exact value \"xxx\"\n"
+           "\n"
+           "The lines with options are displayed using string evaluation "
+           "(see /help eval for the format), with these options:\n"
+           "  - fset.format.option: format for an option which is not on "
+           "current line\n"
+           "  - fset.format.option_current: format for the current option\n"
+           "\n"
+           "The following variables can be used in these options:\n"
+           "  - option data, with color and padded by spaces on the right:\n"
+           "    - ${name}: option name\n"
+           "    - ${parent_name}: parent option name\n"
+           "    - ${type}: option type\n"
+           "    - ${default_value}: option default value\n"
+           "    - ${value}: option value\n"
+           "    - ${value_undef}: \"1\" if value is null, otherwise \"0\"\n"
+           "    - ${value2}: option value, with inherited value if null\n"
+           "    - ${parent_value}: parent option value\n"
+           "    - ${min}: min value\n"
+           "    - ${max}: max value\n"
+           "    - ${description}: option description\n"
+           "    - ${string_values}: string values allowed for set of an "
+           "integer option using strings\n"
+           "  - option data, with color but no spaces:\n"
+           "    - same names prefixed by underscore, for example: ${_name}, "
+           "${_type}, ...\n"
+           "  - option data, raw format (no colors/spaces):\n"
+           "    - same names prefixed by two underscores, for example: "
+           "${__name}, ${__type}, ..."),
         "-bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
@@ -432,7 +460,7 @@ fset_command_init ()
         " || -unset"
         " || -set"
         " || -append"
-        " || *|f:|s:|d:|d=|d==|=|==",
+        " || *|f:|s:|d|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);
 }
