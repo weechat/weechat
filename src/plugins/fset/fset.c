@@ -98,7 +98,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_command_init ();
 
-    if (weechat_config_boolean (fset_config_look_enabled))
+    if (weechat_config_boolean (fset_config_look_help_bar))
         fset_add_bar ();
 
     fset_bar_item_update ();

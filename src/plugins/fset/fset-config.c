@@ -34,7 +34,6 @@ struct t_config_file *fset_config_file = NULL;
 /* fset config, look section */
 
 struct t_config_option *fset_config_look_condition_catch_set;
-struct t_config_option *fset_config_look_enabled;
 struct t_config_option *fset_config_look_help_bar;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
@@ -201,14 +200,6 @@ fset_config_init ()
         NULL, 0, 0,
         "${count} >= 1",
         NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_look_enabled = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "enabled", "boolean",
-        N_("enable fset"),
-        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
