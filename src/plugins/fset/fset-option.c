@@ -207,6 +207,13 @@ int
 fset_option_match_filters (const char *config_name, const char *section_name,
                            struct t_fset_option *fset_option)
 {
+    if (!weechat_config_boolean (fset_config_look_show_plugin_description)
+        && (strcmp (config_name, "plugins") == 0)
+        && (strcmp (section_name, "desc") == 0))
+    {
+        return 0;
+    }
+
     if (!fset_option_filter || !fset_option_filter[0])
         return 1;
 

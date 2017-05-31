@@ -35,6 +35,7 @@ struct t_config_file *fset_config_file = NULL;
 
 struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_help_bar;
+struct t_config_option *fset_config_look_show_plugin_description;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
 
@@ -81,6 +82,23 @@ fset_config_change_help_bar_cb (const void *pointer, void *data,
     (void) option;
 
     weechat_command (NULL, "/window refresh");
+}
+
+/*
+ * Callback for changes on option "fset.look.show_plugin_description".
+ */
+
+void
+fset_config_change_show_plugin_description_cb (const void *pointer, void *data,
+                                               struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (fset_buffer)
+        fset_buffer_refresh (1);
 }
 
 /*
@@ -211,6 +229,14 @@ fset_config_init ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_help_bar_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_show_plugin_description = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "show_plugin_description", "boolean",
+        N_("show the plugin description options (plugins.desc.*)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_show_plugin_description_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_use_keys = weechat_config_new_option (
         fset_config_file, ptr_section,
