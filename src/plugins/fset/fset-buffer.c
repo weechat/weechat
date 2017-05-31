@@ -53,10 +53,10 @@ fset_buffer_set_title ()
     num_options = weechat_arraylist_size (fset_options);
 
     snprintf (str_title, sizeof (str_title),
-              "%s | %d/%d | "
-              "Key(input): alt+'-'(-)=subtract 1, alt+'+'(+)=add 1, "
-              "alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, alt+enter(s)=set, "
-              "alt+f,alt+a(a)=append",
+              _("%s | %d/%d | "
+                "Key(input): alt+'-'(-)=subtract 1, alt+'+'(+)=add 1, "
+                "alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, "
+                "alt+enter(s)=set, alt+f,alt+a(a)=append"),
               (fset_option_filter) ? fset_option_filter : "*",
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
               num_options);
