@@ -1201,23 +1201,11 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
             gui_buffer_visited_add (window->buffer);
             gui_buffer_visited_add (buffer);
         }
-        if (set_last_read)
+        if (set_last_read && window->buffer->num_displayed == 0)
         {
-            if (window->buffer->num_displayed == 0)
-            {
-                window->buffer->lines->last_read_line = window->buffer->lines->last_line;
-                window->buffer->lines->first_line_not_read = 0;
-            }
-            /*
-             * if there is no line displayed after last read line,
-             * then remove the read marker
-             */
-            if (buffer->lines->last_read_line
-                && !gui_line_get_next_displayed (buffer->lines->last_read_line))
-            {
-                buffer->lines->last_read_line = NULL;
-                buffer->lines->first_line_not_read = 0;
-            }
+            window->buffer->lines->last_read_line = window->buffer->lines->last_line;
+            window->buffer->lines->first_line_not_read =
+                (window->buffer->lines->last_read_line) ? 0 : 1;
         }
     }
 
@@ -1273,14 +1261,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
         ptr_bar_window->bar->bar_refresh_needed = 1;
-    }
-
-    if (CONFIG_BOOLEAN(config_look_read_marker_always_show)
-        && set_last_read
-        && !window->buffer->lines->last_read_line
-        && !window->buffer->lines->first_line_not_read)
-    {
-        window->buffer->lines->last_read_line = window->buffer->lines->last_line;
     }
 
     gui_input_move_to_buffer (old_buffer, window->buffer);
