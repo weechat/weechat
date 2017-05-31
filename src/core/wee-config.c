@@ -176,6 +176,7 @@ struct t_config_option *config_look_quote_nick_suffix;
 struct t_config_option *config_look_quote_time_format;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_read_marker_always_show;
+struct t_config_option *config_look_read_marker_auto_set;
 struct t_config_option *config_look_read_marker_string;
 struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_layout_on_exit;
@@ -3325,6 +3326,12 @@ config_weechat_init_options ()
         "read_marker_always_show", "boolean",
         N_("always show read marker, even if it is after last buffer line"),
         NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_read_marker_auto_set = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "read_marker_auto_set", "boolean",
+        N_("set read marker automatically"),
+        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_read_marker_string = config_file_new_option (
         weechat_config_file, ptr_section,

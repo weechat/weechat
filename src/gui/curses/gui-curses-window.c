@@ -1181,6 +1181,9 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     if (!gui_init_ok)
         return;
 
+    set_last_read = set_last_read &&
+        CONFIG_BOOLEAN(config_look_read_marker_auto_set);
+
     gui_buffer_add_value_num_displayed (window->buffer, -1);
 
     old_buffer = window->buffer;

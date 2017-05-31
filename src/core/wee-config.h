@@ -227,6 +227,7 @@ extern struct t_config_option *config_look_quote_nick_suffix;
 extern struct t_config_option *config_look_quote_time_format;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_read_marker_always_show;
+extern struct t_config_option *config_look_read_marker_auto_set;
 extern struct t_config_option *config_look_read_marker_string;
 extern struct t_config_option *config_look_save_config_on_exit;
 extern struct t_config_option *config_look_save_layout_on_exit;
