@@ -928,7 +928,7 @@ fset_option_config_cb (const void *pointer,
             }
         }
         fset_option_set_max_length_fields_all ();
-        fset_buffer_refresh (1);
+        fset_buffer_refresh (0);
     }
 
     return WEECHAT_RC_OK;
