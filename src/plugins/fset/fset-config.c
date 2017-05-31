@@ -33,6 +33,7 @@ struct t_config_file *fset_config_file = NULL;
 
 /* fset config, look section */
 
+struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_enabled;
 struct t_config_option *fset_config_look_help_bar;
 struct t_config_option *fset_config_look_use_keys;
@@ -187,6 +188,21 @@ fset_config_init ()
         return 0;
     }
 
+    fset_config_look_condition_catch_set = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "condition_catch_set", "string",
+        N_("condition to catch /set command and display results in the fset "
+           "buffer; following variables can be used: ${name} (name of option "
+           "given for the /set command), ${count} (number of options found "
+           "with the /set argument); an empty string disables the catch of "
+           "/set command; with value \"1\", the fset buffer is always used "
+           "with /set command"),
+        NULL, 0, 0,
+        "${count} >= 1",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_look_enabled = weechat_config_new_option (
         fset_config_file, ptr_section,
         "enabled", "boolean",

@@ -248,6 +248,134 @@ fset_command_fset (const void *pointer, void *data,
 }
 
 /*
+ * Hooks execution of command "/set".
+ */
+
+int
+fset_command_run_set_cb (const void *pointer, void *data,
+                         struct t_gui_buffer *buffer, const char *command)
+{
+    char **argv, *old_filter, *result, str_number[64];
+    const char *ptr_condition;
+    int rc, argc, old_buffer_selected_line, condition_ok;
+    struct t_arraylist *old_options;
+    struct t_hashtable *old_max_length_field, *eval_extra_vars, *eval_options;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) buffer;
+
+    if (strncmp (command, "/set", 4) != 0)
+        return WEECHAT_RC_OK;
+
+    ptr_condition = weechat_config_string (fset_config_look_condition_catch_set);
+    if (!ptr_condition || !ptr_condition[0])
+        return WEECHAT_RC_OK;
+
+    rc = WEECHAT_RC_OK;
+
+    argv = weechat_string_split (command, " ", 0, 0, &argc);
+
+    if (argc > 2)
+        goto end;
+
+    /*
+     * ignore "diff" and "env" arguments for /set
+     * (we must not catch that in fset!)
+     */
+    if ((argc > 1)
+        && ((weechat_strcasecmp (argv[1], "diff") == 0)
+            || (weechat_strcasecmp (argv[1], "env") == 0)))
+    {
+        goto end;
+    }
+
+    /* backup current options/max length field/selected line/filter */
+    old_options = fset_options;
+    fset_options = fset_option_get_arraylist_options ();
+    old_max_length_field = fset_option_max_length_field;
+    fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
+    old_filter = (fset_option_filter) ? strdup (fset_option_filter) : NULL;
+    fset_option_set_filter ((argc > 1) ? argv[1] : NULL);
+    old_buffer_selected_line = fset_buffer_selected_line;
+    fset_buffer_selected_line = 0;
+
+    fset_option_get_options ();
+
+    /* evaluate condition to catch /set command */
+    condition_ok = 0;
+    eval_extra_vars = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL,
+        NULL);
+    eval_options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (eval_extra_vars && eval_options)
+    {
+        snprintf (str_number, sizeof (str_number),
+                  "%d", weechat_arraylist_size (fset_options));
+        weechat_hashtable_set (eval_extra_vars, "count", str_number);
+        weechat_hashtable_set (eval_extra_vars, "name",
+                               (argc > 1) ? argv[1] : "");
+        weechat_hashtable_set (eval_options, "type", "condition");
+        result = weechat_string_eval_expression (ptr_condition,
+                                                 NULL,
+                                                 eval_extra_vars,
+                                                 eval_options);
+        condition_ok = (result && (strcmp (result, "1") == 0));
+        if (result)
+            free (result);
+    }
+    if (eval_extra_vars)
+        weechat_hashtable_free (eval_extra_vars);
+    if (eval_options)
+        weechat_hashtable_free (eval_options);
+
+    /* check condition to trigger the fset buffer */
+    if (condition_ok)
+    {
+        if (old_options)
+            weechat_arraylist_free (old_options);
+        if (old_max_length_field)
+            weechat_hashtable_free (old_max_length_field);
+        if (old_filter)
+            free (old_filter);
+
+        if (!fset_buffer)
+            fset_buffer_open ();
+
+        fset_buffer_set_localvar_filter ();
+        fset_buffer_refresh (1);
+        weechat_buffer_set (fset_buffer, "display", "1");
+
+        rc = WEECHAT_RC_OK_EAT;
+    }
+    else
+    {
+        weechat_arraylist_free (fset_options);
+        fset_options = old_options;
+        weechat_hashtable_free (fset_option_max_length_field);
+        fset_option_max_length_field = old_max_length_field;
+        fset_option_set_filter (old_filter);
+        if (old_filter)
+            free (old_filter);
+        fset_buffer_selected_line = old_buffer_selected_line;
+    }
+
+end:
+    if (argv)
+        weechat_string_free_split (argv);
+
+    return rc;
+}
+
+/*
  * Hooks fset commands.
  */
 
@@ -306,4 +434,5 @@ fset_command_init ()
         " || -append"
         " || *|f:|s:|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
+    weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);
 }

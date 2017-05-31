@@ -722,6 +722,30 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
     fset_option_free (fset_option);
 }
 
+/*
+ * Gets the arraylist to store options.
+ */
+
+struct t_arraylist *
+fset_option_get_arraylist_options ()
+{
+    return weechat_arraylist_new (100, 1, 0,
+                                  &fset_option_compare_options_cb, NULL,
+                                  &fset_option_free_cb, NULL);
+}
+
+/*
+ * Gets the hashtable to store max length of fields.
+ */
+
+struct t_hashtable *
+fset_option_get_hashtable_max_length_field ()
+{
+    return weechat_hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_INTEGER,
+                                  NULL, NULL);
+}
 
 /*
  * Gets all options to display in fset buffer.
@@ -773,6 +797,19 @@ fset_option_get_options ()
 }
 
 /*
+ * Sets the filter.
+ */
+
+void
+fset_option_set_filter (const char *filter)
+{
+    if (fset_option_filter)
+        free (fset_option_filter);
+    fset_option_filter = (filter && (strcmp (filter, "*") != 0)) ?
+        strdup (filter) : NULL;
+}
+
+/*
  * Filters options.
  */
 
@@ -781,10 +818,7 @@ fset_option_filter_options (const char *filter)
 {
     fset_buffer_selected_line = 0;
 
-    if (fset_option_filter)
-        free (fset_option_filter);
-    fset_option_filter = (filter && (strcmp (filter, "*") != 0)) ?
-        strdup (filter) : NULL;
+    fset_option_set_filter (filter);
 
     fset_buffer_set_localvar_filter ();
 
@@ -987,15 +1021,8 @@ fset_option_print_log ()
 int
 fset_option_init ()
 {
-    fset_option_max_length_field = weechat_hashtable_new (
-        32,
-        WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_INTEGER,
-        NULL, NULL);
-
-    fset_options = weechat_arraylist_new (100, 1, 0,
-                                          &fset_option_compare_options_cb, NULL,
-                                          &fset_option_free_cb, NULL);
+    fset_options = fset_option_get_arraylist_options ();
+    fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
 
     return 1;
 }
