@@ -45,21 +45,30 @@ void
 fset_buffer_set_title ()
 {
     int num_options;
-    char str_title[1024];
+    char str_marked[32], str_title[1024];
 
     if (!fset_buffer)
         return;
 
+    str_marked[0] = '\0';
+    if (fset_option_count_marked > 0)
+    {
+        snprintf (str_marked, sizeof (str_marked),
+                  " (*: %d)",
+                  fset_option_count_marked);
+    }
+
     num_options = weechat_arraylist_size (fset_options);
 
     snprintf (str_title, sizeof (str_title),
-              _("%s | %d/%d | "
+              _("%s | %d/%d%s | "
                 "Key(input): alt+'-'(-)=subtract 1, alt+'+'(+)=add 1, "
                 "alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, "
                 "alt+enter(s)=set, alt+f,alt+a(a)=append"),
               (fset_option_filter) ? fset_option_filter : "*",
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
-              num_options);
+              num_options,
+              str_marked);
 
     weechat_buffer_set (fset_buffer, "title", str_title);
 }
@@ -104,7 +113,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     const char *ptr_field, *ptr_parent_value;
     int selected_line;
     int default_value_undef, value_undef, value_changed;
-    int type, add_quotes, add_quotes_parent;
+    int type, marked, add_quotes, add_quotes_parent;
     struct t_config_option *ptr_option_color_value;
 
     selected_line = (y == fset_buffer_selected_line) ? 1 : 0;
@@ -435,6 +444,30 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "string_values", str_field);
 
+    /* marked */
+    marked = weechat_hdata_integer (fset_hdata_fset_option,
+                                    fset_option, "marked");
+    snprintf (str_field, sizeof (str_field),
+              "%s",
+              (marked) ?
+              weechat_config_string (fset_config_look_marked_string) :
+              weechat_config_string (fset_config_look_unmarked_string));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__marked", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              (marked) ?
+              weechat_color (weechat_config_string (fset_config_color_marked[selected_line])) :
+              weechat_color (weechat_config_string (fset_config_color_unmarked[selected_line])),
+              (marked) ?
+              weechat_config_string (fset_config_look_marked_string) :
+              weechat_config_string (fset_config_look_unmarked_string));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_marked", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "marked", 2);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "marked", str_field);
+
     /* set other variables depending on the value */
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "default_value_undef",
@@ -502,9 +535,12 @@ fset_buffer_set_current_line (int line)
         old_line = fset_buffer_selected_line;
         fset_buffer_selected_line = line;
 
-        fset_buffer_display_line (
-            old_line,
-            weechat_arraylist_get (fset_options, old_line));
+        if (old_line != fset_buffer_selected_line)
+        {
+            fset_buffer_display_line (
+                old_line,
+                weechat_arraylist_get (fset_options, old_line));
+        }
         fset_buffer_display_line (
             fset_buffer_selected_line,
             weechat_arraylist_get (fset_options, fset_buffer_selected_line));
@@ -642,6 +678,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
                            { "u", "unset"  },
                            { "s", "set"    },
                            { "a", "append" },
+                           { ",", "mark 1" },
                            { NULL, NULL    } };
     char str_command[64];
     int i;
@@ -699,6 +736,7 @@ fset_buffer_close_cb (const void *pointer, void *data,
     fset_buffer = NULL;
     fset_buffer_selected_line = 0;
     weechat_arraylist_clear (fset_options);
+    fset_option_count_marked = 0;
 
     return WEECHAT_RC_OK;
 }
@@ -729,15 +767,18 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta- ",       "toggle"   },
-                        { "meta--",       "add -1"   },
-                        { "meta-+",       "add 1"    },
-                        { "meta-fmeta-r", "reset"    },
-                        { "meta-fmeta-u", "unset"    },
-                        { "meta-ctrl-J",  "set"      },
-                        { "meta-ctrl-M",  "set"      },
-                        { "meta-fmeta-a", "append"   },
-                        { NULL,           NULL       } };
+    char *keys[][2] = { { "meta- ",       "toggle"  },
+                        { "meta--",       "add -1"  },
+                        { "meta-+",       "add 1"   },
+                        { "meta-fmeta-r", "reset"   },
+                        { "meta-fmeta-u", "unset"   },
+                        { "meta-ctrl-J",  "set"     },
+                        { "meta-ctrl-M",  "set"     },
+                        { "meta-fmeta-a", "append"  },
+                        { "meta-,",       "mark 1"  },
+                        { "meta2-a",      "mark -1" },
+                        { "meta2-b",      "mark 1"  },
+                        { NULL,           NULL      } };
     char str_key[64], str_command[64];
     int i;
 

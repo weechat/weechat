@@ -44,11 +44,13 @@ struct t_fset_option
     char *max;                           /* max value                       */
     char *description;                   /* option description              */
     char *string_values;                 /* string values for option        */
+    int marked;                          /* option marked for group oper.   */
     struct t_fset_option *prev_option;   /* link to previous option         */
     struct t_fset_option *next_option;   /* link to next option             */
 };
 
 extern struct t_arraylist *fset_options;
+extern int fset_option_count_marked;
 extern struct t_hashtable *fset_option_max_length_field;
 extern char *fset_option_filter;
 extern char *fset_option_type_string[];
@@ -59,12 +61,22 @@ extern int fset_option_valid (struct t_fset_option *option);
 extern struct t_fset_option *fset_option_search_by_name (const char *name,
                                                          int *line);
 extern int fset_option_value_is_changed (struct t_fset_option *option);
+extern void fset_option_set_max_length_fields_all ();
 extern void fset_option_free (struct t_fset_option *fset_option);
 extern struct t_arraylist *fset_option_get_arraylist_options ();
 extern struct t_hashtable *fset_option_get_hashtable_max_length_field ();
 extern void fset_option_get_options ();
 extern void fset_option_set_filter (const char *filter);
 extern void fset_option_filter_options (const char *filter);
+extern void fset_option_toggle_value (struct t_fset_option *fset_option,
+                                      struct t_config_option *option);
+extern void fset_option_add_value (struct t_fset_option *fset_option,
+                                   struct t_config_option *option,
+                                   int value);
+extern void fset_option_reset_value (struct t_fset_option *fset_option,
+                                     struct t_config_option *option);
+extern void fset_option_unset_value (struct t_fset_option *fset_option,
+                                     struct t_config_option *option);
 extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,

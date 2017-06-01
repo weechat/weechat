@@ -31,6 +31,7 @@
 
 
 struct t_arraylist *fset_options = NULL;
+int fset_option_count_marked = 0;
 struct t_hashtable *fset_option_max_length_field = NULL;
 char *fset_option_filter = NULL;
 
@@ -528,6 +529,13 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     /* string_values */
     fset_option_set_max_length_field (
         "string_values", weechat_strlen_screen (fset_option->string_values));
+
+    /* marked */
+    fset_option_set_max_length_field (
+        "marked", weechat_strlen_screen (
+            (fset_option->marked) ?
+            weechat_config_string (fset_config_look_marked_string) :
+            weechat_config_string (fset_config_look_unmarked_string)));
 }
 
 /*
@@ -603,6 +611,7 @@ fset_option_alloc (struct t_config_file *config_file,
         new_fset_option->max = NULL;
         new_fset_option->description = NULL;
         new_fset_option->string_values = NULL;
+        new_fset_option->marked = 0;
         fset_option_set_values (new_fset_option, option);
         if (!fset_option_match_filters (ptr_config_name, ptr_section_name,
                                         new_fset_option))
@@ -790,6 +799,7 @@ fset_option_get_options ()
     int num_options;
 
     weechat_arraylist_clear (fset_options);
+    fset_option_count_marked = 0;
     weechat_hashtable_remove_all (fset_option_max_length_field);
 
     ptr_config = weechat_hdata_get_list (fset_hdata_config_file,
@@ -854,6 +864,78 @@ fset_option_filter_options (const char *filter)
     fset_option_get_options ();
 
     fset_buffer_refresh (1);
+}
+
+/*
+ * Toggles a boolean option.
+ */
+
+void
+fset_option_toggle_value (struct t_fset_option *fset_option,
+                          struct t_config_option *option)
+{
+    if (!fset_option || !option
+        || (fset_option->type != FSET_OPTION_TYPE_BOOLEAN))
+        return;
+
+    weechat_config_option_set (option, "toggle", 1);
+}
+
+/*
+ * Adds a value to an integer/color option.
+ */
+
+void
+fset_option_add_value (struct t_fset_option *fset_option,
+                       struct t_config_option *option,
+                       int value)
+{
+    char str_value[128];
+
+    if (!fset_option || !option
+        || ((fset_option->type != FSET_OPTION_TYPE_INTEGER)
+            && (fset_option->type != FSET_OPTION_TYPE_COLOR)))
+        return;
+
+    snprintf (str_value, sizeof (str_value),
+              "%s%d",
+              (value > 0) ? "++" : "--",
+              (value > 0) ? value : value * -1);
+    weechat_config_option_set (option, str_value, 1);
+}
+
+/*
+ * Resets the value of an option.
+ */
+
+void
+fset_option_reset_value (struct t_fset_option *fset_option,
+                         struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) fset_option;
+
+    if (!option)
+        return;
+
+    weechat_config_option_reset (option, 1);
+}
+
+/*
+ * Unsets the value of an option.
+ */
+
+void
+fset_option_unset_value (struct t_fset_option *fset_option,
+                         struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) fset_option;
+
+    if (!option)
+        return;
+
+    weechat_config_option_unset (option);
 }
 
 /*
@@ -961,6 +1043,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_fset_option, max, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, description, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, string_values, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_fset_option, marked, INTEGER, 0, NULL, NULL);
     }
     return hdata;
 }
@@ -1012,6 +1095,8 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "string_values", fset_option->description))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "marked", fset_option->marked))
+        return 0;
 
     return 1;
 }
@@ -1044,6 +1129,7 @@ fset_option_print_log ()
         weechat_log_printf ("  max . . . . . . . . . : '%s'",  ptr_fset_option->max);
         weechat_log_printf ("  description . . . . . : '%s'",  ptr_fset_option->description);
         weechat_log_printf ("  string_values . . . . : '%s'",  ptr_fset_option->string_values);
+        weechat_log_printf ("  marked. . . . . . . . : %d",    ptr_fset_option->marked);
     }
 }
 
@@ -1059,6 +1145,7 @@ int
 fset_option_init ()
 {
     fset_options = fset_option_get_arraylist_options ();
+    fset_option_count_marked = 0;
     fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
 
     return 1;
@@ -1076,6 +1163,7 @@ fset_option_end ()
         weechat_arraylist_free (fset_options);
         fset_options = NULL;
     }
+    fset_option_count_marked = 0;
     if (fset_option_max_length_field)
     {
         weechat_hashtable_free (fset_option_max_length_field);

@@ -33,6 +33,46 @@
 
 
 /*
+ * Gets the currently selected fset_option pointer and the associated
+ * config_option pointer.
+ */
+
+void
+fset_command_get_option (struct t_fset_option **fset_option,
+                         struct t_config_option **config_option)
+{
+
+    *config_option = NULL;
+
+    *fset_option = weechat_arraylist_get (fset_options,
+                                          fset_buffer_selected_line);
+    if (*fset_option)
+        *config_option = weechat_config_get ((*fset_option)->name);
+}
+
+/*
+ * Gets an integer argument given to the /fset command.
+ */
+
+int
+fset_command_get_int_arg (int argc, char **argv, int arg_number,
+                          int default_value)
+{
+    long value;
+    char *error;
+
+    value = default_value;
+    if (argc > arg_number)
+    {
+        error = NULL;
+        value = strtol (argv[arg_number], &error, 10);
+        if (!error || error[0])
+            value = default_value;
+    }
+    return (int)value;
+}
+
+/*
  * Callback for command "/fset".
  */
 
@@ -41,9 +81,8 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line, append, use_mute, add_quotes, input_pos;
-    long value;
-    char *error, str_value[128], str_input[4096], str_pos[32];
+    int num_options, line, append, use_mute, add_quotes, input_pos, value, i;
+    char str_input[4096], str_pos[32];
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
 
@@ -84,14 +123,7 @@ fset_command_fset (const void *pointer, void *data,
     {
         if (fset_buffer)
         {
-            value = 1;
-            if (argc > 2)
-            {
-                error = NULL;
-                value = strtol (argv[2], &error, 10);
-                if (!error || error[0])
-                    value = 1;
-            }
+            value = fset_command_get_int_arg (argc, argv, 2, 1);
             num_options = weechat_arraylist_size (fset_options);
             if (num_options > 0)
             {
@@ -112,14 +144,7 @@ fset_command_fset (const void *pointer, void *data,
     {
         if (fset_buffer)
         {
-            value = 1;
-            if (argc > 2)
-            {
-                error = NULL;
-                value = strtol (argv[2], &error, 10);
-                if (!error || error[0])
-                    value = 1;
-            }
+            value = fset_command_get_int_arg (argc, argv, 2, 1);
             num_options = weechat_arraylist_size (fset_options);
             if (num_options > 0)
             {
@@ -142,11 +167,10 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (argc < 3)
                 WEECHAT_COMMAND_ERROR;
-            error = NULL;
-            value = strtol (argv[2], &error, 10);
-            if (!error || error[0])
+            value = fset_command_get_int_arg (argc, argv, 3, -1);
+            if (value < 0)
                 WEECHAT_COMMAND_ERROR;
-            fset_buffer_set_current_line ((int)value);
+            fset_buffer_set_current_line (value);
             fset_buffer_check_line_outside_window ();
         }
         return WEECHAT_RC_OK;
@@ -154,41 +178,57 @@ fset_command_fset (const void *pointer, void *data,
 
     if (argv[1][0] == '-')
     {
-        ptr_fset_option = weechat_arraylist_get (fset_options,
-                                                 fset_buffer_selected_line);
-        if (!ptr_fset_option)
-            WEECHAT_COMMAND_ERROR;
-        ptr_option = weechat_config_get (ptr_fset_option->name);
-        if (!ptr_option)
-            WEECHAT_COMMAND_ERROR;
-
         if (weechat_strcasecmp (argv[1], "-toggle") == 0)
         {
-            if (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN)
-                weechat_config_option_set (ptr_option, "toggle", 1);
+            if (fset_option_count_marked > 0)
+            {
+                num_options = weechat_arraylist_size (fset_options);
+                for (i = 0; i < num_options; i++)
+                {
+                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                    if (ptr_fset_option->marked)
+                    {
+                        ptr_option = weechat_config_get (ptr_fset_option->name);
+                        if (ptr_option)
+                            fset_option_toggle_value (ptr_fset_option, ptr_option);
+                    }
+                }
+            }
+            else
+            {
+                fset_command_get_option (&ptr_fset_option, &ptr_option);
+                if (ptr_fset_option && ptr_option)
+                    fset_option_toggle_value (ptr_fset_option, ptr_option);
+            }
             return WEECHAT_RC_OK;
         }
 
         if (weechat_strcasecmp (argv[1], "-add") == 0)
         {
-            if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
-                || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR))
+            value = fset_command_get_int_arg (argc, argv, 2, 0);
+            if (value == 0)
+                WEECHAT_COMMAND_ERROR;
+
+            if (fset_option_count_marked > 0)
             {
-                value = 1;
-                if (argc > 2)
+                num_options = weechat_arraylist_size (fset_options);
+                for (i = 0; i < num_options; i++)
                 {
-                    error = NULL;
-                    value = strtol (argv[2], &error, 10);
-                    if (!error || error[0])
-                        value = 1;
+                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                    if (ptr_fset_option->marked)
+                    {
+                        ptr_option = weechat_config_get (ptr_fset_option->name);
+                        if (ptr_option)
+                            fset_option_add_value (ptr_fset_option, ptr_option, value);
+                    }
                 }
-                if (value != 0)
+            }
+            else
+            {
+                fset_command_get_option (&ptr_fset_option, &ptr_option);
+                if (ptr_fset_option && ptr_option)
                 {
-                    snprintf (str_value, sizeof (str_value),
-                              "%s%ld",
-                              (value > 0) ? "++" : "--",
-                              (value > 0) ? value : value * -1);
-                    weechat_config_option_set (ptr_option, str_value, 1);
+                    fset_option_add_value (ptr_fset_option, ptr_option, value);
                 }
             }
             return WEECHAT_RC_OK;
@@ -196,40 +236,108 @@ fset_command_fset (const void *pointer, void *data,
 
         if (weechat_strcasecmp (argv[1], "-reset") == 0)
         {
-            weechat_config_option_reset (ptr_option, 1);
+            if (fset_option_count_marked > 0)
+            {
+                num_options = weechat_arraylist_size (fset_options);
+                for (i = 0; i < num_options; i++)
+                {
+                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                    if (ptr_fset_option->marked)
+                    {
+                        ptr_option = weechat_config_get (ptr_fset_option->name);
+                        if (ptr_option)
+                            fset_option_reset_value (ptr_fset_option, ptr_option);
+                    }
+                }
+            }
+            else
+            {
+                fset_command_get_option (&ptr_fset_option, &ptr_option);
+                if (ptr_fset_option && ptr_option)
+                {
+                    fset_option_reset_value (ptr_fset_option, ptr_option);
+                }
+            }
             return WEECHAT_RC_OK;
         }
 
         if (weechat_strcasecmp (argv[1], "-unset") == 0)
         {
-            weechat_config_option_unset (ptr_option);
+            if (fset_option_count_marked > 0)
+            {
+                num_options = weechat_arraylist_size (fset_options);
+                for (i = 0; i < num_options; i++)
+                {
+                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                    if (ptr_fset_option->marked)
+                    {
+                        ptr_option = weechat_config_get (ptr_fset_option->name);
+                        if (ptr_option)
+                            fset_option_unset_value (ptr_fset_option, ptr_option);
+                    }
+                }
+            }
+            else
+            {
+                fset_command_get_option (&ptr_fset_option, &ptr_option);
+                if (ptr_fset_option && ptr_option)
+                {
+                    fset_option_unset_value (ptr_fset_option, ptr_option);
+                }
+            }
             return WEECHAT_RC_OK;
         }
 
         if ((weechat_strcasecmp (argv[1], "-set") == 0)
             || (weechat_strcasecmp (argv[1], "-append") == 0))
         {
-            append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
-            use_mute = weechat_config_boolean (fset_config_look_use_mute);
-            add_quotes = (ptr_fset_option->value
-                          && (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
-            snprintf (str_input, sizeof (str_input),
-                      "%s/set %s %s%s%s",
-                      (use_mute) ? "/mute " : "",
-                      ptr_fset_option->name,
-                      (add_quotes) ? "\"" : "",
-                      (ptr_fset_option->value) ? ptr_fset_option->value : FSET_OPTION_VALUE_NULL,
-                      (add_quotes) ? "\"" : "");
-            weechat_buffer_set (buffer, "input", str_input);
-            input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
-                5 +  /* "/set " */
-                weechat_utf8_strlen (ptr_fset_option->name) + 1 +
-                ((add_quotes) ? 1 : 0) +
-                ((append) ? weechat_utf8_strlen (
-                    (ptr_fset_option->value) ?
-                    ptr_fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
-            snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
-            weechat_buffer_set (buffer, "input_pos", str_pos);
+            fset_command_get_option (&ptr_fset_option, &ptr_option);
+            if (ptr_fset_option && ptr_option)
+            {
+                append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
+                use_mute = weechat_config_boolean (fset_config_look_use_mute);
+                add_quotes = (ptr_fset_option->value
+                              && (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
+                snprintf (str_input, sizeof (str_input),
+                          "%s/set %s %s%s%s",
+                          (use_mute) ? "/mute " : "",
+                          ptr_fset_option->name,
+                          (add_quotes) ? "\"" : "",
+                          (ptr_fset_option->value) ? ptr_fset_option->value : FSET_OPTION_VALUE_NULL,
+                          (add_quotes) ? "\"" : "");
+                weechat_buffer_set (buffer, "input", str_input);
+                input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
+                    5 +  /* "/set " */
+                    weechat_utf8_strlen (ptr_fset_option->name) + 1 +
+                    ((add_quotes) ? 1 : 0) +
+                    ((append) ? weechat_utf8_strlen (
+                        (ptr_fset_option->value) ?
+                        ptr_fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
+                snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
+                weechat_buffer_set (buffer, "input_pos", str_pos);
+            }
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "-mark") == 0)
+        {
+            fset_command_get_option (&ptr_fset_option, &ptr_option);
+            if (ptr_fset_option && ptr_option)
+            {
+                value = fset_command_get_int_arg (argc, argv, 2, 1);
+                ptr_fset_option->marked ^= 1;
+                fset_option_count_marked += (ptr_fset_option->marked) ? 1 : -1;
+                num_options = weechat_arraylist_size (fset_options);
+                line = fset_buffer_selected_line + value;
+                if (line < 0)
+                    line = 0;
+                else if (line >= num_options)
+                    line = num_options - 1;
+                fset_buffer_set_current_line (line);
+                fset_buffer_check_line_outside_window ();
+                fset_option_set_max_length_fields_all ();
+                fset_buffer_refresh (0);
+            }
             return WEECHAT_RC_OK;
         }
 
@@ -257,7 +365,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
 {
     char **argv, *old_filter, *result, str_number[64];
     const char *ptr_condition;
-    int rc, argc, old_buffer_selected_line, condition_ok;
+    int rc, argc, old_count_marked, old_buffer_selected_line, condition_ok;
     struct t_arraylist *old_options;
     struct t_hashtable *old_max_length_field, *eval_extra_vars, *eval_options;
 
@@ -294,6 +402,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     /* backup current options/max length field/selected line/filter */
     old_options = fset_options;
     fset_options = fset_option_get_arraylist_options ();
+    old_count_marked = fset_option_count_marked;
     old_max_length_field = fset_option_max_length_field;
     fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
     old_filter = (fset_option_filter) ? strdup (fset_option_filter) : NULL;
@@ -360,6 +469,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     {
         weechat_arraylist_free (fset_options);
         fset_options = old_options;
+        fset_option_count_marked = old_count_marked;
         weechat_hashtable_free (fset_option_max_length_field);
         fset_option_max_length_field = old_max_length_field;
         fset_option_set_filter (old_filter);
@@ -395,6 +505,7 @@ fset_command_init ()
            " || -unset"
            " || -set"
            " || -append"
+           " || -mark [<number>]"
            " || filter"),
         N_("    -bar: add the fset bar\n"
            "-refresh: force the refresh of the \"fset\" bar item\n"
@@ -410,7 +521,10 @@ fset_command_init ()
            "option (move the cursor at the beginning of value)\n"
            " -append: add the /set command to append something in the value "
            "of option (move the cursor at the end of value)\n"
-           "  filter: set a new filter to see only matching options; allowed "
+           "   -mark: toggle mark on the option and move \"number\" lines "
+           "(up/down, default is 1: one line down)\n"
+           "  filter: set a new filter to see only matching options (this "
+           "filter can be used as input in fset buffer as well); allowed "
            "formats are:\n"
            "             *       show all options (no filter)\n"
            "             f:xxx   show only configuration file \"xxx\"\n"
@@ -452,7 +566,19 @@ fset_command_init ()
            "${_type}, ...\n"
            "  - option data, raw format (no colors/spaces):\n"
            "    - same names prefixed by two underscores, for example: "
-           "${__name}, ${__type}, ..."),
+           "${__name}, ${__type}, ...\n"
+           "\n"
+           "Keys on fset buffer:\n"
+           "  alt+space     toggle boolean value\n"
+           "  alt+'-'       subtract 1 from value (integer/color)\n"
+           "  alt+'+'       add 1 to value (integer/color)\n"
+           "  alt+f, alt+r  reset value\n"
+           "  alt+f, alt+u  unset value\n"
+           "  alt+enter     set value\n"
+           "  alt+f, alt+a  append to value\n"
+           "  alt+','       mark/unmark option and move one line down\n"
+           "  shift+down    mark/unmark option and move one line down\n"
+           "  shift+up      mark/unmark option and move one line up"),
         "-bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
@@ -464,6 +590,7 @@ fset_command_init ()
         " || -unset"
         " || -set"
         " || -append"
+        " || -mark"
         " || *|f:|s:|d|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);

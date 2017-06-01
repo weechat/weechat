@@ -26,7 +26,9 @@ extern struct t_config_file *fset_config_file;
 
 extern struct t_config_option *fset_config_look_condition_catch_set;
 extern struct t_config_option *fset_config_look_help_bar;
+extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_show_plugin_description;
+extern struct t_config_option *fset_config_look_unmarked_string;
 extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_look_use_mute;
 
@@ -40,6 +42,7 @@ extern struct t_config_option *fset_config_color_help_description;
 extern struct t_config_option *fset_config_color_help_name;
 extern struct t_config_option *fset_config_color_help_quotes;
 extern struct t_config_option *fset_config_color_help_string_values;
+extern struct t_config_option *fset_config_color_marked[2];
 extern struct t_config_option *fset_config_color_max[2];
 extern struct t_config_option *fset_config_color_min[2];
 extern struct t_config_option *fset_config_color_name[2];
@@ -48,6 +51,7 @@ extern struct t_config_option *fset_config_color_parent_value[2];
 extern struct t_config_option *fset_config_color_quotes[2];
 extern struct t_config_option *fset_config_color_string_values[2];
 extern struct t_config_option *fset_config_color_type[2];
+extern struct t_config_option *fset_config_color_unmarked[2];
 extern struct t_config_option *fset_config_color_value[2];
 extern struct t_config_option *fset_config_color_value_changed[2];
 extern struct t_config_option *fset_config_color_value_undef[2];

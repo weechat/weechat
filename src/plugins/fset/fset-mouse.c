@@ -92,6 +92,7 @@ fset_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     weechat_hashtable_set (info, "fset_option_max", ptr_fset_option->max);
     weechat_hashtable_set (info, "fset_option_description", ptr_fset_option->description);
     weechat_hashtable_set (info, "fset_option_string_values", ptr_fset_option->string_values);
+    weechat_hashtable_set (info, "fset_option_marked", (ptr_fset_option->marked) ? "1" : "0");
 
     return info;
 }

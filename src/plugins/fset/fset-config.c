@@ -35,7 +35,9 @@ struct t_config_file *fset_config_file = NULL;
 
 struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_help_bar;
+struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_show_plugin_description;
+struct t_config_option *fset_config_look_unmarked_string;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
 
@@ -53,6 +55,7 @@ struct t_config_option *fset_config_color_help_description;
 struct t_config_option *fset_config_color_help_name;
 struct t_config_option *fset_config_color_help_quotes;
 struct t_config_option *fset_config_color_help_string_values;
+struct t_config_option *fset_config_color_marked[2];
 struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
@@ -61,6 +64,7 @@ struct t_config_option *fset_config_color_parent_value[2];
 struct t_config_option *fset_config_color_quotes[2];
 struct t_config_option *fset_config_color_string_values[2];
 struct t_config_option *fset_config_color_type[2];
+struct t_config_option *fset_config_color_unmarked[2];
 struct t_config_option *fset_config_color_value[2];
 struct t_config_option *fset_config_color_value_changed[2];
 struct t_config_option *fset_config_color_value_undef[2];
@@ -215,9 +219,7 @@ fset_config_init ()
            "with the /set argument); an empty string disables the catch of "
            "/set command; with value \"1\", the fset buffer is always used "
            "with /set command"),
-        NULL, 0, 0,
-        "${count} >= 1",
-        NULL, 0,
+        NULL, 0, 0, "${count} >= 1", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
@@ -230,6 +232,15 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_help_bar_cb, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_look_marked_string = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "marked_string", "string",
+        N_("string displayed when an option is marked (to do an action on "
+           "multiple options)"),
+        NULL, 0, 0, "*", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_look_show_plugin_description = weechat_config_new_option (
         fset_config_file, ptr_section,
         "show_plugin_description", "boolean",
@@ -237,6 +248,14 @@ fset_config_init ()
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_show_plugin_description_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_unmarked_string = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "unmarked_string", "string",
+        N_("string displayed when an option is not marked"),
+        NULL, 0, 0, " ", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_use_keys = weechat_config_new_option (
         fset_config_file, ptr_section,
@@ -276,7 +295,7 @@ fset_config_init ()
         N_("format of each line with an option "
            "(note: content is evaluated, see /help fset)"),
         NULL, 0, 0,
-        " ${name} ${type} ${value2}",
+        "${marked} ${name} ${type} ${value2}",
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format, NULL, NULL,
@@ -374,6 +393,22 @@ fset_config_init ()
         "help_string_values", "color",
         N_("color for string values"),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_marked[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "marked", "color",
+        N_("color for marked string"),
+        NULL, 0, 0, "brown", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_marked[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "marked_selected", "color",
+        N_("color for marked string on the selected line"),
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
@@ -502,6 +537,22 @@ fset_config_init ()
         "type_selected", "color",
         N_("color for type on the selected line"),
         NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_unmarked[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "unmarked", "color",
+        N_("color for unmarked string"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_unmarked[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "unmarked_selected", "color",
+        N_("color for unmarked string on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color, NULL, NULL,
         NULL, NULL, NULL);
