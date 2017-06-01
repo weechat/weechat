@@ -690,6 +690,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
                            { ",", "mark 1" },
                            { NULL, NULL    } };
     char str_command[64];
+    const char *ptr_input;
     int i;
 
     /* make C compiler happy */
@@ -724,7 +725,13 @@ fset_buffer_input_cb (const void *pointer, void *data,
     }
 
     /* filter options with given text */
-    fset_option_filter_options (input_data);
+    ptr_input = input_data;
+    while (ptr_input[0] == ' ')
+    {
+        ptr_input++;
+    }
+    if (ptr_input[0])
+        fset_option_filter_options (ptr_input);
 
     return WEECHAT_RC_OK;
 }

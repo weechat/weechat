@@ -545,7 +545,11 @@ fset_command_init ()
            "  shift+down       mark/unmark option and move one line down\n"
            "  shift+up         mark/unmark option and move one line up\n"
            "                $  refresh options, unmark all options\n"
-           "                q  close fset buffer"),
+           "                q  close fset buffer\n"
+           "\n"
+           "Note: spaces at beginning of input are ignored, so for example "
+           "\"q\" closes the fset buffer while \" q\" searches all options "
+           "with \"q\" inside name."),
         "-bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
