@@ -61,6 +61,7 @@ Alphabetically:
 * Mateusz Poszwa
 * Matt Robinson
 * Max Anton Teufel
+* Miroslav Koskar
 * Murilo Opsfelder Araujo
 * Nick (SolitaryCipher)
 * Nicolas Cavigneaux
