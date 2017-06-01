@@ -120,7 +120,6 @@ struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
-struct t_config_option *config_look_hotlist_add_buffer_if_away;
 struct t_config_option *config_look_hotlist_add_conditions;
 struct t_config_option *config_look_hotlist_buffer_separator;
 struct t_config_option *config_look_hotlist_count_max;
