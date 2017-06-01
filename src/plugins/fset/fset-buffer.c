@@ -698,7 +698,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
     if (strcmp (input_data, "$") == 0)
     {
         fset_option_get_options ();
-        fset_buffer_refresh (1);
+        fset_buffer_refresh (0);
         return WEECHAT_RC_OK;
     }
 
