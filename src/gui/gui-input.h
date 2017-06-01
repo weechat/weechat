@@ -82,6 +82,7 @@ extern void gui_input_grab_key (struct t_gui_buffer *buffer, int command,
 extern void gui_input_grab_mouse (struct t_gui_buffer *buffer, int area);
 extern void gui_input_set_unread ();
 extern void gui_input_set_unread_current (struct t_gui_buffer *buffer);
+extern void gui_input_set_unread_current_here (struct t_gui_buffer *buffer);
 extern void gui_input_switch_active_buffer (struct t_gui_buffer *buffer);
 extern void gui_input_switch_active_buffer_previous (struct t_gui_buffer *buffer);
 extern void gui_input_zoom_merged_buffer (struct t_gui_buffer *buffer);

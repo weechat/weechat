@@ -474,6 +474,7 @@ list of actions:
   grab_mouse_area: grab mouse event code with area
   set_unread: set unread marker for all buffers
   set_unread_current_buffer: set unread marker for current buffer
+  set_unread_current_buffer_here: set unread marker at current position
   switch_active_buffer: switch to next merged buffer
   switch_active_buffer_previous: switch to previous merged buffer
   zoom_merged_buffer: zoom on merged buffer

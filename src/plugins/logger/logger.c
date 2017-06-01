@@ -1028,7 +1028,7 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   weechat_color (weechat_config_string (logger_config_color_backlog_end)),
                                   num_lines);
-        weechat_buffer_set (buffer, "unread", "");
+        weechat_buffer_set (buffer, "unread", "-1");
     }
     weechat_buffer_set (buffer, "print_hooks_enabled", "1");
 }

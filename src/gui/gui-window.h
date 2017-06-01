@@ -58,6 +58,7 @@ struct t_gui_window
 
     /* refresh */
     int refresh_needed;                /* 1 if refresh needed for window    */
+    int refresh_due_unread;            /* 1 if refresh due unread marker    */
 
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
@@ -89,7 +90,8 @@ struct t_gui_window_scroll
 {
     struct t_gui_buffer *buffer;       /* buffer scrolled in window         */
     int first_line_displayed;          /* = 1 if first line is displayed    */
-    struct t_gui_line *start_line;     /* pointer to line if scrolling      */
+    struct t_gui_line *start_line;     /* pointer to start line if scrolling*/
+    struct t_gui_line *end_line;       /* pointer to end line if scrolling  */
     int start_line_pos;                /* position in first line displayed  */
     int scrolling;                     /* = 1 if "MORE" should be displayed */
     int start_col;                     /* first column displayed            */

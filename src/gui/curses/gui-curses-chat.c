@@ -1731,6 +1731,23 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
     auto_search_first_line = 1;
     ptr_line = NULL;
     line_pos = 0;
+
+    if (window->refresh_due_unread)
+    {
+        window->refresh_due_unread = 0;
+        ptr_line = window->buffer->lines->last_read_line;
+        if (ptr_line && !ptr_line->data->displayed)
+            ptr_line = gui_line_get_prev_displayed (ptr_line);
+        if (ptr_line)
+        {
+            line_pos = gui_chat_display_line (window, ptr_line, 0, 1) - 1;
+            gui_chat_calculate_line_diff (window, &ptr_line, &line_pos,
+                                        (-1) * (window->win_chat_height - 1));
+            window->scroll->start_line = ptr_line;
+            window->scroll->start_line_pos = line_pos;
+        }
+    }
+
     if (window->scroll->start_line)
     {
         auto_search_first_line = 0;
@@ -1817,6 +1834,20 @@ gui_chat_draw_formatted_buffer (struct t_gui_window *window)
     {
         window->scroll->start_line = NULL;
         window->scroll->start_line_pos = 0;
+    }
+
+    window->scroll->end_line = NULL;
+    if (window->scroll->scrolling)
+    {
+        if (ptr_line)
+        {
+            ptr_line2 = gui_line_get_prev_displayed (ptr_line);
+            if (count < gui_chat_display_line (window, ptr_line2, 0, 1))
+                ptr_line2 = gui_line_get_prev_displayed (ptr_line2);
+        }
+        else
+            ptr_line2 = gui_line_get_prev_displayed(gui_line_get_last_displayed (window->buffer));
+        window->scroll->end_line = ptr_line2;
     }
 
     window->scroll->lines_after = 0;
