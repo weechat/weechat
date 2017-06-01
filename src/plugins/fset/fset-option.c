@@ -942,6 +942,96 @@ fset_option_unset_value (struct t_fset_option *fset_option,
 }
 
 /*
+ * Sets the value of an option.
+ */
+
+void
+fset_option_set (struct t_fset_option *fset_option,
+                 struct t_config_option *option,
+                 struct t_gui_buffer *buffer,
+                 int append)
+{
+    int use_mute, add_quotes, input_pos;
+    char str_input[4096], str_pos[32];
+
+    /* make C compiler happy */
+    (void) option;
+
+    if (!fset_option)
+        return;
+
+    use_mute = weechat_config_boolean (fset_config_look_use_mute);
+    add_quotes = (fset_option->value
+                  && (fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
+    snprintf (str_input, sizeof (str_input),
+              "%s/set %s %s%s%s",
+              (use_mute) ? "/mute " : "",
+              fset_option->name,
+              (add_quotes) ? "\"" : "",
+              (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+              (add_quotes) ? "\"" : "");
+    weechat_buffer_set (buffer, "input", str_input);
+    input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
+        5 +  /* "/set " */
+        weechat_utf8_strlen (fset_option->name) + 1 +
+        ((add_quotes) ? 1 : 0) +
+        ((append) ? weechat_utf8_strlen (
+            (fset_option->value) ?
+            fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
+    snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
+    weechat_buffer_set (buffer, "input_pos", str_pos);
+}
+
+/*
+ * Marks/unmarks an option.
+ */
+
+void
+fset_option_toggle_mark (struct t_fset_option *fset_option,
+                         struct t_config_option *option,
+                         int value)
+{
+    int num_options, line;
+
+    /* make C compiler happy */
+    (void) option;
+
+    if (!fset_option)
+        return;
+
+    fset_option->marked ^= 1;
+    fset_option_count_marked += (fset_option->marked) ? 1 : -1;
+    num_options = weechat_arraylist_size (fset_options);
+    line = fset_buffer_selected_line + value;
+    if (line < 0)
+        line = 0;
+    else if (line >= num_options)
+        line = num_options - 1;
+    fset_buffer_set_current_line (line);
+    fset_buffer_check_line_outside_window ();
+}
+
+/*
+ * Unmarks all options.
+ */
+
+void
+fset_option_unmark_all ()
+{
+    int num_options, i;
+    struct t_fset_option *ptr_fset_option;
+
+    num_options = weechat_arraylist_size (fset_options);
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        ptr_fset_option->marked = 0;
+    }
+    fset_option_count_marked = 0;
+    fset_buffer_refresh (0);
+}
+
+/*
  * Callback for config option changed.
  */
 

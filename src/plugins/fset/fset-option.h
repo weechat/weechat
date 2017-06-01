@@ -77,6 +77,14 @@ extern void fset_option_reset_value (struct t_fset_option *fset_option,
                                      struct t_config_option *option);
 extern void fset_option_unset_value (struct t_fset_option *fset_option,
                                      struct t_config_option *option);
+extern void fset_option_set (struct t_fset_option *fset_option,
+                             struct t_config_option *option,
+                             struct t_gui_buffer *buffer,
+                             int append);
+extern void fset_option_toggle_mark (struct t_fset_option *fset_option,
+                                     struct t_config_option *option,
+                                     int value);
+extern void fset_option_unmark_all ();
 extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,
