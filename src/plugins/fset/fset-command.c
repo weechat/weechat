@@ -167,7 +167,10 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (argc < 3)
                 WEECHAT_COMMAND_ERROR;
-            value = fset_command_get_int_arg (argc, argv, 3, -1);
+            if (weechat_strcasecmp (argv[2], "end") == 0)
+                value = weechat_arraylist_size (fset_options) - 1;
+            else
+                value = fset_command_get_int_arg (argc, argv, 2, -1);
             if (value < 0)
                 WEECHAT_COMMAND_ERROR;
             fset_buffer_set_current_line (value);
@@ -498,7 +501,7 @@ fset_command_init ()
         N_("-bar"
            " || -refresh"
            " || -up|-down [<number>]"
-           " || -go <line>"
+           " || -go <line>|end"
            " || -toggle"
            " || -add [<value>]"
            " || -reset"
@@ -511,7 +514,8 @@ fset_command_init ()
            "-refresh: force the refresh of the \"fset\" bar item\n"
            "     -up: move the selected line up by \"number\" lines\n"
            "   -down: move the selected line down by \"number\" lines\n"
-           "     -go: select a line by number\n"
+           "     -go: select a line by number, first line number is 0 "
+           "(\"end\" to select the last line)\n"
            " -toggle: toggle the boolean value\n"
            "    -add: add \"value\", which can be a negative number "
            "(only for integers and colors)\n"

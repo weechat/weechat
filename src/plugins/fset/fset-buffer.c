@@ -767,7 +767,9 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta- ",       "toggle"  },
+    char *keys[][2] = { { "meta-meta2-1~", "go 0"   },
+                        { "meta-meta2-4~", "go end" },
+                        { "meta- ",       "toggle"  },
                         { "meta--",       "add -1"  },
                         { "meta-+",       "add 1"   },
                         { "meta-fmeta-r", "reset"   },
