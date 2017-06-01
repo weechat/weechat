@@ -532,9 +532,12 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
 
     /* marked */
     fset_option_set_max_length_field (
-        "marked", weechat_strlen_screen (
-            (fset_option->marked) ?
-            weechat_config_string (fset_config_look_marked_string) :
+        "marked",
+        weechat_strlen_screen (
+            weechat_config_string (fset_config_look_marked_string)));
+    fset_option_set_max_length_field (
+        "marked",
+        weechat_strlen_screen (
             weechat_config_string (fset_config_look_unmarked_string)));
 }
 

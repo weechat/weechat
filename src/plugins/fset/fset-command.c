@@ -338,8 +338,6 @@ fset_command_fset (const void *pointer, void *data,
                     line = num_options - 1;
                 fset_buffer_set_current_line (line);
                 fset_buffer_check_line_outside_window ();
-                fset_option_set_max_length_fields_all ();
-                fset_buffer_refresh (0);
             }
             return WEECHAT_RC_OK;
         }
