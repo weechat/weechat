@@ -31,6 +31,7 @@ Improvements::
 
 Bug fixes::
 
+  * buflist: fix long mouse gestures
   * buflist: fix slow switch of buffer when there are a lot of buffers opened (issue #998)
   * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)
   * buflist: fix crash on drag & drop of buffers

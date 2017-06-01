@@ -186,8 +186,8 @@ buflist_mouse_move_buffer (const char *key, struct t_gui_buffer *buffer,
          * then set it according to mouse gesture
          */
         number2 = 1;
-        if (weechat_string_match (key, "*gesture-right", 1)
-            || weechat_string_match (key, "*gesture-down", 1))
+        if (weechat_string_match (key, "*gesture-right*", 1)
+            || weechat_string_match (key, "*gesture-down*", 1))
         {
             number2 = 999999;
             ptr_last_gui_buffer = weechat_hdata_get_list (buflist_hdata_buffer,
