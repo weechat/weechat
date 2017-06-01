@@ -305,7 +305,7 @@ fset_config_init ()
         N_("format of each line with an option "
            "(note: content is evaluated, see /help fset)"),
         NULL, 0, 0,
-        "${marked} ${name} ${type} ${value2}",
+        "${marked} ${name}  ${type}  ${value2}",
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format, NULL, NULL,
