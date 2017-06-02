@@ -34,12 +34,12 @@ struct t_config_file *fset_config_file = NULL;
 
 /* fset config, look section */
 
+struct t_config_option *fset_config_look_auto_unmark;
 struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_help_bar;
 struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_show_plugin_description;
 struct t_config_option *fset_config_look_sort;
-struct t_config_option *fset_config_look_unmark_after_action;
 struct t_config_option *fset_config_look_unmarked_string;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
@@ -243,6 +243,15 @@ fset_config_init ()
         return 0;
     }
 
+    fset_config_look_auto_unmark = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "auto_unmark", "boolean",
+        N_("automatically unmark all options after an action on marked "
+           "options or after a refresh"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_look_condition_catch_set = weechat_config_new_option (
         fset_config_file, ptr_section,
         "condition_catch_set", "string",
@@ -293,14 +302,6 @@ fset_config_init ()
         NULL, 0, 0, "~name", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_sort_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_look_unmark_after_action = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "unmark_after_action", "boolean",
-        N_("unmark all options after an action on marked options"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_unmarked_string = weechat_config_new_option (
         fset_config_file, ptr_section,

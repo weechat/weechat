@@ -116,6 +116,9 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     int type, marked, add_quotes, add_quotes_parent;
     struct t_config_option *ptr_option_color_value, *ptr_option_color_quotes;
 
+    if (!fset_option)
+        return;
+
     selected_line = (y == fset_buffer_selected_line) ? 1 : 0;
 
     default_value_undef = (fset_option->default_value == NULL) ? 1 : 0;
@@ -523,7 +526,8 @@ fset_buffer_refresh (int clear)
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
-        fset_buffer_display_line (i, ptr_fset_option);
+        if (ptr_fset_option)
+            fset_buffer_display_line (i, ptr_fset_option);
     }
 
     fset_buffer_set_title ();
@@ -707,6 +711,15 @@ fset_buffer_input_cb (const void *pointer, void *data,
     /* refresh buffer */
     if (strcmp (input_data, "$") == 0)
     {
+        fset_option_get_options ();
+        fset_buffer_refresh (0);
+        return WEECHAT_RC_OK;
+    }
+
+    /* unmark all options and refresh buffer */
+    if (strcmp (input_data, "$$") == 0)
+    {
+        fset_option_unmark_all ();
         fset_option_get_options ();
         fset_buffer_refresh (0);
         return WEECHAT_RC_OK;

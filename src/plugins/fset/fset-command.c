@@ -184,19 +184,19 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
+                fset_option_config_changed_timer = 1;
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
                     ptr_fset_option = weechat_arraylist_get (fset_options, i);
-                    if (ptr_fset_option->marked)
+                    if (ptr_fset_option && ptr_fset_option->marked)
                     {
                         ptr_option = weechat_config_get (ptr_fset_option->name);
                         if (ptr_option)
                             fset_option_toggle_value (ptr_fset_option, ptr_option);
                     }
                 }
-                if (weechat_config_boolean (fset_config_look_unmark_after_action))
-                    fset_option_unmark_all ();
+                fset_option_config_changed_timer = 0;
             }
             else
             {
@@ -214,19 +214,19 @@ fset_command_fset (const void *pointer, void *data,
 
             if (fset_option_count_marked > 0)
             {
+                fset_option_config_changed_timer = 1;
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
                     ptr_fset_option = weechat_arraylist_get (fset_options, i);
-                    if (ptr_fset_option->marked)
+                    if (ptr_fset_option && ptr_fset_option->marked)
                     {
                         ptr_option = weechat_config_get (ptr_fset_option->name);
                         if (ptr_option)
                             fset_option_add_value (ptr_fset_option, ptr_option, value);
                     }
                 }
-                if (weechat_config_boolean (fset_config_look_unmark_after_action))
-                    fset_option_unmark_all ();
+                fset_option_config_changed_timer = 0;
             }
             else
             {
@@ -240,19 +240,19 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
+                fset_option_config_changed_timer = 1;
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
                     ptr_fset_option = weechat_arraylist_get (fset_options, i);
-                    if (ptr_fset_option->marked)
+                    if (ptr_fset_option && ptr_fset_option->marked)
                     {
                         ptr_option = weechat_config_get (ptr_fset_option->name);
                         if (ptr_option)
                             fset_option_reset_value (ptr_fset_option, ptr_option);
                     }
                 }
-                if (weechat_config_boolean (fset_config_look_unmark_after_action))
-                    fset_option_unmark_all ();
+                fset_option_config_changed_timer = 0;
             }
             else
             {
@@ -266,19 +266,19 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
+                fset_option_config_changed_timer = 1;
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
                     ptr_fset_option = weechat_arraylist_get (fset_options, i);
-                    if (ptr_fset_option->marked)
+                    if (ptr_fset_option && ptr_fset_option->marked)
                     {
                         ptr_option = weechat_config_get (ptr_fset_option->name);
                         if (ptr_option)
                             fset_option_unset_value (ptr_fset_option, ptr_option);
                     }
                 }
-                if (weechat_config_boolean (fset_config_look_unmark_after_action))
-                    fset_option_unmark_all ();
+                fset_option_config_changed_timer = 0;
             }
             else
             {
@@ -540,17 +540,18 @@ fset_command_init ()
            "${__name}, ${__type}, ...\n"
            "\n"
            "Keys and input on fset buffer:\n"
-           "  alt+space     t  toggle boolean value\n"
-           "  alt+'-'       -  subtract 1 from value (integer/color)\n"
-           "  alt+'+'       +  add 1 to value (integer/color)\n"
-           "  alt+f, alt+r  r  reset value\n"
-           "  alt+f, alt+u  u  unset value\n"
-           "  alt+enter     s  set value\n"
-           "  alt+f, alt+a  a  append to value\n"
-           "  alt+','       ,  mark/unmark option and move one line down\n"
-           "  shift+down       mark/unmark option and move one line down\n"
-           "  shift+up         mark/unmark option and move one line up\n"
-           "                $  refresh options, unmark all options\n"
+           "  alt+space     t   toggle boolean value\n"
+           "  alt+'-'       -   subtract 1 from value (integer/color)\n"
+           "  alt+'+'       +   add 1 to value (integer/color)\n"
+           "  alt+f, alt+r  r   reset value\n"
+           "  alt+f, alt+u  u   unset value\n"
+           "  alt+enter     s   set value\n"
+           "  alt+f, alt+a  a   append to value\n"
+           "  alt+','       ,   mark/unmark option and move one line down\n"
+           "  shift+down        mark/unmark option and move one line down\n"
+           "  shift+up          mark/unmark option and move one line up\n"
+           "                $   refresh options (keep marked options)\n"
+           "                $$  refresh options (unmark all options)\n"
            "                q  close fset buffer\n"
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "

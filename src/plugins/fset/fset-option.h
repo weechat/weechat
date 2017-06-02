@@ -53,6 +53,7 @@ extern struct t_arraylist *fset_options;
 extern int fset_option_count_marked;
 extern struct t_hashtable *fset_option_max_length_field;
 extern char *fset_option_filter;
+extern int fset_option_config_changed_timer;
 extern char *fset_option_type_string[];
 extern char *fset_option_type_string_short[];
 extern char *fset_option_type_string_tiny[];

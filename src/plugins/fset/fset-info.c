@@ -71,8 +71,10 @@ fset_info_infolist_fset_option_cb (const void *pointer, void *data,
         for (i = 0; i < num_options; i++)
         {
             ptr_fset_option = weechat_arraylist_get (fset_options, i);
-            if (!arguments || !arguments[0]
-                || weechat_string_match (ptr_fset_option->name, arguments, 0))
+            if (ptr_fset_option
+                && (!arguments || !arguments[0]
+                    || weechat_string_match (ptr_fset_option->name,
+                                             arguments, 0)))
             {
                 if (!fset_option_add_to_infolist (ptr_infolist, ptr_fset_option))
                 {

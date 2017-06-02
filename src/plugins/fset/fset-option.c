@@ -34,6 +34,8 @@ struct t_arraylist *fset_options = NULL;
 int fset_option_count_marked = 0;
 struct t_hashtable *fset_option_max_length_field = NULL;
 char *fset_option_filter = NULL;
+int fset_option_config_changed_timer = 0;
+struct t_hook *fset_option_timer_hook = NULL;
 
 char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
 { N_("boolean"), N_("integer"), N_("string"), N_("color") };
@@ -94,7 +96,7 @@ fset_option_search_by_name (const char *name, int *line)
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
-        if (strcmp (ptr_fset_option->name, name) == 0)
+        if (ptr_fset_option && (strcmp (ptr_fset_option->name, name) == 0))
         {
             if (line)
                 *line = i;
@@ -571,7 +573,8 @@ fset_option_set_max_length_fields_all ()
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
-        fset_option_set_max_length_fields_option (ptr_fset_option);
+        if (ptr_fset_option)
+            fset_option_set_max_length_fields_option (ptr_fset_option);
     }
 }
 
@@ -773,16 +776,39 @@ fset_option_get_hashtable_max_length_field ()
 void
 fset_option_get_options ()
 {
-    struct t_fset_option *new_fset_option;
+    struct t_fset_option *new_fset_option, *ptr_fset_option;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-    int num_options;
+    struct t_hashtable *marked_options;
+    int i, num_options;
 
+    /* save marked options in a hashtable */
+    if (!weechat_config_boolean (fset_config_look_auto_unmark))
+    {
+        marked_options = weechat_hashtable_new (256,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_POINTER,
+                                                NULL, NULL);
+        num_options = weechat_arraylist_size (fset_options);
+        for (i = 0; i < num_options; i++)
+        {
+            ptr_fset_option = weechat_arraylist_get (fset_options, i);
+            if (ptr_fset_option && ptr_fset_option->marked)
+                weechat_hashtable_set (marked_options, ptr_fset_option->name, NULL);
+        }
+    }
+    else
+    {
+        marked_options = NULL;
+    }
+
+    /* clear options */
     weechat_arraylist_clear (fset_options);
     fset_option_count_marked = 0;
     weechat_hashtable_remove_all (fset_option_max_length_field);
 
+    /* get options */
     ptr_config = weechat_hdata_get_list (fset_hdata_config_file,
                                          "config_files");
     while (ptr_config)
@@ -810,10 +836,29 @@ fset_option_get_options ()
     }
 
     num_options = weechat_arraylist_size (fset_options);
+
+    /* check selected line */
     if (num_options == 0)
         fset_buffer_selected_line = 0;
     else if (fset_buffer_selected_line >= num_options)
         fset_buffer_selected_line = num_options - 1;
+
+    /* restore marked options */
+    if (marked_options)
+    {
+        for (i = 0; i < num_options; i++)
+        {
+            ptr_fset_option = weechat_arraylist_get (fset_options, i);
+            if (ptr_fset_option
+                && weechat_hashtable_has_key (marked_options,
+                                              ptr_fset_option->name))
+            {
+                ptr_fset_option->marked = 1;
+                fset_option_count_marked++;
+            }
+        }
+        weechat_hashtable_free (marked_options);
+    }
 }
 
 /*
@@ -1003,44 +1048,29 @@ fset_option_unmark_all ()
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
-        ptr_fset_option->marked = 0;
+        if (ptr_fset_option)
+            ptr_fset_option->marked = 0;
     }
     fset_option_count_marked = 0;
     fset_buffer_refresh (0);
 }
 
 /*
- * Callback for config option changed.
+ * Refreshes the fset buffer after the change of an option.
  */
 
-int
-fset_option_config_cb (const void *pointer,
-                       void *data,
-                       const char *option,
-                       const char *value)
+void
+fset_option_config_changed (const char *option_name)
 {
-    const char *ptr_info;
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
-    int line, num_options, full_refresh;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) value;
-
-    /* do nothing if fset buffer is not opened */
-    if (!fset_buffer)
-        return WEECHAT_RC_OK;
-
-    /* do nothing if WeeChat is upgrading */
-    ptr_info = weechat_info_get ("weechat_upgrading", NULL);
-    if (ptr_info && (strcmp (ptr_info, "1") == 0))
-        return WEECHAT_RC_OK;
+    int full_refresh, line, num_options;
 
     full_refresh = 0;
 
-    ptr_fset_option = fset_option_search_by_name (option, &line);
+    ptr_fset_option = (option_name) ?
+        fset_option_search_by_name (option_name, &line) : NULL;
+
     if (ptr_fset_option)
     {
         ptr_option = weechat_config_get (ptr_fset_option->name);
@@ -1072,8 +1102,9 @@ fset_option_config_cb (const void *pointer,
         for (line = 0; line < num_options; line++)
         {
             ptr_fset_option = weechat_arraylist_get (fset_options, line);
-            if (ptr_fset_option->parent_name
-                && (strcmp (ptr_fset_option->parent_name, option) == 0))
+            if (ptr_fset_option
+                && ptr_fset_option->parent_name
+                && (strcmp (ptr_fset_option->parent_name, option_name) == 0))
             {
                 ptr_option = weechat_config_get (ptr_fset_option->name);
                 if (ptr_option)
@@ -1082,6 +1113,67 @@ fset_option_config_cb (const void *pointer,
         }
         fset_option_set_max_length_fields_all ();
         fset_buffer_refresh (0);
+    }
+}
+
+/*
+ * Callback for timer after an option is changed.
+ */
+
+int
+fset_option_config_timer_cb (const void *pointer,
+                             void *data,
+                             int remaining_calls)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) remaining_calls;
+
+    fset_option_config_changed ((const char *)data);
+
+    fset_option_timer_hook = NULL;
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for config option changed.
+ */
+
+int
+fset_option_config_cb (const void *pointer,
+                       void *data,
+                       const char *option,
+                       const char *value)
+{
+    const char *ptr_info;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) value;
+
+    /* do nothing if fset buffer is not opened */
+    if (!fset_buffer)
+        return WEECHAT_RC_OK;
+
+    /* do nothing if WeeChat is upgrading */
+    ptr_info = weechat_info_get ("weechat_upgrading", NULL);
+    if (ptr_info && (strcmp (ptr_info, "1") == 0))
+        return WEECHAT_RC_OK;
+
+    if (fset_option_config_changed_timer)
+    {
+        if (!fset_option_timer_hook)
+        {
+            fset_option_timer_hook = weechat_hook_timer (
+                1, 0, 1,
+                &fset_option_config_timer_cb, NULL, NULL);
+        }
+    }
+    else
+    {
+        fset_option_config_changed (option);
     }
 
     return WEECHAT_RC_OK;
@@ -1186,6 +1278,8 @@ fset_option_print_log ()
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (!ptr_fset_option)
+            continue;
         weechat_log_printf ("");
         weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
         weechat_log_printf ("  name. . . . . . . . . : '%s'",  ptr_fset_option->name);
