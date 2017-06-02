@@ -31,6 +31,7 @@ extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_show_plugin_description;
 extern struct t_config_option *fset_config_look_sort;
 extern struct t_config_option *fset_config_look_unmarked_string;
+extern struct t_config_option *fset_config_look_use_color_value;
 extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_look_use_mute;
 

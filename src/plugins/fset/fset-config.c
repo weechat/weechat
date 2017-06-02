@@ -41,6 +41,7 @@ struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_show_plugin_description;
 struct t_config_option *fset_config_look_sort;
 struct t_config_option *fset_config_look_unmarked_string;
+struct t_config_option *fset_config_look_use_color_value;
 struct t_config_option *fset_config_look_use_keys;
 struct t_config_option *fset_config_look_use_mute;
 
@@ -137,6 +138,22 @@ fset_config_change_sort_cb (const void *pointer, void *data,
         fset_option_get_options ();
         fset_buffer_refresh (0);
     }
+}
+
+/*
+ * Callback for changes on option "fset.look.use_color_value".
+ */
+
+void
+fset_config_change_use_color_value_cb (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    fset_buffer_refresh (0);
 }
 
 /*
@@ -311,6 +328,14 @@ fset_config_init ()
         NULL, 0, 0, " ", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_use_color_value = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "use_color_value", "boolean",
+        N_("use the color to display value of color options"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_use_color_value_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_use_keys = weechat_config_new_option (
         fset_config_file, ptr_section,
