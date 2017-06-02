@@ -117,8 +117,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (fset_buffer)
     {
         ptr_filter = weechat_buffer_get_string (fset_buffer, "localvar_filter");
-        if (ptr_filter)
-            fset_option_filter_options (ptr_filter);
+        fset_option_filter_options (ptr_filter);
     }
 
     return WEECHAT_RC_OK;

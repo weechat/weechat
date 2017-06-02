@@ -913,6 +913,7 @@ fset_buffer_open ()
         weechat_buffer_set (fset_buffer, "type", "free");
         fset_buffer_set_keys ();
         weechat_buffer_set (fset_buffer, "localvar_set_type", "option");
+        weechat_buffer_set (fset_buffer, "localvar_set_filter", "*");
 
         fset_buffer_selected_line = 0;
     }
