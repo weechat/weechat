@@ -36,8 +36,8 @@ struct t_config_file *fset_config_file = NULL;
 
 struct t_config_option *fset_config_look_auto_unmark;
 struct t_config_option *fset_config_look_condition_catch_set;
-struct t_config_option *fset_config_look_help_bar;
 struct t_config_option *fset_config_look_marked_string;
+struct t_config_option *fset_config_look_show_help_bar;
 struct t_config_option *fset_config_look_show_plugin_description;
 struct t_config_option *fset_config_look_sort;
 struct t_config_option *fset_config_look_unmarked_string;
@@ -81,12 +81,12 @@ char *fset_config_eval_format_option_current = NULL;
 
 
 /*
- * Callback for changes on option "fset.look.help_bar".
+ * Callback for changes on option "fset.look.show_help_bar".
  */
 
 void
-fset_config_change_help_bar_cb (const void *pointer, void *data,
-                                struct t_config_option *option)
+fset_config_change_show_help_bar_cb (const void *pointer, void *data,
+                                     struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -283,15 +283,6 @@ fset_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_look_help_bar = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "help_bar", "boolean",
-        N_("display help bar in fset buffer (description of option, "
-           "allowed values and default value)"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_help_bar_cb, NULL, NULL,
-        NULL, NULL, NULL);
     fset_config_look_marked_string = weechat_config_new_option (
         fset_config_file, ptr_section,
         "marked_string", "string",
@@ -300,6 +291,15 @@ fset_config_init ()
         NULL, 0, 0, "*", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_show_help_bar = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "show_help_bar", "boolean",
+        N_("display help bar in fset buffer (description of option, "
+           "allowed values and default value)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_show_help_bar_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_show_plugin_description = weechat_config_new_option (
         fset_config_file, ptr_section,

@@ -41,7 +41,7 @@ struct t_gui_bar_item *fset_bar_item_fset = NULL;
 void
 fset_bar_item_update ()
 {
-    if (weechat_config_boolean (fset_config_look_help_bar))
+    if (weechat_config_boolean (fset_config_look_show_help_bar))
         weechat_bar_item_update (FSET_BAR_ITEM_NAME);
 }
 

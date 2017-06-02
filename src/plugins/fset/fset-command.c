@@ -112,6 +112,12 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    if (weechat_strcasecmp (argv[1], "-toggle_bar") == 0)
+    {
+        weechat_config_option_set (fset_config_look_show_help_bar, "toggle", 1);
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcasecmp (argv[1], "-refresh") == 0)
     {
         fset_bar_item_update ();
@@ -461,6 +467,7 @@ fset_command_init ()
         "fset",
         N_("fast set WeeChat and plugins options"),
         N_("-bar"
+           " || -toggle_bar"
            " || -refresh"
            " || -up|-down [<number>]"
            " || -go <line>|end"
@@ -472,39 +479,43 @@ fset_command_init ()
            " || -append"
            " || -mark [<number>]"
            " || filter"),
-        N_("    -bar: add the fset bar\n"
-           "-refresh: force the refresh of the \"fset\" bar item\n"
-           "     -up: move the selected line up by \"number\" lines\n"
-           "   -down: move the selected line down by \"number\" lines\n"
-           "     -go: select a line by number, first line number is 0 "
+        N_("       -bar: add the help bar\n"
+           "-toggle_bar: toggle the help bar\n"
+           "   -refresh: force the refresh of the \"fset\" bar item\n"
+           "        -up: move the selected line up by \"number\" lines\n"
+           "      -down: move the selected line down by \"number\" lines\n"
+           "        -go: select a line by number, first line number is 0 "
            "(\"end\" to select the last line)\n"
-           " -toggle: toggle the boolean value\n"
-           "    -add: add \"value\", which can be a negative number "
+           "    -toggle: toggle the boolean value\n"
+           "       -add: add \"value\", which can be a negative number "
            "(only for integers and colors)\n"
-           "  -reset: reset the value of option\n"
-           "  -unset: unset the option\n"
-           "    -set: add the /set command in input to edit the value of "
+           "     -reset: reset the value of option\n"
+           "     -unset: unset the option\n"
+           "       -set: add the /set command in input to edit the value of "
            "option (move the cursor at the beginning of value)\n"
-           " -append: add the /set command to append something in the value "
+           "    -append: add the /set command to append something in the value "
            "of option (move the cursor at the end of value)\n"
-           "   -mark: toggle mark on the option and move \"number\" lines "
+           "      -mark: toggle mark on the option and move \"number\" lines "
            "(up/down, default is 1: one line down)\n"
-           "  filter: set a new filter to see only matching options (this "
+           "     filter: set a new filter to see only matching options (this "
            "filter can be used as input in fset buffer as well); allowed "
            "formats are:\n"
-           "             *       show all options (no filter)\n"
-           "             f:xxx   show only configuration file \"xxx\"\n"
-           "             t:xxx   show only type \"xxx\" (beginning of type "
+           "               *       show all options (no filter)\n"
+           "               f:xxx   show only configuration file \"xxx\"\n"
+           "               t:xxx   show only type \"xxx\" (beginning of type "
            "name is allowed, both English and translated types are allowed)\n"
-           "             d       show only changed options\n"
-           "             d:xxx   show only changed options with \"xxx\" in name\n"
-           "             d=xxx   show only changed options with \"xxx\" in value\n"
-           "             d==xxx  show only changed options with exact value \"xxx\"\n"
-           "             =xxx    show only options with \"xxx\" in value\n"
-           "             ==xxx   show only options with exact value \"xxx\"\n"
-           "             s:x,y   sort options by fields x,y "
+           "               d       show only changed options\n"
+           "               d:xxx   show only changed options with \"xxx\" in "
+           "name\n"
+           "               d=xxx   show only changed options with \"xxx\" in "
+           "value\n"
+           "               d==xxx  show only changed options with exact value "
+           "\"xxx\"\n"
+           "               =xxx    show only options with \"xxx\" in value\n"
+           "               ==xxx   show only options with exact value \"xxx\"\n"
+           "               s:x,y   sort options by fields x,y "
            "(see /help fset.look.sort)\n"
-           "             s:      reset sort to its default value "
+           "               s:      reset sort to its default value "
            "(see /help fset.look.sort)\n"
            "\n"
            "The lines with options are displayed using string evaluation "
@@ -553,6 +564,7 @@ fset_command_init ()
            "  shift+up          mark/unmark option and move one line up\n"
            "                $   refresh options (keep marked options)\n"
            "                $$  refresh options (unmark all options)\n"
+           "                v   toggle help bar\n"
            "                q  close fset buffer\n"
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "

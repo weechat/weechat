@@ -721,15 +721,16 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = { { "t", "toggle" },
-                           { "-", "add -1" },
-                           { "+", "add 1"  },
-                           { "r", "reset"  },
-                           { "u", "unset"  },
-                           { "s", "set"    },
-                           { "a", "append" },
-                           { ",", "mark 1" },
-                           { NULL, NULL    } };
+    char *actions[][2] = { { "t", "toggle"     },
+                           { "-", "add -1"     },
+                           { "+", "add 1"      },
+                           { "r", "reset"      },
+                           { "u", "unset"      },
+                           { "s", "set"        },
+                           { "a", "append"     },
+                           { ",", "mark 1"     },
+                           { "v", "toggle_bar" },
+                           { NULL, NULL        } };
     char str_command[64];
     const char *ptr_input;
     int i;
@@ -843,20 +844,21 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta-meta2-1~", "go 0"   },
-                        { "meta-meta2-4~", "go end" },
-                        { "meta- ",       "toggle"  },
-                        { "meta--",       "add -1"  },
-                        { "meta-+",       "add 1"   },
-                        { "meta-fmeta-r", "reset"   },
-                        { "meta-fmeta-u", "unset"   },
-                        { "meta-ctrl-J",  "set"     },
-                        { "meta-ctrl-M",  "set"     },
-                        { "meta-fmeta-a", "append"  },
-                        { "meta-,",       "mark 1"  },
-                        { "meta2-a",      "mark -1" },
-                        { "meta2-b",      "mark 1"  },
-                        { NULL,           NULL      } };
+    char *keys[][2] = { { "meta-meta2-1~", "go 0"      },
+                        { "meta-meta2-4~", "go end"    },
+                        { "meta- ",       "toggle"     },
+                        { "meta--",       "add -1"     },
+                        { "meta-+",       "add 1"      },
+                        { "meta-fmeta-r", "reset"      },
+                        { "meta-fmeta-u", "unset"      },
+                        { "meta-ctrl-J",  "set"        },
+                        { "meta-ctrl-M",  "set"        },
+                        { "meta-fmeta-a", "append"     },
+                        { "meta-,",       "mark 1"     },
+                        { "meta2-a",      "mark -1"    },
+                        { "meta2-b",      "mark 1"     },
+                        { "meta-v",       "toggle_bar" },
+                        { NULL,           NULL         } };
     char str_key[64], str_command[64];
     int i;
 

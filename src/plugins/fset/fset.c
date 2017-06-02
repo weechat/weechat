@@ -58,7 +58,7 @@ fset_add_bar ()
 {
     weechat_bar_new (
         FSET_BAR_NAME, "off", "0", "window",
-        "${fset.look.help_bar} "
+        "${fset.look.show_help_bar} "
         "&& ${buffer.full_name} == " FSET_PLUGIN_NAME "." FSET_BAR_NAME,
         "top", "horizontal", "vertical", "3", "3",
         "default", "cyan", "default", "on",
@@ -98,7 +98,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_command_init ();
 
-    if (weechat_config_boolean (fset_config_look_help_bar))
+    if (weechat_config_boolean (fset_config_look_show_help_bar))
         fset_add_bar ();
 
     fset_bar_item_update ();
