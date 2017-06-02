@@ -3583,10 +3583,8 @@ und die Daten in einer Hashtable gesichert:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable             | Typ     | Beschreibung
-// TRANSLATION MISSING
-| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
-// TRANSLATION MISSING
-| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| irc_server           | pointer | Pointer auf IRC Server (Variable in hdata vom Typ "irc_server" kann verwendet werden, wie `${irc_server.name}`).
+| irc_channel          | pointer | Pointer auf IRC Channel (Variable in hdata vom Typ "irc_channel" kann verwendet werden, wie `${irc_channel.name}`).
 | server               | string  | Name des Server (Beispiel: "freenode").
 | tags                 | string  | Tags in Nachricht (findet selten Verwendung).
 | message_without_tags | string  | Nachricht ohne Tags.
