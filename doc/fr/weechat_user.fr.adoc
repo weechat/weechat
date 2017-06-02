@@ -3606,20 +3606,22 @@ suivantes sont ajoutées dans la table de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Type   | Description
-| server               | chaîne | Nom du serveur (exemple : "freenode").
-| tags                 | chaîne | Étiquettes dans le message (rarement utilisées).
-| message_without_tags | chaîne | Message sans les étiquettes.
-| nick                 | chaîne | Pseudo.
-| host                 | chaîne | Nom d'hôte.
-| command              | chaîne | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...).
-| channel              | chaîne | Canal IRC.
-| arguments            | chaîne | Paramètres de la commande (inclut la valeur de _channel_).
-| text                 | chaîne | Texte (par exemple message utilisateur).
-| pos_command          | chaîne | L'index de _command_ dans le message ("-1" si _command_ n'a pas été trouvé).
-| pos_arguments        | chaîne | L'index de _arguments_ dans le message ("-1" si _arguments_ n'a pas été trouvé).
-| pos_channel          | chaîne | L'index de _channel_ dans le message ("-1" si _channel_ n'a pas été trouvé).
-| pos_text             | chaîne | L'index de _text_ dans le message ("-1" si _text_ n'a pas été trouvé).
+| Variable             | Type     | Description
+| irc_server           | pointeur | Pointeur vers le serveur IRC (les variables dans le hdata de type "irc_server" peuvent être utilisées, comme `${irc_server.name}`).
+| irc_channel          | pointeur | Pointeur vers le canal IRC (les variables dans le hdata de type "irc_channel" peuvent être utilisées, comme `${irc_channel.name}`).
+| server               | chaîne   | Nom du serveur (exemple : "freenode").
+| tags                 | chaîne   | Étiquettes dans le message (rarement utilisées).
+| message_without_tags | chaîne   | Message sans les étiquettes.
+| nick                 | chaîne   | Pseudo.
+| host                 | chaîne   | Nom d'hôte.
+| command              | chaîne   | Commande IRC (exemple : "PRIVMSG", "NOTICE", ...).
+| channel              | chaîne   | Canal IRC.
+| arguments            | chaîne   | Paramètres de la commande (inclut la valeur de _channel_).
+| text                 | chaîne   | Texte (par exemple message utilisateur).
+| pos_command          | chaîne   | L'index de _command_ dans le message ("-1" si _command_ n'a pas été trouvé).
+| pos_arguments        | chaîne   | L'index de _arguments_ dans le message ("-1" si _arguments_ n'a pas été trouvé).
+| pos_channel          | chaîne   | L'index de _channel_ dans le message ("-1" si _channel_ n'a pas été trouvé).
+| pos_text             | chaîne   | L'index de _text_ dans le message ("-1" si _text_ n'a pas été trouvé).
 |===
 
 Lorsque la donnée est un pointeur, la variable `tg_signal_data` peut être

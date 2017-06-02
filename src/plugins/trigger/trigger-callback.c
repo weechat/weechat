@@ -47,7 +47,7 @@ struct t_hashtable *trigger_callback_hashtable_options_regex = NULL;
 
 struct t_hashtable *
 trigger_callback_irc_message_parse (const char *irc_message,
-                                    const char *irc_server)
+                                    const char *irc_server_name)
 {
     struct t_hashtable *hashtable_in, *hashtable_out;
 
@@ -60,7 +60,7 @@ trigger_callback_irc_message_parse (const char *irc_message,
     if (hashtable_in)
     {
         weechat_hashtable_set (hashtable_in, "message", irc_message);
-        weechat_hashtable_set (hashtable_in, "server", irc_server);
+        weechat_hashtable_set (hashtable_in, "server", irc_server_name);
         hashtable_out = weechat_info_get_hashtable ("irc_message_parse",
                                                     hashtable_in);
         weechat_hashtable_free (hashtable_in);
@@ -68,6 +68,63 @@ trigger_callback_irc_message_parse (const char *irc_message,
 
     return hashtable_out;
 }
+
+/*
+ * Gets the pointer to IRC server with its name.
+ *
+ * Returns pointer to IRC server, or NULL if not found.
+ */
+
+void
+trigger_callback_get_irc_server_channel (const char *irc_server_name,
+                                         const char *irc_channel_name,
+                                         void **irc_server, void **irc_channel)
+{
+    struct t_hdata *hdata_irc_server, *hdata_irc_channel;
+    const char *ptr_name;
+
+    *irc_server = NULL;
+    *irc_channel = NULL;
+
+    if (!irc_server_name)
+        return;
+
+    hdata_irc_server = weechat_hdata_get ("irc_server");
+    if (!hdata_irc_server)
+        return;
+
+    /* search the server by name in list of servers */
+    *irc_server = weechat_hdata_get_list (hdata_irc_server, "irc_servers");
+    while (*irc_server)
+    {
+        ptr_name = weechat_hdata_string (hdata_irc_server, *irc_server, "name");
+        if (strcmp (ptr_name, irc_server_name) == 0)
+            break;
+        *irc_server = weechat_hdata_move (hdata_irc_server, *irc_server, 1);
+    }
+    if (!*irc_server)
+        return;
+
+    if (!irc_channel_name)
+        return;
+
+    hdata_irc_channel = weechat_hdata_get ("irc_channel");
+    if (!hdata_irc_channel)
+        return;
+
+    /* search the channel by name in list of channels on the server */
+    *irc_channel = weechat_hdata_pointer (hdata_irc_server,
+                                          *irc_server, "channels");
+    while (*irc_channel)
+    {
+        ptr_name = weechat_hdata_string (hdata_irc_channel,
+                                         *irc_channel, "name");
+        if (strcmp (ptr_name, irc_channel_name) == 0)
+            break;
+        *irc_channel = weechat_hdata_move (hdata_irc_channel, *irc_channel, 1);
+    }
+}
+
 /*
  * Sets variables in "extra_vars" hashtable using tags from message.
  *
@@ -370,13 +427,16 @@ trigger_callback_signal_cb (const void *pointer, void *data,
                             void *signal_data)
 {
     const char *ptr_signal_data;
-    char str_data[128], *irc_server;
+    char str_data[128], *irc_server_name;
     const char *pos, *ptr_irc_message;
+    void *ptr_irc_server, *ptr_irc_channel;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+
     /* split IRC message (if signal_data is an IRC message) */
-    irc_server = NULL;
+    irc_server_name = NULL;
     ptr_irc_message = NULL;
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
@@ -390,7 +450,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
             pos = strchr (signal, ',');
             if (pos)
             {
-                irc_server = weechat_strndup (signal, pos - signal);
+                irc_server_name = weechat_strndup (signal, pos - signal);
                 ptr_irc_message = (const char *)signal_data;
             }
         }
@@ -399,22 +459,31 @@ trigger_callback_signal_cb (const void *pointer, void *data,
             pos = strstr (signal, ",irc_outtags_");
             if (pos)
             {
-                irc_server = weechat_strndup (signal, pos - signal);
+                irc_server_name = weechat_strndup (signal, pos - signal);
                 pos = strchr ((const char *)signal_data, ';');
                 if (pos)
                     ptr_irc_message = pos + 1;
             }
         }
     }
-    if (irc_server && ptr_irc_message)
+    if (irc_server_name && ptr_irc_message)
     {
         extra_vars = trigger_callback_irc_message_parse (ptr_irc_message,
-                                                         irc_server);
+                                                         irc_server_name);
         if (extra_vars)
-            weechat_hashtable_set (extra_vars, "server", irc_server);
+        {
+            weechat_hashtable_set (extra_vars, "server", irc_server_name);
+            trigger_callback_get_irc_server_channel (
+                irc_server_name,
+                weechat_hashtable_get (extra_vars, "channel"),
+                &ptr_irc_server,
+                &ptr_irc_channel);
+            weechat_hashtable_set (pointers, "irc_server", ptr_irc_server);
+            weechat_hashtable_set (pointers, "irc_channel", ptr_irc_channel);
+        }
     }
-    if (irc_server)
-        free (irc_server);
+    if (irc_server_name)
+        free (irc_server_name);
 
     /* create hashtable (if not already created) */
     if (!extra_vars)
@@ -520,8 +589,11 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
     char *buffer_full_name, *str_tags, **tags, *prefix, *string_no_color;
     int length, num_tags;
+    void *ptr_irc_server, *ptr_irc_channel;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
+
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
     buffer = NULL;
     tags = NULL;
@@ -537,10 +609,18 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
         extra_vars = trigger_callback_irc_message_parse (string,
                                                          modifier_data);
         if (extra_vars)
+        {
             weechat_hashtable_set (extra_vars, "server", modifier_data);
+            trigger_callback_get_irc_server_channel (
+                modifier_data,
+                weechat_hashtable_get (extra_vars, "channel"),
+                &ptr_irc_server,
+                &ptr_irc_channel);
+            weechat_hashtable_set (pointers, "irc_server", ptr_irc_server);
+            weechat_hashtable_set (pointers, "irc_channel", ptr_irc_channel);
+        }
     }
 
-    TRIGGER_CALLBACK_CB_NEW_POINTERS;
     if (!extra_vars)
     {
         TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;

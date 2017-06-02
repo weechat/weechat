@@ -3582,20 +3582,24 @@ und die Daten in einer Hashtable gesichert:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Typ    | Beschreibung
-| server               | string | Name des Server (Beispiel: "freenode").
-| tags                 | string | Tags in Nachricht (findet selten Verwendung).
-| message_without_tags | string | Nachricht ohne Tags.
-| nick                 | string | Nick.
-| host                 | string | Hostname.
-| command              | string | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...).
-| channel              | string | IRC Channel.
-| arguments            | string | Argumente des Befehls (Beinhaltet Wert von _channel_).
-| text                 | string | Text (zum Beipiel eine Nachricht eines Users).
-| pos_command          | string | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
-| pos_arguments        | string | Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
-| pos_channel          | string | Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird).
-| pos_text             | string | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
+| Variable             | Typ     | Beschreibung
+// TRANSLATION MISSING
+| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
+// TRANSLATION MISSING
+| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| server               | string  | Name des Server (Beispiel: "freenode").
+| tags                 | string  | Tags in Nachricht (findet selten Verwendung).
+| message_without_tags | string  | Nachricht ohne Tags.
+| nick                 | string  | Nick.
+| host                 | string  | Hostname.
+| command              | string  | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...).
+| channel              | string  | IRC Channel.
+| arguments            | string  | Argumente des Befehls (Beinhaltet Wert von _channel_).
+| text                 | string  | Text (zum Beipiel eine Nachricht eines Users).
+| pos_command          | string  | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
+| pos_arguments        | string  | Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
+| pos_channel          | string  | Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird).
+| pos_text             | string  | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
 |===
 
 Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `tg_signal_data`

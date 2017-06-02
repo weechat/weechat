@@ -3692,24 +3692,22 @@ is added in hashtable:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Type   | Description
-| server               | string | Name of server (example: "freenode").
-| tags                 | string | Tags in message (rarely used).
-| message_without_tags | string | Message without tags.
-| nick                 | string | Nick.
-| host                 | string | Hostname.
-| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...).
-| channel              | string | IRC channel.
-| arguments            | string | Arguments of command (includes value of _channel_).
-| text                 | string | Text (for example user message).
-// TRANSLATION MISSING
-| pos_command          | string | The index of _command_ in message ("-1" if _command_ was not found).
-// TRANSLATION MISSING
-| pos_arguments        | string | The index of _arguments_ in message ("-1" if _arguments_ was not found).
-// TRANSLATION MISSING
-| pos_channel          | string | The index of _channel_ in message ("-1" if _channel_ was not found).
-// TRANSLATION MISSING
-| pos_text             | string | The index of _text_ in message ("-1" if _text_ was not found).
+| Variable             | Type    | Description
+| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
+| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| server               | string  | Name of server (example: "freenode").
+| tags                 | string  | Tags in message (rarely used).
+| message_without_tags | string  | Message without tags.
+| nick                 | string  | Nick.
+| host                 | string  | Hostname.
+| command              | string  | IRC command (example: "PRIVMSG", "NOTICE", ...).
+| channel              | string  | IRC channel.
+| arguments            | string  | Arguments of command (includes value of _channel_).
+| text                 | string  | Text (for example user message).
+| pos_command          | string  | The index of _command_ in message ("-1" if _command_ was not found).
+| pos_arguments        | string  | The index of _arguments_ in message ("-1" if _arguments_ was not found).
+| pos_channel          | string  | The index of _channel_ in message ("-1" if _channel_ was not found).
+| pos_text             | string  | The index of _text_ in message ("-1" if _text_ was not found).
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this

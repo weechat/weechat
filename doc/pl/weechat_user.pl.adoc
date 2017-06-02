@@ -3526,20 +3526,24 @@ są dodawane do tablicy hashy:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Zmienna              | Typ  | Opis
-| server               | ciąg | Nazwa serwera (przykład: "freenode").
-| tags                 | ciąg | Tagi w wiadomości (rzadko używane).
-| message_without_tags | ciąg | Wiadomość bez tagów.
-| nick                 | ciąg | Nick.
-| host                 | ciąg | Nazwa hosta.
-| command              | ciąg | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...).
-| channel              | ciąg | Kanał IRC.
-| arguments            | ciąg | Argumenty komendy (razem z wartością _channel_).
-| text                 | ciąg | Tekst (na przykład wiadomość użytkownika).
-| pos_command          | ciąg | Indeks _command_ w wiadomości ("-1" jeśli _command_ nie zostanie znalezione).
-| pos_arguments        | ciąg | Indeks _arguments_ w wiadomości ("-1" jeśli _arguments_ nie zostaną znalezione).
-| pos_channel          | ciąg | Indeks _channel_ w wiadomości ("-1" jeśli _channel_ nie został znaleziony).
-| pos_text             | ciąg | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
+| Zmienna              | Typ     | Opis
+// TRANSLATION MISSING
+| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
+// TRANSLATION MISSING
+| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| server               | ciąg    | Nazwa serwera (przykład: "freenode").
+| tags                 | ciąg    | Tagi w wiadomości (rzadko używane).
+| message_without_tags | ciąg    | Wiadomość bez tagów.
+| nick                 | ciąg    | Nick.
+| host                 | ciąg    | Nazwa hosta.
+| command              | ciąg    | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...).
+| channel              | ciąg    | Kanał IRC.
+| arguments            | ciąg    | Argumenty komendy (razem z wartością _channel_).
+| text                 | ciąg    | Tekst (na przykład wiadomość użytkownika).
+| pos_command          | ciąg    | Indeks _command_ w wiadomości ("-1" jeśli _command_ nie zostanie znalezione).
+| pos_arguments        | ciąg    | Indeks _arguments_ w wiadomości ("-1" jeśli _arguments_ nie zostaną znalezione).
+| pos_channel          | ciąg    | Indeks _channel_ w wiadomości ("-1" jeśli _channel_ nie został znaleziony).
+| pos_text             | ciąg    | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
 |===
 
 Kiedy dane są wskaźnikiem, zmienna `tg_signal_data` może zostać użyta do
