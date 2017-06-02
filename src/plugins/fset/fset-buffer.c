@@ -712,6 +712,16 @@ fset_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
+    /* change sort of options */
+    if (strncmp (input_data, "s:", 2) == 0)
+    {
+        if (input_data[2])
+            weechat_config_option_set (fset_config_look_sort, input_data + 2, 1);
+        else
+            weechat_config_option_reset (fset_config_look_sort, 1);
+        return WEECHAT_RC_OK;
+    }
+
     /* execute action on an option */
     for (i = 0; actions[i][0]; i++)
     {

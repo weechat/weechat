@@ -230,11 +230,6 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         /* filter by config name */
         return (weechat_strcasecmp (config_name, fset_option_filter + 2) == 0) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "s:", 2) == 0)
-    {
-        /* filter by section name */
-        return (weechat_strcasecmp (section_name, fset_option_filter + 2) == 0) ? 1 : 0;
-    }
     else if (strncmp (fset_option_filter, "d==", 3) == 0)
     {
         /* filter by modified values, exact value */
@@ -640,77 +635,43 @@ end:
  */
 
 int
-fset_option_compare_options_old_cb (void *data, struct t_arraylist *arraylist,
-                                    void *pointer1, void *pointer2)
-{
-    struct t_config_option *ptr_option1, *ptr_option2;
-    struct t_config_file *ptr_config1, *ptr_config2;
-    struct t_config_section *ptr_section1, *ptr_section2;
-    const char *ptr_config_name1, *ptr_config_name2;
-    const char *ptr_section_name1, *ptr_section_name2;
-    const char *ptr_option_name1, *ptr_option_name2;
-    int rc;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) arraylist;
-
-    ptr_option1 = (struct t_config_option *)pointer1;
-    ptr_option2 = (struct t_config_option *)pointer2;
-
-    /* compare config file name */
-    ptr_config1 = weechat_hdata_pointer (fset_hdata_config_option,
-                                         ptr_option1, "config_file");
-    ptr_config_name1 = weechat_hdata_string (fset_hdata_config_file,
-                                             ptr_config1, "name");
-    ptr_config2 = weechat_hdata_pointer (fset_hdata_config_option,
-                                         ptr_option2, "config_file");
-    ptr_config_name2 = weechat_hdata_string (fset_hdata_config_file,
-                                             ptr_config2, "name");
-    rc = weechat_strcasecmp (ptr_config_name1, ptr_config_name2);
-    if (rc != 0)
-        return rc;
-
-    /* compare section name */
-    ptr_section1 = weechat_hdata_pointer (fset_hdata_config_option,
-                                          ptr_option1, "section");
-    ptr_section_name1 = weechat_hdata_string (fset_hdata_config_section,
-                                              ptr_section1, "name");
-    ptr_section2 = weechat_hdata_pointer (fset_hdata_config_option,
-                                          ptr_option2, "section");
-    ptr_section_name2 = weechat_hdata_string (fset_hdata_config_section,
-                                              ptr_section2, "name");
-    rc = weechat_strcasecmp (ptr_section_name1, ptr_section_name2);
-    if (rc != 0)
-        return rc;
-
-    /* compare option name */
-    ptr_option_name1 = weechat_hdata_string (fset_hdata_config_option,
-                                             ptr_option1, "name");
-    ptr_option_name2 = weechat_hdata_string (fset_hdata_config_option,
-                                             ptr_option2, "name");
-    return weechat_strcasecmp (ptr_option_name1, ptr_option_name2);
-}
-
-/*
- * Compares two options to sort them by name.
- */
-
-int
 fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
                                 void *pointer1, void *pointer2)
 {
-    struct t_fset_option *ptr_fset_option1, *ptr_fset_option2;
+    int i, reverse, case_sensitive, rc;
+    const char *ptr_field;
 
     /* make C compiler happy */
     (void) data;
     (void) arraylist;
 
-    ptr_fset_option1 = (struct t_fset_option *)pointer1;
-    ptr_fset_option2 = (struct t_fset_option *)pointer2;
+    if (!fset_hdata_fset_option)
+        return 1;
 
-    return weechat_strcasecmp (ptr_fset_option1->name,
-                               ptr_fset_option2->name);
+    for (i = 0; i < fset_config_sort_fields_count; i++)
+    {
+        rc = 0;
+        reverse = 1;
+        case_sensitive = 1;
+        ptr_field = fset_config_sort_fields[i];
+        while ((ptr_field[0] == '-') || (ptr_field[0] == '~'))
+        {
+            if (ptr_field[0] == '-')
+                reverse *= -1;
+            else if (ptr_field[0] == '~')
+                case_sensitive ^= 1;
+            ptr_field++;
+        }
+        rc = weechat_hdata_compare (fset_hdata_fset_option,
+                                    pointer1, pointer2,
+                                    ptr_field,
+                                    case_sensitive);
+        rc *= reverse;
+        if (rc != 0)
+            return rc;
+    }
+
+    return 1;
 }
 
 /*

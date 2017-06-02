@@ -28,6 +28,7 @@ extern struct t_config_option *fset_config_look_condition_catch_set;
 extern struct t_config_option *fset_config_look_help_bar;
 extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_show_plugin_description;
+extern struct t_config_option *fset_config_look_sort;
 extern struct t_config_option *fset_config_look_unmark_after_action;
 extern struct t_config_option *fset_config_look_unmarked_string;
 extern struct t_config_option *fset_config_look_use_keys;
@@ -58,6 +59,8 @@ extern struct t_config_option *fset_config_color_value[2];
 extern struct t_config_option *fset_config_color_value_changed[2];
 extern struct t_config_option *fset_config_color_value_undef[2];
 
+extern char **fset_config_sort_fields;
+extern int fset_config_sort_fields_count;
 extern char *fset_config_eval_format_option_current;
 
 extern int fset_config_init ();
