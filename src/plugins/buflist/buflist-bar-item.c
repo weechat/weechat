@@ -63,8 +63,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
     struct t_gui_nick *ptr_gui_nick;
     struct t_gui_hotlist *ptr_hotlist;
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
+    void *ptr_server, *ptr_channel;
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
     char str_nick_prefix[32], str_color_nick_prefix[32];
