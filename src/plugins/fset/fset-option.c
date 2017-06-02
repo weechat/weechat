@@ -1069,10 +1069,10 @@ fset_option_config_changed (const char *option_name)
 
     ptr_fset_option = (option_name) ?
         fset_option_search_by_name (option_name, &line) : NULL;
+    ptr_option = (option_name) ? weechat_config_get (option_name) : NULL;
 
     if (ptr_fset_option)
     {
-        ptr_option = weechat_config_get (ptr_fset_option->name);
         if (ptr_option)
         {
             fset_option_set_values (ptr_fset_option, ptr_option);
@@ -1084,7 +1084,7 @@ fset_option_config_changed (const char *option_name)
             full_refresh = 1;
         }
     }
-    else
+    else if (!ptr_option)
     {
         /* option added: get options and refresh the whole buffer */
         full_refresh = 1;
