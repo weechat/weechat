@@ -68,14 +68,13 @@ buflist_add_bar ()
 
 void
 buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
-                                struct t_irc_server **server,
-                                struct t_irc_channel **channel)
+                                void **irc_server, void **irc_channel)
 {
     const char *ptr_server_name, *ptr_channel_name, *ptr_name;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
 
-    *server = NULL;
-    *channel = NULL;
+    *irc_server = NULL;
+    *irc_channel = NULL;
 
     /* check if the buffer belongs to IRC plugin */
     if (strcmp (weechat_buffer_get_string (buffer, "plugin"), "irc") != 0)
@@ -92,16 +91,15 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the server by name in list of servers */
-    *server = weechat_hdata_get_list (hdata_irc_server,
-                                      "irc_servers");
-    while (*server)
+    *irc_server = weechat_hdata_get_list (hdata_irc_server, "irc_servers");
+    while (*irc_server)
     {
-        ptr_name = weechat_hdata_string (hdata_irc_server, *server, "name");
+        ptr_name = weechat_hdata_string (hdata_irc_server, *irc_server, "name");
         if (strcmp (ptr_name, ptr_server_name) == 0)
             break;
-        *server = weechat_hdata_move (hdata_irc_server, *server, 1);
+        *irc_server = weechat_hdata_move (hdata_irc_server, *irc_server, 1);
     }
-    if (!*server)
+    if (!*irc_server)
         return;
 
     /* get channel name from buffer local variable */
@@ -116,15 +114,15 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the channel by name in list of channels on the server */
-    *channel = weechat_hdata_pointer (hdata_irc_server,
-                                      *server,
-                                      "channels");
-    while (*channel)
+    *irc_channel = weechat_hdata_pointer (hdata_irc_server,
+                                          *irc_server, "channels");
+    while (*irc_channel)
     {
-        ptr_name = weechat_hdata_string (hdata_irc_channel, *channel, "name");
+        ptr_name = weechat_hdata_string (hdata_irc_channel,
+                                         *irc_channel, "name");
         if (strcmp (ptr_name, ptr_channel_name) == 0)
             break;
-        *channel = weechat_hdata_move (hdata_irc_channel, *channel, 1);
+        *irc_channel = weechat_hdata_move (hdata_irc_channel, *irc_channel, 1);
     }
 }
 
@@ -220,8 +218,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
     int i, reverse, case_sensitive, rc;
     const char *ptr_field;
     struct t_gui_hotlist *ptr_hotlist1, *ptr_hotlist2;
-    struct t_irc_server *ptr_server1, *ptr_server2;
-    struct t_irc_channel *ptr_channel1, *ptr_channel2;
+    void *ptr_server1, *ptr_server2, *ptr_channel1, *ptr_channel2;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
 
     /* make C compiler happy */
