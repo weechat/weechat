@@ -984,14 +984,13 @@ fset_option_set (struct t_fset_option *fset_option,
         return;
 
     use_mute = weechat_config_boolean (fset_config_look_use_mute);
-    add_quotes = (fset_option->value
-                  && (fset_option->type == FSET_OPTION_TYPE_STRING)) ? 1 : 0;
+    add_quotes = (fset_option->type == FSET_OPTION_TYPE_STRING) ? 1 : 0;
     snprintf (str_input, sizeof (str_input),
               "%s/set %s %s%s%s",
               (use_mute) ? "/mute " : "",
               fset_option->name,
               (add_quotes) ? "\"" : "",
-              (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
+              (fset_option->value) ? fset_option->value : "",
               (add_quotes) ? "\"" : "");
     weechat_buffer_set (buffer, "input", str_input);
     input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
