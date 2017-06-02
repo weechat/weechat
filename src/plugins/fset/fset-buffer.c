@@ -137,7 +137,11 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
                            "__name", str_field);
     snprintf (str_field, sizeof (str_field),
               "%s%s",
-              weechat_color (weechat_config_string (fset_config_color_name[selected_line])),
+              weechat_color (
+                  weechat_config_string (
+                      (value_changed) ?
+                      fset_config_color_name_changed[selected_line] :
+                      fset_config_color_name[selected_line])),
               (ptr_field) ? ptr_field : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_name", str_field);
