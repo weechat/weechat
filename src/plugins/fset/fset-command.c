@@ -170,10 +170,11 @@ fset_command_fset (const void *pointer, void *data,
                 line = weechat_arraylist_size (fset_options) - 1;
             else
                 line = fset_command_get_int_arg (argc, argv, 2, -1);
-            if (line < 0)
-                WEECHAT_COMMAND_ERROR;
-            fset_buffer_set_current_line (line);
-            fset_buffer_check_line_outside_window ();
+            if (line >= 0)
+            {
+                fset_buffer_set_current_line (line);
+                fset_buffer_check_line_outside_window ();
+            }
         }
         return WEECHAT_RC_OK;
     }
