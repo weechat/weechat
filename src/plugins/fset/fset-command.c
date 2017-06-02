@@ -493,6 +493,8 @@ fset_command_init ()
            "formats are:\n"
            "             *       show all options (no filter)\n"
            "             f:xxx   show only configuration file \"xxx\"\n"
+           "             t:xxx   show only type \"xxx\" (beginning of type "
+           "name is allowed, both English and translated types are allowed)\n"
            "             d       show only changed options\n"
            "             d:xxx   show only changed options with \"xxx\" in name\n"
            "             d=xxx   show only changed options with \"xxx\" in value\n"

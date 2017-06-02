@@ -215,6 +215,8 @@ int
 fset_option_match_filters (const char *config_name, const char *section_name,
                            struct t_fset_option *fset_option)
 {
+    int length;
+
     if (!weechat_config_boolean (fset_config_look_show_plugin_description)
         && (strcmp (config_name, "plugins") == 0)
         && (strcmp (section_name, "desc") == 0))
@@ -230,6 +232,21 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         /* filter by config name */
         return (weechat_strcasecmp (config_name, fset_option_filter + 2) == 0) ? 1 : 0;
     }
+    if (strncmp (fset_option_filter, "t:", 2) == 0)
+    {
+        /* filter by type */
+        length = strlen (fset_option_filter + 2);
+        return ((length > 0)
+                && ((weechat_strncasecmp (
+                         fset_option_type_string[fset_option->type],
+                         fset_option_filter + 2,
+                         length) == 0)
+                    || (weechat_strncasecmp (
+                            _(fset_option_type_string[fset_option->type]),
+                            fset_option_filter + 2,
+                            length) == 0))) ? 1 : 0;
+    }
+
     else if (strncmp (fset_option_filter, "d==", 3) == 0)
     {
         /* filter by modified values, exact value */
