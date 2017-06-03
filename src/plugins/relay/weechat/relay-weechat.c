@@ -166,13 +166,12 @@ relay_weechat_free_buffers_nicklist (struct t_hashtable *hashtable,
 void
 relay_weechat_alloc (struct t_relay_client *client)
 {
-    struct t_relay_weechat_data *weechat_data;
     char *password;
 
     password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
                                                NULL, NULL, NULL);
 
-    client->protocol_data = malloc (sizeof (*weechat_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_weechat_data));
     if (client->protocol_data)
     {
         RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
@@ -212,12 +211,11 @@ void
 relay_weechat_alloc_with_infolist (struct t_relay_client *client,
                                    struct t_infolist *infolist)
 {
-    struct t_relay_weechat_data *weechat_data;
     int index, value;
     char name[64];
     const char *key;
 
-    client->protocol_data = malloc (sizeof (*weechat_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_weechat_data));
     if (client->protocol_data)
     {
         /* general stuff */
