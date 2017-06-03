@@ -575,6 +575,7 @@ fset_command_init ()
            "\"q\" closes the fset buffer while \" q\" searches all options "
            "with \"q\" inside name."),
         "-bar"
+        " || -toggle_bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
