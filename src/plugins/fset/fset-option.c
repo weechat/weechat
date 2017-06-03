@@ -252,6 +252,8 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "type_en", fset_option_type_string[fset_option->type]);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "default_value", fset_option->default_value);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "value", fset_option->value);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "parent_value", fset_option->parent_value);
@@ -266,6 +268,15 @@ fset_option_match_filters (const char *config_name, const char *section_name,
                                "description_en", fset_option->description);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "string_values", fset_option->string_values);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "default_value_undef",
+                               (fset_option->default_value == NULL) ? "1" : "0");
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "value_undef",
+                               (fset_option->value == NULL) ? "1" : "0");
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "value_changed",
+                               (fset_option_value_is_changed (fset_option)) ? "1" : "0");
         result = weechat_string_eval_expression (
             fset_option_filter + 2,
             fset_option_filter_hashtable_pointers,
