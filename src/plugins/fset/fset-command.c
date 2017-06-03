@@ -575,7 +575,17 @@ fset_command_init ()
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "
            "\"q\" closes the fset buffer while \" q\" searches all options "
-           "with \"q\" inside name."),
+           "with \"q\" inside name.\n"
+           "\n"
+           "Examples:\n"
+           "  show IRC options changed:\n"
+           "    /fset d:irc.*\n"
+           "  show all options with \"nicklist\" in name:\n"
+           "    /fset nicklist\n"
+           "  show all values which contain \"red\":\n"
+           "    /fset =red\n"
+           "  show all integer options in irc plugin:\n"
+           "    /fset c:${name} =~ ^irc.* && ${type_en} == integer"),
         "-bar"
         " || -toggle_bar"
         " || -refresh"
