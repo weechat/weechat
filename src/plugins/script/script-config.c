@@ -34,9 +34,6 @@
 
 
 struct t_config_file *script_config_file = NULL;
-struct t_config_section *script_config_section_look = NULL;
-struct t_config_section *script_config_section_color = NULL;
-struct t_config_section *script_config_section_scripts = NULL;
 
 /* script config, look section */
 
