@@ -32,6 +32,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix infinite loop when the terminal is closed on the secure password prompt (issue #1010)
   * buflist: fix long mouse gestures
   * buflist: fix slow switch of buffer when there are a lot of buffers opened (issue #998)
   * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)

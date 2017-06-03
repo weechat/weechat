@@ -104,8 +104,8 @@ gui_main_get_password (const char **prompt, char *password, int size)
         /* enter */
         if (ch == '\n')
             break;
-        /* ctrl-C */
-        if (ch == 3)
+        /* terminal lost or ctrl-C */
+        if ((ch == ERR) || (ch == 3))
         {
             password[0] = 3;
             i = 1;
