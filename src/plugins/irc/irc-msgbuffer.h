@@ -32,12 +32,6 @@ enum t_irc_msgbuffer_target
 
 struct t_irc_server;
 
-struct t_irc_msgbuffer
-{
-    char *message;                      /* IRC message                       */
-    enum t_irc_msgbuffer_target target; /* target buffer                     */
-};
-
 extern struct t_gui_buffer *irc_msgbuffer_get_target_buffer (struct t_irc_server *server,
                                                              const char *nick,
                                                              const char *message,
