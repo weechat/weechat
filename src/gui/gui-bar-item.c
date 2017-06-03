@@ -81,8 +81,6 @@ char *gui_bar_items_default_for_bars[][2] =
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
 
-struct t_hdata *gui_bar_item_hdata_bar_item = NULL;
-
 
 /*
  * Checks if a bar item pointer is valid.
