@@ -83,9 +83,6 @@ extern const char *gui_completion_get_string (struct t_gui_completion *completio
 extern struct t_hdata *gui_completion_hdata_completion_cb (const void *pointer,
                                                            void *data,
                                                            const char *hdata_name);
-extern struct t_hdata *gui_completion_hdata_completion_partial_cb (const void *pointer,
-                                                                   void *data,
-                                                                   const char *hdata_name);
 extern void gui_completion_print_log (struct t_gui_completion *completion);
 
 #endif /* WEECHAT_GUI_COMPLETION_H */

@@ -1399,31 +1399,6 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns hdata for completion word.
- */
-
-struct t_hdata *
-gui_completion_hdata_completion_word_cb (const void *pointer, void *data,
-                                         const char *hdata_name)
-{
-    struct t_hdata *hdata;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-
-    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",
-                       0, 0, NULL, NULL);
-    if (hdata)
-    {
-        HDATA_VAR(struct t_gui_completion_word, word, STRING, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_word, nick_completion, CHAR, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_word, count, INTEGER, 0, NULL, NULL);
-    }
-    return hdata;
-}
-
-/*
  * Prints list of completion words in WeeChat log file (usually for crash dump).
  */
 
