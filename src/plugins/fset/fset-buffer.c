@@ -62,9 +62,21 @@ fset_buffer_set_title ()
 
     snprintf (str_title, sizeof (str_title),
               _("%s | %d/%d%s | "
-                "Key(input): alt+'-'(-)=subtract 1, alt+'+'(+)=add 1, "
-                "alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, "
-                "alt+enter(s)=set, alt+f,alt+a(a)=append"),
+                "Key(input): "
+                "alt+space=toggle boolean, "
+                "alt+'-'(-)=subtract 1, "
+                "alt+'+'(+)=add 1, "
+                "alt+f,alt+r(r)=reset, "
+                "alf+f,alt+u(u)=unset, "
+                "alt+enter(s)=set, "
+                "alt+f,alt+a(a)=append "
+                "alt+','=mark/unmark "
+                "shift+down=mark/move down "
+                "shift+up=mark/move up "
+                "($)=refresh "
+                "($$)=unmark/refresh "
+                "alt+v(v)=toggle help bar "
+                "(q)=close buffer"),
               (fset_option_filter) ? fset_option_filter : "*",
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
               num_options,
