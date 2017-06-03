@@ -571,7 +571,7 @@ fset_command_init ()
            "                $   refresh options (keep marked options)\n"
            "                $$  refresh options (unmark all options)\n"
            "                v   toggle help bar\n"
-           "                q  close fset buffer\n"
+           "                q   close fset buffer\n"
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "
            "\"q\" closes the fset buffer while \" q\" searches all options "
