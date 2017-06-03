@@ -957,7 +957,7 @@ fset_buffer_init ()
         return 0;
 
     fset_buffer_hashtable_extra_vars = weechat_hashtable_new (
-        32,
+        128,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING,
         NULL,
