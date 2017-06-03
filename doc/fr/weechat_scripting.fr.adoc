@@ -1063,12 +1063,11 @@ xxx,irc_in2_yyy::
 def join_cb(data, signal, signal_data):
     # signal est par exemple : "freenode,irc_in2_join"
     # signal_data est le message IRC, par exemple : ":nick!user@host JOIN :#canal"
-    nick = weechat.info_get("irc_nick_from_host", signal_data)
     server = signal.split(",")[0]
-    channel = signal_data.split(":")[-1]
-    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "Eheh, %s a rejoint le canal !" % nick)
+        weechat.prnt(buffer, "%s (%s) a rejoint ce canal !" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # il est pratique ici d'utiliser "*" comme serveur, pour intercepter les

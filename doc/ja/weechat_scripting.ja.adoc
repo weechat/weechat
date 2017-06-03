@@ -1047,12 +1047,11 @@ xxx,irc_in2_yyy::
 def join_cb(data, signal, signal_data):
     # シグナル、例えば: "freenode,irc_in2_join"
     # signal_data は IRC メッセージ、例えば: ":nick!user@host JOIN :#channel"
-    nick = weechat.info_get("irc_nick_from_host", signal_data)
     server = signal.split(",")[0]
-    channel = signal_data.split(":")[-1]
-    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "Eheh, %s has joined this channel!" % nick)
+        weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # 全ての IRC サーバに対する JOIN メッセージをキャッチするにはサーバの指定に

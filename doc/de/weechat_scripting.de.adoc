@@ -1056,17 +1056,17 @@ xxxx,irc_in_yyy::
 xxx,irc_in2_yyy::
     Signal wird gesendet nachdem die Nachricht verarbeitet wurde.
 
+// TRANSLATION MISSING
 [source,python]
 ----
 def join_cb(data, signal, signal_data):
     # Das Signal lautet: "freenode,irc_in2_join"
     # signal_data enthält die IRC Nachricht, zum Beispiel: ":nick!user@host JOIN :#channel"
-    nick = weechat.info_get("irc_nick_from_host", signal_data)
     server = signal.split(",")[0]
-    channel = signal_data.split(":")[-1]
-    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "Holla, %s hat den Channel betreten!" % nick)
+        weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # es ist sinnvoll als Server "*" anzugeben um alle JOIN Nachrichten von allen
