@@ -129,7 +129,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name]
+** 説明: pass:none[バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールドはバッファの hdata 変数 ("var")、IRC サーバの hdata 変数 ("irc_server.var")、IRC チャンネルの hdata 変数 ("irc_channel.var") のどれかです; フィールドの先頭に "-" 文字を付けることでソート順を逆にすることも可能です。大文字小文字を区別せずに比較を行うには "~" 文字を使います; 例: "-~short_name" バッファの短縮名を使い、大文字小文字を区別せずにソートして、順番を逆にします]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"number,-active"+`
