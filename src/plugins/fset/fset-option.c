@@ -30,13 +30,22 @@
 #include "fset-config.h"
 
 
+/* options */
 struct t_arraylist *fset_options = NULL;
 int fset_option_count_marked = 0;
 struct t_hashtable *fset_option_max_length_field = NULL;
+
+/* filters */
 char *fset_option_filter = NULL;
+struct t_hashtable *fset_option_filter_hashtable_pointers = NULL;
+struct t_hashtable *fset_option_filter_hashtable_extra_vars = NULL;
+struct t_hashtable *fset_option_filter_hashtable_options = NULL;
+
+/* refresh */
 int fset_option_config_changed_timer = 0;
 struct t_hook *fset_option_timer_hook = NULL;
 
+/* types */
 char *fset_option_type_string[FSET_OPTION_NUM_TYPES] =
 { N_("boolean"), N_("integer"), N_("string"), N_("color") };
 char *fset_option_type_string_short[FSET_OPTION_NUM_TYPES] =
@@ -217,7 +226,8 @@ int
 fset_option_match_filters (const char *config_name, const char *section_name,
                            struct t_fset_option *fset_option)
 {
-    int length;
+    int length, match;
+    char *result;
 
     if (!weechat_config_boolean (fset_config_look_show_plugin_description)
         && (strcmp (config_name, "plugins") == 0)
@@ -229,12 +239,49 @@ fset_option_match_filters (const char *config_name, const char *section_name,
     if (!fset_option_filter || !fset_option_filter[0])
         return 1;
 
-    if (strncmp (fset_option_filter, "f:", 2) == 0)
+    if (strncmp (fset_option_filter, "c:", 2) == 0)
+    {
+        weechat_hashtable_set (fset_option_filter_hashtable_pointers,
+                               "fset_option", fset_option);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "name", fset_option->name);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "parent_name", fset_option->parent_name);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "type", _(fset_option_type_string[fset_option->type]));
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "type_en", fset_option_type_string[fset_option->type]);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "value", fset_option->value);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "parent_value", fset_option->parent_value);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "min", fset_option->min);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "max", fset_option->max);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "description",
+                               (fset_option->description) ? _(fset_option->description) : "");
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "description_en", fset_option->description);
+        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
+                               "string_values", fset_option->string_values);
+        result = weechat_string_eval_expression (
+            fset_option_filter + 2,
+            fset_option_filter_hashtable_pointers,
+            fset_option_filter_hashtable_extra_vars,
+            fset_option_filter_hashtable_options);
+        match = (result && (strcmp (result, "1") == 0)) ? 1 : 0;
+        if (result)
+            free (result);
+        return match;
+    }
+    else if (strncmp (fset_option_filter, "f:", 2) == 0)
     {
         /* filter by config name */
         return (weechat_strcasecmp (config_name, fset_option_filter + 2) == 0) ? 1 : 0;
     }
-    if (strncmp (fset_option_filter, "t:", 2) == 0)
+    else if (strncmp (fset_option_filter, "t:", 2) == 0)
     {
         /* filter by type */
         length = strlen (fset_option_filter + 2);
@@ -248,7 +295,6 @@ fset_option_match_filters (const char *config_name, const char *section_name,
                             fset_option_filter + 2,
                             length) == 0))) ? 1 : 0;
     }
-
     else if (strncmp (fset_option_filter, "d==", 3) == 0)
     {
         /* filter by modified values, exact value */
@@ -1309,8 +1355,54 @@ int
 fset_option_init ()
 {
     fset_options = fset_option_get_arraylist_options ();
+    if (!fset_options)
+        return 0;
     fset_option_count_marked = 0;
     fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
+    if (!fset_option_max_length_field)
+    {
+        weechat_arraylist_free (fset_options);
+        return 0;
+    }
+
+    fset_option_filter_hashtable_pointers = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    if (!fset_option_filter_hashtable_pointers)
+    {
+        weechat_arraylist_free (fset_options);
+        weechat_hashtable_free (fset_option_max_length_field);
+        return 0;
+    }
+    fset_option_filter_hashtable_extra_vars = weechat_hashtable_new (
+        128,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!fset_option_filter_hashtable_extra_vars)
+    {
+        weechat_arraylist_free (fset_options);
+        weechat_hashtable_free (fset_option_max_length_field);
+        weechat_hashtable_free (fset_option_filter_hashtable_pointers);
+        return 0;
+    }
+    fset_option_filter_hashtable_options = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (!fset_option_filter_hashtable_options)
+    {
+        weechat_arraylist_free (fset_options);
+        weechat_hashtable_free (fset_option_max_length_field);
+        weechat_hashtable_free (fset_option_filter_hashtable_pointers);
+        weechat_hashtable_free (fset_option_filter_hashtable_extra_vars);
+        return 0;
+    }
+    weechat_hashtable_set (fset_option_filter_hashtable_options,
+                           "type", "condition");
 
     return 1;
 }
@@ -1337,5 +1429,20 @@ fset_option_end ()
     {
         free (fset_option_filter);
         fset_option_filter = NULL;
+    }
+    if (fset_option_filter_hashtable_pointers)
+    {
+        weechat_hashtable_free (fset_option_filter_hashtable_pointers);
+        fset_option_filter_hashtable_pointers = NULL;
+    }
+    if (fset_option_filter_hashtable_extra_vars)
+    {
+        weechat_hashtable_free (fset_option_filter_hashtable_extra_vars);
+        fset_option_filter_hashtable_extra_vars = NULL;
+    }
+    if (fset_option_filter_hashtable_options)
+    {
+        weechat_hashtable_free (fset_option_filter_hashtable_options);
+        fset_option_filter_hashtable_options = NULL;
     }
 }
