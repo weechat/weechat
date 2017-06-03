@@ -6061,12 +6061,11 @@ weechat.config_option_rename(option, "new_name")
 
 ==== config_option_get_string
 
-_WeeChat ≥ 1.9._
+_WeeChat バージョン 1.9 以上で利用可。_
 
-// TRANSLATION MISSING
-Return string value of an option property.
+オプションプロパティの文字列値を返す。
 
-Prototype:
+プロトタイプ:
 
 [source,C]
 ----
@@ -6076,22 +6075,20 @@ const char *weechat_config_option_get_string (struct t_config_option *option,
 
 引数:
 
-// TRANSLATION MISSING
 * _option_: オプションへのポインタ
 * _property_: プロパティ名:
-** _name_: option name
-** _parent_name_: name of parent option
-** _type_: option type, one of:
+** _name_: オプション名
+** _parent_name_: 親オプション名
+** _type_: オプション型、以下のリストのどれか 1 つ:
 *** _boolean_
 *** _integer_
 *** _string_
 *** _color_
-** _description_: option description
+** _description_: オプションの説明
 
 戻り値:
 
-// TRANSLATION MISSING
-* string value of property
+* プロパティの文字列値
 
 C 言語での使用例:
 
@@ -16039,12 +16036,11 @@ for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
 ----
 
-// TRANSLATION MISSING
 ==== hdata_compare
 
 _WeeChat バージョン 1.9 以上で利用可。_
 
-Compare a hdata variable of two objects.
+2 つのオブジェクトの hdata 変数を比較。
 
 プロトタイプ:
 
@@ -16056,17 +16052,17 @@ int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2
 引数:
 
 * _hdata_: hdata へのポインタ
-* _pointer1_: pointer to first WeeChat/plugin object
-* _pointer2_: pointer to second WeeChat/plugin object
-* _name_: variable name; for arrays, the name can be "N|name" where N is
-  the index in array (starting at 0), for example: "2|name"
-* _case_sensitive_: 1 for case sensitive comparison of strings, otherwise 0
+* _pointer1_: 1 番目の WeeChat およびプラグインオブジェクトへのポインタ
+* _pointer2_: 2 番目の WeeChat およびプラグインオブジェクトへのポインタ
+* _name_: 変数名; 配列の場合、変数名を "N|name" のように指定できます。ここで
+  N は配列のインデックス番号です (番号は 0 から始まります)。例: "2|name"
+* _case_sensitive_: 大文字小文字を区別する場合 1、それ以外の場合 0
 
 戻り値:
 
-* -1 if variable1 < variable2
-* 0 if variable1 == variable2
-* 1 if variable1 > variable2
+* variable1 < variable2 の場合は -1
+* variable1 == variable2 の場合は 0
+* variable1 > variable2 の場合は 1
 
 C 言語での使用例:
 

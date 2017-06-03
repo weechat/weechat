@@ -3483,10 +3483,8 @@ _var_
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | 変数                 | 型      | 説明
-// TRANSLATION MISSING
-| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
-// TRANSLATION MISSING
-| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| irc_server           | pointer | IRC サーバへのポインタ (`${irc_server.name}` のように使うことで、"irc_server" 型の hdata に含まれる変数を使うことが可能です)
+| irc_channel          | pointer | IRC チャンネルへのポインタ (`${irc_channel.name}` のように使うことで、"irc_channel" 型の hdata に含まれる変数を使うことが可能です)
 | server               | string  | サーバの名前 (例: "freenode")
 | tags                 | string  | メッセージ内のタグ (使われることはまれです)
 | message_without_tags | string  | タグを含まないメッセージ
