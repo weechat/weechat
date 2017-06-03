@@ -600,7 +600,7 @@ fset_command_init ()
         " || -set"
         " || -append"
         " || -mark"
-        " || *|f:|s:|d|d:|d=|d==|=|==",
+        " || *|c:|f:|s:|d|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);
 }
