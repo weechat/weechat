@@ -1773,13 +1773,12 @@ relay_irc_close_connection (struct t_relay_client *client)
 void
 relay_irc_alloc (struct t_relay_client *client)
 {
-    struct t_relay_irc_data *irc_data;
     char *password;
 
     password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
                                                NULL, NULL, NULL);
 
-    client->protocol_data = malloc (sizeof (*irc_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_irc_data));
     if (client->protocol_data)
     {
         RELAY_IRC_DATA(client, address) = strdup ("weechat.relay.irc");
@@ -1810,9 +1809,7 @@ void
 relay_irc_alloc_with_infolist (struct t_relay_client *client,
                                struct t_infolist *infolist)
 {
-    struct t_relay_irc_data *irc_data;
-
-    client->protocol_data = malloc (sizeof (*irc_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_irc_data));
     if (client->protocol_data)
     {
         RELAY_IRC_DATA(client, address) = strdup (weechat_infolist_string (infolist, "address"));

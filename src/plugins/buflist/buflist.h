@@ -33,7 +33,6 @@ extern struct t_hdata *buflist_hdata_hotlist;
 extern void buflist_add_bar ();
 extern void buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
                                             void **irc_server, void **irc_channel);
-extern struct t_gui_hotlist *buflist_search_hotlist_for_buffer (struct t_gui_buffer *buffer);
 extern struct t_arraylist *buflist_sort_buffers ();
 
 #endif /* WEECHAT_BUFLIST_H */

@@ -21,7 +21,6 @@
 #define WEECHAT_EXEC_CONFIG_H 1
 
 #define EXEC_CONFIG_NAME "exec"
-#define EXEC_CONFIG_SECTION_EXEC "exec"
 
 extern struct t_config_file *exec_config_file;
 

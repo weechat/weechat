@@ -337,7 +337,7 @@ char *irc_server_fingerprint_str_sizes ();
 #endif /* HAVE_GNUTLS */
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
-extern void irc_server_autojoin_channels ();
+extern void irc_server_autojoin_channels (struct t_irc_server *server);
 extern int irc_server_recv_cb (const void *pointer, void *data, int fd);
 extern int irc_server_timer_sasl_cb (const void *pointer, void *data,
                                      int remaining_calls);

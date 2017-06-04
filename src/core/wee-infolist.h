@@ -22,6 +22,8 @@
 
 #include <time.h>
 
+struct t_weechat_plugin;
+
 /* list structures */
 
 enum t_infolist_type

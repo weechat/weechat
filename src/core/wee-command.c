@@ -1740,7 +1740,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcasecmp (argv[1], "color") == 0)
     {
-        gui_color_dump (buffer);
+        gui_color_dump ();
         return WEECHAT_RC_OK;
     }
 

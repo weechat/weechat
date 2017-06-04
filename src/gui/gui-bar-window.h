@@ -20,10 +20,11 @@
 #ifndef WEECHAT_GUI_BAR_WINDOW_H
 #define WEECHAT_GUI_BAR_WINDOW_H 1
 
+#include "gui-bar.h"
+
 struct t_infolist;
 struct t_gui_buffer;
 struct t_gui_window;
-enum t_gui_bar_position;
 
 struct t_gui_bar_window_coords
 {

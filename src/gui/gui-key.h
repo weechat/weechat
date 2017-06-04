@@ -140,6 +140,6 @@ extern void gui_key_print_log (struct t_gui_buffer *buffer);
 
 /* key functions (GUI dependent) */
 
-extern void gui_key_default_bindings ();
+extern void gui_key_default_bindings (int context);
 
 #endif /* WEECHAT_GUI_KEY_H */

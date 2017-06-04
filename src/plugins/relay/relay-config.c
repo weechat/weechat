@@ -776,7 +776,9 @@ relay_config_init ()
            "interfaces, use \"127.0.0.1\" to allow connections from "
             "local machine only)"),
         NULL, 0, 0, "", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, NULL,
+        &relay_config_change_network_bind_address_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_network_clients_purge_delay = weechat_config_new_option (
         relay_config_file, ptr_section,
         "clients_purge_delay", "integer",

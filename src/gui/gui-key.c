@@ -1007,28 +1007,6 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
- * Callback for replacing values in string with a hashtable.
- */
-
-char *
-gui_key_focus_command_replace_cb (void *data, const char *text)
-{
-    struct t_hashtable *ptr_hashtable;
-    const char *ptr_value;
-
-    ptr_hashtable = (struct t_hashtable *)data;
-
-    if (ptr_hashtable)
-    {
-        ptr_value = hashtable_get (ptr_hashtable, text);
-        if (ptr_value)
-            return strdup (ptr_value);
-    }
-
-    return NULL;
-}
-
-/*
  * Runs command according to focus.
  *
  * Returns:

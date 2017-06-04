@@ -42,8 +42,6 @@
 #define SALT_SIZE 8
 
 struct t_config_file *secure_config_file = NULL;
-struct t_config_section *secure_config_section_crypt = NULL;
-struct t_config_section *secure_config_section_data = NULL;
 
 struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;

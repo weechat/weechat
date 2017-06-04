@@ -22,7 +22,6 @@
 
 #define weechat_plugin weechat_fifo_plugin
 #define FIFO_PLUGIN_NAME "fifo"
-#define FIFO_OPTION_NAME "fifo"
 
 extern struct t_weechat_plugin *weechat_fifo_plugin;
 extern int fifo_quiet;
