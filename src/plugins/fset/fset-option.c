@@ -248,9 +248,7 @@ fset_option_match_filters (const char *config_name, const char *section_name,
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "parent_name", fset_option->parent_name);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "type", _(fset_option_type_string[fset_option->type]));
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "type_en", fset_option_type_string[fset_option->type]);
+                               "type", fset_option_type_string_short[fset_option->type]);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
                                "default_value", fset_option->default_value);
         weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,

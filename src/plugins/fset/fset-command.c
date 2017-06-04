@@ -515,9 +515,9 @@ fset_command_init ()
            "               ==xxx   show only options with exact value \"xxx\"\n"
            "               c:xxx   show only options matching the evaluated "
            "condition \"xxx\", using following variables: name, parent_name, "
-           "type, type_en, default_value, default_value_undef, value, "
-           "value_undef, value_changed, parent_value, min, max, description, "
-           "description_en, string_values\n"
+           "type (bool/int/str/col), default_value, default_value_undef, "
+           "value, value_undef, value_changed, parent_value, min, max, "
+           "description, description_en, string_values\n"
            "               s:x,y   sort options by fields x,y "
            "(see /help fset.look.sort)\n"
            "               s:      reset sort to its default value "
@@ -586,7 +586,7 @@ fset_command_init ()
            "  show all values which contain \"red\":\n"
            "    /fset =red\n"
            "  show all integer options in irc plugin:\n"
-           "    /fset c:${name} =~ ^irc.* && ${type_en} == integer"),
+           "    /fset c:${name} =~ ^irc.* && ${type} == int"),
         "-bar"
         " || -toggle_bar"
         " || -refresh"
