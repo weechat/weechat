@@ -38,6 +38,7 @@ Bug fixes::
   * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)
   * buflist: fix crash on drag & drop of buffers
   * irc: fix memory leak in case of error in "ecdsa-nist256p-challenge" SASL mechanism
+  * relay: rebind on address after option relay.network.bind_address is changed
   * relay: fix parsing of CAP command arguments in irc protocol (issue #995)
 
 [[v1.8]]
