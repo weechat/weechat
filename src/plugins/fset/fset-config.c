@@ -121,7 +121,10 @@ fset_config_change_show_plugin_description_cb (const void *pointer, void *data,
     (void) option;
 
     if (fset_buffer)
+    {
+        fset_buffer_selected_line = 0;
         fset_buffer_refresh (1);
+    }
 }
 
 /*
