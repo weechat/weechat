@@ -61,7 +61,8 @@ fset_buffer_set_title ()
     num_options = weechat_arraylist_size (fset_options);
 
     snprintf (str_title, sizeof (str_title),
-              _("%s | %d/%d%s | "
+              _("Filter: %s | %d/%d%s | "
+                "Sort: %s | "
                 "Key(input): "
                 "alt+space=toggle boolean, "
                 "alt+'-'(-)=subtract 1, "
@@ -80,7 +81,8 @@ fset_buffer_set_title ()
               (fset_option_filter) ? fset_option_filter : "*",
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
               num_options,
-              str_marked);
+              str_marked,
+              weechat_config_string (fset_config_look_sort));
 
     weechat_buffer_set (fset_buffer, "title", str_title);
 }
