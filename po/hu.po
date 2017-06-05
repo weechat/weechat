@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-02 19:56+0200\n"
+"POT-Creation-Date: 2017-06-05 14:55+0200\n"
 "PO-Revision-Date: 2017-01-06 22:03+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4441,6 +4441,14 @@ msgstr "%s nem sikerült a szervert létrehozni\n"
 #, fuzzy
 msgid "Buffers list"
 msgstr "hotlist törlése"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
 
 #, fuzzy
 msgid "bar item with list of buffers"

@@ -351,6 +351,44 @@ buflist_sort_buffers ()
 }
 
 /*
+ * Callback called when a Perl script is loaded: if the script is buffers.pl,
+ * then we display a warning.
+ */
+
+int
+buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
+                          const char *type_data, void *signal_data)
+{
+    int length;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    if (!signal_data)
+        return WEECHAT_RC_OK;
+
+    length = strlen (signal_data);
+    if ((length >= 10)
+        && (strncmp (signal_data + length - 10, "buffers.pl", 10) == 0))
+    {
+        weechat_printf (NULL,
+                        _("%sbuflist: warning: the script buffers.pl is "
+                          "loaded and provides a bar with list of buffers "
+                          "similar to the buflist plugin; you may want to "
+                          "uninstall the script buffers.pl "
+                          "(/script remove buffers.pl) or disable/unload the "
+                          "buflist plugin; see WeeChat release notes for more "
+                          "information"),
+                        weechat_prefix ("error"));
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes buflist plugin.
  */
 
@@ -420,8 +458,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_hashtable_set (keys, "__quiet", "1");
         weechat_key_bind ("mouse", keys);
     }
-
     weechat_hashtable_free (keys);
+
+    weechat_hook_signal ("perl_script_loaded",
+                         &buflist_script_loaded_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

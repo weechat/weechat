@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-02 19:56+0200\n"
+"POT-Creation-Date: 2017-06-05 14:55+0200\n"
 "PO-Revision-Date: 2017-05-13 22:06+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4903,6 +4903,14 @@ msgstr "%s%s: nemohu vytvořit server \"%s\""
 
 msgid "Buffers list"
 msgstr "Seznam bufferů"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
 
 #, fuzzy
 msgid "bar item with list of buffers"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-02 19:56+0200\n"
+"POT-Creation-Date: 2017-06-05 14:55+0200\n"
 "PO-Revision-Date: 2017-06-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5400,6 +5400,14 @@ msgstr "%s%s: エラー: 言語 \"%s\" のスペラーを作成できません"
 
 msgid "Buffers list"
 msgstr "バッファリスト"
+
+#, c-format
+msgid ""
+"%sbuflist: warning: the script buffers.pl is loaded and provides a bar with "
+"list of buffers similar to the buflist plugin; you may want to uninstall the "
+"script buffers.pl (/script remove buffers.pl) or disable/unload the buflist "
+"plugin; see WeeChat release notes for more information"
+msgstr ""
 
 msgid "bar item with list of buffers"
 msgstr "バッファのリストを表示するバー要素"

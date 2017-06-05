@@ -26,6 +26,7 @@ New features::
 Improvements::
 
   * core: allow index for hdata arrays in evaluation of expressions
+  * buflist: display a warning when the script "buffers.pl" is loaded
   * buflist: add support of char "~" in option buflist.look.sort for case insensitive comparison
   * buflist: add variable `${current_buffer}` (boolean "0" / "1") in bar item evaluation
   * trigger: add "irc_server" and "irc_channel" pointers in data for IRC signal/modifier hooks
