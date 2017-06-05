@@ -779,7 +779,7 @@ passphrase: change the passphrase (without passphrase, data is stored as plain t
        set: add or change secured data
        del: delete secured data
 
-Without argument, this command displays secured data in a new buffer.
+Without argument, this command displays secured data in a new buffer. You can use ALT-v to toggle the display of secure data in the buffer"
 
 Keys on secure buffer:
   alt+v  toggle values
