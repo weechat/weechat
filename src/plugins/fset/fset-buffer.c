@@ -54,15 +54,17 @@ fset_buffer_set_title ()
     if (fset_option_count_marked > 0)
     {
         snprintf (str_marked, sizeof (str_marked),
-                  " (*: %d)",
-                  fset_option_count_marked);
+                  " (*: %s%d%s)",
+                  weechat_color (weechat_config_string (fset_config_color_title_marked_options)),
+                  fset_option_count_marked,
+                  weechat_color ("bar_fg"));
     }
 
     num_options = weechat_arraylist_size (fset_options);
 
     snprintf (str_title, sizeof (str_title),
-              _("Filter: %s | %d/%d%s | "
-                "Sort: %s | "
+              _("Filter: %s%s%s | %s%d%s/%s%d%s%s | "
+                "Sort: %s%s%s | "
                 "Key(input): "
                 "alt+space=toggle boolean, "
                 "alt+'-'(-)=subtract 1, "
@@ -70,19 +72,27 @@ fset_buffer_set_title ()
                 "alt+f,alt+r(r)=reset, "
                 "alf+f,alt+u(u)=unset, "
                 "alt+enter(s)=set, "
-                "alt+f,alt+a(a)=append "
-                "alt+','=mark/unmark "
-                "shift+down=mark/move down "
-                "shift+up=mark/move up "
-                "($)=refresh "
-                "($$)=unmark/refresh "
-                "alt+v(v)=toggle help bar "
+                "alt+f,alt+a(a)=append, "
+                "alt+','=mark/unmark, "
+                "shift+down=mark and move down, "
+                "shift+up=mark and move up, "
+                "($)=refresh, "
+                "($$)=unmark/refresh, "
+                "alt+v(v)=toggle help bar, "
                 "(q)=close buffer"),
+              weechat_color (weechat_config_string (fset_config_color_title_filter)),
               (fset_option_filter) ? fset_option_filter : "*",
+              weechat_color ("bar_fg"),
+              weechat_color (weechat_config_string (fset_config_color_title_current_option)),
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
+              weechat_color ("bar_fg"),
+              weechat_color (weechat_config_string (fset_config_color_title_count_options)),
               num_options,
+              weechat_color ("bar_fg"),
               str_marked,
-              weechat_config_string (fset_config_look_sort));
+              weechat_color (weechat_config_string (fset_config_color_title_sort)),
+              weechat_config_string (fset_config_look_sort),
+              weechat_color ("bar_fg"));
 
     weechat_buffer_set (fset_buffer, "title", str_title);
 }

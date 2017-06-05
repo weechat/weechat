@@ -27,6 +27,7 @@ struct t_fset_option;
 extern struct t_gui_buffer *fset_buffer;
 extern int fset_buffer_selected_line;
 
+extern void fset_buffer_set_title ();
 extern void fset_buffer_display_line (int y,
                                       struct t_fset_option *fset_option);
 extern void fset_buffer_refresh (int clear);

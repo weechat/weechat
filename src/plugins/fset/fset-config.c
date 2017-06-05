@@ -75,6 +75,11 @@ struct t_config_option *fset_config_color_quotes_changed[2];
 struct t_config_option *fset_config_color_section[2];
 struct t_config_option *fset_config_color_section_changed[2];
 struct t_config_option *fset_config_color_string_values[2];
+struct t_config_option *fset_config_color_title_count_options;
+struct t_config_option *fset_config_color_title_current_option;
+struct t_config_option *fset_config_color_title_filter;
+struct t_config_option *fset_config_color_title_marked_options;
+struct t_config_option *fset_config_color_title_sort;
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_unmarked[2];
 struct t_config_option *fset_config_color_value[2];
@@ -233,6 +238,22 @@ fset_config_change_color_cb (const void *pointer, void *data,
     (void) option;
 
     fset_buffer_refresh (0);
+}
+
+/*
+ * Callback for changes on title color options.
+ */
+
+void
+fset_config_change_title_color_cb (const void *pointer, void *data,
+                                   struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    fset_buffer_set_title ();
 }
 
 /*
@@ -738,6 +759,47 @@ fset_config_init ()
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_title_count_options = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "title_count_options", "color",
+        N_("color for the count of options found with the current filter "
+           "in title of buffer"),
+        NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_title_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_title_current_option = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "title_current_option", "color",
+        N_("color for current option number in title of buffer"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_title_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_title_filter = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "title_filter", "color",
+        N_("color for filter in title of buffer"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_title_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_title_marked_options = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "title_marked_options", "color",
+        N_("color for number of marked options in title of buffer"),
+        NULL, 0, 0, "lightgreen", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_title_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_title_sort = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "title_sort", "color",
+        N_("color for sort in title of buffer"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_title_color_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_color_type[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
