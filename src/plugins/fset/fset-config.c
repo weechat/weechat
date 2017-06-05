@@ -54,6 +54,8 @@ struct t_config_option *fset_config_format_option_current;
 
 struct t_config_option *fset_config_color_default_value[2];
 struct t_config_option *fset_config_color_description[2];
+struct t_config_option *fset_config_color_file[2];
+struct t_config_option *fset_config_color_file_changed[2];
 struct t_config_option *fset_config_color_help_default_value;
 struct t_config_option *fset_config_color_help_description;
 struct t_config_option *fset_config_color_help_name;
@@ -64,10 +66,14 @@ struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
 struct t_config_option *fset_config_color_name[2];
 struct t_config_option *fset_config_color_name_changed[2];
+struct t_config_option *fset_config_color_option[2];
+struct t_config_option *fset_config_color_option_changed[2];
 struct t_config_option *fset_config_color_parent_name[2];
 struct t_config_option *fset_config_color_parent_value[2];
 struct t_config_option *fset_config_color_quotes[2];
 struct t_config_option *fset_config_color_quotes_changed[2];
+struct t_config_option *fset_config_color_section[2];
+struct t_config_option *fset_config_color_section_changed[2];
 struct t_config_option *fset_config_color_string_values[2];
 struct t_config_option *fset_config_color_type[2];
 struct t_config_option *fset_config_color_unmarked[2];
@@ -436,6 +442,38 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_color_file[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "file", "color",
+        N_("color for file"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_file[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "file_selected", "color",
+        N_("color for file on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_file_changed[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "file_changed", "color",
+        N_("color for file if value is changed"),
+        NULL, 0, 0, "brown", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_file_changed[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "file_changed_selected", "color",
+        N_("color for file if value is changed on the selected line"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_color_help_default_value = weechat_config_new_option (
         fset_config_file, ptr_section,
         "help_default_value", "color",
@@ -556,6 +594,38 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_color_option[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "option", "color",
+        N_("color for option"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_option[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "option_selected", "color",
+        N_("color for option on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_option_changed[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "option_changed", "color",
+        N_("color for option if value is changed"),
+        NULL, 0, 0, "brown", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_option_changed[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "option_changed_selected", "color",
+        N_("color for option if value is changed on the selected line"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
    fset_config_color_parent_name[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_name", "color",
@@ -618,6 +688,38 @@ fset_config_init ()
         N_("color for quotes around string values which are changed "
            "on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_section[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "section", "color",
+        N_("color for section"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_section[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "section_selected", "color",
+        N_("color for section on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_section_changed[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "section_changed", "color",
+        N_("color for section if value is changed"),
+        NULL, 0, 0, "brown", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_section_changed[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "section_changed_selected", "color",
+        N_("color for section if value is changed on the selected line"),
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);

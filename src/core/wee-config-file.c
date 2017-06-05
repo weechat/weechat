@@ -1824,7 +1824,11 @@ config_file_option_get_string (struct t_config_option *option,
     if (!option || !property)
         return NULL;
 
-    if (string_strcasecmp (property, "name") == 0)
+    if (string_strcasecmp (property, "config_name") == 0)
+        return option->config_file->name;
+    else if (string_strcasecmp (property, "section_name") == 0)
+        return option->section->name;
+    else if (string_strcasecmp (property, "name") == 0)
         return option->name;
     else if (string_strcasecmp (property, "parent_name") == 0)
         return option->parent_name;

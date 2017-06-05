@@ -34,7 +34,10 @@ enum t_fset_option_type
 
 struct t_fset_option
 {
-    char *name;                          /* option name                     */
+    char *file;                          /* config file name (eg: "weechat")*/
+    char *section;                       /* section name (eg: "look")       */
+    char *option;                        /* option name                     */
+    char *name;                          /* option full name: file.sect.opt */
     char *parent_name;                   /* parent option name              */
     enum t_fset_option_type type;        /* option type                     */
     char *default_value;                 /* option default value            */

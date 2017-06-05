@@ -140,6 +140,66 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     weechat_hashtable_set (fset_buffer_hashtable_pointers,
                            "fset_option", fset_option);
 
+    /* file */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "file");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__file", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (
+                  weechat_config_string (
+                      (value_changed) ?
+                      fset_config_color_name_changed[selected_line] :
+                      fset_config_color_name[selected_line])),
+              (ptr_field) ? ptr_field : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_file", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "file", 16);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "file", str_field);
+
+    /* section */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "section");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__section", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (
+                  weechat_config_string (
+                      (value_changed) ?
+                      fset_config_color_name_changed[selected_line] :
+                      fset_config_color_name[selected_line])),
+              (ptr_field) ? ptr_field : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_section", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "section", 16);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "section", str_field);
+
+    /* option */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "option");
+    snprintf (str_field, sizeof (str_field), "%s", ptr_field);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__option", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (
+                  weechat_config_string (
+                      (value_changed) ?
+                      fset_config_color_name_changed[selected_line] :
+                      fset_config_color_name[selected_line])),
+              (ptr_field) ? ptr_field : "");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_option", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "option", 16);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "option", str_field);
+
     /* name */
     ptr_field = weechat_hdata_string (fset_hdata_fset_option,
                                       fset_option, "name");
