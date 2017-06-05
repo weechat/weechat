@@ -225,7 +225,7 @@ fset_option_string_match (const char *string, const char *mask)
 int
 fset_option_match_filters (struct t_fset_option *fset_option)
 {
-    int length, match;
+    int match;
     char *result;
 
     if (!weechat_config_boolean (fset_config_look_show_plugin_description)
@@ -299,16 +299,9 @@ fset_option_match_filters (struct t_fset_option *fset_option)
     else if (strncmp (fset_option_filter, "t:", 2) == 0)
     {
         /* filter by type */
-        length = strlen (fset_option_filter + 2);
-        return ((length > 0)
-                && ((weechat_strncasecmp (
-                         fset_option_type_string[fset_option->type],
-                         fset_option_filter + 2,
-                         length) == 0)
-                    || (weechat_strncasecmp (
-                            _(fset_option_type_string[fset_option->type]),
-                            fset_option_filter + 2,
-                            length) == 0))) ? 1 : 0;
+        return (weechat_strcasecmp (
+                    fset_option_type_string_short[fset_option->type],
+                    fset_option_filter + 2) == 0) ? 1 : 0;
     }
     else if (strncmp (fset_option_filter, "d==", 3) == 0)
     {
