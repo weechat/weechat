@@ -6172,6 +6172,8 @@ Paramètres :
 
 * _option_ : pointeur vers l'option
 * _property_ : nom de la propriété :
+** _config_name_ : nom du fichier
+** _section_name_ : nom de la section
 ** _name_ : nom de l'option
 ** _parent_name_ : nom de l'option parente
 ** _type_ : type de l'option, un parmi ceux-ci :

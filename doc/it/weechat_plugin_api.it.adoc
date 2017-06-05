@@ -6275,6 +6275,8 @@ Argomenti:
 // TRANSLATION MISSING
 * _option_: puntatore all'opzione
 * _property_: nome della proprietà:
+** _config_name_: file name
+** _section_name_: section name
 ** _name_: option name
 ** _parent_name_: name of parent option
 ** _type_: option type, one of:

@@ -6073,6 +6073,8 @@ Arguments:
 
 * _option_: option pointer
 * _property_: property name:
+** _config_name_: file name
+** _section_name_: section name
 ** _name_: option name
 ** _parent_name_: name of parent option
 ** _type_: option type, one of:

@@ -6075,8 +6075,11 @@ const char *weechat_config_option_get_string (struct t_config_option *option,
 
 引数:
 
+// TRANSLATION MISSING
 * _option_: オプションへのポインタ
 * _property_: プロパティ名:
+** _config_name_: file name
+** _section_name_: section name
 ** _name_: オプション名
 ** _parent_name_: 親オプション名
 ** _type_: オプション型、以下のリストのどれか 1 つ:
