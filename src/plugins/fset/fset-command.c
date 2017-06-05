@@ -501,6 +501,7 @@ fset_command_init ()
            "filter can be used as input in fset buffer as well); allowed "
            "formats are:\n"
            "               *       show all options (no filter)\n"
+           "               xxx     show only options with \"xxx\" in name\n"
            "               f:xxx   show only configuration file \"xxx\"\n"
            "               t:xxx   show only type \"xxx\" (bool/int/str/col)\n"
            "               d       show only changed options\n"
