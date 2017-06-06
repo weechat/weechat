@@ -320,7 +320,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
             return rc;
     }
 
-    return 1;
+    return 0;
 }
 
 /*
