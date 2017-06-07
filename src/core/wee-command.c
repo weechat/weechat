@@ -5236,24 +5236,6 @@ COMMAND_CALLBACK(save)
 }
 
 /*
- * Displays a secured data.
- */
-
-void
-command_secure_display_data (void *data,
-                             struct t_hashtable *hashtable,
-                             const void *key, const void *value)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) hashtable;
-    (void) value;
-
-    if (key)
-        gui_chat_printf (NULL, "  %s", key);
-}
-
-/*
  * Callback for command "/secure": manage secured data
  */
 
