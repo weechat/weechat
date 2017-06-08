@@ -50,6 +50,7 @@ example:
 
     irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
 
+// TRANSLATION MISSING
 == FILES
 
 $HOME/.weechat/weechat.conf::
@@ -58,7 +59,6 @@ $HOME/.weechat/weechat.conf::
 $HOME/.weechat/plugins.conf::
     plugins configuration file
 
-// TRANSLATION MISSING
 $HOME/.weechat/sec.conf::
     configuration file with secured data
 
@@ -76,6 +76,9 @@ $HOME/.weechat/charset.conf::
 
 $HOME/.weechat/exec.conf::
     configuration file for _exec_ plugin
+
+$HOME/.weechat/fifo.conf::
+    configuration file for _fifo_ plugin
 
 $HOME/.weechat/irc.conf::
     configuration file for _irc_ plugin
