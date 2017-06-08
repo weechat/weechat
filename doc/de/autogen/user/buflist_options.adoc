@@ -80,6 +80,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** Beschreibung: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** Typ: integer
+** Werte: -1 .. 100
+** Standardwert: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** Beschreibung: pass:none[Bedingungen wann ein Buffer dargestellt werden soll (Hinweis: Inhalt ist evaluiert, siehe /help buflist); Beispielsweise werden Server-Buffer versteckt, sofern sie mit dem Core-Buffer zusammengefügt worden sind: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** Typ: Zeichenkette

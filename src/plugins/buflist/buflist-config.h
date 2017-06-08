@@ -32,6 +32,7 @@
 
 extern struct t_config_file *buflist_config_file;
 
+extern struct t_config_option *buflist_config_look_auto_scroll;
 extern struct t_config_option *buflist_config_look_display_conditions;
 extern struct t_config_option *buflist_config_look_enabled;
 extern struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;

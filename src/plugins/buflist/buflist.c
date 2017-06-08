@@ -40,8 +40,11 @@ WEECHAT_PLUGIN_PRIORITY(8000);
 
 struct t_weechat_plugin *weechat_buflist_plugin = NULL;
 
+struct t_hdata *buflist_hdata_window = NULL;
 struct t_hdata *buflist_hdata_buffer = NULL;
 struct t_hdata *buflist_hdata_hotlist = NULL;
+struct t_hdata *buflist_hdata_bar = NULL;
+struct t_hdata *buflist_hdata_bar_window = NULL;
 
 
 /*
@@ -403,8 +406,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_plugin = plugin;
 
+    buflist_hdata_window = weechat_hdata_get ("window");
     buflist_hdata_buffer = weechat_hdata_get ("buffer");
     buflist_hdata_hotlist = weechat_hdata_get ("hotlist");
+    buflist_hdata_bar = weechat_hdata_get ("bar");
+    buflist_hdata_bar_window = weechat_hdata_get ("bar_window");
 
     if (!buflist_config_init ())
         return WEECHAT_RC_ERROR;

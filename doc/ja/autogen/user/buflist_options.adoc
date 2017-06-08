@@ -80,6 +80,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** 説明: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** タイプ: 整数
+** 値: -1 .. 100
+** デフォルト値: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** 説明: pass:none[バッファの表示条件 (注意: 値は評価されます、/help eval を参照してください); サーババッファがコアバッファにマージされている場合にサーババッファを隠す例: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** タイプ: 文字列

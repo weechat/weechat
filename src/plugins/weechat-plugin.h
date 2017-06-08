@@ -42,6 +42,7 @@ struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_bar;
 struct t_gui_bar_item;
+struct t_gui_bar_window;
 struct t_gui_completion;
 struct t_gui_nick;
 struct t_gui_nick_group;

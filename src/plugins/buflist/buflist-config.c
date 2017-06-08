@@ -32,6 +32,7 @@ struct t_config_file *buflist_config_file = NULL;
 
 /* buflist config, look section */
 
+struct t_config_option *buflist_config_look_auto_scroll;
 struct t_config_option *buflist_config_look_display_conditions;
 struct t_config_option *buflist_config_look_enabled;
 struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
@@ -336,6 +337,20 @@ buflist_config_init ()
         return 0;
     }
 
+    buflist_config_look_auto_scroll = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "auto_scroll", "integer",
+        N_("automatically scroll the buflist bar to always see the current "
+           "buffer (this works only with a bar on the left/right position "
+           "with a \"vertical\" filling); this value is the percent number "
+           "of lines displayed before the current buffer when scrolling "
+           "(-1 = disable scroll); for example 50 means that after a scroll, "
+           "the current buffer is at the middle of bar, 0 means on top of "
+           "bar, 100 means at bottom of bar"),
+        NULL, -1, 100, "50", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     buflist_config_look_display_conditions = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "display_conditions", "string",
