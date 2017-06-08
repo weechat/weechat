@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * api: allow update of variables "scroll_x" and "scroll_y" in bar_window with function hdata_update
   * api: add functions config_option_get_string() and hdata_compare()
   * buflist: add keys kbd:[F1]/kbd:[F2], kbd:[Alt+F1]/kbd:[Alt+F2] to scroll the buflist bar
 

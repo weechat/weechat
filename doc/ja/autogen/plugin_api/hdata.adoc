@@ -457,6 +457,9 @@ _gui_objects_   (pointer) +
 _prev_bar_window_   (pointer, hdata: "bar_window") +
 _next_bar_window_   (pointer, hdata: "bar_window") +
 
+*更新可能な変数:* +
+    _scroll_x_ (integer) +
+    _scroll_y_ (integer) +
 
 | weechat
 | [[hdata_buffer]]<<hdata_buffer,buffer>>

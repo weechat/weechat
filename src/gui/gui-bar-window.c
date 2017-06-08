@@ -30,6 +30,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
@@ -1520,6 +1521,45 @@ gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * Callback for updating data of a bar window.
+ */
+
+int
+gui_bar_window_update_cb (void *data, struct t_hdata *hdata, void *pointer,
+                          struct t_hashtable *hashtable)
+{
+    const char *value;
+    int rc;
+
+    /* make C compiler happy */
+    (void) data;
+
+    rc = 0;
+
+    if (hashtable_has_key (hashtable, "scroll_x"))
+    {
+        value = hashtable_get (hashtable, "scroll_x");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "scroll_x", value);
+            rc++;
+        }
+    }
+
+    if (hashtable_has_key (hashtable, "scroll_y"))
+    {
+        value = hashtable_get (hashtable, "scroll_y");
+        if (value)
+        {
+            hdata_set (hdata, pointer, "scroll_y", value);
+            rc++;
+        }
+    }
+
+    return rc;
+}
+
+/*
  * Returns hdata for bar window.
  */
 
@@ -1534,7 +1574,7 @@ gui_bar_window_hdata_bar_window_cb (const void *pointer, void *data,
     (void) data;
 
     hdata = hdata_new (NULL, hdata_name, "prev_bar_window", "next_bar_window",
-                       0, 0, NULL, NULL);
+                       0, 0, &gui_bar_window_update_cb, NULL);
     if (hdata)
     {
         HDATA_VAR(struct t_gui_bar_window, bar, POINTER, 0, NULL, "bar");
@@ -1542,8 +1582,8 @@ gui_bar_window_hdata_bar_window_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_bar_window, y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, width, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, height, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar_window, scroll_x, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_bar_window, scroll_y, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_window, scroll_x, INTEGER, 1, NULL, NULL);
+        HDATA_VAR(struct t_gui_bar_window, scroll_y, INTEGER, 1, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, cursor_x, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, cursor_y, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_bar_window, current_size, INTEGER, 0, NULL, NULL);
