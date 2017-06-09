@@ -61,7 +61,7 @@ struct t_config_option *fset_config_color_help_default_value;
 struct t_config_option *fset_config_color_help_description;
 struct t_config_option *fset_config_color_help_name;
 struct t_config_option *fset_config_color_help_quotes;
-struct t_config_option *fset_config_color_help_string_values;
+struct t_config_option *fset_config_color_help_values;
 struct t_config_option *fset_config_color_marked[2];
 struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
@@ -539,10 +539,10 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_help_string_values = weechat_config_new_option (
+    fset_config_color_help_values = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "help_string_values", "color",
-        N_("color for string values"),
+        "help_values", "color",
+        N_("color for allowed values"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,

@@ -47,7 +47,7 @@ extern struct t_config_option *fset_config_color_help_default_value;
 extern struct t_config_option *fset_config_color_help_description;
 extern struct t_config_option *fset_config_color_help_name;
 extern struct t_config_option *fset_config_color_help_quotes;
-extern struct t_config_option *fset_config_color_help_string_values;
+extern struct t_config_option *fset_config_color_help_values;
 extern struct t_config_option *fset_config_color_marked[2];
 extern struct t_config_option *fset_config_color_max[2];
 extern struct t_config_option *fset_config_color_min[2];
