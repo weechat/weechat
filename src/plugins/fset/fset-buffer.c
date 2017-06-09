@@ -805,7 +805,9 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = { { "t", "toggle"     },
+    char *actions[][2] = { { "<", "left"       },
+                           { ">", "right"      },
+                           { "t", "toggle"     },
                            { "-", "add -1"     },
                            { "+", "add 1"      },
                            { "r", "reset"      },
@@ -928,26 +930,28 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta-meta2-1~", "go 0"      },
-                        { "meta-meta2-4~", "go end"    },
-                        { "meta- ",       "toggle"     },
-                        { "meta--",       "add -1"     },
-                        { "meta-+",       "add 1"      },
-                        { "meta-fmeta-r", "reset"      },
-                        { "meta-fmeta-u", "unset"      },
-                        { "meta-ctrl-J",  "set"        },
-                        { "meta-ctrl-M",  "set"        },
-                        { "meta-fmeta-a", "append"     },
-                        { "meta-,",       "mark 1"     },
-                        { "meta2-a",      "mark -1"    },
-                        { "meta2-b",      "mark 1"     },
-                        { "meta-v",       "toggle_bar" },
-                        { NULL,           NULL         } };
+    char *keys[][2] = { { "meta2-A",       "up"         },
+                        { "meta2-B",       "down"       },
+                        { "meta-meta2-1~", "go 0"       },
+                        { "meta-meta2-4~", "go end"     },
+                        { "meta2-23~",     "left"       },
+                        { "meta2-24~",     "right"      },
+                        { "meta- ",        "toggle"     },
+                        { "meta--",        "add -1"     },
+                        { "meta-+",        "add 1"      },
+                        { "meta-fmeta-r",  "reset"      },
+                        { "meta-fmeta-u",  "unset"      },
+                        { "meta-ctrl-J",   "set"        },
+                        { "meta-ctrl-M",   "set"        },
+                        { "meta-fmeta-a",  "append"     },
+                        { "meta-,",        "mark 1"     },
+                        { "meta2-a",       "mark -1"    },
+                        { "meta2-b",       "mark 1"     },
+                        { "meta-v",        "toggle_bar" },
+                        { NULL,            NULL         } };
     char str_key[64], str_command[64];
     int i;
 
-    weechat_buffer_set (fset_buffer, "key_bind_meta2-A", "/fset -up");
-    weechat_buffer_set (fset_buffer, "key_bind_meta2-B", "/fset -down");
     for (i = 0; keys[i][0]; i++)
     {
         if (weechat_config_boolean (fset_config_look_use_keys))

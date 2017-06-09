@@ -82,8 +82,10 @@ fset_command_fset (const void *pointer, void *data,
                    char **argv, char **argv_eol)
 {
     int num_options, line, append, value, i;
+    char str_command[512];
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
+    struct t_gui_window *ptr_window;
 
     /* make C compiler happy */
     (void) pointer;
@@ -161,6 +163,54 @@ fset_command_fset (const void *pointer, void *data,
                     fset_buffer_set_current_line (line);
                     fset_buffer_check_line_outside_window ();
                 }
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-left") == 0)
+    {
+        if (fset_buffer)
+        {
+            ptr_window = weechat_window_search_with_buffer (fset_buffer);
+            if (ptr_window)
+            {
+                value = fset_command_get_int_arg (
+                    argc, argv, 2,
+                    weechat_config_integer (fset_config_look_scroll_horizontal));
+                if (value < 1)
+                    value = 1;
+                else if (value > 100)
+                    value = 100;
+                snprintf (str_command, sizeof (str_command),
+                          "/window scroll_horiz -window %d -%d%%",
+                          weechat_window_get_integer (ptr_window, "number"),
+                          value);
+                weechat_command (fset_buffer, str_command);
+            }
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "-right") == 0)
+    {
+        if (fset_buffer)
+        {
+            ptr_window = weechat_window_search_with_buffer (fset_buffer);
+            if (ptr_window)
+            {
+                value = fset_command_get_int_arg (
+                    argc, argv, 2,
+                    weechat_config_integer (fset_config_look_scroll_horizontal));
+                if (value < 1)
+                    value = 1;
+                else if (value > 100)
+                    value = 100;
+                snprintf (str_command, sizeof (str_command),
+                          "/window scroll_horiz -window %d %d%%",
+                          weechat_window_get_integer (ptr_window, "number"),
+                          value);
+                weechat_command (fset_buffer, str_command);
             }
         }
         return WEECHAT_RC_OK;
@@ -470,6 +520,7 @@ fset_command_init ()
            " || -toggle_bar"
            " || -refresh"
            " || -up|-down [<number>]"
+           " || -left|-right [<percent>]"
            " || -go <line>|end"
            " || -toggle"
            " || -add [<value>]"
@@ -484,6 +535,10 @@ fset_command_init ()
            "   -refresh: force the refresh of the \"fset\" bar item\n"
            "        -up: move the selected line up by \"number\" lines\n"
            "      -down: move the selected line down by \"number\" lines\n"
+           "      -left: scroll the fset buffer by \"percent\" of width "
+           "on the left\n"
+           "     -right: scroll the fset buffer by \"percent\" of width "
+           "on the right\n"
            "        -go: select a line by number, first line number is 0 "
            "(\"end\" to select the last line)\n"
            "    -toggle: toggle the boolean value\n"
@@ -597,6 +652,8 @@ fset_command_init ()
         " || -refresh"
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
+        " || -left 10|20|30|40|50|60|70|80|90|100"
+        " || -right 10|20|30|40|50|60|70|80|90|100"
         " || -go"
         " || -toggle"
         " || -add -1|1"

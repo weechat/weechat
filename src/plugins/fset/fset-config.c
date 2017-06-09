@@ -37,6 +37,7 @@ struct t_config_file *fset_config_file = NULL;
 struct t_config_option *fset_config_look_auto_unmark;
 struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_marked_string;
+struct t_config_option *fset_config_look_scroll_horizontal;
 struct t_config_option *fset_config_look_show_help_bar;
 struct t_config_option *fset_config_look_show_plugin_description;
 struct t_config_option *fset_config_look_sort;
@@ -319,6 +320,14 @@ fset_config_init ()
         N_("string displayed when an option is marked (to do an action on "
            "multiple options)"),
         NULL, 0, 0, "*", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_look_scroll_horizontal = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "scroll_horizontal", "integer",
+        N_("left/right scroll in fset buffer (percent of width)"),
+        NULL, 1, 100, "10", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
