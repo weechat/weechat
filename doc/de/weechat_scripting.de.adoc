@@ -1056,7 +1056,6 @@ xxxx,irc_in_yyy::
 xxx,irc_in2_yyy::
     Signal wird gesendet nachdem die Nachricht verarbeitet wurde.
 
-// TRANSLATION MISSING
 [source,python]
 ----
 def join_cb(data, signal, signal_data):
@@ -1066,7 +1065,7 @@ def join_cb(data, signal, signal_data):
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
     buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
+        weechat.prnt(buffer, "%s (%s) ist dem Channel beigetreten!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # es ist sinnvoll als Server "*" anzugeben um alle JOIN Nachrichten von allen
