@@ -80,56 +80,6 @@ int secure_buffer_display_values = 0;
 
 
 /*
- * Searches for a hash algorithm.
- *
- * Returns hash algorithm value (from gcrypt constant), -1 if hash algorithm is
- * not found.
- */
-
-int
-secure_search_hash_algo (const char *hash_algo)
-{
-    int i;
-
-    if (!hash_algo)
-        return -1;
-
-    for (i = 0; secure_hash_algo_string[i]; i++)
-    {
-        if (strcmp (secure_hash_algo_string[i], hash_algo) == 0)
-            return secure_hash_algo[i];
-    }
-
-    /* hash algorithm not found */
-    return -1;
-}
-
-/*
- * Searches for a cipher.
- *
- * Returns cipher value (from gcrypt constant), -1 if cipher is not
- * found.
- */
-
-int
-secure_search_cipher (const char *cipher)
-{
-    int i;
-
-    if (!cipher)
-        return -1;
-
-    for (i = 0; secure_cipher_string[i]; i++)
-    {
-        if (strcmp (secure_cipher_string[i], cipher) == 0)
-            return secure_cipher[i];
-    }
-
-    /* cipher not found */
-    return -1;
-}
-
-/*
  * Derives a key from salt + passphrase (using a hash).
  *
  * Returns:
