@@ -489,27 +489,6 @@ upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
 }
 
 /*
- * Reads an UTF-8 string in upgrade file (reads a string then normalizes it).
- *
- * Returns:
- *   1: OK
- *   0: error
- */
-
-int
-upgrade_file_read_string_utf8 (struct t_upgrade_file *upgrade_file,
-                               char **string)
-{
-    if (!upgrade_file_read_string (upgrade_file, string))
-        return 0;
-
-    if (string && *string)
-        utf8_normalize (*string, '?');
-
-    return 1;
-}
-
-/*
  * Reads a buffer in upgrade file.
  *
  * Returns:
