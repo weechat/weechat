@@ -57,7 +57,7 @@ infolist_new (struct t_weechat_plugin *plugin)
 
         new_infolist->prev_infolist = last_weechat_infolist;
         new_infolist->next_infolist = NULL;
-        if (weechat_infolists)
+        if (last_weechat_infolist)
             last_weechat_infolist->next_infolist = new_infolist;
         else
             weechat_infolists = new_infolist;
@@ -114,7 +114,7 @@ infolist_new_item (struct t_infolist *infolist)
 
         new_item->prev_item = infolist->last_item;
         new_item->next_item = NULL;
-        if (infolist->items)
+        if (infolist->last_item)
             infolist->last_item->next_item = new_item;
         else
             infolist->items = new_item;
@@ -150,7 +150,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
-        if (item->vars)
+        if (item->last_var)
             item->last_var->next_var = new_var;
         else
             item->vars = new_var;
@@ -184,7 +184,7 @@ infolist_new_var_string (struct t_infolist_item *item,
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
-        if (item->vars)
+        if (item->last_var)
             item->last_var->next_var = new_var;
         else
             item->vars = new_var;
@@ -218,7 +218,7 @@ infolist_new_var_pointer (struct t_infolist_item *item,
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
-        if (item->vars)
+        if (item->last_var)
             item->last_var->next_var = new_var;
         else
             item->vars = new_var;
@@ -255,7 +255,7 @@ infolist_new_var_buffer (struct t_infolist_item *item,
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
-        if (item->vars)
+        if (item->last_var)
             item->last_var->next_var = new_var;
         else
             item->vars = new_var;
@@ -291,7 +291,7 @@ infolist_new_var_time (struct t_infolist_item *item,
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
-        if (item->vars)
+        if (item->last_var)
             item->last_var->next_var = new_var;
         else
             item->vars = new_var;

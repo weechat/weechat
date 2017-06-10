@@ -122,7 +122,7 @@ gui_layout_add (struct t_gui_layout *layout)
 
     layout->prev_layout = last_gui_layout;
     layout->next_layout = NULL;
-    if (gui_layouts)
+    if (last_gui_layout)
         last_gui_layout->next_layout = layout;
     else
         gui_layouts = layout;
@@ -234,7 +234,7 @@ gui_layout_buffer_add (struct t_gui_layout *layout,
 
         /* add layout buffer to list */
         new_layout_buffer->prev_layout = layout->last_layout_buffer;
-        if (layout->layout_buffers)
+        if (layout->last_layout_buffer)
             (layout->last_layout_buffer)->next_layout = new_layout_buffer;
         else
             layout->layout_buffers = new_layout_buffer;

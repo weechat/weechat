@@ -904,7 +904,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
         new_plugin->next_plugin = NULL;
-        if (weechat_plugins)
+        if (last_weechat_plugin)
             last_weechat_plugin->next_plugin = new_plugin;
         else
             weechat_plugins = new_plugin;

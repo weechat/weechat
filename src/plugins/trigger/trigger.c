@@ -839,10 +839,10 @@ trigger_add (struct t_trigger *trigger,
         /* add trigger to end of list */
         trigger->prev_trigger = *last_list_trigger;
         trigger->next_trigger = NULL;
-        if (!*list_triggers)
-            *list_triggers = trigger;
-        else
+        if (*last_list_trigger)
             (*last_list_trigger)->next_trigger = trigger;
+        else
+            *list_triggers = trigger;
         *last_list_trigger = trigger;
     }
 }

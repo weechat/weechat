@@ -528,7 +528,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
-    if (channel->nicks)
+    if (channel->last_nick)
         channel->last_nick->next_nick = new_nick;
     else
         channel->nicks = new_nick;

@@ -501,7 +501,7 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
         }
         buffer->prev_buffer = last_gui_buffer;
         buffer->next_buffer = NULL;
-        if (gui_buffers)
+        if (last_gui_buffer)
             last_gui_buffer->next_buffer = buffer;
         else
             gui_buffers = buffer;
@@ -3670,7 +3670,7 @@ gui_buffer_sort_by_layout_number ()
             /* move the buffer in a temporary list */
             ptr_buffer->prev_buffer = last_extra_buffer;
             ptr_buffer->next_buffer = NULL;
-            if (extra_buffers)
+            if (last_extra_buffer)
                 last_extra_buffer->next_buffer = ptr_buffer;
             else
                 extra_buffers = ptr_buffer;
@@ -3807,7 +3807,7 @@ gui_buffer_undo_add (struct t_gui_buffer *buffer)
     /* add undo to the list */
     new_undo->prev_undo = buffer->last_input_undo;
     new_undo->next_undo = NULL;
-    if (buffer->input_undo)
+    if (buffer->last_input_undo)
         (buffer->last_input_undo)->next_undo = new_undo;
     else
         buffer->input_undo = new_undo;
@@ -4014,7 +4014,7 @@ gui_buffer_visited_add (struct t_gui_buffer *buffer)
 
         new_buffer_visited->prev_buffer = last_gui_buffer_visited;
         new_buffer_visited->next_buffer = NULL;
-        if (gui_buffers_visited)
+        if (last_gui_buffer_visited)
             last_gui_buffer_visited->next_buffer = new_buffer_visited;
         else
             gui_buffers_visited = new_buffer_visited;

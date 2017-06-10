@@ -166,7 +166,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
 
         new_config_file->prev_config = last_config_file;
         new_config_file->next_config = NULL;
-        if (config_files)
+        if (last_config_file)
             last_config_file->next_config = new_config_file;
         else
             config_files = new_config_file;
@@ -286,7 +286,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
 
         new_section->prev_section = config_file->last_section;
         new_section->next_section = NULL;
-        if (config_file->sections)
+        if (config_file->last_section)
             config_file->last_section->next_section = new_section;
         else
             config_file->sections = new_section;

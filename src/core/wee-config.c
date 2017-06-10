@@ -1705,10 +1705,10 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
             /* add new proxy at the end */
             ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
             ptr_temp_proxy->next_proxy = NULL;
-            if (!weechat_temp_proxies)
-                weechat_temp_proxies = ptr_temp_proxy;
-            else
+            if (last_weechat_temp_proxy)
                 last_weechat_temp_proxy->next_proxy = ptr_temp_proxy;
+            else
+                weechat_temp_proxies = ptr_temp_proxy;
             last_weechat_temp_proxy = ptr_temp_proxy;
         }
     }
@@ -1785,10 +1785,10 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
             /* add new bar at the end */
             ptr_temp_bar->prev_bar = last_gui_temp_bar;
             ptr_temp_bar->next_bar = NULL;
-            if (!gui_temp_bars)
-                gui_temp_bars = ptr_temp_bar;
-            else
+            if (last_gui_temp_bar)
                 last_gui_temp_bar->next_bar = ptr_temp_bar;
+            else
+                gui_temp_bars = ptr_temp_bar;
             last_gui_temp_bar = ptr_temp_bar;
         }
     }

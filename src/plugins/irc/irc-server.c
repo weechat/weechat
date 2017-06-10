@@ -1129,7 +1129,7 @@ irc_server_alloc (const char *name)
     /* add new server to queue */
     new_server->prev_server = last_irc_server;
     new_server->next_server = NULL;
-    if (irc_servers)
+    if (last_irc_server)
         last_irc_server->next_server = new_server;
     else
         irc_servers = new_server;
@@ -1558,7 +1558,7 @@ irc_server_outqueue_add (struct t_irc_server *server, int priority,
 
         new_outqueue->prev_outqueue = server->last_outqueue[priority];
         new_outqueue->next_outqueue = NULL;
-        if (server->outqueue[priority])
+        if (server->last_outqueue[priority])
             server->last_outqueue[priority]->next_outqueue = new_outqueue;
         else
             server->outqueue[priority] = new_outqueue;

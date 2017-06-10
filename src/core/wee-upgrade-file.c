@@ -245,7 +245,7 @@ upgrade_file_new (const char *filename,
         /* add upgrade file to list of upgrade files */
         new_upgrade_file->prev_upgrade = last_upgrade_file;
         new_upgrade_file->next_upgrade = NULL;
-        if (upgrade_files)
+        if (last_upgrade_file)
             last_upgrade_file->next_upgrade = new_upgrade_file;
         else
             upgrade_files = new_upgrade_file;

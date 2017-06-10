@@ -403,7 +403,7 @@ proxy_new_with_options (const char *name,
 
     /* add proxy to proxies list */
     new_proxy->prev_proxy = last_weechat_proxy;
-    if (weechat_proxies)
+    if (last_weechat_proxy)
         last_weechat_proxy->next_proxy = new_proxy;
     else
         weechat_proxies = new_proxy;

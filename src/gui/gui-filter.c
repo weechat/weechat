@@ -417,7 +417,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 
         /* add filter to filters list */
         new_filter->prev_filter = last_gui_filter;
-        if (gui_filters)
+        if (last_gui_filter)
             last_gui_filter->next_filter = new_filter;
         else
             gui_filters = new_filter;

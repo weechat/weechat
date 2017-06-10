@@ -325,7 +325,7 @@ irc_redirect_pattern_new (const char *name, int temp_pattern, int timeout,
 
     /* add redirect pattern to end of list */
     new_redirect_pattern->prev_redirect = last_irc_redirect_pattern;
-    if (irc_redirect_patterns)
+    if (last_irc_redirect_pattern)
         last_irc_redirect_pattern->next_redirect = new_redirect_pattern;
     else
         irc_redirect_patterns = new_redirect_pattern;
@@ -484,7 +484,7 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
 
     /* add redirect to end of list */
     new_redirect->prev_redirect = server->last_redirect;
-    if (server->redirects)
+    if (server->last_redirect)
         (server->last_redirect)->next_redirect = new_redirect;
     else
         server->redirects = new_redirect;

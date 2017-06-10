@@ -486,7 +486,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     /* add new channel to channels list */
     new_channel->prev_channel = server->last_channel;
     new_channel->next_channel = NULL;
-    if (server->channels)
+    if (server->last_channel)
         (server->last_channel)->next_channel = new_channel;
     else
         server->channels = new_channel;

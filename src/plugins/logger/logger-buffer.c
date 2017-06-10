@@ -98,7 +98,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
 
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
-        if (logger_buffers)
+        if (last_logger_buffer)
             last_logger_buffer->next_buffer = new_logger_buffer;
         else
             logger_buffers = new_logger_buffer;

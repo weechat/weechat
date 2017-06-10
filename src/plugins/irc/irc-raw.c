@@ -205,7 +205,7 @@ irc_raw_message_add_to_list (time_t date, const char *prefix,
         /* add message to list */
         new_raw_message->prev_message = last_irc_raw_message;
         new_raw_message->next_message = NULL;
-        if (irc_raw_messages)
+        if (last_irc_raw_message)
             last_irc_raw_message->next_message = new_raw_message;
         else
             irc_raw_messages = new_raw_message;

@@ -563,7 +563,7 @@ script_repo_add (struct t_script_repo *script)
         /* add script to the end */
         script->prev_script = last_script_repo;
         script->next_script = NULL;
-        if (scripts_repo)
+        if (last_script_repo)
             last_script_repo->next_script = script;
         else
             scripts_repo = script;

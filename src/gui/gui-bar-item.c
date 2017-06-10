@@ -557,7 +557,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
 
         /* add bar item to bar items queue */
         new_bar_item->prev_item = last_gui_bar_item;
-        if (gui_bar_items)
+        if (last_gui_bar_item)
             last_gui_bar_item->next_item = new_bar_item;
         else
             gui_bar_items = new_bar_item;

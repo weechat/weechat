@@ -136,7 +136,7 @@ exec_add ()
 
     new_exec_cmd->prev_cmd = last_exec_cmd;
     new_exec_cmd->next_cmd = NULL;
-    if (exec_cmds)
+    if (last_exec_cmd)
         last_exec_cmd->next_cmd = new_exec_cmd;
     else
         exec_cmds = new_exec_cmd;
