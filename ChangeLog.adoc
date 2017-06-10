@@ -27,6 +27,7 @@ New features::
 
 Improvements::
 
+  * core: improve speed of nicklist bar item callback
   * core: allow index for hdata arrays in evaluation of expressions
   * buflist: display a warning when the script "buffers.pl" is loaded
   * buflist: add support of char "~" in option buflist.look.sort for case insensitive comparison
