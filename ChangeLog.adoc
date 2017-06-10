@@ -35,6 +35,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix bind of keys with space key, like kbd:[Alt+Space] (bug #32133)
   * core: fix infinite loop when the terminal is closed on the secure password prompt (issue #1010)
   * buflist: fix long mouse gestures
   * buflist: fix slow switch of buffer when there are a lot of buffers opened (issue #998)
