@@ -805,7 +805,9 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = { { "<", "left"       },
+    char *actions[][2] = { { "<<", "go 0"      },
+                           { ">>", "go end"    },
+                           { "<", "left"       },
                            { ">", "right"      },
                            { "t", "toggle"     },
                            { "-", "add -1"     },
@@ -948,6 +950,7 @@ fset_buffer_set_keys ()
                         { "meta2-a",       "mark -1"    },
                         { "meta2-b",       "mark 1"     },
                         { "meta-v",        "toggle_bar" },
+                        { "ctrl-L",        "refresh"    },
                         { NULL,            NULL         } };
     char str_key[64], str_command[64];
     int i;
