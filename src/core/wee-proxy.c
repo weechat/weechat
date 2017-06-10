@@ -152,39 +152,6 @@ proxy_search (const char *name)
 }
 
 /*
- * Searches for a proxy by option name.
- *
- * Returns pointer to proxy found, NULL if not found.
- */
-
-struct t_proxy *
-proxy_search_with_option_name (const char *option_name)
-{
-    char *proxy_name, *pos_option;
-    struct t_proxy *ptr_proxy;
-
-    ptr_proxy = NULL;
-
-    pos_option = strchr (option_name, '.');
-    if (pos_option)
-    {
-        proxy_name = string_strndup (option_name, pos_option - option_name);
-        if (proxy_name)
-        {
-            for (ptr_proxy = weechat_proxies; ptr_proxy;
-                 ptr_proxy = ptr_proxy->next_proxy)
-            {
-                if (strcmp (ptr_proxy->name, proxy_name) == 0)
-                    break;
-            }
-            free (proxy_name);
-        }
-    }
-
-    return ptr_proxy;
-}
-
-/*
  * Sets name for a proxy.
  */
 
