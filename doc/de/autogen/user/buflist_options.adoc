@@ -81,7 +81,7 @@
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
-** Beschreibung: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** Beschreibung: pass:none[scrollt automatisch die buflist-Bar um den aktuellen Buffer darzustellen (dies funktioniert ausschließlich wenn die Bar links/rechts positioniert ist und als Darstellung "vertical" verwendet wird); dieser Wert ist eine prozentuale Angabe wo der aktuelle Buffer angezeigt werden soll (-1 = deaktiviert); zum Beispiel wird bei einem Wert von 50 der Buffer in der Mitte der Bar angezeigt, bei 0 wird der Buffer oben und bei 100 am unteren Rand der Bar angezeigt]
 ** Typ: integer
 ** Werte: -1 .. 100
 ** Standardwert: `+50+`
