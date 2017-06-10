@@ -170,22 +170,6 @@ gui_window_objects_free (struct t_gui_window *window, int free_separators)
 }
 
 /*
- * Clears a Curses window with a WeeChat color.
- */
-
-void
-gui_window_clear_weechat (WINDOW *window, int weechat_color)
-{
-    if (!gui_init_ok)
-        return;
-
-    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_weechat_get_pair (weechat_color)) |
-              gui_color[weechat_color]->attributes);
-    werase (window);
-    wmove (window, 0, 0);
-}
-
-/*
  * Clears a Curses window.
  */
 
