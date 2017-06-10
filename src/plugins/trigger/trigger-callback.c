@@ -591,14 +591,14 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     int length, num_tags;
     void *ptr_irc_server, *ptr_irc_channel;
 
-    TRIGGER_CALLBACK_CB_INIT(NULL);
-
-    TRIGGER_CALLBACK_CB_NEW_POINTERS;
-
     buffer = NULL;
     tags = NULL;
     num_tags = 0;
     string_no_color = NULL;
+
+    TRIGGER_CALLBACK_CB_INIT(NULL);
+
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
 
     /* split IRC message (if string is an IRC message) */
     if ((strncmp (modifier, "irc_in_", 7) == 0)
