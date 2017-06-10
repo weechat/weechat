@@ -736,7 +736,6 @@ fset_option_compare_options_cb (void *data, struct t_arraylist *arraylist,
 
     for (i = 0; i < fset_config_sort_fields_count; i++)
     {
-        rc = 0;
         reverse = 1;
         case_sensitive = 1;
         ptr_field = fset_config_sort_fields[i];
