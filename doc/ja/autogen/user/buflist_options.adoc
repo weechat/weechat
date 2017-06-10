@@ -81,7 +81,7 @@
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
-** 説明: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** 説明: pass:none[現在のバッファが常にバーの中に表示されるように自動的にバッファリストバーをスクロールします (この機能はフィリングが "vertical" に設定された左右にあるバーでのみ機能します); 設定値は現在のバーよりも前に表示される行数のパーセント値です (-1 = 自動スクロールを無効化); 例えば値を 50 に設定した場合、現在のバッファがバーの中央に位置するように自動スクロールされます。0 に設定した場合はバーの最初、100 に設定した場合はバーの最後を意味します]
 ** タイプ: 整数
 ** 値: -1 .. 100
 ** デフォルト値: `+50+`
