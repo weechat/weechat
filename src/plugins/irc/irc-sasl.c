@@ -151,7 +151,6 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     answer_base64 = NULL;
     string = NULL;
-    length = 0;
 
     if (strcmp (data_base64, "+") == 0)
     {
