@@ -491,9 +491,11 @@ Elenco di funzioni nelle API per gli script:
 | visualizzazione |
   prefix +
   color +
+// TRANSLATION MISSING
   print (for python: prnt) +
-  print_date_tags (for python:
-  prnt_date_tags) +
+// TRANSLATION MISSING
+  print_date_tags (for python: prnt_date_tags) +
+// TRANSLATION MISSING
   print_y (for python: prnt_y) +
   log_print
 
@@ -512,6 +514,7 @@ Elenco di funzioni nelle API per gli script:
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -593,6 +596,7 @@ Elenco di funzioni nelle API per gli script:
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -618,6 +622,7 @@ Elenco di funzioni nelle API per gli script:
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 

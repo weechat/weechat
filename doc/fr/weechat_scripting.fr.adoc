@@ -488,8 +488,7 @@ Liste des fonctions de l'API script :
   prefix +
   color +
   print (pour python : prnt) +
-  print_date_tags (pour python :
-  prnt_date_tags) +
+  print_date_tags (pour python : prnt_date_tags) +
   print_y (pour python : prnt_y) +
   log_print
 
@@ -508,6 +507,7 @@ Liste des fonctions de l'API script :
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -589,6 +589,7 @@ Liste des fonctions de l'API script :
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -614,6 +615,7 @@ Liste des fonctions de l'API script :
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 

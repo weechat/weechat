@@ -484,9 +484,11 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
 | 表示 |
   prefix +
   color +
+// TRANSLATION MISSING
   print (for python: prnt) +
-  print_date_tags (for python:
-  prnt_date_tags) +
+// TRANSLATION MISSING
+  print_date_tags (for python: prnt_date_tags) +
+// TRANSLATION MISSING
   print_y (for python: prnt_y) +
   log_print
 
@@ -505,6 +507,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -586,6 +589,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -611,6 +615,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 

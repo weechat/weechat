@@ -477,8 +477,7 @@ List of functions in script API:
   prefix +
   color +
   print (for python: prnt) +
-  print_date_tags (for python:
-  prnt_date_tags) +
+  print_date_tags (for python: prnt_date_tags) +
   print_y (for python: prnt_y) +
   log_print
 
@@ -497,6 +496,7 @@ List of functions in script API:
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -578,6 +578,7 @@ List of functions in script API:
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -603,6 +604,7 @@ List of functions in script API:
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 
