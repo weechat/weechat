@@ -282,6 +282,26 @@ relay_command_relay (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "start") == 0)
+        {
+            WEECHAT_COMMAND_MIN_ARGS(3, "start");
+            ptr_server = relay_server_search (argv_eol[2]);
+            if (ptr_server)
+            {
+                if (ptr_server->sock < 0)
+                    relay_server_create_socket (ptr_server);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: relay \"%s\" not found"),
+                                weechat_prefix ("error"),
+                                RELAY_PLUGIN_NAME,
+                                argv_eol[2]);
+            }
+            return WEECHAT_RC_OK;
+        }
+
         if (weechat_strcasecmp (argv[1], "restart") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(3, "restart");
@@ -362,7 +382,7 @@ relay_command_init ()
         N_("relay control"),
         N_("list|listfull|listrelay"
            " || add <name> <port>"
-           " || del|stop|restart <name>"
+           " || del|start|restart|stop <name>"
            " || raw"
            " || sslcertkey"),
         N_("         list: list relay clients (only active relays)\n"
@@ -370,9 +390,10 @@ relay_command_init ()
            "    listrelay: list relays (name and port)\n"
            "          add: add a relay (listen on a port)\n"
            "          del: remove a relay (clients remain connected)\n"
-           "         stop: close the server socket (clients remain connected)\n"
+           "        start: listen on port\n"
            "      restart: close the server socket and listen again on port "
            "(clients remain connected)\n"
+           "         stop: close the server socket (clients remain connected)\n"
            "         name: relay name (see format below)\n"
            "         port: port used for relay\n"
            "          raw: open buffer with raw Relay data\n"
@@ -419,8 +440,9 @@ relay_command_init ()
         " || listrelay"
         " || add %(relay_protocol_name) %(relay_free_port)"
         " || del %(relay_relays)"
-        " || stop %(relay_relays)"
+        " || start %(relay_relays)"
         " || restart %(relay_relays)"
+        " || stop %(relay_relays)"
         " || raw"
         " || sslcertkey",
         &relay_command_relay, NULL, NULL);
