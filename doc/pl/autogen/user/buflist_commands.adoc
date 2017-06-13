@@ -29,6 +29,7 @@ The following variables can be used in these options:
   - extra variables added by buflist for convenience:
     - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
     - ${current_buffer}: a boolean ("0" or "1"), "1" if this is the current buffer; it can be used in a condition: ${if:${current_buffer}?...:...}
+    - ${merged}: a boolean ("0" or "1"), "1" if the buffer is merged with at least another buffer; it can be used in a condition: ${if:${merged}?...:...}
     - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
     - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers
     - ${number_displayed}: "1" if the number is displayed, otherwise "0"
