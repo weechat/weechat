@@ -537,6 +537,7 @@ Les fichiers dans le répertoire principal sont :
 | buflist.conf | Fichier de configuration de l'extension _buflist_    | Non.
 | charset.conf | Fichier de configuration de l'extension _charset_    | Non.
 | exec.conf    | Fichier de configuration de l'extension _exec_       | Non.
+| fifo.conf    | Fichier de configuration de l'extension _fifo_       | Non.
 | irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
 | logger.conf  | Fichier de configuration de l'extension _logger_     | Non.
 | relay.conf   | Fichier de configuration de l'extension _relay_      | Non.

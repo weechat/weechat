@@ -534,6 +534,7 @@ Folgende Dateien findet man im Heimatverzeichnis:
 | buflist.conf | Konfiguration für _buflist_-Erweiterung | Nein.
 | charset.conf | Konfiguration für _charset_-Erweiterung | Nein.
 | exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein.
+| fifo.conf    | Konfiguration für _fifo_-Erweiterung    | Nein.
 | irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
 | logger.conf  | Konfiguration für _logger_-Erweiterung  | Nein.
 | relay.conf   | Konfiguration für _relay_-Erweiterung   | Nein.

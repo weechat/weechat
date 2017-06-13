@@ -566,6 +566,7 @@ The files in home directory are:
 | buflist.conf | Configuration file for _buflist_ plugin | No.
 | charset.conf | Configuration file for _charset_ plugin | No.
 | exec.conf    | Configuration file for _exec_ plugin    | No.
+| fifo.conf    | Configuration file for _fifo_ plugin    | No.
 | irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
 | logger.conf  | Configuration file for _logger_ plugin  | No.
 | relay.conf   | Configuration file for _relay_ plugin   | No.

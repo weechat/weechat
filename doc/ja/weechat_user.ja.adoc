@@ -529,6 +529,7 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 | buflist.conf | _buflist_ プラグイン用の設定ファイル    | 保護されません
 | charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
 | exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
+| fifo.conf    | _fifo_ プラグイン用の設定ファイル       | 保護されません
 | irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
 | logger.conf  | _logger_ プラグイン用の設定ファイル     | 保護されません
 | relay.conf   | _relay_ プラグイン用の設定ファイル      | 保護されません

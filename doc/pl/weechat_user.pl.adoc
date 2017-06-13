@@ -533,6 +533,7 @@ Pliki w katalogu domowym:
 | buflist.conf | Plik konfiguracyjny wtyczki _buflist_         | Nie.
 | charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
 | exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
+| fifo.conf    | Plik konfiguracyjny wtyczki _fifo_            | Nie.
 | irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
 | logger.conf  | Plik konfiguracyjny wtyczki _logger_          | Nie.
 | relay.conf   | Plik konfiguracyjny wtyczki _relay_           | Nie.
