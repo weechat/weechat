@@ -216,6 +216,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
 {
     struct t_arraylist *buffers;
     struct t_gui_buffer *ptr_buffer, *ptr_current_buffer;
+    struct t_gui_buffer *ptr_buffer_prev, *ptr_buffer_next;
     struct t_gui_nick *ptr_gui_nick;
     struct t_gui_hotlist *ptr_hotlist;
     void *ptr_server, *ptr_channel;
@@ -349,6 +350,29 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                    "number_displayed", "0");
         }
         prev_number = number;
+
+        /* buffer merged */
+        ptr_buffer_prev = weechat_hdata_move (buflist_hdata_buffer,
+                                              ptr_buffer, -1);
+        ptr_buffer_next = weechat_hdata_move (buflist_hdata_buffer,
+                                              ptr_buffer, 1);
+        if ((ptr_buffer_prev
+             && (weechat_hdata_integer (buflist_hdata_buffer,
+                                        ptr_buffer_prev,
+                                        "number") == number))
+            || (ptr_buffer_next
+                && (weechat_hdata_integer (buflist_hdata_buffer,
+                                           ptr_buffer_next,
+                                           "number") == number)))
+        {
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "merged", "1");
+        }
+        else
+        {
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "merged", "0");
+        }
 
         /* buffer name */
         ptr_type = weechat_buffer_get_string (ptr_buffer, "localvar_type");
