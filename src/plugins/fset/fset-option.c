@@ -228,7 +228,7 @@ fset_option_match_filters (struct t_fset_option *fset_option)
     int match;
     char *result;
 
-    if (!weechat_config_boolean (fset_config_look_show_plugin_description)
+    if (!weechat_config_boolean (fset_config_look_show_plugins_desc)
         && (strcmp (fset_option->file, "plugins") == 0)
         && (strcmp (fset_option->section, "desc") == 0))
     {

@@ -39,7 +39,7 @@ struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_scroll_horizontal;
 struct t_config_option *fset_config_look_show_help_bar;
-struct t_config_option *fset_config_look_show_plugin_description;
+struct t_config_option *fset_config_look_show_plugins_desc;
 struct t_config_option *fset_config_look_sort;
 struct t_config_option *fset_config_look_unmarked_string;
 struct t_config_option *fset_config_look_use_color_value;
@@ -109,12 +109,12 @@ fset_config_change_show_help_bar_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "fset.look.show_plugin_description".
+ * Callback for changes on option "fset.look.show_plugins_desc".
  */
 
 void
-fset_config_change_show_plugin_description_cb (const void *pointer, void *data,
-                                               struct t_config_option *option)
+fset_config_change_show_plugins_desc_cb (const void *pointer, void *data,
+                                         struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -124,6 +124,7 @@ fset_config_change_show_plugin_description_cb (const void *pointer, void *data,
     if (fset_buffer)
     {
         fset_buffer_selected_line = 0;
+        fset_option_get_options ();
         fset_buffer_refresh (1);
     }
 }
@@ -340,13 +341,13 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_show_help_bar_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_look_show_plugin_description = weechat_config_new_option (
+    fset_config_look_show_plugins_desc = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "show_plugin_description", "boolean",
+        "show_plugins_desc", "boolean",
         N_("show the plugin description options (plugins.desc.*)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL,
-        &fset_config_change_show_plugin_description_cb, NULL, NULL,
+        &fset_config_change_show_plugins_desc_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_sort = weechat_config_new_option (
         fset_config_file, ptr_section,

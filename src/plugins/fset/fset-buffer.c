@@ -932,26 +932,29 @@ fset_buffer_set_callbacks ()
 void
 fset_buffer_set_keys ()
 {
-    char *keys[][2] = { { "meta2-A",       "up"         },
-                        { "meta2-B",       "down"       },
-                        { "meta-meta2-1~", "go 0"       },
-                        { "meta-meta2-4~", "go end"     },
-                        { "meta2-23~",     "left"       },
-                        { "meta2-24~",     "right"      },
-                        { "meta- ",        "toggle"     },
-                        { "meta--",        "add -1"     },
-                        { "meta-+",        "add 1"      },
-                        { "meta-fmeta-r",  "reset"      },
-                        { "meta-fmeta-u",  "unset"      },
-                        { "meta-ctrl-J",   "set"        },
-                        { "meta-ctrl-M",   "set"        },
-                        { "meta-fmeta-a",  "append"     },
-                        { "meta-,",        "mark 1"     },
-                        { "meta2-a",       "mark -1"    },
-                        { "meta2-b",       "mark 1"     },
-                        { "meta-v",        "toggle_bar" },
-                        { "ctrl-L",        "refresh"    },
-                        { NULL,            NULL         } };
+    char *keys[][2] = {
+        { "meta2-A",       "/fset -up"      },
+        { "meta2-B",       "/fset -down"    },
+        { "meta-meta2-1~", "/fset -go 0"    },
+        { "meta-meta2-4~", "/fset -go end"  },
+        { "meta2-23~",     "/fset -left"    },
+        { "meta2-24~",     "/fset -right"   },
+        { "meta- ",        "/fset -toggle"  },
+        { "meta--",        "/fset -add -1"  },
+        { "meta-+",        "/fset -add 1"   },
+        { "meta-fmeta-r",  "/fset -reset"   },
+        { "meta-fmeta-u",  "/fset -unset"   },
+        { "meta-ctrl-J",   "/fset -set"     },
+        { "meta-ctrl-M",   "/fset -set"     },
+        { "meta-fmeta-a",  "/fset -append"  },
+        { "meta-,",        "/fset -mark 1"  },
+        { "meta2-a",       "/fset -mark -1" },
+        { "meta2-b",       "/fset -mark 1"  },
+        { "ctrl-L",        "/fset -refresh" },
+        { "meta-p",        "/mute /set fset.look.show_plugins_desc toggle", },
+        { "meta-v",        "/mute /set fset.look.show_help_bar toggle"      },
+        { NULL,            NULL             },
+    };
     char str_key[64], str_command[64];
     int i;
 
@@ -960,7 +963,7 @@ fset_buffer_set_keys ()
         if (weechat_config_boolean (fset_config_look_use_keys))
         {
             snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
-            snprintf (str_command, sizeof (str_command), "/fset -%s", keys[i][1]);
+            snprintf (str_command, sizeof (str_command), "%s", keys[i][1]);
             weechat_buffer_set (fset_buffer, str_key, str_command);
         }
         else

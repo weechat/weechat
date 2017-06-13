@@ -114,12 +114,6 @@ fset_command_fset (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    if (weechat_strcasecmp (argv[1], "-toggle_bar") == 0)
-    {
-        weechat_config_option_set (fset_config_look_show_help_bar, "toggle", 1);
-        return WEECHAT_RC_OK;
-    }
-
     if (weechat_strcasecmp (argv[1], "-refresh") == 0)
     {
         fset_option_get_options ();
@@ -519,7 +513,6 @@ fset_command_init ()
         "fset",
         N_("fast set WeeChat and plugins options"),
         N_("-bar"
-           " || -toggle_bar"
            " || -refresh"
            " || -up|-down [<number>]"
            " || -left|-right [<percent>]"
@@ -533,7 +526,6 @@ fset_command_init ()
            " || -mark [<number>]"
            " || filter"),
         N_("       -bar: add the help bar\n"
-           "-toggle_bar: toggle the help bar\n"
            "   -refresh: refresh list of options, then whole screen "
            "(command: /window refresh)\n"
            "        -up: move the selected line up by \"number\" lines\n"
@@ -673,7 +665,6 @@ fset_command_init ()
            "  show all integer options in irc plugin:\n"
            "    /fset c:${file} == irc && ${type} == int"),
         "-bar"
-        " || -toggle_bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
         " || -down 1|2|3|4|5"
