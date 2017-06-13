@@ -1067,9 +1067,8 @@ fset_option_set (struct t_fset_option *fset_option,
         5 +  /* "/set " */
         weechat_utf8_strlen (fset_option->name) + 1 +
         ((add_quotes) ? 1 : 0) +
-        ((append) ? weechat_utf8_strlen (
-            (fset_option->value) ?
-            fset_option->value : FSET_OPTION_VALUE_NULL) : 0);
+        ((append) ? ((fset_option->value) ?
+                     weechat_utf8_strlen (fset_option->value) : 0) : 0);
     snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
     weechat_buffer_set (buffer, "input_pos", str_pos);
 }
