@@ -81,7 +81,7 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line, append, value, i;
+    int num_options, line, value, i;
     char str_command[512];
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
@@ -284,7 +284,17 @@ fset_command_fset (const void *pointer, void *data,
             else
             {
                 fset_command_get_option (&ptr_fset_option, &ptr_option);
-                fset_option_add_value (ptr_fset_option, ptr_option, value);
+                if (ptr_fset_option &&
+                    ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
+                     || (ptr_fset_option->type == FSET_OPTION_TYPE_COLOR)))
+                {
+                    fset_option_add_value (ptr_fset_option, ptr_option, value);
+                }
+                else
+                {
+                    fset_option_set (ptr_fset_option, ptr_option, buffer,
+                                     (value > 0) ? 1 : 0);
+                }
             }
             return WEECHAT_RC_OK;
         }
@@ -341,12 +351,17 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
-        if ((weechat_strcasecmp (argv[1], "-set") == 0)
-            || (weechat_strcasecmp (argv[1], "-append") == 0))
+        if (weechat_strcasecmp (argv[1], "-set") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
-            append = (weechat_strcasecmp (argv[1], "-append") == 0) ? 1 : 0;
-            fset_option_set (ptr_fset_option, ptr_option, buffer, append);
+            fset_option_set (ptr_fset_option, ptr_option, buffer, 0);
+            return WEECHAT_RC_OK;
+        }
+
+        if (weechat_strcasecmp (argv[1], "-append") == 0)
+        {
+            fset_command_get_option (&ptr_fset_option, &ptr_option);
+            fset_option_set (ptr_fset_option, ptr_option, buffer, 1);
             return WEECHAT_RC_OK;
         }
 
@@ -625,8 +640,10 @@ fset_command_init ()
            "\n"
            "Keys and input to set options on fset buffer:\n"
            "  alt+space         t    toggle boolean value\n"
-           "  alt+'-'           -    subtract 1 from value (integer/color)\n"
-           "  alt+'+'           +    add 1 to value (integer/color)\n"
+           "  alt+'-'           -    subtract 1 from value for integer/color, "
+           "set value for other types\n"
+           "  alt+'+'           +    add 1 to value for integer/color, append "
+           "to value for other types\n"
            "  alt+f, alt+r      r    reset value\n"
            "  alt+f, alt+u      u    unset value\n"
            "  alt+enter         s    set value\n"
@@ -651,7 +668,7 @@ fset_command_init ()
            "  right button                    toggle boolean (on/off) or "
            "edit the option value\n"
            "  right button + drag left/right  increase/decrease value "
-           "(for integer or color)\n"
+           "for integer/color, set/append to value for other types\n"
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "
            "\"q\" closes the fset buffer while \" q\" searches all options "

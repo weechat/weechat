@@ -186,8 +186,12 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
             snprintf (str_command, sizeof (str_command),
                       "/fset -add -%d",
                       distance);
-            weechat_command (fset_buffer, str_command);
         }
+        else
+        {
+            snprintf (str_command, sizeof (str_command), "/fset -set");
+        }
+        weechat_command (fset_buffer, str_command);
     }
     else if (weechat_string_match (ptr_key, "button2-gesture-right*", 1))
     {
@@ -198,8 +202,12 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
             snprintf (str_command, sizeof (str_command),
                       "/fset -add %d",
                       distance);
-            weechat_command (fset_buffer, str_command);
         }
+        else
+        {
+            snprintf (str_command, sizeof (str_command), "/fset -append");
+        }
+        weechat_command (fset_buffer, str_command);
     }
 
     return WEECHAT_RC_OK;
