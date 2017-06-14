@@ -640,6 +640,8 @@ fset_command_init ()
            "(command: /fset -refresh)\n"
            "                    $    refresh options (keep marked options)\n"
            "                    $$   refresh options (unmark all options)\n"
+           "                    p    toggle plugin description options "
+           "(plugins.desc.*)\n"
            "                    v    toggle help bar\n"
            "                    q    close fset buffer\n"
            "\n"
