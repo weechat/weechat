@@ -805,21 +805,22 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       const char *input_data)
 {
-    char *actions[][2] = { { "<<", "go 0"      },
-                           { ">>", "go end"    },
-                           { "<", "left"       },
-                           { ">", "right"      },
-                           { "t", "toggle"     },
-                           { "-", "add -1"     },
-                           { "+", "add 1"      },
-                           { "r", "reset"      },
-                           { "u", "unset"      },
-                           { "s", "set"        },
-                           { "a", "append"     },
-                           { ",", "mark 1"     },
-                           { "v", "toggle_bar" },
-                           { NULL, NULL        } };
-    char str_command[64];
+    char *actions[][2] = {
+        { "<<", "/fset -go 0"   },
+        { ">>", "/fset -go end" },
+        { "<",  "/fset -left"   },
+        { ">",  "/fset -right"  },
+        { "t",  "/fset -toggle" },
+        { "-",  "/fset -add -1" },
+        { "+",  "/fset -add 1"  },
+        { "r",  "/fset -reset"  },
+        { "u",  "/fset -unset"  },
+        { "s",  "/fset -set"    },
+        { "a",  "/fset -append" },
+        { ",",  "/fset -mark 1" },
+        { "p",  "/mute /set fset.look.show_plugins_desc toggle", },
+        { "v",  "/mute /set fset.look.show_help_bar toggle"      },
+        { NULL, NULL        } };
     const char *ptr_input;
     int i;
 
@@ -866,9 +867,7 @@ fset_buffer_input_cb (const void *pointer, void *data,
     {
         if (strcmp (input_data, actions[i][0]) == 0)
         {
-            snprintf (str_command, sizeof (str_command),
-                      "/fset -%s", actions[i][1]);
-            weechat_command (buffer, str_command);
+            weechat_command (buffer, actions[i][1]);
             return WEECHAT_RC_OK;
         }
     }
@@ -955,7 +954,7 @@ fset_buffer_set_keys ()
         { "meta-v",        "/mute /set fset.look.show_help_bar toggle"      },
         { NULL,            NULL             },
     };
-    char str_key[64], str_command[64];
+    char str_key[64];
     int i;
 
     for (i = 0; keys[i][0]; i++)
@@ -963,8 +962,7 @@ fset_buffer_set_keys ()
         if (weechat_config_boolean (fset_config_look_use_keys))
         {
             snprintf (str_key, sizeof (str_key), "key_bind_%s", keys[i][0]);
-            snprintf (str_command, sizeof (str_command), "%s", keys[i][1]);
-            weechat_buffer_set (fset_buffer, str_key, str_command);
+            weechat_buffer_set (fset_buffer, str_key, keys[i][1]);
         }
         else
         {
