@@ -28,6 +28,7 @@
 #include "fset-bar-item.h"
 #include "fset-buffer.h"
 #include "fset-command.h"
+#include "fset-completion.h"
 #include "fset-config.h"
 #include "fset-info.h"
 #include "fset-mouse.h"
@@ -97,6 +98,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     fset_option_init ();
 
     fset_command_init ();
+
+    fset_completion_init ();
 
     if (weechat_config_boolean (fset_config_look_show_help_bar))
         fset_add_bar ();

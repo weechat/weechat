@@ -751,7 +751,7 @@ fset_command_init ()
         " || -append"
         " || -mark"
         " || -export -help|-nohelp|%(filename) %(filename)"
-        " || *|c:|f:|s:|d|d:|d=|d==|=|==",
+        " || *|c:|f:|s:|d|d:|d=|d==|=|==|%(fset_options)",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);
 }

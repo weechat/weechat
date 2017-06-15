@@ -157,6 +157,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/fset/fset-buffer.h
 ./src/plugins/fset/fset-command.c
 ./src/plugins/fset/fset-command.h
+./src/plugins/fset/fset-completion.c
+./src/plugins/fset/fset-completion.h
 ./src/plugins/fset/fset-config.c
 ./src/plugins/fset/fset-config.h
 ./src/plugins/fset/fset-info.c

@@ -31,6 +31,8 @@ fset_la_SOURCES = fset.c \
                   fset-buffer.h \
                   fset-command.c \
                   fset-command.h \
+                  fset-completion.c \
+                  fset-completion.h \
                   fset-config.c \
                   fset-config.h \
                   fset-info.c \
