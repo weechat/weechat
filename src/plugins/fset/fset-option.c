@@ -373,18 +373,38 @@ fset_option_set_values (struct t_fset_option *fset_option,
     char str_value[64];
 
     /* file */
+    if (fset_option->file)
+    {
+        free (fset_option->file);
+        fset_option->file = NULL;
+    }
     ptr_config_name = weechat_config_option_get_string (option, "config_name");
     fset_option->file = strdup (ptr_config_name);
 
     /* section */
+    if (fset_option->section)
+    {
+        free (fset_option->section);
+        fset_option->section = NULL;
+    }
     ptr_section_name = weechat_config_option_get_string (option, "section_name");
     fset_option->section = strdup (ptr_section_name);
 
     /* option */
+    if (fset_option->option)
+    {
+        free (fset_option->option);
+        fset_option->option = NULL;
+    }
     ptr_option_name = weechat_config_option_get_string (option, "name");
     fset_option->option = strdup (ptr_option_name);
 
     /* name */
+    if (fset_option->name)
+    {
+        free (fset_option->name);
+        fset_option->name = NULL;
+    }
     length = strlen (ptr_config_name) + 1 +
         strlen (ptr_section_name) + 1 +
         strlen (ptr_option_name) + 1;
