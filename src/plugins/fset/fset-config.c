@@ -36,6 +36,7 @@ struct t_config_file *fset_config_file = NULL;
 
 struct t_config_option *fset_config_look_auto_unmark;
 struct t_config_option *fset_config_look_condition_catch_set;
+struct t_config_option *fset_config_look_export_help_default;
 struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_scroll_horizontal;
 struct t_config_option *fset_config_look_show_help_bar;
@@ -50,6 +51,9 @@ struct t_config_option *fset_config_look_use_mute;
 
 struct t_config_option *fset_config_format_option;
 struct t_config_option *fset_config_format_option_current;
+struct t_config_option *fset_config_format_export_help;
+struct t_config_option *fset_config_format_export_option;
+struct t_config_option *fset_config_format_export_option_null;
 
 /* fset config, color section */
 
@@ -315,6 +319,16 @@ fset_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_look_export_help_default = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_help_default", "boolean",
+        N_("write help for each option exported by default (this can be "
+           "overridden with arguments \"-help\" and \"-nohelp\" for command "
+           "/fset -export"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_look_marked_string = weechat_config_new_option (
         fset_config_file, ptr_section,
         "marked_string", "string",
@@ -428,6 +442,39 @@ fset_config_init ()
         NULL, 0, 0, "${color:,blue}${format_option}", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_format_export_help = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_help", "string",
+        N_("format of help line written before each option exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "# ${description2}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_format_export_option = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_option", "string",
+        N_("format of each option exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "/set ${name} ${quoted_value}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_format_export_option_null = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_option_null", "string",
+        N_("format of each option with \"null\" value exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "/unset ${name}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL);
 
     /* color */

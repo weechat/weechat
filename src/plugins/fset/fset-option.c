@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/stat.h>
 
 #include "../weechat-plugin.h"
 #include "fset.h"
@@ -216,6 +217,85 @@ fset_option_string_match (const char *string, const char *mask)
 }
 
 /*
+ * Adds the properties of an fset option in a hashtable
+ * (keys and values must be strings).
+ */
+
+void
+fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
+                                     struct t_fset_option *fset_option)
+{
+    int length;
+    char *value;
+
+    weechat_hashtable_set (hashtable, "file", fset_option->file);
+    weechat_hashtable_set (hashtable, "section", fset_option->section);
+    weechat_hashtable_set (hashtable, "option", fset_option->option);
+    weechat_hashtable_set (hashtable, "name", fset_option->name);
+    weechat_hashtable_set (hashtable, "parent_name", fset_option->parent_name);
+    weechat_hashtable_set (hashtable,
+                           "type", _(fset_option_type_string[fset_option->type]));
+    weechat_hashtable_set (hashtable,
+                           "type_en", fset_option_type_string[fset_option->type]);
+    weechat_hashtable_set (hashtable,
+                           "type_short", fset_option_type_string_short[fset_option->type]);
+    weechat_hashtable_set (hashtable,
+                           "type_tiny", fset_option_type_string_tiny[fset_option->type]);
+    weechat_hashtable_set (hashtable,
+                           "default_value", fset_option->default_value);
+    weechat_hashtable_set (hashtable, "value", fset_option->value);
+    if (fset_option->value && (fset_option->type == FSET_OPTION_TYPE_STRING))
+    {
+        length = 1 + strlen (fset_option->value) + 1 + 1;
+        value = malloc (length);
+        if (value)
+        {
+            snprintf (value, length, "\"%s\"", fset_option->value);
+            weechat_hashtable_set (hashtable, "quoted_value", value);
+            free (value);
+        }
+        else
+        {
+            weechat_hashtable_set (hashtable,
+                                   "quoted_value", fset_option->value);
+        }
+    }
+    else
+    {
+        weechat_hashtable_set (hashtable, "quoted_value", fset_option->value);
+    }
+    weechat_hashtable_set (hashtable,
+                           "parent_value", fset_option->parent_value);
+    weechat_hashtable_set (hashtable, "min", fset_option->min);
+    weechat_hashtable_set (hashtable, "max", fset_option->max);
+    weechat_hashtable_set (hashtable,
+                           "description",
+                           (fset_option->description && fset_option->description[0]) ?
+                           _(fset_option->description) : "");
+    weechat_hashtable_set (hashtable,
+                           "description2",
+                           (fset_option->description && fset_option->description[0]) ?
+                           _(fset_option->description) : _("(no description)"));
+    weechat_hashtable_set (hashtable,
+                           "description_en", fset_option->description);
+    weechat_hashtable_set (hashtable,
+                           "description_en2",
+                           (fset_option->description && fset_option->description[0]) ?
+                           fset_option->description : "(no description)");
+    weechat_hashtable_set (hashtable,
+                           "string_values", fset_option->string_values);
+    weechat_hashtable_set (hashtable,
+                           "default_value_undef",
+                           (fset_option->default_value == NULL) ? "1" : "0");
+    weechat_hashtable_set (hashtable,
+                           "value_undef",
+                           (fset_option->value == NULL) ? "1" : "0");
+    weechat_hashtable_set (hashtable,
+                           "value_changed",
+                           (fset_option_value_is_changed (fset_option)) ? "1" : "0");
+}
+
+/*
  * Checks if an option is matching current filter(s).
  *
  * Returns:
@@ -243,44 +323,9 @@ fset_option_match_filters (struct t_fset_option *fset_option)
     {
         weechat_hashtable_set (fset_option_filter_hashtable_pointers,
                                "fset_option", fset_option);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "file", fset_option->file);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "section", fset_option->section);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "option", fset_option->option);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "name", fset_option->name);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "parent_name", fset_option->parent_name);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "type", fset_option_type_string_short[fset_option->type]);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "default_value", fset_option->default_value);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "value", fset_option->value);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "parent_value", fset_option->parent_value);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "min", fset_option->min);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "max", fset_option->max);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "description",
-                               (fset_option->description) ? _(fset_option->description) : "");
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "description_en", fset_option->description);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "string_values", fset_option->string_values);
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "default_value_undef",
-                               (fset_option->default_value == NULL) ? "1" : "0");
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "value_undef",
-                               (fset_option->value == NULL) ? "1" : "0");
-        weechat_hashtable_set (fset_option_filter_hashtable_extra_vars,
-                               "value_changed",
-                               (fset_option_value_is_changed (fset_option)) ? "1" : "0");
+        fset_option_add_option_in_hashtable (
+            fset_option_filter_hashtable_extra_vars,
+            fset_option);
         result = weechat_string_eval_expression (
             fset_option_filter + 2,
             fset_option_filter_hashtable_pointers,
@@ -649,9 +694,23 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
             (fset_option->description && fset_option->description[0]) ?
             _(fset_option->description) : ""));
 
+    /* description2 */
+    fset_option_set_max_length_field (
+        "description2",
+        weechat_strlen_screen (
+            (fset_option->description && fset_option->description[0]) ?
+            _(fset_option->description) : _("(no description)")));
+
     /* description_en */
     fset_option_set_max_length_field (
-        "description", weechat_strlen_screen (fset_option->description));
+        "description_en", weechat_strlen_screen (fset_option->description));
+
+    /* description_en2 */
+    fset_option_set_max_length_field (
+        "description_en2",
+        weechat_strlen_screen (
+            (fset_option->description && fset_option->description[0]) ?
+            fset_option->description : "(no description)"));
 
     /* string_values */
     fset_option_set_max_length_field (
@@ -1142,6 +1201,91 @@ fset_option_unmark_all ()
     }
     fset_option_count_marked = 0;
     fset_buffer_refresh (0);
+}
+
+/*
+ * Exports options currently displayed in fset buffer.
+ *
+ * If with_help == 1, the help is displayed above each option
+ * and options are separated by an empty line.
+ *
+ * Returns:
+ *   1: export OK
+ *   0: error
+ */
+
+int
+fset_option_export (const char *filename, int with_help)
+{
+    int num_options, i;
+    char *line;
+    FILE *file;
+    struct t_fset_option *ptr_fset_option;
+    struct t_hashtable *hashtable_pointers, *hashtable_extra_vars;
+
+    file = fopen (filename, "w");
+    if (!file)
+        return 0;
+
+    chmod (filename, 0600);
+
+    hashtable_pointers = weechat_hashtable_new (
+        8,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    hashtable_extra_vars = weechat_hashtable_new (
+        128,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+
+    num_options = weechat_arraylist_size (fset_options);
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (ptr_fset_option)
+        {
+            weechat_hashtable_set (hashtable_pointers,
+                                   "fset_option", ptr_fset_option);
+            fset_option_add_option_in_hashtable (hashtable_extra_vars,
+                                                 ptr_fset_option);
+            if (with_help)
+            {
+                if (i > 0)
+                    fprintf (file, "\n");
+                line = weechat_string_eval_expression (
+                    weechat_config_string (fset_config_format_export_help),
+                    hashtable_pointers,
+                    hashtable_extra_vars,
+                    NULL);
+                if (line && line[0])
+                    fprintf (file, "%s\n", line);
+                if (line)
+                    free (line);
+            }
+            line = weechat_string_eval_expression (
+                (ptr_fset_option->value) ?
+                weechat_config_string (fset_config_format_export_option) :
+                weechat_config_string (fset_config_format_export_option_null),
+                hashtable_pointers,
+                hashtable_extra_vars,
+                NULL);
+            if (line && line[0])
+                fprintf (file, "%s\n", line);
+            if (line)
+                free (line);
+        }
+    }
+
+    fclose (file);
+
+    if (hashtable_pointers)
+        weechat_hashtable_free (hashtable_pointers);
+    if (hashtable_extra_vars)
+        weechat_hashtable_free (hashtable_extra_vars);
+
+    return 1;
 }
 
 /*

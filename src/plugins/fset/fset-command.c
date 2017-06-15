@@ -81,8 +81,9 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line, value, i;
+    int num_options, line, value, i, with_help;
     char str_command[512];
+    const char *ptr_filename;
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
     struct t_gui_window *ptr_window;
@@ -91,7 +92,6 @@ fset_command_fset (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) buffer;
-    (void) argv_eol;
 
     if (argc == 1)
     {
@@ -373,6 +373,40 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "-export") == 0)
+        {
+            if (argc < 3)
+                WEECHAT_COMMAND_ERROR;
+            with_help = weechat_config_boolean (fset_config_look_export_help_default);
+            ptr_filename = argv_eol[2];
+            if (weechat_strcasecmp (argv[2], "-help") == 0)
+            {
+                with_help = 1;
+                if (argc < 4)
+                    WEECHAT_COMMAND_ERROR;
+                ptr_filename = argv_eol[3];
+            }
+            else if (weechat_strcasecmp (argv[2], "-nohelp") == 0)
+            {
+                with_help = 0;
+                if (argc < 4)
+                    WEECHAT_COMMAND_ERROR;
+                ptr_filename = argv_eol[3];
+            }
+            num_options = weechat_arraylist_size (fset_options);
+            if (num_options == 0)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: there are no options displayed, "
+                                  "unable to export."),
+                                weechat_prefix ("error"), FSET_PLUGIN_NAME);
+                return WEECHAT_RC_OK;
+            }
+            if (!fset_option_export (ptr_filename, with_help))
+                WEECHAT_COMMAND_ERROR;
+            return WEECHAT_RC_OK;
+        }
+
         WEECHAT_COMMAND_ERROR;
     }
     else
@@ -539,6 +573,7 @@ fset_command_init ()
            " || -set"
            " || -append"
            " || -mark [<number>]"
+           " || -export [-help|-nohelp] <filename>"
            " || filter"),
         N_("       -bar: add the help bar\n"
            "   -refresh: refresh list of options, then whole screen "
@@ -562,6 +597,12 @@ fset_command_init ()
            "of option (move the cursor at the end of value)\n"
            "      -mark: toggle mark on the option and move \"number\" lines "
            "(up/down, default is 1: one line down)\n"
+           "    -export: export the options and values displayed in a file "
+           "(each line has format: \"/set name value\" or \"/unset name\")\n"
+           "      -help: force writing of help on options in exported file "
+           "(see /help fset.look.export_help_default)\n"
+           "    -nohelp: do not write help on options in exported file "
+           "(see /help fset.look.export_help_default)\n"
            "     filter: set a new filter to see only matching options (this "
            "filter can be used as input in fset buffer as well); allowed "
            "formats are:\n"
@@ -580,10 +621,11 @@ fset_command_init ()
            "               ==xxx   show only options with exact value \"xxx\"\n"
            "               c:xxx   show only options matching the evaluated "
            "condition \"xxx\", using following variables: file, section, "
-           "option, name, parent_name, type (bool/int/str/col), "
-           "default_value, default_value_undef, value, value_undef, "
-           "value_changed, parent_value, min, max, description, "
-           "description_en, string_values\n"
+           "option, name, parent_name, type, type_en, type_short "
+           "(bool/int/str/col), type_tiny (b/i/s/c), default_value, "
+           "default_value_undef, value, quoted_value, value_undef, "
+           "value_changed, parent_value, min, max, description, description2, "
+           "description_en, description_en2, string_values\n"
            "               s:x,y   sort options by fields x,y "
            "(see /help fset.look.sort)\n"
            "               s:      reset sort to its default value "
@@ -605,6 +647,8 @@ fset_command_init ()
            "    - ${parent_name}: parent option name\n"
            "    - ${type}: option type (translated)\n"
            "    - ${type_en}: option type (in English)\n"
+           "    - ${type_short}: short option type (bool/int/str/col)\n"
+           "    - ${type_tiny}: tiny option type (b/i/s/c)\n"
            "    - ${default_value}: option default value\n"
            "    - ${default_value_undef}: \"1\" if default value is null, "
            "otherwise \"0\"\n"
@@ -617,7 +661,11 @@ fset_command_init ()
            "    - ${min}: min value\n"
            "    - ${max}: max value\n"
            "    - ${description}: option description (translated)\n"
+           "    - ${description2}: option description (translated), "
+           "\"(no description)\" (translated) if there's no description\n"
            "    - ${description_en}: option description (in English)\n"
+           "    - ${description_en2}: option description (in English), "
+           "\"(no description)\" if there's no description\n"
            "    - ${string_values}: string values allowed for set of an "
            "integer option using strings\n"
            "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
@@ -629,38 +677,41 @@ fset_command_init ()
            "${__name}, ${__type}, ...\n"
            "\n"
            "Keys and input to move in on fset buffer:\n"
-           "  up                    move one line up\n"
-           "  down                  move one line down\n"
-           "  pgup                  move one page up\n"
-           "  pgdn                  move one page down\n"
-           "  alt-home          <<  move to first line\n"
-           "  alt-end           >>  move to last line\n"
-           "  F11               <   scroll horizontally on the left\n"
-           "  F12               >   scroll horizontally on the right\n"
+           "  up                        move one line up\n"
+           "  down                      move one line down\n"
+           "  pgup                      move one page up\n"
+           "  pgdn                      move one page down\n"
+           "  alt-home          <<      move to first line\n"
+           "  alt-end           >>      move to last line\n"
+           "  F11               <       scroll horizontally on the left\n"
+           "  F12               >       scroll horizontally on the right\n"
            "\n"
            "Keys and input to set options on fset buffer:\n"
-           "  alt+space         t    toggle boolean value\n"
-           "  alt+'-'           -    subtract 1 from value for integer/color, "
+           "  alt+space         t       toggle boolean value\n"
+           "  alt+'-'           -       subtract 1 from value for integer/color, "
            "set value for other types\n"
-           "  alt+'+'           +    add 1 to value for integer/color, append "
+           "  alt+'+'           +       add 1 to value for integer/color, append "
            "to value for other types\n"
-           "  alt+f, alt+r      r    reset value\n"
-           "  alt+f, alt+u      u    unset value\n"
-           "  alt+enter         s    set value\n"
-           "  alt+f, alt+a      a    append to value\n"
-           "  alt+','           ,    mark/unmark option and move one line down\n"
-           "  shift+down             mark/unmark option and move one line down\n"
-           "  shift+up               mark/unmark option and move one line up\n"
+           "  alt+f, alt+r      r       reset value\n"
+           "  alt+f, alt+u      u       unset value\n"
+           "  alt+enter         s       set value\n"
+           "  alt+f, alt+a      a       append to value\n"
+           "  alt+','           ,       mark/unmark option and move one line down\n"
+           "  shift+down                mark/unmark option and move one line down\n"
+           "  shift+up                  mark/unmark option and move one line up\n"
            "\n"
            "Other keys and input on fset buffer:\n"
-           "  ctrl+L                 refresh options and whole screen "
+           "  ctrl+L                    refresh options and whole screen "
            "(command: /fset -refresh)\n"
-           "                    $    refresh options (keep marked options)\n"
-           "                    $$   refresh options (unmark all options)\n"
-           "                    p    toggle plugin description options "
+           "                    $       refresh options (keep marked options)\n"
+           "                    $$      refresh options (unmark all options)\n"
+           "                    p       toggle plugin description options "
            "(plugins.desc.*)\n"
-           "                    v    toggle help bar\n"
-           "                    q    close fset buffer\n"
+           "                    v       toggle help bar\n"
+           "                    w:xxx   export options in file \"xxx\"\n"
+           "                    w-:xxx  export options in file \"xxx\" without help\n"
+           "                    w+:xxx  export options in file \"xxx\" with help\n"
+           "                    q       close fset buffer\n"
            "\n"
            "Mouse actions on fset buffer:\n"
            "  wheel up/down                   move line up/down\n"
@@ -681,8 +732,10 @@ fset_command_init ()
            "    /fset nicklist\n"
            "  show all values which contain \"red\":\n"
            "    /fset =red\n"
+           "  show all values which are exactly \"red\":\n"
+           "    /fset ==red\n"
            "  show all integer options in irc plugin:\n"
-           "    /fset c:${file} == irc && ${type} == int"),
+           "    /fset c:${file} == irc && ${type_en} == integer"),
         "-bar"
         " || -refresh"
         " || -up 1|2|3|4|5"
@@ -697,6 +750,7 @@ fset_command_init ()
         " || -set"
         " || -append"
         " || -mark"
+        " || -export -help|-nohelp|%(filename) %(filename)"
         " || *|c:|f:|s:|d|d:|d=|d==|=|==",
         &fset_command_fset, NULL, NULL);
     weechat_hook_command_run ("/set", &fset_command_run_set_cb, NULL, NULL);

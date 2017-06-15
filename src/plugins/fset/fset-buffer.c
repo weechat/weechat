@@ -545,6 +545,23 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description", str_field);
 
+    /* description2 */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "description");
+    snprintf (str_field, sizeof (str_field),
+              "%s", (ptr_field && ptr_field[0]) ? _(ptr_field) : _("(no description)"));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__description2", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_description[selected_line])),
+              (ptr_field && ptr_field[0]) ? _(ptr_field) : _("(no description)"));
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_description2", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "description2", 64);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "description2", str_field);
+
     /* description_en */
     ptr_field = weechat_hdata_string (fset_hdata_fset_option,
                                       fset_option, "description");
@@ -557,9 +574,26 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
               (ptr_field) ? ptr_field : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description_en", str_field);
-    fset_buffer_fills_field (str_field, sizeof (str_field), "description", 64);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "description_en", 64);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description_en", str_field);
+
+    /* description_en2 */
+    ptr_field = weechat_hdata_string (fset_hdata_fset_option,
+                                      fset_option, "description");
+    snprintf (str_field, sizeof (str_field),
+              "%s", (ptr_field && ptr_field[0]) ? ptr_field : "(no description)");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "__description_en2", str_field);
+    snprintf (str_field, sizeof (str_field),
+              "%s%s",
+              weechat_color (weechat_config_string (fset_config_color_description[selected_line])),
+              (ptr_field && ptr_field[0]) ? ptr_field : "(no description)");
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "_description_en2", str_field);
+    fset_buffer_fills_field (str_field, sizeof (str_field), "description_en2", 64);
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "description_en2", str_field);
 
     /* string_values */
     ptr_field = weechat_hdata_string (fset_hdata_fset_option,
@@ -859,6 +893,34 @@ fset_buffer_input_cb (const void *pointer, void *data,
             weechat_config_option_set (fset_config_look_sort, input_data + 2, 1);
         else
             weechat_config_option_reset (fset_config_look_sort, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    /* export options in a file */
+    if (strncmp (input_data, "w:", 2) == 0)
+    {
+        if (input_data[2])
+        {
+            fset_option_export (
+                input_data + 2,
+                weechat_config_boolean (fset_config_look_export_help_default));
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* export options in a file (without help) */
+    if (strncmp (input_data, "w-:", 3) == 0)
+    {
+        if (input_data[3])
+            fset_option_export (input_data + 3, 0);
+        return WEECHAT_RC_OK;
+    }
+
+    /* export options in a file (with help) */
+    if (strncmp (input_data, "w+:", 3) == 0)
+    {
+        if (input_data[3])
+            fset_option_export (input_data + 3, 1);
         return WEECHAT_RC_OK;
     }
 

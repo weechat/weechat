@@ -26,6 +26,7 @@ extern struct t_config_file *fset_config_file;
 
 extern struct t_config_option *fset_config_look_auto_unmark;
 extern struct t_config_option *fset_config_look_condition_catch_set;
+extern struct t_config_option *fset_config_look_export_help_default;
 extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_scroll_horizontal;
 extern struct t_config_option *fset_config_look_show_help_bar;
@@ -38,6 +39,9 @@ extern struct t_config_option *fset_config_look_use_mute;
 
 extern struct t_config_option *fset_config_format_option;
 extern struct t_config_option *fset_config_format_option_current;
+extern struct t_config_option *fset_config_format_export_help;
+extern struct t_config_option *fset_config_format_export_option;
+extern struct t_config_option *fset_config_format_export_option_null;
 
 extern struct t_config_option *fset_config_color_default_value[2];
 extern struct t_config_option *fset_config_color_description[2];

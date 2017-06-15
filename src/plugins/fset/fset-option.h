@@ -88,6 +88,7 @@ extern void fset_option_toggle_mark (struct t_fset_option *fset_option,
                                      struct t_config_option *option,
                                      int value);
 extern void fset_option_unmark_all ();
+extern int fset_option_export (const char *filename, int with_help);
 extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,
