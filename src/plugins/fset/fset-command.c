@@ -237,7 +237,7 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
-                fset_option_config_changed_timer = 1;
+                fset_option_enable_timer_config_changed ();
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
@@ -249,7 +249,7 @@ fset_command_fset (const void *pointer, void *data,
                             fset_option_toggle_value (ptr_fset_option, ptr_option);
                     }
                 }
-                fset_option_config_changed_timer = 0;
+                fset_option_disable_timer_config_changed ();
             }
             else
             {
@@ -267,7 +267,7 @@ fset_command_fset (const void *pointer, void *data,
 
             if (fset_option_count_marked > 0)
             {
-                fset_option_config_changed_timer = 1;
+                fset_option_enable_timer_config_changed ();
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
@@ -279,7 +279,7 @@ fset_command_fset (const void *pointer, void *data,
                             fset_option_add_value (ptr_fset_option, ptr_option, value);
                     }
                 }
-                fset_option_config_changed_timer = 0;
+                fset_option_disable_timer_config_changed ();
             }
             else
             {
@@ -303,7 +303,7 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
-                fset_option_config_changed_timer = 1;
+                fset_option_enable_timer_config_changed ();
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
@@ -315,7 +315,7 @@ fset_command_fset (const void *pointer, void *data,
                             fset_option_reset_value (ptr_fset_option, ptr_option);
                     }
                 }
-                fset_option_config_changed_timer = 0;
+                fset_option_disable_timer_config_changed ();
             }
             else
             {
@@ -329,7 +329,7 @@ fset_command_fset (const void *pointer, void *data,
         {
             if (fset_option_count_marked > 0)
             {
-                fset_option_config_changed_timer = 1;
+                fset_option_enable_timer_config_changed ();
                 num_options = weechat_arraylist_size (fset_options);
                 for (i = 0; i < num_options; i++)
                 {
@@ -341,7 +341,7 @@ fset_command_fset (const void *pointer, void *data,
                             fset_option_unset_value (ptr_fset_option, ptr_option);
                     }
                 }
-                fset_option_config_changed_timer = 0;
+                fset_option_disable_timer_config_changed ();
             }
             else
             {

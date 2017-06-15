@@ -56,7 +56,6 @@ extern struct t_arraylist *fset_options;
 extern int fset_option_count_marked;
 extern struct t_hashtable *fset_option_max_length_field;
 extern char *fset_option_filter;
-extern int fset_option_config_changed_timer;
 extern char *fset_option_type_string[];
 extern char *fset_option_type_string_short[];
 extern char *fset_option_type_string_tiny[];
@@ -93,6 +92,8 @@ extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,
                                   const char *value);
+extern void fset_option_enable_timer_config_changed ();
+extern void fset_option_disable_timer_config_changed ();
 extern struct t_hdata *fset_option_hdata_option_cb (const void *pointer,
                                                     void *data,
                                                     const char *hdata_name);

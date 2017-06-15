@@ -42,7 +42,8 @@ struct t_hashtable *fset_option_filter_hashtable_extra_vars = NULL;
 struct t_hashtable *fset_option_filter_hashtable_options = NULL;
 
 /* refresh */
-int fset_option_config_changed_timer = 0;
+int fset_option_config_changed_use_timer = 0;
+struct t_hashtable *fset_option_timer_options_changed = NULL;
 struct t_hook *fset_option_timer_hook = NULL;
 
 /* types */
@@ -1153,7 +1154,7 @@ fset_option_config_changed (const char *option_name)
             full_refresh = 1;
         }
     }
-    else if (!ptr_option)
+    else if (ptr_option)
     {
         /* option added: get options and refresh the whole buffer */
         full_refresh = 1;
@@ -1162,6 +1163,7 @@ fset_option_config_changed (const char *option_name)
     if (full_refresh)
     {
         fset_option_get_options ();
+        fset_buffer_selected_line = 0;
         fset_buffer_refresh (1);
     }
     else
@@ -1185,6 +1187,24 @@ fset_option_config_changed (const char *option_name)
 }
 
 /*
+ * Callback called by the timer for each option changed.
+ */
+
+void
+fset_option_timer_option_changed_cb (void *data,
+                                     struct t_hashtable *hashtable,
+                                     const void *key,
+                                     const void *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) hashtable;
+    (void) value;
+
+    fset_option_config_changed (key);
+}
+
+/*
  * Callback for timer after an option is changed.
  */
 
@@ -1195,9 +1215,21 @@ fset_option_config_timer_cb (const void *pointer,
 {
     /* make C compiler happy */
     (void) pointer;
+    (void) data;
     (void) remaining_calls;
 
-    fset_option_config_changed ((const char *)data);
+    if (fset_option_timer_options_changed)
+    {
+        weechat_hashtable_map (fset_option_timer_options_changed,
+                               &fset_option_timer_option_changed_cb,
+                               NULL);
+        weechat_hashtable_free (fset_option_timer_options_changed);
+        fset_option_timer_options_changed = NULL;
+    }
+    else
+    {
+        fset_option_config_changed (NULL);
+    }
 
     fset_option_timer_hook = NULL;
 
@@ -1230,7 +1262,7 @@ fset_option_config_cb (const void *pointer,
     if (ptr_info && (strcmp (ptr_info, "1") == 0))
         return WEECHAT_RC_OK;
 
-    if (fset_option_config_changed_timer)
+    if (fset_option_config_changed_use_timer)
     {
         if (!fset_option_timer_hook)
         {
@@ -1238,6 +1270,8 @@ fset_option_config_cb (const void *pointer,
                 1, 0, 1,
                 &fset_option_config_timer_cb, NULL, NULL);
         }
+        weechat_hashtable_set (fset_option_timer_options_changed,
+                               option, NULL);
     }
     else
     {
@@ -1245,6 +1279,38 @@ fset_option_config_cb (const void *pointer,
     }
 
     return WEECHAT_RC_OK;
+}
+
+/*
+ * Enables a timer when options are changed.
+ */
+
+void
+fset_option_enable_timer_config_changed ()
+{
+    if (fset_option_timer_options_changed)
+    {
+        weechat_hashtable_remove_all (fset_option_timer_options_changed);
+    }
+    else
+    {
+        fset_option_timer_options_changed = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    fset_option_config_changed_use_timer = 1;
+}
+
+/*
+ * Disables timer when options are changed.
+ */
+
+void
+fset_option_disable_timer_config_changed ()
+{
+    fset_option_config_changed_use_timer = 0;
 }
 
 /*
@@ -1479,5 +1545,10 @@ fset_option_end ()
     {
         weechat_hashtable_free (fset_option_filter_hashtable_options);
         fset_option_filter_hashtable_options = NULL;
+    }
+    if (fset_option_timer_options_changed)
+    {
+        weechat_hashtable_free (fset_option_timer_options_changed);
+        fset_option_timer_options_changed = NULL;
     }
 }
