@@ -524,7 +524,7 @@ Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendend
     item(*): beliebiges Bar-Item
   item(xxx): Bar-Item mit Namen "xxx"
 Der Platzhalter "*" kann verwendet werden um mehrere unterschiedliche Mausereignisse auszuwählen.
-Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name".  Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
+Für den Kontext "mouse" kann ein besonderer Übergabewert für den zu nutzenden Befehl verwendet werden, "hsignal:name". Dieses sendet das hsignal "name" und als Inhalt ein Hashtable als Argument.
 Ein weiterer Übergabewert ist "-" und kann genutzt werden um einen Schlüssel zu deaktivieren (der Schlüssel wird bei der Durchführung übersprungen).
 
 Beispiele:
