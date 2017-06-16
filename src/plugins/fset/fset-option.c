@@ -754,8 +754,7 @@ fset_option_set_max_length_fields_all ()
  * Allocates an fset option structure using a pointer to a
  * WeeChat/plugin option.
  *
- * Returns pointer to new fset option, NULL if the option does not match
- * filters or if error.
+ * Returns pointer to new fset option, NULL if error.
  */
 
 struct t_fset_option *
@@ -783,6 +782,26 @@ fset_option_alloc (struct t_config_option *option)
     new_fset_option->marked = 0;
 
     fset_option_set_values (new_fset_option, option);
+
+    return new_fset_option;
+}
+
+/*
+ * Allocates an fset option structure using a pointer to a
+ * WeeChat/plugin option.
+ *
+ * Returns pointer to new fset option, NULL if the option does not match
+ * filters or if error.
+ */
+
+struct t_fset_option *
+fset_option_add (struct t_config_option *option)
+{
+    struct t_fset_option *new_fset_option;
+
+    new_fset_option = fset_option_alloc (option);
+    if (!new_fset_option)
+        return NULL;
 
     /* check if option match filters (if not, ignore it) */
     if (!fset_option_match_filters (new_fset_option))
@@ -972,7 +991,7 @@ fset_option_get_options ()
                                                 ptr_section, "options");
             while (ptr_option)
             {
-                new_fset_option = fset_option_alloc (ptr_option);
+                new_fset_option = fset_option_add (ptr_option);
                 if (new_fset_option)
                     weechat_arraylist_add (fset_options, new_fset_option);
                 ptr_option = weechat_hdata_move (fset_hdata_config_option,
@@ -1295,9 +1314,12 @@ fset_option_export (const char *filename, int with_help)
 void
 fset_option_config_changed (const char *option_name)
 {
-    struct t_fset_option *ptr_fset_option;
+    struct t_fset_option *ptr_fset_option, *new_fset_option;
     struct t_config_option *ptr_option;
     int full_refresh, line, num_options;
+
+    if (!fset_buffer)
+        return;
 
     full_refresh = 0;
 
@@ -1320,8 +1342,12 @@ fset_option_config_changed (const char *option_name)
     }
     else if (ptr_option)
     {
-        /* option added: get options and refresh the whole buffer */
-        full_refresh = 1;
+        new_fset_option = fset_option_alloc (ptr_option);
+        if (fset_option_match_filters (new_fset_option))
+        {
+            /* option added: get options and refresh the whole buffer */
+            full_refresh = 1;
+        }
     }
 
     if (full_refresh)
