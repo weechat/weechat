@@ -78,6 +78,7 @@ fset_buffer_set_title ()
                 "shift+up=mark and move up, "
                 "($)=refresh, "
                 "($$)=unmark/refresh, "
+                "alt+p(p)=toggle plugins desc, "
                 "alt+v(v)=toggle help bar, "
                 "ctrl+X(x)=switch format, "
                 "(q)=close buffer"),
