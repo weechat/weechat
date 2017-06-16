@@ -27,6 +27,7 @@ extern struct t_config_file *fset_config_file;
 extern struct t_config_option *fset_config_look_auto_unmark;
 extern struct t_config_option *fset_config_look_condition_catch_set;
 extern struct t_config_option *fset_config_look_export_help_default;
+extern struct t_config_option *fset_config_look_format_number;
 extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_scroll_horizontal;
 extern struct t_config_option *fset_config_look_show_help_bar;
@@ -37,8 +38,8 @@ extern struct t_config_option *fset_config_look_use_color_value;
 extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_look_use_mute;
 
-extern struct t_config_option *fset_config_format_option;
-extern struct t_config_option *fset_config_format_option_current;
+extern struct t_config_option *fset_config_format_option[2];
+extern struct t_config_option *fset_config_format_option_current[2];
 extern struct t_config_option *fset_config_format_export_help;
 extern struct t_config_option *fset_config_format_export_option;
 extern struct t_config_option *fset_config_format_export_option_null;
@@ -79,7 +80,7 @@ extern struct t_config_option *fset_config_color_value_undef[2];
 
 extern char **fset_config_sort_fields;
 extern int fset_config_sort_fields_count;
-extern char *fset_config_eval_format_option_current;
+extern char *fset_config_eval_format_option_current[2];
 
 extern int fset_config_init ();
 extern int fset_config_read ();

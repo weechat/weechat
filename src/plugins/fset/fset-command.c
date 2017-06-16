@@ -81,8 +81,8 @@ fset_command_fset (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    int num_options, line, value, i, with_help;
-    char str_command[512];
+    int num_options, line, value, i, with_help, min, max, format_number;
+    char str_command[512], str_number[64];
     const char *ptr_filename;
     struct t_fset_option *ptr_fset_option;
     struct t_config_option *ptr_option;
@@ -373,6 +373,23 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "-format") == 0)
+        {
+            min = weechat_hdata_integer (fset_hdata_config_option,
+                                         fset_config_look_format_number,
+                                         "min");
+            max = weechat_hdata_integer (fset_hdata_config_option,
+                                         fset_config_look_format_number,
+                                         "max");
+            format_number = weechat_config_integer (fset_config_look_format_number) + 1;
+            if (format_number > max)
+                format_number = min;
+            snprintf (str_number, sizeof (str_number), "%d", format_number);
+            weechat_config_option_set (fset_config_look_format_number,
+                                       str_number, 1);
+            return WEECHAT_RC_OK;
+        }
+
         if (weechat_strcasecmp (argv[1], "-export") == 0)
         {
             if (argc < 3)
@@ -573,6 +590,7 @@ fset_command_init ()
            " || -set"
            " || -append"
            " || -mark [<number>]"
+           " || -format"
            " || -export [-help|-nohelp] <filename>"
            " || filter"),
         N_("       -bar: add the help bar\n"
@@ -597,6 +615,7 @@ fset_command_init ()
            "of option (move the cursor at the end of value)\n"
            "      -mark: toggle mark on the option and move \"number\" lines "
            "(up/down, default is 1: one line down)\n"
+           "    -format: switch to the next available format\n"
            "    -export: export the options and values displayed in a file "
            "(each line has format: \"/set name value\" or \"/unset name\")\n"
            "      -help: force writing of help on options in exported file "
@@ -711,6 +730,7 @@ fset_command_init ()
            "                    w:xxx   export options in file \"xxx\"\n"
            "                    w-:xxx  export options in file \"xxx\" without help\n"
            "                    w+:xxx  export options in file \"xxx\" with help\n"
+           "  ctrl+X            x       switch the format used to display options\n"
            "                    q       close fset buffer\n"
            "\n"
            "Mouse actions on fset buffer:\n"
@@ -750,6 +770,7 @@ fset_command_init ()
         " || -set"
         " || -append"
         " || -mark"
+        " || -format"
         " || -export -help|-nohelp|%(filename) %(filename)"
         " || *|c:|f:|s:|d|d:|d=|d==|=|==|%(fset_options)",
         &fset_command_fset, NULL, NULL);

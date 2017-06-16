@@ -79,6 +79,7 @@ fset_buffer_set_title ()
                 "($)=refresh, "
                 "($$)=unmark/refresh, "
                 "alt+v(v)=toggle help bar, "
+                "ctrl+X(x)=switch format, "
                 "(q)=close buffer"),
               weechat_color (weechat_config_string (fset_config_color_title_filter)),
               (fset_option_filter) ? fset_option_filter : "*",
@@ -137,7 +138,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     const char *ptr_field, *ptr_parent_value;
     int selected_line;
     int default_value_undef, value_undef, value_changed;
-    int type, marked, add_quotes, add_quotes_parent;
+    int type, marked, add_quotes, add_quotes_parent, format_number;
 
     if (!fset_option)
         return;
@@ -647,8 +648,11 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
                            (value_changed) ? "1" : "0");
 
     /* build string for line */
+    format_number = weechat_config_integer (fset_config_look_format_number);
     line = weechat_string_eval_expression (
-        (selected_line) ? fset_config_eval_format_option_current : weechat_config_string (fset_config_format_option),
+        (selected_line) ?
+        fset_config_eval_format_option_current[format_number - 1] :
+        weechat_config_string (fset_config_format_option[format_number - 1]),
         fset_buffer_hashtable_pointers,
         fset_buffer_hashtable_extra_vars,
         NULL);
@@ -854,7 +858,9 @@ fset_buffer_input_cb (const void *pointer, void *data,
         { ",",  "/fset -mark 1" },
         { "p",  "/mute /set fset.look.show_plugins_desc toggle", },
         { "v",  "/mute /set fset.look.show_help_bar toggle"      },
-        { NULL, NULL        } };
+        { "x",  "/fset -format" },
+        { NULL, NULL            },
+    };
     const char *ptr_input;
     int i;
 
@@ -1014,6 +1020,7 @@ fset_buffer_set_keys ()
         { "ctrl-L",        "/fset -refresh" },
         { "meta-p",        "/mute /set fset.look.show_plugins_desc toggle", },
         { "meta-v",        "/mute /set fset.look.show_help_bar toggle"      },
+        { "ctrl-X",        "/fset -format"  },
         { NULL,            NULL             },
     };
     char str_key[64];
