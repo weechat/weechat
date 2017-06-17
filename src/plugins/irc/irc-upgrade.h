@@ -33,6 +33,8 @@ enum t_irc_upgrade_type
     IRC_UPGRADE_TYPE_REDIRECT_PATTERN,
     IRC_UPGRADE_TYPE_REDIRECT,
     IRC_UPGRADE_TYPE_NOTIFY,
+    IRC_UPGRADE_TYPE_MODELIST,
+    IRC_UPGRADE_TYPE_MODELIST_ITEM
 };
 
 extern int irc_upgrade_save ();
