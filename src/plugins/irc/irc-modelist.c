@@ -83,7 +83,7 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
     /* initialize new item */
     new_item->number = (modelist->last_item) ? modelist->last_item->number + 1 : 0;
     new_item->mask = strdup (mask);
-    new_item->setter = strdup (setter);
+    new_item->setter = (setter) ? strdup (setter) : NULL;
     new_item->datetime = datetime;
 
     /* add new item to modelist */
