@@ -1200,7 +1200,7 @@ fset_option_toggle_mark (struct t_fset_option *fset_option,
 void
 fset_option_mark_options_matching_filter (const char *filter, int mark)
 {
-    int num_options, i, mark_old;
+    int num_options, i, mark_old, matching;
     struct t_fset_option *ptr_fset_option;
 
     num_options = weechat_arraylist_size (fset_options);
@@ -1210,12 +1210,20 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
         if (ptr_fset_option)
         {
             mark_old = ptr_fset_option->marked;
-            if (fset_option_match_filter (ptr_fset_option, filter))
-                ptr_fset_option->marked = mark;
-            else
-                ptr_fset_option->marked = mark ^ 1;
-            if (mark_old != ptr_fset_option->marked)
-                fset_option_count_marked += (ptr_fset_option->marked) ? 1 : -1;
+            matching = fset_option_match_filter (ptr_fset_option, filter);
+            if (matching)
+            {
+                if (!mark_old && mark)
+                {
+                    ptr_fset_option->marked = 1;
+                    fset_option_count_marked++;
+                }
+                else if (mark_old && !mark)
+                {
+                    ptr_fset_option->marked = 0;
+                    fset_option_count_marked--;
+                }
+            }
         }
     }
     fset_buffer_refresh (0);
