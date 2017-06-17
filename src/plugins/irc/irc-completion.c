@@ -422,15 +422,16 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
 }
 
 /*
- * Adds ban masks current channel to completion list.
+ * Adds modelist masks current channel to completion list.
  */
 
 int
-irc_completion_bans_cb (const void *pointer, void *data,
-                        const char *completion_item,
-                        struct t_gui_buffer *buffer,
-                        struct t_gui_completion *completion)
+irc_completion_modelist_cb (const void *pointer, void *data,
+                            const char *completion_item,
+                            struct t_gui_buffer *buffer,
+                            struct t_gui_completion *completion)
 {
+    char *pos;
     struct t_irc_modelist *ptr_modelist;
     struct t_irc_modelist_item *ptr_item;
 
@@ -439,48 +440,14 @@ irc_completion_bans_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) completion_item;
 
-    if (ptr_channel)
+    pos = strchr (completion_item, ':');
+    if (pos)
+        pos++;
+
+    if (pos && pos[0] && ptr_channel)
     {
-        ptr_modelist = irc_modelist_search (ptr_channel, 'b');
-        if (ptr_modelist)
-        {
-            for (ptr_item = ptr_modelist->items; ptr_item; ptr_item = ptr_item->next_item)
-            {
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_item->mask,
-                                                  0, WEECHAT_LIST_POS_END);
-            }
-        }
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
- * Adds quiet masks current channel to completion list.
- */
-
-int
-irc_completion_quiets_cb (const void *pointer,
-                          void *data, const char *completion_item,
-                          struct t_gui_buffer *buffer,
-                          struct t_gui_completion *completion)
-{
-    struct t_irc_modelist *ptr_modelist;
-    struct t_irc_modelist_item *ptr_item;
-
-    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) completion_item;
-
-    if (ptr_channel)
-    {
-        ptr_modelist = irc_modelist_search (ptr_channel, 'q');
+        ptr_modelist = irc_modelist_search (ptr_channel, pos[0]);
         if (ptr_modelist)
         {
             for (ptr_item = ptr_modelist->items; ptr_item; ptr_item = ptr_item->next_item)
@@ -833,12 +800,10 @@ irc_completion_init ()
     weechat_hook_completion ("irc_channel_nicks_hosts",
                              N_("nicks and hostnames of current IRC channel"),
                              &irc_completion_channel_nicks_hosts_cb, NULL, NULL);
-    weechat_hook_completion ("irc_bans",
-                             N_("ban masks of current IRC channel"),
-                             &irc_completion_bans_cb, NULL, NULL);
-    weechat_hook_completion ("irc_quiets",
-                             N_("quiet masks of current IRC channel"),
-                             &irc_completion_quiets_cb, NULL, NULL);
+    weechat_hook_completion ("irc_modelist",
+                             N_("modelist masks of current IRC channel; "
+                                "required argument: modelist mode"),
+                             &irc_completion_modelist_cb, NULL, NULL);
     weechat_hook_completion ("irc_channel_topic",
                              N_("topic of current IRC channel"),
                              &irc_completion_channel_topic_cb, NULL, NULL);

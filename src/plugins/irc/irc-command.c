@@ -6968,14 +6968,14 @@ irc_command_init ()
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
            "   nick: nick, host or ban number"),
-        "%(irc_bans)", &irc_command_unban, NULL, NULL);
+        "%(irc_modelist:b)", &irc_command_unban, NULL, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
            "   nick: nick, host or quiet number"),
-        "%(irc_quiets)", &irc_command_unquiet, NULL, NULL);
+        "%(irc_modelist:q)", &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),
