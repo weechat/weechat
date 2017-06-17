@@ -78,6 +78,8 @@ fset_buffer_set_title ()
                 "shift+up=mark and move up, "
                 "($)=refresh, "
                 "($$)=unmark/refresh, "
+                "(m)=mark matching options, "
+                "(u)=unmark matching options, "
                 "alt+p(p)=toggle plugins desc, "
                 "alt+v(v)=toggle help bar, "
                 "ctrl+X(x)=switch format, "
@@ -890,6 +892,20 @@ fset_buffer_input_cb (const void *pointer, void *data,
         fset_option_unmark_all ();
         fset_option_get_options ();
         fset_buffer_refresh (0);
+        return WEECHAT_RC_OK;
+    }
+
+    /* mark options matching filter */
+    if (strncmp (input_data, "m:", 2) == 0)
+    {
+        fset_option_mark_options_matching_filter (input_data + 2, 1);
+        return WEECHAT_RC_OK;
+    }
+
+    /* unmark options matching filter */
+    if (strncmp (input_data, "u:", 2) == 0)
+    {
+        fset_option_mark_options_matching_filter (input_data + 2, 0);
         return WEECHAT_RC_OK;
     }
 

@@ -304,22 +304,15 @@ fset_option_add_option_in_hashtable (struct t_hashtable *hashtable,
  */
 
 int
-fset_option_match_filters (struct t_fset_option *fset_option)
+fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
 {
     int match;
     char *result;
 
-    if (!weechat_config_boolean (fset_config_look_show_plugins_desc)
-        && (strcmp (fset_option->file, "plugins") == 0)
-        && (strcmp (fset_option->section, "desc") == 0))
-    {
-        return 0;
-    }
-
-    if (!fset_option_filter || !fset_option_filter[0])
+    if (!filter || !filter[0])
         return 1;
 
-    if (strncmp (fset_option_filter, "c:", 2) == 0)
+    if (strncmp (filter, "c:", 2) == 0)
     {
         weechat_hashtable_set (fset_option_filter_hashtable_pointers,
                                "fset_option", fset_option);
@@ -336,68 +329,68 @@ fset_option_match_filters (struct t_fset_option *fset_option)
             free (result);
         return match;
     }
-    else if (strncmp (fset_option_filter, "f:", 2) == 0)
+    else if (strncmp (filter, "f:", 2) == 0)
     {
         /* filter by config name */
         return (weechat_strcasecmp (fset_option->file,
-                                    fset_option_filter + 2) == 0) ? 1 : 0;
+                                    filter + 2) == 0) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "t:", 2) == 0)
+    else if (strncmp (filter, "t:", 2) == 0)
     {
         /* filter by type */
         return (weechat_strcasecmp (
                     fset_option_type_string_short[fset_option->type],
-                    fset_option_filter + 2) == 0) ? 1 : 0;
+                    filter + 2) == 0) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "d==", 3) == 0)
+    else if (strncmp (filter, "d==", 3) == 0)
     {
         /* filter by modified values (on exact value) */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (weechat_strcasecmp (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                    fset_option_filter + 3) == 0) ? 1 : 0;
+                    filter + 3) == 0) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "d=", 2) == 0)
+    else if (strncmp (filter, "d=", 2) == 0)
     {
         /* filter by modified values (on value) */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                    fset_option_filter + 2)) ? 1 : 0;
+                    filter + 2)) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "d:", 2) == 0)
+    else if (strncmp (filter, "d:", 2) == 0)
     {
         /* filter by modified values (on name) */
         if (!fset_option_value_is_changed (fset_option))
             return 0;
         return fset_option_string_match (fset_option->name,
-                                         fset_option_filter + 2) ? 1 : 0;
+                                         filter + 2) ? 1 : 0;
     }
-    else if (strcmp (fset_option_filter, "d") == 0)
+    else if (strcmp (filter, "d") == 0)
     {
         /* filter by modified values */
         return (fset_option_value_is_changed (fset_option)) ? 1 : 0;
     }
-    else if (strncmp (fset_option_filter, "==", 2) == 0)
+    else if (strncmp (filter, "==", 2) == 0)
     {
         /* filter by exact value */
         return (weechat_strcasecmp (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                    fset_option_filter + 2) == 0) ? 1 : 0;
+                    filter + 2) == 0) ? 1 : 0;
     }
-    else if (fset_option_filter[0] == '=')
+    else if (filter[0] == '=')
     {
         /* filter by value */
         return (fset_option_string_match (
                     (fset_option->value) ? fset_option->value : FSET_OPTION_VALUE_NULL,
-                    fset_option_filter + 1)) ? 1 : 0;
+                    filter + 1)) ? 1 : 0;
     }
     else
     {
         /* filter by option name */
-        return (fset_option_string_match (fset_option->name, fset_option_filter)) ? 1 : 0;
+        return (fset_option_string_match (fset_option->name, filter)) ? 1 : 0;
     }
 }
 
@@ -803,8 +796,16 @@ fset_option_add (struct t_config_option *option)
     if (!new_fset_option)
         return NULL;
 
+    if (!weechat_config_boolean (fset_config_look_show_plugins_desc)
+        && (strcmp (new_fset_option->file, "plugins") == 0)
+        && (strcmp (new_fset_option->section, "desc") == 0))
+    {
+        fset_option_free (new_fset_option);
+        return NULL;
+    }
+
     /* check if option match filters (if not, ignore it) */
-    if (!fset_option_match_filters (new_fset_option))
+    if (!fset_option_match_filter (new_fset_option, fset_option_filter))
     {
         fset_option_free (new_fset_option);
         return NULL;
@@ -1223,6 +1224,34 @@ fset_option_unmark_all ()
 }
 
 /*
+ * Mark/unmark options matching a filter.
+ */
+
+void
+fset_option_mark_options_matching_filter (const char *filter, int mark)
+{
+    int num_options, i, mark_old;
+    struct t_fset_option *ptr_fset_option;
+
+    num_options = weechat_arraylist_size (fset_options);
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (ptr_fset_option)
+        {
+            mark_old = ptr_fset_option->marked;
+            if (fset_option_match_filter (ptr_fset_option, filter))
+                ptr_fset_option->marked = mark;
+            else
+                ptr_fset_option->marked = mark ^ 1;
+            if (mark_old != ptr_fset_option->marked)
+                fset_option_count_marked += (ptr_fset_option->marked) ? 1 : -1;
+        }
+    }
+    fset_buffer_refresh (0);
+}
+
+/*
  * Exports options currently displayed in fset buffer.
  *
  * If with_help == 1, the help is displayed above each option
@@ -1343,7 +1372,7 @@ fset_option_config_changed (const char *option_name)
     else if (ptr_option)
     {
         new_fset_option = fset_option_alloc (ptr_option);
-        if (fset_option_match_filters (new_fset_option))
+        if (fset_option_match_filter (new_fset_option, fset_option_filter))
         {
             /* option added: get options and refresh the whole buffer */
             full_refresh = 1;
