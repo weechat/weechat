@@ -1179,11 +1179,8 @@ fset_option_set (struct t_fset_option *fset_option,
 
 void
 fset_option_toggle_mark (struct t_fset_option *fset_option,
-                         struct t_config_option *option,
-                         int value)
+                         struct t_config_option *option)
 {
-    int num_options, line;
-
     /* make C compiler happy */
     (void) option;
 
@@ -1192,34 +1189,7 @@ fset_option_toggle_mark (struct t_fset_option *fset_option,
 
     fset_option->marked ^= 1;
     fset_option_count_marked += (fset_option->marked) ? 1 : -1;
-    num_options = weechat_arraylist_size (fset_options);
-    line = fset_buffer_selected_line + value;
-    if (line < 0)
-        line = 0;
-    else if (line >= num_options)
-        line = num_options - 1;
-    fset_buffer_set_current_line (line);
-    fset_buffer_check_line_outside_window ();
-}
 
-/*
- * Unmarks all options.
- */
-
-void
-fset_option_unmark_all ()
-{
-    int num_options, i;
-    struct t_fset_option *ptr_fset_option;
-
-    num_options = weechat_arraylist_size (fset_options);
-    for (i = 0; i < num_options; i++)
-    {
-        ptr_fset_option = weechat_arraylist_get (fset_options, i);
-        if (ptr_fset_option)
-            ptr_fset_option->marked = 0;
-    }
-    fset_option_count_marked = 0;
     fset_buffer_refresh (0);
 }
 
@@ -1248,6 +1218,27 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
                 fset_option_count_marked += (ptr_fset_option->marked) ? 1 : -1;
         }
     }
+    fset_buffer_refresh (0);
+}
+
+/*
+ * Unmarks all options.
+ */
+
+void
+fset_option_unmark_all ()
+{
+    int num_options, i;
+    struct t_fset_option *ptr_fset_option;
+
+    num_options = weechat_arraylist_size (fset_options);
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (ptr_fset_option)
+            ptr_fset_option->marked = 0;
+    }
+    fset_option_count_marked = 0;
     fset_buffer_refresh (0);
 }
 

@@ -368,8 +368,7 @@ fset_command_fset (const void *pointer, void *data,
         if (weechat_strcasecmp (argv[1], "-mark") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
-            value = fset_command_get_int_arg (argc, argv, 2, 1);
-            fset_option_toggle_mark (ptr_fset_option, ptr_option, value);
+            fset_option_toggle_mark (ptr_fset_option, ptr_option);
             return WEECHAT_RC_OK;
         }
 
@@ -589,7 +588,7 @@ fset_command_init ()
            " || -unset"
            " || -set"
            " || -append"
-           " || -mark [<number>]"
+           " || -mark"
            " || -format"
            " || -export [-help|-nohelp] <filename>"
            " || filter"),
@@ -613,8 +612,7 @@ fset_command_init ()
            "option (move the cursor at the beginning of value)\n"
            "    -append: add the /set command to append something in the value "
            "of option (move the cursor at the end of value)\n"
-           "      -mark: toggle mark on the option and move \"number\" lines "
-           "(up/down, default is 1: one line down)\n"
+           "      -mark: toggle mark\n"
            "    -format: switch to the next available format\n"
            "    -export: export the options and values displayed in a file "
            "(each line has format: \"/set name value\" or \"/unset name\")\n"
@@ -711,21 +709,21 @@ fset_command_init ()
            "  alt+f, alt+u      u       unset value\n"
            "  alt+enter         s       set value\n"
            "  alt+f, alt+a      a       append to value\n"
-           "  alt+','           ,       mark/unmark option and move one line down\n"
+           "  alt+','           ,       mark/unmark option\n"
+           "  shift+up                  move one line up and mark/unmark option\n"
            "  shift+down                mark/unmark option and move one line down\n"
-           "  shift+up                  mark/unmark option and move one line up\n"
+           "                    m:xxx   mark options displayed that are "
+           "matching filter \"xxx\" (any filter on option or value is allowed, "
+           "see filters above)\n"
+           "                    u:xxx   unmark options displayed that are "
+           "matching filter \"xxx\" (any filter on option or value is allowed, "
+           "see filters above)\n"
            "\n"
            "Other keys and input on fset buffer:\n"
            "  ctrl+L                    refresh options and whole screen "
            "(command: /fset -refresh)\n"
            "                    $       refresh options (keep marked options)\n"
            "                    $$      refresh options (unmark all options)\n"
-           "                    m:xxx   mark options displayed and matching "
-           "filter \"xxx\" (any filter on option or value is allowed, "
-           "see filters above)\n"
-           "                    u:xxx   unmark options displayed and matching "
-           "filter \"xxx\" (any filter on option or value is allowed, "
-           "see filters above)\n"
            "                    p       toggle plugin description options "
            "(plugins.desc.*)\n"
            "                    v       toggle help bar\n"
