@@ -54,7 +54,8 @@ fset_buffer_set_title ()
     if (fset_option_count_marked > 0)
     {
         snprintf (str_marked, sizeof (str_marked),
-                  " (*: %s%d%s)",
+                  " (%s: %s%d%s)",
+                  weechat_config_string (fset_config_look_marked_string),
                   weechat_color (weechat_config_string (fset_config_color_title_marked_options)),
                   fset_option_count_marked,
                   weechat_color ("bar_fg"));
