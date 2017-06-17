@@ -1015,7 +1015,7 @@ fset_buffer_set_keys ()
         { "meta-ctrl-J",   "/fset -set"     },
         { "meta-ctrl-M",   "/fset -set"     },
         { "meta-fmeta-a",  "/fset -append"  },
-        { "meta-,",        "/fset -mark 1"  },
+        { "meta-,",        "/fset -mark 0"  },
         { "meta2-a",       "/fset -mark -1" },
         { "meta2-b",       "/fset -mark 1"  },
         { "ctrl-L",        "/fset -refresh" },
