@@ -648,7 +648,7 @@ fset_command_init ()
            "(see /help eval for the format), with these options:\n"
            "  - fset.format.option: format for an option which is not on "
            "current line\n"
-           "  - fset.format.option_current: format for the current option\n"
+           "  - fset.format.option_selected: format for the selected option\n"
            "\n"
            "The following variables can be used in these options:\n"
            "  - option data, with color and padded by spaces on the right:\n"

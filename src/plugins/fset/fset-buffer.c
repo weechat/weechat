@@ -693,7 +693,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
     format_number = weechat_config_integer (fset_config_look_format_number);
     line = weechat_string_eval_expression (
         (selected_line) ?
-        fset_config_eval_format_option_current[format_number - 1] :
+        fset_config_eval_format_option_selected[format_number - 1] :
         weechat_config_string (fset_config_format_option[format_number - 1]),
         fset_buffer_hashtable_pointers,
         fset_buffer_hashtable_extra_vars,

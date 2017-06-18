@@ -51,7 +51,7 @@ struct t_config_option *fset_config_look_use_mute;
 /* fset config, format section */
 
 struct t_config_option *fset_config_format_option[2];
-struct t_config_option *fset_config_format_option_current[2];
+struct t_config_option *fset_config_format_option_selected[2];
 struct t_config_option *fset_config_format_export_help;
 struct t_config_option *fset_config_format_export_option;
 struct t_config_option *fset_config_format_export_option_null;
@@ -95,7 +95,7 @@ struct t_config_option *fset_config_color_value_undef[2];
 
 char **fset_config_sort_fields = NULL;
 int fset_config_sort_fields_count = 0;
-char *fset_config_eval_format_option_current[2] = { NULL, NULL };
+char *fset_config_eval_format_option_selected[2] = { NULL, NULL };
 
 
 /*
@@ -228,10 +228,10 @@ fset_config_change_format_cb (const void *pointer, void *data,
 
     for (i = 0; i < 2; i++)
     {
-        if (fset_config_eval_format_option_current[i])
-            free (fset_config_eval_format_option_current[i]);
-        fset_config_eval_format_option_current[i] = weechat_string_replace (
-            weechat_config_string (fset_config_format_option_current[i]),
+        if (fset_config_eval_format_option_selected[i])
+            free (fset_config_eval_format_option_selected[i]);
+        fset_config_eval_format_option_selected[i] = weechat_string_replace (
+            weechat_config_string (fset_config_format_option_selected[i]),
             "${format_option}",
             weechat_config_string (fset_config_format_option[i]));
     }
@@ -479,10 +479,10 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_format_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_format_option_current[0] = weechat_config_new_option (
+    fset_config_format_option_selected[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "option_current1", "string",
-        N_("first format for the line with current option "
+        "option_selected1", "string",
+        N_("first format for the line with selected option "
            "(note: content is evaluated, see /help fset, "
            "${format_option} is replaced by the content of option "
            "fset.format.option1 before evaluation); "
@@ -491,10 +491,10 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_format_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_format_option_current[1] = weechat_config_new_option (
+    fset_config_format_option_selected[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
-        "option_current2", "string",
-        N_("second format for the line with current option "
+        "option_selected2", "string",
+        N_("second format for the line with selected option "
            "(note: content is evaluated, see /help fset, "
            "${format_option} is replaced by the content of option "
            "fset.format.option2 before evaluation); "
@@ -1072,10 +1072,10 @@ fset_config_free ()
 
     for (i = 0; i < 2; i++)
     {
-        if (fset_config_eval_format_option_current[i])
+        if (fset_config_eval_format_option_selected[i])
         {
-            free (fset_config_eval_format_option_current[i]);
-            fset_config_eval_format_option_current[i] = NULL;
+            free (fset_config_eval_format_option_selected[i]);
+            fset_config_eval_format_option_selected[i] = NULL;
         }
     }
 }
