@@ -67,6 +67,7 @@ struct t_config_option *fset_config_color_help_description;
 struct t_config_option *fset_config_color_help_name;
 struct t_config_option *fset_config_color_help_quotes;
 struct t_config_option *fset_config_color_help_values;
+struct t_config_option *fset_config_color_index[2];
 struct t_config_option *fset_config_color_marked[2];
 struct t_config_option *fset_config_color_max[2];
 struct t_config_option *fset_config_color_min[2];
@@ -651,6 +652,22 @@ fset_config_init ()
         "help_values", "color",
         N_("color for allowed values"),
         NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_index[0] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "index", "color",
+        N_("color for index of option"),
+        NULL, 0, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_index[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "index_selected", "color",
+        N_("color for index of option on the selected line"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);

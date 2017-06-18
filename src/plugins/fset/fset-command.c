@@ -682,6 +682,7 @@ fset_command_init ()
            "    - ${string_values}: string values allowed for set of an "
            "integer option using strings\n"
            "    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
+           "    - ${index}: index of option in list\n"
            "  - option data, with color but no spaces:\n"
            "    - same names prefixed by underscore, for example: ${_name}, "
            "${_type}, ...\n"
