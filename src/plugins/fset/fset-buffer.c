@@ -155,7 +155,7 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 {
     char *line, str_field[4096], str_color_value[128], str_color_quotes[128];
     char str_number[64];
-    const char *ptr_field, *ptr_parent_value;
+    const char *ptr_field, *ptr_parent_value, *ptr_format;
     int selected_line;
     int default_value_undef, value_undef, value_changed;
     int type, marked, add_quotes, add_quotes_parent, format_number;
@@ -691,14 +691,23 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
 
     /* build string for line */
     format_number = weechat_config_integer (fset_config_look_format_number);
-    line = weechat_string_eval_expression (
-        (selected_line) ?
-        fset_config_eval_format_option_selected[format_number - 1] :
-        weechat_config_string (fset_config_format_option[format_number - 1]),
-        fset_buffer_hashtable_pointers,
-        fset_buffer_hashtable_extra_vars,
-        NULL);
-
+    if (selected_line)
+    {
+        ptr_format = fset_config_eval_format_option_selected[format_number - 1];
+    }
+    else if (fset_option->marked)
+    {
+        ptr_format = fset_config_eval_format_option_marked[format_number - 1];
+    }
+    else
+    {
+        ptr_format = weechat_config_string (
+            fset_config_format_option[format_number - 1]);
+    }
+    line = weechat_string_eval_expression (ptr_format,
+                                           fset_buffer_hashtable_pointers,
+                                           fset_buffer_hashtable_extra_vars,
+                                           NULL);
     if (line)
     {
         weechat_printf_y (fset_buffer, y, "%s", line);
