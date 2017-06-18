@@ -74,18 +74,24 @@ fset_completion_option_cb (const void *pointer, void *data,
                         0, WEECHAT_LIST_POS_SORT);
                     config_section_added = 1;
                 }
+                weechat_hook_completion_list_add (
+                    completion,
+                    weechat_config_option_get_string (ptr_option, "name"),
+                    0,
+                    WEECHAT_LIST_POS_SORT);
                 words = weechat_string_split (
                     weechat_config_option_get_string (ptr_option, "name"),
                     "_", 0, 0, &num_words);
-                if (words)
+                if (words && (num_words > 1))
                 {
                     for (i = 0; i < num_words; i++)
                     {
                         weechat_hook_completion_list_add (
                             completion, words[i], 0, WEECHAT_LIST_POS_SORT);
                     }
-                    weechat_string_free_split (words);
                 }
+                if (words)
+                    weechat_string_free_split (words);
                 ptr_option = weechat_hdata_move (fset_hdata_config_option,
                                                  ptr_option, 1);
             }
