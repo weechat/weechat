@@ -651,6 +651,11 @@ fset_buffer_display_line (int y, struct t_fset_option *fset_option)
                            "value_changed",
                            (value_changed) ? "1" : "0");
 
+    /* set other variables */
+    weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
+                           "selected_line",
+                           (selected_line) ? "1" : "0");
+
     /* build string for line */
     format_number = weechat_config_integer (fset_config_look_format_number);
     line = weechat_string_eval_expression (
