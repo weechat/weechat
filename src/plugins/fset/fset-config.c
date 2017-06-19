@@ -112,8 +112,8 @@ fset_config_change_format_number_cb (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    fset_buffer_selected_line = 0;
     fset_buffer_refresh (1);
+    fset_buffer_check_line_outside_window ();
 }
 
 /*
@@ -262,8 +262,8 @@ fset_config_change_format_cb (const void *pointer, void *data,
             weechat_config_string (fset_config_format_option[i]), "${newline}") + 1;
     }
 
-    fset_buffer_selected_line = 0;
     fset_buffer_refresh (1);
+    fset_buffer_check_line_outside_window ();
 }
 
 /*
