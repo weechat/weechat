@@ -934,7 +934,7 @@ fset_option_get_arraylist_options ()
 struct t_hashtable *
 fset_option_get_hashtable_max_length_field ()
 {
-    return weechat_hashtable_new (32,
+    return weechat_hashtable_new (128,
                                   WEECHAT_HASHTABLE_STRING,
                                   WEECHAT_HASHTABLE_INTEGER,
                                   NULL, NULL);

@@ -39,8 +39,6 @@ extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_look_use_mute;
 
 extern struct t_config_option *fset_config_format_option[2];
-extern struct t_config_option *fset_config_format_option_marked[2];
-extern struct t_config_option *fset_config_format_option_selected[2];
 extern struct t_config_option *fset_config_format_export_help;
 extern struct t_config_option *fset_config_format_export_option;
 extern struct t_config_option *fset_config_format_export_option_null;
@@ -55,6 +53,8 @@ extern struct t_config_option *fset_config_color_help_name;
 extern struct t_config_option *fset_config_color_help_quotes;
 extern struct t_config_option *fset_config_color_help_values;
 extern struct t_config_option *fset_config_color_index[2];
+extern struct t_config_option *fset_config_color_line_marked_bg[2];
+extern struct t_config_option *fset_config_color_line_selected_bg[2];
 extern struct t_config_option *fset_config_color_marked[2];
 extern struct t_config_option *fset_config_color_max[2];
 extern struct t_config_option *fset_config_color_min[2];
@@ -82,8 +82,7 @@ extern struct t_config_option *fset_config_color_value_undef[2];
 
 extern char **fset_config_sort_fields;
 extern int fset_config_sort_fields_count;
-extern char *fset_config_eval_format_option_marked[2];
-extern char *fset_config_eval_format_option_selected[2];
+extern int fset_config_format_option_num_lines[2];
 
 extern int fset_config_init ();
 extern int fset_config_read ();

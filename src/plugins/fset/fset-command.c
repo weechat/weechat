@@ -694,6 +694,8 @@ fset_command_init ()
            "  - other data:\n"
            "    - ${selected_line}: \"1\" if the line is selected, "
            "otherwise \"0\"\n"
+           "    - ${newline}: insert a new line at point, so the option is "
+           "displayed on multiple lines\n"
            "\n"
            "Keys and input to move in on fset buffer:\n"
            "  up                        move one line up\n"
