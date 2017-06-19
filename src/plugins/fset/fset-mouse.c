@@ -37,7 +37,7 @@
  */
 
 struct t_hashtable *
-fset_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
+fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *buffer;
     int rc;
@@ -104,19 +104,18 @@ fset_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 int
 fset_mouse_get_distance_x (struct t_hashtable *hashtable)
 {
-    int distance;
+    int distance, x, x2;
     char *error;
-    long x, x2;
 
     distance = 0;
     error = NULL;
-    x = strtol (weechat_hashtable_get (hashtable, "_chat_line_x"),
-                &error, 10);
+    x = (int)strtol (weechat_hashtable_get (hashtable, "_chat_line_x"),
+                     &error, 10);
     if (error && !error[0])
     {
         error = NULL;
-        x2 = strtol (weechat_hashtable_get (hashtable, "_chat_line_x2"),
-                     &error, 10);
+        x2 = (int)strtol (weechat_hashtable_get (hashtable, "_chat_line_x2"),
+                          &error, 10);
         if (error && !error[0])
         {
             distance = (x2 - x) / 3;
@@ -130,18 +129,69 @@ fset_mouse_get_distance_x (struct t_hashtable *hashtable)
 }
 
 /*
+ * Gets coordinates: y, y2, chat_line_y, chat_line_y2 from hashtable.
+ *
+ * Returns:
+ *   1: OK, all coordinates are set
+ *   0: error (coordinates must not be used)
+ */
+
+int
+fset_mouse_get_coords (struct t_hashtable *hashtable,
+                       int *y, int *y2, int *chat_line_y, int *chat_line_y2)
+{
+    char *error;
+    const char *ptr_value;
+
+    ptr_value = weechat_hashtable_get (hashtable, "_y");
+    if (!ptr_value)
+        return 0;
+    error = NULL;
+    *y = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return 0;
+
+    ptr_value = weechat_hashtable_get (hashtable, "_y2");
+    if (!ptr_value)
+        return 0;
+    error = NULL;
+    *y2 = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return 0;
+
+    ptr_value = weechat_hashtable_get (hashtable, "_chat_line_y");
+    if (!ptr_value)
+        return 0;
+    error = NULL;
+    *chat_line_y = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return 0;
+
+    ptr_value = weechat_hashtable_get (hashtable, "_chat_line_y2");
+    if (!ptr_value)
+        return 0;
+    error = NULL;
+    *chat_line_y2 = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return 0;
+
+    return 1;
+}
+
+/*
  * Callback called when a mouse action occurs in fset bar or bar item.
  */
 
 int
-fset_hsignal_cb (const void *pointer, void *data, const char *signal,
-                 struct t_hashtable *hashtable)
+fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
+                       struct t_hashtable *hashtable)
 {
     const char *ptr_key, *ptr_chat_line_y, *ptr_fset_option_pointer;
     char str_command[1024];
     struct t_fset_option *ptr_fset_option;
     long unsigned int value;
-    int rc, distance;
+    int rc, distance, num_options, y, y2, chat_line_y, chat_line_y2;
+    int min_y, max_y, i;
 
     /* make C compiler happy */
     (void) pointer;
@@ -170,14 +220,7 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
               ptr_chat_line_y);
     weechat_command (fset_buffer, str_command);
 
-    if (strcmp (ptr_key, "button2") == 0)
-    {
-        snprintf (str_command, sizeof (str_command),
-                  "/fset %s",
-                  (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN) ? "-toggle" : "-set");
-        weechat_command (fset_buffer, str_command);
-    }
-    else if (weechat_string_match (ptr_key, "button2-gesture-left*", 1))
+    if (weechat_string_match (ptr_key, "button2-gesture-left*", 1))
     {
         distance = fset_mouse_get_distance_x (hashtable);
         if ((ptr_fset_option->type == FSET_OPTION_TYPE_INTEGER)
@@ -209,6 +252,52 @@ fset_hsignal_cb (const void *pointer, void *data, const char *signal,
         }
         weechat_command (fset_buffer, str_command);
     }
+    else if (weechat_string_match (ptr_key, "button2*", 1))
+    {
+        if (fset_mouse_get_coords (hashtable, &y, &y2,
+                                   &chat_line_y, &chat_line_y2))
+        {
+            if (y == y2)
+            {
+                /* toggle or set option */
+                snprintf (
+                    str_command, sizeof (str_command),
+                    "/fset %s",
+                    (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN) ?
+                    "-toggle" : "-set");
+                weechat_command (fset_buffer, str_command);
+            }
+            else if ((chat_line_y >= 0) || (chat_line_y2 >= 0))
+            {
+                /* mark/unmark multiple options */
+                num_options = weechat_arraylist_size (fset_options);
+                if (chat_line_y < 0)
+                    chat_line_y = (y > y2) ? 0 : num_options - 1;
+                else if (chat_line_y2 < 0)
+                    chat_line_y2 = (y > y2) ? 0 : num_options - 1;
+                min_y = (chat_line_y < chat_line_y2) ?
+                    chat_line_y : chat_line_y2;
+                max_y = (chat_line_y > chat_line_y2) ?
+                    chat_line_y : chat_line_y2;
+                if (min_y < 0)
+                    min_y = 0;
+                if (max_y > num_options - 1)
+                    max_y = num_options - 1;
+                for (i = min_y; i <= max_y; i++)
+                {
+                    ptr_fset_option = weechat_arraylist_get (fset_options, i);
+                    if (ptr_fset_option)
+                    {
+                        fset_option_toggle_mark (ptr_fset_option, NULL);
+                    }
+                }
+                snprintf (str_command, sizeof (str_command),
+                          "/fset -go %d",
+                          chat_line_y2);
+                weechat_command (fset_buffer, str_command);
+            }
+        }
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -233,10 +322,10 @@ fset_mouse_init ()
     if (!keys)
         return 0;
 
-    weechat_hook_focus ("chat", &fset_focus_cb, NULL, NULL);
+    weechat_hook_focus ("chat", &fset_mouse_focus_cb, NULL, NULL);
 
     weechat_hook_hsignal(FSET_MOUSE_HSIGNAL,
-                         &fset_hsignal_cb, NULL, NULL);
+                         &fset_mouse_hsignal_cb, NULL, NULL);
 
     weechat_hashtable_set (
         keys,

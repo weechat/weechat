@@ -750,6 +750,7 @@ fset_command_init ()
            "edit the option value\n"
            "  right button + drag left/right  increase/decrease value "
            "for integer/color, set/append to value for other types\n"
+           "  right button + drag up/down     mark/unmark multiple options\n"
            "\n"
            "Note: spaces at beginning of input are ignored, so for example "
            "\"q\" closes the fset buffer while \" q\" searches all options "
