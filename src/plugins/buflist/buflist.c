@@ -370,6 +370,10 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
     (void) signal;
     (void) type_data;
 
+    /* display a warning only if buflist is enabled */
+    if (!weechat_config_boolean (buflist_config_look_enabled))
+        return WEECHAT_RC_OK;
+
     if (!signal_data)
         return WEECHAT_RC_OK;
 
