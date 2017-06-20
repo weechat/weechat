@@ -502,8 +502,10 @@ fset_config_init ()
            "(note: content is evaluated, see /help fset); "
            "formats can be switched with key ctrl+X"),
         NULL, 0, 0,
-        "${marked} ${name}  ${type_short}  ${min}  ${max}  ${default_value}  "
-        "${value2}  ${description}",
+        "${marked} ${name}  ${type}  ${value2}${newline}"
+        "  ${empty_name}  ${_default_value}${color:darkgray} -- "
+        "${min}..${max}${newline}"
+        "  ${empty_name}  ${description}",
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format_cb, NULL, NULL,
