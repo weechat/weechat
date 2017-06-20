@@ -466,7 +466,18 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     /* nick already exists on this channel? */
     ptr_nick = irc_nick_search (server, channel, nickname);
     if (ptr_nick)
+    {
+        /* remove old nick from nicklist */
+        irc_nick_nicklist_remove (server, channel, ptr_nick);
+
+        /* update nick prefixes */
+        irc_nick_set_prefixes (server, ptr_nick, prefixes);
+
+        /* add new nick in nicklist */
+        irc_nick_nicklist_add (server, channel, ptr_nick);
+
         return ptr_nick;
+    }
 
     /* alloc memory for new nick */
     if ((new_nick = malloc (sizeof (*new_nick))) == NULL)
