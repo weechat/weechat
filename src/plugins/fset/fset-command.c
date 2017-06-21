@@ -254,7 +254,10 @@ fset_command_fset (const void *pointer, void *data,
             else
             {
                 fset_command_get_option (&ptr_fset_option, &ptr_option);
-                fset_option_toggle_value (ptr_fset_option, ptr_option);
+                if (ptr_fset_option->type == FSET_OPTION_TYPE_BOOLEAN)
+                    fset_option_toggle_value (ptr_fset_option, ptr_option);
+                else
+                    fset_option_set (ptr_fset_option, ptr_option, buffer, -1);
             }
             return WEECHAT_RC_OK;
         }
@@ -611,9 +614,11 @@ fset_command_init ()
            "on the right\n"
            "        -go: select a line by number, first line number is 0 "
            "(\"end\" to select the last line)\n"
-           "    -toggle: toggle the boolean value\n"
-           "       -add: add \"value\", which can be a negative number "
-           "(only for integers and colors)\n"
+           "    -toggle: toggle the boolean value, set a new value for other "
+           "types\n"
+           "       -add: add \"value\" (which can be a negative number) "
+           "for integers and colors, set/append to value for other types "
+           "(set for a negative value, append for a positive value)\n"
            "     -reset: reset the value of option\n"
            "     -unset: unset the option\n"
            "       -set: add the /set command in input to edit the value of "
