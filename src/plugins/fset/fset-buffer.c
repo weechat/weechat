@@ -73,6 +73,7 @@ fset_buffer_set_title ()
                 "alt+f,alt+r(r)=reset, "
                 "alf+f,alt+u(u)=unset, "
                 "alt+enter(s)=set, "
+                "alt+f,alt+n(n)=set new value, "
                 "alt+f,alt+a(a)=append, "
                 "alt+','=mark/unmark, "
                 "shift+down=mark and move down, "
@@ -952,22 +953,23 @@ fset_buffer_input_cb (const void *pointer, void *data,
                       const char *input_data)
 {
     char *actions[][2] = {
-        { "<<", "/fset -go 0"   },
-        { ">>", "/fset -go end" },
-        { "<",  "/fset -left"   },
-        { ">",  "/fset -right"  },
-        { "t",  "/fset -toggle" },
-        { "-",  "/fset -add -1" },
-        { "+",  "/fset -add 1"  },
-        { "r",  "/fset -reset"  },
-        { "u",  "/fset -unset"  },
-        { "s",  "/fset -set"    },
-        { "a",  "/fset -append" },
-        { ",",  "/fset -mark 1" },
+        { "<<", "/fset -go 0"                                    },
+        { ">>", "/fset -go end"                                  },
+        { "<",  "/fset -left"                                    },
+        { ">",  "/fset -right"                                   },
+        { "t",  "/fset -toggle"                                  },
+        { "-",  "/fset -add -1"                                  },
+        { "+",  "/fset -add 1"                                   },
+        { "r",  "/fset -reset"                                   },
+        { "u",  "/fset -unset"                                   },
+        { "s",  "/fset -set"                                     },
+        { "n",  "/fset -setnew"                                  },
+        { "a",  "/fset -append"                                  },
+        { ",",  "/fset -mark 1"                                  },
         { "p",  "/mute /set fset.look.show_plugins_desc toggle", },
         { "v",  "/mute /set fset.look.show_help_bar toggle"      },
-        { "x",  "/fset -format" },
-        { NULL, NULL            },
+        { "x",  "/fset -format"                                  },
+        { NULL, NULL                                             },
     };
     const char *ptr_input;
     int i;
@@ -1135,6 +1137,7 @@ fset_buffer_set_keys ()
         { "meta-fmeta-u",  "/fset -unset"                                   },
         { "meta-ctrl-J",   "/fset -set"                                     },
         { "meta-ctrl-M",   "/fset -set"                                     },
+        { "meta-fmeta-n",  "/fset -setnew"                                  },
         { "meta-fmeta-a",  "/fset -append"                                  },
         { "meta-,",        "/fset -mark"                                    },
         { "meta2-a",       "/fset -up; /fset -mark"                         },

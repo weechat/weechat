@@ -358,6 +358,13 @@ fset_command_fset (const void *pointer, void *data,
             return WEECHAT_RC_OK;
         }
 
+        if (weechat_strcasecmp (argv[1], "-setnew") == 0)
+        {
+            fset_command_get_option (&ptr_fset_option, &ptr_option);
+            fset_option_set (ptr_fset_option, ptr_option, buffer, -1);
+            return WEECHAT_RC_OK;
+        }
+
         if (weechat_strcasecmp (argv[1], "-append") == 0)
         {
             fset_command_get_option (&ptr_fset_option, &ptr_option);
@@ -587,6 +594,7 @@ fset_command_init ()
            " || -reset"
            " || -unset"
            " || -set"
+           " || -setnew"
            " || -append"
            " || -mark"
            " || -format"
@@ -610,6 +618,8 @@ fset_command_init ()
            "     -unset: unset the option\n"
            "       -set: add the /set command in input to edit the value of "
            "option (move the cursor at the beginning of value)\n"
+           "    -setnew: add the /set command in input to edit a new value "
+           "for the option\n"
            "    -append: add the /set command to append something in the value "
            "of option (move the cursor at the end of value)\n"
            "      -mark: toggle mark\n"
@@ -719,6 +729,7 @@ fset_command_init ()
            "  alt+f, alt+r      r       reset value\n"
            "  alt+f, alt+u      u       unset value\n"
            "  alt+enter         s       set value\n"
+           "  alt+f, alt+n      n       set new value\n"
            "  alt+f, alt+a      a       append to value\n"
            "  alt+','           ,       mark/unmark option\n"
            "  shift+up                  move one line up and mark/unmark option\n"
@@ -784,6 +795,7 @@ fset_command_init ()
         " || -reset"
         " || -unset"
         " || -set"
+        " || -setnew"
         " || -append"
         " || -mark"
         " || -format"

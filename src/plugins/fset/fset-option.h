@@ -83,7 +83,7 @@ extern void fset_option_unset_value (struct t_fset_option *fset_option,
 extern void fset_option_set (struct t_fset_option *fset_option,
                              struct t_config_option *option,
                              struct t_gui_buffer *buffer,
-                             int append);
+                             int set_mode);
 extern void fset_option_toggle_mark (struct t_fset_option *fset_option,
                                      struct t_config_option *option);
 extern void fset_option_mark_options_matching_filter (const char *filter,
