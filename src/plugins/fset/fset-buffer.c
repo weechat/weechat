@@ -1130,7 +1130,7 @@ fset_buffer_set_keys ()
         { "meta-meta2-4~", "/fset -go end"                                  },
         { "meta2-23~",     "/fset -left"                                    },
         { "meta2-24~",     "/fset -right"                                   },
-        { "meta- ",        "/fset -toggle"                                  },
+        { "meta-space",    "/fset -toggle"                                  },
         { "meta--",        "/fset -add -1"                                  },
         { "meta-+",        "/fset -add 1"                                   },
         { "meta-fmeta-r",  "/fset -reset"                                   },
