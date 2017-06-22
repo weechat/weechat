@@ -34,7 +34,7 @@
 
 WEECHAT_STABLE=1.8
 WEECHAT_DEVEL=1.9
-WEECHAT_DEVEL_FULL=1.9-rc1
+WEECHAT_DEVEL_FULL=1.9-rc2
 
 if [ $# -lt 1 ]; then
     echo >&2 "Syntax: $0 stable|devel|devel-full|devel-major|devel-minor|devel-patch"
