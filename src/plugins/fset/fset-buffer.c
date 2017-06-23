@@ -64,8 +64,7 @@ fset_buffer_set_title ()
     num_options = weechat_arraylist_size (fset_options);
 
     snprintf (str_title, sizeof (str_title),
-              _("Filter: %s%s%s | %s%d%s/%s%d%s%s | "
-                "Sort: %s%s%s | "
+              _("%s%d%s/%s%d%s%s | Filter: %s%s%s | Sort: %s%s%s | "
                 "Key(input): "
                 "alt+space=toggle boolean, "
                 "alt+'-'(-)=subtract 1 or set, "
@@ -86,9 +85,6 @@ fset_buffer_set_title ()
                 "alt+v(v)=toggle help bar, "
                 "ctrl+X(x)=switch format, "
                 "(q)=close buffer"),
-              weechat_color (weechat_config_string (fset_config_color_title_filter)),
-              (fset_option_filter) ? fset_option_filter : "*",
-              weechat_color ("bar_fg"),
               weechat_color (weechat_config_string (fset_config_color_title_current_option)),
               (num_options > 0) ? fset_buffer_selected_line + 1 : 0,
               weechat_color ("bar_fg"),
@@ -96,6 +92,9 @@ fset_buffer_set_title ()
               num_options,
               weechat_color ("bar_fg"),
               str_marked,
+              weechat_color (weechat_config_string (fset_config_color_title_filter)),
+              (fset_option_filter) ? fset_option_filter : "*",
+              weechat_color ("bar_fg"),
               weechat_color (weechat_config_string (fset_config_color_title_sort)),
               weechat_config_string (fset_config_look_sort),
               weechat_color ("bar_fg"));
