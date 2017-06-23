@@ -69,7 +69,7 @@
 ** Standardwert: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.name]] *buflist.format.name*
-** Beschreibung: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** Beschreibung: pass:none[Format für den Namen eines Buffers (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${name}"+`
