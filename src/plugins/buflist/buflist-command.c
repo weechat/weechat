@@ -120,6 +120,8 @@ buflist_command_init ()
            "(set only if the option buflist.look.nick_prefix is enabled)\n"
            "    - ${nick_prefix}: nick prefix for a channel "
            "(set only if the option buflist.look.nick_prefix is enabled)\n"
+           "    - ${format_name}: formatted name (evaluation of option "
+           "buflist.format.name)\n"
            "    - ${name}: the short name (if set), with a fallback on the "
            "name\n"
            "    - ${color_hotlist}: the color depending on the highest "

@@ -316,8 +316,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         ptr_name = weechat_hdata_string (buflist_hdata_buffer,
                                          ptr_buffer, "short_name");
         if (!ptr_name)
+        {
             ptr_name = weechat_hdata_string (buflist_hdata_buffer,
                                              ptr_buffer, "name");
+        }
 
         if (*buflist[0])
         {
@@ -440,6 +442,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                "indent", ptr_format_indent);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "name", ptr_name);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "format_name",
+                               weechat_config_string (
+                                   buflist_config_format_name));
 
         /* hotlist */
         ptr_hotlist_format = weechat_config_string (

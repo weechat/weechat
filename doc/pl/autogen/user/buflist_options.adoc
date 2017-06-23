@@ -6,7 +6,7 @@
 ** opis: pass:none[format każdej linii w buforze (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** domyślna wartość: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** opis: pass:none[format linii z obecnym buforem (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
@@ -67,6 +67,12 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.name]] *buflist.format.name*
+** opis: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"${name}"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** opis: pass:none[format dla prefiksu nicka na kanale (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]

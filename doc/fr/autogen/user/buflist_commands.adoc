@@ -37,6 +37,7 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)
     - ${color_nick_prefix} : la couleur du préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
     - ${nick_prefix} : le préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
+    - ${format_name} : le nom formaté (évaluation de l'option buflist.format.name)
     - ${name} : le nom court (si défini), sinon le nom
     - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)
     - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)

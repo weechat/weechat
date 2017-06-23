@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-13 21:16+0200\n"
-"PO-Revision-Date: 2017-01-06 22:04+0100\n"
+"POT-Creation-Date: 2017-06-23 11:57+0200\n"
+"PO-Revision-Date: 2017-06-23 11:58+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -5315,6 +5315,8 @@ msgid ""
 "the option buflist.look.nick_prefix is enabled)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
+"    - ${format_name}: formatted name (evaluation of option buflist.format."
+"name)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
 "    - ${color_hotlist}: the color depending on the highest hotlist level for "
 "the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the "
@@ -5475,6 +5477,12 @@ msgid ""
 msgstr ""
 "password per il server (nota: il contenuto viene valutato, consultare /help "
 "eval)"
+
+#, fuzzy
+msgid "format for buffer name (note: content is evaluated, see /help buflist)"
+msgstr ""
+"nome utente per il server proxy (nota: il contenuto viene valutato, "
+"consultare /help eval)"
 
 #, fuzzy
 msgid ""
@@ -12190,21 +12198,3 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
-
-#~ msgid "commands defined by plugins"
-#~ msgstr "comandi definiti dai plugin"
-
-#~ msgid "weechat commands"
-#~ msgstr "comandi di weechat"
-
-#~ msgid "commands (weechat and plugins)"
-#~ msgstr "comandi (weechat e plugin)"
-
-#~ msgid "control debug for core/plugins"
-#~ msgstr "attiva debug per core/plugin"
-
-#~ msgid "text color for nicks in chat window"
-#~ msgstr "colore del testo per i nick nella finestra di chat"
-
-#~ msgid "%s: removing old fifo pipe \"%s\""
-#~ msgstr "%s: rimozione della pipe fifo %s precedente"

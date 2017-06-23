@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-13 21:16+0200\n"
-"PO-Revision-Date: 2017-04-08 14:50+0200\n"
+"POT-Creation-Date: 2017-06-23 11:57+0200\n"
+"PO-Revision-Date: 2017-06-23 11:58+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -5571,6 +5571,8 @@ msgid ""
 "the option buflist.look.nick_prefix is enabled)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
+"    - ${format_name}: formatted name (evaluation of option buflist.format."
+"name)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
 "    - ${color_hotlist}: the color depending on the highest hotlist level for "
 "the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the "
@@ -5724,6 +5726,12 @@ msgid ""
 "help buflist)"
 msgstr ""
 "palavra-passe para o servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid "format for buffer name (note: content is evaluated, see /help buflist)"
+msgstr ""
+"nome de utilizador para usar no servidor (nota: o conteúdo é avaliado, ver /"
+"help eval)"
 
 #, fuzzy
 msgid ""
@@ -12823,35 +12831,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#~ msgid ""
-#~ "URL for file with list of scripts; by default HTTPS is forced, see option "
-#~ "script.scripts.url_force_https"
-#~ msgstr ""
-#~ "URL do ficheiro com a lista de scripts; por omissão é forçado HTTPS, ver "
-#~ "a opção script.scripts.url_force_https"
-
-#~ msgid ""
-#~ "force use of HTTPS for downloads (index and scripts); you should disable "
-#~ "this option only if you have problems with the downloads"
-#~ msgstr ""
-#~ "forçar uso de HTTPS para transferir (índice e scripts); deve desativar "
-#~ "esta opção apenas se tem problemas com as transferências"
-
-#~ msgid "commands defined by plugins"
-#~ msgstr "comandos definidos por plugins"
-
-#~ msgid "weechat commands"
-#~ msgstr "comandos do weechat"
-
-#~ msgid "commands (weechat and plugins)"
-#~ msgstr "comandos (weechat e plugins)"
-
-#~ msgid "control debug for core/plugins"
-#~ msgstr "controlar depuração do core/plugins"
-
-#~ msgid "text color for nicks in chat window"
-#~ msgstr "cor do texto dos nicks na janela de chat"
-
-#~ msgid "%s: removing old fifo pipe \"%s\""
-#~ msgstr "%s: a remover o pipe fifo antigo \"%s\""

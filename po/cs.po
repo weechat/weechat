@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-13 21:16+0200\n"
-"PO-Revision-Date: 2017-05-13 22:06+0200\n"
+"POT-Creation-Date: 2017-06-23 11:57+0200\n"
+"PO-Revision-Date: 2017-06-23 11:58+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -4963,6 +4963,8 @@ msgid ""
 "the option buflist.look.nick_prefix is enabled)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
+"    - ${format_name}: formatted name (evaluation of option buflist.format."
+"name)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
 "    - ${color_hotlist}: the color depending on the highest hotlist level for "
 "the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the "
@@ -5100,6 +5102,10 @@ msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 msgid ""
 "format for lag on an IRC server buffer (note: content is evaluated, see /"
 "help buflist)"
+msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
+
+#, fuzzy
+msgid "format for buffer name (note: content is evaluated, see /help buflist)"
 msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #, fuzzy
@@ -11711,21 +11717,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#~ msgid "commands defined by plugins"
-#~ msgstr "příkazy definované pluginy"
-
-#~ msgid "weechat commands"
-#~ msgstr "příkazy weechat"
-
-#~ msgid "commands (weechat and plugins)"
-#~ msgstr "příkazy (weechat a pluginů)"
-
-#~ msgid "control debug for core/plugins"
-#~ msgstr "spřáva ladění pro jádro/pluginy"
-
-#~ msgid "text color for nicks in chat window"
-#~ msgstr "barva textu přezdívky v okně rozhovoru"
-
-#~ msgid "%s: removing old fifo pipe \"%s\""
-#~ msgstr "%s: odstraňuji starou fifo rouru \"%s\""

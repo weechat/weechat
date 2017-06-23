@@ -6,7 +6,7 @@
 ** description: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
 ** type: string
 ** values: any string
-** default value: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** default value: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** description: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
@@ -67,6 +67,12 @@
 ** type: string
 ** values: any string
 ** default value: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.name]] *buflist.format.name*
+** description: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** type: string
+** values: any string
+** default value: `+"${name}"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** description: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]

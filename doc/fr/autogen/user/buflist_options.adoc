@@ -6,7 +6,7 @@
 ** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** valeur par défaut: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** description: pass:none[format pour la ligne avec le tampon courant (note : le contenu est évalué, voir /help buflist)]
@@ -67,6 +67,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
+
+* [[option_buflist.format.name]] *buflist.format.name*
+** description: pass:none[format pour le nom du tampon (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"${name}"+`
 
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** description: pass:none[format pour un préfixe de pseudo sur un canal (note : le contenu est évalué, voir /help buflist)]

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-13 21:16+0200\n"
-"PO-Revision-Date: 2017-01-06 22:03+0100\n"
+"POT-Creation-Date: 2017-06-23 11:57+0200\n"
+"PO-Revision-Date: 2017-06-23 11:58+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -4501,6 +4501,8 @@ msgid ""
 "the option buflist.look.nick_prefix is enabled)\n"
 "    - ${nick_prefix}: nick prefix for a channel (set only if the option "
 "buflist.look.nick_prefix is enabled)\n"
+"    - ${format_name}: formatted name (evaluation of option buflist.format."
+"name)\n"
 "    - ${name}: the short name (if set), with a fallback on the name\n"
 "    - ${color_hotlist}: the color depending on the highest hotlist level for "
 "the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the "
@@ -4636,6 +4638,10 @@ msgstr "felhasználónév az IRC szerveren"
 msgid ""
 "format for lag on an IRC server buffer (note: content is evaluated, see /"
 "help buflist)"
+msgstr "felhasználónév az IRC szerveren"
+
+#, fuzzy
+msgid "format for buffer name (note: content is evaluated, see /help buflist)"
 msgstr "felhasználónév az IRC szerveren"
 
 #, fuzzy
@@ -11005,23 +11011,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "commands defined by plugins"
-#~ msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-#~ msgid "weechat commands"
-#~ msgstr "%s belső parancsok:\n"
-
-#, fuzzy
-#~ msgid "commands (weechat and plugins)"
-#~ msgstr "  (nem található bővítőmodul)\n"
-
-#, fuzzy
-#~ msgid "text color for nicks in chat window"
-#~ msgstr "idő színe a beszédablakban"
-
-#, fuzzy
-#~ msgid "%s: removing old fifo pipe \"%s\""
-#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"

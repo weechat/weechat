@@ -37,6 +37,7 @@ The following variables can be used in these options:
     - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
     - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
     - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${format_name}: formatted name (evaluation of option buflist.format.name)
     - ${name}: the short name (if set), with a fallback on the name
     - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
     - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
