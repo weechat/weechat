@@ -39,7 +39,7 @@
 ** domyślna wartość: `+"${color:brown}"+`
 
 * [[option_buflist.format.hotlist_none]] *buflist.format.hotlist_none*
-** opis: pass:none[format dla bufora niw znajdującego się na hotliście (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
+** opis: pass:none[format dla bufora nie znajdującego się na hotliście (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:default}"+`
@@ -69,7 +69,7 @@
 ** domyślna wartość: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.name]] *buflist.format.name*
-** opis: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** opis: pass:none[format dla nazwy bufora (uwaga: zawartość jest przetwarzana, zobacz /help buflist)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${name}"+`
@@ -87,7 +87,7 @@
 ** domyślna wartość: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
-** opis: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** opis: pass:none[automatycznie przewiń litę kanałów, żeby zawsze wyświetlała obecny bufor (działa tylko, kiedy lita kanałów ma pozycję lewo/prawo z uzupełnianiem "vertical"); ta wartość określa procentowo ilość linii wyświetlanych przed obecnym buforem podczas przewijania (-1 = wyłącz przewijanie); na przykład 50 oznacza, że po przewinięciu obecny bufor jest na środku listy, 0 oznacza górę listy, 100 dół listy]
 ** typ: liczba
 ** wartości: -1 .. 100
 ** domyślna wartość: `+50+`
@@ -141,7 +141,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** opis: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name]
+** opis: pass:none[oddzielona przecinkami lista pól do sortowania buforów; każde pole to zmienna hdata bufora ("var"), zmienna hdata serwera IRC ("irc_server.var") lub zmienna hdata kanału IRC ("irc_channel.var"); znak "-" użyty przed nazwą pola odwraca kolejność, znak "~" może zostać użyty do porównań niewrażliwych na wielkość liter; przykład: "-~short_name" dla sortowania  odwrotnego, niewrażliwego na wielkość liter po skróconej nazwie bufora]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"number,-active"+`
