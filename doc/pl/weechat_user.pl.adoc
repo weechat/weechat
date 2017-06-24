@@ -1565,14 +1565,10 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
 | kbd:[Alt+Home]  | Przewiń na górę bufora. | `/window scroll_top`
 | kbd:[Alt+End]   | Przewiń na dół bufora. | `/window scroll_bottom`
-// TRANSLATION MISSING
-| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
-// TRANSLATION MISSING
-| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
-// TRANSLATION MISSING
-| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
-// TRANSLATION MISSING
-| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
+| kbd:[F1]        | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
+| kbd:[F2]        | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | Idź na początek listy buforów. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | Idź na koniec listy buforów. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1698,18 +1694,12 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 | ⇓             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
 | kbd:[Ctrl+⇑]  | -             | chat                  | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓]  | -             | chat                  | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
-// TRANSLATION MISSING
-| ◾◽◽          | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽          | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◾◽◽          | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| ◽◽◾          | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇑] | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
-// TRANSLATION MISSING
-| kbd:[Ctrl+⇓] | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
+| ◾◽◽          | góra / lewo    | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽          | dół / prawo | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽          | -            | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
+| ◽◽◾          | -            | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+⇑] | -            | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+⇓] | -            | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
 | ◾◽◽           | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽           | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽           | góra (długo)  | lista nicków          | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
@@ -2587,10 +2577,9 @@ Ustaw proxy dla TOR:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-// TRANSLATION MISSING
-Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (see the chapter
-<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> to generate
-a private key):
+Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdział
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> żeby dowiedzieć
+się jak wygenerować klucz prywatny):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
@@ -3528,10 +3517,8 @@ są dodawane do tablicy hashy:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Zmienna              | Typ     | Opis
-// TRANSLATION MISSING
-| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
-// TRANSLATION MISSING
-| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| irc_server           | wskaźnik | Wskaźnik na serwer IRC (można użyć zmiennych hdata typu "irc_server" jak `${irc_server.name}`).
+| irc_channel          | wskaźnik | Wskaźnik na kanał IRC (można użyć zmiennych hdata typu "irc_channel" jak `${irc_channel.name}`).
 | server               | ciąg    | Nazwa serwera (przykład: "freenode").
 | tags                 | ciąg    | Tagi w wiadomości (rzadko używane).
 | message_without_tags | ciąg    | Wiadomość bez tagów.

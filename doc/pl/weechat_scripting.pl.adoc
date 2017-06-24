@@ -480,12 +480,9 @@ Lista funkcji w API skryptów:
 | wyświetlanie |
   prefix +
   color +
-// TRANSLATION MISSING
-  print (for python: prnt) +
-// TRANSLATION MISSING
-  print_date_tags (for python: prnt_date_tags) +
-// TRANSLATION MISSING
-  print_y (for python: prnt_y) +
+  print (dla pythona: prnt) +
+  print_date_tags (dla pythona: prnt_date_tags) +
+  print_y (dla pythona: prnt_y) +
   log_print
 
 | hooks |
