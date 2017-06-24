@@ -34,10 +34,10 @@ Die folgenden Variablen können in den obigen Optionen genutzt werden:
     - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
     - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
     - ${indent}: Einrückung für Name (Channel und private Buffer werden eingerückt) (evaluiert aus Option buflist.format.indent)
-    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus  Option buflist.format.nick_prefix)
+    - ${format_nick_prefix}: Nick-Präfix mit entsprechender Farbe für einen Channel (evaluiert aus Option buflist.format.nick_prefix)
     - ${color_nick_prefix}: Farbe für den Nick-Präfix von einem Channel (wird nur genutzt wenn die Option buflist.look.nick_prefix aktiviert ist)
     - ${nick_prefix}: der Nick-Präfix für einen Channel (wird nur genutzt falls die Option buflist.look.nick_prefix aktiviert ist)
-    - ${format_name}: der formatierte Name (evaluiert aus  Option buflist.format.name)
+    - ${format_name}: der formatierte Name (evaluiert aus Option buflist.format.name)
     - ${name}: der Kurzname (falls einer gesetzt ist), Ersatzweise wird auf den Originalnamen zurückgegriffen
     - ${color_hotlist}: die Farbe mit der höchsten Priorität für den entsprechenden Buffer  (evaluiert aus Option buflist.format.hotlist_xxx wobei xxx der entsprechende Level ist)
     - ${format_hotlist}: die formatierte Hotlist (evaluiert aus Option buflist.format.hotlist)
