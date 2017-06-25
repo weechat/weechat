@@ -717,7 +717,7 @@ fset_config_init ()
     fset_config_color_marked[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "marked", "color",
-        N_("color for marked string"),
+        N_("color for mark indicator"),
         NULL, 0, 0, "brown", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -725,7 +725,7 @@ fset_config_init ()
     fset_config_color_marked[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "marked_selected", "color",
-        N_("color for marked string on the selected line"),
+        N_("color for mark indicator on the selected line"),
         NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -829,7 +829,7 @@ fset_config_init ()
    fset_config_color_parent_name[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_name", "color",
-        N_("color for parent name"),
+        N_("color for name of parent option"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -837,7 +837,7 @@ fset_config_init ()
     fset_config_color_parent_name[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_name_selected", "color",
-        N_("color for parent name on the selected line"),
+        N_("color for name of parent option on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -845,7 +845,7 @@ fset_config_init ()
     fset_config_color_parent_value[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_value", "color",
-        N_("color for parent value"),
+        N_("color for value of parent option"),
         NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -853,7 +853,7 @@ fset_config_init ()
     fset_config_color_parent_value[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_value_selected", "color",
-        N_("color for parent value on the selected line"),
+        N_("color for value of parent option on the selected line"),
         NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -999,7 +999,7 @@ fset_config_init ()
     fset_config_color_unmarked[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "unmarked", "color",
-        N_("color for unmarked string"),
+        N_("color for mark indicator when the option is not marked"),
         NULL, 0, 0, "default", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
@@ -1007,7 +1007,8 @@ fset_config_init ()
     fset_config_color_unmarked[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "unmarked_selected", "color",
-        N_("color for unmarked string on the selected line"),
+        N_("color for mark indicator when the option is not marked "
+           "on the selected line"),
         NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
