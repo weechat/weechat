@@ -114,6 +114,6 @@ fset_completion_init ()
 {
     weechat_hook_completion ("fset_options",
                              N_("configuration files, sections, options and "
-                                "word of options"),
+                                "words of options"),
                              &fset_completion_option_cb, NULL, NULL);
 }
