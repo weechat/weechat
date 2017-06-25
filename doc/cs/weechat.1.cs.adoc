@@ -78,6 +78,10 @@ $HOME/.weechat/exec.conf::
 $HOME/.weechat/fifo.conf::
     configuration file for _fifo_ plugin
 
+// TRANSLATION MISSING
+$HOME/.weechat/fset.conf::
+    configuration file for _fset_ plugin
+
 $HOME/.weechat/irc.conf::
     konfigurační soubor pro _irc_ plugin
 
