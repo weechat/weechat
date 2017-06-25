@@ -94,6 +94,7 @@ PLUGIN_LIST = {
     'charset': 'o',
     'exec': 'o',
     'fifo': 'o',
+    'fset': 'o',
     'irc': 'co',
     'logger': 'o',
     'relay': 'o',
