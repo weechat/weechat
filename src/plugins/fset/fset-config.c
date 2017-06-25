@@ -373,7 +373,7 @@ fset_config_init ()
         "export_help_default", "boolean",
         N_("write help for each option exported by default (this can be "
            "overridden with arguments \"-help\" and \"-nohelp\" for command "
-           "/fset -export"),
+           "/fset -export)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
