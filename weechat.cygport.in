@@ -96,6 +96,7 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/charset.dll
     usr/lib/weechat/plugins/exec.dll
     usr/lib/weechat/plugins/fifo.dll
+    usr/lib/weechat/plugins/fset.dll
     usr/lib/weechat/plugins/irc.dll
     usr/lib/weechat/plugins/logger.dll
     usr/lib/weechat/plugins/relay.dll
