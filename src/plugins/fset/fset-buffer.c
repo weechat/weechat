@@ -76,7 +76,7 @@ fset_buffer_set_title ()
                 "alt+f,alt+a(a)=append, "
                 "alt+','=mark/unmark, "
                 "shift+down=mark and move down, "
-                "shift+up=mark and move up, "
+                "shift+up=move up and mark, "
                 "($)=refresh, "
                 "($$)=unmark/refresh, "
                 "(m)=mark matching options, "
