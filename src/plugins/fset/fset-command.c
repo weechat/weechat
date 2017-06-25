@@ -602,7 +602,7 @@ fset_command_init ()
            " || -mark"
            " || -format"
            " || -export [-help|-nohelp] <filename>"
-           " || filter"),
+           " || <filter>"),
         N_("       -bar: add the help bar\n"
            "   -refresh: refresh list of options, then whole screen "
            "(command: /window refresh)\n"
