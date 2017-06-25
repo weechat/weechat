@@ -69,7 +69,7 @@
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
 * [[option_buflist.format.name]] *buflist.format.name*
-** 説明: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[バッファ名の書式 (注意: 値は評価されます、/help buflist を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${name}"+`
