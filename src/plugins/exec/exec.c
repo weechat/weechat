@@ -37,7 +37,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Execution of external commands in WeeChat"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(12000);
+WEECHAT_PLUGIN_PRIORITY(13000);
 
 struct t_weechat_plugin *weechat_exec_plugin = NULL;
 
