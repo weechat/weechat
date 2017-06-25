@@ -17,6 +17,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.9]]
+== Version 1.9 (2017-06-25)
+
+No release note.
+
 [[v1.8]]
 == Version 1.8 (2017-05-13)
 
