@@ -83,8 +83,7 @@ fset_bar_item_fset_cb (const void *pointer, void *data,
         return NULL;
 
     weechat_string_dyn_concat (default_and_values, weechat_color ("bar_fg"));
-    weechat_string_dyn_concat (default_and_values, _("default:"));
-    weechat_string_dyn_concat (default_and_values, " ");
+    weechat_string_dyn_concat (default_and_values, _("default: "));
     if (ptr_fset_option->default_value)
     {
         if (ptr_fset_option->type == FSET_OPTION_TYPE_STRING)
