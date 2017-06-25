@@ -218,6 +218,9 @@ Liste des options couramment utilisées :
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Compiler <<fifo_plugin,l'extension Fifo>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  Compiler <<fset_plugin,l'extension Fset>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Activer Gnutls (pour SSL).
 
@@ -538,6 +541,7 @@ Les fichiers dans le répertoire principal sont :
 | charset.conf | Fichier de configuration de l'extension _charset_    | Non.
 | exec.conf    | Fichier de configuration de l'extension _exec_       | Non.
 | fifo.conf    | Fichier de configuration de l'extension _fifo_       | Non.
+| fset.conf    | Fichier de configuration de l'extension _fset_       | Non.
 | irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
 | logger.conf  | Fichier de configuration de l'extension _logger_     | Non.
 | relay.conf   | Fichier de configuration de l'extension _relay_      | Non.
@@ -2065,12 +2069,13 @@ Les extensions par défaut sont :
 [width="100%",cols="^1,5",options="header"]
 |===
 | Extension  | Description
-| alias      | Définir des alias pour les commandes.
+| alias      | Définition d'alias pour les commandes.
 | aspell     | Vérification orthographique de la ligne de commande.
 | buflist    | Objet de barre avec la liste des tampons.
 | charset    | Encodage/encodage avec jeu de caractère sur les tampons.
 | exec       | Exécution de commandes externes dans WeeChat.
 | fifo       | Tube FIFO pour envoyer des commandes à distance vers WeeChat.
+| fset       | Modification rapide des options de WeeChat et des extensions.
 | irc        | Discussion avec le protocole IRC.
 | logger     | Enregistrement des tampons dans des fichiers.
 | relay      | Relai de données via le réseau.
@@ -2420,6 +2425,34 @@ include::autogen/user/fifo_options.adoc[]
 ==== Commandes
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Extension Fset
+
+L'extension Fset affiche une liste des options dans un tampon et aide à définir
+les options de WeeChat et des extensions.
+
+[[fset_options]]
+==== Options (fset.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| color   | /set fset.color.*    | Couleurs.
+| format  | /set fset.format.*   | Formats utilisés pour afficher la liste des options.
+| look    | /set fset.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Commandes
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === Extension IRC

@@ -214,6 +214,9 @@ List of commonly used options:
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Compile <<fifo_plugin,Fifo plugin>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  Compile <<fset_plugin,Fset plugin>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Enable Gnutls (for SSL).
 
@@ -527,6 +530,7 @@ The files in home directory are:
 | charset.conf | Configuration file for _charset_ plugin | No.
 | exec.conf    | Configuration file for _exec_ plugin    | No.
 | fifo.conf    | Configuration file for _fifo_ plugin    | No.
+| fset.conf    | Configuration file for _fset_ plugin    | No.
 | irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
 | logger.conf  | Configuration file for _logger_ plugin  | No.
 | relay.conf   | Configuration file for _relay_ plugin   | No.
@@ -2004,6 +2008,7 @@ Default plugins are:
 | charset    | Charset decoding/encoding for buffers.
 | exec       | Execution of external commands in WeeChat.
 | fifo       | FIFO pipe used to remotely send commands to WeeChat.
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | IRC chat protocol.
 | logger     | Log buffers to files.
 | relay      | Relay data via network.
@@ -2121,9 +2126,9 @@ Sections:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section    | Control command       | Description
-| format     | /set buflist.format.* | Formats used to display list of buffers.
-| look       | /set buflist.look.*   | Look and feel.
+| Section | Control command       | Description
+| format  | /set buflist.format.* | Formats used to display list of buffers.
+| look    | /set buflist.look.*   | Look and feel.
 |===
 
 Options:
@@ -2338,6 +2343,34 @@ include::autogen/user/fifo_options.adoc[]
 ==== Commands
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Fset plugin
+
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Options (fset.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| color   | /set fset.color.*  | Colors.
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Commands
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === IRC plugin

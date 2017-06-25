@@ -220,6 +220,9 @@ Lista popularnych opcji:
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Kompilacja <<fifo_plugin,wtyczki fifo>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  Kompilacja <<fset_plugin,wtyczki fset>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Włączenie Gnutls (dla SSL).
 
@@ -534,6 +537,7 @@ Pliki w katalogu domowym:
 | charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
 | exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
 | fifo.conf    | Plik konfiguracyjny wtyczki _fifo_            | Nie.
+| fset.conf    | Plik konfiguracyjny wtyczki _fset_            | Nie.
 | irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
 | logger.conf  | Plik konfiguracyjny wtyczki _logger_          | Nie.
 | relay.conf   | Plik konfiguracyjny wtyczki _relay_           | Nie.
@@ -2019,6 +2023,8 @@ Domyślne wtyczki:
 | charset    | Ustawianie kodowania dla buforów.
 | exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat.
 | fifo       | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat.
+// TRANSLATION MISSING
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | Protokół IRC.
 | logger     | Logowanie zawartości buforów do plików.
 | relay      | Przekazuje dane przez sieć.
@@ -2356,6 +2362,36 @@ include::autogen/user/fifo_options.adoc[]
 ==== Komendy
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Wtyczka Fset
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Opcje (fset.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| color  | /set fset.color.*  | Kolory.
+// TRANSLATION MISSING
+| format | /set fset.format.* | Formats used to display list of options.
+| look   | /set fset.look.*   | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Komendy
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === Wtyczka IRC

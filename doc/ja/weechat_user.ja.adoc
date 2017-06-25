@@ -218,6 +218,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   <<fifo_plugin,Fifo プラグイン>>のコンパイル。
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  <<fset_plugin,Fset プラグイン>>のコンパイル。
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Gnutls の有効化 (SSL 用)。
 
@@ -530,6 +533,7 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 | charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
 | exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
 | fifo.conf    | _fifo_ プラグイン用の設定ファイル       | 保護されません
+| fset.conf    | _fset_ プラグイン用の設定ファイル       | 保護されません
 | irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
 | logger.conf  | _logger_ プラグイン用の設定ファイル     | 保護されません
 | relay.conf   | _relay_ プラグイン用の設定ファイル      | 保護されません
@@ -2004,6 +2008,8 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
+// TRANSLATION MISSING
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
 | relay      | ネットワーク経由でデータを中継
@@ -2338,6 +2344,36 @@ include::autogen/user/fifo_options.adoc[]
 ==== コマンド
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Fset プラグイン
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== オプション (fset.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| color      | /set fset.color.*  | 色
+// TRANSLATION MISSING
+| format     | /set fset.format.* | Formats used to display list of options.
+| look       | /set fset.look.*   | 外観
+|===
+
+オプション:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== コマンド
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === IRC プラグイン

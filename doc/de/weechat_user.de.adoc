@@ -222,6 +222,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   kompiliert <<fifo_plugin,Fifo Erweiterung>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  kompiliert <<fset_plugin,Fset Erweiterung>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   kompiliert Gnutls (für SSL).
 
@@ -535,6 +538,7 @@ Folgende Dateien findet man im Heimatverzeichnis:
 | charset.conf | Konfiguration für _charset_-Erweiterung | Nein.
 | exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein.
 | fifo.conf    | Konfiguration für _fifo_-Erweiterung    | Nein.
+| fset.conf    | Konfiguration für _fset_-Erweiterung    | Nein.
 | irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
 | logger.conf  | Konfiguration für _logger_-Erweiterung  | Nein.
 | relay.conf   | Konfiguration für _relay_-Erweiterung   | Nein.
@@ -2053,6 +2057,8 @@ Standarderweiterungen:
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
+// TRANSLATION MISSING
+| fset        | Fast set of WeeChat and plugins options.
 | irc         | IRC Chat-Protokoll.
 | logger      | erstellt Protokolldateien von Buffern.
 | relay       | Daten via Netzwerk übermitteln.
@@ -2396,6 +2402,36 @@ include::autogen/user/fifo_options.adoc[]
 ==== Befehle
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Fset Erweiterung
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Optionen (fset.conf)
+
+Sektionen:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| color   | /set fset.color.*  | Farben.
+// TRANSLATION MISSING
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Befehle
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === IRC Erweiterung
