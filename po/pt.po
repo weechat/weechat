@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-23 11:57+0200\n"
+"POT-Creation-Date: 2017-06-25 22:26+0200\n"
 "PO-Revision-Date: 2017-06-23 11:58+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -6199,6 +6199,586 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr "nome do pipe FIFO"
 
+#, fuzzy
+msgid "values:"
+msgstr "valores"
+
+#. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
+#, fuzzy, c-format
+msgid "%s%s%s: %s %s[%s%s]%s"
+msgstr "%sNicks %s%s%s: %s[%s%s%s]"
+
+#, fuzzy
+msgid "(no description)"
+msgstr "descrição"
+
+#, c-format
+msgid ""
+"%s%d%s/%s%d%s%s | Filter: %s%s%s | Sort: %s%s%s | Key(input): alt"
+"+space=toggle boolean, alt+'-'(-)=subtract 1 or set, alt+'+'(+)=add 1 or "
+"append, alt+f,alt+r(r)=reset, alf+f,alt+u(u)=unset, alt+enter(s)=set, alt+f,"
+"alt+n(n)=set new value, alt+f,alt+a(a)=append, alt+','=mark/unmark, shift"
+"+down=mark and move down, shift+up=move up and mark, ($)=refresh, ($"
+"$)=unmark/refresh, (m)=mark matching options, (u)=unmark matching options, "
+"alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
+"format, (q)=close buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: there are no options displayed, unable to export."
+msgstr ""
+
+msgid "fast set WeeChat and plugins options"
+msgstr ""
+
+msgid ""
+"-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
+"<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
+"setnew || -append || -mark || -format || -export [-help|-nohelp] <filename> "
+"|| <filter>"
+msgstr ""
+
+msgid ""
+"       -bar: add the help bar\n"
+"   -refresh: refresh list of options, then whole screen (command: /window "
+"refresh)\n"
+"        -up: move the selected line up by \"number\" lines\n"
+"      -down: move the selected line down by \"number\" lines\n"
+"      -left: scroll the fset buffer by \"percent\" of width on the left\n"
+"     -right: scroll the fset buffer by \"percent\" of width on the right\n"
+"        -go: select a line by number, first line number is 0 (\"end\" to "
+"select the last line)\n"
+"    -toggle: toggle the boolean value, set a new value for other types\n"
+"       -add: add \"value\" (which can be a negative number) for integers and "
+"colors, set/append to value for other types (set for a negative value, "
+"append for a positive value)\n"
+"     -reset: reset the value of option\n"
+"     -unset: unset the option\n"
+"       -set: add the /set command in input to edit the value of option (move "
+"the cursor at the beginning of value)\n"
+"    -setnew: add the /set command in input to edit a new value for the "
+"option\n"
+"    -append: add the /set command to append something in the value of option "
+"(move the cursor at the end of value)\n"
+"      -mark: toggle mark\n"
+"    -format: switch to the next available format\n"
+"    -export: export the options and values displayed in a file (each line "
+"has format: \"/set name value\" or \"/unset name\")\n"
+"      -help: force writing of help on options in exported file (see /help "
+"fset.look.export_help_default)\n"
+"    -nohelp: do not write help on options in exported file (see /help fset."
+"look.export_help_default)\n"
+"     filter: set a new filter to see only matching options (this filter can "
+"be used as input in fset buffer as well); allowed formats are:\n"
+"               *       show all options (no filter)\n"
+"               xxx     show only options with \"xxx\" in name\n"
+"               f:xxx   show only configuration file \"xxx\"\n"
+"               t:xxx   show only type \"xxx\" (bool/int/str/col)\n"
+"               d       show only changed options\n"
+"               d:xxx   show only changed options with \"xxx\" in name\n"
+"               d=xxx   show only changed options with \"xxx\" in value\n"
+"               d==xxx  show only changed options with exact value \"xxx\"\n"
+"               =xxx    show only options with \"xxx\" in value\n"
+"               ==xxx   show only options with exact value \"xxx\"\n"
+"               c:xxx   show only options matching the evaluated condition "
+"\"xxx\", using following variables: file, section, option, name, "
+"parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/"
+"c), default_value, default_value_undef, value, quoted_value, value_undef, "
+"value_changed, parent_value, min, max, description, description2, "
+"description_en, description_en2, string_values\n"
+"\n"
+"The lines with options are displayed using string evaluation (see /help eval "
+"for the format), with these options:\n"
+"  - fset.format.option{1,2}: formats for an option which is not marked nor "
+"the selected line\n"
+"  - fset.format.option_marked{1,2}: formats for a marked option\n"
+"  - fset.format.option_selected{1,2}: formats for the selected option\n"
+"\n"
+"The following variables can be used in these options:\n"
+"  - option data, with color and padded by spaces on the right:\n"
+"    - ${file}: configuration file (for example \"weechat\" or \"irc\")\n"
+"    - ${section}: section\n"
+"    - ${option}: option name\n"
+"    - ${name}: full option name (file.section.option)\n"
+"    - ${parent_name}: parent option name\n"
+"    - ${type}: option type (translated)\n"
+"    - ${type_en}: option type (in English)\n"
+"    - ${type_short}: short option type (bool/int/str/col)\n"
+"    - ${type_tiny}: tiny option type (b/i/s/c)\n"
+"    - ${default_value}: option default value\n"
+"    - ${default_value_undef}: \"1\" if default value is null, otherwise "
+"\"0\"\n"
+"    - ${value}: option value\n"
+"    - ${value_undef}: \"1\" if value is null, otherwise \"0\"\n"
+"    - ${value_changed}: \"1\" if value is different from default value, "
+"otherwise \"0\"\n"
+"    - ${value2}: option value, with inherited value if null\n"
+"    - ${parent_value}: parent option value\n"
+"    - ${min}: min value\n"
+"    - ${max}: max value\n"
+"    - ${description}: option description (translated)\n"
+"    - ${description2}: option description (translated), \"(no "
+"description)\" (translated) if there's no description\n"
+"    - ${description_en}: option description (in English)\n"
+"    - ${description_en2}: option description (in English), \"(no "
+"description)\" if there's no description\n"
+"    - ${string_values}: string values allowed for set of an integer option "
+"using strings\n"
+"    - ${marked}: \"1\" if option is marked, otherwise \"0\"\n"
+"    - ${index}: index of option in list\n"
+"  - option data, with color but no spaces:\n"
+"    - same names prefixed by underscore, for example: ${_name}, "
+"${_type}, ...\n"
+"  - option data, raw format (no colors/spaces):\n"
+"    - same names prefixed by two underscores, for example: ${__name}, "
+"${__type}, ...\n"
+"  - option data, only spaces:\n"
+"    - same names prefixed with \"empty_\", for example: ${empty_name}, "
+"${empty_type}\n"
+"  - other data:\n"
+"    - ${selected_line}: \"1\" if the line is selected, otherwise \"0\"\n"
+"    - ${newline}: insert a new line at point, so the option is displayed on "
+"multiple lines\n"
+"\n"
+"Keys and input to move in on fset buffer:\n"
+"  up                        move one line up\n"
+"  down                      move one line down\n"
+"  pgup                      move one page up\n"
+"  pgdn                      move one page down\n"
+"  alt-home          <<      move to first line\n"
+"  alt-end           >>      move to last line\n"
+"  F11               <       scroll horizontally on the left\n"
+"  F12               >       scroll horizontally on the right\n"
+"\n"
+"Keys and input to set options on fset buffer:\n"
+"  alt+space         t       toggle boolean value\n"
+"  alt+'-'           -       subtract 1 from value for integer/color, set "
+"value for other types\n"
+"  alt+'+'           +       add 1 to value for integer/color, append to "
+"value for other types\n"
+"  alt+f, alt+r      r       reset value\n"
+"  alt+f, alt+u      u       unset value\n"
+"  alt+enter         s       set value\n"
+"  alt+f, alt+n      n       set new value\n"
+"  alt+f, alt+a      a       append to value\n"
+"  alt+','           ,       mark/unmark option\n"
+"  shift+up                  move one line up and mark/unmark option\n"
+"  shift+down                mark/unmark option and move one line down\n"
+"                    m:xxx   mark options displayed that are matching filter "
+"\"xxx\" (any filter on option or value is allowed, see filters above)\n"
+"                    u:xxx   unmark options displayed that are matching "
+"filter \"xxx\" (any filter on option or value is allowed, see filters "
+"above)\n"
+"\n"
+"Other keys and input on fset buffer:\n"
+"  ctrl+L                    refresh options and whole screen (command: /fset "
+"-refresh)\n"
+"                    $       refresh options (keep marked options)\n"
+"                    $$      refresh options (unmark all options)\n"
+"                    p       toggle plugin description options (plugins.desc."
+"*)\n"
+"                    v       toggle help bar\n"
+"                    s:x,y   sort options by fields x,y (see /help fset.look."
+"sort)\n"
+"                    s:      reset sort to its default value (see /help fset."
+"look.sort)\n"
+"                    w:xxx   export options in file \"xxx\"\n"
+"                    w-:xxx  export options in file \"xxx\" without help\n"
+"                    w+:xxx  export options in file \"xxx\" with help\n"
+"  ctrl+X            x       switch the format used to display options\n"
+"                    q       close fset buffer\n"
+"\n"
+"Mouse actions on fset buffer:\n"
+"  wheel up/down                   move line up/down\n"
+"  left button                     move line here\n"
+"  right button                    toggle boolean (on/off) or edit the option "
+"value\n"
+"  right button + drag left/right  increase/decrease value for integer/color, "
+"set/append to value for other types\n"
+"  right button + drag up/down     mark/unmark multiple options\n"
+"\n"
+"Note: spaces at beginning of input are ignored, so for example \"q\" closes "
+"the fset buffer while \" q\" searches all options with \"q\" inside name.\n"
+"\n"
+"Examples:\n"
+"  show IRC options changed:\n"
+"    /fset d:irc.*\n"
+"  show all options with \"nicklist\" in name:\n"
+"    /fset nicklist\n"
+"  show all values which contain \"red\":\n"
+"    /fset =red\n"
+"  show all values which are exactly \"red\":\n"
+"    /fset ==red\n"
+"  show all integer options in irc plugin:\n"
+"    /fset c:${file} == irc && ${type_en} == integer"
+msgstr ""
+
+#, fuzzy
+msgid "configuration files, sections, options and words of options"
+msgstr "ficheiro de configuração \"%s\" (opções %s.*)"
+
+msgid ""
+"automatically unmark all options after an action on marked options or after "
+"a refresh"
+msgstr ""
+
+msgid ""
+"condition to catch /set command and display results in the fset buffer; "
+"following variables can be used: ${name} (name of option given for the /set "
+"command), ${count} (number of options found with the /set argument); an "
+"empty string disables the catch of /set command; with value \"1\", the fset "
+"buffer is always used with /set command"
+msgstr ""
+
+msgid ""
+"write help for each option exported by default (this can be overridden with "
+"arguments \"-help\" and \"-nohelp\" for command /fset -export)"
+msgstr ""
+
+msgid ""
+"number of format used to display options; this is dynamically changed by the "
+"key ctrl-X on the fset buffer"
+msgstr ""
+
+msgid ""
+"string displayed when an option is marked (to do an action on multiple "
+"options)"
+msgstr ""
+
+msgid "left/right scroll in fset buffer (percent of width)"
+msgstr ""
+
+msgid ""
+"display help bar in fset buffer (description of option, allowed values and "
+"default value)"
+msgstr ""
+
+msgid "show the plugin description options (plugins.desc.*)"
+msgstr ""
+
+msgid ""
+"comma-separated list of fields to sort options (see /help fset for a list of "
+"fields); char \"-\" can be used before field to reverse order, char \"~\" "
+"can be used to do a case insensitive comparison; example: \"-~name\" for "
+"case insensitive and reverse sort on option name"
+msgstr ""
+
+#, fuzzy
+msgid "string displayed when an option is not marked"
+msgstr "cadeia apresentada entre buffers na hotlist"
+
+#, fuzzy
+msgid "use the color to display value of color options"
+msgstr "definir alias de cores e mostrar paleta de cores"
+
+#, fuzzy
+msgid ""
+"use keys alt+X in fset buffer to do actions on options; if disabled, only "
+"the input is allowed"
+msgstr ""
+"usar teclas alt+X no buffer de scripts para realizar ações sobre os scripts "
+"(alt+i = instalar, alt+r = remover, ...); se desativado, só permitir usar a "
+"entrada: i, r, ..."
+
+#, fuzzy
+msgid "use /mute command to set options"
+msgstr "mostrar ajuda sobre comandos e opções"
+
+msgid ""
+"first format of each line with an option which is not marked nor the "
+"selected one (note: content is evaluated, see /help fset); formats can be "
+"switched with key ctrl+X"
+msgstr ""
+
+msgid ""
+"second format of each line with an option which is not marked not the "
+"selected one (note: content is evaluated, see /help fset); formats can be "
+"switched with key ctrl+X"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"format of help line written before each option exported in a file (note: "
+"content is evaluated, see /help fset)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid ""
+"format of each option exported in a file (note: content is evaluated, see /"
+"help fset)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid ""
+"format of each option with \"null\" value exported in a file (note: content "
+"is evaluated, see /help fset)"
+msgstr ""
+"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
+
+#, fuzzy
+msgid "color for default value"
+msgstr "valor predefinido"
+
+msgid "color for default value on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for description"
+msgstr "cor do texto da descrição do cliente"
+
+#, fuzzy
+msgid "color for description on the selected line"
+msgstr "cor do texto da descrição de linha selecionada no buffer de scripts"
+
+#, fuzzy
+msgid "color for file"
+msgstr "cor do texto de valores"
+
+#, fuzzy
+msgid "color for file on the selected line"
+msgstr "cor da linha que termina o registo recente"
+
+#, fuzzy
+msgid "color for file if value is changed"
+msgstr "cor do tópico antigo (quando se altera o tópico)"
+
+msgid "color for file if value is changed on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for default value in help bar"
+msgstr "cor da linha que termina o registo recente"
+
+#, fuzzy
+msgid "color for description in help bar"
+msgstr "cor do texto da descrição no buffer de scripts"
+
+#, fuzzy
+msgid "color for name in help bar"
+msgstr "cor do nick na barra de entrada"
+
+#, fuzzy
+msgid "color for quotes around string values"
+msgstr "cor do texto das mensagens de join"
+
+#, fuzzy
+msgid "color for allowed values"
+msgstr "cor das linhas do registo recente"
+
+#, fuzzy
+msgid "color for index of option"
+msgstr "cor do texto da descrição do cliente"
+
+msgid "color for index of option on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"background color for a marked line (used with the first format, see option "
+"fset.format.option1)"
+msgstr ""
+"cor de fundo do marcador em linhas onde o texto procurado foi encontrado"
+
+#, fuzzy
+msgid ""
+"background color for a marked line (used with the second format, see option "
+"fset.format.option2)"
+msgstr ""
+"cor de fundo do marcador em linhas onde o texto procurado foi encontrado"
+
+#, fuzzy
+msgid ""
+"background color for the selected line (used with the first format, see "
+"option fset.format.option1)"
+msgstr "cor de fundo da linha selecionada no buffer de scripts"
+
+#, fuzzy
+msgid ""
+"background color for the selected line (used with the second format, see "
+"option fset.format.option2)"
+msgstr "cor de fundo da linha selecionada no buffer de scripts"
+
+#, fuzzy
+msgid "color for mark indicator"
+msgstr "cor das linhas do registo recente"
+
+#, fuzzy
+msgid "color for mark indicator on the selected line"
+msgstr ""
+"cor do texto do nome do script da linha selecionada no buffer de scripts"
+
+#, fuzzy
+msgid "color for max value"
+msgstr "cor do texto de valores"
+
+msgid "color for max value on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for min value"
+msgstr "cor do texto de valores"
+
+#, fuzzy
+msgid "color for min value on the selected line"
+msgstr "cor da linha que termina o registo recente"
+
+#, fuzzy
+msgid "color for name"
+msgstr "nomes de cores"
+
+#, fuzzy
+msgid "color for name on the selected line"
+msgstr "cor da linha que termina o registo recente"
+
+#, fuzzy
+msgid "color for name if value is changed"
+msgstr "cor do novo tópico do canal (quando se altera o tópico)"
+
+msgid "color for name if value is changed on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for option"
+msgstr "opção de configuração"
+
+#, fuzzy
+msgid "color for option on the selected line"
+msgstr "cor do texto de ações na linha de entrada"
+
+#, fuzzy
+msgid "color for option if value is changed"
+msgstr "%s%d%s opção com valor alterado"
+
+msgid "color for option if value is changed on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for name of parent option"
+msgstr "cor do texto da descrição do cliente"
+
+#, fuzzy
+msgid "color for name of parent option on the selected line"
+msgstr "cor do texto de ações na linha de entrada"
+
+#, fuzzy
+msgid "color for value of parent option"
+msgstr "cor do texto da descrição do cliente"
+
+#, fuzzy
+msgid "color for value of parent option on the selected line"
+msgstr "cor do texto de ações na linha de entrada"
+
+msgid "color for quotes around string values on the selected line"
+msgstr ""
+
+msgid "color for quotes around string values which are changed"
+msgstr ""
+
+msgid ""
+"color for quotes around string values which are changed on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for section"
+msgstr "secção de configuração"
+
+#, fuzzy
+msgid "color for section on the selected line"
+msgstr "cor do texto de ações na linha de entrada"
+
+#, fuzzy
+msgid "color for section if value is changed"
+msgstr "cor do texto das mensagens de join"
+
+msgid "color for section if value is changed on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for string values"
+msgstr "cor do texto de valores"
+
+msgid "color for string values on the selected line"
+msgstr ""
+
+msgid ""
+"color for the count of options found with the current filter in title of "
+"buffer"
+msgstr ""
+
+#, fuzzy
+msgid "color for current option number in title of buffer"
+msgstr "cor do texto do número do buffer atual na barra de estado"
+
+#, fuzzy
+msgid "color for filter in title of buffer"
+msgstr "cor do texto do outro nick no buffer privado"
+
+msgid "color for number of marked options in title of buffer"
+msgstr ""
+
+#, fuzzy
+msgid "color for sort in title of buffer"
+msgstr "cor do texto do outro nick no buffer privado"
+
+#, fuzzy
+msgid "color for type"
+msgstr "cor do texto do chat"
+
+#, fuzzy
+msgid "color for type on the selected line"
+msgstr "cor do texto \"Notice\" em notices"
+
+#, fuzzy
+msgid "color for mark indicator when the option is not marked"
+msgstr "cadeia apresentada entre buffers na hotlist"
+
+#, fuzzy
+msgid ""
+"color for mark indicator when the option is not marked on the selected line"
+msgstr ""
+"cor do texto do nome do script da linha selecionada no buffer de scripts"
+
+#, fuzzy
+msgid "color for value"
+msgstr "cor do texto de valores"
+
+#, fuzzy
+msgid "color for value on the selected line"
+msgstr "cor das linhas do registo recente"
+
+msgid "color for value changed (different from default)"
+msgstr ""
+
+msgid "color for value changed (different from default) on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "color for undefined value"
+msgstr "cor do texto de valores"
+
+msgid "color for undefined value on the selected line"
+msgstr ""
+
+#, fuzzy
+msgid "list of fset options"
+msgstr "lista de opções"
+
+#, fuzzy
+msgid "fset option pointer (optional)"
+msgstr "ponteiro para plugin (opcional)"
+
+msgid "option name (wildcard \"*\" is allowed) (optional)"
+msgstr "nome da opção (o caráter universal \"*\" é permitido) (opcional)"
+
+#, fuzzy
+msgid "fset options"
+msgstr "lista de opções"
+
+msgid "Fast set of WeeChat and plugins options"
+msgstr ""
+
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
 msgstr "%s%s: script \"%s\" já registado (registo ignorado)"
@@ -10331,9 +10911,6 @@ msgstr "nick_xxx ou group_xxx para obter apenas o nick/grupo xxx (opcional)"
 msgid "list of options"
 msgstr "lista de opções"
 
-msgid "option name (wildcard \"*\" is allowed) (optional)"
-msgstr "nome da opção (o caráter universal \"*\" é permitido) (opcional)"
-
 msgid "list of plugins"
 msgstr "lista de plugins"
 
@@ -12831,3 +13408,20 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#, fuzzy
+#~ msgid "color for parent name"
+#~ msgstr "cor de texto do nome dos servidores"
+
+#, fuzzy
+#~ msgid "color for parent name on the selected line"
+#~ msgstr ""
+#~ "cor do texto do nome do script da linha selecionada no buffer de scripts"
+
+#, fuzzy
+#~ msgid "color for parent value"
+#~ msgstr "cor do texto de valores"
+
+#, fuzzy
+#~ msgid "color for unmarked string"
+#~ msgstr "cor das linhas do registo recente"
