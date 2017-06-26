@@ -28,8 +28,7 @@ extern struct t_gui_buffer *fset_buffer;
 extern int fset_buffer_selected_line;
 
 extern void fset_buffer_set_title ();
-extern void fset_buffer_display_line (int index,
-                                      struct t_fset_option *fset_option);
+extern void fset_buffer_display_option (struct t_fset_option *fset_option);
 extern void fset_buffer_refresh (int clear);
 extern void fset_buffer_set_current_line (int line);
 extern void fset_buffer_check_line_outside_window ();

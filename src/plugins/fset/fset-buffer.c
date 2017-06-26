@@ -159,7 +159,7 @@ fset_buffer_fills_field (char *field, char *field_spaces, int size,
  */
 
 void
-fset_buffer_display_line (int index, struct t_fset_option *fset_option)
+fset_buffer_display_option (struct t_fset_option *fset_option)
 {
     char *line, str_color_line[128], *color_line, **lines, str_field[4096], str_field2[4096];
     char str_color_value[128], str_color_quotes[128], str_number[64];
@@ -170,7 +170,7 @@ fset_buffer_display_line (int index, struct t_fset_option *fset_option)
     if (!fset_option)
         return;
 
-    selected_line = (index == fset_buffer_selected_line) ? 1 : 0;
+    selected_line = (fset_option->index == fset_buffer_selected_line) ? 1 : 0;
 
     default_value_undef = (fset_option->default_value == NULL) ? 1 : 0;
     value_undef = (fset_option->value == NULL) ? 1 : 0;
@@ -675,13 +675,13 @@ fset_buffer_display_line (int index, struct t_fset_option *fset_option)
                            "empty_marked", str_field2);
 
     /* index */
-    snprintf (str_field, sizeof (str_field), "%d", index + 1);
+    snprintf (str_field, sizeof (str_field), "%d", fset_option->index + 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "__index", str_field);
     snprintf (str_field, sizeof (str_field),
               "%s%d",
               weechat_color (weechat_config_string (fset_config_color_index[selected_line])),
-              index + 1);
+              fset_option->index + 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_index", str_field);
     snprintf (str_number, sizeof (str_number),
@@ -742,7 +742,7 @@ fset_buffer_display_line (int index, struct t_fset_option *fset_option)
         lines = weechat_string_split (line, "\r\n", 0, 0, &num_lines);
         if (lines)
         {
-            y = index * fset_config_format_option_num_lines[format_number - 1];
+            y = fset_option->index * fset_config_format_option_num_lines[format_number - 1];
             for (i = 0; i < num_lines; i++)
             {
                 weechat_printf_y (fset_buffer, y, "%s%s",
@@ -781,7 +781,7 @@ fset_buffer_refresh (int clear)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
         if (ptr_fset_option)
-            fset_buffer_display_line (i, ptr_fset_option);
+            fset_buffer_display_option (ptr_fset_option);
     }
 
     fset_buffer_set_title ();
@@ -804,12 +804,10 @@ fset_buffer_set_current_line (int line)
 
         if (old_line != fset_buffer_selected_line)
         {
-            fset_buffer_display_line (
-                old_line,
+            fset_buffer_display_option (
                 weechat_arraylist_get (fset_options, old_line));
         }
-        fset_buffer_display_line (
-            fset_buffer_selected_line,
+        fset_buffer_display_option (
             weechat_arraylist_get (fset_options, fset_buffer_selected_line));
 
         fset_buffer_set_title ();

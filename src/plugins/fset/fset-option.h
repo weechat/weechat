@@ -34,6 +34,7 @@ enum t_fset_option_type
 
 struct t_fset_option
 {
+    int index;                           /* index of option in list         */
     char *file;                          /* config file name (eg: "weechat")*/
     char *section;                       /* section name (eg: "look")       */
     char *option;                        /* option name                     */

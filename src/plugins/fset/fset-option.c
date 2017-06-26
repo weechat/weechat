@@ -759,6 +759,7 @@ fset_option_alloc (struct t_config_option *option)
     if (!new_fset_option)
         return NULL;
 
+    new_fset_option->index = 0;
     new_fset_option->file = NULL;
     new_fset_option->section = NULL;
     new_fset_option->option = NULL;
@@ -1007,6 +1008,13 @@ fset_option_get_options ()
 
     num_options = weechat_arraylist_size (fset_options);
 
+    for (i = 0; i < num_options; i++)
+    {
+        ptr_fset_option = weechat_arraylist_get (fset_options, i);
+        if (ptr_fset_option)
+            ptr_fset_option->index = i;
+    }
+
     /* check selected line */
     if (num_options == 0)
         fset_buffer_selected_line = 0;
@@ -1195,7 +1203,7 @@ fset_option_toggle_mark (struct t_fset_option *fset_option,
     fset_option->marked ^= 1;
     fset_option_count_marked += (fset_option->marked) ? 1 : -1;
 
-    fset_buffer_refresh (0);
+    fset_buffer_display_option (fset_option);
 }
 
 /*
@@ -1205,8 +1213,10 @@ fset_option_toggle_mark (struct t_fset_option *fset_option,
 void
 fset_option_mark_options_matching_filter (const char *filter, int mark)
 {
-    int num_options, i, mark_old, matching;
+    int num_options, i, mark_old, matching, set_title;
     struct t_fset_option *ptr_fset_option;
+
+    set_title = 0;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
@@ -1222,16 +1232,22 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
                 {
                     ptr_fset_option->marked = 1;
                     fset_option_count_marked++;
+                    fset_buffer_display_option (ptr_fset_option);
+                    set_title = 1;
                 }
                 else if (mark_old && !mark)
                 {
                     ptr_fset_option->marked = 0;
                     fset_option_count_marked--;
+                    fset_buffer_display_option (ptr_fset_option);
+                    set_title = 1;
                 }
             }
         }
     }
-    fset_buffer_refresh (0);
+
+    if (set_title)
+        fset_buffer_set_title ();
 }
 
 /*
@@ -1241,18 +1257,30 @@ fset_option_mark_options_matching_filter (const char *filter, int mark)
 void
 fset_option_unmark_all ()
 {
-    int num_options, i;
+    int num_options, marked, set_title, i;
     struct t_fset_option *ptr_fset_option;
+
+    set_title = 0;
 
     num_options = weechat_arraylist_size (fset_options);
     for (i = 0; i < num_options; i++)
     {
         ptr_fset_option = weechat_arraylist_get (fset_options, i);
         if (ptr_fset_option)
+        {
+            marked = ptr_fset_option->marked;
             ptr_fset_option->marked = 0;
+            if (marked)
+            {
+                fset_buffer_display_option (ptr_fset_option);
+                set_title = 1;
+            }
+        }
     }
     fset_option_count_marked = 0;
-    fset_buffer_refresh (0);
+
+    if (set_title)
+        fset_buffer_set_title ();
 }
 
 /*
@@ -1365,7 +1393,7 @@ fset_option_config_changed (const char *option_name)
         if (ptr_option)
         {
             fset_option_set_values (ptr_fset_option, ptr_option);
-            fset_buffer_display_line (line, ptr_fset_option);
+            fset_buffer_display_option (ptr_fset_option);
         }
         else
         {
@@ -1553,6 +1581,7 @@ fset_option_hdata_option_cb (const void *pointer, void *data,
     hdata = weechat_hdata_new (hdata_name, NULL, NULL, 0, 0, NULL, NULL);
     if (hdata)
     {
+        WEECHAT_HDATA_VAR(struct t_fset_option, index, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, file, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, section, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_fset_option, option, STRING, 0, NULL, NULL);
@@ -1592,6 +1621,8 @@ fset_option_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
 
+    if (!weechat_infolist_new_var_integer (ptr_item, "index", fset_option->index))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "file", fset_option->file))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "section", fset_option->section))
@@ -1648,6 +1679,7 @@ fset_option_print_log ()
             continue;
         weechat_log_printf ("");
         weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
+        weechat_log_printf ("  index . . . . . . . . : '%s'",  ptr_fset_option->index);
         weechat_log_printf ("  file. . . . . . . . . : '%s'",  ptr_fset_option->file);
         weechat_log_printf ("  section . . . . . . . : '%s'",  ptr_fset_option->section);
         weechat_log_printf ("  option. . . . . . . . : '%s'",  ptr_fset_option->option);
