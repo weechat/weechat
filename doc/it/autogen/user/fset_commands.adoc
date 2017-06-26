@@ -125,8 +125,8 @@ Other keys and input on fset buffer:
   ctrl+L                    refresh options and whole screen (command: /fset -refresh)
                     $       refresh options (keep marked options)
                     $$      refresh options (unmark all options)
-                    p       toggle plugin description options (plugins.desc.*)
-                    v       toggle help bar
+  alt+p             p       toggle plugin description options (plugins.desc.*)
+  alt+v             v       toggle help bar
                     s:x,y   sort options by fields x,y (see /help fset.look.sort)
                     s:      reset sort to its default value (see /help fset.look.sort)
                     w:xxx   export options in file "xxx"

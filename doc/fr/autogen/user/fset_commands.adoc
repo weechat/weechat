@@ -125,8 +125,8 @@ Autres touches et entrées sur le tampon fset :
   ctrl+L                    rafraîchir les options et l'écran entier (commande : /fset -refresh)
                     $       rafraîchir les options (garder les options marquées)
                     $$      rafraîchir les options (démarquer toutes les options)
-                    p       activer/désactiver la description des options d'extensions (plugins.desc.*)
-                    v       activer/désactiver la barre d'aide
+  alt+p             p       activer/désactiver la description des options d'extensions (plugins.desc.*)
+  alt+v             v       activer/désactiver la barre d'aide
                     s:x,y   trier les options par les champs x,y (voir /help fset.look.sort)
                     s:      réinitialiser le tri à sa valeur par défaut (voir /help fset.look.sort)
                     w:xxx   exporter les options dans le fichier "xxx"
