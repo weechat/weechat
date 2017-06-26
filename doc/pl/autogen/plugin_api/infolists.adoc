@@ -8,6 +8,8 @@
 
 | alias | alias | lista aliasów | wskaźnik aliasu (opcjonalny) | nazwa aliasu (wildcard "*" jest dozwolony) (opcjonalne)
 
+| fset | fset_option | list of fset options | fset option pointer (optional) | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
+
 | guile | guile_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
 | irc | irc_channel | lista kanałów IRC | wskaźnik kanału (opcjonalne) | serwer,kanał (kanał jest opcjonalny)

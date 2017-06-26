@@ -16,6 +16,8 @@
 
 | exec | exec_commands_ids | ids (numbers and names) of executed commands
 
+| fset | fset_options | configuration files, sections, options and words of options
+
 | guile | guile_script | list of scripts
 
 | irc | irc_channel | current IRC channel

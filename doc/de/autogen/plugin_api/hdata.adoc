@@ -8,6 +8,26 @@
 |===
 | Erweiterung | Name | Beschreibung | Listen | Variablen
 
+| fset
+| [[hdata_fset_option]]<<hdata_fset_option,fset_option>>
+| fset options
+| -
+| _file_   (string) +
+_section_   (string) +
+_option_   (string) +
+_name_   (string) +
+_parent_name_   (string) +
+_type_   (integer) +
+_default_value_   (string) +
+_value_   (string) +
+_parent_value_   (string) +
+_min_   (string) +
+_max_   (string) +
+_description_   (string) +
+_string_values_   (string) +
+_marked_   (integer) +
+
+
 | guile
 | [[hdata_guile_script]]<<hdata_guile_script,guile_script>>
 | Liste der Skripten

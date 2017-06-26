@@ -8,6 +8,8 @@
 
 | alias | alias | list of aliases | alias pointer (optional) | alias name (wildcard "*" is allowed) (optional)
 
+| fset | fset_option | list of fset options | fset option pointer (optional) | option name (wildcard "*" is allowed) (optional)
+
 | guile | guile_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)
 
 | irc | irc_channel | list of channels for an IRC server | channel pointer (optional) | server,channel (channel is optional)
