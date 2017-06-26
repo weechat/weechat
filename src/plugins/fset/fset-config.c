@@ -40,7 +40,6 @@ struct t_config_option *fset_config_look_export_help_default;
 struct t_config_option *fset_config_look_format_number;
 struct t_config_option *fset_config_look_marked_string;
 struct t_config_option *fset_config_look_scroll_horizontal;
-struct t_config_option *fset_config_look_show_help_bar;
 struct t_config_option *fset_config_look_show_plugins_desc;
 struct t_config_option *fset_config_look_sort;
 struct t_config_option *fset_config_look_unmarked_string;
@@ -114,22 +113,6 @@ fset_config_change_format_number_cb (const void *pointer, void *data,
 
     fset_buffer_refresh (1);
     fset_buffer_check_line_outside_window ();
-}
-
-/*
- * Callback for changes on option "fset.look.show_help_bar".
- */
-
-void
-fset_config_change_show_help_bar_cb (const void *pointer, void *data,
-                                     struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    weechat_command (NULL, "/window refresh");
 }
 
 /*
@@ -403,15 +386,6 @@ fset_config_init ()
         NULL, 1, 100, "10", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_look_show_help_bar = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "show_help_bar", "boolean",
-        N_("display help bar in fset buffer (description of option, "
-           "allowed values and default value)"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_show_help_bar_cb, NULL, NULL,
         NULL, NULL, NULL);
     fset_config_look_show_plugins_desc = weechat_config_new_option (
         fset_config_file, ptr_section,

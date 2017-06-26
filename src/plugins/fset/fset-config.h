@@ -30,7 +30,6 @@ extern struct t_config_option *fset_config_look_export_help_default;
 extern struct t_config_option *fset_config_look_format_number;
 extern struct t_config_option *fset_config_look_marked_string;
 extern struct t_config_option *fset_config_look_scroll_horizontal;
-extern struct t_config_option *fset_config_look_show_help_bar;
 extern struct t_config_option *fset_config_look_show_plugins_desc;
 extern struct t_config_option *fset_config_look_sort;
 extern struct t_config_option *fset_config_look_unmarked_string;

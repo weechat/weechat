@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-26 22:20+0200\n"
-"PO-Revision-Date: 2017-06-25 09:00+0900\n"
+"POT-Creation-Date: 2017-06-26 23:32+0200\n"
+"PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -6411,11 +6411,6 @@ msgid ""
 msgstr ""
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
-
-msgid ""
-"display help bar in fset buffer (description of option, allowed values and "
-"default value)"
 msgstr ""
 
 msgid "show the plugin description options (plugins.desc.*)"
@@ -13279,19 +13274,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#, fuzzy
-#~ msgid "color for parent name"
-#~ msgstr "サーバ名のテキスト色"
-
-#, fuzzy
-#~ msgid "color for parent name on the selected line"
-#~ msgstr "スクリプトバッファ内のスクリプト名が選択された場合のテキスト色"
-
-#, fuzzy
-#~ msgid "color for parent value"
-#~ msgstr "値のテキスト色"
-
-#, fuzzy
-#~ msgid "color for unmarked string"
-#~ msgstr "バックログ行の色"

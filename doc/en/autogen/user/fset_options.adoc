@@ -440,12 +440,6 @@
 ** values: 1 .. 100
 ** default value: `+10+`
 
-* [[option_fset.look.show_help_bar]] *fset.look.show_help_bar*
-** description: pass:none[display help bar in fset buffer (description of option, allowed values and default value)]
-** type: boolean
-** values: on, off
-** default value: `+on+`
-
 * [[option_fset.look.show_plugins_desc]] *fset.look.show_plugins_desc*
 ** description: pass:none[show the plugin description options (plugins.desc.*)]
 ** type: boolean

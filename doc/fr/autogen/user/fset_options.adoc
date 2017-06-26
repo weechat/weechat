@@ -440,12 +440,6 @@
 ** valeurs: 1 .. 100
 ** valeur par défaut: `+10+`
 
-* [[option_fset.look.show_help_bar]] *fset.look.show_help_bar*
-** description: pass:none[afficher la barre d'aide dans le tampon fset (description de l'option, valeurs autorisées et valeur par défaut)]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+on+`
-
 * [[option_fset.look.show_plugins_desc]] *fset.look.show_plugins_desc*
 ** description: pass:none[afficher les options de description des extensions (plugins.desc.*)]
 ** type: booléen

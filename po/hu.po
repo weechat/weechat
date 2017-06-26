@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-26 22:20+0200\n"
-"PO-Revision-Date: 2017-06-23 11:58+0200\n"
+"POT-Creation-Date: 2017-06-26 23:32+0200\n"
+"PO-Revision-Date: 2017-06-26 23:32+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -5235,11 +5235,6 @@ msgid ""
 msgstr ""
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
-
-msgid ""
-"display help bar in fset buffer (description of option, allowed values and "
-"default value)"
 msgstr ""
 
 msgid "show the plugin description options (plugins.desc.*)"
@@ -11574,19 +11569,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "color for parent name"
-#~ msgstr "szerver nevének színe"
-
-#, fuzzy
-#~ msgid "color for parent name on the selected line"
-#~ msgstr "szerver nevének színe"
-
-#, fuzzy
-#~ msgid "color for parent value"
-#~ msgstr "üzenetek színe"
-
-#, fuzzy
-#~ msgid "color for unmarked string"
-#~ msgstr "távollevő felhasználók nevének színe"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-26 22:20+0200\n"
-"PO-Revision-Date: 2017-06-23 11:58+0200\n"
+"POT-Creation-Date: 2017-06-26 23:32+0200\n"
+"PO-Revision-Date: 2017-06-26 23:32+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -6088,11 +6088,6 @@ msgid ""
 msgstr ""
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
-
-msgid ""
-"display help bar in fset buffer (description of option, allowed values and "
-"default value)"
 msgstr ""
 
 msgid "show the plugin description options (plugins.desc.*)"
@@ -12775,21 +12770,3 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
-
-#, fuzzy
-#~ msgid "color for parent name"
-#~ msgstr "colore del testo per i nomi dei server"
-
-#, fuzzy
-#~ msgid "color for parent name on the selected line"
-#~ msgstr ""
-#~ "colore del testo del nome dello script per la riga selezionata nel buffer "
-#~ "degli script"
-
-#, fuzzy
-#~ msgid "color for parent value"
-#~ msgstr "colore del testo per i valori"
-
-#, fuzzy
-#~ msgid "color for unmarked string"
-#~ msgstr "colore per la cronologia"

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-06-26 22:20+0200\n"
-"PO-Revision-Date: 2017-06-23 11:58+0200\n"
+"POT-Creation-Date: 2017-06-26 23:32+0200\n"
+"PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: tr\n"
@@ -4818,11 +4818,6 @@ msgid ""
 msgstr ""
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
-
-msgid ""
-"display help bar in fset buffer (description of option, allowed values and "
-"default value)"
 msgstr ""
 
 msgid "show the plugin description options (plugins.desc.*)"
@@ -10568,11 +10563,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
-
-#, fuzzy
-#~ msgid "color for parent name"
-#~ msgstr "sunucu isimleri için metin rengi"
-
-#, fuzzy
-#~ msgid "color for parent value"
-#~ msgstr "değerler için metin rengi"
