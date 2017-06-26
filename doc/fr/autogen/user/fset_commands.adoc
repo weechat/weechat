@@ -56,9 +56,8 @@
                c:xxx   afficher seulement les options qui correspondent à la condition évaluée "xxx", en utilisant les variables suiantes : file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
 Les lignes avec des options sont affichées en utilisant l'évaluation de chaîne (voir /help eval pour le format), avec ces options :
-  - fset.format.option{1,2} : formats pour une option qui n'est pas marquée ni sur la ligne sélectionnée
-  - fset.format.option_marked{1,2} : formats pour une option marquée
-  - fset.format.option_selected{1,2} : formats pour une option sélectionnée
+  - fset.format.option1 : premier format pour une option
+  - fset.format.option2 : second format pour une option
 
 Les variables suivantes peuvent être utilisées dans ces options :
   - données de l'option, avec couleur et alignées avec des espaces sur la droite :
