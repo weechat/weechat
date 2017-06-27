@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
   * logger: call strftime before replacing buffer local variables
 
 [[v1.9]]
