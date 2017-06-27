@@ -104,8 +104,11 @@ buflist_bar_item_bar_can_scroll (struct t_gui_bar *bar)
     if (!items_subcount || (items_subcount[0] <= 0))
         return 0;
     items_name = weechat_hdata_pointer (buflist_hdata_bar, bar, "items_name");
-    if (!items_name || (strcmp (items_name[0][0], BUFLIST_BAR_ITEM_NAME) != 0))
+    if (!items_name || !items_name[0] || !items_name[0][0]
+        || (strcmp (items_name[0][0], BUFLIST_BAR_ITEM_NAME) != 0))
+    {
         return 0;
+    }
 
     /* OK, bar can be scrolled! */
     return 1;
