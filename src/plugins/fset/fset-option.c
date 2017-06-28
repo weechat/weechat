@@ -573,61 +573,61 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     int length, length_value, length_parent_value;
 
     /* file */
-    length = weechat_strlen_screen (fset_option->file);
+    length = weechat_utf8_strlen_screen (fset_option->file);
     if (length > fset_option_max_length->file)
         fset_option_max_length->file = length;
 
     /* section */
-    length = weechat_strlen_screen (fset_option->section);
+    length = weechat_utf8_strlen_screen (fset_option->section);
     if (length > fset_option_max_length->section)
         fset_option_max_length->section = length;
 
     /* option */
-    length = weechat_strlen_screen (fset_option->option);
+    length = weechat_utf8_strlen_screen (fset_option->option);
     if (length > fset_option_max_length->option)
         fset_option_max_length->option = length;
 
     /* name */
-    length = weechat_strlen_screen (fset_option->name);
+    length = weechat_utf8_strlen_screen (fset_option->name);
     if (length > fset_option_max_length->name)
         fset_option_max_length->name = length;
 
     /* parent_name */
     length = (fset_option->parent_name) ?
-        weechat_strlen_screen (fset_option->name) : 0;
+        weechat_utf8_strlen_screen (fset_option->name) : 0;
     if (length > fset_option_max_length->parent_name)
         fset_option_max_length->parent_name = length;
 
     /* type */
-    length = weechat_strlen_screen (_(fset_option_type_string[fset_option->type]));
+    length = weechat_utf8_strlen_screen (_(fset_option_type_string[fset_option->type]));
     if (length > fset_option_max_length->type)
         fset_option_max_length->type = length;
 
     /* type_en */
-    length = weechat_strlen_screen (fset_option_type_string[fset_option->type]);
+    length = weechat_utf8_strlen_screen (fset_option_type_string[fset_option->type]);
     if (length > fset_option_max_length->type_en)
         fset_option_max_length->type_en = length;
 
     /* type_short */
-    length = weechat_strlen_screen (fset_option_type_string_short[fset_option->type]);
+    length = weechat_utf8_strlen_screen (fset_option_type_string_short[fset_option->type]);
     if (length > fset_option_max_length->type_short)
         fset_option_max_length->type_short = length;
 
     /* type_tiny */
-    length = weechat_strlen_screen (fset_option_type_string_tiny[fset_option->type]);
+    length = weechat_utf8_strlen_screen (fset_option_type_string_tiny[fset_option->type]);
     if (length > fset_option_max_length->type_tiny)
         fset_option_max_length->type_tiny = length;
 
     /* default_value */
     if (fset_option->default_value)
     {
-        length = weechat_strlen_screen (fset_option->default_value);
+        length = weechat_utf8_strlen_screen (fset_option->default_value);
         if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length += 2;
     }
     else
     {
-        length = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
+        length = weechat_utf8_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     if (length > fset_option_max_length->default_value)
         fset_option_max_length->default_value = length;
@@ -635,13 +635,13 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     /* value */
     if (fset_option->value)
     {
-        length_value = weechat_strlen_screen (fset_option->value);
+        length_value = weechat_utf8_strlen_screen (fset_option->value);
         if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length_value += 2;
     }
     else
     {
-        length_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
+        length_value = weechat_utf8_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     if (length_value > fset_option_max_length->value)
         fset_option_max_length->value = length_value;
@@ -649,13 +649,13 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     /* parent_value */
     if (fset_option->parent_value)
     {
-        length_parent_value = weechat_strlen_screen (fset_option->parent_value);
+        length_parent_value = weechat_utf8_strlen_screen (fset_option->parent_value);
         if (fset_option->type == FSET_OPTION_TYPE_STRING)
             length_parent_value += 2;
     }
     else
     {
-        length_parent_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
+        length_parent_value = weechat_utf8_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
     if (length_parent_value > fset_option_max_length->parent_value)
         fset_option_max_length->parent_value = length_parent_value;
@@ -668,50 +668,50 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
         fset_option_max_length->value2 = length;
 
     /* min */
-    length = weechat_strlen_screen (fset_option->min);
+    length = weechat_utf8_strlen_screen (fset_option->min);
     if (length > fset_option_max_length->min)
         fset_option_max_length->min = length;
 
     /* max */
-    length = weechat_strlen_screen (fset_option->max);
+    length = weechat_utf8_strlen_screen (fset_option->max);
     if (length > fset_option_max_length->max)
         fset_option_max_length->max = length;
 
     /* description */
     length = (fset_option->description && fset_option->description[0]) ?
-        weechat_strlen_screen (_(fset_option->description)) : 0;
+        weechat_utf8_strlen_screen (_(fset_option->description)) : 0;
     if (length > fset_option_max_length->description)
         fset_option_max_length->description = length;
 
     /* description2 */
-    length = weechat_strlen_screen (
+    length = weechat_utf8_strlen_screen (
         (fset_option->description && fset_option->description[0]) ?
         _(fset_option->description) : _("(no description)"));
     if (length > fset_option_max_length->description2)
         fset_option_max_length->description2 = length;
 
     /* description_en */
-    length = weechat_strlen_screen (fset_option->description);
+    length = weechat_utf8_strlen_screen (fset_option->description);
     if (length > fset_option_max_length->description_en)
         fset_option_max_length->description_en = length;
 
     /* description_en2 */
-    length = weechat_strlen_screen (
+    length = weechat_utf8_strlen_screen (
         (fset_option->description && fset_option->description[0]) ?
         fset_option->description : _("(no description)"));
     if (length > fset_option_max_length->description_en2)
         fset_option_max_length->description_en2 = length;
 
     /* string_values */
-    length = weechat_strlen_screen (fset_option->string_values);
+    length = weechat_utf8_strlen_screen (fset_option->string_values);
     if (length > fset_option_max_length->string_values)
         fset_option_max_length->string_values = length;
 
     /* marked */
-    length = weechat_strlen_screen (weechat_config_string (fset_config_look_marked_string));
+    length = weechat_utf8_strlen_screen (weechat_config_string (fset_config_look_marked_string));
     if (length > fset_option_max_length->marked)
         fset_option_max_length->marked = length;
-    length = weechat_strlen_screen (weechat_config_string (fset_config_look_unmarked_string));
+    length = weechat_utf8_strlen_screen (weechat_config_string (fset_config_look_unmarked_string));
     if (length > fset_option_max_length->marked)
         fset_option_max_length->marked = length;
 }
