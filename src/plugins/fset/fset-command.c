@@ -459,7 +459,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
     const char *ptr_condition;
     int rc, argc, old_count_marked, old_buffer_selected_line, condition_ok;
     struct t_arraylist *old_options;
-    struct t_hashtable *old_max_length_field, *eval_extra_vars, *eval_options;
+    struct t_fset_option_max_length *old_max_length;
+    struct t_hashtable *eval_extra_vars, *eval_options;
 
     /* make C compiler happy */
     (void) pointer;
@@ -495,8 +496,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
     old_options = fset_options;
     fset_options = fset_option_get_arraylist_options ();
     old_count_marked = fset_option_count_marked;
-    old_max_length_field = fset_option_max_length_field;
-    fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
+    old_max_length = fset_option_max_length;
+    fset_option_max_length = fset_option_get_max_length ();
     old_filter = (fset_option_filter) ? strdup (fset_option_filter) : NULL;
     fset_option_set_filter ((argc > 1) ? argv[1] : NULL);
     old_buffer_selected_line = fset_buffer_selected_line;
@@ -543,8 +544,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
     {
         if (old_options)
             weechat_arraylist_free (old_options);
-        if (old_max_length_field)
-            weechat_hashtable_free (old_max_length_field);
+        if (old_max_length)
+            free (old_max_length);
         if (old_filter)
             free (old_filter);
 
@@ -562,8 +563,8 @@ fset_command_run_set_cb (const void *pointer, void *data,
         weechat_arraylist_free (fset_options);
         fset_options = old_options;
         fset_option_count_marked = old_count_marked;
-        weechat_hashtable_free (fset_option_max_length_field);
-        fset_option_max_length_field = old_max_length_field;
+        free (fset_option_max_length);
+        fset_option_max_length = old_max_length;
         fset_option_set_filter (old_filter);
         if (old_filter)
             free (old_filter);

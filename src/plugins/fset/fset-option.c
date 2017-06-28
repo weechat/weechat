@@ -34,7 +34,7 @@
 /* options */
 struct t_arraylist *fset_options = NULL;
 int fset_option_count_marked = 0;
-struct t_hashtable *fset_option_max_length_field = NULL;
+struct t_fset_option_max_length *fset_option_max_length = NULL;
 
 /* filters */
 char *fset_option_filter = NULL;
@@ -564,20 +564,6 @@ fset_option_set_values (struct t_fset_option *fset_option,
 }
 
 /*
- * Sets max length for a field in hashtable "fset_option_max_length_field".
- */
-
-void
-fset_option_set_max_length_field (const char *field, int length)
-{
-    int *value;
-
-    value = weechat_hashtable_get (fset_option_max_length_field, field);
-    if (!value || (length > *value))
-        weechat_hashtable_set (fset_option_max_length_field, field, &length);
-}
-
-/*
  * Sets max length for fields, for one option.
  */
 
@@ -587,45 +573,50 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     int length, length_value, length_parent_value;
 
     /* file */
-    fset_option_set_max_length_field (
-        "file", weechat_strlen_screen (fset_option->file));
+    length = weechat_strlen_screen (fset_option->file);
+    if (length > fset_option_max_length->file)
+        fset_option_max_length->file = length;
 
     /* section */
-    fset_option_set_max_length_field (
-        "section", weechat_strlen_screen (fset_option->section));
+    length = weechat_strlen_screen (fset_option->section);
+    if (length > fset_option_max_length->section)
+        fset_option_max_length->section = length;
 
     /* option */
-    fset_option_set_max_length_field (
-        "option", weechat_strlen_screen (fset_option->option));
+    length = weechat_strlen_screen (fset_option->option);
+    if (length > fset_option_max_length->option)
+        fset_option_max_length->option = length;
 
     /* name */
-    fset_option_set_max_length_field (
-        "name", weechat_strlen_screen (fset_option->name));
+    length = weechat_strlen_screen (fset_option->name);
+    if (length > fset_option_max_length->name)
+        fset_option_max_length->name = length;
 
     /* parent_name */
-    fset_option_set_max_length_field (
-        "parent_name",
-        (fset_option->parent_name) ? weechat_strlen_screen (fset_option->parent_name) : 0);
+    length = (fset_option->parent_name) ?
+        weechat_strlen_screen (fset_option->name) : 0;
+    if (length > fset_option_max_length->parent_name)
+        fset_option_max_length->parent_name = length;
 
     /* type */
-    fset_option_set_max_length_field (
-        "type",
-        weechat_strlen_screen (_(fset_option_type_string[fset_option->type])));
+    length = weechat_strlen_screen (_(fset_option_type_string[fset_option->type]));
+    if (length > fset_option_max_length->type)
+        fset_option_max_length->type = length;
 
     /* type_en */
-    fset_option_set_max_length_field (
-        "type_en",
-        weechat_strlen_screen (fset_option_type_string[fset_option->type]));
+    length = weechat_strlen_screen (fset_option_type_string[fset_option->type]);
+    if (length > fset_option_max_length->type_en)
+        fset_option_max_length->type_en = length;
 
     /* type_short */
-    fset_option_set_max_length_field (
-        "type_short",
-        weechat_strlen_screen (fset_option_type_string_short[fset_option->type]));
+    length = weechat_strlen_screen (fset_option_type_string_short[fset_option->type]);
+    if (length > fset_option_max_length->type_short)
+        fset_option_max_length->type_short = length;
 
     /* type_tiny */
-    fset_option_set_max_length_field (
-        "type_tiny",
-        weechat_strlen_screen (fset_option_type_string_tiny[fset_option->type]));
+    length = weechat_strlen_screen (fset_option_type_string_tiny[fset_option->type]);
+    if (length > fset_option_max_length->type_tiny)
+        fset_option_max_length->type_tiny = length;
 
     /* default_value */
     if (fset_option->default_value)
@@ -638,7 +629,8 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     {
         length = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
-    fset_option_set_max_length_field ("default_value", length);
+    if (length > fset_option_max_length->default_value)
+        fset_option_max_length->default_value = length;
 
     /* value */
     if (fset_option->value)
@@ -651,7 +643,8 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     {
         length_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
-    fset_option_set_max_length_field ("value", length_value);
+    if (length_value > fset_option_max_length->value)
+        fset_option_max_length->value = length_value;
 
     /* parent_value */
     if (fset_option->parent_value)
@@ -664,60 +657,73 @@ fset_option_set_max_length_fields_option (struct t_fset_option *fset_option)
     {
         length_parent_value = weechat_strlen_screen (FSET_OPTION_VALUE_NULL);
     }
-    fset_option_set_max_length_field ("parent_value", length_parent_value);
+    if (length_parent_value > fset_option_max_length->parent_value)
+        fset_option_max_length->parent_value = length_parent_value;
 
     /* value2 */
     length = length_value;
     if (!fset_option->value)
         length += 4 + length_parent_value;
-    fset_option_set_max_length_field ("value2", length);
+    if (length > fset_option_max_length->value2)
+        fset_option_max_length->value2 = length;
 
     /* min */
-    fset_option_set_max_length_field (
-        "min", weechat_strlen_screen (fset_option->min));
+    length = weechat_strlen_screen (fset_option->min);
+    if (length > fset_option_max_length->min)
+        fset_option_max_length->min = length;
 
     /* max */
-    fset_option_set_max_length_field (
-        "max", weechat_strlen_screen (fset_option->max));
+    length = weechat_strlen_screen (fset_option->max);
+    if (length > fset_option_max_length->max)
+        fset_option_max_length->max = length;
 
     /* description */
-    fset_option_set_max_length_field (
-        "description",
-        weechat_strlen_screen (
-            (fset_option->description && fset_option->description[0]) ?
-            _(fset_option->description) : ""));
+    length = (fset_option->description && fset_option->description[0]) ?
+        weechat_strlen_screen (_(fset_option->description)) : 0;
+    if (length > fset_option_max_length->description)
+        fset_option_max_length->description = length;
 
     /* description2 */
-    fset_option_set_max_length_field (
-        "description2",
-        weechat_strlen_screen (
-            (fset_option->description && fset_option->description[0]) ?
-            _(fset_option->description) : _("(no description)")));
+    length = weechat_strlen_screen (
+        (fset_option->description && fset_option->description[0]) ?
+        _(fset_option->description) : _("(no description)"));
+    if (length > fset_option_max_length->description2)
+        fset_option_max_length->description2 = length;
 
     /* description_en */
-    fset_option_set_max_length_field (
-        "description_en", weechat_strlen_screen (fset_option->description));
+    length = weechat_strlen_screen (fset_option->description);
+    if (length > fset_option_max_length->description_en)
+        fset_option_max_length->description_en = length;
 
     /* description_en2 */
-    fset_option_set_max_length_field (
-        "description_en2",
-        weechat_strlen_screen (
-            (fset_option->description && fset_option->description[0]) ?
-            fset_option->description : "(no description)"));
+    length = weechat_strlen_screen (
+        (fset_option->description && fset_option->description[0]) ?
+        fset_option->description : _("(no description)"));
+    if (length > fset_option_max_length->description_en2)
+        fset_option_max_length->description_en2 = length;
 
     /* string_values */
-    fset_option_set_max_length_field (
-        "string_values", weechat_strlen_screen (fset_option->string_values));
+    length = weechat_strlen_screen (fset_option->string_values);
+    if (length > fset_option_max_length->string_values)
+        fset_option_max_length->string_values = length;
 
     /* marked */
-    fset_option_set_max_length_field (
-        "marked",
-        weechat_strlen_screen (
-            weechat_config_string (fset_config_look_marked_string)));
-    fset_option_set_max_length_field (
-        "marked",
-        weechat_strlen_screen (
-            weechat_config_string (fset_config_look_unmarked_string)));
+    length = weechat_strlen_screen (weechat_config_string (fset_config_look_marked_string));
+    if (length > fset_option_max_length->marked)
+        fset_option_max_length->marked = length;
+    length = weechat_strlen_screen (weechat_config_string (fset_config_look_unmarked_string));
+    if (length > fset_option_max_length->marked)
+        fset_option_max_length->marked = length;
+}
+
+/*
+ * Initializes max length for fields.
+ */
+
+void
+fset_option_init_max_length (struct t_fset_option_max_length *max_length)
+{
+    memset (max_length, 0, sizeof (*max_length));
 }
 
 /*
@@ -731,7 +737,7 @@ fset_option_set_max_length_fields_all ()
     struct t_fset_option *ptr_fset_option;
 
     /* first clear all max lengths */
-    weechat_hashtable_remove_all (fset_option_max_length_field);
+    fset_option_init_max_length (fset_option_max_length);
 
     /* set max length for fields, for all options */
     num_options = weechat_arraylist_size (fset_options);
@@ -917,7 +923,7 @@ fset_option_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
 }
 
 /*
- * Gets the arraylist to store options.
+ * Allocates and returns the arraylist to store options.
  */
 
 struct t_arraylist *
@@ -929,16 +935,19 @@ fset_option_get_arraylist_options ()
 }
 
 /*
- * Gets the hashtable to store max length of fields.
+ * Allocates and returns the structure to store max length of fields.
  */
 
-struct t_hashtable *
-fset_option_get_hashtable_max_length_field ()
+struct t_fset_option_max_length *
+fset_option_get_max_length ()
 {
-    return weechat_hashtable_new (128,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  WEECHAT_HASHTABLE_INTEGER,
-                                  NULL, NULL);
+    struct t_fset_option_max_length *max_length;
+
+    max_length = malloc (sizeof (*fset_option_max_length));
+    if (max_length)
+        fset_option_init_max_length (max_length);
+
+    return max_length;
 }
 
 /*
@@ -978,7 +987,7 @@ fset_option_get_options ()
     /* clear options */
     weechat_arraylist_clear (fset_options);
     fset_option_count_marked = 0;
-    weechat_hashtable_remove_all (fset_option_max_length_field);
+    fset_option_init_max_length (fset_option_max_length);
 
     /* get options */
     ptr_config = weechat_hdata_get_list (fset_hdata_config_file,
@@ -1714,8 +1723,9 @@ fset_option_init ()
     if (!fset_options)
         return 0;
     fset_option_count_marked = 0;
-    fset_option_max_length_field = fset_option_get_hashtable_max_length_field ();
-    if (!fset_option_max_length_field)
+
+    fset_option_max_length = fset_option_get_max_length ();
+    if (!fset_option_max_length)
     {
         weechat_arraylist_free (fset_options);
         return 0;
@@ -1729,7 +1739,7 @@ fset_option_init ()
     if (!fset_option_filter_hashtable_pointers)
     {
         weechat_arraylist_free (fset_options);
-        weechat_hashtable_free (fset_option_max_length_field);
+        free (fset_option_max_length);
         return 0;
     }
     fset_option_filter_hashtable_extra_vars = weechat_hashtable_new (
@@ -1740,7 +1750,7 @@ fset_option_init ()
     if (!fset_option_filter_hashtable_extra_vars)
     {
         weechat_arraylist_free (fset_options);
-        weechat_hashtable_free (fset_option_max_length_field);
+        free (fset_option_max_length);
         weechat_hashtable_free (fset_option_filter_hashtable_pointers);
         return 0;
     }
@@ -1752,7 +1762,7 @@ fset_option_init ()
     if (!fset_option_filter_hashtable_options)
     {
         weechat_arraylist_free (fset_options);
-        weechat_hashtable_free (fset_option_max_length_field);
+        free (fset_option_max_length);
         weechat_hashtable_free (fset_option_filter_hashtable_pointers);
         weechat_hashtable_free (fset_option_filter_hashtable_extra_vars);
         return 0;
@@ -1776,10 +1786,10 @@ fset_option_end ()
         fset_options = NULL;
     }
     fset_option_count_marked = 0;
-    if (fset_option_max_length_field)
+    if (fset_option_max_length)
     {
-        weechat_hashtable_free (fset_option_max_length_field);
-        fset_option_max_length_field = NULL;
+        free (fset_option_max_length);
+        fset_option_max_length = NULL;
     }
     if (fset_option_filter)
     {

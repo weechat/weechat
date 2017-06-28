@@ -53,9 +53,34 @@ struct t_fset_option
     struct t_fset_option *next_option;   /* link to next option             */
 };
 
+struct t_fset_option_max_length
+{
+    int file;
+    int section;
+    int option;
+    int name;
+    int parent_name;
+    int type;
+    int type_en;
+    int type_short;
+    int type_tiny;
+    int default_value;
+    int value;
+    int parent_value;
+    int value2;
+    int min;
+    int max;
+    int description;
+    int description2;
+    int description_en;
+    int description_en2;
+    int string_values;
+    int marked;
+};
+
 extern struct t_arraylist *fset_options;
 extern int fset_option_count_marked;
-extern struct t_hashtable *fset_option_max_length_field;
+extern struct t_fset_option_max_length *fset_option_max_length;
 extern char *fset_option_filter;
 extern char *fset_option_type_string[];
 extern char *fset_option_type_string_short[];
@@ -68,7 +93,7 @@ extern int fset_option_value_is_changed (struct t_fset_option *option);
 extern void fset_option_set_max_length_fields_all ();
 extern void fset_option_free (struct t_fset_option *fset_option);
 extern struct t_arraylist *fset_option_get_arraylist_options ();
-extern struct t_hashtable *fset_option_get_hashtable_max_length_field ();
+extern struct t_fset_option_max_length *fset_option_get_max_length ();
 extern void fset_option_get_options ();
 extern void fset_option_set_filter (const char *filter);
 extern void fset_option_filter_options (const char *filter);

@@ -103,8 +103,7 @@ fset_buffer_set_title ()
 }
 
 /*
- * Fills a field with spaces (according to max length in hashtable
- * "fset_option_max_length_field" for this field.
+ * Fills a field with spaces (according to max length for this field).
  *
  * If fill_right == 1, fills with spaces on the right. Otherwise
  * fills with spaces on the left before the value.
@@ -112,24 +111,17 @@ fset_buffer_set_title ()
 
 void
 fset_buffer_fills_field (char *field, char *field_spaces, int size,
-                         const char *field_name, int default_max_length,
-                         int fill_right)
+                         int max_length, int fill_right)
 {
-    int length, length_screen, *ptr_length, num_spaces;
+    int length, length_screen, num_spaces;
 
     length = strlen (field);
     length_screen = weechat_strlen_screen (field);
 
-    ptr_length = (field_name) ?
-        (int *)weechat_hashtable_get (fset_option_max_length_field, field_name) :
-        NULL;
-    if (!ptr_length)
-        ptr_length = &default_max_length;
+    if (max_length > size - 1)
+        max_length = size - 1;
 
-    if (*ptr_length > size - 1)
-        *ptr_length = size - 1;
-
-    num_spaces = *ptr_length - length_screen;
+    num_spaces = max_length - length_screen;
     if (num_spaces > 0)
     {
         if (length + num_spaces >= size)
@@ -150,8 +142,8 @@ fset_buffer_fills_field (char *field, char *field_spaces, int size,
     }
 
     /* field with spaces */
-    memset (field_spaces, ' ', *ptr_length);
-    field_spaces[*ptr_length] = '\0';
+    memset (field_spaces, ' ', max_length);
+    field_spaces[max_length] = '\0';
 }
 
 /*
@@ -161,7 +153,8 @@ fset_buffer_fills_field (char *field, char *field_spaces, int size,
 void
 fset_buffer_display_option (struct t_fset_option *fset_option)
 {
-    char *line, str_color_line[128], *color_line, **lines, str_field[4096], str_field2[4096];
+    char *line, str_color_line[128], *color_line, **lines;
+    char str_field[4096], str_field2[4096];
     char str_color_value[128], str_color_quotes[128], str_number[64];
     int selected_line, y, i, num_lines;
     int default_value_undef, value_undef, value_changed;
@@ -194,7 +187,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->file) ? fset_option->file : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_file", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "file", 16, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->file, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "file", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -214,7 +208,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->section) ? fset_option->section : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_section", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "section", 16, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->section, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "section", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -234,7 +229,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->option) ? fset_option->option : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_option", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "option", 16, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->option, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "option", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -254,7 +250,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->name) ? fset_option->name : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_name", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "name", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->name, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "name", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -270,7 +267,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->parent_name) ? fset_option->parent_name : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_parent_name", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "parent_name", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->parent_name, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "parent_name", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -287,7 +285,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               _(fset_option_type_string[fset_option->type]));
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_type", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "type", 8, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->type, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "type", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -304,7 +303,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               fset_option_type_string[fset_option->type]);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_type_en", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "type_en", 8, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->type_en, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "type_en", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -321,7 +321,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               fset_option_type_string_short[fset_option->type]);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_type_short", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "type_short", 4, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->type_short, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "type_short", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -338,7 +339,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               fset_option_type_string_tiny[fset_option->type]);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_type_tiny", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "type_tiny", 1, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->type_tiny, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "type_tiny", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -367,7 +369,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (add_quotes) ? "\"" : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_default_value", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "default_value", 16, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->default_value, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "default_value", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -435,7 +438,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (add_quotes) ? "\"" : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_value", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "value", 16, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->value, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "value", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -468,7 +472,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
                   (add_quotes_parent) ? "\"" : "");
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_value2", str_field);
-        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "value2", 32, 1);
+        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                                 fset_option_max_length->value2, 1);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "value2", str_field);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -491,7 +496,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (add_quotes) ? "\"" : "");
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_value2", str_field);
-        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "value2", 32, 1);
+        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                                 fset_option_max_length->value2, 1);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "value2", str_field);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -517,7 +523,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
                   (add_quotes_parent) ? "\"" : "");
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_parent_value", str_field);
-        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "parent_value", 16, 1);
+        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                                 fset_option_max_length->parent_value, 1);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "parent_value", str_field);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -530,7 +537,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
                                "__parent_value", str_field);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "_parent_value", str_field);
-        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "parent_value", 16, 1);
+        fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                                 fset_option_max_length->parent_value, 1);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                                "parent_value", str_field);
         weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -547,7 +555,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->min) ? fset_option->min : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_min", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "min", 8, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->min, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "min", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -563,7 +572,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->max) ? fset_option->max : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_max", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "max", 8, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->max, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "max", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -580,7 +590,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->description && fset_option->description[0]) ? _(fset_option->description) : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "description", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->description, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -597,7 +608,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->description && fset_option->description[0]) ? _(fset_option->description) : _("(no description)"));
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description2", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "description2", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->description2, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description2", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -613,7 +625,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->description) ? fset_option->description : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description_en", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "description_en", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->description_en, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description_en", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -630,7 +643,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->description && fset_option->description[0]) ? fset_option->description : "(no description)");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_description_en2", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "description_en2", 64, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->description_en2, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "description_en2", str_field);
 
@@ -644,7 +658,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               (fset_option->string_values) ? fset_option->string_values : "");
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_string_values", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "string_values", 32, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->string_values, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "string_values", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -668,7 +683,8 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
               weechat_config_string (fset_config_look_unmarked_string));
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "_marked", str_field);
-    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field), "marked", 2, 1);
+    fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
+                             fset_option_max_length->marked, 1);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "marked", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
@@ -687,7 +703,7 @@ fset_buffer_display_option (struct t_fset_option *fset_option)
     snprintf (str_number, sizeof (str_number),
               "%d", weechat_arraylist_size (fset_options));
     fset_buffer_fills_field (str_field, str_field2, sizeof (str_field),
-                             NULL, strlen (str_number), 0);
+                             strlen (str_number), 0);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
                            "index", str_field);
     weechat_hashtable_set (fset_buffer_hashtable_extra_vars,
