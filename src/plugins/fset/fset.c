@@ -86,6 +86,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_buffer_init ();
 
+    fset_option_init ();
+
     if (!fset_config_init ())
         return WEECHAT_RC_ERROR;
 
@@ -93,8 +95,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (!fset_bar_item_init ())
         return WEECHAT_RC_ERROR;
-
-    fset_option_init ();
 
     fset_command_init ();
 
