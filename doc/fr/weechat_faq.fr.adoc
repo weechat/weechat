@@ -325,7 +325,7 @@ exemple :
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
 défaut : kbd:[Alt+l]).
 
-Pour rendre la le clic d'URL plus facile, vous pouvez :
+Pour rendre le clic d'URL plus facile, vous pouvez :
 
 * déplacer la liste des pseudos en haut :
 
