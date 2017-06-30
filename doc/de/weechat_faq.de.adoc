@@ -334,14 +334,27 @@ Bildschirm zu positionieren:
 
 Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: kbd:[Alt+l]).
 
-WeeChat stellt standardmäßig die Uhrzeit als auch einen Präfix in jeder
-Zeile dar. Optional können zusätzlich auch Bars im Chatfenster dargestellt
-werden. Man kann die Benutzerliste z.B. am oberen Rand darstellen lassen und
-die Ausrichtung der Nicknamen entfernen:
+// TRANSLATION MISSING
+To make opening URLs easier, you can:
+
+// TRANSLATION MISSING
+* move nicklist to top:
 
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+
+// TRANSLATION MISSING
+* disable alignment for multiline words (WeeChat ≥ 1.7):
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+// TRANSLATION MISSING
+* or for all wrapped lines:
+
+----
 /set weechat.look.align_end_of_lines time
 ----
 

@@ -247,7 +247,7 @@ Per rimuovere l'allineamento dei nick:
 
 // TRANSLATION MISSING
 [[status_hotlist]]
-=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+=== What does the [H: 3(1,8), 2(4)] in status bar mean?
 
 This is called the "hotlist", a list of buffers with the number of unread
 messages, by order: highlights, private messages, messages, other messages
@@ -337,14 +337,27 @@ Un'altra soluzione è spostare la lista nick in alto o in basso, per esempio:
 // TRANSLATION MISSING
 With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
-Con le impostazioni predefinite, WeeChat mostra l'ora ed il prefisso per ogni
-riga e le barre opzionali intorno all'area di chat. Per facilitare il clic
-delle url, è possibile spostare la lista nick in alto e rimuovere
-l'allineamento sul nick:
+// TRANSLATION MISSING
+To make opening URLs easier, you can:
+
+// TRANSLATION MISSING
+* move nicklist to top:
 
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+
+// TRANSLATION MISSING
+* disable alignment for multiline words (WeeChat ≥ 1.7):
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+// TRANSLATION MISSING
+* or for all wrapped lines:
+
+----
 /set weechat.look.align_end_of_lines time
 ----
 
@@ -735,7 +748,7 @@ Per aiuto: `/help filter` e `/help irc.look.smart_filter`
 === Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
+With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
 joining a channel with the option _irc.look.display_join_message_ (see
 `/help irc.look.display_join_message` for more info).
 
