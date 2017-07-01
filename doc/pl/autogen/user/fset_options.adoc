@@ -393,13 +393,13 @@
 ** domyślna wartość: `+"/unset ${name}"+`
 
 * [[option_fset.format.option1]] *fset.format.option1*
-** opis: pass:none[first format of each line with an option which is not marked nor the selected one (note: content is evaluated, see /help fset); an empty string uses the predefined format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** opis: pass:none[first format of each line with an option which is not marked nor the selected one (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_fset.format.option2]] *fset.format.option2*
-** opis: pass:none[second format of each line with an option which is not marked not the selected one (note: content is evaluated, see /help fset); an empty string uses the predefined format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** opis: pass:none[second format of each line with an option which is not marked not the selected one (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
