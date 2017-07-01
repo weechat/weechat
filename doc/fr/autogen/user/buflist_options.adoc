@@ -86,6 +86,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** description: pass:none[ajouter une nouvelle ligne entre les tampons affichés, de sorte que chaque tampon est affiché sur une ligne séparée (recommandé) ; si désactivé, les nouvelles lignes doivent être ajoutées dans les formats avec "${\n}", et les actions de souris ne sont plus possibles]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
 ** description: pass:none[faire défiler automatiquement la barre buflist pour toujours voir le tampon courant (cela fonctionne seulement avec une barre en position gauche/droite avec un remplissage "vertical") ; cette valeur est un pourcentage de lignes affichées avant le tampon courant lors du défilement (-1 = désactiver le défilement) ; par exemple 50 signifie qu'après un défilement, le tampon courant est au milieu de la barre, 0 signifie en haut de la barre et 100 signifie en bas de la barre]
 ** type: entier

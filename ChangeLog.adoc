@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * buflist: add option buflist.look.add_newline (issue #1027)
   * fset: new plugin "fset" (fast set of WeeChat and plugins options)
 
 Bug fixes::

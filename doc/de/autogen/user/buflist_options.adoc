@@ -86,6 +86,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** Beschreibung: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
 ** Beschreibung: pass:none[scrollt automatisch die buflist-Bar um den aktuellen Buffer darzustellen (dies funktioniert ausschließlich wenn die Bar links/rechts positioniert ist und als Darstellung "vertical" verwendet wird); dieser Wert ist eine prozentuale Angabe wo der aktuelle Buffer angezeigt werden soll (-1 = deaktiviert); zum Beispiel wird bei einem Wert von 50 der Buffer in der Mitte der Bar angezeigt, bei 0 wird der Buffer oben und bei 100 am unteren Rand der Bar angezeigt]
 ** Typ: integer

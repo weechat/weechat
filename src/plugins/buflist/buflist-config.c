@@ -32,6 +32,7 @@ struct t_config_file *buflist_config_file = NULL;
 
 /* buflist config, look section */
 
+struct t_config_option *buflist_config_look_add_newline;
 struct t_config_option *buflist_config_look_auto_scroll;
 struct t_config_option *buflist_config_look_display_conditions;
 struct t_config_option *buflist_config_look_enabled;
@@ -338,6 +339,17 @@ buflist_config_init ()
         return 0;
     }
 
+    buflist_config_look_add_newline = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "add_newline", "boolean",
+        N_("add newline between the buffers displayed, so each buffer is "
+           "displayed on a separate line (recommended); if disabled, newlines "
+           "must be manually added in the formats with \"${\\n}\", "
+           "and the mouse actions are not possible any more"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
     buflist_config_look_auto_scroll = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "auto_scroll", "integer",

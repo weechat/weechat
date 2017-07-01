@@ -324,7 +324,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                              ptr_buffer, "name");
         }
 
-        if (*buflist[0])
+        if (weechat_config_boolean (buflist_config_look_add_newline)
+            && *buflist[0])
         {
             if (!weechat_string_dyn_concat (buflist, "\n"))
                 goto error;

@@ -86,6 +86,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** opis: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
 ** opis: pass:none[automatycznie przewiń litę kanałów, żeby zawsze wyświetlała obecny bufor (działa tylko, kiedy lita kanałów ma pozycję lewo/prawo z uzupełnianiem "vertical"); ta wartość określa procentowo ilość linii wyświetlanych przed obecnym buforem podczas przewijania (-1 = wyłącz przewijanie); na przykład 50 oznacza, że po przewinięciu obecny bufor jest na środku listy, 0 oznacza górę listy, 100 dół listy]
 ** typ: liczba

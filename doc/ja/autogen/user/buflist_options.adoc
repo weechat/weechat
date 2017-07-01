@@ -86,6 +86,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** 説明: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
 ** 説明: pass:none[現在のバッファが常にバーの中に表示されるように自動的にバッファリストバーをスクロールします (この機能はフィリングが "vertical" に設定された左右にあるバーでのみ機能します); 設定値は現在のバーよりも前に表示される行数のパーセント値です (-1 = 自動スクロールを無効化); 例えば値を 50 に設定した場合、現在のバッファがバーの中央に位置するように自動スクロールされます。0 に設定した場合はバーの最初、100 に設定した場合はバーの最後を意味します]
 ** タイプ: 整数

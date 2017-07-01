@@ -86,6 +86,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** descrizione: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
 * [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
 ** descrizione: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
 ** tipo: intero
