@@ -51,6 +51,38 @@ struct t_hdata *fset_hdata_fset_option = NULL;
 
 
 /*
+ * Callback for signal "debug_dump".
+ */
+
+int
+fset_debug_dump_cb (const void *pointer, void *data,
+                    const char *signal, const char *type_data,
+                    void *signal_data)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    if (!signal_data
+        || (weechat_strcasecmp ((char *)signal_data, FSET_PLUGIN_NAME) == 0))
+    {
+        weechat_log_printf ("");
+        weechat_log_printf ("***** \"%s\" plugin dump *****",
+                            weechat_plugin->name);
+
+        fset_option_print_log ();
+
+        weechat_log_printf ("");
+        weechat_log_printf ("***** End of \"%s\" plugin dump *****",
+                            weechat_plugin->name);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Adds the fset bar.
  */
 
@@ -108,6 +140,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     fset_hdata_fset_option = weechat_hdata_get ("fset_option");
 
+    /* hook some signals */
+    weechat_hook_signal ("debug_dump", &fset_debug_dump_cb, NULL, NULL);
     weechat_hook_signal ("window_scrolled",
                          &fset_buffer_window_scrolled_cb, NULL, NULL);
 
