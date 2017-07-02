@@ -130,7 +130,6 @@ fset_config_change_show_plugins_desc_cb (const void *pointer, void *data,
 
     if (fset_buffer)
     {
-        fset_buffer_selected_line = 0;
         fset_option_get_options ();
         fset_buffer_refresh (1);
     }

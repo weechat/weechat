@@ -120,8 +120,6 @@ extern int fset_option_config_cb (const void *pointer,
                                   void *data,
                                   const char *option,
                                   const char *value);
-extern void fset_option_enable_timer_config_changed ();
-extern void fset_option_disable_timer_config_changed ();
 extern struct t_hdata *fset_option_hdata_option_cb (const void *pointer,
                                                     void *data,
                                                     const char *hdata_name);

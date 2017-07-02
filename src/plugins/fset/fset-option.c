@@ -43,7 +43,6 @@ struct t_hashtable *fset_option_filter_hashtable_extra_vars = NULL;
 struct t_hashtable *fset_option_filter_hashtable_options = NULL;
 
 /* refresh */
-int fset_option_config_changed_use_timer = 0;
 struct t_hashtable *fset_option_timer_options_changed = NULL;
 struct t_hook *fset_option_timer_hook = NULL;
 
@@ -1477,18 +1476,10 @@ fset_option_config_timer_cb (const void *pointer,
     (void) data;
     (void) remaining_calls;
 
-    if (fset_option_timer_options_changed)
-    {
-        weechat_hashtable_map (fset_option_timer_options_changed,
-                               &fset_option_timer_option_changed_cb,
-                               NULL);
-        weechat_hashtable_free (fset_option_timer_options_changed);
-        fset_option_timer_options_changed = NULL;
-    }
-    else
-    {
-        fset_option_config_changed (NULL);
-    }
+    weechat_hashtable_map (fset_option_timer_options_changed,
+                           &fset_option_timer_option_changed_cb,
+                           NULL);
+    weechat_hashtable_remove_all (fset_option_timer_options_changed);
 
     fset_option_timer_hook = NULL;
 
@@ -1521,55 +1512,17 @@ fset_option_config_cb (const void *pointer,
     if (ptr_info && (strcmp (ptr_info, "1") == 0))
         return WEECHAT_RC_OK;
 
-    if (fset_option_config_changed_use_timer)
+    weechat_hashtable_set (fset_option_timer_options_changed,
+                           option, NULL);
+
+    if (!fset_option_timer_hook)
     {
-        if (!fset_option_timer_hook)
-        {
-            fset_option_timer_hook = weechat_hook_timer (
-                1, 0, 1,
-                &fset_option_config_timer_cb, NULL, NULL);
-        }
-        weechat_hashtable_set (fset_option_timer_options_changed,
-                               option, NULL);
-    }
-    else
-    {
-        fset_option_config_changed (option);
+        fset_option_timer_hook = weechat_hook_timer (
+            1, 0, 1,
+            &fset_option_config_timer_cb, NULL, NULL);
     }
 
     return WEECHAT_RC_OK;
-}
-
-/*
- * Enables a timer when options are changed.
- */
-
-void
-fset_option_enable_timer_config_changed ()
-{
-    if (fset_option_timer_options_changed)
-    {
-        weechat_hashtable_remove_all (fset_option_timer_options_changed);
-    }
-    else
-    {
-        fset_option_timer_options_changed = weechat_hashtable_new (
-            32,
-            WEECHAT_HASHTABLE_STRING,
-            WEECHAT_HASHTABLE_POINTER,
-            NULL, NULL);
-    }
-    fset_option_config_changed_use_timer = 1;
-}
-
-/*
- * Disables timer when options are changed.
- */
-
-void
-fset_option_disable_timer_config_changed ()
-{
-    fset_option_config_changed_use_timer = 0;
 }
 
 /*
@@ -1768,6 +1721,21 @@ fset_option_init ()
     }
     weechat_hashtable_set (fset_option_filter_hashtable_options,
                            "type", "condition");
+
+    fset_option_timer_options_changed = weechat_hashtable_new (
+        128,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    if (!fset_option_timer_options_changed)
+    {
+        weechat_arraylist_free (fset_options);
+        free (fset_option_max_length);
+        weechat_hashtable_free (fset_option_filter_hashtable_pointers);
+        weechat_hashtable_free (fset_option_filter_hashtable_extra_vars);
+        weechat_hashtable_free (fset_option_filter_hashtable_options);
+        return 0;
+    }
 
     return 1;
 }
