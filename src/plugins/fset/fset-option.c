@@ -1430,7 +1430,9 @@ fset_option_config_changed (const char *option_name)
                 fset_buffer_selected_line = num_options - 1;
         }
         else
+        {
             fset_buffer_selected_line = 0;
+        }
         fset_buffer_refresh (1);
     }
     else
