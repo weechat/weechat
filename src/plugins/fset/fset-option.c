@@ -1423,7 +1423,14 @@ fset_option_config_changed (const char *option_name)
     if (full_refresh)
     {
         fset_option_get_options ();
-        fset_buffer_selected_line = 0;
+        num_options = weechat_arraylist_size (fset_options);
+        if (num_options > 0)
+        {
+            if (fset_buffer_selected_line >= num_options)
+                fset_buffer_selected_line = num_options - 1;
+        }
+        else
+            fset_buffer_selected_line = 0;
         fset_buffer_refresh (1);
     }
     else
