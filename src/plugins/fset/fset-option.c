@@ -1640,7 +1640,7 @@ fset_option_print_log ()
             continue;
         weechat_log_printf ("");
         weechat_log_printf ("[fset option (addr:0x%lx)]", ptr_fset_option);
-        weechat_log_printf ("  index . . . . . . . . : '%s'",  ptr_fset_option->index);
+        weechat_log_printf ("  index . . . . . . . . : %d",    ptr_fset_option->index);
         weechat_log_printf ("  file. . . . . . . . . : '%s'",  ptr_fset_option->file);
         weechat_log_printf ("  section . . . . . . . : '%s'",  ptr_fset_option->section);
         weechat_log_printf ("  option. . . . . . . . : '%s'",  ptr_fset_option->option);
