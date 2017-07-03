@@ -596,7 +596,7 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
         return 0;
 
     if (channel != NULL)
-        if (channel->type == 0) return 1; // Is a channel, as long as it's a channel
+        if (channel->type == IRC_CHANNEL_TYPE_CHANNEL) return 1; // Is a channel, as long as it's a channel
     // even if not valid (huh)
 
     first_char[0] = string[0];
