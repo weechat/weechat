@@ -637,26 +637,28 @@ arraylist_clear (struct t_arraylist *arraylist)
         }
     }
 
-    if (arraylist->data
-        && (arraylist->size_alloc != arraylist->size_alloc_min))
+    if (arraylist->data)
     {
-        free (arraylist->data);
-        arraylist->data = NULL;
-        arraylist->size_alloc = 0;
-        if (arraylist->size_alloc_min > 0)
+        if (arraylist->size_alloc != arraylist->size_alloc_min)
         {
-            arraylist->data = calloc(arraylist->size_alloc_min,
-                                     sizeof (*arraylist->data));
-            if (!arraylist->data)
-                return 0;
-            arraylist->size_alloc = arraylist->size_alloc_min;
+            free (arraylist->data);
+            arraylist->data = NULL;
+            arraylist->size_alloc = 0;
+            if (arraylist->size_alloc_min > 0)
+            {
+                arraylist->data = calloc(arraylist->size_alloc_min,
+                                         sizeof (*arraylist->data));
+                if (!arraylist->data)
+                    return 0;
+                arraylist->size_alloc = arraylist->size_alloc_min;
+            }
         }
-    }
-    else if (arraylist->size_alloc > 0)
-    {
-        memset (arraylist->data,
-                0,
-                arraylist->size_alloc * sizeof (*arraylist->data));
+        else if (arraylist->size_alloc > 0)
+        {
+            memset (arraylist->data,
+                    0,
+                    arraylist->size_alloc * sizeof (*arraylist->data));
+        }
     }
 
     arraylist->size = 0;

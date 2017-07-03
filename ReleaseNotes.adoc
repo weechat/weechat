@@ -17,8 +17,27 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v1.9]]
+== Version 1.9 (2017-06-25)
+
+No release note.
+
 [[v1.8]]
-== Version 1.8 (under dev)
+== Version 1.8 (2017-05-13)
+
+[[v1.8_options]]
+=== Options
+
+The option _script.scripts.url_force_https_ has been removed because now the
+site weechat.org can only be used with HTTPS. +
+Both HTTP and HTTPS protocols are allowed in the option _script.scripts.url_.
+For http://weechat.org an automatic redirection to https://weechat.org will
+occur, so you should check that the CA certificates are properly installed
+on your machine.
+
+Aspell option with color for suggestion on a misspelled word has been renamed:
+
+* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
 
 [[v1.8_buflist_plugin]]
 === Buflist plugin
@@ -27,20 +46,28 @@ A new plugin called "buflist" has been added, it replaces the script "buffers.pl
 
 If the script is installed, you will see two sidebars with list of buffers.
 
-If you fell in love with buflist, you can uninstall the script and remove its bar
-with these commands:
+If you fell in love with buflist and that the script buffers.pl is installed,
+you can uninstall the script and remove its bar with these commands:
 
 ----
 /script remove buffers.pl
 /bar del buffers
 ----
 
-[[v1.8_aspell_options]]
-=== Aspell options
+If you don't want the list of buffers, you can disable buflist:
 
-Aspell option with color for suggestion on a misspelled word has been renamed:
+----
+/set buflist.look.enabled off
+----
 
-* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
+To save extra memory, you can even unload the buflist plugin, remove the bar and
+prevent the plugin from loading on next startup:
+
+----
+/plugin unload buflist
+/bar del buflist
+/set weechat.plugin.autoload "*,!buflist"
+----
 
 [[v1.7.1]]
 == Version 1.7.1 (2017-04-22)

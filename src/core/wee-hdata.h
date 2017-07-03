@@ -110,6 +110,8 @@ extern int hdata_check_pointer (struct t_hdata *hdata, void *list,
 extern void *hdata_move (struct t_hdata *hdata, void *pointer, int count);
 extern void *hdata_search (struct t_hdata *hdata, void *pointer,
                            const char *search, int move);
+extern void hdata_get_index_and_name (const char *name, int *index,
+                                      const char **ptr_name);
 extern char hdata_char (struct t_hdata *hdata, void *pointer,
                         const char *name);
 extern int hdata_integer (struct t_hdata *hdata, void *pointer,
@@ -124,6 +126,9 @@ extern time_t hdata_time (struct t_hdata *hdata, void *pointer,
                           const char *name);
 extern struct t_hashtable *hdata_hashtable (struct t_hdata *hdata,
                                             void *pointer, const char *name);
+extern int hdata_compare (struct t_hdata *hdata, void *pointer1,
+                          void *pointer2, const char *name,
+                          int case_sensitive);
 extern int hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
                       const char *value);
 extern int hdata_update (struct t_hdata *hdata, void *pointer,

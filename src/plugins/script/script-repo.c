@@ -402,7 +402,7 @@ script_repo_alloc ()
 }
 
 /*
- * Compares two script using sort key(s) (from option script.look.sort).
+ * Compares two scripts using sort key(s) (from option script.look.sort).
  *
  * Returns:
  *   < 0: script1 < script2
@@ -563,7 +563,7 @@ script_repo_add (struct t_script_repo *script)
         /* add script to the end */
         script->prev_script = last_script_repo;
         script->next_script = NULL;
-        if (scripts_repo)
+        if (last_script_repo)
             last_script_repo->next_script = script;
         else
             scripts_repo = script;

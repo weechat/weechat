@@ -184,7 +184,7 @@ alias_command_cb (const void *pointer, void *data,
 
     if (weechat_strcasecmp (argv[1], "addcompletion") == 0)
     {
-        WEECHAT_COMMAND_MIN_ARGS(5, "add");
+        WEECHAT_COMMAND_MIN_ARGS(5, "addcompletion");
         alias_command_add (
             (weechat_string_is_command_char (argv[3])) ?
             (char *)weechat_utf8_next_char (argv[3]) : argv[3],

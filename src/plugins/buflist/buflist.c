@@ -36,16 +36,32 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Buffers list"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(8000);
+WEECHAT_PLUGIN_PRIORITY(9000);
 
 struct t_weechat_plugin *weechat_buflist_plugin = NULL;
 
+struct t_hdata *buflist_hdata_window = NULL;
 struct t_hdata *buflist_hdata_buffer = NULL;
 struct t_hdata *buflist_hdata_hotlist = NULL;
+struct t_hdata *buflist_hdata_bar = NULL;
+struct t_hdata *buflist_hdata_bar_window = NULL;
 
 
 /*
- * Get IRC server and channel pointers for a buffer.
+ * Adds the buflist bar.
+ */
+
+void
+buflist_add_bar ()
+{
+    weechat_bar_new (BUFLIST_BAR_NAME, "off", "0", "root", "", "left",
+                     "columns_vertical", "vertical", "0", "0",
+                     "default", "default", "default", "on",
+                     BUFLIST_BAR_ITEM_NAME);
+}
+
+/*
+ * Gets IRC server and channel pointers for a buffer.
  *
  * According to buffer:
  * - non IRC buffer: both are NULL
@@ -55,15 +71,13 @@ struct t_hdata *buflist_hdata_hotlist = NULL;
 
 void
 buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
-                                struct t_irc_server **server,
-                                struct t_irc_channel **channel)
+                                void **irc_server, void **irc_channel)
 {
-    const char *ptr_server_name, *ptr_channel_name;
-    char str_condition[512];
+    const char *ptr_server_name, *ptr_channel_name, *ptr_name;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
 
-    *server = NULL;
-    *channel = NULL;
+    *irc_server = NULL;
+    *irc_channel = NULL;
 
     /* check if the buffer belongs to IRC plugin */
     if (strcmp (weechat_buffer_get_string (buffer, "plugin"), "irc") != 0)
@@ -80,16 +94,15 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the server by name in list of servers */
-    snprintf (str_condition, sizeof (str_condition),
-              "${irc_server.name} == %s",
-              ptr_server_name);
-    *server = weechat_hdata_get_list (hdata_irc_server,
-                                      "irc_servers");
-    *server = weechat_hdata_search (hdata_irc_server,
-                                    *server,
-                                    str_condition,
-                                    1);
-    if (!*server)
+    *irc_server = weechat_hdata_get_list (hdata_irc_server, "irc_servers");
+    while (*irc_server)
+    {
+        ptr_name = weechat_hdata_string (hdata_irc_server, *irc_server, "name");
+        if (strcmp (ptr_name, ptr_server_name) == 0)
+            break;
+        *irc_server = weechat_hdata_move (hdata_irc_server, *irc_server, 1);
+    }
+    if (!*irc_server)
         return;
 
     /* get channel name from buffer local variable */
@@ -104,97 +117,16 @@ buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
         return;
 
     /* search the channel by name in list of channels on the server */
-    snprintf (str_condition, sizeof (str_condition),
-              "${irc_channel.name} == %s",
-              ptr_channel_name);
-    *channel = weechat_hdata_pointer (hdata_irc_server,
-                                      *server,
-                                      "channels");
-    *channel = weechat_hdata_search (hdata_irc_channel,
-                                     *channel,
-                                     str_condition,
-                                     1);
-}
-
-/*
- * Compares a hdata variable of two objects.
- *
- * Returns:
- *   -1: variable1 < variable2
- *    0: variable1 == variable2
- *    1: variable1 > variable2
- */
-
-int
-buflist_compare_hdata_var (struct t_hdata *hdata,
-                           void *pointer1, void *pointer2,
-                           const char *variable)
-{
-    int type, rc, int_value1, int_value2;
-    long long_value1, long_value2;
-    char char_value1, char_value2;
-    const char *pos, *str_value1, *str_value2;
-    void *ptr_value1, *ptr_value2;
-    time_t time_value1, time_value2;
-
-    rc = 0;
-
-    pos = strchr (variable, '|');
-    type = weechat_hdata_get_var_type (hdata, (pos) ? pos + 1 : variable);
-    switch (type)
+    *irc_channel = weechat_hdata_pointer (hdata_irc_server,
+                                          *irc_server, "channels");
+    while (*irc_channel)
     {
-        case WEECHAT_HDATA_CHAR:
-            char_value1 = weechat_hdata_char (hdata, pointer1, variable);
-            char_value2 = weechat_hdata_char (hdata, pointer2, variable);
-            rc = (char_value1 < char_value2) ?
-                -1 : ((char_value1 > char_value2) ? 1 : 0);
+        ptr_name = weechat_hdata_string (hdata_irc_channel,
+                                         *irc_channel, "name");
+        if (strcmp (ptr_name, ptr_channel_name) == 0)
             break;
-        case WEECHAT_HDATA_INTEGER:
-            int_value1 = weechat_hdata_integer (hdata, pointer1, variable);
-            int_value2 = weechat_hdata_integer (hdata, pointer2, variable);
-            rc = (int_value1 < int_value2) ?
-                -1 : ((int_value1 > int_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_LONG:
-            long_value1 = weechat_hdata_long (hdata, pointer1, variable);
-            long_value2 = weechat_hdata_long (hdata, pointer2, variable);
-            rc = (long_value1 < long_value2) ?
-                -1 : ((long_value1 > long_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_STRING:
-        case WEECHAT_HDATA_SHARED_STRING:
-            str_value1 = weechat_hdata_string (hdata, pointer1, variable);
-            str_value2 = weechat_hdata_string (hdata, pointer2, variable);
-            if (!str_value1 && !str_value2)
-                rc = 0;
-            else if (str_value1 && !str_value2)
-                rc = 1;
-            else if (!str_value1 && str_value2)
-                rc = -1;
-            else
-            {
-                rc = strcmp (str_value1, str_value2);
-                if (rc < 0)
-                    rc = -1;
-                else if (rc > 0)
-                    rc = 1;
-            }
-            break;
-        case WEECHAT_HDATA_POINTER:
-            ptr_value1 = weechat_hdata_pointer (hdata, pointer1, variable);
-            ptr_value2 = weechat_hdata_pointer (hdata, pointer2, variable);
-            rc = (ptr_value1 < ptr_value2) ?
-                -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
-            break;
-        case WEECHAT_HDATA_TIME:
-            time_value1 = weechat_hdata_time (hdata, pointer1, variable);
-            time_value2 = weechat_hdata_time (hdata, pointer2, variable);
-            rc = (time_value1 < time_value2) ?
-                -1 : ((time_value1 > time_value2) ? 1 : 0);
-            break;
+        *irc_channel = weechat_hdata_move (hdata_irc_channel, *irc_channel, 1);
     }
-
-    return rc;
 }
 
 /*
@@ -286,11 +218,10 @@ int
 buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                          void *pointer1, void *pointer2)
 {
-    int i, reverse, rc;
+    int i, reverse, case_sensitive, rc;
     const char *ptr_field;
     struct t_gui_hotlist *ptr_hotlist1, *ptr_hotlist2;
-    struct t_irc_server *ptr_server1, *ptr_server2;
-    struct t_irc_channel *ptr_channel1, *ptr_channel2;
+    void *ptr_server1, *ptr_server2, *ptr_channel1, *ptr_channel2;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
 
     /* make C compiler happy */
@@ -304,14 +235,15 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
     {
         rc = 0;
         reverse = 1;
-        if (buflist_config_sort_fields[i][0] == '-')
+        case_sensitive = 1;
+        ptr_field = buflist_config_sort_fields[i];
+        while ((ptr_field[0] == '-') || (ptr_field[0] == '~'))
         {
-            ptr_field = buflist_config_sort_fields[i] + 1;
-            reverse = -1;
-        }
-        else
-        {
-            ptr_field = buflist_config_sort_fields[i];
+            if (ptr_field[0] == '-')
+                reverse *= -1;
+            else if (ptr_field[0] == '~')
+                case_sensitive ^= 1;
+            ptr_field++;
         }
         if (strncmp (ptr_field, "hotlist.", 8) == 0)
         {
@@ -327,9 +259,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                 rc = -1;
             else
             {
-                rc = buflist_compare_hdata_var (buflist_hdata_hotlist,
-                                                pointer1, pointer2,
-                                                ptr_field + 8);
+                rc = weechat_hdata_compare (buflist_hdata_hotlist,
+                                            pointer1, pointer2,
+                                            ptr_field + 8,
+                                            case_sensitive);
             }
         }
         else if (strncmp (ptr_field, "irc_server.", 11) == 0)
@@ -340,9 +273,10 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                                                  &ptr_server1, &ptr_channel1);
                 buflist_buffer_get_irc_pointers (pointer2,
                                                  &ptr_server2, &ptr_channel2);
-                rc = buflist_compare_hdata_var (hdata_irc_server,
-                                                ptr_server1, ptr_server2,
-                                                ptr_field + 11);
+                rc = weechat_hdata_compare (hdata_irc_server,
+                                            ptr_server1, ptr_server2,
+                                            ptr_field + 11,
+                                            case_sensitive);
             }
         }
         else if (strncmp (ptr_field, "irc_channel.", 12) == 0)
@@ -353,16 +287,18 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                                                  &ptr_server1, &ptr_channel1);
                 buflist_buffer_get_irc_pointers (pointer2,
                                                  &ptr_server2, &ptr_channel2);
-                rc = buflist_compare_hdata_var (hdata_irc_channel,
-                                                ptr_channel1, ptr_channel2,
-                                                ptr_field + 12);
+                rc = weechat_hdata_compare (hdata_irc_channel,
+                                            ptr_channel1, ptr_channel2,
+                                            ptr_field + 12,
+                                            case_sensitive);
             }
         }
         else
         {
-            rc = buflist_compare_hdata_var (buflist_hdata_buffer,
-                                            pointer1, pointer2,
-                                            ptr_field);
+            rc = weechat_hdata_compare (buflist_hdata_buffer,
+                                        pointer1, pointer2,
+                                        ptr_field,
+                                        case_sensitive);
 
             /*
              * In case we are sorting on "active" flag and that both
@@ -387,7 +323,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
             return rc;
     }
 
-    return 1;
+    return 0;
 }
 
 /*
@@ -418,20 +354,67 @@ buflist_sort_buffers ()
 }
 
 /*
+ * Callback called when a Perl script is loaded: if the script is buffers.pl,
+ * then we display a warning.
+ */
+
+int
+buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
+                          const char *type_data, void *signal_data)
+{
+    int length;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+    (void) type_data;
+
+    /* display a warning only if buflist is enabled */
+    if (!weechat_config_boolean (buflist_config_look_enabled))
+        return WEECHAT_RC_OK;
+
+    if (!signal_data)
+        return WEECHAT_RC_OK;
+
+    length = strlen (signal_data);
+    if ((length >= 10)
+        && (strncmp (signal_data + length - 10, "buffers.pl", 10) == 0))
+    {
+        weechat_printf (NULL,
+                        _("%sbuflist: warning: the script buffers.pl is "
+                          "loaded and provides a bar with list of buffers "
+                          "similar to the buflist plugin; you may want to "
+                          "uninstall the script buffers.pl "
+                          "(/script remove buffers.pl) or disable/unload the "
+                          "buflist plugin; see WeeChat release notes for more "
+                          "information"),
+                        weechat_prefix ("error"));
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes buflist plugin.
  */
 
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    struct t_hashtable *keys;
+
     /* make C compiler happy */
     (void) argc;
     (void) argv;
 
     weechat_plugin = plugin;
 
+    buflist_hdata_window = weechat_hdata_get ("window");
     buflist_hdata_buffer = weechat_hdata_get ("buffer");
     buflist_hdata_hotlist = weechat_hdata_get ("hotlist");
+    buflist_hdata_bar = weechat_hdata_get ("bar");
+    buflist_hdata_bar_window = weechat_hdata_get ("bar_window");
 
     if (!buflist_config_init ())
         return WEECHAT_RC_ERROR;
@@ -443,14 +426,52 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     buflist_command_init ();
 
-    weechat_bar_new (BUFLIST_BAR_NAME, "off", "0", "root", "", "left",
-                     "columns_vertical", "vertical", "0", "0",
-                     "default", "default", "default", "on",
-                     BUFLIST_BAR_ITEM_NAME);
+    if (weechat_config_boolean (buflist_config_look_enabled))
+        buflist_add_bar ();
 
-    weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    buflist_bar_item_update ();
 
     buflist_mouse_init ();
+
+    /* default keys and mouse actions */
+    keys = weechat_hashtable_new (32,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  WEECHAT_HASHTABLE_STRING,
+                                  NULL, NULL);
+    if (keys)
+    {
+        /* default keys */
+        weechat_hashtable_set (keys,
+                               "meta-OP", "/bar scroll buflist * -100%");
+        weechat_hashtable_set (keys,
+                               "meta-OQ", "/bar scroll buflist * +100%");
+        weechat_hashtable_set (keys,
+                               "meta-meta-OP", "/bar scroll buflist * b");
+        weechat_hashtable_set (keys,
+                               "meta-meta-OQ", "/bar scroll buflist * e");
+        weechat_key_bind ("default", keys);
+
+        /* default mouse actions */
+        weechat_hashtable_remove_all (keys);
+        weechat_hashtable_set (keys,
+                               "@item(" BUFLIST_BAR_ITEM_NAME "):button1*",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@item(" BUFLIST_BAR_ITEM_NAME "):button2*",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@bar(" BUFLIST_BAR_NAME "):ctrl-wheelup",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys,
+                               "@bar(" BUFLIST_BAR_NAME "):ctrl-wheeldown",
+                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        weechat_hashtable_set (keys, "__quiet", "1");
+        weechat_key_bind ("mouse", keys);
+    }
+    weechat_hashtable_free (keys);
+
+    weechat_hook_signal ("perl_script_loaded",
+                         &buflist_script_loaded_cb, NULL, NULL);
 
     return WEECHAT_RC_OK;
 }

@@ -314,13 +314,27 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 
 W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]).
 
-Domyślnie WeeChat wyświetla czas i przedrostki dla każdej linii i opcjonalne paski
-dookoła obszaru rozmowy. Aby usprawnić klikanie w urle można przesunąć listę nicków
-na górę oraz usunąć wyrównanie nicków:
+// TRANSLATION MISSING
+To make opening URLs easier, you can:
+
+// TRANSLATION MISSING
+* move nicklist to top:
 
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+
+// TRANSLATION MISSING
+* disable alignment for multiline words (WeeChat ≥ 1.7):
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+// TRANSLATION MISSING
+* or for all wrapped lines:
+
+----
 /set weechat.look.align_end_of_lines time
 ----
 
@@ -604,8 +618,7 @@ Ustaw opcję _weechat.network.gnutls_ca_file_ do pliku z certyfikatami:
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
-// TRANSLATION MISSING
-Note: if you are running OS X with homebrew openssl installed, you can do:
+Uwaga: jeśli używasz OS X z openssl zainstalowanym przez homebrew, możesz wykonać:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"

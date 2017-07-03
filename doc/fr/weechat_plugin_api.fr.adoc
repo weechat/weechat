@@ -5941,7 +5941,13 @@ int weechat_config_option_set (struct t_config_option *option,
 Paramètres :
 
 * _option_ : pointeur vers l'option
-* _value_ : nouvelle valeur pour l'option
+* _value_ : nouvelle valeur pour l'option, des valeurs spéciales sont possibles
+  selon le type de l'option :
+** _boolean_ :
+*** `toggle` : basculer la valeur courante
+** _integer_ ou _color_ :
+*** `++N` : ajouter `N` (un entier) à la valeur courante
+*** `--N` : soustraire `N` (un entier) de la valeur courante
 * _run_callback_ : 1 pour appeler la fonction de rappel si la valeur de
   l'option est changée, sinon 0
 
@@ -6147,6 +6153,49 @@ weechat.config_option_rename(option, new_name)
 # exemple
 weechat.config_option_rename(option, "nouveau_nom")
 ----
+
+==== config_option_get_string
+
+_WeeChat ≥ 1.9._
+
+Retourner la valeur d'une propriété de l'option sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----
+const char *weechat_config_option_get_string (struct t_config_option *option,
+                                              const char *property);
+----
+
+Paramètres :
+
+* _option_ : pointeur vers l'option
+* _property_ : nom de la propriété :
+** _config_name_ : nom du fichier
+** _section_name_ : nom de la section
+** _name_ : nom de l'option
+** _parent_name_ : nom de l'option parente
+** _type_ : type de l'option, un parmi ceux-ci :
+*** _boolean_
+*** _integer_
+*** _string_
+*** _color_
+** _description_ : description de l'option
+
+Valeur de retour :
+
+* valeur de la propriété, sous forme de chaîne
+
+Exemple en C :
+
+[source,C]
+----
+const char *type = weechat_config_option_get_string (option, "type");
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 ==== config_option_get_pointer
 
@@ -8242,7 +8291,8 @@ Paramètres :
 ** _const char *command_ : la commande exécutée, avec ses paramètres
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_OK_EAT_ : la commande ne sera pas exécutée par WeeChat après
+    la fonction de rappel
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
   appelée par WeeChat
@@ -8250,10 +8300,6 @@ Paramètres :
   appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
   fonction similaire) et est automatiquement libéré (par free) lorsque le
   "hook" est supprimé
-
-[NOTE]
-La fonction de rappel peut retourner _WEECHAT_RC_OK_ ou _WEECHAT_RC_OK_EAT_ (la
-commande ne sera pas exécutée par WeeChat après la fonction de rappel).
 
 Valeur de retour :
 
@@ -16325,6 +16371,59 @@ hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
 weechat.prnt("", "variables locales dans le tampon principal :")
 for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
+----
+
+==== hdata_compare
+
+_WeeChat ≥ 1.9._
+
+Comparer une variable hdata de deux objets.
+
+Prototype :
+
+[source,C]
+----
+int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2, const char *name, int case_sensitive);
+----
+
+Paramètres :
+
+* _hdata_ : pointeur vers le hdata
+* _pointer1_ : pointeur vers le premier objet WeeChat ou d'une extension
+* _pointer2_ : pointeur vers le second objet WeeChat ou d'une extension
+* _name_ : nom de la variable ; pour les tableaux, le nom peut être "N|name" où N
+  est un index dans le tableau (démarrant à 0), par exemple : "2|name"
+* _case_sensitive_ : 1 pour une comparaison tenant compte de la casse pour les chaînes,
+  sinon 0
+
+Valeur de retour :
+
+* -1 si variable1 < variable2
+* 0 si variable1 == variable2
+* 1 si variable1 > variable2
+
+Exemple en C :
+
+[source,C]
+----
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "freenode.#weechat-fr");
+weechat_printf (NULL, "comparaison de numéro = %d", weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+rc = weechat.hdata_compare(hdata, pointer1, pointer2, name, case_sensitive)
+
+# exemple
+hdata = weechat.hdata_get("buffer")
+buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
+buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")
+weechat.prnt("", "comparaison de numéro = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
 ----
 
 ==== hdata_set

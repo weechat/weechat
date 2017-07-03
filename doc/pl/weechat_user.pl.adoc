@@ -129,10 +129,9 @@ WeeChat.
 [NOTE]
 ^(1)^ Nazwy pochodzą z dystrybucji Debian GNU/Linux, wersje i nazwy pakietów
 mogą być inne w innych dystrybucjach. +
-// TRANSLATION MISSING
-^(2)^ It is recommended to compile with libncurses**w**5-dev (the *w* is
-important). WeeChat can compile with libncurses5-dev, but it is *NOT* recommended:
-you may experience display bugs with wide chars. +
+^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
+WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
+możesz doświadczyć błędów wyświetlania. +
 ^(3)^ Gnutls ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
@@ -220,6 +219,9 @@ Lista popularnych opcji:
 
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Kompilacja <<fifo_plugin,wtyczki fifo>>.
+
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  Kompilacja <<fset_plugin,wtyczki fset>>.
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Włączenie Gnutls (dla SSL).
@@ -534,6 +536,8 @@ Pliki w katalogu domowym:
 | buflist.conf | Plik konfiguracyjny wtyczki _buflist_         | Nie.
 | charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
 | exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
+| fifo.conf    | Plik konfiguracyjny wtyczki _fifo_            | Nie.
+| fset.conf    | Plik konfiguracyjny wtyczki _fset_            | Nie.
 | irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
 | logger.conf  | Plik konfiguracyjny wtyczki _logger_          | Nie.
 | relay.conf   | Plik konfiguracyjny wtyczki _relay_           | Nie.
@@ -1565,6 +1569,10 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
 | kbd:[Alt+Home]  | Przewiń na górę bufora. | `/window scroll_top`
 | kbd:[Alt+End]   | Przewiń na dół bufora. | `/window scroll_bottom`
+| kbd:[F1]        | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
+| kbd:[F2]        | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | Idź na początek listy buforów. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | Idź na koniec listy buforów. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1690,6 +1698,12 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 | ⇓             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
 | kbd:[Ctrl+⇑]  | -             | chat                  | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓]  | -             | chat                  | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽          | góra / lewo    | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽          | dół / prawo | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽          | -            | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
+| ◽◽◾          | -            | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+⇑] | -            | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+⇓] | -            | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
 | ◾◽◽           | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽           | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽           | góra (długo)  | lista nicków          | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
@@ -2005,11 +2019,12 @@ Domyślne wtyczki:
 | Wtyczka    | Opis
 | alias      | Definiuje aliasy dla komend.
 | aspell     | Sprawdzanie pisowni w linii poleceń.
-// TRANSLATION MISSING
-| buflist    | Bar item with list of buffers.
+| buflist    | Element paska z listą buforów.
 | charset    | Ustawianie kodowania dla buforów.
 | exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat.
 | fifo       | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat.
+// TRANSLATION MISSING
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | Protokół IRC.
 | logger     | Logowanie zawartości buforów do plików.
 | relay      | Przekazuje dane przez sieć.
@@ -2116,21 +2131,19 @@ Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 [[buflist_plugin]]
 === Wtyczka buflist
 
-// TRANSLATION MISSING
-Buflist plugin displays a list of buffers in a bar item called "buflist". +
-A default bar "buflist" is created on startup with this item.
+Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist". +
+Domyślny pasek "buflist" jet tworzony podczas uruchomieina z tą wtyczką włączoną.
 
 [[buflist_options]]
 ==== Options (buflist.conf)
 
 Sekcje:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sekcja | Komenda               | Opis
-| format | /set buflist.format.* | Formats used to display list of buffers.
-| look   | /set buflist.look.*   | Wygląd.
+| format | /set buflist.format.* | Formaty użyte do wyświetlania listy buforów.
+| look   | /set buflist.look.*   | Wygląd elementów na liście buforów.
 |===
 
 Opcje:
@@ -2349,6 +2362,36 @@ include::autogen/user/fifo_options.adoc[]
 ==== Komendy
 
 include::autogen/user/fifo_commands.adoc[]
+
+[[fset_plugin]]
+=== Wtyczka Fset
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Opcje (fset.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja | Komenda            | Opis
+| color  | /set fset.color.*  | Kolory.
+// TRANSLATION MISSING
+| format | /set fset.format.* | Formats used to display list of options.
+| look   | /set fset.look.*   | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Komendy
+
+include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === Wtyczka IRC
@@ -2570,13 +2613,14 @@ Ustaw proxy dla TOR:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-// TRANSLATION MISSING
-Set SASL authentication with ECDSA-NIST256P-CHALLENGE:
+Ustaw uwierzytelnianie SASL z użyciem ECDSA-NIST256P-CHALLENGE (zobacz rozdział
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> żeby dowiedzieć
+się jak wygenerować klucz prywatny):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "twój_użytkownik"
-/set irc.server.freenode-tor.sasl_password "twoje_hasło"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 Na koniec połącz się z serwerem:
@@ -3508,20 +3552,22 @@ są dodawane do tablicy hashy:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Zmienna              | Typ  | Opis
-| server               | ciąg | Nazwa serwera (przykład: "freenode").
-| tags                 | ciąg | Tagi w wiadomości (rzadko używane).
-| message_without_tags | ciąg | Wiadomość bez tagów.
-| nick                 | ciąg | Nick.
-| host                 | ciąg | Nazwa hosta.
-| command              | ciąg | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...).
-| channel              | ciąg | Kanał IRC.
-| arguments            | ciąg | Argumenty komendy (razem z wartością _channel_).
-| text                 | ciąg | Tekst (na przykład wiadomość użytkownika).
-| pos_command          | ciąg | Indeks _command_ w wiadomości ("-1" jeśli _command_ nie zostanie znalezione).
-| pos_arguments        | ciąg | Indeks _arguments_ w wiadomości ("-1" jeśli _arguments_ nie zostaną znalezione).
-| pos_channel          | ciąg | Indeks _channel_ w wiadomości ("-1" jeśli _channel_ nie został znaleziony).
-| pos_text             | ciąg | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
+| Zmienna              | Typ     | Opis
+| irc_server           | wskaźnik | Wskaźnik na serwer IRC (można użyć zmiennych hdata typu "irc_server" jak `${irc_server.name}`).
+| irc_channel          | wskaźnik | Wskaźnik na kanał IRC (można użyć zmiennych hdata typu "irc_channel" jak `${irc_channel.name}`).
+| server               | ciąg    | Nazwa serwera (przykład: "freenode").
+| tags                 | ciąg    | Tagi w wiadomości (rzadko używane).
+| message_without_tags | ciąg    | Wiadomość bez tagów.
+| nick                 | ciąg    | Nick.
+| host                 | ciąg    | Nazwa hosta.
+| command              | ciąg    | Komendy IRC (na przykład: "PRIVMSG", "NOTICE", ...).
+| channel              | ciąg    | Kanał IRC.
+| arguments            | ciąg    | Argumenty komendy (razem z wartością _channel_).
+| text                 | ciąg    | Tekst (na przykład wiadomość użytkownika).
+| pos_command          | ciąg    | Indeks _command_ w wiadomości ("-1" jeśli _command_ nie zostanie znalezione).
+| pos_arguments        | ciąg    | Indeks _arguments_ w wiadomości ("-1" jeśli _arguments_ nie zostaną znalezione).
+| pos_channel          | ciąg    | Indeks _channel_ w wiadomości ("-1" jeśli _channel_ nie został znaleziony).
+| pos_text             | ciąg    | Indeks _text_ w wiadomości ("-1" jeśli _text_ nie został znaleziony).
 |===
 
 Kiedy dane są wskaźnikiem, zmienna `tg_signal_data` może zostać użyta do

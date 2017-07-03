@@ -477,8 +477,7 @@ List of functions in script API:
   prefix +
   color +
   print (for python: prnt) +
-  print_date_tags (for python:
-  prnt_date_tags) +
+  print_date_tags (for python: prnt_date_tags) +
   print_y (for python: prnt_y) +
   log_print
 
@@ -497,6 +496,7 @@ List of functions in script API:
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -578,6 +578,7 @@ List of functions in script API:
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -603,6 +604,7 @@ List of functions in script API:
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 
@@ -1039,12 +1041,11 @@ xxx,irc_in2_yyy::
 def join_cb(data, signal, signal_data):
     # signal is for example: "freenode,irc_in2_join"
     # signal_data is IRC message, for example: ":nick!user@host JOIN :#channel"
-    nick = weechat.info_get("irc_nick_from_host", signal_data)
     server = signal.split(",")[0]
-    channel = signal_data.split(":")[-1]
-    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "Eheh, %s has joined this channel!" % nick)
+        weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # it is useful here to use "*" as server, to catch JOIN messages on all IRC

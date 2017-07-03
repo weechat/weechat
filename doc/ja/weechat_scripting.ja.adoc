@@ -484,10 +484,9 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
 | 表示 |
   prefix +
   color +
-  print (for python: prnt) +
-  print_date_tags (for python:
-  prnt_date_tags) +
-  print_y (for python: prnt_y) +
+  print (python では prnt) +
+  print_date_tags (python では prnt_date_tags) +
+  print_y (python では prnt_y) +
   log_print
 
 | フック |
@@ -505,6 +504,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   hook_hsignal_send +
   hook_config +
   hook_completion +
+  hook_completion_get_string +
   hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
@@ -586,6 +586,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   infolist_next +
   infolist_prev +
   infolist_reset_item_cursor +
+  infolist_search_var +
   infolist_fields +
   infolist_integer +
   infolist_string +
@@ -611,6 +612,7 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
   hdata_pointer +
   hdata_time +
   hdata_hashtable +
+  hdata_compare +
   hdata_update +
   hdata_get_string
 
@@ -1047,12 +1049,11 @@ xxx,irc_in2_yyy::
 def join_cb(data, signal, signal_data):
     # シグナル、例えば: "freenode,irc_in2_join"
     # signal_data は IRC メッセージ、例えば: ":nick!user@host JOIN :#channel"
-    nick = weechat.info_get("irc_nick_from_host", signal_data)
     server = signal.split(",")[0]
-    channel = signal_data.split(":")[-1]
-    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, channel))
+    msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
+    buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "Eheh, %s has joined this channel!" % nick)
+        weechat.prnt(buffer, "%s (%s) has joined this channel!" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # 全ての IRC サーバに対する JOIN メッセージをキャッチするにはサーバの指定に

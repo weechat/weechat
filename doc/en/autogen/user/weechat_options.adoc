@@ -410,6 +410,12 @@
 ** values: on, off
 ** default value: `+on+`
 
+* [[option_weechat.completion.nick_case_sensitive]] *weechat.completion.nick_case_sensitive*
+** description: pass:none[case sensitive completion for nicks]
+** type: boolean
+** values: on, off
+** default value: `+off+`
+
 * [[option_weechat.completion.nick_completer]] *weechat.completion.nick_completer*
 ** description: pass:none[string inserted after nick completion (when nick is first word on command line)]
 ** type: string

@@ -4861,6 +4861,31 @@ API_FUNC(hdata_hashtable)
     API_RETURN_OBJ(result_hash);
 }
 
+API_FUNC(hdata_compare)
+{
+    char *hdata, *pointer1, *pointer2, *name;
+    int case_sensitive, rc;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    if (items < 5)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = SvPV_nolen (ST (0));
+    pointer1 = SvPV_nolen (ST (1));
+    pointer2 = SvPV_nolen (ST (2));
+    name = SvPV_nolen (ST (3));
+    case_sensitive = SvIV(ST (4));
+
+    rc = weechat_hdata_compare (API_STR2PTR(hdata),
+                                API_STR2PTR(pointer1),
+                                API_STR2PTR(pointer2),
+                                name,
+                                case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(hdata_update)
 {
     char *hdata, *pointer;
@@ -5229,6 +5254,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(hdata_pointer);
     API_DEF_FUNC(hdata_time);
     API_DEF_FUNC(hdata_hashtable);
+    API_DEF_FUNC(hdata_compare);
     API_DEF_FUNC(hdata_update);
     API_DEF_FUNC(hdata_get_string);
     API_DEF_FUNC(upgrade_new);

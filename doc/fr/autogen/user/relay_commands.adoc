@@ -8,7 +8,7 @@
 ----
 /relay  list|listfull|listrelay
         add <nom> <port>
-        del|stop|restart <nom>
+        del|start|restart|stop <nom>
         raw
         sslcertkey
 
@@ -17,8 +17,9 @@
  listrelay : lister les relais (nom et port)
        add : ajouter un relai (écouter sur un port)
        del : supprimer un relai (les clients restent connectés)
-      stop : fermer le socket serveur (les clients restent connectés)
+     start : écouter sur le port
    restart : fermer le socket serveur et écouter à nouveau sur le port (les clients restent connectés)
+      stop : fermer le socket serveur (les clients restent connectés)
        nom : nom du relai (voir le format ci-dessous)
       port : port utilisé pour le relai
        raw : ouvrir le tampon avec les données brutes Relay

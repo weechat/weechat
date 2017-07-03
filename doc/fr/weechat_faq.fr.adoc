@@ -325,14 +325,23 @@ exemple :
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
 défaut : kbd:[Alt+l]).
 
-Par défaut, WeeChat affiche l'heure et un préfixe pour chaque ligne avec des
-barres optionnelles autour de la zone de discussion. Pour rendre la le clic
-d'URL plus facile, vous pouvez déplacer la liste des pseudos en haut et
-supprimer l'alignement sur les pseudos :
+Pour rendre le clic d'URL plus facile, vous pouvez :
+
+* déplacer la liste des pseudos en haut :
 
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+
+* désactiver l'alignement pour les mots sur plusieurs lignes (WeeChat ≥ 1.7) :
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+* ou pour toutes les lignes :
+
+----
 /set weechat.look.align_end_of_lines time
 ----
 
@@ -719,7 +728,7 @@ Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
 
-Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés ou non lorsque
+Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés lorsque
 vous rejoignez un canal avec l'option _irc.look.display_join_message_ (voir
 `/help irc.look.display_join_message` pour plus d'informations).
 

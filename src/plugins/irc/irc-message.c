@@ -70,7 +70,7 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                    int *pos_command, int *pos_arguments, int *pos_channel,
                    int *pos_text)
 {
-    const char *ptr_message, *pos, *pos2, *pos3, *pos4, *ptr_channel_found;
+    const char *ptr_message, *pos, *pos2, *pos3, *pos4;
 
     if (tags)
         *tags = NULL;
@@ -96,7 +96,6 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         *pos_channel = -1;
     if (pos_text)
         *pos_text = -1;
-    ptr_channel_found = NULL;
 
     if (!message)
         return;
@@ -210,7 +209,6 @@ irc_message_parse (struct t_irc_server *server, const char *message,
             {
                 if (irc_channel_is_channel (server, pos))
                 {
-                    ptr_channel_found = pos;
                     pos2 = strchr (pos, ' ');
                     if (channel)
                     {
@@ -255,7 +253,6 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                         }
                         if (irc_channel_is_channel (server, pos2))
                         {
-                            ptr_channel_found = pos2;
                             pos4 = strchr (pos2, ' ');
                             if (channel)
                             {
@@ -282,35 +279,23 @@ irc_message_parse (struct t_irc_server *server, const char *message,
                         }
                         else
                         {
-                            if (ptr_channel_found)
+                            if (channel)
+                                *channel = weechat_strndup (pos, pos3 - pos);
+                            if (pos_channel)
+                                *pos_channel = pos - message;
+                            pos4 = strchr (pos3, ' ');
+                            if (pos4)
                             {
-                                if (pos[0] == ':')
-                                    pos++;
-                                if (text)
-                                    *text = strdup (pos);
-                                if (pos_text)
-                                    *pos_text = pos - message;
-                            }
-                            else
-                            {
-                                if (channel)
-                                    *channel = weechat_strndup (pos, pos3 - pos);
-                                if (pos_channel)
-                                    *pos_channel = pos - message;
-                                pos4 = strchr (pos3, ' ');
-                                if (pos4)
+                                while (pos4[0] == ' ')
                                 {
-                                    while (pos4[0] == ' ')
-                                    {
-                                        pos4++;
-                                    }
-                                    if (pos4[0] == ':')
-                                        pos4++;
-                                    if (text)
-                                        *text = strdup (pos4);
-                                    if (pos_text)
-                                        *pos_text = pos4 - message;
+                                    pos4++;
                                 }
+                                if (pos4[0] == ':')
+                                    pos4++;
+                                if (text)
+                                    *text = strdup (pos4);
+                                if (pos_text)
+                                    *pos_text = pos4 - message;
                             }
                         }
                     }
@@ -996,7 +981,6 @@ irc_message_split (struct t_irc_server *server, const char *message)
     host = NULL;
     command = NULL;
     arguments = NULL;
-    index_args = 0;
     argv = NULL;
     argv_eol = NULL;
 

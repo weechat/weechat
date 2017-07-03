@@ -1225,13 +1225,12 @@ relay_irc_hook_signals (struct t_relay_client *client)
 
 void
 relay_irc_recv_command_capab (struct t_relay_client *client,
-                              const char *arguments)
+                              int argc, char **argv)
 {
-    char str_capab[1024], **capabs;
-    const char *ptr_args;
-    int i, num_capabs, capability;
+    char str_capab[1024];
+    int i, capability;
 
-    if (weechat_strcasecmp (arguments, "ls") == 0)
+    if (weechat_strcasecmp (argv[0], "ls") == 0)
     {
         /* return the list of supported server capabilities */
         str_capab[0] = '\0';
@@ -1249,48 +1248,37 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
         if (!RELAY_IRC_DATA(client, connected))
             RELAY_IRC_DATA(client, cap_ls_received) = 1;
     }
-    else if (weechat_strncasecmp (arguments, "req ", 4) == 0)
+    else if (weechat_strcasecmp (argv[0], "req") == 0)
     {
         /* client is asking for one or more server capabilities */
-        ptr_args = arguments + 4;
-        while (ptr_args[0] == ' ')
+        str_capab[0] = '\0';
+        for (i = 1; i < argc; i++)
         {
-            ptr_args++;
+            capability = relay_irc_search_server_capability (
+                (argv[i][0] == ':') ? argv[i] + 1 : argv[i]);
+            if (capability >= 0)
+            {
+                if (str_capab[0])
+                    strcat (str_capab, " ");
+                strcat (str_capab,
+                        relay_irc_server_capabilities[capability]);
+                RELAY_IRC_DATA(client, server_capabilities) |= 1 << capability;
+            }
         }
-        if (ptr_args[0] == ':')
-            ptr_args++;
-        capabs = weechat_string_split (ptr_args, " ", 0, 0, &num_capabs);
-        if (capabs)
+        /*
+         * if at least one supported capability was enabled, send ACK to
+         * client
+         */
+        if (str_capab[0])
         {
-            str_capab[0] = '\0';
-            for (i = 0; i < num_capabs; i++)
-            {
-                capability = relay_irc_search_server_capability (capabs[i]);
-                if (capability >= 0)
-                {
-                    if (str_capab[0])
-                        strcat (str_capab, " ");
-                    strcat (str_capab,
-                            relay_irc_server_capabilities[capability]);
-                    RELAY_IRC_DATA(client, server_capabilities) |= 1 << capability;
-                }
-            }
-            /*
-             * if at least one supported capability was enabled, send ACK to
-             * client
-             */
-            if (str_capab[0])
-            {
-                relay_irc_sendf (client,
-                                 ":%s CAP %s ACK :%s",
-                                 RELAY_IRC_DATA(client, address),
-                                 (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
-                                 str_capab);
-            }
-            weechat_string_free_split (capabs);
+            relay_irc_sendf (client,
+                             ":%s CAP %s ACK :%s",
+                             RELAY_IRC_DATA(client, address),
+                             (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
+                             str_capab);
         }
     }
-    else if (weechat_strcasecmp (arguments, "end") == 0)
+    else if (weechat_strcasecmp (argv[0], "end") == 0)
     {
         if (!RELAY_IRC_DATA(client, connected))
             RELAY_IRC_DATA(client, cap_end_received) = 1;
@@ -1353,8 +1341,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     /* server capabilities */
     if (irc_command && (weechat_strcasecmp (irc_command, "cap") == 0))
     {
-        if (irc_args)
-            relay_irc_recv_command_capab (client, irc_args);
+        if ((irc_argc > 0) && irc_argv)
+            relay_irc_recv_command_capab (client, irc_argc, irc_argv);
     }
     /* if client is not yet "connected" */
     if (!RELAY_IRC_DATA(client, connected))
@@ -1785,13 +1773,12 @@ relay_irc_close_connection (struct t_relay_client *client)
 void
 relay_irc_alloc (struct t_relay_client *client)
 {
-    struct t_relay_irc_data *irc_data;
     char *password;
 
     password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
                                                NULL, NULL, NULL);
 
-    client->protocol_data = malloc (sizeof (*irc_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_irc_data));
     if (client->protocol_data)
     {
         RELAY_IRC_DATA(client, address) = strdup ("weechat.relay.irc");
@@ -1822,9 +1809,7 @@ void
 relay_irc_alloc_with_infolist (struct t_relay_client *client,
                                struct t_infolist *infolist)
 {
-    struct t_relay_irc_data *irc_data;
-
-    client->protocol_data = malloc (sizeof (*irc_data));
+    client->protocol_data = malloc (sizeof (struct t_relay_irc_data));
     if (client->protocol_data)
     {
         RELAY_IRC_DATA(client, address) = strdup (weechat_infolist_string (infolist, "address"));

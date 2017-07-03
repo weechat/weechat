@@ -32,7 +32,10 @@
 
 extern struct t_config_file *buflist_config_file;
 
+extern struct t_config_option *buflist_config_look_add_newline;
+extern struct t_config_option *buflist_config_look_auto_scroll;
 extern struct t_config_option *buflist_config_look_display_conditions;
+extern struct t_config_option *buflist_config_look_enabled;
 extern struct t_config_option *buflist_config_look_mouse_jump_visited_buffer;
 extern struct t_config_option *buflist_config_look_mouse_move_buffer;
 extern struct t_config_option *buflist_config_look_mouse_wheel;
@@ -49,6 +52,7 @@ extern struct t_config_option *buflist_config_format_hotlist_level_none;
 extern struct t_config_option *buflist_config_format_hotlist_separator;
 extern struct t_config_option *buflist_config_format_indent;
 extern struct t_config_option *buflist_config_format_lag;
+extern struct t_config_option *buflist_config_format_name;
 extern struct t_config_option *buflist_config_format_nick_prefix;
 extern struct t_config_option *buflist_config_format_number;
 

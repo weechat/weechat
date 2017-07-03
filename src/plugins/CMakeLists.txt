@@ -86,6 +86,10 @@ if(ENABLE_FIFO)
   add_subdirectory(fifo)
 endif()
 
+if(ENABLE_FSET)
+  add_subdirectory(fset)
+endif()
+
 if(ENABLE_IRC)
   add_subdirectory(irc)
 endif()

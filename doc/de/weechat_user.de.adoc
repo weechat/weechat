@@ -222,6 +222,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   kompiliert <<fifo_plugin,Fifo Erweiterung>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  kompiliert <<fset_plugin,Fset Erweiterung>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   kompiliert Gnutls (für SSL).
 
@@ -534,6 +537,8 @@ Folgende Dateien findet man im Heimatverzeichnis:
 | buflist.conf | Konfiguration für _buflist_-Erweiterung | Nein.
 | charset.conf | Konfiguration für _charset_-Erweiterung | Nein.
 | exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein.
+| fifo.conf    | Konfiguration für _fifo_-Erweiterung    | Nein.
+| fset.conf    | Konfiguration für _fset_-Erweiterung    | Nein.
 | irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
 | logger.conf  | Konfiguration für _logger_-Erweiterung  | Nein.
 | relay.conf   | Konfiguration für _relay_-Erweiterung   | Nein.
@@ -1589,6 +1594,10 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
 | kbd:[Alt+PgDn]  | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
 | kbd:[Alt+Home]  | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
 | kbd:[Alt+End]   | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
+| kbd:[F1]        | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
+| kbd:[F2]        | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | springt zum Anfang der buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | springt zum Ende der buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1713,6 +1722,12 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 | ⇓               | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer. | `/script down 5`
 | kbd:[Ctrl+⇑]    | -            | chat                 | horizontal, nach links scrollen. | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓]    | -            | chat                 | horizontal, nach rechts scrollen. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽             | up / left    | buflist              | verschiebt Buffer in der Reihenfolge nach unten. | Signal `buflist_mouse`.
+| ◾◽◽             | down / right | buflist              | verschiebt Buffer in der Reihenfolge nach oben. | Signal `buflist_mouse`.
+| ◾◽◽             | -            | buflist              | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `buflist_mouse`.
+| ◽◽◾             | -            | buflist              | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `buflist_mouse`.
+| kbd:[Ctrl+⇑]    | -            | buflist              | wechselt zum vorherigen Buffer. | Signal `buflist_mouse`.
+| kbd:[Ctrl+⇓]    | -            | buflist              | wechselt zum nächsten Buffer. | Signal `buflist_mouse`.
 | ◾◽◽             | hoch         | Benutzerliste        | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽             | runter       | Benutzerliste        | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽             | hoch(lang)   | Benutzerliste        | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist ${_window_number} b`
@@ -2042,6 +2057,8 @@ Standarderweiterungen:
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
+// TRANSLATION MISSING
+| fset        | Fast set of WeeChat and plugins options.
 | irc         | IRC Chat-Protokoll.
 | logger      | erstellt Protokolldateien von Buffern.
 | relay       | Daten via Netzwerk übermitteln.
@@ -2386,6 +2403,36 @@ include::autogen/user/fifo_options.adoc[]
 
 include::autogen/user/fifo_commands.adoc[]
 
+[[fset_plugin]]
+=== Fset Erweiterung
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Optionen (fset.conf)
+
+Sektionen:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| color   | /set fset.color.*  | Farben.
+// TRANSLATION MISSING
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Befehle
+
+include::autogen/user/fset_commands.adoc[]
+
 [[irc_plugin]]
 === IRC Erweiterung
 
@@ -2608,12 +2655,14 @@ Einen Proxy für TOR anlegen:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE setzen:
+SASL Authentifikation mit ECDSA-NIST256P-CHALLENGE nutzen (siehe Kapitel
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> um einen
+privaten Schlüssel zu generieren):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 Zum Abschluss stellt man eine Verbindung zum Server her:
@@ -3570,20 +3619,22 @@ und die Daten in einer Hashtable gesichert:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Typ    | Beschreibung
-| server               | string | Name des Server (Beispiel: "freenode").
-| tags                 | string | Tags in Nachricht (findet selten Verwendung).
-| message_without_tags | string | Nachricht ohne Tags.
-| nick                 | string | Nick.
-| host                 | string | Hostname.
-| command              | string | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...).
-| channel              | string | IRC Channel.
-| arguments            | string | Argumente des Befehls (Beinhaltet Wert von _channel_).
-| text                 | string | Text (zum Beipiel eine Nachricht eines Users).
-| pos_command          | string | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
-| pos_arguments        | string | Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
-| pos_channel          | string | Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird).
-| pos_text             | string | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
+| Variable             | Typ     | Beschreibung
+| irc_server           | pointer | Pointer auf IRC Server (Variable in hdata vom Typ "irc_server" kann verwendet werden, wie `${irc_server.name}`).
+| irc_channel          | pointer | Pointer auf IRC Channel (Variable in hdata vom Typ "irc_channel" kann verwendet werden, wie `${irc_channel.name}`).
+| server               | string  | Name des Server (Beispiel: "freenode").
+| tags                 | string  | Tags in Nachricht (findet selten Verwendung).
+| message_without_tags | string  | Nachricht ohne Tags.
+| nick                 | string  | Nick.
+| host                 | string  | Hostname.
+| command              | string  | IRC Befehl (Beispiel: "PRIVMSG", "NOTICE", ...).
+| channel              | string  | IRC Channel.
+| arguments            | string  | Argumente des Befehls (Beinhaltet Wert von _channel_).
+| text                 | string  | Text (zum Beipiel eine Nachricht eines Users).
+| pos_command          | string  | Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird).
+| pos_arguments        | string  | Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird).
+| pos_channel          | string  | Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird).
+| pos_text             | string  | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
 |===
 
 Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `tg_signal_data`

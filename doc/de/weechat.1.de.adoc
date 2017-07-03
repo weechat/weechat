@@ -73,6 +73,13 @@ $HOME/.weechat/charset.conf::
 $HOME/.weechat/exec.conf::
     Konfigurationsdatei für _exec_ Erweiterung
 
+$HOME/.weechat/fifo.conf::
+    Konfigurationsdatei für _fifo_ Erweiterung
+
+// TRANSLATION MISSING
+$HOME/.weechat/fset.conf::
+    configuration file for _fset_ plugin
+
 $HOME/.weechat/irc.conf::
     Konfigurationsdatei für _irc_ Erweiterung
 

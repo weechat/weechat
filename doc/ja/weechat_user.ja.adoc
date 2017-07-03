@@ -218,6 +218,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   <<fifo_plugin,Fifo プラグイン>>のコンパイル。
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  <<fset_plugin,Fset プラグイン>>のコンパイル。
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Gnutls の有効化 (SSL 用)。
 
@@ -529,6 +532,8 @@ WeeChat を設定するにはこのファイルを編集するか、WeeChat
 | buflist.conf | _buflist_ プラグイン用の設定ファイル    | 保護されません
 | charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
 | exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
+| fifo.conf    | _fifo_ プラグイン用の設定ファイル       | 保護されません
+| fset.conf    | _fset_ プラグイン用の設定ファイル       | 保護されません
 | irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
 | logger.conf  | _logger_ プラグイン用の設定ファイル     | 保護されません
 | relay.conf   | _relay_ プラグイン用の設定ファイル      | 保護されません
@@ -1554,6 +1559,10 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+PgDn]  | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
 | kbd:[Alt+Home]  | バッファ履歴を最初までスクロール | `/window scroll_top`
 | kbd:[Alt+End]   | バッファ履歴を最後までスクロール | `/window scroll_bottom`
+| kbd:[F1]        | バッファリストを上方に 1 ページスクロール | `/bar scroll buflist * -100%`
+| kbd:[F2]        | バッファリストを下方に 1 ページスクロール | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]    | バッファリストを上端までスクロール | `/bar scroll buflist * b`
+| kbd:[Alt+F2]    | バッファリストを下端までスクロール | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1678,6 +1687,12 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 | ⇓            | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
 | kbd:[Ctrl+⇑] | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓] | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽          | 上 / 左      | バッファリスト                | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽          | 下 / 右      | バッファリスト                | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽          | -            | バッファリスト                | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
+| ◽◽◾          | -            | バッファリスト                | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+⇑] | -            | バッファリスト                | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+⇓] | -            | バッファリスト                | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
 | ◾◽◽          | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽          | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽          | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
@@ -1993,6 +2008,8 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
+// TRANSLATION MISSING
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
 | relay      | ネットワーク経由でデータを中継
@@ -2328,6 +2345,36 @@ include::autogen/user/fifo_options.adoc[]
 
 include::autogen/user/fifo_commands.adoc[]
 
+[[fset_plugin]]
+=== Fset プラグイン
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== オプション (fset.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| color      | /set fset.color.*  | 色
+// TRANSLATION MISSING
+| format     | /set fset.format.* | Formats used to display list of options.
+| look       | /set fset.look.*   | 外観
+|===
+
+オプション:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== コマンド
+
+include::autogen/user/fset_commands.adoc[]
+
 [[irc_plugin]]
 === IRC プラグイン
 
@@ -2545,12 +2592,13 @@ TOR プロキシを設定:
 /set irc.server.freenode-tor.proxy "tor"
 ----
 
-ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定:
+ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を作成するには
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE 認証>>を参照してください):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 最後に、サーバに接続してください:
@@ -3471,20 +3519,22 @@ _var_
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| 変数                 | 型     | 説明
-| server               | string | サーバの名前 (例: "freenode")
-| tags                 | string | メッセージ内のタグ (使われることはまれです)
-| message_without_tags | string | タグを含まないメッセージ
-| nick                 | string | ニックネーム
-| host                 | string | ホスト名
-| command              | string | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
-| channel              | string | IRC チャンネル
-| arguments            | string | コマンドの引数 (_channel_ の値を含みます)
-| text                 | string | テキスト (例えばユーザメッセージ)
-| pos_command          | string | メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1")
-| pos_arguments        | string | メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1")
-| pos_channel          | string | メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1")
-| pos_text             | string | メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1")
+| 変数                 | 型      | 説明
+| irc_server           | pointer | IRC サーバへのポインタ (`${irc_server.name}` のように使うことで、"irc_server" 型の hdata に含まれる変数を使うことが可能です)
+| irc_channel          | pointer | IRC チャンネルへのポインタ (`${irc_channel.name}` のように使うことで、"irc_channel" 型の hdata に含まれる変数を使うことが可能です)
+| server               | string  | サーバの名前 (例: "freenode")
+| tags                 | string  | メッセージ内のタグ (使われることはまれです)
+| message_without_tags | string  | タグを含まないメッセージ
+| nick                 | string  | ニックネーム
+| host                 | string  | ホスト名
+| command              | string  | IRC コマンド (例: "PRIVMSG"、"NOTICE"、...)
+| channel              | string  | IRC チャンネル
+| arguments            | string  | コマンドの引数 (_channel_ の値を含みます)
+| text                 | string  | テキスト (例えばユーザメッセージ)
+| pos_command          | string  | メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1")
+| pos_arguments        | string  | メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1")
+| pos_channel          | string  | メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1")
+| pos_text             | string  | メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1")
 |===
 
 データがポインタの場合、hdata の属性を読むために変数 `tg_signal_data`

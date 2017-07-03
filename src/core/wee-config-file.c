@@ -107,52 +107,6 @@ config_file_config_find_pos (const char *name)
 }
 
 /*
- * Inserts a configuration file in list (keeping configuration files sorted by
- * name).
- */
-
-void
-config_file_config_insert (struct t_config_file *config_file)
-{
-    struct t_config_file *pos_config;
-
-    if (!config_file)
-        return;
-
-    if (config_files)
-    {
-        pos_config = config_file_config_find_pos (config_file->name);
-        if (pos_config)
-        {
-            /* insert configuration file into the list (before config found) */
-            config_file->prev_config = pos_config->prev_config;
-            config_file->next_config = pos_config;
-            if (pos_config->prev_config)
-                (pos_config->prev_config)->next_config = config_file;
-            else
-                config_files = config_file;
-            pos_config->prev_config = config_file;
-        }
-        else
-        {
-            /* add configuration file to the end of list */
-            config_file->prev_config = last_config_file;
-            config_file->next_config = NULL;
-            last_config_file->next_config = config_file;
-            last_config_file = config_file;
-        }
-    }
-    else
-    {
-        /* first configuration file */
-        config_file->prev_config = NULL;
-        config_file->next_config = NULL;
-        config_files = config_file;
-        last_config_file = config_file;
-    }
-}
-
-/*
  * Creates a new configuration file.
  *
  * Returns pointer to new configuration file, NULL if error.
@@ -212,7 +166,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
 
         new_config_file->prev_config = last_config_file;
         new_config_file->next_config = NULL;
-        if (config_files)
+        if (last_config_file)
             last_config_file->next_config = new_config_file;
         else
             config_files = new_config_file;
@@ -245,52 +199,6 @@ config_file_section_find_pos (struct t_config_file *config_file,
 
     /* position not found (we will add to the end of list) */
     return NULL;
-}
-
-/*
- * Inserts a section in configuration file (keeping sections sorted by name).
- */
-
-void
-config_file_section_insert_in_config (struct t_config_section *section)
-{
-    struct t_config_section *pos_section;
-
-    if (!section || !section->config_file)
-        return;
-
-    if (section->config_file->sections)
-    {
-        pos_section = config_file_section_find_pos (section->config_file,
-                                                    section->name);
-        if (pos_section)
-        {
-            /* insert section into the list (before section found) */
-            section->prev_section = pos_section->prev_section;
-            section->next_section = pos_section;
-            if (pos_section->prev_section)
-                (pos_section->prev_section)->next_section = section;
-            else
-                (section->config_file)->sections = section;
-            pos_section->prev_section = section;
-        }
-        else
-        {
-            /* add section to end of sections */
-            section->prev_section = (section->config_file)->last_section;
-            section->next_section = NULL;
-            (section->config_file)->last_section->next_section = section;
-            (section->config_file)->last_section = section;
-        }
-    }
-    else
-    {
-        /* first section of file */
-        section->prev_section = NULL;
-        section->next_section = NULL;
-        (section->config_file)->sections = section;
-        (section->config_file)->last_section = section;
-    }
 }
 
 /*
@@ -378,7 +286,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
 
         new_section->prev_section = config_file->last_section;
         new_section->next_section = NULL;
-        if (config_file->sections)
+        if (config_file->last_section)
             config_file->last_section->next_section = new_section;
         else
             config_file->sections = new_section;
@@ -1906,7 +1814,34 @@ config_file_option_value_to_string (struct t_config_option *option,
 }
 
 /*
- * Gets a pointer of an option property.
+ * Gets a string value of an option property.
+ */
+
+const char *
+config_file_option_get_string (struct t_config_option *option,
+                               const char *property)
+{
+    if (!option || !property)
+        return NULL;
+
+    if (string_strcasecmp (property, "config_name") == 0)
+        return option->config_file->name;
+    else if (string_strcasecmp (property, "section_name") == 0)
+        return option->section->name;
+    else if (string_strcasecmp (property, "name") == 0)
+        return option->name;
+    else if (string_strcasecmp (property, "parent_name") == 0)
+        return option->parent_name;
+    else if (string_strcasecmp (property, "type") == 0)
+        return config_option_type_string[option->type];
+    else if (string_strcasecmp (property, "description") == 0)
+        return option->description;
+
+    return NULL;
+}
+
+/*
+ * Gets a pointer on an option property.
  */
 
 void *

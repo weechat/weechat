@@ -155,6 +155,7 @@ struct t_irc_server
     int temp_server;                /* temporary server (not saved)          */
     int reloading_from_config;      /* 1 if reloading from config file       */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
+    char *addresses_eval;           /* evaluation of addresses               */
     int addresses_count;            /* number of addresses                   */
     char **addresses_array;         /* addresses (after split)               */
     int *ports_array;               /* ports for addresses                   */
@@ -280,8 +281,8 @@ extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    int max);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
-extern void irc_server_set_addresses (struct t_irc_server *server,
-                                      const char *addresses);
+extern int irc_server_set_addresses (struct t_irc_server *server,
+                                     const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server, const char *nick);
 extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
@@ -336,7 +337,7 @@ char *irc_server_fingerprint_str_sizes ();
 #endif /* HAVE_GNUTLS */
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
-extern void irc_server_autojoin_channels ();
+extern void irc_server_autojoin_channels (struct t_irc_server *server);
 extern int irc_server_recv_cb (const void *pointer, void *data, int fd);
 extern int irc_server_timer_sasl_cb (const void *pointer, void *data,
                                      int remaining_calls);

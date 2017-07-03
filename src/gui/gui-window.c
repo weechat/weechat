@@ -678,7 +678,7 @@ gui_window_new (struct t_gui_window *parent_window, struct t_gui_buffer *buffer,
 
     /* add window to windows queue */
     new_window->prev_window = last_gui_window;
-    if (gui_windows)
+    if (last_gui_window)
         last_gui_window->next_window = new_window;
     else
         gui_windows = new_window;

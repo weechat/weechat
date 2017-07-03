@@ -1274,7 +1274,6 @@ gui_input_history_next (struct t_gui_window *window,
     (void) history;
 
     input_changed = 0;
-    rc = 0;
 
     if (!window->buffer->input)
         return;

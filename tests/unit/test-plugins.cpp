@@ -57,6 +57,7 @@ TEST(Plugins, Loaded)
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == charset", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == exec", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == fifo", 1));
+    CHECK(hdata_search (hdata, plugins, "${plugin.name} == fset", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == guile", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == irc", 1));
     //CHECK(hdata_search (hdata, plugins, "${plugin.name} == javascript", 1));

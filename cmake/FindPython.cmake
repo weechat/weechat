@@ -35,7 +35,7 @@ endif()
 
 if(ENABLE_PYTHON3)
   find_program(PYTHON_EXECUTABLE
-    NAMES python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+    NAMES python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
 else()
@@ -67,7 +67,7 @@ if(PYTHON_EXECUTABLE)
     )
   if(ENABLE_PYTHON3)
     find_library(PYTHON_LIBRARY
-      NAMES python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+      NAMES python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
       HINTS ${PYTHON_POSSIBLE_LIB_PATH}
       )
   else()

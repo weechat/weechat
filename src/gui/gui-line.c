@@ -937,10 +937,10 @@ gui_line_add_to_list (struct t_gui_lines *lines,
 {
     int prefix_length, prefix_is_nick;
 
-    if (!lines->first_line)
-        lines->first_line = line;
-    else
+    if (lines->last_line)
         (lines->last_line)->next_line = line;
+    else
+        lines->first_line = line;
     line->prev_line = lines->last_line;
     line->next_line = NULL;
     lines->last_line = line;

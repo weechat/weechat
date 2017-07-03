@@ -877,6 +877,105 @@ hdata_hashtable (struct t_hdata *hdata, void *pointer, const char *name)
 }
 
 /*
+ * Compares a hdata variable of two objects.
+ *
+ * If case_sensitive == 1, the comparison of strings is case sensitive.
+ *
+ * Returns:
+ *   -1: variable1 < variable2
+ *    0: variable1 == variable2
+ *    1: variable1 > variable2
+ */
+
+int
+hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2,
+               const char *name, int case_sensitive)
+{
+    int rc, int_value1, int_value2;
+    long long_value1, long_value2;
+    char char_value1, char_value2;
+    const char *ptr_name, *str_value1, *str_value2;
+    void *ptr_value1, *ptr_value2;
+    time_t time_value1, time_value2;
+
+    if (!pointer1 && pointer2)
+        return -1;
+    if (pointer1 && !pointer2)
+        return 1;
+    if (!pointer1 && !pointer2)
+        return 0;
+
+    rc = 0;
+
+    hdata_get_index_and_name (name, NULL, &ptr_name);
+    switch (hdata_get_var_type (hdata, ptr_name))
+    {
+        case WEECHAT_HDATA_CHAR:
+            char_value1 = hdata_char (hdata, pointer1, name);
+            char_value2 = hdata_char (hdata, pointer2, name);
+            rc = (char_value1 < char_value2) ?
+                -1 : ((char_value1 > char_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_INTEGER:
+            int_value1 = hdata_integer (hdata, pointer1, name);
+            int_value2 = hdata_integer (hdata, pointer2, name);
+            rc = (int_value1 < int_value2) ?
+                -1 : ((int_value1 > int_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_LONG:
+            long_value1 = hdata_long (hdata, pointer1, name);
+            long_value2 = hdata_long (hdata, pointer2, name);
+            rc = (long_value1 < long_value2) ?
+                -1 : ((long_value1 > long_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_STRING:
+        case WEECHAT_HDATA_SHARED_STRING:
+            str_value1 = hdata_string (hdata, pointer1, name);
+            str_value2 = hdata_string (hdata, pointer2, name);
+            if (!str_value1 && !str_value2)
+                rc = 0;
+            else if (str_value1 && !str_value2)
+                rc = 1;
+            else if (!str_value1 && str_value2)
+                rc = -1;
+            else
+            {
+                if (case_sensitive)
+                    rc = strcmp (str_value1, str_value2);
+                else
+                    rc = string_strcasecmp (str_value1, str_value2);
+                if (rc < 0)
+                    rc = -1;
+                else if (rc > 0)
+                    rc = 1;
+            }
+            break;
+        case WEECHAT_HDATA_POINTER:
+            ptr_value1 = hdata_pointer (hdata, pointer1, name);
+            ptr_value2 = hdata_pointer (hdata, pointer2, name);
+            rc = (ptr_value1 < ptr_value2) ?
+                -1 : ((ptr_value1 > ptr_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_TIME:
+            time_value1 = hdata_time (hdata, pointer1, name);
+            time_value2 = hdata_time (hdata, pointer2, name);
+            rc = (time_value1 < time_value2) ?
+                -1 : ((time_value1 > time_value2) ? 1 : 0);
+            break;
+        case WEECHAT_HDATA_HASHTABLE:
+            /* no comparison for hashtables */
+            rc = 0;
+            break;
+        case WEECHAT_HDATA_OTHER:
+            /* no comparison for other types */
+            rc = 0;
+            break;
+    }
+
+    return rc;
+}
+
+/*
  * Sets value for a variable in hdata.
  *
  * WARNING: this is dangerous, and only some variables can be set by this

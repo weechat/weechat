@@ -4933,6 +4933,30 @@ API_FUNC(hdata_hashtable)
     return 1;
 }
 
+API_FUNC(hdata_compare)
+{
+    const char *hdata, *pointer1, *pointer2, *name;
+    int case_sensitive, rc;
+
+    API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
+    if (lua_gettop (L) < 5)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    hdata = lua_tostring (L, -5);
+    pointer1 = lua_tostring (L, -4);
+    pointer2 = lua_tostring (L, -3);
+    name = lua_tostring (L, -2);
+    case_sensitive = lua_tonumber (L, -1);
+
+    rc = weechat_hdata_compare (API_STR2PTR(hdata),
+                                API_STR2PTR(pointer1),
+                                API_STR2PTR(pointer2),
+                                name,
+                                case_sensitive);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(hdata_update)
 {
     const char *hdata, *pointer;
@@ -5289,6 +5313,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hdata_pointer),
     API_DEF_FUNC(hdata_time),
     API_DEF_FUNC(hdata_hashtable),
+    API_DEF_FUNC(hdata_compare),
     API_DEF_FUNC(hdata_update),
     API_DEF_FUNC(hdata_get_string),
     API_DEF_FUNC(upgrade_new),

@@ -6,8 +6,10 @@
 * `+buflist+`: objet de barre avec la liste des tampons
 
 ----
-/buflist  refresh
+/buflist  bar
+          refresh
 
+    bar : ajouter la barre "buflist"
 refresh : forcer le rafraichissement de l'objet de barre "buflist"
 
 Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :
@@ -26,15 +28,20 @@ Les variables suivantes peuvent être utilisées dans ces options :
   - irc_channel: données du canal IRC, défini seulement sur un tampon de canal IRC (voir le hdata "irc_channel" dans la doc API)
   - variables additionnelles ajoutées par buflist pour des raisons pratiques :
     - ${format_buffer} : la valeur évaluée de l'option buflist.format.buffer ; peut être utilisée dans l'option buflist.format.buffer_current pour juste changer la couleur de fond par exemple
+    - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
+    - ${merged} : un booléen ("0" ou "1"), "1" si le tampon est mélangé avec au moins un autre tampon ; cela peut être utilisé dans une condition : ${if:${merged}?...:...}
     - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
     - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
+    - ${number_displayed} : "1" si le numéro est affiché, sinon "0"
     - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
     - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)
     - ${color_nick_prefix} : la couleur du préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
     - ${nick_prefix} : le préfixe du pseudo pour un canal (défini seulement si l'option buflist.look.nick_prefix est activée)
+    - ${format_name} : le nom formaté (évaluation de l'option buflist.format.name)
     - ${name} : le nom court (si défini), sinon le nom
     - ${color_hotlist} : la couleur qui dépend du niveau de hotlist le plus élevé pour le tampon (évaluation de l'option buflist.format.hotlist_xxx où xxx est le niveau)
     - ${format_hotlist} : la hotlist formatée (évaluation de l'option buflist.format.hotlist)
     - ${hotlist} : la hotlist brute
+    - ${hotlist_priority} : "none", "low", "message", "private" ou "highlight"
     - ${format_lag} : le lag pour un tampon de serveur IRC, vide s'il n'y a pas de lag (évaluation de l'option buflist.format.lag)
 ----

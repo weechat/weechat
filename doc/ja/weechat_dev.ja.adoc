@@ -78,6 +78,8 @@ qweechat::
 |       charset/    | charset プラグイン
 |       exec/       | exec プラグイン
 |       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
+// TRANSLATION MISSING
+|       fset/       | Fset (Fast Set) plugin.
 |       guile/      | guile (scheme) スクリプト用 API
 |       irc/        | IRC (Internet Relay Chat) プラグイン
 |       javascript/ | javascript スクリプト用 API
@@ -219,6 +221,17 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       fifo-command.c              | fifo コマンド
 |       fifo-config.c               | fifo 設定オプション (fifo.conf ファイル)
 |       fifo-info.c                 | fifo の情報/インフォリスト/hdata
+// TRANSLATION MISSING
+|    fset/                          | Fset plugin.
+|       fset.c                      | Main fset functions.
+|       fset-bar-item.c             | Fset bar items.
+|       fset-buffer.c               | Fset buffer.
+|       fset-command.c              | Fset commands.
+|       fset-completion.c           | Fset completions.
+|       fset-config.c               | Fset config options (file fset.conf).
+|       fset-info.c                 | Fset info/infolists/hdata.
+|       fset-mouse.c                | Fset mouse actions.
+|       fset-option.c               | Fset options management.
 |    guile/                         | guile (scheme) プラグイン
 |       weechat-guile.c             | guile の主要関数 (スクリプトのロード/アンロード、guile コードの実行)
 |       weechat-guile-api.c         | guile スクリプト作成 API 関数

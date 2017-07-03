@@ -208,7 +208,7 @@ irc_notify_new (struct t_irc_server *server, const char *nick, int check_away)
 
         /* add notify to notify list on server */
         new_notify->prev_notify = server->last_notify;
-        if (server->notify_list)
+        if (server->last_notify)
             server->last_notify->next_notify = new_notify;
         else
             server->notify_list = new_notify;

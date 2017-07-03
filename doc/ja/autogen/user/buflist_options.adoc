@@ -6,7 +6,7 @@
 ** 説明: pass:none[各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** デフォルト値: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** 説明: pass:none[現在のバッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
@@ -57,7 +57,7 @@
 ** デフォルト値: `+"${color:default},"+`
 
 * [[option_buflist.format.indent]] *buflist.format.indent*
-** 説明: pass:none[string displayed to indent channel and private buffers (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[indent チャンネルとプライベートバッファに表示される文字列 (注意: 値は評価されます、/help buflist を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"  "+`
@@ -68,8 +68,14 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.format.name]] *buflist.format.name*
+** 説明: pass:none[バッファ名の書式 (注意: 値は評価されます、/help buflist を参照してください)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"${name}"+`
+
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
-** 説明: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
+** 説明: pass:none[チャンネルにおけるニックネームプレフィックス書式 (注意: 値は評価されます、/help buflist を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color_nick_prefix}${nick_prefix}"+`
@@ -80,11 +86,29 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** 説明: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** 説明: pass:none[現在のバッファが常にバーの中に表示されるように自動的にバッファリストバーをスクロールします (この機能はフィリングが "vertical" に設定された左右にあるバーでのみ機能します); 設定値は現在のバーよりも前に表示される行数のパーセント値です (-1 = 自動スクロールを無効化); 例えば値を 50 に設定した場合、現在のバッファがバーの中央に位置するように自動スクロールされます。0 に設定した場合はバーの最初、100 に設定した場合はバーの最後を意味します]
+** タイプ: 整数
+** 値: -1 .. 100
+** デフォルト値: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** 説明: pass:none[バッファの表示条件 (注意: 値は評価されます、/help eval を参照してください); サーババッファがコアバッファにマージされている場合にサーババッファを隠す例: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${buffer.hidden}==0"+`
+
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** 説明: pass:none[buflist を有効化します]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** 説明: pass:none[有効の場合、現在のバッファを示す行で左または右ボタンをクリックすることで一つ前または次の訪問済みバッファに移動します]
@@ -123,7 +147,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
+** 説明: pass:none[バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールドはバッファの hdata 変数 ("var")、IRC サーバの hdata 変数 ("irc_server.var")、IRC チャンネルの hdata 変数 ("irc_channel.var") のどれかです; フィールドの先頭に "-" 文字を付けることでソート順を逆にすることも可能です。大文字小文字を区別せずに比較を行うには "~" 文字を使います; 例: "-~short_name" バッファの短縮名を使い、大文字小文字を区別せずにソートして、順番を逆にします]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"number,-active"+`

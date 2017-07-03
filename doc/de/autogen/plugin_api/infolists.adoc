@@ -8,6 +8,8 @@
 
 | alias | alias | Liste der Alias | Alias Pointer (optional) | Name des Alias (Platzhalter "*" kann verwendet werden) (optional)
 
+| fset | fset_option | list of fset options | fset option pointer (optional) | Name einer Einstellung (Platzhalter "*" kann verwendet werden) (optional)
+
 | guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
 | irc | irc_channel | Liste der Channels eines IRC-Servers | Channel Pointer (optional) | Server,Channel (Channel ist optional)

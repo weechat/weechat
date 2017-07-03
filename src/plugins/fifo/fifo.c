@@ -54,7 +54,7 @@ char *fifo_filename = NULL;
 char *fifo_unterminated = NULL;
 
 
-int fifo_fd_cb ();
+int fifo_fd_cb (const void *pointer, void *data, int fd);
 
 
 /*

@@ -723,6 +723,7 @@ raison : raison
          add <serveur> <nom>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
          copy|rename <serveur> <nouveau_nom>
          reorder <serveur> [<serveur>...]
+         open <serveur>|-all [<serveur>...]
          del|keep <serveur>
          deloutq|jump|raw
 
@@ -737,6 +738,7 @@ nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
     copy : dupliquer un serveur
   rename : renommer un serveur
  reorder : réordonner la liste des serveurs
+    open : ouvrir le tampon du serveur sans s'y connecter
     keep : garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
      del : supprimer un serveur
  deloutq : supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)

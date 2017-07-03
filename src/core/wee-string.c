@@ -3428,7 +3428,6 @@ string_dyn_concat (char **string, const char *add)
         {
             free (ptr_string_dyn->string);
             free (ptr_string_dyn);
-            *string = NULL;
             return 0;
         }
         ptr_string_dyn->string = string_realloc;

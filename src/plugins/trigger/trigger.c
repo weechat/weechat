@@ -38,7 +38,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Text replacement and command execution on events 
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(11000);
+WEECHAT_PLUGIN_PRIORITY(12000);
 
 struct t_weechat_plugin *weechat_trigger_plugin = NULL;
 
@@ -839,10 +839,10 @@ trigger_add (struct t_trigger *trigger,
         /* add trigger to end of list */
         trigger->prev_trigger = *last_list_trigger;
         trigger->next_trigger = NULL;
-        if (!*list_triggers)
-            *list_triggers = trigger;
-        else
+        if (*last_list_trigger)
             (*last_list_trigger)->next_trigger = trigger;
+        else
+            *list_triggers = trigger;
         *last_list_trigger = trigger;
     }
 }

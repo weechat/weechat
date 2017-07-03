@@ -81,8 +81,6 @@ char *gui_bar_items_default_for_bars[][2] =
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
 
-struct t_hdata *gui_bar_item_hdata_bar_item = NULL;
-
 
 /*
  * Checks if a bar item pointer is valid.
@@ -559,7 +557,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
 
         /* add bar item to bar items queue */
         new_bar_item->prev_item = last_gui_bar_item;
-        if (gui_bar_items)
+        if (last_gui_bar_item)
             last_gui_bar_item->next_item = new_bar_item;
         else
             gui_bar_items = new_bar_item;
@@ -1672,8 +1670,8 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     struct t_config_option *ptr_option;
-    int i, length;
-    char *str_nicklist;
+    char **nicklist, *str_nicklist;
+    int i;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1685,7 +1683,10 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
     if (!buffer)
         return NULL;
 
-    length = 1;
+    nicklist = string_dyn_alloc (256);
+    if (!nicklist)
+        return NULL;
+
     ptr_group = NULL;
     ptr_nick = NULL;
     gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
@@ -1696,107 +1697,108 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 && buffer->nicklist_display_groups
                 && ptr_group->visible))
         {
+            if (*nicklist[0])
+                string_dyn_concat (nicklist, "\n");
+
             if (ptr_nick)
-                length += ptr_nick->group->level + 16 /* color */
-                    + ((ptr_nick->prefix) ? strlen (ptr_nick->prefix) : 0)
-                    + 16 /* color */
-                    + strlen (ptr_nick->name) + 1;
-            else
-                length += ptr_group->level - 1
-                    + 16 /* color */
-                    + strlen (gui_nicklist_get_group_start (ptr_group->name))
-                    + 1;
-        }
-        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
-    }
-
-    str_nicklist = malloc (length);
-    if (str_nicklist)
-    {
-        str_nicklist[0] = '\0';
-        ptr_group = NULL;
-        ptr_nick = NULL;
-        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
-        while (ptr_group || ptr_nick)
-        {
-            if ((ptr_nick && ptr_nick->visible)
-                || (ptr_group && !ptr_nick
-                    && buffer->nicklist_display_groups
-                    && ptr_group->visible))
             {
-                if (str_nicklist[0])
-                    strcat (str_nicklist, "\n");
-
-                if (ptr_nick)
+                if (buffer->nicklist_display_groups)
                 {
-                    if (buffer->nicklist_display_groups)
+                    for (i = 0; i < ptr_nick->group->level; i++)
                     {
-                        for (i = 0; i < ptr_nick->group->level; i++)
-                        {
-                            strcat (str_nicklist, " ");
-                        }
+                        string_dyn_concat (nicklist, " ");
                     }
-                    if (ptr_nick->prefix_color)
-                    {
-                        if (strchr (ptr_nick->prefix_color, '.'))
-                        {
-                            config_file_search_with_string (ptr_nick->prefix_color,
-                                                            NULL, NULL, &ptr_option,
-                                                            NULL);
-                            if (ptr_option)
-                                strcat (str_nicklist, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
-                        }
-                        else
-                        {
-                            strcat (str_nicklist, gui_color_get_custom (ptr_nick->prefix_color));
-                        }
-                    }
-                    if (ptr_nick->prefix)
-                        strcat (str_nicklist, ptr_nick->prefix);
-                    if (ptr_nick->color)
-                    {
-                        if (strchr (ptr_nick->color, '.'))
-                        {
-                            config_file_search_with_string (ptr_nick->color,
-                                                            NULL, NULL, &ptr_option,
-                                                            NULL);
-                            if (ptr_option)
-                                strcat (str_nicklist, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
-                        }
-                        else
-                        {
-                            strcat (str_nicklist, gui_color_get_custom (ptr_nick->color));
-                        }
-                    }
-                    strcat (str_nicklist, ptr_nick->name);
                 }
-                else
+                if (ptr_nick->prefix_color)
                 {
-                    for (i = 0; i < ptr_group->level - 1; i++)
+                    if (strchr (ptr_nick->prefix_color, '.'))
                     {
-                        strcat (str_nicklist, " ");
-                    }
-                    if (ptr_group->color)
-                    {
-                        if (strchr (ptr_group->color, '.'))
-                        {
-                            config_file_search_with_string (ptr_group->color,
-                                                            NULL, NULL, &ptr_option,
+                        config_file_search_with_string (ptr_nick->prefix_color,
+                                                        NULL, NULL, &ptr_option,
                                                             NULL);
-                            if (ptr_option)
-                                strcat (str_nicklist, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
-                        }
-                        else
+                        if (ptr_option)
                         {
-                            strcat (str_nicklist, gui_color_get_custom (ptr_group->color));
+                            string_dyn_concat (
+                                nicklist,
+                                gui_color_get_custom (
+                                    gui_color_get_name (
+                                        CONFIG_COLOR(ptr_option))));
                         }
                     }
-                    strcat (str_nicklist, gui_nicklist_get_group_start (ptr_group->name));
+                    else
+                    {
+                        string_dyn_concat (nicklist,
+                                           gui_color_get_custom (
+                                               ptr_nick->prefix_color));
+                    }
                 }
+                if (ptr_nick->prefix)
+                    string_dyn_concat (nicklist, ptr_nick->prefix);
+                if (ptr_nick->color)
+                {
+                    if (strchr (ptr_nick->color, '.'))
+                    {
+                        config_file_search_with_string (ptr_nick->color,
+                                                        NULL, NULL, &ptr_option,
+                                                        NULL);
+                        if (ptr_option)
+                        {
+                            string_dyn_concat (
+                                nicklist,
+                                gui_color_get_custom (
+                                    gui_color_get_name (
+                                        CONFIG_COLOR(ptr_option))));
+                        }
+                    }
+                    else
+                    {
+                        string_dyn_concat (nicklist,
+                                           gui_color_get_custom (
+                                               ptr_nick->color));
+                    }
+                }
+                string_dyn_concat (nicklist, ptr_nick->name);
             }
-            gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+            else
+            {
+                for (i = 0; i < ptr_group->level - 1; i++)
+                {
+                    string_dyn_concat (nicklist, " ");
+                }
+                if (ptr_group->color)
+                {
+                    if (strchr (ptr_group->color, '.'))
+                    {
+                        config_file_search_with_string (ptr_group->color,
+                                                        NULL, NULL, &ptr_option,
+                                                        NULL);
+                        if (ptr_option)
+                        {
+                            string_dyn_concat (
+                                nicklist,
+                                gui_color_get_custom (
+                                    gui_color_get_name (
+                                        CONFIG_COLOR(ptr_option))));
+                        }
+                    }
+                    else
+                    {
+                        string_dyn_concat (nicklist,
+                                           gui_color_get_custom (
+                                               ptr_group->color));
+                    }
+                }
+                string_dyn_concat (nicklist,
+                                   gui_nicklist_get_group_start (
+                                       ptr_group->name));
+            }
         }
+        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
     }
+
+    str_nicklist = *nicklist;
+
+    string_dyn_free (nicklist, 0);
 
     return str_nicklist;
 }

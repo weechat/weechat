@@ -5086,6 +5086,7 @@ IRC_COMMAND_CALLBACK(server)
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(4, "add");
+
         ptr_server2 = irc_server_casesearch (argv[2]);
         if (ptr_server2)
         {
@@ -5233,6 +5234,55 @@ IRC_COMMAND_CALLBACK(server)
         weechat_printf (NULL,
                         NG_("%d server moved", "%d servers moved", count),
                         count);
+
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "open") == 0)
+    {
+        WEECHAT_COMMAND_MIN_ARGS(3, "open");
+
+        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        {
+            for (ptr_server2 = irc_servers; ptr_server2;
+                 ptr_server2 = ptr_server2->next_server)
+            {
+                if (!ptr_server2->buffer)
+                {
+                    if (irc_server_create_buffer (ptr_server2))
+                    {
+                        weechat_buffer_set (ptr_server2->buffer,
+                                            "display", "auto");
+                    }
+                }
+            }
+        }
+        else
+        {
+            for (i = 2; i < argc; i++)
+            {
+                ptr_server2 = irc_server_search (argv[i]);
+                if (ptr_server2)
+                {
+                    if (!ptr_server2->buffer)
+                    {
+                        if (irc_server_create_buffer (ptr_server2))
+                        {
+                            weechat_buffer_set (ptr_server2->buffer,
+                                                "display", "auto");
+                        }
+                    }
+                }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: server \"%s\" not found for \"%s\" command"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        argv[i], "server open");
+                }
+            }
+        }
 
         return WEECHAT_RC_OK;
     }
@@ -6786,6 +6836,7 @@ irc_command_init ()
            "[-no<option>]"
            " || copy|rename <server> <new_name>"
            " || reorder <server> [<server>...]"
+           " || open <server>|-all [<server>...]"
            " || del|keep <server>"
            " || deloutq|jump|raw"),
         N_("    list: list servers (without argument, this list is displayed)\n"
@@ -6801,6 +6852,7 @@ irc_command_init ()
            "    copy: duplicate a server\n"
            "  rename: rename a server\n"
            " reorder: reorder list of servers\n"
+           "    open: open the server buffer without connecting\n"
            "    keep: keep server in config file (for temporary servers only)\n"
            "     del: delete a server\n"
            " deloutq: delete messages out queue for all servers (all messages "
@@ -6826,6 +6878,7 @@ irc_command_init ()
         " || rename %(irc_servers) %(irc_servers)"
         " || keep %(irc_servers)"
         " || reorder %(irc_servers)|%*"
+        " || open %(irc_servers)|-all %(irc_servers)|%*"
         " || del %(irc_servers)"
         " || deloutq"
         " || jump"

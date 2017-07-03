@@ -120,7 +120,6 @@ struct t_config_option *config_look_emphasized_attributes;
 struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_highlight_regex;
 struct t_config_option *config_look_highlight_tags;
-struct t_config_option *config_look_hotlist_add_buffer_if_away;
 struct t_config_option *config_look_hotlist_add_conditions;
 struct t_config_option *config_look_hotlist_buffer_separator;
 struct t_config_option *config_look_hotlist_count_max;
@@ -264,6 +263,7 @@ struct t_config_option *config_completion_base_word_until_cursor;
 struct t_config_option *config_completion_command_inline;
 struct t_config_option *config_completion_default_template;
 struct t_config_option *config_completion_nick_add_space;
+struct t_config_option *config_completion_nick_case_sensitive;
 struct t_config_option *config_completion_nick_completer;
 struct t_config_option *config_completion_nick_first_only;
 struct t_config_option *config_completion_nick_ignore_chars;
@@ -1705,10 +1705,10 @@ config_weechat_proxy_read_cb (const void *pointer, void *data,
             /* add new proxy at the end */
             ptr_temp_proxy->prev_proxy = last_weechat_temp_proxy;
             ptr_temp_proxy->next_proxy = NULL;
-            if (!weechat_temp_proxies)
-                weechat_temp_proxies = ptr_temp_proxy;
-            else
+            if (last_weechat_temp_proxy)
                 last_weechat_temp_proxy->next_proxy = ptr_temp_proxy;
+            else
+                weechat_temp_proxies = ptr_temp_proxy;
             last_weechat_temp_proxy = ptr_temp_proxy;
         }
     }
@@ -1785,10 +1785,10 @@ config_weechat_bar_read_cb (const void *pointer, void *data,
             /* add new bar at the end */
             ptr_temp_bar->prev_bar = last_gui_temp_bar;
             ptr_temp_bar->next_bar = NULL;
-            if (!gui_temp_bars)
-                gui_temp_bars = ptr_temp_bar;
-            else
+            if (last_gui_temp_bar)
                 last_gui_temp_bar->next_bar = ptr_temp_bar;
+            else
+                gui_temp_bars = ptr_temp_bar;
             last_gui_temp_bar = ptr_temp_bar;
         }
     }
@@ -4104,6 +4104,12 @@ config_weechat_init_options ()
         N_("add space after nick completion (when nick is not first word on "
            "command line)"),
         NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_nick_case_sensitive = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_case_sensitive", "boolean",
+        N_("case sensitive completion for nicks"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_completer = config_file_new_option (
         weechat_config_file, ptr_section,

@@ -245,7 +245,7 @@ upgrade_file_new (const char *filename,
         /* add upgrade file to list of upgrade files */
         new_upgrade_file->prev_upgrade = last_upgrade_file;
         new_upgrade_file->next_upgrade = NULL;
-        if (upgrade_files)
+        if (last_upgrade_file)
             last_upgrade_file->next_upgrade = new_upgrade_file;
         else
             upgrade_files = new_upgrade_file;
@@ -485,27 +485,6 @@ upgrade_file_read_string (struct t_upgrade_file *upgrade_file, char **string)
         if (fseek (upgrade_file->file, length, SEEK_CUR) < 0)
             return 0;
     }
-    return 1;
-}
-
-/*
- * Reads an UTF-8 string in upgrade file (reads a string then normalizes it).
- *
- * Returns:
- *   1: OK
- *   0: error
- */
-
-int
-upgrade_file_read_string_utf8 (struct t_upgrade_file *upgrade_file,
-                               char **string)
-{
-    if (!upgrade_file_read_string (upgrade_file, string))
-        return 0;
-
-    if (string && *string)
-        utf8_normalize (*string, '?');
-
     return 1;
 }
 

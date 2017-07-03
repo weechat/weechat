@@ -75,6 +75,12 @@ $HOME/.weechat/charset.conf::
 $HOME/.weechat/exec.conf::
     fichier de configuration pour l'extension _exec_
 
+$HOME/.weechat/fifo.conf::
+    fichier de configuration pour l'extension _fifo_
+
+$HOME/.weechat/fset.conf::
+    fichier de configuration pour l'extension _fset_
+
 $HOME/.weechat/irc.conf::
     fichier de configuration pour l'extension _irc_
 

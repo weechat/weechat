@@ -1,6 +1,5 @@
 /*
  * Copyright (C) 2003-2017 Sébastien Helleu <flashcode@flashtux.org>
- * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -26,18 +25,17 @@
 
 #define BUFLIST_BAR_NAME "buflist"
 
-struct t_irc_server;
-struct t_irc_channel;
-
 extern struct t_weechat_plugin *weechat_buflist_plugin;
 
+extern struct t_hdata *buflist_hdata_window;
 extern struct t_hdata *buflist_hdata_buffer;
 extern struct t_hdata *buflist_hdata_hotlist;
+extern struct t_hdata *buflist_hdata_bar;
+extern struct t_hdata *buflist_hdata_bar_window;
 
+extern void buflist_add_bar ();
 extern void buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
-                                            struct t_irc_server **server,
-                                            struct t_irc_channel **channel);
-extern struct t_gui_hotlist *buflist_search_hotlist_for_buffer (struct t_gui_buffer *buffer);
+                                            void **irc_server, void **irc_channel);
 extern struct t_arraylist *buflist_sort_buffers ();
 
 #endif /* WEECHAT_BUFLIST_H */

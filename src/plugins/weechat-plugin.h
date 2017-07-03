@@ -26,6 +26,7 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#include <stddef.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -36,14 +37,21 @@ extern "C" {
 #endif /* PATH_MAX */
 
 struct t_config_option;
+struct t_config_section;
+struct t_config_file;
 struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_bar;
 struct t_gui_bar_item;
+struct t_gui_bar_window;
 struct t_gui_completion;
+struct t_gui_nick;
+struct t_gui_nick_group;
 struct t_infolist;
 struct t_infolist_item;
+struct t_upgrade_file;
 struct t_weelist;
+struct t_weelist_item;
 struct t_arraylist;
 struct t_hashtable;
 struct t_hdata;
@@ -59,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20170401-01"
+#define WEECHAT_PLUGIN_API_VERSION "20170530-02"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -561,6 +569,8 @@ struct t_weechat_plugin
     int (*config_option_unset) (struct t_config_option *option);
     void (*config_option_rename) (struct t_config_option *option,
                                   const char *new_name);
+    const char *(*config_option_get_string) (struct t_config_option *option,
+                                             const char *property);
     void *(*config_option_get_pointer) (struct t_config_option *option,
                                         const char *property);
     int (*config_option_is_null) (struct t_config_option *option);
@@ -1063,6 +1073,9 @@ struct t_weechat_plugin
                           const char *name);
     struct t_hashtable *(*hdata_hashtable) (struct t_hdata *hdata,
                                             void *pointer, const char *name);
+    int (*hdata_compare) (struct t_hdata *hdata,
+                          void *pointer1, void *pointer2, const char *name,
+                          int case_sensitive);
     int (*hdata_set) (struct t_hdata *hdata, void *pointer, const char *name,
                       const char *value);
     int (*hdata_update) (struct t_hdata *hdata, void *pointer,
@@ -1492,6 +1505,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->config_option_unset)(__option)
 #define weechat_config_option_rename(__option, __new_name)              \
     (weechat_plugin->config_option_rename)(__option, __new_name)
+#define weechat_config_option_get_string(__option, __property)         \
+    (weechat_plugin->config_option_get_string)(__option, __property)
 #define weechat_config_option_get_pointer(__option, __property)         \
     (weechat_plugin->config_option_get_pointer)(__option, __property)
 #define weechat_config_option_is_null(__option)                         \
@@ -1984,6 +1999,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->hdata_time)(__hdata, __pointer, __name)
 #define weechat_hdata_hashtable(__hdata, __pointer, __name)             \
     (weechat_plugin->hdata_hashtable)(__hdata, __pointer, __name)
+#define weechat_hdata_compare(__hdata, __pointer1, __pointer2, __name,  \
+                              __case_sensitive)                         \
+    (weechat_plugin->hdata_compare)(__hdata, __pointer1, __pointer2,    \
+                                    __name, __case_sensitive)
 #define weechat_hdata_set(__hdata, __pointer, __name, __value)          \
     (weechat_plugin->hdata_set)(__hdata, __pointer, __name, __value)
 #define weechat_hdata_update(__hdata, __pointer, __hashtable)           \

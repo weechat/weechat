@@ -723,6 +723,7 @@ reason: Grund der Abmeldung
          add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
          copy|rename <server> <new_name>
          reorder <server> [<server>...]
+         open <server>|-all [<server>...]
          del|keep <server>
          deloutq|jump|raw
 
@@ -737,6 +738,7 @@ nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
     copy: erstellt eine Kopie des Servers
   rename: benennt den Server um
  reorder: Anordnung der Server ändern
+    open: öffnen den Serverbuffer, ohne eine Verbindung herzustellen
     keep: übernimmt den Server in die Konfigurationsdatei (nur sinnvoll bei temporär angelegten Servern)
      del: entfernt einen Server
  deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)

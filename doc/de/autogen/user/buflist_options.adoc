@@ -6,7 +6,7 @@
 ** Beschreibung: pass:none[Format für eine Zeile mit einem Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** Standardwert: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** Beschreibung: pass:none[Format für die Zeile mit dem ausgewählten Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
@@ -68,6 +68,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.format.name]] *buflist.format.name*
+** Beschreibung: pass:none[Format für den Namen eines Buffers (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"${name}"+`
+
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** Beschreibung: pass:none[Format des Nick-Präfix für einen Channel (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
 ** Typ: Zeichenkette
@@ -80,11 +86,29 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** Beschreibung: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** Beschreibung: pass:none[scrollt automatisch die buflist-Bar um den aktuellen Buffer darzustellen (dies funktioniert ausschließlich wenn die Bar links/rechts positioniert ist und als Darstellung "vertical" verwendet wird); dieser Wert ist eine prozentuale Angabe wo der aktuelle Buffer angezeigt werden soll (-1 = deaktiviert); zum Beispiel wird bei einem Wert von 50 der Buffer in der Mitte der Bar angezeigt, bei 0 wird der Buffer oben und bei 100 am unteren Rand der Bar angezeigt]
+** Typ: integer
+** Werte: -1 .. 100
+** Standardwert: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** Beschreibung: pass:none[Bedingungen wann ein Buffer dargestellt werden soll (Hinweis: Inhalt ist evaluiert, siehe /help buflist); Beispielsweise werden Server-Buffer versteckt, sofern sie mit dem Core-Buffer zusammengefügt worden sind: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${buffer.hidden}==0"+`
+
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** Beschreibung: pass:none[buflist aktivieren]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** Beschreibung: pass:none[ist diese Einstellung aktiviert, kann mit der linken/rechten Maustaste auf dem aktuellen Buffer zum vorherigen/nächsten Buffer gesprungen werden]
@@ -123,7 +147,7 @@
 ** Standardwert: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist eine hdata Variable vom Typ Buffer ("var"), eine hdata Variable vom Typ IRC Server ("irc_server.var") oder eine hdata Variable vom Typ IRC Channel ("irc_channel.var"); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Buffer zu sortieren; jedes Feld ist entweder eine hdata Variable von Buffer ("var"), eine hdata Variable vom Typ IRC Server ("irc_server.var") oder eine hdata Variable vom Typ IRC Channel ("irc_channel.var"); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen  "~" verwendet; Beispiel: "-~short_name" sortiert die Buffer nach ihrem Kurznamen, wobei dies invertierte passiert und nicht zwischen Groß-oder Kleinschreibung unterschieden wird]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"number,-active"+`

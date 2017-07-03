@@ -129,7 +129,5 @@ extern int gui_layout_window_add_to_infolist (struct t_infolist *infolist,
 extern int gui_layout_add_to_infolist (struct t_infolist *infolist,
                                        struct t_gui_layout *layout);
 extern void gui_layout_print_log ();
-extern void gui_layout_init ();
-extern void gui_layout_end ();
 
 #endif /* WEECHAT_GUI_LAYOUT_H */

@@ -152,7 +152,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 
         /* add ignore to ignore list */
         new_ignore->prev_ignore = last_irc_ignore;
-        if (irc_ignore_list)
+        if (last_irc_ignore)
             last_irc_ignore->next_ignore = new_ignore;
         else
             irc_ignore_list = new_ignore;

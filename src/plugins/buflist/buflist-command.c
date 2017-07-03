@@ -20,9 +20,6 @@
  */
 
 #include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <time.h>
 
 #include "../weechat-plugin.h"
 #include "buflist.h"
@@ -43,16 +40,20 @@ buflist_command_buflist (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) buffer;
-    (void) argc;
-    (void) argv;
     (void) argv_eol;
 
     if (argc == 1)
         return WEECHAT_RC_OK;
 
+    if (weechat_strcasecmp (argv[1], "bar") == 0)
+    {
+        buflist_add_bar ();
+        return WEECHAT_RC_OK;
+    }
+
     if (weechat_strcasecmp (argv[1], "refresh") == 0)
     {
-        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+        buflist_bar_item_update ();
         return WEECHAT_RC_OK;
     }
 
@@ -69,8 +70,9 @@ buflist_command_init ()
     weechat_hook_command (
         "buflist",
         N_("bar item with list of buffers"),
-        "refresh",
-        N_("refresh: force the refresh of the \"buflist\" bar item\n"
+        "bar || refresh",
+        N_("    bar: add the \"buflist\" bar\n"
+           "refresh: force the refresh of the \"buflist\" bar item\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with these options:\n"
@@ -97,10 +99,18 @@ buflist_command_init ()
            "buflist.format.buffer; this can be used in option "
            "buflist.format.buffer_current to just change the background color "
            "for example\n"
+           "    - ${current_buffer}: a boolean (\"0\" or \"1\"), \"1\" if "
+           "this is the current buffer; it can be used in a condition: "
+           "${if:${current_buffer}?...:...}\n"
+           "    - ${merged}: a boolean (\"0\" or \"1\"), \"1\" if the "
+           "buffer is merged with at least another buffer; it can be used "
+           "in a condition: ${if:${merged}?...:...}\n"
            "    - ${format_number}: indented number with separator "
            "(evaluation of option buflist.format.number)\n"
            "    - ${number}: indented number, for example \" 1\" if there "
            "are between 10 and 99 buffers\n"
+           "    - ${number_displayed}: \"1\" if the number is displayed, "
+           "otherwise \"0\"\n"
            "    - ${indent}: indentation for name (channel and private "
            "buffers are indented) (evaluation of "
            "option buflist.format.indent)\n"
@@ -110,6 +120,8 @@ buflist_command_init ()
            "(set only if the option buflist.look.nick_prefix is enabled)\n"
            "    - ${nick_prefix}: nick prefix for a channel "
            "(set only if the option buflist.look.nick_prefix is enabled)\n"
+           "    - ${format_name}: formatted name (evaluation of option "
+           "buflist.format.name)\n"
            "    - ${name}: the short name (if set), with a fallback on the "
            "name\n"
            "    - ${color_hotlist}: the color depending on the highest "
@@ -118,8 +130,10 @@ buflist_command_init ()
            "    - ${format_hotlist}: the formatted hotlist (evaluation "
            "of option buflist.format.hotlist)\n"
            "    - ${hotlist}: the raw hotlist\n"
+           "    - ${hotlist_priority}: \"none\", \"low\", \"message\", "
+           "\"private\" or \"highlight\"\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)"),
-        "refresh",
+        "bar || refresh",
         &buflist_command_buflist, NULL, NULL);
 }

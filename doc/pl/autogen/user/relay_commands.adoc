@@ -8,7 +8,7 @@
 ----
 /relay  list|listfull|listrelay
         add <nazwa> <port>
-        del|stop|restart <nazwa>
+        del|start|restart|stop <nazwa>
         raw
         sslcertkey
 
@@ -17,12 +17,13 @@
     listrelay: wyświetla pośredników (nazwa i port)
           add: dodaje relay (nasłuchuje na porcie)
           del: usuwa relay (klienty zostają połączone)
-         stop: zamyka gniazdo serwera (klienty zostają połączone)
+        start: nasłuchuje na portcie
       restart: zamyka porta serwera i otwiera go ponownie nasłuchując na nim (klienty zostają połączone)
-         nazwa: nazwa pośrednika (format poniżej)
+         stop: zamyka gniazdo serwera (klienty zostają połączone)
+        nazwa: nazwa pośrednika (format poniżej)
          port: port używany przez pośrednika
           raw: otwiera bufor z nieprzetworzonymi danymi pośrednika
-   kluczSSL: ustawia certyfikat SSL/hasło używając ścieżki w opcji relay.network.ssl_cert_key
+   sslcertkey: ustawia certyfikat SSL/hasło używając ścieżki w opcji relay.network.ssl_cert_key
 
 Nazwa pośrednika to: [ipv4.][ipv6.][ssl.]<protokół.nazwa>
          ipv4: wymusza użycie IPv4

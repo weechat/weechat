@@ -2014,85 +2014,81 @@ char *weechat_string_eval_expression (const char *expr,
 * 評価された式 (使用後には必ず "free" を呼び出して領域を開放してください)、失敗した場合は
   NULL (式が不正な場合やメモリが不足している場合)
 
-// TRANSLATION MISSING
-List of logical operators that can be used in conditions (by order of priority,
-from first used to last):
+条件に使える論理演算子のリスト
+(上から優先順位の高い順):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
-| Operator | Description | Examples | Results
+| 演算子 | 説明 | 例 | 結果
 
 | `+&&+` |
-  Logical "and" |
+  論理積 |
   `+25 && 77+` +
   `+25 && 0+` |
   `+1+` +
   `+0+`
 
 | `+\|\|+` |
-  Logical "or" |
+  論理和 |
   `+25 \|\| 0+` +
   `+0 \|\| 0+` |
   `+1+` +
   `+0+`
 |===
 
-// TRANSLATION MISSING
-List of comparison operators that can be used in conditions (by order of priority,
-from first used to last):
+条件に使える比較演算子のリスト
+(上から優先順位の高い順):
 
-// TRANSLATION MISSING
 [width="100%",cols="2,8,4,4",options="header"]
 |===
-| Operator | Description | Examples | Results
+| 演算子 | 説明 | 例 | 結果
 
 | `+=~+` |
-  Is matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  POSIX 拡張正規表現にマッチ (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def =~ ab.*ef+` +
   `+abc def =~ y.*z+` |
   `+1+` +
   `+0+`
 
 | `+!~+` |
-  Is NOT matching POSIX extended regex (optional flags are allowed, see function <<_string_regcomp,string_regcomp>>) |
+  POSIX 拡張正規表現にマッチしない (任意でフラグを指定することも可能です、関数 <<_string_regcomp,string_regcomp>> を確認してください) |
   `+abc def !~ ab.*ef+` +
   `+abc def !~ y.*z+` |
   `+0+` +
   `+1+`
 
 | `+=*+` +
-  (_WeeChat ≥ 1.8_) |
-  Is matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  マスクにマッチ、"*" を指定できます (関数 <<_string_match,string_match>> を確認してください) |
   `+abc def =* a*f+` +
   `+abc def =* y*z+` |
   `+1+` +
   `+0+`
 
 | `+!*+` +
-  (_WeeChat ≥ 1.8_) |
-  Is NOT matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
+  (_WeeChat バージョン 1.8 以上で利用可_) |
+  マスクにマッチしない、"*" を指定できます (関数 <<_string_match,string_match>> を確認してください) |
   `+abc def !* a*f+` +
   `+abc def !* y*z+` |
   `+0+` +
   `+1+`
 
 | `+==+` |
-  Equal |
+  等しい |
   `+test == test+` +
   `+test == string+` |
   `+1+` +
   `+0+`
 
 | `+!=+` |
-  Not equal |
+  等しくない |
   `+test != test+` +
   `+test != string+` |
   `+0+` +
   `+1+`
 
 | `+<=+` |
-  Less or equal |
+  以下 |
   `+abc <= defghi+` +
   `+abc <= abc+` +
   `+defghi <= abc+` +
@@ -2103,7 +2099,7 @@ from first used to last):
   `+0+`
 
 | `+<+` |
-  Less |
+  より小さい |
   `+abc < defghi+` +
   `+abc < abc+` +
   `+defghi < abc+` +
@@ -2114,7 +2110,7 @@ from first used to last):
   `+0+`
 
 | `+>=+` |
-  Greater or equal |
+  以上 |
   `+defghi >= abc+` +
   `+abc >= abc+` +
   `+abc >= defghi+` +
@@ -2125,7 +2121,7 @@ from first used to last):
   `+1+`
 
 | `+>+` |
-  Greater |
+  より大きい |
   `+defghi > abc+` +
   `+abc > abc+` +
   `+abc > defghi+` +
@@ -2170,12 +2166,11 @@ from first used to last):
   `+${hide:*,password}+` |
  `+********+`
 
-// TRANSLATION MISSING
 | `+${cut:max,suffix,string}+` +
   `+${cut:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
   `string` の先頭 `max` 文字とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
-   With the format `+max`, the suffix is counted in max length. |
+  `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cut:4,…,this is a test}+` +
   `+${cut:+4,…,this is a test}+` +
   `+${cut:2,>>,こんにちは世界}+` |
@@ -2183,12 +2178,11 @@ from first used to last):
   `+t…+` +
   `+こん>>+`
 
-// TRANSLATION MISSING
 | `+${cutscr:max,suffix,string}+` +
   `+${cutscr:+max,suffix,string}+` +
   (_WeeChat バージョン 1.8 以上で利用可_) |
   `string` の先頭 `max` 文字 (半角文字幅換算) とオプションの `suffix` 文字 (`string` の文字数が `max` 文字を超える場合) +
-  With the format `+max`, the suffix is counted in max length. |
+  `+max` を使った場合、`max` 文字にはサフィックスの文字数も含まれます。|
   `+${cutscr:4,…,this is a test}+` +
   `+${cutscr:+4,…,this is a test}+` +
   `+${cutscr:2,>>,こんにちは世界}+` |
@@ -5854,7 +5848,13 @@ int weechat_config_option_set (struct t_config_option *option,
 引数:
 
 * _option_: オプションへのポインタ
-* _value_: オプションの新しい値
+* _value_:
+  オプションの新しい値、オプションのタイプによって以下の特殊値を取ることも可能です:
+** _ブール型_:
+*** `toggle`: 現在の値を切り替える
+** _整数型_ または _色_:
+*** `++N`: 現在の値に `N` (任意の整数) を加える
+*** `--N`: 現在の値から `N` (任意の整数) を引く
 * _run_callback_: オプションが変更された際に、_callback_change_ コールバックを呼び出す場合は
   1、呼び出さない場合は 0
 
@@ -6058,6 +6058,50 @@ weechat.config_option_rename(option, new_name)
 # 例
 weechat.config_option_rename(option, "new_name")
 ----
+
+==== config_option_get_string
+
+_WeeChat バージョン 1.9 以上で利用可。_
+
+オプションプロパティの文字列値を返す。
+
+プロトタイプ:
+
+[source,C]
+----
+const char *weechat_config_option_get_string (struct t_config_option *option,
+                                              const char *property);
+----
+
+引数:
+
+// TRANSLATION MISSING
+* _option_: オプションへのポインタ
+* _property_: プロパティ名:
+** _config_name_: file name
+** _section_name_: section name
+** _name_: オプション名
+** _parent_name_: 親オプション名
+** _type_: オプション型、以下のリストのどれか 1 つ:
+*** _boolean_
+*** _integer_
+*** _string_
+*** _color_
+** _description_: オプションの説明
+
+戻り値:
+
+* プロパティの文字列値
+
+C 言語での使用例:
+
+[source,C]
+----
+const char *type = weechat_config_option_get_string (option, "type");
+----
+
+[NOTE]
+スクリプト API ではこの関数を利用できません。
 
 ==== config_option_get_pointer
 
@@ -8114,16 +8158,12 @@ struct t_hook *weechat_hook_command_run (const char *command,
 ** _const char *command_: 実行するコマンド、引数付き
 ** 戻り値:
 *** _WEECHAT_RC_OK_
-*** _WEECHAT_RC_OK_EAT_
+*** _WEECHAT_RC_OK_EAT_: コールバックの後にコマンドを実行しない
 *** _WEECHAT_RC_ERROR_
 * _callback_pointer_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ
 * _callback_data_: WeeChat が _callback_ コールバックを呼び出す際にコールバックに渡すポインタ;
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成したフックが削除された時点で自動的に開放されます
-
-[NOTE]
-コールバックは _WEECHAT_RC_OK_ または _WEECHAT_RC_OK_EAT_
-(コールバックの後にコマンドを実行しない) を返すことができます。
 
 戻り値:
 
@@ -15997,6 +16037,59 @@ hash = weechat.hdata_hashtable(hdata, buffer, "local_variables")
 weechat.prnt("", "local variables in core buffer:")
 for key in hash:
     weechat.prnt("", "  %s == %s" % (key, hash[key]))
+----
+
+==== hdata_compare
+
+_WeeChat バージョン 1.9 以上で利用可。_
+
+2 つのオブジェクトの hdata 変数を比較。
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_hdata_compare (struct t_hdata *hdata, void *pointer1, void *pointer2, const char *name, int case_sensitive);
+----
+
+引数:
+
+* _hdata_: hdata へのポインタ
+* _pointer1_: 1 番目の WeeChat およびプラグインオブジェクトへのポインタ
+* _pointer2_: 2 番目の WeeChat およびプラグインオブジェクトへのポインタ
+* _name_: 変数名; 配列の場合、変数名を "N|name" のように指定できます。ここで
+  N は配列のインデックス番号です (番号は 0 から始まります)。例: "2|name"
+* _case_sensitive_: 大文字小文字を区別する場合 1、それ以外の場合 0
+
+戻り値:
+
+* variable1 < variable2 の場合は -1
+* variable1 == variable2 の場合は 0
+* variable1 > variable2 の場合は 1
+
+C 言語での使用例:
+
+[source,C]
+----
+struct t_hdata *hdata = weechat_hdata_get ("buffer");
+struct t_gui_buffer *buffer1 = weechat_buffer_search ("irc", "freenode.#weechat");
+struct t_gui_buffer *buffer2 = weechat_buffer_search ("irc", "freenode.#weechat-fr");
+weechat_printf (NULL, "number comparison = %d",
+                weechat_hdata_compare (hdata, buffer1, buffer2, "number", 0));
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+rc = weechat.hdata_compare(hdata, pointer1, pointer2, name, case_sensitive)
+
+# 例
+hdata = weechat.hdata_get("buffer")
+buffer1 = weechat.buffer_search("irc", "freenode.#weechat")
+buffer2 = weechat.buffer_search("irc", "freenode.#weechat-fr")
+weechat.prnt("", "number comparison = %d" % weechat.hdata_compare(hdata, buffer1, buffer2, "number", 0))
 ----
 
 ==== hdata_set

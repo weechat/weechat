@@ -15,18 +15,67 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
-[[v1.8]]
-== Version 1.8 (under dev)
+[[v2.0]]
+== Version 2.0 (under dev)
 
 New features::
 
+  * buflist: add option buflist.look.add_newline (issue #1027)
+  * fset: new plugin "fset" (fast set of WeeChat and plugins options)
+
+Bug fixes::
+
+  * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
+
+[[v1.9]]
+== Version 1.9 (2017-06-25)
+
+New features::
+
+  * api: allow update of variables "scroll_x" and "scroll_y" in bar_window with function hdata_update
+  * api: add functions config_option_get_string() and hdata_compare()
+  * buflist: add option buflist.look.auto_scroll (issue #332)
+  * buflist: add keys kbd:[F1]/kbd:[F2], kbd:[Alt+F1]/kbd:[Alt+F2] to scroll the buflist bar
+
+Improvements::
+
+  * core: improve speed of nicklist bar item callback
+  * core: allow index for hdata arrays in evaluation of expressions
+  * buflist: display a warning when the script "buffers.pl" is loaded
+  * buflist: add support of char "~" in option buflist.look.sort for case insensitive comparison
+  * buflist: add variable `${format_name}` in bar item evaluation and option buflist.format.name (issue #1020)
+  * buflist: add variables `${current_buffer}` and `${merged}` (booleans "0" / "1") in bar item evaluation
+  * relay: add option "start" in command /relay
+  * trigger: add "irc_server" and "irc_channel" pointers in data for IRC signal/modifier hooks
+
+Bug fixes::
+
+  * core: fix bind of keys with space key, like kbd:[Alt+Space] (bug #32133)
+  * core: fix infinite loop when the terminal is closed on the secure password prompt (issue #1010)
+  * buflist: fix long mouse gestures
+  * buflist: fix slow switch of buffer when there are a lot of buffers opened (issue #998)
+  * buflist: add option "bar" in command /buflist, do not automatically add the "buflist" bar when the option buflist.look.enabled is off (issue #994)
+  * buflist: fix crash on drag & drop of buffers
+  * irc: don't reset nick properties (prefixes/away/account/realname) on /names when the nick already exists (issue #1019)
+  * irc: fix memory leak in case of error in "ecdsa-nist256p-challenge" SASL mechanism
+  * relay: rebind on address after option relay.network.bind_address is changed
+  * relay: fix parsing of CAP command arguments in irc protocol (issue #995)
+
+[[v1.8]]
+== Version 1.8 (2017-05-13)
+
+New features::
+
+  * core: add option weechat.completion.nick_case_sensitive (issue #981)
   * core: add wilcard matching operator (`+=*+` and `+!*+`) in evaluation of expressions (issue #611)
   * core: add cut of string in evaluation of expressions with "cut:" (number of chars) and "cutscr:" (number of chars displayed on screen)
   * core: add ternary operator (condition) in evaluation of expressions (`${if:condition?value_if_true:value_if_false}`)
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
-  * buflist: new plugin "buflist" (bar item with list of buffers)
   * api: add arraylist functions: arraylist_new(), arraylist_size(), arraylist_get(), arraylist_search(), arraylist_insert(), arraylist_add(), arraylist_remove(), arraylist_clear(), arraylist_free()
   * api: add dynamic string functions: string_dyn_alloc(), string_dyn_copy(), string_dyn_concat(), string_dyn_free()
+  * aspell: add options to control delimiters in suggestions: aspell.color.suggestion_delimiter_{dict|word} and aspell.look.suggestion_delimiter_{dict|word} (issue #940)
+  * buflist: new plugin "buflist" (bar item with list of buffers)
+  * irc: add option "open" in command /server (issue #966)
   * irc: send signal "irc_server_lag_changed" and store the lag in the server buffer (local variable)
 
 Improvements::
@@ -35,7 +84,6 @@ Improvements::
   * core: add last start date in output of command /version after at least one /upgrade (issue #903)
   * api: add special key "__quiet" in hashtable for function key_bind()
   * api: add `${re:#}` to get the index of last group captured in function string_eval_expression()
-  * aspell: add options to control delimiters in suggestions: aspell.color.suggestion_delimiter_{dict|word} and aspell.look.suggestion_delimiter_{dict|word} (issue #940)
   * irc: send multiple masks by message in commands /ban, /unban, /quiet and /unquiet, use ban mask default for nicks in /quiet and /unquiet, display an error if /quiet and /unquiet are not supported by server (issue #579, issue #15, issue #577)
   * irc: add option "-include" in commands /allchan, /allpv and /allserv (issue #572)
   * irc: don't smart filter modes given to you (issue #530, issue #897)
@@ -43,8 +91,10 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix memory leak in display of mouse event debug info
   * core: fix command /cursor stop (do not toggle cursor mode) (issue #964)
   * core: fix delayed refresh when the signal SIGWINCH is received (terminal resized), send signal "signal_sigwinch" after refreshes (issue #902)
+  * irc: fix update of server addresses on reconnection when the evaluated content has changed (issue #925)
   * irc: fix crash in case of invalid server reply during SASL authentication with dh-blowfish or dh-aes mechanism
   * irc: fix double decoding of IRC colors in messages sent/displayed by commands /msg and /query (issue #943)
   * irc: fix parsing of message 324 (modes) when there is a colon before the modes (issue #913)
@@ -54,6 +104,7 @@ Bug fixes::
 Build::
 
   * core: fix compilation on FreeBSD with autotools (issue #276)
+  * python: add detection of Python 3.6
   * ruby: add detection of Ruby 2.4 (issue #895)
 
 [[v1.7.1]]

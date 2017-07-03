@@ -67,12 +67,24 @@ Only CMake is officially supported to build WeeChat. You should only use
 autotools if you are not able to use CMake. +
 Building with autotools requires more dependencies and is slower than with CMake.
 
+To build and install in system directories:
+
+----
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+# make install
+----
+
+To build and install in a custom directory, for example your home:
+
 ----
 $ mkdir build
 $ cd build
 $ cmake .. -DCMAKE_INSTALL_PREFIX=/path/to/directory
 $ make
-$ make install     (as root for installation in system directories)
+$ make install
 ----
 
 For more information or installation with autotools, please look at

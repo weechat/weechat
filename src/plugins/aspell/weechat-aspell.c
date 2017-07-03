@@ -46,7 +46,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Spell checker for input (with Aspell)"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(10000);
+WEECHAT_PLUGIN_PRIORITY(11000);
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;
 

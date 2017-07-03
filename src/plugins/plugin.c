@@ -728,6 +728,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_option_set_null = &config_file_option_set_null;
         new_plugin->config_option_unset = &config_file_option_unset;
         new_plugin->config_option_rename = &config_file_option_rename;
+        new_plugin->config_option_get_string = &config_file_option_get_string;
         new_plugin->config_option_get_pointer = &config_file_option_get_pointer;
         new_plugin->config_option_is_null = &config_file_option_is_null;
         new_plugin->config_option_default_is_null = &config_file_option_default_is_null;
@@ -890,6 +891,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hdata_pointer = &hdata_pointer;
         new_plugin->hdata_time = &hdata_time;
         new_plugin->hdata_hashtable = &hdata_hashtable;
+        new_plugin->hdata_compare = &hdata_compare;
         new_plugin->hdata_set = &hdata_set;
         new_plugin->hdata_update = &hdata_update;
         new_plugin->hdata_get_string = &hdata_get_string;
@@ -902,7 +904,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
         new_plugin->next_plugin = NULL;
-        if (weechat_plugins)
+        if (last_weechat_plugin)
             last_weechat_plugin->next_plugin = new_plugin;
         else
             weechat_plugins = new_plugin;

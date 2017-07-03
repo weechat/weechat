@@ -273,42 +273,49 @@ gui_key_grab_end_timer_cb (const void *pointer, void *data,
 char *
 gui_key_get_internal_code (const char *key)
 {
-    char *result;
+    char *result, *result2;
 
     if ((key[0] == '@') && strchr (key, ':'))
         return strdup (key);
 
-    if ((result = malloc (strlen (key) + 1)))
-    {
-        result[0] = '\0';
-        while (key[0])
-        {
-            if (strncmp (key, "meta2-", 6) == 0)
-            {
-                strcat (result, "\x01[[");
-                key += 6;
-            }
-            if (strncmp (key, "meta-", 5) == 0)
-            {
-                strcat (result, "\x01[");
-                key += 5;
-            }
-            else if (strncmp (key, "ctrl-", 5) == 0)
-            {
-                strcat (result, "\x01");
-                key += 5;
-            }
-            else
-            {
-                strncat (result, key, 1);
-                key++;
-            }
-        }
-    }
-    else
+    result = malloc (strlen (key) + 1);
+    if (!result)
         return NULL;
 
-    return result;
+    result[0] = '\0';
+    while (key[0])
+    {
+        if (strncmp (key, "meta2-", 6) == 0)
+        {
+            strcat (result, "\x01[[");
+            key += 6;
+        }
+        if (strncmp (key, "meta-", 5) == 0)
+        {
+            strcat (result, "\x01[");
+            key += 5;
+        }
+        else if (strncmp (key, "ctrl-", 5) == 0)
+        {
+            strcat (result, "\x01");
+            key += 5;
+        }
+        else if (strncmp (key, "space", 5) == 0)
+        {
+            strcat (result, " ");
+            key += 5;
+        }
+        else
+        {
+            strncat (result, key, 1);
+            key++;
+        }
+    }
+
+    result2 = strdup (result);
+    free (result);
+
+    return result2;
 }
 
 /*
@@ -322,41 +329,49 @@ gui_key_get_internal_code (const char *key)
 char *
 gui_key_get_expanded_name (const char *key)
 {
-    char *result;
+    char *result, *result2;
 
     if (!key)
         return NULL;
 
     result = malloc ((strlen (key) * 5) + 1);
-    if (result)
+    if (!result)
+        return NULL;
+
+    result[0] = '\0';
+    while (key[0])
     {
-        result[0] = '\0';
-        while (key[0])
+        if (strncmp (key, "\x01[[", 3) == 0)
         {
-            if (strncmp (key, "\x01[[", 3) == 0)
-            {
-                strcat (result, "meta2-");
-                key += 3;
-            }
-            if (strncmp (key, "\x01[", 2) == 0)
-            {
-                strcat (result, "meta-");
-                key += 2;
-            }
-            else if ((key[0] == '\x01') && (key[1]))
-            {
-                strcat (result, "ctrl-");
-                key++;
-            }
-            else
-            {
-                strncat (result, key, 1);
-                key++;
-            }
+            strcat (result, "meta2-");
+            key += 3;
+        }
+        if (strncmp (key, "\x01[", 2) == 0)
+        {
+            strcat (result, "meta-");
+            key += 2;
+        }
+        else if ((key[0] == '\x01') && (key[1]))
+        {
+            strcat (result, "ctrl-");
+            key++;
+        }
+        else if (key[0] == ' ')
+        {
+            strcat (result, "space");
+            key++;
+        }
+        else
+        {
+            strncat (result, key, 1);
+            key++;
         }
     }
 
-    return result;
+    result2 = strdup (result);
+    free (result);
+
+    return result2;
 }
 
 /*
@@ -1007,28 +1022,6 @@ gui_key_focus_matching (struct t_gui_key *key,
 }
 
 /*
- * Callback for replacing values in string with a hashtable.
- */
-
-char *
-gui_key_focus_command_replace_cb (void *data, const char *text)
-{
-    struct t_hashtable *ptr_hashtable;
-    const char *ptr_value;
-
-    ptr_hashtable = (struct t_hashtable *)data;
-
-    if (ptr_hashtable)
-    {
-        ptr_value = hashtable_get (ptr_hashtable, text);
-        if (ptr_value)
-            return strdup (ptr_value);
-    }
-
-    return NULL;
-}
-
-/*
  * Runs command according to focus.
  *
  * Returns:
@@ -1107,12 +1100,16 @@ gui_key_focus_command (const char *key, int context,
         {
             gui_chat_printf (NULL, _("Hashtable focus:"));
             list_keys = hashtable_get_list_keys (hashtable);
-            for (ptr_item = list_keys->items; ptr_item;
-                 ptr_item = ptr_item->next_item)
+            if (list_keys)
             {
-                gui_chat_printf (NULL, "  %s: \"%s\"",
-                                 ptr_item->data,
-                                 hashtable_get (hashtable, ptr_item->data));
+                for (ptr_item = list_keys->items; ptr_item;
+                     ptr_item = ptr_item->next_item)
+                {
+                    gui_chat_printf (NULL, "  %s: \"%s\"",
+                                     ptr_item->data,
+                                     hashtable_get (hashtable, ptr_item->data));
+                }
+                weelist_free (list_keys);
             }
         }
         if (debug)

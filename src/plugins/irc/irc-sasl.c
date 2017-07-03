@@ -151,7 +151,6 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     answer_base64 = NULL;
     string = NULL;
-    length = 0;
 
     if (strcmp (data_base64, "+") == 0)
     {
@@ -292,7 +291,11 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         if (answer_base64)
             weechat_string_encode_base64 (string, length, answer_base64);
         free (string);
+        string = NULL;
     }
+
+    if (string)
+        free (string);
 
     return answer_base64;
 

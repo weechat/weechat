@@ -223,7 +223,7 @@ To remove nick alignment:
 ----
 
 [[status_hotlist]]
-=== What does mean the [H: 3(1,8), 2(4)] in status bar?
+=== What does the [H: 3(1,8), 2(4)] in status bar mean?
 
 This is called the "hotlist", a list of buffers with the number of unread
 messages, by order: highlights, private messages, messages, other messages
@@ -310,13 +310,23 @@ Another solution is to move nicklist to top or bottom, for example:
 
 With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
 
-By default, WeeChat displays time and prefix for each line and optional bars
-around chat area. To make easier URL click, you can move nicklist to top and
-remove alignment on nick:
+To make opening URLs easier, you can:
+
+* move nicklist to top:
 
 ----
 /set weechat.bar.nicklist.position top
-/set weechat.look.prefix_align none
+----
+
+* disable alignment for multiline words (WeeChat ≥ 1.7):
+
+----
+/set weechat.look.align_multiline_words off
+----
+
+* or for all wrapped lines:
+
+----
 /set weechat.look.align_end_of_lines time
 ----
 
@@ -686,7 +696,7 @@ For help: `/help filter` and `/help irc.look.smart_filter`
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?
 
-With WeeChat ≥ 0.4.1, you can choose which messages are displayed or not when
+With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
 joining a channel with the option _irc.look.display_join_message_ (see
 `/help irc.look.display_join_message` for more info).
 

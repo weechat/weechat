@@ -470,15 +470,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         /* remove old nick from nicklist */
         irc_nick_nicklist_remove (server, channel, ptr_nick);
 
-        /* update nick */
+        /* update nick prefixes */
         irc_nick_set_prefixes (server, ptr_nick, prefixes);
-        ptr_nick->away = away;
-        if (ptr_nick->account)
-            free (ptr_nick->account);
-        ptr_nick->account = (account) ? strdup (account) : NULL;
-        if (ptr_nick->realname)
-            free (ptr_nick->realname);
-        ptr_nick->realname = (realname) ? strdup (realname) : NULL;
 
         /* add new nick in nicklist */
         irc_nick_nicklist_add (server, channel, ptr_nick);
@@ -528,7 +521,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
-    if (channel->nicks)
+    if (channel->last_nick)
         channel->last_nick->next_nick = new_nick;
     else
         channel->nicks = new_nick;

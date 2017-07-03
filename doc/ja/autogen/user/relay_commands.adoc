@@ -8,7 +8,7 @@
 ----
 /relay  list|listfull|listrelay
         add <name> <port>
-        del|stop|restart <name>
+        del|start|restart|stop <name>
         raw
         sslcertkey
 
@@ -17,8 +17,9 @@
     listrelay: リレーをリストアップ (名前とポート番号)
           add: リレーを追加 (ポートで接続を待ち受ける)
           del: リレーを削除 (クライアントとの接続は保持)
-         stop: サーバソケットを閉じる (クライアントとの接続は保持)
+        start: ポートリッスンを開始する
       restart: サーバソケットを閉じて同じポートで接続を待つ (クライアントとの接続は保持)
+         stop: サーバソケットを閉じる (クライアントとの接続は保持)
          name: リレー名 (以下の書式を参照)
          port: リレーが使うポートの番号
           raw: 生リレーデータを表示するバッファを開く

@@ -739,7 +739,7 @@ relay_client_outqueue_add (struct t_relay_client *client,
 
         new_outqueue->prev_outqueue = client->last_outqueue;
         new_outqueue->next_outqueue = NULL;
-        if (client->outqueue)
+        if (client->last_outqueue)
             client->last_outqueue->next_outqueue = new_outqueue;
         else
             client->outqueue = new_outqueue;

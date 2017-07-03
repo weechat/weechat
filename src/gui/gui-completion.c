@@ -356,19 +356,26 @@ int
 gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 {
     char *base_word2, *nick2;
-    int return_cmp;
+    int case_sensitive, return_cmp;
+
+    case_sensitive = CONFIG_BOOLEAN(config_completion_nick_case_sensitive);
 
     if (!CONFIG_STRING(config_completion_nick_ignore_chars)
         || !CONFIG_STRING(config_completion_nick_ignore_chars)[0]
-        || !base_word || !nick || !base_word[0] || !nick[0]
+        || !base_word[0] || !nick[0]
         || gui_completion_nick_has_ignored_chars (base_word))
-        return string_strncasecmp (base_word, nick, max);
+    {
+        return (case_sensitive) ?
+            strncmp (base_word, nick, max) :
+            string_strncasecmp (base_word, nick, max);
+    }
 
     base_word2 = gui_completion_nick_strdup_ignore_chars (base_word);
     nick2 = gui_completion_nick_strdup_ignore_chars (nick);
 
-    return_cmp = string_strncasecmp (base_word2, nick2,
-                                     utf8_strlen (base_word2));
+    return_cmp = (case_sensitive) ?
+        strncmp (base_word2, nick2, utf8_strlen (base_word2)) :
+        string_strncasecmp (base_word2, nick2, utf8_strlen (base_word2));
 
     free (base_word2);
     free (nick2);
@@ -1387,31 +1394,6 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_completion, diff_size, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, diff_length, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, partial_list, POINTER, 0, NULL, NULL);
-    }
-    return hdata;
-}
-
-/*
- * Returns hdata for completion word.
- */
-
-struct t_hdata *
-gui_completion_hdata_completion_word_cb (const void *pointer, void *data,
-                                         const char *hdata_name)
-{
-    struct t_hdata *hdata;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-
-    hdata = hdata_new (NULL, hdata_name, "prev_item", "next_item",
-                       0, 0, NULL, NULL);
-    if (hdata)
-    {
-        HDATA_VAR(struct t_gui_completion_word, word, STRING, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_word, nick_completion, CHAR, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_completion_word, count, INTEGER, 0, NULL, NULL);
     }
     return hdata;
 }

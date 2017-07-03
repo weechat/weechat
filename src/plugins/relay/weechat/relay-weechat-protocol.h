@@ -86,11 +86,6 @@ extern int relay_weechat_protocol_signal_buffer_cb (const void *pointer,
                                                     const char *signal,
                                                     const char *type_data,
                                                     void *signal_data);
-extern int relay_weechat_protocol_signal_nicklist_cb (const void *pointer,
-                                                      void *data,
-                                                      const char *signal,
-                                                      const char *type_data,
-                                                      void *signal_data);
 extern int relay_weechat_protocol_hsignal_nicklist_cb (const void *pointer,
                                                        void *data,
                                                        const char *signal,

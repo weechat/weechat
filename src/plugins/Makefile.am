@@ -61,6 +61,10 @@ if PLUGIN_FIFO
 fifo_dir = fifo
 endif
 
+if PLUGIN_FSET
+fset_dir = fset
+endif
+
 if PLUGIN_IRC
 irc_dir = irc
 endif
@@ -120,6 +124,7 @@ SUBDIRS = . \
           $(charset_dir) \
           $(exec_dir) \
           $(fifo_dir) \
+          $(fset_dir) \
           $(irc_dir) \
           $(logger_dir) \
           $(relay_dir) \

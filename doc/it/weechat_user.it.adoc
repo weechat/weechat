@@ -245,6 +245,9 @@ List of commonly used options:
 | ENABLE_FIFO | `ON`, `OFF` | ON |
   Compile <<fifo_plugin,Fifo plugin>>.
 
+| ENABLE_FSET | `ON`, `OFF` | ON |
+  Compile <<fset_plugin,Fset plugin>>.
+
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
   Enable Gnutls (for SSL).
 
@@ -566,6 +569,8 @@ The files in home directory are:
 | buflist.conf | Configuration file for _buflist_ plugin | No.
 | charset.conf | Configuration file for _charset_ plugin | No.
 | exec.conf    | Configuration file for _exec_ plugin    | No.
+| fifo.conf    | Configuration file for _fifo_ plugin    | No.
+| fset.conf    | Configuration file for _fset_ plugin    | No.
 | irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
 | logger.conf  | Configuration file for _logger_ plugin  | No.
 | relay.conf   | Configuration file for _relay_ plugin   | No.
@@ -1634,6 +1639,14 @@ with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`
 | kbd:[Alt+PgDn]  | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down`
 | kbd:[Alt+Home]  | Scorre in cima al buffer. | `/window scroll_top`
 | kbd:[Alt+End]   | Scorre alla fine del del buffer. | `/window scroll_bottom`
+// TRANSLATION MISSING
+| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+// TRANSLATION MISSING
+| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+// TRANSLATION MISSING
+| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
+// TRANSLATION MISSING
+| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
@@ -1768,6 +1781,18 @@ evento del mouse.
 | ⇓            | -                | chat (script buffer) | Move 5 lines down in script buffer. | `/script down 5`
 | kbd:[Ctrl+⇑] | -                | chat                 | Scroll horizontally to the left. | `/window scroll_horiz -window ${_window_number} -10%`
 | kbd:[Ctrl+⇓] | -                | chat                 | Scroll horizontally to the right. | `/window scroll_horiz -window ${_window_number} +10%`
+// TRANSLATION MISSING
+| ◾◽◽          | up / left        | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◾◽◽          | down / right     | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◾◽◽          | -                | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| ◽◽◾          | -                | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+⇑] | -                | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
+// TRANSLATION MISSING
+| kbd:[Ctrl+⇓] | -                | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
 | ◾◽◽          | su               | lista nick           | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist ${_window_number} -100%`
 | ◾◽◽          | giù              | lista nick           | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist ${_window_number} +100%`
 | ◾◽◽          | up (lungo)       | lista nick           | Sposta all'inizio della lista nick. | `/bar scroll nicklist ${_window_number} b`
@@ -2101,6 +2126,8 @@ I plugin predefiniti sono:
 // TRANSLATION MISSING
 | exec       | Execution of external commands in WeeChat.
 | fifo       | pipe FIFO utilizzata per inviare comandi da remoto su WeeChat.
+// TRANSLATION MISSING
+| fset       | Fast set of WeeChat and plugins options.
 | irc        | protocollo chat per IRC.
 | logger     | Registra i buffer su file.
 | relay      | Relay dei dati via rete.
@@ -2464,6 +2491,38 @@ include::autogen/user/fifo_options.adoc[]
 
 include::autogen/user/fifo_commands.adoc[]
 
+[[fset_plugin]]
+=== Fset plugin
+
+// TRANSLATION MISSING
+Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
+and plugin options.
+
+[[fset_options]]
+==== Opzioni (fset.conf)
+
+// TRANSLATION MISSING
+Sections:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| color   | /set fset.color.*  | Colors.
+| format  | /set fset.format.* | Formats used to display list of options.
+| look    | /set fset.look.*   | Look and feel.
+|===
+
+// TRANSLATION MISSING
+Options:
+
+include::autogen/user/fset_options.adoc[]
+
+[[fset_commands]]
+==== Comandi
+
+include::autogen/user/fset_commands.adoc[]
+
 [[irc_plugin]]
 === Plugin IRC
 
@@ -2700,12 +2759,14 @@ Impostare il proxy per TOR:
 ----
 
 // TRANSLATION MISSING
-Set SASL authentication with ECDSA-NIST256P-CHALLENGE:
+Set SASL authentication with ECDSA-NIST256P-CHALLENGE (see the chapter
+<<irc_sasl_ecdsa_nist256p_challenge,SASL ECDSA-NIST256P-CHALLENGE>> to generate
+a private key):
 
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_password "your_password"
+/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
 ----
 
 E alla fine, connettersi al server:
@@ -3670,24 +3731,22 @@ is added in hashtable:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable             | Type   | Description
-| server               | string | Name of server (example: "freenode").
-| tags                 | string | Tags in message (rarely used).
-| message_without_tags | string | Message without tags.
-| nick                 | string | Nick.
-| host                 | string | Hostname.
-| command              | string | IRC command (example: "PRIVMSG", "NOTICE", ...).
-| channel              | string | IRC channel.
-| arguments            | string | Arguments of command (includes value of _channel_).
-| text                 | string | Text (for example user message).
-// TRANSLATION MISSING
-| pos_command          | string | The index of _command_ in message ("-1" if _command_ was not found).
-// TRANSLATION MISSING
-| pos_arguments        | string | The index of _arguments_ in message ("-1" if _arguments_ was not found).
-// TRANSLATION MISSING
-| pos_channel          | string | The index of _channel_ in message ("-1" if _channel_ was not found).
-// TRANSLATION MISSING
-| pos_text             | string | The index of _text_ in message ("-1" if _text_ was not found).
+| Variable             | Type    | Description
+| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
+| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| server               | string  | Name of server (example: "freenode").
+| tags                 | string  | Tags in message (rarely used).
+| message_without_tags | string  | Message without tags.
+| nick                 | string  | Nick.
+| host                 | string  | Hostname.
+| command              | string  | IRC command (example: "PRIVMSG", "NOTICE", ...).
+| channel              | string  | IRC channel.
+| arguments            | string  | Arguments of command (includes value of _channel_).
+| text                 | string  | Text (for example user message).
+| pos_command          | string  | The index of _command_ in message ("-1" if _command_ was not found).
+| pos_arguments        | string  | The index of _arguments_ in message ("-1" if _arguments_ was not found).
+| pos_channel          | string  | The index of _channel_ in message ("-1" if _channel_ was not found).
+| pos_text             | string  | The index of _text_ in message ("-1" if _text_ was not found).
 |===
 
 When the data is a pointer, the variable `tg_signal_data` can be used like this

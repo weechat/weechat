@@ -1740,7 +1740,7 @@ COMMAND_CALLBACK(debug)
 
     if (string_strcasecmp (argv[1], "color") == 0)
     {
-        gui_color_dump (buffer);
+        gui_color_dump ();
         return WEECHAT_RC_OK;
     }
 
@@ -5233,24 +5233,6 @@ COMMAND_CALLBACK(save)
     }
 
     return WEECHAT_RC_OK;
-}
-
-/*
- * Displays a secured data.
- */
-
-void
-command_secure_display_data (void *data,
-                             struct t_hashtable *hashtable,
-                             const void *key, const void *value)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) hashtable;
-    (void) value;
-
-    if (key)
-        gui_chat_printf (NULL, "  %s", key);
 }
 
 /*

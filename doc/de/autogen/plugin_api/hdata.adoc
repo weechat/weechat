@@ -8,6 +8,27 @@
 |===
 | Erweiterung | Name | Beschreibung | Listen | Variablen
 
+| fset
+| [[hdata_fset_option]]<<hdata_fset_option,fset_option>>
+| fset options
+| -
+| _index_   (integer) +
+_file_   (string) +
+_section_   (string) +
+_option_   (string) +
+_name_   (string) +
+_parent_name_   (string) +
+_type_   (integer) +
+_default_value_   (string) +
+_value_   (string) +
+_parent_value_   (string) +
+_min_   (string) +
+_max_   (string) +
+_description_   (string) +
+_string_values_   (string) +
+_marked_   (integer) +
+
+
 | guile
 | [[hdata_guile_script]]<<hdata_guile_script,guile_script>>
 | Liste der Skripten
@@ -168,6 +189,7 @@ _options_   (pointer) +
 _temp_server_   (integer) +
 _reloading_from_config_   (integer) +
 _reloaded_from_config_   (integer) +
+_addresses_eval_   (string) +
 _addresses_count_   (integer) +
 _addresses_array_   (string, array_size: "addresses_count") +
 _ports_array_   (integer, array_size: "addresses_count") +
@@ -456,6 +478,9 @@ _gui_objects_   (pointer) +
 _prev_bar_window_   (pointer, hdata: "bar_window") +
 _next_bar_window_   (pointer, hdata: "bar_window") +
 
+*Update erlaubt:* +
+    _scroll_x_ (integer) +
+    _scroll_y_ (integer) +
 
 | weechat
 | [[hdata_buffer]]<<hdata_buffer,buffer>>

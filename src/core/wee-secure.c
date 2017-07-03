@@ -42,8 +42,6 @@
 #define SALT_SIZE 8
 
 struct t_config_file *secure_config_file = NULL;
-struct t_config_section *secure_config_section_crypt = NULL;
-struct t_config_section *secure_config_section_data = NULL;
 
 struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;
@@ -80,56 +78,6 @@ int secure_data_encrypted = 0;
 struct t_gui_buffer *secure_buffer = NULL;
 int secure_buffer_display_values = 0;
 
-
-/*
- * Searches for a hash algorithm.
- *
- * Returns hash algorithm value (from gcrypt constant), -1 if hash algorithm is
- * not found.
- */
-
-int
-secure_search_hash_algo (const char *hash_algo)
-{
-    int i;
-
-    if (!hash_algo)
-        return -1;
-
-    for (i = 0; secure_hash_algo_string[i]; i++)
-    {
-        if (strcmp (secure_hash_algo_string[i], hash_algo) == 0)
-            return secure_hash_algo[i];
-    }
-
-    /* hash algorithm not found */
-    return -1;
-}
-
-/*
- * Searches for a cipher.
- *
- * Returns cipher value (from gcrypt constant), -1 if cipher is not
- * found.
- */
-
-int
-secure_search_cipher (const char *cipher)
-{
-    int i;
-
-    if (!cipher)
-        return -1;
-
-    for (i = 0; secure_cipher_string[i]; i++)
-    {
-        if (strcmp (secure_cipher_string[i], cipher) == 0)
-            return secure_cipher[i];
-    }
-
-    /* cipher not found */
-    return -1;
-}
 
 /*
  * Derives a key from salt + passphrase (using a hash).

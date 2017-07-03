@@ -74,6 +74,7 @@ Les répertoires principaux de WeeChat sont :
 |       charset/    | Extension Charset.
 |       exec/       | Extension Exec.
 |       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat).
+|       fset/       | Extension Fset (Fast Set).
 |       guile/      | API script Guile (scheme).
 |       irc/        | Extension IRC (Internet Relay Chat).
 |       javascript/ | API script Javascript.
@@ -215,6 +216,16 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       fifo-command.c              | Commandes pour Fifo.
 |       fifo-config.c               | Options de configuration pour Fifo (fichier fifo.conf).
 |       fifo-info.c                 | Info/infolists/hdata pour Fifo.
+|    fset/                          | Extension Fset.
+|       fset.c                      | Fonctions principales de Fset.
+|       fset-bar-item.c             | Objets de barre Fset.
+|       fset-buffer.c               | Tampon Fset.
+|       fset-command.c              | Commandes pour Fset.
+|       fset-completion.c           | Complétions pour Fset.
+|       fset-config.c               | Options de configuration pour Fset (fichier fset.conf).
+|       fset-info.c                 | Info/infolists/hdata pour Fset.
+|       fset-mouse.c                | Actions souris pour Fset.
+|       fset-option.c               | Gestion des options Fset.
 |    guile/                         | Extension Guile (scheme).
 |       weechat-guile.c             | Fonctions principales pour Guile (chargement/déchargement des scripts, exécution de code Guile).
 |       weechat-guile-api.c         | Fonctions de l'API script Guile.

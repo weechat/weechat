@@ -6,7 +6,7 @@
 ** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** valeur par défaut: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** description: pass:none[format pour la ligne avec le tampon courant (note : le contenu est évalué, voir /help buflist)]
@@ -68,6 +68,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.format.name]] *buflist.format.name*
+** description: pass:none[format pour le nom du tampon (note : le contenu est évalué, voir /help buflist)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"${name}"+`
+
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** description: pass:none[format pour un préfixe de pseudo sur un canal (note : le contenu est évalué, voir /help buflist)]
 ** type: chaîne
@@ -80,11 +86,29 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** description: pass:none[ajouter une nouvelle ligne entre les tampons affichés, de sorte que chaque tampon est affiché sur une ligne séparée (recommandé) ; si désactivé, les nouvelles lignes doivent être ajoutées dans les formats avec "${\n}", et les actions de souris ne sont plus possibles]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** description: pass:none[faire défiler automatiquement la barre buflist pour toujours voir le tampon courant (cela fonctionne seulement avec une barre en position gauche/droite avec un remplissage "vertical") ; cette valeur est un pourcentage de lignes affichées avant le tampon courant lors du défilement (-1 = désactiver le défilement) ; par exemple 50 signifie qu'après un défilement, le tampon courant est au milieu de la barre, 0 signifie en haut de la barre et 100 signifie en bas de la barre]
+** type: entier
+** valeurs: -1 .. 100
+** valeur par défaut: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist) ; par exemple pour cacher les tampons de serveurs s'ils sont fusionnés avec le tampon "core" : "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
+
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** description: pass:none[activer buflist]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** description: pass:none[si activé, les clics avec les boutons gauche/droit sur la ligne avec le tampon courant sautent au tampon visité avant/après]
@@ -123,7 +147,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ("var"), une variable hdata du serveur IRC ("irc_server.var") ou une variable hdata du canal IRC ("irc_channel.var") ; le caractère "-" peut être utilisé pour inverser l'ordre]
+** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ("var"), une variable hdata du serveur IRC ("irc_server.var") ou une variable hdata du canal IRC ("irc_channel.var") ; le caractère "-" peut être utilisé pour inverser l'ordre, le caractère "~" peut être utilisé pour effectuer une comparaison insensible à la casse ; exemple : "-~short_name" pour un tri inverse insensible à la casse sur le nom court du tampon]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"number,-active"+`

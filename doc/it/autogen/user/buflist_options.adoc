@@ -6,7 +6,7 @@
 ** descrizione: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${name}"+`
+** valore predefinito: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`
 
 * [[option_buflist.format.buffer_current]] *buflist.format.buffer_current*
 ** descrizione: pass:none[format for the line with current buffer (note: content is evaluated, see /help buflist)]
@@ -68,6 +68,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+" ${color:green}[${color:brown}${lag}${color:green}]"+`
 
+* [[option_buflist.format.name]] *buflist.format.name*
+** descrizione: pass:none[format for buffer name (note: content is evaluated, see /help buflist)]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"${name}"+`
+
 * [[option_buflist.format.nick_prefix]] *buflist.format.nick_prefix*
 ** descrizione: pass:none[format for nick prefix on a channel (note: content is evaluated, see /help buflist)]
 ** tipo: stringa
@@ -80,11 +86,29 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
+* [[option_buflist.look.add_newline]] *buflist.look.add_newline*
+** descrizione: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
+* [[option_buflist.look.auto_scroll]] *buflist.look.auto_scroll*
+** descrizione: pass:none[automatically scroll the buflist bar to always see the current buffer (this works only with a bar on the left/right position with a "vertical" filling); this value is the percent number of lines displayed before the current buffer when scrolling (-1 = disable scroll); for example 50 means that after a scroll, the current buffer is at the middle of bar, 0 means on top of bar, 100 means at bottom of bar]
+** tipo: intero
+** valori: -1 .. 100
+** valore predefinito: `+50+`
+
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
 ** descrizione: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist); for example to hide server buffers if they are merged with core buffer: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"${buffer.hidden}==0"+`
+
+* [[option_buflist.look.enabled]] *buflist.look.enabled*
+** descrizione: pass:none[enable buflist]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_buflist.look.mouse_jump_visited_buffer]] *buflist.look.mouse_jump_visited_buffer*
 ** descrizione: pass:none[if enabled, clicks with left/right buttons on the line with current buffer jump to previous/next visited buffer]
@@ -123,7 +147,7 @@
 ** valore predefinito: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** descrizione: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order]
+** descrizione: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"number,-active"+`

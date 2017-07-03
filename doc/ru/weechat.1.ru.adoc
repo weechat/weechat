@@ -64,11 +64,23 @@ $HOME/.weechat/alias.conf::
 $HOME/.weechat/aspell.conf::
     файл конфигурации для плагина _aspell_
 
+// TRANSLATION MISSING
+$HOME/.weechat/buflist.conf::
+    configuration file for _buflist_ plugin
+
 $HOME/.weechat/charset.conf::
     файл конфигурации для плагина _charset_
 
 $HOME/.weechat/exec.conf::
     файл конфигурации для плагина _exec_
+
+// TRANSLATION MISSING
+$HOME/.weechat/fifo.conf::
+    configuration file for _fifo_ plugin
+
+// TRANSLATION MISSING
+$HOME/.weechat/fset.conf::
+    configuration file for _fset_ plugin
 
 $HOME/.weechat/irc.conf::
     файл конфигурации для плагина _irc_

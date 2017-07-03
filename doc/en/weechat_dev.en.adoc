@@ -72,6 +72,7 @@ The main WeeChat directories are:
 |       charset/    | Charset plugin.
 |       exec/       | Exec plugin.
 |       fifo/       | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat).
+|       fset/       | Fset (Fast Set) plugin.
 |       guile/      | Guile (scheme) scripting API.
 |       irc/        | IRC (Internet Relay Chat) plugin.
 |       javascript/ | Javascript scripting API.
@@ -213,6 +214,16 @@ WeeChat "core" is located in following directories:
 |       fifo-command.c              | Fifo commands.
 |       fifo-config.c               | Fifo config options (file fifo.conf).
 |       fifo-info.c                 | Fifo info/infolists/hdata.
+|    fset/                          | Fset plugin.
+|       fset.c                      | Main fset functions.
+|       fset-bar-item.c             | Fset bar items.
+|       fset-buffer.c               | Fset buffer.
+|       fset-command.c              | Fset commands.
+|       fset-completion.c           | Fset completions.
+|       fset-config.c               | Fset config options (file fset.conf).
+|       fset-info.c                 | Fset info/infolists/hdata.
+|       fset-mouse.c                | Fset mouse actions.
+|       fset-option.c               | Fset options management.
 |    guile/                         | Guile (scheme) plugin.
 |       weechat-guile.c             | Main guile functions (load/unload scripts, execute guile code).
 |       weechat-guile-api.c         | Guile scripting API functions.
