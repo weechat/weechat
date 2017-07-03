@@ -155,10 +155,11 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (jako root)
+$ sudo make install
 ----
 
-* Instalacja w wybranym katalogu:
+// TRANSLATION MISSING
+* Instalacja w wybranym katalogu (for example your home):
 
 ----
 $ mkdir build
@@ -315,10 +316,11 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (jako root)
+$ sudo make install
 ----
 
-* Instalacja w wybranym katalogu:
+// TRANSLATION MISSING
+* Instalacja w wybranym katalogu (for example your home):
 
 ----
 $ ./autogen.sh

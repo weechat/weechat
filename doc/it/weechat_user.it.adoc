@@ -177,10 +177,11 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (come root)
+$ sudo make install
 ----
 
-* Installazione in una directory personalizzata:
+// TRANSLATION MISSING
+* Installazione in una directory personalizzata (for example your home):
 
 ----
 $ mkdir build
@@ -341,10 +342,11 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (come root)
+$ sudo make install
 ----
 
-* Installazione in una directory personalizzata:
+// TRANSLATION MISSING
+* Installazione in una directory personalizzata (for example your home):
 
 ----
 $ ./autogen.sh

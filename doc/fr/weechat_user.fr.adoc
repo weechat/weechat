@@ -153,10 +153,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (en root)
+$ sudo make install
 ----
 
-* Installation dans un répertoire spécifique :
+* Installation dans un répertoire spécifique (par exemple dans votre "home") :
 
 ----
 $ mkdir build
@@ -314,10 +314,10 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (en root)
+$ sudo make install
 ----
 
-* Installation dans un répertoire spécifique :
+* Installation dans un répertoire spécifique (par exemple dans votre "home") :
 
 ----
 $ ./autogen.sh

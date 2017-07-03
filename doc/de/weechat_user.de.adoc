@@ -157,10 +157,11 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (als root)
+$ sudo make install
 ----
 
-* Installation in ein benutzerdefiniertes Verzeichnis:
+// TRANSLATION MISSING
+* Installation in ein benutzerdefiniertes Verzeichnis (for example your home):
 
 ----
 $ mkdir build
@@ -317,10 +318,11 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (als root)
+$ sudo make install
 ----
 
-* Installation in ein benutzerdefiniertes Verzeichnis:
+// TRANSLATION MISSING
+* Installation in ein benutzerdefiniertes Verzeichnis (for example your home):
 
 ----
 $ ./autogen.sh

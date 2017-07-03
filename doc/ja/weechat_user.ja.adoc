@@ -154,10 +154,11 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (root で実行)
+$ sudo make install
 ----
 
-* 任意のディレクトリにインストールする場合:
+// TRANSLATION MISSING
+* 任意のディレクトリにインストールする場合 (for example your home):
 
 ----
 $ mkdir build
@@ -312,10 +313,11 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (as root)
+$ sudo make install
 ----
 
-* 任意のディレクトリにインストールする場合:
+// TRANSLATION MISSING
+* 任意のディレクトリにインストールする場合 (for example your home):
 
 ----
 $ ./autogen.sh
