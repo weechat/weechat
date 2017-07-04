@@ -992,7 +992,8 @@ plugin_arraylist_cmp_cb (void *data,
  */
 
 void
-plugin_auto_load (int argc, char **argv)
+plugin_auto_load (int argc, char **argv, int load_from_plugin_path,
+                  int load_from_lib_dir)
 {
     char *dir_name, *plugin_path, *plugin_path2;
     struct t_weechat_plugin *ptr_plugin;
@@ -1015,7 +1016,8 @@ plugin_auto_load (int argc, char **argv)
     }
 
     /* auto-load plugins in WeeChat home dir */
-    if (CONFIG_STRING(config_plugin_path)
+    if (load_from_plugin_path
+        && CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
         plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
@@ -1035,14 +1037,17 @@ plugin_auto_load (int argc, char **argv)
     }
 
     /* auto-load plugins in WeeChat global lib dir */
-    length = strlen (WEECHAT_LIBDIR) + 16 + 1;
-    dir_name = malloc (length);
-    if (dir_name)
+    if (load_from_lib_dir)
     {
-        snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 1, 0,
-                            &plugin_auto_load_file, &plugin_args);
-        free (dir_name);
+        length = strlen (WEECHAT_LIBDIR) + 16 + 1;
+        dir_name = malloc (length);
+        if (dir_name)
+        {
+            snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
+            util_exec_on_files (dir_name, 1, 0,
+                                &plugin_auto_load_file, &plugin_args);
+            free (dir_name);
+        }
     }
 
     /* free autoload array */
@@ -1332,7 +1337,7 @@ plugin_init (int auto_load, int argc, char *argv[])
     if (auto_load)
     {
         plugin_quiet = 1;
-        plugin_auto_load (argc, argv);
+        plugin_auto_load (argc, argv, 1, 1);
         plugin_display_short_list ();
         plugin_quiet = 0;
     }
