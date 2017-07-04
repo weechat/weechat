@@ -23,6 +23,10 @@ New features::
   * buflist: add option buflist.look.add_newline (issue #1027)
   * fset: new plugin "fset" (fast set of WeeChat and plugins options)
 
+Improvements::
+
+  * api: add argument "recurse_subdirs" in function exec_on_files()
+
 Bug fixes::
 
   * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar

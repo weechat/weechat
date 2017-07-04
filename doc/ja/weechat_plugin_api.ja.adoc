@@ -3176,7 +3176,8 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== exec_on_files
 
-_WeeChat バージョン 1.5 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.5, 2.0._
 
 ディレクトリ中のファイルを探し、各ファイルに対してコールバックを実行。
 
@@ -3185,6 +3186,7 @@ _WeeChat バージョン 1.5 で更新。_
 [source,C]
 ----
 void weechat_exec_on_files (const char *directory,
+                            int recurse_subdirs,
                             int hidden_files,
                             void (*callback)(void *data,
                                              const char *filename),
@@ -3194,6 +3196,8 @@ void weechat_exec_on_files (const char *directory,
 引数:
 
 * _directory_: ファイルを検索するディレクトリ
+// TRANSLATION MISSING
+* _recurse_subdirs_: 1 to recurse into sub-directories (_WeeChat ≥ 2.0_)
 * _hidden_files_: 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
 * _callback_: 各ファイルに対して呼び出すコールバック関数、引数:
 ** _void *data_: ポインタ
@@ -3209,7 +3213,7 @@ void callback (void *data, const char *filename)
     /* ... */
 }
 ...
-weechat_exec_on_files ("/tmp", 0, &callback, NULL);
+weechat_exec_on_files ("/tmp", 0, 0, &callback, NULL);
 ----
 
 [NOTE]

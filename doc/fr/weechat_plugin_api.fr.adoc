@@ -3226,7 +3226,7 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== exec_on_files
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 2.0._
 
 Balayer les fichiers dans un répertoire et exécuter une fonction de rappel
 pour chaque fichier.
@@ -3236,6 +3236,7 @@ Prototype :
 [source,C]
 ----
 void weechat_exec_on_files (const char *directory,
+                            int recurse_subdirs,
                             int hidden_files,
                             void (*callback)(void *data,
                                              const char *filename),
@@ -3245,6 +3246,7 @@ void weechat_exec_on_files (const char *directory,
 Paramètres :
 
 * _directory_ : répertoire où chercher les fichiers
+* _recurse_subdirs_ : 1 pour entrer dans les sous-répertoires (_WeeChat ≥ 2.0_)
 * _hidden_files_ : 1 pour inclure les fichiers cachés, sinon 0
 * _callback_ : fonction appelée pour chaque fichier trouvé, paramètres :
 ** _void *data_ : pointeur
@@ -3261,7 +3263,7 @@ void callback (void *data, const char *filename)
     /* ... */
 }
 ...
-weechat_exec_on_files ("/tmp", 0, &callback, NULL);
+weechat_exec_on_files ("/tmp", 0, 0, &callback, NULL);
 ----
 
 [NOTE]

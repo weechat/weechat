@@ -1025,6 +1025,7 @@ plugin_auto_load (int argc, char **argv)
         util_exec_on_files ((plugin_path2) ?
                             plugin_path2 : ((plugin_path) ?
                                             plugin_path : CONFIG_STRING(config_plugin_path)),
+                            1,
                             0,
                             &plugin_auto_load_file, &plugin_args);
         if (plugin_path)
@@ -1039,7 +1040,7 @@ plugin_auto_load (int argc, char **argv)
     if (dir_name)
     {
         snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 0,
+        util_exec_on_files (dir_name, 1, 0,
                             &plugin_auto_load_file, &plugin_args);
         free (dir_name);
     }

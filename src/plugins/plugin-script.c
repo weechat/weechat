@@ -419,7 +419,7 @@ plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
 
     snprintf (dir_name, dir_length,
               "%s/%s/autoload", dir_home, weechat_plugin->name);
-    weechat_exec_on_files (dir_name, 0, callback, NULL);
+    weechat_exec_on_files (dir_name, 0, 0, callback, NULL);
 
     free (dir_name);
 }

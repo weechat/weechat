@@ -46,7 +46,8 @@ extern void util_catch_signal (int signum, void (*handler)(int));
 extern int util_mkdir_home (const char *directory, int mode);
 extern int util_mkdir (const char *directory, int mode);
 extern int util_mkdir_parents (const char *directory, int mode);
-extern void util_exec_on_files (const char *directory, int hidden_files,
+extern void util_exec_on_files (const char *directory, int recurse_subdirs,
+                                int hidden_files,
                                 void (*callback)(void *data,
                                                  const char *filename),
                                 void *callback_data);

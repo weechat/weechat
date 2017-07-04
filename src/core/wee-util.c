@@ -485,7 +485,8 @@ util_mkdir_parents (const char *directory, int mode)
  */
 
 void
-util_exec_on_files (const char *directory, int hidden_files,
+util_exec_on_files (const char *directory, int recurse_subdirs,
+                    int hidden_files,
                     void (*callback)(void *data, const char *filename),
                     void *callback_data)
 {
@@ -507,7 +508,17 @@ util_exec_on_files (const char *directory, int hidden_files,
                 snprintf (complete_filename, sizeof (complete_filename),
                           "%s/%s", directory, entry->d_name);
                 lstat (complete_filename, &statbuf);
-                if (!S_ISDIR(statbuf.st_mode))
+                if (S_ISDIR(statbuf.st_mode))
+                {
+                    if (recurse_subdirs
+                        && (strcmp (entry->d_name, ".") != 0)
+                        && (strcmp (entry->d_name, "..") != 0))
+                    {
+                        util_exec_on_files (complete_filename, 1, hidden_files,
+                                            callback, callback_data);
+                    }
+                }
+                else
                 {
                     (*callback) (callback_data, complete_filename);
                 }
