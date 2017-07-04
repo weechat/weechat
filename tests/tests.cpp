@@ -160,6 +160,9 @@ main (int argc, char *argv[])
     /* display WeeChat version */
     input_data (gui_buffer_search_main (), "/command core version");
 
+    /* auto-load plugins, only from path in option weechat.plugin.path */
+    plugin_auto_load (0, NULL, 1, 0);
+
     /* run all tests */
     printf ("\n");
     printf (">>>>>>>>>> TESTS >>>>>>>>>>\n");
