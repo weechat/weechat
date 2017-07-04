@@ -490,7 +490,7 @@ util_exec_on_files (const char *directory, int recurse_subdirs,
                     void (*callback)(void *data, const char *filename),
                     void *callback_data)
 {
-    char complete_filename[1024];
+    char complete_filename[PATH_MAX];
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
