@@ -484,6 +484,19 @@ You can edit this file at your convenience to configure WeeChat or you can set
 parameters with `/set` command in WeeChat (see
 <<weechat_commands,WeeChat commands>>).
 
+[[environment_variables]]
+=== Environment variables
+
+Some environment variables are used by WeeChat if they are defined:
+
+[width="100%",cols="1m,6",options="header"]
+|===
+| Name                 | Description
+| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...).
+| WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
+| WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
+|===
+
 [[files_and_directories]]
 === Files and directories
 
