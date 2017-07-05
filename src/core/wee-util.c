@@ -555,7 +555,7 @@ util_search_full_lib_name_ext (const char *filename, const char *extension,
               (strchr (filename, '.')) ? "" : extension);
 
     /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
-    extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
         length = strlen (extra_libdir) + strlen (name_with_ext) +

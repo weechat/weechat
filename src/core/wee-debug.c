@@ -573,7 +573,7 @@ debug_directories ()
 {
     char *extra_libdir;
 
-    extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
 
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Directories:"));

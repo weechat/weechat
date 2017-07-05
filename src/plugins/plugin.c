@@ -1041,7 +1041,7 @@ plugin_auto_load (int argc, char **argv,
     /* auto-load plugins in WEECHAT_EXTRA_LIBDIR environment variable */
     if (load_from_extra_lib_dir)
     {
-        extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+        extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
         if (extra_libdir && extra_libdir[0])
         {
             length = strlen (extra_libdir) + 16 + 1;

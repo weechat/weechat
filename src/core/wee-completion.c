@@ -885,7 +885,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     (void) buffer;
 
     /* plugins in WeeChat extra lib dir */
-    extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
     if (extra_libdir && extra_libdir[0])
     {
         length = strlen (extra_libdir) + 16 + 1;
