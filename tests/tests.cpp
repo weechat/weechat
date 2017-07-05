@@ -39,6 +39,7 @@ extern "C"
 #include "src/plugins/plugin.h"
 #include "src/gui/gui-main.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-chat.h"
 
     extern void gui_main_init ();
     extern void gui_main_loop ();
@@ -125,6 +126,7 @@ main (int argc, char *argv[])
 {
     int rc, length, weechat_argc;
     char *weechat_tests_args, *args, **weechat_argv;
+    struct t_gui_buffer *ptr_core_buffer;
 
     /* setup environment: English language, no specific timezone */
     setenv ("LC_ALL", "en_US.UTF-8", 1);
@@ -133,7 +135,7 @@ main (int argc, char *argv[])
     /* build arguments for WeeChat */
     weechat_tests_args = getenv ("WEECHAT_TESTS_ARGS");
     length = strlen (argv[0]) +
-        64 +  /* -p --dir ... */
+        64 +  /* --dir ... */
         ((weechat_tests_args) ? 1 + strlen (weechat_tests_args) : 0) +
         1;
     args = (char *)malloc (length);
@@ -143,7 +145,7 @@ main (int argc, char *argv[])
         return 1;
     }
     snprintf (args, length,
-              "%s -p --dir ./tmp_weechat_test%s%s",
+              "%s --dir ./tmp_weechat_test%s%s",
               argv[0],
               (weechat_tests_args) ? " " : "",
               (weechat_tests_args) ? weechat_tests_args : "");
@@ -157,11 +159,21 @@ main (int argc, char *argv[])
         string_free_split (weechat_argv);
     free (args);
 
-    /* display WeeChat version */
-    input_data (gui_buffer_search_main (), "/command core version");
+    ptr_core_buffer = gui_buffer_search_main ();
 
-    /* auto-load plugins, only from path in option weechat.plugin.path */
-    plugin_auto_load (0, NULL, 1, 0, 0);
+    /* display WeeChat version and directories */
+    input_data (ptr_core_buffer, "/command core version");
+    input_data (ptr_core_buffer, "/debug dirs");
+
+    /* auto-load plugins from WEECHAT_EXTRA_LIBDIR if no plugin were loaded */
+    if (!weechat_plugins)
+    {
+        gui_chat_printf (NULL,
+                         "Auto-loading plugins from path in "
+                         "environment variable WEECHAT_EXTRA_LIBDIR (\"%s\")",
+                         getenv ("WEECHAT_EXTRA_LIBDIR"));
+        plugin_auto_load (0, NULL, 0, 1, 0);
+    }
 
     /* run all tests */
     printf ("\n");
