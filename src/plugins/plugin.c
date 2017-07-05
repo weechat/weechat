@@ -992,10 +992,12 @@ plugin_arraylist_cmp_cb (void *data,
  */
 
 void
-plugin_auto_load (int argc, char **argv, int load_from_plugin_path,
+plugin_auto_load (int argc, char **argv,
+                  int load_from_plugin_path,
+                  int load_from_extra_lib_dir,
                   int load_from_lib_dir)
 {
-    char *dir_name, *plugin_path, *plugin_path2;
+    char *dir_name, *plugin_path, *plugin_path2, *extra_libdir;
     struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
     struct t_arraylist *arraylist;
@@ -1015,7 +1017,7 @@ plugin_auto_load (int argc, char **argv, int load_from_plugin_path,
                                               &plugin_autoload_count);
     }
 
-    /* auto-load plugins in WeeChat home dir */
+    /* auto-load plugins in custom path */
     if (load_from_plugin_path
         && CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
@@ -1034,6 +1036,21 @@ plugin_auto_load (int argc, char **argv, int load_from_plugin_path,
             free (plugin_path);
         if (plugin_path2)
             free (plugin_path2);
+    }
+
+    /* auto-load plugins in WEECHAT_EXTRA_LIBDIR environment variable */
+    if (load_from_extra_lib_dir)
+    {
+        extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+        if (extra_libdir && extra_libdir[0])
+        {
+            length = strlen (extra_libdir) + 16 + 1;
+            dir_name = malloc (length);
+            snprintf (dir_name, length, "%s/plugins", extra_libdir);
+            util_exec_on_files (dir_name, 1, 0,
+                                &plugin_auto_load_file, &plugin_args);
+            free (dir_name);
+        }
     }
 
     /* auto-load plugins in WeeChat global lib dir */
@@ -1337,7 +1354,7 @@ plugin_init (int auto_load, int argc, char *argv[])
     if (auto_load)
     {
         plugin_quiet = 1;
-        plugin_auto_load (argc, argv, 1, 1);
+        plugin_auto_load (argc, argv, 1, 1, 1);
         plugin_display_short_list ();
         plugin_quiet = 0;
     }

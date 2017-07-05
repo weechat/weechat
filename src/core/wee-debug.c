@@ -571,12 +571,18 @@ debug_libs_cb (const void *pointer, void *data,
 void
 debug_directories ()
 {
+    char *extra_libdir;
+
+    extra_libdir = getenv ("WEECHAT_EXTRA_LIBDIR");
+
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Directories:"));
-    gui_chat_printf (NULL, "  home  : %s (%s: %s)",
+    gui_chat_printf (NULL, "  home: %s (%s: %s)",
                      weechat_home, _("default"), WEECHAT_HOME);
-    gui_chat_printf (NULL, "  lib   : %s", WEECHAT_LIBDIR);
-    gui_chat_printf (NULL, "  share : %s", WEECHAT_SHAREDIR);
+    gui_chat_printf (NULL, "  lib: %s", WEECHAT_LIBDIR);
+    gui_chat_printf (NULL, "  lib (extra): %s",
+                     (extra_libdir && extra_libdir[0]) ? extra_libdir : "-");
+    gui_chat_printf (NULL, "  share: %s", WEECHAT_SHAREDIR);
     gui_chat_printf (NULL, "  locale: %s", LOCALEDIR);
 }
 
