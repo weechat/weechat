@@ -76,4 +76,4 @@ add_test(NAME unit
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   COMMAND tests -v)
 set_property(TEST unit PROPERTY
-  ENVIRONMENT "WEECHAT_TESTS_ARGS=-p -r '/set weechat.plugin.path \"${PROJECT_BINARY_DIR}/src/plugins\"'")
+  ENVIRONMENT "WEECHAT_TESTS_ARGS=-r '/set weechat.plugin.path \"${PROJECT_BINARY_DIR}/src/plugins\"'")

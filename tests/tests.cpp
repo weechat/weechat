@@ -133,7 +133,7 @@ main (int argc, char *argv[])
     /* build arguments for WeeChat */
     weechat_tests_args = getenv ("WEECHAT_TESTS_ARGS");
     length = strlen (argv[0]) +
-        64 +  /* --dir ... */
+        64 +  /* -p --dir ... */
         ((weechat_tests_args) ? 1 + strlen (weechat_tests_args) : 0) +
         1;
     args = (char *)malloc (length);
@@ -143,7 +143,7 @@ main (int argc, char *argv[])
         return 1;
     }
     snprintf (args, length,
-              "%s --dir ./tmp_weechat_test%s%s",
+              "%s -p --dir ./tmp_weechat_test%s%s",
               argv[0],
               (weechat_tests_args) ? " " : "",
               (weechat_tests_args) ? weechat_tests_args : "");
