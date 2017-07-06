@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_fset.color.default_value]] *fset.color.default_value*
-** Beschreibung: pass:none[color for default value]
+** Beschreibung: pass:none[Farbe für Standardwert]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -15,7 +15,7 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.description]] *fset.color.description*
-** Beschreibung: pass:none[color for description]
+** Beschreibung: pass:none[Farbe für Beschreibung]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -27,7 +27,7 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.file]] *fset.color.file*
-** Beschreibung: pass:none[color for file]
+** Beschreibung: pass:none[Farbe für Datei]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -129,7 +129,7 @@
 ** Standardwert: `+yellow+`
 
 * [[option_fset.color.max]] *fset.color.max*
-** Beschreibung: pass:none[color for max value]
+** Beschreibung: pass:none[Farbe für Maximalwert]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -141,19 +141,19 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.min]] *fset.color.min*
-** Beschreibung: pass:none[color for min value]
+** Beschreibung: pass:none[Farbe für Minimalwert]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
 
 * [[option_fset.color.min_selected]] *fset.color.min_selected*
-** Beschreibung: pass:none[color for min value on the selected line]
+** Beschreibung: pass:none[Farbe für Minimalwert, für ausgewählte Zeile]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+white+`
 
 * [[option_fset.color.name]] *fset.color.name*
-** Beschreibung: pass:none[color for name]
+** Beschreibung: pass:none[Farbe für Name]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -177,7 +177,7 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.option]] *fset.color.option*
-** Beschreibung: pass:none[color for option]
+** Beschreibung: pass:none[Farbe für Option]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -249,7 +249,7 @@
 ** Standardwert: `+default+`
 
 * [[option_fset.color.section]] *fset.color.section*
-** Beschreibung: pass:none[color for section]
+** Beschreibung: pass:none[Farbe für Sektion]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -273,7 +273,7 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.string_values]] *fset.color.string_values*
-** Beschreibung: pass:none[color for string values]
+** Beschreibung: pass:none[Farbe für String-Werte]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -291,13 +291,13 @@
 ** Standardwert: `+cyan+`
 
 * [[option_fset.color.title_current_option]] *fset.color.title_current_option*
-** Beschreibung: pass:none[color for current option number in title of buffer]
+** Beschreibung: pass:none[Farbe in welcher die Ordnungszahl der ausgewählten Option im Title angegeben werden soll]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+lightcyan+`
 
 * [[option_fset.color.title_filter]] *fset.color.title_filter*
-** Beschreibung: pass:none[color for filter in title of buffer]
+** Beschreibung: pass:none[Farbe für Filter im Buffer-Titel]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+yellow+`
@@ -309,19 +309,19 @@
 ** Standardwert: `+lightgreen+`
 
 * [[option_fset.color.title_sort]] *fset.color.title_sort*
-** Beschreibung: pass:none[color for sort in title of buffer]
+** Beschreibung: pass:none[Farbe für Sortierung im Buffer-Titel]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+white+`
 
 * [[option_fset.color.type]] *fset.color.type*
-** Beschreibung: pass:none[color for type]
+** Beschreibung: pass:none[Farbe für den Variablentyp]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+green+`
 
 * [[option_fset.color.type_selected]] *fset.color.type_selected*
-** Beschreibung: pass:none[color for type on the selected line]
+** Beschreibung: pass:none[Farbe für den Variablentyp wenn Zeile angewählt wird]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+lightgreen+`
@@ -339,7 +339,7 @@
 ** Standardwert: `+white+`
 
 * [[option_fset.color.value]] *fset.color.value*
-** Beschreibung: pass:none[color for value]
+** Beschreibung: pass:none[Farbe für Wert]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+cyan+`
@@ -357,13 +357,13 @@
 ** Standardwert: `+yellow+`
 
 * [[option_fset.color.value_selected]] *fset.color.value_selected*
-** Beschreibung: pass:none[color for value on the selected line]
+** Beschreibung: pass:none[Farbe für Wert für die ausgewählte Zeile]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+lightcyan+`
 
 * [[option_fset.color.value_undef]] *fset.color.value_undef*
-** Beschreibung: pass:none[color for undefined value]
+** Beschreibung: pass:none[Farbe für undefinierten Wert]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+magenta+`
@@ -471,7 +471,7 @@
 ** Standardwert: `+on+`
 
 * [[option_fset.look.use_mute]] *fset.look.use_mute*
-** Beschreibung: pass:none[use /mute command to set options]
+** Beschreibung: pass:none[nutzt /mute Befehl wenn eine Option geändert wird]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`

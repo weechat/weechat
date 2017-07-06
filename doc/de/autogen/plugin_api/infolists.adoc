@@ -8,7 +8,7 @@
 
 | alias | alias | Liste der Alias | Alias Pointer (optional) | Name des Alias (Platzhalter "*" kann verwendet werden) (optional)
 
-| fset | fset_option | list of fset options | fset option pointer (optional) | Name einer Einstellung (Platzhalter "*" kann verwendet werden) (optional)
+| fset | fset_option | Auflistung der fset Optionen | fset Option-Pointer (optional) | Name einer Einstellung (Platzhalter "*" kann verwendet werden) (optional)
 
 | guile | guile_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 

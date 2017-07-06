@@ -10,7 +10,7 @@
 
 | fset
 | [[hdata_fset_option]]<<hdata_fset_option,fset_option>>
-| fset options
+| fset Optionen
 | -
 | _index_   (integer) +
 _file_   (string) +
