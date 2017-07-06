@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: support loading of plugins from path in environment variable "WEECHAT_EXTRA_LIBDIR" (issue #971, issue #979)
   * buflist: add option buflist.look.add_newline (issue #1027)
   * fset: new plugin "fset" (fast set of WeeChat and plugins options)
 
