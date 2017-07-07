@@ -459,6 +459,10 @@ fset_command_run_set_cb (const void *pointer, void *data,
     (void) data;
     (void) buffer;
 
+    /* ignore /set command from fset buffer input */
+    if (fset_buffer && (buffer == fset_buffer))
+        return WEECHAT_RC_OK;
+
     if (strncmp (command, "/set", 4) != 0)
         return WEECHAT_RC_OK;
 
