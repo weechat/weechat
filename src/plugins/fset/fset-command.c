@@ -459,7 +459,7 @@ fset_command_run_set_cb (const void *pointer, void *data,
     (void) data;
     (void) buffer;
 
-    /* ignore /set command from fset buffer input */
+    /* ignore /set command if issued on fset buffer */
     if (fset_buffer && (buffer == fset_buffer))
         return WEECHAT_RC_OK;
 
