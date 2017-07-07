@@ -138,7 +138,7 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         new_config_file->name = strdup (name);
         if (!new_config_file->name)
         {
-            free (new_config_file);
+            FREE(new_config_file);
             return NULL;
         }
         length = strlen (name) + 8 + 1;
@@ -147,14 +147,14 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         {
             snprintf (filename, length, "%s.conf", name);
             new_config_file->filename = strdup (filename);
-            free (filename);
+            FREE(filename);
         }
         else
             new_config_file->filename = strdup (name);
         if (!new_config_file->filename)
         {
-            free (new_config_file->name);
-            free (new_config_file);
+            FREE(new_config_file->name);
+            FREE(new_config_file);
             return NULL;
         }
         new_config_file->file = NULL;
@@ -261,7 +261,7 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
         new_section->name = strdup (name);
         if (!new_section->name)
         {
-            free (new_section);
+            FREE(new_section);
             return NULL;
         }
         new_section->user_can_add_options = user_can_add_options;
@@ -400,7 +400,7 @@ config_file_hook_config_exec (struct t_config_option *option)
             else
                 hook_config_exec (option_full_name, NULL);
 
-            free (option_full_name);
+            FREE(option_full_name);
         }
     }
 }
@@ -481,40 +481,9 @@ config_file_option_insert_in_section (struct t_config_option *option)
  */
 
 struct t_config_option *
-config_file_option_malloc ()
+config_file_option_malloc (void)
 {
-    struct t_config_option *new_option;
-
-    new_option = malloc (sizeof (*new_option));
-    if (new_option)
-    {
-        new_option->config_file = NULL;
-        new_option->section = NULL;
-        new_option->name = NULL;
-        new_option->parent_name = NULL;
-        new_option->type = 0;
-        new_option->description = NULL;
-        new_option->string_values = NULL;
-        new_option->min = 0;
-        new_option->max = 0;
-        new_option->default_value = NULL;
-        new_option->value = NULL;
-        new_option->null_value_allowed = 0;
-        new_option->callback_check_value = NULL;
-        new_option->callback_check_value_pointer = NULL;
-        new_option->callback_check_value_data = NULL;
-        new_option->callback_change = NULL;
-        new_option->callback_change_pointer = NULL;
-        new_option->callback_change_data = NULL;
-        new_option->callback_delete = NULL;
-        new_option->callback_delete_pointer = NULL;
-        new_option->callback_delete_data = NULL;
-        new_option->loaded = 0;
-        new_option->prev_option = NULL;
-        new_option->next_option = NULL;
-    }
-
-    return new_option;
+    return calloc(sizeof (struct t_config_option), 1);
 }
 
 /*
@@ -801,15 +770,13 @@ error:
     if (new_option)
     {
         config_file_option_free_data (new_option);
-        free (new_option);
+        FREE(new_option);
         new_option = NULL;
     }
 
 end:
-    if (option_name)
-        free (option_name);
-    if (parent_name)
-        free (parent_name);
+    FREE(option_name);
+    FREE(parent_name);
     return new_option;
 }
 
@@ -966,10 +933,8 @@ config_file_search_with_string (const char *option_name,
         }
     }
 
-    if (file_name)
-        free (file_name);
-    if (section_name)
-        free (section_name);
+    FREE(file_name);
+    FREE(section_name);
 
     if (config_file)
         *config_file = ptr_config;
@@ -1104,11 +1069,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                     || (strcmp ((char *)option->value,
                                 (char *)option->default_value) != 0))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-                if (option->value)
-                {
-                    free (option->value);
-                    option->value = NULL;
-                }
+                FREE(option->value);
+                option->value = NULL;
                 option->value = strdup ((char *)option->default_value);
                 if (!option->value)
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1142,7 +1104,7 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
         {
             if (option->value)
             {
-                free (option->value);
+                FREE(option->value);
                 option->value = NULL;
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             }
@@ -1229,10 +1191,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                                 rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                             }
                             else
-                            {
-                                free (option->value);
-                                option->value = NULL;
-                            }
+                                FREE(option->value);
                         }
                     }
                 }
@@ -1321,8 +1280,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         {
                             if (old_value_was_null)
                             {
-                                free (option->value);
-                                option->value = NULL;
+                                FREE(option->value);
                             }
                         }
                     }
@@ -1378,8 +1336,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                         {
                             if (old_value_was_null)
                             {
-                                free (option->value);
-                                option->value = NULL;
+                                FREE(option->value);
                             }
                         }
                     }
@@ -1390,11 +1347,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
                 if (!option->value
                     || (strcmp (CONFIG_STRING(option), value) != 0))
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
-                if (option->value)
-                {
-                    free (option->value);
-                    option->value = NULL;
-                }
+                FREE(option->value);
                 option->value = strdup (value);
                 if (!option->value)
                     rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
@@ -1461,8 +1414,7 @@ config_file_option_set (struct t_config_option *option, const char *value,
     {
         if (option->null_value_allowed && option->value)
         {
-            free (option->value);
-            option->value = NULL;
+            FREE(option->value);
             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
         }
         else
@@ -1517,8 +1469,7 @@ config_file_option_set_null (struct t_config_option *option, int run_callback)
         else
         {
             /* set option to null */
-            free (option->value);
-            option->value = NULL;
+            FREE(option->value);
             rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
         }
     }
@@ -1595,7 +1546,7 @@ config_file_option_unset (struct t_config_option *option)
         if (option_full_name)
         {
             hook_config_exec (option_full_name, NULL);
-            free (option_full_name);
+            FREE(option_full_name);
         }
     }
     else
@@ -1654,8 +1605,7 @@ config_file_option_rename (struct t_config_option *option,
         }
 
         /* rename option */
-        if (option->name)
-            free (option->name);
+        FREE(option->name);
         option->name = str_new_name;
 
         /* re-insert option in section */
@@ -1680,7 +1630,7 @@ config_file_option_rename (struct t_config_option *option,
                     if (ptr_option->parent_name
                         && (strcmp (ptr_option->parent_name, full_old_name) == 0))
                     {
-                        free (ptr_option->parent_name);
+                        FREE(ptr_option->parent_name);
                         ptr_option->parent_name = strdup (full_new_name);
                     }
                 }
@@ -1688,10 +1638,8 @@ config_file_option_rename (struct t_config_option *option,
         }
     }
 
-    if (full_old_name)
-        free (full_old_name);
-    if (full_new_name)
-        free (full_new_name);
+    FREE(full_old_name);
+    FREE(full_new_name);
 }
 
 /*
@@ -2309,10 +2257,10 @@ config_file_write_line (struct t_config_file *config_file,
                 rc = string_fprintf (config_file->file, "%s%s = %s\n",
                                      config_file_option_escape (option_name),
                                      option_name, vbuffer);
-                free (vbuffer);
+                FREE(vbuffer);
                 return rc;
             }
-            free (vbuffer);
+            FREE(vbuffer);
         }
     }
 
@@ -2357,7 +2305,7 @@ config_file_write_internal (struct t_config_file *config_file,
     filename2 = malloc (filename_length + 32);
     if (!filename2)
     {
-        free (filename);
+        FREE(filename);
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     }
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
@@ -2367,11 +2315,11 @@ config_file_write_internal (struct t_config_file *config_file,
     {
         if (strcmp (filename, resolved_path) != 0)
         {
-            free (filename);
+            FREE(filename);
             filename = strdup (resolved_path);
             if (!filename)
             {
-                free (filename2);
+                FREE(filename2);
                 return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
             }
         }
@@ -2463,8 +2411,8 @@ config_file_write_internal (struct t_config_file *config_file,
     /* rename temp file to target file */
     rc = rename (filename2, filename);
 
-    free (filename);
-    free (filename2);
+    FREE(filename);
+    FREE(filename2);
 
     if (rc != 0)
         return WEECHAT_CONFIG_WRITE_ERROR;
@@ -2484,8 +2432,8 @@ error:
         config_file->file = NULL;
     }
     unlink (filename2);
-    free (filename);
-    free (filename2);
+    FREE(filename);
+    FREE(filename2);
     return WEECHAT_CONFIG_WRITE_ERROR;
 }
 
@@ -2558,7 +2506,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                            "backup this file now)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename);
-        free (filename);
+        FREE(filename);
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
     }
 
@@ -2753,14 +2701,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                 }
             }
 
-            if (ptr_line2)
-                free (ptr_line2);
+            FREE(ptr_line2);
         }
     }
 
     fclose (config_file->file);
     config_file->file = NULL;
-    free (filename);
+    FREE(filename);
 
     return WEECHAT_CONFIG_READ_OK;
 }
@@ -2843,24 +2790,16 @@ config_file_reload (struct t_config_file *config_file)
 void
 config_file_option_free_data (struct t_config_option *option)
 {
-    if (option->name)
-        free (option->name);
-    if (option->parent_name)
-        free (option->parent_name);
-    if (option->description)
-        free (option->description);
+    FREE(option->name);
+    FREE(option->parent_name);
+    FREE(option->description);
     if (option->string_values)
         string_free_split (option->string_values);
-    if (option->default_value)
-        free (option->default_value);
-    if (option->value)
-        free (option->value);
-    if (option->callback_check_value_data)
-        free (option->callback_check_value_data);
-    if (option->callback_change_data)
-        free (option->callback_change_data);
-    if (option->callback_delete_data)
-        free (option->callback_delete_data);
+    FREE(option->default_value);
+    FREE(option->value);
+    FREE(option->callback_check_value_data);
+    FREE(option->callback_change_data);
+    FREE(option->callback_delete_data);
 }
 
 /*
@@ -2898,7 +2837,7 @@ config_file_option_free (struct t_config_option *option)
         ptr_section->options = new_options;
     }
 
-    free (option);
+    FREE(option);
 }
 
 /*
@@ -2934,18 +2873,12 @@ config_file_section_free (struct t_config_section *section)
 
     /* free data */
     config_file_section_free_options (section);
-    if (section->name)
-        free (section->name);
-    if (section->callback_read_data)
-        free (section->callback_read_data);
-    if (section->callback_write_data)
-        free (section->callback_write_data);
-    if (section->callback_write_default_data)
-        free (section->callback_write_default_data);
-    if (section->callback_create_option_data)
-        free (section->callback_create_option_data);
-    if (section->callback_delete_option_data)
-        free (section->callback_delete_option_data);
+    FREE(section->name);
+    FREE(section->callback_read_data);
+    FREE(section->callback_write_data);
+    FREE(section->callback_write_default_data);
+    FREE(section->callback_create_option_data);
+    FREE(section->callback_delete_option_data);
 
     /* remove section from list */
     if (ptr_config->last_section == section)
@@ -2961,7 +2894,7 @@ config_file_section_free (struct t_config_section *section)
     if (section->next_section)
         (section->next_section)->prev_section = section->prev_section;
 
-    free (section);
+    FREE(section);
 
     ptr_config->sections = new_sections;
 }
@@ -2983,10 +2916,8 @@ config_file_free (struct t_config_file *config_file)
     {
         config_file_section_free (config_file->sections);
     }
-    if (config_file->name)
-        free (config_file->name);
-    if (config_file->filename)
-        free (config_file->filename);
+    FREE(config_file->name);
+    FREE(config_file->filename);
 
     /* remove configuration file from list */
     if (last_config_file == config_file)
@@ -3003,10 +2934,9 @@ config_file_free (struct t_config_file *config_file)
         (config_file->next_config)->prev_config = config_file->prev_config;
 
     /* free data */
-    if (config_file->callback_reload_data)
-        free (config_file->callback_reload_data);
+    FREE(config_file->callback_reload_data);
 
-    free (config_file);
+    FREE(config_file);
 
     config_files = new_config_files;
 }
@@ -3016,7 +2946,7 @@ config_file_free (struct t_config_file *config_file)
  */
 
 void
-config_file_free_all ()
+config_file_free_all (void)
 {
     while (config_files)
     {
@@ -3230,12 +3160,10 @@ config_file_add_option_to_infolist(struct t_infolist *infolist,
         (const char **)option->string_values, "|");
     if (!infolist_new_var_string (ptr_item, "string_values", string_values))
     {
-        if (string_values)
-            free (string_values);
+        FREE(string_values);
         goto error;
     }
-    if (string_values)
-        free (string_values);
+    FREE(string_values);
     if (!infolist_new_var_integer (ptr_item, "min", option->min))
         goto error;
     if (!infolist_new_var_integer (ptr_item, "max", option->max))
@@ -3269,10 +3197,10 @@ config_file_add_option_to_infolist(struct t_infolist *infolist,
             goto error;
         if (!infolist_new_var_string (ptr_item, "value", value))
         {
-            free (value);
+            FREE(value);
             goto error;
         }
-        free (value);
+        FREE(value);
     }
     if (option->default_value)
     {
@@ -3281,10 +3209,10 @@ config_file_add_option_to_infolist(struct t_infolist *infolist,
             goto error;
         if (!infolist_new_var_string (ptr_item, "default_value", value))
         {
-            free (value);
+            FREE(value);
             goto error;
         }
-        free (value);
+        FREE(value);
     }
     if (option->parent_name)
     {
@@ -3298,10 +3226,10 @@ config_file_add_option_to_infolist(struct t_infolist *infolist,
                 goto error;
             if (!infolist_new_var_string (ptr_item, "parent_value", value))
             {
-                free (value);
+                FREE(value);
                 goto error;
             }
-            free (value);
+            FREE(value);
         }
     }
 
@@ -3311,7 +3239,7 @@ error:
     rc = 0;
 
 end:
-    free (option_full_name);
+    FREE(option_full_name);
     return rc;
 }
 
@@ -3363,7 +3291,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
  */
 
 void
-config_file_print_log ()
+config_file_print_log (void)
 {
     struct t_config_file *ptr_config_file;
     struct t_config_section *ptr_section;
