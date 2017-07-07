@@ -1167,7 +1167,36 @@ gui_completion_complete (struct t_gui_completion *completion)
                     completion->word_found_is_nick = 0;
                     completion->add_space = 0;
                     completion->position = -1;
-                    string_tolower (completion->word_found);
+
+                    /*
+                     * Try to find an exact match with the case of
+                     * what the user typed. If this is impossible,
+                     * just use the first match.
+                     */
+                    index2 = -1;
+                    if (completion->list)
+                    {
+                        if (completion->direction < 0)
+                            index2 = completion->list->size - 1;
+                        else
+                            index2 = 0;
+                    }
+                    while ((index2 >= 0) && (index2 < completion->list->size))
+                    {
+                        ptr_completion_word2 =
+                            (struct t_gui_completion_word *)(completion->list->data[index2]);
+                        if (strncmp (completion->base_word,
+                                     ptr_completion_word2->word,
+                                     length) == 0)
+                        {
+                            strncpy (completion->word_found,
+                                     ptr_completion_word2->word,
+                                     common_prefix_size);
+                            break;
+                        }
+                        index2 = (completion->direction < 0) ?
+                            index2 - 1 : index2 + 1;
+                    }
 
                     /* alert user of partial completion */
                     if (CONFIG_BOOLEAN(config_completion_partial_completion_alert))
