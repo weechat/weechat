@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-07-01 16:06+0200\n"
-"PO-Revision-Date: 2017-06-26 23:33+0200\n"
+"PO-Revision-Date: 2017-07-08 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -5545,6 +5545,10 @@ msgid ""
 "separate line (recommended); if disabled, newlines must be manually added in "
 "the formats with \"${\\n}\", and the mouse actions are not possible any more"
 msgstr ""
+"バッファリスト内に表示されたバッファ同士の間に改行を追加します。こうすること"
+"で、各バッファが 1 行ごとに表示されます (推奨); これを無効化する場合には、表"
+"示書式に改行 \"${\\n}\" を追加しなければいけません。さらに、マウス操作はでき"
+"なくなります"
 
 msgid ""
 "automatically scroll the buflist bar to always see the current buffer (this "
@@ -6172,18 +6176,16 @@ msgstr ""
 msgid "name of FIFO pipe"
 msgstr "FIFO パイプの名前"
 
-#, fuzzy
 msgid "values:"
-msgstr "値"
+msgstr "値:"
 
 #. TRANSLATORS: "%s%s%s:" at beginning of string it the name of option
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s: %s %s[%s%s]%s"
-msgstr "%sニックネーム %s%s%s: %s[%s%s%s]"
+msgstr "%s%s%s: %s %s[%s%s]%s"
 
-#, fuzzy
 msgid "(no description)"
-msgstr "説明"
+msgstr "(説明がありません)"
 
 #, c-format
 msgid ""
@@ -6196,13 +6198,21 @@ msgid ""
 "alt+p(p)=toggle plugins desc, alt+v(v)=toggle help bar, ctrl+X(x)=switch "
 "format, (q)=close buffer"
 msgstr ""
+"%s%d%s/%s%d%s%s | フィルタ: %s%s%s | ソート: %s%s%s | キー(入力): alt+space="
+"ブール値のトグル、alt+'-'(-)=1 減らすか設定、alt+'+'(+)=1 増やすか追加、alt"
+"+f、alt+r(r)=リセット、alf+f、alt+u(u)=アンセット、alt+enter(s)=設定、alt+f、"
+"alt+n(n)=新しい値を設定、alt+f、alt+a(a)=追加、alt+','=マスク/アンマスク、"
+"shift+down=マークして下の項目へ移動、shift+up=上の項目に移動してマーク、($)="
+"再読込、($$)=アンマーク/再読込、(m)=マッチするオプションをマーク、(u)=マッチ"
+"するオプションをアンマーク、alt+p(p)=プラグイン説明のトグル、alt+v(v)=ヘルプ"
+"バーのトグル、ctrl+X(x)=書式の切り替え、(q)=バッファを閉じる"
 
 #, c-format
 msgid "%s%s: there are no options displayed, unable to export."
-msgstr ""
+msgstr "%s%s: オプションが表示されておらず、エクスポートできません。"
 
 msgid "fast set WeeChat and plugins options"
-msgstr ""
+msgstr "WeeChat とプラグインのオプションを高速設定"
 
 msgid ""
 "-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
@@ -6210,6 +6220,10 @@ msgid ""
 "setnew || -append || -mark || -format || -export [-help|-nohelp] <filename> "
 "|| <filter>"
 msgstr ""
+"-bar || -refresh || -up|-down [<number>] || -left|-right [<percent>] || -go "
+"<line>|end || -toggle || -add [<value>] || -reset || -unset || -set || -"
+"setnew || -append || -mark || -format || -export [-help|-nohelp] <filename> "
+"|| <filter>"
 
 msgid ""
 "       -bar: add the help bar\n"
@@ -6383,15 +6397,195 @@ msgid ""
 "  show all integer options in irc plugin:\n"
 "    /fset c:${file} == irc && ${type_en} == integer"
 msgstr ""
+"       -bar: ヘルプバーを追加します\n"
+"   -refresh: オプションリストを再読込した後、画面全体を再描画します (コマン"
+"ド: /window refresh)\n"
+"        -up: 選択行を \"number\" 行だけ上に移動\n"
+"      -down: 選択行を \"number\" 行だけ下に移動\n"
+"      -left: fset バッファをその幅の \"percent\" だけ左にスクロール\n"
+"     -right: fset バッファをその幅の \"percent\" だけ右にスクロール\n"
+"        -go: 番号を使って行を選択、1 行目は 0 (\"end\" で最後の行を選択)\n"
+"    -toggle: ブール値型の場合は値をトグル、その他の型の場合は新しい値を設定\n"
+"       -add: 整数型と色の場合は \"value\" を追加 (負の値でも可)、その他の型の"
+"場合は値を設定または追加 (負の値を設定、正の値を追加)\n"
+"     -reset: オプションの値をリセット\n"
+"     -unset: オプションをアンセット\n"
+"       -set: オプションの値を編集する目的で /set コマンドを入力に追加 (カーソ"
+"ルを値の先頭に移動)\n"
+"    -setnew: オプションの新しい値を編集する目的で /set コマンドを入力に追加\n"
+"    -append: オプションの値に何かを追加する目的で /set コマンドを追加 (カーソ"
+"ルを値の末尾に移動)\n"
+"      -mark: マークをトグル\n"
+"    -format: 次の利用可能な書式に切り替える\n"
+"    -export: 表示されているオプションと値をファイルにエクスポート (各行の書"
+"式: \"/set name value\" または \"/unset name\")\n"
+"      -help: エクスポートされるファイルにオプションのヘルプを強制的に書き込"
+"む (/help fset.look.export_help_default を参照してください)\n"
+"    -nohelp: エクスポートされるファイルにオプションのヘルプを書き込まない (/"
+"help fset.look.export_help_default を参照してください)\n"
+"     filter: 表示オプションを制限するフィルタ (このフィルタを fset バッファの"
+"入力として使うことも可能です); フィルタの書式は以下の例に従ってください:\n"
+"               *       すべてのオプションを表示します (フィルタなし)\n"
+"               xxx     名前に \"xxx\" が含まれるオプションだけを表示\n"
+"               f:xxx   設定ファイル \"xxx\" に含まれるオプションだけを表示\n"
+"               t:xxx   型が \"xxx\" (bool/int/str/col) のオプションだけを表"
+"示\n"
+"               d       変更されたオプションだけを表示\n"
+"               d:xxx   変更されたオプションかつ名前に \"xxx\" が含まれるもの"
+"だけを表示\n"
+"               d=xxx   変更されたオプションかつ値に \"xxx\" が含まれるものだ"
+"けを表示\n"
+"               d==xxx  変更されたオプションかつ値が \"xxx\" と完全に一致する"
+"ものだけを表示\n"
+"               =xxx    値に \"xxx\" が含まれるオプションだけを表示\n"
+"               ==xxx   値が \"xxx\" と完全に一致するオプションだけを表示\n"
+"               c:xxx   評価された状態が \"xxx\" に一致するオプションだけを表"
+"示、評価は以下の変数に対して行われます: file、section、option、name、"
+"parent_name、type、type_en、type_short (bool/int/str/col)、type_tiny (b/i/s/"
+"c)、default_value、default_value_undef、value、quoted_value、value_undef、"
+"value_changed、parent_value、min、max、description、description2、"
+"description_en、description_en2、string_values\n"
+"\n"
+"オプションの表示書式 (この書式に関しては /help eval を参照してください) を設"
+"定するには、以下のオプションを使います:\n"
+"  - fset.format.option1: オプションに対する 1 番目の書式\n"
+"  - fset.format.option2: オプションに対する 2 番目の書式\n"
+"\n"
+"オプションの表示書式には以下の変数を使うことが可能です:\n"
+"  - オプションに関するデータ、色をつけたり、スペースで右寄せできます:\n"
+"    - ${file}: 設定ファイル名 (\"weechat\" や \"irc\" など)\n"
+"    - ${section}: セクション名\n"
+"    - ${option}: オプション名\n"
+"    - ${name}: 完全なオプション名 (file.section.option)\n"
+"    - ${parent_name}: 親オプション名\n"
+"    - ${type}: オプション型 (翻訳済み)\n"
+"    - ${type_en}: オプション型 (英語)\n"
+"    - ${type_short}: オプション型の略称 (bool/int/str/col)\n"
+"    - ${type_tiny}: オプション型の短縮名 (b/i/s/c)\n"
+"    - ${default_value}: オプションのデフォルト値\n"
+"    - ${default_value_undef}: デフォルト値が null の場合に \"1\"、それ以外の"
+"場合に \"0\"\n"
+"    - ${value}: オプションの値\n"
+"    - ${value_undef}: オプションの値が null の場合に \"1\"、それ以外の場合に "
+"\"0\"\n"
+"    - ${value_changed}: オプションの値がデフォルト値と異なる場合に \"1\"、そ"
+"れ以外の場合に \"0\"\n"
+"    - ${value2}: オプションの値、null の場合に値は継承されます\n"
+"    - ${parent_value}: 親オプションの値\n"
+"    - ${min}: 最小値\n"
+"    - ${max}: 最大値\n"
+"    - ${description}: オプションの説明 (翻訳済み)\n"
+"    - ${description2}: オプションの説明 (翻訳済み)、オプションの説明がない場"
+"合は \"(説明がありません)\" と表示されます\n"
+"    - ${description_en}: オプションの説明 (英語)\n"
+"    - ${description_en2}: オプションの説明 (英語)、オプションの説明がない場合"
+"は \"(no description)\" と表示されます\n"
+"    - ${string_values}: 文字列で設定可能な整数型オプションで使える文字列値\n"
+"    - ${marked}: オプションがマークされている場合に \"1\"、それ以外の場合に "
+"\"0\"\n"
+"    - ${index}: オプションのリストインデックス\n"
+"  - オプションに関するデータ、色を付けることが可能、スペースを含めることは不"
+"可能:\n"
+"    - 上記変数名の前にアンダースコアを付ける、例: ${_name}、${_type}、...\n"
+"  - オプションに関するデータ、生情報 (色もスペースもつけられません):\n"
+"    - 上記変数名の前にアンダースコアを 2 つ付ける、例: "
+"${__name}、${__type}、...\n"
+"  - オプションに関するデータ、スペースのみつけられます:\n"
+"    - 上記変数名の前に \"empty_\" を付ける、例: "
+"${empty_name}、${empty_type}\n"
+"  - その他のデータ:\n"
+"    - ${selected_line}: 行が選択されている場合に \"1\"、それ以外の場合に "
+"\"0\"\n"
+"    - ${newline}: この位置に改行を挿入します、オプションは複数行に渡って表示"
+"されます\n"
+"\n"
+"fset バッファを操作するキーと入力:\n"
+"  up                        1 行上に移動\n"
+"  down                      1 行下に移動\n"
+"  pgup                      1 ページ上に移動\n"
+"  pgdn                      1 ページ下に移動\n"
+"  alt-home          <<      最上部に移動\n"
+"  alt-end           >>      最下部に移動\n"
+"  F11               <       水平左方向にスクロール\n"
+"  F12               >       水平右方向にスクロール\n"
+"\n"
+"fset バッファでオプションを設定するためのキーと入力:\n"
+"  alt+space         t       ブール値をトグル\n"
+"  alt+'-'           -       整数型および色の場合は値を 1 減らす、その他の型の"
+"場合は値を設定する\n"
+"  alt+'+'           +       整数型および色の場合は値を 1 増やす、その他の型の"
+"場合は値を追加する\n"
+"  alt+f, alt+r      r       値をリセット\n"
+"  alt+f, alt+u      u       値をアンセット\n"
+"  alt+enter         s       値を設定\n"
+"  alt+f, alt+n      n       新しい値を設定\n"
+"  alt+f, alt+a      a       値を追加\n"
+"  alt+','           ,       オプションをマーク/アンマーク\n"
+"  shift+up                  上の項目に移動してオプションをマーク/アンマーク\n"
+"  shift+down                オプションをマーク/アンマークして下の項目に移動\n"
+"                    m:xxx   フィルタ \"xxx\" にマッチしたことで表示されるオプ"
+"ションをマーク (オプションの名前や値に対する任意のフィルタが使えます、フィル"
+"タの詳細は上を参照してください)\n"
+"                    u:xxx   フィルタ \"xxx\" にマッチしたことで表示されるオプ"
+"ションをアンマーク (オプションの名前や値に対する任意のフィルタが使えます、"
+"フィルタの詳細は上を参照してください)\n"
+"\n"
+"fset バッファを操作するその他のキーと入力:\n"
+"  ctrl+L                    オプションの再読込とスクリーンの再描画 (コマン"
+"ド: /fset -refresh)\n"
+"                    $       オプションの再読込 (オプションのマーク状態は変わ"
+"りません)\n"
+"                    $$      オプションの再読込 (すべてのオプションをアンマー"
+"ク)\n"
+"  alt+p             p       プラグイン説明のオプションをトグル (plugins.desc."
+"*)\n"
+"  alt+v             v       ヘルプバーをトグル\n"
+"                    s:x,y   オプションをフィールド x と y でソート (/help "
+"fset.look.sort を参照してください)\n"
+"                    s:      ソートをリセットしてデフォルトの順番に整列 (/"
+"help fset.look.sort を参照してください)\n"
+"                    w:xxx   オプションをファイル \"xxx\" にエクスポート\n"
+"                    w-:xxx  ヘルプを含めずに、オプションをファイル \"xxx\" に"
+"エクスポート\n"
+"                    w+:xxx  ヘルプを含めて、オプションをファイル \"xxx\" にエ"
+"クスポート\n"
+"  ctrl+X            x       オプション表示用の書式を切り替える\n"
+"                    q       fset バッファを閉じる\n"
+"\n"
+"fset バッファのマウス操作:\n"
+"  ホイールの上下                  行を上方向/下方向へスクロール\n"
+"  左ボタン                        行をクリック位置に移動\n"
+"  右ボタン                        ブール値をトグル (オン/オフ) またはオプショ"
+"ン値を編集\n"
+"  右ボタン + 左/右にドラッグ      整数型と色の場合は値を増加/減少、その他の型"
+"の場合は値を設定/追加\n"
+"  右ボタン + 上/下にドラッグ      複数のオプションをマーク/アンマーク\n"
+"\n"
+"注意: 入力の先頭にあるスペースは無視されません、例えば \"q\" は fset バッファ"
+"を閉じますが、\" q\" はすべてのオプションから名前に \"q\" が含まれるものを検"
+"索します。\n"
+"\n"
+"例:\n"
+"  変更された IRC オプションを表示:\n"
+"    /fset d:irc.*\n"
+"  名前に \"nicklist\" が含まれるすべてのオプションを表示:\n"
+"    /fset nicklist\n"
+"  値に \"red\" が含まれるすべてのオプションを表示:\n"
+"    /fset =red\n"
+"  値が \"red\" と完全に一致するすべてのオプションを表示:\n"
+"    /fset ==red\n"
+"  irc プラグインから整数型のすべてのオプションを表示:\n"
+"    /fset c:${file} == irc && ${type_en} == integer"
 
-#, fuzzy
 msgid "configuration files, sections, options and words of options"
-msgstr "設定ファイル \"%s\" (オプション %s.*)"
+msgstr "設定ファイル、セクション、オプションの名前、オプションの値"
 
 msgid ""
 "automatically unmark all options after an action on marked options or after "
 "a refresh"
 msgstr ""
+"マーク済みオプションに対する操作の後または再読込の後に自動的にすべてのオプ"
+"ションをアンマーク"
 
 msgid ""
 "condition to catch /set command and display results in the fset buffer; "
@@ -6400,62 +6594,65 @@ msgid ""
 "empty string disables the catch of /set command; with value \"1\", the fset "
 "buffer is always used with /set command"
 msgstr ""
+"/set コマンドを受け付けて fset バッファに結果を表示する条件; 以下の値を利用可"
+"能です: ${name} (/set コマンドに渡すオプション名)、${count} (/set 引数のオプ"
+"ション数); 空文字列は /set コマンドの受付を無効化します; 値が \"1\" の場合、"
+"fset バッファは常に /set コマンドと一緒に使われます"
 
 msgid ""
 "write help for each option exported by default (this can be overridden with "
 "arguments \"-help\" and \"-nohelp\" for command /fset -export)"
 msgstr ""
+"デフォルトでエクスポートされた各オプションのヘルプを書き込む (コマンド /fset "
+"-export の引数 \"-help\" と \"-nohelp\" を使えばこの設定を上書きできます)"
 
 msgid ""
 "number of format used to display options; this is dynamically changed by the "
 "key ctrl-X on the fset buffer"
 msgstr ""
+"オプションを表示する際に使う書式番号; この値は fset バッファで ctrl-X キーを"
+"押すことで動的に変化します"
 
 msgid ""
 "string displayed when an option is marked (to do an action on multiple "
 "options)"
 msgstr ""
+"オプションをマークする際に表示される文字列 (マークは何らかの操作を複数のオプ"
+"ションに対して行う際に用います)"
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
+msgstr "fset バッファの左右スクロール量 (横幅の割合)"
 
 msgid "show the plugin description options (plugins.desc.*)"
-msgstr ""
+msgstr "プラグイン説明オプションを表示 (plugins.desc.*)"
 
-#, fuzzy
 msgid ""
 "comma-separated list of fields to sort options (see /help fset for a list of "
 "fields); char \"-\" can be used before field to reverse order, char \"~\" "
 "can be used to do a case insensitive comparison; example: \"-~name\" for "
 "case insensitive and reverse sort on option name"
 msgstr ""
-"バッファをソートする際に考慮するフィールドのコンマ区切りリスト; 各フィールド"
-"はバッファの hdata 変数 (\"var\")、IRC サーバの hdata 変数 (\"irc_server.var"
-"\")、IRC チャンネルの hdata 変数 (\"irc_channel.var\") のどれかです; フィール"
-"ドの先頭に \"-\" 文字を付けることでソート順を逆にすることも可能です。大文字小"
-"文字を区別せずに比較を行うには \"~\" 文字を使います; 例: \"-~short_name\" "
-"バッファの短縮名を使い、大文字小文字を区別せずにソートして、順番を逆にします"
+"ソートオプションのコンマ区切りリスト (フィールドのリストは /help fset を参照"
+"してください); フィールドの先頭に \"-\" 文字を付けることでソート順を逆にする"
+"ことも可能です。大文字小文字を区別せずに比較を行うには \"~\" 文字を使います; "
+"例: \"-~name\" オプション名を基準に大文字小文字を区別せずにソートして、順番を"
+"逆にします"
 
-#, fuzzy
 msgid "string displayed when an option is not marked"
-msgstr "ホットリストにあるバッファの間に表示される文字列"
+msgstr "オプションがマークされていない場合に表示される文字列"
 
-#, fuzzy
 msgid "use the color to display value of color options"
-msgstr "色の別名の定義と、色パレットの表示"
+msgstr "色オプションの値を表示する際に使う色"
 
-#, fuzzy
 msgid ""
 "use keys alt+X in fset buffer to do actions on options; if disabled, only "
 "the input is allowed"
 msgstr ""
-"スクリプトに対して何かアクションを行うにはスクリプトバッファで alt+X キーを"
-"使ってください (alt+i = インストール、alt+r = 削除、...); これができない場"
-"合、単一のキーを試してください: i、r、..."
+"fset バッファ内でオプションに対する操作を行う際に alt+X を使う; これを無効化"
+"する場合、操作時にコマンド入力が必要になります"
 
-#, fuzzy
 msgid "use /mute command to set options"
-msgstr "コマンドとオプションに関するヘルプを表示"
+msgstr "オプション設定時に /mute コマンドを使う"
 
 msgid ""
 "first format of each line with an option which is not marked nor the "
@@ -6464,6 +6661,10 @@ msgid ""
 "is without evaluation of string and then much faster; formats can be "
 "switched with key ctrl+X"
 msgstr ""
+"マークされてもいないし選択もされていないオプションに対する 1 番目の書式 (注"
+"意: 内容は評価されます、/help fset を参照してください); 空文字列はデフォルト"
+"書式 (\"${marked} ${name}  ${type}  ${value2}\") を使います、デフォルト書式は"
+"文字列を評価しないので高速です; 書式を切り替えるには ctrl+X を使います"
 
 msgid ""
 "second format of each line with an option which is not marked not the "
@@ -6472,285 +6673,254 @@ msgid ""
 "is without evaluation of string and then much faster; formats can be "
 "switched with key ctrl+X"
 msgstr ""
+"マークされてもいないし選択もされていないオプションに対する 2 番目の書式 (注"
+"意: 内容は評価されます、/help fset を参照してください); 空文字列はデフォルト"
+"書式 (\"${marked} ${name}  ${type}  ${value2}\") を使います、デフォルト書式は"
+"文字列を評価しないので高速です; 書式を切り替えるには ctrl+X を使います"
 
-#, fuzzy
 msgid ""
 "format of help line written before each option exported in a file (note: "
 "content is evaluated, see /help fset)"
 msgstr ""
-"各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)"
+"オプションをファイルへエクスポートする際に使うヘルプ行の書式 (注意: 値は評価"
+"されます、/help fset を参照してください)"
 
-#, fuzzy
 msgid ""
 "format of each option exported in a file (note: content is evaluated, see /"
 "help fset)"
 msgstr ""
-"各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)"
+"オプションをファイルへエクスポートする際に使うオプションの書式 (注意: 値は評"
+"価されます、/help fset を参照してください)"
 
-#, fuzzy
 msgid ""
 "format of each option with \"null\" value exported in a file (note: content "
 "is evaluated, see /help fset)"
 msgstr ""
-"各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)"
+"オプション値が \"null\" の場合に、そのオプションをファイルへエクスポートする"
+"際に使うオプションの書式 (注意: 値は評価されます、/help fset を参照してくださ"
+"い)"
 
-#, fuzzy
 msgid "color for default value"
-msgstr "デフォルト値"
+msgstr "デフォルト値を意味するテキスト色"
 
 msgid "color for default value on the selected line"
-msgstr ""
+msgstr "デフォルト値を意味するテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for description"
-msgstr "クライアント説明用のテキスト色"
+msgstr "オプション説明文のテキスト色"
 
-#, fuzzy
 msgid "color for description on the selected line"
-msgstr "スクリプトバッファ内の説明が選択された場合のテキスト色"
+msgstr "オプション説明文のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for file"
-msgstr "値のテキスト色"
+msgstr "ファイルのテキスト色"
 
-#, fuzzy
 msgid "color for file on the selected line"
-msgstr "バックログの最終行の色"
+msgstr "ファイルのテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for file if value is changed"
-msgstr "古いチャンネルトピックの色 (トピックが変更されたときに使われます)"
+msgstr "ファイルのテキスト色 (値が変更されている場合)"
 
 msgid "color for file if value is changed on the selected line"
-msgstr ""
+msgstr "ファイルのテキスト色 (値が変更されており、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for default value in help bar"
-msgstr "バックログの最終行の色"
+msgstr "デフォルト値を意味する色 (ヘルプバー内に表示される場合)"
 
-#, fuzzy
 msgid "color for description in help bar"
-msgstr "スクリプトバッファ内の説明のテキスト色"
+msgstr "オプション説明文のテキスト色 (ヘルプバー内に表示される場合)"
 
-#, fuzzy
 msgid "color for name in help bar"
-msgstr "インプットバーのニックネームに使う色"
+msgstr "オプション名のテキスト色 (ヘルプバー内に表示される場合)"
 
-#, fuzzy
 msgid "color for quotes around string values"
-msgstr "参加メッセージの色"
+msgstr "文字列値を囲む引用符のテキスト色"
 
-#, fuzzy
 msgid "color for allowed values"
-msgstr "バックログ行の色"
+msgstr "利用可能な値のテキスト色"
 
-#, fuzzy
 msgid "color for index of option"
-msgstr "クライアント説明用のテキスト色"
+msgstr "オプションインデックスのテキスト色"
 
 msgid "color for index of option on the selected line"
-msgstr ""
+msgstr "オプションインデックスのテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid ""
 "background color for a marked line (used with the first format, see option "
 "fset.format.option1)"
-msgstr "テキスト検索にヒットした行のマーカーの背景色"
+msgstr ""
+"マーク済み行の背景色 (1 番目の書式と一緒に使われます、fset.format.option1 を"
+"参照してください)"
 
-#, fuzzy
 msgid ""
 "background color for a marked line (used with the second format, see option "
 "fset.format.option2)"
-msgstr "テキスト検索にヒットした行のマーカーの背景色"
+msgstr ""
+"マーク済み行の背景色 (2 番目の書式と一緒に使われます、fset.format.option2 を"
+"参照してください)"
 
-#, fuzzy
 msgid ""
 "background color for the selected line (used with the first format, see "
 "option fset.format.option1)"
-msgstr "スクリプトバッファ内の選択行の背景色"
+msgstr ""
+"選択行の背景色 (1 番目の書式と一緒に使われます、fset.format.option1 を参照し"
+"てください)"
 
-#, fuzzy
 msgid ""
 "background color for the selected line (used with the second format, see "
 "option fset.format.option2)"
-msgstr "スクリプトバッファ内の選択行の背景色"
+msgstr ""
+"選択行の背景色 (2 番目の書式と一緒に使われます、fset.format.option2 を参照し"
+"てください)"
 
-#, fuzzy
 msgid "color for mark indicator"
-msgstr "バックログ行の色"
+msgstr "マークのテキスト色"
 
-#, fuzzy
 msgid "color for mark indicator on the selected line"
-msgstr "スクリプトバッファ内のスクリプト名が選択された場合のテキスト色"
+msgstr "マークのテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for max value"
-msgstr "値のテキスト色"
+msgstr "最大値を意味するテキスト色"
 
 msgid "color for max value on the selected line"
-msgstr ""
+msgstr "最大値を意味するテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for min value"
-msgstr "値のテキスト色"
+msgstr "最小値を意味するテキスト色"
 
-#, fuzzy
 msgid "color for min value on the selected line"
-msgstr "バックログの最終行の色"
+msgstr "最小値を意味するテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for name"
-msgstr "色名"
+msgstr "完全なオプション名のテキスト色"
 
-#, fuzzy
 msgid "color for name on the selected line"
-msgstr "バックログの最終行の色"
+msgstr "完全なオプション名のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for name if value is changed"
-msgstr "新しいチャンネルトピックの色 (トピックが変更されたときに使われます)"
+msgstr "完全なオプション名のテキスト色 (値が変更されている場合)"
 
 msgid "color for name if value is changed on the selected line"
 msgstr ""
+"完全なオプション名のテキスト色 (値が変更されており、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for option"
-msgstr "設定オプション"
+msgstr "オプション名のテキスト色"
 
-#, fuzzy
 msgid "color for option on the selected line"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "オプション名のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for option if value is changed"
-msgstr "%s%d%s 個のオプションで値が変更されました"
+msgstr "オプション名のテキスト色 (値が変更されている場合)"
 
 msgid "color for option if value is changed on the selected line"
-msgstr ""
+msgstr "オプション名のテキスト色 (値が変更されており、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for name of parent option"
-msgstr "クライアント説明用のテキスト色"
+msgstr "親オプション名のテキスト色"
 
-#, fuzzy
 msgid "color for name of parent option on the selected line"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "親オプション名のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for value of parent option"
-msgstr "クライアント説明用のテキスト色"
+msgstr "親オプション値のテキスト色"
 
-#, fuzzy
 msgid "color for value of parent option on the selected line"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "親オプション値のテキスト色 (選択行に表示される場合)"
 
 msgid "color for quotes around string values on the selected line"
-msgstr ""
+msgstr "文字列値を囲む引用符のテキスト色 (選択行に表示される場合)"
 
 msgid "color for quotes around string values which are changed"
-msgstr ""
+msgstr "文字列値を囲む引用符のテキスト色 (値が変更されている場合)"
 
 msgid ""
 "color for quotes around string values which are changed on the selected line"
 msgstr ""
+"文字列値を囲む引用符のテキスト色 (値が変更されており、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for section"
-msgstr "設定セクション"
+msgstr "セクション名のテキスト色"
 
-#, fuzzy
 msgid "color for section on the selected line"
-msgstr "入力がアクションの場合のテキスト色"
+msgstr "セクション名のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for section if value is changed"
-msgstr "参加メッセージの色"
+msgstr "セクション名のテキスト色 (値が変更されている場合)"
 
 msgid "color for section if value is changed on the selected line"
-msgstr ""
+msgstr "セクション名のテキスト色 (値が変更されており、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for string values"
-msgstr "値のテキスト色"
+msgstr "文字列値のテキスト色"
 
 msgid "color for string values on the selected line"
-msgstr ""
+msgstr "文字列値のテキスト色 (選択行に表示される場合)"
 
 msgid ""
 "color for the count of options found with the current filter in title of "
 "buffer"
-msgstr ""
+msgstr "現在のフィルタにマッチするオプション数のテキスト色 (バッファタイトル)"
 
-#, fuzzy
 msgid "color for current option number in title of buffer"
-msgstr "ステータスバー内の現在のバッファ番号のテキスト色"
+msgstr "現在のオプション番号のテキスト色 (バッファタイトル)"
 
-#, fuzzy
 msgid "color for filter in title of buffer"
-msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+msgstr "フィルタのテキスト色 (バッファタイトル)"
 
 msgid "color for number of marked options in title of buffer"
-msgstr ""
+msgstr "マーク済みオプション数のテキスト色 (バッファタイトル)"
 
-#, fuzzy
 msgid "color for sort in title of buffer"
-msgstr "プライベートバッファ内の他のニックネームのテキスト色"
+msgstr "ソート規則のテキスト色 (バッファタイトル)"
 
-#, fuzzy
 msgid "color for type"
-msgstr "チャットのテキスト色"
+msgstr "型のテキスト色"
 
-#, fuzzy
 msgid "color for type on the selected line"
-msgstr "notices に含まれるテキスト \"Notice\" の色"
+msgstr "型のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for mark indicator when the option is not marked"
-msgstr "ホットリストにあるバッファの間に表示される文字列"
+msgstr "マーク標識のテキスト色 (マークが付けられていない場合)"
 
-#, fuzzy
 msgid ""
 "color for mark indicator when the option is not marked on the selected line"
-msgstr "スクリプトバッファ内のスクリプト名が選択された場合のテキスト色"
+msgstr ""
+"マーク標識のテキスト色 (マークが付けられておらず、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for value"
 msgstr "値のテキスト色"
 
-#, fuzzy
 msgid "color for value on the selected line"
-msgstr "バックログ行の色"
+msgstr "値のテキスト色 (選択行に表示される場合)"
 
 msgid "color for value changed (different from default)"
-msgstr ""
+msgstr "値のテキスト色 (値がデフォルト値と同じではない場合)"
 
 msgid "color for value changed (different from default) on the selected line"
 msgstr ""
+"値のテキスト色 (値がデフォルト値と同じではなく、選択行に表示される場合)"
 
-#, fuzzy
 msgid "color for undefined value"
-msgstr "値のテキスト色"
+msgstr "未定義値のテキスト色"
 
 msgid "color for undefined value on the selected line"
-msgstr ""
+msgstr "未定義値のテキスト色 (選択行に表示される場合)"
 
-#, fuzzy
 msgid "list of fset options"
-msgstr "オプションリスト"
+msgstr "fset オプションのリスト"
 
-#, fuzzy
 msgid "fset option pointer (optional)"
-msgstr "プラグインポインタ (任意)"
+msgstr "fset オプションポインタ (任意)"
 
 msgid "option name (wildcard \"*\" is allowed) (optional)"
 msgstr "オプション名 (ワイルドカード \"*\" を使うことができます) (任意)"
 
-#, fuzzy
 msgid "fset options"
-msgstr "オプションリスト"
+msgstr "fset オプション"
 
 msgid "Fast set of WeeChat and plugins options"
-msgstr ""
+msgstr "WeeChat とプラグインオプションの高速設定"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
