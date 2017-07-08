@@ -745,7 +745,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->config_write = &config_file_write;
         new_plugin->config_read = &config_file_read;
         new_plugin->config_reload = &config_file_reload;
-        new_plugin->config_option_free = &config_file_option_free;
+        new_plugin->config_option_free = &plugin_api_config_file_option_free;
         new_plugin->config_section_free_options = &config_file_section_free_options;
         new_plugin->config_section_free = &config_file_section_free;
         new_plugin->config_free = &config_file_free;

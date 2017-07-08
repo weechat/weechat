@@ -458,17 +458,17 @@ proxy_new (const char *name, const char *type, const char *ipv6,
     if (!new_proxy)
     {
         if (option_type)
-            config_file_option_free (option_type);
+            config_file_option_free (option_type, 0);
         if (option_ipv6)
-            config_file_option_free (option_ipv6);
+            config_file_option_free (option_ipv6, 0);
         if (option_address)
-            config_file_option_free (option_address);
+            config_file_option_free (option_address, 0);
         if (option_port)
-            config_file_option_free (option_port);
+            config_file_option_free (option_port, 0);
         if (option_username)
-            config_file_option_free (option_username);
+            config_file_option_free (option_username, 0);
         if (option_password)
-            config_file_option_free (option_password);
+            config_file_option_free (option_password, 0);
     }
 
     return new_proxy;
@@ -516,7 +516,7 @@ proxy_use_temp_proxies ()
             {
                 if (ptr_temp_proxy->options[i])
                 {
-                    config_file_option_free (ptr_temp_proxy->options[i]);
+                    config_file_option_free (ptr_temp_proxy->options[i], 0);
                     ptr_temp_proxy->options[i] = NULL;
                 }
             }
@@ -564,7 +564,7 @@ proxy_free (struct t_proxy *proxy)
         free (proxy->name);
     for (i = 0; i < PROXY_NUM_OPTIONS; i++)
     {
-        config_file_option_free (proxy->options[i]);
+        config_file_option_free (proxy->options[i], 1);
     }
 
     free (proxy);

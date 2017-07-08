@@ -1840,7 +1840,7 @@ COMMAND_CALLBACK(debug)
             ptr_option = config_weechat_debug_get (argv[2]);
             if (ptr_option)
             {
-                config_file_option_free (ptr_option);
+                config_file_option_free (ptr_option, 1);
                 config_weechat_debug_set_all ();
                 gui_chat_printf (NULL, _("Debug disabled for \"%s\""),
                                  argv[2]);
