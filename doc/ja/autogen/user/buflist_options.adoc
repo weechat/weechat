@@ -87,7 +87,7 @@
 ** デフォルト値: `+"${color:green}${number}${if:${number_displayed}?.: }"+`
 
 * [[option_buflist.look.add_newline]] *buflist.look.add_newline*
-** 説明: pass:none[add newline between the buffers displayed, so each buffer is displayed on a separate line (recommended); if disabled, newlines must be manually added in the formats with "${\n}", and the mouse actions are not possible any more]
+** 説明: pass:none[バッファリスト内に表示されたバッファ同士の間に改行を追加します。こうすることで、各バッファが 1 行ごとに表示されます (推奨); これを無効化する場合には、表示書式に改行 "${\n}" を追加しなければいけません。さらに、マウス操作はできなくなります]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
