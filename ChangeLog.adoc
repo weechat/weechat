@@ -30,6 +30,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: call the config hook when options are renamed or removed
   * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
 
 [[v1.9]]
