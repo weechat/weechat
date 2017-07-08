@@ -42,7 +42,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("FIFO pipe for remote control"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(7000);
+WEECHAT_PLUGIN_PRIORITY(8000);
 
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
