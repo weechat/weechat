@@ -1692,6 +1692,8 @@ config_file_option_rename (struct t_config_option *option,
         free (full_old_name);
     if (full_new_name)
         free (full_new_name);
+
+    config_file_hook_config_exec (option);
 }
 
 /*
