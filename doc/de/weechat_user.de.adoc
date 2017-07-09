@@ -160,8 +160,7 @@ $ make
 $ sudo make install
 ----
 
-// TRANSLATION MISSING
-* Installation in ein benutzerdefiniertes Verzeichnis (for example your home):
+* Installation in ein benutzerdefiniertes Verzeichnis (zum Beispiel ins Heimatverzeichnis):
 
 ----
 $ mkdir build
@@ -321,8 +320,7 @@ $ make
 $ sudo make install
 ----
 
-// TRANSLATION MISSING
-* Installation in ein benutzerdefiniertes Verzeichnis (for example your home):
+* Installation in ein benutzerdefiniertes Verzeichnis (zum Beispiel ins Heimatverzeichnis):
 
 ----
 $ ./autogen.sh
@@ -494,18 +492,17 @@ Die Einstellungen für WeeChat können an die eigenen Bedürfnisse angepasst wer
 Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführt werden. (siehe
 <<weechat_commands,WeeChat Befehle>>).
 
-// TRANSLATION MISSING
 [[environment_variables]]
-=== Environment variables
+=== Umgebungsvariablen
 
-Some environment variables are used by WeeChat if they are defined:
+Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurden:
 
 [width="100%",cols="1m,6",options="header"]
 |===
-| Name                 | Description
-| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...).
-| WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
-| WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
+| Name                 | Beschreibung
+| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...).
+| WEECHAT_PASSPHRASE   | Die Passphrase zum Entschlüsseln von schutzwürdigen Daten.
+| WEECHAT_EXTRA_LIBDIR | Ein zusätzliches Verzeichnis um Erweiterungen zu installieren (vom "plugins" Verzeichnis in dieses Verzeichnis).
 |===
 
 [[files_and_directories]]
@@ -2073,8 +2070,7 @@ Standarderweiterungen:
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
 | fifo        | FIFO Pipe die zur Fernsteuerung von WeeChat genutzt werden kann.
-// TRANSLATION MISSING
-| fset        | Fast set of WeeChat and plugins options.
+| fset        | Optionen von WeeChat und Erweiterungen schnell anpassen.
 | irc         | IRC Chat-Protokoll.
 | logger      | erstellt Protokolldateien von Buffern.
 | relay       | Daten via Netzwerk übermitteln.
@@ -2422,9 +2418,8 @@ include::autogen/user/fifo_commands.adoc[]
 [[fset_plugin]]
 === Fset Erweiterung
 
-// TRANSLATION MISSING
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
+Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
+die Konfiguration von WeeChat und Erweiterungen.
 
 [[fset_options]]
 ==== Optionen (fset.conf)
@@ -2435,8 +2430,7 @@ Sektionen:
 |===
 | Sektion | Steuerbefehl       | Beschreibung
 | color   | /set fset.color.*  | Farben.
-// TRANSLATION MISSING
-| format  | /set fset.format.* | Formats used to display list of options.
+| format  | /set fset.format.* | Format um die Liste der Optionen darzustellen.
 | look    | /set fset.look.*   | Erscheinungsbild.
 |===
 

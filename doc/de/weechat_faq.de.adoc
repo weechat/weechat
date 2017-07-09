@@ -334,25 +334,21 @@ Bildschirm zu positionieren:
 
 Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: kbd:[Alt+l]).
 
-// TRANSLATION MISSING
-To make opening URLs easier, you can:
+Um URLs einfacher zu öffnen:
 
-// TRANSLATION MISSING
-* move nicklist to top:
+* die Nicklist an den oberen Bildschirmbereich positionieren:
 
 ----
 /set weechat.bar.nicklist.position top
 ----
 
-// TRANSLATION MISSING
-* disable alignment for multiline words (WeeChat ≥ 1.7):
+* die Ausrichtung bei einem Zeilenumbruch deaktivieren (WeeChat ≥ 1.7):
 
 ----
 /set weechat.look.align_multiline_words off
 ----
 
-// TRANSLATION MISSING
-* or for all wrapped lines:
+* oder für alle Zeilenumbrüche:
 
 ----
 /set weechat.look.align_end_of_lines time

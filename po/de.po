@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-07-09 15:49+0200\n"
-"PO-Revision-Date: 2017-07-05 18:31+0200\n"
+"PO-Revision-Date: 2017-07-09 18:12+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -5946,6 +5946,10 @@ msgid ""
 "separate line (recommended); if disabled, newlines must be manually added in "
 "the formats with \"${\\n}\", and the mouse actions are not possible any more"
 msgstr ""
+"fügt einen Zeilenumbruch zwischen die einzelnen Buffer hinzu um pro Zeile "
+"einen Buffer anzuzeigen (empfohlen); falls deaktiviert muss ein "
+"Zeilenumbruch manuell hinzugefügt werden, \"${\\\\n}\", des Weiteren ist die "
+"Mausunterstützung nicht mehr gegeben"
 
 msgid ""
 "automatically scroll the buflist bar to always see the current buffer (this "
@@ -7009,6 +7013,9 @@ msgid ""
 "automatically unmark all options after an action on marked options or after "
 "a refresh"
 msgstr ""
+"die Markierung wird automatisch für alle Optionen gelöscht, sobald eine "
+"Aktion bei einer markierten Option durchgeführt wird oder die Liste neu "
+"eingelesen wird"
 
 msgid ""
 "condition to catch /set command and display results in the fset buffer; "
@@ -7034,10 +7041,12 @@ msgid ""
 msgstr ""
 
 msgid "left/right scroll in fset buffer (percent of width)"
-msgstr ""
+msgstr "links/rechts im fset Buffer scrollen (prozentual zur Breite)"
 
 msgid "show the plugin description options (plugins.desc.*)"
 msgstr ""
+"zeigt die zusätzlichen Optionen von Erweiterung an, die für die Beschreibung "
+"zuständig sind (plugins.desc.*)"
 
 #, fuzzy
 msgid ""
@@ -7123,7 +7132,7 @@ msgid "color for default value"
 msgstr "Farbe für Standardwert"
 
 msgid "color for default value on the selected line"
-msgstr ""
+msgstr "Farbe für den Standardwert bei der ausgewählten Zeile"
 
 msgid "color for description"
 msgstr "Farbe für Beschreibung"
@@ -7148,7 +7157,7 @@ msgstr ""
 "Thema des Channels geändert wurde"
 
 msgid "color for file if value is changed on the selected line"
-msgstr ""
+msgstr "Farbe von Datei wenn Wert verändert ist, bei der ausgewählten Zeile"
 
 #, fuzzy
 msgid "color for default value in help bar"
@@ -7177,7 +7186,7 @@ msgid "color for index of option"
 msgstr "Textfarbe für Client-Beschreibung"
 
 msgid "color for index of option on the selected line"
-msgstr ""
+msgstr "Farbe für Index der Option bei der ausgewählten Zeile"
 
 #, fuzzy
 msgid ""
@@ -7217,7 +7226,7 @@ msgid "color for max value"
 msgstr "Farbe für Maximalwert"
 
 msgid "color for max value on the selected line"
-msgstr ""
+msgstr "Farbe für Maximalwert bei der ausgewählten Zeile"
 
 msgid "color for min value"
 msgstr "Farbe für Minimalwert"
@@ -7239,7 +7248,7 @@ msgstr ""
 "Thema des Channels geändert wurde"
 
 msgid "color for name if value is changed on the selected line"
-msgstr ""
+msgstr "Farbe vom Namen, falls Wert verändert wurde bei der ausgewählten Zeile"
 
 msgid "color for option"
 msgstr "Farbe für Option"
@@ -7255,6 +7264,7 @@ msgstr "%s%d%s Einstellung, mit abweichendem Wert"
 
 msgid "color for option if value is changed on the selected line"
 msgstr ""
+"Farbe von Option, falls Wert verändert wurde bei der ausgewählten Zeile"
 
 #, fuzzy
 msgid "color for name of parent option"
@@ -7276,13 +7286,17 @@ msgstr ""
 
 msgid "color for quotes around string values on the selected line"
 msgstr ""
+"Farbe der Anführungszeichen um Zeichenketten, bei der ausgewählten Zeile"
 
 msgid "color for quotes around string values which are changed"
 msgstr ""
+"Farbe der Anführungszeichen um Zeichenketten wenn der Wert verändert wurde"
 
 msgid ""
 "color for quotes around string values which are changed on the selected line"
 msgstr ""
+"Farbe der Anführungszeichen um Zeichenketten wenn der Wert verändert wurde, "
+"bei der ausgewählten Zeile"
 
 msgid "color for section"
 msgstr "Farbe für Sektion"
@@ -7305,7 +7319,7 @@ msgid "color for string values"
 msgstr "Farbe für String-Werte"
 
 msgid "color for string values on the selected line"
-msgstr ""
+msgstr "Farbe für Werte von Zeichenketten, bei der ausgewählten Zeile"
 
 msgid ""
 "color for the count of options found with the current filter in title of "
@@ -7361,7 +7375,7 @@ msgid "color for undefined value"
 msgstr "Farbe für undefinierten Wert"
 
 msgid "color for undefined value on the selected line"
-msgstr ""
+msgstr "Farbe für undefinierte Werte für die ausgewählte Zeile"
 
 msgid "list of fset options"
 msgstr "Auflistung der fset Optionen"
@@ -7377,7 +7391,7 @@ msgid "fset options"
 msgstr "fset Optionen"
 
 msgid "Fast set of WeeChat and plugins options"
-msgstr ""
+msgstr "Optionen von WeeChat und Erweiterungen schnell anpassen"
 
 #, c-format
 msgid "%s%s: script \"%s\" already registered (register ignored)"
