@@ -80,6 +80,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 { { "addresses",            ""                        },
   { "proxy",                ""                        },
   { "ipv6",                 "on"                      },
+  { "sctp",                 "off"                     },
   { "ssl",                  "off"                     },
   { "ssl_cert",             ""                        },
   { "ssl_priorities",       "NORMAL:-VERS-SSL3.0"     },

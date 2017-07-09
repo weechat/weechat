@@ -34,6 +34,7 @@
 #include <sys/socket.h>
 #include <sys/wait.h>
 #include <poll.h>
+#include <netinet/in.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <errno.h>
@@ -2253,6 +2254,38 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
               const void *callback_pointer,
               void *callback_data)
 {
+    return hook_connect_both(0, plugin, proxy, address, port, ipv6,
+                             retry, gnutls_sess, gnutls_cb, gnutls_dhkey_size,
+                             gnutls_priorities, local_hostname, callback, callback_pointer,
+                             callback_data);
+}
+
+#ifdef IPPROTO_SCTP
+struct t_hook *
+hook_connect_sctp (struct t_weechat_plugin *plugin, const char *proxy,
+                  const char *address, int port, int ipv6, int retry,
+                  void *gnutls_sess, void *gnutls_cb, int gnutls_dhkey_size,
+                  const char *gnutls_priorities, const char *local_hostname,
+                  t_hook_callback_connect *callback,
+                  const void *callback_pointer,
+                  void *callback_data)
+{
+    return hook_connect_both(IPPROTO_SCTP, plugin, proxy, address, port, ipv6,
+                             retry, gnutls_sess, gnutls_cb, gnutls_dhkey_size,
+                             gnutls_priorities, local_hostname, callback, callback_pointer,
+                             callback_data);
+}
+#endif
+
+struct t_hook *
+hook_connect_both (int proto, struct t_weechat_plugin *plugin, const char *proxy,
+                  const char *address, int port, int ipv6, int retry,
+                  void *gnutls_sess, void *gnutls_cb, int gnutls_dhkey_size,
+                  const char *gnutls_priorities, const char *local_hostname,
+                  t_hook_callback_connect *callback,
+                  const void *callback_pointer,
+                  void *callback_data)
+{
     struct t_hook *new_hook;
     struct t_hook_connect *new_hook_connect;
     int i;
@@ -2285,6 +2318,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->callback = callback;
     new_hook_connect->proxy = (proxy) ? strdup (proxy) : NULL;
     new_hook_connect->address = strdup (address);
+    new_hook_connect->sctp = proto;
     new_hook_connect->port = port;
     new_hook_connect->sock = -1;
     new_hook_connect->ipv6 = ipv6;
