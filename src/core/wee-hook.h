@@ -257,6 +257,7 @@ struct t_hook_connect
     char *address;                     /* peer address                      */
     int port;                          /* peer port                         */
     int ipv6;                          /* use IPv6                          */
+    int sctp;                          /* use SCTP (ignored if not usable)  */
     int sock;                          /* socket (set when connected)       */
     int retry;                         /* retry count                       */
 #ifdef HAVE_GNUTLS
@@ -498,6 +499,26 @@ extern struct t_hook *hook_process_hashtable (struct t_weechat_plugin *plugin,
                                               const void *callback_pointer,
                                               void *callback_data);
 extern void hook_process_exec ();
+extern struct t_hook *hook_connect_both (int proto, struct t_weechat_plugin *plugin,
+                                    const char *proxy, const char *address,
+                                    int port, int ipv6, int retry,
+                                    void *gnutls_session, void *gnutls_cb,
+                                    int gnutls_dhkey_size,
+                                    const char *gnutls_priorities,
+                                    const char *local_hostname,
+                                    t_hook_callback_connect *callback,
+                                    const void *callback_pointer,
+                                    void *callback_data);
+extern struct t_hook *hook_connect_sctp (struct t_weechat_plugin *plugin,
+                                    const char *proxy, const char *address,
+                                    int port, int ipv6, int retry,
+                                    void *gnutls_session, void *gnutls_cb,
+                                    int gnutls_dhkey_size,
+                                    const char *gnutls_priorities,
+                                    const char *local_hostname,
+                                    t_hook_callback_connect *callback,
+                                    const void *callback_pointer,
+                                    void *callback_data);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *proxy, const char *address,
                                     int port, int ipv6, int retry,

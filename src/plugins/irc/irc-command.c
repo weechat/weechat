@@ -4630,6 +4630,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                             IRC_COLOR_CHAT_VALUE,
                             (weechat_config_boolean (server->options[IRC_SERVER_OPTION_IPV6])) ?
                             _("on") : _("off"));
+        /* sctp */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SCTP]))
+            weechat_printf (NULL, "  sctp . . . . . . . . :   (%s)",
+                            (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SCTP)) ?
+                            _("on") : _("off"));
+        else
+            weechat_printf (NULL, "  sctp . . . . . . . . : %s%s",
+                            IRC_COLOR_CHAT_VALUE,
+                            (weechat_config_boolean (server->options[IRC_SERVER_OPTION_SCTP])) ?
+                            _("on") : _("off"));
         /* ssl */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL]))
             weechat_printf (NULL, "  ssl. . . . . . . . . :   (%s)",

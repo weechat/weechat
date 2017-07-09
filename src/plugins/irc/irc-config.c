@@ -1579,6 +1579,22 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_SCTP:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "boolean",
+                N_("use protocol 132 (SCTP) for server communication"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_SSL:
             new_option = weechat_config_new_option (
                 config_file, section,

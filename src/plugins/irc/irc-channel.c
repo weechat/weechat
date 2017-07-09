@@ -581,7 +581,8 @@ irc_channel_set_modes (struct t_irc_channel *channel, const char *modes)
  * Checks if a string is a valid channel name.
  *
  * Returns:
- *   1: string is a channel name
+ *   1: string is a channel name, or is not a channel name but is a
+ *      channel to which we are joined (should never happen)
  *   0: string is not a channel name
  */
 
@@ -589,9 +590,14 @@ int
 irc_channel_is_channel (struct t_irc_server *server, const char *string)
 {
     char first_char[2];
+    struct t_irc_channel *channel = irc_channel_search(server, string);
 
     if (!string)
         return 0;
+
+    if (channel != NULL)
+        if (channel->type == IRC_CHANNEL_TYPE_CHANNEL) return 1; // Is a channel, as long as it's a channel
+    // even if not valid (huh)
 
     first_char[0] = string[0];
     first_char[1] = '\0';

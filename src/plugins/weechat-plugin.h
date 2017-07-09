@@ -705,6 +705,25 @@ struct t_weechat_plugin
                                                     const char *ip_address),
                                     const void *callback_pointer,
                                     void *callback_data);
+    struct t_hook *(*hook_connect_sctp) (struct t_weechat_plugin *plugin,
+                                    const char *proxy,
+                                    const char *address,
+                                    int port,
+                                    int ipv6,
+                                    int retry,
+                                    void *gnutls_sess, void *gnutls_cb,
+                                    int gnutls_dhkey_size,
+                                    const char *gnutls_priorities,
+                                    const char *local_hostname,
+                                    int (*callback)(const void *pointer,
+                                                    void *data,
+                                                    int status,
+                                                    int gnutls_rc,
+                                                    int sock,
+                                                    const char *error,
+                                                    const char *ip_address),
+                                    const void *callback_pointer,
+                                    void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags,
@@ -1630,6 +1649,19 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                              __local_hostname, __callback, __pointer,   \
                              __data)                                    \
     (weechat_plugin->hook_connect)(weechat_plugin, __proxy, __address,  \
+                                   __port, __ipv6, __retry,             \
+                                   __gnutls_sess, __gnutls_cb,          \
+                                   __gnutls_dhkey_size,                 \
+                                   __gnutls_priorities,                 \
+                                   __local_hostname,                    \
+                                   __callback, __pointer, __data)
+
+#define weechat_hook_connect_sctp(__proxy, __address, __port, __ipv6,        \
+                             __retry, __gnutls_sess, __gnutls_cb,       \
+                             __gnutls_dhkey_size, __gnutls_priorities,  \
+                             __local_hostname, __callback, __pointer,   \
+                             __data)                                    \
+    (weechat_plugin->hook_connect_sctp)(weechat_plugin, __proxy, __address,  \
                                    __port, __ipv6, __retry,             \
                                    __gnutls_sess, __gnutls_cb,          \
                                    __gnutls_dhkey_size,                 \

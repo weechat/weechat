@@ -47,6 +47,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_ADDRESSES = 0, /* server addresses (IP/name with port) */
     IRC_SERVER_OPTION_PROXY,         /* proxy used for server (optional)     */
     IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
+    IRC_SERVER_OPTION_SCTP,          /* IPPROTO_SCTP                         */
     IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
     IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
     IRC_SERVER_OPTION_SSL_PRIORITIES, /* gnutls priorities                   */

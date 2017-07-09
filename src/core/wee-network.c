@@ -822,6 +822,9 @@ network_connect_child (struct t_hook *hook_connect)
     else
     {
         hints.ai_family = HOOK_CONNECT(hook_connect, ipv6) ? AF_UNSPEC : AF_INET;
+#ifdef IPPROTO_SCTP
+        hints.ai_protocol = (HOOK_CONNECT(hook_connect, sctp)==IPPROTO_SCTP) ? IPPROTO_SCTP : IPPROTO_TCP;
+#endif
         snprintf (port, sizeof (port), "%d", HOOK_CONNECT(hook_connect, port));
         rc = getaddrinfo (HOOK_CONNECT(hook_connect, address), port, &hints, &res_remote);
     }
@@ -1728,8 +1731,13 @@ network_connect_with_fork (struct t_hook *hook_connect)
     {
         for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
         {
+#ifdef IPPROTO_SCTP
+            HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, (HOOK_CONNECT(hook_connect, sctp)==IPPROTO_SCTP) ? IPPROTO_SCTP : IPPROTO_TCP);
+            HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, (HOOK_CONNECT(hook_connect, sctp)==IPPROTO_SCTP) ? IPPROTO_SCTP : IPPROTO_TCP);
+#else
             HOOK_CONNECT(hook_connect, sock_v4[i]) = socket (AF_INET, SOCK_STREAM, 0);
             HOOK_CONNECT(hook_connect, sock_v6[i]) = socket (AF_INET6, SOCK_STREAM, 0);
+#endif
         }
     }
 
