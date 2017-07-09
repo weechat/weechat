@@ -1708,33 +1708,33 @@ gui_bar_new (const char *name, const char *hidden, const char *priority,
     if (!new_bar)
     {
         if (option_hidden)
-            config_file_option_free (option_hidden);
+            config_file_option_free (option_hidden, 0);
         if (option_priority)
-            config_file_option_free (option_priority);
+            config_file_option_free (option_priority, 0);
         if (option_type)
-            config_file_option_free (option_type);
+            config_file_option_free (option_type, 0);
         if (option_conditions)
-            config_file_option_free (option_conditions);
+            config_file_option_free (option_conditions, 0);
         if (option_position)
-            config_file_option_free (option_position);
+            config_file_option_free (option_position, 0);
         if (option_filling_top_bottom)
-            config_file_option_free (option_filling_top_bottom);
+            config_file_option_free (option_filling_top_bottom, 0);
         if (option_filling_left_right)
-            config_file_option_free (option_filling_left_right);
+            config_file_option_free (option_filling_left_right, 0);
         if (option_size)
-            config_file_option_free (option_size);
+            config_file_option_free (option_size, 0);
         if (option_size_max)
-            config_file_option_free (option_size_max);
+            config_file_option_free (option_size_max, 0);
         if (option_color_fg)
-            config_file_option_free (option_color_fg);
+            config_file_option_free (option_color_fg, 0);
         if (option_color_delim)
-            config_file_option_free (option_color_delim);
+            config_file_option_free (option_color_delim, 0);
         if (option_color_bg)
-            config_file_option_free (option_color_bg);
+            config_file_option_free (option_color_bg, 0);
         if (option_separator)
-            config_file_option_free (option_separator);
+            config_file_option_free (option_separator, 0);
         if (option_items)
-            config_file_option_free (option_items);
+            config_file_option_free (option_items, 0);
     }
 
     return new_bar;
@@ -1790,7 +1790,7 @@ gui_bar_use_temp_bars ()
             {
                 if (ptr_temp_bar->options[i])
                 {
-                    config_file_option_free (ptr_temp_bar->options[i]);
+                    config_file_option_free (ptr_temp_bar->options[i], 0);
                     ptr_temp_bar->options[i] = NULL;
                 }
             }
@@ -2171,7 +2171,7 @@ gui_bar_free (struct t_gui_bar *bar)
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
         if (bar->options[i])
-            config_file_option_free (bar->options[i]);
+            config_file_option_free (bar->options[i], 1);
     }
     gui_bar_free_items_arrays (bar);
 

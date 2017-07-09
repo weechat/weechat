@@ -1466,7 +1466,7 @@ config_weechat_debug_create_option_cb (const void *pointer, void *data,
                 rc = config_file_option_set (ptr_option, value, 1);
             else
             {
-                config_file_option_free (ptr_option);
+                config_file_option_free (ptr_option, 1);
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             }
         }
@@ -1512,7 +1512,7 @@ config_weechat_debug_delete_option_cb (const void *pointer, void *data,
     (void) config_file;
     (void) section;
 
-    config_file_option_free (option);
+    config_file_option_free (option, 1);
 
     config_weechat_debug_set_all ();
 
@@ -1592,7 +1592,7 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
                     rc = config_file_option_set (ptr_option, value, 1);
                 else
                 {
-                    config_file_option_free (ptr_option);
+                    config_file_option_free (ptr_option, 1);
                     rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                 }
             }
@@ -1652,7 +1652,7 @@ config_weechat_palette_delete_option_cb (const void *pointer, void *data,
     if (error && !error[0])
         gui_color_palette_remove (number);
 
-    config_file_option_free (option);
+    config_file_option_free (option, 1);
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }
@@ -2088,7 +2088,7 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
                 rc = config_file_option_set (ptr_option, value, 1);
             else
             {
-                config_file_option_free (ptr_option);
+                config_file_option_free (ptr_option, 1);
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             }
         }
@@ -2134,7 +2134,7 @@ config_weechat_notify_delete_option_cb (const void *pointer, void *data,
     (void) config_file;
     (void) section;
 
-    config_file_option_free (option);
+    config_file_option_free (option, 1);
 
     gui_buffer_notify_set_all ();
 

@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20170530-02"
+#define WEECHAT_PLUGIN_API_VERSION "20170704-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -362,7 +362,8 @@ struct t_weechat_plugin
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
     int (*mkdir_parents) (const char *directory, int mode);
-    void (*exec_on_files) (const char *directory, int hidden_files,
+    void (*exec_on_files) (const char *directory, int recurse_subdirs,
+                           int hidden_files,
                            void (*callback)(void *data, const char *filename),
                            void *callback_data);
     char *(*file_get_content) (const char *filename);
@@ -1298,9 +1299,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->mkdir)(__directory, __mode)
 #define weechat_mkdir_parents(__directory, __mode)                      \
     (weechat_plugin->mkdir_parents)(__directory, __mode)
-#define weechat_exec_on_files(__directory, __hidden_files, __callback,  \
+#define weechat_exec_on_files(__directory, __recurse_subdirs,           \
+                              __hidden_files, __callback,               \
                               __callback_data)                          \
-    (weechat_plugin->exec_on_files)(__directory, __hidden_files,        \
+    (weechat_plugin->exec_on_files)(__directory, __recurse_subdirs,     \
+                                    __hidden_files,                     \
                                     __callback, __callback_data)
 #define weechat_file_get_content(__filename)                            \
     (weechat_plugin->file_get_content)(__filename)

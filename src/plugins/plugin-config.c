@@ -335,7 +335,7 @@ plugin_config_delete_desc (const void *pointer, void *data,
         }
     }
 
-    config_file_option_free (option);
+    config_file_option_free (option, 1);
 
     return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
 }

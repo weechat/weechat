@@ -907,7 +907,7 @@ upgrade_weechat_end ()
 
     /* remove .upgrade files */
     util_exec_on_files (weechat_home,
-                        0,
+                        0, 0,
                         &upgrade_weechat_remove_file_cb, NULL);
 
     /* display message for end of /upgrade with duration */

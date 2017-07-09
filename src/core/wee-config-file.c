@@ -1588,7 +1588,7 @@ config_file_option_unset (struct t_config_option *option)
         }
         else
         {
-            config_file_option_free (option);
+            config_file_option_free (option, 0);
             rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
         }
 
@@ -1692,6 +1692,8 @@ config_file_option_rename (struct t_config_option *option,
         free (full_old_name);
     if (full_new_name)
         free (full_new_name);
+
+    config_file_hook_config_exec (option);
 }
 
 /*
@@ -2868,13 +2870,17 @@ config_file_option_free_data (struct t_config_option *option)
  */
 
 void
-config_file_option_free (struct t_config_option *option)
+config_file_option_free (struct t_config_option *option, int run_callback)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *new_options;
+    char *option_full_name;
 
     if (!option)
         return;
+
+    option_full_name = (run_callback) ?
+        config_file_option_full_name (option) : NULL;
 
     ptr_section = option->section;
 
@@ -2899,6 +2905,12 @@ config_file_option_free (struct t_config_option *option)
     }
 
     free (option);
+
+    if (option_full_name)
+    {
+        hook_config_exec (option_full_name, NULL);
+        free (option_full_name);
+    }
 }
 
 /*
@@ -2913,7 +2925,7 @@ config_file_section_free_options (struct t_config_section *section)
 
     while (section->options)
     {
-        config_file_option_free (section->options);
+        config_file_option_free (section->options, 0);
     }
 }
 

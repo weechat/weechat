@@ -153,10 +153,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (en root)
+$ sudo make install
 ----
 
-* Installation dans un répertoire spécifique :
+* Installation dans un répertoire spécifique (par exemple dans votre "home") :
 
 ----
 $ mkdir build
@@ -314,10 +314,10 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (en root)
+$ sudo make install
 ----
 
-* Installation dans un répertoire spécifique :
+* Installation dans un répertoire spécifique (par exemple dans votre "home") :
 
 ----
 $ ./autogen.sh
@@ -493,6 +493,19 @@ Le fichier de configuration par défaut est : _~/.weechat/weechat.conf_.
 Vous pouvez éditer ce fichier pour configurer WeeChat à votre convenance ou
 vous pouvez modifier les paramètres dans WeeChat avec la commande `/set`
 (voir <<weechat_commands,commandes WeeChat>>).
+
+[[environment_variables]]
+=== Variables d'environnement
+
+Des variables d'environnement sont utilisées par WeeChat si elles sont définies :
+
+[width="100%",cols="1m,6",options="header"]
+|===
+| Nom                  | Description
+| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc...).
+| WEECHAT_PASSPHRASE   | La phrase de chiffrement utilisée pour déchiffrer les données sécurisées.
+| WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
+|===
 
 [[files_and_directories]]
 === Fichiers et répertoires

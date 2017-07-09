@@ -40,7 +40,7 @@ WEECHAT_PLUGIN_DESCRIPTION(N_("Fast set of WeeChat and plugins options"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
-WEECHAT_PLUGIN_PRIORITY(8000);
+WEECHAT_PLUGIN_PRIORITY(2000);
 
 struct t_weechat_plugin *weechat_fset_plugin = NULL;
 

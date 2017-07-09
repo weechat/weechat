@@ -875,7 +875,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
                                           struct t_gui_buffer *buffer,
                                           struct t_gui_completion *completion)
 {
-    char *plugin_path, *plugin_path2, *dir_name;
+    char *plugin_path, *plugin_path2, *dir_name, *extra_libdir;
     int length;
 
     /* make C compiler happy */
@@ -883,6 +883,22 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     (void) data;
     (void) completion_item;
     (void) buffer;
+
+    /* plugins in WeeChat extra lib dir */
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
+    if (extra_libdir && extra_libdir[0])
+    {
+        length = strlen (extra_libdir) + 16 + 1;
+        dir_name = malloc (length);
+        if (dir_name)
+        {
+            snprintf (dir_name, length, "%s/plugins", extra_libdir);
+            util_exec_on_files (dir_name, 1, 0,
+                                &completion_list_add_plugins_installed_exec_cb,
+                                completion);
+            free (dir_name);
+        }
+    }
 
     /* plugins in WeeChat home dir */
     if (CONFIG_STRING(config_plugin_path)
@@ -897,6 +913,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
             (plugin_path2) ?
             plugin_path2 : ((plugin_path) ?
                             plugin_path : CONFIG_STRING(config_plugin_path)),
+            1,
             0,
             &completion_list_add_plugins_installed_exec_cb,
             completion);
@@ -912,7 +929,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     if (dir_name)
     {
         snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 0,
+        util_exec_on_files (dir_name, 1, 0,
                             &completion_list_add_plugins_installed_exec_cb,
                             completion);
         free (dir_name);

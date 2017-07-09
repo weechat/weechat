@@ -485,11 +485,12 @@ util_mkdir_parents (const char *directory, int mode)
  */
 
 void
-util_exec_on_files (const char *directory, int hidden_files,
+util_exec_on_files (const char *directory, int recurse_subdirs,
+                    int hidden_files,
                     void (*callback)(void *data, const char *filename),
                     void *callback_data)
 {
-    char complete_filename[1024];
+    char complete_filename[PATH_MAX];
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
@@ -507,7 +508,17 @@ util_exec_on_files (const char *directory, int hidden_files,
                 snprintf (complete_filename, sizeof (complete_filename),
                           "%s/%s", directory, entry->d_name);
                 lstat (complete_filename, &statbuf);
-                if (!S_ISDIR(statbuf.st_mode))
+                if (S_ISDIR(statbuf.st_mode))
+                {
+                    if (recurse_subdirs
+                        && (strcmp (entry->d_name, ".") != 0)
+                        && (strcmp (entry->d_name, "..") != 0))
+                    {
+                        util_exec_on_files (complete_filename, 1, hidden_files,
+                                            callback, callback_data);
+                    }
+                }
+                else
                 {
                     (*callback) (callback_data, complete_filename);
                 }
@@ -530,7 +541,7 @@ char *
 util_search_full_lib_name_ext (const char *filename, const char *extension,
                                const char *plugins_dir)
 {
-    char *name_with_ext, *final_name;
+    char *name_with_ext, *final_name, *extra_libdir;
     int length;
     struct stat st;
 
@@ -542,6 +553,33 @@ util_search_full_lib_name_ext (const char *filename, const char *extension,
               "%s%s",
               filename,
               (strchr (filename, '.')) ? "" : extension);
+
+    /* try libdir from environment variable WEECHAT_EXTRA_LIBDIR */
+    extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
+    if (extra_libdir && extra_libdir[0])
+    {
+        length = strlen (extra_libdir) + strlen (name_with_ext) +
+            strlen (plugins_dir) + 16;
+        final_name = malloc(length);
+        if (!final_name)
+        {
+            free (name_with_ext);
+            return NULL;
+        }
+        snprintf (final_name, length,
+                  "%s%s%s%s%s",
+                  extra_libdir,
+                  DIR_SEPARATOR,
+                  plugins_dir,
+                  DIR_SEPARATOR,
+                  name_with_ext);
+        if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+        {
+            free (name_with_ext);
+            return final_name;
+        }
+        free (final_name);
+    }
 
     /* try WeeChat user's dir */
     length = strlen (weechat_home) + strlen (name_with_ext) +

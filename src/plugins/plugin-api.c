@@ -108,6 +108,16 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
 }
 
 /*
+ * Frees an option.
+ */
+
+void
+plugin_api_config_file_option_free (struct t_config_option *option)
+{
+    config_file_option_free (option, 1);
+}
+
+/*
  * Gets pointer on an option.
  */
 
