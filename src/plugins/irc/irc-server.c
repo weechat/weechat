@@ -4729,7 +4729,23 @@ irc_server_connect (struct t_irc_server *server)
 #ifdef HAVE_GNUTLS
     if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
         server->ssl_connected = 1;
-    server->hook_connect = weechat_hook_connect (
+    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SCTP))
+    server->hook_connect = weechat_hook_connect_sctp (
+        proxy,
+        server->current_address,
+        server->current_port,
+        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+        server->current_retry,
+        (server->ssl_connected) ? &server->gnutls_sess : NULL,
+        (server->ssl_connected) ? &irc_server_gnutls_callback : NULL,
+        IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+        &irc_server_connect_cb,
+        server,
+        NULL);
+    else
+    server->hook_connect = weechat_hook_connect_sctp (
         proxy,
         server->current_address,
         server->current_port,
@@ -4744,6 +4760,19 @@ irc_server_connect (struct t_irc_server *server)
         server,
         NULL);
 #else
+    if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SCTP))
+    server->hook_connect = weechat_hook_connect_sctp (
+        proxy,
+        server->current_address,
+        server->current_port,
+        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+        server->current_retry,
+        NULL, NULL, 0, NULL,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+        &irc_server_connect_cb,
+        server,
+        NULL);
+    else
     server->hook_connect = weechat_hook_connect (
         proxy,
         server->current_address,
@@ -5536,6 +5565,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL)))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sctp",
+                                           IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SCTP)))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "ssl_cert",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT)))
