@@ -75,3 +75,6 @@ add_dependencies(tests
 add_test(NAME unit
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
   COMMAND tests -v)
+set_property(TEST unit PROPERTY
+  ENVIRONMENT "WEECHAT_TESTS_ARGS=-p;"
+  "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src")

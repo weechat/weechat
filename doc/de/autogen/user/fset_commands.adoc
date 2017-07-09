@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_fset_fset]]
-* `+fset+`: fast set WeeChat and plugins options
+* `+fset+`: Optionen von WeeChat und Erweiterungen schnell anpassen
 
 ----
 /fset  -bar

@@ -55,6 +55,7 @@ Alphabetically:
 * Kyle Fuller (kylef)
 * Leonid Evdokimov
 * Lázaro A.
+* Linus Heckemann
 * Maarten de Vries
 * Mantas Mikulėnas (grawity)
 * Marco Paolone

@@ -1840,7 +1840,7 @@ COMMAND_CALLBACK(debug)
             ptr_option = config_weechat_debug_get (argv[2]);
             if (ptr_option)
             {
-                config_file_option_free (ptr_option);
+                config_file_option_free (ptr_option, 1);
                 config_weechat_debug_set_all ();
                 gui_chat_printf (NULL, _("Debug disabled for \"%s\""),
                                  argv[2]);
@@ -4477,10 +4477,10 @@ COMMAND_CALLBACK(plugin)
         {
             plugin_argv = string_split (argv_eol[2], " ", 0, 0,
                                         &plugin_argc);
-            plugin_auto_load (plugin_argc, plugin_argv);
+            plugin_auto_load (plugin_argc, plugin_argv, 1, 1, 1);
         }
         else
-            plugin_auto_load (0, NULL);
+            plugin_auto_load (0, NULL, 1, 1, 1);
         return WEECHAT_RC_OK;
     }
 
@@ -4514,7 +4514,7 @@ COMMAND_CALLBACK(plugin)
                 if (strcmp (argv[2], "*") == 0)
                 {
                     plugin_unload_all ();
-                    plugin_auto_load (plugin_argc, plugin_argv);
+                    plugin_auto_load (plugin_argc, plugin_argv, 1, 1, 1);
                 }
                 else
                 {
@@ -4529,7 +4529,7 @@ COMMAND_CALLBACK(plugin)
         else
         {
             plugin_unload_all ();
-            plugin_auto_load (0, NULL);
+            plugin_auto_load (0, NULL, 1, 1, 1);
         }
         return WEECHAT_RC_OK;
     }

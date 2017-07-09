@@ -154,10 +154,10 @@ $ mkdir build
 $ cd build
 $ cmake ..
 $ make
-% make install    (root で実行)
+$ sudo make install
 ----
 
-* 任意のディレクトリにインストールする場合:
+* 任意のディレクトリ (例えば自分のホームディレクトリ) にインストールする場合:
 
 ----
 $ mkdir build
@@ -312,10 +312,10 @@ $ mkdir build
 $ cd build
 $ ../configure
 $ make
-% make install    (as root)
+$ sudo make install
 ----
 
-* 任意のディレクトリにインストールする場合:
+* 任意のディレクトリ (例えば自分のホームディレクトリ) にインストールする場合:
 
 ----
 $ ./autogen.sh
@@ -486,6 +486,19 @@ _~/.weechat/weechat.conf_ です。
 WeeChat を設定するにはこのファイルを編集するか、WeeChat
 内で `/set` コマンドにパラメータを付けて設定します
 (<<weechat_commands,WeeChat コマンド>>を参照)。
+
+[[environment_variables]]
+=== 環境変数
+
+以下の環境変数が定義されていた場合、WeeChat はそれを利用します:
+
+[width="100%",cols="1m,6",options="header"]
+|===
+| 変数名               | 説明
+| WEECHAT_HOME         | WeeChat ホームディレクトリ (ここには設定ファイル、ログ、スクリプトなどがあります)
+| WEECHAT_PASSPHRASE   | 暗号化データを復号化するためのパスフレーズ
+| WEECHAT_EXTRA_LIBDIR | プラグインをロードするための追加ディレクトリパス (設定したパス内の "plugins" ディレクトリからロードします)
+|===
 
 [[files_and_directories]]
 === ファイルとディレクトリ
@@ -2008,8 +2021,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
 | fifo       | 外部から WeeChat にコマンドを送信するための FIFO パイプ
-// TRANSLATION MISSING
-| fset       | Fast set of WeeChat and plugins options.
+| fset       | WeeChat とプラグインのオプションを高速設定
 | irc        | IRC チャットプロトコル
 | logger     | バッファの内容をファイルに保存
 | relay      | ネットワーク経由でデータを中継
@@ -2348,9 +2360,8 @@ include::autogen/user/fifo_commands.adoc[]
 [[fset_plugin]]
 === Fset プラグイン
 
-// TRANSLATION MISSING
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
+fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
+とプラグインのオプション設定を支援します。
 
 [[fset_options]]
 ==== オプション (fset.conf)
@@ -2361,8 +2372,7 @@ and plugin options.
 |===
 | セクション | 操作コマンド       | 説明
 | color      | /set fset.color.*  | 色
-// TRANSLATION MISSING
-| format     | /set fset.format.* | Formats used to display list of options.
+| format     | /set fset.format.* | オプションリストの表示書式
 | look       | /set fset.look.*   | 外観
 |===
 

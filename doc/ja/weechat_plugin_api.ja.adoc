@@ -3176,7 +3176,7 @@ weechat.mkdir_parents("/tmp/my/dir", 0755)
 
 ==== exec_on_files
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5 と 2.0 で更新。_
 
 ディレクトリ中のファイルを探し、各ファイルに対してコールバックを実行。
 
@@ -3185,6 +3185,7 @@ _WeeChat バージョン 1.5 で更新。_
 [source,C]
 ----
 void weechat_exec_on_files (const char *directory,
+                            int recurse_subdirs,
                             int hidden_files,
                             void (*callback)(void *data,
                                              const char *filename),
@@ -3194,6 +3195,7 @@ void weechat_exec_on_files (const char *directory,
 引数:
 
 * _directory_: ファイルを検索するディレクトリ
+* _recurse_subdirs_: サブディレクトリ内を再帰的に探す場合は 1 (_WeeChat バージョン 2.0 以上で利用可_)
 * _hidden_files_: 検索対象に隠しファイルを含める場合は 1、含めない場合は 0
 * _callback_: 各ファイルに対して呼び出すコールバック関数、引数:
 ** _void *data_: ポインタ
@@ -3209,7 +3211,7 @@ void callback (void *data, const char *filename)
     /* ... */
 }
 ...
-weechat_exec_on_files ("/tmp", 0, &callback, NULL);
+weechat_exec_on_files ("/tmp", 0, 0, &callback, NULL);
 ----
 
 [NOTE]
@@ -6075,11 +6077,10 @@ const char *weechat_config_option_get_string (struct t_config_option *option,
 
 引数:
 
-// TRANSLATION MISSING
 * _option_: オプションへのポインタ
 * _property_: プロパティ名:
-** _config_name_: file name
-** _section_name_: section name
+** _config_name_: ファイル名
+** _section_name_: セクション名
 ** _name_: オプション名
 ** _parent_name_: 親オプション名
 ** _type_: オプション型、以下のリストのどれか 1 つ:

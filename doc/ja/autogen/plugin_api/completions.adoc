@@ -16,7 +16,7 @@
 
 | exec | exec_commands_ids | 実行されたコマンドの識別子 (番号と名前)
 
-| fset | fset_options | configuration files, sections, options and words of options
+| fset | fset_options | 設定ファイル、セクション、オプションの名前、オプションの値
 
 | guile | guile_script | スクリプトのリスト
 

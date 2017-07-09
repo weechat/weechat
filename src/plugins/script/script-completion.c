@@ -214,14 +214,14 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
             /* look for files in "~/.weechat/<language>/" */
             snprintf (directory, length,
                       "%s/%s", weechat_home, script_language[i]);
-            weechat_exec_on_files (directory, 0,
+            weechat_exec_on_files (directory, 0, 0,
                                    &script_completion_exec_file_cb,
                                    pointers);
 
             /* look for files in "~/.weechat/<language>/autoload/" */
             snprintf (directory, length,
                       "%s/%s/autoload", weechat_home, script_language[i]);
-            weechat_exec_on_files (directory, 0,
+            weechat_exec_on_files (directory, 0, 0,
                                    &script_completion_exec_file_cb,
                                    pointers);
         }

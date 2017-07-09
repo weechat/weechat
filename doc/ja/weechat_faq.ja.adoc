@@ -313,25 +313,21 @@ kbd:[Ctrl] + kbd:[Alt] + マウス選択です。
 
 WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: kbd:[Alt+l])。
 
-// TRANSLATION MISSING
-To make opening URLs easier, you can:
+URL を簡単にクリックできるようにするには、以下を試してみてください:
 
-// TRANSLATION MISSING
-* move nicklist to top:
+* ニックネームリストを上方に移動します:
 
 ----
 /set weechat.bar.nicklist.position top
 ----
 
-// TRANSLATION MISSING
-* disable alignment for multiline words (WeeChat ≥ 1.7):
+* 複数行に渡る単語の整列を無効化します (WeeChat バージョン 1.7 以上の場合):
 
 ----
 /set weechat.look.align_multiline_words off
 ----
 
-// TRANSLATION MISSING
-* or for all wrapped lines:
+* もしくは、すべての折り返された行について整列を無効化します:
 
 ----
 /set weechat.look.align_end_of_lines time
