@@ -142,7 +142,7 @@ Mouse actions on fset buffer:
   right button + drag left/right  increase/decrease value for integer/color, set/append to value for other types
   right button + drag up/down     mark/unmark multiple options
 
-Note: spaces at beginning of input are ignored, so for example "q" closes the fset buffer while " q" searches all options with "q" inside name.
+Note: if input has one or more leading spaces, the following text is interpreted as a filter, without the spaces. For example " q" searches all options with "q" inside name while "q" closes the fset buffer.
 
 Examples:
   show IRC options changed:

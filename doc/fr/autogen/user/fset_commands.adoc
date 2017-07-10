@@ -142,7 +142,7 @@ Actions de la souris sur le tampon fset :
   right button + drag left/right  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
   right button + drag up/down     marquer/démarquer plusieurs options
 
-Note : les espaces au début et à la fin de l'entrée sont ignorés, donc par exemple "q" ferme le tampon fset, tandis que " q" cherche toutes les options avec "q" dans le nom.
+Note : si l'entrée comporte un ou plusieurs espaces en tête, le texte suivant est interprété comme un filtre, sans les espaces. Par exemple " q" cherche toutes les options avec "q" dans le nom, tandis que "q" ferme le tampon fset.
 
 Exemples :
   afficher les options IRC changées :
