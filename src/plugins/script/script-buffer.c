@@ -1118,6 +1118,20 @@ script_buffer_set_keys ()
 }
 
 /*
+ * Sets the local variable "filter" in the script buffer.
+ */
+
+void
+script_buffer_set_localvar_filter ()
+{
+    if (!script_buffer)
+        return;
+
+    weechat_buffer_set (script_buffer, "localvar_set_filter",
+                        (script_repo_filter) ? script_repo_filter : "*");
+}
+
+/*
  * Opens script buffer.
  */
 
@@ -1139,6 +1153,7 @@ script_buffer_open ()
         weechat_buffer_set (script_buffer, "title", _("Scripts"));
         script_buffer_set_keys ();
         weechat_buffer_set (script_buffer, "localvar_set_type", "script");
+        script_buffer_set_localvar_filter ();
 
         script_buffer_selected_line = 0;
         script_buffer_detail_script = NULL;

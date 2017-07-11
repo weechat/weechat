@@ -27,6 +27,7 @@ New features::
 Improvements::
 
   * api: add argument "recurse_subdirs" in function exec_on_files()
+  * script: add local variable "filter" in the script buffer (issue #1037)
 
 Bug fixes::
 

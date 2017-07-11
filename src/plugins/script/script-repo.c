@@ -910,6 +910,8 @@ script_repo_set_filter (const char *filter)
     if (script_repo_filter)
         free (script_repo_filter);
     script_repo_filter = (filter) ? strdup (filter) : NULL;
+
+    script_buffer_set_localvar_filter ();
 }
 
 /*
