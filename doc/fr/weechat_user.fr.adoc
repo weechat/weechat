@@ -579,30 +579,30 @@ valeur et applique les changements immédiatement.
 Exemple de terminal avec WeeChat :
 
 ....
- ▼ barre "title"
-┌───────────────────────────────────────────────────────────────────────────┐
-│Bienvenue sur #test, canal de test                                         │
-│12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #test    │@Flashy│
-│12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot peter]       │@joe   │
-│12:52:27    -- | Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal) │+weebot│
-│12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009            │peter  │
-│12:54:15 peter | bonjour !                                         │       │
-│12:55:01  @joe | salut                                             │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
-│[@Flashy(i)] salut peter!█                                                 │
-└───────────────────────────────────────────────────────────────────────────┘
- ▲ barres "status" et "input"                            barre "nicklist" ▲
+ ▼ barre "buflist"   ▼ barre "title"
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Bienvenue sur #test, canal de test                                         │
+│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) a rejoint #test    │@Flashy│
+│2.  #test │12:52:27    -- | Pseudos #test: [@Flashy @joe +weebot peter]       │@joe   │
+│3.  #abc  │12:52:27    -- | Canal #test: 4 pseudos (2 ops, 1 voice, 1 normal) │+weebot│
+│4.  #def  │12:52:27    -- | Canal créé le Tue Jan 27 06:30:17 2009            │peter  │
+│5.  #ghi  │12:54:15 peter | bonjour !                                         │       │
+│          │12:55:01  @joe | salut                                             │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[@Flashy(i)] salut peter !█                                                │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+            ▲ barres "status" et "input"                            barre "nicklist" ▲
 ....
 
 L'écran est composé des zones suivantes :
@@ -613,29 +613,46 @@ L'écran est composé des zones suivantes :
 ** préfixe (avant "|")
 ** message (après "|")
 * barres autour de la zone de discussion, les barres par défaut sont :
+** barre _buflist_, sur la gauche
 ** barre _title_, au dessus de la zone de discussion
 ** barre _status_, sous la zone de discussion
 ** barre _input_, sous la barre de statut
 ** barre _nicklist_, sur la droite
 
+La barre _buflist_ contient les objets (items) suivants par défaut :
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Objet (item) | Exemple     | Description
+| buflist      | `1.weechat` | Liste des tampons.
+|===
+
+La barre _title_ contient les objets (items) suivants par défaut :
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Objet (item) | Exemple               | Description
+| buffer_title | `Bienvenue sur #test` | Titre du tampon.
+|===
+
 La barre _status_ contient les objets (items) suivants par défaut :
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
-| Objet (item)          | Exemple               | Description
-| time                  | `[12:55]`             | Heure.
-| buffer_last_number    | `[6]`                 | Numéro du dernier tampon de la liste.
-| buffer_plugin         | `[irc/freenode]`      | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon).
-| buffer_number         | `3`                   | Numéro du tampon courant.
-| buffer_name           | `#test`               | Nom du tampon courant.
-| buffer_modes          | `+n`                  | Modes du canal IRC.
-| buffer_nicklist_count | `{4}`                 | Nombre de pseudos dans la liste des pseudos.
-| buffer_zoom           | !                     | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
-| buffer_filter         | `+*+`                 | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
-| scroll                | `-PLUS(50)-`          | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
-| lag                   | `[Lag: 2.5]`          | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
-| hotlist               | `[H: 4:#abc(2,5), 6]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 6).
-| completion            | `abc(2) def(5)`       | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
+| Objet (item)          | Exemple                 | Description
+| time                  | `[12:55]`               | Heure.
+| buffer_last_number    | `[5]`                   | Numéro du dernier tampon de la liste.
+| buffer_plugin         | `[irc/freenode]`        | Extension du tampon courant (l'extension irc peut afficher le nom du serveur IRC auquel est rattaché ce tampon).
+| buffer_number         | `2`                     | Numéro du tampon courant.
+| buffer_name           | `#test`                 | Nom du tampon courant.
+| buffer_modes          | `+n`                    | Modes du canal IRC.
+| buffer_nicklist_count | `{4}`                   | Nombre de pseudos dans la liste des pseudos.
+| buffer_zoom           | !                       | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
+| buffer_filter         | `+*+`                   | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
+| scroll                | `-PLUS(50)-`            | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.
+| lag                   | `[Lag: 2.5]`            | Indicateur de "lag" (ralentissements réseau), en secondes (caché si le lag est faible).
+| hotlist               | `[Act: 3:#abc(2,5), 5]` | Liste des tampons où il y a de l'activité (messages non lus) (dans cet exemple, 2 highlights et 5 messages non lus sur _#abc_, un message non lu sur le tampon numéro 5).
+| completion            | `abc(2) def(5)`         | Liste des mots pour la complétion, avec le nombre de complétions possibles pour chaque mot.
 |===
 
 La barre _input_ contient les objets (items) suivants par défaut :
@@ -648,6 +665,14 @@ La barre _input_ contient les objets (items) suivants par défaut :
 | input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages).
 | input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes.
 | input_text   | `salut peter !`                                 | Texte entré.
+|===
+
+La barre _nicklist_ contient les objets (items) suivants par défaut :
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Objet (item)    | Exemple   | Description
+| buffer_nicklist | `@Flashy` | Liste des pseudos sur le tampon courant.
 |===
 
 Autres objets (non utilisés dans des barres par défaut) :
@@ -1084,13 +1109,12 @@ Liste des options de barre :
 
 | type | `root`, `window` |
   Une barre avec le type `root` est affichée exactement une fois à l'écran, en
-  dehors de toutes les fenêtres. Il n'y a pas de barre root par défaut, mais un
-  exemple est la barre _buffers_ créée par le script _buffers.pl_ (barre
-  latérale avec la liste des tampons). +
+  dehors de toutes les fenêtres. La barre par défaut _buflist_ est de type
+  `root`. +
   Une barre avec le type `window` est affichée dans chaque fenêtre, par exemple
   si vous découpez l'écran (avec `/window splith` ou `/window splitv`), vous
-  aurez une barre dans chaque fenêtre. Les quatre barres par défaut (_title_,
-  _status_, _input_, _nicklist_) sont de type `window`.
+  aurez une barre dans chaque fenêtre. Les barres par défaut _title_, _status_,
+  _input_ et _nicklist_ sont de type `window`.
 
 | position | `top`, `bottom`, `left`, `right` |
   Position de la barre : au dessus/en dessous de la discussion, sur la

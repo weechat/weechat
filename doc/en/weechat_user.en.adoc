@@ -568,30 +568,30 @@ and applies immediately the changes.
 Example of terminal with WeeChat:
 
 ....
- ▼ bar "title"
-┌───────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel                                   │
-│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
-│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
-│12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
-│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | hello                                             │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
-│[@Flashy(i)] hi peter!█                                                    │
-└───────────────────────────────────────────────────────────────────────────┘
- ▲ bars "status" and "input"                               bar "nicklist" ▲
+ ▼ bar "buflist"   ▼ bar "title"
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Welcome to #test, this is a test channel                                   │
+│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
+│2.  #test │12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
+│3.  #abc  │12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
+│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
+│5.  #ghi  │12:54:15 peter | hey!                                              │       │
+│          │12:55:01  @joe | hello                                             │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[@Flashy(i)] hi peter!█                                                    │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+            ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
 Screen is composed by following areas:
@@ -601,29 +601,46 @@ Screen is composed by following areas:
 ** prefix (before "|")
 ** message (after "|")
 * bars around chat area, default bars are:
+** _buflist_ bar, on the left
 ** _title_ bar, above chat area
 ** _status_ bar, below chat area
 ** _input_ bar, below status bar
 ** _nicklist_ bar, on the right
 
+Bar _buflist_ has following default items:
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item    | Example     | Description
+| buflist | `1.weechat` | List of buffers.
+|===
+
+Bar _title_ has following default items:
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item         | Example            | Description
+| buffer_title | `Welcome to #test` | Buffer title.
+|===
+
 Bar _status_ has following default items:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
-| Item                  | Example               | Description
-| time                  | `[12:55]`             | Time.
-| buffer_last_number    | `[6]`                 | Number of last buffer in list.
-| buffer_plugin         | `[irc/freenode]`      | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
-| buffer_number         | `3`                   | Current buffer number.
-| buffer_name           | `#test`               | Current buffer name.
-| buffer_modes          | `+n`                  | IRC channel modes.
-| buffer_nicklist_count | `{4}`                 | Number of nicks in nicklist.
-| buffer_zoom           | !                     | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
-| buffer_filter         | `+*+`                 | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
-| scroll                | `-MORE(50)-`          | Scroll indicator, with number of lines below last line displayed.
-| lag                   | `[Lag: 2.5]`          | Lag indicator, in seconds (hidden if lag is low).
-| hotlist               | `[H: 4:#abc(2,5), 6]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #6).
-| completion            | `abc(2) def(5)`       | List of words for completion, with number of possible completions for each word.
+| Item                  | Example                 | Description
+| time                  | `[12:55]`               | Time.
+| buffer_last_number    | `[5]`                   | Number of last buffer in list.
+| buffer_plugin         | `[irc/freenode]`        | Plugin of current buffer (irc plugin can add IRC server name used by buffer).
+| buffer_number         | `2`                     | Current buffer number.
+| buffer_name           | `#test`                 | Current buffer name.
+| buffer_modes          | `+n`                    | IRC channel modes.
+| buffer_nicklist_count | `{4}`                   | Number of nicks in nicklist.
+| buffer_zoom           | !                       | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
+| buffer_filter         | `+*+`                   | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
+| scroll                | `-MORE(50)-`            | Scroll indicator, with number of lines below last line displayed.
+| lag                   | `[Lag: 2.5]`            | Lag indicator, in seconds (hidden if lag is low).
+| hotlist               | `[Act: 3:#abc(2,5), 5]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
+| completion            | `abc(2) def(5)`         | List of words for completion, with number of possible completions for each word.
 |===
 
 Bar _input_ has following default items:
@@ -631,11 +648,19 @@ Bar _input_ has following default items:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item         | Example                                      | Description
-| input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode)
-| away         | `(away)`                                     | Away indicator
-| input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages)
-| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines
-| input_text   | `hi peter!`                                  | Input text
+| input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode).
+| away         | `(away)`                                     | Away indicator.
+| input_search | `[Search (~ str,msg)]`                       | Search indicator ("`~`": case insensitive, "`==`": case sensitive, "`str`": search string, "`regex`": search regular expression, "`msg`": search in messages, "`pre`": search in prefixes, "`pre\|msg`": search in prefixes and messages).
+| input_paste  | `[Paste 7 lines ? [ctrl-Y] Yes [ctrl-N] No]` | Question to user for pasting lines.
+| input_text   | `hi peter!`                                  | Input text.
+|===
+
+Bar _nicklist_ has following default items:
+
+[width="100%",cols="^3,^4,10",options="header"]
+|===
+| Item            | Example   | Description
+| buffer_nicklist | `@Flashy` | List of nicks on current buffer.
 |===
 
 Other items available (not used in bars by default):
@@ -1061,12 +1086,11 @@ List of bar options:
 
 | type | `root`, `window` |
   A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. There is no root bar by default, but an example is the bar _buffers_
-  created by script _buffers.pl_ (sidebar with list of buffers). +
+  windows. The default bar _buflist_ has type `root`. +
   A bar with type `window` is displayed in each window, for example if you
   split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The four default bars (_title_, _status_,
-  _input_, _nicklist_) have type `window`.
+  will have one bar in each window. The default bars _title_, _status_,
+  _input_ and _nicklist_ have type `window`.
 
 | position | `top`, `bottom`, `left`, `right` |
   Position of the bar: above/below chat, on the left/right.
