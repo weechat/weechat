@@ -941,93 +941,94 @@ angezeigt.
 Beispiele für eine horizontal Fensteraufteilung (`/window splith`):
 
 ....
-                          ▼ Fenster #2 (Buffer #4)
-┌───────────────────────────────────────────────────────────────────────────┐
-│Welcome to #abc                                                            │
-│12:55:12     Max | hi                                              │@Flashy│
-│12:55:20 @Flashy | hi Max!                                         │Max    │
-│12:55:32     Max | how are you?                                    │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│[12:55] [6] [irc/freenode] 4:#abc(+n){2}                                   │
-│[@Flashy]                                                                  │
-│───────────────────────────────────────────────────────────────────────────│
-│Welcome to #test                                                           │
-│12:54:15 peter | hey!                                              │@Flashy│
-│12:55:01  @joe | hello                                             │@joe   │
-│                                                                   │+weebot│
-│                                                                   │peter  │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}                                  │
-│[@Flashy] hi peter!█                                                       │
-└───────────────────────────────────────────────────────────────────────────┘
-                          ▲ Fenster #1 (Buffer #3)
+                               ▼ Fenster #2 (Buffer #4)
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Welcome to #def                                                            │
+│  weechat │12:55:12     Max | hi                                              │@Flashy│
+│2.  #test │12:55:20 @Flashy | hi Max!                                         │Max    │
+│3.  #abc  │                                                                   │       │
+│4.  #def  │                                                                   │       │
+│5.  #ghi  │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │[12:55] [5] [irc/freenode] 4:#def(+n){2}                                   │
+│          │[@Flashy]                                                                  │
+│          │───────────────────────────────────────────────────────────────────────────│
+│          │Welcome to #abc                                                            │
+│          │12:54:15 peter | hey!                                              │@Flashy│
+│          │12:55:01  @joe | hello                                             │@joe   │
+│          │                                                                   │+weebot│
+│          │                                                                   │peter  │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
+│          │[@Flashy] hi peter!█                                                       │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+                               ▲ Fenster #1 (Buffer #3)
 ....
 
 Beispiele für eine vertikale Fensteraufteilung (`/window splitv`):
 
 ....
-┌───────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test                     │Welcome to #abc                      │
-│12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
-│12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
-│                             │+weebot│                             │       │
-│                             │peter  │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
-│[@Flashy] hi peter!█                 │[@Flashy]                            │
-└───────────────────────────────────────────────────────────────────────────┘
-      ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Welcome to #abc                      │Welcome to #def                      │
+│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:12     Max | hi        │@Flashy│
+│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:20 @Flashy | hi Max!   │Max    │
+│3.  #abc  │                             │+weebot│                             │       │
+│4.  #def  │                             │peter  │                             │       │
+│5.  #ghi  │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
+│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+                 ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ....
 
 Beispiele für eine vertikale und horizontale Fensteraufteilung:
 
 ....
-                                            ▼ Fenster #3 (Buffer #5)
-┌───────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test                     │Welcome to #def                      │
-│12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
-│12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
-│                             │+weebot│                             │       │
-│                             │peter  │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │[12:55] [irc/oftc] 5:#def(+n){2}     │
-│                             │       │[@Flashy]                            │
-│                             │       │─────────────────────────────────────│
-│                             │       │Welcome to #abc                      │
-│                             │       │12:55:12     Max | hi        │@Flashy│
-│                             │       │12:55:20 @Flashy | hi Max!   │Max    │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│                             │       │                             │       │
-│[12:55] [irc/oftc] 3:#test(+n){4}    │[12:55] [irc/oftc] 4:#abc(+n){2}     │
-│[@Flashy] hi peter!█                 │[@Flashy]                            │
-└───────────────────────────────────────────────────────────────────────────┘
-      ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
+                                                       ▼ Fenster #3 (Buffer #5)
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Welcome to #abc                      │Welcome to #ghi                      │
+│  weechat │12:54:15 peter | hey!        │@Flashy│12:55:42 @Flashy | hi        │@Flashy│
+│2.  #test │12:55:01  @joe | hello       │@joe   │12:55:56    alex | hi Flashy │alex   │
+│3.  #abc  │                             │+weebot│                             │       │
+│4.  #def  │                             │peter  │                             │       │
+│5.  #ghi  │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │[12:55] [5] [irc/freenode] 5:#ghi(+n)│
+│          │                             │       │[@Flashy]                            │
+│          │                             │       │─────────────────────────────────────│
+│          │                             │       │Welcome to #def                      │
+│          │                             │       │12:55:12     Max | hi        │@Flashy│
+│          │                             │       │12:55:20 @Flashy | hi Max!   │Max    │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │                             │       │                             │       │
+│          │[12:55] [5] [irc/freenode] 3:#abc(+n)│[12:55] [5] [irc/freenode] 4:#def(+n)│
+│          │[@Flashy] hi peter!█                 │[@Flashy]                            │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+                 ▲ Fenster #1 (Buffer #3)              ▲ Fenster #2 (Buffer #4)
 ....
 
 [[buffers_lines]]
@@ -1356,55 +1357,61 @@ Der vereinfachte Anzeigemodus kann mit einer vorgegebenen Zeit gestartet werden
 Im normalen Modus sieht WeeChat wie folgt aus:
 
 ....
-┌───────────────────────────────────────────────────────────────────────────┐
-│Welcome to #test, this is a test channel                                   │
-│12:52:27   --> | Flashy (flashcode@weechat.org) has joined #test   │@Flashy│
-│12:52:27    -- | Nicks #test: [@Flashy @joe +weebot peter]         │@joe   │
-│12:52:27    -- | Channel #test: 4 nicks (2 ops, 1 voice, 1 normal) │+weebot│
-│12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
-│12:54:15 peter | hey!                                              │       │
-│12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
-│               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
-│               | process                                           │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│                                                                   │       │
-│[12:55] [6] [irc/freenode] 3:#test(+n){4}* [H: 4:#abc(2,5), 6]             │
-│[@Flashy(i)] hi peter!█                                                    │
-└───────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│1.freenode│Welcome to #abc                                                            │
+│  weechat │12:52:27   --> | Flashy (flashcode@weechat.org) has joined #abc    │@Flashy│
+│2.  #test │12:52:27    -- | Nicks #abc: [@Flashy @joe +weebot peter]          │@joe   │
+│3.  #abc  │12:52:27    -- | Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)  │+weebot│
+│4.  #def  │12:52:27    -- | Channel created on Tue Jan 27 06:30:17 2009       │peter  │
+│5.  #ghi  │12:54:15 peter | hey!                                              │       │
+│          │12:55:01  @joe | peter: hook_process: https://weechat.org/files/do │       │
+│          │               | c/devel/weechat_plugin_api.en.html#_weechat_hook_ │       │
+│          │               | process                                           │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │                                                                   │       │
+│          │[12:55] [5] [irc/freenode] 3:#abc(+n){4}                                   │
+│          │[@Flashy(i)] hi peter!█                                                    │
+└──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
 Der selbe Bildschirm sieht im vereinfachten Anzeigemodus wie folgt aus:
 
 ....
-┌───────────────────────────────────────────────────────────────────────────┐
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│                                                                           │
-│12:52 --> Flashy (flashcode@weechat.org) has joined #test                  │
-│12:52 -- Nicks #test: [@Flashy @joe +weebot peter]                         │
-│12:52 -- Channel #test: 4 nicks (2 ops, 1 voice, 1 normal)                 │
-│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                       │
-│12:54 <peter> hey!                                                         │
-│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weech│
-│at_plugin_api.en.html#_weechat_hook_process                                │
-└───────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│                                                                                      │
+│12:52 --> Flashy (flashcode@weechat.org) has joined #abc                              │
+│12:52 -- Nicks #abc: [@Flashy @joe +weebot peter]                                     │
+│12:52 -- Channel #abc: 4 nicks (2 ops, 1 voice, 1 normal)                             │
+│12:52 -- Channel created on Tue Jan 27 06:30:17 2009                                  │
+│12:54 <peter> hey!                                                                    │
+│12:55 <@joe> peter: hook_process: https://weechat.org/files/doc/devel/weechat_plugin_a│
+│pi.en.html#_weechat_hook_process                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────┘
 ....
 
 Es kann nun die URL von _joe_ ohne Probleme angeklickt werden (dies setzt
