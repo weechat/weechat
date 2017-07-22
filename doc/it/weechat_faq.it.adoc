@@ -189,33 +189,39 @@ un buffer. È possibile dividere lo schermo in più finestre.
 Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
 da una finestra) o visualizzato da una o più finestre.
 
+// TRANSLATION MISSING
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-Utilizzando lo script _buffers.pl_:
+With WeeChat ≥ 1.8, the plugin "buflist" is loaded and enabled by default.
+
+With an older version, you can install script _buffers.pl_:
 
 ----
 /script install buffers.pl
 ----
 
-Per limitare la dimensione della barra:
+To limit size of bar (replace "buflist" by "buffers" if you're using the script
+_buffers.pl_):
 
 ----
-/set weechat.bar.buffers.size_max 15
+/set weechat.bar.buflist.size_max 15
 ----
 
-Per spostare la barra in basso:
+To move bar to bottom:
 
 ----
-/set weechat.bar.buffers.position bottom
+/set weechat.bar.buflist.position bottom
 ----
 
-// TRANSLATION MISSING
 To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
 bar with your mouse wheel.
 
-// TRANSLATION MISSING
-Or you can define keys, similar to the existing keys to scroll nicklist.
+Default keys to scroll _buflist_ bar are kbd:[F1], kbd:[F2], kbd:[Alt+F1]
+and kbd:[Alt+F2].
+
+For script _buffers.pl_, you can define keys, similar to the existing keys to
+scroll nicklist. +
 For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
 
 ----

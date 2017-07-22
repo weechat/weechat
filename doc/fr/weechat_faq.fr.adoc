@@ -180,13 +180,16 @@ aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-Utilisez le script _buffers.pl_ :
+Avec WeeChat ≥ 1.8, l'extension "buflist" est chargée et activée par défaut.
+
+Avec une version plus ancienne, vous pouvez installer le script _buffers.pl_ :
 
 ----
 /script install buffers.pl
 ----
 
-Pour limiter la taille de la barre :
+Pour limiter la taille de la barre (remplacez "buflist" par "buffers" si vous
+utilisez le script _buffers.pl_) :
 
 ----
 /set weechat.bar.buffers.size_max 15
@@ -201,8 +204,11 @@ Pour déplacer la barre en bas :
 Pour faire défiler la barre : si la souris est activée (touche : kbd:[Alt+m]),
 vous pouvez faire défiler avec la roulette de votre souris.
 
-Ou vous pouvez définir des touches, comme les touches déjà existantes pour faire
-défiler la liste de pseudos.
+Les touches par défaut pour faire défiler la barre _buflist_ sont kbd:[F1],
+kbd:[F2], kbd:[Alt+F1] et kbd:[Alt+F2].
+
+Pour le script _buffers.pl_, vous pouvez définir des touches, comme les touches
+déjà existantes pour faire défiler la liste de pseudos. +
 Par exemple pour utiliser kbd:[F1], kbd:[F2], kbd:[Alt+F1] et kbd:[Alt+F2] :
 
 ----
