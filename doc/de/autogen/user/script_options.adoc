@@ -225,7 +225,7 @@
 ** Standardwert: `+30+`
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
-** Beschreibung: pass:none[Skripten welche "gehalten" werden sollen. Dies ist eine durch Kommata getrennte Liste von Skripten die weder aktualisiert noch entfernt werden können. Zum Beispiel: "go.py,urlserver.py"]
+** Beschreibung: pass:none[scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "go.py,urlserver.py"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
