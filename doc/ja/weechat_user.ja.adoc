@@ -604,20 +604,18 @@ WeeChat を起動した端末の例:
 ** プレフィックス ("|" の前)
 ** メッセージ ("|" の後)
 * チャットエリアの周りにあるバー、デフォルトバーは:
-// TRANSLATION MISSING
-** _buflist_ bar, on the left
+** バッファリスト (_buflist_) バー、左端
 ** タイトル (_title_) バー、チャットエリアの上
 ** 状態 (_status_) バー、チャットエリアの下
 ** 入力 (_input_) バー、状態バーの下
 ** ニックネームリスト (_nicklist_) バー、右端
 
-状態 (_buflist_) バーは以下の初期要素を持っています:
+バッファリスト (_buflist_) バーは以下の初期要素を持っています:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | 要素    | 例          | 説明
-// TRANSLATION MISSING
-| buflist | `1.weechat` | List of buffers.
+| buflist | `1.weechat` | バッファ一覧
 |===
 
 状態 (_title_) バーは以下の初期要素を持っています:
@@ -625,8 +623,7 @@ WeeChat を起動した端末の例:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | 要素         | 例                 | 説明
-// TRANSLATION MISSING
-| buffer_title | `Welcome to #test` | Buffer title.
+| buffer_title | `Welcome to #test` | バッファタイトル
 |===
 
 状態 (_status_) バーは以下の初期要素を持っています:
@@ -661,13 +658,12 @@ WeeChat を起動した端末の例:
 | input_text   | `hi peter!`                                  | 入力テキスト
 |===
 
-入力 (_nicklist_) バーは以下の初期要素を持っています:
+ニックネームリスト (_nicklist_) バーは以下の初期要素を持っています:
 
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | 要素            | 例        | 説明
-// TRANSLATION MISSING
-| buffer_nicklist | `@Flashy` | List of nicks on current buffer.
+| buffer_nicklist | `@Flashy` | 現在のバッファのニックネーム一覧
 |===
 
 その他の利用可能な要素 (初期状態のバーはこれらの要素を持ちません):
@@ -1092,13 +1088,12 @@ _バー_ とは任意のテキストを含めることができるチャット�
 | オプション名 | 値 | 説明
 
 | type | `root`、`window` |
-// TRANSLATION MISSING
-  A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. The default bar _buflist_ has type `root`. +
-  A bar with type `window` is displayed in each window, for example if you
-  split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The default bars _title_, _status_,
-  _input_ and _nicklist_ have type `window`.
+  `root` 型バーは画面上の全ウィンドウの外側にきっかり 1 回だけ表示されます。
+  デフォルトバーである _buflist_ は `root` 型のバーです。 +
+  `window` 型バーは各ウィンドウの中に表示されます。例えば、`/window splith`
+  や `/window splitv` などの方法で画面を 1 回分割した場合、1
+  つのバーがそれぞれのウィンドウに表示されます。デフォルトの `window`
+  型バーには _title_、_status_、_input_、_nicklist_ などがあります。
 
 | position | `top`、`bottom`、`left`、`right` |
   バーの位置: チャットエリアの上、下、左、右。
