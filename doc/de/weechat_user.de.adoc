@@ -609,8 +609,7 @@ Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 ** Prefix (links von dem "|")
 ** Nachricht (rechts von dem "|")
 * Die Bars können um den Chat-Bereich angeordnet werden. Standard-Bars sind:
-// TRANSLATION MISSING
-** _buflist_ Bar, on the left
+** _buflist_ Bar, auf der linken Seite
 ** _title_ Bar, über dem Chat-Bereich
 ** _status_ Bar, unter dem Chat-Bereich
 ** _input_ Bar, unter der Status-Bar
@@ -621,8 +620,7 @@ Die _buflist_-Bar besitzt als Standardeinträge:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item    | Beispiel    | Beschreibung
-// TRANSLATION MISSING
-| buflist | `1.weechat` | List of buffers.
+| buflist | `1.weechat` | Auflistung der Buffer.
 |===
 
 Die _title_-Bar besitzt als Standardeinträge:
@@ -630,8 +628,7 @@ Die _title_-Bar besitzt als Standardeinträge:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item         | Beispiel           | Beschreibung
-// TRANSLATION MISSING
-| buffer_title | `Welcome to #test` | Buffer title.
+| buffer_title | `Willkommen in #test` | Buffer-Titel.
 |===
 
 Die _status_-Bar besitzt als Standardeinträge:
@@ -671,8 +668,7 @@ In der _nicklist_ Bar lautet die Standardeinstellung:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item            | Beispiel  | Beschreibung
-// TRANSLATION MISSING
-| buffer_nicklist | `@Flashy` | List of nicks on current buffer.
+| buffer_nicklist | `@Flashy` | Liste der Nicks für den aktuellen Buffer.
 |===
 
 andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar aktiviert sind):
@@ -1108,13 +1104,12 @@ Aufzählung von Bar-Optionen:
 | Option | Wert   | Beschreibung
 
 | type | `root`, `window` |
-// TRANSLATION MISSING
-  A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. The default bar _buflist_ has type `root`. +
-  A bar with type `window` is displayed in each window, for example if you
-  split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The default bars _title_, _status_,
-  _input_ and _nicklist_ have type `window`.
+  Eine Bar vom Typ `root` wird nur einmal auf dem Bildschirm dargestellt und dies
+  außerhalb von Fenstern. Die Standardbar _buflist_ ist vom Typ `root`. +
+  Eine Bar vom Typ `window` wird hingegen in jedem Fenster dargestellt, zum Beispiel
+  wenn man den Bildschirm teilt (mit `/window splith` oder `/window splitv`). Diese
+  Bar wird nun in jedem einzelnen Fenster angezeigt. Die Standardbar _title_, _status_,
+  _input_ und _nicklist_ sind vom Typ `window`.
 
 | position | `top`, `bottom`, `left`, `right` |
   Position der Bar: ober- oder unterhalb des Chatfensters, oder links/rechts davon.

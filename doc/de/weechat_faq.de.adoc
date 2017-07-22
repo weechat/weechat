@@ -187,13 +187,12 @@ Jedes Fenster stellt einen Buffer dar. Ein Buffer kann unsichtbar sein (er wird
 in einem Fenster nicht angezeigt). Oder ein Buffer wird durch ein oder mehrere Fenster
 angezeigt.
 
-// TRANSLATION MISSING
 [[buffers_list]]
 === Wie kann ich eine Liste mit den Buffern z.B. auf der linken Seite anzeigen lassen?
 
-With WeeChat ≥ 1.8, the plugin "buflist" is loaded and enabled by default.
+Ab WeeChat ≥ 1.8 wird standardmäßig die "buflist" Erweiterung automatisch geladen und verwendet.
 
-With an older version, you can install script _buffers.pl_:
+bei älteren Versionen kann das Skript _buffers.pl_ installiert werden:
 
 ----
 /script install buffers.pl
