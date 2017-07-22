@@ -2221,7 +2221,7 @@ char *weechat_string_eval_expression (const char *expr,
   WeeChat またはプラグインのインフォ、<<_info_get,info_get>>
   を参照 |
   `+${info:version}+` +
-  `+${info:irc_nick_color_name,foo}+` |
+  `+${info:nick_color_name,foo}+` |
   `+1.0+` +
   `+lightblue+`
 
