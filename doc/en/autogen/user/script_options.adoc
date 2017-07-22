@@ -225,7 +225,7 @@
 ** default value: `+30+`
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
-** description: pass:none[scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "buffers.pl,iset.pl"]
+** description: pass:none[scripts to "hold": comma-separated list of scripts which will never been upgraded and can not be removed, for example: "go.py,urlserver.py"]
 ** type: string
 ** values: any string
 ** default value: `+""+`

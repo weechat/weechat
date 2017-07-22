@@ -363,8 +363,8 @@ script_command_init ()
            "\n"
            "Examples:\n"
            "  /script search url\n"
-           "  /script install iset.pl buffers.pl\n"
-           "  /script remove iset.pl\n"
+           "  /script install go.py urlserver.py\n"
+           "  /script remove go.py\n"
            "  /script hold urlserver.py\n"
            "  /script reload urlserver\n"
            "  /script upgrade"),

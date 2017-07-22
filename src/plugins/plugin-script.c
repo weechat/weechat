@@ -448,7 +448,7 @@ plugin_script_search (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * Searches for a script by full name (example: "iset.pl").
+ * Searches for a script by full name (example: "go.py").
  *
  * Returns pointer to script, NULL if not found.
  */

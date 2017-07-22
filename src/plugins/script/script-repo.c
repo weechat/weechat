@@ -135,7 +135,7 @@ script_repo_search_by_name (const char *name)
 }
 
 /*
- * Searches for a script by name/extension (example: "iset.pl").
+ * Searches for a script by name/extension (example: "go.py").
  *
  * Returns pointer to script found, NULL if not found.
  */

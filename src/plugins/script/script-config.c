@@ -167,7 +167,7 @@ script_config_get_xml_filename ()
  *
  * If suffix is not NULL, it is added to filename.
  *
- * Example: "/home/xxx/.weechat/script/iset.pl"
+ * Example: "/home/xxx/.weechat/script/go.py"
  *
  * Note: result must be freed after use.
  */
@@ -748,7 +748,7 @@ script_config_init ()
         "hold", "string",
         N_("scripts to \"hold\": comma-separated list of scripts which will "
            "never been upgraded and can not be removed, for example: "
-           "\"buffers.pl,iset.pl\""),
+           "\"go.py,urlserver.py\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &script_config_change_hold_cb, NULL, NULL,

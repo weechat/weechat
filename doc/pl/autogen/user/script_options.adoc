@@ -225,7 +225,7 @@
 ** domyślna wartość: `+30+`
 
 * [[option_script.scripts.hold]] *script.scripts.hold*
-** opis: pass:none[skrypty do "wstrzymania": oddzielona przecinkami lista skryptów, które nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "buffers.pl,iset.pl"]
+** opis: pass:none[skrypty do "wstrzymania": oddzielona przecinkami lista skryptów, które nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: "go.py,urlserver.py"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

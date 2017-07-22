@@ -72,8 +72,8 @@ Akcje myszy w buforze skryptów:
 
 Przykłady:
   /script search url
-  /script install iset.pl buffers.pl
-  /script remove iset.pl
+  /script install go.py urlserver.py
+  /script remove go.py
   /script hold urlserver.py
   /script reload urlserver
   /script upgrade

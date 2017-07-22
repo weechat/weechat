@@ -186,7 +186,7 @@ script_action_load (const char *name, int quiet)
         return;
     }
 
-    /* execute command (for example: "/perl load iset.pl") */
+    /* execute command (for example: "/python load go.py") */
     snprintf (str_command, sizeof (str_command),
               "/%s load %s%s",
               script_language[language],
@@ -211,7 +211,7 @@ script_action_unload (const char *name, int quiet)
     pos = strrchr (name, '.');
     if (pos)
     {
-        /* unload script by using name + extension (example: "iset.pl") */
+        /* unload script by using name + extension (example: "go.py") */
         language = script_language_search_by_extension (pos + 1);
         if (language < 0)
         {
@@ -225,7 +225,7 @@ script_action_unload (const char *name, int quiet)
         }
         /*
          * search registered name of script using name with extension,
-         * for example with "iset.pl" we should find "iset"
+         * for example with "go.py" we should find "go"
          */
         snprintf (hdata_name, sizeof (hdata_name),
                   "%s_script", script_language[language]);
@@ -316,7 +316,7 @@ script_action_reload (const char *name, int quiet)
     pos = strrchr (name, '.');
     if (pos)
     {
-        /* reload script by using name + extension (example: "iset.pl") */
+        /* reload script by using name + extension (example: "go.py") */
         language = script_language_search_by_extension (pos + 1);
         if (language < 0)
         {
@@ -330,7 +330,7 @@ script_action_reload (const char *name, int quiet)
         }
         /*
          * search registered name of script using name with extension,
-         * for example with "iset.pl" we should find "iset"
+         * for example with "go.py" we should find "go"
          */
         snprintf (hdata_name, sizeof (hdata_name),
                   "%s_script", script_language[language]);

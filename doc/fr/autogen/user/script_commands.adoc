@@ -72,8 +72,8 @@ Actions de la souris sur le tampon des scripts :
 
 Exemples :
   /script search url
-  /script install iset.pl buffers.pl
-  /script remove iset.pl
+  /script install go.py urlserver.py
+  /script remove go.py
   /script hold urlserver.py
   /script reload urlserver
   /script upgrade
