@@ -445,8 +445,7 @@ weechat_startup_message ()
               "\n"
               "Moreover, there is inline help with /help on all commands and "
               "options (use Tab key to complete the name).\n"
-              "The command /iset (script iset.pl) can help to customize "
-              "WeeChat: /script install iset.pl\n"
+              "The command /fset can help to customize WeeChat.\n"
               "\n"
               "You can add and connect to an IRC server with /server and "
               "/connect commands (see /help server)."));
