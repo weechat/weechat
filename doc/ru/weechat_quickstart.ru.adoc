@@ -375,7 +375,7 @@ _foo_):
 например:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 Для получения дополнительной информации введите команду `/help script`.

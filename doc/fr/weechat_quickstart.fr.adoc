@@ -375,7 +375,7 @@ vous pouvez télécharger et installer les scripts avec la commande `/script`,
 par exemple :
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 Voir `/help script` pour plus d'infos.

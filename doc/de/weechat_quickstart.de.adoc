@@ -387,7 +387,7 @@ Viele externe Skripten (von Drittprogrammierern) sind für WeeChat verfügbar. D
 Skripten können mittels des `/script` Befehls heruntergeladen und installiert werden:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 siehe `/help script` für weitere Informationen.

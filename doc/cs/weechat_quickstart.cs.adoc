@@ -369,7 +369,7 @@ stáhnout a nainstalovat scripty z repozitáře pomocí příkazu `/script`,
 například:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 Zkuste `/help script` pro více informací.

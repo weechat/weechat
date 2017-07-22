@@ -365,7 +365,7 @@ WeeChat では多くの外部スクリプト (貢献者の作った)
 コマンドを使ってください、例:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 より詳しい情報を参照するには `/help script` を使ってください。

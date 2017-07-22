@@ -401,7 +401,7 @@ download and install scripts from the repository with the `/script` command,
 for example:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 // TRANSLATION MISSING

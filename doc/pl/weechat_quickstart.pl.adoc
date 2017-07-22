@@ -367,7 +367,7 @@ Dostępne jest wiele zewnętrznych skryptów (od społeczności), możesz je pob
 i zainstalować za pomocą komendy `/script`, na przykład:
 
 ----
-/script install iset.pl
+/script install go.py
 ----
 
 Więcej informacji można uzyskać wykonując komendę `/help script`.
