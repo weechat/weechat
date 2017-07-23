@@ -333,6 +333,27 @@ _configure_
 $ ./configure --help
 ----
 
+// TRANSLATION MISSING
+[[run_tests]]
+==== Run tests
+
+Following packages are *required* to compile tests:
+
+* libcpputest-dev
+* C++ compiler
+
+Tests must be enabled when compiling WeeChat (with cmake):
+
+----
+$ cmake .. -DENABLE_TESTS=ON
+----
+
+They can be launched after compilation from the build directory (with cmake):
+
+----
+$ ctest -V
+----
+
 [[git_sources]]
 === Git ソース
 

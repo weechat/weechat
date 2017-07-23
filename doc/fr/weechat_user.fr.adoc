@@ -335,6 +335,27 @@ Des options peuvent être utilisées pour le script _configure_, elles peuvent
 $ ./configure --help
 ----
 
+[[run_tests]]
+==== Lancement des tests
+
+Les paquets suivants sont nécessaires pour compiler les tests :
+
+* libcpputest-dev
+* C++ compiler
+
+Les tests doivent être activés pour compiler WeeChat (avec cmake) :
+
+----
+$ cmake .. -DENABLE_TESTS=ON
+----
+
+Ils peuvent être lancés après compilation depuis le répertoire de construction
+(avec cmake) :
+
+----
+$ ctest -V
+----
+
 [[git_sources]]
 === Sources Git
 
