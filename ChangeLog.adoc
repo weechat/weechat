@@ -22,6 +22,7 @@ Bug fixes::
 
   * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
   * logger: call strftime before replacing buffer local variables
+  * relay: fix send of "PART" command in backlog (irc protocol)
 
 [[v1.9]]
 == Version 1.9 (2017-06-25)
