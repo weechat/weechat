@@ -906,6 +906,7 @@ relay_irc_send_channel_backlog (struct t_relay_client *client,
                                      (ptr_host) ? "!" : "",
                                      (ptr_host) ? ptr_host : "",
                                      channel);
+                    break;
                 case RELAY_IRC_CMD_QUIT:
                     relay_irc_sendf (client,
                                      "%s:%s%s%s QUIT",

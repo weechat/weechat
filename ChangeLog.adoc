@@ -33,6 +33,7 @@ Bug fixes::
 
   * core: call the config hook when options are renamed or removed
   * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
+  * relay: fix send of "PART" command in backlog (irc protocol)
   * relay: fix parsing of CAP command without arguments in irc protocol, send ACK only if all capabilities received are OK and NAK otherwise (issue #1040)
 
 Tests:
