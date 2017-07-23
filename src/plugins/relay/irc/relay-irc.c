@@ -1302,6 +1302,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
 
     hash_parsed = NULL;
     irc_argv = NULL;
+    irc_argv_eol = NULL;
     irc_argc = 0;
 
     /* display debug message */
@@ -1739,6 +1740,8 @@ end:
         weechat_hashtable_free (hash_parsed);
     if (irc_argv)
         weechat_string_free_split (irc_argv);
+    if (irc_argv_eol)
+        weechat_string_free_split (irc_argv_eol);
 }
 
 /*
