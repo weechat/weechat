@@ -890,7 +890,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     {
         /* return the number of seconds */
         util_get_uptime (&total_seconds, NULL, NULL, NULL, NULL);
-        snprintf (value, sizeof (value), "%ld", total_seconds);
+        snprintf (value, sizeof (value), "%ld", (long)total_seconds);
         return value;
     }
 
