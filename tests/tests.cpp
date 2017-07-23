@@ -47,6 +47,8 @@ extern "C"
 
 #include "CppUTest/CommandLineTestRunner.h"
 
+#define LOCALE_TESTS "en_US.UTF-8"
+
 /* import tests from libs */
 IMPORT_TEST_GROUP(Plugins);
 IMPORT_TEST_GROUP(Arraylist);
@@ -129,8 +131,18 @@ main (int argc, char *argv[])
     struct t_gui_buffer *ptr_core_buffer;
 
     /* setup environment: English language, no specific timezone */
-    setenv ("LC_ALL", "en_US.UTF-8", 1);
+    setenv ("LC_ALL", LOCALE_TESTS, 1);
     setenv ("TZ", "", 1);
+
+    /* check if locale exists */
+    if (!setlocale (LC_ALL, ""))
+    {
+        fprintf (stderr,
+                 "ERROR: the locale %s must be installed to run WeeChat "
+                 "tests.\n",
+                 LOCALE_TESTS);
+        return 1;
+    }
 
     /* build arguments for WeeChat */
     weechat_tests_args = getenv ("WEECHAT_TESTS_ARGS");
