@@ -1227,8 +1227,8 @@ void
 relay_irc_recv_command_capab (struct t_relay_client *client,
                               int argc, char **argv, char **argv_eol)
 {
-    char str_capab[1024];
-    int i, capability, server_caps, caps_ok;
+    char str_capab[1024], *ptr_cap;
+    int i, capability, server_caps, num_caps_received, caps_ok;
 
     if (weechat_strcasecmp (argv[0], "ls") == 0)
     {
@@ -1251,21 +1251,26 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
     else if (weechat_strcasecmp (argv[0], "req") == 0)
     {
         /* client is asking for one or more server capabilities */
+        num_caps_received = 0;
         caps_ok = 0;
         server_caps = RELAY_IRC_DATA(client, server_capabilities);
         for (i = 1; i < argc; i++)
         {
-            capability = relay_irc_search_server_capability (
-                (argv[i][0] == ':') ? argv[i] + 1 : argv[i]);
-            if (capability >= 0)
+            ptr_cap = (argv[i][0] == ':') ? argv[i] + 1 : argv[i];
+            if (ptr_cap[0])
             {
-                caps_ok = 1;
-                server_caps |= 1 << capability;
-            }
-            else
-            {
-                caps_ok = 0;
-                break;
+                num_caps_received++;
+                capability = relay_irc_search_server_capability (ptr_cap);
+                if (capability >= 0)
+                {
+                    caps_ok = 1;
+                    server_caps |= 1 << capability;
+                }
+                else
+                {
+                    caps_ok = 0;
+                    break;
+                }
             }
         }
         if (caps_ok)
@@ -1277,6 +1282,17 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
             (RELAY_IRC_DATA(client, nick)) ? RELAY_IRC_DATA(client, nick) : "nick",
             (caps_ok) ? "ACK" : "NAK",
             (argc >= 2) ? ((argv_eol[1][0] == ':') ? argv_eol[1] + 1 : argv_eol[1]) : "");
+
+        /*
+         * if the CAP REQ command is received without arguments, we consider
+         * the CAP END is received; this is a workaround for clients like
+         * Atomic which are sending "CAP REQ :" (see issue #1040)
+         */
+        if (num_caps_received == 0)
+        {
+            if (!RELAY_IRC_DATA(client, connected))
+                RELAY_IRC_DATA(client, cap_end_received) = 1;
+        }
     }
     else if (weechat_strcasecmp (argv[0], "end") == 0)
     {
