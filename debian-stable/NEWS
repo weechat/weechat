@@ -13,7 +13,7 @@ weechat (0.3.1-1) unstable; urgency=low
   are stronger checks while connecting with SSL. By default, if a connection
   is not fully trusted it will fail.
   You can find more information on how to handle this new behaviour here:
-    http://dev.weechat.org/post/2009/12/01/SSL-certificates
+    https://weechat.org/blog/post/2009/12/01/SSL-certificates
 
  -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 25 Jan 2010 12:35:11 +0100
 
