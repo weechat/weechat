@@ -174,40 +174,39 @@ _ウィンドウ_
 それぞれのウィンドウは 1 つのバッファの内容を表示します。バッファを隠す
 (ウィンドウで表示させない) ことや 1 つ以上のウィンドウに表示させることも出来ます。
 
-// TRANSLATION MISSING
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-With WeeChat ≥ 1.8, the plugin "buflist" is loaded and enabled by default.
+WeeChat バージョン 1.8 以上の場合、"buflist" プラグインがロードされ、デフォルトで有効化されます。
 
-With an older version, you can install script _buffers.pl_:
+バージョン 1.8 よりも古い WeeChat をお使いなら、以下の方法で _buffers.pl_ スクリプトをインストールしてください:
 
 ----
 /script install buffers.pl
 ----
 
-To limit size of bar (replace "buflist" by "buffers" if you're using the script
-_buffers.pl_):
+バッファリストバーのサイズを制限するには以下の方法を使ってください
+(_buffers.pl_ スクリプトを使っているなら、"buflist" を "buffers" に置き換えてください):
 
 ----
 /set weechat.bar.buflist.size_max 15
 ----
 
-To move bar to bottom:
+バッファリストバーの位置を下に移動するには以下の方法を使ってください:
 
 ----
 /set weechat.bar.buflist.position bottom
 ----
 
-To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
-bar with your mouse wheel.
+_buflist_ バーをスクロールする方法: マウスを有効化しているならば
+(キー: kbd:[Alt+m])、マウスホイールでバッファリストバーをスクロールできます。
 
-Default keys to scroll _buflist_ bar are kbd:[F1], kbd:[F2], kbd:[Alt+F1]
-and kbd:[Alt+F2].
+_buflist_ バーをスクロールするデフォルトキーは
+kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] です。
 
-For script _buffers.pl_, you can define keys, similar to the existing keys to
-scroll nicklist. +
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+_buffers.pl_
+スクリプトをお使いの場合、ニックネームリストをスクロールするキーと似たキーを割り当てることも可能です。 +
+例えば、kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] を割り当てるには以下の方法を使います:
 
 ----
 /key bind meta-OP /bar scroll buffers * -100%
