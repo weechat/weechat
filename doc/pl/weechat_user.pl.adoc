@@ -115,7 +115,7 @@ WeeChat.
 | ca-certificates        |               |          | Certyfikaty dla połączeń SSL.
 | libaspell-dev
   ∥ libenchant-dev       |               |          | Wtyczka aspell.
-| python-dev             | ≥ 2.5 ^(4)^   |          | Wtyczka python.
+| python-dev             | ≥ 2.6 ^(4)^   |          | Wtyczka python.
 | libperl-dev            |               |          | Wtyczka perl.
 | ruby2.3, ruby2.3-dev   | ≥ 1.8         |          | Wtyczka ruby.
 | liblua5.3-dev          |               |          | Wtyczka lua.

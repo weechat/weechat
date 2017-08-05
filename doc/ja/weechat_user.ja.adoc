@@ -114,7 +114,7 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev
   ∥ libenchant-dev       |                  |        | aspell プラグイン
-| python-dev             | 2.5 以上 ^(4)^   |        | python プラグイン
+| python-dev             | 2.6 以上 ^(4)^   |        | python プラグイン
 | libperl-dev            |                  |        | perl プラグイン
 | ruby2.3, ruby2.3-dev   | 1.8 以上         |        | ruby プラグイン
 | liblua5.3-dev          |                  |        | lua プラグイン

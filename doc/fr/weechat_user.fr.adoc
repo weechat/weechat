@@ -112,7 +112,7 @@ compiler WeeChat.
 | ca-certificates        |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
   ∥ libenchant-dev       |               |        | Extension aspell.
-| python-dev             | ≥ 2.5 ^(4)^   |        | Extension python.
+| python-dev             | ≥ 2.6 ^(4)^   |        | Extension python.
 | libperl-dev            |               |        | Extension perl.
 | ruby-2.3, ruby2.3-dev  | ≥ 1.8         |        | Extension ruby.
 | liblua5.3-dev          |               |        | Extension lua.

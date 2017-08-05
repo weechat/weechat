@@ -131,7 +131,7 @@ compilare WeeChat.
 | ca-certificates        |               |           | Certificati per le connessioni SSL.
 | libaspell-dev
   ∥ libenchant-dev       |               |           | Plugin aspell.
-| python-dev             | ≥ 2.5 ^(4)^   |           | Plugin python.
+| python-dev             | ≥ 2.6 ^(4)^   |           | Plugin python.
 | libperl-dev            |               |           | Plugin perl.
 | ruby-2.3, ruby2.3-dev  | ≥ 1.8         |           | Plugin ruby.
 | liblua5.3-dev          |               |           | Plugin lua.
