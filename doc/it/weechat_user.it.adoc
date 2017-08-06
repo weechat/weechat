@@ -156,7 +156,7 @@ you may experience display bugs with wide chars. +
 ^(3)^ Gnutls ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ La versione raccomandata di Python è la 2.7 (tutti gli script funzionano
-correttamente con la versione 2.7, ma non con le versioni ≤ 2.6 o ≥ 3.0).
+correttamente con la versione 2.7, ma non con le versioni < 2.7 o ≥ 3.0).
 
 // TRANSLATION MISSING
 If you are using a Debian/Ubuntu based distribution, and if you have some

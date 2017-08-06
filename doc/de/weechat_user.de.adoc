@@ -136,7 +136,7 @@ Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ Gnutls ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
-aber nicht mit Version ≤ 2.6 oder ≥ 3.0).
+aber nicht mit Version < 2.7 oder ≥ 3.0).
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
 "deb-src" Quelleintrag in _/etc/apt/sources.list_ eingetragen hat, dann ist

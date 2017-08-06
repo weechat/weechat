@@ -133,8 +133,9 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 *されません* (ワイドキャラクタの表示にバグを生じるでしょう)。 +
 ^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、Gnutls
 バージョン 3.0.21 以上が必要です。 +
-^(4)^ Python はバージョン 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
-で正しく動きますが、バージョン 2.6 以下または 3.0 以上では正しく動きません)。
+// TRANSLATION MISSING
+^(4)^ Recommended Python version is 2.7 (all scripts run fine with version 2.7,
+but not with versions < 2.7 or ≥ 3.0).
 
 Debian および Ubuntu
 ベースのディストリビューションを使っており、_/etc/apt/sources.list_ ファイルで "deb-src"
