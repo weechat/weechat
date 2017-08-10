@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_PROXY_H
-#define WEECHAT_PROXY_H 1
+#define WEECHAT_PROXY_H
 
 struct t_infolist;
 

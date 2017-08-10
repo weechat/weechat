@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_H
-#define WEECHAT_FSET_H 1
+#ifndef WEECHAT_PLUGIN_FSET_H
+#define WEECHAT_PLUGIN_FSET_H
 
 #define weechat_plugin weechat_fset_plugin
 #define FSET_PLUGIN_NAME "fset"
@@ -34,4 +34,4 @@ extern struct t_hdata *fset_hdata_fset_option;
 
 extern void fset_add_bar ();
 
-#endif /* WEECHAT_FSET_H */
+#endif /* WEECHAT_PLUGIN_FSET_H */

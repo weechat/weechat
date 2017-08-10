@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_BUFFER_H
-#define WEECHAT_FSET_BUFFER_H 1
+#ifndef WEECHAT_PLUGIN_FSET_BUFFER_H
+#define WEECHAT_PLUGIN_FSET_BUFFER_H
 
 #define FSET_BUFFER_NAME "fset"
 
@@ -43,4 +43,4 @@ extern void fset_buffer_open ();
 extern int fset_buffer_init ();
 extern void fset_buffer_end ();
 
-#endif /* WEECHAT_FSET_BUFFER_H */
+#endif /* WEECHAT_PLUGIN_FSET_BUFFER_H */

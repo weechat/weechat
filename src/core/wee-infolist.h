@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_INFOLIST_H
-#define WEECHAT_INFOLIST_H 1
+#define WEECHAT_INFOLIST_H
 
 #include <time.h>
 

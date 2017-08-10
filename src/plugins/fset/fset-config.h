@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_CONFIG_H
-#define WEECHAT_FSET_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_FSET_CONFIG_H
+#define WEECHAT_PLUGIN_FSET_CONFIG_H
 
 #define FSET_CONFIG_NAME "fset"
 
@@ -88,4 +88,4 @@ extern int fset_config_read ();
 extern int fset_config_write ();
 extern void fset_config_free ();
 
-#endif /* WEECHAT_FSET_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_FSET_CONFIG_H */

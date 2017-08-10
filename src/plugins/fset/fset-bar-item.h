@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_BAR_ITEM_H
-#define WEECHAT_FSET_BAR_ITEM_H 1
+#ifndef WEECHAT_PLUGIN_FSET_BAR_ITEM_H
+#define WEECHAT_PLUGIN_FSET_BAR_ITEM_H
 
 #define FSET_BAR_ITEM_NAME "fset"
 
@@ -26,4 +26,4 @@ extern void fset_bar_item_update ();
 extern int fset_bar_item_init ();
 extern void fset_bar_item_end ();
 
-#endif /* WEECHAT_FSET_BAR_ITEM_H */
+#endif /* WEECHAT_PLUGIN_FSET_BAR_ITEM_H */

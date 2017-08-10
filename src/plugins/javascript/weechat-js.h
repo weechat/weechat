@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_JS_H
-#define WEECHAT_JS_H 1
+#ifndef WEECHAT_PLUGIN_JS_H
+#define WEECHAT_PLUGIN_JS_H
 
 #include <v8.h>
 
@@ -59,4 +59,4 @@ extern void *weechat_js_exec (struct t_plugin_script *script,
                               int ret_type, const char *function,
                               const char *format, void **argv);
 
-#endif /* WEECHAT_JS_H */
+#endif /* WEECHAT_PLUGIN_JS_H */

@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RELAY_COMPLETION_H
-#define WEECHAT_RELAY_COMPLETION_H 1
+#ifndef WEECHAT_PLUGIN_RELAY_COMPLETION_H
+#define WEECHAT_PLUGIN_RELAY_COMPLETION_H
 
 extern void relay_completion_init ();
 
-#endif /* WEECHAT_RELAY_COMPLETION_H */
+#endif /* WEECHAT_PLUGIN_RELAY_COMPLETION_H */

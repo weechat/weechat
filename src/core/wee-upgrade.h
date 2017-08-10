@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_UPGRADE_H
-#define WEECHAT_UPGRADE_H 1
+#define WEECHAT_UPGRADE_H
 
 #include "wee-upgrade-file.h"
 

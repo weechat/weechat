@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_COLOR_H
-#define WEECHAT_GUI_COLOR_H 1
+#define WEECHAT_GUI_COLOR_H
 
 #include <regex.h>
 

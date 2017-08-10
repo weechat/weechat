@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_NICKLIST_H
-#define WEECHAT_GUI_NICKLIST_H 1
+#define WEECHAT_GUI_NICKLIST_H
 
 struct t_gui_buffer;
 struct t_infolist;

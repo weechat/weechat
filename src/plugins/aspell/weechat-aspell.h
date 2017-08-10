@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_ASPELL_H
-#define WEECHAT_ASPELL_H 1
+#ifndef WEECHAT_PLUGIN_ASPELL_H
+#define WEECHAT_PLUGIN_ASPELL_H
 
 #ifdef USE_ENCHANT
 #include <enchant.h>
@@ -49,4 +49,4 @@ extern char *weechat_aspell_build_option_name (struct t_gui_buffer *buffer);
 extern const char *weechat_aspell_get_dict_with_buffer_name (const char *name);
 extern const char *weechat_aspell_get_dict (struct t_gui_buffer *buffer);
 
-#endif /* WEECHAT_ASPELL_H */
+#endif /* WEECHAT_PLUGIN_ASPELL_H */

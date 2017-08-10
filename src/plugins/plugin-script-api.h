@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_SCRIPT_API_H
-#define WEECHAT_PLUGIN_SCRIPT_API_H 1
+#ifndef WEECHAT_PLUGIN_PLUGIN_SCRIPT_API_H
+#define WEECHAT_PLUGIN_PLUGIN_SCRIPT_API_H
 
 #include <time.h>
 
@@ -370,4 +370,4 @@ extern struct t_upgrade_file *plugin_script_api_upgrade_new (struct t_weechat_pl
                                                              const char *function,
                                                              const char *data);
 
-#endif /* WEECHAT_PLUGIN_SCRIPT_API_H */
+#endif /* WEECHAT_PLUGIN_PLUGIN_SCRIPT_API_H */

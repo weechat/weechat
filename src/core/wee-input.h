@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_INPUT_H
-#define WEECHAT_INPUT_H 1
+#define WEECHAT_INPUT_H
 
 struct t_gui_buffer;
 struct t_weechat_plugin;

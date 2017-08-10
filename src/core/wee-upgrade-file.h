@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_UPGRADE_FILE_H
-#define WEECHAT_UPGRADE_FILE_H 1
+#define WEECHAT_UPGRADE_FILE_H
 
 #define UPGRADE_SIGNATURE "===== WeeChat Upgrade file v2.2 - binary, do not edit! ====="
 

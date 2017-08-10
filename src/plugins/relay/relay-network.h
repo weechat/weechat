@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RELAY_NETWORK_H
-#define WEECHAT_RELAY_NETWORK_H 1
+#ifndef WEECHAT_PLUGIN_RELAY_NETWORK_H
+#define WEECHAT_PLUGIN_RELAY_NETWORK_H
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
@@ -38,4 +38,4 @@ extern void relay_network_set_priority ();
 extern void relay_network_init ();
 extern void relay_network_end ();
 
-#endif /* WEECHAT_RELAY_NETWORK_H */
+#endif /* WEECHAT_PLUGIN_RELAY_NETWORK_H */

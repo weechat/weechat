@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_UTIL_H
-#define WEECHAT_UTIL_H 1
+#define WEECHAT_UTIL_H
 
 #include <time.h>
 

@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_EXEC_COMPLETION_H
-#define WEECHAT_EXEC_COMPLETION_H 1
+#ifndef WEECHAT_PLUGIN_EXEC_COMPLETION_H
+#define WEECHAT_PLUGIN_EXEC_COMPLETION_H
 
 extern void exec_completion_init ();
 
-#endif /* WEECHAT_EXEC_COMPLETION_H */
+#endif /* WEECHAT_PLUGIN_EXEC_COMPLETION_H */

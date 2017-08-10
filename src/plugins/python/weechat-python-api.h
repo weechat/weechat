@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PYTHON_API_H
-#define WEECHAT_PYTHON_API_H 1
+#ifndef WEECHAT_PLUGIN_PYTHON_API_H
+#define WEECHAT_PLUGIN_PYTHON_API_H
 
 extern PyMethodDef weechat_python_funcs[];
 
@@ -31,4 +31,4 @@ extern int weechat_python_api_buffer_close_cb (const void *pointer,
                                                void *data,
                                                struct t_gui_buffer *buffer);
 
-#endif /* WEECHAT_PYTHON_API_H */
+#endif /* WEECHAT_PLUGIN_PYTHON_API_H */

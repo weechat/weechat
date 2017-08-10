@@ -19,7 +19,7 @@
  */
 
 #ifndef WEECHAT_CONFIG_H
-#define WEECHAT_CONFIG_H 1
+#define WEECHAT_CONFIG_H
 
 #include <regex.h>
 #include <wctype.h>

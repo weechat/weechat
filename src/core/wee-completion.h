@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_COMPLETION_H
-#define WEECHAT_COMPLETION_H 1
+#define WEECHAT_COMPLETION_H
 
 struct t_gui_buffer;
 struct t_gui_completion;

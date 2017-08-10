@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_SASL_H
-#define WEECHAT_IRC_SASL_H 1
+#ifndef WEECHAT_PLUGIN_IRC_SASL_H
+#define WEECHAT_PLUGIN_IRC_SASL_H
 
 struct t_irc_server;
 
@@ -50,4 +50,4 @@ extern char *irc_sasl_mechanism_dh_aes (const char *data_base64,
                                         const char *sasl_username,
                                         const char *sasl_password);
 
-#endif /* WEECHAT_IRC_SASL_H */
+#endif /* WEECHAT_PLUGIN_IRC_SASL_H */

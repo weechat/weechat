@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_BAR_WINDOW_H
-#define WEECHAT_GUI_BAR_WINDOW_H 1
+#define WEECHAT_GUI_BAR_WINDOW_H
 
 #include "gui-bar.h"
 

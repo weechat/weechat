@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_IGNORE_H
-#define WEECHAT_IRC_IGNORE_H 1
+#ifndef WEECHAT_PLUGIN_IRC_IGNORE_H
+#define WEECHAT_PLUGIN_IRC_IGNORE_H
 
 #include <regex.h>
 
@@ -58,4 +58,4 @@ extern int irc_ignore_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_ignore *ignore);
 extern void irc_ignore_print_log ();
 
-#endif /* WEECHAT_IRC_IGNORE_H */
+#endif /* WEECHAT_PLUGIN_IRC_IGNORE_H */

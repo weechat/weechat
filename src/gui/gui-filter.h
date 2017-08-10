@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_FILTER_H
-#define WEECHAT_GUI_FILTER_H 1
+#define WEECHAT_GUI_FILTER_H
 
 #include <regex.h>
 

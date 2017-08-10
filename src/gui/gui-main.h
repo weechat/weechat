@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_MAIN_H
-#define WEECHAT_GUI_MAIN_H 1
+#define WEECHAT_GUI_MAIN_H
 
 /* main functions (GUI dependent) */
 

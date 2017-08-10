@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_EXEC_CONFIG_H
-#define WEECHAT_EXEC_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_EXEC_CONFIG_H
+#define WEECHAT_PLUGIN_EXEC_CONFIG_H
 
 #define EXEC_CONFIG_NAME "exec"
 
@@ -38,4 +38,4 @@ extern int exec_config_read ();
 extern int exec_config_write ();
 extern void exec_config_free ();
 
-#endif /* WEECHAT_EXEC_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_EXEC_CONFIG_H */

@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_MOUSE_H
-#define WEECHAT_GUI_MOUSE_H 1
+#define WEECHAT_GUI_MOUSE_H
 
 /* mouse variables */
 

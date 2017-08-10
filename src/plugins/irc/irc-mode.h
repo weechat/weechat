@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_MODE_H
-#define WEECHAT_IRC_MODE_H 1
+#ifndef WEECHAT_PLUGIN_IRC_MODE_H
+#define WEECHAT_PLUGIN_IRC_MODE_H
 
 struct t_irc_server;
 struct t_irc_channel;
@@ -31,4 +31,4 @@ extern int irc_mode_channel_set (struct t_irc_server *server,
 extern void irc_mode_user_set (struct t_irc_server *server, const char *modes,
                                int reset_modes);
 
-#endif /* WEECHAT_IRC_MODE_H */
+#endif /* WEECHAT_PLUGIN_IRC_MODE_H */

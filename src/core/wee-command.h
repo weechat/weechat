@@ -19,7 +19,7 @@
  */
 
 #ifndef WEECHAT_COMMAND_H
-#define WEECHAT_COMMAND_H 1
+#define WEECHAT_COMMAND_H
 
 #define COMMAND_CALLBACK(__command)                                     \
     int                                                                 \

@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_VERSION_H
-#define WEECHAT_VERSION_H 1
+#define WEECHAT_VERSION_H
 
 extern const char *version_get_name ();
 extern const char *version_get_version ();

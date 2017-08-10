@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_BACKTACE_H
-#define WEECHAT_BACKTACE_H 1
+#define WEECHAT_BACKTACE_H
 
 #define BACKTRACE_MAX 128
 

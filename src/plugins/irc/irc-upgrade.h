@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_UPGRADE_H
-#define WEECHAT_IRC_UPGRADE_H 1
+#ifndef WEECHAT_PLUGIN_IRC_UPGRADE_H
+#define WEECHAT_PLUGIN_IRC_UPGRADE_H
 
 #define IRC_UPGRADE_FILENAME "irc"
 
@@ -38,4 +38,4 @@ enum t_irc_upgrade_type
 extern int irc_upgrade_save ();
 extern int irc_upgrade_load ();
 
-#endif /* WEECHAT_IRC_UPGRADE_H */
+#endif /* WEECHAT_PLUGIN_IRC_UPGRADE_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_XFER_BUFFER_H
-#define WEECHAT_XFER_BUFFER_H 1
+#ifndef WEECHAT_PLUGIN_XFER_BUFFER_H
+#define WEECHAT_PLUGIN_XFER_BUFFER_H
 
 #define XFER_BUFFER_NAME "xfer.list"
 
@@ -33,4 +33,4 @@ extern int xfer_buffer_close_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer);
 extern void xfer_buffer_open ();
 
-#endif /* WEECHAT_XFER_BUFFER_H */
+#endif /* WEECHAT_PLUGIN_XFER_BUFFER_H */

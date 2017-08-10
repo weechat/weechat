@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_BUFLIST_BAR_ITEM_H
-#define WEECHAT_BUFLIST_BAR_ITEM_H 1
+#ifndef WEECHAT_PLUGIN_BUFLIST_BAR_ITEM_H
+#define WEECHAT_PLUGIN_BUFLIST_BAR_ITEM_H
 
 #define BUFLIST_BAR_ITEM_NAME "buflist"
 
@@ -28,4 +28,4 @@ extern void buflist_bar_item_update ();
 extern int buflist_bar_item_init ();
 extern void buflist_bar_item_end ();
 
-#endif /* WEECHAT_BUFLIST_BAR_ITEM_H */
+#endif /* WEECHAT_PLUGIN_BUFLIST_BAR_ITEM_H */

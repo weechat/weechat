@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_LAYOUT_H
-#define WEECHAT_GUI_LAYOUT_H 1
+#define WEECHAT_GUI_LAYOUT_H
 
 #define GUI_LAYOUT_DEFAULT_NAME "default"
 

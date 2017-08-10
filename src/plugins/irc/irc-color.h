@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_COLOR_H
-#define WEECHAT_IRC_COLOR_H 1
+#ifndef WEECHAT_PLUGIN_IRC_COLOR_H
+#define WEECHAT_PLUGIN_IRC_COLOR_H
 
 #define IRC_NUM_COLORS        100
 
@@ -114,4 +114,4 @@ extern char *irc_color_for_tags (const char *color);
 extern int irc_color_weechat_add_to_infolist (struct t_infolist *infolist);
 extern void irc_color_end ();
 
-#endif /* WEECHAT_IRC_COLOR_H */
+#endif /* WEECHAT_PLUGIN_IRC_COLOR_H */

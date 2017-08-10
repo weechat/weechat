@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_OPTION_H
-#define WEECHAT_FSET_OPTION_H 1
+#ifndef WEECHAT_PLUGIN_FSET_OPTION_H
+#define WEECHAT_PLUGIN_FSET_OPTION_H
 
 #define FSET_OPTION_VALUE_NULL "null"
 
@@ -129,4 +129,4 @@ extern void fset_option_print_log ();
 extern int fset_option_init ();
 extern void fset_option_end ();
 
-#endif /* WEECHAT_FSET_OPTION_H */
+#endif /* WEECHAT_PLUGIN_FSET_OPTION_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_H
-#define WEECHAT_PLUGIN_H 1
+#ifndef WEECHAT_PLUGIN_PLUGIN_H
+#define WEECHAT_PLUGIN_PLUGIN_H
 
 #include "weechat-plugin.h"
 
@@ -56,4 +56,4 @@ extern int plugin_add_to_infolist (struct t_infolist *infolist,
                                    struct t_weechat_plugin *plugin);
 extern void plugin_print_log ();
 
-#endif /* WEECHAT_PLUGIN_H */
+#endif /* WEECHAT_PLUGIN_PLUGIN_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_INPUT_H
-#define WEECHAT_IRC_INPUT_H 1
+#ifndef WEECHAT_PLUGIN_IRC_INPUT_H
+#define WEECHAT_PLUGIN_IRC_INPUT_H
 
 struct t_gui_buffer;
 
@@ -31,4 +31,4 @@ extern int irc_input_send_cb (const void *pointer, void *data,
                               const char *signal, const char *type_data,
                               void *signal_data);
 
-#endif /* WEECHAT_IRC_INPUT_H */
+#endif /* WEECHAT_PLUGIN_IRC_INPUT_H */

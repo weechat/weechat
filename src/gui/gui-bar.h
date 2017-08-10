@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_BAR_H
-#define WEECHAT_GUI_BAR_H 1
+#define WEECHAT_GUI_BAR_H
 
 struct t_infolist;
 struct t_weechat_plugin;

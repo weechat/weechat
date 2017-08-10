@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_URL_H
-#define WEECHAT_URL_H 1
+#define WEECHAT_URL_H
 
 struct t_hashtable;
 struct t_infolist;

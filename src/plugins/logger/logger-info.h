@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_LOGGER_INFO_H
-#define WEECHAT_LOGGER_INFO_H 1
+#ifndef WEECHAT_PLUGIN_LOGGER_INFO_H
+#define WEECHAT_PLUGIN_LOGGER_INFO_H
 
 extern void logger_info_init ();
 
-#endif /* WEECHAT_LOGGER_INFO_H */
+#endif /* WEECHAT_PLUGIN_LOGGER_INFO_H */

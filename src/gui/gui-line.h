@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_LINE_H
-#define WEECHAT_GUI_LINE_H 1
+#define WEECHAT_GUI_LINE_H
 
 #include <time.h>
 #include <regex.h>

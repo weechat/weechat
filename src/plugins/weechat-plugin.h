@@ -20,7 +20,7 @@
  */
 
 #ifndef WEECHAT_WEECHAT_PLUGIN_H
-#define WEECHAT_WEECHAT_PLUGIN_H 1
+#define WEECHAT_WEECHAT_PLUGIN_H
 
 #ifdef __cplusplus
 extern "C" {

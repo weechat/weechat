@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_EVAL_H
-#define WEECHAT_EVAL_H 1
+#define WEECHAT_EVAL_H
 
 #include <regex.h>
 

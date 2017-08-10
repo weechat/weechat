@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_TRIGGER_H
-#define WEECHAT_TRIGGER_H 1
+#ifndef WEECHAT_PLUGIN_TRIGGER_H
+#define WEECHAT_PLUGIN_TRIGGER_H
 
 #include <regex.h>
 
@@ -170,4 +170,4 @@ extern struct t_trigger *trigger_copy (struct t_trigger *trigger,
 extern void trigger_free (struct t_trigger *trigger);
 extern void trigger_free_all ();
 
-#endif /* WEECHAT_TRIGGER_H */
+#endif /* WEECHAT_PLUGIN_TRIGGER_H */

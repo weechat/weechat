@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_CURSES_H
-#define WEECHAT_GUI_CURSES_H 1
+#define WEECHAT_GUI_CURSES_H
 
 #include <time.h>
 

@@ -19,7 +19,7 @@
  */
 
 #ifndef WEECHAT_H
-#define WEECHAT_H 1
+#define WEECHAT_H
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"

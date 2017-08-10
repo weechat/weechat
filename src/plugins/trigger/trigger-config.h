@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_TRIGGER_CONFIG_H
-#define WEECHAT_TRIGGER_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_TRIGGER_CONFIG_H
+#define WEECHAT_PLUGIN_TRIGGER_CONFIG_H
 
 #define TRIGGER_CONFIG_NAME "trigger"
 #define TRIGGER_CONFIG_SECTION_TRIGGER "trigger"
@@ -49,4 +49,4 @@ extern int trigger_config_read ();
 extern int trigger_config_write ();
 extern void trigger_config_free ();
 
-#endif /* WEECHAT_TRIGGER_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_TRIGGER_CONFIG_H */

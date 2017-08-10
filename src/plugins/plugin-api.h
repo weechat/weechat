@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_API_H
-#define WEECHAT_PLUGIN_API_H 1
+#ifndef WEECHAT_PLUGIN_PLUGIN_API_H
+#define WEECHAT_PLUGIN_PLUGIN_API_H
 
 #include <time.h>
 
@@ -73,4 +73,4 @@ extern void plugin_api_infolist_free (struct t_infolist *infolist);
 
 extern void plugin_api_init ();
 
-#endif /* WEECHAT_PLUGIN_API_H */
+#endif /* WEECHAT_PLUGIN_PLUGIN_API_H */

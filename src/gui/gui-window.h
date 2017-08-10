@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_WINDOW_H
-#define WEECHAT_GUI_WINDOW_H 1
+#define WEECHAT_GUI_WINDOW_H
 
 struct t_infolist;
 struct t_gui_bar_window;

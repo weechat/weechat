@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_BAR_ITEM_H
-#define WEECHAT_GUI_BAR_ITEM_H 1
+#define WEECHAT_GUI_BAR_ITEM_H
 
 enum t_gui_bar_item_weechat
 {

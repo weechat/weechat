@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_ASPELL_CONFIG_H
-#define WEECHAT_ASPELL_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_ASPELL_CONFIG_H
+#define WEECHAT_PLUGIN_ASPELL_CONFIG_H
 
 #define ASPELL_CONFIG_NAME "aspell"
 
@@ -51,4 +51,4 @@ extern int weechat_aspell_config_read ();
 extern int weechat_aspell_config_write ();
 extern void weechat_aspell_config_free ();
 
-#endif /* WEECHAT_ASPELL_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_ASPELL_CONFIG_H */

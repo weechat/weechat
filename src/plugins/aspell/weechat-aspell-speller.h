@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_ASPELL_SPELLER_H
-#define WEECHAT_ASPELL_SPELLER_H 1
+#ifndef WEECHAT_PLUGIN_ASPELL_SPELLER_H
+#define WEECHAT_PLUGIN_ASPELL_SPELLER_H
 
 struct t_aspell_speller_buffer
 {
@@ -48,4 +48,4 @@ extern struct t_aspell_speller_buffer *weechat_aspell_speller_buffer_new (struct
 extern int weechat_aspell_speller_init ();
 extern void weechat_aspell_speller_end ();
 
-#endif /* WEECHAT_ASPELL_SPELLER_H */
+#endif /* WEECHAT_PLUGIN_ASPELL_SPELLER_H */

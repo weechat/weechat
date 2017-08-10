@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_GUILE_H
-#define WEECHAT_GUILE_H 1
+#ifndef WEECHAT_PLUGIN_GUILE_H
+#define WEECHAT_PLUGIN_GUILE_H
 
 #define weechat_plugin weechat_guile_plugin
 #define GUILE_PLUGIN_NAME "guile"
@@ -46,4 +46,4 @@ extern void *weechat_guile_exec (struct t_plugin_script *script,
 extern int weechat_guile_port_fill_input (SCM port);
 extern void weechat_guile_port_write (SCM port, const void *data, size_t size);
 
-#endif /* WEECHAT_GUILE_H */
+#endif /* WEECHAT_PLUGIN_GUILE_H */

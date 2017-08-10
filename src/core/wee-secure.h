@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_SECURE_H
-#define WEECHAT_SECURE_H 1
+#define WEECHAT_SECURE_H
 
 #define SECURE_CONFIG_NAME "sec"
 

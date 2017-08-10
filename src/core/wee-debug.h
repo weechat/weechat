@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_DEBUG_H
-#define WEECHAT_DEBUG_H 1
+#define WEECHAT_DEBUG_H
 
 struct t_gui_window_tree;
 

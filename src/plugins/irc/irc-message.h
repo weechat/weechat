@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_MESSAGE_H
-#define WEECHAT_IRC_MESSAGE_H 1
+#ifndef WEECHAT_PLUGIN_IRC_MESSAGE_H
+#define WEECHAT_PLUGIN_IRC_MESSAGE_H
 
 struct t_irc_server;
 struct t_irc_channel;
@@ -43,4 +43,4 @@ extern char *irc_message_replace_vars (struct t_irc_server *server,
 extern struct t_hashtable *irc_message_split (struct t_irc_server *server,
                                               const char *message);
 
-#endif /* WEECHAT_IRC_MESSAGE_H */
+#endif /* WEECHAT_PLUGIN_IRC_MESSAGE_H */

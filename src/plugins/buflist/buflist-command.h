@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_BUFLIST_COMMAND_H
-#define WEECHAT_BUFLIST_COMMAND_H 1
+#ifndef WEECHAT_PLUGIN_BUFLIST_COMMAND_H
+#define WEECHAT_PLUGIN_BUFLIST_COMMAND_H
 
 extern void buflist_command_init ();
 
-#endif /* WEECHAT_BUFLIST_COMMAND_H */
+#endif /* WEECHAT_PLUGIN_BUFLIST_COMMAND_H */

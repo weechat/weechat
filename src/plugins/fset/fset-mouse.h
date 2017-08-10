@@ -17,12 +17,12 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FSET_MOUSE_H
-#define WEECHAT_FSET_MOUSE_H 1
+#ifndef WEECHAT_PLUGIN_FSET_MOUSE_H
+#define WEECHAT_PLUGIN_FSET_MOUSE_H
 
 #define FSET_MOUSE_HSIGNAL "fset_mouse"
 
 extern int fset_mouse_init ();
 extern void fset_mouse_end ();
 
-#endif /* WEECHAT_FSET_MOUSE_H */
+#endif /* WEECHAT_PLUGIN_FSET_MOUSE_H */

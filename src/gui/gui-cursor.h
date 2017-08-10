@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_CURSOR_H
-#define WEECHAT_GUI_CURSOR_H 1
+#define WEECHAT_GUI_CURSOR_H
 
 /* cursor variables */
 

@@ -17,12 +17,12 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_BUFLIST_MOUSE_H
-#define WEECHAT_BUFLIST_MOUSE_H 1
+#ifndef WEECHAT_PLUGIN_BUFLIST_MOUSE_H
+#define WEECHAT_PLUGIN_BUFLIST_MOUSE_H
 
 #define BUFLIST_MOUSE_HSIGNAL "buflist_mouse"
 
 extern int buflist_mouse_init ();
 extern void buflist_mouse_end ();
 
-#endif /* WEECHAT_BUFLIST_MOUSE_H */
+#endif /* WEECHAT_PLUGIN_BUFLIST_MOUSE_H */

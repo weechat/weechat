@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_FIFO_CONFIG_H
-#define WEECHAT_FIFO_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_FIFO_CONFIG_H
+#define WEECHAT_PLUGIN_FIFO_CONFIG_H
 
 #define FIFO_CONFIG_NAME "fifo"
 
@@ -31,4 +31,4 @@ extern int fifo_config_read ();
 extern int fifo_config_write ();
 extern void fifo_config_free ();
 
-#endif /* WEECHAT_FIFO_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_FIFO_CONFIG_H */

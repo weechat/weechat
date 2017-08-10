@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_SERVER_H
-#define WEECHAT_IRC_SERVER_H 1
+#ifndef WEECHAT_PLUGIN_IRC_SERVER_H
+#define WEECHAT_PLUGIN_IRC_SERVER_H
 
 #include <time.h>
 #include <sys/time.h>
@@ -377,4 +377,4 @@ extern int irc_server_add_to_infolist (struct t_infolist *infolist,
                                        struct t_irc_server *server);
 extern void irc_server_print_log ();
 
-#endif /* WEECHAT_IRC_SERVER_H */
+#endif /* WEECHAT_PLUGIN_IRC_SERVER_H */

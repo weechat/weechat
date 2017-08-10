@@ -19,7 +19,7 @@
  */
 
 #ifndef WEECHAT_HOOK_H
-#define WEECHAT_HOOK_H 1
+#define WEECHAT_HOOK_H
 
 #include <unistd.h>
 #include <time.h>

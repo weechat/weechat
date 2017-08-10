@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_BUFFER_H
-#define WEECHAT_GUI_BUFFER_H 1
+#define WEECHAT_GUI_BUFFER_H
 
 #include <limits.h>
 #include <regex.h>

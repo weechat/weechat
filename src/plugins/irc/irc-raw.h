@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_RAW_H
-#define WEECHAT_IRC_RAW_H 1
+#ifndef WEECHAT_PLUGIN_IRC_RAW_H
+#define WEECHAT_PLUGIN_IRC_RAW_H
 
 #include <time.h>
 
@@ -61,4 +61,4 @@ extern void irc_raw_message_free_all ();
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
                                     struct t_irc_raw_message *raw_message);
 
-#endif /* WEECHAT_IRC_RAW_H */
+#endif /* WEECHAT_PLUGIN_IRC_RAW_H */

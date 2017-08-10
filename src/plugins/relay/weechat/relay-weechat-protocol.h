@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RELAY_WEECHAT_PROTOCOL_H
-#define WEECHAT_RELAY_WEECHAT_PROTOCOL_H 1
+#ifndef WEECHAT_PLUGIN_RELAY_WEECHAT_PROTOCOL_H
+#define WEECHAT_PLUGIN_RELAY_WEECHAT_PROTOCOL_H
 
 #define RELAY_WEECHAT_PROTOCOL_SYNC_BUFFER   1
 #define RELAY_WEECHAT_PROTOCOL_SYNC_NICKLIST 2
@@ -101,4 +101,4 @@ extern int relay_weechat_protocol_timer_nicklist_cb (const void *pointer,
 extern void relay_weechat_protocol_recv (struct t_relay_client *client,
                                          const char *data);
 
-#endif /* WEECHAT_RELAY_WEECHAT_PROTOCOL_H */
+#endif /* WEECHAT_PLUGIN_RELAY_WEECHAT_PROTOCOL_H */

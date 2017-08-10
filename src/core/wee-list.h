@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_LIST_H
-#define WEECHAT_LIST_H 1
+#define WEECHAT_LIST_H
 
 struct t_weelist_item
 {

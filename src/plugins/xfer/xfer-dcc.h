@@ -17,10 +17,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_XFER_DCC_H
-#define WEECHAT_XFER_DCC_H 1
+#ifndef WEECHAT_PLUGIN_XFER_DCC_H
+#define WEECHAT_PLUGIN_XFER_DCC_H
 
 extern void xfer_dcc_send_file_child (struct t_xfer *xfer);
 extern void xfer_dcc_recv_file_child (struct t_xfer *xfer);
 
-#endif /* WEECHAT_XFER_DCC_H */
+#endif /* WEECHAT_PLUGIN_XFER_DCC_H */

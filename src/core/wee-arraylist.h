@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_ARRAYLIST_H
-#define WEECHAT_ARRAYLIST_H 1
+#define WEECHAT_ARRAYLIST_H
 
 struct t_arraylist;
 

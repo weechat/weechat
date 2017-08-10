@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RUBY_H
-#define WEECHAT_RUBY_H 1
+#ifndef WEECHAT_PLUGIN_RUBY_H
+#define WEECHAT_PLUGIN_RUBY_H
 
 #define weechat_plugin weechat_ruby_plugin
 #define RUBY_PLUGIN_NAME "ruby"
@@ -45,4 +45,4 @@ void *weechat_ruby_exec (struct t_plugin_script *script,
                          int ret_type, const char *function,
                          const char *format, void **argv);
 
-#endif /* WEECHAT_RUBY_H */
+#endif /* WEECHAT_PLUGIN_RUBY_H */

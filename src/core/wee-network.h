@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_NETWORK_H
-#define WEECHAT_NETWORK_H 1
+#define WEECHAT_NETWORK_H
 
 #include <sys/types.h>
 #include <sys/socket.h>

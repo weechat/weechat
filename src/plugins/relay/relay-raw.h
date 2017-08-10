@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RELAY_RAW_H
-#define WEECHAT_RELAY_RAW_H 1
+#ifndef WEECHAT_PLUGIN_RELAY_RAW_H
+#define WEECHAT_PLUGIN_RELAY_RAW_H
 
 #include <time.h>
 
@@ -58,4 +58,4 @@ extern void relay_raw_message_free_all ();
 extern int relay_raw_add_to_infolist (struct t_infolist *infolist,
                                       struct t_relay_raw_message *raw_message);
 
-#endif /* WEECHAT_RELAY_RAW_H */
+#endif /* WEECHAT_PLUGIN_RELAY_RAW_H */

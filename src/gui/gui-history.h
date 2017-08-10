@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_HISTORY_H
-#define WEECHAT_GUI_HISTORY_H 1
+#define WEECHAT_GUI_HISTORY_H
 
 struct t_gui_buffer;
 

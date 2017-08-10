@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_LOG_H
-#define WEECHAT_LOG_H 1
+#define WEECHAT_LOG_H
 
 extern char *weechat_log_filename;
 extern FILE *weechat_log_file;

@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_UTF8_H
-#define WEECHAT_UTF8_H 1
+#define WEECHAT_UTF8_H
 
 #ifndef __USE_XOPEN
 #define __USE_XOPEN

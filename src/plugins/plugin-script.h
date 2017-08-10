@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_SCRIPT_H
-#define WEECHAT_PLUGIN_SCRIPT_H 1
+#ifndef WEECHAT_PLUGIN_PLUGIN_SCRIPT_H
+#define WEECHAT_PLUGIN_PLUGIN_SCRIPT_H
 
 /* constants which defines return types for weechat_<lang>_exec functions */
 
@@ -182,4 +182,4 @@ extern void plugin_script_end (struct t_weechat_plugin *weechat_plugin,
 extern void plugin_script_print_log (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *scripts);
 
-#endif /* WEECHAT_PLUGIN_SCRIPT_H */
+#endif /* WEECHAT_PLUGIN_PLUGIN_SCRIPT_H */

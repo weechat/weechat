@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_HOTLIST_H
-#define WEECHAT_GUI_HOTLIST_H 1
+#define WEECHAT_GUI_HOTLIST_H
 
 enum t_gui_hotlist_priority
 {

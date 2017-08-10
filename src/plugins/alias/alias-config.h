@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_ALIAS_CONFIG_H
-#define WEECHAT_ALIAS_CONFIG_H 1
+#ifndef WEECHAT_PLUGIN_ALIAS_CONFIG_H
+#define WEECHAT_PLUGIN_ALIAS_CONFIG_H
 
 extern struct t_config_file *alias_config_file;
 extern struct t_config_section *alias_config_section_cmd;
@@ -32,4 +32,4 @@ extern int alias_config_init ();
 extern int alias_config_read ();
 extern int alias_config_write ();
 
-#endif /* WEECHAT_ALIAS_CONFIG_H */
+#endif /* WEECHAT_PLUGIN_ALIAS_CONFIG_H */

@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_CHAT_H
-#define WEECHAT_GUI_CHAT_H 1
+#define WEECHAT_GUI_CHAT_H
 
 #include <time.h>
 

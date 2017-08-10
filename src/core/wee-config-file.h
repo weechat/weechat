@@ -19,7 +19,7 @@
  */
 
 #ifndef WEECHAT_CONFIG_FILE_H
-#define WEECHAT_CONFIG_FILE_H 1
+#define WEECHAT_CONFIG_FILE_H
 
 #define CONFIG_BOOLEAN(option) (*((int *)((option)->value)))
 #define CONFIG_BOOLEAN_DEFAULT(option) (*((int *)((option)->default_value)))

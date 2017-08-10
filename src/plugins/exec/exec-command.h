@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_EXEC_COMMAND_H
-#define WEECHAT_EXEC_COMMAND_H 1
+#ifndef WEECHAT_PLUGIN_EXEC_COMMAND_H
+#define WEECHAT_PLUGIN_EXEC_COMMAND_H
 
 struct t_exec_cmd_options
 {
@@ -48,4 +48,4 @@ extern int exec_command_run (struct t_gui_buffer *buffer,
                              int start_arg);
 extern void exec_command_init ();
 
-#endif /* WEECHAT_EXEC_COMMAND_H */
+#endif /* WEECHAT_PLUGIN_EXEC_COMMAND_H */

@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_H
-#define WEECHAT_IRC_H 1
+#ifndef WEECHAT_PLUGIN_IRC_H
+#define WEECHAT_PLUGIN_IRC_H
 
 #define weechat_plugin weechat_irc_plugin
 #define IRC_PLUGIN_NAME "irc"
@@ -28,4 +28,4 @@ extern struct t_weechat_plugin *weechat_irc_plugin;
 
 extern int irc_signal_upgrade_received;
 
-#endif /* WEECHAT_IRC_H */
+#endif /* WEECHAT_PLUGIN_IRC_H */

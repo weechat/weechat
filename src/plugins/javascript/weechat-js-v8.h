@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_JS_V8_H
-#define WEECHAT_JS_V8_H 1
+#ifndef WEECHAT_PLUGIN_JS_V8_H
+#define WEECHAT_PLUGIN_JS_V8_H
 
 #include <cstdio>
 #include <v8.h>
@@ -51,4 +51,4 @@ private:
     v8::Handle<v8::String> source;
 };
 
-#endif /* WEECHAT_JS_V8_H */
+#endif /* WEECHAT_PLUGIN_JS_V8_H */

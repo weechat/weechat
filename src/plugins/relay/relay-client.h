@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_RELAY_CLIENT_H
-#define WEECHAT_RELAY_CLIENT_H 1
+#ifndef WEECHAT_PLUGIN_RELAY_CLIENT_H
+#define WEECHAT_PLUGIN_RELAY_CLIENT_H
 
 #include <time.h>
 
@@ -153,4 +153,4 @@ extern int relay_client_add_to_infolist (struct t_infolist *infolist,
                                          struct t_relay_client *client);
 extern void relay_client_print_log ();
 
-#endif /* WEECHAT_RELAY_CLIENT_H */
+#endif /* WEECHAT_PLUGIN_RELAY_CLIENT_H */

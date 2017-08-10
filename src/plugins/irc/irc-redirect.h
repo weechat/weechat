@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_REDIRECT_H
-#define WEECHAT_IRC_REDIRECT_H 1
+#ifndef WEECHAT_PLUGIN_IRC_REDIRECT_H
+#define WEECHAT_PLUGIN_IRC_REDIRECT_H
 
 #include <time.h>
 
@@ -132,4 +132,4 @@ extern int irc_redirect_command_hsignal_cb (const void *pointer, void *data,
 extern void irc_redirect_init ();
 extern void irc_redirect_end ();
 
-#endif /* WEECHAT_IRC_REDIRECT_H */
+#endif /* WEECHAT_PLUGIN_IRC_REDIRECT_H */

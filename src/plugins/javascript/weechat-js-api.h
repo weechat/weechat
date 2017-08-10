@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_JS_API_H
-#define WEECHAT_JS_API_H 1
+#ifndef WEECHAT_PLUGIN_JS_API_H
+#define WEECHAT_PLUGIN_JS_API_H
 
 extern int weechat_js_api_buffer_input_data_cb (const void *pointer,
                                                 void *data,
@@ -29,4 +29,4 @@ extern int weechat_js_api_buffer_close_cb (const void *pointer,
                                            void *data,
                                            struct t_gui_buffer *buffer);
 
-#endif /* WEECHAT_JS_API_H */
+#endif /* WEECHAT_PLUGIN_JS_API_H */

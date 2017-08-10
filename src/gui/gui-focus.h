@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_GUI_FOCUS_H
-#define WEECHAT_GUI_FOCUS_H 1
+#define WEECHAT_GUI_FOCUS_H
 
 /* focus structures */
 
