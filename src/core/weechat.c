@@ -131,13 +131,13 @@ weechat_display_copyright ()
  */
 
 void
-weechat_display_usage (char *exec_name)
+weechat_display_usage ()
 {
     weechat_display_copyright ();
     string_fprintf (stdout, "\n");
     string_fprintf (stdout,
                     _("Usage: %s [option...] [plugin:option...]\n"),
-                    exec_name, exec_name);
+                    weechat_argv0);
     string_fprintf (stdout, "\n");
     string_fprintf (
         stdout,
@@ -208,7 +208,7 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
         {
-            weechat_display_usage (argv[0]);
+            weechat_display_usage ();
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-l") == 0)
