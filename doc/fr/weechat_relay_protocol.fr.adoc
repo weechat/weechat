@@ -71,13 +71,17 @@ un _proxy IRC_ (non décrit dans ce document).
 [[commands]]
 == Commandes (client → relay)
 
-Les commandes ont le format : "(id) commande paramètres\n".
+Les commandes ont le format :
+
+----
+(id) commande paramètres\n
+----
 
 Les champs sont :
 
 * _id_ : identifiant du message (facultatif) qui sera envoyée dans la réponse de
   _relay_; elle doit être entre parenthèses, et ne doit pas commencer par un
-  underscore ("_") (les identifiants commençant par un underscore sont réservés
+  underscore (les identifiants commençant par un underscore sont réservés
   pour les messages _évènements_ de WeeChat)
 * _commande_ : une commande (voir le tableau ci-dessous)
 * _paramètres_ : paramètres facultatifs pour la commande (plusieurs paramètres
@@ -94,8 +98,8 @@ Liste des commandes disponibles (détail dans les chapitres suivants) :
 | infolist | Demander une _infolist_.
 | nicklist | Demander une _nicklist_ (liste de pseudos).
 | input    | Envoyer des données à un tampon (texte ou commande).
-| sync     | Synchroniser un/des tampon(s) (recevoir les mises à jour pour le(s) tampon(s)).
-| desync   | Désynchroniser un/des tampon(s) (stopper les mises à jour pour le(s) tampon(s)).
+| sync     | Synchroniser un/des tampon(s) : recevoir les mises à jour pour le(s) tampon(s).
+| desync   | Désynchroniser un/des tampon(s) : stopper les mises à jour pour le(s) tampon(s).
 | quit     | Se déconnecter de _relay_.
 |===
 
@@ -544,7 +548,7 @@ Il y a deux types d'identifiants (_id_) :
 
 Les identifiants réservés par WeeChat :
 
-[width="100%",cols="5,5,3,4,7",options="header"]
+[width="100%",cols="5m,5,3,4,7",options="header"]
 |===
 | Identifiant | Reçu avec _sync_ | Données envoyées |
   Description | Action recommandée dans le client

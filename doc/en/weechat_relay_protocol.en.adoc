@@ -67,13 +67,17 @@ _IRC proxy_ (not described in this document).
 [[commands]]
 == Commands (client → relay)
 
-Commands have format: "(id) command arguments\n".
+Commands have format:
+
+----
+(id) command arguments\n
+----
 
 Fields are:
 
 * _id_: optional message identifier that will be sent in answer from _relay_;
   it must be enclosed in parentheses, and must not start with an underscore
-  ("_") (ids starting with underscore are reserved for WeeChat _event_ messages)
+  (ids starting with underscore are reserved for WeeChat _event_ messages)
 * _command_: a command (see table below)
 * _arguments_: optional arguments for command (many arguments are separated by
   spaces).
@@ -89,8 +93,8 @@ List of available commands (detail in next chapters):
 | infolist | Request an _infolist_.
 | nicklist | Request a _nicklist_.
 | input    | Send data to a buffer (text or command).
-| sync     | Synchronize buffer(s) (get updates for buffer(s)).
-| desync   | Desynchronize buffer(s) (stop updates for buffer(s)).
+| sync     | Synchronize buffer(s): get updates for buffer(s).
+| desync   | Desynchronize buffer(s): stop updates for buffer(s).
 | quit     | Disconnect from _relay_.
 |===
 
@@ -524,7 +528,7 @@ There are two types of identifiers (_id_):
 
 WeeChat reserved identifiers:
 
-[width="100%",cols="5,5,3,4,7",options="header"]
+[width="100%",cols="5m,5,3,4,7",options="header"]
 |===
 | Identifier | Received with _sync_ | Data sent |
   Description | Recommended action in client
