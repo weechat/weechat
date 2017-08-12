@@ -28,6 +28,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <limits.h>
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
@@ -168,37 +169,42 @@ xfer_file_find_filename (struct t_xfer *xfer)
 void
 xfer_file_calculate_speed (struct t_xfer *xfer, int ended)
 {
-    time_t local_time, elapsed;
-    unsigned long long bytes_per_sec_total;
+    struct timeval local_time;
+    long long elapsed_us;
+    double bytes_per_us_total;
 
-    local_time = time (NULL);
-    if (ended || local_time > xfer->last_check_time)
+    gettimeofday(&local_time, NULL);
+    if (ended || weechat_util_timeval_cmp(&local_time, &xfer->last_check_time) > 0)
     {
         if (ended)
         {
             /* calculate bytes per second (global) */
-            elapsed = local_time - xfer->start_transfer;
-            if (elapsed == 0)
-                elapsed = 1;
-            xfer->bytes_per_sec = (xfer->pos - xfer->start_resume) / elapsed;
+            elapsed_us = weechat_util_timeval_diff(&xfer->start_transfer, &local_time);
+            if (elapsed_us == 0)
+                elapsed_us = 1;
+            xfer->bytes_per_sec = ((xfer->pos - xfer->start_resume) * 1000000.0) / elapsed_us;
             xfer->eta = 0;
         }
         else
         {
             /* calculate ETA */
-            elapsed = local_time - xfer->start_transfer;
-            if (elapsed == 0)
-                elapsed = 1;
-            bytes_per_sec_total = (xfer->pos - xfer->start_resume) / elapsed;
-            if (bytes_per_sec_total == 0)
-                bytes_per_sec_total = 1;
-            xfer->eta = (xfer->size - xfer->pos) / bytes_per_sec_total;
+            elapsed_us = weechat_util_timeval_diff(&xfer->start_transfer, &local_time);
+            if (elapsed_us == 0)
+                xfer->eta = ULLONG_MAX;
+            else
+            {
+                bytes_per_us_total = (double)(xfer->pos - xfer->start_resume) / (double)elapsed_us;
+                if (bytes_per_us_total == 0)
+                    xfer->eta = ULLONG_MAX;
+                else
+                    xfer->eta = (xfer->size - xfer->pos) / bytes_per_us_total / 1000000.0;
+            }
 
             /* calculate bytes per second (since last check time) */
-            elapsed = local_time - xfer->last_check_time;
-            if (elapsed == 0)
-                elapsed = 1;
-            xfer->bytes_per_sec = (xfer->pos - xfer->last_check_pos) / elapsed;
+            elapsed_us = weechat_util_timeval_diff(&xfer->last_check_time, &local_time);
+            if (elapsed_us == 0)
+                elapsed_us = 1;
+            xfer->bytes_per_sec = ((xfer->pos - xfer->last_check_pos) * 1000000.0) / elapsed_us;
         }
         xfer->last_check_time = local_time;
         xfer->last_check_pos = xfer->pos;
