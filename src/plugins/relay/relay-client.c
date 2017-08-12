@@ -1784,11 +1784,11 @@ relay_client_print_log ()
                             relay_protocol_string[ptr_client->protocol]);
         weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
         weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
-        weechat_log_printf ("  listen_start_time . . : %ld",   ptr_client->listen_start_time);
-        weechat_log_printf ("  start_time. . . . . . : %ld",   ptr_client->start_time);
-        weechat_log_printf ("  end_time. . . . . . . : %ld",   ptr_client->end_time);
+        weechat_log_printf ("  listen_start_time . . : %lld",  (long long)ptr_client->listen_start_time);
+        weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_client->start_time);
+        weechat_log_printf ("  end_time. . . . . . . : %lld",  (long long)ptr_client->end_time);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_client->hook_fd);
-        weechat_log_printf ("  last_activity . . . . : %ld",   ptr_client->last_activity);
+        weechat_log_printf ("  last_activity . . . . : %lld",  (long long)ptr_client->last_activity);
         weechat_log_printf ("  bytes_recv. . . . . . : %llu",  ptr_client->bytes_recv);
         weechat_log_printf ("  bytes_sent. . . . . . : %llu",  ptr_client->bytes_sent);
         weechat_log_printf ("  recv_data_type. . . . : %d (%s)",

@@ -761,8 +761,8 @@ relay_server_print_log ()
         weechat_log_printf ("  ssl . . . . . . . . . : %d",    ptr_server->ssl);
         weechat_log_printf ("  sock. . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_server->hook_fd);
-        weechat_log_printf ("  start_time. . . . . . : %ld",   ptr_server->start_time);
-        weechat_log_printf ("  last_client_disconnect: %ld", ptr_server->last_client_disconnect);
+        weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_server->start_time);
+        weechat_log_printf ("  last_client_disconnect: %lld",  (long long)ptr_server->last_client_disconnect);
         weechat_log_printf ("  prev_server . . . . . : 0x%lx", ptr_server->prev_server);
         weechat_log_printf ("  next_server . . . . . : 0x%lx", ptr_server->next_server);
     }

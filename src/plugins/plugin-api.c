@@ -643,7 +643,7 @@ plugin_api_info_inactivity_cb (const void *pointer, void *data,
         inactivity = 0;
     else
         inactivity = time (NULL) - gui_key_last_activity_time;
-    snprintf (value, sizeof (value), "%ld", (long int)inactivity);
+    snprintf (value, sizeof (value), "%lld", (long long)inactivity);
     return value;
 }
 
@@ -890,7 +890,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     {
         /* return the number of seconds */
         util_get_uptime (&total_seconds, NULL, NULL, NULL, NULL);
-        snprintf (value, sizeof (value), "%ld", (long)total_seconds);
+        snprintf (value, sizeof (value), "%lld", (long long)total_seconds);
         return value;
     }
 

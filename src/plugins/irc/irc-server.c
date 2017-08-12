@@ -6061,26 +6061,26 @@ irc_server_print_log ()
         weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
         weechat_log_printf ("  chanmodes. . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  monitor. . . . . . . : %d",    ptr_server->monitor);
-        weechat_log_printf ("  monitor_time . . . . : %ld",   ptr_server->monitor_time);
+        weechat_log_printf ("  monitor_time . . . . : %lld",  (long long)ptr_server->monitor_time);
         weechat_log_printf ("  reconnect_delay. . . : %d",    ptr_server->reconnect_delay);
-        weechat_log_printf ("  reconnect_start. . . : %ld",   ptr_server->reconnect_start);
-        weechat_log_printf ("  command_time . . . . : %ld",   ptr_server->command_time);
+        weechat_log_printf ("  reconnect_start. . . : %lld",  (long long)ptr_server->reconnect_start);
+        weechat_log_printf ("  command_time . . . . : %lld",  (long long)ptr_server->command_time);
         weechat_log_printf ("  reconnect_join . . . : %d",    ptr_server->reconnect_join);
         weechat_log_printf ("  disable_autojoin . . : %d",    ptr_server->disable_autojoin);
         weechat_log_printf ("  is_away. . . . . . . : %d",    ptr_server->is_away);
         weechat_log_printf ("  away_message . . . . : '%s'",  ptr_server->away_message);
-        weechat_log_printf ("  away_time. . . . . . : %ld",   ptr_server->away_time);
+        weechat_log_printf ("  away_time. . . . . . : %lld",  (long long)ptr_server->away_time);
         weechat_log_printf ("  lag. . . . . . . . . : %d",    ptr_server->lag);
         weechat_log_printf ("  lag_displayed. . . . : %d",    ptr_server->lag_displayed);
         weechat_log_printf ("  lag_check_time . . . : tv_sec:%d, tv_usec:%d",
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);
-        weechat_log_printf ("  lag_next_check . . . : %ld",   ptr_server->lag_next_check);
-        weechat_log_printf ("  lag_last_refresh . . : %ld",   ptr_server->lag_last_refresh);
+        weechat_log_printf ("  lag_next_check . . . : %lld",  (long long)ptr_server->lag_next_check);
+        weechat_log_printf ("  lag_last_refresh . . : %lld",  (long long)ptr_server->lag_last_refresh);
         weechat_log_printf ("  cmd_list_regexp. . . : 0x%lx", ptr_server->cmd_list_regexp);
-        weechat_log_printf ("  last_user_message. . : %ld",   ptr_server->last_user_message);
-        weechat_log_printf ("  last_away_check. . . : %ld",   ptr_server->last_away_check);
-        weechat_log_printf ("  last_data_purge. . . : %ld",   ptr_server->last_data_purge);
+        weechat_log_printf ("  last_user_message. . : %lld",  (long long)ptr_server->last_user_message);
+        weechat_log_printf ("  last_away_check. . . : %lld",  (long long)ptr_server->last_away_check);
+        weechat_log_printf ("  last_data_purge. . . : %lld",  (long long)ptr_server->last_data_purge);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
             weechat_log_printf ("  outqueue[%02d] . . . . : 0x%lx", i, ptr_server->outqueue[i]);

@@ -128,10 +128,10 @@ end:
                 break;
             case WEECHAT_HDATA_TIME:
                 snprintf (str_value, sizeof (str_value),
-                          "%ld",
+                          "%lld",
                           (ptr_buffer) ?
-                          (long int)weechat_hdata_time (buflist_hdata_buffer,
-                                                        ptr_buffer, list_keys[i]) : -1);
+                          (long long)weechat_hdata_time (buflist_hdata_buffer,
+                                                         ptr_buffer, list_keys[i]) : -1);
                 weechat_hashtable_set (info, list_keys[i], str_value);
                 break;
             default:  /* ignore other types */

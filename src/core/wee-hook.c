@@ -4807,8 +4807,8 @@ hook_print_log ()
                         strftime (text_time, sizeof (text_time),
                                   "%d/%m/%Y %H:%M:%S", local_time);
                     }
-                    log_printf ("    last_exec.tv_sec. . . : %ld (%s)",
-                                HOOK_TIMER(ptr_hook, last_exec.tv_sec),
+                    log_printf ("    last_exec.tv_sec. . . : %lld (%s)",
+                                (long long)(HOOK_TIMER(ptr_hook, last_exec.tv_sec)),
                                 text_time);
                     log_printf ("    last_exec.tv_usec . . : %ld",   HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                     text_time[0] = '\0';
@@ -4819,8 +4819,8 @@ hook_print_log ()
                         strftime (text_time, sizeof (text_time),
                                   "%d/%m/%Y %H:%M:%S", local_time);
                     }
-                    log_printf ("    next_exec.tv_sec. . . : %ld (%s)",
-                                HOOK_TIMER(ptr_hook, next_exec.tv_sec),
+                    log_printf ("    next_exec.tv_sec. . . : %lld (%s)",
+                                (long long)(HOOK_TIMER(ptr_hook, next_exec.tv_sec)),
                                 text_time);
                     log_printf ("    next_exec.tv_usec . . : %ld",   HOOK_TIMER(ptr_hook, next_exec.tv_usec));
                     break;

@@ -39,26 +39,26 @@
 #include "gui-window.h"
 
 
-#define FOCUS_STR(__name, __string)                                     \
+#define FOCUS_STR(__name, __string)                                      \
     hashtable_set (hashtable, __name, __string);
-#define FOCUS_STR_VAR(__name, __var)                                    \
+#define FOCUS_STR_VAR(__name, __var)                                     \
     hashtable_set (hashtable, __name, (__var) ? __var : "");
-#define FOCUS_INT(__name, __int)                                        \
-    snprintf (str_value, sizeof (str_value), "%d", __int);              \
+#define FOCUS_INT(__name, __int)                                         \
+    snprintf (str_value, sizeof (str_value), "%d", __int);               \
     hashtable_set (hashtable, __name, str_value);
-#define FOCUS_TIME(__name, __time)                                      \
-    snprintf (str_value, sizeof (str_value), "%ld", (long)__time);      \
+#define FOCUS_TIME(__name, __time)                                       \
+    snprintf (str_value, sizeof (str_value), "%lld", (long long)__time); \
     hashtable_set (hashtable, __name, str_value);
-#define FOCUS_PTR(__name, __pointer)                                    \
-    if (__pointer)                                                      \
-    {                                                                   \
-        snprintf (str_value, sizeof (str_value),                        \
-                  "0x%lx", (long unsigned int)__pointer);               \
-        hashtable_set (hashtable, __name, str_value);                   \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        hashtable_set (hashtable, __name, "");                          \
+#define FOCUS_PTR(__name, __pointer)                                     \
+    if (__pointer)                                                       \
+    {                                                                    \
+        snprintf (str_value, sizeof (str_value),                         \
+                  "0x%lx", (long unsigned int)__pointer);                \
+        hashtable_set (hashtable, __name, str_value);                    \
+    }                                                                    \
+    else                                                                 \
+    {                                                                    \
+        hashtable_set (hashtable, __name, "");                           \
     }
 
 

@@ -770,7 +770,7 @@ infolist_print_log ()
                         log_printf ("        size of buffer . . . : %d",    ptr_var->size);
                         break;
                     case INFOLIST_TIME:
-                        log_printf ("        value (time) . . . . : %ld", *((time_t *)ptr_var->value));
+                        log_printf ("        value (time) . . . . : %lld", (long long)(*((time_t *)ptr_var->value)));
                         break;
                 }
                 log_printf ("        prev_var . . . . . . : 0x%lx", ptr_var->prev_var);

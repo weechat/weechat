@@ -1726,8 +1726,8 @@ xfer_print_log ()
         weechat_log_printf ("  remote_nick_color . . . : '%s'",  ptr_xfer->remote_nick_color);
         weechat_log_printf ("  fast_send . . . . . . . : %d",    ptr_xfer->fast_send);
         weechat_log_printf ("  blocksize . . . . . . . : %d",    ptr_xfer->blocksize);
-        weechat_log_printf ("  start_time. . . . . . . : %ld",   ptr_xfer->start_time);
-        weechat_log_printf ("  start_transfer. . . . . : %ld",   ptr_xfer->start_transfer);
+        weechat_log_printf ("  start_time. . . . . . . : %lld",  (long long)ptr_xfer->start_time);
+        weechat_log_printf ("  start_transfer. . . . . : %lld",  (long long)ptr_xfer->start_transfer);
         weechat_log_printf ("  sock. . . . . . . . . . : %d",    ptr_xfer->sock);
         weechat_log_printf ("  child_pid . . . . . . . : %d",    ptr_xfer->child_pid);
         weechat_log_printf ("  child_read. . . . . . . : %d",    ptr_xfer->child_read);
@@ -1742,9 +1742,9 @@ xfer_print_log ()
         weechat_log_printf ("  pos . . . . . . . . . . : %llu",  ptr_xfer->pos);
         weechat_log_printf ("  ack . . . . . . . . . . : %llu",  ptr_xfer->ack);
         weechat_log_printf ("  start_resume. . . . . . : %llu",  ptr_xfer->start_resume);
-        weechat_log_printf ("  last_check_time . . . . : %ld",   ptr_xfer->last_check_time);
+        weechat_log_printf ("  last_check_time . . . . : %lld",  (long long)ptr_xfer->last_check_time);
         weechat_log_printf ("  last_check_pos. . . . . : %llu",  ptr_xfer->last_check_pos);
-        weechat_log_printf ("  last_activity . . . . . : %ld",   ptr_xfer->last_activity);
+        weechat_log_printf ("  last_activity . . . . . : %lld",  (long long)ptr_xfer->last_activity);
         weechat_log_printf ("  bytes_per_sec . . . . . : %llu",  ptr_xfer->bytes_per_sec);
         weechat_log_printf ("  eta . . . . . . . . . . : %llu",  ptr_xfer->eta);
         weechat_log_printf ("  hash_target . . . . . . : '%s'",  ptr_xfer->hash_target);

@@ -216,7 +216,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
             break;
         case WEECHAT_HDATA_TIME:
             snprintf (str_value, sizeof (str_value),
-                      "%ld", (long)hdata_time (hdata, pointer, var_name));
+                      "%lld", (long long)hdata_time (hdata, pointer, var_name));
             value = strdup (str_value);
             break;
         case WEECHAT_HDATA_HASHTABLE:
@@ -249,7 +249,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
                             break;
                         case HASHTABLE_TIME:
                             snprintf (str_value, sizeof (str_value),
-                                      "%ld", (long)(*((time_t *)ptr_value)));
+                                      "%lld", (long long)(*((time_t *)ptr_value)));
                             value = strdup (str_value);
                             break;
                         case HASHTABLE_NUM_TYPES:

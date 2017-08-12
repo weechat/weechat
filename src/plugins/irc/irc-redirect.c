@@ -1209,7 +1209,7 @@ irc_redirect_print_log (struct t_irc_server *server)
         weechat_log_printf ("       timeout . . . . . . : %d",    ptr_redirect->timeout);
         weechat_log_printf ("       command . . . . . . : '%s'",  ptr_redirect->command);
         weechat_log_printf ("       assigned_to_command : %d",    ptr_redirect->assigned_to_command);
-        weechat_log_printf ("       start_time. . . . . : %ld",   ptr_redirect->start_time);
+        weechat_log_printf ("       start_time. . . . . : %lld",  (long long)ptr_redirect->start_time);
         weechat_log_printf ("       cmd_start . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_redirect->cmd_start,
                             weechat_hashtable_get_string (ptr_redirect->cmd_start, "keys_values"));

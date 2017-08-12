@@ -691,8 +691,8 @@ exec_print_log ()
         weechat_log_printf ("  command . . . . . . . . . : '%s'",  ptr_exec_cmd->command);
         weechat_log_printf ("  pid . . . . . . . . . . . : %d",    ptr_exec_cmd->pid);
         weechat_log_printf ("  detached. . . . . . . . . : %d",    ptr_exec_cmd->detached);
-        weechat_log_printf ("  start_time. . . . . . . . : %ld",   ptr_exec_cmd->start_time);
-        weechat_log_printf ("  end_time. . . . . . . . . : %ld",   ptr_exec_cmd->end_time);
+        weechat_log_printf ("  start_time. . . . . . . . : %lld",  (long long)ptr_exec_cmd->start_time);
+        weechat_log_printf ("  end_time. . . . . . . . . : %lld",  (long long)ptr_exec_cmd->end_time);
         weechat_log_printf ("  output_to_buffer. . . . . : %d",    ptr_exec_cmd->output_to_buffer);
         weechat_log_printf ("  output_to_buffer_exec_cmd : %d",    ptr_exec_cmd->output_to_buffer_exec_cmd);
         weechat_log_printf ("  buffer_full_name. . . . . : '%s'",  ptr_exec_cmd->buffer_full_name);

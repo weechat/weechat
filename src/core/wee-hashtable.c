@@ -554,7 +554,7 @@ hashtable_to_string (enum t_hashtable_type type, const void *value)
             break;
         case HASHTABLE_TIME:
             snprintf (str_value, sizeof (str_value),
-                      "%ld", (long)(*((time_t *)value)));
+                      "%lld", (long long)(*((time_t *)value)));
             return str_value;
             break;
         case HASHTABLE_NUM_TYPES:
@@ -1235,7 +1235,7 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                     log_printf ("      key (buffer) . . . : 0x%lx", ptr_item->key);
                     break;
                 case HASHTABLE_TIME:
-                    log_printf ("      key (time) . . . . : %ld",   *((time_t *)ptr_item->key));
+                    log_printf ("      key (time) . . . . : %lld", (long long)(*((time_t *)ptr_item->key)));
                     break;
                 case HASHTABLE_NUM_TYPES:
                     break;

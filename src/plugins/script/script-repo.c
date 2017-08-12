@@ -1657,8 +1657,8 @@ script_repo_print_log ()
         weechat_log_printf ("  md5sum. . . . . . . . : '%s'",  ptr_script->md5sum);
         weechat_log_printf ("  url . . . . . . . . . : '%s'",  ptr_script->url);
         weechat_log_printf ("  popularity. . . . . . : %d",    ptr_script->popularity);
-        weechat_log_printf ("  date_added. . . . . . : %ld",   ptr_script->date_added);
-        weechat_log_printf ("  date_updated. . . . . : %ld",   ptr_script->date_updated);
+        weechat_log_printf ("  date_added. . . . . . : %lld",  (long long)ptr_script->date_added);
+        weechat_log_printf ("  date_updated. . . . . : %lld",  (long long)ptr_script->date_updated);
         weechat_log_printf ("  status. . . . . . . . : %d (%s%s%s%s%s )",
                             ptr_script->status,
                             (ptr_script->status & SCRIPT_STATUS_INSTALLED) ? " installed": "",

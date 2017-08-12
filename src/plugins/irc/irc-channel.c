@@ -1686,9 +1686,9 @@ irc_channel_print_log (struct t_irc_channel *channel)
              ptr_nick_speaking;
              ptr_nick_speaking = ptr_nick_speaking->next_nick)
         {
-            weechat_log_printf ("         nick speaking time: '%s', time: %ld",
+            weechat_log_printf ("         nick speaking time: '%s', time: %lld",
                                 ptr_nick_speaking->nick,
-                                ptr_nick_speaking->time_last_message);
+                                (long long)ptr_nick_speaking->time_last_message);
         }
     }
     for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)

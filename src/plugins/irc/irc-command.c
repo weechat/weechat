@@ -1526,8 +1526,8 @@ IRC_COMMAND_CALLBACK(ctcp)
     {
         /* generate argument for PING if not provided */
         gettimeofday (&tv, NULL);
-        snprintf (str_time, sizeof (str_time), "%ld %ld",
-                  (long)tv.tv_sec, (long)tv.tv_usec);
+        snprintf (str_time, sizeof (str_time), "%lld %ld",
+                  (long long)tv.tv_sec, (long)tv.tv_usec);
         ctcp_args = str_time;
     }
     else

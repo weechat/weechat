@@ -242,7 +242,7 @@ relay_weechat_msg_add_time (struct t_relay_weechat_msg *msg, time_t time)
     char str_time[128];
     unsigned char length;
 
-    snprintf (str_time, sizeof (str_time), "%ld", (long)time);
+    snprintf (str_time, sizeof (str_time), "%lld", (long long)time);
     length = strlen (str_time);
     relay_weechat_msg_add_bytes (msg, &length, 1);
     relay_weechat_msg_add_bytes (msg, str_time, length);

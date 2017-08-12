@@ -2609,7 +2609,7 @@ weechat_lua_api_hook_print_cb (const void *pointer, void *data,
 
     if (ptr_function && ptr_function[0])
     {
-        snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)date);
+        snprintf (timebuffer, sizeof (timebuffer), "%lld", (long long)date);
 
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = API_PTR2STR(buffer);
