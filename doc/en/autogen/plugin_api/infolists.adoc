@@ -8,6 +8,8 @@
 
 | alias | alias | list of aliases | alias pointer (optional) | alias name (wildcard "*" is allowed) (optional)
 
+| alias | alias_default | list of default aliases | - | -
+
 | fset | fset_option | list of fset options | fset option pointer (optional) | option name (wildcard "*" is allowed) (optional)
 
 | guile | guile_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)

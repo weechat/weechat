@@ -8,6 +8,8 @@
 
 | alias | alias | liste des alias | pointeur vers l'alias (optionnel) | nom d'alias (le caractère joker "*" est autorisé) (optionnel)
 
+| alias | alias_default | liste des alias par défaut | - | -
+
 | fset | fset_option | liste des options fset | pointeur vers l'option fset (optionnel) | nom d'option (le caractère joker "*" est autorisé) (optionnel)
 
 | guile | guile_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)

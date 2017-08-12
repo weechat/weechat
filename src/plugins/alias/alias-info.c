@@ -23,10 +23,11 @@
 
 #include "../weechat-plugin.h"
 #include "alias.h"
+#include "alias-config.h"
 
 
 /*
- * Returns alias infolist "alias".
+ * Returns infolist "alias".
  */
 
 struct t_infolist *
@@ -82,6 +83,58 @@ alias_info_infolist_alias_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns infolist "alias_default".
+ */
+
+struct t_infolist *
+alias_info_infolist_alias_default_cb (const void *pointer, void *data,
+                                      const char *infolist_name,
+                                      void *obj_pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_infolist_item *ptr_item;
+    int i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) infolist_name;
+    (void) obj_pointer;
+    (void) arguments;
+
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
+
+    for (i = 0; alias_default[i][0]; i++)
+    {
+        ptr_item = weechat_infolist_new_item (ptr_infolist);
+        if (!ptr_item)
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        if (!weechat_infolist_new_var_string (ptr_item, "name", alias_default[i][0]))
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        if (!weechat_infolist_new_var_string (ptr_item, "command", alias_default[i][1]))
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        if (!weechat_infolist_new_var_string (ptr_item, "completion", alias_default[i][2]))
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+    }
+
+    return ptr_infolist;
+}
+
+/*
  * Hooks infolist for alias plugin.
  */
 
@@ -93,4 +146,8 @@ alias_info_init ()
         N_("alias pointer (optional)"),
         N_("alias name (wildcard \"*\" is allowed) (optional)"),
         &alias_info_infolist_alias_cb, NULL, NULL);
+    weechat_hook_infolist (
+        "alias_default", N_("list of default aliases"),
+        NULL, NULL,
+        &alias_info_infolist_alias_default_cb, NULL, NULL);
 }

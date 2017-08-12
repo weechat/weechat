@@ -8,6 +8,8 @@
 
 | alias | alias | 別名のリスト | 別名のポインタ (任意) | 別名の名前 (ワイルドカード "*" を使うことができます) (任意)
 
+| alias | alias_default | list of default aliases | - | -
+
 | fset | fset_option | fset オプションのリスト | fset オプションポインタ (任意) | オプション名 (ワイルドカード "*" を使うことができます) (任意)
 
 | guile | guile_script | スクリプトのリスト | スクリプトポインタ (任意) | スクリプト名 (ワイルドカード "*" を使うことができます) (任意)

@@ -31,46 +31,42 @@ struct t_config_file *alias_config_file = NULL;
 struct t_config_section *alias_config_section_cmd = NULL;
 struct t_config_section *alias_config_section_completion = NULL;
 
-char *alias_default_cmd[][2] =
-{ { "AAWAY",   "allserv /away"                       },
-  { "AME",     "allchan /me"                         },
-  { "AMSG",    "allchan /msg *"                      },
-  { "ANICK",   "allserv /nick"                       },
-  { "BEEP",    "print -beep"                         },
-  { "BYE",     "quit"                                },
-  { "C",       "buffer clear"                        },
-  { "CL",      "buffer clear"                        },
-  { "CLOSE",   "buffer close"                        },
-  { "CHAT",    "dcc chat"                            },
-  { "EXIT",    "quit"                                },
-  { "IG",      "ignore"                              },
-  { "J",       "join"                                },
-  { "K",       "kick"                                },
-  { "KB",      "kickban"                             },
-  { "LEAVE",   "part"                                },
-  { "M",       "msg"                                 },
-  { "MUB",     "unban *"                             },
-  { "MSGBUF", "command -buffer $1 * /input send $2-" },
-  { "N",       "names"                               },
-  { "Q",       "query"                               },
-  { "REDRAW",  "window refresh"                      },
-  { "SAY",     "msg *"                               },
-  { "SIGNOFF", "quit"                                },
-  { "T",       "topic"                               },
-  { "UB",      "unban"                               },
-  { "UMODE",   "mode $nick"                          },
-  { "V",       "command core version"                },
-  { "W",       "who"                                 },
-  { "WC",      "window merge"                        },
-  { "WI",      "whois"                               },
-  { "WII",     "whois $1 $1"                         },
-  { "WW",      "whowas"                              },
-  { NULL,      NULL                                  },
-};
-
-char *alias_default_completion[][2] =
-{ { "MSGBUF", "%(buffers_plugins_names)" },
-  { NULL,     NULL                       },
+char *alias_default[][3] =
+{ { "AAWAY",   "allserv /away",        NULL            },
+  { "AME",     "allchan /me",          NULL            },
+  { "AMSG",    "allchan /msg *",       NULL            },
+  { "ANICK",   "allserv /nick",        NULL            },
+  { "BEEP",    "print -beep",          NULL            },
+  { "BYE",     "quit",                 NULL            },
+  { "C",       "buffer clear",         NULL            },
+  { "CL",      "buffer clear",         NULL            },
+  { "CLOSE",   "buffer close",         NULL            },
+  { "CHAT",    "dcc chat",             NULL            },
+  { "EXIT",    "quit",                 NULL            },
+  { "IG",      "ignore",               NULL            },
+  { "J",       "join",                 NULL            },
+  { "K",       "kick",                 NULL            },
+  { "KB",      "kickban",              NULL            },
+  { "LEAVE",   "part",                 NULL            },
+  { "M",       "msg",                  NULL            },
+  { "MUB",     "unban *",              NULL            },
+  { "MSGBUF",  "command -buffer $1 * /input send $2-",
+    "%(buffers_plugins_names)"                         },
+  { "N",       "names",                NULL            },
+  { "Q",       "query",                NULL            },
+  { "REDRAW",  "window refresh",       NULL            },
+  { "SAY",     "msg *",                NULL            },
+  { "SIGNOFF", "quit",                 NULL            },
+  { "T",       "topic",                NULL            },
+  { "UB",      "unban",                NULL            },
+  { "UMODE",   "mode $nick",           NULL            },
+  { "V",       "command core version", NULL            },
+  { "W",       "who",                  NULL            },
+  { "WC",      "window merge",         NULL            },
+  { "WI",      "whois",                NULL            },
+  { "WII",     "whois $1 $1",          NULL            },
+  { "WW",      "whowas",               NULL            },
+  { NULL,      NULL,                   NULL            },
 };
 
 /*
@@ -204,11 +200,11 @@ alias_config_cmd_write_default_cb (const void *pointer, void *data,
     if (!weechat_config_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
-    for (i = 0; alias_default_cmd[i][0]; i++)
+    for (i = 0; alias_default[i][0]; i++)
     {
         if (!weechat_config_write_line (config_file,
-                                        alias_default_cmd[i][0],
-                                        "\"%s\"", alias_default_cmd[i][1]))
+                                        alias_default[i][0],
+                                        "\"%s\"", alias_default[i][1]))
             return WEECHAT_CONFIG_WRITE_ERROR;
     }
 
@@ -291,12 +287,15 @@ alias_config_completion_write_default_cb (const void *pointer, void *data,
     if (!weechat_config_write_line (config_file, section_name, NULL))
         return WEECHAT_CONFIG_WRITE_ERROR;
 
-    for (i = 0; alias_default_completion[i][0]; i++)
+    for (i = 0; alias_default[i][0]; i++)
     {
-        if (!weechat_config_write_line (config_file,
-                                        alias_default_completion[i][0],
-                                        "\"%s\"", alias_default_completion[i][1]))
-            return WEECHAT_CONFIG_WRITE_ERROR;
+        if (alias_default[i][2])
+        {
+            if (!weechat_config_write_line (config_file,
+                                            alias_default[i][0],
+                                            "\"%s\"", alias_default[i][2]))
+                return WEECHAT_CONFIG_WRITE_ERROR;
+        }
     }
 
     return WEECHAT_CONFIG_WRITE_OK;
