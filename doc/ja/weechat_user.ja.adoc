@@ -827,7 +827,7 @@ _TERM_ 変数が間違った値に設定された状態で WeeChat が起動完�
 
 WeeChat における基本色とは:
 
-[width="50%",cols="^3m,8",options="header"]
+[width="50%",cols="1m,4",options="header"]
 |===
 | 名前         | 色
 | default      | デフォルトの端末色 (背景色を透過色とする)
@@ -2066,7 +2066,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 
 デフォルトプラグインのリスト:
 
-[width="100%",cols="^1,5",options="header"]
+[width="100%",cols="1,8",options="header"]
 |===
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
@@ -2784,7 +2784,7 @@ CTCP "BLABLA" 要求に対する応答を以下のように設定できます:
 以下のコードを設定値に含めることが可能です。これらのコードは
 CTCP 応答時に自動的に WeeChat によって展開されます:
 
-[width="100%",cols="^2l,4,8",options="header"]
+[width="100%",cols="2l,4,8",options="header"]
 |===
 | コード       | 説明                                      | 値/例
 | $clientinfo  | サポートしている CTCP オプションのリスト  | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
@@ -2806,7 +2806,7 @@ WeeChat をコンパイルし、git がインストールされている場合�
 
 CTCP オプションが設定されていない (デフォルトの) 場合、CTCP 応答は以下のようになります:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
 | CTCP       | 応答書式                             | 例
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`

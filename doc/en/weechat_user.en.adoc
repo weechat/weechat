@@ -823,7 +823,7 @@ you can change it with these two commands:
 
 Basic colors in WeeChat are:
 
-[width="50%",cols="^3m,8",options="header"]
+[width="50%",cols="1m,4",options="header"]
 |===
 | Name         | Color
 | default      | Default terminal color (transparent for background)
@@ -2062,7 +2062,7 @@ Examples to load, unload or list plugins:
 
 Default plugins are:
 
-[width="100%",cols="^1,5",options="header"]
+[width="100%",cols="1,8",options="header"]
 |===
 | Plugin     | Description
 | alias      | Define alias for commands.
@@ -2770,7 +2770,7 @@ If you want to restore standard CTCP reply, then remove option:
 Following codes can be used in strings and are automatically expanded by WeeChat
 when replying to CTCP:
 
-[width="100%",cols="^2l,4,8",options="header"]
+[width="100%",cols="2l,4,8",options="header"]
 |===
 | Code         | Description                         | Value/example
 | $clientinfo  | List of supported CTCP              | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
@@ -2792,7 +2792,7 @@ if WeeChat has been compiled inside the git repository and if git was installed.
 
 If CTCP options are not defined (by default), CTCP replies are:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
 | CTCP       | Reply format                         | Example
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`

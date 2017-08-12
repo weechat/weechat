@@ -835,7 +835,7 @@ geändert werden:
 
 Basisfarben in WeeChat sind:
 
-[width="50%",cols="^3m,8",options="header"]
+[width="50%",cols="1m,4",options="header"]
 |===
 | Name         | Farbe
 | default      | Standard Terminalfarbe (transparent für Hintergrund)
@@ -2112,7 +2112,7 @@ Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
 
 Standarderweiterungen:
 
-[width="100%",cols="^1,5",options="header"]
+[width="100%",cols="1,8",options="header"]
 |===
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
@@ -2849,7 +2849,7 @@ dann müssen Sie lediglich die Option löschen:
 Folgende Platzhalter können in den CTCP-Antworten genutzt werden. Diese werden dann
 mit dem entsprechenden Wert ersetzt:
 
-[width="100%",cols="^2l,4,8",options="header"]
+[width="100%",cols="2l,4,8",options="header"]
 |===
 | Platzhalter  | Beschreibung                        | Wert/Beispiel
 | $clientinfo  | Liste der CTCP Antworten            | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
@@ -2872,7 +2872,7 @@ und das Git überhaupt installiert ist.
 
 Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
 | CTCP       | Antwortformat                        | Beispiel
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`

@@ -839,7 +839,7 @@ możesz ją zmienić za pomocą tych dwóch komend:
 
 Podstawowe kolory w WeeChat to:
 
-[width="50%",cols="^3m,8",options="header"]
+[width="50%",cols="1m,4",options="header"]
 |===
 | Nazwa        | Kolor
 | default      | Domyślny kolor terminala (przezroczysty dla tła)
@@ -2088,7 +2088,7 @@ Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
 
 Domyślne wtyczki:
 
-[width="100%",cols="^1,5",options="header"]
+[width="100%",cols="1,8",options="header"]
 |===
 | Wtyczka    | Opis
 | alias      | Definiuje aliasy dla komend.
@@ -2818,7 +2818,7 @@ Jeśli chcesz przywrócić standardowe odpowiedzi dla CTCP usuń opcję:
 Następujące kody mogą być użyte w ciągach i zostaną automatycznie zamienione
 przez WeeChat podczas odpowiedzi na CTCP:
 
-[width="100%",cols="^2l,4,8",options="header"]
+[width="100%",cols="2l,4,8",options="header"]
 |===
 | Kod          | Opis                              | Wartość/Przykład
 | $clientinfo  | Lista wspieranych CTCP            | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
@@ -2840,7 +2840,7 @@ WeeChat został skompilowany wewnątrz repozytorium git i git był zainstalowany
 
 Jeśli opcje CTCP nie są zdefiniowane (domyślne), odpowiedzi CTCP to:
 
-[width="100%",cols="^2,4,8",options="header"]
+[width="100%",cols="2,4,8",options="header"]
 |===
 | CTCP       | Format odpowiedzi                    | Przykład
 | CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
