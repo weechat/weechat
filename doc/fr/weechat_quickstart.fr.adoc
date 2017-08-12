@@ -84,12 +84,11 @@ Toutes les options sont sauvées quand WeeChat quitte (ou avec la commande
 
 [IMPORTANT]
 Il n'est *pas recommandé* de modifier les fichiers de configuration à la main
-car WeeChat peut les écrire à tout moment (par exemple sur
-<<command_weechat_quit,/quit>>) et après chaque changement vous devez lancer la
-commande <<command_weechat_reload,/reload>> (avec le risque de perdre d'autres
-changements qui n'auraient pas été sauvés avec <<command_weechat_save,/save>>). +
-Vous pouvez utiliser la commande <<command_weechat_set,/set>>, qui vérifie la
-valeur et applique les changements immédiatement.
+car WeeChat peut les écrire à tout moment (par exemple sur `/quit`) et après
+chaque changement vous devez lancer la commande `/reload` (avec le risque de
+perdre d'autres changements qui n'auraient pas été sauvés avec `/save`). +
+Vous pouvez utiliser la commande `/set`, qui vérifie la valeur et applique
+les changements immédiatement.
 
 [[core_vs_plugins]]
 == Cœur vs extensions

@@ -86,12 +86,11 @@ komendy `/save`, która wymusza zapisanie opcji).
 
 [IMPORTANT]
 *Nie zaleca się* ręcznie edytować plików konfiguracyjnych, ponieważ WeeChat
-może je nadpisać w dowolnej chwili (na przykład podczas <<command_weechat_quit,/quit>>),
-oraz po każdej zmianie musisz wykonać komendę <<command_weechat_reload,/reload>>
-(ryzykując utratę zmian, które nie zostały zapisane za pomocą
-<<command_weechat_save,/save>>). +
-Możesz użyć komendy <<command_weechat_set,/set>>, która sprawdza wartość i nanosi
-od razu wymagane zmiany.
+może je nadpisać w dowolnej chwili (na przykład podczas `/quit`),
+oraz po każdej zmianie musisz wykonać komendę `/reload`
+(ryzykując utratę zmian, które nie zostały zapisane za pomocą `/save`). +
+Możesz użyć komendy `/set`, która sprawdza wartość i nanosi od razu wymagane
+zmiany.
 
 [[core_vs_plugins]]
 == Rdzeń vs wtyczki
