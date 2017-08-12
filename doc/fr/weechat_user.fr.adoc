@@ -2051,9 +2051,9 @@ Pour utiliser le mot de passe _freenode_, par exemple avec
 include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
-==== Options des données sécurisées (sec.conf)
+==== Options des données sécurisées
 
-Sections :
+Sections dans le fichier _sec.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2067,9 +2067,9 @@ Options :
 include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
-==== Options WeeChat (weechat.conf)
+==== Options WeeChat
 
-Sections :
+Sections dans le fichier _weechat.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2181,9 +2181,9 @@ include::autogen/user/alias_default_aliases.adoc[]
 include::autogen/user/alias_commands.adoc[]
 
 [[alias_options]]
-==== Options (alias.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _alias.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2278,9 +2278,9 @@ Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
 include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_options]]
-==== Options (aspell.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _aspell.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2310,9 +2310,9 @@ Une barre par défaut "buflist" est créée au démarrage avec cet objet de barr
 include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
-==== Options (buflist.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _buflist.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2431,9 +2431,9 @@ _FAQ WeeChat_.
 include::autogen/user/charset_commands.adoc[]
 
 [[charset_options]]
-==== Options (charset.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _charset.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2461,9 +2461,9 @@ d'afficher la sortie localement, ou de l'envoyer à un tampon.
 include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
-==== Options (exec.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _exec.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2527,9 +2527,9 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 include::autogen/user/fifo_commands.adoc[]
 
 [[fifo_options]]
-==== Options (fifo.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _fifo.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2553,9 +2553,9 @@ les options de WeeChat et des extensions.
 include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
-==== Options (fset.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _fset.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3038,9 +3038,9 @@ seulement :
 include::autogen/user/irc_commands.adoc[]
 
 [[irc_options]]
-==== Options (irc.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _irc.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3194,9 +3194,9 @@ Vous obtiendrez les fichiers suivants :
 include::autogen/user/logger_commands.adoc[]
 
 [[logger_options]]
-==== Options (logger.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _logger.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3347,9 +3347,9 @@ _weechat_).
 include::autogen/user/relay_commands.adoc[]
 
 [[relay_options]]
-==== Options (relay.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _relay.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3423,9 +3423,9 @@ include::autogen/user/guile_commands.adoc[]
 include::autogen/user/javascript_commands.adoc[]
 
 [[script_options]]
-==== Options Script (script.conf)
+==== Options Script
 
-Sections :
+Sections dans le fichier _script.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3985,9 +3985,9 @@ configuration (rien n'est affiché sur le tampon "core").
 include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_options]]
-==== Options (trigger.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _trigger.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -4018,9 +4018,9 @@ L'extension Xfer permet :
 include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
-==== Options (xfer.conf)
+==== Options
 
-Sections :
+Sections dans le fichier _xfer.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===

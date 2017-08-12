@@ -2006,9 +2006,10 @@ W celu użycia hasła _freenode_, na przykład z
 include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
-==== Opcje dla bezpiecznych danych (sec.conf)
+==== Opcje dla bezpiecznych danych
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _sec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2022,9 +2023,10 @@ Opcje:
 include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
-==== Opcje WeeChat (weechat.conf)
+==== Opcje WeeChat
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2136,9 +2138,10 @@ include::autogen/user/alias_default_aliases.adoc[]
 include::autogen/user/alias_commands.adoc[]
 
 [[alias_options]]
-==== Options (alias.conf)
+==== Options
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _alias.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2233,9 +2236,10 @@ Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_options]]
-==== Opcje (aspell.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _aspell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2264,9 +2268,10 @@ Domyślny pasek "buflist" jet tworzony podczas uruchomieina z tą wtyczką włą
 include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
-==== Options (buflist.conf)
+==== Options
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _buflist.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2379,9 +2384,10 @@ W razie jakichś problemów z kodowaniem, zajrzyj do _WeeChat FAQ_.
 include::autogen/user/charset_commands.adoc[]
 
 [[charset_options]]
-==== Opcje (charset.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _charset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2409,9 +2415,10 @@ jej wynik lokalnie lub wysłać do bufora.
 include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
-==== Opcje (exec.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _exec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2473,9 +2480,10 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 include::autogen/user/fifo_commands.adoc[]
 
 [[fifo_options]]
-==== Opcje (fifo.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _fifo.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2500,9 +2508,10 @@ and plugin options.
 include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
-==== Opcje (fset.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _fset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2980,9 +2989,10 @@ Kilka przykładów:
 include::autogen/user/irc_commands.adoc[]
 
 [[irc_options]]
-==== Opcje (irc.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _irc.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3137,9 +3147,10 @@ Spowoduje powstanie następującej struktury:
 include::autogen/user/logger_commands.adoc[]
 
 [[logger_options]]
-==== Opcje (logger.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _logger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3285,9 +3296,10 @@ Adres URL musi się zawsze kończyć "/weechat" (dla protokołów _irc_ i _weech
 include::autogen/user/relay_commands.adoc[]
 
 [[relay_options]]
-==== Opcje (relay.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _relay.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3360,9 +3372,10 @@ include::autogen/user/guile_commands.adoc[]
 include::autogen/user/javascript_commands.adoc[]
 
 [[script_options]]
-==== Opcje wtyczki script (script.conf)
+==== Opcje wtyczki script
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _script.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3892,9 +3905,10 @@ wyświetli w buforze rdzenia).
 include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_options]]
-==== Opcje (trigger.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _trigger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3925,9 +3939,10 @@ Wtyczka xfer zapewnia:
 include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
-==== Opcje (xfer.conf)
+==== Opcje
 
-Sekcje:
+// TRANSLATION MISSING
+Sections in file _xfer.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===

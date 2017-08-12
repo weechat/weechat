@@ -1986,9 +1986,10 @@ IRC サーバのパスワードを設定する例:
 include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
-==== 保護データのオプション (sec.conf)
+==== 保護データのオプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _sec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2002,9 +2003,10 @@ include::autogen/user/weechat_commands.adoc[]
 include::autogen/user/sec_options.adoc[]
 
 [[weechat_options]]
-==== WeeChat オプション (weechat.conf)
+==== WeeChat オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2114,9 +2116,10 @@ include::autogen/user/alias_default_aliases.adoc[]
 include::autogen/user/alias_commands.adoc[]
 
 [[alias_options]]
-==== Options (alias.conf)
+==== Options
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _alias.conf_:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
@@ -2212,9 +2215,10 @@ _aspell.check.suggestions_ オプションで設定します。
 include::autogen/user/aspell_commands.adoc[]
 
 [[aspell_options]]
-==== オプション (aspell.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _aspell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2243,9 +2247,10 @@ Buflist プラグインを使うことで、"buflist" と呼ばれるバー要�
 include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
-==== オプション (buflist.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _buflist.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2355,9 +2360,10 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 include::autogen/user/charset_commands.adoc[]
 
 [[charset_options]]
-==== オプション (charset.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _charset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2385,9 +2391,10 @@ include::autogen/user/charset_options.adoc[]
 include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
-==== オプション (exec.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _exec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2448,9 +2455,10 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 include::autogen/user/fifo_commands.adoc[]
 
 [[fifo_options]]
-==== オプション (fifo.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _fifo.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2474,9 +2482,10 @@ fset (高速設定) プラグインはバッファ内にオプションのリス
 include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
-==== オプション (fset.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _fset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2946,9 +2955,10 @@ weechat::
 include::autogen/user/irc_commands.adoc[]
 
 [[irc_options]]
-==== オプション (irc.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _irc.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3099,9 +3109,10 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
 include::autogen/user/logger_commands.adoc[]
 
 [[logger_options]]
-==== オプション (logger.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _logger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3244,9 +3255,10 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 include::autogen/user/relay_commands.adoc[]
 
 [[relay_options]]
-==== オプション (relay.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _relay.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3319,9 +3331,10 @@ include::autogen/user/guile_commands.adoc[]
 include::autogen/user/javascript_commands.adoc[]
 
 [[script_options]]
-==== スクリプトオプション (script.conf)
+==== スクリプトオプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _script.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3850,9 +3863,10 @@ timer フックに対する引数は:
 include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_options]]
-==== オプション (trigger.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _trigger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3883,9 +3897,10 @@ Xfer プラグインの機能:
 include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
-==== オプション (xfer.conf)
+==== オプション
 
-セクション:
+// TRANSLATION MISSING
+Sections in file _xfer.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
