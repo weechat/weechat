@@ -2227,6 +2227,16 @@ _Guida allo Scripting di WeeChat_.
 Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
 plugin).
 
+// TRANSLATION MISSING
+Some aliases are created by default, with name in upper case (to make them
+different from standard commands); commands are not case sensitive in WeeChat,
+so for example `/close` runs the alias `/CLOSE`.
+
+// TRANSLATION MISSING
+List of default aliases:
+
+include::autogen/user/alias_default_aliases.adoc[]
+
 [[alias_commands]]
 ==== Comandi
 

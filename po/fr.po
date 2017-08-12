@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-07-22 12:50+0200\n"
-"PO-Revision-Date: 2017-07-22 12:51+0200\n"
+"POT-Creation-Date: 2017-08-12 14:22+0200\n"
+"PO-Revision-Date: 2017-08-12 14:25+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -69,6 +69,15 @@ msgstr "valeur par défaut"
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
 msgstr "valeur non définie autorisée (null)"
+
+msgid "Alias"
+msgstr "Alias"
+
+msgid "Command"
+msgstr "Commande"
+
+msgid "Completion"
+msgstr "Complétion"
 
 msgid "IRC color"
 msgstr "Couleur IRC"
@@ -5416,6 +5425,9 @@ msgstr "pointeur vers l'alias (optionnel)"
 
 msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgstr "nom d'alias (le caractère joker \"*\" est autorisé) (optionnel)"
+
+msgid "list of default aliases"
+msgstr "liste des alias par défaut"
 
 msgid "Spell checker for input (with Aspell)"
 msgstr "Vérificateur d'orthographe pour la saisie (avec Aspell)"

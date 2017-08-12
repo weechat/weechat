@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-07-22 12:50+0200\n"
+"POT-Creation-Date: 2017-08-12 14:22+0200\n"
 "PO-Revision-Date: 2017-07-29 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -67,6 +67,17 @@ msgstr "デフォルト値"
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
 msgstr "(null) は設定できません"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "コマンド:"
+
+#, fuzzy
+msgid "Completion"
+msgstr "補完:"
 
 msgid "IRC color"
 msgstr "IRC 色"
@@ -5169,6 +5180,10 @@ msgstr "別名のポインタ (任意)"
 
 msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgstr "別名の名前 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+msgid "list of default aliases"
+msgstr "別名のリスト"
 
 msgid "Spell checker for input (with Aspell)"
 msgstr "入力に対するスペルチェッカ (Aspell を利用)"

@@ -394,6 +394,22 @@ def get_url_options():
     return url_options
 
 
+def get_default_aliases():
+    """
+    Get list of default aliases as list of dictionaries.
+    """
+    default_aliases = []
+    infolist = weechat.infolist_get('alias_default', '', '')
+    while weechat.infolist_next(infolist):
+        default_aliases.append({
+            'name': '/' + weechat.infolist_string(infolist, 'name'),
+            'command': '/' + weechat.infolist_string(infolist, 'command'),
+            'completion': weechat.infolist_string(infolist, 'completion'),
+        })
+    weechat.infolist_free(infolist)
+    return default_aliases
+
+
 def get_irc_colors():
     """
     Get list of IRC colors as list of dictionaries.
@@ -443,6 +459,7 @@ def docgen_cmd_cb(data, buf, args):
     hdata = get_hdata()
     completions = get_completions()
     url_options = get_url_options()
+    default_aliases = get_default_aliases()
     irc_colors = get_irc_colors()
     plugins_priority = get_plugins_priority()
 
@@ -564,6 +581,20 @@ def docgen_cmd_cb(data, buf, args):
                         doc.write('** {0}\n'.format(
                             _('undefined value allowed (null)')))
             doc.update('options', num_files, num_files_updated)
+
+        # write default aliases
+        doc = AutogenDoc(directory, 'user', 'alias_default_aliases')
+        doc.write('[width="100%",cols="2m,5m,5",options="header"]\n')
+        doc.write('|===\n')
+        doc.write('| {0} | {1} | {2}\n\n'
+                  ''.format(_('Alias'), _('Command'), _('Completion')))
+        for alias in default_aliases:
+            doc.write('| {0} | {1} | {2}\n'
+                      ''.format(escape(alias['name']),
+                                escape(alias['command']),
+                                escape(alias['completion'] or '-')))
+        doc.write('|===\n')
+        doc.update('alias_default_aliases', num_files, num_files_updated)
 
         # write IRC colors
         doc = AutogenDoc(directory, 'user', 'irc_colors')

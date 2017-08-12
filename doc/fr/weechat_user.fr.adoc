@@ -2167,6 +2167,14 @@ _Guide pour Scripts WeeChat_.
 L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
 d'autres extensions).
 
+Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
+différencier des commandes standard); les commandes ne sont pas sensibles à la
+casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
+
+Liste des alias par défaut :
+
+include::autogen/user/alias_default_aliases.adoc[]
+
 [[alias_commands]]
 ==== Commandes
 

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-07-22 12:50+0200\n"
+"POT-Creation-Date: 2017-08-12 14:22+0200\n"
 "PO-Revision-Date: 2017-06-26 23:32+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -69,6 +69,17 @@ msgstr "výchozí hodnota"
 #. TRANSLATORS: please do not translate "(null)"
 msgid "undefined value allowed (null)"
 msgstr "povolena nedefinovaná hodnota (null)"
+
+msgid "Alias"
+msgstr ""
+
+#, fuzzy
+msgid "Command"
+msgstr "Příkazy:"
+
+#, fuzzy
+msgid "Completion"
+msgstr "doplnění:"
 
 msgid "IRC color"
 msgstr "IRC barva"
@@ -4689,6 +4700,10 @@ msgstr "ukazatel aliasu (volitelné)"
 #, fuzzy
 msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
+
+#, fuzzy
+msgid "list of default aliases"
+msgstr "seznam aliasů"
 
 msgid "Spell checker for input (with Aspell)"
 msgstr "Kontrola pravopisu pro vstup (s Aspellem)"
