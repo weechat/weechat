@@ -495,23 +495,20 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 [[running_weechat]]
 === WeeChat starten
 
-Befehlszeile:
-
-include::cmdline_options.de.adoc[]
-
 Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 
 ----
 $ weechat
 ----
 
-Wird WeeChat zum ersten mal gestartet wird eine Konfigurationsdatei
-mit Standardparametern erstellt. Die Konfigurationsdatei heißt:
-_~/.weechat/weechat.conf_.
+Befehlszeile:
 
-Die Einstellungen für WeeChat können an die eigenen Bedürfnisse angepasst werden. Dazu sollten
-Veränderungen an der Konfigurationsdatei mit dem internen Befehl `/set` durchführt werden. (siehe
-<<weechat_commands,WeeChat Befehle>>).
+include::cmdline_options.de.adoc[]
+
+// TRANSLATION MISSING
+When you run WeeChat for the first time, the default configuration files are
+created in _~/.weechat_ with default options and values
+(see <<files_and_directories,Dateien und Verzeichnisse>>).
 
 [[environment_variables]]
 === Umgebungsvariablen

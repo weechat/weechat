@@ -497,23 +497,19 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 [[running_weechat]]
 === Lancement de WeeChat
 
-Paramètres de ligne de commande :
-
-include::cmdline_options.fr.adoc[]
-
 Pour lancer WeeChat, tapez cette commande :
 
 ----
 $ weechat
 ----
 
-Lorsque vous lancez WeeChat pour la première fois, un fichier de configuration
-par défaut est créé, avec les options par défaut.
-Le fichier de configuration par défaut est : _~/.weechat/weechat.conf_.
+Paramètres de ligne de commande :
 
-Vous pouvez éditer ce fichier pour configurer WeeChat à votre convenance ou
-vous pouvez modifier les paramètres dans WeeChat avec la commande `/set`
-(voir <<weechat_commands,commandes WeeChat>>).
+include::cmdline_options.fr.adoc[]
+
+Lorsque vous lancez WeeChat pour la première fois, les fichiers de configuration
+par défaut sont créés dans _~/.weechat_ avec les options et valeurs par défaut
+(voir <<files_and_directories,Fichiers et répertoires>>).
 
 [[environment_variables]]
 === Variables d'environnement

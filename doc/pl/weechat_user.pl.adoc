@@ -497,23 +497,20 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 [[running_weechat]]
 === Uruchamianie WeeChat
 
-Parametry z linii poleceń:
-
-include::cmdline_options.pl.adoc[]
-
 Żeby uruchomić WeeChat, wykonaj polecenie:
 
 ----
 $ weechat
 ----
 
-Podczas pierwszego uruchomienia WeeChat tworzona jest domyślna konfiguracja,
-wraz z domyślnymi opcjami. Plik konfiguracyjny to:
-_~/.weechat/weechat.conf_.
+Parametry z linii poleceń:
 
-Możesz edytować ten plik wedle upodobań, żeby skonfigurować WeeChat, lub możesz
-ustawić parametry za pomocą komendy `/set` z poziomu WeeChat (zobacz
-<<weechat_commands,Komendy WeeChat>>).
+include::cmdline_options.pl.adoc[]
+
+// TRANSLATION MISSING
+When you run WeeChat for the first time, the default configuration files are
+created in _~/.weechat_ with default options and values
+(see <<files_and_directories,Pliki i foldery>>).
 
 // TRANSLATION MISSING
 [[environment_variables]]

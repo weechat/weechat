@@ -489,23 +489,20 @@ gdb /usr/bin/weechat 12345
 [[running_weechat]]
 === WeeChat の起動
 
-コマンドライン引数:
-
-include::cmdline_options.ja.adoc[]
-
 WeeChat を起動させるには、以下コマンドを実行:
 
 ----
 $ weechat
 ----
 
-初めて WeeChat
-を起動する場合、デフォルトのオプションで設定ファイルが作成されます。このデフォルト設定ファイルは
-_~/.weechat/weechat.conf_ です。
+コマンドライン引数:
 
-WeeChat を設定するにはこのファイルを編集するか、WeeChat
-内で `/set` コマンドにパラメータを付けて設定します
-(<<weechat_commands,WeeChat コマンド>>を参照)。
+include::cmdline_options.ja.adoc[]
+
+// TRANSLATION MISSING
+When you run WeeChat for the first time, the default configuration files are
+created in _~/.weechat_ with default options and values
+(see <<files_and_directories,ファイルとディレクトリ>>).
 
 [[environment_variables]]
 === 環境変数
