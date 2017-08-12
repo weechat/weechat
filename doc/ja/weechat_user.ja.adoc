@@ -2093,7 +2093,7 @@ API を使ったプラグインやスクリプトの開発についてより詳�
 プラグイン API リファレンス_ または _WeeChat スクリプト作成ガイド_ を参照してください。
 
 [[alias_plugin]]
-=== Alias プラグイン
+=== Alias
 
 Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
 だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
@@ -2129,7 +2129,7 @@ include::autogen/user/alias_commands.adoc[]
 |===
 
 [[aspell_plugin]]
-=== Aspell プラグイン
+=== Aspell
 
 Aspell
 プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
@@ -2232,7 +2232,7 @@ include::autogen/user/aspell_commands.adoc[]
 include::autogen/user/aspell_options.adoc[]
 
 [[buflist_plugin]]
-=== Buflist プラグイン
+=== Buflist
 
 Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります。 +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
@@ -2259,7 +2259,7 @@ include::autogen/user/buflist_commands.adoc[]
 include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
-=== Charset プラグイン
+=== Charset
 
 Charset プラグインを使うことで、文字コードに従ってデータのデコードとエンコードができます。
 
@@ -2374,7 +2374,7 @@ include::autogen/user/charset_commands.adoc[]
 include::autogen/user/charset_options.adoc[]
 
 [[exec_plugin]]
-=== exec プラグイン
+=== Exec
 
 `/exec` コマンドを使うことで WeeChat
 内部から外部コマンドを実行し、その結果を表示したりバッファに送信することが可能になります。
@@ -2401,7 +2401,7 @@ include::autogen/user/exec_commands.adoc[]
 include::autogen/user/exec_options.adoc[]
 
 [[fifo_plugin]]
-=== Fifo プラグイン
+=== Fifo
 
 外部から WeeChat を操作するには、FIFO パイプにコマンドやテキストを書き込んでください ("fifo.file.enabled"
 オプションが有効化されている必要がありますが、デフォルトで有効化されているはずです)。
@@ -2463,7 +2463,7 @@ include::autogen/user/fifo_commands.adoc[]
 include::autogen/user/fifo_options.adoc[]
 
 [[fset_plugin]]
-=== Fset プラグイン
+=== Fset
 
 fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
 とプラグインのオプション設定を支援します。
@@ -2491,7 +2491,7 @@ include::autogen/user/fset_commands.adoc[]
 include::autogen/user/fset_options.adoc[]
 
 [[irc_plugin]]
-=== IRC プラグイン
+=== IRC
 
 IRC プラグインは IRC プロトコルに従って他の人と会話を行うために設計されています。
 
@@ -2969,7 +2969,7 @@ include::autogen/user/irc_commands.adoc[]
 include::autogen/user/irc_options.adoc[]
 
 [[logger_plugin]]
-=== Logger プラグイン
+=== Logger
 
 Logger
 プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
@@ -3118,7 +3118,7 @@ include::autogen/user/logger_commands.adoc[]
 include::autogen/user/logger_options.adoc[]
 
 [[relay_plugin]]
-=== Relay プラグイン
+=== Relay
 
 Relay プラグインはネットワークを介して異なるプロトコルを用いてデータを中継するために利用します:
 
@@ -3263,8 +3263,9 @@ include::autogen/user/relay_commands.adoc[]
 
 include::autogen/user/relay_options.adoc[]
 
+// TRANSLATION MISSING
 [[scripts_plugins]]
-=== スクリプトプラグイン
+=== Scripts
 
 WeeChat は 7 種類のスクリプトプラグインを備えています:
 Python、Perl、Ruby、Lua、Tcl、Guile
@@ -3335,7 +3336,7 @@ include::autogen/user/javascript_commands.adoc[]
 include::autogen/user/script_options.adoc[]
 
 [[trigger_plugin]]
-=== トリガプラグイン
+=== Trigger
 
 トリガは WeeChat の便利ツールです:
 様々なもの
@@ -3868,7 +3869,7 @@ include::autogen/user/trigger_commands.adoc[]
 include::autogen/user/trigger_options.adoc[]
 
 [[xfer_plugin]]
-=== Xfer プラグイン
+=== Xfer
 
 Xfer プラグインの機能:
 

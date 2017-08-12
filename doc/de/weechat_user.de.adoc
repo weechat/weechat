@@ -2139,7 +2139,7 @@ Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahre
 sollten Sie die _WeeChat Plugin API Reference_ oder _WeeChat Scripting Guide_ lesen.
 
 [[alias_plugin]]
-=== Alias Erweiterung
+=== Alias
 
 Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Alias) zu erstellen.
 
@@ -2174,7 +2174,7 @@ Sektionen:
 |===
 
 [[aspell_plugin]]
-=== Aspell Erweiterung
+=== Aspell
 
 Mit der ASpell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
 Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
@@ -2279,7 +2279,7 @@ Optionen:
 include::autogen/user/aspell_options.adoc[]
 
 [[buflist_plugin]]
-=== Buflist Erweiterung
+=== Buflist
 
 Die Buflist-Erweiterung dient dazu eine Liste der Buffer in einer Bar-Item mit Namen "buflist"
 darzustellen. +
@@ -2307,7 +2307,7 @@ Optionen:
 include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
-=== Charset Erweiterung
+=== Charset
 
 Die Charset Erweiterung übernimmt das de-/kodieren der Zeichensätze.
 
@@ -2427,7 +2427,7 @@ Optionen:
 include::autogen/user/charset_options.adoc[]
 
 [[exec_plugin]]
-=== Exec Erweiterung
+=== Exec
 
 Der `/exec` Befehl erlaubt es aus WeeChat heraus einen oder mehrere externe
 Befehle auszuführen und eine Ausgabe im lokalen Buffer darzustellen oder in
@@ -2455,7 +2455,7 @@ Options:
 include::autogen/user/exec_options.adoc[]
 
 [[fifo_plugin]]
-=== Fifo Erweiterung
+=== Fifo
 
 Sie können WeeChat fern steuern indem Sie Befehle oder einen Text an die FIFO Pipe
 schicken (dazu muss die Option "fifo.file.enabled" aktiviert sein (standardmäßig
@@ -2518,7 +2518,7 @@ Optionen:
 include::autogen/user/fifo_options.adoc[]
 
 [[fset_plugin]]
-=== Fset Erweiterung
+=== Fset
 
 Die fset Erweiterung stellt eine Liste aller Optionen in einem Buffer dar und erleichtert
 die Konfiguration von WeeChat und Erweiterungen.
@@ -2546,7 +2546,7 @@ Optionen:
 include::autogen/user/fset_options.adoc[]
 
 [[irc_plugin]]
-=== IRC Erweiterung
+=== IRC
 
 Die IRC Erweiterung ist konzipiert um mittels dem IRC Protokoll mit anderen Menschen zu chatten.
 
@@ -3035,7 +3035,7 @@ Optionen:
 include::autogen/user/irc_options.adoc[]
 
 [[logger_plugin]]
-=== Logger Erweiterung
+=== Logger
 
 Die Logger Erweiterung erlaubt es den Inhalt von Buffern in Dateien zu sichern.
 Dabei kann man über Optionen Einfluss darauf nehmen was gesichert und wie etwas
@@ -3191,7 +3191,7 @@ Optionen:
 include::autogen/user/logger_options.adoc[]
 
 [[relay_plugin]]
-=== Relay Erweiterung
+=== Relay
 
 Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokolle,
 über ein Netzwerk zu übermitteln:
@@ -3345,8 +3345,9 @@ Optionen:
 
 include::autogen/user/relay_options.adoc[]
 
+// TRANSLATION MISSING
 [[scripts_plugins]]
-=== Erweiterungen für Skripten
+=== Scripts
 
 WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl,
 Guile (scheme) und Javascript.
@@ -3419,7 +3420,7 @@ Optionen:
 include::autogen/user/script_options.adoc[]
 
 [[trigger_plugin]]
-=== Trigger Erweiterung
+=== Trigger
 
 Trigger ist das Schweizer Armeemesser für WeeChat. Es können verschiedene
 Hooks überwacht werden (signal. modifier, print, ...), der Inhalt von
@@ -3966,7 +3967,7 @@ Optionen:
 include::autogen/user/trigger_options.adoc[]
 
 [[xfer_plugin]]
-=== Xfer Erweiterung
+=== Xfer
 
 Mit der xfer Erweiterung kann man:
 

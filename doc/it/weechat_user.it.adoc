@@ -2222,7 +2222,7 @@ favore consultare _Riferimento API dei Plugin per WeeChat_ oppure
 _Guida allo Scripting di WeeChat_.
 
 [[alias_plugin]]
-=== Plugin Alias
+=== Alias
 
 Il plugin Alias consente di creare alias per i comandi (da WeeChat o altri
 plugin).
@@ -2259,7 +2259,7 @@ Sections:
 |===
 
 [[aspell_plugin]]
-=== Plugin Aspell
+=== Aspell
 
 Il plugin Aspell consente di verificare l'ortografia nella riga di comando.
 È possibile utilizzare più lingue per buffer.
@@ -2366,7 +2366,7 @@ Options:
 include::autogen/user/aspell_options.adoc[]
 
 [[buflist_plugin]]
-=== Plugin Buflist
+=== Buflist
 
 // TRANSLATION MISSING
 Buflist plugin displays a list of buffers in a bar item called "buflist". +
@@ -2397,7 +2397,7 @@ Options:
 include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
-=== Plugin Charset
+=== Charset
 
 Il plugin Charset consente di decodificare o codificare dati utilizzando
 i set caratteri.
@@ -2523,7 +2523,7 @@ include::autogen/user/charset_options.adoc[]
 
 // TRANSLATION MISSING
 [[exec_plugin]]
-=== Exec plugin
+=== Exec
 
 The `/exec` command lets you execute external commands inside WeeChat and
 display the output locally, or send it to a buffer.
@@ -2550,7 +2550,7 @@ Options:
 include::autogen/user/exec_options.adoc[]
 
 [[fifo_plugin]]
-=== Plugin Fifo
+=== Fifo
 
 È possibile controllare da remoto WeeChat, inviando comandi o del testo ad una
 pipe FIFO (se l'opzione "fifo.file.enabled" è abilitata, e lo è per default).
@@ -2619,7 +2619,7 @@ Options:
 include::autogen/user/fifo_options.adoc[]
 
 [[fset_plugin]]
-=== Fset plugin
+=== Fset
 
 // TRANSLATION MISSING
 Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
@@ -2651,7 +2651,7 @@ Options:
 include::autogen/user/fset_options.adoc[]
 
 [[irc_plugin]]
-=== Plugin IRC
+=== IRC
 
 Il plugin IRC è realizzato per chattare tramite protocollo IRC con altre persone.
 
@@ -3167,7 +3167,7 @@ Options:
 include::autogen/user/irc_options.adoc[]
 
 [[logger_plugin]]
-=== Plugin Logger
+=== Logger
 
 Il plugin Logger consente di salvare il contenuto dei buffer su file, con
 opzioni a proposito su cosa e come viene salvato.
@@ -3322,7 +3322,7 @@ Options:
 include::autogen/user/logger_options.adoc[]
 
 [[relay_plugin]]
-=== Plugin Relay
+=== Relay
 
 Il plugin Relay viene utilizzato per inoltrare i dati via rete, facendo uso di
 protocolli differenti:
@@ -3477,8 +3477,9 @@ Options:
 
 include::autogen/user/relay_options.adoc[]
 
+// TRANSLATION MISSING
 [[scripts_plugins]]
-=== Plugin per gli script
+=== Scripts
 
 WeeChat fornisce 7 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
 (scheme), Javascript.
@@ -3556,7 +3557,7 @@ include::autogen/user/script_options.adoc[]
 
 // TRANSLATION MISSING
 [[trigger_plugin]]
-=== Trigger plugin
+=== Trigger
 
 Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
 modifier, print, ...), change the content of data, and execute one or more
@@ -4094,7 +4095,7 @@ Options:
 include::autogen/user/trigger_options.adoc[]
 
 [[xfer_plugin]]
-=== Plugin Xfer
+=== Xfer
 
 Il plugin Xfer fornisce:
 

@@ -2162,7 +2162,7 @@ l'API), merci de consulter la _Référence API Extension WeeChat_ ou le
 _Guide pour Scripts WeeChat_.
 
 [[alias_plugin]]
-=== Extension Alias
+=== Alias
 
 L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
 d'autres extensions).
@@ -2195,7 +2195,7 @@ Sections :
 |===
 
 [[aspell_plugin]]
-=== Extension Aspell
+=== Aspell
 
 L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
@@ -2298,7 +2298,7 @@ Options :
 include::autogen/user/aspell_options.adoc[]
 
 [[buflist_plugin]]
-=== Extension Buflist
+=== Buflist
 
 L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
 "buflist". +
@@ -2326,7 +2326,7 @@ Options :
 include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
-=== Extension Charset
+=== Charset
 
 L'extension Charset vous permet de décoder et encoder les données en utilisant
 un jeu de caractères.
@@ -2450,7 +2450,7 @@ Options :
 include::autogen/user/charset_options.adoc[]
 
 [[exec_plugin]]
-=== Extension Exec
+=== Exec
 
 La commande `/exec` vous permet de lancer des commandes externes dans WeeChat et
 d'afficher la sortie localement, ou de l'envoyer à un tampon.
@@ -2477,7 +2477,7 @@ Options :
 include::autogen/user/exec_options.adoc[]
 
 [[fifo_plugin]]
-=== Extension Fifo
+=== Fifo
 
 Vous pouvez contrôler WeeChat à distance, en envoyant des commandes ou du
 texte dans un tube FIFO (si l'option _fifo.file.enabled_ est activée,
@@ -2542,7 +2542,7 @@ Options :
 include::autogen/user/fifo_options.adoc[]
 
 [[fset_plugin]]
-=== Extension Fset
+=== Fset
 
 L'extension Fset affiche une liste des options dans un tampon et aide à définir
 les options de WeeChat et des extensions.
@@ -2570,7 +2570,7 @@ Options :
 include::autogen/user/fset_options.adoc[]
 
 [[irc_plugin]]
-=== Extension IRC
+=== IRC
 
 L'extension IRC permet de dialoguer avec d'autres personnes via le
 protocole IRC.
@@ -3061,7 +3061,7 @@ Options :
 include::autogen/user/irc_options.adoc[]
 
 [[logger_plugin]]
-=== Extension Logger
+=== Logger
 
 L'extension Logger permet de sauvegarder le contenu des tampons dans des
 fichiers, avec des options sur comment et quoi sauvegarder.
@@ -3213,7 +3213,7 @@ Options :
 include::autogen/user/logger_options.adoc[]
 
 [[relay_plugin]]
-=== Extension Relay
+=== Relay
 
 L'extension Relay est utilisée pour relayer des données via le réseau, en
 utilisant divers protocoles :
@@ -3367,7 +3367,7 @@ Options :
 include::autogen/user/relay_options.adoc[]
 
 [[scripts_plugins]]
-=== Extensions Scripts
+=== Scripts
 
 WeeChat fournit 7 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
 Guile (scheme) et Javascript.
@@ -3440,7 +3440,7 @@ Options :
 include::autogen/user/script_options.adoc[]
 
 [[trigger_plugin]]
-=== Extension Trigger
+=== Trigger
 
 Trigger est le couteau suisse de WeeChat : il peut accrocher différentes choses
 (signal, modificateur, print, ...), changer le contenu des données, et exécuter
@@ -4004,7 +4004,7 @@ Options :
 include::autogen/user/trigger_options.adoc[]
 
 [[xfer_plugin]]
-=== Extension Xfer
+=== Xfer
 
 L'extension Xfer permet :
 

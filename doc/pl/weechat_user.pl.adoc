@@ -2116,7 +2116,7 @@ Więcej informacji o wtyczkach i tworzeniu skryptów (przez API), można znaleź
 _Opisie API wtyczek_ i _Poradniku pisania skryptów_.
 
 [[alias_plugin]]
-=== Wtyczka alias
+=== Alias
 
 Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
 
@@ -2150,7 +2150,7 @@ Sekcje:
 |===
 
 [[aspell_plugin]]
-=== Wtyczka aspell
+=== Aspell
 
 Wtyczka aspell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
 ustawienie wielu języków dla bufora.
@@ -2253,7 +2253,7 @@ Opcje:
 include::autogen/user/aspell_options.adoc[]
 
 [[buflist_plugin]]
-=== Wtyczka buflist
+=== Buflist
 
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist". +
 Domyślny pasek "buflist" jet tworzony podczas uruchomieina z tą wtyczką włączoną.
@@ -2280,7 +2280,7 @@ Opcje:
 include::autogen/user/buflist_options.adoc[]
 
 [[charset_plugin]]
-=== Wtyczka charset
+=== Charset
 
 Wtyczka charset pozwala na zmianę kodowania dla wysyłanych i otrzymywanych danych.
 
@@ -2398,7 +2398,7 @@ Opcje:
 include::autogen/user/charset_options.adoc[]
 
 [[exec_plugin]]
-=== Wtyczka exec
+=== Exec
 
 Komenda `/exec` pozwala wykonać zewnętrzne polecenie wewnątrz WeeChat i wyświetlić
 jej wynik lokalnie lub wysłać do bufora.
@@ -2425,7 +2425,7 @@ Opcje:
 include::autogen/user/exec_options.adoc[]
 
 [[fifo_plugin]]
-=== Wtyczka fifo
+=== Fifo
 
 Możesz zdalnie kontrolować WeeChat, poprzez wysyłanie komend lub tekstu do
 kolejki FIFO (jeśli opcja "fifo.file.enabled" jest włączona, domyślnie jest
@@ -2488,7 +2488,7 @@ Opcje:
 include::autogen/user/fifo_options.adoc[]
 
 [[fset_plugin]]
-=== Wtyczka Fset
+=== Fset
 
 // TRANSLATION MISSING
 Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
@@ -2518,7 +2518,7 @@ Opcje:
 include::autogen/user/fset_options.adoc[]
 
 [[irc_plugin]]
-=== Wtyczka IRC
+=== IRC
 
 Wtyczka IRC jest zaprojektowana do prowadzenia rozmów z innymi osobami przez
 protokół IRC.
@@ -3003,7 +3003,7 @@ Opcje:
 include::autogen/user/irc_options.adoc[]
 
 [[logger_plugin]]
-=== Wtyczka logger
+=== Logger
 
 Wtyczka logger pozwala zapisywać zawartość bufora do pliku, oraz wybrać co i jak
 ma być zapisywane.
@@ -3156,7 +3156,7 @@ Opcje:
 include::autogen/user/logger_options.adoc[]
 
 [[relay_plugin]]
-=== Wtyczka relay
+=== Relay
 
 Wtyczka relay jest używana do przekazywania danych przez sieć, z użyciem różnych
 protokołów:
@@ -3305,7 +3305,7 @@ Opcje:
 include::autogen/user/relay_options.adoc[]
 
 [[scripts_plugins]]
-=== Wtyczki skryptowe
+=== Skryptowe
 
 WeeChat posiada 7 wtyczek skryptowych: Python, Perl, Ruby, Lua, Tcl, Guile
 (scheme) i Javascript.
@@ -3377,7 +3377,7 @@ Opcje:
 include::autogen/user/script_options.adoc[]
 
 [[trigger_plugin]]
-=== Wtyczka trigger
+=== Trigger
 
 Trigger to scyzoryk szwajcarski dla WeeChat: może być podpięty do wielu rzeczy
 (sygnał, modyrikator, wyśiwrtlanie, ...), zmieniać zawartość danych, oraz wykonać
@@ -3911,7 +3911,7 @@ Opcje:
 include::autogen/user/trigger_options.adoc[]
 
 [[xfer_plugin]]
-=== Wtyczka xfer
+=== Xfer
 
 Wtyczka xfer zapewnia:
 
