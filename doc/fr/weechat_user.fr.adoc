@@ -2046,8 +2046,13 @@ Pour utiliser le mot de passe _freenode_, par exemple avec
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
 ----
 
-[[options_and_commands]]
-=== Options et commandes
+[[commands_and_options]]
+=== Commandes et options
+
+[[weechat_commands]]
+==== Commandes WeeChat
+
+include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
 ==== Options des données sécurisées (sec.conf)
@@ -2099,11 +2104,6 @@ Sections :
 Options :
 
 include::autogen/user/weechat_options.adoc[]
-
-[[weechat_commands]]
-==== Commandes WeeChat
-
-include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == Extensions
@@ -2182,31 +2182,6 @@ include::autogen/user/alias_commands.adoc[]
 L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
 
-[[aspell_options]]
-==== Options (aspell.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Commande de contrôle                      | Description
-| color      | /set aspell.color.*                       | Couleurs.
-| check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| look       | /set aspell.look.*                        | Aspect/présentation.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::autogen/user/aspell_options.adoc[]
-
-[[aspell_commands]]
-==== Commandes
-
-include::autogen/user/aspell_commands.adoc[]
-
 [[aspell_speller_options]]
 ==== Options du vérificateur d'orthographe
 
@@ -2252,12 +2227,42 @@ Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
+[[aspell_commands]]
+==== Commandes
+
+include::autogen/user/aspell_commands.adoc[]
+
+[[aspell_options]]
+==== Options (aspell.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle                      | Description
+| color      | /set aspell.color.*                       | Couleurs.
+| check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique.
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look       | /set aspell.look.*                        | Aspect/présentation.
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::autogen/user/aspell_options.adoc[]
+
 [[buflist_plugin]]
 === Extension Buflist
 
 L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
 "buflist". +
 Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
+
+[[buflist_commands]]
+==== Commandes
+
+include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
 ==== Options (buflist.conf)
@@ -2274,11 +2279,6 @@ Sections :
 Options :
 
 include::autogen/user/buflist_options.adoc[]
-
-[[buflist_commands]]
-==== Commandes
-
-include::autogen/user/buflist_commands.adoc[]
 
 [[charset_plugin]]
 === Extension Charset
@@ -2318,30 +2318,6 @@ Par exemple :
 ....
 charset : terminal : ISO-8859-15, interne : UTF-8
 ....
-
-[[charset_options]]
-==== Options (charset.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle                        | Description
-| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::autogen/user/charset_options.adoc[]
-
-[[charset_commands]]
-==== Commandes
-
-include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== Définir le jeu de caractère
@@ -2404,11 +2380,40 @@ Pour voir tous les jeux de caractères utilisés, utilisez la commande suivante�
 Pour tout problème avec les jeux de caractères, merci de consulter la
 _FAQ WeeChat_.
 
+[[charset_commands]]
+==== Commandes
+
+include::autogen/user/charset_commands.adoc[]
+
+[[charset_options]]
+==== Options (charset.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle                        | Description
+| default | /set charset.default.*                      | Jeu de caractère d'encodage/décodage par défaut.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Jeu de caractère d'encodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Jeu de caractère de décodage par tampon (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::autogen/user/charset_options.adoc[]
+
 [[exec_plugin]]
 === Extension Exec
 
 La commande `/exec` vous permet de lancer des commandes externes dans WeeChat et
 d'afficher la sortie localement, ou de l'envoyer à un tampon.
+
+[[exec_commands]]
+==== Commandes
+
+include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
 ==== Options (exec.conf)
@@ -2425,11 +2430,6 @@ Sections :
 Options :
 
 include::autogen/user/exec_options.adoc[]
-
-[[exec_commands]]
-==== Commandes
-
-include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Extension Fifo
@@ -2476,6 +2476,11 @@ $ echo '*bonjour !' >~/.weechat/weechat_fifo
 $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
+[[fifo_commands]]
+==== Commandes
+
+include::autogen/user/fifo_commands.adoc[]
+
 [[fifo_options]]
 ==== Options (fifo.conf)
 
@@ -2491,16 +2496,16 @@ Options :
 
 include::autogen/user/fifo_options.adoc[]
 
-[[fifo_commands]]
-==== Commandes
-
-include::autogen/user/fifo_commands.adoc[]
-
 [[fset_plugin]]
 === Extension Fset
 
 L'extension Fset affiche une liste des options dans un tampon et aide à définir
 les options de WeeChat et des extensions.
+
+[[fset_commands]]
+==== Commandes
+
+include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
 ==== Options (fset.conf)
@@ -2518,11 +2523,6 @@ Sections :
 Options :
 
 include::autogen/user/fset_options.adoc[]
-
-[[fset_commands]]
-==== Commandes
-
-include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === Extension IRC
@@ -2549,34 +2549,6 @@ port par défaut (6667), avec le pseudo _nono_ :
 ----
 $ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
-
-[[irc_options]]
-==== Options (irc.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section        | Commande de contrôle           | Description
-| look           | /set irc.look.*                | Aspect/présentation.
-| color          | /set irc.color.*               | Couleurs.
-| network        | /set irc.network.*             | Options réseau.
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Tampon cible pour les messages IRC>> (les options peuvent être ajoutées/supprimées dans la section).
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Réponses CTCP>> (les options peuvent être ajoutées/supprimées dans la section).
-| ignore         | <<command_irc_ignore,/ignore>> | Personnes ignorées.
-| server_default | /set irc.server_default.*      | Valeurs par défaut pour serveurs (les options peuvent être ajoutées/supprimées dans la section).
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Serveurs.
-|===
-
-Options :
-
-include::autogen/user/irc_options.adoc[]
-
-[[irc_commands]]
-==== Commandes
-
-include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== Certificats SSL
@@ -3015,35 +2987,39 @@ seulement :
 /set irc.msgbuffer.303 weechat
 ----
 
-[[logger_plugin]]
-=== Extension Logger
+[[irc_commands]]
+==== Commandes
 
-L'extension Logger permet de sauvegarder le contenu des tampons dans des
-fichiers, avec des options sur comment et quoi sauvegarder.
+include::autogen/user/irc_commands.adoc[]
 
-[[logger_options]]
-==== Options (logger.conf)
+[[irc_options]]
+==== Options (irc.conf)
 
 Sections :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Commande de contrôle | Description
-| look    | /set logger.look.*   | Aspect/présentation.
-| color   | /set logger.color.*  | Couleurs.
-| file    | /set logger.file.*   | Options pour les fichiers de log.
-| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| Section        | Commande de contrôle           | Description
+| look           | /set irc.look.*                | Aspect/présentation.
+| color          | /set irc.color.*               | Couleurs.
+| network        | /set irc.network.*             | Options réseau.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Tampon cible pour les messages IRC>> (les options peuvent être ajoutées/supprimées dans la section).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,Réponses CTCP>> (les options peuvent être ajoutées/supprimées dans la section).
+| ignore         | <<command_irc_ignore,/ignore>> | Personnes ignorées.
+| server_default | /set irc.server_default.*      | Valeurs par défaut pour serveurs (les options peuvent être ajoutées/supprimées dans la section).
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Serveurs.
 |===
 
 Options :
 
-include::autogen/user/logger_options.adoc[]
+include::autogen/user/irc_options.adoc[]
 
-[[logger_commands]]
-==== Commandes
+[[logger_plugin]]
+=== Extension Logger
 
-include::autogen/user/logger_commands.adoc[]
+L'extension Logger permet de sauvegarder le contenu des tampons dans des
+fichiers, avec des options sur comment et quoi sauvegarder.
 
 [[logger_log_levels]]
 ==== Niveaux d'enregistrement
@@ -3167,6 +3143,30 @@ Vous obtiendrez les fichiers suivants :
             |       #chan2.weechatlog
 ....
 
+[[logger_commands]]
+==== Commandes
+
+include::autogen/user/logger_commands.adoc[]
+
+[[logger_options]]
+==== Options (logger.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set logger.look.*   | Aspect/présentation.
+| color   | /set logger.color.*  | Couleurs.
+| file    | /set logger.file.*   | Options pour les fichiers de log.
+| level   | /set logger.level.*  | Niveau de log par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| mask    | /set logger.mask.*   | Masque de nom de fichier par tampon (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::autogen/user/logger_options.adoc[]
+
 [[relay_plugin]]
 === Extension Relay
 
@@ -3181,31 +3181,6 @@ utilisant divers protocoles :
 ** WeeChat-Android (Android) : https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs) : https://github.com/the-kenny/weechat.el
 ** WeeCloud (Javascript) : https://github.com/eirikb/weecloud
-
-[[relay_options]]
-==== Options (relay.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle               | Description
-| look    | /set relay.look.*                  | Aspect/présentation.
-| color   | /set relay.color.*                 | Couleurs.
-| network | /set relay.network.*               | Options réseau.
-| irc     | /set relay.irc.*                   | Options spécifiques au protocole irc (proxy irc).
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports utilisés pour le relai (protocoles irc et weechat) (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::autogen/user/relay_options.adoc[]
-
-[[relay_commands]]
-==== Commandes
-
-include::autogen/user/relay_commands.adoc[]
 
 [[relay_password]]
 ==== Mot de passe
@@ -3321,6 +3296,31 @@ Le port (9000 dans l'exemple) est le port défini dans l'extension Relay.
 L'URI doit toujours se terminer par "/weechat" (pour les protocoles _irc_ et
 _weechat_).
 
+[[relay_commands]]
+==== Commandes
+
+include::autogen/user/relay_commands.adoc[]
+
+[[relay_options]]
+==== Options (relay.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle               | Description
+| look    | /set relay.look.*                  | Aspect/présentation.
+| color   | /set relay.color.*                 | Couleurs.
+| network | /set relay.network.*               | Options réseau.
+| irc     | /set relay.irc.*                   | Options spécifiques au protocole irc (proxy irc).
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Ports utilisés pour le relai (protocoles irc et weechat) (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::autogen/user/relay_options.adoc[]
+
 [[scripts_plugins]]
 === Extensions Scripts
 
@@ -3336,23 +3336,6 @@ URL : https://weechat.org/scripts
 
 Pour plus d'informations sur comment écrire des scripts, ou sur l'API
 WeeChat pour les scripts, merci de lire le _Le Guide pour Scripts WeeChat_.
-
-[[script_options]]
-==== Options Script (script.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle  | Description
-| look    | /set script.look.*    | Aspect/présentation.
-| color   | /set script.color.*   | Couleurs.
-| scripts | /set script.scripts.* | Options pour le téléchargement des scripts.
-|===
-
-Options :
-
-include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Commandes Script
@@ -3394,6 +3377,23 @@ include::autogen/user/guile_commands.adoc[]
 
 include::autogen/user/javascript_commands.adoc[]
 
+[[script_options]]
+==== Options Script (script.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle  | Description
+| look    | /set script.look.*    | Aspect/présentation.
+| color   | /set script.color.*   | Couleurs.
+| scripts | /set script.scripts.* | Options pour le téléchargement des scripts.
+|===
+
+Options :
+
+include::autogen/user/script_options.adoc[]
+
 [[trigger_plugin]]
 === Extension Trigger
 
@@ -3405,30 +3405,6 @@ trigger de s'exécuter dans certaines circonstances.
 Utiliser les triggers nécessite de connaître le fonctionnement des signaux,
 modificateurs, etc... Il peut être utile de lire le chapitre sur les _Hooks_
 dans la _Référence API Extension WeeChat_.
-
-[[trigger_options]]
-==== Options (trigger.conf)
-
-Sections :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Commande de contrôle                     | Description
-| look    | /set trigger.look.*                      | Aspect/présentation.
-| color   | /set trigger.color.*                     | Couleurs.
-| trigger | <<command_trigger_trigger,/trigger add>> +
-            <<command_trigger_trigger,/trigger set>> +
-            /set trigger.trigger.*                   | Options des triggers.
-|===
-
-Options :
-
-include::autogen/user/trigger_options.adoc[]
-
-[[trigger_commands]]
-==== Commandes
-
-include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== Anatomie d'un trigger
@@ -3958,6 +3934,30 @@ Les paramètres pour le minuteur sont :
 La commande `/mute /save` sauvegarde silencieusement les fichiers de
 configuration (rien n'est affiché sur le tampon "core").
 
+[[trigger_commands]]
+==== Commandes
+
+include::autogen/user/trigger_commands.adoc[]
+
+[[trigger_options]]
+==== Options (trigger.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle                     | Description
+| look    | /set trigger.look.*                      | Aspect/présentation.
+| color   | /set trigger.color.*                     | Couleurs.
+| trigger | <<command_trigger_trigger,/trigger add>> +
+            <<command_trigger_trigger,/trigger set>> +
+            /set trigger.trigger.*                   | Options des triggers.
+|===
+
+Options :
+
+include::autogen/user/trigger_options.adoc[]
+
 [[xfer_plugin]]
 === Extension Xfer
 
@@ -3966,6 +3966,11 @@ L'extension Xfer permet :
 * la discussion directe (entre deux machines, sans serveur), par exemple le
   "DCC Chat" via l'extension IRC
 * le transfert de fichiers, par exemple le "DCC" via l'extension IRC
+
+[[xfer_commands]]
+==== Commandes
+
+include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
 ==== Options (xfer.conf)
@@ -3984,11 +3989,6 @@ Sections :
 Options :
 
 include::autogen/user/xfer_options.adoc[]
-
-[[xfer_commands]]
-==== Commandes
-
-include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == Support

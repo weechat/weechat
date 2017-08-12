@@ -1977,8 +1977,13 @@ To use the _freenode_ password, for example with
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
 ----
 
-[[options_and_commands]]
-=== Options and commands
+[[commands_and_options]]
+=== Commands and options
+
+[[weechat_commands]]
+==== WeeChat commands
+
+include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
 ==== Secured data options (sec.conf)
@@ -2030,11 +2035,6 @@ Sections:
 Options:
 
 include::autogen/user/weechat_options.adoc[]
-
-[[weechat_commands]]
-==== WeeChat commands
-
-include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == Plugins
@@ -2111,31 +2111,6 @@ include::autogen/user/alias_commands.adoc[]
 Aspell plugin lets you check spelling in command line. It is possible to use
 many languages by buffer.
 
-[[aspell_options]]
-==== Options (aspell.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                           | Description
-| color      | /set aspell.color.*                       | Colors.
-| check      | /set aspell.check.*                       | Options to control spell checking.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section).
-| look       | /set aspell.look.*                        | Look and feel.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller options>> (options can be added/removed in section).
-|===
-
-Options:
-
-include::autogen/user/aspell_options.adoc[]
-
-[[aspell_commands]]
-==== Commands
-
-include::autogen/user/aspell_commands.adoc[]
-
 [[aspell_speller_options]]
 ==== Speller options
 
@@ -2180,11 +2155,41 @@ Example of suggestions with English and French dictionaries (`en,fr`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
+[[aspell_commands]]
+==== Commands
+
+include::autogen/user/aspell_commands.adoc[]
+
+[[aspell_options]]
+==== Options (aspell.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                           | Description
+| color      | /set aspell.color.*                       | Colors.
+| check      | /set aspell.check.*                       | Options to control spell checking.
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section).
+| look       | /set aspell.look.*                        | Look and feel.
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller options>> (options can be added/removed in section).
+|===
+
+Options:
+
+include::autogen/user/aspell_options.adoc[]
+
 [[buflist_plugin]]
 === Buflist plugin
 
 Buflist plugin displays a list of buffers in a bar item called "buflist". +
 A default bar "buflist" is created on startup with this item.
+
+[[buflist_commands]]
+==== Commands
+
+include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
 ==== Options (buflist.conf)
@@ -2201,11 +2206,6 @@ Sections:
 Options:
 
 include::autogen/user/buflist_options.adoc[]
-
-[[buflist_commands]]
-==== Commands
-
-include::autogen/user/buflist_commands.adoc[]
 
 [[charset_plugin]]
 === Charset plugin
@@ -2242,30 +2242,6 @@ For example:
 ....
 charset: terminal: ISO-8859-15, internal: UTF-8
 ....
-
-[[charset_options]]
-==== Options (charset.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                             | Description
-| default | /set charset.default.*                      | Default decoding/encoding charset.
-| decode  | <<command_charset_charset,/charset decode>> +
-            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
-| encode  | <<command_charset_charset,/charset encode>> +
-            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
-|===
-
-Options:
-
-include::autogen/user/charset_options.adoc[]
-
-[[charset_commands]]
-==== Commands
-
-include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== Set charset
@@ -2322,11 +2298,40 @@ To see all charsets used, use following command:
 
 For any problem with charsets, please look at _WeeChat FAQ_.
 
+[[charset_commands]]
+==== Commands
+
+include::autogen/user/charset_commands.adoc[]
+
+[[charset_options]]
+==== Options (charset.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                             | Description
+| default | /set charset.default.*                      | Default decoding/encoding charset.
+| decode  | <<command_charset_charset,/charset decode>> +
+            /set charset.decode.*                       | Decoding charset by buffer (options can be added/removed in section).
+| encode  | <<command_charset_charset,/charset encode>> +
+            /set charset.encode.*                       | Encoding charset by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::autogen/user/charset_options.adoc[]
+
 [[exec_plugin]]
 === Exec plugin
 
 The `/exec` command lets you execute external commands inside WeeChat and
 display the output locally, or send it to a buffer.
+
+[[exec_commands]]
+==== Commands
+
+include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
 ==== Options (exec.conf)
@@ -2343,11 +2348,6 @@ Sections:
 Options:
 
 include::autogen/user/exec_options.adoc[]
-
-[[exec_commands]]
-==== Commands
-
-include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Fifo plugin
@@ -2391,6 +2391,11 @@ $ echo '*hello!' >~/.weechat/weechat_fifo
 $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
+[[fifo_commands]]
+==== Commands
+
+include::autogen/user/fifo_commands.adoc[]
+
 [[fifo_options]]
 ==== Options (fifo.conf)
 
@@ -2406,16 +2411,16 @@ Options:
 
 include::autogen/user/fifo_options.adoc[]
 
-[[fifo_commands]]
-==== Commands
-
-include::autogen/user/fifo_commands.adoc[]
-
 [[fset_plugin]]
 === Fset plugin
 
 Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
 and plugin options.
+
+[[fset_commands]]
+==== Commands
+
+include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
 ==== Options (fset.conf)
@@ -2433,11 +2438,6 @@ Sections:
 Options:
 
 include::autogen/user/fset_options.adoc[]
-
-[[fset_commands]]
-==== Commands
-
-include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === IRC plugin
@@ -2462,34 +2462,6 @@ default port (6667), with nick _nono_:
 ----
 $ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
-
-[[irc_options]]
-==== Options (irc.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section        | Control command                | Description
-| look           | /set irc.look.*                | Look and feel.
-| color          | /set irc.color.*               | Colors.
-| network        | /set irc.network.*             | Network options.
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Target buffer for IRC messages>> (options can be added/removed in section).
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP replies>> (options can be added/removed in section).
-| ignore         | <<command_irc_ignore,/ignore>> | Ignore people.
-| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined).
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | Servers.
-|===
-
-Options:
-
-include::autogen/user/irc_options.adoc[]
-
-[[irc_commands]]
-==== Commands
-
-include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== SSL certificates
@@ -2919,35 +2891,39 @@ Some examples:
 /set irc.msgbuffer.303 weechat
 ----
 
-[[logger_plugin]]
-=== Logger plugin
+[[irc_commands]]
+==== Commands
 
-The Logger plugin lets you save content of buffers to files, with options
-about what and how it is saved.
+include::autogen/user/irc_commands.adoc[]
 
-[[logger_options]]
-==== Options (logger.conf)
+[[irc_options]]
+==== Options (irc.conf)
 
 Sections:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section | Control command     | Description
-| look    | /set logger.look.*  | Look and feel.
-| color   | /set logger.color.* | Colors.
-| file    | /set logger.file.*  | Options for log files.
-| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
-| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
+| Section        | Control command                | Description
+| look           | /set irc.look.*                | Look and feel.
+| color          | /set irc.color.*               | Colors.
+| network        | /set irc.network.*             | Network options.
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,Target buffer for IRC messages>> (options can be added/removed in section).
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP replies>> (options can be added/removed in section).
+| ignore         | <<command_irc_ignore,/ignore>> | Ignore people.
+| server_default | /set irc.server_default.*      | Default values for servers (used when options in server are not defined).
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | Servers.
 |===
 
 Options:
 
-include::autogen/user/logger_options.adoc[]
+include::autogen/user/irc_options.adoc[]
 
-[[logger_commands]]
-==== Commands
+[[logger_plugin]]
+=== Logger plugin
 
-include::autogen/user/logger_commands.adoc[]
+The Logger plugin lets you save content of buffers to files, with options
+about what and how it is saved.
 
 [[logger_log_levels]]
 ==== Log levels
@@ -3069,6 +3045,30 @@ You'll have following files:
             |       #chan2.weechatlog
 ....
 
+[[logger_commands]]
+==== Commands
+
+include::autogen/user/logger_commands.adoc[]
+
+[[logger_options]]
+==== Options (logger.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command     | Description
+| look    | /set logger.look.*  | Look and feel.
+| color   | /set logger.color.* | Colors.
+| file    | /set logger.file.*  | Options for log files.
+| level   | /set logger.level.* | Log level by buffer (options can be added/removed in section).
+| mask    | /set logger.mask.*  | Filename mask by buffer (options can be added/removed in section).
+|===
+
+Options:
+
+include::autogen/user/logger_options.adoc[]
+
 [[relay_plugin]]
 === Relay plugin
 
@@ -3083,31 +3083,6 @@ The Relay plugin is used to relay data via network, using different protocols:
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
 ** WeeCloud (Javascript): https://github.com/eirikb/weecloud
-
-[[relay_options]]
-==== Options (relay.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                    | Description
-| look    | /set relay.look.*                  | Look and feel.
-| color   | /set relay.color.*                 | Colors.
-| network | /set relay.network.*               | Network options.
-| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
-| port    | <<command_relay_relay,/relay add>> +
-            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
-|===
-
-Options:
-
-include::autogen/user/relay_options.adoc[]
-
-[[relay_commands]]
-==== Commands
-
-include::autogen/user/relay_commands.adoc[]
 
 [[relay_password]]
 ==== Password
@@ -3215,6 +3190,31 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 
+[[relay_commands]]
+==== Commands
+
+include::autogen/user/relay_commands.adoc[]
+
+[[relay_options]]
+==== Options (relay.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                    | Description
+| look    | /set relay.look.*                  | Look and feel.
+| color   | /set relay.color.*                 | Colors.
+| network | /set relay.network.*               | Network options.
+| irc     | /set relay.irc.*                   | Options specific to irc protocol (irc proxy).
+| port    | <<command_relay_relay,/relay add>> +
+            /set relay.port.*                  | Ports used for relay (irc and weechat protocols) (options can be added/removed in section).
+|===
+
+Options:
+
+include::autogen/user/relay_options.adoc[]
+
 [[scripts_plugins]]
 === Scripts plugins
 
@@ -3228,23 +3228,6 @@ repository, which are visible at this URL: https://weechat.org/scripts
 
 For more information about how to write scripts, or WeeChat API for
 scripts, please read _WeeChat Scripting Guide_.
-
-[[script_options]]
-==== Script options (script.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command       | Description
-| look    | /set script.look.*    | Look and feel.
-| color   | /set script.color.*   | Colors.
-| scripts | /set script.scripts.* | Options for download of scripts.
-|===
-
-Options:
-
-include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Script commands
@@ -3286,6 +3269,23 @@ include::autogen/user/guile_commands.adoc[]
 
 include::autogen/user/javascript_commands.adoc[]
 
+[[script_options]]
+==== Script options (script.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command       | Description
+| look    | /set script.look.*    | Look and feel.
+| color   | /set script.color.*   | Colors.
+| scripts | /set script.scripts.* | Options for download of scripts.
+|===
+
+Options:
+
+include::autogen/user/script_options.adoc[]
+
 [[trigger_plugin]]
 === Trigger plugin
 
@@ -3297,30 +3297,6 @@ circumstances.
 Using triggers require you to know how the signals, modifiers, ... are working.
 So you might consider reading the _Hooks_ chapter in the
 _WeeChat Plugin API Reference_.
-
-[[trigger_options]]
-==== Options (trigger.conf)
-
-Sections:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section | Control command                          | Description
-| look    | /set trigger.look.*                      | Look and feel.
-| color   | /set trigger.color.*                     | Colors.
-| trigger | <<command_trigger_trigger,/trigger add>> +
-            <<command_trigger_trigger,/trigger set>> +
-            /set trigger.trigger.*                   | Trigger options.
-|===
-
-Options:
-
-include::autogen/user/trigger_options.adoc[]
-
-[[trigger_commands]]
-==== Commands
-
-include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== Anatomy of a trigger
@@ -3823,6 +3799,30 @@ Arguments for the timer hook are:
 The command `/mute /save` will silently save configuration files (nothing
 displayed on core buffer).
 
+[[trigger_commands]]
+==== Commands
+
+include::autogen/user/trigger_commands.adoc[]
+
+[[trigger_options]]
+==== Options (trigger.conf)
+
+Sections:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command                          | Description
+| look    | /set trigger.look.*                      | Look and feel.
+| color   | /set trigger.color.*                     | Colors.
+| trigger | <<command_trigger_trigger,/trigger add>> +
+            <<command_trigger_trigger,/trigger set>> +
+            /set trigger.trigger.*                   | Trigger options.
+|===
+
+Options:
+
+include::autogen/user/trigger_options.adoc[]
+
 [[xfer_plugin]]
 === Xfer plugin
 
@@ -3831,6 +3831,11 @@ Xfer plugin brings:
 * direct chat (between two hosts, without server): for example "DCC Chat" via
   IRC plugin
 * file transfer, for example "DCC" via IRC plugin
+
+[[xfer_commands]]
+==== Commands
+
+include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
 ==== Options (xfer.conf)
@@ -3849,11 +3854,6 @@ Sections:
 Options:
 
 include::autogen/user/xfer_options.adoc[]
-
-[[xfer_commands]]
-==== Commands
-
-include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == Support

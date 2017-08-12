@@ -1979,8 +1979,14 @@ IRC サーバのパスワードを設定する例:
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
 ----
 
-[[options_and_commands]]
-=== オプションとコマンド
+// TRANSLATION MISSING
+[[commands_and_options]]
+=== Commands and options
+
+[[weechat_commands]]
+==== WeeChat コマンド
+
+include::autogen/user/weechat_commands.adoc[]
 
 [[sec_options]]
 ==== 保護データのオプション (sec.conf)
@@ -2032,11 +2038,6 @@ include::autogen/user/sec_options.adoc[]
 オプション:
 
 include::autogen/user/weechat_options.adoc[]
-
-[[weechat_commands]]
-==== WeeChat コマンド
-
-include::autogen/user/weechat_commands.adoc[]
 
 [[plugins]]
 == プラグイン
@@ -2111,31 +2112,6 @@ include::autogen/user/alias_commands.adoc[]
 Aspell
 プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
 
-[[aspell_options]]
-==== オプション (aspell.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                              | 説明
-| color      | /set aspell.color.*                       | 色
-| check      | /set aspell.check.*                       | スペルチェックの操作コマンド
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
-| look       | /set aspell.look.*                        | 外観
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::autogen/user/aspell_options.adoc[]
-
-[[aspell_commands]]
-==== コマンド
-
-include::autogen/user/aspell_commands.adoc[]
-
 [[aspell_speller_options]]
 ==== Speller オプション
 
@@ -2180,11 +2156,41 @@ _aspell.check.suggestions_ オプションで設定します。
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
+[[aspell_commands]]
+==== コマンド
+
+include::autogen/user/aspell_commands.adoc[]
+
+[[aspell_options]]
+==== オプション (aspell.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                              | 説明
+| color      | /set aspell.color.*                       | 色
+| check      | /set aspell.check.*                       | スペルチェックの操作コマンド
+| dict       | <<command_aspell_aspell,/aspell setdict>> +
+               /set aspell.dict.*                        | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| look       | /set aspell.look.*                        | 外観
+| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::autogen/user/aspell_options.adoc[]
+
 [[buflist_plugin]]
 === Buflist プラグイン
 
 Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります。 +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
+
+[[buflist_commands]]
+==== コマンド
+
+include::autogen/user/buflist_commands.adoc[]
 
 [[buflist_options]]
 ==== オプション (buflist.conf)
@@ -2201,11 +2207,6 @@ Buflist プラグインを使うことで、"buflist" と呼ばれるバー要�
 オプション:
 
 include::autogen/user/buflist_options.adoc[]
-
-[[buflist_commands]]
-==== コマンド
-
-include::autogen/user/buflist_commands.adoc[]
 
 [[charset_plugin]]
 === Charset プラグイン
@@ -2242,30 +2243,6 @@ UTF-8 です。
 ....
 charset: terminal: ISO-8859-15, internal: UTF-8
 ....
-
-[[charset_options]]
-==== オプション (charset.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                                | 説明
-| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
-| decode     | <<command_charset_charset,/charset decode>> +
-               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
-| encode     | <<command_charset_charset,/charset encode>> +
-               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::autogen/user/charset_options.adoc[]
-
-[[charset_commands]]
-==== コマンド
-
-include::autogen/user/charset_commands.adoc[]
 
 [[charset_set]]
 ==== 文字コードの設定
@@ -2322,11 +2299,40 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 
 文字コードに関する問題があれば、_WeeChat FAQ_ を参照してください。
 
+[[charset_commands]]
+==== コマンド
+
+include::autogen/user/charset_commands.adoc[]
+
+[[charset_options]]
+==== オプション (charset.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                                | 説明
+| default    | /set charset.default.*                      | デフォルトのデコード/エンコード文字セット
+| decode     | <<command_charset_charset,/charset decode>> +
+               /set charset.decode.*                       | バッファのデコード文字セット (オプションをセクションに追加/削除出来ます)
+| encode     | <<command_charset_charset,/charset encode>> +
+               /set charset.encode.*                       | バッファのエンコード文字セット (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::autogen/user/charset_options.adoc[]
+
 [[exec_plugin]]
 === exec プラグイン
 
 `/exec` コマンドを使うことで WeeChat
 内部から外部コマンドを実行し、その結果を表示したりバッファに送信することが可能になります。
+
+[[exec_commands]]
+==== コマンド
+
+include::autogen/user/exec_commands.adoc[]
 
 [[exec_options]]
 ==== オプション (exec.conf)
@@ -2343,11 +2349,6 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 オプション:
 
 include::autogen/user/exec_options.adoc[]
-
-[[exec_commands]]
-==== コマンド
-
-include::autogen/user/exec_commands.adoc[]
 
 [[fifo_plugin]]
 === Fifo プラグイン
@@ -2391,6 +2392,11 @@ $ echo '*hello!' >~/.weechat/weechat_fifo
 $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 ----
 
+[[fifo_commands]]
+==== コマンド
+
+include::autogen/user/fifo_commands.adoc[]
+
 [[fifo_options]]
 ==== オプション (fifo.conf)
 
@@ -2406,16 +2412,16 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 
 include::autogen/user/fifo_options.adoc[]
 
-[[fifo_commands]]
-==== コマンド
-
-include::autogen/user/fifo_commands.adoc[]
-
 [[fset_plugin]]
 === Fset プラグイン
 
 fset (高速設定) プラグインはバッファ内にオプションのリストを表示し、WeeChat
 とプラグインのオプション設定を支援します。
+
+[[fset_commands]]
+==== コマンド
+
+include::autogen/user/fset_commands.adoc[]
 
 [[fset_options]]
 ==== オプション (fset.conf)
@@ -2433,11 +2439,6 @@ fset (高速設定) プラグインはバッファ内にオプションのリス
 オプション:
 
 include::autogen/user/fset_options.adoc[]
-
-[[fset_commands]]
-==== コマンド
-
-include::autogen/user/fset_commands.adoc[]
 
 [[irc_plugin]]
 === IRC プラグイン
@@ -2462,34 +2463,6 @@ _nono_ というニックネームを使って _chat.freenode.net_ ホストの�
 ----
 $ weechat irc://nono@chat.freenode.net/#weechat,#toto
 ----
-
-[[irc_options]]
-==== オプション (irc.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション     | 操作コマンド                   | 説明
-| look           | /set irc.look.*                | 外観
-| color          | /set irc.color.*               | 色
-| network        | /set irc.network.*             | ネットワークオプション
-| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (オプションをセクションに追加/削除出来ます)
-| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (オプションをセクションに追加/削除出来ます)
-| ignore         | <<command_irc_ignore,/ignore>> | 無視ユーザ
-| server_default | /set irc.server_default.*      | サーバに対するデフォルト値 (サーバオプションが定義されていない場合に利用されます)
-| server         | <<command_irc_server,/server>> +
-                   /set irc.server.*              | サーバ
-|===
-
-オプション:
-
-include::autogen/user/irc_options.adoc[]
-
-[[irc_commands]]
-==== コマンド
-
-include::autogen/user/irc_commands.adoc[]
 
 [[irc_ssl_certificates]]
 ==== SSL 証明書
@@ -2917,35 +2890,39 @@ weechat::
 /set irc.msgbuffer.303 weechat
 ----
 
-[[logger_plugin]]
-=== Logger プラグイン
+[[irc_commands]]
+==== コマンド
 
-Logger
-プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
+include::autogen/user/irc_commands.adoc[]
 
-[[logger_options]]
-==== オプション (logger.conf)
+[[irc_options]]
+==== オプション (irc.conf)
 
 セクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| セクション | 操作コマンド        | 説明
-| look       | /set logger.look.*  | 外観
-| color      | /set logger.color.* | 色
-| file       | /set logger.file.*  | ログファイルのオプション
-| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
-| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
+| セクション     | 操作コマンド                   | 説明
+| look           | /set irc.look.*                | 外観
+| color          | /set irc.color.*               | 色
+| network        | /set irc.network.*             | ネットワークオプション
+| msgbuffer      | /set irc.msgbuffer.*           | <<irc_target_buffer,IRC メッセージのターゲットバッファ>> (オプションをセクションに追加/削除出来ます)
+| ctcp           | /set irc.ctcp.*                | <<irc_ctcp_replies,CTCP 応答>> (オプションをセクションに追加/削除出来ます)
+| ignore         | <<command_irc_ignore,/ignore>> | 無視ユーザ
+| server_default | /set irc.server_default.*      | サーバに対するデフォルト値 (サーバオプションが定義されていない場合に利用されます)
+| server         | <<command_irc_server,/server>> +
+                   /set irc.server.*              | サーバ
 |===
 
 オプション:
 
-include::autogen/user/logger_options.adoc[]
+include::autogen/user/irc_options.adoc[]
 
-[[logger_commands]]
-==== コマンド
+[[logger_plugin]]
+=== Logger プラグイン
 
-include::autogen/user/logger_commands.adoc[]
+Logger
+プラグインを使うことで、バッファの内容をファイルに保存できます。保存形式とその方法をオプションで設定できます。
 
 [[logger_log_levels]]
 ==== ログレベル
@@ -3066,6 +3043,30 @@ IRC サーバ名を使ったディレクトリに、チャンネル名を使っ�
             |       #chan2.weechatlog
 ....
 
+[[logger_commands]]
+==== コマンド
+
+include::autogen/user/logger_commands.adoc[]
+
+[[logger_options]]
+==== オプション (logger.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド        | 説明
+| look       | /set logger.look.*  | 外観
+| color      | /set logger.color.* | 色
+| file       | /set logger.file.*  | ログファイルのオプション
+| level      | /set logger.level.* | バッファのログレベル (オプションをセクションに追加/削除出来ます)
+| mask       | /set logger.mask.*  | バッファのファイル名マスク (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::autogen/user/logger_options.adoc[]
+
 [[relay_plugin]]
 === Relay プラグイン
 
@@ -3080,31 +3081,6 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
 ** WeeCloud (Javascript): https://github.com/eirikb/weecloud
-
-[[relay_options]]
-==== オプション (relay.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                       | 説明
-| look       | /set relay.look.*                  | 外観
-| color      | /set relay.color.*                 | 色
-| network    | /set relay.network.*               | ネットワークオプション
-| irc        | /set relay.irc.*                   | 特定の irc プロトコルのオプション (irc プロキシ)
-| port       | <<command_relay_relay,/relay add>> +
-               /set relay.port.*                  | リレーに使うポート(irc や weechat プロトコル) (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::autogen/user/relay_options.adoc[]
-
-[[relay_commands]]
-==== コマンド
-
-include::autogen/user/relay_commands.adoc[]
 
 [[relay_password]]
 ==== パスワード
@@ -3212,6 +3188,31 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 ポート番号 (例では 9000 番) は Relay プラグインで定義したものです。URI
 の最後には必ず "/weechat" をつけます (_irc_ と _weechat_ プロトコルの場合)。
 
+[[relay_commands]]
+==== コマンド
+
+include::autogen/user/relay_commands.adoc[]
+
+[[relay_options]]
+==== オプション (relay.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                       | 説明
+| look       | /set relay.look.*                  | 外観
+| color      | /set relay.color.*                 | 色
+| network    | /set relay.network.*               | ネットワークオプション
+| irc        | /set relay.irc.*                   | 特定の irc プロトコルのオプション (irc プロキシ)
+| port       | <<command_relay_relay,/relay add>> +
+               /set relay.port.*                  | リレーに使うポート(irc や weechat プロトコル) (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::autogen/user/relay_options.adoc[]
+
 [[scripts_plugins]]
 === スクリプトプラグイン
 
@@ -3225,23 +3226,6 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 
 スクリプトの書き方やスクリプト用の WeeChat API
 についての詳しい情報は、_WeeChat スクリプト作成ガイド_ を参照してください。
-
-[[script_options]]
-==== スクリプトオプション (script.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド          | 説明
-| look       | /set script.look.*    | 外観
-| color      | /set script.color.*   | 色
-| scripts    | /set script.scripts.* | スクリプトのダウンロードに関するオプション
-|===
-
-オプション:
-
-include::autogen/user/script_options.adoc[]
 
 [[script_commands]]
 ==== Script コマンド
@@ -3283,6 +3267,23 @@ include::autogen/user/guile_commands.adoc[]
 
 include::autogen/user/javascript_commands.adoc[]
 
+[[script_options]]
+==== スクリプトオプション (script.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド          | 説明
+| look       | /set script.look.*    | 外観
+| color      | /set script.color.*   | 色
+| scripts    | /set script.scripts.* | スクリプトのダウンロードに関するオプション
+|===
+
+オプション:
+
+include::autogen/user/script_options.adoc[]
+
 [[trigger_plugin]]
 === トリガプラグイン
 
@@ -3294,30 +3295,6 @@ include::autogen/user/javascript_commands.adoc[]
 トリガを使うにはシグナル、修飾子、...
 がどのように動いているかを知らなければいけません。これを知るには _WeeChat
 プラグイン API リファレンス_ の _フック_ の章を読むことをお勧めします。
-
-[[trigger_options]]
-==== オプション (trigger.conf)
-
-セクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                             | 説明
-| look       | /set trigger.look.*                      | 外観
-| color      | /set trigger.color.*                     | 色
-| trigger    | <<command_trigger_trigger,/trigger add>> +
-               <<command_trigger_trigger,/trigger set>> +
-               /set trigger.trigger.*                   | トリガオプション
-|===
-
-オプション:
-
-include::autogen/user/trigger_options.adoc[]
-
-[[trigger_commands]]
-==== コマンド
-
-include::autogen/user/trigger_commands.adoc[]
 
 [[trigger_anatomy]]
 ==== トリガの構造
@@ -3816,6 +3793,30 @@ timer フックに対する引数は:
 コマンド `/mute /save` は無言で設定ファイルを保存します
 (core バッファに対して何も表示しません)。
 
+[[trigger_commands]]
+==== コマンド
+
+include::autogen/user/trigger_commands.adoc[]
+
+[[trigger_options]]
+==== オプション (trigger.conf)
+
+セクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                             | 説明
+| look       | /set trigger.look.*                      | 外観
+| color      | /set trigger.color.*                     | 色
+| trigger    | <<command_trigger_trigger,/trigger add>> +
+               <<command_trigger_trigger,/trigger set>> +
+               /set trigger.trigger.*                   | トリガオプション
+|===
+
+オプション:
+
+include::autogen/user/trigger_options.adoc[]
+
 [[xfer_plugin]]
 === Xfer プラグイン
 
@@ -3824,6 +3825,11 @@ Xfer プラグインの機能:
 * ダイレクトチャット (サーバ不要の 2 ホスト間直接接続):
   例えば IRC プラグイン経由の "DCC チャット"
 * ファイル転送、例えば IRC プラグイン経由の "DCC"
+
+[[xfer_commands]]
+==== コマンド
+
+include::autogen/user/xfer_commands.adoc[]
 
 [[xfer_options]]
 ==== オプション (xfer.conf)
@@ -3842,11 +3848,6 @@ Xfer プラグインの機能:
 オプション:
 
 include::autogen/user/xfer_options.adoc[]
-
-[[xfer_commands]]
-==== コマンド
-
-include::autogen/user/xfer_commands.adoc[]
 
 [[support]]
 == サポート
