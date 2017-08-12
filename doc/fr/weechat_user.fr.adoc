@@ -495,7 +495,7 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 == Utilisation
 
 [[running_weechat]]
-=== Lancer WeeChat
+=== Lancement de WeeChat
 
 Paramètres de ligne de commande :
 
