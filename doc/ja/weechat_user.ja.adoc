@@ -2103,6 +2103,21 @@ Alias プラグインを使うことで、コマンドの別名を定義でき�
 
 include::autogen/user/alias_commands.adoc[]
 
+[[alias_options]]
+==== Options (alias.conf)
+
+セクション:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                   | 説明
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
 [[aspell_plugin]]
 === Aspell プラグイン
 

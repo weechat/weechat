@@ -2125,6 +2125,20 @@ Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
 
 include::autogen/user/alias_commands.adoc[]
 
+[[alias_options]]
+==== Options (alias.conf)
+
+Sekcje:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja     | Komenda                        | Opis
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commands for aliases.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Completions for aliases.
+|===
+
 [[aspell_plugin]]
 === Wtyczka aspell
 

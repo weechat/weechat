@@ -2172,6 +2172,20 @@ d'autres extensions).
 
 include::autogen/user/alias_commands.adoc[]
 
+[[alias_options]]
+==== Options (alias.conf)
+
+Sections :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle           | Description
+| cmd        | <<command_alias_alias,/alias>> +
+               /set alias.cmd.*               | Commandes pour les alias.
+| completion | <<command_alias_alias,/alias>> +
+               /set alias.completion.*        | Complétions pour les alias.
+|===
+
 [[aspell_plugin]]
 === Extension Aspell
 
