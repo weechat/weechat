@@ -2200,6 +2200,33 @@ Sections :
 L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
 
+La vérification de l'orthographe est désactivée par défaut et peut être
+activée/désactivée avec la touche kbd:[Alt+s].
+
+[[aspell_dictionaries]]
+==== Dictionnaires
+
+Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
+être définis soit globalement, soit spécifiquement sur un tampon.
+
+Plusieurs dictionnaires peuvent être utilisés en même temps : WeeChat vérifiera
+les mots dans tous les dictionnaires.
+
+Par exemple pour utiliser l'anglais et le français :
+
+----
+/set aspell.check.default_dict "en,fr"
+----
+
+Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
+par exemple sur un canal allemand :
+
+----
+/aspell setdict de
+----
+
+Pour plus d'informations, voir la commande <<command_aspell_aspell,/aspell>>.
+
 [[aspell_speller_options]]
 ==== Options du vérificateur d'orthographe
 

@@ -2129,6 +2129,32 @@ Sections:
 Aspell plugin lets you check spelling in command line. It is possible to use
 many languages by buffer.
 
+Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+
+[[aspell_dictionaries]]
+==== Dictionaries
+
+Before using spell checking, dictionaries must be defined, either globally or
+specific to buffers.
+
+Multiple dictionaries can be used at same time: WeeChat will check words in all
+dictionaries.
+
+For example to use English and French:
+
+----
+/set aspell.check.default_dict "en,fr"
+----
+
+It is possible to use a different dictionary on a specific buffer, for example
+on a German channel:
+
+----
+/aspell setdict de
+----
+
+For more information, see the command <<command_aspell_aspell,/aspell>>.
+
 [[aspell_speller_options]]
 ==== Speller options
 
