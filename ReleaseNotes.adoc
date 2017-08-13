@@ -23,8 +23,8 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.0_hook_fd]]
 === Function hook_fd
 
-The argument _fd_ sent to the callback of _hook_fd_ is now an integer
-(it was a string in older releases). +
+In scripts, the argument _fd_ sent to the callback of _hook_fd_ is now
+an integer (it was a string in older releases). +
 To be compatible with all versions, it is recommended to convert the argument
 to integer before using it, for example in Python: `int(fd)`.
 
@@ -546,6 +546,14 @@ the new default key is kbd:[Alt+l].
 
 Use command `/key missing` to add the key or `/key listdiff` to see differences
 between your current keys and WeeChat default keys.
+
+[[v1.0_hook_fd]]
+=== Function hook_print
+
+In scripts, the arguments _displayed_ and _highlight_ sent to the callback of
+_hook_print_ are now integers (they were strings in older releases). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before testing it, for example in Python: `if int(highlight):`.
 
 [[v0.4.3]]
 == Version 0.4.3 (2014-02-09)
