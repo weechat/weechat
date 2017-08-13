@@ -8808,7 +8808,8 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
-_WeeChat バージョン 1.5 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.5, 2.0._
 
 接続をフックする (リモートホストへのバックグラウンド接続)。
 
@@ -8890,6 +8891,13 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 戻り値:
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
+
+// TRANSLATION MISSING
+[IMPORTANT]
+In scripts, with WeeChat ≥ 2.0, the callback arguments _status_, _gnutls_rc_
+and _sock_ are integers (with WeeChat ≤ 1.9, they were strings). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before using it, for example in Python: `int(sock)`.
 
 C 言語での使用例:
 

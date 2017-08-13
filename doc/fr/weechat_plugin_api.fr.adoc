@@ -8961,7 +8961,7 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 2.0._
 
 Accrocher une connexion (connexion à une machine distante en tâche de fond).
 
@@ -9049,6 +9049,13 @@ Paramètres :
 Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+[IMPORTANT]
+Dans les scripts, avec WeeChat ≥ 2.0, les paramètres de la fonction de rappel
+_status_, _gnutls_rc_ et _sock_ sont des entiers (avec WeeChat ≤ 1.9, ils étaient
+des chaînes). +
+Pour être compatible avec toutes les versions, il est recommandé de convertir
+le paramètre avant de l'utiliser, par exemple en Python: `int(sock)`.
 
 Exemple en C :
 

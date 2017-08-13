@@ -20,6 +20,14 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.0]]
 == Version 2.0 (under dev)
 
+[[v2.0_hook_connect]]
+=== Function hook_connect
+
+In scripts, the arguments _status_, _gnutls_rc_ and _sock_ sent to the callback
+of _hook_connect_ are now integers (they were strings in older releases). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before using it, for example in Python: `int(sock)`.
+
 [[v2.0_hook_fd]]
 === Function hook_fd
 

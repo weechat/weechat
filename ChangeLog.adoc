@@ -34,6 +34,7 @@ Bug fixes::
 
   * core: fix cast of time_t (to "long long" instead of "long") (issue #1051)
   * core: call the config hook when options are renamed or removed
+  * api: change type of arguments status/gnutls_rc/sock in hook_connect() callback from string to integer (in scripts)
   * api: change type of argument fd in hook_fd() callback from string to integer (in scripts)
   * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
   * relay: fix send of "PART" command in backlog (irc protocol)
