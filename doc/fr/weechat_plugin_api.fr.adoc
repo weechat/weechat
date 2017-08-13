@@ -8772,13 +8772,14 @@ Les paramètres sont les mêmes que ceux de la fonction
 Pour une commande standard (ne commençant pas par "url:"), les options suivantes
 sont disponibles :
 
-[width="100%",cols="^1,1,3",options="header"]
+[width="100%",cols="^1,1,1,4",options="header"]
 |===
-| Option | Valeur | Description
+| Option | Valeur | Défaut | Description
 
 | argN (N ≥ 1) +
   _(WeeChat ≥ 0.4.0)_ |
   toute chaîne |
+  pas de paramètres |
   Paramètres pour la commande ; si aucun paramètre n'est donné avec ces options,
   la commande sera automatiquement découpée comme le fait le shell (et donc les
   paramètres de la commande sont lus dans le paramètre _command_).
@@ -8786,19 +8787,22 @@ sont disponibles :
 | stdin +
   _(WeeChat ≥ 0.4.3)_ |
   (non utilisée) |
+  pas de stdin |
   Créer un tuyau pour écrire sur l'entrée standard (stdin) du processus fils
   (voir la fonction <<_hook_set,hook_set>>).
 
 | buffer_flush +
   _(WeeChat ≥ 1.0)_ |
   nombre d'octets |
+  65536 |
   Nombre minimum d'octets pour vider stdout/stderr (pour envoyer la sortie à la
-  fonction de rappel), entre 1 et 65536 (par défaut); 1 = envoyer toute sortie
+  fonction de rappel), entre 1 et 65536. Avec la valeur 1, la sortie est envoyée
   immédiatement à la fonction de rappel.
 
 | detached +
   _(WeeChat ≥ 1.0)_ |
   (non utilisée) |
+  non détaché |
   Lancer le process dans un mode détaché : stdout et stderr sont redirigés vers
   _/dev/null_.
 |===
