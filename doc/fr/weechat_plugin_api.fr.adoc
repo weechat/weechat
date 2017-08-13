@@ -8467,7 +8467,6 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
-// TRANSLATION MISSING
 [IMPORTANT]
 Dans les scripts, avec WeeChat ≥ 2.0, le paramètre de la fonction de rappel _fd_
 est un entier (avec WeeChat ≤ 1.9, il était une chaîne). +
