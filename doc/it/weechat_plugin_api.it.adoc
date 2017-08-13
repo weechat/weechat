@@ -8518,7 +8518,7 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 ==== hook_fd
 
 // TRANSLATION MISSING
-_Updated in 1.3, 1.5._
+_Updated in 1.3, 1.5, 2.0._
 
 Hook su un descrittore file (file oppure socket).
 
@@ -8562,6 +8562,13 @@ Argomenti:
 Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore
+
+// TRANSLATION MISSING
+[IMPORTANT]
+In scripts, with WeeChat ≥ 2.0, the callback argument _fd_ is an integer
+(with WeeChat ≤ 1.9, it was a string). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before using it, for example in Python: `int(fd)`.
 
 Esempio in C:
 

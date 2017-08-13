@@ -8279,7 +8279,8 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
-_WeeChat バージョン 1.3 と 1.5 で更新。_
+// TRANSLATION MISSING
+_Updated in 1.3, 1.5, 2.0._
 
 ファイルディスクリプタ (ファイルやソケット) をフック。
 
@@ -8321,6 +8322,13 @@ struct t_hook *weechat_hook_fd (int fd,
 戻り値:
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
+
+// TRANSLATION MISSING
+[IMPORTANT]
+In scripts, with WeeChat ≥ 2.0, the callback argument _fd_ is an integer
+(with WeeChat ≤ 1.9, it was a string). +
+To be compatible with all versions, it is recommended to convert the argument
+to integer before using it, for example in Python: `int(fd)`.
 
 C 言語での使用例:
 

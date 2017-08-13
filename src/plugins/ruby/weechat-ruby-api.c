@@ -2735,7 +2735,7 @@ weechat_ruby_api_hook_fd_cb (const void *pointer, void *data, int fd)
 {
     struct t_plugin_script *script;
     void *func_argv[2];
-    char str_fd[32], empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     int *rc, ret;
 
@@ -2744,15 +2744,13 @@ weechat_ruby_api_hook_fd_cb (const void *pointer, void *data, int fd)
 
     if (ptr_function && ptr_function[0])
     {
-        snprintf (str_fd, sizeof (str_fd), "%d", fd);
-
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = str_fd;
+        func_argv[1] = &fd;
 
         rc = (int *) weechat_ruby_exec (script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         ptr_function,
-                                        "ss", func_argv);
+                                        "si", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
