@@ -547,7 +547,7 @@ the new default key is kbd:[Alt+l].
 Use command `/key missing` to add the key or `/key listdiff` to see differences
 between your current keys and WeeChat default keys.
 
-[[v1.0_hook_fd]]
+[[v1.0_hook_print]]
 === Function hook_print
 
 In scripts, the arguments _displayed_ and _highlight_ sent to the callback of
