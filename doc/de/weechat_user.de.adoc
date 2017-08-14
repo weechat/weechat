@@ -338,22 +338,21 @@ folgendem Befehl angezeigt werden:
 $ ./configure --help
 ----
 
-// TRANSLATION MISSING
 [[run_tests]]
-==== Run tests
+==== Tests ausführen
 
-Following packages are *required* to compile tests:
+Folgende Pakete werden *benötigt* um Tests zu kompilieren:
 
 * libcpputest-dev
 * C++ compiler
 
-Tests must be enabled when compiling WeeChat (with cmake):
+Tests muss aktiviert werden wenn WeeChat kompiliert wird (mittels cmake):
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-They can be launched after compilation from the build directory (with cmake):
+Nach der Kompilierung wird die Testumgebung im build-Verzeichnis (bei cmake) ausgeführt:
 
 ----
 $ ctest -V
@@ -505,10 +504,9 @@ Befehlszeile:
 
 include::cmdline_options.de.adoc[]
 
-// TRANSLATION MISSING
-When you run WeeChat for the first time, the default configuration files are
-created in _~/.weechat_ with default options and values
-(see <<files_and_directories,Dateien und Verzeichnisse>>).
+Wenn WeeChat das erste mal ausgeführt wird, wird die Standardkonfiguration und
+die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
+(siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
 [[environment_variables]]
 === Umgebungsvariablen
@@ -1113,7 +1111,7 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 Eine _Bar_ ist ein Bereich der parallel, zum Chatfenster, jedwede Art von Text enthalten kann.
 
 Eine Bar kann mittels `weechat.bar.name.option` konfiguriert werden. Dabei steht `name`,
-für den Namen der Bar und `option` für die Option für diese Bar.
+für den Namen der Bar und `option` für die Option dieser Bar.
 
 Aufzählung von Bar-Optionen:
 
@@ -2031,8 +2029,7 @@ include::autogen/user/weechat_commands.adoc[]
 [[sec_options]]
 ==== Optionen für schutzwürdige Daten
 
-// TRANSLATION MISSING
-Sections in file _sec.conf_:
+Sektionen in Datei _sec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2048,16 +2045,15 @@ include::autogen/user/sec_options.adoc[]
 [[weechat_options]]
 ==== WeeChat Optionen
 
-// TRANSLATION MISSING
-Sections in file _weechat.conf_:
+Sektion in Datei _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sektion    | Steuerbefehl                              | Beschreibung
 | debug      | <<command_weechat_debug,/debug set>>      +
-               /set weechat.debug.*                      | Debug level, for core and plugins (Optionen können in Sektion hinzugefügt/entfernt werden).
-| startup    | /set weechat.startup.*                    | Startup options.
-| look       | /set weechat.look.*                       | Look and feel.
+               /set weechat.debug.*                      | Debug level, für Core und Erweitertungen (Optionen können in Sektion hinzugefügt/entfernt werden).
+| startup    | /set weechat.startup.*                    | Optionen die nach dem Programmstart ausgeführt werden.
+| look       | /set weechat.look.*                       | Erscheinungsbild.
 | palette    | <<command_weechat_color,/color alias>>    +
                /set weechat.palette.*                    | Alternativnamen für Farben (Optionen können in Sektion hinzugefügt/entfernt werden).
 | color      | /set weechat.color.*                      | Farben.
@@ -2145,13 +2141,11 @@ sollten Sie die _WeeChat Plugin API Reference_ oder _WeeChat Scripting Guide_ le
 
 Die Alias-Erweiterung erlaubt es, für Befehle, sogenannte Kurzbefehle (einen Alias) zu erstellen.
 
-// TRANSLATION MISSING
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
+Einige Aliase existieren standardmäßig, deren Namen sind in Großbuchstaben erstellt (um
+sie von Standardbefehlen zu unterscheiden); bei Befehlen wird in WeeChat nicht zwischen
+Groß- und Kleinschreinung unterschieden, der Befehl `/close` führt den Alias `/CLOSE` aus.
 
-// TRANSLATION MISSING
-List of default aliases:
+Liste der standardmäßigen Aliase:
 
 include::autogen/user/alias_default_aliases.adoc[]
 
@@ -2161,19 +2155,17 @@ include::autogen/user/alias_default_aliases.adoc[]
 include::autogen/user/alias_commands.adoc[]
 
 [[alias_options]]
-==== Options
+==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _alias.conf_:
+Sektionen in Datei _alias.conf_:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sektion    | Steuerbefehl                   | Beschreibung
 | cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
+               /set alias.cmd.*               | Befehle für Alias.
 | completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
+               /set alias.completion.*        | Vervollständigung für Alias.
 |===
 
 [[aspell_plugin]]
@@ -2182,33 +2174,32 @@ Sections in file _alias.conf_:
 Mit der ASpell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
 Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 
-// TRANSLATION MISSING
-Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+Die Rechtschreibprüfung ist standardmäßig deaktiviert und kann mittels dem
+Tastenbefehl [Alt+s] umgeschaltet werden.
 
-// TRANSLATION MISSING
 [[aspell_dictionaries]]
-==== Dictionaries
+==== Wörterbücher
 
-Before using spell checking, dictionaries must be defined, either globally or
-specific to buffers.
+Um die Rechtschreibprüfung nutzen zu können muss vorab ein Wörterbuch definiert werden,
+welches genutzt werden soll. Dies kann entweder global oder per Buffer geschehen.
 
-Multiple dictionaries can be used at same time: WeeChat will check words in all
-dictionaries.
+Verschiedene Wörterbücher können parallel verwendet werden. WeeChat gleicht dann
+die Wörter mit allen Wörterbüchern ab,
 
-For example to use English and French:
-
-----
-/set aspell.check.default_dict "en,fr"
-----
-
-It is possible to use a different dictionary on a specific buffer, for example
-on a German channel:
+Um zum Beispiel Englisch und Deutsch zu nutzen:
 
 ----
-/aspell setdict de
+/set aspell.check.default_dict "en,de"
 ----
 
-For more information, see the command <<command_aspell_aspell,/aspell>>.
+Es ist möglich ein anderes Wörterbuch für einen speziellen Buffer zu verwenden, zum
+Beispiel in einem französischen Channel:
+
+----
+/aspell setdict fr
+----
+
+Für weitere Informationen, siehe den Befehl <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]
 ==== Optionen für Rechtschreibprüfung
@@ -2264,8 +2255,7 @@ include::autogen/user/aspell_commands.adoc[]
 [[aspell_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _aspell.conf_:
+Sektionen in Datei _aspell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2297,8 +2287,7 @@ include::autogen/user/buflist_commands.adoc[]
 [[buflist_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _buflist.conf_:
+Sektionen in Datei _buflist.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2415,8 +2404,7 @@ include::autogen/user/charset_commands.adoc[]
 [[charset_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _charset.conf_:
+Sektionen in Datei _charset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2447,8 +2435,7 @@ include::autogen/user/exec_commands.adoc[]
 [[exec_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _exec.conf_:
+Sektionen in Datei _exec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2512,8 +2499,7 @@ include::autogen/user/fifo_commands.adoc[]
 [[fifo_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _fifo.conf_:
+Sektionen in Datei _fifo.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2539,8 +2525,7 @@ include::autogen/user/fset_commands.adoc[]
 [[fset_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _fset.conf_:
+Sektionen in Datei _fset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3023,8 +3008,7 @@ include::autogen/user/irc_commands.adoc[]
 [[irc_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _irc.conf_:
+Sektionen in Datei _irc.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3184,8 +3168,7 @@ include::autogen/user/logger_commands.adoc[]
 [[logger_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _logger.conf_:
+Sektionen in Datei _logger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3339,8 +3322,7 @@ include::autogen/user/relay_commands.adoc[]
 [[relay_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _relay.conf_:
+Sektionen in Datei _relay.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3357,9 +3339,8 @@ Optionen:
 
 include::autogen/user/relay_options.adoc[]
 
-// TRANSLATION MISSING
 [[scripts_plugins]]
-=== Scripts
+=== Skripten
 
 WeeChat unterstützt sechs Skript-Erweiterungen: Python, Perl, Ruby, Lua, Tcl,
 Guile (scheme) und Javascript.
@@ -3417,8 +3398,7 @@ include::autogen/user/javascript_commands.adoc[]
 [[script_options]]
 ==== Script Optionen
 
-// TRANSLATION MISSING
-Sections in file _script.conf_:
+Sektionen in Datei _script.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3963,8 +3943,7 @@ include::autogen/user/trigger_commands.adoc[]
 [[trigger_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _trigger.conf_:
+Sektionen in Datei _trigger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3997,8 +3976,7 @@ include::autogen/user/xfer_commands.adoc[]
 [[xfer_options]]
 ==== Optionen
 
-// TRANSLATION MISSING
-Sections in file _xfer.conf_:
+Sektionen in Datei _xfer.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
