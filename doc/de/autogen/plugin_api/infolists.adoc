@@ -8,7 +8,7 @@
 
 | alias | alias | Liste der Alias | Alias Pointer (optional) | Name des Alias (Platzhalter "*" kann verwendet werden) (optional)
 
-| alias | alias_default | list of default aliases | - | -
+| alias | alias_default | Liste der standardmäßigen Aliase | - | -
 
 | fset | fset_option | Auflistung der fset Optionen | fset Option-Pointer (optional) | Name einer Einstellung (Platzhalter "*" kann verwendet werden) (optional)
 
