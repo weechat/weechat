@@ -9454,6 +9454,16 @@ List of signals sent by WeeChat and plugins:
   Pointer: buffer. |
   Buffer cleared.
 
+| weechat | buffer_filters_enabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointer: buffer. |
+  Filters enabled in buffer.
+
+| weechat | buffer_filters_disabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointer: buffer. |
+  Filters disabled in buffer.
+
 | weechat | buffer_hidden |
   Pointer: buffer. |
   Buffer hidden.

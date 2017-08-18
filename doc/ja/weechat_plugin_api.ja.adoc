@@ -9468,6 +9468,18 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Pointer: バッファ |
   バッファをクリア
 
+// TRANSLATION MISSING
+| weechat | buffer_filters_enabled +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  Pointer: バッファ |
+  Filters enabled in buffer.
+
+// TRANSLATION MISSING
+| weechat | buffer_filters_disabled +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  Pointer: バッファ |
+  Filters disabled in buffer.
+
 | weechat | buffer_hidden |
   Pointer: バッファ |
   バッファを隠す

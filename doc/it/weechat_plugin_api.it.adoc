@@ -9782,6 +9782,18 @@ List of signals sent by WeeChat and plugins:
   Buffer cleared.
 
 // TRANSLATION MISSING
+| weechat | buffer_filters_enabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointer: buffer. |
+  Filters enabled in buffer.
+
+// TRANSLATION MISSING
+| weechat | buffer_filters_disabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointer: buffer. |
+  Filters disabled in buffer.
+
+// TRANSLATION MISSING
 | weechat | buffer_hidden |
   Pointer: buffer. |
   Buffer hidden.

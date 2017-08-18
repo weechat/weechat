@@ -9638,6 +9638,16 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Pointeur : tampon. |
   Tampon vidé.
 
+| weechat | buffer_filters_enabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointeur : tampon. |
+  Filtres activés dans le tampon.
+
+| weechat | buffer_filters_disabled +
+  _(WeeChat ≥ 2.0)_ |
+  Pointeur : tampon. |
+  Filtres désactivés dans le tampon.
+
 | weechat | buffer_hidden |
   Pointeur : tampon. |
   Tampon masqué.

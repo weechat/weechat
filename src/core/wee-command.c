@@ -2110,6 +2110,9 @@ COMMAND_CALLBACK(filter)
                 {
                     buffer->filter = 1;
                     gui_filter_buffer (buffer, NULL);
+                    (void) hook_signal_send (
+                        "buffer_filters_enabled",
+                        WEECHAT_HOOK_SIGNAL_POINTER, buffer);
                 }
             }
             else
@@ -2165,6 +2168,9 @@ COMMAND_CALLBACK(filter)
                 {
                     buffer->filter = 0;
                     gui_filter_buffer (buffer, NULL);
+                    (void) hook_signal_send (
+                        "buffer_filters_disabled",
+                        WEECHAT_HOOK_SIGNAL_POINTER, buffer);
                 }
             }
             else
@@ -2218,6 +2224,10 @@ COMMAND_CALLBACK(filter)
                 /* toggle filters in buffer */
                 buffer->filter ^= 1;
                 gui_filter_buffer (buffer, NULL);
+                (void) hook_signal_send (
+                    (buffer->filter) ?
+                    "buffer_filters_enabled" : "buffer_filters_disabled",
+                    WEECHAT_HOOK_SIGNAL_POINTER, buffer);
             }
             else
             {
