@@ -499,10 +499,9 @@ $ weechat
 
 include::cmdline_options.ja.adoc[]
 
-// TRANSLATION MISSING
-When you run WeeChat for the first time, the default configuration files are
-created in _~/.weechat_ with default options and values
-(see <<files_and_directories,ファイルとディレクトリ>>).
+WeeChat の初回起動時にデフォルトのオプション設定を含む設定ファイルが
+_~/.weechat_ ディレクトリの中に作成されます
+(<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
 [[environment_variables]]
 === 環境変数
@@ -1976,9 +1975,8 @@ IRC サーバのパスワードを設定する例:
 /set irc.server.freenode.sasl_password "${sec.data.freenode}"
 ----
 
-// TRANSLATION MISSING
 [[commands_and_options]]
-=== Commands and options
+=== コマンドとオプション
 
 [[weechat_commands]]
 ==== WeeChat コマンド
@@ -1988,8 +1986,7 @@ include::autogen/user/weechat_commands.adoc[]
 [[sec_options]]
 ==== 保護データのオプション
 
-// TRANSLATION MISSING
-Sections in file _sec.conf_:
+_sec.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2005,8 +2002,7 @@ include::autogen/user/sec_options.adoc[]
 [[weechat_options]]
 ==== WeeChat オプション
 
-// TRANSLATION MISSING
-Sections in file _weechat.conf_:
+_weechat.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2100,13 +2096,12 @@ API を使ったプラグインやスクリプトの開発についてより詳�
 Alias プラグインを使うことで、コマンドの別名を定義できます (WeeChat
 だけでなく他のプラグインが提供するコマンドの別名を定義することもできます)。
 
-// TRANSLATION MISSING
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
+大文字の別名はデフォルトで定義されたものです (標準コマンドと区別するために大文字を使っています);
+WeeChat はコマンドの大文字小文字を区別しないので、コマンド
+`/close` は別名である `/CLOSE` を実行します。
 
-// TRANSLATION MISSING
-List of default aliases:
+
+デフォルトで定義された別名のリスト:
 
 include::autogen/user/alias_default_aliases.adoc[]
 
@@ -2116,19 +2111,17 @@ include::autogen/user/alias_default_aliases.adoc[]
 include::autogen/user/alias_commands.adoc[]
 
 [[alias_options]]
-==== Options
+==== オプション
 
-// TRANSLATION MISSING
-Sections in file _alias.conf_:
+_alias.conf_ ファイル内のセクション:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | セクション | 操作コマンド                   | 説明
 | cmd        | <<command_alias_alias,/alias>> +
-               /set alias.cmd.*               | Commands for aliases.
+               /set alias.cmd.*               | 別名に割り当てたコマンド
 | completion | <<command_alias_alias,/alias>> +
-               /set alias.completion.*        | Completions for aliases.
+               /set alias.completion.*        | 別名に割り当てた補完
 |===
 
 [[aspell_plugin]]
@@ -2137,33 +2130,29 @@ Sections in file _alias.conf_:
 Aspell
 プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
 
-// TRANSLATION MISSING
-Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
 
-// TRANSLATION MISSING
 [[aspell_dictionaries]]
-==== Dictionaries
+==== 辞書
 
-Before using spell checking, dictionaries must be defined, either globally or
-specific to buffers.
+スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
 
-Multiple dictionaries can be used at same time: WeeChat will check words in all
-dictionaries.
+同時に複数の辞書を使用可能です:
+WeeChat はすべての辞書を使って単語をチェックします。
 
-For example to use English and French:
+英語とフランス語の辞書を使う例:
 
 ----
 /set aspell.check.default_dict "en,fr"
 ----
 
-It is possible to use a different dictionary on a specific buffer, for example
-on a German channel:
+特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
 
 ----
 /aspell setdict de
 ----
 
-For more information, see the command <<command_aspell_aspell,/aspell>>.
+詳しい情報はコマンド <<command_aspell_aspell,/aspell>> を参照してください。
 
 [[aspell_speller_options]]
 ==== Speller オプション
@@ -2217,8 +2206,7 @@ include::autogen/user/aspell_commands.adoc[]
 [[aspell_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _aspell.conf_:
+_aspell.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2249,8 +2237,7 @@ include::autogen/user/buflist_commands.adoc[]
 [[buflist_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _buflist.conf_:
+_buflist.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2362,8 +2349,7 @@ include::autogen/user/charset_commands.adoc[]
 [[charset_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _charset.conf_:
+_charset.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2393,8 +2379,7 @@ include::autogen/user/exec_commands.adoc[]
 [[exec_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _exec.conf_:
+_exec.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2457,8 +2442,7 @@ include::autogen/user/fifo_commands.adoc[]
 [[fifo_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _fifo.conf_:
+_fifo.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2484,8 +2468,7 @@ include::autogen/user/fset_commands.adoc[]
 [[fset_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _fset.conf_:
+_fset.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2957,8 +2940,7 @@ include::autogen/user/irc_commands.adoc[]
 [[irc_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _irc.conf_:
+_irc.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3111,8 +3093,7 @@ include::autogen/user/logger_commands.adoc[]
 [[logger_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _logger.conf_:
+_logger.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3257,8 +3238,7 @@ include::autogen/user/relay_commands.adoc[]
 [[relay_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _relay.conf_:
+_relay.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3275,9 +3255,8 @@ Sections in file _relay.conf_:
 
 include::autogen/user/relay_options.adoc[]
 
-// TRANSLATION MISSING
 [[scripts_plugins]]
-=== Scripts
+=== スクリプト
 
 WeeChat は 7 種類のスクリプトプラグインを備えています:
 Python、Perl、Ruby、Lua、Tcl、Guile
@@ -3333,8 +3312,7 @@ include::autogen/user/javascript_commands.adoc[]
 [[script_options]]
 ==== スクリプトオプション
 
-// TRANSLATION MISSING
-Sections in file _script.conf_:
+_script.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3865,8 +3843,7 @@ include::autogen/user/trigger_commands.adoc[]
 [[trigger_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _trigger.conf_:
+_trigger.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3899,8 +3876,7 @@ include::autogen/user/xfer_commands.adoc[]
 [[xfer_options]]
 ==== オプション
 
-// TRANSLATION MISSING
-Sections in file _xfer.conf_:
+_xfer.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===

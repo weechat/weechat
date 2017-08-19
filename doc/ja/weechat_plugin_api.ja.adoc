@@ -8279,8 +8279,7 @@ hook = weechat.hook_timer(20 * 1000, 0, 0, "my_timer_cb", "")
 
 ==== hook_fd
 
-// TRANSLATION MISSING
-_Updated in 1.3, 1.5, 2.0._
+_WeeChat バージョン 1.3、1.5、2.0 で更新。_
 
 ファイルディスクリプタ (ファイルやソケット) をフック。
 
@@ -8323,12 +8322,11 @@ struct t_hook *weechat_hook_fd (int fd,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
-// TRANSLATION MISSING
 [IMPORTANT]
-In scripts, with WeeChat ≥ 2.0, the callback argument _fd_ is an integer
-(with WeeChat ≤ 1.9, it was a string). +
-To be compatible with all versions, it is recommended to convert the argument
-to integer before using it, for example in Python: `int(fd)`.
+スクリプトにおけるコールバック引数 _fd_  は
+WeeChat バージョン 2.0 以上では整数、バージョン 1.9 以下では文字列です。 +
+すべてのバージョンで互換性を保つには、使用前にコールバック引数 _fd_
+を整数へ変換することを推奨します (Python の場合 `int(fd)` のように変換してください)。
 
 C 言語での使用例:
 
@@ -8624,40 +8622,35 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 [width="100%",cols="^1,1,1,4",options="header"]
 |===
-// TRANSLATION MISSING
-| オプション | 値 | Default | 説明
+| オプション | 値 | デフォルト | 説明
 
-// TRANSLATION MISSING
 | argN (N は 1 以上) +
   _(WeeChat バージョン 0.4.0 以上で利用可)_ |
   任意の文字列 |
-  no arguments |
+  引数なし |
   コマンドの引数;
   このオプションを使って引数を渡さない場合、シェルと同じように引数を自動的に分割します
   (_command_ 引数からコマンド引数をロードします)
 
-// TRANSLATION MISSING
 | stdin +
   _(WeeChat バージョン 0.4.3 以上で利用可)_ |
   (非使用) |
-  no stdin |
+  標準出力を使用しない |
   データを書き込むためのパイプを子プロセスの標準入力 (stdin)
   に作成します (関数 <<_hook_set,hook_set>> を参照)
 
-// TRANSLATION MISSING
 | buffer_flush +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   バイト数 |
   65536 |
-  Minimum number of bytes to flush stdout/stderr (to send output to callback),
-  between 1 and 65536. With the value 1, the output is sent immediately to the
-  callback.
+  標準出力および標準エラー出力をフラッシュ (出力をコールバックヘ送信)
+  するバイト数の最小値。取りうる値の範囲は 1 から 65536 までです。1
+  の場合、出力をすぐにコールバックへ送信します。
 
-// TRANSLATION MISSING
 | detached +
   _(WeeChat バージョン 1.0 以上で利用可)_ |
   (非使用) |
-  not detached |
+  detached モードで実行しない |
   detached モードでプロセスを実行: 標準出力と標準エラー出力を
   _/dev/null_ にリダイレクトする
 |===
@@ -8808,8 +8801,7 @@ hook3 = weechat.hook_process_hashtable("sh",
 
 ==== hook_connect
 
-// TRANSLATION MISSING
-_Updated in 1.5, 2.0._
+_WeeChat バージョン 1.5 と 2.0 で更新。_
 
 接続をフックする (リモートホストへのバックグラウンド接続)。
 
@@ -8892,12 +8884,11 @@ struct t_hook *weechat_hook_connect (const char *proxy,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
-// TRANSLATION MISSING
 [IMPORTANT]
-In scripts, with WeeChat ≥ 2.0, the callback arguments _status_, _gnutls_rc_
-and _sock_ are integers (with WeeChat ≤ 1.9, they were strings). +
-To be compatible with all versions, it is recommended to convert the argument
-to integer before using it, for example in Python: `int(sock)`.
+スクリプトにおけるコールバック引数 _status_、_gnutls_rc_、_sock_  は
+WeeChat バージョン 2.0 以上では整数、バージョン 1.9 以下では文字列です。 +
+すべてのバージョンで互換性を保つには、使用前にコールバック引数 _status_、_gnutls_rc_、_sock_
+を整数へ変換することを推奨します (Python の場合 `int(sock)` のように変換してください)。
 
 C 言語での使用例:
 
@@ -9058,10 +9049,10 @@ struct t_hook *weechat_hook_print (struct t_gui_buffer *buffer,
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
 [IMPORTANT]
-WeeChat バージョン 1.0 以上では、スクリプトのコールバック引数 _displayed_
-と _highlight_ は整数です (WeeChat バージョン 0.4.3 以下では文字列でした)。 +
-すべてのバージョンで互換性を持たせるためには、引数を使う前に整数に変換することをお勧めします、Python
-を使った例: `if int(highlight):`。
+スクリプトにおけるコールバック引数 _displayed_、_highlight_ は
+WeeChat バージョン 1.0 以上では整数、バージョン 0.4.3 以下では文字列です。 +
+すべてのバージョンで互換性を保つには、使用前にコールバック引数 _displayed_、_highlight_
+を整数へ変換することを推奨します (Python の場合 `if int(highlight):` のように変換してください)。
 
 C 言語での使用例:
 
@@ -9468,17 +9459,15 @@ WeeChat とプラグインが送信するシグナルのリスト:
   Pointer: バッファ |
   バッファをクリア
 
-// TRANSLATION MISSING
 | weechat | buffer_filters_enabled +
   _(WeeChat バージョン 2.0 以上で利用可)_ |
   Pointer: バッファ |
-  Filters enabled in buffer.
+  バッファでフィルタが有効化されています。
 
-// TRANSLATION MISSING
 | weechat | buffer_filters_disabled +
   _(WeeChat バージョン 2.0 以上で利用可)_ |
   Pointer: バッファ |
-  Filters disabled in buffer.
+  バッファでフィルタが無効化されています。
 
 | weechat | buffer_hidden |
   Pointer: バッファ |
