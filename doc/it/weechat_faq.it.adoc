@@ -102,10 +102,13 @@ soluzione tra quelle elencate:
   necessario su molte distribuzioni ma non tutte): `ldd /path/di/weechat`
 * verificare che il plugin "charset" sia caricato con il comando `plugin` (se non
   lo è, probabilmente è necessario il pacchetto "weechat-plugins")
+// TRANSLATION MISSING
 * verificare l'output del comando `/charset` (sul buffer core). Dovrebbero essere
   visualizzati _ISO-XXXXXX_ oppure _UTF-8_ per il set caratteri del terminale.
   Se invece compaiono _ANSI_X3.4-1968_ o altri valori, il locale probabilmente
-  non è esatto (correggere la variabile $LANG).
+  non è esatto. +
+  To fix your locale, check the installed locales with `locale -a` and set
+  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
 * impostare il valore di decodifica globale, per esempio:
   `/set charset.default.decode = ISO-8859-15`
 * se si usa la localizzazione UTF-8:

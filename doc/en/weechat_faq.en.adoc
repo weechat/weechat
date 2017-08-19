@@ -92,7 +92,9 @@ It's common issue, please read carefully and check *ALL* solutions below:
   not, then you probably need the "weechat-plugins" package).
 * Check the output of command `/charset` (on core buffer). You should see
   _ISO-XXXXXX_ or _UTF-8_ for terminal charset. If you see _ANSI_X3.4-1968_ or
-  other values, your locale is probably wrong (fix your $LANG).
+  other values, your locale is probably wrong. +
+  To fix your locale, check the installed locales with `locale -a` and set
+  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
 * Setup global decode value, for example:
   `/set charset.default.decode "ISO-8859-15"`.
 * If you are using UTF-8 locale:

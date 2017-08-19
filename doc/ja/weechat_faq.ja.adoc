@@ -95,9 +95,11 @@ https://weechat.org/doc
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
 * `/plugin` コマンドで "charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
+// TRANSLATION MISSING
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
-  または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります
-  ($LANG を修正してください)。
+  または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります。 +
+  To fix your locale, check the installed locales with `locale -a` and set
+  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
 * UTF-8 ロケールを使っている場合は:

@@ -98,7 +98,10 @@ points ci-dessous :
 * Vérifiez la sortie de la commande `/charset` (sur le tampon "core"), vous
   devriez voir _ISO-XXXXXX_ ou _UTF-8_ pour le charset du terminal. Si vous
   voyez _ANSI_X3.4-1968_ ou d'autres valeurs, votre locale est probablement
-  erronée (corrigez votre $LANG).
+  erronée. +
+  Pour corriger votre locale, vérifiez les locales installées avec `locale -a`
+  et définissez une valeur appropriée pour $LANG, par exemple :
+  `export LANG=en_US.UTF-8`.
 * Affectez la valeur pour le décodage global, par exemple :
   `/set charset.default.decode "ISO-8859-15"`.
 * Si vous utilisez la locale UTF-8 :

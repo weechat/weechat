@@ -95,10 +95,12 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
   większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat`
 * sprawdź czy wtyczka "charset" jest załadowana za pomocą komendy `/plugin`
   (jeśli nie jest, to najprawdopodobniej potrzebujesz pakietu "weechat-plugins")
+// TRANSLATION MISSING
 * sprawdź wyjście komendy `/charset` (w głównym buforze). Powinieneś zobaczyć
   _ISO-XXXXXX_ lub _UTF-8_ dla kodowania terminala. Jeśli widzisz _ANSI_X3.4-1968_
-  lub inne wartości, twoje ustawienie dla locale najprawdopodobniej jest złe
-  (napraw swoje $LANG).
+  lub inne wartości, twoje ustawienie dla locale najprawdopodobniej jest złe. +
+  To fix your locale, check the installed locales with `locale -a` and set
+  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
 * ustaw globalną wartość dekodowania, na przykład:
   `/set charset.default.decode "ISO-8859-2"`
 * jeśli korzystasz z UTF-8:
