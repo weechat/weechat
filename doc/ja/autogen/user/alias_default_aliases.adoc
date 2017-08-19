@@ -4,7 +4,7 @@
 //
 [width="100%",cols="2m,5m,5",options="header"]
 |===
-| Alias | Command | Completion
+| 別名 | コマンド | 補完
 
 | /AAWAY | /allserv /away | -
 | /AME | /allchan /me | -
