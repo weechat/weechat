@@ -1375,20 +1375,20 @@ TEST(String, Dyn)
     POINTERS_EQUAL(NULL, string_dyn_alloc (-1));
     POINTERS_EQUAL(NULL, string_dyn_alloc (0));
 
-    str = string_dyn_alloc (1);
+    str = string_dyn_alloc (2);
     ptr_string_dyn = (struct t_string_dyn *)str;
     CHECK(str);
     CHECK(*str);
     STRCMP_EQUAL("", *str);
 
     /* check internal structure content */
-    LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(2, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     STRCMP_EQUAL("", ptr_string_dyn->string);
 
     /* check copy with NULL */
     LONGS_EQUAL(1, string_dyn_copy (str, NULL));
-    LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(2, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("", ptr_string_dyn->string);
@@ -1396,7 +1396,7 @@ TEST(String, Dyn)
 
     /* check copy with an empty string */
     LONGS_EQUAL(1, string_dyn_copy (str, ""));
-    LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(2, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("", ptr_string_dyn->string);
