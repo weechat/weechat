@@ -11812,6 +11812,7 @@ Arguments:
 *** 2: forward search (direction: newest messages)
 ** _text_search_exact_: 1 if text search is case sensitive
 ** _text_search_found_: 1 if text found, otherwise 0
+** _max_buffer_lines_number_: history lines limit, -1 if global limit is used
 
 Return value:
 
@@ -12098,6 +12099,10 @@ Properties:
   "0" to disable unknown commands on this buffer (default behavior), "1" to
   get unknown commands, for example if user type "/unknowncmd", buffer will
   receive it (no error about unknown command).
+
+| max_buffer_lines_number | integer |
+ Non-negative integer to override the global history lines limit, "-1" to use
+ the global limit.
 
 | localvar_set_xxx | any string |
   Set new value for local variable _xxx_ (variable is created if it does not

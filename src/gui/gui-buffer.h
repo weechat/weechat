@@ -124,6 +124,7 @@ struct t_gui_buffer
     int time_for_each_line;            /* time is displayed for each line?  */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
                                        /* (1=refresh, 2=erase+refresh)      */
+    int max_buffer_lines_number;       /* override global history limit     */
 
     /* nicklist */
     int nicklist;                      /* = 1 if nicklist is enabled        */
@@ -171,7 +172,7 @@ struct t_gui_buffer
     /* completion */
     struct t_gui_completion *completion; /* completion                      */
 
-    /* history */
+    /* command history */
     struct t_gui_history *history;     /* commands history                  */
     struct t_gui_history *last_history;/* last command in history           */
     struct t_gui_history *ptr_history; /* current command in history        */

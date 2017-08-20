@@ -482,6 +482,12 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     else
         ptr_buffer->filter = 1;
 
+    /* max_buffer_lines_number */
+    if (infolist_search_var (infolist, "max_buffer_lines_number"))
+        ptr_buffer->max_buffer_lines_number = infolist_integer (infolist, "max_buffer_lines_number");
+    else
+        ptr_buffer->max_buffer_lines_number = -1;
+
     /* nicklist */
     ptr_buffer->nicklist_case_sensitive =
         infolist_integer (infolist, "nicklist_case_sensitive");
