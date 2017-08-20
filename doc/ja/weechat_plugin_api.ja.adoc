@@ -2355,7 +2355,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-char **weechat_dyn_alloc (int size_alloc);
+char **weechat_string_dyn_alloc (int size_alloc);
 ----
 
 引数:
@@ -2370,7 +2370,7 @@ C 言語での使用例:
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
+char **string = weechat_string_dyn_alloc (256);
 ----
 
 [NOTE]
@@ -2389,7 +2389,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-int weechat_dyn_copy (char **string, const char *new_string);
+int weechat_string_dyn_copy (char **string, const char *new_string);
 ----
 
 引数:
@@ -2405,8 +2405,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_copy (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_copy (string, "test"))
 {
     /* 成功 */
 }
@@ -2432,7 +2432,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-int weechat_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add);
 ----
 
 引数:
@@ -2448,10 +2448,10 @@ C 言語での使用例:
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_copy (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc"))
     {
         /* ... */
     }
@@ -2471,7 +2471,7 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-char *weechat_dyn_free (char **string, int free_string);
+char *weechat_string_dyn_free (char **string, int free_string);
 ----
 
 引数:
@@ -2488,8 +2488,8 @@ C 言語での使用例:
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_concat (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_concat (string, "test"))
 {
     /* 成功 */
 }
@@ -2498,7 +2498,7 @@ else
     /* 失敗 */
 }
 /* ... */
-weechat_dyn_free (string, 1);
+weechat_string_dyn_free (string, 1);
 ----
 
 [NOTE]

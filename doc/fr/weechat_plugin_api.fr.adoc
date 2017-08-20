@@ -2393,7 +2393,7 @@ Prototype :
 
 [source,C]
 ----
-char **weechat_dyn_alloc (int size_alloc);
+char **weechat_string_dyn_alloc (int size_alloc);
 ----
 
 Paramètres :
@@ -2408,7 +2408,7 @@ Exemple en C :
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
+char **string = weechat_string_dyn_alloc (256);
 ----
 
 [NOTE]
@@ -2427,7 +2427,7 @@ Prototype :
 
 [source,C]
 ----
-int weechat_dyn_copy (char **string, const char *new_string);
+int weechat_string_dyn_copy (char **string, const char *new_string);
 ----
 
 Paramètres :
@@ -2443,8 +2443,8 @@ Exemple en C :
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_copy (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_copy (string, "test"))
 {
     /* OK */
 }
@@ -2470,7 +2470,7 @@ Prototype :
 
 [source,C]
 ----
-int weechat_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add);
 ----
 
 Paramètres :
@@ -2486,10 +2486,10 @@ Exemple en C :
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_copy (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc"))
     {
         /* ... */
     }
@@ -2509,7 +2509,7 @@ Prototype :
 
 [source,C]
 ----
-char *weechat_dyn_free (char **string, int free_string);
+char *weechat_string_dyn_free (char **string, int free_string);
 ----
 
 Paramètres :
@@ -2526,8 +2526,8 @@ Exemple en C :
 
 [source,C]
 ----
-char **string = weechat_dyn_alloc (256);
-if (weechat_dyn_concat (string, "test"))
+char **string = weechat_string_dyn_alloc (256);
+if (weechat_string_dyn_concat (string, "test"))
 {
     /* OK */
 }
@@ -2536,7 +2536,7 @@ else
     /* erreur */
 }
 /* ... */
-weechat_dyn_free (string, 1);
+weechat_string_dyn_free (string, 1);
 ----
 
 [NOTE]
