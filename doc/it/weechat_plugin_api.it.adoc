@@ -12260,6 +12260,8 @@ Argomenti:
 ** _input_: 1 se l'input è abilitato, altrimenti 0
 ** _input_get_unknown_commands_: 1 se i comandi sconosciuti vengono inviati
    alla callback di input, altrimenti 0
+// TRANSLATION MISSING
+** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
 ** _input_size_: dimensione per l'input (in byte)
 ** _input_length_: lunghezza dell'input (numero di caratteri)
 ** _input_pos_: posizione del cursore nell'input del buffer
@@ -12584,6 +12586,10 @@ Properties:
   predefinito), "1" per ricevere i comandi sconosciuti, ad esempio se l'utente
   digita "/unknowncmd", verrà ricevuto dal buffer (nessun errore riguardo il
   comando sconosciuto).
+
+// TRANSLATION MISSING
+| input_get_empty | "0" oppure "1" |
+  "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
 | localvar_set_xxx | qualsiasi stringa |
   Imposta il nuovo valore per la variabile locale _xxx_ (la variabile verrà

@@ -84,9 +84,9 @@ char *gui_buffer_properties_get_integer[] =
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
   "nicklist_visible_count", "input", "input_get_unknown_commands",
-  "input_size", "input_length", "input_pos", "input_1st_display",
-  "num_history", "text_search", "text_search_exact", "text_search_regex",
-  "text_search_where", "text_search_found",
+  "input_get_empty", "input_size", "input_length", "input_pos",
+  "input_1st_display", "num_history", "text_search", "text_search_exact",
+  "text_search_regex", "text_search_where", "text_search_found",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -107,7 +107,7 @@ char *gui_buffer_properties_set[] =
   "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
   "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
   "hotlist_max_level_nicks_del", "input", "input_pos",
-  "input_get_unknown_commands",
+  "input_get_unknown_commands", "input_get_empty",
   NULL
 };
 
@@ -661,6 +661,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->input_callback_pointer = input_callback_pointer;
     new_buffer->input_callback_data = input_callback_data;
     new_buffer->input_get_unknown_commands = 0;
+    new_buffer->input_get_empty = 0;
     gui_buffer_input_buffer_init (new_buffer);
 
     /* undo for input */
@@ -1063,6 +1064,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->input;
     else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
         return buffer->input_get_unknown_commands;
+    else if (string_strcasecmp (property, "input_get_empty") == 0)
+        return buffer->input_get_empty;
     else if (string_strcasecmp (property, "input_size") == 0)
         return buffer->input_buffer_size;
     else if (string_strcasecmp (property, "input_length") == 0)
@@ -1761,6 +1764,20 @@ gui_buffer_set_input_get_unknown_commands (struct t_gui_buffer *buffer,
 }
 
 /*
+ * Sets flag "input_get_empty" for a buffer.
+ */
+
+void
+gui_buffer_set_input_get_empty (struct t_gui_buffer *buffer,
+                                int input_get_empty)
+{
+    if (!buffer)
+        return;
+
+    buffer->input_get_empty = (input_get_empty) ? 1 : 0;
+}
+
+/*
  * Sets unread marker for a buffer.
  */
 
@@ -2024,6 +2041,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_input_get_unknown_commands (buffer, number);
+    }
+    else if (string_strcasecmp (property, "input_get_empty") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_buffer_set_input_get_empty (buffer, number);
     }
     else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
     {
@@ -4125,6 +4149,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, input_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_callback_data, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_get_unknown_commands, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, input_get_empty, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer_alloc, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, input_buffer_size, INTEGER, 0, NULL, NULL);
@@ -4320,6 +4345,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input_get_unknown_commands", buffer->input_get_unknown_commands))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_get_empty", buffer->input_get_empty))
         return 0;
     if (!infolist_new_var_string (ptr_item, "input_buffer", buffer->input_buffer))
         return 0;
@@ -4532,6 +4559,7 @@ gui_buffer_print_log ()
         log_printf ("  input_callback_pointer. : 0x%lx", ptr_buffer->input_callback_pointer);
         log_printf ("  input_callback_data . . : 0x%lx", ptr_buffer->input_callback_data);
         log_printf ("  input_get_unknown_cmd . : %d",    ptr_buffer->input_get_unknown_commands);
+        log_printf ("  input_get_empty . . . . : %d",    ptr_buffer->input_get_empty);
         log_printf ("  input_buffer. . . . . . : '%s'",  ptr_buffer->input_buffer);
         log_printf ("  input_buffer_alloc. . . : %d",    ptr_buffer->input_buffer_alloc);
         log_printf ("  input_buffer_size . . . : %d",    ptr_buffer->input_buffer_size);

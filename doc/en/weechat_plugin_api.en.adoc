@@ -11801,6 +11801,7 @@ Arguments:
 ** _input_: 1 if input is enabled, otherwise 0
 ** _input_get_unknown_commands_: 1 if unknown commands are sent to input
    callback, otherwise 0
+** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
 ** _input_size_: input size (in bytes)
 ** _input_length_: input length (number of chars)
 ** _input_pos_: cursor position in buffer input
@@ -12098,6 +12099,9 @@ Properties:
   "0" to disable unknown commands on this buffer (default behavior), "1" to
   get unknown commands, for example if user type "/unknowncmd", buffer will
   receive it (no error about unknown command).
+
+| input_get_empty | "0" or "1" |
+  "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
 | localvar_set_xxx | any string |
   Set new value for local variable _xxx_ (variable is created if it does not

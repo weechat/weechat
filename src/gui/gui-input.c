@@ -412,7 +412,8 @@ gui_input_return (struct t_gui_buffer *buffer)
         gui_window_bare_display_toggle (NULL);
     }
 
-    if (buffer->input && (buffer->input_buffer_size > 0))
+    if (buffer->input
+        && (buffer->input_get_empty || (buffer->input_buffer_size > 0)))
     {
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
         command = strdup (buffer->input_buffer);

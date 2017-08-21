@@ -194,8 +194,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
 
     rc = WEECHAT_RC_OK;
 
-    if (!buffer || !gui_buffer_valid (buffer)
-        || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
+    if (!buffer || !gui_buffer_valid (buffer) || !data)
     {
         return WEECHAT_RC_ERROR;
     }
@@ -213,12 +212,12 @@ input_data (struct t_gui_buffer *buffer, const char *data)
                                    data);
 
     /* data was dropped? */
-    if (new_data && !new_data[0])
+    if (data[0] && new_data && !new_data[0])
         goto end;
 
     first_command = 1;
     ptr_data = (new_data) ? new_data : data;
-    while (ptr_data && ptr_data[0])
+    while (ptr_data)
     {
         /*
          * if the buffer pointer is not valid any more (or if it's another

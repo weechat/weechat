@@ -534,6 +534,7 @@ _input_callback_   (pointer) +
 _input_callback_pointer_   (pointer) +
 _input_callback_data_   (pointer) +
 _input_get_unknown_commands_   (integer) +
+_input_get_empty_   (integer) +
 _input_buffer_   (string) +
 _input_buffer_alloc_   (integer) +
 _input_buffer_size_   (integer) +

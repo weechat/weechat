@@ -11805,6 +11805,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _input_: 入力可能な場合は 1、そうでない場合は 0
 ** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は
    1、そうでない場合は 0
+// TRANSLATION MISSING
+** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
 ** _input_size_: 入力サイズ (バイト単位)
 ** _input_length_: 入力長 (文字数)
 ** _input_pos_: バッファ入力におけるカーソル位置
@@ -12100,6 +12102,10 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
   指定したバッファに対する未定義のコマンドを無効にする場合は "0"
   (デフォルト)、未定義のコマンドを受け入れる場合は "1"、例えばユーザが "/unknowncmd"
   を入力した場合、バッファはこれを受け入れる (未定義のコマンドに対するエラーを出さない)
+
+// TRANSLATION MISSING
+| input_get_empty | "0" または "1" |
+  "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
 
 | localvar_set_xxx | 任意の文字列 |
   ローカル変数 _xxx_ の新しい値を設定
