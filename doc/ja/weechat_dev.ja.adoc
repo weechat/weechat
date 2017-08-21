@@ -370,14 +370,14 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    XX/                               | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
 |       cmdline_options.XX.adoc        | コマンドラインオプション (man ページとユーザーズガイドに含まれるファイル)
 |       weechat.1.XX.adoc              | man ページ (`man weechat`)
-|       weechat_dev.XX.adoc            | 開発者リファレンス (この文書)
-|       weechat_faq.XX.adoc            | FAQ
-|       weechat_plugin_api.XX.adoc     | プラグイン API リファレンス
-|       weechat_quickstart.XX.adoc     | クイックスタートガイド
-|       weechat_relay_protocol.XX.adoc | リレープロトコル (リモートインターフェイス用)
-|       weechat_scripting.XX.adoc      | スクリプト作成ガイド
-|       weechat_tester.XX.adoc         | テスターガイド
-|       weechat_user.XX.adoc           | ユーザーズガイド
+|       weechat_dev.XX.adoc            | link:weechat_dev.ja.html[開発者リファレンス] (この文書)
+|       weechat_faq.XX.adoc            | link:weechat_faq.ja.html[FAQ]
+|       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.ja.html[プラグイン API リファレンス]
+|       weechat_quickstart.XX.adoc     | link:weechat_quickstart.ja.html[クイックスタートガイド]
+|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.ja.html[リレープロトコル] (リモートインターフェイス用)
+|       weechat_scripting.XX.adoc      | link:weechat_scripting.ja.html[スクリプト作成ガイド]
+|       weechat_tester.XX.adoc         | link:weechat_tester.ja.html[テスターガイド]
+|       weechat_user.XX.adoc           | link:weechat_user.ja.html[ユーザーズガイド]
 |       autogen/                       | docgen.py スクリプトが自動生成するファイル
 |          user/                       | ユーザーズガイド用の自動生成ファイル (手作業による編集は *禁止*!)
 |          plugin_api/                 | プラグイン API 用の自動生成ファイル (手作業による編集は *禁止*!)

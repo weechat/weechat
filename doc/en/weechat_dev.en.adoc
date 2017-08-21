@@ -364,14 +364,14 @@ Documentation files:
 |    XX/                               | Documentation for language XX (languages: en, fr, de, it, ...).
 |       cmdline_options.XX.adoc        | Command-line options (file included in man page and user's guide).
 |       weechat.1.XX.adoc              | Man page (`man weechat`).
-|       weechat_dev.XX.adoc            | Developer's guide (this document).
-|       weechat_faq.XX.adoc            | FAQ.
-|       weechat_plugin_api.XX.adoc     | Plugin API reference.
-|       weechat_quickstart.XX.adoc     | Quickstart guide.
-|       weechat_relay_protocol.XX.adoc | Relay protocol (for remote interfaces).
-|       weechat_scripting.XX.adoc      | Scripting guide.
-|       weechat_tester.XX.adoc         | Tester's guide.
-|       weechat_user.XX.adoc           | User's guide.
+|       weechat_dev.XX.adoc            | link:weechat_dev.en.html[Developer's guide] (this document).
+|       weechat_faq.XX.adoc            | link:weechat_faq.en.html[FAQ].
+|       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.en.html[Plugin API reference].
+|       weechat_quickstart.XX.adoc     | link:weechat_quickstart.en.html[Quickstart guide].
+|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.en.html[Relay protocol] (for remote interfaces).
+|       weechat_scripting.XX.adoc      | link:weechat_scripting.en.html[Scripting guide].
+|       weechat_tester.XX.adoc         | link:weechat_tester.en.html[Tester's guide].
+|       weechat_user.XX.adoc           | link:weechat_user.en.html[User's guide].
 |       autogen/                       | Files auto-built with script docgen.py.
 |          user/                       | Files auto-built for user's guide (do *NEVER* update manually!).
 |          plugin_api/                 | Files auto-built for plugin API (do *NEVER* update manually!).

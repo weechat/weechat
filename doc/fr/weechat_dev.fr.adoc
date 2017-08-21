@@ -366,14 +366,14 @@ Fichiers de documentation :
 |    XX/                               | Documentation pour la langue XX (langues : en, fr, de, it, ...).
 |       cmdline_options.XX.adoc        | Options de ligne de commande (fichier inclus dans la page de manuel et le guide utilisateur).
 |       weechat.1.XX.adoc              | Page de manuel (`man weechat`).
-|       weechat_dev.XX.adoc            | Guide du développeur (ce document).
-|       weechat_faq.XX.adoc            | FAQ (questions fréquemment posées).
-|       weechat_plugin_api.XX.adoc     | Référence API extension.
-|       weechat_quickstart.XX.adoc     | Guide de démarrage.
-|       weechat_relay_protocol.XX.adoc | Protocole Relay (pour les interfaces distantes).
-|       weechat_scripting.XX.adoc      | Guide pour scripts.
-|       weechat_tester.XX.adoc         | Guide du testeur.
-|       weechat_user.XX.adoc           | Guide utilisateur.
+|       weechat_dev.XX.adoc            | link:weechat_dev.fr.html[Guide du développeur] (ce document).
+|       weechat_faq.XX.adoc            | link:weechat_faq.fr.html[FAQ] (questions fréquemment posées).
+|       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.fr.html[Référence API extension].
+|       weechat_quickstart.XX.adoc     | link:weechat_quickstart.fr.html[Guide de démarrage].
+|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.fr.html[Protocole Relay (pour les interfaces distantes)].
+|       weechat_scripting.XX.adoc      | link:weechat_scripting.fr.html[Guide pour scripts].
+|       weechat_tester.XX.adoc         | link:weechat_tester.fr.html[Guide du testeur].
+|       weechat_user.XX.adoc           | link:weechat_user.fr.html[Guide utilisateur].
 |       autogen/                       | Fichiers automatiquement générés avec le script docgen.py.
 |          user/                       | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !).
 |          plugin_api/                 | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !).
