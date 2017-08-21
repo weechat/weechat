@@ -229,9 +229,10 @@ directory _autoload_ viene creato automaticamente'.
 [[differences_with_c_api]]
 == Differenze con le API in C
 
-Le API per gli script sono quasi identiche di quelle per i plugin C.
-È possibile consultare _*_ per i dettagli su ogni funzione nelle API:
-prototipo, argomenti, valori restituiti, esempi.
+// TRANSLATION MISSING
+Script API is almost the same as C plugin API.
+You can look at link:weechat_plugin_api.it.html[WeeChat plugin API reference]
+for detail about each function in API: prototype, arguments, return values, examples.
 
 È importante fare la differenza tra un _plugin_ ed uno _script_:
 un plugin è un file binario compilato e caricato con il comando
@@ -389,8 +390,9 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 [[script_api]]
 == Script API
 
-Per maggiori informazioni sulle funzioni nelle API,
-consultare _Referenze API per Plugin di WeeChat_.
+// TRANSLATION MISSING
+For more information about functions in API, please read the
+link:weechat_plugin_api.it.html[WeeChat plugin API reference].
 
 [[script_api_functions]]
 === Funzioni
@@ -700,10 +702,10 @@ Elenco di costanti nelle API per gli script:
 [[common_tasks]]
 == Compiti comuni
 
-Questo capitolo spiega alcuni compiti comuni, con degli esempi.
-Verranno utilizzati soltanto degli elementi parziali contenuti
-nelle API, per un riferimento completo consultare
-_Referenze API per Plugin di WeeChat_.
+// TRANSLATION MISSING
+This chapter shows some common tasks, with examples.
+Only partial things in API are used here, for full reference, see the
+link:weechat_plugin_api.it.html[WeeChat plugin API reference].
 
 [[buffers]]
 === Buffer
@@ -971,9 +973,10 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-Per maggiori informazioni sul trasferimento degli URL e le opzioni disponibili,
-consultare le funzioni `hook_process` e `hook_process_hashtable` in
-_Referenze API per Plugin_.
+// TRANSLATION MISSING
+For more information about URL transfer and available options, see functions
+`hook_process` and `hook_process_hashtable` in
+link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference].
 
 [[config_options]]
 === Configurazione / opzioni

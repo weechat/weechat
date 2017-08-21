@@ -231,7 +231,7 @@ ein Link in das entsprechende _autoload_ Verzeichnis erzeugt.
 Die Skripten API ist nahezu identisch mit der API der C Erweiterung.
 Um einen Überblick über alle API Funktionen (Prototyp, Argumente,
 Rückgabe werte, Beispiele) zu erhalten werfen Sie einen Blick in
-die _WeeChat Plugin API Reference_.
+die link:weechat_plugin_api.en.html[WeeChat Plugin API Reference] (Englisch).
 Es ist wichtig das man zwischen einer _Erweiterung_ und einem _Skript_
 unterscheidet: Eine _Erweiterung_ ist eine Binärdatei die kompiliert wurde
 und mittels `/plugin` geladen wird. Ein _Skript_ ist eine Textdatei welche
@@ -388,7 +388,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == Skript API
 
 Um weiterführende Informationen zu den API Funktionen zu erhalten
-lesen Sie bitte _WeeChat Plugin API Reference_.
+lesen Sie bitte link:weechat_plugin_api.en.html[WeeChat Plugin API Reference] (Englisch).
 
 [[script_api_functions]]
 === Funktionen
@@ -697,7 +697,8 @@ Liste der Konstanten in Skript API:
 
 Dieses Kapitel beinhaltet einige Aufgaben mit Lösungsbeispielen.
 Die Skript API wird dabei nur sehr oberflächlich besprochen.Um eine vollständige
-Übersicht aller Befehle zu erhalten nutzen Sie bitte die _WeeChat Plugin API Reference_.
+Übersicht aller Befehle zu erhalten nutzen Sie bitte die
+link:weechat_plugin_api.en.html[WeeChat Plugin API Reference] (Englisch).
 
 [[buffers]]
 === Buffer
@@ -965,8 +966,10 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-Für weiterführende Informationen zum URL Transfer und für die verfügbaren Optionen,
-siehe `hook_process` und `hook_process_hashtable` in der API Erweiterung Anleitung.
+// TRANSLATION MISSING
+For more information about URL transfer and available options, see functions
+`hook_process` and `hook_process_hashtable` in
+link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
 
 [[config_options]]
 === Konfiguration / Optionen

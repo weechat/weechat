@@ -227,8 +227,9 @@ dowiązanie w katalogu _autoload_.
 == Różnice pomiędzy API dla C
 
 API skryptów jest prawie takie same jak API dla wtyczek pisanych w C.
-Możesz zajrzeć do _Opisu API wtyczek WeeChat_ po więcej informacji na temat
-każdej z funkcji API: prototyp, argumenty, zwracane wartości, przykłady.
+Możesz zajrzeć do link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski)
+po więcej informacji na temat każdej z funkcji API: prototyp, argumenty,
+zwracane wartości, przykłady.
 
 Ważne jest rozróżnienie _wtyczki_ od _skryptu_: _wtyczka_ jest plikiem binarnym
 skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast _skrypt_ jest
@@ -379,7 +380,8 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 [[script_api]]
 == API skryptów
 
-Więcej informacji o funkcjach w API, znajdziesz w _Opisie API wtyczek WeeChat_.
+Więcej informacji o funkcjach w API, znajdziesz w
+link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski).
 
 [[script_api_functions]]
 === Fukcje
@@ -688,7 +690,7 @@ Lista stałych w API skryptów:
 
 Ten rozdział przedstawia część częstych zadań z przykładami.
 Użyto tu tylko część rzeczy dostępnych w API, dokładne informacje można znaleźć
-w _Opisie API wtyczek WeeChat_.
+w link:weechat_plugin_api.en.html[Opisu API wtyczek WeeChat] (Angielski).
 
 [[buffers]]
 === Bufory
@@ -949,7 +951,8 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 Więcej informacji o transferach URL i dostępnych opcjach dla funkcji
-`hook_process` oraz `hook_process_hashtable` można znaleźć w _Opisie API wtyczek_.
+`hook_process` oraz `hook_process_hashtable` można znaleźć w
+link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angielski).
 
 [[config_options]]
 === Konfiguracja / opcje

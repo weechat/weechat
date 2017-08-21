@@ -226,8 +226,9 @@ dans le répertoire _autoload_ est automatiquement créé.
 == Différences avec l'API C
 
 L'API script est quasiment identique à l'API C.
-Vous pouvez consulter la _Référence API Extension WeeChat_ pour le détail de
-chaque fonction de l'API : prototype, paramètres, valeurs de retour, exemples.
+Vous pouvez consulter la link:weechat_plugin_api.fr.html[Référence API extension WeeChat]
+pour le détail de chaque fonction de l'API : prototype, paramètres, valeurs
+de retour, exemples.
 
 Il est important de bien faire la différence entre une _extension_ et un
 _script_ : une _extension_ est un fichier binaire compilé et chargé avec la
@@ -386,7 +387,7 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 == API script
 
 Pour plus d'informations sur les fonctions de l'API, merci de consulter la
-_Référence API Extension WeeChat_.
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat].
 
 [[script_api_functions]]
 === Fonctions
@@ -696,7 +697,7 @@ Liste des constantes de l'API script :
 
 Ce chapitre montre quelques tâches courantes, avec des exemples.
 Seule une partie de l'API est utilisée ici, pour une référence complète, voir la
-_Référence API Extension WeeChat_.
+link:weechat_plugin_api.fr.html[Référence API extension WeeChat].
 
 [[buffers]]
 === Tampons
@@ -967,7 +968,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 Pour plus d'information sur le transfert d'URL et les options disponibles, voir
 les fonctions `hook_process` et `hook_process_hashtable` dans la
-_Référence API Extension WeeChat_.
+link:weechat_plugin_api.fr.html#_hook_process[Référence API extension WeeChat].
 
 [[config_options]]
 === Config / options

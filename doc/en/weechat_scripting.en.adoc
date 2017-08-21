@@ -221,8 +221,8 @@ directory is automatically created.
 == Differences with C API
 
 Script API is almost the same as C plugin API.
-You can look at _WeeChat Plugin API Reference_ for detail about each function
-in API: prototype, arguments, return values, examples.
+You can look at link:weechat_plugin_api.en.html[WeeChat plugin API reference]
+for detail about each function in API: prototype, arguments, return values, examples.
 
 It's important to make difference between a _plugin_ and a _script_: a
 _plugin_ is a binary file compiled and loaded with command `/plugin`, whereas
@@ -374,8 +374,8 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 [[script_api]]
 == Script API
 
-For more information about functions in API, please read
-_WeeChat Plugin API Reference_.
+For more information about functions in API, please read the
+link:weechat_plugin_api.en.html[WeeChat plugin API reference].
 
 [[script_api_functions]]
 === Functions
@@ -683,8 +683,8 @@ List of constants in script API:
 == Common tasks
 
 This chapter shows some common tasks, with examples.
-Only partial things in API are used here, for full reference, see
-_WeeChat Plugin API Reference_.
+Only partial things in API are used here, for full reference, see the
+link:weechat_plugin_api.en.html[WeeChat plugin API reference].
 
 [[buffers]]
 === Buffers
@@ -945,7 +945,8 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in _WeeChat Plugin API Reference_.
+`hook_process` and `hook_process_hashtable` in
+link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference].
 
 [[config_options]]
 === Config / options

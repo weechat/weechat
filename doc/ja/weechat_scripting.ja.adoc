@@ -226,9 +226,10 @@ $ ln -s ../script.py
 [[differences_with_c_api]]
 == C API との違い
 
-スクリプト API は C 言語プラグイン API とほぼ同じです。API
-に含まれる各関数の詳細については、_WeeChat プラグイン API リファレンス_
-をご覧ください: プロトタイプ、引数、戻り値、例。
+// TRANSLATION MISSING
+Script API is almost the same as C plugin API.
+You can look at link:weechat_plugin_api.ja.html[WeeChat plugin API reference]
+for detail about each function in API: prototype, arguments, return values, examples.
 
 _プラグイン_ と _スクリプト_ の違いを理解することは重要です:
 _プラグイン_ とはコンパイル済みバイナリファイルで `/plugin` コマンドを使ってロードします、これに対して
@@ -382,8 +383,9 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 [[script_api]]
 == スクリプト API
 
-API に含まれる関数の詳しい情報は
-_WeeChat プラグイン API リファレンス_ をご覧ください。
+// TRANSLATION MISSING
+For more information about functions in API, please read the
+link:weechat_plugin_api.ja.html[WeeChat plugin API reference].
 
 [[script_api_functions]]
 === 関数
@@ -690,9 +692,10 @@ _WeeChat プラグイン API リファレンス_ をご覧ください。
 [[common_tasks]]
 == 良くあるタスク
 
-この章ではいくつかの良くあるタスクを例を交えて紹介します。ここでは
-API の一部の機能を使っています。完全なリファレンスは
-_WeeChat プラグイン API リファレンス_ をご覧ください。
+// TRANSLATION MISSING
+This chapter shows some common tasks, with examples.
+Only partial things in API are used here, for full reference, see the
+link:weechat_plugin_api.ja.html[WeeChat plugin API reference].
 
 [[buffers]]
 === バッファ
@@ -952,8 +955,10 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-URL 転送に関するより詳しい情報と利用可能なオプションを見るには、
-_WeeChat プラグイン API リファレンス_ の `hook_process` と `hook_process_hashtable` をご覧ください。
+// TRANSLATION MISSING
+For more information about URL transfer and available options, see functions
+`hook_process` and `hook_process_hashtable` in
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat plugin API reference].
 
 [[config_options]]
 === 設定 / オプション
