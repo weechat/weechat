@@ -87,7 +87,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 Per l'aiuto digitare `/help`. Per l'aiuto su un comando, digitare `/help comando`.
 Tasti e comandi sono elencati nella documentazione.
 
-Si raccomanda ai nuovi utenti di leggere la guida rapida: https://weechat.org/doc
+// TRANSLATION MISSING
+It's recommended for new users to read the
+link:weechat_quickstart.it.html[Quickstart guide].
 
 [[display]]
 == Visualizzare
@@ -281,7 +283,8 @@ These colors can be changed with the options __weechat.color.status_data_*__
 (buffers) and __weechat.color.status_count_*__ (counters). +
 Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
 
-See user's guide for more info about the hotlist (screen layout).
+See link:weechat_user.it.html#screen_layout[User's guide / Screen layout] for
+more info about the hotlist.
 
 [[input_bar_size]]
 === Come posso usare la riga di comando con più di una riga?
@@ -447,8 +450,9 @@ Per la versione 0.3.4, bisogna usare il comando `/color` per aggiungere nuovi co
 Per le versioni ≥ 0.3.5, è possibile usare qualsiasi numero di colore nelle
 opzioni (opzionale: si possono aggiungere gli alias ai colori con il comando `/color`).
 
-Per favore consultare la guida per l'utente per maggiori informazioni sulla gestione
-dei colori.
+// TRANSLATION MISSING
+Please read the link:weechat_user.it.html#colors[User's guide / Colors] for more
+information about colors management.
 
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
@@ -456,8 +460,9 @@ dei colori.
 Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `/input search_text_here`).
 E per passare alle notifiche: kbd:[Alt+p] / kbd:[Alt+n].
 
-Consultare la guida per l'utente per maggiori informazioni su questa funzione
-(combinazioni tasti predefiniti).
+// TRANSLATION MISSING
+See link:weechat_user.it.html#key_bindings[User's guide / Key bindings] for more
+info about this feature.
 
 // TRANSLATION MISSING
 [[terminal_focus]]
@@ -537,8 +542,9 @@ kbd:[1] per passare al buffer 11.
 /key bind meta-q /buffer *11
 ----
 
-List of default keys is in User's guide.
-L'elenco dei tasti predefiniti è nella Guida dell'utente.
+// TRANSLATION MISSING
+List of default keys is in
+link:weechat_user.it.html#key_bindings[User's guide / Key bindings].
 
 [[global_history]]
 === Come si può usare la cronologia globale (invece di quella del buffer) con i tasti su e giù?

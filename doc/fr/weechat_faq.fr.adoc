@@ -77,8 +77,8 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
 `/help commande`. Les touches et commandes sont listées dans la documentation.
 
-Il est recommandé pour les nouveaux utilisateurs de lire le guide de démarrage
-rapide : https://weechat.org/doc
+Il est recommandé pour les nouveaux utilisateurs de lire le
+link:weechat_quickstart.fr.html[Guide de démarrage rapide].
 
 [[display]]
 == Affichage
@@ -267,8 +267,8 @@ Ces couleurs peuvent être changées via les options __weechat.color.status_data
 Les autres options pour la "hotlist" peuvent être changées via les options
 __weechat.look.hotlist_*__.
 
-Voir le guide utilisateur pour plus d'information sur la "hotlist" (organisation
-de l'écran).
+Voir le link:weechat_user.fr.html#screen_layout[Guide utilisateur / Organisation de l'écran]
+pour plus d'information sur la "hotlist".
 
 [[input_bar_size]]
 === Comment utiliser une ligne de commande sur plusieurs lignes ?
@@ -429,8 +429,8 @@ Pour les versions ≥ 0.3.5, vous pouvez utiliser un numéro de couleur dans les
 options (facultatif : vous pouvez ajouter des alias de couleurs avec la commande
 `/color`).
 
-Merci de lire le guide utilisateur pour plus d'information sur la gestion des
-couleurs.
+Merci de lire le link:weechat_user.fr.html#colors[Guide utilisateur / Couleurs] pour
+plus d'information sur la gestion des couleurs.
 
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
@@ -438,8 +438,8 @@ couleurs.
 La touche par défaut est kbd:[Ctrl+r] (la commande est : `/input search_text_here`).
 Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
-Voir le guide utilisateur pour plus d'information sur cette fonctionnalité
-(raccourcis clavier par défaut).
+Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut]
+pour plus d'information sur cette fonctionnalité.
 
 [[terminal_focus]]
 === Comment puis-je exécuter des commandes lorsque le terminal obtient/perd le focus ?
@@ -519,7 +519,8 @@ Vous pouvez définir une touche, par exemple :
 /key bind meta-q /buffer *11
 ----
 
-La liste des touches par défaut est dans le Guide utilisateur.
+La liste des touches par défaut est dans le
+link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut].
 
 [[global_history]]
 === Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?

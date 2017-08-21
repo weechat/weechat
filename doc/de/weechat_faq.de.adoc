@@ -88,8 +88,9 @@ Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 beschrieben. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweise
 in den Buffern blättern)
 
-Neue Benutzer sollten unbedingt die quickstart-Anleitung lesen:
-https://weechat.org/doc
+// TRANSLATION MISSING
+It's recommended for new users to read the
+link:weechat_quickstart.de.html[Quickstart guide].
 
 [[display]]
 == Anzeige
@@ -279,7 +280,9 @@ Diese Farben können mit den Optionen __weechat.color.status_data_*__
 Weitere hotlist Eigenschaften können den Optionen  __weechat.look.hotlist_*__
 verändert werden.
 
-siehe Benutzeranleitung für weitere Informationen bezüglich der Hotlist (screen layout).
+// TRANSLATION MISSING
+See link:weechat_user.de.html#screen_layout[User's guide / Screen layout] for
+more info about the hotlist.
 
 [[input_bar_size]]
 === Wie kann man eine mehrzeilige Eingabezeile einstellen?
@@ -438,7 +441,9 @@ Ab Version ≥ 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entspr
 Zahl der Farbe eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
 eine Farbe definieren).
 
-Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranleitung.
+// TRANSLATION MISSING
+Please read the link:weechat_user.de.html#colors[User's guide / Colors] for more
+information about colors management.
 
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
@@ -446,7 +451,9 @@ Weiterführende Informationen zum Farbmanagement erhält man in der Benutzeranle
 Die Standardtastenbelegung lautet kbd:[Ctrl+r] (der dazugehörige Befehl: `/input search_text_here`).
 und um zu Highlight-Nachrichten zu springen: kbd:[Alt+p] / kbd:[Alt+n].
 
-Siehe Benutzeranleitung für weitere Informationen zu dieser Funktion (Standardtastenbelegung).
+// TRANSLATION MISSING
+See link:weechat_user.de.html#key_bindings[User's guide / Key bindings] for more
+info about this feature.
 
 [[terminal_focus]]
 === Wie kann ich Befehle ausführen, wenn der Terminal (keinen) Fokus hat?
@@ -528,7 +535,9 @@ Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 /key bind meta-q /buffer *11
 ----
 
-Eine Auflistung der Standardtastenbelegung findet man in der Benutzeranleitung.
+// TRANSLATION MISSING
+List of default keys is in
+link:weechat_user.de.html#key_bindings[User's guide / Key bindings].
 
 [[global_history]]
 === Wie kann ich den globalen Verlaufsspeicher (anstelle des Buffer eigenen) mit den Up-/Down-Tasten nutzen?

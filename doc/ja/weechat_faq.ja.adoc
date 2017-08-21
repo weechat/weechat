@@ -80,8 +80,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
 と入力してください。キーとコマンドはドキュメント内にリストアップされています。
 
-新しいユーザはクイックスタートガイドを読むことをお勧めします:
-https://weechat.org/doc
+// TRANSLATION MISSING
+It's recommended for new users to read the
+link:weechat_quickstart.ja.html[Quickstart guide].
 
 [[display]]
 == 表示
@@ -260,7 +261,9 @@ kbd:[Alt+k] の後にキーを押してください。
 および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
 その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-ホットリストに関する詳しい情報はユーザーズガイド (画面レイアウト) をご覧ください。
+// TRANSLATION MISSING
+See link:weechat_user.ja.html#screen_layout[User's guide / Screen layout] for
+more info about the hotlist.
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
@@ -412,7 +415,9 @@ WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/co
 WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
 色の別名を追加するには `/color` コマンドを使ってください)。
 
-色管理に関するより詳しい情報はユーザーズガイドを読んでください。
+// TRANSLATION MISSING
+Please read the link:weechat_user.ja.html#colors[User's guide / Colors] for more
+information about colors management.
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -420,7 +425,9 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-この機能に関するより詳しい情報はユーザーズガイドを参照してください (デフォルトのキー割り当て)。
+// TRANSLATION MISSING
+See link:weechat_user.ja.html#key_bindings[User's guide / Key bindings] for more
+info about this feature.
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -497,7 +504,9 @@ UXTerm*metaSendsEscape: true
 /key bind meta-q /buffer *11
 ----
 
-デフォルトキー割り当てのリストはユーザーズガイドを参照してください。
+// TRANSLATION MISSING
+List of default keys is in
+link:weechat_user.ja.html#key_bindings[User's guide / Key bindings].
 
 [[global_history]]
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。

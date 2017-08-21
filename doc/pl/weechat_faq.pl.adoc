@@ -80,8 +80,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
 Klawisze i komendy są wypisane w dokumentacji.
 
-Nowym użytkownikom zaleca się przeczytanie quickstart (szybki start):
-https://weechat.org/doc
+// TRANSLATION MISSING
+It's recommended for new users to read the
+link:weechat_quickstart.pl.html[Quickstart guide].
 
 [[display]]
 == Wyświetlanie
@@ -263,7 +264,9 @@ Kolory można zmienić za pomocą opcji __weechat.color.status_data_*__
 (bufory) i __weechat.color.status_count_*__ (liczniki). +
 Pozostałe opcje hotlist można zmienić za pomocą opcji __weechat.look.hotlist_*__.
 
-Więcej informacji na temat hotlisty można znaleźć w poradniku użytkownika (sekcja układ ekranu).
+// TRANSLATION MISSING
+See link:weechat_user.pl.html#screen_layout[User's guide / Screen layout] for
+more info about the hotlist.
 
 [[input_bar_size]]
 === Jak używać linii poleceń z więcej niż jednym wierszem?
@@ -419,7 +422,9 @@ Dla wersji 0.3.4, musisz użyć komendy `/color` w celu dodania nowych kolorów.
 Dla wersji ≥ 0.3.5, można używać dowolnego numeru koloru w opcjach (opcjonalnie:
 można stworzyć alias dla koloru za pomocą komendy `/color`).
 
-Więcej informacji na temat zarządzania kolorami można uzyskać w poradniku użytkownika.
+// TRANSLATION MISSING
+Please read the link:weechat_user.pl.html#colors[User's guide / Colors] for more
+information about colors management.
 
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
@@ -428,7 +433,9 @@ Domyślny skrót klawiszowy to kbd:[Ctrl+r] (komenda: `/input search_text_here`)
 
 Poruszanie się między podświetleniami: kbd:[Alt+p] / kbd:[Alt+n].
 
-Po więcej informacji zajrzyj do poradnika użytkownika (domyślne skróty klawiszowe).
+// TRANSLATION MISSING
+See link:weechat_user.pl.html#key_bindings[User's guide / Key bindings] for more
+info about this feature.
 
 [[terminal_focus]]
 === Jak mogę wykonywać komendy, kiedy terminal stanie się/przestanie być aktywny?
@@ -506,7 +513,9 @@ Można również samemu stworzyć skrót, na przykład:
 /key bind meta-q /buffer *11
 ----
 
-Lista domyślnych skrótów znajduje się w poradniku użytkownika.
+// TRANSLATION MISSING
+List of default keys is in
+link:weechat_user.pl.html#key_bindings[User's guide / Key bindings].
 
 [[global_history]]
 === Jak używać globalnej historii (zamiast historii buforu) za pomocą strzałek góra/dół?

@@ -75,8 +75,8 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 For help you can type `/help`. For help about a command, type `/help command`.
 Keys and commands are listed in documentation.
 
-It's recommended for new users to read the quickstart guide:
-https://weechat.org/doc
+It's recommended for new users to read the
+link:weechat_quickstart.en.html[Quickstart guide].
 
 [[display]]
 == Display
@@ -257,7 +257,8 @@ These colors can be changed with the options __weechat.color.status_data_*__
 (buffers) and __weechat.color.status_count_*__ (counters). +
 Other hotlist options can be changed with the options __weechat.look.hotlist_*__.
 
-See user's guide for more info about the hotlist (screen layout).
+See link:weechat_user.en.html#screen_layout[User's guide / Screen layout] for
+more info about the hotlist.
 
 [[input_bar_size]]
 === How to use command line with more than one line?
@@ -410,7 +411,8 @@ For version 0.3.4, you must use command `/color` to add new colors.
 For versions ≥ 0.3.5, you can use any color number in options (optional: you
 can add color aliases with command `/color`).
 
-Please read user's guide for more information about colors management.
+Please read the link:weechat_user.en.html#colors[User's guide / Colors] for more
+information about colors management.
 
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
@@ -418,7 +420,8 @@ Please read user's guide for more information about colors management.
 The default key is kbd:[Ctrl+r] (command is: `/input search_text_here`).
 And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
 
-See user's guide for more info about this feature (default key bindings).
+See link:weechat_user.en.html#key_bindings[User's guide / Key bindings] for more
+info about this feature.
 
 [[terminal_focus]]
 === How can I execute commands when terminal gets/loses focus?
@@ -495,7 +498,8 @@ You can bind a key, for example:
 /key bind meta-q /buffer *11
 ----
 
-List of default keys is in User's guide.
+List of default keys is in
+link:weechat_user.en.html#key_bindings[User's guide / Key bindings].
 
 [[global_history]]
 === How to use global history (instead of buffer history) with up and down keys?
