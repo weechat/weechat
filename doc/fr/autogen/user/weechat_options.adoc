@@ -951,7 +951,7 @@
 ** valeur par défaut: `+10+`
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** description: pass:none[nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (-1 = désactiver cette fonctionnalité)]
+** description: pass:none[nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (-1 = désactiver cette fonctionnalité) ; cette option est utilisée seulement si l'objet de barre "input_paste" est utilisé dans au moins une barre (par défaut il est utilisé dans la barre "input")]
 ** type: entier
 ** valeurs: -1 .. 2147483647
 ** valeur par défaut: `+1+`

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-08-12 14:22+0200\n"
+"POT-Creation-Date: 2017-08-21 07:46+0200\n"
 "PO-Revision-Date: 2017-06-26 23:32+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2912,12 +2912,11 @@ msgid ""
 "sequence for end of bracketed paste (\"ESC[201~\") was not received in time"
 msgstr ""
 
-#, fuzzy
 msgid ""
-"max number of lines for paste without asking user (-1 = disable this feature)"
+"max number of lines for paste without asking user (-1 = disable this "
+"feature); this option is used only if the bar item \"input_paste\" is used "
+"in at least one bar (by default it is used in \"input\" bar)"
 msgstr ""
-"maximálisan beilleszthető sorok száma a felhasználó megkérdezése nélkül (0 = "
-"szolgáltatás kikapcsolása)"
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
 msgid ""
@@ -11594,3 +11593,11 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "max number of lines for paste without asking user (-1 = disable this "
+#~ "feature)"
+#~ msgstr ""
+#~ "maximálisan beilleszthető sorok száma a felhasználó megkérdezése nélkül "
+#~ "(0 = szolgáltatás kikapcsolása)"

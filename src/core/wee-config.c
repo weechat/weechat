@@ -3139,7 +3139,9 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "paste_max_lines", "integer",
         N_("max number of lines for paste without asking user "
-           "(-1 = disable this feature)"),
+           "(-1 = disable this feature); this option is used only if the bar "
+           "item \"input_paste\" is used in at least one bar (by default it "
+           "is used in \"input\" bar)"),
         NULL, -1, INT_MAX, "1", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (

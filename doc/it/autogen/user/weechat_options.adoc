@@ -951,7 +951,7 @@
 ** valore predefinito: `+10+`
 
 * [[option_weechat.look.paste_max_lines]] *weechat.look.paste_max_lines*
-** descrizione: pass:none[numero massimo di righe da incollare senza conferma dell'utente (-1 = disabilita questa caratteristica)]
+** descrizione: pass:none[max number of lines for paste without asking user (-1 = disable this feature); this option is used only if the bar item "input_paste" is used in at least one bar (by default it is used in "input" bar)]
 ** tipo: intero
 ** valori: -1 .. 2147483647
 ** valore predefinito: `+1+`
