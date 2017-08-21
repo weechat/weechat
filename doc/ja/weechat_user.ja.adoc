@@ -1810,7 +1810,7 @@ WeeChat でマウスを有効化した場合、すべてのマウスイベント
 (一部の端末、例えば iTerm などでは kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
 
 [NOTE]
-マウスに関するトラブルがあれば _WeeChat FAQ_ を参照してください。
+マウスに関するトラブルがあれば link:weechat_faq.ja.html#mouse[WeeChat FAQ / Mouse] を参照してください。
 
 [[mouse_bind_events]]
 ==== コマンドに対してマウスイベントを割り当てる
@@ -2087,8 +2087,10 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | xfer       | ファイル転送とダイレクトチャット
 |===
 
-API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには、_WeeChat
-プラグイン API リファレンス_ または _WeeChat スクリプト作成ガイド_ を参照してください。
+// TRANSLATION MISSING
+To learn more about plugin or script development (through API), please read the
+link:weechat_plugin_api.ja.html[WeeChat plugin API reference] or the
+link:weechat_scripting.ja.html[WeeChat scripting guide].
 
 [[alias_plugin]]
 === Alias
@@ -2339,7 +2341,7 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 [[charset_troubleshooting]]
 ==== トラブルシューティング
 
-文字コードに関する問題があれば、_WeeChat FAQ_ を参照してください。
+文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ / Charset] を参照してください。
 
 [[charset_commands]]
 ==== コマンド
@@ -3266,8 +3268,9 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
 のスクリプトをインストール/削除したりする事が可能です。
 
-スクリプトの書き方やスクリプト用の WeeChat API
-についての詳しい情報は、_WeeChat スクリプト作成ガイド_ を参照してください。
+// TRANSLATION MISSING
+For more information about how to write scripts, or WeeChat API for
+scripts, please read the link:weechat_scripting.ja.html[WeeChat scripting guide].
 
 [[script_commands]]
 ==== Script コマンド
@@ -3334,9 +3337,10 @@ include::autogen/user/script_options.adoc[]
 (signal、modifier、print、...)
 をフックして、データの内容を書き換えたり、複数のコマンドを実行することができます。条件をつけることで一部の場合だけトリガを実行するように設定することもできます。
 
-トリガを使うにはシグナル、修飾子、...
-がどのように動いているかを知らなければいけません。これを知るには _WeeChat
-プラグイン API リファレンス_ の _フック_ の章を読むことをお勧めします。
+// TRANSLATION MISSING
+Using triggers require you to know how the signals, modifiers, ... are working.
+So you might consider reading the
+link:weechat_plugin_api.ja.html#hooks[WeeChat plugin API reference / Hooks].
 
 [[trigger_anatomy]]
 ==== トリガの構造
@@ -3352,10 +3356,10 @@ include::autogen/user/script_options.adoc[]
   オプションが `off`
   の場合、トリガは無効化され、アクションは実行されません。
 
-| hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、`timer`、`config`、`focus`
-  |
-  トリガの中で使われるフック。より詳しい情報は、_WeeChat
-  プラグイン API リファレンス_ の _フック_ の章を参照してください。
+// TRANSLATION MISSING
+| hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、`timer`、`config`、`focus` |
+  The hook used in trigger. For more information, see
+  link:weechat_plugin_api.ja.html#hooks[WeeChat plugin API reference / Hooks].
 
 | arguments | 文字列 |
   フックに対する引数、指定したフックの型に依存します。
@@ -3411,9 +3415,10 @@ trigger.trigger.beep.post_action = none
 
 引数は使用するフックの種類に依存します。引数はセミコロンで区切ってください。
 
-[width="100%",cols="2,6,7",options="header"]
+[width="100%",cols="2,6,7,2",options="header"]
 |===
-| フック | 引数 | 例
+// TRANSLATION MISSING
+| フック | 引数 | 例 | Documentation (API)
 
 | signal |
   1. シグナル名 (優先度の指定も可) (必須) +
@@ -3421,20 +3426,23 @@ trigger.trigger.beep.post_action = none
   3. ... |
   `+*,irc_in_privmsg+` +
   `+*,irc_in_privmsg;*,irc_in_notice+` +
-  `+signal_sigwinch+`
+  `+signal_sigwinch+` |
+  link:weechat_plugin_api.ja.html#_hook_signal[hook_signal]
 
 | hsignal |
   1. シグナル名 (優先度の指定も可) (必須) +
   2. シグナル名 (優先度の指定も可) +
   3. ... |
-  `+nicklist_nick_added+`
+  `+nicklist_nick_added+` |
+  link:weechat_plugin_api.ja.html#_hook_hsignal[hook_hsignal]
 
 | modifier |
   1. 修飾子名 (優先度の指定も可) (必須) +
   2. 修飾子名 (優先度の指定も可) +
   3. ... |
   `+weechat_print+` +
-  `+5000\|input_text_display;5000\|history_add+`
+  `+5000\|input_text_display;5000\|history_add+` |
+  link:weechat_plugin_api.ja.html#_hook_modifier[hook_modifier]
 
 | print |
   1. バッファ名 +
@@ -3444,7 +3452,8 @@ trigger.trigger.beep.post_action = none
   `+irc.freenode.*+` +
   `+irc.freenode.#weechat+` +
   `+irc.freenode.#weechat;irc_notice+` +
-  `+*;;;1+`
+  `+*;;;1+` |
+  link:weechat_plugin_api.ja.html#_hook_print[hook_print]
 
 | command |
   1. コマンド名 (優先度の指定も可) (必須) +
@@ -3453,32 +3462,37 @@ trigger.trigger.beep.post_action = none
   4. 引数の説明 +
   5. 補完 |
   `+test+` +
-  `+5000\|test+`
+  `+5000\|test+` |
+  link:weechat_plugin_api.ja.html#_hook_command[hook_command]
 
 | command_run |
   1. コマンド (優先度の指定も可) (必須) +
   2. コマンド (優先度の指定も可) +
   3. ... |
-  `+/cmd arguments+`
+  `+/cmd arguments+` |
+  link:weechat_plugin_api.ja.html#_hook_command_run[hook_command_run]
 
 | timer |
   1. インターバルするミリ秒数 (必須) +
   2. 秒の調整 (デフォルト: 0) +
   3. 呼び出し回数の最大値 (デフォルト: 0、「無限に」呼び出すことを意味します) |
   `+3600000+` +
-  `+60000;0;5+`
+  `+60000;0;5+` |
+  link:weechat_plugin_api.ja.html#_hook_timer[hook_timer]
 
 | config |
   1. オプション名 (優先度の指定も可) (必須) +
   2. オプション名 (優先度の指定も可) +
   3. ... |
-  `+weechat.look.*+`
+  `+weechat.look.*+` |
+  link:weechat_plugin_api.ja.html#_hook_config[hook_config]
 
 | focus |
   1. エリア名 (優先度の指定も可) (必須) +
   2. エリア名 (優先度の指定も可) +
   3. ... |
-  `+buffer_nicklist+`
+  `+buffer_nicklist+` |
+  link:weechat_plugin_api.ja.html#_hook_focus[hook_focus]
 |===
 
 [[trigger_conditions]]

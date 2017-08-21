@@ -1845,7 +1845,8 @@ einigen  Terminals, wie z.B. iTerm, muß die Taste kbd:[Alt] anstelle von
 kbd:[Shift] verwendet werden).
 
 [NOTE]
-Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die _WeeChat FAQ_ gelesen werden.
+Sollten Probleme bei der Mausunterstützung auftreten, dann sollte Bitte die
+link:weechat_faq.de.html#mouse[WeeChat FAQ / Mausunterstützung].
 
 [[mouse_bind_events]]
 ==== Befehle einem Maus-Ereignis zuweisen
@@ -2134,7 +2135,8 @@ Standarderweiterungen:
 |===
 
 Um mehr über Erweiterungen- und Skriptenprogrammierung (mittels API) zu erfahren,
-sollten Sie die _WeeChat Plugin API Reference_ oder _WeeChat Scripting Guide_ lesen.
+sollten Sie die link:weechat_plugin_api.en.html[Anleitung für API Erweiterung] (Englisch) oder
+link:weechat_scripting.de.html[WeeChat scripting guide] lesen.
 
 [[alias_plugin]]
 === Alias
@@ -2394,7 +2396,7 @@ Um sich alle genutzten Zeichensätze anzeigen zu lassen wird folgender Befehl ge
 ==== Fehlersuche
 
 sollten Probleme bei der Zeichensatzdarstellung auftreten dann werfen Sie bitte
-einen Blick in die _WeeChat FAQ_.
+einen Blick in die link:weechat_faq.de.html#charset[WeeChat FAQ / Charset].
 
 [[charset_commands]]
 ==== Befehle
@@ -3353,7 +3355,7 @@ Skripten, aus dem Skript-Repository, installiert und deinstalliert werden. Das S
 kann unter folgender URL eingesehen werden: https://weechat.org/scripts
 
 Sollten wir Ihr Interesse geweckt haben, selber Skripten für WeeChat zu programmieren, dann lesen Sie
-bitte die _WeeChat Scripting Guide_.
+bitte die link:weechat_scripting.de.html[WeeChat scripting Guide].
 
 [[script_commands]]
 ==== Skript Befehle
@@ -3421,9 +3423,10 @@ Daten kann verändert werden, es können ein- oder mehrere Befehle ausgeführt
 werden. Eine Bedingung kann genutzt werden um damit zu verhindern, dass der
 Trigger unter bestimmten Umständen ausgeführt wird.
 
+// TRANSLATION MISSING
 Um Trigger nutzen zu können ist es erforderlich zu wissen wie signals,
-modifiers, ... in WeeChat funktionieren. Dazu sollte man das Kapitel
-_Hooks_ in der _Anleitung für API Erweiterung_ lesen.
+modifiers, ... in WeeChat funktionieren. So you might consider reading the
+link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
 [[trigger_anatomy]]
 ==== Aufbau eines Triggers
@@ -3441,7 +3444,7 @@ Ein Trigger hat folgende Optionen (Benennung ist
 | hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
   `timer`, `config`, `focus` |
   Der hook welcher durch Trigger genutzt werden soll. Für weitere Informationen siehe
-  _Anleitung für API Erweiterung_, Kapitel _Hooks_.
+  link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
 | arguments | string |
   Argumente welche der Hook nutzen soll. Dies ist davon abhängig welcher Hook-Typ genutzt wird.
@@ -3501,9 +3504,10 @@ abgearbeitet:
 Die Argumente sind abhängig von dem genutzten Hook und werden durch
 ein Semikolon getrennt.
 
-[width="100%",cols="2,6,7",options="header"]
+[width="100%",cols="2,6,7,2",options="header"]
 |===
-| Hook | Argumente | Beispiele
+// TRANSLATION MISSING
+| Hook | Argumente | Beispiele | Documentation (API)
 
 | signal |
   1. Signalname (Priorität erlaubt) (erforderlich) +
@@ -3511,20 +3515,23 @@ ein Semikolon getrennt.
   3. ... |
   `+*,irc_in_privmsg+` +
   `+*,irc_in_privmsg;*,irc_in_notice+` +
-  `+signal_sigwinch+`
+  `+signal_sigwinch+` |
+  link:weechat_plugin_api.en.html#_hook_signal[hook_signal] (Englisch)
 
 | hsignal |
   1. Signalname (Priorität erlaubt) (erforderlich) +
   2. Signalname (Priorität erlaubt) +
   3. ... |
-  `+nicklist_nick_added+`
+  `+nicklist_nick_added+` |
+  link:weechat_plugin_api.en.html#_hook_hsignal[hook_hsignal] (Englisch)
 
 | modifier |
   1. modifier-Name (Priorität erlaubt) (erforderlich) +
   2. modifier-Name (Priorität erlaubt) +
   3. ... |
   `+weechat_print+` +
-  `+5000\|input_text_display;5000\|history_add+`
+  `+5000\|input_text_display;5000\|history_add+` |
+  link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Englisch)
 
 | print |
   1. Buffername +
@@ -3534,7 +3541,8 @@ ein Semikolon getrennt.
   `+irc.freenode.*+` +
   `+irc.freenode.#weechat+` +
   `+irc.freenode.#weechat;irc_notice+` +
-  `+*;;;1+`
+  `+*;;;1+` |
+  link:weechat_plugin_api.en.html#_hook_print[hook_print] (Englisch)
 
 | command |
   1. Befehlsname (Priorität erlaubt) (erforderlich) +
@@ -3543,32 +3551,37 @@ ein Semikolon getrennt.
   4. Beschreibung der Argumente +
   5. Vervollständigung |
   `+test+` +
-  `+5000\|test+`
+  `+5000\|test+` |
+  link:weechat_plugin_api.en.html#_hook_command[hook_command] (Englisch)
 
 | command_run |
   1. Befehl (Priorität erlaubt) (erforderlich) +
   2. Befehl (Priorität erlaubt) +
   3. ... |
-  `+/cmd arguments+`
+  `+/cmd arguments+` |
+  link:weechat_plugin_api.en.html#_hook_command_run[hook_command_run] (Englisch)
 
 | timer |
   1. Intervall in Millisekunden (erforderlich) +
   2. Abgleich der Sekunden (Standardwert: 0) +
   3. max. Anzahl an Aufrufen (Standardwert: 0, was "unendlich" bedeutet) |
   `+3600000+` +
-  `+60000;0;5+`
+  `+60000;0;5+` |
+  link:weechat_plugin_api.en.html#_hook_timer[hook_timer] (Englisch)
 
 | config |
   1. Name der Option (Priorität erlaubt) (erforderlich) +
   2. Name der Option (Priorität erlaubt) +
   3. ... |
-  `+weechat.look.*+`
+  `+weechat.look.*+` |
+  link:weechat_plugin_api.en.html#_hook_config[hook_config] (Englisch)
 
 | focus |
   1. area Name (Priorität erlaubt) (erforderlich) +
   2. area Name (Priorität erlaubt) +
   3. ... |
-  `+buffer_nicklist+`
+  `+buffer_nicklist+` |
+  link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Englisch)
 |===
 
 [[trigger_conditions]]
