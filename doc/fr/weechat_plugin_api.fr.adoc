@@ -5669,7 +5669,8 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 En Ruby, les 3 fonctions de rappel + "data" (6 chaînes) doivent être données
 dans un tableau de 6 chaînes de caractères (en raison d'une limitation de Ruby
-à 15 paramètres par fonction), voir le _Guide pour Scripts WeeChat_ pour plus
+à 15 paramètres par fonction), voir le
+link:++weechat_scripting.fr.html#_ruby++[Guide pour scripts WeeChat] pour plus
 d'infos _(corrigé dans la version 0.4.1)_.
 
 ==== config_search_option
@@ -7765,7 +7766,7 @@ Paramètres :
   étiquette)
 * _message_ : message à afficher
 
-Voir le chapitre sur les étiquettes des lignes dans le _Guide utilisateur WeeChat_
+Voir le link:weechat_user.fr.html#lines_tags[Guide utilisateur WeeChat / Étiquettes des lignes]
 pour une liste des étiquettes couramment utilisées dans WeeChat.
 
 Exemple en C :
@@ -13921,8 +13922,8 @@ Paramètres :
 ** _inactive_ : la barre est affichée dans les fenêtres inactives seulement
 ** _nicklist_ : la barre est affichée dans les fenêtres possédant une liste des
    pseudos
-** expression évaluée : voir le chapitre sur les barres dans le
-   _Guide utilisateur WeeChat_
+** expression évaluée : voir le
+   link:weechat_user.fr.html#bar_conditions[Guide utilisateur WeeChat / Conditions de barres]
 * _position_ : _top_ (en haut), _bottom_ (en bas), _left_ (à gauche) ou _right_
   (à droite)
 * _filling_top_bottom_ :
@@ -14379,8 +14380,8 @@ if (hashtable_in)
 ----
 
 [NOTE]
-Voir le _Guide pour Scripts WeeChat_ pour plus d'infos sur la sortie de
-"irc_message_parse".
+Voir le link:weechat_scripting.fr.html#irc_message_parse[Guide pour scripts WeeChat / Analyser un message]
+pour plus d'infos sur la sortie de "irc_message_parse".
 
 Script (Python) :
 
@@ -16012,8 +16013,8 @@ Paramètres :
 * _pointer_ : pointeur vers un objet WeeChat ou d'une extension
 * _search_ : expression à évaluer, le pointeur par défaut dans l'expression est
   le nom du hdata (et ce pointeur change pour chaque élément dans la liste);
-  pour l'aide sur l'expression, voir la commande `/eval` dans le
-  _Guide utilisateur WeeChat_
+  pour l'aide sur l'expression, voir le
+  link:weechat_user.fr.html#command_weechat_eval[Guide utilisateur WeeChat / Commande /eval]
 * _move_ : nombre de saut(s) à exécuter après une recherche infructueuse (entier
   négatif ou positif, différent de 0)
 

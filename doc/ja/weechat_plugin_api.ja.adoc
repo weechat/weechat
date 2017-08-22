@@ -5578,10 +5578,12 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
     "", "")
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Ruby では、3 組のコールバックとデータ (合わせて 6 つの文字列) を渡すために必ず 6 つの文字列をからなる配列を
-1 つ渡してください (これは Ruby が 関数に 15 個以上の引数を渡せないことが原因です)、より詳しい内容は
-_WeeChat スクリプト作成ガイド_ を参照してください _(WeeChat バージョン 0.4.1 で修正済み)_。
+In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
+strings (due to a Ruby limitation of 15 arguments by function), see the
+link:++weechat_scripting.ja.html#_ruby++[WeeChat Scripting Guide] for more info
+_(fixed in version 0.4.1)_.
 
 ==== config_search_option
 
@@ -7647,8 +7649,9 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 * _tags_: タグのコンマ区切りリスト (タグを指定しない場合は NULL)
 * _message_: 表示するメッセージ
 
-WeeChat で共通に使われるタグのリストは _WeeChat ユーザーズガイド_
-の行のタグに関する章をご覧ください
+// TRANSLATION MISSING
+See the link:weechat_user.ja.html#lines_tags[WeeChat user's guide / Lines tags]
+for a list of commonly used tags in WeeChat.
 
 C 言語での使用例:
 
@@ -13642,7 +13645,9 @@ struct t_gui_bar *weechat_bar_new (const char *name,
 ** _active_: アクティブウィンドウのみに表示されているバー
 ** _inactive_: 非アクティブウィンドウのみに表示されているバー
 ** _nicklist_: ニックネームリストを持つウィンドウに表示されているバー
-** 評価された式: _WeeChat ユーザーズガイド_ のバーに関する章を参照
+// TRANSLATION MISSING
+** evaluated expression: see the
+   link:weechat_user.ja.html#bar_conditions[WeeChat user's guide / Bar conditions]
 * _position_: _top_、_bottom_、_left_、_right_
 * _filling_top_bottom_:
 ** _horizontal_: 要素は水平方向に詰め込まれている (各要素の後に間隔)
@@ -14086,9 +14091,10 @@ if (hashtable_in)
 }
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-"irc_message_parse" の出力に関するより詳しい内容を得るには
-_WeeChat スクリプト作成ガイド_ をご覧ください。
+See the link:weechat_scripting.ja.html#irc_message_parse[WeeChat scripting guide / Parse message]
+for more info about "irc_message_parse" output.
 
 スクリプト (Python) での使用例:
 
@@ -15690,9 +15696,11 @@ void *weechat_hdata_search (struct t_hdata *hdata, void *pointer, const char *se
 
 * _hdata_: hdata へのポインタ
 * _pointer_: WeeChat および plugin オブジェクトへのポインタ
-* _search_: 評価する式、式中のデフォルトポインタは hdata の名前
-  (デフォルトポインタはリストに含まれる各要素で置換される); 式に関する詳細は
-  _WeeChat ユーザーズガイド_ のコマンド `/eval` を参照
+// TRANSLATION MISSING
+* _search_: expression to evaluate, default pointer in expression is the name of
+  hdata (and this pointer changes for each element in list); for help on
+  expression, see the
+  link:weechat_user.ja.html#command_weechat_eval[WeeChat user's guide / Command /eval]
 * _move_: 検索に失敗した後に移動を実行する回数
   (負および正の整数、ゼロは禁止)
 

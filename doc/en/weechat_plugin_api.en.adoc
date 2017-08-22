@@ -5577,7 +5577,8 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
 strings (due to a Ruby limitation of 15 arguments by function), see the
-_WeeChat Scripting Guide_ for more info _(fixed in version 0.4.1)_.
+link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide] for more info
+_(fixed in version 0.4.1)_.
 
 ==== config_search_option
 
@@ -7642,8 +7643,8 @@ Arguments:
 * _tags_: comma separated list of tags (NULL means no tags)
 * _message_: message to display
 
-See chapter about line tags in _WeeChat User's guide_ for a list of commonly
-used tags in WeeChat.
+See the link:weechat_user.en.html#lines_tags[WeeChat user's guide / Lines tags]
+for a list of commonly used tags in WeeChat.
 
 C example:
 
@@ -13636,7 +13637,8 @@ Arguments:
 ** _active_: bar is displayed in active window only
 ** _inactive_: bar is displayed in inactive windows only
 ** _nicklist_: bar is displayed in windows with nicklist
-** evaluated expression: see chapter about bars in _WeeChat User's guide_
+** evaluated expression: see the
+   link:weechat_user.en.html#bar_conditions[WeeChat user's guide / Bar conditions]
 * _position_: _top_, _bottom_, _left_ or _right_
 * _filling_top_bottom_:
 ** _horizontal_: items are filled horizontally (space after each item)
@@ -14083,8 +14085,8 @@ if (hashtable_in)
 ----
 
 [NOTE]
-See the _WeeChat Scripting Guide_ for more info about "irc_message_parse"
-output.
+See the link:weechat_scripting.en.html#irc_message_parse[WeeChat scripting guide / Parse message]
+for more info about "irc_message_parse" output.
 
 Script (Python):
 
@@ -15688,7 +15690,8 @@ Arguments:
 * _pointer_: pointer to a WeeChat/plugin object
 * _search_: expression to evaluate, default pointer in expression is the name of
   hdata (and this pointer changes for each element in list); for help on
-  expression, see command `/eval` in _WeeChat User's guide_
+  expression, see the
+  link:weechat_user.en.html#command_weechat_eval[WeeChat user's guide / Command /eval]
 * _move_: number of jump(s) to execute after unsuccessful search (negative or
   positive integer, different from 0)
 

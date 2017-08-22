@@ -5764,7 +5764,8 @@ option5 = weechat.config_new_option(config_file, section, "option5", "color",
 [NOTE]
 In Ruby, the 3 callbacks + data (6 strings) must be given in an array of 6
 strings (due to a Ruby limitation of 15 arguments by function), see the
-_WeeChat Scripting Guide_ for more info _(fixed in version 0.4.1)_.
+link:++weechat_scripting.it.html#_ruby++[WeeChat Scripting Guide] for more info
+_(fixed in version 0.4.1)_.
 
 ==== config_search_option
 
@@ -7878,8 +7879,8 @@ Argomenti:
 * _message_: messaggio da visualizzare
 
 // TRANSLATION MISSING
-See chapter about line tags in _WeeChat User's guide_ for a list of commonly
-used tags in WeeChat.
+See the link:weechat_user.it.html#lines_tags[WeeChat user's guide / Lines tags]
+for a list of commonly used tags in WeeChat.
 
 Esempio in C:
 
@@ -14154,7 +14155,8 @@ Argomenti:
 ** _inactive_: la barra viene visualizzata solo nelle finestre inattive
 ** _nicklist_: la barra viene visualizzata nelle finestre con liste nick
 // TRANSLATION MISSING
-** evaluated expression: see chapter about bars in _WeeChat User's guide_
+** evaluated expression: see the
+   link:weechat_user.it.html#bar_conditions[WeeChat user's guide / Bar conditions]
 * _position_: _top_, _bottom_, _left_ o _right_
 * _filling_top_bottom_:
 ** _horizontal_: gli elementi sono posizionati in orizzontale
@@ -14626,8 +14628,8 @@ if (hashtable_in)
 
 // TRANSLATION MISSING
 [NOTE]
-See the _WeeChat Scripting Guide_ for more info about "irc_message_parse"
-output.
+See the link:weechat_scripting.it.html#irc_message_parse[Guida allo Scripting di WeeChat / Verifica messaggio]
+for more info about "irc_message_parse" output.
 
 Script (Python):
 
@@ -16274,7 +16276,8 @@ Argomenti:
 // TRANSLATION MISSING
 * _search_: expression to evaluate, default pointer in expression is the name of
   hdata (and this pointer changes for each element in list); for help on
-  expression, see command `/eval` in _WeeChat User's guide_
+  expression, see the
+  link:weechat_user.it.html#command_weechat_eval[WeeChat user's guide / Command /eval]
 // TRANSLATION MISSING
 * _move_: number of jump(s) to execute after unsuccessful search (negative or
   positive integer, different from 0)
