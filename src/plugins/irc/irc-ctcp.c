@@ -1084,8 +1084,21 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                                       address, arguments + 1, pos_args, reply);
             if (!reply || reply[0])
             {
-                irc_ctcp_reply_to_nick (server, command, channel, nick,
-                                        arguments + 1, pos_args);
+                if (reply)
+                {
+                    decoded_reply = irc_ctcp_replace_variables (server, reply);
+                    if (decoded_reply)
+                    {
+                        irc_ctcp_reply_to_nick (server, command, channel, nick,
+                                                arguments + 1, decoded_reply);
+                        free (decoded_reply);
+                    }
+                }
+                else
+                {
+                    irc_ctcp_reply_to_nick (server, command, channel, nick,
+                                            arguments + 1, pos_args);
+                }
             }
         }
         /* CTCP DCC */
