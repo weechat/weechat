@@ -12,7 +12,7 @@
 == Objet
 
 Beaucoup d'utilisateurs nous demandent comment aider WeeChat. La façon
-la plus facile (et aussi la plus rusée) consiste à le tester !
+la plus facile (et aussi la plus rusée) consiste à le tester !
 
 Le test est une partie très importante du développement de logiciel et
 ne devrait pas être sous-estimé. Lorsque de nouvelles fonctionnalités
@@ -116,7 +116,7 @@ Selon votre distribution Linux :
 * Debian : https://weechat.org/download/debian
 * Gentoo : https://weechat.org/download
 * ArchLinux : PKGBUILD depuis http://aur.archlinux.org/
-* autre : nous ne savons pas ! Eheh.
+* autre : nous ne savons pas ! Eheh.
 
 
 [[run]]
@@ -135,4 +135,4 @@ Maintenant si vous obtenez un comportement étrange ou un plantage, n'hésitez
 pas à nous en avertir sur _#weechat_, serveur _chat.freenode.net_.
 
 S'il n'y a pas de plantage, dites-le nous aussi, nous avons besoin de votre
-retour et de vos impressions !
+retour et de vos impressions !

@@ -162,7 +162,7 @@ Sous WeeChat :
 
 Exemple complet d'extension, qui ajoute une commande `/double` : affiche deux
 fois les paramètres sur le tampon courant, ou exécute deux fois une commande
-(ok ce n'est pas très utile, mais c'est juste un exemple !) :
+(ok ce n'est pas très utile, mais c'est juste un exemple !) :
 
 [source,C]
 ----
@@ -7719,7 +7719,7 @@ Exemple en C :
 ----
 weechat_printf (NULL, "Bonjour sur le tampon WeeChat");
 weechat_printf (buffer, "Bonjour sur ce tampon");
-weechat_printf (buffer, "%sCeci est une erreur !", weechat_prefix ("error"));
+weechat_printf (buffer, "%sCeci est une erreur !", weechat_prefix ("error"));
 weechat_printf (buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations");
 weechat_printf (buffer, "\t\tMessage sans heure/alignement");
 weechat_printf (buffer, "\t\t");  /* ligne vide (sans heure) */
@@ -7735,7 +7735,7 @@ weechat.prnt(buffer, message)
 # exemple
 weechat.prnt("", "Bonjour sur le tampon WeeChat")
 weechat.prnt(buffer, "Bonjour sur ce tampon")
-weechat.prnt(buffer, "%sCeci est une erreur !" % weechat.prefix("error"))
+weechat.prnt(buffer, "%sCeci est une erreur !" % weechat.prefix("error"))
 weechat.prnt(buffer, " \tMessage sans préfixe mais avec \t quelques \t tabulations")
 weechat.prnt(buffer, "\t\tMessage sans heure/alignement")
 weechat.prnt(buffer, "\t\t")  # ligne vide (sans heure)
@@ -8149,7 +8149,7 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
 }
 
 struct t_hook *my_completion_hook = weechat_hook_completion ("extension_item",
-                                                             "ma complétion !",
+                                                             "ma complétion !",
                                                              &my_completion_cb, NULL, NULL);
 ----
 
@@ -8166,7 +8166,7 @@ def my_completion_cb(data, completion_item, buffer, completion):
     weechat.hook_completion_list_add(completion, "test_mot2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
-hook = weechat.hook_completion("extension_item", "ma complétion !",
+hook = weechat.hook_completion("extension_item", "ma complétion !",
                                "my_completion_cb", "")
 ----
 
@@ -8316,7 +8316,7 @@ int
 my_command_run_cb (const void *pointer, void *data,
                    struct t_gui_buffer *buffer, const char *command)
 {
-    weechat_printf (NULL, "Je mange la complétion !");
+    weechat_printf (NULL, "Je mange la complétion !");
     return WEECHAT_RC_OK_EAT;
 }
 
@@ -8334,7 +8334,7 @@ hook = weechat.hook_command_run(command, callback, callback_data)
 
 # exemple
 def my_command_run_cb(data, buffer, command):
-    weechat.prnt("", "Je mange la complétion !")
+    weechat.prnt("", "Je mange la complétion !")
     return weechat.WEECHAT_RC_OK_EAT
 
 hook = weechat.hook_command_run("/input complete*", "my_command_run_cb", "")
@@ -10192,9 +10192,9 @@ Exemples en C :
 
 [source,C]
 ----
-/* dis "Bonjour !" sur le serveur freenode, canal #weechat */
+/* dis "Bonjour !" sur le serveur freenode, canal #weechat */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
-                          "freenode;#weechat;priority_high,user_message;;Bonjour !");
+                          "freenode;#weechat;priority_high,user_message;;Bonjour !");
 
 /* envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité */
 weechat_hook_signal_send ("irc_input_send", WEECHAT_HOOK_SIGNAL_STRING,
@@ -10205,9 +10205,9 @@ Script (Python) :
 
 [source,python]
 ----
-# dis "Bonjour !" sur le serveur freenode, canal #weechat
+# dis "Bonjour !" sur le serveur freenode, canal #weechat
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
-                         "freenode;#weechat;priority_high,user_message;;Bonjour !")
+                         "freenode;#weechat;priority_high,user_message;;Bonjour !")
 
 # envoie la commande "/whois FlashCode" sur le canal freenode, en basse priorité
 weechat.hook_signal_send("irc_input_send", weechat.WEECHAT_HOOK_SIGNAL_STRING,
@@ -11696,7 +11696,7 @@ my_input_cb (const void *pointer, void *data,
 int
 my_close_cb (const void *pointer, void *data, struct t_gui_buffer *buffer)
 {
-    weechat_printf (NULL, "Le tampon '%s' va être fermé !",
+    weechat_printf (NULL, "Le tampon '%s' va être fermé !",
                     weechat_buffer_get_string (buffer, "name"));
     return WEECHAT_RC_OK;
 }
@@ -11720,7 +11720,7 @@ def my_input_cb(data, buffer, input_data):
     return weechat.WEECHAT_RC_OK
 
 def my_close_cb(data, buffer):
-    weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
+    weechat.prnt("", "Le tampon '%s' va être fermé !" % weechat.buffer_get_string(buffer, "name"))
     return weechat.WEECHAT_RC_OK
 
 buffer = weechat.buffer_new("mon_buffer", "my_input_cb", "", "my_close_cb", "")

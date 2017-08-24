@@ -126,7 +126,7 @@ Exemple, pour chaque langage :
 import weechat
 
 weechat.register("test_python", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
-weechat.prnt("", "Bonjour, du script python !")
+weechat.prnt("", "Bonjour, du script python !")
 ----
 
 * Perl :
@@ -134,7 +134,7 @@ weechat.prnt("", "Bonjour, du script python !")
 [source,perl]
 ----
 weechat::register("test_perl", "FlashCode", "1.0", "GPL3", "Script de test", "", "");
-weechat::print("", "Bonjour, du script perl !");
+weechat::print("", "Bonjour, du script perl !");
 ----
 
 * Ruby :
@@ -143,7 +143,7 @@ weechat::print("", "Bonjour, du script perl !");
 ----
 def weechat_init
   Weechat.register("test_ruby", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
-  Weechat.print("", "Bonjour, du script ruby !")
+  Weechat.print("", "Bonjour, du script ruby !")
   return Weechat::WEECHAT_RC_OK
 end
 ----
@@ -153,7 +153,7 @@ end
 [source,lua]
 ----
 weechat.register("test_lua", "FlashCode", "1.0", "GPL3", "Script de test", "", "")
-weechat.print("", "Bonjour, du script lua !")
+weechat.print("", "Bonjour, du script lua !")
 ----
 
 * Tcl :
@@ -161,7 +161,7 @@ weechat.print("", "Bonjour, du script lua !")
 [source,tcl]
 ----
 weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Script de test" "" ""
-weechat::print "" "Bonjour, du script tcl !"
+weechat::print "" "Bonjour, du script tcl !"
 ----
 
 * Guile (scheme) :
@@ -169,7 +169,7 @@ weechat::print "" "Bonjour, du script tcl !"
 [source,lisp]
 ----
 (weechat:register "test_scheme" "FlashCode" "1.0" "GPL3" "Script de test" "" "")
-(weechat:print "" "Bonjour, du script scheme !")
+(weechat:print "" "Bonjour, du script scheme !")
 ----
 
 * Javascript :
@@ -177,7 +177,7 @@ weechat::print "" "Bonjour, du script tcl !"
 [source,javascript]
 ----
 weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
-weechat.print("", "Bonjour, du script javascript !");
+weechat.print("", "Bonjour, du script javascript !");
 ----
 
 [[load_script]]
@@ -277,7 +277,7 @@ WeeChat), vous pouvez faire :
 
 [source,python]
 ----
-weechat.prnt("", "bonjour !")
+weechat.prnt("", "bonjour !")
 ----
 
 [WARNING]
@@ -1070,7 +1070,7 @@ def join_cb(data, signal, signal_data):
     msg = weechat.info_get_hashtable("irc_message_parse", {"message": signal_data})
     buffer = weechat.info_get("irc_buffer", "%s,%s" % (server, msg["channel"]))
     if buffer:
-        weechat.prnt(buffer, "%s (%s) a rejoint ce canal !" % (msg["nick"], msg["host"]))
+        weechat.prnt(buffer, "%s (%s) a rejoint ce canal !" % (msg["nick"], msg["host"]))
     return weechat.WEECHAT_RC_OK
 
 # il est pratique ici d'utiliser "*" comme serveur, pour intercepter les
@@ -1088,7 +1088,7 @@ commande IRC) pour un message reçu, de sorte que vous puissiez le modifier.
 ----
 def modifier_cb(data, modifier, modifier_data, string):
     # ajouter le nom du serveur à tous les messages reçus
-    # (ok ce n'est pas très utile, mais c'est juste un exemple !)
+    # (ok ce n'est pas très utile, mais c'est juste un exemple !)
     return "%s %s" % (string, modifier_data)
 
 weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
@@ -1096,7 +1096,7 @@ weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
 
 [WARNING]
 Un message mal formé peut provoquer un plantage de WeeChat ou de sérieux
-problèmes !
+problèmes !
 
 [[irc_message_parse]]
 ==== Analyser un message

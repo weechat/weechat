@@ -128,7 +128,7 @@ compiler WeeChat.
 nom du paquet peut être différente. +
 ^(2)^ Il est recommandé de compiler avec libncurses**w**5-dev (le *w* est
 important). WeeChat peut compiler avec libncurses5-dev, but ce n'est *PAS*
-recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
+recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
 larges. +
 ^(3)^ Gnutls ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE. +
@@ -360,7 +360,7 @@ $ ctest -V
 === Sources Git
 
 Attention : les sources git sont réservés aux utilisateurs avancés : il se peut
-que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
+que WeeChat ne compile pas et qu'il soit très instable. Vous êtes prévenus !
 
 Pour récupérer les sources git, tapez cette commande :
 
@@ -428,7 +428,7 @@ ulimit -c 200000
 Lorsque WeeChat se plante, votre système génère un fichier _core_ ou
 _core.12345_ (_12345_ est l'identifiant du processus).
 Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
-*pas* le répertoire où WeeChat est installé !).
+*pas* le répertoire où WeeChat est installé !).
 
 Par exemple si _weechat_ est installé dans _/usr/bin/_ et que le fichier
 _core_ est dans _/home/xxx/_, alors lancez gdb avec cette commande :
@@ -472,7 +472,7 @@ Copying output to /tmp/crash.txt.
 Vous devez envoyer cette trace aux développeurs, et leur indiquer quelle action
 a été la cause de ce plantage.
 
-Merci pour votre aide !
+Merci pour votre aide !
 
 [[debug_running_weechat]]
 ==== Debug de WeeChat qui tourne
@@ -683,8 +683,8 @@ La barre _input_ contient les objets (items) suivants par défaut :
 | input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur freenode).
 | away         | `(absent)`                                      | Indicateur d'absence.
 | input_search | `[Recherche (~ str,msg)]`                       | Indicateur de recherche de texte ("`~`" : insensible à la casse, "`==`" : sensible à la casse, "`str`" : recherche de chaîne, "`regex`" : recherche d'expression régulière, "`msg`" : recherche dans les messages, "`pre`" : recherche dans les préfixes, "`pre\|msg`" : recherche dans les préfixes et messages).
-| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes.
-| input_text   | `salut peter !`                                 | Texte entré.
+| input_paste  | `[Coller 7 lignes ? [ctrl-Y] Oui [ctrl-N] Non]` | Question à l'utilisateur pour coller des lignes.
+| input_text   | `salut peter !`                                 | Texte entré.
 |===
 
 La barre _nicklist_ contient les objets (items) suivants par défaut :
@@ -775,11 +775,11 @@ Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
 taper `/color` puis kbd:[Alt+c] dans WeeChat ou lancez cette commande dans le
 terminal : `weechat --colors`.
 
-Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
+Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
 gras, et "tout le monde" en rouge clair souligné :
 
 ----
-^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
+^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
 ----
 
 [NOTE]
@@ -1078,11 +1078,11 @@ présentation (_pass:[weechat.look.*]_) et de couleur (_pass:[weechat.color.chat
 [[lines_tags]]
 ==== Étiquettes des lignes
 
-WeeChat utilise des étiquettes (« tags ») dans les lignes pour différentes raisons :
+WeeChat utilise des étiquettes (« tags ») dans les lignes pour différentes raisons :
 
 * highlight
 * niveau de notification
-* enregistrement (« log »)
+* enregistrement (« log »)
 * utilisation de la commande <<command_weechat_filter,/filter>>
 
 Les étiquettes peuvent être affichées avec la commande `/debug tags`
@@ -1511,7 +1511,7 @@ les niveaux possibles sont :
 * 3 : highlight (en réalité inutile, car il s'agit déjà du niveau maximal par
   défaut pour tous les messages)
 
-Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le tampon
+Par exemple pour désactiver les « highlights » de "joe" et "mike" sur le tampon
 courant :
 
 ----
@@ -1529,7 +1529,7 @@ avec `/help autosetbuffer`.
 === Highlights
 
 [[highlights_words]]
-==== Ajouter des mots pour le « highlight »
+==== Ajouter des mots pour le « highlight »
 
 Par défaut, WeeChat met en valeur les messages des autres utilisateurs qui
 contiennent votre pseudo, par conséquent le highlight dépend du tampon
@@ -1556,9 +1556,9 @@ Les délimiteurs autour des mots à mettre en valeur peuvent être paramétrés 
 l'option <<option_weechat.look.word_chars_highlight,weechat.look.word_chars_highlight>>.
 
 [[highlights_tags]]
-==== Ajouter des étiquettes pour le « highlight »
+==== Ajouter des étiquettes pour le « highlight »
 
-Les lignes affichées contiennent des étiquettes (« tags »), qui donnent des
+Les lignes affichées contiennent des étiquettes (« tags »), qui donnent des
 informations sur l'origine du message ou le message lui-même. +
 Vous pouvez afficher les étiquettes avec la commande `/debug tags` (même commande
 pour les cacher).
@@ -2507,13 +2507,13 @@ $ echo 'irc.server.freenode */nick autrepseudo' >~/.weechat/weechat_fifo
 * Envoyer un message sur le canal IRC #weechat :
 
 ----
-$ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *bonjour !' >~/.weechat/weechat_fifo
 ----
 
 * Envoyer un message sur le tampon courant :
 
 ----
-$ echo '*bonjour !' >~/.weechat/weechat_fifo
+$ echo '*bonjour !' >~/.weechat/weechat_fifo
 ----
 
 * Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
@@ -2833,7 +2833,7 @@ Par exemple, pour personnaliser la réponse au CTCP "VERSION", utilisez la
 commande suivante :
 
 ----
-/set irc.ctcp.version "Je suis sous WeeChat $version, ça déchire !"
+/set irc.ctcp.version "Je suis sous WeeChat $version, ça déchire !"
 ----
 
 Si vous voulez bloquer le CTCP "VERSION" (ne pas répondre à une demande), alors

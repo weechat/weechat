@@ -229,7 +229,7 @@ suivante ("xxx" est le nom d'une option) :
 [NOTE]
 Cette commande peut aussi être utilisée pour créer et se connecter au serveur
 sans utiliser la commande `/server` (dois-je répéter que vous pouvez voir
-l'aide pour cette commande avec `/help connect` ?).
+l'aide pour cette commande avec `/help connect` ?).
 
 Par défaut, les tampons des serveurs sont mélangés avec le tampon _core_
 WeeChat. Pour basculer entre le tampon _core_ et les tampons des serveurs, il
@@ -388,4 +388,4 @@ https://weechat.org/scripts
 Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
 toute autre question : https://weechat.org/doc
 
-Bon WeeChat !
+Bon WeeChat !

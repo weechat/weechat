@@ -111,7 +111,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier                | Description
 | core/                         | Fonctions du cœur : point d'entrée, structures internes.
-|    wee-arraylist.c            | Listes avec tableau (« arraylists »).
+|    wee-arraylist.c            | Listes avec tableau (« arraylists »).
 |    wee-backtrace.c            | Afficher une trace après un plantage.
 |    wee-command.c              | Commandes du cœur de WeeChat.
 |    wee-completion.c           | Complétions par défaut.
@@ -340,7 +340,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    tests.cpp                | Programme utilisé pour lancer les tests.
 |    unit/                    | Racine des tests unitaires.
 |       core/                 | Racine des tests unitaires pour le cœur.
-|          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »).
+|          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »).
 |          test-eval.cpp      | Tests : évaluation d'expressions.
 |          test-hashtble.cpp  | Tests : tables de hachage.
 |          test-hdata.cpp     | Tests : hdata.
@@ -375,8 +375,8 @@ Fichiers de documentation :
 |       weechat_tester.XX.adoc         | link:weechat_tester.fr.html[Guide du testeur].
 |       weechat_user.XX.adoc           | link:weechat_user.fr.html[Guide utilisateur].
 |       autogen/                       | Fichiers automatiquement générés avec le script docgen.py.
-|          user/                       | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !).
-|          plugin_api/                 | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !).
+|          user/                       | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !).
+|          plugin_api/                 | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !).
 |===
 
 Les traductions pour WeeChat et les extensions sont effectuées avec gettext, les
