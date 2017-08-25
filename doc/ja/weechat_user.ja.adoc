@@ -1810,7 +1810,7 @@ WeeChat でマウスを有効化した場合、すべてのマウスイベント
 (一部の端末、例えば iTerm などでは kbd:[Shift] の代わりに kbd:[Alt] を使ってください)。
 
 [NOTE]
-マウスに関するトラブルがあれば link:weechat_faq.ja.html#mouse[WeeChat FAQ / Mouse] を参照してください。
+マウスに関するトラブルがあれば link:weechat_faq.ja.html#mouse[WeeChat FAQ (よくある質問) / マウス]を参照してください。
 
 [[mouse_bind_events]]
 ==== コマンドに対してマウスイベントを割り当てる
@@ -2087,10 +2087,9 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | xfer       | ファイル転送とダイレクトチャット
 |===
 
-// TRANSLATION MISSING
-To learn more about plugin or script development (through API), please read the
-link:weechat_plugin_api.ja.html[WeeChat plugin API reference] or the
-link:weechat_scripting.ja.html[WeeChat scripting guide].
+API を使ったプラグインやスクリプトの開発についてより詳しく学ぶには
+link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]または
+link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
 
 [[alias_plugin]]
 === Alias
@@ -2341,7 +2340,7 @@ IRC サーバの全てのチャンネルおよびプライベートバッファ�
 [[charset_troubleshooting]]
 ==== トラブルシューティング
 
-文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ / Charset] を参照してください。
+文字コードに関する問題があれば、link:weechat_faq.ja.html#charset[WeeChat FAQ (よくある質問) / いくつかの文字が見えません。どうすれば良いですか。]を参照してください。
 
 [[charset_commands]]
 ==== コマンド
@@ -3268,9 +3267,8 @@ Python、Perl、Ruby、Lua、Tcl、Guile
 スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
 のスクリプトをインストール/削除したりする事が可能です。
 
-// TRANSLATION MISSING
-For more information about how to write scripts, or WeeChat API for
-scripts, please read the link:weechat_scripting.ja.html[WeeChat scripting guide].
+スクリプトの書き方やスクリプト用の WeeChat API についての詳しい情報は
+link:weechat_scripting.ja.html[WeeChat スクリプト作成ガイド]を参照してください。
 
 [[script_commands]]
 ==== Script コマンド
@@ -3337,10 +3335,9 @@ include::autogen/user/script_options.adoc[]
 (signal、modifier、print、...)
 をフックして、データの内容を書き換えたり、複数のコマンドを実行することができます。条件をつけることで一部の場合だけトリガを実行するように設定することもできます。
 
-// TRANSLATION MISSING
-Using triggers require you to know how the signals, modifiers, ... are working.
-So you might consider reading the
-link:weechat_plugin_api.ja.html#hooks[WeeChat plugin API reference / Hooks].
+トリガを使うにはシグナル、修飾子、...
+がどのように動いているかを知らなければいけません。これを知るには
+link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を読むことをお勧めします。
 
 [[trigger_anatomy]]
 ==== トリガの構造
@@ -3356,10 +3353,9 @@ link:weechat_plugin_api.ja.html#hooks[WeeChat plugin API reference / Hooks].
   オプションが `off`
   の場合、トリガは無効化され、アクションは実行されません。
 
-// TRANSLATION MISSING
 | hook | `signal`、`hsignal`、`modifier`、`print`、`command`、`command_run`、`timer`、`config`、`focus` |
-  The hook used in trigger. For more information, see
-  link:weechat_plugin_api.ja.html#hooks[WeeChat plugin API reference / Hooks].
+  トリガの中で使われるフック。より詳しい情報は
+  link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を参照してください。
 
 | arguments | 文字列 |
   フックに対する引数、指定したフックの型に依存します。
@@ -3417,8 +3413,7 @@ trigger.trigger.beep.post_action = none
 
 [width="100%",cols="2,6,7,2",options="header"]
 |===
-// TRANSLATION MISSING
-| フック | 引数 | 例 | Documentation (API)
+| フック | 引数 | 例 | 解説 (API)
 
 | signal |
   1. シグナル名 (優先度の指定も可) (必須) +
@@ -3920,4 +3915,4 @@ IRC を使ったサポート窓口は _chat.freenode.net_ サーバにありま�
 ** _#weechat-de_ (ドイツ語)
 ** _#weechat-fi_ (フィンランド語)
 
-他の方法でサポートを受けるには、以下のページをご覧ください: https://weechat.org/dev/support
+他の方法でサポートを受けるには、以下のページを参照してください: https://weechat.org/dev/support

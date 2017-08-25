@@ -43,7 +43,7 @@ WeeChat は非常に軽く、革新的な機能を備えているからです。
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。
 
-いくつかのリモート GUI が利用可能です、機能のページに載っているリンクをご覧ください:
+いくつかのリモート GUI が利用可能です、機能のページに載っているリンクを参照してください:
 https://weechat.org/about/features
 
 [[compile_git]]
@@ -80,9 +80,7 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
 と入力してください。キーとコマンドはドキュメント内にリストアップされています。
 
-// TRANSLATION MISSING
-It's recommended for new users to read the
-link:weechat_quickstart.ja.html[Quickstart guide].
+新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド]を読むことをお勧めします
 
 [[display]]
 == 表示
@@ -96,11 +94,10 @@ link:weechat_quickstart.ja.html[Quickstart guide].
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
 * `/plugin` コマンドで "charset" プラグインがロード済みであることの確認
   (ロードされていない場合、"weechat-plugins" パッケージが必要かもしれません)。
-// TRANSLATION MISSING
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
   または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります。 +
-  To fix your locale, check the installed locales with `locale -a` and set
-  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
+  ロケールを修正するには、`locale -a` を使ってインストール済みのロケールを確認し、$LANG
+  に適切な値を設定してください。これを行うには `export LANG=en_US.UTF-8` のようにします。
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
 * UTF-8 ロケールを使っている場合は:
@@ -125,7 +122,7 @@ WeeChat は UTF-8 ロケールを推奨します。ISO
 次の回避方法を使えば、修正済みの _wcwidth_ 関数を使う事が可能です:
 https://blog.nytsoi.net/2015/05/04/emoji-support-for-weechat
 
-より詳しい情報を得るにはバグ報告をご覧ください:
+より詳しい情報を得るにはバグ報告を参照してください:
 https://github.com/weechat/weechat/issues/79
 
 [[bars_background]]
@@ -261,9 +258,7 @@ kbd:[Alt+k] の後にキーを押してください。
 および __weechat.color.status_count_*__ オプション (カウンタ) を設定します。 +
 その他のホットリスト関連オプションは __weechat.look.hotlist_*__ オプションを使って変更します。
 
-// TRANSLATION MISSING
-See link:weechat_user.ja.html#screen_layout[User's guide / Screen layout] for
-more info about the hotlist.
+ホットリストに関する詳しい情報はlink:weechat_user.ja.html#screen_layout[ユーザーズガイド / 画面レイアウト]を参照してください
 
 [[input_bar_size]]
 === コマンドラインの行数を増やすにはどうすればいいですか。
@@ -415,9 +410,7 @@ WeeChat バージョン 0.3.4 の場合、新しい色を追加するには `/co
 WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用できます (オプション:
 色の別名を追加するには `/color` コマンドを使ってください)。
 
-// TRANSLATION MISSING
-Please read the link:weechat_user.ja.html#colors[User's guide / Colors] for more
-information about colors management.
+色管理に関するより詳しい情報はlink:weechat_user.ja.html#colors[ユーザーズガイド / 色]を参照してください
 
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
@@ -425,9 +418,7 @@ information about colors management.
 デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
-// TRANSLATION MISSING
-See link:weechat_user.ja.html#key_bindings[User's guide / Key bindings] for more
-info about this feature.
+この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
 
 [[terminal_focus]]
 === どうすれば端末にフォーカスが合った時や外れた時にコマンドを実行できますか。
@@ -504,9 +495,7 @@ UXTerm*metaSendsEscape: true
 /key bind meta-q /buffer *11
 ----
 
-// TRANSLATION MISSING
-List of default keys is in
-link:weechat_user.ja.html#key_bindings[User's guide / Key bindings].
+デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
 
 [[global_history]]
 === どうすればグローバルヒストリを (バッファヒストリの代わりに) 上下矢印キーで使えますか。
