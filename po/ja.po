@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-08-21 07:46+0200\n"
+"POT-Creation-Date: 2017-08-25 07:44+0200\n"
 "PO-Revision-Date: 2017-08-19 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4949,9 +4949,9 @@ msgstr ""
 msgid "Bar \"%s\" updated"
 msgstr "バー \"%s\" がアップデートされました"
 
-#, c-format
-msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
-msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
+#, fuzzy, c-format
+msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
+msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
 msgstr[0] "%s %d 行をペーストしますか? [ctrl-Y] はい [ctrl-N] いいえ"
 
 msgid "Search"

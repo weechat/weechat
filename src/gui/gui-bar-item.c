@@ -758,8 +758,8 @@ gui_bar_item_input_paste_cb (const void *pointer, void *data,
 
     lines = gui_key_get_paste_lines ();
     snprintf (str_paste, sizeof (str_paste),
-              NG_("%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No",
-                  "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No",
+              NG_("%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No",
+                  "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No",
                   lines),
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_actions))),
               lines);

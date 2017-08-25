@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-08-21 07:46+0200\n"
+"POT-Creation-Date: 2017-08-25 07:44+0200\n"
 "PO-Revision-Date: 2017-07-22 12:55+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5052,9 +5052,9 @@ msgstr ""
 msgid "Bar \"%s\" updated"
 msgstr "Barra \"%s\" atualizada"
 
-#, c-format
-msgid "%sPaste %d line ? [ctrl-Y] Yes [ctrl-N] No"
-msgid_plural "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
+#, fuzzy, c-format
+msgid "%sPaste %d line? [ctrl-Y] Yes [ctrl-N] No"
+msgid_plural "%sPaste %d lines? [ctrl-Y] Yes [ctrl-N] No"
 msgstr[0] "%sColar %d linha ? [ctrl-Y] Sim [ctrl-N] Não"
 msgstr[1] "%sColar %d linhas ? [ctrl-Y] Sim [ctrl-N] Não"
 

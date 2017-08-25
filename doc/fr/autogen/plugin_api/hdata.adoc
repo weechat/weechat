@@ -478,7 +478,7 @@ _gui_objects_   (pointer) +
 _prev_bar_window_   (pointer, hdata: "bar_window") +
 _next_bar_window_   (pointer, hdata: "bar_window") +
 
-*Mise à jour autorisée :* +
+*Mise à jour autorisée :* +
     _scroll_x_ (integer) +
     _scroll_y_ (integer) +
 
@@ -721,7 +721,7 @@ _last_gui_history_ +
 _next_history_   (pointer, hdata: "history") +
 _prev_history_   (pointer, hdata: "history") +
 
-*Mise à jour autorisée :* +
+*Mise à jour autorisée :* +
     _{hdata_update_create}_ +
     _{hdata_update_delete}_ +
 
@@ -849,7 +849,7 @@ _prefix_   (shared_string) +
 _prefix_length_   (integer) +
 _message_   (string) +
 
-*Mise à jour autorisée :* +
+*Mise à jour autorisée :* +
     _date_ (time) +
     _date_printed_ (time) +
     _tags_array_ (shared_string) +
