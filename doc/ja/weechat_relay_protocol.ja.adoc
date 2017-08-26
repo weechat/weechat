@@ -177,7 +177,7 @@ _hdata_ を要求。
 
 [NOTE]
 WeeChat バージョン 1.6 以上では、hdata へのパスが無効または NULL ポインタが見つかった場合、空の
-hdata が返されます (<<object_hdata,hdata オブジェクト>>の例をご覧ください)。 +
+hdata が返されます (<<object_hdata,hdata オブジェクト>>の例を参照してください)。 +
 1.6 よりも古いバージョンでは、何も返されません。
 
 例:
@@ -379,7 +379,7 @@ desync [<buffer>[,<buffer>...] <option>[,<option>...]]
   全てのバッファを指定するには "*" を使ってください
 * _options_: 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
   _buffers,upgrade,buffer,nicklist_、バッファに対するデフォルトは _buffer,nicklist_):
-  値に関する詳しい情報は <<command_sync,sync コマンド>>をご覧ください
+  値に関する詳しい情報は <<command_sync,sync コマンド>>を参照してください
 
 [NOTE]
 buffer に "*" を指定した場合、(名前を使って) 同期されている他のバッファは同期状態が保存されます。 +
