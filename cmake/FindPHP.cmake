@@ -25,3 +25,20 @@ find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
   pkg_search_module(php7 php)
 endif()
+
+if(NOT PHP_FOUND)
+  find_program(PHP_CONFIG_EXECUTABLE NAMES
+    php-config php-config7
+    php-config7.2 php-config72
+    php-config7.1 php-config71
+    php-config7.0 php-config70)
+  if (PHP_CONFIG_EXECUTABLE)
+    execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --prefix OUTPUT_VARIABLE PHP_LIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --includes OUTPUT_VARIABLE PHP_INCLUDE_DIRS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --libs OUTPUT_VARIABLE PHP_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
+    string(REPLACE "-I" "" PHP_INCLUDE_DIRS ${PHP_INCLUDE_DIRS})
+    SEPARATE_ARGUMENTS(PHP_INCLUDE_DIRS)
+    set(PHP_LDFLAGS "-L${PHP_LIB_PREFIX}/lib/ ${PHP_LIBS} -lphp7")
+    set(PHP_FOUND 1)
+  endif()
+endif()
