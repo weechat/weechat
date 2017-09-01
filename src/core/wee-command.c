@@ -7902,7 +7902,8 @@ command_init ()
         N_("[<option> [<value>]]"
            " || diff [<option> [<option>...]]"
            " || env [<variable> [<value>]]"),
-        N_("option: name of an option (wildcard \"*\" is allowed)\n"
+        N_("option: name of an option (wildcard \"*\" is allowed to list "
+           "options, if no value is specified)\n"
            " value: new value for option, according to type:\n"
            "          boolean: on, off or toggle\n"
            "          integer: number, ++number or --number\n"

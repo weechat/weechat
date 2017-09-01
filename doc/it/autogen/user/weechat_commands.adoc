@@ -814,7 +814,7 @@ Examples:
       diff [<option> [<option>...]]
       env [<variable> [<value>]]
 
-option: name of an option (wildcard "*" is allowed)
+option: name of an option (wildcard "*" is allowed to list options, if no value is specified)
  value: new value for option, according to type:
           boolean: on, off or toggle
           integer: number, ++number or --number

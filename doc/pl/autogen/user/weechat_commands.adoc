@@ -814,31 +814,31 @@ Przykłady:
       diff [<opcja> [<opcja>...]]
       env [<zmienna> [<wartość>]]
 
-opcja: nazwa opcji (może zawierać wildcard"*")
- wartość: nowa wartość opcji, zgodnie z typem:
-          boolean: on, off lub toggle
-          integer: numer, ++numer lub --numer
-           string: dowolny ciąg ("" dla pustego ciągu)
-            color: nazwa koloru, ++numer lub --numer
-        Uwaga: dla wszystkich typów, można użyć null dla usunięcia wartości opcji (niezdefiniowana wartość). Działa to tylko z niektórymi specjalnymi zmiennymi wtyczek.
-  diff: wyświetla tylko zmienione opcje
-   env: wyświetla lub ustawia zmienne środowiskowe (użyj "" żeby skasować zmienną)
+option: name of an option (wildcard "*" is allowed to list options, if no value is specified)
+ value: new value for option, according to type:
+          boolean: on, off or toggle
+          integer: number, ++number or --number
+           string: any string ("" for empty string)
+            color: color name, ++number or --number
+        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+  diff: display only changed options
+   env: display or set an environment variable (use value "" to unset a variable)
 
-Przykłady:
-  wyświetla opcje dotyczące podświetleń:
+Examples:
+  display options about highlight:
     /set *highlight*
-  dodaje słowo do podświetlenia:
-    /set weechat.look.highlight "słowo"
-  wyświetla zmienione opcje:
+  add a word to highlight:
+    /set weechat.look.highlight "word"
+  display changed options:
     /set diff
-  wyświetla zmienione opcje dla wtyczki irc:
+  display changed options in irc plugin:
     /set diff irc.*
-  wyświetla wartość zmiennej środowiskowej LANG:
+  display value of environment variable LANG:
     /set env LANG
-  ustawia zmienną środowiskową LANG i używa jej:
+  set environment variable LANG and use it:
     /set env LANG fr_FR.UTF-8
     /upgrade
-  kasuje zmienną środowiskową ABC:
+  unset environment variable ABC:
     /set env ABC ""
 ----
 

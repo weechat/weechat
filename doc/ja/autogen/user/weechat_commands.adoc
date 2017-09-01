@@ -814,31 +814,31 @@ ${sec.data.xxx} の形で書かれた保護データは以下の様に利用で�
       diff [<option> [<option>...]]
       env [<variable> [<value>]]
 
-option: オプションの名前 (ワイルドカード "*" を使うことができます)
- value: オプションに対する新しい値、以下の型に従う:
-          boolean: on、off、toggle
-          integer: 番号、++番号、--番号
-           string: 任意の文字列 (空文字列は "")
-            color: 色の名前、++色番号、--色番号
-        注意: どんな型であっても、オプションの値を削除する (未定義値にする) には null が使えます。これはいくつかの特別なプラグイン変数でのみ有効です。
-  diff: 変更されたオプションのみを表示
-   env: 環境変数を表示または設定 (変数の値を削除するには値に "" を入れてください)
+option: name of an option (wildcard "*" is allowed to list options, if no value is specified)
+ value: new value for option, according to type:
+          boolean: on, off or toggle
+          integer: number, ++number or --number
+           string: any string ("" for empty string)
+            color: color name, ++number or --number
+        Note: for all types, you can use null to remove option value (undefined value). This works only for some special plugin variables.
+  diff: display only changed options
+   env: display or set an environment variable (use value "" to unset a variable)
 
-例:
-  ハイライトに関するオプションを表示:
+Examples:
+  display options about highlight:
     /set *highlight*
-  highlight に単語を追加:
+  add a word to highlight:
     /set weechat.look.highlight "word"
-  変更されたオプションを表示:
+  display changed options:
     /set diff
-  irc プラグインのオプションの内、変更されたオプションを表示:
+  display changed options in irc plugin:
     /set diff irc.*
-  環境変数 LANG の値を表示:
+  display value of environment variable LANG:
     /set env LANG
-  環境変数 LANG を設定し、これを使う:
+  set environment variable LANG and use it:
     /set env LANG fr_FR.UTF-8
     /upgrade
-  環境変数 ABC の値を削除する:
+  unset environment variable ABC:
     /set env ABC ""
 ----
 

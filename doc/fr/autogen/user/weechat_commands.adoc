@@ -814,7 +814,7 @@ Exemples :
       diff [<option> [<option>...]]
       env [<variable> [<valeur>]]
 
-option : nom d'une option (le caractère joker "*" est autorisé)
+option : nom d'une option (le caractère joker "*" est autorisé pour lister les options, si aucune valeur n'est spécifiée)
 valeur : nouvelle valeur pour l'option, selon le type :
            booléen : on, off ou toggle
             entier : nombre, ++nombre ou --nombre
