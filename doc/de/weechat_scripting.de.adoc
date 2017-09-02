@@ -966,9 +966,8 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
                                30 * 1000, "my_process_cb", "")
 ----
 
-// TRANSLATION MISSING
-For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in
+Für weitere Informationen zum URL Transfer und verfügbare Optionen, siehe Funktionen
+`hook_process` und `hook_process_hashtable` in
 link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
 
 [[config_options]]

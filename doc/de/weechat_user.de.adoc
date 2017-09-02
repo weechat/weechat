@@ -3423,10 +3423,9 @@ Daten kann verändert werden, es können ein- oder mehrere Befehle ausgeführt
 werden. Eine Bedingung kann genutzt werden um damit zu verhindern, dass der
 Trigger unter bestimmten Umständen ausgeführt wird.
 
-// TRANSLATION MISSING
-Um Trigger nutzen zu können ist es erforderlich zu wissen wie signals,
-modifiers, ... in WeeChat funktionieren. So you might consider reading the
-link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
+Um Trigger nutzen zu können ist es von Vorteil zu wissen wie signals,
+modifiers, ... in WeeChat überhaupt funktionieren. Deshalb sollte man überlegen,
+ob man nicht folgende Anleitung lesen sollte link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
 [[trigger_anatomy]]
 ==== Aufbau eines Triggers
@@ -3506,8 +3505,7 @@ ein Semikolon getrennt.
 
 [width="100%",cols="2,6,7,2",options="header"]
 |===
-// TRANSLATION MISSING
-| Hook | Argumente | Beispiele | Documentation (API)
+| Hook | Argumente | Beispiele | Dokumentation (API)
 
 | signal |
   1. Signalname (Priorität erlaubt) (erforderlich) +

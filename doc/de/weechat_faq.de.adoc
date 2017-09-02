@@ -88,15 +88,13 @@ Befehle sowie die Belegung der jeweiligen Tasten sind in der Dokumentation
 beschrieben. (Tipp: Mit den Tasten <Bild-hoch>/<Bild-runter> kann man seitenweise
 in den Buffern blättern)
 
-// TRANSLATION MISSING
-It's recommended for new users to read the
-link:weechat_quickstart.de.html[Quickstart guide].
+Neuen Anwendern wird empfohlen die link:weechat_quickstart.de.html[Quickstart Anleitung] zu lesen.
 
 [[display]]
 == Anzeige
 
 [[charset]]
-=== Bei einigen Zeichen fehlen die Akzente. Wie kann ich das korrigieren?
+=== Bei einigen Zeichen fehlen die Akzente. Wie kann ich das beheben?
 
 Dies ist ein bekanntes Problem. Aus diesem Grund sollten die folgenden Punkte
 sorgfältig durchgelesen und *alle* aufgezeigten Lösungsmöglichkeiten überprüft
@@ -106,13 +104,12 @@ werden:
   meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat`
 * prüfe mit dem Befehl `/plugin`, ob die "charset" Erweiterung geladen ist (falls
   dies nicht der Fall sein sollte benötigst Du wahrscheinlich noch das Paket "weechat-plugins")
-// TRANSLATION MISSING
 * überprüfe die Ausgabe des `/charset` Befehls (im Server-Buffer). Du solltest
   für den Terminal _ISO-XXXXXX_ oder _UTF-8_ als Antwort erhalten. Sollte hingegen
   _ANSI_X3.4-1968_ oder ein anderer Wert angezeigt werden, ist Deine lokale
   Einstellung möglicherweise falsch. +
-  To fix your locale, check the installed locales with `locale -a` and set
-  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
+  um die Lokalisation zu reparieren überprüfe selbige mittels `locale -a`
+  und füge einen entsprechenden Wert in $LANG ein, zum Beispiel `export LANG=de_DE.UTF-8`
 * Einstellen des globalen decode Wertes, z.B.:
   `/set charset.default.decode "ISO-8859-15"`
 * Falls Du UTF-8 lokal nutzt:
@@ -202,28 +199,28 @@ bei älteren Versionen kann das Skript _buffers.pl_ installiert werden:
 /script install buffers.pl
 ----
 
-To limit size of bar (replace "buflist" by "buffers" if you're using the script
-_buffers.pl_):
+Um die Größe der Bar zu reduzieren (ersetze "buflist" durch "buffers", wenn das
+Skript _buffers.pl_ genutzt wird):
 
 ----
 /set weechat.bar.buflist.size_max 15
 ----
 
-To move bar to bottom:
+Um die Bar an den unteren Rand zu bewegen:
 
 ----
 /set weechat.bar.buflist.position bottom
 ----
 
-To scroll the bar: if mouse is enabled (key: kbd:[Alt+m]), you can scroll the
-bar with your mouse wheel.
+Um in der Bar zu scollen; wenn die Maus aktiviert ist (Taste: kbd:[Alt+m]), kann
+mit dem Mausrad gescrollt werden.
 
-Default keys to scroll _buflist_ bar are kbd:[F1], kbd:[F2], kbd:[Alt+F1]
-and kbd:[Alt+F2].
+Standardtastenbelegung zum scrollen der _buflist_ Bar: kbd:[F1], kbd:[F2], kbd:[Alt+F1]
+und kbd:[Alt+F2].
 
-For script _buffers.pl_, you can define keys, similar to the existing keys to
-scroll nicklist. +
-For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
+Beim Skript _buffers.pl_ können entsprechende Tasten definiert werden die vergleichbar
+mit den vorhanden Tasten für die Nicklist sind +
+Um zum Beispiel folgende Tasten zu nutzen kbd:[F1], kbd:[F2], kbd:[Alt+F1] und kbd:[Alt+F2]:
 
 ----
 /key bind meta-OP /bar scroll buffers * -100%
@@ -280,9 +277,8 @@ Diese Farben können mit den Optionen __weechat.color.status_data_*__
 Weitere hotlist Eigenschaften können den Optionen  __weechat.look.hotlist_*__
 verändert werden.
 
-// TRANSLATION MISSING
-See link:weechat_user.de.html#screen_layout[User's guide / Screen layout] for
-more info about the hotlist.
+Siehe link:weechat_user.de.html#screen_layout[Benutzeranleitung / Screen layout] für
+weitere Informationen über die Hotlist.
 
 [[input_bar_size]]
 === Wie kann man eine mehrzeilige Eingabezeile einstellen?
@@ -441,9 +437,8 @@ Ab Version ≥ 0.3.5 kann in den Optionen für eine zu nutzende Farbe die entspr
 Zahl der Farbe eingetragen werden (optional: mit dem Befehl `/color` kann man einen Alias für
 eine Farbe definieren).
 
-// TRANSLATION MISSING
-Please read the link:weechat_user.de.html#colors[User's guide / Colors] for more
-information about colors management.
+Bitte lese link:weechat_user.de.html#colors[Benutzeranleitung / Farben] für weitere
+Informationen die das Farbmanagement betreffen.
 
 [[search_text]]
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
@@ -451,9 +446,8 @@ information about colors management.
 Die Standardtastenbelegung lautet kbd:[Ctrl+r] (der dazugehörige Befehl: `/input search_text_here`).
 und um zu Highlight-Nachrichten zu springen: kbd:[Alt+p] / kbd:[Alt+n].
 
-// TRANSLATION MISSING
-See link:weechat_user.de.html#key_bindings[User's guide / Key bindings] for more
-info about this feature.
+siehe link:weechat_user.de.html#key_bindings[Benutzeranleitung / Tastenbelegungen] für weitere
+Informationen zu dieser Funktion.
 
 [[terminal_focus]]
 === Wie kann ich Befehle ausführen, wenn der Terminal (keinen) Fokus hat?
@@ -535,9 +529,8 @@ Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 /key bind meta-q /buffer *11
 ----
 
-// TRANSLATION MISSING
-List of default keys is in
-link:weechat_user.de.html#key_bindings[User's guide / Key bindings].
+Eine Auflistung der Standardtastenbelegung findet man in
+link:weechat_user.de.html#key_bindings[Benutzeranleitung / Tastenbelegungen].
 
 [[global_history]]
 === Wie kann ich den globalen Verlaufsspeicher (anstelle des Buffer eigenen) mit den Up-/Down-Tasten nutzen?
