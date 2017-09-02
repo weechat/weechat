@@ -298,7 +298,11 @@ input_data (struct t_gui_buffer *buffer, const char *data,
                 break;
         }
 
-        pos = strchr (ptr_data, '\n');
+        if (buffer->input_multiline)
+            pos = NULL;
+        else
+            pos = strchr (ptr_data, '\n');
+
         if (pos)
             pos[0] = '\0';
 
