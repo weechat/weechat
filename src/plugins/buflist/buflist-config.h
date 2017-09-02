@@ -58,6 +58,9 @@ extern struct t_config_option *buflist_config_format_number;
 
 extern char **buflist_config_sort_fields;
 extern int buflist_config_sort_fields_count;
+extern char *buflist_config_format_buffer_eval;
+extern char *buflist_config_format_buffer_current_eval;
+extern char *buflist_config_format_hotlist_eval;
 
 extern int buflist_config_init ();
 extern int buflist_config_read ();

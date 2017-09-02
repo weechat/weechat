@@ -20,6 +20,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.0]]
 == Version 2.0 (under dev)
 
+[[v2.0_buflist_eval]]
+=== Evaluation in buflist
+
+The evaluation of expressions in buflist options is not recursive any more,
+to prevent too many evaluations, for example in buffer variables
+(see issue #1060 for more information). +
+If you are using custom variables/options containing evaluated expressions,
+like `${some.config.option}`, and if this option contains evaluated strings (`${...}`),
+you must evaluate them with: `${eval:${some.config.option}}`.
+
+[NOTE]
+The default buflist formats (`${format_buffer}`, `${format_name}`,
+`${format_hotlist}`, ...) are automatically evaluated in options _buflist.format.buffer_,
+_buflist.format.buffer_current_ and _buflist.format.hotlist_.
+
 [[v2.0_hook_connect]]
 === Function hook_connect
 
@@ -43,8 +58,8 @@ No release note.
 
 [[v1.8]]
 == Version 1.8 (2017-05-13)
-
 [[v1.8_options]]
+
 === Options
 
 The option _script.scripts.url_force_https_ has been removed because now the

@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -62,6 +63,9 @@ struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
 char **buflist_config_sort_fields = NULL;
 int buflist_config_sort_fields_count = 0;
+char *buflist_config_format_buffer_eval = NULL;
+char *buflist_config_format_buffer_current_eval = NULL;
+char *buflist_config_format_hotlist_eval = NULL;
 
 
 /*
@@ -292,7 +296,7 @@ buflist_config_change_nick_prefix (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on format options.
+ * Callback for changes on options needing bar item refresh.
  */
 
 void
@@ -303,6 +307,67 @@ buflist_config_change_buflist (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) option;
+
+    buflist_bar_item_update ();
+}
+
+/*
+ * Replace formats like ${format_xxx} by evaluated form: ${eval:${format_xxx}}.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+buflist_config_add_eval_for_formats (const char *string)
+{
+    char *formats[] = { "format_buffer", "format_number", "indent",
+                        "format_nick_prefix", "format_name",
+                        "format_hotlist", "hotlist", "format_lag",
+                        "color_hotlist", NULL };
+    char *result, *tmp, format[512], format_eval[512];
+    int i;
+
+    result = strdup (string);
+    for (i = 0; formats[i]; i++)
+    {
+        snprintf (format, sizeof (format),
+                  "${%s}", formats[i]);
+        snprintf (format_eval, sizeof (format_eval),
+                  "${eval:${%s}}", formats[i]);
+        tmp = weechat_string_replace (result, format, format_eval);
+        free (result);
+        result = tmp;
+    }
+    return result;
+}
+
+/*
+ * Callback for changes on some format options.
+ */
+
+void
+buflist_config_change_format (const void *pointer, void *data,
+                              struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (buflist_config_format_buffer_eval)
+        free (buflist_config_format_buffer_eval);
+    buflist_config_format_buffer_eval = buflist_config_add_eval_for_formats (
+        weechat_config_string (buflist_config_format_buffer));
+
+    if (buflist_config_format_buffer_current_eval)
+        free (buflist_config_format_buffer_current_eval);
+    buflist_config_format_buffer_current_eval = buflist_config_add_eval_for_formats (
+        weechat_config_string (buflist_config_format_buffer_current));
+
+    if (buflist_config_format_hotlist_eval)
+        free (buflist_config_format_hotlist_eval);
+    buflist_config_format_hotlist_eval = buflist_config_add_eval_for_formats (
+        weechat_config_string (buflist_config_format_hotlist));
 
     buflist_bar_item_update ();
 }
@@ -480,7 +545,7 @@ buflist_config_init ()
         "${format_name}",
         NULL, 0,
         NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
+        &buflist_config_change_format, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_format_buffer_current = weechat_config_new_option (
         buflist_config_file, ptr_section,
@@ -489,7 +554,7 @@ buflist_config_init ()
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0, "${color:,blue}${format_buffer}", NULL, 0,
         NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
+        &buflist_config_change_format, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_format_hotlist = weechat_config_new_option (
         buflist_config_file, ptr_section,
@@ -500,7 +565,7 @@ buflist_config_init ()
         " ${color:green}(${hotlist}${color:green})",
         NULL, 0,
         NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
+        &buflist_config_change_format, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_format_hotlist_level[0] = weechat_config_new_option (
         buflist_config_file, ptr_section,
@@ -624,6 +689,7 @@ buflist_config_read ()
     {
         buflist_config_change_sort (NULL, NULL, NULL);
         buflist_config_change_signals_refresh (NULL, NULL, NULL);
+        buflist_config_change_format (NULL, NULL, NULL);
     }
 
     return rc;
@@ -657,4 +723,11 @@ buflist_config_free ()
         buflist_config_sort_fields = NULL;
         buflist_config_sort_fields_count = 0;
     }
+
+    if (buflist_config_format_buffer_eval)
+        free (buflist_config_format_buffer_eval);
+    if (buflist_config_format_buffer_current_eval)
+        free (buflist_config_format_buffer_current_eval);
+    if (buflist_config_format_hotlist_eval)
+        free (buflist_config_format_hotlist_eval);
 }
