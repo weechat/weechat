@@ -134,6 +134,13 @@ if(ENABLE_SCRIPTS AND ENABLE_LUA)
   endif()
 endif()
 
+if(ENABLE_SCRIPTS AND ENABLE_PHP)
+  find_package(PHP)
+  if(PHP_FOUND)
+    add_subdirectory(php)
+  endif()
+endif()
+
 if(ENABLE_SCRIPTS AND ENABLE_TCL)
   find_package(TCL)
   if(TCL_FOUND)

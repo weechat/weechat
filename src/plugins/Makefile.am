@@ -97,6 +97,10 @@ if PLUGIN_LUA
 lua_dir = lua
 endif
 
+if PLUGIN_PHP
+php_dir = php
+endif
+
 if PLUGIN_TCL
 tcl_dir = tcl
 endif
@@ -133,6 +137,7 @@ SUBDIRS = . \
           $(python_dir) \
           $(ruby_dir) \
           $(lua_dir) \
+          $(php_dir) \
           $(tcl_dir) \
           $(guile_dir) \
           $(javascript_dir) \
