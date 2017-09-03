@@ -97,30 +97,31 @@ compiler WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Paquet ^(1)^           | Version       | Requis | Fonctionnalité
+| Paquet ^(1)^                | Version       | Requis | Fonctionnalité
 | compilateur C
-  (gcc, clang, ...)      |               | *oui*  | Construction.
-| compilateur C++        |               |        | Construction et lancement des tests, extension javascript.
-| cmake                  |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
-| pkg-config             |               | *oui*  | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses.
-| libcurl4-gnutls-dev    |               | *oui*  | Transfert d'URL.
-| zlib1g-dev             |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
-| libgcrypt20-dev        |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script.
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
-| ca-certificates        |               |        | Certificats pour les connexions SSL.
+  (gcc, clang, ...)           |               | *oui*  | Construction.
+| compilateur C++             |               |        | Construction et lancement des tests, extension javascript.
+| cmake                       |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
+| pkg-config                  |               | *oui*  | Détection des bibliothèques installées.
+| libncursesw5-dev ^(2)^      |               | *oui*  | Interface ncurses.
+| libcurl4-gnutls-dev         |               | *oui*  | Transfert d'URL.
+| zlib1g-dev                  |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
+| libgcrypt20-dev             |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| gettext                     |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
+| ca-certificates             |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |        | Extension aspell.
-| python-dev             | ≥ 2.6 ^(4)^   |        | Extension python.
-| libperl-dev            |               |        | Extension perl.
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |        | Extension ruby.
-| liblua5.3-dev          |               |        | Extension lua.
-| tcl-dev                | ≥ 8.5         |        | Extension tcl.
-| guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme).
-| libv8-dev              | ≤ 3.24.3      |        | Extension javascript.
-| asciidoctor            | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
-| libcpputest-dev        | ≥ 3.4         |        | Construction et lancement des tests.
+  ∥ libenchant-dev            |               |        | Extension aspell.
+| python-dev                  | ≥ 2.6 ^(4)^   |        | Extension python.
+| libperl-dev                 |               |        | Extension perl.
+| ruby-2.3, ruby2.3-dev       | ≥ 1.8         |        | Extension ruby.
+| liblua5.3-dev               |               |        | Extension lua.
+| tcl-dev                     | ≥ 8.5         |        | Extension tcl.
+| guile-2.0-dev               | ≥ 2.0         |        | Extension guile (scheme).
+| libv8-dev                   | ≤ 3.24.3      |        | Extension javascript.
+| php7.0-dev, libphp7.0-embed | ≥ 7.0         |        | Extension PHP.
+| asciidoctor                 | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
+| libcpputest-dev             | ≥ 3.4         |        | Construction et lancement des tests.
 |===
 
 [NOTE]
@@ -251,6 +252,9 @@ Liste des options couramment utilisées :
 | ENABLE_PERL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Perl>>.
 
+| ENABLE_PHP | `ON`, `OFF` | ON |
+  Compiler <<scripts_plugins,l'extension PHP>>.
+
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Python>>.
 
@@ -269,7 +273,7 @@ Liste des options couramment utilisées :
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, Javascript).
+  Lua, Tcl, Guile, Javascript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Tcl>>.
@@ -551,6 +555,8 @@ Les répertoires sont :
 |       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^.
 |    javascript/    | Scripts Javascript.
 |       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^.
+|    php/           | Scripts PHP.
+|       autoload/   | Scripts PHP chargés automatiquement au démarrage ^(1)^.
 |===
 
 [NOTE]
@@ -2154,6 +2160,7 @@ Les extensions par défaut sont :
 | tcl        | Interface (API) pour scripts Tcl.
 | guile      | Interface (API) pour scripts Guile (scheme).
 | javascript | Interface (API) pour scripts Javascript.
+| php        | Interface (API) pour scripts PHP.
 | trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
 | xfer       | Transfert de fichier et discussion directe.
 |===
@@ -3371,8 +3378,8 @@ include::autogen/user/relay_options.adoc[]
 [[scripts_plugins]]
 === Scripts
 
-WeeChat fournit 7 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
-Guile (scheme) et Javascript.
+WeeChat fournit 8 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
+Guile (scheme), Javascript et PHP.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
@@ -3424,6 +3431,11 @@ include::autogen/user/guile_commands.adoc[]
 ==== Commandes Javascript
 
 include::autogen/user/javascript_commands.adoc[]
+
+[[php_commands]]
+==== Commandes PHP
+
+include::autogen/user/php_commands.adoc[]
 
 [[script_options]]
 ==== Options Script

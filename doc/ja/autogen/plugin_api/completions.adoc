@@ -58,6 +58,8 @@
 
 | perl | perl_script | スクリプトのリスト
 
+| php | php_script | スクリプトのリスト
+
 | python | python_script | スクリプトのリスト
 
 | relay | relay_free_port | リレープラグイン用の最初の空きポート番号

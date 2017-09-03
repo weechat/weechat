@@ -34,6 +34,8 @@
 
 | perl | perl_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)
 
+| php | php_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)
+
 | python | python_script | list of scripts | script pointer (optional) | script name (wildcard "*" is allowed) (optional)
 
 | relay | relay | list of relay clients | relay pointer (optional) | -

@@ -94,30 +94,31 @@ compile WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Package ^(1)^          | Version       | Required | Feature
+| Package ^(1)^               | Version       | Required | Feature
 | C compiler
-  (gcc, clang, ...)      |               | *yes*    | Build.
-| C++ compiler           |               |          | Build and run tests, javascript plugin.
-| cmake                  |               | *yes*    | Build (autotools still possible, but cmake is recommended).
-| pkg-config             |               | *yes*    | Detect installed libraries.
-| libncursesw5-dev ^(2)^ |               | *yes*    | Ncurses interface.
-| libcurl4-gnutls-dev    |               | *yes*    | URL transfer.
-| zlib1g-dev             |               | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin.
-| libgcrypt20-dev        |               | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |          | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |          | Internationalization (translation of messages; base language is English).
-| ca-certificates        |               |          | Certificates for SSL connections.
+  (gcc, clang, ...)           |               | *yes*    | Build.
+| C++ compiler                |               |          | Build and run tests, javascript plugin.
+| cmake                       |               | *yes*    | Build (autotools still possible, but cmake is recommended).
+| pkg-config                  |               | *yes*    | Detect installed libraries.
+| libncursesw5-dev ^(2)^      |               | *yes*    | Ncurses interface.
+| libcurl4-gnutls-dev         |               | *yes*    | URL transfer.
+| zlib1g-dev                  |               | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin.
+| libgcrypt20-dev             |               | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ |          | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| gettext                     |               |          | Internationalization (translation of messages; base language is English).
+| ca-certificates             |               |          | Certificates for SSL connections.
 | libaspell-dev
-  ∥ libenchant-dev       |               |          | Aspell plugin.
-| python-dev             | ≥ 2.6 ^(4)^   |          | Python plugin.
-| libperl-dev            |               |          | Perl plugin.
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |          | Ruby plugin.
-| liblua5.3-dev          |               |          | Lua plugin.
-| tcl-dev                | ≥ 8.5         |          | Tcl plugin.
-| guile-2.0-dev          | ≥ 2.0         |          | Guile (scheme) plugin.
-| libv8-dev              | ≤ 3.24.3      |          | Javascript plugin.
-| asciidoctor            | ≥ 1.5.4       |          | Build man page and documentation.
-| libcpputest-dev        | ≥ 3.4         |          | Build and run tests.
+  ∥ libenchant-dev            |               |          | Aspell plugin.
+| python-dev                  | ≥ 2.6 ^(4)^   |          | Python plugin.
+| libperl-dev                 |               |          | Perl plugin.
+| ruby-2.3, ruby2.3-dev       | ≥ 1.8         |          | Ruby plugin.
+| liblua5.3-dev               |               |          | Lua plugin.
+| tcl-dev                     | ≥ 8.5         |          | Tcl plugin.
+| guile-2.0-dev               | ≥ 2.0         |          | Guile (scheme) plugin.
+| libv8-dev                   | ≤ 3.24.3      |          | Javascript plugin.
+| php7.0-dev, libphp7.0-embed | ≥ 7.0         |          | PHP plugin.
+| asciidoctor                 | ≥ 1.5.4       |          | Build man page and documentation.
+| libcpputest-dev             | ≥ 3.4         |          | Build and run tests.
 |===
 
 [NOTE]
@@ -247,6 +248,9 @@ List of commonly used options:
 | ENABLE_PERL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Perl plugin>>.
 
+| ENABLE_PHP | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,PHP plugin>>.
+
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Python plugin>>.
 
@@ -265,7 +269,7 @@ List of commonly used options:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, Javascript).
+  Guile, Javascript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
@@ -540,6 +544,8 @@ The directories are:
 |       autoload/   | Guile scripts auto-loaded on startup ^(1)^.
 |    javascript/    | Javascript scripts.
 |       autoload/   | Javascript scripts auto-loaded on startup ^(1)^.
+|    php/           | PHP scripts.
+|       autoload/   | PHP scripts auto-loaded on startup ^(1)^.
 |===
 
 [NOTE]
@@ -2084,6 +2090,7 @@ Default plugins are:
 | tcl        | Tcl scripting API.
 | guile      | Guile (scheme) scripting API.
 | javascript | Javascript scripting API.
+| php        | PHP scripting API.
 | trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
 | xfer       | File transfer and direct chat.
 |===
@@ -3265,8 +3272,8 @@ include::autogen/user/relay_options.adoc[]
 [[scripts_plugins]]
 === Scripts
 
-WeeChat provides 7 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
-(scheme) and Javascript.
+WeeChat provides 8 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme), Javascript and PHP.
 These plugins can load, execute and unload scripts for these languages.
 
 Another plugin called "script" is a scripts manager and is used to load/unload
@@ -3315,6 +3322,11 @@ include::autogen/user/guile_commands.adoc[]
 ==== Javascript commands
 
 include::autogen/user/javascript_commands.adoc[]
+
+[[php_commands]]
+==== PHP commands
+
+include::autogen/user/php_commands.adoc[]
 
 [[script_options]]
 ==== Script options

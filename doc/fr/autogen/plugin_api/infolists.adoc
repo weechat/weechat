@@ -34,6 +34,8 @@
 
 | perl | perl_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)
 
+| php | php_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)
+
 | python | python_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)
 
 | relay | relay | liste des clients pour le relai | pointeur vers le relay (optionnel) | -

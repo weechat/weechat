@@ -58,6 +58,8 @@
 
 | perl | perl_script | liste des scripts
 
+| php | php_script | liste des scripts
+
 | python | python_script | liste des scripts
 
 | relay | relay_free_port | premier port libre pour l'extension relay

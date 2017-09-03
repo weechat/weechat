@@ -101,11 +101,12 @@ PLUGIN_LIST = {
     'script': 'o',
     'perl': '',
     'python': '',
-    'javascript': '',
     'ruby': '',
     'lua': '',
     'tcl': '',
     'guile': '',
+    'javascript': '',
+    'php': '',
     'trigger': 'o',
     'xfer': 'co',
 }

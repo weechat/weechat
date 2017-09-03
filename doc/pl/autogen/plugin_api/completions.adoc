@@ -58,6 +58,8 @@
 
 | perl | perl_script | lista skryptów
 
+| php | php_script | lista skryptów
+
 | python | python_script | lista skryptów
 
 | relay | relay_free_port | pierwszy wolny port dla wtyczki relay

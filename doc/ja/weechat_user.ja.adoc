@@ -99,30 +99,31 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| パッケージ ^(1)^       | バージョン       | 要件   | 機能
+| パッケージ ^(1)^            | バージョン       | 要件   | 機能
 | C コンパイラ
-  (gcc, clang, ...)      |                  | *必須* | ビルド
-| C++ コンパイラ         |                  |        | ビルドとテストの実行、javascript プラグイン
-| cmake                  |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
-| pkg-config             |                  | *必須* | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェイス
-| libcurl4-gnutls-dev    |                  | *必須* | URL 転送
-| zlib1g-dev             |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
-| libgnutls28-dev        | 2.2.0 以上 ^(3)^ |        | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
-| gettext                |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+  (gcc, clang, ...)           |                  | *必須* | ビルド
+| C++ コンパイラ              |                  |        | ビルドとテストの実行、javascript プラグイン
+| cmake                       |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| pkg-config                  |                  | *必須* | インストール済みライブラリを検出
+| libncursesw5-dev ^(2)^      |                  | *必須* | ncurses インターフェイス
+| libcurl4-gnutls-dev         |                  | *必須* | URL 転送
+| zlib1g-dev                  |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt20-dev             |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| libgnutls28-dev             | 2.2.0 以上 ^(3)^ |        | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+| gettext                     |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| ca-certificates             |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev
-  ∥ libenchant-dev       |                  |        | aspell プラグイン
-| python-dev             | 2.6 以上 ^(4)^   |        | python プラグイン
-| libperl-dev            |                  |        | perl プラグイン
-| ruby2.3, ruby2.3-dev   | 1.8 以上         |        | ruby プラグイン
-| liblua5.3-dev          |                  |        | lua プラグイン
-| tcl-dev                | 8.5 以上         |        | tcl プラグイン
-| guile-2.0-dev          | 2.0 以上         |        | guile (scheme) プラグイン
-| libv8-dev              | 3.24.3 以下      |        | javascript プラグイン
-| asciidoctor            | 1.5.4 以上       |        | man ページと文書のビルド
-| libcpputest-dev        | 3.4 以上         |        | ビルドとテストの実行
+  ∥ libenchant-dev            |                  |        | aspell プラグイン
+| python-dev                  | 2.6 以上 ^(4)^   |        | python プラグイン
+| libperl-dev                 |                  |        | perl プラグイン
+| ruby2.3, ruby2.3-dev        | 1.8 以上         |        | ruby プラグイン
+| liblua5.3-dev               |                  |        | lua プラグイン
+| tcl-dev                     | 8.5 以上         |        | tcl プラグイン
+| guile-2.0-dev               | 2.0 以上         |        | guile (scheme) プラグイン
+| libv8-dev                   | 3.24.3 以下      |        | javascript プラグイン
+| php7.0-dev, libphp7.0-embed | 7.0 以上         |        | PHP プラグイン
+| asciidoctor                 | 1.5.4 以上       |        | man ページと文書のビルド
+| libcpputest-dev             | 3.4 以上         |        | ビルドとテストの実行
 |===
 
 [NOTE]
@@ -251,6 +252,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_PERL | `ON`, `OFF` | ON |
   <<scripts_plugins,Perl プラグイン>>のコンパイル。
 
+| ENABLE_PHP | `ON`, `OFF` | ON |
+  <<scripts_plugins,PHP プラグイン>>のコンパイル。
+
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   <<scripts_plugins,Python プラグイン>>のコンパイル。
 
@@ -269,7 +273,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   すべての<<scripts_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile、Javascript) のコンパイル。
+  (Python、Perl、Ruby、Lua、Tcl、Guile、Javascript, PHP) のコンパイル。
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル。
@@ -543,6 +547,8 @@ _~/.weechat_ ディレクトリの中に作成されます
 |       autoload/   | 起動時に自動ロードされる Guile スクリプト ^(1)^
 |    javascript/    | Javascript スクリプト
 |       autoload/   | 起動時に自動ロードされる Javascript スクリプト ^(1)^
+|    php/           | PHP スクリプト
+|       autoload/   | 起動時に自動ロードされる PHP スクリプト ^(1)^
 |===
 
 [NOTE]
@@ -2083,6 +2089,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | tcl        | Tcl スクリプト API
 | guile      | Guile (scheme) スクリプト API
 | javascript | Javascript スクリプト API
+| php        | PHP スクリプト API
 | trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
 | xfer       | ファイル転送とダイレクトチャット
 |===
@@ -3259,9 +3266,9 @@ include::autogen/user/relay_options.adoc[]
 [[scripts_plugins]]
 === スクリプト
 
-WeeChat は 7 種類のスクリプトプラグインを備えています:
+WeeChat は 8 種類のスクリプトプラグインを備えています:
 Python、Perl、Ruby、Lua、Tcl、Guile
-(scheme)、Javascript。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
+(scheme)、Javascript、PHP。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
 スクリプトマネージャを使えば、任意の言語で書かれたスクリプトをロード/アンロードしたり、WeeChat
 スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
@@ -3309,6 +3316,11 @@ include::autogen/user/guile_commands.adoc[]
 ==== Javascript コマンド
 
 include::autogen/user/javascript_commands.adoc[]
+
+[[php_commands]]
+==== PHP コマンド
+
+include::autogen/user/php_commands.adoc[]
 
 [[script_options]]
 ==== スクリプトオプション

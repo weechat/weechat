@@ -34,6 +34,8 @@
 
 | perl | perl_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
+| php | php_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
+
 | python | python_script | Liste der Skripten | Skript Pointer (optional) | Name des Skriptes (Platzhalter "*" kann verwendet werden) (optional)
 
 | relay | relay | Liste der Relay-Clients | Relay Pointer (optional) | -

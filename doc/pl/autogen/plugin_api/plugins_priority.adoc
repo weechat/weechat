@@ -13,6 +13,6 @@
 . xfer (7000)
 . irc (6000)
 . relay (5000)
-. guile, javascript, lua, perl, python, ruby, tcl (4000)
+. guile, javascript, lua, perl, php, python, ruby, tcl (4000)
 . script (3000)
 . fset (2000)

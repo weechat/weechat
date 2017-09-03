@@ -110,38 +110,39 @@ compilare WeeChat.
 
 [width="100%",cols="5,^3,^3,.^13",options="header"]
 |===
-| Pacchetto ^(1)^        | Versione      | Richiesto | Caratteristica
+| Pacchetto ^(1)^             | Versione      | Richiesto | Caratteristica
 // TRANSLATION MISSING
 | C compiler
-  (gcc, clang, ...)      |               | *sì*      | Build.
+  (gcc, clang, ...)           |               | *sì*      | Build.
 // TRANSLATION MISSING
-| C++ compiler           |               |           | Build and run tests, plugin Javascript.
-| cmake                  |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
+| C++ compiler                |               |           | Build and run tests, plugin Javascript.
+| cmake                       |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
 // TRANSLATION MISSING
-| pkg-config             |               | *sì*      | Detect installed libraries.
-| libncursesw5-dev ^(2)^ |               | *sì*      | Interfaccia ncurses.
-| libcurl4-gnutls-dev    |               | *sì*      | Trasferimento URL.
+| pkg-config                  |               | *sì*      | Detect installed libraries.
+| libncursesw5-dev ^(2)^      |               | *sì*      | Interfaccia ncurses.
+| libcurl4-gnutls-dev         |               | *sì*      | Trasferimento URL.
 // TRANSLATION MISSING
-| zlib1g-dev             |               | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin.
+| zlib1g-dev                  |               | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
+| libgcrypt20-dev             |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
 // TRANSLATION MISSING
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
-| ca-certificates        |               |           | Certificati per le connessioni SSL.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| gettext                     |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
+| ca-certificates             |               |           | Certificati per le connessioni SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |           | Plugin aspell.
-| python-dev             | ≥ 2.6 ^(4)^   |           | Plugin python.
-| libperl-dev            |               |           | Plugin perl.
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |           | Plugin ruby.
-| liblua5.3-dev          |               |           | Plugin lua.
-| tcl-dev                | ≥ 8.5         |           | Plugin tcl.
-| guile-2.0-dev          | ≥ 2.0         |           | Plugin guile (scheme).
-| libv8-dev              | ≤ 3.24.3      |           | Plugin Javascript.
+  ∥ libenchant-dev            |               |           | Plugin aspell.
+| python-dev                  | ≥ 2.6 ^(4)^   |           | Plugin python.
+| libperl-dev                 |               |           | Plugin perl.
+| ruby-2.3, ruby2.3-dev       | ≥ 1.8         |           | Plugin ruby.
+| liblua5.3-dev               |               |           | Plugin lua.
+| tcl-dev                     | ≥ 8.5         |           | Plugin tcl.
+| guile-2.0-dev               | ≥ 2.0         |           | Plugin guile (scheme).
+| libv8-dev                   | ≤ 3.24.3      |           | Plugin Javascript.
+| php7.0-dev, libphp7.0-embed | ≥ 7.0         |           | Plugin PHP.
 // TRANSLATION MISSING
-| asciidoctor            | ≥ 1.5.4       |           | Build man page and documentation.
+| asciidoctor                 | ≥ 1.5.4       |           | Build man page and documentation.
 // TRANSLATION MISSING
-| libcpputest-dev        | ≥ 3.4         |           | Build and run tests.
+| libcpputest-dev             | ≥ 3.4         |           | Build and run tests.
 |===
 
 // TRANSLATION MISSING (note 3)
@@ -279,6 +280,9 @@ List of commonly used options:
 | ENABLE_PERL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Perl plugin>>.
 
+| ENABLE_PHP | `ON`, `OFF` | ON |
+  Compile <<scripts_plugins,PHP plugin>>.
+
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Python plugin>>.
 
@@ -297,7 +301,7 @@ List of commonly used options:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, Javascript).
+  Guile, Javascript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
@@ -585,6 +589,8 @@ The directories are:
 |       autoload/   | Guile scripts auto-loaded on startup ^(1)^.
 |    javascript/    | Javascript scripts.
 |       autoload/   | Javascript scripts auto-loaded on startup ^(1)^.
+|    php/           | PHP scripts.
+|       autoload/   | PHP scripts auto-loaded on startup ^(1)^.
 |===
 
 [NOTE]
@@ -2213,6 +2219,7 @@ I plugin predefiniti sono:
 | tcl        | API per lo scripting in TCL.
 | guile      | API per lo scripting in Guile (scheme).
 | javascript | API per lo scripting in Javascript.
+| php        | API per lo scripting in PHP.
 // TRANSLATION MISSING
 | trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
 | xfer       | Trasferimento file e chat diretta.
@@ -3483,8 +3490,8 @@ include::autogen/user/relay_options.adoc[]
 [[scripts_plugins]]
 === Scripts
 
-WeeChat fornisce 7 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
-(scheme), Javascript.
+WeeChat fornisce 8 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
+(scheme), Javascript, PHP.
 Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
@@ -3535,6 +3542,11 @@ include::autogen/user/guile_commands.adoc[]
 ==== Comandi Javascript
 
 include::autogen/user/javascript_commands.adoc[]
+
+[[php_commands]]
+==== Comandi PHP
+
+include::autogen/user/php_commands.adoc[]
 
 // TRANSLATION MISSING
 [[script_options]]

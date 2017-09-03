@@ -324,6 +324,26 @@ _prev_script_   (pointer, hdata: "perl_script") +
 _next_script_   (pointer, hdata: "perl_script") +
 
 
+| php
+| [[hdata_php_script]]<<hdata_php_script,php_script>>
+| liste des scripts
+| _scripts_ +
+_last_script_ +
+
+| _filename_   (string) +
+_interpreter_   (pointer) +
+_name_   (string) +
+_author_   (string) +
+_version_   (string) +
+_license_   (string) +
+_description_   (string) +
+_shutdown_func_   (string) +
+_charset_   (string) +
+_unloading_   (integer) +
+_prev_script_   (pointer, hdata: "php_script") +
+_next_script_   (pointer, hdata: "php_script") +
+
+
 | python
 | [[hdata_python_script]]<<hdata_python_script,python_script>>
 | liste des scripts

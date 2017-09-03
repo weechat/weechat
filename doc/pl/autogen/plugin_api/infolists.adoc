@@ -34,6 +34,8 @@
 
 | perl | perl_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
+| php | php_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
+
 | python | python_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 
 | relay | relay | lista zdalnych klientów | wskaźnik relay (opcjonalny) | -
