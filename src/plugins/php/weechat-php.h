@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PHP_H
-#define WEECHAT_PHP_H 1
+#ifndef WEECHAT_PLUGIN_PHP_H
+#define WEECHAT_PLUGIN_PHP_H 1
 
 #define weechat_plugin weechat_php_plugin
 #define PHP_PLUGIN_NAME "php"
@@ -57,4 +57,4 @@ extern void *weechat_php_exec (struct t_plugin_script *script,
 extern zval *weechat_php_func_map_get (const char *func_name);
 extern char *weechat_php_func_map_add (zval *ofunc);
 
-#endif /* WEECHAT_PHP_H */
+#endif /* WEECHAT_PLUGIN_PHP_H */

@@ -17,8 +17,8 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PHP_API_H
-#define WEECHAT_PHP_API_H 1
+#ifndef WEECHAT_PLUGIN_PHP_API_H
+#define WEECHAT_PLUGIN_PHP_API_H 1
 
 extern struct zval* weechat_php_api_funcs[];
 extern struct t_php_const weechat_php_api_consts[];
@@ -221,4 +221,4 @@ PHP_FUNCTION(weechat_window_set_title);
 PHP_FUNCTION(forget_class);
 PHP_FUNCTION(forget_function);
 
-#endif /* WEECHAT_PHP_API_H */
+#endif /* WEECHAT_PLUGIN_PHP_API_H */
