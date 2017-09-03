@@ -23,7 +23,7 @@
 #define weechat_plugin weechat_script_plugin
 #define SCRIPT_PLUGIN_NAME "script"
 
-#define SCRIPT_NUM_LANGUAGES 7
+#define SCRIPT_NUM_LANGUAGES 8
 
 extern struct t_weechat_plugin *weechat_script_plugin;
 

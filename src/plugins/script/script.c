@@ -46,9 +46,9 @@ WEECHAT_PLUGIN_PRIORITY(3000);
 struct t_weechat_plugin *weechat_script_plugin = NULL;
 
 char *script_language[SCRIPT_NUM_LANGUAGES] =
-{ "guile", "lua", "perl", "python", "ruby", "tcl", "javascript" };
+{ "guile", "lua", "perl", "python", "ruby", "tcl", "javascript", "php" };
 char *script_extension[SCRIPT_NUM_LANGUAGES] =
-{ "scm",   "lua", "pl",   "py",     "rb",   "tcl", "js" };
+{ "scm",   "lua", "pl",   "py",     "rb",   "tcl", "js", "php" };
 
 int script_plugin_loaded[SCRIPT_NUM_LANGUAGES];
 struct t_hashtable *script_loaded = NULL;
