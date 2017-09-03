@@ -45,8 +45,29 @@ struct t_plugin_script *last_php_script = NULL;
 struct t_plugin_script *php_current_script = NULL;
 struct t_plugin_script *php_registered_script = NULL;
 const char *php_current_script_filename = NULL;
+
+/*
+ * string used to execute action "install":
+ * when signal "php_script_install" is received, name of string
+ * is added to this string, to be installed later by a timer (when nothing is
+ * running in script)
+ */
 char *php_action_install_list = NULL;
+
+/*
+ * string used to execute action "remove":
+ * when signal "php_script_remove" is received, name of string
+ * is added to this string, to be removed later by a timer (when nothing is
+ * running in script)
+ */
 char *php_action_remove_list = NULL;
+
+/*
+ * string used to execute action "autoload":
+ * when signal "php_script_autoload" is received, name of string
+ * is added to this string, to autoload or disable autoload later by a timer
+ * (when nothing is running in script)
+ */
 char *php_action_autoload_list = NULL;
 
 const zend_function_entry weechat_functions[] = {
@@ -337,24 +358,40 @@ zend_module_entry weechat_module_entry = {
     STANDARD_MODULE_PROPERTIES
 };
 
+/*
+ * Callback called for each key/value in a hashtable.
+ */
+
 void
 weechat_php_hashtable_to_array_cb (void *data,
-                                 struct t_hashtable *hashtable,
-                                 const char *key,
-                                 const char *value)
+                                   struct t_hashtable *hashtable,
+                                   const char *key,
+                                   const char *value)
 {
+    /* make C compiler happy */
     (void) hashtable;
-    add_assoc_string((zval*)data, key, (char*)value);
+
+    add_assoc_string ((zval*)data, key, (char*)value);
 }
+
+/*
+ * Converts a WeeChat hashtable to a PHP array.
+ */
 
 void
 weechat_php_hashtable_to_array (struct t_hashtable *hashtable, zval *arr)
 {
-    array_init(arr);
+    array_init (arr);
     weechat_hashtable_map_string (hashtable,
                                   &weechat_php_hashtable_to_array_cb,
                                   arr);
 }
+
+/*
+ * Converts a PHP array to a WeeChat hashtable.
+ *
+ * Note: hashtable must be freed after use.
+ */
 
 struct t_hashtable *
 weechat_php_array_to_hashtable (zval *arr,
@@ -368,7 +405,8 @@ weechat_php_array_to_hashtable (zval *arr,
 
     hashtable = weechat_hashtable_new (size, type_keys, type_values,
                                        NULL, NULL);
-    if (!hashtable) return NULL;
+    if (!hashtable)
+        return NULL;
 
     ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(arr), key, val) {
         if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
@@ -390,6 +428,69 @@ weechat_php_array_to_hashtable (zval *arr,
 
     return hashtable;
 }
+
+static void
+weechat_php_func_map_free_val (struct t_hashtable *hashtable,
+                               const void *key, void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) key;
+
+    zval_dtor ((zval *)value);
+    efree ((zval *)value);
+}
+
+static void
+weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+
+    free ((char *)key);
+}
+
+zval *
+weechat_php_func_map_get (const char* func_name)
+{
+    if (!weechat_php_func_map)
+        return NULL;
+
+    return weechat_hashtable_get (weechat_php_func_map, func_name);
+}
+
+char *
+weechat_php_func_map_add (zval *ofunc)
+{
+    zval *func;
+    char *func_name;
+
+    if (!weechat_php_func_map)
+    {
+        weechat_php_func_map = weechat_hashtable_new (32,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_POINTER,
+                                                      NULL, NULL);
+        weechat_hashtable_set_pointer (weechat_php_func_map,
+                                       "callback_free_value",
+                                       weechat_php_func_map_free_val);
+        weechat_hashtable_set_pointer (weechat_php_func_map,
+                                       "callback_free_key",
+                                       weechat_php_func_map_free_key);
+    }
+
+    func = (zval *)safe_emalloc (sizeof (zval), 1, 0);
+    ZVAL_COPY(func, ofunc);
+    func_name = plugin_script_ptr2str (func);
+
+    weechat_hashtable_set (weechat_php_func_map, func_name, func);
+
+    return func_name;
+}
+
+/*
+ * Executes a PHP function.
+ */
 
 void *
 weechat_php_exec (struct t_plugin_script *script, int ret_type,
@@ -418,7 +519,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
     else
     {
         argc = strlen (format);
-        params = safe_emalloc (sizeof(zval), argc, 0);
+        params = safe_emalloc (sizeof (zval), argc, 0);
 
         for (i = 0; i < argc; i++)
         {
@@ -440,8 +541,8 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 
     /* Invoke func */
     ret_value = NULL;
-    memset(&fci, 0, sizeof(zend_fcall_info));
-    memset(&fci_cache, 0, sizeof(zend_fcall_info_cache));
+    memset(&fci, 0, sizeof (zend_fcall_info));
+    memset(&fci_cache, 0, sizeof (zend_fcall_info_cache));
 
     zfunc = weechat_php_func_map_get (function);
     if (zfunc && zend_fcall_info_init (zfunc, 0, &fci, &fci_cache, NULL, NULL) == SUCCESS)
@@ -458,7 +559,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
             if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
             {
                 convert_to_string (&zretval);
-                ret_value = strdup ((char *) Z_STRVAL(zretval));
+                ret_value = strdup ((char *)Z_STRVAL(zretval));
             }
             else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
             {
@@ -486,7 +587,7 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
                             weechat_prefix ("error"), PHP_PLUGIN_NAME, function);
         }
     }
-    zend_end_try();
+    zend_end_try ();
 
     /* Cleanup */
     if (params)
@@ -503,6 +604,14 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 
     return ret_value;
 }
+
+/*
+ * Loads a PHP script.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
 
 int
 weechat_php_load (const char *filename)
@@ -523,7 +632,7 @@ weechat_php_load (const char *filename)
     {
         php_execute_script (&file_handle);
     }
-    zend_end_try();
+    zend_end_try ();
 
     if (!php_registered_script)
     {
@@ -548,12 +657,22 @@ weechat_php_load (const char *filename)
     return 1;
 }
 
+/*
+ * Callback for script_auto_load() function.
+ */
+
 void
 weechat_php_load_cb (void *data, const char *filename)
 {
+    /* make C compiler happy */
     (void) data;
+
     weechat_php_load (filename);
 }
+
+/*
+ * Unloads a PHP script.
+ */
 
 void
 weechat_php_unload (struct t_plugin_script *script)
@@ -585,6 +704,10 @@ weechat_php_unload (struct t_plugin_script *script)
         free (filename);
 }
 
+/*
+ * Unloads a PHP script by name.
+ */
+
 void
 weechat_php_unload_name (const char *name)
 {
@@ -602,6 +725,23 @@ weechat_php_unload_name (const char *name)
                         weechat_prefix ("error"), PHP_PLUGIN_NAME, name);
     }
 }
+
+/*
+ * Unloads all PHP scripts.
+ */
+
+void
+weechat_php_unload_all ()
+{
+    while (php_scripts)
+    {
+        weechat_php_unload (php_scripts);
+    }
+}
+
+/*
+ * Reloads a PHP script by name.
+ */
 
 void
 weechat_php_reload_name (const char *name)
@@ -628,14 +768,9 @@ weechat_php_reload_name (const char *name)
     }
 }
 
-void
-weechat_php_unload_all ()
-{
-    while (php_scripts)
-    {
-        weechat_php_unload (php_scripts);
-    }
-}
+/*
+ * Callback for command "/php".
+ */
 
 int
 weechat_php_command_cb (const void *pointer, void *data,
@@ -644,6 +779,7 @@ weechat_php_command_cb (const void *pointer, void *data,
 {
     char *ptr_name, *path_script;
 
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) buffer;
@@ -730,12 +866,17 @@ weechat_php_command_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Adds PHP scripts to completion list.
+ */
+
 int
 weechat_php_completion_cb (const void *pointer, void *data,
                            const char *completion_item,
                            struct t_gui_buffer *buffer,
                            struct t_gui_completion *completion)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) completion_item;
@@ -746,10 +887,15 @@ weechat_php_completion_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Returns hdata for PHP scripts.
+ */
+
 struct t_hdata *
 weechat_php_hdata_cb (const void *pointer, void *data,
                       const char *hdata_name)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
 
@@ -758,11 +904,16 @@ weechat_php_hdata_cb (const void *pointer, void *data,
                                        hdata_name);
 }
 
+/*
+ * Returns infolist with PHP scripts.
+ */
+
 struct t_infolist *
 weechat_php_infolist_cb (const void *pointer, void *data,
                          const char *infolist_name,
                          void *obj_pointer, const char *arguments)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
 
@@ -779,11 +930,16 @@ weechat_php_infolist_cb (const void *pointer, void *data,
     return NULL;
 }
 
+/*
+ * Dumps PHP plugin data in WeeChat log file.
+ */
+
 int
 weechat_php_signal_debug_dump_cb (const void *pointer, void *data,
                                   const char *signal,
                                   const char *type_data, void *signal_data)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -798,11 +954,16 @@ weechat_php_signal_debug_dump_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Display infos about external libraries used.
+ */
+
 int
 weechat_php_signal_debug_libs_cb (const void *pointer, void *data,
                                   const char *signal,
                                   const char *type_data, void *signal_data)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) signal;
@@ -818,10 +979,15 @@ weechat_php_signal_debug_libs_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Timer for executing actions.
+ */
+
 int
 weechat_php_timer_action_cb (const void *pointer, void *data,
                              int remaining_calls)
 {
+    /* make C compiler happy */
     (void) data;
     (void) remaining_calls;
 
@@ -855,12 +1021,18 @@ weechat_php_timer_action_cb (const void *pointer, void *data,
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Callback called when a script action is asked (install/remove/autoload a
+ * script).
+ */
+
 int
 weechat_php_signal_script_action_cb (const void *pointer, void *data,
                                      const char *signal,
                                      const char *type_data,
                                      void *signal_data)
 {
+    /* make C compiler happy */
     (void) pointer;
     (void) data;
 
@@ -896,20 +1068,20 @@ weechat_php_signal_script_action_cb (const void *pointer, void *data,
 }
 
 int
-php_weechat_startup(sapi_module_struct *sapi_module)
+php_weechat_startup (sapi_module_struct *sapi_module)
 {
     return php_module_startup (sapi_module, &weechat_module_entry, 1);
 }
 
 size_t
-php_weechat_ub_write(const char *str, size_t str_length)
+php_weechat_ub_write (const char *str, size_t str_length)
 {
     weechat_printf (NULL, "php: %s", str);
     return str_length + 5;
 }
 
 void
-php_weechat_sapi_error(int type, const char *format, ...)
+php_weechat_sapi_error (int type, const char *format, ...)
 {
     (void) type;
     weechat_va_format (format);
@@ -918,11 +1090,15 @@ php_weechat_sapi_error(int type, const char *format, ...)
 }
 
 void
-php_weechat_log_message(char *message, int syslog_type_int)
+php_weechat_log_message (char *message, int syslog_type_int)
 {
     (void) syslog_type_int;
     php_weechat_ub_write (message, strlen (message));
 }
+
+/*
+ * Initializes PHP plugin.
+ */
 
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
@@ -958,6 +1134,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     return WEECHAT_RC_OK;
 }
 
+/*
+ * Ends PHP plugin.
+ */
+
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
@@ -981,58 +1161,4 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (php_action_autoload_list);
 
     return WEECHAT_RC_OK;
-}
-
-static void
-weechat_php_func_map_free_val (struct t_hashtable *hashtable, const void *key, void *value)
-{
-    (void) hashtable;
-    (void) key;
-    zval_dtor ((zval *)value);
-    efree ((zval *)value);
-}
-
-static void
-weechat_php_func_map_free_key (struct t_hashtable *hashtable, void *key)
-{
-    (void) hashtable;
-    free ((char *)key);
-}
-
-zval *
-weechat_php_func_map_get (const char* func_name) {
-    if (!weechat_php_func_map)
-    {
-        return NULL;
-    }
-    return weechat_hashtable_get (weechat_php_func_map, func_name);
-}
-
-char *
-weechat_php_func_map_add (zval *ofunc)
-{
-    zval *func;
-    char *func_name;
-
-    if (!weechat_php_func_map)
-    {
-        weechat_php_func_map = weechat_hashtable_new (32,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_POINTER,
-                                                      NULL, NULL);
-        weechat_hashtable_set_pointer (weechat_php_func_map,
-                                       "callback_free_value",
-                                       weechat_php_func_map_free_val);
-        weechat_hashtable_set_pointer (weechat_php_func_map,
-                                       "callback_free_key",
-                                       weechat_php_func_map_free_key);
-    }
-
-    func = (zval *)safe_emalloc (sizeof(zval), 1, 0);
-    ZVAL_COPY(func, ofunc);
-    func_name = plugin_script_ptr2str (func);
-
-    weechat_hashtable_set (weechat_php_func_map, func_name, func);
-
-    return func_name;
 }

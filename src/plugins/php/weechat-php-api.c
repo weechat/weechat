@@ -58,6 +58,10 @@
 
 static char weechat_php_empty_arg[1] = { '\0' };
 
+/*
+ * Registers a PHP script.
+ */
+
 PHP_FUNCTION(weechat_register)
 {
     API_FUNC_INIT(weechat_register);
@@ -142,6 +146,13 @@ PHP_FUNCTION(weechat_register)
 
     RETURN_TRUE;
 }
+
+/*
+ * Wrappers for functions in scripting API.
+ *
+ * For more info about these functions, look at their implementation in WeeChat
+ * core.
+ */
 
 static void weechat_php_cb(const void *pointer, void *data, void **func_argv, const char *func_types, int func_type, void *rc)
 {
