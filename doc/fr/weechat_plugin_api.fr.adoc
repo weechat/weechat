@@ -9533,6 +9533,26 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) perl supprimé(s).
 
+| php | php_script_loaded +
+  _(WeeChat ≥ 2.0)_ |
+  Chaîne : chemin vers le script. |
+  Script PHP chargé.
+
+| php | php_script_unloaded +
+  _(WeeChat ≥ 2.0)_ |
+  Chaîne : chemin vers le script. |
+  Script PHP déchargé.
+
+| php | php_script_installed +
+  _(WeeChat ≥ 2.0)_ |
+  Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
+  Script(s) PHP installé(s).
+
+| php | php_script_removed +
+  _(WeeChat ≥ 2.0)_ |
+  Chaîne : liste de scripts supprimés (séparés par des virgules). |
+  Script(s) PHP supprimé(s).
+
 | python | python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   Chaîne : chemin vers le script. |
@@ -10089,6 +10109,7 @@ Cinq signaux peuvent être envoyés pour installer un script, selon le langage 
 * _tcl_script_install_
 * _guile_script_install_
 * _javascript_script_install_
+* _php_script_install_
 
 La fonction de rappel effectuera les actions suivantes lorsqu'elle recevra le
 signal :
@@ -10135,6 +10156,7 @@ langage :
 * _tcl_script_remove_
 * _guile_script_remove_
 * _javascript_script_remove_
+* _php_script_remove_
 
 Pour chaque script dans la liste, la fonction de rappel déchargera et
 supprimera le script.

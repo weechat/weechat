@@ -9355,6 +9355,26 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Perl スクリプトを削除
 
+| php | php_script_loaded +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  String: スクリプトへのパス |
+  PHP スクリプトをロード
+
+| php | php_script_unloaded +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  String: スクリプトへのパス |
+  PHP スクリプトをリロード
+
+| php | php_script_installed +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  String: インストールされたスクリプトへのパスのコンマ区切りリスト |
+  PHP スクリプトをインストール
+
+| php | php_script_removed +
+  _(WeeChat バージョン 2.0 以上で利用可)_ |
+  String: 削除されたスクリプトへのパスのコンマ区切りリスト |
+  PHP スクリプトを削除
+
 | python | python_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
@@ -9910,6 +9930,7 @@ weechat.hook_signal_send("logger_backlog", weechat.WEECHAT_HOOK_SIGNAL_POINTER, 
 * _tcl_script_install_
 * _guile_script_install_
 * _javascript_script_install_
+* _php_script_install_
 
 シグナルを受け取ったらコールバックは以下のように働きます:
 
@@ -9952,6 +9973,7 @@ weechat.hook_signal_send("python_script_install", WEECHAT_HOOK_SIGNAL_STRING,
 * _tcl_script_remove_
 * _guile_script_remove_
 * _javascript_script_remove_
+* _php_script_remove_
 
 リスト文字列に含まれるそれぞれのスクリプトについて、コールバックはスクリプトをリロードして削除します。
 

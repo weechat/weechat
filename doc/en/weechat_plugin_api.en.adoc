@@ -9349,6 +9349,26 @@ List of signals sent by WeeChat and plugins:
   String: comma-separated list of scripts removed. |
   Perl script(s) removed.
 
+| php | php_script_loaded +
+  _(WeeChat ≥ 2.0)_ |
+  String: path to script. |
+  PHP script loaded.
+
+| php | php_script_unloaded +
+  _(WeeChat ≥ 2.0)_ |
+  String: path to script. |
+  PHP script unloaded.
+
+| php | php_script_installed +
+  _(WeeChat ≥ 2.0)_ |
+  String: comma-separated list of paths to scripts installed. |
+  PHP script(s) installed.
+
+| php | php_script_removed +
+  _(WeeChat ≥ 2.0)_ |
+  String: comma-separated list of scripts removed. |
+  PHP script(s) removed.
+
 | python | python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
@@ -9903,6 +9923,7 @@ Five signals can be sent to install a script, according to language:
 * _tcl_script_install_
 * _guile_script_install_
 * _javascript_script_install_
+* _php_script_install_
 
 The callback will do following actions when receiving signal:
 
@@ -9945,6 +9966,7 @@ Five signals can be sent to remove list of scripts, according to language:
 * _tcl_script_remove_
 * _guile_script_remove_
 * _javascript_script_remove_
+* _php_script_remove_
 
 For each script in list, the callback will unload then remove script.
 

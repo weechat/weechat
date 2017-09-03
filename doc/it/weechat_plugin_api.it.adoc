@@ -9658,6 +9658,30 @@ List of signals sent by WeeChat and plugins:
   Perl script(s) removed.
 
 // TRANSLATION MISSING
+| php | php_script_loaded +
+  _(WeeChat ≥ 2.0)_ |
+  String: path to script. |
+  PHP script loaded.
+
+// TRANSLATION MISSING
+| php | php_script_unloaded +
+  _(WeeChat ≥ 2.0)_ |
+  String: path to script. |
+  PHP script unloaded.
+
+// TRANSLATION MISSING
+| php | php_script_installed +
+  _(WeeChat ≥ 2.0)_ |
+  String: comma-separated list of paths to scripts installed. |
+  PHP script(s) installed.
+
+// TRANSLATION MISSING
+| php | php_script_removed +
+  _(WeeChat ≥ 2.0)_ |
+  String: comma-separated list of scripts removed. |
+  PHP script(s) removed.
+
+// TRANSLATION MISSING
 | python | python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
@@ -10271,6 +10295,7 @@ del linguaggio:
 * _tcl_script_install_
 * _guile_script_install_
 * _javascript_script_install_
+* _php_script_install_
 
 La callback compirà le seguenti azioni alla ricezione del segnale:
 
@@ -10318,6 +10343,7 @@ seconda del linguaggio:
 * _tcl_script_remove_
 * _guile_script_remove_
 * _javascript_script_remove_
+* _php_script_remove_
 
 Per ogni script nella lista, la callback scaricherà e rimuoverà lo script.
 
