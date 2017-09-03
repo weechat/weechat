@@ -122,6 +122,7 @@ AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
+AH_VERBATIM([PLUGIN_PHP], [#undef PLUGIN_PHP])
 AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_JAVASCRIPT], [#undef PLUGIN_JAVASCRIPT])
@@ -159,6 +160,7 @@ AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugi
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
 AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off Javascript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
+AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugin (default=compiled if found)],enable_php=$enableval,enable_php=yes)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
@@ -292,6 +294,7 @@ if test "x$enable_scripts" = "xno" ; then
     enable_tcl="no"
     enable_guile="no"
     enable_javascript="no"
+    enable_php="no"
 fi
 
 # ---------------------------------- alias -------------------------------------
@@ -928,6 +931,108 @@ fi
 
 AC_LANG_POP
 
+# ---------------------------------- php --------------------------------------
+
+PHP_VERSION=
+
+if test "x$enable_php" = "xyes" ; then
+    ac_save_CPPFLAGS="$CPPFLAGS"
+    ac_save_CFLAGS="$CFLAGS"
+    ac_save_LDFLAGS="$LDFLAGS"
+
+    PHP_CFLAGS=""
+    PHP_LFLAGS=""
+
+    if test -n "$php_inc"; then
+       CFLAGS="$CFLAGS -I$php_inc"
+       CPPFLAGS="$CPPFLAGS -I$php_inc"
+    fi
+    if test -n "$php_lib"; then
+       LDFLAGS="$LDFLAGS -L$php_lib"
+    fi
+
+    if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
+        AC_MSG_CHECKING(for PHP headers and libraries with pkg-config)
+        echo
+        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+            pkgconfig_php_found=`$PKGCONFIG --exists php$l 2>/dev/null`
+            if test "x$?" = "x0" ; then
+                PHP_VERSION=`$PKGCONFIG --modversion php$l`
+                PHP_CFLAGS="$PHP_CFLAGS "`$PKGCONFIG --cflags php$l`
+                PHP_LFLAGS="$PHP_LFLAGS "`$PKGCONFIG --libs php$l`
+                break
+            fi
+        done
+    fi
+
+    if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
+        PHPCONFIG=""
+        AC_MSG_CHECKING(for PHP headers and libraries with php-config)
+        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+            AC_CHECK_PROG(PHPCONFIG, "php-config$l", "php-config$l")
+            if test "x$PHPCONFIG" != "x" ; then
+                PHP_CFLAGS=`$PHPCONFIG --includes`
+                PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp7"
+                PHP_VERSION=`$PHPCONFIG --version`
+                break
+            fi
+        done
+    fi
+
+    if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
+        AC_MSG_CHECKING(for PHP headers and libraries)
+        echo
+        AC_CHECK_HEADER(php.h,ac_found_php_header="yes",ac_found_php_header="no")
+        if test "x$ac_found_php_header" = "xyes" ; then
+            PHP_CFLAGS="$CFLAGS"
+        fi
+        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+            AC_CHECK_LIB(php$l,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
+            if test "x$ac_found_php_lib" = "xyes" ; then
+                PHP_VERSION=">=7.0.0"
+
+                PHP_LFLAGS="$LDFLAGS -lphp7 -lm"
+
+                ac2_save_LDFLAGS="$LDFLAGS"
+                LDFLAGS="$LDFLAGS -lphp7 -lm"
+
+                if echo "$host_os" | grep "^linux" 1>/dev/null 2>&1 ; then
+                    LDFLAGS="$LDFLAGS -ldl"
+                fi
+
+                LDFLAGS="$ac2_save_LDFLAGS"
+                break
+            fi
+        done
+    fi
+
+    AC_MSG_CHECKING(for PHP compiling and linking)
+    PHP_TEST=`LT=phptest.c ; echo "#include <sapi/embed/php_embed.h>" > $LT; echo "int main() { php_embed_init(0, NULL); php_embed_shutdown(); return 0; }" >> $LT ; $CC -Wall $LT -o $LT.out $PHP_CFLAGS $PHP_LFLAGS $CFLAGS $LDFLAGS 1>/dev/null 2>&1 ; echo $?; rm -f $LT $LT.out 1>/dev/null 2>&1`
+    if test "x$PHP_TEST" != "x0" ; then
+        AC_MSG_RESULT(no)
+        AC_MSG_WARN([
+*** PHP (>=7.0) headers and/or libraries couldn't be found on your system.
+*** Try to install libphp-embed with your software package manager.
+*** WeeChat will be built without PHP support.])
+        enable_php="no"
+        not_found="$not_found php"
+    else
+        AC_MSG_RESULT(yes)
+    fi
+
+    CFLAGS="$ac_save_CFLAGS"
+    CPPFLAGS="$ac_save_CPPFLAGS"
+    LDFLAGS="$ac_save_LDFLAGS"
+else
+    not_asked="$not_asked php"
+fi
+
+if test "x$enable_php" = "xyes" ; then
+    AC_SUBST(PHP_CFLAGS)
+    AC_SUBST(PHP_LFLAGS)
+    AC_DEFINE(PLUGIN_PHP)
+fi
+
 # --------------------------------- trigger ------------------------------------
 
 if test "x$enable_trigger" = "xyes" ; then
@@ -1281,6 +1386,7 @@ AM_CONDITIONAL(PLUGIN_LUA,              test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
 AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
+AM_CONDITIONAL(PLUGIN_PHP,              test "$enable_php" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
@@ -1319,6 +1425,7 @@ AC_OUTPUT([Makefile
            src/plugins/tcl/Makefile
            src/plugins/guile/Makefile
            src/plugins/javascript/Makefile
+           src/plugins/php/Makefile
            src/plugins/trigger/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
@@ -1396,6 +1503,9 @@ if test "x$enable_guile" = "xyes"; then
 fi
 if test "x$enable_javascript" = "xyes"; then
     listplugins="$listplugins javascript/v8"
+fi
+if test "x$enable_php" = "xyes"; then
+    listplugins="$listplugins php($PHP_VERSION)"
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"

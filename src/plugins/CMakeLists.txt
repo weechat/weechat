@@ -155,6 +155,13 @@ if(ENABLE_SCRIPTS AND ENABLE_JAVASCRIPT)
   endif()
 endif()
 
+if(ENABLE_SCRIPTS AND ENABLE_PHP)
+  find_package(PHP)
+  if(PHP_FOUND)
+    add_subdirectory(php)
+  endif()
+endif()
+
 if(ENABLE_TRIGGER)
   add_subdirectory(trigger)
 endif()

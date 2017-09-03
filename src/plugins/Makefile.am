@@ -109,6 +109,10 @@ if PLUGIN_JAVASCRIPT
 javascript_dir = javascript
 endif
 
+if PLUGIN_PHP
+php_dir = php
+endif
+
 if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
@@ -136,6 +140,7 @@ SUBDIRS = . \
           $(tcl_dir) \
           $(guile_dir) \
           $(javascript_dir) \
+          $(php_dir) \
           $(trigger_dir) \
           $(xfer_dir)
 
