@@ -85,6 +85,7 @@ qweechat::
 |       logger/     | logger プラグイン (表示されたメッセージをファイルに書き込む)
 |       lua/        | lua スクリプト用 API
 |       perl/       | perl スクリプト用 API
+|       php/        | php スクリプト用 API
 |       python/     | python スクリプト用 API
 |       relay/      | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
 |       ruby/       | ruby スクリプト用 API
@@ -274,6 +275,9 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    perl/                          | perl プラグイン
 |       weechat-perl.c              | perl の主要関数 (スクリプトのロード/アンロード、perl コードの実行)
 |       weechat-perl-api.c          | perl スクリプト作成 API 関数
+|    php/                           | php プラグイン
+|       weechat-php.c               | php の主要関数 (スクリプトのロード/アンロード、php コードの実行)
+|       weechat-php-api.c           | php スクリプト作成 API 関数
 |    python/                        | python プラグイン
 |       weechat-python.c            | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
 |       weechat-python-api.c        | python スクリプト作成 API 関数

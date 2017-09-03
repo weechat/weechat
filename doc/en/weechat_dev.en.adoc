@@ -79,6 +79,7 @@ The main WeeChat directories are:
 |       logger/     | Logger plugin (write messages displayed to files).
 |       lua/        | Lua scripting API.
 |       perl/       | Perl scripting API.
+|       php/        | PHP scripting API.
 |       python/     | Python scripting API.
 |       relay/      | Relay plugin (irc proxy + relay for remote interfaces).
 |       ruby/       | Ruby scripting API.
@@ -268,6 +269,9 @@ WeeChat "core" is located in following directories:
 |    perl/                          | Perl plugin.
 |       weechat-perl.c              | Main perl functions (load/unload scripts, execute perl code).
 |       weechat-perl-api.c          | Perl scripting API functions.
+|    php/                           | PHP plugin.
+|       weechat-php.c               | Main PHP functions (load/unload scripts, execute PHP code).
+|       weechat-php-api.c           | PHP scripting API functions.
 |    python/                        | Python plugin.
 |       weechat-python.c            | Main python functions (load/unload scripts, execute python code).
 |       weechat-python-api.c        | Python scripting API functions.

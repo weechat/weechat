@@ -81,6 +81,7 @@ Les répertoires principaux de WeeChat sont :
 |       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers).
 |       lua/        | API script Lua.
 |       perl/       | API script Perl.
+|       php/        | API script PHP.
 |       python/     | API script Python.
 |       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes).
 |       ruby/       | API script Ruby.
@@ -270,6 +271,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    perl/                          | Extension Perl.
 |       weechat-perl.c              | Fonctions principales pour Perl (chargement/déchargement des scripts, exécution de code Perl).
 |       weechat-perl-api.c          | Fonctions de l'API script Perl.
+|    php/                           | Extension PHP.
+|       weechat-php.c               | Fonctions principales pour PHP (chargement/déchargement des scripts, exécution de code PHP).
+|       weechat-php-api.c           | Fonctions de l'API script PHP.
 |    python/                        | Extension Python.
 |       weechat-python.c            | Fonctions principales pour Python (chargement/déchargement des scripts, exécution de code Python).
 |       weechat-python-api.c        | Fonctions de l'API script Python.
