@@ -25,13 +25,14 @@ rapide et léger, conçu pour différents systèmes d'exploitation.
 Ce manuel documente la façon d'écrire des scripts pour WeeChat, en utilisant
 l'un des langages de script supportés :
 
-* python
-* perl
-* ruby
-* lua
-* tcl
-* guile (scheme)
-* javascript
+* Python
+* Perl
+* Ruby
+* Lua
+* Tcl
+* Guile (Scheme)
+* Javascript
+* PHP
 
 [NOTE]
 La majorité des exemples de cette documentation sont écrits en Python, mais
@@ -77,7 +78,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 * Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`.
 
-==== Guile (scheme)
+==== Guile (Scheme)
 
 * Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`.
 * Les fonctions suivantes prennent une liste de paramètres en entrée (au lieu
@@ -90,6 +91,10 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ==== Javascript
 
 * Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...);`.
+
+==== PHP
+
+* Les fonctions sont appelées par `weechat_xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Fonction register
@@ -164,7 +169,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Script de test" "" ""
 weechat::print "" "Bonjour, du script tcl !"
 ----
 
-* Guile (scheme) :
+* Guile (Scheme) :
 
 [source,lisp]
 ----
@@ -176,8 +181,20 @@ weechat::print "" "Bonjour, du script tcl !"
 
 [source,javascript]
 ----
-weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Script de test", "", "");
 weechat.print("", "Bonjour, du script javascript !");
+----
+
+* PHP :
+
+[source,php]
+----
+<?php
+
+new class {
+    function __construct() {
+        weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Script de test', '', '');
+        weechat_printf('', 'Bonjour, du script PHP !');
 ----
 
 [[load_script]]
@@ -194,6 +211,7 @@ par exemple :
 /script load script.tcl
 /script load script.scm
 /script load script.js
+/script load script.php
 ----
 
 Chaque langage a également sa propre commande :
@@ -206,6 +224,7 @@ Chaque langage a également sa propre commande :
 /tcl load script.tcl
 /guile load script.scm
 /javascript load script.js
+/php load script.php
 ----
 
 Vous pouvez faire un lien dans le répertoire _langage/autoload_ pour charger
@@ -359,7 +378,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* Guile (scheme) :
+* Guile (Scheme) :
 
 [source,lisp]
 ----
@@ -381,6 +400,16 @@ function timer_cb(data, remaining_calls) {
 }
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
+----
+
+* PHP :
+
+[source,php]
+----
+weechat_hook_timer(1000, 0, 1, function ($data, remaining_calls) {
+    weechat_printf('', 'timer! data=' . $data);
+    return WEECHAT_RC_OK;
+}, 'test');
 ----
 
 [[script_api]]

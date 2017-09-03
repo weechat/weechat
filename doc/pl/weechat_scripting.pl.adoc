@@ -29,13 +29,14 @@ i lekkim, zaprojektowanym dla wielu systemów operacyjnych.
 Ten dokument przedstawia sposób pisania skryptów dla WeeChat z użyciem jednego ze
 wspieranych języków skryptowych:
 
-* python
-* perl
-* ruby
-* lua
-* tcl
-* guile (scheme)
-* javascript
+* Python
+* Perl
+* Ruby
+* Lua
+* Tcl
+* Guile (Scheme)
+* Javascript
+* PHP
 
 [NOTE]
 Prawie wszystkie przykłady umieszczone w tym dokumencie są napisane w Pythonie,
@@ -80,7 +81,7 @@ Weechat.config_new_option(config, section, "nazwa", "ciąg", "opis opcji", "", 0
 
 * Funkcje są wywoływane za pomocą `weechat::xxx arg1 arg2 ...`
 
-==== Guile (scheme)
+==== Guile (Scheme)
 
 * Funkcje są wywoływane za pomocą `(weechat:xxx arg1 arg2 ...)`
 * Następujące funkcje przyjmują pojedynczą listę argumentów (zamiast wielu
@@ -93,6 +94,10 @@ Weechat.config_new_option(config, section, "nazwa", "ciąg", "opis opcji", "", 0
 ==== Javascript
 
 * Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...);`
+
+==== PHP
+
+* Funkcje są wywoływane za pomocą `weechat_xxx(arg1, arg2, ...);`
 
 [[register_function]]
 === Funkcja rejestrująca
@@ -166,7 +171,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Skrypt testowy" "" ""
 weechat::print "" "Witaj ze skryptu tcl!"
 ----
 
-* Guile (scheme):
+* Guile (Scheme):
 
 [source,lisp]
 ----
@@ -178,8 +183,20 @@ weechat::print "" "Witaj ze skryptu tcl!"
 
 [source,javascript]
 ----
-weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
+weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Skrypt testowy", "", "");
 weechat.print("", "Witaj ze skryptu javascript!");
+----
+
+* PHP:
+
+[source,php]
+----
+<?php
+
+new class {
+    function __construct() {
+        weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Skrypt testowy', '', '');
+        weechat_printf('', 'Witaj ze skryptu PHP!');
 ----
 
 [[load_script]]
@@ -195,6 +212,7 @@ Zaleca się używanie wtyczki "script" do ładowania skryptów, na przykład:
 /script load script.tcl
 /script load script.scm
 /script load script.js
+/script load script.php
 ----
 
 Każdy język posiada również swoją własną komendę:
@@ -207,6 +225,7 @@ Każdy język posiada również swoją własną komendę:
 /tcl load skrypt.tcl
 /guile load skrypt.scm
 /javascript load skrypt.js
+/php load skrypt.php
 ----
 
 Możesz zrobić dowiązanie w katalogu _język/autoload_ jeśli chcesz automatycznie
@@ -353,7 +372,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* Guile (scheme):
+* Guile (Scheme):
 
 [source,lisp]
 ----
@@ -375,6 +394,16 @@ function timer_cb(data, remaining_calls) {
 }
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
+----
+
+* PHP:
+
+[source,php]
+----
+weechat_hook_timer(1000, 0, 1, function ($data, remaining_calls) {
+    weechat_printf('', 'timer! data=' . $data);
+    return WEECHAT_RC_OK;
+}, 'test');
 ----
 
 [[script_api]]

@@ -29,13 +29,14 @@ WeeChat (Wee Enhanced Environment for Chat)
 このマニュアル文書は以下のスクリプト言語を利用して WeeChat
 用のスクリプトを製作する方法を解説しています:
 
-* python
-* perl
-* ruby
-* lua
-* tcl
-* guile (scheme)
-* javascript
+* Python
+* Perl
+* Ruby
+* Lua
+* Tcl
+* Guile (Scheme)
+* Javascript
+* PHP
 
 [NOTE]
 この文書に含まれるほぼすべての例は Python
@@ -80,7 +81,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 * 関数は `weechat::xxx arg1 arg2 ...` のように呼び出してください。
 
-==== Guile (scheme)
+==== Guile (Scheme)
 
 * 関数は `(weechat:xxx arg1 arg2 ...)` のように呼び出してください。
 * 以下の関数は引数のリストをひとつだけ取ります
@@ -93,6 +94,10 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ==== Javascript
 
 * 関数は `weechat.xxx(arg1, arg2, ...);` のように呼び出してください。
+
+==== PHP
+
+* 関数は `weechat_xxx(arg1, arg2, ...);` のように呼び出してください。
 
 [[register_function]]
 === 関数の登録
@@ -166,7 +171,7 @@ weechat::register "test_tcl" "FlashCode" "1.0" "GPL3" "Test script" "" ""
 weechat::print "" "Hello, from tcl script!"
 ----
 
-* Guile (scheme):
+* Guile (Scheme):
 
 [source,lisp]
 ----
@@ -182,6 +187,18 @@ weechat.register("test_js", "FlashCode", "1.0", "GPL3", "Test script", "", "");
 weechat.print("", "Hello, from javascript script!");
 ----
 
+* PHP:
+
+[source,php]
+----
+<?php
+
+new class {
+    function __construct() {
+        weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Test script', '', '');
+        weechat_printf('', 'Hello, from PHP script!');
+----
+
 [[load_script]]
 === スクリプトのロード
 
@@ -195,6 +212,7 @@ weechat.print("", "Hello, from javascript script!");
 /script load script.tcl
 /script load script.scm
 /script load script.js
+/script load script.php
 ----
 
 プログラミング言語ごとの固有コマンドを利用することもできます:
@@ -207,6 +225,7 @@ weechat.print("", "Hello, from javascript script!");
 /tcl load script.tcl
 /guile load script.scm
 /javascript load script.js
+/php load script.php
 ----
 
 WeeChat の開始時にスクリプトを自動ロードするには
@@ -355,7 +374,7 @@ proc timer_cb { data remaining_calls } {
 weechat::hook_timer 1000 0 1 timer_cb test
 ----
 
-* Guile (scheme):
+* Guile (Scheme):
 
 [source,lisp]
 ----
@@ -377,6 +396,16 @@ function timer_cb(data, remaining_calls) {
 }
 
 weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
+----
+
+* PHP:
+
+[source,php]
+----
+weechat_hook_timer(1000, 0, 1, function ($data, remaining_calls) {
+    weechat_printf('', 'timer! data=' . $data);
+    return WEECHAT_RC_OK;
+}, 'test');
 ----
 
 [[script_api]]
