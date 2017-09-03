@@ -90,6 +90,7 @@ PHP_FUNCTION(weechat_config_write_option);
 PHP_FUNCTION(weechat_gettext);
 PHP_FUNCTION(weechat_hdata_char);
 PHP_FUNCTION(weechat_hdata_check_pointer);
+PHP_FUNCTION(weechat_hdata_compare);
 PHP_FUNCTION(weechat_hdata_get);
 PHP_FUNCTION(weechat_hdata_get_list);
 PHP_FUNCTION(weechat_hdata_get_string);

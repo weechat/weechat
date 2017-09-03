@@ -114,6 +114,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_gettext, NULL)
     PHP_FE(weechat_hdata_char, NULL)
     PHP_FE(weechat_hdata_check_pointer, NULL)
+    PHP_FE(weechat_hdata_compare, NULL)
     PHP_FE(weechat_hdata_get_list, NULL)
     PHP_FE(weechat_hdata_get, NULL)
     PHP_FE(weechat_hdata_get_string, NULL)

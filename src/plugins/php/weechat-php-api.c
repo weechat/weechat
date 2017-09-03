@@ -1470,6 +1470,33 @@ PHP_FUNCTION(weechat_hdata_check_pointer)
     RETURN_LONG(retval);
 }
 
+PHP_FUNCTION(weechat_hdata_compare)
+{
+    API_FUNC_INIT(weechat_hdata_compare);
+    zend_string *z_hdata;
+    zend_string *z_pointer1;
+    zend_string *z_pointer2;
+    zend_string *z_name;
+    zend_long z_case_sensitive;
+    int retval;
+    struct t_hdata *hdata;
+    void *pointer1;
+    void *pointer2;
+    char *name;
+    int case_sensitive;
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSl", &z_hdata, &z_pointer1, &z_pointer2, &z_name, &z_case_sensitive) == FAILURE)
+    {
+        return;
+    }
+    hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
+    pointer1 = (void *)API_STR2PTR(ZSTR_VAL(z_pointer1));
+    pointer2 = (void *)API_STR2PTR(ZSTR_VAL(z_pointer2));
+    name = (void *)API_STR2PTR(ZSTR_VAL(z_name));
+    case_sensitive = (int)z_case_sensitive;
+    retval = weechat_hdata_compare (hdata, pointer1, pointer2, name, case_sensitive);
+    RETURN_LONG(retval);
+}
+
 PHP_FUNCTION(weechat_hdata_get)
 {
     API_FUNC_INIT(weechat_hdata_get);
