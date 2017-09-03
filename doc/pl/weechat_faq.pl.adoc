@@ -875,7 +875,7 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
 * nie ładuj nieużywanych pluginów, np: aspell, buflist, fifo, logger, perl,
-  python, ruby, lua, tcl, guile, javascript, xfer (używana do DCC)
+  python, ruby, lua, tcl, guile, javascript, php, xfer (używana do DCC)
 * ładować tylko naprawdę używane skrypty
 * nie ładuj certyfikatów jeśli SSL *NIE* jest używany: ustaw pusty ciąg w opcji
   _weechat.network.gnutls_ca_file_
