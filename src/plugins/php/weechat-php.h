@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006-2017 Adam Saponara <as@php.net>
+ * Copyright (C) 2017 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -44,7 +45,8 @@ extern struct t_plugin_script *php_current_script;
 extern struct t_plugin_script *php_registered_script;
 extern const char *php_current_script_filename;
 
-extern void weechat_php_hashtable_to_array (struct t_hashtable *hashtable, zval *arr);
+extern void weechat_php_hashtable_to_array (struct t_hashtable *hashtable,
+                                            zval *arr);
 extern struct t_hashtable *weechat_php_array_to_hashtable (zval* arr,
                                                            int size,
                                                            const char *type_keys,
