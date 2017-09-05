@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-09-01 21:02+0200\n"
+"POT-Creation-Date: 2017-09-05 07:26+0200\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8346,6 +8346,10 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to initialize %s"
 msgstr ""
+
+#, fuzzy
+msgid "Support of PHP scripts"
+msgstr "Lua betik desteği"
 
 msgid "WeeChat version"
 msgstr "WeeChat sürüm"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-09-01 21:02+0200\n"
+"POT-Creation-Date: 2017-09-05 07:26+0200\n"
 "PO-Revision-Date: 2017-08-26 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10843,6 +10843,10 @@ msgstr "%s%s: ファイル \"%s\" を解析できません"
 #, c-format
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: %s の初期化に失敗"
+
+#, fuzzy
+msgid "Support of PHP scripts"
+msgstr "lua スクリプトサポート"
 
 msgid "WeeChat version"
 msgstr "WeeChat のバージョン"

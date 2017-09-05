@@ -242,6 +242,10 @@
 ./src/plugins/perl/weechat-perl-api.h
 ./src/plugins/perl/weechat-perl.c
 ./src/plugins/perl/weechat-perl.h
+./src/plugins/php/weechat-php-api.c
+./src/plugins/php/weechat-php-api.h
+./src/plugins/php/weechat-php.c
+./src/plugins/php/weechat-php.h
 ./src/plugins/plugin-api.c
 ./src/plugins/plugin-api.h
 ./src/plugins/plugin.c

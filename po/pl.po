@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-09-01 21:02+0200\n"
+"POT-Creation-Date: 2017-09-05 07:26+0200\n"
 "PO-Revision-Date: 2017-07-22 12:55+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10866,6 +10866,10 @@ msgstr "%s%s: nie można przetworzyć pliku \"%s\""
 #, c-format
 msgid "%s%s: unable to initialize %s"
 msgstr "%s%s: nie można zainicjować %s"
+
+#, fuzzy
+msgid "Support of PHP scripts"
+msgstr "Wsparcie dla skryptów lua"
 
 msgid "WeeChat version"
 msgstr "wersja WeeChat"
