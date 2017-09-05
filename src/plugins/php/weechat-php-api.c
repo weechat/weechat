@@ -33,7 +33,7 @@
 
 #define API_FUNC_INIT(__name)                                           \
     char *php_function_name = #__name;                                  \
-    (void)php_function_name
+    (void) php_function_name
 
 #define API_PTR2STR(__pointer)                                          \
     plugin_script_ptr2str (__pointer)
@@ -48,14 +48,16 @@
 
 #define weechat_php_get_function_name(__zfunc, __str)                   \
     char *(__str);                                                      \
-    do {                                                                \
+    do                                                                  \
+    {                                                                   \
         if (!zend_is_callable (__zfunc, 0, NULL))                       \
         {                                                               \
             php_error_docref (NULL, E_WARNING, "Expected callable");    \
             RETURN_FALSE;                                               \
         }                                                               \
         (__str) = weechat_php_func_map_add (__zfunc);                   \
-    } while (0)
+    }                                                                   \
+    while (0)
 
 static char weechat_php_empty_arg[1] = { '\0' };
 
@@ -65,19 +67,15 @@ static char weechat_php_empty_arg[1] = { '\0' };
 
 PHP_FUNCTION(weechat_register)
 {
-    API_FUNC_INIT(weechat_register);
-    zend_string *name;
-    zend_string *author;
-    zend_string *version;
-    zend_string *license;
-    zend_string *description;
+    zend_string *name, *author, *version, *license, *description, *charset;
     zval *shutdown_func;
     char *shutdown_func_name;
-    zend_string *charset;
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "SSSSSzS",
-                              &name, &author, &version, &license, &description,
-                              &shutdown_func, &charset) == FAILURE)
+    API_FUNC_INIT(weechat_register);
+
+    if (zend_parse_parameters (ZEND_NUM_ARGS() TSRMLS_CC, "SSSSSzS",
+                               &name, &author, &version, &license, &description,
+                               &shutdown_func, &charset) == FAILURE)
     {
         return;
     }
@@ -112,7 +110,7 @@ PHP_FUNCTION(weechat_register)
     shutdown_func_name = NULL;
     if (zend_is_callable (shutdown_func, 0, NULL))
     {
-        weechat_php_get_function_name(shutdown_func, shutdown_func_name_tmp);
+        weechat_php_get_function_name (shutdown_func, shutdown_func_name_tmp);
         shutdown_func_name = shutdown_func_name_tmp;
     }
 
@@ -177,7 +175,7 @@ weechat_php_cb (const void *pointer, void *data, void **func_argv,
     if (func_type == WEECHAT_SCRIPT_EXEC_INT)
     {
         *((int *)rc) = *((int *)ret);
-        free(ret);
+        free (ret);
     }
     else if (func_type == WEECHAT_SCRIPT_EXEC_HASHTABLE)
     {
@@ -213,8 +211,10 @@ weechat_php_cb_err:
 
 PHP_FUNCTION(weechat_plugin_get_name)
 {
-    API_FUNC_INIT(weechat_plugin_get_name);
     const char *retval;
+
+    API_FUNC_INIT(weechat_plugin_get_name);
+
     if (zend_parse_parameters_none () == FAILURE)
     {
         return;
@@ -225,9 +225,11 @@ PHP_FUNCTION(weechat_plugin_get_name)
 
 PHP_FUNCTION(weechat_charset_set)
 {
-    API_FUNC_INIT(weechat_charset_set);
     zend_string *z_charset;
     char *charset;
+
+    API_FUNC_INIT(weechat_charset_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_charset) == FAILURE)
     {
         return;
@@ -239,12 +241,11 @@ PHP_FUNCTION(weechat_charset_set)
 
 PHP_FUNCTION(weechat_iconv_to_internal)
 {
+    zend_string *z_charset, *z_string;
+    char *charset, *string, *retval;
+
     API_FUNC_INIT(weechat_iconv_to_internal);
-    zend_string *z_charset;
-    zend_string *z_string;
-    char *retval;
-    char *charset;
-    char *string;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_charset, &z_string) == FAILURE)
     {
@@ -259,12 +260,11 @@ PHP_FUNCTION(weechat_iconv_to_internal)
 
 PHP_FUNCTION(weechat_iconv_from_internal)
 {
+    zend_string *z_charset, *z_string;
+    char *charset, *string, *retval;
+
     API_FUNC_INIT(weechat_iconv_from_internal);
-    zend_string *z_charset;
-    zend_string *z_string;
-    char *retval;
-    char *charset;
-    char *string;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_charset, &z_string) == FAILURE)
     {
@@ -279,10 +279,12 @@ PHP_FUNCTION(weechat_iconv_from_internal)
 
 PHP_FUNCTION(weechat_gettext)
 {
-    API_FUNC_INIT(weechat_gettext);
     zend_string *z_string;
-    const char *retval;
     char *string;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_gettext);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_string) == FAILURE)
     {
         return;
@@ -294,14 +296,14 @@ PHP_FUNCTION(weechat_gettext)
 
 PHP_FUNCTION(weechat_ngettext)
 {
-    API_FUNC_INIT(weechat_ngettext);
-    zend_string *z_single;
-    zend_string *z_plural;
+    zend_string *z_single, *z_plural;
     zend_long z_count;
-    const char *retval;
-    char *single;
-    char *plural;
+    char *single, *plural;
     int count;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_ngettext);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_single, &z_plural,
                                &z_count) == FAILURE)
@@ -319,10 +321,12 @@ PHP_FUNCTION(weechat_ngettext)
 
 PHP_FUNCTION(weechat_strlen_screen)
 {
-    API_FUNC_INIT(weechat_strlen_screen);
     zend_string *z_string;
-    int retval;
     char *string;
+    int retval;
+
+    API_FUNC_INIT(weechat_strlen_screen);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_string) == FAILURE)
     {
         return;
@@ -334,14 +338,13 @@ PHP_FUNCTION(weechat_strlen_screen)
 
 PHP_FUNCTION(weechat_string_match)
 {
-    API_FUNC_INIT(weechat_string_match);
-    zend_string *z_string;
-    zend_string *z_mask;
+    zend_string *z_string, *z_mask;
     zend_long z_case_sensitive;
-    int retval;
-    char *string;
-    char *mask;
-    int case_sensitive;
+    int case_sensitive, retval;
+    char *string, *mask;
+
+    API_FUNC_INIT(weechat_string_match);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_string, &z_mask,
                                &z_case_sensitive) == FAILURE)
@@ -359,12 +362,12 @@ PHP_FUNCTION(weechat_string_match)
 
 PHP_FUNCTION(weechat_string_has_highlight)
 {
-    API_FUNC_INIT(weechat_string_has_highlight);
-    zend_string *z_string;
-    zend_string *z_highlight_words;
+    zend_string *z_string, *z_highlight_words;
+    char *string, *highlight_words;
     int retval;
-    char *string;
-    char *highlight_words;
+
+    API_FUNC_INIT(weechat_string_has_highlight);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_string, &z_highlight_words) == FAILURE)
     {
@@ -379,12 +382,12 @@ PHP_FUNCTION(weechat_string_has_highlight)
 
 PHP_FUNCTION(weechat_string_has_highlight_regex)
 {
-    API_FUNC_INIT(weechat_string_has_highlight_regex);
-    zend_string *z_string;
-    zend_string *z_regex;
+    zend_string *z_string, *z_regex;
+    char *string, *regex;
     int retval;
-    char *string;
-    char *regex;
+
+    API_FUNC_INIT(weechat_string_has_highlight_regex);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_string, &z_regex) == FAILURE)
     {
@@ -399,10 +402,11 @@ PHP_FUNCTION(weechat_string_has_highlight_regex)
 
 PHP_FUNCTION(weechat_string_mask_to_regex)
 {
-    API_FUNC_INIT(weechat_string_mask_to_regex);
     zend_string *z_mask;
-    char *retval;
-    char *mask;
+    char *mask, *retval;
+
+    API_FUNC_INIT(weechat_string_mask_to_regex);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_mask) == FAILURE)
     {
         return;
@@ -414,12 +418,11 @@ PHP_FUNCTION(weechat_string_mask_to_regex)
 
 PHP_FUNCTION(weechat_string_remove_color)
 {
+    zend_string *z_string, *z_replacement;
+    char *string, *replacement, *retval;
+
     API_FUNC_INIT(weechat_string_remove_color);
-    zend_string *z_string;
-    zend_string *z_replacement;
-    char *retval;
-    char *string;
-    char *replacement;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_string, &z_replacement) == FAILURE)
     {
@@ -434,10 +437,12 @@ PHP_FUNCTION(weechat_string_remove_color)
 
 PHP_FUNCTION(weechat_string_is_command_char)
 {
-    API_FUNC_INIT(weechat_string_is_command_char);
     zend_string *z_string;
-    int retval;
     char *string;
+    int retval;
+
+    API_FUNC_INIT(weechat_string_is_command_char);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_string) == FAILURE)
     {
         return;
@@ -449,10 +454,12 @@ PHP_FUNCTION(weechat_string_is_command_char)
 
 PHP_FUNCTION(weechat_string_input_for_buffer)
 {
-    API_FUNC_INIT(weechat_string_input_for_buffer);
     zend_string *z_string;
-    const char *retval;
     char *string;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_string_input_for_buffer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_string) == FAILURE)
     {
         return;
@@ -464,16 +471,13 @@ PHP_FUNCTION(weechat_string_input_for_buffer)
 
 PHP_FUNCTION(weechat_string_eval_expression)
 {
-    API_FUNC_INIT(weechat_string_eval_expression);
     zend_string *z_expr;
-    zval *z_pointers;
-    zval *z_extra_vars;
-    zval *z_options;
-    char *retval;
-    char *expr;
-    struct t_hashtable *pointers;
-    struct t_hashtable *extra_vars;
-    struct t_hashtable *options;
+    zval *z_pointers, *z_extra_vars, *z_options;
+    char *expr, *retval;
+    struct t_hashtable *pointers, *extra_vars, *options;
+
+    API_FUNC_INIT(weechat_string_eval_expression);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Saaa", &z_expr, &z_pointers, &z_extra_vars,
                                &z_options) == FAILURE)
@@ -481,17 +485,17 @@ PHP_FUNCTION(weechat_string_eval_expression)
         return;
     }
     expr = ZSTR_VAL(z_expr);
-    pointers = weechat_php_array_to_hashtable(
+    pointers = weechat_php_array_to_hashtable (
         z_pointers,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    extra_vars = weechat_php_array_to_hashtable(
+    extra_vars = weechat_php_array_to_hashtable (
         z_extra_vars,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    options = weechat_php_array_to_hashtable(
+    options = weechat_php_array_to_hashtable (
         z_options,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
@@ -505,16 +509,13 @@ PHP_FUNCTION(weechat_string_eval_expression)
 
 PHP_FUNCTION(weechat_string_eval_path_home)
 {
-    API_FUNC_INIT(weechat_string_eval_path_home);
     zend_string *z_path;
-    zval *z_pointers;
-    zval *z_extra_vars;
-    zval *z_options;
-    char *retval;
-    char *path;
-    struct t_hashtable *pointers;
-    struct t_hashtable *extra_vars;
-    struct t_hashtable *options;
+    zval *z_pointers, *z_extra_vars, *z_options;
+    char *path, *retval;
+    struct t_hashtable *pointers, *extra_vars, *options;
+
+    API_FUNC_INIT(weechat_string_eval_path_home);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Saaa", &z_path, &z_pointers, &z_extra_vars,
                                &z_options) == FAILURE)
@@ -522,17 +523,17 @@ PHP_FUNCTION(weechat_string_eval_path_home)
         return;
     }
     path = ZSTR_VAL(z_path);
-    pointers = weechat_php_array_to_hashtable(
+    pointers = weechat_php_array_to_hashtable (
         z_pointers,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    extra_vars = weechat_php_array_to_hashtable(
+    extra_vars = weechat_php_array_to_hashtable (
         z_extra_vars,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
-    options = weechat_php_array_to_hashtable(
+    options = weechat_php_array_to_hashtable (
         z_options,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
@@ -546,12 +547,13 @@ PHP_FUNCTION(weechat_string_eval_path_home)
 
 PHP_FUNCTION(weechat_mkdir_home)
 {
-    API_FUNC_INIT(weechat_mkdir_home);
     zend_string *z_directory;
     zend_long z_mode;
-    int retval;
     char *directory;
-    int mode;
+    int mode, retval;
+
+    API_FUNC_INIT(weechat_mkdir_home);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_directory, &z_mode) == FAILURE)
     {
@@ -565,12 +567,13 @@ PHP_FUNCTION(weechat_mkdir_home)
 
 PHP_FUNCTION(weechat_mkdir)
 {
-    API_FUNC_INIT(weechat_mkdir);
     zend_string *z_directory;
     zend_long z_mode;
-    int retval;
     char *directory;
-    int mode;
+    int mode, retval;
+
+    API_FUNC_INIT(weechat_mkdir);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_directory, &z_mode) == FAILURE)
     {
@@ -584,12 +587,13 @@ PHP_FUNCTION(weechat_mkdir)
 
 PHP_FUNCTION(weechat_mkdir_parents)
 {
-    API_FUNC_INIT(weechat_mkdir_parents);
     zend_string *z_directory;
     zend_long z_mode;
-    int retval;
     char *directory;
-    int mode;
+    int mode, retval;
+
+    API_FUNC_INIT(weechat_mkdir_parents);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_directory, &z_mode) == FAILURE)
     {
@@ -603,8 +607,10 @@ PHP_FUNCTION(weechat_mkdir_parents)
 
 PHP_FUNCTION(weechat_list_new)
 {
-    API_FUNC_INIT(weechat_list_new);
     struct t_weelist *retval;
+
+    API_FUNC_INIT(weechat_list_new);
+
     if (zend_parse_parameters_none () == FAILURE)
     {
         return;
@@ -615,16 +621,14 @@ PHP_FUNCTION(weechat_list_new)
 
 PHP_FUNCTION(weechat_list_add)
 {
-    API_FUNC_INIT(weechat_list_add);
-    zend_string *z_weelist;
-    zend_string *z_data;
-    zend_string *z_where;
-    zend_string *z_user_data;
-    struct t_weelist_item *retval;
+    zend_string *z_weelist, *z_data, *z_where, *z_user_data;
     struct t_weelist *weelist;
-    char *data;
-    char *where;
+    char *data, *where;
     void *user_data;
+    struct t_weelist_item *retval;
+
+    API_FUNC_INIT(weechat_list_add);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSS", &z_weelist, &z_data, &z_where,
                                &z_user_data) == FAILURE)
@@ -644,12 +648,13 @@ PHP_FUNCTION(weechat_list_add)
 
 PHP_FUNCTION(weechat_list_search)
 {
-    API_FUNC_INIT(weechat_list_search);
-    zend_string *z_weelist;
-    zend_string *z_data;
-    struct t_weelist_item *retval;
+    zend_string *z_weelist, *z_data;
     struct t_weelist *weelist;
     char *data;
+    struct t_weelist_item *retval;
+
+    API_FUNC_INIT(weechat_list_search);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_weelist, &z_data) == FAILURE)
     {
@@ -663,12 +668,13 @@ PHP_FUNCTION(weechat_list_search)
 
 PHP_FUNCTION(weechat_list_search_pos)
 {
-    API_FUNC_INIT(weechat_list_search_pos);
-    zend_string *z_weelist;
-    zend_string *z_data;
-    int retval;
+    zend_string *z_weelist, *z_data;
     struct t_weelist *weelist;
     char *data;
+    int retval;
+
+    API_FUNC_INIT(weechat_list_search_pos);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_weelist, &z_data) == FAILURE)
     {
@@ -682,12 +688,13 @@ PHP_FUNCTION(weechat_list_search_pos)
 
 PHP_FUNCTION(weechat_list_casesearch)
 {
-    API_FUNC_INIT(weechat_list_casesearch);
-    zend_string *z_weelist;
-    zend_string *z_data;
-    struct t_weelist_item *retval;
+    zend_string *z_weelist, *z_data;
     struct t_weelist *weelist;
     char *data;
+    struct t_weelist_item *retval;
+
+    API_FUNC_INIT(weechat_list_casesearch);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_weelist, &z_data) == FAILURE)
     {
@@ -701,12 +708,13 @@ PHP_FUNCTION(weechat_list_casesearch)
 
 PHP_FUNCTION(weechat_list_casesearch_pos)
 {
-    API_FUNC_INIT(weechat_list_casesearch_pos);
-    zend_string *z_weelist;
-    zend_string *z_data;
-    int retval;
+    zend_string *z_weelist, *z_data;
     struct t_weelist *weelist;
     char *data;
+    int retval;
+
+    API_FUNC_INIT(weechat_list_casesearch_pos);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_weelist, &z_data) == FAILURE)
     {
@@ -720,12 +728,14 @@ PHP_FUNCTION(weechat_list_casesearch_pos)
 
 PHP_FUNCTION(weechat_list_get)
 {
-    API_FUNC_INIT(weechat_list_get);
     zend_string *z_weelist;
     zend_long z_position;
-    struct t_weelist_item *retval;
     struct t_weelist *weelist;
     int position;
+    struct t_weelist_item *retval;
+
+    API_FUNC_INIT(weechat_list_get);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_weelist, &z_position) == FAILURE)
     {
@@ -739,11 +749,12 @@ PHP_FUNCTION(weechat_list_get)
 
 PHP_FUNCTION(weechat_list_set)
 {
-    API_FUNC_INIT(weechat_list_set);
-    zend_string *z_item;
-    zend_string *z_value;
+    zend_string *z_item, *z_value;
     struct t_weelist_item *item;
     char *value;
+
+    API_FUNC_INIT(weechat_list_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_item, &z_value) == FAILURE)
     {
@@ -757,10 +768,11 @@ PHP_FUNCTION(weechat_list_set)
 
 PHP_FUNCTION(weechat_list_next)
 {
-    API_FUNC_INIT(weechat_list_next);
     zend_string *z_item;
-    struct t_weelist_item *retval;
-    struct t_weelist_item *item;
+    struct t_weelist_item *item, *retval;
+
+    API_FUNC_INIT(weechat_list_next);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_item) == FAILURE)
     {
         return;
@@ -772,10 +784,11 @@ PHP_FUNCTION(weechat_list_next)
 
 PHP_FUNCTION(weechat_list_prev)
 {
-    API_FUNC_INIT(weechat_list_prev);
     zend_string *z_item;
-    struct t_weelist_item *retval;
-    struct t_weelist_item *item;
+    struct t_weelist_item *item, *retval;
+
+    API_FUNC_INIT(weechat_list_prev);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_item) == FAILURE)
     {
         return;
@@ -787,10 +800,12 @@ PHP_FUNCTION(weechat_list_prev)
 
 PHP_FUNCTION(weechat_list_string)
 {
-    API_FUNC_INIT(weechat_list_string);
     zend_string *z_item;
     const char *retval;
     struct t_weelist_item *item;
+
+    API_FUNC_INIT(weechat_list_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_item) == FAILURE)
     {
         return;
@@ -802,10 +817,12 @@ PHP_FUNCTION(weechat_list_string)
 
 PHP_FUNCTION(weechat_list_size)
 {
-    API_FUNC_INIT(weechat_list_size);
     zend_string *z_weelist;
-    int retval;
     struct t_weelist *weelist;
+    int retval;
+
+    API_FUNC_INIT(weechat_list_size);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_weelist) == FAILURE)
     {
         return;
@@ -817,11 +834,12 @@ PHP_FUNCTION(weechat_list_size)
 
 PHP_FUNCTION(weechat_list_remove)
 {
-    API_FUNC_INIT(weechat_list_remove);
-    zend_string *z_weelist;
-    zend_string *z_item;
+    zend_string *z_weelist, *z_item;
     struct t_weelist *weelist;
     struct t_weelist_item *item;
+
+    API_FUNC_INIT(weechat_list_remove);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_weelist, &z_item) == FAILURE)
     {
@@ -835,9 +853,11 @@ PHP_FUNCTION(weechat_list_remove)
 
 PHP_FUNCTION(weechat_list_remove_all)
 {
-    API_FUNC_INIT(weechat_list_remove_all);
     zend_string *z_weelist;
     struct t_weelist *weelist;
+
+    API_FUNC_INIT(weechat_list_remove_all);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_weelist) == FAILURE)
     {
         return;
@@ -849,9 +869,11 @@ PHP_FUNCTION(weechat_list_remove_all)
 
 PHP_FUNCTION(weechat_list_free)
 {
-    API_FUNC_INIT(weechat_list_free);
     zend_string *z_weelist;
     struct t_weelist *weelist;
+
+    API_FUNC_INIT(weechat_list_free);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_weelist) == FAILURE)
     {
         return;
@@ -862,28 +884,33 @@ PHP_FUNCTION(weechat_list_free)
 }
 
 static int
-weechat_php_config_new_callback_reload(const void *pointer, void *data,
-                                       struct t_config_file *config_file)
+weechat_php_config_new_callback_reload (const void *pointer, void *data,
+                                        struct t_config_file *config_file)
 {
     int rc;
     void *func_argv[2];
+
     func_argv[1] = API_PTR2STR(config_file);
-    weechat_php_cb(pointer, data, func_argv, "ss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_config_new)
 {
-    API_FUNC_INIT(weechat_config_new);
     zend_string *z_name;
     zval *z_callback_reload;
     zend_string *z_data;
+    char *name, *data;
     struct t_config_file *retval;
-    char *name;
-    char *data;
+
+    API_FUNC_INIT(weechat_config_new);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_name, &z_callback_reload,
                                &z_data) == FAILURE)
@@ -912,16 +939,20 @@ weechat_php_config_new_section_callback_read (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[5];
+
     func_argv[1] = API_PTR2STR(config_file);
     func_argv[2] = API_PTR2STR(section);
     func_argv[3] = option_name ? (char *)option_name : weechat_php_empty_arg;
     func_argv[4] = value ? (char *)value : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sssss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sssss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
     if (func_argv[2])
         free (func_argv[2]);
+
     return rc;
 }
 
@@ -932,12 +963,16 @@ weechat_php_config_new_section_callback_write (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = API_PTR2STR(config_file);
     func_argv[2] = section_name ? (char *)section_name : weechat_php_empty_arg;
+
     weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
@@ -949,12 +984,16 @@ weechat_php_config_new_section_callback_write_default (const void *pointer,
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = API_PTR2STR(config_file);
     func_argv[2] = section_name ? (char *)section_name : weechat_php_empty_arg;
+
     weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
@@ -968,16 +1007,20 @@ weechat_php_config_new_section_callback_create_option (const void *pointer,
 {
     int rc;
     void *func_argv[5];
+
     func_argv[1] = API_PTR2STR(config_file);
     func_argv[2] = API_PTR2STR(section);
     func_argv[3] = option_name ? (char *)option_name : weechat_php_empty_arg;
     func_argv[4] = value ? (char *)value : weechat_php_empty_arg;
+
     weechat_php_cb (pointer, data, func_argv, "sssss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
     if (func_argv[2])
         free (func_argv[2]);
+
     return rc;
 }
 
@@ -990,47 +1033,41 @@ weechat_php_config_new_section_callback_delete_option (const void *pointer,
 {
     int rc;
     void *func_argv[4];
+
     func_argv[1] = API_PTR2STR(config_file);
     func_argv[2] = API_PTR2STR(section);
     func_argv[3] = API_PTR2STR(option);
+
     weechat_php_cb (pointer, data, func_argv, "ssss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
     if (func_argv[2])
         free (func_argv[2]);
     if (func_argv[3])
         free (func_argv[3]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_config_new_section)
 {
-    API_FUNC_INIT(weechat_config_new_section);
-    zend_string *z_config_file;
-    zend_string *z_name;
-    zend_long z_user_can_add_options;
-    zend_long z_user_can_delete_options;
-    zval *z_callback_read;
-    zend_string *z_data_read;
-    zval *z_callback_write;
-    zend_string *z_data_write;
-    zval *z_callback_write_default;
-    zend_string *z_data_write_default;
-    zval *z_callback_create_option;
-    zend_string *z_data_create_option;
-    zval *z_callback_delete_option;
-    zend_string *z_data_delete_option;
+    zend_string *z_config_file, *z_name;
+    zend_long z_user_can_add_options, z_user_can_delete_options;
+    zval *z_callback_read, *z_callback_write, *z_callback_write_default;
+    zval *z_callback_create_option, *z_callback_delete_option;
+    zend_string *z_data_read, *z_data_write, *z_data_write_default;
+    zend_string *z_data_create_option, *z_data_delete_option;
     struct t_config_section *retval;
     struct t_config_file *config_file;
     char *name;
-    int user_can_add_options;
-    int user_can_delete_options;
-    char *data_read;
-    char *data_write;
-    char *data_write_default;
-    char *data_create_option;
-    char *data_delete_option;
+    int user_can_add_options, user_can_delete_options;
+    char *data_read, *data_write, *data_write_default;
+    char *data_create_option, *data_delete_option;
+
+    API_FUNC_INIT(weechat_config_new_section);
+
     if (zend_parse_parameters (
             ZEND_NUM_ARGS(), "SSllzSzSzSzSzS", &z_config_file, &z_name,
             &z_user_can_add_options, &z_user_can_delete_options,
@@ -1085,12 +1122,13 @@ PHP_FUNCTION(weechat_config_new_section)
 
 PHP_FUNCTION(weechat_config_search_section)
 {
-    API_FUNC_INIT(weechat_config_search_section);
-    zend_string *z_config_file;
-    zend_string *z_section_name;
-    struct t_config_section *retval;
+    zend_string *z_config_file, *z_section_name;
     struct t_config_file *config_file;
     char *section_name;
+    struct t_config_section *retval;
+
+    API_FUNC_INIT(weechat_config_search_section);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_config_file,
                                &z_section_name) == FAILURE)
@@ -1112,12 +1150,16 @@ weechat_php_config_new_option_callback_check_value (const void *pointer,
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = API_PTR2STR(option);
     func_argv[2] = value ? (char *)value : weechat_php_empty_arg;
+
     weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
@@ -1128,9 +1170,12 @@ weechat_php_config_new_option_callback_change (const void *pointer,
 {
     int *rc;
     void *func_argv[2];
+
     func_argv[1] = API_PTR2STR(option);
+
     weechat_php_cb (pointer, data, func_argv, "ss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
 }
@@ -1142,48 +1187,32 @@ weechat_php_config_new_option_callback_delete (const void *pointer,
 {
     int rc;
     void *func_argv[2];
+
     func_argv[1] = API_PTR2STR(option);
-    weechat_php_cb(pointer, data, func_argv, "ss",
+
+    weechat_php_cb (pointer, data, func_argv, "ss",
                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
 }
 
 PHP_FUNCTION(weechat_config_new_option)
 {
-    API_FUNC_INIT(weechat_config_new_option);
-    zend_string *z_config_file;
-    zend_string *z_section;
-    zend_string *z_name;
-    zend_string *z_type;
-    zend_string *z_description;
-    zend_string *z_string_values;
-    zend_long z_min;
-    zend_long z_max;
-    zend_string *z_default_value;
-    zend_string *z_value;
-    zend_long z_null_value_allowed;
-    zval *z_callback_check_value;
-    zend_string *z_data_check_value;
-    zval *z_callback_change;
-    zend_string *z_data_change;
-    zval *z_callback_delete;
-    zend_string *z_data_delete;
-    struct t_config_option *retval;
+    zend_string *z_config_file, *z_section, *z_name, *z_type, *z_description;
+    zend_string *z_string_values, *z_default_value, *z_value;
+    zend_string *z_data_check_value, *z_data_change, *z_data_delete;
+    zend_long z_min, z_max, z_null_value_allowed;
+    zval *z_callback_check_value, *z_callback_change, *z_callback_delete;
     struct t_config_file *config_file;
     struct t_config_section *section;
-    char *name;
-    char *type;
-    char *description;
-    char *string_values;
-    int min;
-    int max;
-    char *default_value;
-    char *value;
-    int null_value_allowed;
-    char *data_check_value;
-    char *data_change;
-    char *data_delete;
+    char *name, *type, *description, *string_values, *default_value, *value;
+    char *data_check_value, *data_change, *data_delete;
+    int min, max, null_value_allowed;
+    struct t_config_option *retval;
+
+    API_FUNC_INIT(weechat_config_new_option);
+
     if (zend_parse_parameters (
             ZEND_NUM_ARGS(), "SSSSSSllSSlzSzSzS", &z_config_file, &z_section,
             &z_name, &z_type, &z_description, &z_string_values, &z_min, &z_max,
@@ -1239,14 +1268,14 @@ PHP_FUNCTION(weechat_config_new_option)
 
 PHP_FUNCTION(weechat_config_search_option)
 {
-    API_FUNC_INIT(weechat_config_search_option);
-    zend_string *z_config_file;
-    zend_string *z_section;
-    zend_string *z_option_name;
-    struct t_config_option *retval;
+    zend_string *z_config_file, *z_section, *z_option_name;
     struct t_config_file *config_file;
     struct t_config_section *section;
     char *option_name;
+    struct t_config_option *retval;
+
+    API_FUNC_INIT(weechat_config_search_option);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_config_file, &z_section,
                                &z_option_name) == FAILURE)
@@ -1263,10 +1292,12 @@ PHP_FUNCTION(weechat_config_search_option)
 
 PHP_FUNCTION(weechat_config_string_to_boolean)
 {
-    API_FUNC_INIT(weechat_config_string_to_boolean);
     zend_string *z_text;
-    int retval;
     char *text;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_string_to_boolean);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_text) == FAILURE)
     {
         return;
@@ -1278,12 +1309,13 @@ PHP_FUNCTION(weechat_config_string_to_boolean)
 
 PHP_FUNCTION(weechat_config_option_reset)
 {
-    API_FUNC_INIT(weechat_config_option_reset);
     zend_string *z_option;
     zend_long z_run_callback;
-    int retval;
     struct t_config_option *option;
-    int run_callback;
+    int run_callback, retval;
+
+    API_FUNC_INIT(weechat_config_option_reset);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_option, &z_run_callback) == FAILURE)
     {
@@ -1297,14 +1329,14 @@ PHP_FUNCTION(weechat_config_option_reset)
 
 PHP_FUNCTION(weechat_config_option_set)
 {
-    API_FUNC_INIT(weechat_config_option_set);
-    zend_string *z_option;
-    zend_string *z_value;
+    zend_string *z_option, *z_value;
     zend_long z_run_callback;
-    int retval;
     struct t_config_option *option;
     char *value;
-    int run_callback;
+    int run_callback, retval;
+
+    API_FUNC_INIT(weechat_config_option_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_option, &z_value,
                                &z_run_callback) == FAILURE)
@@ -1321,12 +1353,13 @@ PHP_FUNCTION(weechat_config_option_set)
 
 PHP_FUNCTION(weechat_config_option_set_null)
 {
-    API_FUNC_INIT(weechat_config_option_set_null);
     zend_string *z_option;
     zend_long z_run_callback;
-    int retval;
     struct t_config_option *option;
-    int run_callback;
+    int run_callback, retval;
+
+    API_FUNC_INIT(weechat_config_option_set_null);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_option, &z_run_callback) == FAILURE)
     {
@@ -1340,10 +1373,12 @@ PHP_FUNCTION(weechat_config_option_set_null)
 
 PHP_FUNCTION(weechat_config_option_unset)
 {
-    API_FUNC_INIT(weechat_config_option_unset);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_option_unset);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1355,11 +1390,12 @@ PHP_FUNCTION(weechat_config_option_unset)
 
 PHP_FUNCTION(weechat_config_option_rename)
 {
-    API_FUNC_INIT(weechat_config_option_rename);
-    zend_string *z_option;
-    zend_string *z_new_name;
+    zend_string *z_option, *z_new_name;
     struct t_config_option *option;
     char *new_name;
+
+    API_FUNC_INIT(weechat_config_option_rename);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_option, &z_new_name) == FAILURE)
     {
@@ -1373,10 +1409,12 @@ PHP_FUNCTION(weechat_config_option_rename)
 
 PHP_FUNCTION(weechat_config_option_is_null)
 {
-    API_FUNC_INIT(weechat_config_option_is_null);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_option_is_null);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1388,10 +1426,12 @@ PHP_FUNCTION(weechat_config_option_is_null)
 
 PHP_FUNCTION(weechat_config_option_default_is_null)
 {
-    API_FUNC_INIT(weechat_config_option_default_is_null);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_option_default_is_null);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1403,10 +1443,12 @@ PHP_FUNCTION(weechat_config_option_default_is_null)
 
 PHP_FUNCTION(weechat_config_boolean)
 {
-    API_FUNC_INIT(weechat_config_boolean);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_boolean);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1418,10 +1460,12 @@ PHP_FUNCTION(weechat_config_boolean)
 
 PHP_FUNCTION(weechat_config_boolean_default)
 {
-    API_FUNC_INIT(weechat_config_boolean_default);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_boolean_default);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1433,10 +1477,12 @@ PHP_FUNCTION(weechat_config_boolean_default)
 
 PHP_FUNCTION(weechat_config_integer)
 {
-    API_FUNC_INIT(weechat_config_integer);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1448,10 +1494,12 @@ PHP_FUNCTION(weechat_config_integer)
 
 PHP_FUNCTION(weechat_config_integer_default)
 {
-    API_FUNC_INIT(weechat_config_integer_default);
     zend_string *z_option;
-    int retval;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_integer_default);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1463,10 +1511,12 @@ PHP_FUNCTION(weechat_config_integer_default)
 
 PHP_FUNCTION(weechat_config_string)
 {
-    API_FUNC_INIT(weechat_config_string);
     zend_string *z_option;
-    const char *retval;
     struct t_config_option *option;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_config_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1478,10 +1528,12 @@ PHP_FUNCTION(weechat_config_string)
 
 PHP_FUNCTION(weechat_config_string_default)
 {
-    API_FUNC_INIT(weechat_config_string_default);
     zend_string *z_option;
-    const char *retval;
     struct t_config_option *option;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_config_string_default);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1493,10 +1545,12 @@ PHP_FUNCTION(weechat_config_string_default)
 
 PHP_FUNCTION(weechat_config_color)
 {
-    API_FUNC_INIT(weechat_config_color);
     zend_string *z_option;
-    const char *retval;
     struct t_config_option *option;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_config_color);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1508,10 +1562,12 @@ PHP_FUNCTION(weechat_config_color)
 
 PHP_FUNCTION(weechat_config_color_default)
 {
-    API_FUNC_INIT(weechat_config_color_default);
     zend_string *z_option;
-    const char *retval;
     struct t_config_option *option;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_config_color_default);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1523,12 +1579,13 @@ PHP_FUNCTION(weechat_config_color_default)
 
 PHP_FUNCTION(weechat_config_write_option)
 {
-    API_FUNC_INIT(weechat_config_write_option);
-    zend_string *z_config_file;
-    zend_string *z_option;
-    int retval;
+    zend_string *z_config_file, *z_option;
     struct t_config_file *config_file;
     struct t_config_option *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_write_option);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_config_file, &z_option) == FAILURE)
     {
@@ -1542,14 +1599,13 @@ PHP_FUNCTION(weechat_config_write_option)
 
 PHP_FUNCTION(weechat_config_write_line)
 {
-    API_FUNC_INIT(weechat_config_write_line);
-    zend_string *z_config_file;
-    zend_string *z_option_name;
-    zend_string *z_value;
-    int retval;
+    zend_string *z_config_file, *z_option_name, *z_value;
     struct t_config_file *config_file;
-    char *option_name;
-    char *value;
+    char *option_name, *value;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_write_line);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_config_file, &z_option_name,
                                &z_value) == FAILURE)
@@ -1567,10 +1623,12 @@ PHP_FUNCTION(weechat_config_write_line)
 
 PHP_FUNCTION(weechat_config_write)
 {
-    API_FUNC_INIT(weechat_config_write);
     zend_string *z_config_file;
-    int retval;
     struct t_config_file *config_file;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_write);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_config_file) == FAILURE)
     {
@@ -1583,10 +1641,12 @@ PHP_FUNCTION(weechat_config_write)
 
 PHP_FUNCTION(weechat_config_read)
 {
-    API_FUNC_INIT(weechat_config_read);
     zend_string *z_config_file;
-    int retval;
     struct t_config_file *config_file;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_read);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_config_file) == FAILURE)
     {
@@ -1599,10 +1659,12 @@ PHP_FUNCTION(weechat_config_read)
 
 PHP_FUNCTION(weechat_config_reload)
 {
-    API_FUNC_INIT(weechat_config_reload);
     zend_string *z_config_file;
-    int retval;
     struct t_config_file *config_file;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_reload);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_config_file) == FAILURE)
     {
@@ -1615,9 +1677,11 @@ PHP_FUNCTION(weechat_config_reload)
 
 PHP_FUNCTION(weechat_config_option_free)
 {
-    API_FUNC_INIT(weechat_config_option_free);
     zend_string *z_option;
     struct t_config_option *option;
+
+    API_FUNC_INIT(weechat_config_option_free);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1629,9 +1693,11 @@ PHP_FUNCTION(weechat_config_option_free)
 
 PHP_FUNCTION(weechat_config_section_free_options)
 {
-    API_FUNC_INIT(weechat_config_section_free_options);
     zend_string *z_section;
     struct t_config_section *section;
+
+    API_FUNC_INIT(weechat_config_section_free_options);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_section) == FAILURE)
     {
         return;
@@ -1643,9 +1709,11 @@ PHP_FUNCTION(weechat_config_section_free_options)
 
 PHP_FUNCTION(weechat_config_section_free)
 {
-    API_FUNC_INIT(weechat_config_section_free);
     zend_string *z_section;
     struct t_config_section *section;
+
+    API_FUNC_INIT(weechat_config_section_free);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_section) == FAILURE)
     {
         return;
@@ -1657,9 +1725,11 @@ PHP_FUNCTION(weechat_config_section_free)
 
 PHP_FUNCTION(weechat_config_free)
 {
-    API_FUNC_INIT(weechat_config_free);
     zend_string *z_config_file;
     struct t_config_file *config_file;
+
+    API_FUNC_INIT(weechat_config_free);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_config_file) == FAILURE)
     {
@@ -1672,10 +1742,12 @@ PHP_FUNCTION(weechat_config_free)
 
 PHP_FUNCTION(weechat_config_get)
 {
-    API_FUNC_INIT(weechat_config_get);
     zend_string *z_option_name;
-    struct t_config_option *retval;
     char *option_name;
+    struct t_config_option *retval;
+
+    API_FUNC_INIT(weechat_config_get);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_option_name) == FAILURE)
     {
@@ -1688,10 +1760,12 @@ PHP_FUNCTION(weechat_config_get)
 
 PHP_FUNCTION(weechat_config_get_plugin)
 {
-    API_FUNC_INIT(weechat_config_get_plugin);
     zend_string *z_option;
-    const char *retval;
     char *option;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_config_get_plugin);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1705,10 +1779,12 @@ PHP_FUNCTION(weechat_config_get_plugin)
 
 PHP_FUNCTION(weechat_config_is_set_plugin)
 {
-    API_FUNC_INIT(weechat_config_is_set_plugin);
     zend_string *z_option;
-    int retval;
     char *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_is_set_plugin);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1723,11 +1799,10 @@ PHP_FUNCTION(weechat_config_is_set_plugin)
 PHP_FUNCTION(weechat_config_set_plugin)
 {
     API_FUNC_INIT(weechat_config_set_plugin);
-    zend_string *z_option;
-    zend_string *z_value;
+    zend_string *z_option, *z_value;
+    char *option, *value;
     int retval;
-    char *option;
-    char *value;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_option, &z_value) == FAILURE)
     {
@@ -1744,11 +1819,11 @@ PHP_FUNCTION(weechat_config_set_plugin)
 
 PHP_FUNCTION(weechat_config_set_desc_plugin)
 {
+    zend_string *z_option, *z_description;
+    char *option, *description;
+
     API_FUNC_INIT(weechat_config_set_desc_plugin);
-    zend_string *z_option;
-    zend_string *z_description;
-    char *option;
-    char *description;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_option, &z_description) == FAILURE)
     {
@@ -1765,10 +1840,12 @@ PHP_FUNCTION(weechat_config_set_desc_plugin)
 
 PHP_FUNCTION(weechat_config_unset_plugin)
 {
-    API_FUNC_INIT(weechat_config_unset_plugin);
     zend_string *z_option;
-    int retval;
     char *option;
+    int retval;
+
+    API_FUNC_INIT(weechat_config_unset_plugin);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_option) == FAILURE)
     {
         return;
@@ -1782,34 +1859,36 @@ PHP_FUNCTION(weechat_config_unset_plugin)
 
 PHP_FUNCTION(weechat_key_bind)
 {
-    API_FUNC_INIT(weechat_key_bind);
     zend_string *z_context;
     zval *z_keys;
-    int retval;
     char *context;
     struct t_hashtable *keys;
+    int retval;
+
+    API_FUNC_INIT(weechat_key_bind);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sa", &z_context, &z_keys) == FAILURE)
     {
         return;
     }
     context = ZSTR_VAL(z_context);
-    keys = weechat_php_array_to_hashtable(z_keys,
-                                          WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
-                                          WEECHAT_HASHTABLE_STRING,
-                                          WEECHAT_HASHTABLE_STRING);
+    keys = weechat_php_array_to_hashtable (z_keys,
+                                           WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING);
     retval = weechat_key_bind ((const char *)context, keys);
     RETURN_LONG(retval);
 }
 
 PHP_FUNCTION(weechat_key_unbind)
 {
-    API_FUNC_INIT(weechat_key_unbind);
-    zend_string *z_context;
-    zend_string *z_key;
+    zend_string *z_context, *z_key;
     int retval;
-    char *context;
-    char *key;
+    char *context, *key;
+
+    API_FUNC_INIT(weechat_key_unbind);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_context, &z_key) == FAILURE)
     {
@@ -1823,10 +1902,12 @@ PHP_FUNCTION(weechat_key_unbind)
 
 PHP_FUNCTION(weechat_prefix)
 {
-    API_FUNC_INIT(weechat_prefix);
     zend_string *z_prefix;
-    const char *retval;
     char *prefix;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_prefix);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_prefix) == FAILURE)
     {
         return;
@@ -1838,10 +1919,12 @@ PHP_FUNCTION(weechat_prefix)
 
 PHP_FUNCTION(weechat_color)
 {
-    API_FUNC_INIT(weechat_color);
     zend_string *z_color_name;
-    const char *retval;
     char *color_name;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_color);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_color_name) == FAILURE)
     {
         return;
@@ -1853,11 +1936,12 @@ PHP_FUNCTION(weechat_color)
 
 PHP_FUNCTION(weechat_printf)
 {
-    API_FUNC_INIT(weechat_printf);
-    zend_string *z_buffer;
-    zend_string *z_format;
+    zend_string *z_buffer, *z_format;
     struct t_gui_buffer *buffer;
     char *format;
+
+    API_FUNC_INIT(weechat_printf);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_format) == FAILURE)
     {
@@ -1872,15 +1956,14 @@ PHP_FUNCTION(weechat_printf)
 
 PHP_FUNCTION(weechat_printf_date_tags)
 {
-    API_FUNC_INIT(weechat_printf_date_tags);
-    zend_string *z_buffer;
+    zend_string *z_buffer, *z_tags, *z_format;
     zend_long z_date;
-    zend_string *z_tags;
-    zend_string *z_format;
     struct t_gui_buffer *buffer;
     time_t date;
-    char *tags;
-    char *format;
+    char *tags, *format;
+
+    API_FUNC_INIT(weechat_printf_date_tags);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SlSS", &z_buffer, &z_date, &z_tags,
                                &z_format) == FAILURE)
@@ -1903,13 +1986,14 @@ PHP_FUNCTION(weechat_printf_date_tags)
 
 PHP_FUNCTION(weechat_printf_y)
 {
-    API_FUNC_INIT(weechat_printf_y);
-    zend_string *z_buffer;
+    zend_string *z_buffer, *z_format;
     zend_long z_y;
-    zend_string *z_format;
     struct t_gui_buffer *buffer;
     int y;
     char *format;
+
+    API_FUNC_INIT(weechat_printf_y);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SlS", &z_buffer, &z_y, &z_format) == FAILURE)
     {
@@ -1929,9 +2013,11 @@ PHP_FUNCTION(weechat_printf_y)
 
 PHP_FUNCTION(weechat_log_printf)
 {
-    API_FUNC_INIT(weechat_log_printf);
     zend_string *z_format;
     char *format;
+
+    API_FUNC_INIT(weechat_log_printf);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_format) == FAILURE)
     {
         return;
@@ -1947,20 +2033,19 @@ weechat_php_hook_command_callback (const void *pointer, void *data,
                                    struct t_gui_buffer *buffer,
                                    int argc, char **argv, char **argv_eol)
 {
-    int rc;
+    int rc, i, *argi;
     void *func_argv[4];
-    int i;
-    int *argi;
     struct t_hashtable *args;
 
-    (void)argv_eol;
+    /* make C compiler happy */
+    (void) argv_eol;
 
     args = weechat_hashtable_new (argc,
                                   WEECHAT_HASHTABLE_INTEGER,
                                   WEECHAT_HASHTABLE_STRING,
                                   NULL,
                                   NULL);
-    argi = malloc(sizeof(int) * argc);
+    argi = malloc (sizeof (int) * argc);
 
     for (i = 0; i < argc; i++)
     {
@@ -1971,32 +2056,28 @@ weechat_php_hook_command_callback (const void *pointer, void *data,
     func_argv[1] = API_PTR2STR(buffer);
     func_argv[2] = &argc;
     func_argv[3] = args;
+
     weechat_php_cb (pointer, data, func_argv, "ssih",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     free (argi);
     weechat_hashtable_free (args);
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_command)
 {
-    API_FUNC_INIT(weechat_hook_command);
-    zend_string *z_command;
-    zend_string *z_description;
-    zend_string *z_args;
-    zend_string *z_args_description;
-    zend_string *z_completion;
+    zend_string *z_command, *z_description, *z_args, *z_args_description;
+    zend_string *z_completion, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *command, *description, *args, *args_description, *completion, *data;
     struct t_hook *retval;
-    char *command;
-    char *description;
-    char *args;
-    char *args_description;
-    char *completion;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_command);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSSzS", &z_command, &z_description, &z_args,
                                &z_args_description, &z_completion, &z_callback,
@@ -2032,29 +2113,31 @@ weechat_php_hook_completion_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[4];
+
     func_argv[1] = completion_item ? (char *)completion_item : weechat_php_empty_arg;
     func_argv[2] = API_PTR2STR(buffer);
     func_argv[3] = API_PTR2STR(completion);
-    weechat_php_cb(pointer, data, func_argv, "ssss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[2])
         free (func_argv[2]);
     if (func_argv[3])
         free (func_argv[3]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_completion)
 {
-    API_FUNC_INIT(weechat_hook_completion);
-    zend_string *z_completion;
-    zend_string *z_description;
+    zend_string *z_completion, *z_description, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *completion, *description, *data;
     struct t_hook *retval;
-    char *completion;
-    char *description;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_completion);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSzS", &z_completion, &z_description,
                                &z_callback, &z_data) == FAILURE)
@@ -2077,12 +2160,13 @@ PHP_FUNCTION(weechat_hook_completion)
 
 PHP_FUNCTION(weechat_hook_completion_get_string)
 {
-    API_FUNC_INIT(weechat_hook_completion_get_string);
-    zend_string *z_completion;
-    zend_string *z_property;
-    const char *retval;
+    zend_string *z_completion, *z_property;
     struct t_gui_completion *completion;
     char *property;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hook_completion_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_completion, &z_property) == FAILURE)
     {
@@ -2097,15 +2181,14 @@ PHP_FUNCTION(weechat_hook_completion_get_string)
 
 PHP_FUNCTION(weechat_hook_completion_list_add)
 {
-    API_FUNC_INIT(weechat_hook_completion_list_add);
-    zend_string *z_completion;
-    zend_string *z_word;
+    zend_string *z_completion, *z_word, *z_where;
     zend_long z_nick_completion;
-    zend_string *z_where;
     struct t_gui_completion *completion;
-    char *word;
+    char *word, *where;
     int nick_completion;
-    char *where;
+
+    API_FUNC_INIT(weechat_hook_completion_list_add);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSlS", &z_completion, &z_word,
                                &z_nick_completion, &z_where) == FAILURE)
@@ -2130,24 +2213,28 @@ weechat_php_hook_command_run_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = API_PTR2STR(buffer);
     func_argv[2] = command ? (char *)command : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_command_run)
 {
-    API_FUNC_INIT(weechat_hook_command_run);
-    zend_string *z_command;
+    zend_string *z_command, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *command, *data;
     struct t_hook *retval;
-    char *command;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_command_run);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_command, &z_callback,
                                &z_data) == FAILURE)
@@ -2166,30 +2253,31 @@ PHP_FUNCTION(weechat_hook_command_run)
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
-static int weechat_php_hook_timer_callback(const void *pointer, void *data,
-                                           int remaining_calls)
+static int weechat_php_hook_timer_callback (const void *pointer, void *data,
+                                            int remaining_calls)
 {
     int rc;
     void *func_argv[2];
+
     func_argv[1] = &remaining_calls;
-    weechat_php_cb(pointer, data, func_argv, "si",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "si",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_timer)
 {
-    API_FUNC_INIT(weechat_hook_timer);
-    zend_long z_interval;
-    zend_long z_align_second;
-    zend_long z_max_calls;
+    zend_long z_interval, z_align_second, z_max_calls;
     zval *z_callback;
     zend_string *z_data;
-    struct t_hook *retval;
-    int interval;
-    int align_second;
-    int max_calls;
+    int interval, align_second, max_calls;
     char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_timer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "lllzS", &z_interval, &z_align_second,
                                &z_max_calls, &z_callback, &z_data) == FAILURE)
@@ -2212,32 +2300,31 @@ PHP_FUNCTION(weechat_hook_timer)
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
-static int weechat_php_hook_fd_callback(const void *pointer, void *data,
-                                        int fd)
+static int weechat_php_hook_fd_callback (const void *pointer, void *data,
+                                         int fd)
 {
     int rc;
     void *func_argv[2];
+
     func_argv[1] = &fd;
-    weechat_php_cb(pointer, data, func_argv, "si",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "si",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_fd)
 {
-    API_FUNC_INIT(weechat_hook_fd);
-    zend_long z_fd;
-    zend_long z_flag_read;
-    zend_long z_flag_write;
-    zend_long z_flag_exception;
+    zend_long z_fd, z_flag_read, z_flag_write, z_flag_exception;
     zval *z_callback;
     zend_string *z_data;
-    struct t_hook *retval;
-    int fd;
-    int flag_read;
-    int flag_write;
-    int flag_exception;
+    int fd, flag_read, flag_write, flag_exception;
     char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_fd);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "llllzS", &z_fd, &z_flag_read, &z_flag_write,
                                &z_flag_exception, &z_callback,
@@ -2269,26 +2356,29 @@ weechat_php_hook_process_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[5];
+
     func_argv[1] = command ? (char *)command : weechat_php_empty_arg;
     func_argv[2] = &return_code;
     func_argv[3] = out ? (char *)out : weechat_php_empty_arg;
     func_argv[4] = err ? (char *)err : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssiss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssiss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_process)
 {
-    API_FUNC_INIT(weechat_hook_process);
-    zend_string *z_command;
+    zend_string *z_command, *z_data;
     zend_long z_timeout;
     zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
-    char *command;
+    char *command, *data;
     int timeout;
-    char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_process);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SlzS", &z_command, &z_timeout, &z_callback,
                                &z_data) == FAILURE)
@@ -2317,28 +2407,30 @@ weechat_php_hook_process_hashtable_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[5];
+
     func_argv[1] = command ? (char *)command : weechat_php_empty_arg;
     func_argv[2] = &return_code;
     func_argv[3] = out ? (char *)out : weechat_php_empty_arg;
     func_argv[4] = err ? (char *)err : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssiss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssiss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_process_hashtable)
 {
-    API_FUNC_INIT(weechat_hook_process_hashtable);
-    zend_string *z_command;
-    zval *z_options;
+    zend_string *z_command, *z_data;
+    zval *z_options, *z_callback;
     zend_long z_timeout;
-    zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
-    char *command;
+    char *command, *data;
     struct t_hashtable *options;
     int timeout;
-    char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_process_hashtable);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SalzS", &z_command, &z_options, &z_timeout,
                                &z_callback, &z_data) == FAILURE)
@@ -2346,7 +2438,7 @@ PHP_FUNCTION(weechat_hook_process_hashtable)
         return;
     }
     command = ZSTR_VAL(z_command);
-    options = weechat_php_array_to_hashtable(
+    options = weechat_php_array_to_hashtable (
         z_options,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
@@ -2372,42 +2464,33 @@ weechat_php_hook_connect_callback (const void *pointer, void *data, int status,
 {
     int rc;
     void *func_argv[6];
+
     func_argv[1] = &status;
     func_argv[2] = &gnutls_rc;
     func_argv[3] = &sock;
     func_argv[4] = error ? (char *)error : weechat_php_empty_arg;
     func_argv[5] = ip_address ? (char *)ip_address : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "siiiss", WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "siiiss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_connect)
 {
-    API_FUNC_INIT(weechat_hook_connect);
-    zend_string *z_proxy;
-    zend_string *z_address;
-    zend_long z_port;
-    zend_long z_ipv6;
-    zend_long z_retry;
-    zend_string *z_gnutls_sess;
-    zend_string *z_gnutls_cb;
-    zend_long z_gnutls_dhkey_size;
-    zend_string *z_gnutls_priorities;
-    zend_string *z_local_hostname;
+    zend_string *z_proxy, *z_address, *z_gnutls_sess, *z_gnutls_cb;
+    zend_string *z_gnutls_priorities, *z_local_hostname, *z_data;
+    zend_long z_port, z_ipv6, z_retry, z_gnutls_dhkey_size;
     zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
-    char *proxy;
-    char *address;
-    int port;
-    int ipv6;
-    int retry;
-    void *gnutls_sess;
-    void *gnutls_cb;
+    char *proxy, *address, *gnutls_priorities, *local_hostname, *data;
+    int port, ipv6, retry;
+    void *gnutls_sess, *gnutls_cb;
     int gnutls_dhkey_size;
-    char *gnutls_priorities;
-    char *local_hostname;
-    char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_connect);
+
     if (zend_parse_parameters (
             ZEND_NUM_ARGS(), "SSlllSSlSSzS", &z_proxy, &z_address, &z_port,
             &z_ipv6, &z_retry, &z_gnutls_sess, &z_gnutls_cb,
@@ -2455,6 +2538,7 @@ weechat_php_hook_print_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[9];
+
     func_argv[1] = API_PTR2STR(buffer);
     func_argv[2] = &date;
     func_argv[3] = &tags_count;
@@ -2463,28 +2547,28 @@ weechat_php_hook_print_callback (const void *pointer, void *data,
     func_argv[6] = &highlight;
     func_argv[7] = prefix ? (char *)prefix : weechat_php_empty_arg;
     func_argv[8] = message ? (char *)message : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssiisiiss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssiisiiss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_print)
 {
-    API_FUNC_INIT(weechat_hook_print);
-    zend_string *z_buffer;
-    zend_string *z_tags;
-    zend_string *z_message;
+    zend_string *z_buffer, *z_tags, *z_message, *z_data;
     zend_long z_strip_colors;
     zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
     struct t_gui_buffer *buffer;
-    char *tags;
-    char *message;
+    char *tags, *message, *data;
     int strip_colors;
-    char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_print);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSlzS", &z_buffer, &z_tags, &z_message,
                                &z_strip_colors, &z_callback,
@@ -2510,29 +2594,32 @@ PHP_FUNCTION(weechat_hook_print)
 }
 
 static int
-weechat_php_hook_signal_callback(const void *pointer, void *data,
-                                 const char *signal, const char *type_data,
-                                 void *signal_data)
+weechat_php_hook_signal_callback (const void *pointer, void *data,
+                                  const char *signal, const char *type_data,
+                                  void *signal_data)
 {
     int rc;
     void *func_argv[4];
+
     func_argv[1] = signal ? (char *)signal : weechat_php_empty_arg;
     func_argv[2] = type_data ? (char *)type_data : weechat_php_empty_arg;
     func_argv[3] = signal_data ? (char *)signal_data : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_signal)
 {
-    API_FUNC_INIT(weechat_hook_signal);
-    zend_string *z_signal;
+    zend_string *z_signal, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *signal, *data;
     struct t_hook *retval;
-    char *signal;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_signal);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_signal, &z_callback,
                                &z_data) == FAILURE)
@@ -2553,14 +2640,13 @@ PHP_FUNCTION(weechat_hook_signal)
 
 PHP_FUNCTION(weechat_hook_signal_send)
 {
-    API_FUNC_INIT(weechat_hook_signal_send);
-    zend_string *z_signal;
-    zend_string *z_type_data;
-    zend_string *z_signal_data;
-    int retval;
-    char *signal;
-    char *type_data;
+    zend_string *z_signal, *z_type_data, *z_signal_data;
+    char *signal, *type_data;
     void *signal_data;
+    int retval;
+
+    API_FUNC_INIT(weechat_hook_signal_send);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_signal, &z_type_data,
                                &z_signal_data) == FAILURE)
@@ -2575,28 +2661,31 @@ PHP_FUNCTION(weechat_hook_signal_send)
     RETURN_LONG(retval);
 }
 
-static int weechat_php_hook_hsignal_callback(const void *pointer, void *data,
-                                             const char *signal,
-                                             struct t_hashtable *hashtable)
+static int weechat_php_hook_hsignal_callback (const void *pointer, void *data,
+                                              const char *signal,
+                                              struct t_hashtable *hashtable)
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = signal ? (char *)signal : weechat_php_empty_arg;
     func_argv[2] = hashtable;
-    weechat_php_cb(pointer, data, func_argv, "ssh",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssh",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_hsignal)
 {
-    API_FUNC_INIT(weechat_hook_hsignal);
-    zend_string *z_signal;
+    zend_string *z_signal, *z_data;
     zval *z_callback;
-    zend_string *z_data;
     struct t_hook *retval;
-    char *signal;
-    char *data;
+    char *signal, *data;
+
+    API_FUNC_INIT(weechat_hook_hsignal);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_signal, &z_callback,
                                &z_data) == FAILURE)
@@ -2617,12 +2706,14 @@ PHP_FUNCTION(weechat_hook_hsignal)
 
 PHP_FUNCTION(weechat_hook_hsignal_send)
 {
-    API_FUNC_INIT(weechat_hook_hsignal_send);
     zend_string *z_signal;
     zval *z_hashtable;
-    int retval;
     char *signal;
     struct t_hashtable *hashtable;
+    int retval;
+
+    API_FUNC_INIT(weechat_hook_hsignal_send);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sa", &z_signal, &z_hashtable) == FAILURE)
     {
@@ -2639,27 +2730,30 @@ PHP_FUNCTION(weechat_hook_hsignal_send)
 }
 
 static int
-weechat_php_hook_config_callback(const void *pointer, void *data,
-                                 const char *option, const char *value)
+weechat_php_hook_config_callback (const void *pointer, void *data,
+                                  const char *option, const char *value)
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = option ? (char *)option : weechat_php_empty_arg;
     func_argv[2] = value ? (char *)value : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_config)
 {
-    API_FUNC_INIT(weechat_hook_config);
-    zend_string *z_option;
+    zend_string *z_option, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *option, *data;
     struct t_hook *retval;
-    char *option;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_config);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_option, &z_callback,
                                &z_data) == FAILURE)
@@ -2679,30 +2773,33 @@ PHP_FUNCTION(weechat_hook_config)
 }
 
 static char *
-weechat_php_hook_modifier_callback(const void *pointer, void *data,
-                                   const char *modifier,
-                                   const char *modifier_data,
-                                   const char *string)
+weechat_php_hook_modifier_callback (const void *pointer, void *data,
+                                    const char *modifier,
+                                    const char *modifier_data,
+                                    const char *string)
 {
     char *rc;
     void *func_argv[4];
+
     func_argv[1] = modifier ? (char *)modifier : weechat_php_empty_arg;
     func_argv[2] = modifier_data ? (char *)modifier_data : weechat_php_empty_arg;
     func_argv[3] = string ? (char *)string : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssss",
-                   WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssss",
+                    WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_modifier)
 {
-    API_FUNC_INIT(weechat_hook_modifier);
-    zend_string *z_modifier;
+    zend_string *z_modifier, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *modifier, *data;
     struct t_hook *retval;
-    char *modifier;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_modifier);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_modifier, &z_callback,
                                &z_data) == FAILURE)
@@ -2723,14 +2820,11 @@ PHP_FUNCTION(weechat_hook_modifier)
 
 PHP_FUNCTION(weechat_hook_modifier_exec)
 {
+    zend_string *z_modifier, *z_modifier_data, *z_string;
+    char *modifier, *modifier_data, *string, *retval;
+
     API_FUNC_INIT(weechat_hook_modifier_exec);
-    zend_string *z_modifier;
-    zend_string *z_modifier_data;
-    zend_string *z_string;
-    char *retval;
-    char *modifier;
-    char *modifier_data;
-    char *string;
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_modifier, &z_modifier_data,
                                &z_string) == FAILURE)
@@ -2746,30 +2840,32 @@ PHP_FUNCTION(weechat_hook_modifier_exec)
     SAFE_RETURN_STRING(retval);
 }
 
-static const char *weechat_php_hook_info_callback(const void *pointer, void *data, const char *info_name, const char *arguments)
+static const char *weechat_php_hook_info_callback (const void *pointer,
+                                                   void *data,
+                                                   const char *info_name,
+                                                   const char *arguments)
 {
     char *rc;
     void *func_argv[3];
+
     func_argv[1] = info_name ? (char *)info_name : weechat_php_empty_arg;
     func_argv[2] = arguments ? (char *)arguments : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sss",
-                   WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sss",
+                    WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_info)
 {
-    API_FUNC_INIT(weechat_hook_info);
-    zend_string *z_info_name;
-    zend_string *z_description;
-    zend_string *z_args_description;
+    zend_string *z_info_name, *z_description, *z_args_description, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *info_name, *description, *args_description, *data;
     struct t_hook *retval;
-    char *info_name;
-    char *description;
-    char *args_description;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_info);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSzS", &z_info_name, &z_description,
                                &z_args_description, &z_callback,
@@ -2794,33 +2890,33 @@ PHP_FUNCTION(weechat_hook_info)
 }
 
 struct t_hashtable *
-weechat_php_api_hook_info_hashtable_callback(const void *pointer, void *data,
-                                             const char *info_name,
-                                             struct t_hashtable *hashtable)
+weechat_php_api_hook_info_hashtable_callback (const void *pointer, void *data,
+                                              const char *info_name,
+                                              struct t_hashtable *hashtable)
 {
     struct t_hashtable *rc;
     void *func_argv[3];
+
     func_argv[1] = (info_name) ? (char *)info_name : weechat_php_empty_arg;
     func_argv[2] = hashtable;
-    weechat_php_cb(pointer, data, func_argv, "ssh", WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssh",
+                    WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_info_hashtable)
 {
-    API_FUNC_INIT(weechat_hook_info_hashtable);
-    zend_string *z_info_name;
-    zend_string *z_description;
-    zend_string *z_args_description;
-    zend_string *z_output_description;
+    zend_string *z_info_name, *z_description, *z_args_description;
+    zend_string *z_output_description, *z_data;
     zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
-    char *info_name;
-    char *description;
-    char *args_description;
-    char *output_description;
+    char *info_name, *description, *args_description, *output_description;
     char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_info_hashtable);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSSzS", &z_info_name, &z_description,
                                &z_args_description, &z_output_description,
@@ -2854,31 +2950,31 @@ weechat_php_api_hook_infolist_callback (const void *pointer, void *data,
 {
     struct t_infolist *rc;
     void *func_argv[4];
+
     func_argv[1] = (info_name) ? (char *)info_name : weechat_php_empty_arg;
     func_argv[2] = API_PTR2STR(obj_pointer);
     func_argv[3] = (arguments) ? (char *)arguments : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "ssss",
-                   WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssss",
+                    WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
     if (func_argv[2])
         free (func_argv[2]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_infolist)
 {
-    API_FUNC_INIT(weechat_hook_infolist);
-    zend_string *z_infolist_name;
-    zend_string *z_description;
-    zend_string *z_pointer_description;
-    zend_string *z_args_description;
+    zend_string *z_infolist_name, *z_description, *z_pointer_description;
+    zend_string *z_args_description, *z_data;
     zval *z_callback;
-    zend_string *z_data;
-    struct t_hook *retval;
-    char *infolist_name;
-    char *description;
-    char *pointer_description;
-    char *args_description;
+    char *infolist_name, *description, *pointer_description, *args_description;
     char *data;
+    struct t_hook *retval;
+
+    API_FUNC_INIT(weechat_hook_infolist);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSzS", &z_infolist_name, &z_description,
                                &z_pointer_description, &z_args_description,
@@ -2891,7 +2987,7 @@ PHP_FUNCTION(weechat_hook_infolist)
     pointer_description = ZSTR_VAL(z_pointer_description);
     args_description = ZSTR_VAL(z_args_description);
     data = ZSTR_VAL(z_data);
-    weechat_php_get_function_name(z_callback, callback_name);
+    weechat_php_get_function_name (z_callback, callback_name);
     retval = plugin_script_api_hook_infolist (weechat_php_plugin,
                                               php_current_script,
                                               infolist_name,
@@ -2905,26 +3001,29 @@ PHP_FUNCTION(weechat_hook_infolist)
 }
 
 struct t_hashtable *
-weechat_php_api_hook_focus_callback(const void *pointer, void *data,
-                                    struct t_hashtable *info)
+weechat_php_api_hook_focus_callback (const void *pointer, void *data,
+                                     struct t_hashtable *info)
 {
     struct t_hashtable *rc;
     void *func_argv[2];
+
     func_argv[1] = info;
-    weechat_php_cb(pointer, data, func_argv, "sh",
-                   WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sh",
+                    WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_hook_focus)
 {
-    API_FUNC_INIT(weechat_hook_focus);
-    zend_string *z_area;
+    zend_string *z_area, *z_data;
     zval *z_callback;
-    zend_string *z_data;
+    char *area, *data;
     struct t_hook *retval;
-    char *area;
-    char *data;
+
+    API_FUNC_INIT(weechat_hook_focus);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_area, &z_callback,
                                &z_data) == FAILURE)
     {
@@ -2944,13 +3043,12 @@ PHP_FUNCTION(weechat_hook_focus)
 
 PHP_FUNCTION(weechat_hook_set)
 {
-    API_FUNC_INIT(weechat_hook_set);
-    zend_string *z_hook;
-    zend_string *z_property;
-    zend_string *z_value;
+    zend_string *z_hook, *z_property, *z_value;
     struct t_hook *hook;
-    char *property;
-    char *value;
+    char *property, *value;
+
+    API_FUNC_INIT(weechat_hook_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hook, &z_property,
                                &z_value) == FAILURE)
     {
@@ -2965,9 +3063,11 @@ PHP_FUNCTION(weechat_hook_set)
 
 PHP_FUNCTION(weechat_unhook)
 {
-    API_FUNC_INIT(weechat_unhook);
     zend_string *z_hook;
     struct t_hook *hook;
+
+    API_FUNC_INIT(weechat_unhook);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_hook) == FAILURE)
     {
         return;
@@ -2979,9 +3079,11 @@ PHP_FUNCTION(weechat_unhook)
 
 PHP_FUNCTION(weechat_unhook_all)
 {
-    API_FUNC_INIT(weechat_unhook_all);
     zend_string *z_subplugin;
     char *subplugin;
+
+    API_FUNC_INIT(weechat_unhook_all);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_subplugin) == FAILURE)
     {
         return;
@@ -2997,12 +3099,16 @@ int weechat_php_buffer_new_input_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[3];
+
     func_argv[1] = API_PTR2STR(buffer);
     func_argv[2] = input_data ? (char *)input_data : weechat_php_empty_arg;
-    weechat_php_cb(pointer, data, func_argv, "sss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "sss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
@@ -3011,26 +3117,27 @@ int weechat_php_buffer_new_close_callback (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[2];
+
     func_argv[1] = API_PTR2STR(buffer);
-    weechat_php_cb(pointer, data, func_argv, "ss",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ss",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_buffer_new)
 {
-    API_FUNC_INIT(weechat_buffer_new);
-    zend_string *z_name;
-    zval *z_input_callback;
-    zend_string *z_data_input;
-    zval *z_close_callback;
-    zend_string *z_data_close;
+    zend_string *z_name, *z_data_input, *z_data_close;
+    zval *z_input_callback, *z_close_callback;
+    char *name, *data_input, *data_close;
     struct t_gui_buffer *retval;
-    char *name;
-    char *data_input;
-    char *data_close;
+
+    API_FUNC_INIT(weechat_buffer_new);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzSzS", &z_name, &z_input_callback,
                                &z_data_input, &z_close_callback,
@@ -3057,12 +3164,12 @@ PHP_FUNCTION(weechat_buffer_new)
 
 PHP_FUNCTION(weechat_buffer_search)
 {
-    API_FUNC_INIT(weechat_buffer_search);
-    zend_string *z_plugin;
-    zend_string *z_name;
+    zend_string *z_plugin, *z_name;
+    char *plugin, *name;
     struct t_gui_buffer *retval;
-    char *plugin;
-    char *name;
+
+    API_FUNC_INIT(weechat_buffer_search);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_plugin, &z_name) == FAILURE)
     {
@@ -3076,8 +3183,10 @@ PHP_FUNCTION(weechat_buffer_search)
 
 PHP_FUNCTION(weechat_buffer_search_main)
 {
-    API_FUNC_INIT(weechat_buffer_search_main);
     struct t_gui_buffer *retval;
+
+    API_FUNC_INIT(weechat_buffer_search_main);
+
     if (zend_parse_parameters_none () == FAILURE)
     {
         return;
@@ -3088,9 +3197,11 @@ PHP_FUNCTION(weechat_buffer_search_main)
 
 PHP_FUNCTION(weechat_buffer_clear)
 {
-    API_FUNC_INIT(weechat_buffer_clear);
     zend_string *z_buffer;
     struct t_gui_buffer *buffer;
+
+    API_FUNC_INIT(weechat_buffer_clear);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_buffer) == FAILURE)
     {
         return;
@@ -3102,9 +3213,11 @@ PHP_FUNCTION(weechat_buffer_clear)
 
 PHP_FUNCTION(weechat_buffer_close)
 {
-    API_FUNC_INIT(weechat_buffer_close);
     zend_string *z_buffer;
     struct t_gui_buffer *buffer;
+
+    API_FUNC_INIT(weechat_buffer_close);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_buffer) == FAILURE)
     {
         return;
@@ -3116,11 +3229,13 @@ PHP_FUNCTION(weechat_buffer_close)
 
 PHP_FUNCTION(weechat_buffer_merge)
 {
-    API_FUNC_INIT(weechat_buffer_merge);
     zend_string *z_buffer;
     zend_string *z_target_buffer;
     struct t_gui_buffer *buffer;
     struct t_gui_buffer *target_buffer;
+
+    API_FUNC_INIT(weechat_buffer_merge);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_target_buffer) == FAILURE)
     {
@@ -3134,10 +3249,12 @@ PHP_FUNCTION(weechat_buffer_merge)
 
 PHP_FUNCTION(weechat_buffer_unmerge)
 {
-    API_FUNC_INIT(weechat_buffer_unmerge);
     zend_string *z_buffer;
     zend_long z_number;
     struct t_gui_buffer *buffer;
+
+    API_FUNC_INIT(weechat_buffer_unmerge);
+
     int number;
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sl", &z_buffer, &z_number) == FAILURE)
@@ -3152,12 +3269,13 @@ PHP_FUNCTION(weechat_buffer_unmerge)
 
 PHP_FUNCTION(weechat_buffer_get_integer)
 {
-    API_FUNC_INIT(weechat_buffer_get_integer);
-    zend_string *z_buffer;
-    zend_string *z_property;
-    int retval;
+    zend_string *z_buffer, *z_property;
     struct t_gui_buffer *buffer;
     char *property;
+    int retval;
+
+    API_FUNC_INIT(weechat_buffer_get_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_property) == FAILURE)
     {
@@ -3171,12 +3289,13 @@ PHP_FUNCTION(weechat_buffer_get_integer)
 
 PHP_FUNCTION(weechat_buffer_get_string)
 {
-    API_FUNC_INIT(weechat_buffer_get_string);
-    zend_string *z_buffer;
-    zend_string *z_property;
+    zend_string *z_buffer, *z_property;
     const char *retval;
     struct t_gui_buffer *buffer;
     char *property;
+
+    API_FUNC_INIT(weechat_buffer_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_property) == FAILURE)
     {
@@ -3190,12 +3309,13 @@ PHP_FUNCTION(weechat_buffer_get_string)
 
 PHP_FUNCTION(weechat_buffer_get_pointer)
 {
-    API_FUNC_INIT(weechat_buffer_get_pointer);
-    zend_string *z_buffer;
-    zend_string *z_property;
+    zend_string *z_buffer, *z_property;
     void *retval;
     struct t_gui_buffer *buffer;
     char *property;
+
+    API_FUNC_INIT(weechat_buffer_get_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_property) == FAILURE)
     {
@@ -3209,13 +3329,12 @@ PHP_FUNCTION(weechat_buffer_get_pointer)
 
 PHP_FUNCTION(weechat_buffer_set)
 {
-    API_FUNC_INIT(weechat_buffer_set);
-    zend_string *z_buffer;
-    zend_string *z_property;
-    zend_string *z_value;
+    zend_string *z_buffer, *z_property, *z_value;
     struct t_gui_buffer *buffer;
-    char *property;
-    char *value;
+    char *property, *value;
+
+    API_FUNC_INIT(weechat_buffer_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_property,
                                &z_value) == FAILURE)
@@ -3231,12 +3350,12 @@ PHP_FUNCTION(weechat_buffer_set)
 
 PHP_FUNCTION(weechat_buffer_string_replace_local_var)
 {
-    API_FUNC_INIT(weechat_buffer_string_replace_local_var);
-    zend_string *z_buffer;
-    zend_string *z_string;
-    char *retval;
+    zend_string *z_buffer, *z_string;
     struct t_gui_buffer *buffer;
-    char *string;
+    char *string, *retval;
+
+    API_FUNC_INIT(weechat_buffer_string_replace_local_var);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_string) == FAILURE)
     {
@@ -3251,12 +3370,13 @@ PHP_FUNCTION(weechat_buffer_string_replace_local_var)
 
 PHP_FUNCTION(weechat_buffer_match_list)
 {
-    API_FUNC_INIT(weechat_buffer_match_list);
-    zend_string *z_buffer;
-    zend_string *z_string;
-    int retval;
+    zend_string *z_buffer, *z_string;
     struct t_gui_buffer *buffer;
     char *string;
+    int retval;
+
+    API_FUNC_INIT(weechat_buffer_match_list);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_string) == FAILURE)
     {
@@ -3270,10 +3390,12 @@ PHP_FUNCTION(weechat_buffer_match_list)
 
 PHP_FUNCTION(weechat_window_search_with_buffer)
 {
-    API_FUNC_INIT(weechat_window_search_with_buffer);
     zend_string *z_buffer;
-    struct t_gui_window *retval;
     struct t_gui_buffer *buffer;
+    struct t_gui_window *retval;
+
+    API_FUNC_INIT(weechat_window_search_with_buffer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_buffer) == FAILURE)
     {
         return;
@@ -3285,12 +3407,13 @@ PHP_FUNCTION(weechat_window_search_with_buffer)
 
 PHP_FUNCTION(weechat_window_get_integer)
 {
-    API_FUNC_INIT(weechat_window_get_integer);
-    zend_string *z_window;
-    zend_string *z_property;
-    int retval;
+    zend_string *z_window, *z_property;
     struct t_gui_window *window;
     char *property;
+    int retval;
+
+    API_FUNC_INIT(weechat_window_get_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_window, &z_property) == FAILURE)
     {
@@ -3304,12 +3427,13 @@ PHP_FUNCTION(weechat_window_get_integer)
 
 PHP_FUNCTION(weechat_window_get_string)
 {
-    API_FUNC_INIT(weechat_window_get_string);
-    zend_string *z_window;
-    zend_string *z_property;
-    const char *retval;
+    zend_string *z_window, *z_property;
     struct t_gui_window *window;
     char *property;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_window_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_window, &z_property) == FAILURE)
     {
@@ -3323,12 +3447,13 @@ PHP_FUNCTION(weechat_window_get_string)
 
 PHP_FUNCTION(weechat_window_get_pointer)
 {
-    API_FUNC_INIT(weechat_window_get_pointer);
-    zend_string *z_window;
-    zend_string *z_property;
-    void *retval;
+    zend_string *z_window, *z_property;
     struct t_gui_window *window;
     char *property;
+    void *retval;
+
+    API_FUNC_INIT(weechat_window_get_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_window, &z_property) == FAILURE)
     {
@@ -3342,9 +3467,11 @@ PHP_FUNCTION(weechat_window_get_pointer)
 
 PHP_FUNCTION(weechat_window_set_title)
 {
-    API_FUNC_INIT(weechat_window_set_title);
     zend_string *z_title;
     char *title;
+
+    API_FUNC_INIT(weechat_window_set_title);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_title) == FAILURE)
     {
         return;
@@ -3356,18 +3483,15 @@ PHP_FUNCTION(weechat_window_set_title)
 
 PHP_FUNCTION(weechat_nicklist_add_group)
 {
-    API_FUNC_INIT(weechat_nicklist_add_group);
-    zend_string *z_buffer;
-    zend_string *z_parent_group;
-    zend_string *z_name;
-    zend_string *z_color;
+    zend_string *z_buffer, *z_parent_group, *z_name, *z_color;
     zend_long z_visible;
-    struct t_gui_nick_group *retval;
     struct t_gui_buffer *buffer;
-    struct t_gui_nick_group *parent_group;
-    char *name;
-    char *color;
+    struct t_gui_nick_group *parent_group, *retval;
+    char *name, *color;
     int visible;
+
+    API_FUNC_INIT(weechat_nicklist_add_group);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSl", &z_buffer, &z_parent_group, &z_name,
                                &z_color, &z_visible) == FAILURE)
@@ -3389,14 +3513,14 @@ PHP_FUNCTION(weechat_nicklist_add_group)
 
 PHP_FUNCTION(weechat_nicklist_search_group)
 {
-    API_FUNC_INIT(weechat_nicklist_search_group);
-    zend_string *z_buffer;
-    zend_string *z_from_group;
-    zend_string *z_name;
+    zend_string *z_buffer, *z_from_group, *z_name;
     struct t_gui_nick_group *retval;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *from_group;
     char *name;
+
+    API_FUNC_INIT(weechat_nicklist_search_group);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_from_group,
                                &z_name) == FAILURE)
@@ -3414,22 +3538,17 @@ PHP_FUNCTION(weechat_nicklist_search_group)
 
 PHP_FUNCTION(weechat_nicklist_add_nick)
 {
-    API_FUNC_INIT(weechat_nicklist_add_nick);
-    zend_string *z_buffer;
-    zend_string *z_group;
-    zend_string *z_name;
-    zend_string *z_color;
-    zend_string *z_prefix;
+    zend_string *z_buffer, *z_group, *z_name, *z_color, *z_prefix;
     zend_string *z_prefix_color;
     zend_long z_visible;
-    struct t_gui_nick *retval;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
-    char *name;
-    char *color;
-    char *prefix;
-    char *prefix_color;
+    char *name, *color, *prefix, *prefix_color;
     int visible;
+    struct t_gui_nick *retval;
+
+    API_FUNC_INIT(weechat_nicklist_add_nick);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSSSl", &z_buffer, &z_group, &z_name,
                                &z_color, &z_prefix, &z_prefix_color,
@@ -3456,14 +3575,14 @@ PHP_FUNCTION(weechat_nicklist_add_nick)
 
 PHP_FUNCTION(weechat_nicklist_search_nick)
 {
-    API_FUNC_INIT(weechat_nicklist_search_nick);
-    zend_string *z_buffer;
-    zend_string *z_from_group;
-    zend_string *z_name;
-    struct t_gui_nick *retval;
+    zend_string *z_buffer, *z_from_group, *z_name;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *from_group;
+    struct t_gui_nick *retval;
     char *name;
+
+    API_FUNC_INIT(weechat_nicklist_search_nick);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_from_group,
                                &z_name) == FAILURE)
@@ -3481,11 +3600,12 @@ PHP_FUNCTION(weechat_nicklist_search_nick)
 
 PHP_FUNCTION(weechat_nicklist_remove_group)
 {
-    API_FUNC_INIT(weechat_nicklist_remove_group);
-    zend_string *z_buffer;
-    zend_string *z_group;
+    zend_string *z_buffer, *z_group;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
+
+    API_FUNC_INIT(weechat_nicklist_remove_group);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_group) == FAILURE)
     {
@@ -3499,11 +3619,12 @@ PHP_FUNCTION(weechat_nicklist_remove_group)
 
 PHP_FUNCTION(weechat_nicklist_remove_nick)
 {
-    API_FUNC_INIT(weechat_nicklist_remove_nick);
-    zend_string *z_buffer;
-    zend_string *z_nick;
+    zend_string *z_buffer, *z_nick;
     struct t_gui_buffer *buffer;
     struct t_gui_nick *nick;
+
+    API_FUNC_INIT(weechat_nicklist_remove_nick);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_nick) == FAILURE)
     {
@@ -3517,9 +3638,11 @@ PHP_FUNCTION(weechat_nicklist_remove_nick)
 
 PHP_FUNCTION(weechat_nicklist_remove_all)
 {
-    API_FUNC_INIT(weechat_nicklist_remove_all);
     zend_string *z_buffer;
     struct t_gui_buffer *buffer;
+
+    API_FUNC_INIT(weechat_nicklist_remove_all);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_buffer) == FAILURE)
     {
         return;
@@ -3531,14 +3654,14 @@ PHP_FUNCTION(weechat_nicklist_remove_all)
 
 PHP_FUNCTION(weechat_nicklist_group_get_integer)
 {
-    API_FUNC_INIT(weechat_nicklist_group_get_integer);
-    zend_string *z_buffer;
-    zend_string *z_group;
-    zend_string *z_property;
-    int retval;
+    zend_string *z_buffer, *z_group, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
     char *property;
+    int retval;
+
+    API_FUNC_INIT(weechat_nicklist_group_get_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
@@ -3556,14 +3679,14 @@ PHP_FUNCTION(weechat_nicklist_group_get_integer)
 
 PHP_FUNCTION(weechat_nicklist_group_get_string)
 {
-    API_FUNC_INIT(weechat_nicklist_group_get_string);
-    zend_string *z_buffer;
-    zend_string *z_group;
-    zend_string *z_property;
-    const char *retval;
+    zend_string *z_buffer, *z_group, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
     char *property;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_nicklist_group_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
@@ -3581,14 +3704,14 @@ PHP_FUNCTION(weechat_nicklist_group_get_string)
 
 PHP_FUNCTION(weechat_nicklist_group_get_pointer)
 {
-    API_FUNC_INIT(weechat_nicklist_group_get_pointer);
-    zend_string *z_buffer;
-    zend_string *z_group;
-    zend_string *z_property;
-    void *retval;
+    zend_string *z_buffer, *z_group, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
     char *property;
+    void *retval;
+
+    API_FUNC_INIT(weechat_nicklist_group_get_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
@@ -3606,15 +3729,13 @@ PHP_FUNCTION(weechat_nicklist_group_get_pointer)
 
 PHP_FUNCTION(weechat_nicklist_group_set)
 {
-    API_FUNC_INIT(weechat_nicklist_group_set);
-    zend_string *z_buffer;
-    zend_string *z_group;
-    zend_string *z_property;
-    zend_string *z_value;
+    zend_string *z_buffer, *z_group, *z_property, *z_value;
     struct t_gui_buffer *buffer;
     struct t_gui_nick_group *group;
-    char *property;
-    char *value;
+    char *property, *value;
+
+    API_FUNC_INIT(weechat_nicklist_group_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSS", &z_buffer, &z_group, &z_property,
                                &z_value) == FAILURE)
@@ -3634,14 +3755,14 @@ PHP_FUNCTION(weechat_nicklist_group_set)
 
 PHP_FUNCTION(weechat_nicklist_nick_get_integer)
 {
-    API_FUNC_INIT(weechat_nicklist_nick_get_integer);
-    zend_string *z_buffer;
-    zend_string *z_nick;
-    zend_string *z_property;
-    int retval;
+    zend_string *z_buffer, *z_nick, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick *nick;
     char *property;
+    int retval;
+
+    API_FUNC_INIT(weechat_nicklist_nick_get_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
@@ -3659,14 +3780,14 @@ PHP_FUNCTION(weechat_nicklist_nick_get_integer)
 
 PHP_FUNCTION(weechat_nicklist_nick_get_string)
 {
-    API_FUNC_INIT(weechat_nicklist_nick_get_string);
-    zend_string *z_buffer;
-    zend_string *z_nick;
-    zend_string *z_property;
-    const char *retval;
+    zend_string *z_buffer, *z_nick, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick *nick;
     char *property;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_nicklist_nick_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
@@ -3684,14 +3805,14 @@ PHP_FUNCTION(weechat_nicklist_nick_get_string)
 
 PHP_FUNCTION(weechat_nicklist_nick_get_pointer)
 {
-    API_FUNC_INIT(weechat_nicklist_nick_get_pointer);
-    zend_string *z_buffer;
-    zend_string *z_nick;
-    zend_string *z_property;
-    void *retval;
+    zend_string *z_buffer, *z_nick, *z_property;
     struct t_gui_buffer *buffer;
     struct t_gui_nick *nick;
     char *property;
+    void *retval;
+
+    API_FUNC_INIT(weechat_nicklist_nick_get_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
@@ -3709,15 +3830,13 @@ PHP_FUNCTION(weechat_nicklist_nick_get_pointer)
 
 PHP_FUNCTION(weechat_nicklist_nick_set)
 {
-    API_FUNC_INIT(weechat_nicklist_nick_set);
-    zend_string *z_buffer;
-    zend_string *z_nick;
-    zend_string *z_property;
-    zend_string *z_value;
+    zend_string *z_buffer, *z_nick, *z_property, *z_value;
     struct t_gui_buffer *buffer;
     struct t_gui_nick *nick;
-    char *property;
-    char *value;
+    char *property, *value;
+
+    API_FUNC_INIT(weechat_nicklist_nick_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSS", &z_buffer, &z_nick, &z_property,
                                &z_value) == FAILURE)
@@ -3737,10 +3856,12 @@ PHP_FUNCTION(weechat_nicklist_nick_set)
 
 PHP_FUNCTION(weechat_bar_item_search)
 {
-    API_FUNC_INIT(weechat_bar_item_search);
     zend_string *z_name;
     struct t_gui_bar_item *retval;
     char *name;
+
+    API_FUNC_INIT(weechat_bar_item_search);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_name) == FAILURE)
     {
         return;
@@ -3759,30 +3880,34 @@ weechat_php_bar_item_new_build_callback (const void *pointer, void *data,
 {
     char *rc;
     void *func_argv[5];
+
     func_argv[1] = API_PTR2STR(item);
     func_argv[2] = API_PTR2STR(window);
     func_argv[3] = API_PTR2STR(buffer);
     func_argv[4] = extra_info;
+
     weechat_php_cb (pointer, data, func_argv, "ssssh",
                     WEECHAT_SCRIPT_EXEC_STRING, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
     if (func_argv[2])
         free (func_argv[2]);
     if (func_argv[3])
         free (func_argv[3]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_bar_item_new)
 {
-    API_FUNC_INIT(weechat_bar_item_new);
-    zend_string *z_name;
+    zend_string *z_name, *z_data;
     zval *z_build_callback;
-    zend_string *z_data;
     struct t_gui_bar_item *retval;
-    char *name;
-    char *data;
+    char *name, *data;
+
+    API_FUNC_INIT(weechat_bar_item_new);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SzS", &z_name, &z_build_callback,
                                &z_data) == FAILURE)
@@ -3803,9 +3928,11 @@ PHP_FUNCTION(weechat_bar_item_new)
 
 PHP_FUNCTION(weechat_bar_item_update)
 {
-    API_FUNC_INIT(weechat_bar_item_update);
     zend_string *z_name;
     char *name;
+
+    API_FUNC_INIT(weechat_bar_item_update);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_name) == FAILURE)
     {
         return;
@@ -3817,9 +3944,11 @@ PHP_FUNCTION(weechat_bar_item_update)
 
 PHP_FUNCTION(weechat_bar_item_remove)
 {
-    API_FUNC_INIT(weechat_bar_item_remove);
     zend_string *z_item;
     struct t_gui_bar_item *item;
+
+    API_FUNC_INIT(weechat_bar_item_remove);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_item) == FAILURE)
     {
         return;
@@ -3831,10 +3960,12 @@ PHP_FUNCTION(weechat_bar_item_remove)
 
 PHP_FUNCTION(weechat_bar_search)
 {
-    API_FUNC_INIT(weechat_bar_search);
     zend_string *z_name;
     struct t_gui_bar *retval;
     char *name;
+
+    API_FUNC_INIT(weechat_bar_search);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_name) == FAILURE)
     {
         return;
@@ -3846,38 +3977,17 @@ PHP_FUNCTION(weechat_bar_search)
 
 PHP_FUNCTION(weechat_bar_new)
 {
-    API_FUNC_INIT(weechat_bar_new);
-    zend_string *z_name;
-    zend_string *z_hidden;
-    zend_string *z_priority;
-    zend_string *z_type;
-    zend_string *z_condition;
-    zend_string *z_position;
-    zend_string *z_filling_top_bottom;
-    zend_string *z_filling_left_right;
-    zend_string *z_size;
-    zend_string *z_size_max;
-    zend_string *z_color_fg;
-    zend_string *z_color_delim;
-    zend_string *z_color_bg;
-    zend_string *z_separator;
-    zend_string *z_items;
+    zend_string *z_name, *z_hidden, *z_priority, *z_type, *z_condition;
+    zend_string *z_position, *z_filling_top_bottom, *z_filling_left_right;
+    zend_string *z_size, *z_size_max, *z_color_fg, *z_color_delim, *z_color_bg;
+    zend_string *z_separator, *z_items;
+    char *name, *hidden, *priority, *type, *condition, *position;
+    char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
+    char *color_delim, *color_bg, *separator, *items;
     struct t_gui_bar *retval;
-    char *name;
-    char *hidden;
-    char *priority;
-    char *type;
-    char *condition;
-    char *position;
-    char *filling_top_bottom;
-    char *filling_left_right;
-    char *size;
-    char *size_max;
-    char *color_fg;
-    char *color_delim;
-    char *color_bg;
-    char *separator;
-    char *items;
+
+    API_FUNC_INIT(weechat_bar_new);
+
     if (zend_parse_parameters (
             ZEND_NUM_ARGS(), "SSSSSSSSSSSSSSS", &z_name, &z_hidden,
             &z_priority, &z_type, &z_condition, &z_position,
@@ -3923,14 +4033,13 @@ PHP_FUNCTION(weechat_bar_new)
 
 PHP_FUNCTION(weechat_bar_set)
 {
-    API_FUNC_INIT(weechat_bar_set);
-    zend_string *z_bar;
-    zend_string *z_property;
-    zend_string *z_value;
-    int retval;
+    zend_string *z_bar, *z_property, *z_value;
     struct t_gui_bar *bar;
-    char *property;
-    char *value;
+    char *property, *value;
+    int retval;
+
+    API_FUNC_INIT(weechat_bar_set);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_bar, &z_property, &z_value) == FAILURE)
     {
@@ -3945,9 +4054,11 @@ PHP_FUNCTION(weechat_bar_set)
 
 PHP_FUNCTION(weechat_bar_update)
 {
-    API_FUNC_INIT(weechat_bar_update);
     zend_string *z_name;
     char *name;
+
+    API_FUNC_INIT(weechat_bar_update);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_name) == FAILURE)
     {
         return;
@@ -3959,9 +4070,11 @@ PHP_FUNCTION(weechat_bar_update)
 
 PHP_FUNCTION(weechat_bar_remove)
 {
-    API_FUNC_INIT(weechat_bar_remove);
     zend_string *z_bar;
     struct t_gui_bar *bar;
+
+    API_FUNC_INIT(weechat_bar_remove);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_bar) == FAILURE)
     {
         return;
@@ -3973,12 +4086,13 @@ PHP_FUNCTION(weechat_bar_remove)
 
 PHP_FUNCTION(weechat_command)
 {
-    API_FUNC_INIT(weechat_command);
-    zend_string *z_buffer;
-    zend_string *z_command;
-    int retval;
+    zend_string *z_buffer, *z_command;
     struct t_gui_buffer *buffer;
     char *command;
+    int retval;
+
+    API_FUNC_INIT(weechat_command);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_buffer, &z_command) == FAILURE)
     {
@@ -3995,12 +4109,12 @@ PHP_FUNCTION(weechat_command)
 
 PHP_FUNCTION(weechat_info_get)
 {
-    API_FUNC_INIT(weechat_info_get);
-    zend_string *z_info_name;
-    zend_string *z_arguments;
+    zend_string *z_info_name, *z_arguments;
+    char *info_name, *arguments;
     const char *retval;
-    char *info_name;
-    char *arguments;
+
+    API_FUNC_INIT(weechat_info_get);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_info_name, &z_arguments) == FAILURE)
     {
@@ -4015,12 +4129,13 @@ PHP_FUNCTION(weechat_info_get)
 
 PHP_FUNCTION(weechat_info_get_hashtable)
 {
-    API_FUNC_INIT(weechat_info_get_hashtable);
     zend_string *z_info_name;
     zval *z_hashtable;
-    struct t_hashtable *retval;
     char *info_name;
-    struct t_hashtable *hashtable;
+    struct t_hashtable *hashtable, *retval;
+
+    API_FUNC_INIT(weechat_info_get_hashtable);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "Sa", &z_info_name, &z_hashtable) == FAILURE)
     {
@@ -4033,13 +4148,15 @@ PHP_FUNCTION(weechat_info_get_hashtable)
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
     retval = weechat_info_get_hashtable ((const char *)info_name, hashtable);
-    weechat_php_hashtable_to_array(retval, return_value);
+    weechat_php_hashtable_to_array (retval, return_value);
 }
 
 PHP_FUNCTION(weechat_infolist_new)
 {
-    API_FUNC_INIT(weechat_infolist_new);
     struct t_infolist *retval;
+
+    API_FUNC_INIT(weechat_infolist_new);
+
     if (zend_parse_parameters_none () == FAILURE)
     {
         return;
@@ -4050,10 +4167,12 @@ PHP_FUNCTION(weechat_infolist_new)
 
 PHP_FUNCTION(weechat_infolist_new_item)
 {
-    API_FUNC_INIT(weechat_infolist_new_item);
     zend_string *z_infolist;
-    struct t_infolist_item *retval;
     struct t_infolist *infolist;
+    struct t_infolist_item *retval;
+
+    API_FUNC_INIT(weechat_infolist_new_item);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4065,14 +4184,15 @@ PHP_FUNCTION(weechat_infolist_new_item)
 
 PHP_FUNCTION(weechat_infolist_new_var_integer)
 {
-    API_FUNC_INIT(weechat_infolist_new_var_integer);
-    zend_string *z_item;
-    zend_string *z_name;
+    zend_string *z_item, *z_name;
     zend_long z_value;
-    struct t_infolist_var *retval;
     struct t_infolist_item *item;
     char *name;
     int value;
+    struct t_infolist_var *retval;
+
+    API_FUNC_INIT(weechat_infolist_new_var_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_item, &z_name, &z_value) == FAILURE)
     {
@@ -4089,14 +4209,13 @@ PHP_FUNCTION(weechat_infolist_new_var_integer)
 
 PHP_FUNCTION(weechat_infolist_new_var_string)
 {
-    API_FUNC_INIT(weechat_infolist_new_var_string);
-    zend_string *z_item;
-    zend_string *z_name;
-    zend_string *z_value;
-    struct t_infolist_var *retval;
+    zend_string *z_item, *z_name, *z_value;
     struct t_infolist_item *item;
-    char *name;
-    char *value;
+    char *name, *value;
+    struct t_infolist_var *retval;
+
+    API_FUNC_INIT(weechat_infolist_new_var_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_item, &z_name, &z_value) == FAILURE)
     {
@@ -4113,14 +4232,14 @@ PHP_FUNCTION(weechat_infolist_new_var_string)
 
 PHP_FUNCTION(weechat_infolist_new_var_pointer)
 {
-    API_FUNC_INIT(weechat_infolist_new_var_pointer);
-    zend_string *z_item;
-    zend_string *z_name;
-    zend_string *z_pointer;
-    struct t_infolist_var *retval;
+    zend_string *z_item, *z_name, *z_pointer;
     struct t_infolist_item *item;
     char *name;
     void *pointer;
+    struct t_infolist_var *retval;
+
+    API_FUNC_INIT(weechat_infolist_new_var_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_item, &z_name, &z_pointer) == FAILURE)
     {
@@ -4137,14 +4256,15 @@ PHP_FUNCTION(weechat_infolist_new_var_pointer)
 
 PHP_FUNCTION(weechat_infolist_new_var_time)
 {
-    API_FUNC_INIT(weechat_infolist_new_var_time);
-    zend_string *z_item;
-    zend_string *z_name;
+    zend_string *z_item, *z_name;
     zend_long z_time;
-    struct t_infolist_var *retval;
     struct t_infolist_item *item;
     char *name;
     time_t time;
+    struct t_infolist_var *retval;
+
+    API_FUNC_INIT(weechat_infolist_new_var_time);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_item, &z_name, &z_time) == FAILURE)
     {
@@ -4159,12 +4279,13 @@ PHP_FUNCTION(weechat_infolist_new_var_time)
 
 PHP_FUNCTION(weechat_infolist_search_var)
 {
-    API_FUNC_INIT(weechat_infolist_search_var);
-    zend_string *z_infolist;
-    zend_string *z_name;
-    struct t_infolist_var *retval;
+    zend_string *z_infolist, *z_name;
     struct t_infolist *infolist;
     char *name;
+    struct t_infolist_var *retval;
+
+    API_FUNC_INIT(weechat_infolist_search_var);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_name) == FAILURE)
     {
@@ -4178,14 +4299,13 @@ PHP_FUNCTION(weechat_infolist_search_var)
 
 PHP_FUNCTION(weechat_infolist_get)
 {
-    API_FUNC_INIT(weechat_infolist_get);
-    zend_string *z_infolist_name;
-    zend_string *z_pointer;
-    zend_string *z_arguments;
+    zend_string *z_infolist_name, *z_pointer, *z_arguments;
     struct t_infolist *retval;
-    char *infolist_name;
+    char *infolist_name, *arguments;
     void *pointer;
-    char *arguments;
+
+    API_FUNC_INIT(weechat_infolist_get);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_infolist_name, &z_pointer,
                                &z_arguments) == FAILURE)
@@ -4203,10 +4323,12 @@ PHP_FUNCTION(weechat_infolist_get)
 
 PHP_FUNCTION(weechat_infolist_next)
 {
-    API_FUNC_INIT(weechat_infolist_next);
     zend_string *z_infolist;
-    int retval;
     struct t_infolist *infolist;
+    int retval;
+
+    API_FUNC_INIT(weechat_infolist_next);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4218,10 +4340,12 @@ PHP_FUNCTION(weechat_infolist_next)
 
 PHP_FUNCTION(weechat_infolist_prev)
 {
-    API_FUNC_INIT(weechat_infolist_prev);
     zend_string *z_infolist;
-    int retval;
     struct t_infolist *infolist;
+    int retval;
+
+    API_FUNC_INIT(weechat_infolist_prev);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4233,9 +4357,11 @@ PHP_FUNCTION(weechat_infolist_prev)
 
 PHP_FUNCTION(weechat_infolist_reset_item_cursor)
 {
-    API_FUNC_INIT(weechat_infolist_reset_item_cursor);
     zend_string *z_infolist;
     struct t_infolist *infolist;
+
+    API_FUNC_INIT(weechat_infolist_reset_item_cursor);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4247,10 +4373,12 @@ PHP_FUNCTION(weechat_infolist_reset_item_cursor)
 
 PHP_FUNCTION(weechat_infolist_fields)
 {
-    API_FUNC_INIT(weechat_infolist_fields);
     zend_string *z_infolist;
-    const char *retval;
     struct t_infolist *infolist;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_infolist_fields);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4262,12 +4390,13 @@ PHP_FUNCTION(weechat_infolist_fields)
 
 PHP_FUNCTION(weechat_infolist_integer)
 {
-    API_FUNC_INIT(weechat_infolist_integer);
-    zend_string *z_infolist;
-    zend_string *z_var;
-    int retval;
+    zend_string *z_infolist, *z_var;
     struct t_infolist *infolist;
     char *var;
+    int retval;
+
+    API_FUNC_INIT(weechat_infolist_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_var) == FAILURE)
     {
@@ -4281,12 +4410,13 @@ PHP_FUNCTION(weechat_infolist_integer)
 
 PHP_FUNCTION(weechat_infolist_string)
 {
-    API_FUNC_INIT(weechat_infolist_string);
-    zend_string *z_infolist;
-    zend_string *z_var;
-    const char *retval;
+    zend_string *z_infolist, *z_var;
     struct t_infolist *infolist;
     char *var;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_infolist_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_var) == FAILURE)
     {
@@ -4300,12 +4430,13 @@ PHP_FUNCTION(weechat_infolist_string)
 
 PHP_FUNCTION(weechat_infolist_pointer)
 {
-    API_FUNC_INIT(weechat_infolist_pointer);
-    zend_string *z_infolist;
-    zend_string *z_var;
-    void *retval;
+    zend_string *z_infolist, *z_var;
     struct t_infolist *infolist;
     char *var;
+    void *retval;
+
+    API_FUNC_INIT(weechat_infolist_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_var) == FAILURE)
     {
@@ -4319,12 +4450,13 @@ PHP_FUNCTION(weechat_infolist_pointer)
 
 PHP_FUNCTION(weechat_infolist_time)
 {
-    API_FUNC_INIT(weechat_infolist_time);
-    zend_string *z_infolist;
-    zend_string *z_var;
-    time_t retval;
+    zend_string *z_infolist, *z_var;
     struct t_infolist *infolist;
     char *var;
+    time_t retval;
+
+    API_FUNC_INIT(weechat_infolist_time);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_var) == FAILURE)
     {
@@ -4338,9 +4470,11 @@ PHP_FUNCTION(weechat_infolist_time)
 
 PHP_FUNCTION(weechat_infolist_free)
 {
-    API_FUNC_INIT(weechat_infolist_free);
     zend_string *z_infolist;
     struct t_infolist *infolist;
+
+    API_FUNC_INIT(weechat_infolist_free);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_infolist) == FAILURE)
     {
         return;
@@ -4352,10 +4486,12 @@ PHP_FUNCTION(weechat_infolist_free)
 
 PHP_FUNCTION(weechat_hdata_get)
 {
-    API_FUNC_INIT(weechat_hdata_get);
     zend_string *z_hdata_name;
-    struct t_hdata *retval;
     char *hdata_name;
+    struct t_hdata *retval;
+
+    API_FUNC_INIT(weechat_hdata_get);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_hdata_name) == FAILURE)
     {
         return;
@@ -4367,12 +4503,13 @@ PHP_FUNCTION(weechat_hdata_get)
 
 PHP_FUNCTION(weechat_hdata_get_var_offset)
 {
-    API_FUNC_INIT(weechat_hdata_get_var_offset);
-    zend_string *z_hdata;
-    zend_string *z_name;
-    int retval;
+    zend_string *z_hdata, *z_name;
     struct t_hdata *hdata;
     char *name;
+    int retval;
+
+    API_FUNC_INIT(weechat_hdata_get_var_offset);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_hdata, &z_name) == FAILURE)
     {
@@ -4386,12 +4523,13 @@ PHP_FUNCTION(weechat_hdata_get_var_offset)
 
 PHP_FUNCTION(weechat_hdata_get_var_type_string)
 {
-    API_FUNC_INIT(weechat_hdata_get_var_type_string);
-    zend_string *z_hdata;
-    zend_string *z_name;
-    const char *retval;
+    zend_string *z_hdata, *z_name;
     struct t_hdata *hdata;
     char *name;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hdata_get_var_type_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_hdata, &z_name) == FAILURE)
     {
@@ -4405,14 +4543,14 @@ PHP_FUNCTION(weechat_hdata_get_var_type_string)
 
 PHP_FUNCTION(weechat_hdata_get_var_array_size)
 {
-    API_FUNC_INIT(weechat_hdata_get_var_array_size);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    int retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    int retval;
+
+    API_FUNC_INIT(weechat_hdata_get_var_array_size);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4429,14 +4567,14 @@ PHP_FUNCTION(weechat_hdata_get_var_array_size)
 
 PHP_FUNCTION(weechat_hdata_get_var_array_size_string)
 {
-    API_FUNC_INIT(weechat_hdata_get_var_array_size_string);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    const char *retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hdata_get_var_array_size_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4453,12 +4591,13 @@ PHP_FUNCTION(weechat_hdata_get_var_array_size_string)
 
 PHP_FUNCTION(weechat_hdata_get_var_hdata)
 {
-    API_FUNC_INIT(weechat_hdata_get_var_hdata);
-    zend_string *z_hdata;
-    zend_string *z_name;
-    const char *retval;
+    zend_string *z_hdata, *z_name;
     struct t_hdata *hdata;
     char *name;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hdata_get_var_hdata);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_hdata, &z_name) == FAILURE)
     {
@@ -4472,12 +4611,13 @@ PHP_FUNCTION(weechat_hdata_get_var_hdata)
 
 PHP_FUNCTION(weechat_hdata_get_list)
 {
-    API_FUNC_INIT(weechat_hdata_get_list);
-    zend_string *z_hdata;
-    zend_string *z_name;
-    void *retval;
+    zend_string *z_hdata, *z_name;
     struct t_hdata *hdata;
     char *name;
+    void *retval;
+
+    API_FUNC_INIT(weechat_hdata_get_list);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_hdata, &z_name) == FAILURE)
     {
@@ -4491,14 +4631,13 @@ PHP_FUNCTION(weechat_hdata_get_list)
 
 PHP_FUNCTION(weechat_hdata_check_pointer)
 {
-    API_FUNC_INIT(weechat_hdata_check_pointer);
-    zend_string *z_hdata;
-    zend_string *z_list;
-    zend_string *z_pointer;
-    int retval;
+    zend_string *z_hdata, *z_list, *z_pointer;
     struct t_hdata *hdata;
-    void *list;
-    void *pointer;
+    void *list, *pointer;
+    int retval;
+
+    API_FUNC_INIT(weechat_hdata_check_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_list, &z_pointer) == FAILURE)
     {
@@ -4513,14 +4652,15 @@ PHP_FUNCTION(weechat_hdata_check_pointer)
 
 PHP_FUNCTION(weechat_hdata_move)
 {
-    API_FUNC_INIT(weechat_hdata_move);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
+    zend_string *z_hdata, *z_pointer;
     zend_long z_count;
-    void *retval;
     struct t_hdata *hdata;
     void *pointer;
     int count;
+    void *retval;
+
+    API_FUNC_INIT(weechat_hdata_move);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSl", &z_hdata, &z_pointer, &z_count) == FAILURE)
     {
@@ -4535,16 +4675,16 @@ PHP_FUNCTION(weechat_hdata_move)
 
 PHP_FUNCTION(weechat_hdata_search)
 {
-    API_FUNC_INIT(weechat_hdata_search);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_search;
+    zend_string *z_hdata, *z_pointer, *z_search;
     zend_long z_move;
-    void *retval;
     struct t_hdata *hdata;
     void *pointer;
     char *search;
     int move;
+    void *retval;
+
+    API_FUNC_INIT(weechat_hdata_search);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSl", &z_hdata, &z_pointer, &z_search,
                                &z_move) == FAILURE)
@@ -4561,14 +4701,13 @@ PHP_FUNCTION(weechat_hdata_search)
 
 PHP_FUNCTION(weechat_hdata_char)
 {
-    API_FUNC_INIT(weechat_hdata_char);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    char retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
-    char *name;
+    char *name, retval;
+
+    API_FUNC_INIT(weechat_hdata_char);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4583,14 +4722,14 @@ PHP_FUNCTION(weechat_hdata_char)
 
 PHP_FUNCTION(weechat_hdata_integer)
 {
-    API_FUNC_INIT(weechat_hdata_integer);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    int retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    int retval;
+
+    API_FUNC_INIT(weechat_hdata_integer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4605,14 +4744,14 @@ PHP_FUNCTION(weechat_hdata_integer)
 
 PHP_FUNCTION(weechat_hdata_long)
 {
-    API_FUNC_INIT(weechat_hdata_long);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    long retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    long retval;
+
+    API_FUNC_INIT(weechat_hdata_long);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4627,14 +4766,14 @@ PHP_FUNCTION(weechat_hdata_long)
 
 PHP_FUNCTION(weechat_hdata_string)
 {
-    API_FUNC_INIT(weechat_hdata_string);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    const char *retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hdata_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4649,14 +4788,13 @@ PHP_FUNCTION(weechat_hdata_string)
 
 PHP_FUNCTION(weechat_hdata_pointer)
 {
-    API_FUNC_INIT(weechat_hdata_pointer);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    void *retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
-    void *pointer;
+    void *pointer, *retval;
     char *name;
+
+    API_FUNC_INIT(weechat_hdata_pointer);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4671,14 +4809,14 @@ PHP_FUNCTION(weechat_hdata_pointer)
 
 PHP_FUNCTION(weechat_hdata_time)
 {
-    API_FUNC_INIT(weechat_hdata_time);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    time_t retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    time_t retval;
+
+    API_FUNC_INIT(weechat_hdata_time);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4693,14 +4831,14 @@ PHP_FUNCTION(weechat_hdata_time)
 
 PHP_FUNCTION(weechat_hdata_hashtable)
 {
-    API_FUNC_INIT(weechat_hdata_hashtable);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
-    zend_string *z_name;
-    struct t_hashtable *retval;
+    zend_string *z_hdata, *z_pointer, *z_name;
     struct t_hdata *hdata;
     void *pointer;
     char *name;
+    struct t_hashtable *retval;
+
+    API_FUNC_INIT(weechat_hdata_hashtable);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
     {
@@ -4710,23 +4848,20 @@ PHP_FUNCTION(weechat_hdata_hashtable)
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
     retval = weechat_hdata_hashtable (hdata, pointer, (const char *)name);
-    weechat_php_hashtable_to_array(retval, return_value);
+    weechat_php_hashtable_to_array (retval, return_value);
 }
 
 PHP_FUNCTION(weechat_hdata_compare)
 {
-    API_FUNC_INIT(weechat_hdata_compare);
-    zend_string *z_hdata;
-    zend_string *z_pointer1;
-    zend_string *z_pointer2;
-    zend_string *z_name;
+    zend_string *z_hdata, *z_pointer1, *z_pointer2, *z_name;
     zend_long z_case_sensitive;
-    int retval;
     struct t_hdata *hdata;
-    void *pointer1;
-    void *pointer2;
+    void *pointer1, *pointer2;
     char *name;
-    int case_sensitive;
+    int case_sensitive, retval;
+
+    API_FUNC_INIT(weechat_hdata_compare);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSSSl", &z_hdata, &z_pointer1, &z_pointer2,
                                &z_name, &z_case_sensitive) == FAILURE)
@@ -4745,14 +4880,15 @@ PHP_FUNCTION(weechat_hdata_compare)
 
 PHP_FUNCTION(weechat_hdata_update)
 {
-    API_FUNC_INIT(weechat_hdata_update);
-    zend_string *z_hdata;
-    zend_string *z_pointer;
+    zend_string *z_hdata, *z_pointer;
     zval *z_hashtable;
     int retval;
     struct t_hdata *hdata;
     void *pointer;
     struct t_hashtable *hashtable;
+
+    API_FUNC_INIT(weechat_hdata_update);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SSa", &z_hdata, &z_pointer,
                                &z_hashtable) == FAILURE)
@@ -4772,12 +4908,13 @@ PHP_FUNCTION(weechat_hdata_update)
 
 PHP_FUNCTION(weechat_hdata_get_string)
 {
-    API_FUNC_INIT(weechat_hdata_get_string);
-    zend_string *z_hdata;
-    zend_string *z_property;
-    const char *retval;
+    zend_string *z_hdata, *z_property;
     struct t_hdata *hdata;
     char *property;
+    const char *retval;
+
+    API_FUNC_INIT(weechat_hdata_get_string);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_hdata, &z_property) == FAILURE)
     {
@@ -4797,27 +4934,32 @@ weechat_php_upgrade_new_callback_read (const void *pointer, void *data,
 {
     int rc;
     void *func_argv[4];
+
     func_argv[1] = API_PTR2STR(upgrade_file);
     func_argv[2] = &object_id;
     func_argv[3] = API_PTR2STR(infolist);
-    weechat_php_cb(pointer, data, func_argv, "ssis",
-                   WEECHAT_SCRIPT_EXEC_INT, &rc);
+
+    weechat_php_cb (pointer, data, func_argv, "ssis",
+                    WEECHAT_SCRIPT_EXEC_INT, &rc);
+
     if (func_argv[1])
         free (func_argv[1]);
     if (func_argv[3])
         free (func_argv[3]);
+
     return rc;
 }
 
 PHP_FUNCTION(weechat_upgrade_new)
 {
-    API_FUNC_INIT(weechat_upgrade_new);
-    zend_string *z_filename;
+    zend_string *z_filename, *z_data;
     zval *z_callback_read;
-    zend_string *z_data;
-    struct t_upgrade_file *retval;
     char *filename;
     char *data;
+    struct t_upgrade_file *retval;
+
+    API_FUNC_INIT(weechat_upgrade_new);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_filename,
                                &z_callback_read, &z_data) == FAILURE)
     {
@@ -4837,14 +4979,15 @@ PHP_FUNCTION(weechat_upgrade_new)
 
 PHP_FUNCTION(weechat_upgrade_write_object)
 {
-    API_FUNC_INIT(weechat_upgrade_write_object);
-    zend_string *z_upgrade_file;
+    zend_string *z_upgrade_file, *z_infolist;
     zend_long z_object_id;
-    zend_string *z_infolist;
-    int retval;
     struct t_upgrade_file *upgrade_file;
     int object_id;
     struct t_infolist *infolist;
+    int retval;
+
+    API_FUNC_INIT(weechat_upgrade_write_object);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SlS", &z_upgrade_file, &z_object_id,
                                &z_infolist) == FAILURE)
@@ -4860,10 +5003,12 @@ PHP_FUNCTION(weechat_upgrade_write_object)
 
 PHP_FUNCTION(weechat_upgrade_read)
 {
-    API_FUNC_INIT(weechat_upgrade_read);
     zend_string *z_upgrade_file;
-    int retval;
     struct t_upgrade_file *upgrade_file;
+    int retval;
+
+    API_FUNC_INIT(weechat_upgrade_read);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_upgrade_file) == FAILURE)
     {
@@ -4876,9 +5021,11 @@ PHP_FUNCTION(weechat_upgrade_read)
 
 PHP_FUNCTION(weechat_upgrade_close)
 {
-    API_FUNC_INIT(weechat_upgrade_close);
     zend_string *z_upgrade_file;
     struct t_upgrade_file *upgrade_file;
+
+    API_FUNC_INIT(weechat_upgrade_close);
+
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "S", &z_upgrade_file) == FAILURE)
     {
@@ -4905,7 +5052,7 @@ static void forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
     }
     else
     {
-        lc_name = zend_string_tolower(class_name);
+        lc_name = zend_string_tolower (class_name);
     }
     re = zend_hash_del (ht, lc_name);
     zend_string_release (lc_name);
@@ -4918,10 +5065,10 @@ static void forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 
 PHP_FUNCTION(forget_class)
 {
-    forget_hash_entry(EG(class_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
+    forget_hash_entry (EG(class_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
 
 PHP_FUNCTION(forget_function)
 {
-    forget_hash_entry(EG(function_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
+    forget_hash_entry (EG(function_table), INTERNAL_FUNCTION_PARAM_PASSTHRU);
 }
