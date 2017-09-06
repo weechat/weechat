@@ -647,8 +647,8 @@ weechat_php_load (const char *filename)
     plugin_script_set_buffer_callbacks (weechat_php_plugin,
                                         php_scripts,
                                         php_current_script,
-                                        weechat_php_buffer_new_input_callback,
-                                        weechat_php_buffer_new_close_callback);
+                                        &weechat_php_api_buffer_input_data_cb,
+                                        &weechat_php_api_buffer_close_cb);
 
     (void) weechat_hook_signal_send ("php_script_loaded",
                                      WEECHAT_HOOK_SIGNAL_STRING,

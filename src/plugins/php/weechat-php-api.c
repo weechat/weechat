@@ -884,8 +884,8 @@ PHP_FUNCTION(weechat_list_free)
 }
 
 static int
-weechat_php_config_new_callback_reload (const void *pointer, void *data,
-                                        struct t_config_file *config_file)
+weechat_php_api_config_reload_cb (const void *pointer, void *data,
+                                  struct t_config_file *config_file)
 {
     int rc;
     void *func_argv[2];
@@ -924,18 +924,18 @@ PHP_FUNCTION(weechat_config_new)
         weechat_php_plugin,
         php_current_script,
         (const char *)name,
-        weechat_php_config_new_callback_reload,
+        &weechat_php_api_config_reload_cb,
         (const char *)callback_reload_name,
         (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_config_new_section_callback_read (const void *pointer, void *data,
-                                              struct t_config_file *config_file,
-                                              struct t_config_section *section,
-                                              const char *option_name,
-                                              const char *value)
+weechat_php_api_config_section_read_cb (const void *pointer, void *data,
+                                        struct t_config_file *config_file,
+                                        struct t_config_section *section,
+                                        const char *option_name,
+                                        const char *value)
 {
     int rc;
     void *func_argv[5];
@@ -957,9 +957,9 @@ weechat_php_config_new_section_callback_read (const void *pointer, void *data,
 }
 
 static int
-weechat_php_config_new_section_callback_write (const void *pointer, void *data,
-                                               struct t_config_file *config_file,
-                                               const char *section_name)
+weechat_php_api_config_section_write_cb (const void *pointer, void *data,
+                                         struct t_config_file *config_file,
+                                         const char *section_name)
 {
     int rc;
     void *func_argv[3];
@@ -977,10 +977,10 @@ weechat_php_config_new_section_callback_write (const void *pointer, void *data,
 }
 
 static int
-weechat_php_config_new_section_callback_write_default (const void *pointer,
-                                                       void *data,
-                                                       struct t_config_file *config_file,
-                                                       const char *section_name)
+weechat_php_api_config_section_write_default_cb (const void *pointer,
+                                                 void *data,
+                                                 struct t_config_file *config_file,
+                                                 const char *section_name)
 {
     int rc;
     void *func_argv[3];
@@ -998,12 +998,12 @@ weechat_php_config_new_section_callback_write_default (const void *pointer,
 }
 
 static int
-weechat_php_config_new_section_callback_create_option (const void *pointer,
-                                                       void *data,
-                                                       struct t_config_file *config_file,
-                                                       struct t_config_section *section,
-                                                       const char *option_name,
-                                                       const char *value)
+weechat_php_api_config_section_create_option_cb (const void *pointer,
+                                                 void *data,
+                                                 struct t_config_file *config_file,
+                                                 struct t_config_section *section,
+                                                 const char *option_name,
+                                                 const char *value)
 {
     int rc;
     void *func_argv[5];
@@ -1025,11 +1025,11 @@ weechat_php_config_new_section_callback_create_option (const void *pointer,
 }
 
 static int
-weechat_php_config_new_section_callback_delete_option (const void *pointer,
-                                                       void *data,
-                                                       struct t_config_file *config_file,
-                                                       struct t_config_section *section,
-                                                       struct t_config_option *option)
+weechat_php_api_config_section_delete_option_cb (const void *pointer,
+                                                 void *data,
+                                                 struct t_config_file *config_file,
+                                                 struct t_config_section *section,
+                                                 struct t_config_option *option)
 {
     int rc;
     void *func_argv[4];
@@ -1102,19 +1102,19 @@ PHP_FUNCTION(weechat_config_new_section)
         (const char *)name,
         user_can_add_options,
         user_can_delete_options,
-        weechat_php_config_new_section_callback_read,
+        &weechat_php_api_config_section_read_cb,
         (const char *)callback_read_name,
         (const char *)data_read,
-        weechat_php_config_new_section_callback_write,
+        &weechat_php_api_config_section_write_cb,
         (const char *)callback_write_name,
         (const char *)data_write,
-        weechat_php_config_new_section_callback_write_default,
+        &weechat_php_api_config_section_write_default_cb,
         (const char *)callback_write_default_name,
         (const char *)data_write_default,
-        weechat_php_config_new_section_callback_create_option,
+        &weechat_php_api_config_section_create_option_cb,
         (const char *)callback_create_option_name,
         (const char *)data_create_option,
-        weechat_php_config_new_section_callback_delete_option,
+        &weechat_php_api_config_section_delete_option_cb,
         (const char *)callback_delete_option_name,
         (const char *)data_delete_option);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -1143,10 +1143,10 @@ PHP_FUNCTION(weechat_config_search_section)
 }
 
 static int
-weechat_php_config_new_option_callback_check_value (const void *pointer,
-                                                    void *data,
-                                                    struct t_config_option *option,
-                                                    const char *value)
+weechat_php_api_config_option_check_value_cb (const void *pointer,
+                                              void *data,
+                                              struct t_config_option *option,
+                                              const char *value)
 {
     int rc;
     void *func_argv[3];
@@ -1164,9 +1164,9 @@ weechat_php_config_new_option_callback_check_value (const void *pointer,
 }
 
 static void
-weechat_php_config_new_option_callback_change (const void *pointer,
-                                               void *data,
-                                               struct t_config_option *option)
+weechat_php_api_config_option_change_cb (const void *pointer,
+                                         void *data,
+                                         struct t_config_option *option)
 {
     int *rc;
     void *func_argv[2];
@@ -1181,9 +1181,9 @@ weechat_php_config_new_option_callback_change (const void *pointer,
 }
 
 static void
-weechat_php_config_new_option_callback_delete (const void *pointer,
-                                               void *data,
-                                               struct t_config_option *option)
+weechat_php_api_config_option_delete_cb (const void *pointer,
+                                         void *data,
+                                         struct t_config_option *option)
 {
     int rc;
     void *func_argv[2];
@@ -1254,13 +1254,13 @@ PHP_FUNCTION(weechat_config_new_option)
         (const char *)default_value,
         (const char *)value,
         null_value_allowed,
-        weechat_php_config_new_option_callback_check_value,
+        &weechat_php_api_config_option_check_value_cb,
         (const char *)callback_check_value_name,
         (const char *)data_check_value,
-        weechat_php_config_new_option_callback_change,
+        &weechat_php_api_config_option_change_cb,
         (const char *)callback_change_name,
         (const char *)data_change,
-        weechat_php_config_new_option_callback_delete,
+        &weechat_php_api_config_option_delete_cb,
         (const char *)callback_delete_name,
         (const char *)data_delete);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -2029,9 +2029,9 @@ PHP_FUNCTION(weechat_log_printf)
 }
 
 static int
-weechat_php_hook_command_callback (const void *pointer, void *data,
-                                   struct t_gui_buffer *buffer,
-                                   int argc, char **argv, char **argv_eol)
+weechat_php_api_hook_command_cb (const void *pointer, void *data,
+                                 struct t_gui_buffer *buffer,
+                                 int argc, char **argv, char **argv_eol)
 {
     int rc, i, *argi;
     void *func_argv[4];
@@ -2099,17 +2099,17 @@ PHP_FUNCTION(weechat_hook_command)
                                              (const char *)args,
                                              (const char *)args_description,
                                              (const char *)completion,
-                                             weechat_php_hook_command_callback,
+                                             &weechat_php_api_hook_command_cb,
                                              (const char *)callback_name,
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_completion_callback (const void *pointer, void *data,
-                                      const char *completion_item,
-                                      struct t_gui_buffer *buffer,
-                                      struct t_gui_completion *completion)
+weechat_php_api_hook_completion_cb (const void *pointer, void *data,
+                                    const char *completion_item,
+                                    struct t_gui_buffer *buffer,
+                                    struct t_gui_completion *completion)
 {
     int rc;
     void *func_argv[4];
@@ -2152,7 +2152,7 @@ PHP_FUNCTION(weechat_hook_completion)
                                                 php_current_script,
                                                 (const char *)completion,
                                                 (const char *)description,
-                                                weechat_php_hook_completion_callback,
+                                                &weechat_php_api_hook_completion_cb,
                                                 (const char *)callback_name,
                                                 (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -2207,9 +2207,9 @@ PHP_FUNCTION(weechat_hook_completion_list_add)
 }
 
 static int
-weechat_php_hook_command_run_callback (const void *pointer, void *data,
-                                       struct t_gui_buffer *buffer,
-                                       const char *command)
+weechat_php_api_hook_command_run_cb (const void *pointer, void *data,
+                                     struct t_gui_buffer *buffer,
+                                     const char *command)
 {
     int rc;
     void *func_argv[3];
@@ -2247,14 +2247,15 @@ PHP_FUNCTION(weechat_hook_command_run)
     retval = plugin_script_api_hook_command_run (weechat_php_plugin,
                                                  php_current_script,
                                                  (const char *)command,
-                                                 weechat_php_hook_command_run_callback,
+                                                 &weechat_php_api_hook_command_run_cb,
                                                  (const char *)callback_name,
                                                  (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
-static int weechat_php_hook_timer_callback (const void *pointer, void *data,
-                                            int remaining_calls)
+static int
+weechat_php_api_hook_timer_cb (const void *pointer, void *data,
+                               int remaining_calls)
 {
     int rc;
     void *func_argv[2];
@@ -2294,14 +2295,15 @@ PHP_FUNCTION(weechat_hook_timer)
                                            interval,
                                            align_second,
                                            max_calls,
-                                           weechat_php_hook_timer_callback,
+                                           &weechat_php_api_hook_timer_cb,
                                            (const char *)callback_name,
                                            (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
-static int weechat_php_hook_fd_callback (const void *pointer, void *data,
-                                         int fd)
+static int
+weechat_php_api_hook_fd_cb (const void *pointer, void *data,
+                            int fd)
 {
     int rc;
     void *func_argv[2];
@@ -2343,16 +2345,16 @@ PHP_FUNCTION(weechat_hook_fd)
                                         flag_read,
                                         flag_write,
                                         flag_exception,
-                                        weechat_php_hook_fd_callback,
+                                        &weechat_php_api_hook_fd_cb,
                                         (const char *)callback_name,
                                         (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_process_callback (const void *pointer, void *data,
-                                   const char *command, int return_code,
-                                   const char *out, const char *err)
+weechat_php_api_hook_process_cb (const void *pointer, void *data,
+                                 const char *command, int return_code,
+                                 const char *out, const char *err)
 {
     int rc;
     void *func_argv[5];
@@ -2393,17 +2395,17 @@ PHP_FUNCTION(weechat_hook_process)
                                              php_current_script,
                                              (const char *)command,
                                              timeout,
-                                             weechat_php_hook_process_callback,
+                                             &weechat_php_api_hook_process_cb,
                                              (const char *)callback_name,
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_process_hashtable_callback (const void *pointer, void *data,
-                                             const char *command,
-                                             int return_code,
-                                             const char *out, const char *err)
+weechat_php_api_hook_process_hashtable_cb (const void *pointer, void *data,
+                                           const char *command,
+                                           int return_code,
+                                           const char *out, const char *err)
 {
     int rc;
     void *func_argv[5];
@@ -2451,16 +2453,16 @@ PHP_FUNCTION(weechat_hook_process_hashtable)
                                                        (const char *)command,
                                                        options,
                                                        timeout,
-                                                       weechat_php_hook_process_hashtable_callback,
+                                                       &weechat_php_api_hook_process_hashtable_cb,
                                                        (const char *)callback_name,
                                                        (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_connect_callback (const void *pointer, void *data, int status,
-                                   int gnutls_rc, int sock, const char *error,
-                                   const char *ip_address)
+weechat_php_api_hook_connect_cb (const void *pointer, void *data, int status,
+                                 int gnutls_rc, int sock, const char *error,
+                                 const char *ip_address)
 {
     int rc;
     void *func_argv[6];
@@ -2523,18 +2525,18 @@ PHP_FUNCTION(weechat_hook_connect)
                                              gnutls_dhkey_size,
                                              (const char *)gnutls_priorities,
                                              (const char *)local_hostname,
-                                             weechat_php_hook_connect_callback,
+                                             &weechat_php_api_hook_connect_cb,
                                              (const char *)callback_name,
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_print_callback (const void *pointer, void *data,
-                                 struct t_gui_buffer *buffer, time_t date,
-                                 int tags_count, const char **tags,
-                                 int displayed, int highlight,
-                                 const char *prefix, const char *message)
+weechat_php_api_hook_print_cb (const void *pointer, void *data,
+                               struct t_gui_buffer *buffer, time_t date,
+                               int tags_count, const char **tags,
+                               int displayed, int highlight,
+                               const char *prefix, const char *message)
 {
     int rc;
     void *func_argv[9];
@@ -2587,16 +2589,16 @@ PHP_FUNCTION(weechat_hook_print)
                                            (const char *)tags,
                                            (const char *)message,
                                            strip_colors,
-                                           weechat_php_hook_print_callback,
+                                           &weechat_php_api_hook_print_cb,
                                            (const char *)callback_name,
                                            (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static int
-weechat_php_hook_signal_callback (const void *pointer, void *data,
-                                  const char *signal, const char *type_data,
-                                  void *signal_data)
+weechat_php_api_hook_signal_cb (const void *pointer, void *data,
+                                const char *signal, const char *type_data,
+                                void *signal_data)
 {
     int rc;
     void *func_argv[4];
@@ -2632,7 +2634,7 @@ PHP_FUNCTION(weechat_hook_signal)
     retval = plugin_script_api_hook_signal (weechat_php_plugin,
                                             php_current_script,
                                             (const char *)signal,
-                                            weechat_php_hook_signal_callback,
+                                            &weechat_php_api_hook_signal_cb,
                                             (const char *)callback_name,
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -2661,9 +2663,10 @@ PHP_FUNCTION(weechat_hook_signal_send)
     RETURN_LONG(retval);
 }
 
-static int weechat_php_hook_hsignal_callback (const void *pointer, void *data,
-                                              const char *signal,
-                                              struct t_hashtable *hashtable)
+static int
+weechat_php_api_hook_hsignal_cb (const void *pointer, void *data,
+                                 const char *signal,
+                                 struct t_hashtable *hashtable)
 {
     int rc;
     void *func_argv[3];
@@ -2698,7 +2701,7 @@ PHP_FUNCTION(weechat_hook_hsignal)
     retval = plugin_script_api_hook_hsignal (weechat_php_plugin,
                                              php_current_script,
                                              (const char *)signal,
-                                             weechat_php_hook_hsignal_callback,
+                                             &weechat_php_api_hook_hsignal_cb,
                                              (const char *)callback_name,
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -2730,8 +2733,8 @@ PHP_FUNCTION(weechat_hook_hsignal_send)
 }
 
 static int
-weechat_php_hook_config_callback (const void *pointer, void *data,
-                                  const char *option, const char *value)
+weechat_php_api_hook_config_cb (const void *pointer, void *data,
+                                const char *option, const char *value)
 {
     int rc;
     void *func_argv[3];
@@ -2766,17 +2769,17 @@ PHP_FUNCTION(weechat_hook_config)
     retval = plugin_script_api_hook_config (weechat_php_plugin,
                                             php_current_script,
                                             (const char *)option,
-                                            weechat_php_hook_config_callback,
+                                            &weechat_php_api_hook_config_cb,
                                             (const char *)callback_name,
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 static char *
-weechat_php_hook_modifier_callback (const void *pointer, void *data,
-                                    const char *modifier,
-                                    const char *modifier_data,
-                                    const char *string)
+weechat_php_api_hook_modifier_cb (const void *pointer, void *data,
+                                  const char *modifier,
+                                  const char *modifier_data,
+                                  const char *string)
 {
     char *rc;
     void *func_argv[4];
@@ -2812,7 +2815,7 @@ PHP_FUNCTION(weechat_hook_modifier)
     retval = plugin_script_api_hook_modifier (weechat_php_plugin,
                                               php_current_script,
                                               (const char *)modifier,
-                                              weechat_php_hook_modifier_callback,
+                                              &weechat_php_api_hook_modifier_cb,
                                               (const char *)callback_name,
                                               (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -2840,10 +2843,11 @@ PHP_FUNCTION(weechat_hook_modifier_exec)
     SAFE_RETURN_STRING(retval);
 }
 
-static const char *weechat_php_hook_info_callback (const void *pointer,
-                                                   void *data,
-                                                   const char *info_name,
-                                                   const char *arguments)
+static const char *
+weechat_php_api_hook_info_cb (const void *pointer,
+                              void *data,
+                              const char *info_name,
+                              const char *arguments)
 {
     char *rc;
     void *func_argv[3];
@@ -2883,16 +2887,16 @@ PHP_FUNCTION(weechat_hook_info)
                                           (const char *)info_name,
                                           (const char *)description,
                                           (const char *)args_description,
-                                          weechat_php_hook_info_callback,
+                                          &weechat_php_api_hook_info_cb,
                                           (const char *)callback_name,
                                           (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 struct t_hashtable *
-weechat_php_api_hook_info_hashtable_callback (const void *pointer, void *data,
-                                              const char *info_name,
-                                              struct t_hashtable *hashtable)
+weechat_php_api_hook_info_hashtable_cb (const void *pointer, void *data,
+                                        const char *info_name,
+                                        struct t_hashtable *hashtable)
 {
     struct t_hashtable *rc;
     void *func_argv[3];
@@ -2936,17 +2940,17 @@ PHP_FUNCTION(weechat_hook_info_hashtable)
                                                     description,
                                                     args_description,
                                                     output_description,
-                                                    weechat_php_api_hook_info_hashtable_callback,
+                                                    &weechat_php_api_hook_info_hashtable_cb,
                                                     callback_name,
                                                     data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 struct t_infolist *
-weechat_php_api_hook_infolist_callback (const void *pointer, void *data,
-                                        const char *info_name,
-                                        void *obj_pointer,
-                                        const char *arguments)
+weechat_php_api_hook_infolist_cb (const void *pointer, void *data,
+                                  const char *info_name,
+                                  void *obj_pointer,
+                                  const char *arguments)
 {
     struct t_infolist *rc;
     void *func_argv[4];
@@ -2994,15 +2998,15 @@ PHP_FUNCTION(weechat_hook_infolist)
                                               description,
                                               pointer_description,
                                               args_description,
-                                              weechat_php_api_hook_infolist_callback,
+                                              &weechat_php_api_hook_infolist_cb,
                                               callback_name,
                                               data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 struct t_hashtable *
-weechat_php_api_hook_focus_callback (const void *pointer, void *data,
-                                     struct t_hashtable *info)
+weechat_php_api_hook_focus_cb (const void *pointer, void *data,
+                               struct t_hashtable *info)
 {
     struct t_hashtable *rc;
     void *func_argv[2];
@@ -3035,7 +3039,7 @@ PHP_FUNCTION(weechat_hook_focus)
     retval = plugin_script_api_hook_focus (weechat_php_plugin,
                                            php_current_script,
                                            area,
-                                           weechat_php_api_hook_focus_callback,
+                                           &weechat_php_api_hook_focus_cb,
                                            callback_name,
                                            data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -3093,9 +3097,10 @@ PHP_FUNCTION(weechat_unhook_all)
     RETURN_NULL();
 }
 
-int weechat_php_buffer_new_input_callback (const void *pointer, void *data,
-                                           struct t_gui_buffer *buffer,
-                                           const char *input_data)
+int
+weechat_php_api_buffer_input_data_cb (const void *pointer, void *data,
+                                      struct t_gui_buffer *buffer,
+                                      const char *input_data)
 {
     int rc;
     void *func_argv[3];
@@ -3112,8 +3117,9 @@ int weechat_php_buffer_new_input_callback (const void *pointer, void *data,
     return rc;
 }
 
-int weechat_php_buffer_new_close_callback (const void *pointer, void *data,
-                                           struct t_gui_buffer *buffer)
+int
+weechat_php_api_buffer_close_cb (const void *pointer, void *data,
+                                 struct t_gui_buffer *buffer)
 {
     int rc;
     void *func_argv[2];
@@ -3153,10 +3159,10 @@ PHP_FUNCTION(weechat_buffer_new)
     retval = plugin_script_api_buffer_new (weechat_php_plugin,
                                            php_current_script,
                                            (const char *)name,
-                                           weechat_php_buffer_new_input_callback,
+                                           &weechat_php_api_buffer_input_data_cb,
                                            (const char *)input_callback_name,
                                            (const char *)data_input,
-                                           weechat_php_buffer_new_close_callback,
+                                           &weechat_php_api_buffer_close_cb,
                                            (const char *)close_callback_name,
                                            (const char *)data_close);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -3900,11 +3906,11 @@ PHP_FUNCTION(weechat_bar_item_search)
 }
 
 static char *
-weechat_php_bar_item_new_build_callback (const void *pointer, void *data,
-                                         struct t_gui_bar_item *item,
-                                         struct t_gui_window *window,
-                                         struct t_gui_buffer *buffer,
-                                         struct t_hashtable *extra_info)
+weechat_php_api_bar_item_new_build_cb (const void *pointer, void *data,
+                                       struct t_gui_bar_item *item,
+                                       struct t_gui_window *window,
+                                       struct t_gui_buffer *buffer,
+                                       struct t_hashtable *extra_info)
 {
     char *rc;
     void *func_argv[5];
@@ -3948,7 +3954,7 @@ PHP_FUNCTION(weechat_bar_item_new)
     retval = plugin_script_api_bar_item_new (weechat_php_plugin,
                                              php_current_script,
                                              (const char *)name,
-                                             weechat_php_bar_item_new_build_callback,
+                                             &weechat_php_api_bar_item_new_build_cb,
                                              (const char *)build_callback_name,
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -4955,10 +4961,10 @@ PHP_FUNCTION(weechat_hdata_get_string)
 }
 
 static int
-weechat_php_upgrade_new_callback_read (const void *pointer, void *data,
-                                       struct t_upgrade_file *upgrade_file,
-                                       int object_id,
-                                       struct t_infolist *infolist)
+weechat_php_api_upgrade_read_cb (const void *pointer, void *data,
+                                 struct t_upgrade_file *upgrade_file,
+                                 int object_id,
+                                 struct t_infolist *infolist)
 {
     int rc;
     void *func_argv[4];
@@ -4999,7 +5005,7 @@ PHP_FUNCTION(weechat_upgrade_new)
     retval = plugin_script_api_upgrade_new (weechat_php_plugin,
                                             php_current_script,
                                             (const char *)filename,
-                                            weechat_php_upgrade_new_callback_read,
+                                            &weechat_php_api_upgrade_read_cb,
                                             (const char *)callback_read_name,
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
@@ -5064,7 +5070,8 @@ PHP_FUNCTION(weechat_upgrade_close)
     RETURN_NULL();
 }
 
-static void forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
+static void
+forget_hash_entry (HashTable *ht, INTERNAL_FUNCTION_PARAMETERS)
 {
     zend_string *class_name;
     zend_string *lc_name;

@@ -24,8 +24,13 @@
 extern struct zval* weechat_php_api_funcs[];
 extern struct t_php_const weechat_php_api_consts[];
 
-extern int weechat_php_buffer_new_input_callback(const void *pointer, void *data, struct t_gui_buffer *buffer, const char *input_data);
-extern int weechat_php_buffer_new_close_callback(const void *pointer, void *data, struct t_gui_buffer *buffer);
+extern int weechat_php_api_buffer_input_data_cb (const void *pointer,
+                                                 void *data,
+                                                 struct t_gui_buffer *buffer,
+                                                 const char *input_data);
+extern int weechat_php_api_buffer_close_cb (const void *pointer,
+                                            void *data,
+                                            struct t_gui_buffer *buffer);
 
 PHP_FUNCTION(weechat_register);
 PHP_FUNCTION(weechat_plugin_get_name);
