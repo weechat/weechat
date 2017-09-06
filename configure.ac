@@ -954,13 +954,16 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         AC_MSG_CHECKING(for PHP headers and libraries with pkg-config)
         echo
-        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+        for l in "$php_suffix" "7" "7.2" "72" "7.1" "71" "7.0" "70" "" ; do
             pkgconfig_php_found=`$PKGCONFIG --exists php$l 2>/dev/null`
             if test "x$?" = "x0" ; then
-                PHP_VERSION=`$PKGCONFIG --modversion php$l`
-                PHP_CFLAGS="$PHP_CFLAGS "`$PKGCONFIG --cflags php$l`
-                PHP_LFLAGS="$PHP_LFLAGS "`$PKGCONFIG --libs php$l`
-                break
+                pkgconfig_php_found=`$PKGCONFIG --atleast-version=7 php$l 2>/dev/null`
+                if test "x$?" = "x0" ; then
+                    PHP_VERSION=`$PKGCONFIG --modversion php$l`
+                    PHP_CFLAGS="$PHP_CFLAGS "`$PKGCONFIG --cflags php$l`
+                    PHP_LFLAGS="$PHP_LFLAGS "`$PKGCONFIG --libs php$l`
+                    break
+                fi
             fi
         done
     fi
@@ -968,13 +971,16 @@ if test "x$enable_php" = "xyes" ; then
     if test "x$PHP_CFLAGS" = "x" -o "x$PHP_LFLAGS" = "x" ; then
         PHPCONFIG=""
         AC_MSG_CHECKING(for PHP headers and libraries with php-config)
-        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+        for l in "$php_suffix" "7" "7.2" "72" "7.1" "71" "7.0" "70" "" ; do
             AC_CHECK_PROG(PHPCONFIG, "php-config$l", "php-config$l")
             if test "x$PHPCONFIG" != "x" ; then
-                PHP_CFLAGS=`$PHPCONFIG --includes`
-                PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp7"
-                PHP_VERSION=`$PHPCONFIG --version`
-                break
+                php_config_version=`$PHPCONFIG --version`
+                if test "x${php_config_version#7}" != "x${php_config_version}" ; then
+                    PHP_VERSION=$php_config_version
+                    PHP_CFLAGS=`$PHPCONFIG --includes`
+                    PHP_LFLAGS="-L$($PHPCONFIG --prefix)/lib/ $($PHPCONFIG --libs) -lphp7"
+                    break
+                fi
             fi
         done
     fi
@@ -986,7 +992,7 @@ if test "x$enable_php" = "xyes" ; then
         if test "x$ac_found_php_header" = "xyes" ; then
             PHP_CFLAGS="$CFLAGS"
         fi
-        for l in "$php_suffix" "" "7" "7.2" "72" "7.1" "71" "7.0" "70" ; do
+        for l in "$php_suffix" "7" "7.2" "72" "7.1" "71" "7.0" "70" "" ; do
             AC_CHECK_LIB(php$l,php_execute_script,ac_found_php_lib="yes",ac_found_php_lib="no")
             if test "x$ac_found_php_lib" = "xyes" ; then
                 PHP_VERSION=">=7.0.0"
