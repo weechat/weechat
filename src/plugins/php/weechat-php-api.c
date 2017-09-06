@@ -3195,6 +3195,20 @@ PHP_FUNCTION(weechat_buffer_search_main)
     char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
+PHP_FUNCTION(weechat_current_buffer)
+{
+    struct t_gui_buffer *retval;
+
+    API_FUNC_INIT(weechat_current_buffer);
+
+    if (zend_parse_parameters_none () == FAILURE)
+    {
+        return;
+    }
+    retval = weechat_current_buffer ();
+    char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
+}
+
 PHP_FUNCTION(weechat_buffer_clear)
 {
     zend_string *z_buffer;
@@ -3386,6 +3400,20 @@ PHP_FUNCTION(weechat_buffer_match_list)
     string = ZSTR_VAL(z_string);
     retval = weechat_buffer_match_list (buffer, (const char *)string);
     RETURN_LONG(retval);
+}
+
+PHP_FUNCTION(weechat_current_window)
+{
+    struct t_gui_window *retval;
+
+    API_FUNC_INIT(weechat_current_window);
+
+    if (zend_parse_parameters_none () == FAILURE)
+    {
+        return;
+    }
+    retval = weechat_current_window ();
+    char *__retstr = API_PTR2STR(retval); SAFE_RETURN_STRING(__retstr);
 }
 
 PHP_FUNCTION(weechat_window_search_with_buffer)
