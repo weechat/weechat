@@ -1902,92 +1902,92 @@ API_FUNC(color)
     API_RETURN_STRING(retval);
 }
 
-API_FUNC(printf)
+API_FUNC(print)
 {
-    zend_string *z_buffer, *z_format;
+    zend_string *z_buffer, *z_message;
     struct t_gui_buffer *buffer;
-    char *format;
+    char *message;
 
-    API_INIT_FUNC(0, "printf", API_RETURN_ERROR);
+    API_INIT_FUNC(0, "print", API_RETURN_ERROR);
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_format) == FAILURE)
+                               "SS", &z_buffer, &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
-    format = ZSTR_VAL(z_format);
+    message = ZSTR_VAL(z_message);
     plugin_script_api_printf (weechat_php_plugin, php_current_script, buffer,
-                              "%s", format);
+                              "%s", message);
 
     API_RETURN_OK;
 }
 
-API_FUNC(printf_date_tags)
+API_FUNC(print_date_tags)
 {
-    zend_string *z_buffer, *z_tags, *z_format;
+    zend_string *z_buffer, *z_tags, *z_message;
     zend_long z_date;
     struct t_gui_buffer *buffer;
     time_t date;
-    char *tags, *format;
+    char *tags, *message;
 
-    API_INIT_FUNC(1, "printf_date_tags", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SlSS", &z_buffer, &z_date, &z_tags,
-                               &z_format) == FAILURE)
+                               &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     date = (time_t)z_date;
     tags = ZSTR_VAL(z_tags);
-    format = ZSTR_VAL(z_format);
+    message = ZSTR_VAL(z_message);
     plugin_script_api_printf_date_tags (weechat_php_plugin,
                                         php_current_script,
                                         buffer,
                                         date,
                                         (const char *)tags,
                                         "%s",
-                                        format);
+                                        message);
 
     API_RETURN_OK;
 }
 
-API_FUNC(printf_y)
+API_FUNC(print_y)
 {
-    zend_string *z_buffer, *z_format;
+    zend_string *z_buffer, *z_message;
     zend_long z_y;
     struct t_gui_buffer *buffer;
     int y;
-    char *format;
+    char *message;
 
-    API_INIT_FUNC(1, "printf_y", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SlS", &z_buffer, &z_y, &z_format) == FAILURE)
+                               "SlS", &z_buffer, &z_y, &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     y = (int)z_y;
-    format = ZSTR_VAL(z_format);
+    message = ZSTR_VAL(z_message);
     plugin_script_api_printf_y (weechat_php_plugin,
                                 php_current_script,
                                 buffer,
                                 y,
                                 "%s",
-                                format);
+                                message);
 
     API_RETURN_OK;
 }
 
-API_FUNC(log_printf)
+API_FUNC(log_print)
 {
-    zend_string *z_format;
-    char *format;
+    zend_string *z_message;
+    char *message;
 
-    API_INIT_FUNC(1, "log_printf", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_format) == FAILURE)
+    API_INIT_FUNC(1, "log_print", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    format = ZSTR_VAL(z_format);
+    message = ZSTR_VAL(z_message);
     plugin_script_api_log_printf (weechat_php_plugin, php_current_script,
-                                  "%s", format);
+                                  "%s", message);
 
     API_RETURN_OK;
 }
