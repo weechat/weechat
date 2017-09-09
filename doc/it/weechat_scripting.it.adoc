@@ -194,12 +194,8 @@ weechat.print("", "Hello, from javascript script!");
 
 [source,php]
 ----
-<?php
-
-new class {
-    function __construct() {
-        weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Test script', '', '');
-        weechat_printf('', 'Hello, from PHP script!');
+weechat_register('test_php', 'FlashCode', '1.0', 'GPL3', 'Test script', '', '');
+weechat_print('', 'Hello, from PHP script!');
 ----
 
 [[load_script]]
@@ -410,10 +406,12 @@ weechat.hook_timer(1000, 0, 1, "timer_cb", "test");
 
 [source,php]
 ----
-weechat_hook_timer(1000, 0, 1, function ($data, remaining_calls) {
-    weechat_printf('', 'timer! data=' . $data);
+$timer_cb = function ($data, $remaining_calls) {
+    weechat_print('', 'timer! data=' . $data);
     return WEECHAT_RC_OK;
-}, 'test');
+};
+
+weechat_hook_timer(1000, 0, 1, $timer_cb, 'test');
 ----
 
 [[script_api]]
