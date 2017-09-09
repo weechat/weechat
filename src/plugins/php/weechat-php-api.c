@@ -1997,35 +1997,18 @@ weechat_php_api_hook_command_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
                                  int argc, char **argv, char **argv_eol)
 {
-    int rc, i, *argi;
-    void *func_argv[4];
-    struct t_hashtable *args;
+    int rc;
+    void *func_argv[3];
 
     /* make C compiler happy */
-    (void) argv_eol;
-
-    args = weechat_hashtable_new (argc,
-                                  WEECHAT_HASHTABLE_INTEGER,
-                                  WEECHAT_HASHTABLE_STRING,
-                                  NULL,
-                                  NULL);
-    argi = malloc (sizeof (int) * argc);
-
-    for (i = 0; i < argc; i++)
-    {
-        *(argi + i) = i;
-        weechat_hashtable_set (args, argi+i, argv[i]);
-    }
+    (void) argv;
 
     func_argv[1] = API_PTR2STR(buffer);
-    func_argv[2] = &argc;
-    func_argv[3] = args;
+    func_argv[2] = (argc > 1) ? argv_eol[1] : weechat_php_empty_arg;
 
-    weechat_php_cb (pointer, data, func_argv, "ssih",
+    weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_INT, &rc);
 
-    free (argi);
-    weechat_hashtable_free (args);
     if (func_argv[1])
         free (func_argv[1]);
 
