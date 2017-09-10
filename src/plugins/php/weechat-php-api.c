@@ -229,13 +229,17 @@ weechat_php_cb_err:
 
 API_FUNC(plugin_get_name)
 {
+    zend_string *z_plugin;
+    struct t_weechat_plugin *plugin;
     const char *retval;
 
     API_INIT_FUNC(1, "plugin_get_name", API_RETURN_EMPTY);
-    if (zend_parse_parameters_none () == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_plugin) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    retval = weechat_plugin_get_name (weechat_php_plugin);
+    plugin = API_STR2PTR(ZSTR_VAL(z_plugin));
+
+    retval = weechat_plugin_get_name (plugin);
 
     API_RETURN_STRING(retval);
 }
