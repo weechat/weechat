@@ -498,7 +498,7 @@ API_FUNC(string_eval_expression)
         z_pointers,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_STRING);
+        WEECHAT_HASHTABLE_POINTER);
     extra_vars = weechat_php_array_to_hashtable (
         z_extra_vars,
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
