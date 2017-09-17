@@ -38,10 +38,22 @@ if(NOT PHP_FOUND)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --libs OUTPUT_VARIABLE PHP_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --version OUTPUT_VARIABLE PHP_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     if(${PHP_VERSION} MATCHES "^7")
-      string(REPLACE "-I" "" PHP_INCLUDE_DIRS ${PHP_INCLUDE_DIRS})
-      SEPARATE_ARGUMENTS(PHP_INCLUDE_DIRS)
-      set(PHP_LDFLAGS "-L${PHP_LIB_PREFIX}/lib/ ${PHP_LIBS} -lphp7")
-      set(PHP_FOUND 1)
+      find_library(PHP_LIB php7 HINTS ${PHP_LIB_PREFIX} ${PHP_LIB_PREFIX}/lib ${PHP_LIB_PREFIX}/lib64)
+      if(PHP_LIB)
+        get_filename_component(PHP_LIB_DIR ${PHP_LIB} DIRECTORY)
+        string(REPLACE "-I" "" PHP_INCLUDE_DIRS ${PHP_INCLUDE_DIRS})
+        SEPARATE_ARGUMENTS(PHP_INCLUDE_DIRS)
+        set(PHP_LDFLAGS "-L${PHP_LIB_DIR} ${PHP_LIBS} -lphp7")
+        set(PHP_FOUND 1)
+      endif()
     endif()
   endif()
+endif()
+
+if(NOT PHP_FOUND)
+  message(WARNING "Could not find libphp7. "
+    "Ensure PHP >=7.0.0 development libraries are installed and compiled with `--enable-embed`. "
+    "Ensure `php-config` is in `PATH`. "
+    "You may set `-DCMAKE_LIBRARY_PATH=...` to the directory containing libphp7."
+  )
 endif()
