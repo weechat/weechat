@@ -1016,9 +1016,10 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
             local_time = localtime (&line_date);
             if (local_time)
             {
-                strftime (str_time, sizeof (str_time),
-                          CONFIG_STRING(config_look_quote_time_format),
-                          local_time);
+                if (strftime (str_time, sizeof (str_time),
+                              CONFIG_STRING(config_look_quote_time_format),
+                              local_time) == 0)
+                    str_time[0] = '\0';
             }
         }
     }

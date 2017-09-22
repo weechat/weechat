@@ -117,8 +117,9 @@ script_buffer_display_line_script (int line, struct t_script_repo *script)
                     if (script->date_added > 0)
                     {
                         tm = localtime (&script->date_added);
-                        strftime (str_date, sizeof (str_date),
-                                  "%Y-%m-%d", tm);
+                        if (strftime (str_date, sizeof (str_date),
+                                      "%Y-%m-%d", tm) == 0)
+                            str_date[0] = '\0';
                         snprintf (str_item, sizeof (str_item),
                                   "%s%s",
                                   weechat_color (
@@ -232,8 +233,9 @@ script_buffer_display_line_script (int line, struct t_script_repo *script)
                     if (script->date_updated > 0)
                     {
                         tm = localtime (&script->date_updated);
-                        strftime (str_date, sizeof (str_date),
-                                  "%Y-%m-%d", tm);
+                        if (strftime (str_date, sizeof (str_date),
+                                      "%Y-%m-%d", tm) == 0)
+                            str_date[0] = '\0';
                         snprintf (str_item, sizeof (str_item),
                                   "%s%s",
                                   weechat_color (
@@ -672,14 +674,16 @@ script_buffer_display_detail_script (struct t_script_repo *script)
     }
     line++;
     tm = localtime (&script->date_added);
-    strftime (str_time, sizeof (str_time), "%Y-%m-%d %H:%M:%S", tm);
+    if (strftime (str_time, sizeof (str_time), "%Y-%m-%d %H:%M:%S", tm) == 0)
+        str_time[0] = '\0';
     weechat_printf_y (script_buffer, line + 1,
                       "%s: %s",
                       script_buffer_detail_label (_(labels[line]), max_length),
                       str_time);
     line++;
     tm = localtime (&script->date_updated);
-    strftime (str_time, sizeof (str_time), "%Y-%m-%d %H:%M:%S", tm);
+    if (strftime (str_time, sizeof (str_time), "%Y-%m-%d %H:%M:%S", tm) == 0)
+        str_time[0] = '\0';
     weechat_printf_y (script_buffer, line + 1,
                       "%s: %s",
                       script_buffer_detail_label (_(labels[line]), max_length),

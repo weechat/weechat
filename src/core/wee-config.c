@@ -994,9 +994,10 @@ config_get_item_time (char *text_time, int max_length)
 
     date = time (NULL);
     local_time = localtime (&date);
-    strftime (text_time, max_length,
-              config_item_time_evaluated,
-              local_time);
+    if (strftime (text_time, max_length,
+                  config_item_time_evaluated,
+                  local_time) == 0)
+        text_time[0] = '\0';
 }
 
 /*
@@ -1281,7 +1282,8 @@ config_day_change_timer_cb (const void *pointer, void *data,
         }
 
         /* send signal "day_changed" */
-        strftime (str_time, sizeof (str_time), "%Y-%m-%d", local_time);
+        if (strftime (str_time, sizeof (str_time), "%Y-%m-%d", local_time) == 0)
+            str_time[0] = '\0';
         (void) hook_signal_send ("day_changed",
                                  WEECHAT_HOOK_SIGNAL_STRING, str_time);
     }

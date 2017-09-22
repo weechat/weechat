@@ -93,7 +93,8 @@ logger_get_file_path ()
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     path2[0] = '\0';
-    strftime (path2, length - 1, path, date_tmp);
+    if (strftime (path2, length - 1, path, date_tmp) == 0)
+        path2[0] = '\0';
 
     if (weechat_logger_plugin->debug)
     {
@@ -573,9 +574,10 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
             date_tmp = localtime (&seconds);
             if (date_tmp)
             {
-                strftime (buf_time, sizeof (buf_time) - 1,
-                          weechat_config_string (logger_config_file_time_format),
-                          date_tmp);
+                if (strftime (buf_time, sizeof (buf_time) - 1,
+                              weechat_config_string (logger_config_file_time_format),
+                              date_tmp) == 0)
+                    buf_time[0] = '\0';
             }
             snprintf (buf_beginning, sizeof (buf_beginning),
                       _("%s\t****  Beginning of log  ****"),
@@ -633,9 +635,10 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
             date_tmp = localtime (&seconds);
             if (date_tmp)
             {
-                strftime (buf_time, sizeof (buf_time) - 1,
-                          weechat_config_string (logger_config_file_time_format),
-                          date_tmp);
+                if (strftime (buf_time, sizeof (buf_time) - 1,
+                              weechat_config_string (logger_config_file_time_format),
+                              date_tmp) == 0)
+                    buf_time[0] = '\0';
             }
             logger_write_line (logger_buffer,
                                _("%s\t****  End of log  ****"),
@@ -1268,9 +1271,10 @@ logger_print_cb (const void *pointer, void *data,
             date_tmp = localtime (&date);
             if (date_tmp)
             {
-                strftime (buf_time, sizeof (buf_time) - 1,
-                          weechat_config_string (logger_config_file_time_format),
-                          date_tmp);
+                if (strftime (buf_time, sizeof (buf_time) - 1,
+                              weechat_config_string (logger_config_file_time_format),
+                              date_tmp) == 0)
+                    buf_time[0] = '\0';
             }
 
             logger_write_line (ptr_logger_buffer,

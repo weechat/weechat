@@ -798,7 +798,9 @@ trigger_callback_print_cb  (const void *pointer, void *data,
     date_tmp = localtime (&date);
     if (date_tmp)
     {
-        strftime (str_temp, sizeof (str_temp), "%Y-%m-%d %H:%M:%S", date_tmp);
+        if (strftime (str_temp, sizeof (str_temp),
+                      "%Y-%m-%d %H:%M:%S", date_tmp) == 0)
+            str_temp[0] = '\0';
         weechat_hashtable_set (extra_vars, "tg_date", str_temp);
     }
     snprintf (str_temp, sizeof (str_temp), "%d", displayed);
@@ -940,7 +942,9 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
     date_tmp = localtime (&date);
     if (date_tmp)
     {
-        strftime (str_temp, sizeof (str_temp), "%Y-%m-%d %H:%M:%S", date_tmp);
+        if (strftime (str_temp, sizeof (str_temp),
+                      "%Y-%m-%d %H:%M:%S", date_tmp) == 0)
+            str_temp[0] = '\0';
         weechat_hashtable_set (extra_vars, "tg_date", str_temp);
     }
 

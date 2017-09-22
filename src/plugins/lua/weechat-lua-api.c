@@ -4580,7 +4580,10 @@ API_FUNC(infolist_time)
                                   variable);
     date_tmp = localtime (&time);
     if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    {
+        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
+            timebuffer[0] = '\0';
+    }
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);

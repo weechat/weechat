@@ -452,9 +452,10 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     now = time (NULL);
     local_time = localtime (&now);
     setlocale (LC_ALL, "C");
-    strftime (buf, sizeof (buf),
-              weechat_config_string (irc_config_look_ctcp_time_format),
-              local_time);
+    if (strftime (buf, sizeof (buf),
+                  weechat_config_string (irc_config_look_ctcp_time_format),
+                  local_time) == 0)
+        buf[0] = '\0';
     setlocale (LC_ALL, "");
     temp = weechat_string_replace (res, "$time", buf);
     free (res);

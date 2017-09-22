@@ -649,14 +649,19 @@ gui_chat_display_day_changed (struct t_gui_window *window,
     /* build the message to display */
     if (date1)
     {
-        strftime (temp_message, sizeof (temp_message),
-                  CONFIG_STRING(config_look_day_change_message_2dates), date1);
-        strftime (message, sizeof (message), temp_message, date2);
+        if (strftime (temp_message, sizeof (temp_message),
+                      CONFIG_STRING(config_look_day_change_message_2dates),
+                      date1) == 0)
+            temp_message[0] = '\0';
+        if (strftime (message, sizeof (message), temp_message, date2) == 0)
+            message[0] = '\0';
     }
     else
     {
-        strftime (message, sizeof (message),
-                  CONFIG_STRING(config_look_day_change_message_1date), date2);
+        if (strftime (message, sizeof (message),
+                      CONFIG_STRING(config_look_day_change_message_1date),
+                      date2) == 0)
+            message[0] = '\0';
     }
 
     message_with_color = (strstr (message, "${")) ?
@@ -1928,9 +1933,10 @@ gui_chat_get_bare_line (struct t_gui_line *line)
         && CONFIG_STRING(config_look_bare_display_time_format)[0])
     {
         local_time = localtime (&line->data->date);
-        strftime (str_time, sizeof (str_time),
-                  CONFIG_STRING(config_look_bare_display_time_format),
-                  local_time);
+        if (strftime (str_time, sizeof (str_time),
+                      CONFIG_STRING(config_look_bare_display_time_format),
+                      local_time) == 0)
+            str_time[0] = '\0';
     }
     tag_prefix_nick = gui_line_search_tag_starting_with (line, "prefix_nick_");
 

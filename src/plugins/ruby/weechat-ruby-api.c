@@ -5462,7 +5462,10 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     time = weechat_infolist_time (API_STR2PTR(c_infolist), c_variable);
     date_tmp = localtime (&time);
     if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
+    {
+        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
+            timebuffer[0] = '\0';
+    }
     result = strdup (timebuffer);
 
     API_RETURN_STRING_FREE(result);

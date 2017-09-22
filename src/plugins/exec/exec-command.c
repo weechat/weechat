@@ -108,11 +108,13 @@ exec_command_list ()
         {
             /* process has ended */
             local_time = localtime (&ptr_exec_cmd->start_time);
-            strftime (str_time1, sizeof (str_time1),
-                      "%Y-%m-%d %H:%M:%S", local_time);
+            if (strftime (str_time1, sizeof (str_time1),
+                          "%Y-%m-%d %H:%M:%S", local_time) == 0)
+                str_time1[0] = '\0';
             local_time = localtime (&ptr_exec_cmd->end_time);
-            strftime (str_time2, sizeof (str_time2),
-                      "%Y-%m-%d %H:%M:%S", local_time);
+            if (strftime (str_time2, sizeof (str_time2),
+                          "%Y-%m-%d %H:%M:%S", local_time) == 0)
+                str_time2[0] = '\0';
             weechat_printf (NULL,
                             "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (%s -> %s, %s)",
                             weechat_color (weechat_config_string (exec_config_color_flag_finished)),

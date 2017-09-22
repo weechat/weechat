@@ -96,8 +96,9 @@ relay_buffer_refresh (const char *hotlist)
             date_tmp = localtime (&(ptr_client->start_time));
             if (date_tmp)
             {
-                strftime (str_date_start, sizeof (str_date_start),
-                          "%a, %d %b %Y %H:%M:%S", date_tmp);
+                if (strftime (str_date_start, sizeof (str_date_start),
+                              "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                    str_date_start[0] = '\0';
             }
             str_date_end[0] = '-';
             str_date_end[1] = '\0';
@@ -106,8 +107,9 @@ relay_buffer_refresh (const char *hotlist)
                 date_tmp = localtime (&(ptr_client->end_time));
                 if (date_tmp)
                 {
-                    strftime (str_date_end, sizeof (str_date_end),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                    if (strftime (str_date_end, sizeof (str_date_end),
+                                  "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                        str_date_end[0] = '\0';
                 }
             }
 

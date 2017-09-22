@@ -98,10 +98,12 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
     weechat_hashtable_set (info, "script_md5sum", ptr_script->md5sum);
     weechat_hashtable_set (info, "script_url", ptr_script->url);
     tm = localtime (&ptr_script->date_added);
-    strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm);
+    if (strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm) == 0)
+        str_date[0] = '\0';
     weechat_hashtable_set (info, "script_date_added", str_date);
     tm = localtime (&ptr_script->date_updated);
-    strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm);
+    if (strftime (str_date, sizeof (str_date), "%Y-%m-%d %H:%M:%S", tm) == 0)
+        str_date[0] = '\0';
     weechat_hashtable_set (info, "script_date_updated", str_date);
     weechat_hashtable_set (info, "script_version_loaded", ptr_script->version_loaded);
 

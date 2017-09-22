@@ -66,16 +66,18 @@ relay_command_client_list (int full)
         date_tmp = localtime (&(ptr_client->start_time));
         if (date_tmp)
         {
-            strftime (date_start, sizeof (date_start),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (strftime (date_start, sizeof (date_start),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                date_start[0] = '\0';
         }
 
         date_activity[0] = '\0';
         date_tmp = localtime (&(ptr_client->last_activity));
         if (date_tmp)
         {
-            strftime (date_activity, sizeof (date_activity),
-                      "%a, %d %b %Y %H:%M:%S", date_tmp);
+            if (strftime (date_activity, sizeof (date_activity),
+                          "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                date_activity[0] = '\0';
         }
 
         if (full)
@@ -156,8 +158,9 @@ relay_command_server_list ()
                 date_tmp = localtime (&(ptr_server->start_time));
                 if (date_tmp)
                 {
-                    strftime (date_start, sizeof (date_start),
-                              "%a, %d %b %Y %H:%M:%S", date_tmp);
+                    if (strftime (date_start, sizeof (date_start),
+                                  "%a, %d %b %Y %H:%M:%S", date_tmp) == 0)
+                        date_start[0] = '\0';
                 }
                 weechat_printf (
                     NULL,
