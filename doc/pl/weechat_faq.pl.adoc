@@ -2,9 +2,11 @@
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: pl
-:toc: macro
+:toc: left
 :toc-title: Spis treści
+:toclevels: 2
 :sectnums:
+:sectnumlevels: 2
 :docinfo1:
 
 
