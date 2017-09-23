@@ -9464,22 +9464,22 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | javascript | javascript_script_loaded +
   _(WeeChat ≥ 1.2)_ |
   Chaîne : chemin vers le script. |
-  Script javascript chargé.
+  Script JavaScript chargé.
 
 | javascript | javascript_script_unloaded +
   _(WeeChat ≥ 1.2)_ |
   Chaîne : chemin vers le script. |
-  Script javascript déchargé.
+  Script JavaScript déchargé.
 
 | javascript | javascript_script_installed +
   _(WeeChat ≥ 1.2)_ |
   Chaîne : liste de chemins vers scripts installés (séparés par des virgules). |
-  Script(s) javascript installé(s).
+  Script(s) JavaScript installé(s).
 
 | javascript | javascript_script_removed +
   _(WeeChat ≥ 1.2)_ |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
-  Script(s) javascript supprimé(s).
+  Script(s) JavaScript supprimé(s).
 
 | logger | logger_start |
   Pointeur : tampon. |

@@ -405,7 +405,7 @@ New features::
   * core: add options weechat.look.word_chars_{highlight|input} (issue #55, task #9459)
   * irc: add support of "account-notify" capability (issue #11, issue #246)
   * irc: add support of "ecdsa-nist256p-challenge" SASL mechanism (issue #251)
-  * javascript: new script plugin for javascript
+  * javascript: new script plugin for JavaScript
 
 Improvements::
 

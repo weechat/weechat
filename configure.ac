@@ -159,7 +159,7 @@ AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plug
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
-AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off Javascript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
+AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off JavaScript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
 AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugin (default=compiled if found)],enable_php=$enableval,enable_php=yes)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
@@ -908,14 +908,14 @@ if test "x$enable_javascript" = "xyes" ; then
             AC_MSG_RESULT(no)
             AC_MSG_WARN([
 *** V8 library couldn't be found on your system.
-*** WeeChat will be built without Javascript support.])
+*** WeeChat will be built without JavaScript support.])
             enable_javascript="no"
             not_found="$not_found javascript/v8"
         fi
     else
         AC_MSG_WARN([
 *** V8 header files couldn't be found on your system.
-*** WeeChat will be built without Javascript support.])
+*** WeeChat will be built without JavaScript support.])
         enable_javascript="no"
         not_found="$not_found javascript/v8"
     fi

@@ -103,7 +103,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | Paket ^(1)^                 | Version       | benötigt | Funktion
 | C compiler
   (gcc, clang, ...)           |               | *ja*     | zum Erstellen der Binärdatei.
-| C++ compiler                |               |          | zum Erstellen der Binärdatei und um Test auszuführen, javascript Erweiterung.
+| C++ compiler                |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
 | cmake                       |               | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
 | pkg-config                  |               | *ja*     | entdeckt installierte Bibliotheken.
 | libncursesw5-dev ^(2)^      |               | *ja*     | Ncurses Oberfläche.
@@ -121,7 +121,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | liblua5.3-dev               |               |          | Lua Erweiterung.
 | tcl-dev                     | ≥ 8.5         |          | Tcl Erweiterung.
 | guile-2.0-dev               | ≥ 2.0         |          | Guile (scheme) Erweiterung.
-| libv8-dev                   | ≤ 3.24.3      |          | Javascript Erweiterung.
+| libv8-dev                   | ≤ 3.24.3      |          | JavaScript Erweiterung.
 | php7.0-dev, libphp7.0-embed | ≥ 7.0         |          | PHP Erweiterung.
 | asciidoctor                 | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
 | libcpputest-dev             | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
@@ -236,7 +236,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<irc_plugin,IRC Erweiterung>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
-  kompiliert <<scripts_plugins,Javascript Erweiterung>>.
+  kompiliert <<scripts_plugins,JavaScript Erweiterung>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Unterstützung großer Dateien.
@@ -277,7 +277,7 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, Javascript, PHP).
+  Lua, Tcl, Guile, JavaScript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Tcl Erweiterung>>.
@@ -550,8 +550,8 @@ Verzeichnisse:
 |       autoload/   | Tcl-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
 |    guile/         | Guile-Skripten.
 |       autoload/   | Guile-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
-|    javascript/    | Javascript-Skripten.
-|       autoload/   | Javascript-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
+|    javascript/    | JavaScript-Skripten.
+|       autoload/   | JavaScript-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
 |    php/           | PHP-Skripten.
 |       autoload/   | PHP-Skripten die beim Start automatisch ausgeführt werden ^(1)^.
 |===
@@ -2135,7 +2135,7 @@ Standarderweiterungen:
 | lua         | Lua-Skript API.
 | tcl         | Tcl-Skript API.
 | guile       | Guile(scheme)-Skript API.
-| javascript  | Javascript-Skript API.
+| javascript  | JavaScript-Skript API.
 | php         | PHP-Skript API.
 | trigger     | Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche durch WeeChat oder eine Erweiterung ausgelöst werden.
 | xfer        | Datentransfer und Direktchat.
@@ -3207,7 +3207,7 @@ Die Relay-Erweiterung wird genutzt um Daten, mittels unterschiedlicher Protokoll
 ** QWeeChat (Qt): https://weechat.org/download
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (Javascript): https://github.com/eirikb/weecloud
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
 
 [[relay_password]]
 ==== Passwort
@@ -3353,7 +3353,7 @@ include::autogen/user/relay_options.adoc[]
 
 // TRANSLATION MISSING
 WeeChat unterstützt Erweiterungen für insgesamt acht Skriptsprachen:
-Python, Perl, Ruby, Lua, Tcl, Guile (scheme), Javascript und PHP.
+Python, Perl, Ruby, Lua, Tcl, Guile (scheme), JavaScript und PHP.
 Mit diesen Erweiterungen kann für die jeweilige Skriptsprache, Skripten geladen, ausgeführt
 und entfernt werden.
 
@@ -3401,7 +3401,7 @@ include::autogen/user/tcl_commands.adoc[]
 include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
-==== Javascript Befehle
+==== JavaScript Befehle
 
 include::autogen/user/javascript_commands.adoc[]
 

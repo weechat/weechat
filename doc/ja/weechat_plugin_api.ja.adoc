@@ -9286,22 +9286,22 @@ WeeChat とプラグインが送信するシグナルのリスト:
 | javascript | javascript_script_loaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトをロード
+  JavaScript スクリプトをロード
 
 | javascript | javascript_script_unloaded +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: スクリプトへのパス |
-  Javascript スクリプトをリロード
+  JavaScript スクリプトをリロード
 
 | javascript | javascript_script_installed +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: インストールされたスクリプトへのパスのコンマ区切りリスト |
-  Javascript スクリプトをインストール
+  JavaScript スクリプトをインストール
 
 | javascript | javascript_script_removed +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
-  Javascript スクリプトを削除
+  JavaScript スクリプトを削除
 
 | logger | logger_start |
   Pointer: バッファ |

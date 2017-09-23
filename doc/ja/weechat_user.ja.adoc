@@ -102,7 +102,7 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | パッケージ ^(1)^            | バージョン       | 要件   | 機能
 | C コンパイラ
   (gcc, clang, ...)           |                  | *必須* | ビルド
-| C++ コンパイラ              |                  |        | ビルドとテストの実行、javascript プラグイン
+| C++ コンパイラ              |                  |        | ビルドとテストの実行、JavaScript プラグイン
 | cmake                       |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
 | pkg-config                  |                  | *必須* | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^      |                  | *必須* | ncurses インターフェイス
@@ -232,7 +232,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
   <<irc_plugin,IRC プラグイン>>のコンパイル
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
-  <<scripts_plugins,Javascript プラグイン>>のコンパイル。
+  <<scripts_plugins,JavaScript プラグイン>>のコンパイル。
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   巨大ファイルのサポート。
@@ -273,7 +273,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   すべての<<scripts_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile、Javascript, PHP) のコンパイル。
+  (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript, PHP) のコンパイル。
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル。
@@ -545,8 +545,8 @@ _~/.weechat_ ディレクトリの中に作成されます
 |       autoload/   | 起動時に自動ロードされる Tcl スクリプト ^(1)^
 |    guile/         | Guile スクリプト
 |       autoload/   | 起動時に自動ロードされる Guile スクリプト ^(1)^
-|    javascript/    | Javascript スクリプト
-|       autoload/   | 起動時に自動ロードされる Javascript スクリプト ^(1)^
+|    javascript/    | JavaScript スクリプト
+|       autoload/   | 起動時に自動ロードされる JavaScript スクリプト ^(1)^
 |    php/           | PHP スクリプト
 |       autoload/   | 起動時に自動ロードされる PHP スクリプト ^(1)^
 |===
@@ -2088,7 +2088,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | lua        | Lua スクリプト API
 | tcl        | Tcl スクリプト API
 | guile      | Guile (scheme) スクリプト API
-| javascript | Javascript スクリプト API
+| javascript | JavaScript スクリプト API
 | php        | PHP スクリプト API
 | trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
 | xfer       | ファイル転送とダイレクトチャット
@@ -3130,7 +3130,7 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 ** QWeeChat (Qt): https://weechat.org/download
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (Javascript): https://github.com/eirikb/weecloud
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
 
 [[relay_password]]
 ==== パスワード
@@ -3268,7 +3268,7 @@ include::autogen/user/relay_options.adoc[]
 
 WeeChat は 8 種類のスクリプトプラグインを備えています:
 Python、Perl、Ruby、Lua、Tcl、Guile
-(scheme)、Javascript、PHP。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
+(scheme)、JavaScript、PHP。これらのプラグインでそれぞれの言語で書かれたスクリプトのロード、実行、アンロードができます。
 
 スクリプトマネージャを使えば、任意の言語で書かれたスクリプトをロード/アンロードしたり、WeeChat
 スクリプトリポジトリ (https://weechat.org/scripts から参照可能)
@@ -3313,7 +3313,7 @@ include::autogen/user/tcl_commands.adoc[]
 include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
-==== Javascript コマンド
+==== JavaScript コマンド
 
 include::autogen/user/javascript_commands.adoc[]
 

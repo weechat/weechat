@@ -37,7 +37,7 @@ linguaggi di scripting supportati:
 * Lua
 * Tcl
 * Guile (Scheme)
-* Javascript
+* JavaScript
 * PHP
 
 [NOTE]
@@ -94,7 +94,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ** config_new_option
 ** bar_new
 
-==== Javascript
+==== JavaScript
 
 * Le funzioni sono chiamate con `weechat.xxx(arg1, arg2, ...);`
 
@@ -182,7 +182,7 @@ weechat::print "" "Hello, from tcl script!"
 (weechat:print "" "Hello, from scheme script!")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -390,7 +390,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -777,7 +777,7 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-La funzione print si chiama `print` in Perl/Ruby/Lua/Tcl/Guile/Javascript e
+La funzione print si chiama `print` in Perl/Ruby/Lua/Tcl/Guile/JavaScript e
 `prnt` in Python.
 
 [[buffers_send_text]]

@@ -9577,25 +9577,25 @@ List of signals sent by WeeChat and plugins:
 | javascript | javascript_script_loaded +
   _(WeeChat ≥ 1.2)_ |
   String: path to script. |
-  Javascript script loaded.
+  JavaScript script loaded.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_unloaded +
   _(WeeChat ≥ 1.2)_ |
   String: path to script. |
-  Javascript script unloaded.
+  JavaScript script unloaded.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_installed +
   _(WeeChat ≥ 1.2)_ |
   String: comma-separated list of paths to scripts installed. |
-  Javascript script(s) installed.
+  JavaScript script(s) installed.
 
 // TRANSLATION MISSING
 | javascript | javascript_script_removed +
   _(WeeChat ≥ 1.2)_ |
   String: comma-separated list of scripts removed. |
-  Javascript script(s) removed.
+  JavaScript script(s) removed.
 
 | logger | logger_start |
   Puntatore: buffer. |

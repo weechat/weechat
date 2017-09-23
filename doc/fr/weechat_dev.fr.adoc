@@ -77,7 +77,7 @@ Les répertoires principaux de WeeChat sont :
 |       fset/       | Extension Fset (Fast Set).
 |       guile/      | API script Guile (scheme).
 |       irc/        | Extension IRC (Internet Relay Chat).
-|       javascript/ | API script Javascript.
+|       javascript/ | API script JavaScript.
 |       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers).
 |       lua/        | API script Lua.
 |       perl/       | API script Perl.
@@ -255,10 +255,10 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-sasl.c                  | Authentification SASL avec le serveur IRC.
 |       irc-server.c                | Communication avec le serveur IRC.
 |       irc-upgrade.c               | Sauvegarde/restauration des données IRC lors de la mise à jour de WeeChat.
-|    javascript/                    | Extension Javascript.
-|       weechat-js.cpp              | Fonctions principales pour Javascript (chargement/déchargement des scripts, exécution de code Javascript).
-|       weechat-js-api.cpp          | Fonctions de l'API script Javascript.
-|       weechat-js-v8.cpp           | Fonctions Javascript v8.
+|    javascript/                    | Extension JavaScript.
+|       weechat-js.cpp              | Fonctions principales pour JavaScript (chargement/déchargement des scripts, exécution de code JavaScript).
+|       weechat-js-api.cpp          | Fonctions de l'API script JavaScript.
+|       weechat-js-v8.cpp           | Fonctions JavaScript v8.
 |    logger/                        | Extension Logger.
 |       logger.c                    | Fonctions principales pour Logger.
 |       logger-buffer.c             | Gestion des listes de tampons pour Logger.

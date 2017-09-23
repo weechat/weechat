@@ -35,7 +35,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 * Lua
 * Tcl
 * Guile (Scheme)
-* Javascript
+* JavaScript
 * PHP
 
 [NOTE]
@@ -91,7 +91,7 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 ** config_new_option
 ** bar_new
 
-==== Javascript
+==== JavaScript
 
 * 関数は `weechat.xxx(arg1, arg2, ...);` のように呼び出してください。
 
@@ -179,7 +179,7 @@ weechat::print "" "Hello, from tcl script!"
 (weechat:print "" "Hello, from scheme script!")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -382,7 +382,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -763,7 +763,7 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-Print 関数は Perl/Ruby/Lua/Tcl/Guile/Javascript では `print` で、Python では
+Print 関数は Perl/Ruby/Lua/Tcl/Guile/JavaScript では `print` で、Python では
 `prnt` です。
 
 [[buffers_send_text]]

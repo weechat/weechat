@@ -59,7 +59,7 @@ python2-devel ruby tcl-devel libguile2.0-devel zlib-devel"
 # CMake compilation of WeeChat:
 #   1. set prefix to /usr
 #   2. enable build of man pages and documentation
-#   3. disable Javascript plugin because libv8 is not available in Cygwin
+#   3. disable javascript plugin because libv8 is not available in Cygwin
 #
 CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
 -DENABLE_JAVASCRIPT=OFF"

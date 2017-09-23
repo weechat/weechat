@@ -35,7 +35,7 @@ wspieranych języków skryptowych:
 * Lua
 * Tcl
 * Guile (Scheme)
-* Javascript
+* JavaScript
 * PHP
 
 [NOTE]
@@ -91,7 +91,7 @@ Weechat.config_new_option(config, section, "nazwa", "ciąg", "opis opcji", "", 0
 ** config_new_option
 ** bar_new
 
-==== Javascript
+==== JavaScript
 
 * Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...);`
 
@@ -179,7 +179,7 @@ weechat::print "" "Witaj ze skryptu tcl!"
 (weechat:print "" "Witaj ze skryptu scheme!")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -380,7 +380,7 @@ weechat::hook_timer 1000 0 1 timer_cb test
 (weechat:hook_timer 1000 0 1 "timer_cb" "test")
 ----
 
-* Javascript:
+* JavaScript:
 
 [source,javascript]
 ----
@@ -761,7 +761,7 @@ weechat.prnt(buffer, "wiadomość na kanale #weechat")
 ----
 
 [NOTE]
-Funkcja drukująca nazywa się `print` w Perl/Ruby/Lua/Tcl/Guile/Javascript i
+Funkcja drukująca nazywa się `print` w Perl/Ruby/Lua/Tcl/Guile/JavaScript i
 `prnt` w Pythonie.
 
 [[buffers_send_text]]

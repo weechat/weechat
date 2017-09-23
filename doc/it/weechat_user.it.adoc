@@ -115,7 +115,7 @@ compilare WeeChat.
 | C compiler
   (gcc, clang, ...)           |               | *sì*      | Build.
 // TRANSLATION MISSING
-| C++ compiler                |               |           | Build and run tests, plugin Javascript.
+| C++ compiler                |               |           | Build and run tests, plugin JavaScript.
 | cmake                       |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
 // TRANSLATION MISSING
 | pkg-config                  |               | *sì*      | Detect installed libraries.
@@ -137,8 +137,8 @@ compilare WeeChat.
 | liblua5.3-dev               |               |           | Plugin lua.
 | tcl-dev                     | ≥ 8.5         |           | Plugin tcl.
 | guile-2.0-dev               | ≥ 2.0         |           | Plugin guile (scheme).
-| libv8-dev                   | ≤ 3.24.3      |           | Plugin Javascript.
-| php7.0-dev, libphp7.0-embed | ≥ 7.0         |           | Plugin PHP.
+| libv8-dev                   | ≤ 3.24.3      |           | Plugin javascript.
+| php7.0-dev, libphp7.0-embed | ≥ 7.0         |           | Plugin php.
 // TRANSLATION MISSING
 | asciidoctor                 | ≥ 1.5.4       |           | Build man page and documentation.
 // TRANSLATION MISSING
@@ -260,7 +260,7 @@ List of commonly used options:
   Compile <<irc_plugin,IRC plugin>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
-  Compile <<scripts_plugins,Javascript plugin>>.
+  Compile <<scripts_plugins,JavaScript plugin>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support of large files.
@@ -301,7 +301,7 @@ List of commonly used options:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
-  Guile, Javascript, PHP).
+  Guile, JavaScript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
@@ -587,8 +587,8 @@ The directories are:
 |       autoload/   | Tcl scripts auto-loaded on startup ^(1)^.
 |    guile/         | Guile scripts.
 |       autoload/   | Guile scripts auto-loaded on startup ^(1)^.
-|    javascript/    | Javascript scripts.
-|       autoload/   | Javascript scripts auto-loaded on startup ^(1)^.
+|    javascript/    | JavaScript scripts.
+|       autoload/   | JavaScript scripts auto-loaded on startup ^(1)^.
 |    php/           | PHP scripts.
 |       autoload/   | PHP scripts auto-loaded on startup ^(1)^.
 |===
@@ -2218,7 +2218,7 @@ I plugin predefiniti sono:
 | lua        | API per lo scripting in Lua.
 | tcl        | API per lo scripting in TCL.
 | guile      | API per lo scripting in Guile (scheme).
-| javascript | API per lo scripting in Javascript.
+| javascript | API per lo scripting in JavaScript.
 | php        | API per lo scripting in PHP.
 // TRANSLATION MISSING
 | trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
@@ -3344,7 +3344,7 @@ protocolli differenti:
 ** QWeeChat (Qt): https://weechat.org/download
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (Javascript): https://github.com/eirikb/weecloud
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
 
 // TRANSLATION MISSING
 [[relay_password]]
@@ -3491,7 +3491,7 @@ include::autogen/user/relay_options.adoc[]
 === Scripts
 
 WeeChat fornisce 8 plugin per lo scripting: Python, Perl, Ruby, Lua, Tcl, Guile
-(scheme), Javascript, PHP.
+(scheme), JavaScript, PHP.
 Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
@@ -3539,7 +3539,7 @@ include::autogen/user/tcl_commands.adoc[]
 include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
-==== Comandi Javascript
+==== Comandi JavaScript
 
 include::autogen/user/javascript_commands.adoc[]
 

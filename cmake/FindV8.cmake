@@ -17,7 +17,7 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# - Find V8 (Google's Javascript engine)
+# - Find V8 (Google's JavaScript engine)
 # This module finds if libv8 is installed and determines where
 # the include files and libraries are.
 #

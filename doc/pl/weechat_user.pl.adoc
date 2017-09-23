@@ -103,7 +103,7 @@ WeeChat.
 | Pakiet ^(1)^                | Wersja        | Wymagany | Opis
 | kompilator C
   (gcc, clang, ...)           |               | *tak*    | Kompilacja.
-| kompilator C++              |               |          | Kompilacja i uruchamianie testów, wtyczka javascript.
+| kompilator C++              |               |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
 | cmake                       |               | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak cmake jest zalecany).
 | pkg-config                  |               | *tak*    | Wykrywa zainstalowane biblioteki.
 | libncursesw5-dev ^(2)^      |               | *tak*    | Interfejs ncurses.
@@ -276,7 +276,7 @@ Lista popularnych opcji:
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
-  Tcl, Guile, Javascript, PHP).
+  Tcl, Guile, JavaScript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki tcl>>.
@@ -554,8 +554,8 @@ Foldery to:
 |       autoload/   | Skrypty tcl automatycznie ładowane przy starcie ^(1)^.
 |    guile/         | Skrypty guile.
 |       autoload/   | skrypry guile automatycznie ładowane przy starcie ^(1)^.
-|    javascript/    | Skrypty javascript.
-|       autoload/   | Skrypty javascript automatycznie ładowane przy starcie ^(1)^.
+|    javascript/    | Skrypty JavaScript.
+|       autoload/   | Skrypty JavaScript automatycznie ładowane przy starcie ^(1)^.
 |    php/           | Skrypty PHP.
 |       autoload/   | Skrypty PHP automatycznie ładowane przy starcie ^(1)^.
 |===
@@ -2116,7 +2116,7 @@ Domyślne wtyczki:
 | lua        | Wsparcie dla skryptów napisanych w Lua.
 | tcl        | Wsparcie dla skryptów napisanych w Tcl.
 | guile      | Wsparcie dla skryptów napisanych w Guile (scheme).
-| javascript | Wsparcie dla skryptów napisanych w Javascript.
+| javascript | Wsparcie dla skryptów napisanych w JavaScript.
 | php        | Wsparcie dla skryptów napisanych w PHP.
 | trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki.
 | xfer       | Przesyłanie plików i bezpośredni chat.
@@ -3189,7 +3189,7 @@ protokołów:
 ** QWeeChat (Qt): https://weechat.org/download
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs): https://github.com/the-kenny/weechat.el
-** WeeCloud (Javascript): https://github.com/eirikb/weecloud
+** WeeCloud (JavaScript): https://github.com/eirikb/weecloud
 
 [[relay_password]]
 ==== Hasło
@@ -3329,7 +3329,7 @@ include::autogen/user/relay_options.adoc[]
 === Skryptowe
 
 WeeChat posiada 8 wtyczek skryptowych: Python, Perl, Ruby, Lua, Tcl, Guile
-(scheme), Javascript i PHP.
+(scheme), JavaScript i PHP.
 Wtyczki te potrafią ładować, wykonywać i wyładowywać skrypty w tych językach.
 
 Inna wtyczka nazwana "script" jest managerem skryptów i jest używana do

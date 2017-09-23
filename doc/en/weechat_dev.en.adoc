@@ -75,7 +75,7 @@ The main WeeChat directories are:
 |       fset/       | Fset (Fast Set) plugin.
 |       guile/      | Guile (scheme) scripting API.
 |       irc/        | IRC (Internet Relay Chat) plugin.
-|       javascript/ | Javascript scripting API.
+|       javascript/ | JavaScript scripting API.
 |       logger/     | Logger plugin (write messages displayed to files).
 |       lua/        | Lua scripting API.
 |       perl/       | Perl scripting API.
@@ -253,10 +253,10 @@ WeeChat "core" is located in following directories:
 |       irc-sasl.c                  | SASL authentication with IRC server.
 |       irc-server.c                | I/O communication with IRC server.
 |       irc-upgrade.c               | Save/restore of IRC data when upgrading WeeChat.
-|    javascript/                    | Javascript plugin.
-|       weechat-js.cpp              | Main javascript functions (load/unload scripts, execute javascript code).
-|       weechat-js-api.cpp          | Javascript scripting API functions.
-|       weechat-js-v8.cpp           | Javascript v8 functions.
+|    javascript/                    | JavaScript plugin.
+|       weechat-js.cpp              | Main JavaScript functions (load/unload scripts, execute JavaScript code).
+|       weechat-js-api.cpp          | JavaScript scripting API functions.
+|       weechat-js-v8.cpp           | JavaScript v8 functions.
 |    logger/                        | Logger plugin.
 |       logger.c                    | Main logger functions.
 |       logger-buffer.c             | Logger buffer list management.

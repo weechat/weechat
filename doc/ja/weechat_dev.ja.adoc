@@ -259,10 +259,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-sasl.c                  | IRC サーバに対する SASL 認証
 |       irc-server.c                | IRC サーバとの入出力通信
 |       irc-upgrade.c               | WeeChat をアップグレードする際の IRC データの保存およびロード
-|    javascript/                    | javascript プラグイン
-|       weechat-js.cpp              | javascript の主要関数 (スクリプトのロード/アンロード、javascript コードの実行)
-|       weechat-js-api.cpp          | javascript スクリプト作成 API 関数
-|       weechat-js-v8.cpp           | javascript v8 関数
+|    javascript/                    | JavaScript プラグイン
+|       weechat-js.cpp              | JavaScript の主要関数 (スクリプトのロード/アンロード、JavaScript コードの実行)
+|       weechat-js-api.cpp          | JavaScript スクリプト作成 API 関数
+|       weechat-js-v8.cpp           | JavaScript v8 関数
 |    logger/                        | logger プラグイン
 |       logger.c                    | logger の主要関数
 |       logger-buffer.c             | logger バッファリスト管理

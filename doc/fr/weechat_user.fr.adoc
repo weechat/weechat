@@ -100,7 +100,7 @@ compiler WeeChat.
 | Paquet ^(1)^                | Version       | Requis | Fonctionnalité
 | compilateur C
   (gcc, clang, ...)           |               | *oui*  | Construction.
-| compilateur C++             |               |        | Construction et lancement des tests, extension javascript.
+| compilateur C++             |               |        | Construction et lancement des tests, extension JavaScript.
 | cmake                       |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
 | pkg-config                  |               | *oui*  | Détection des bibliothèques installées.
 | libncursesw5-dev ^(2)^      |               | *oui*  | Interface ncurses.
@@ -232,7 +232,7 @@ Liste des options couramment utilisées :
   Compiler <<irc_plugin,l'extension IRC>>.
 
 | ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
-  Compiler <<scripts_plugins,l'extension Javascript>>.
+  Compiler <<scripts_plugins,l'extension JavaScript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |
   Support des gros fichiers.
@@ -273,7 +273,7 @@ Liste des options couramment utilisées :
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
-  Lua, Tcl, Guile, Javascript, PHP).
+  Lua, Tcl, Guile, JavaScript, PHP).
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Tcl>>.
@@ -553,8 +553,8 @@ Les répertoires sont :
 |       autoload/   | Scripts Tcl chargés automatiquement au démarrage ^(1)^.
 |    guile/         | Scripts Guile.
 |       autoload/   | Scripts Guile chargés automatiquement au démarrage ^(1)^.
-|    javascript/    | Scripts Javascript.
-|       autoload/   | Scripts Javascript chargés automatiquement au démarrage ^(1)^.
+|    javascript/    | Scripts JavaScript.
+|       autoload/   | Scripts JavaScript chargés automatiquement au démarrage ^(1)^.
 |    php/           | Scripts PHP.
 |       autoload/   | Scripts PHP chargés automatiquement au démarrage ^(1)^.
 |===
@@ -2159,7 +2159,7 @@ Les extensions par défaut sont :
 | lua        | Interface (API) pour scripts Lua.
 | tcl        | Interface (API) pour scripts Tcl.
 | guile      | Interface (API) pour scripts Guile (scheme).
-| javascript | Interface (API) pour scripts Javascript.
+| javascript | Interface (API) pour scripts JavaScript.
 | php        | Interface (API) pour scripts PHP.
 | trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
 | xfer       | Transfert de fichier et discussion directe.
@@ -3234,7 +3234,7 @@ utilisant divers protocoles :
 ** QWeeChat (Qt) : https://weechat.org/download
 ** WeeChat-Android (Android) : https://github.com/ubergeek42/weechat-android
 ** weechat.el (Emacs) : https://github.com/the-kenny/weechat.el
-** WeeCloud (Javascript) : https://github.com/eirikb/weecloud
+** WeeCloud (JavaScript) : https://github.com/eirikb/weecloud
 
 [[relay_password]]
 ==== Mot de passe
@@ -3379,7 +3379,7 @@ include::autogen/user/relay_options.adoc[]
 === Scripts
 
 WeeChat fournit 8 extensions pour scripts : Python, Perl, Ruby, Lua, Tcl,
-Guile (scheme), Javascript et PHP.
+Guile (scheme), JavaScript et PHP.
 Ces extensions peuvent charger, exécuter et décharger des scripts pour ces
 langages.
 
@@ -3428,7 +3428,7 @@ include::autogen/user/tcl_commands.adoc[]
 include::autogen/user/guile_commands.adoc[]
 
 [[javascript_commands]]
-==== Commandes Javascript
+==== Commandes JavaScript
 
 include::autogen/user/javascript_commands.adoc[]
 
