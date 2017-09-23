@@ -40,14 +40,21 @@ Bug fixes::
   * api: change type of arguments status/gnutls_rc/sock in hook_connect() callback from string to integer (in scripts)
   * api: change type of argument fd in hook_fd() callback from string to integer (in scripts)
   * buflist: remove recursive evaluation of extra variables (issue #1060)
-  * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
   * irc: fix CTCP PING reply when the option irc.ctcp.ping is set to non-empty value
-  * relay: fix send of "PART" command in backlog (irc protocol)
   * relay: fix parsing of CAP command without arguments in irc protocol, send ACK only if all capabilities received are OK and NAK otherwise (issue #1040)
 
 Tests::
 
   * display an error if the required locale en_US.UTF-8 is not installed
+
+[[v1.9.1]]
+== Version 1.9.1 (2017-09-23)
+
+Bug fixes::
+
+  * buflist: fix crash in auto-scroll of bar when the buflist item is not the first item in the bar
+  * logger: call strftime before replacing buffer local variables
+  * relay: fix send of "PART" command in backlog (irc protocol)
 
 [[v1.9]]
 == Version 1.9 (2017-06-25)
