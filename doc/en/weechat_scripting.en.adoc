@@ -755,8 +755,7 @@ weechat.prnt(buffer, "message on #weechat channel")
 ----
 
 [NOTE]
-Print function is called `print` in Perl/Ruby/Lua/Tcl/Guile/JavaScript and
-`prnt` in Python.
+Print function is called `prnt` in Python and `print` in other languages.
 
 [[buffers_send_text]]
 ==== Send text to buffer

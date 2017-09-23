@@ -762,9 +762,9 @@ buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.prnt(buffer, "message on #weechat channel")
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-Print 関数は Perl/Ruby/Lua/Tcl/Guile/JavaScript では `print` で、Python では
-`prnt` です。
+Print function is called `prnt` in Python and `print` in other languages.
 
 [[buffers_send_text]]
 ==== バッファにテキストを送信

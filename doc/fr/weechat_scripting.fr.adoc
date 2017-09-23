@@ -769,8 +769,8 @@ weechat.prnt(buffer, "message sur le canal #weechat")
 ----
 
 [NOTE]
-La fonction d'affichage est appelée `print` en
-Perl/Ruby/Lua/Tcl/Guile/JavaScript et `prnt` en Python.
+La fonction d'affichage est appelée `prnt` en Python et `print` dans les autres
+langages.
 
 [[buffers_send_text]]
 ==== Envoyer du texte au tampon
