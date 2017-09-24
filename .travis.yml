@@ -9,10 +9,10 @@ dist: trusty
 
 env:
     - BUILDTOOL="cmake" BUILDARGS="" PY_VER=2.7
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON3=ON" PY_VER=3.6
+    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON3=ON" PY_VER=3.5
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_GNUTLS=OFF" PY_VER=2.7
     - BUILDTOOL="autotools" BUILDARGS="" PY_VER=2.7
-    - BUILDTOOL="autotools" BUILDARGS="--enable-python3" PY_VER=3.6
+    - BUILDTOOL="autotools" BUILDARGS="--enable-python3" PY_VER=3.5
     - BUILDTOOL="autotools" BUILDARGS="--disable-gnutls" PY_VER=2.7
 
 before_script:
