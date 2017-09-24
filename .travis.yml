@@ -8,18 +8,16 @@ sudo: required
 dist: trusty
 
 env:
-    - BUILDTOOL="cmake" BUILDARGS="" PY_VER=2.7
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON3=ON" PY_VER=3.5
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_GNUTLS=OFF" PY_VER=2.7
-    - BUILDTOOL="autotools" BUILDARGS="" PY_VER=2.7
-    - BUILDTOOL="autotools" BUILDARGS="--enable-python3" PY_VER=3.5
-    - BUILDTOOL="autotools" BUILDARGS="--disable-gnutls" PY_VER=2.7
+    - BUILDTOOL="cmake" BUILDARGS=""
+    # - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON3=ON"
+    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_GNUTLS=OFF"
+    - BUILDTOOL="autotools" BUILDARGS=""
+    # - BUILDTOOL="autotools" BUILDARGS="--enable-python3"
+    - BUILDTOOL="autotools" BUILDARGS="--disable-gnutls"
 
 before_script:
     # Workaround https://github.com/travis-ci/travis-ci/issues/5326
     - export PATH=$(echo $PATH | tr ':' "\n" | sed '/\/opt\/python/d' | tr "\n" ":" | sed "s|::|:|g")
-    # Workaround https://github.com/travis-ci/travis-ci/issues/8363
-    - pyenv global system ${PY_VER}
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
     - sudo add-apt-repository -y ppa:ondrej/php
     - sudo apt-get update -qq
