@@ -570,6 +570,8 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
     else
     {
         /* exclusive or (XOR) with attributes */
+        attrs = 0;
+        pair = 0;
         ptr_attrs = &attrs;
         ptr_pair = &pair;
         wattr_get (window, ptr_attrs, ptr_pair, NULL);
