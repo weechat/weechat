@@ -1089,18 +1089,21 @@ php_weechat_sapi_error (int type, const char *format, ...)
     free (vbuffer);
 }
 
+#if PHP_MAJOR_VERSION > 7 || PHP_MINOR_VERSION >= 1
 void
-#if PHP_MINOR_VERSION >= 1
 php_weechat_log_message (char *message, int syslog_type_int)
-#else
-php_weechat_log_message (char *message)
-#endif
 {
-#if PHP_MINOR_VERSION >= 1
-    (void)syslog_type_int;
-#endif
+    (void) syslog_type_int;
+
     php_weechat_ub_write (message, strlen (message));
 }
+#else
+void
+php_weechat_log_message (char *message)
+{
+    php_weechat_ub_write (message, strlen (message));
+}
+#endif
 
 /*
  * Initializes PHP plugin.
