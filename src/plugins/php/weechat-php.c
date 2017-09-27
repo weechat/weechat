@@ -1090,6 +1090,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
 }
 
 #if PHP_MAJOR_VERSION > 7 || PHP_MINOR_VERSION >= 1
+/* PHP >= 7.1 */
 void
 php_weechat_log_message (char *message, int syslog_type_int)
 {
@@ -1098,6 +1099,7 @@ php_weechat_log_message (char *message, int syslog_type_int)
     php_weechat_ub_write (message, strlen (message));
 }
 #else
+/* PHP 7.0 */
 void
 php_weechat_log_message (char *message)
 {
