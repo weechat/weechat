@@ -1,0 +1,26 @@
+diff --git a/debian-devel/control b/debian-devel/control
+index 04fc76a41..d776aea16 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -16,7 +16,7 @@ Build-Depends:
+     tcl8.6-dev,
+     guile-2.0-dev,
+     libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
+-    php7.1-dev, libphp7.1-embed,
++    php7.0-dev, libphp7.0-embed,
+     libcurl4-gnutls-dev,
+     libgcrypt20-dev,
+     libgnutls28-dev,
+diff --git a/debian-stable/control b/debian-stable/control
+index 68a501262..cfc285fe6 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -16,7 +16,7 @@ Build-Depends:
+     tcl8.6-dev,
+     guile-2.0-dev,
+     libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
+-    php7.1-dev, libphp7.1-embed,
++    php7.0-dev, libphp7.0-embed,
+     libcurl4-gnutls-dev,
+     libgcrypt20-dev,
+     libgnutls28-dev,
