@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index 04fc76a41..465269b3e 100644
+index cc7685a70..465269b3e 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,9 +3,7 @@ Section: net
@@ -20,7 +20,7 @@ index 04fc76a41..465269b3e 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.1-dev, libphp7.1-embed,
+-    php7.1-dev, libphp7.1-embed, libxml2-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -58,7 +58,7 @@ index 04fc76a41..465269b3e 100644
    - Spell checking (thanks to aspell)
    - FIFO pipe for remote control
 diff --git a/debian-stable/control b/debian-stable/control
-index 68a501262..09a7327d3 100644
+index 2829be49b..09a7327d3 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,9 +3,7 @@ Section: net
@@ -79,7 +79,7 @@ index 68a501262..09a7327d3 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.1-dev, libphp7.1-embed,
+-    php7.1-dev, libphp7.1-embed, libxml2-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
