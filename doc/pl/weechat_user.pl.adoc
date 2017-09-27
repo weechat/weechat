@@ -122,7 +122,7 @@ WeeChat.
 | tcl-dev                     | ≥ 8.5         |          | Wtyczka tcl.
 | guile-2.0-dev               | ≥ 2.0         |          | Wtyczka guile (scheme).
 | libv8-dev                   | ≤ 3.24.3      |          | Wtyczka javascript.
-| php7.0-dev, libphp7.0-embed | ≥ 7.0         |          | Wtyczka PHP.
+| php7.1-dev, libphp7.1-embed | ≥ 7.0         |          | Wtyczka PHP.
 | asciidoctor                 | ≥ 1.5.4       |          | Tworzenie strony man i dokumentacji.
 | libcpputest-dev             | ≥ 3.4         |          | Kompilacja i uruchamianie testów.
 |===

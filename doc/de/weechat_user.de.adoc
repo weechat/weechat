@@ -122,7 +122,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | tcl-dev                     | ≥ 8.5         |          | Tcl Erweiterung.
 | guile-2.0-dev               | ≥ 2.0         |          | Guile (scheme) Erweiterung.
 | libv8-dev                   | ≤ 3.24.3      |          | JavaScript Erweiterung.
-| php7.0-dev, libphp7.0-embed | ≥ 7.0         |          | PHP Erweiterung.
+| php7.1-dev, libphp7.1-embed | ≥ 7.0         |          | PHP Erweiterung.
 | asciidoctor                 | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
 | libcpputest-dev             | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
 |===
