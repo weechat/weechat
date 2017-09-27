@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index 809e059..35e19b8 100644
+index 04fc76a41..465269b3e 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,9 +3,7 @@ Section: net
@@ -12,7 +12,7 @@ index 809e059..35e19b8 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,12 +11,12 @@ Build-Depends:
+@@ -13,13 +11,12 @@ Build-Depends:
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
@@ -20,6 +20,7 @@ index 809e059..35e19b8 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
+-    php7.1-dev, libphp7.1-embed,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -29,8 +30,35 @@ index 809e059..35e19b8 100644
      zlib1g-dev
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
+@@ -45,7 +42,7 @@ Description: Fast, light and extensible chat client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - spell checking
+   - highly customizable and extensible
+@@ -71,7 +68,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - spell checking
+   - highly customizable and extensible
+@@ -102,7 +99,7 @@ Description: Fast, light and extensible chat client - plugins
+  .
+  This package provides some plugins to enhance WeeChat. It currently
+  ships the following plugins:
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - Spell checking (thanks to aspell)
+   - FIFO pipe for remote control
 diff --git a/debian-stable/control b/debian-stable/control
-index 74d134c..9780937 100644
+index 68a501262..09a7327d3 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,9 +3,7 @@ Section: net
@@ -43,7 +71,7 @@ index 74d134c..9780937 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,12 +11,12 @@ Build-Depends:
+@@ -13,13 +11,12 @@ Build-Depends:
      python-dev,
      libaspell-dev,
      liblua5.1-0-dev,
@@ -51,6 +79,7 @@ index 74d134c..9780937 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
+-    php7.1-dev, libphp7.1-embed,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -60,13 +89,40 @@ index 74d134c..9780937 100644
      zlib1g-dev
  Standards-Version: 3.9.8
  Homepage: https://weechat.org/
+@@ -44,7 +41,7 @@ Description: Fast, light and extensible chat client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - spell checking
+   - highly customizable and extensible
+@@ -71,7 +68,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - spell checking
+   - highly customizable and extensible
+@@ -102,7 +99,7 @@ Description: Fast, light and extensible chat client - plugins
+  .
+  This package provides some plugins to enhance WeeChat. It currently
+  ships the following plugins:
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - scripts manager
+   - Spell checking (thanks to aspell)
+   - FIFO pipe for remote control
 diff --git a/debian-stable/weechat-plugins.install b/debian-stable/weechat-plugins.install
 old mode 100755
 new mode 100644
-index 198360f..980192f
+index 2d601e09b..980192fa4
 --- a/debian-stable/weechat-plugins.install
 +++ b/debian-stable/weechat-plugins.install
-@@ -1,10 +1,8 @@
+@@ -1,13 +1,10 @@
 -#!/usr/bin/dh-exec
 -
  usr/lib/weechat/plugins/aspell.so
@@ -77,4 +133,7 @@ index 198360f..980192f
 +usr/lib/weechat/plugins/javascript.so
  usr/lib/weechat/plugins/lua.so
  usr/lib/weechat/plugins/perl.so
+-usr/lib/weechat/plugins/php.so
  usr/lib/weechat/plugins/python.so
+ usr/lib/weechat/plugins/relay.so
+ usr/lib/weechat/plugins/ruby.so
