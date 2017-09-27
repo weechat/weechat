@@ -1090,8 +1090,15 @@ php_weechat_sapi_error (int type, const char *format, ...)
 }
 
 void
+#if PHP_MINOR_VERSION >= 1
+php_weechat_log_message (char *message, int syslog_type_int)
+#else
 php_weechat_log_message (char *message)
+#endif
 {
+#if PHP_MINOR_VERSION >= 1
+    (void)syslog_type_int;
+#endif
     php_weechat_ub_write (message, strlen (message));
 }
 
