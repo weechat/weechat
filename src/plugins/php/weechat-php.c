@@ -1089,7 +1089,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
     free (vbuffer);
 }
 
-#if PHP_MAJOR_VERSION > 7 || PHP_MINOR_VERSION >= 1
+#if PHP_VERSION_ID >= 70100
 /* PHP >= 7.1 */
 void
 php_weechat_log_message (char *message, int syslog_type_int)
