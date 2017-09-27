@@ -30,15 +30,15 @@
 #
 # Script arguments:          Examples:
 #
-#   1. version               devel, devel-2, stable, stable-2, 1.4, 1.4-2
-#   2. distro type/name      debian/sid, ubuntu/wily, raspbian/jessie
+#   1. version               devel, devel-2, stable, stable-2, 1.9, 1.9-2
+#   2. distro type/name      debian/sid, ubuntu/artful, raspbian/stretch
 #
 # Examples:
 #
 #   …/build-debian.sh devel debian/sid
-#   …/build-debian.sh stable debian/jessie
-#   …/build-debian.sh 1.4 ubuntu/wily
-#   …/build-debian.sh 1.4-2 ubuntu/wily
+#   …/build-debian.sh stable debian/stretch
+#   …/build-debian.sh 1.9 ubuntu/artful
+#   …/build-debian.sh 1.9-2 ubuntu/zesty
 #
 # Environment variables that can be used:
 #
@@ -65,8 +65,8 @@ Syntax: $0 devel|stable|<version> distro
 
   version  version to build: stable, devel or specific version
            (debian package revision is allowed after name (default is 1),
-           for example: devel-2, stable-2, 1.4-2)
-   distro  the distro type/name (debian/sid, ubuntu/wily, raspbian/jessie, ...)
+           for example: devel-2, stable-2, 1.9-2)
+   distro  the distro type/name (debian/sid, ubuntu/artful, raspbian/stretch, ...)
 
 IMPORTANT: the current OS must match the distro, and the WeeChat sources
            must be checkouted in the appropriate version (this script
@@ -75,9 +75,9 @@ IMPORTANT: the current OS must match the distro, and the WeeChat sources
 Examples:
 
   $0 devel debian/sid
-  $0 stable debian/jessie
-  $0 1.4 ubuntu/wily
-  $0 1.4-2 ubuntu/wily
+  $0 stable debian/stretch
+  $0 1.9 ubuntu/artful
+  $0 1.9-2 ubuntu/zesty
 
 EOF
     exit ${RC}
@@ -127,7 +127,7 @@ VERSION="$1"
 DISTRO="$2"
 
 # separate version and revision
-# example: devel => devel / 1, stable-2 => stable / 2, 1.4-2 => 1.4 / 2
+# example: devel => devel / 1, stable-2 => stable / 2, 1.9-2 => 1.9 / 2
 TMP_VERSION=$(expr "${VERSION}" : '\([^/]*\)-') || true
 DEB_REVISION=""
 if [ ! -z "${TMP_VERSION}" ]; then
