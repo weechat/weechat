@@ -16,6 +16,7 @@ Build-Depends:
     tcl8.6-dev,
     guile-2.0-dev,
     libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
+    php7.1-dev, libphp7.1-embed,
     libcurl4-gnutls-dev,
     libgcrypt20-dev,
     libgnutls28-dev,
@@ -43,7 +44,7 @@ Description: Fast, light and extensible chat client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
   - scripts manager
   - spell checking
   - highly customizable and extensible
@@ -70,7 +71,7 @@ Description: Fast, light and extensible chat client - console client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
   - scripts manager
   - spell checking
   - highly customizable and extensible
@@ -101,7 +102,7 @@ Description: Fast, light and extensible chat client - plugins
  .
  This package provides some plugins to enhance WeeChat. It currently
  ships the following plugins:
-  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
   - scripts manager
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
