@@ -191,7 +191,9 @@ weechat_aspell_command_speller_list_dicts ()
         }
 
         snprintf (str_dict, sizeof (str_dict), "%-22s %s%s",
-                  dict->name, lang, str_country);
+                  dict->name,
+                  (lang) ? lang : "?",
+                  str_country);
 
         weechat_printf (NULL, "  %s", str_dict);
 
