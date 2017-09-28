@@ -121,9 +121,8 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | tcl-dev                      | 8.5 以上         |        | tcl プラグイン
 | guile-2.0-dev                | 2.0 以上         |        | guile (scheme) プラグイン
 | libv8-dev                    | 3.24.3 以下      |        | javascript プラグイン
-// TRANSLATION MISSING
 | php7.1-dev, libphp7.1-embed,
-  libxml2-dev                  | PHP >= 7.0       |        | PHP プラグイン
+  libxml2-dev                  | PHP 7.0 以上     |        | PHP プラグイン
 | asciidoctor                  | 1.5.4 以上       |        | man ページと文書のビルド
 | libcpputest-dev              | 3.4 以上         |        | ビルドとテストの実行
 |===
@@ -275,7 +274,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   すべての<<scripts_plugins,スクリプトプラグイン>>
-  (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript, PHP) のコンパイル。
+  (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript、PHP) のコンパイル。
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル。
