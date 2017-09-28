@@ -15,6 +15,7 @@
 
 Alphabetically:
 
+* Adam Saponara (adsr)
 * Ailin Nemui (Nei)
 * Aleksey V Zapparov
 * Alex Tarkovsky
