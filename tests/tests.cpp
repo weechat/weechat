@@ -173,10 +173,6 @@ main (int argc, char *argv[])
 
     ptr_core_buffer = gui_buffer_search_main ();
 
-    /* display WeeChat version and directories */
-    input_data (ptr_core_buffer, "/command core version");
-    input_data (ptr_core_buffer, "/debug dirs");
-
     /* auto-load plugins from WEECHAT_EXTRA_LIBDIR if no plugin were loaded */
     if (!weechat_plugins)
     {
@@ -186,6 +182,11 @@ main (int argc, char *argv[])
                          getenv ("WEECHAT_EXTRA_LIBDIR"));
         plugin_auto_load (0, NULL, 0, 1, 0);
     }
+
+    /* display WeeChat version and directories */
+    input_data (ptr_core_buffer, "/command core version");
+    input_data (ptr_core_buffer, "/debug dirs");
+    input_data (ptr_core_buffer, "/debug libs");
 
     /* run all tests */
     printf ("\n");
