@@ -1156,7 +1156,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    /* unload all scripts */
+    php_quiet = 1;
     plugin_script_end (plugin, &php_scripts, &weechat_php_unload_all);
+    php_quiet = 0;
 
     if (weechat_php_func_map)
     {
