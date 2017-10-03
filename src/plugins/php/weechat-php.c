@@ -38,14 +38,14 @@ WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_php_plugin;
-struct t_hashtable *weechat_php_func_map = NULL;
-int php_quiet = 0;
 
+int php_quiet;
 struct t_plugin_script *php_scripts = NULL;
 struct t_plugin_script *last_php_script = NULL;
 struct t_plugin_script *php_current_script = NULL;
 struct t_plugin_script *php_registered_script = NULL;
 const char *php_current_script_filename = NULL;
+struct t_hashtable *weechat_php_func_map = NULL;
 
 /*
  * string used to execute action "install":
@@ -836,6 +836,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             ptr_name = argv_eol[2];
             if (strncmp (ptr_name, "-q ", 3) == 0)
             {
+                php_quiet = 1;
                 ptr_name += 3;
                 while (ptr_name[0] == ' ')
                 {
@@ -858,6 +859,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             {
                 weechat_php_unload_name (ptr_name);
             }
+            php_quiet = 0;
         }
         else
             WEECHAT_COMMAND_ERROR;
