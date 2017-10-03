@@ -67,8 +67,12 @@
     plugin_script_str2ptr (weechat_lua_plugin,                          \
                            LUA_CURRENT_SCRIPT_NAME,                     \
                            lua_function_name, __string)
-#define API_RETURN_OK return 1
-#define API_RETURN_ERROR return 0
+#define API_RETURN_OK                                                   \
+    lua_pushinteger (L, 1);                                             \
+    return 1
+#define API_RETURN_ERROR                                                \
+    lua_pushinteger (L, 0);                                             \
+    return 1
 #define API_RETURN_EMPTY                                                \
     lua_pushstring (L, "");                                             \
     return 0

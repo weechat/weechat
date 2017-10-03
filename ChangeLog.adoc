@@ -44,6 +44,7 @@ Bug fixes::
   * guile: return integer (0/1) instead of boolean in API functions
   * guile: fix return value of static strings in API functions
   * irc: fix CTCP PING reply when the option irc.ctcp.ping is set to non-empty value
+  * lua: fix boolean return value (as integer) in API functions
   * relay: fix parsing of CAP command without arguments in irc protocol, send ACK only if all capabilities received are OK and NAK otherwise (issue #1040)
 
 Tests::
