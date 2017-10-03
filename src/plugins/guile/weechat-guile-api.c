@@ -68,10 +68,10 @@
     }
 #define API_RETURN_OK                                                   \
     API_FREE_STRINGS;                                                   \
-    return SCM_BOOL_T
+    return scm_from_int (1)
 #define API_RETURN_ERROR                                                \
     API_FREE_STRINGS                                                    \
-    return SCM_BOOL_F
+    return scm_from_int (0)
 #define API_RETURN_EMPTY                                                \
     API_FREE_STRINGS;                                                   \
     return scm_from_locale_string("")
