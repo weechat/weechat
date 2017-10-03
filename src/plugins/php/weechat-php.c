@@ -871,6 +871,7 @@ weechat_php_command_cb (const void *pointer, void *data,
             }
             if (weechat_strcasecmp (argv[1], "load") == 0)
             {
+                /* load PHP script */
                 path_script = plugin_script_search_path (weechat_php_plugin,
                                                          ptr_name);
                 weechat_php_load ((path_script) ? path_script : ptr_name);
@@ -879,10 +880,12 @@ weechat_php_command_cb (const void *pointer, void *data,
             }
             else if (weechat_strcasecmp (argv[1], "reload") == 0)
             {
+                /* reload one PHP script */
                 weechat_php_reload_name (ptr_name);
             }
             else if (weechat_strcasecmp (argv[1], "unload") == 0)
             {
+                /* unload PHP script */
                 weechat_php_unload_name (ptr_name);
             }
             php_quiet = 0;
@@ -1172,6 +1175,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     plugin_script_display_short_list (weechat_php_plugin,
                                       php_scripts);
 
+    /* init OK */
     return WEECHAT_RC_OK;
 }
 
