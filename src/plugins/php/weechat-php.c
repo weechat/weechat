@@ -618,6 +618,13 @@ weechat_php_load (const char *filename)
 {
     zend_file_handle file_handle;
 
+    if ((weechat_php_plugin->debug >= 2) || !php_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: loading script \"%s\""),
+                        PHP_PLUGIN_NAME, filename);
+    }
+
     php_current_script = NULL;
     php_registered_script = NULL;
     php_current_script_filename = filename;
@@ -680,6 +687,13 @@ weechat_php_unload (struct t_plugin_script *script)
     int *rc;
     char *filename;
 
+    if ((weechat_php_plugin->debug >= 2) || !php_quiet)
+    {
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: unloading script \"%s\""),
+                        PHP_PLUGIN_NAME, script->name);
+    }
+
     if (script->shutdown_func && script->shutdown_func[0])
     {
         rc = (int *)weechat_php_exec (script,
@@ -717,6 +731,12 @@ weechat_php_unload_name (const char *name)
     if (ptr_script)
     {
         weechat_php_unload (ptr_script);
+        if (!php_quiet)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s: script \"%s\" unloaded"),
+                            PHP_PLUGIN_NAME, name);
+        }
     }
     else
     {
@@ -756,6 +776,12 @@ weechat_php_reload_name (const char *name)
         if (filename)
         {
             weechat_php_unload (ptr_script);
+            if (!php_quiet)
+            {
+                weechat_printf (NULL,
+                                weechat_gettext ("%s: script \"%s\" unloaded"),
+                                PHP_PLUGIN_NAME, name);
+            }
             weechat_php_load (filename);
             free (filename);
         }
