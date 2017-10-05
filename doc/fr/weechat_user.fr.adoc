@@ -97,32 +97,32 @@ compiler WeeChat.
 
 [width="100%",cols="6,^3,^3,.^13",options="header"]
 |===
-| Paquet ^(1)^                 | Version       | Requis | Fonctionnalité
+| Paquet ^(1)^                | Version       | Requis | Fonctionnalité
 | compilateur C
-  (gcc, clang, ...)            |               | *oui*  | Construction.
-| compilateur C++              |               |        | Construction et lancement des tests, extension JavaScript.
-| cmake                        |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
-| pkg-config                   |               | *oui*  | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^       |               | *oui*  | Interface ncurses.
-| libcurl4-gnutls-dev          |               | *oui*  | Transfert d'URL.
-| zlib1g-dev                   |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
-| libgcrypt20-dev              |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script.
-| libgnutls28-dev              | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| gettext                      |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
-| ca-certificates              |               |        | Certificats pour les connexions SSL.
+  (gcc, clang, ...)           |               | *oui*  | Construction.
+| compilateur C++             |               |        | Construction et lancement des tests, extension JavaScript.
+| cmake                       |               | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
+| pkg-config                  |               | *oui*  | Détection des bibliothèques installées.
+| libncursesw5-dev ^(2)^      |               | *oui*  | Interface ncurses.
+| libcurl4-gnutls-dev         |               | *oui*  | Transfert d'URL.
+| zlib1g-dev                  |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
+| libgcrypt20-dev             |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES), extension script.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ |        | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
+| gettext                     |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
+| ca-certificates             |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
-  ∥ libenchant-dev             |               |        | Extension aspell.
-| python-dev                   | ≥ 2.6 ^(4)^   |        | Extension python.
-| libperl-dev                  |               |        | Extension perl.
-| ruby-2.3, ruby2.3-dev        | ≥ 1.8         |        | Extension ruby.
-| liblua5.3-dev                |               |        | Extension lua.
-| tcl-dev                      | ≥ 8.5         |        | Extension tcl.
-| guile-2.0-dev                | ≥ 2.0         |        | Extension guile (scheme).
-| libv8-dev                    | ≤ 3.24.3      |        | Extension javascript.
-| php7.1-dev, libphp7.1-embed,
-  libxml2-dev                  | PHP ≥ 7.0     |        | Extension PHP.
-| asciidoctor                  | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
-| libcpputest-dev              | ≥ 3.4         |        | Construction et lancement des tests.
+  ∥ libenchant-dev            |               |        | Extension aspell.
+| python-dev                  | ≥ 2.6 ^(4)^   |        | Extension python.
+| libperl-dev                 |               |        | Extension perl.
+| ruby-2.3, ruby2.3-dev       | ≥ 1.8         |        | Extension ruby.
+| liblua5.3-dev               |               |        | Extension lua.
+| tcl-dev                     | ≥ 8.5         |        | Extension tcl.
+| guile-2.0-dev               | ≥ 2.0         |        | Extension guile (scheme).
+| libv8-dev                   | ≤ 3.24.3      |        | Extension javascript.
+| php7.1-dev, libphp7.1-embed | ≥ 7.0         |        | Extension PHP.
+| libxml2-dev                 |               |        | Extension PHP.
+| asciidoctor                 | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
+| libcpputest-dev             | ≥ 3.4         |        | Construction et lancement des tests.
 |===
 
 [NOTE]

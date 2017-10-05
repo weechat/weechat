@@ -100,32 +100,32 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 
 [width="100%",cols="6,^3,^3,.^13",options="header"]
 |===
-| Paket ^(1)^                  | Version       | benötigt | Funktion
+| Paket ^(1)^                 | Version       | benötigt | Funktion
 | C compiler
-  (gcc, clang, ...)            |               | *ja*     | zum Erstellen der Binärdatei.
-| C++ compiler                 |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| cmake                        |               | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
-| pkg-config                   |               | *ja*     | entdeckt installierte Bibliotheken.
-| libncursesw5-dev ^(2)^       |               | *ja*     | Ncurses Oberfläche.
-| libcurl4-gnutls-dev          |               | *ja*     | URL Transfer.
-| zlib1g-dev                   |               | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
-| libgcrypt20-dev              |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung.
-| libgnutls28-dev              | ≥ 2.2.0 ^(3)^ |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
-| gettext                      |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates              |               |          | Zertifikate für SSL Verbindungen.
+  (gcc, clang, ...)           |               | *ja*     | zum Erstellen der Binärdatei.
+| C++ compiler                |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+| cmake                       |               | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
+| pkg-config                  |               | *ja*     | entdeckt installierte Bibliotheken.
+| libncursesw5-dev ^(2)^      |               | *ja*     | Ncurses Oberfläche.
+| libcurl4-gnutls-dev         |               | *ja*     | URL Transfer.
+| zlib1g-dev                  |               | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
+| libgcrypt20-dev             |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung.
+| libgnutls28-dev             | ≥ 2.2.0 ^(3)^ |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
+| gettext                     |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+| ca-certificates             |               |          | Zertifikate für SSL Verbindungen.
 | libaspell-dev
-  ∥ libenchant-dev             |               |          | Aspell Erweiterung.
-| python-dev                   | ≥ 2.6 ^(4)^   |          | Python Erweiterung.
-| libperl-dev                  |               |          | Perl Erweiterung.
-| ruby-2.3, ruby2.3-dev        | ≥ 1.8         |          | Ruby Erweiterung.
-| liblua5.3-dev                |               |          | Lua Erweiterung.
-| tcl-dev                      | ≥ 8.5         |          | Tcl Erweiterung.
-| guile-2.0-dev                | ≥ 2.0         |          | Guile (scheme) Erweiterung.
-| libv8-dev                    | ≤ 3.24.3      |          | JavaScript Erweiterung.
-| php7.1-dev, libphp7.1-embed,
-  libxml2-dev                  | PHP ≥ 7.0     |          | PHP Erweiterung.
-| asciidoctor                  | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
-| libcpputest-dev              | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
+  ∥ libenchant-dev            |               |          | Aspell Erweiterung.
+| python-dev                  | ≥ 2.6 ^(4)^   |          | Python Erweiterung.
+| libperl-dev                 |               |          | Perl Erweiterung.
+| ruby-2.3, ruby2.3-dev       | ≥ 1.8         |          | Ruby Erweiterung.
+| liblua5.3-dev               |               |          | Lua Erweiterung.
+| tcl-dev                     | ≥ 8.5         |          | Tcl Erweiterung.
+| guile-2.0-dev               | ≥ 2.0         |          | Guile (scheme) Erweiterung.
+| libv8-dev                   | ≤ 3.24.3      |          | JavaScript Erweiterung.
+| php7.1-dev, libphp7.1-embed | ≥ 7.0         |          | PHP Erweiterung.
+| libxml2-dev                 |               |          | PHP Erweiterung.
+| asciidoctor                 | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
+| libcpputest-dev             | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
 |===
 
 [NOTE]
