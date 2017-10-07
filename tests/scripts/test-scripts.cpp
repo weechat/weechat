@@ -97,7 +97,7 @@ TEST_GROUP(Scripts)
     {
         /*
          * TODO: fix memory leaks in javascript plugin
-         * and remove this function
+         * and keep memory leak detection enabled
          */
         MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
 
@@ -117,7 +117,7 @@ TEST_GROUP(Scripts)
 
         /*
          * TODO: fix memory leaks in javascript plugin
-         * and remove this function
+         * and keep memory leak detection enabled
          */
         MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
     }
