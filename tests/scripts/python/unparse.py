@@ -309,9 +309,6 @@ class UnparsePerl(UnparsePython):
     the script to test WeeChat scripting API).
     """
 
-    def __init__(self, *args, **kwargs):
-        super(UnparsePerl, self).__init__(*args, **kwargs)
-
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
         self.add(
@@ -467,9 +464,6 @@ class UnparseRuby(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    def __init__(self, *args, **kwargs):
-        super(UnparseRuby, self).__init__(*args, **kwargs)
 
     def _ast_attribute(self, node):
         """Add an AST Attribute in output."""
@@ -961,9 +955,6 @@ class UnparseJavascript(UnparsePython):
     the script to test WeeChat scripting API).
     """
 
-    def __init__(self, *args, **kwargs):
-        super(UnparseJavascript, self).__init__(*args, **kwargs)
-
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -1023,9 +1014,6 @@ class UnparsePhp(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
-
-    def __init__(self, *args, **kwargs):
-        super(UnparsePhp, self).__init__(*args, **kwargs)
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
