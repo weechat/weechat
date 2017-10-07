@@ -131,6 +131,8 @@ TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, str_command[4096];
+    char *test_scripts_dir;
+    const char *ptr_test_scripts_dir;
     const char *languages[][2] = {
         { "python",    "py"  },
         { "perl",      "pl"  },
@@ -146,15 +148,20 @@ TEST(Scripts, API)
 
     printf ("...\n");
 
+    ptr_test_scripts_dir = getenv ("WEECHAT_TESTS_SCRIPTS_DIR");
+    test_scripts_dir = strdup (
+        (ptr_test_scripts_dir) ?
+        ptr_test_scripts_dir : "../tests/scripts/python");
+
     /* build paths for scripting API tests */
     snprintf (path_testapigen, sizeof (path_testapigen),
               "%s%s%s",
-              getenv ("WEECHAT_TESTS_SCRIPTS_DIR"),
+              test_scripts_dir,
               DIR_SEPARATOR,
               "testapigen.py");
     snprintf (path_testapi, sizeof (path_testapi),
               "%s%s%s",
-              getenv ("WEECHAT_TESTS_SCRIPTS_DIR"),
+              test_scripts_dir,
               DIR_SEPARATOR,
               "testapi.py");
     path_testapi_output_dir = string_eval_path_home ("%h/testapi",
@@ -238,6 +245,7 @@ TEST(Scripts, API)
     }
 
     free (path_testapi_output_dir);
+    free (test_scripts_dir);
 
     printf ("TEST(Scripts, API)");
 }
