@@ -52,6 +52,10 @@ Tests::
   * scripts: add scripting API tests (issue #104)
   * unit: display an error if the required locale en_US.UTF-8 is not installed
 
+Build::
+
+  * javascript: fix detection of libv8 with autotools on Ubuntu Trusty
+
 [[v1.9.1]]
 == Version 1.9.1 (2017-09-23)
 

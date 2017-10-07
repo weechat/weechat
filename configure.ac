@@ -888,8 +888,8 @@ if test "x$enable_javascript" = "xyes" ; then
     AC_CHECK_HEADER(v8.h,ac_found_v8_header="yes",ac_found_v8_header="no")
     if test "x$ac_found_v8_header" = "xyes" ; then
         #AC_CHECK_LIB(v8,v8,ac_found_v8_lib="yes",ac_found_v8_lib="no")
-        ac_save_LDFLAGS="$LDFLAGS"
-        LDFLAGS="$LDFLAGS -lv8"
+        ac_save_LIBS="$LIBS"
+        LIBS="$LIBS -lv8"
         AC_MSG_CHECKING(for v8 usability in programs)
         AC_TRY_RUN([
             #include <v8.h>
@@ -898,7 +898,7 @@ if test "x$enable_javascript" = "xyes" ; then
                 const char *version = V8::GetVersion();
                 return 0;
             }],ac_found_v8_lib="yes", ac_found_v8_lib="no", ac_found_v8_lib="assume-yes")
-        LDFLAGS="$ac_save_LDFLAGS"
+        LIBS="$ac_save_LIBS"
         if test "x$ac_found_v8_lib" = "xyes" ; then
             AC_MSG_RESULT(yes)
             v8_found="yes"
