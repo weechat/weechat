@@ -90,6 +90,8 @@ Les répertoires principaux de WeeChat sont :
 |       trigger/    | Extension Trigger.
 |       xfer/       | Extension Xfer (IRC DCC fichier/discussion).
 | tests/            | Tests.
+|    scripts/       | Tests de l'API script.
+|       python/     | Scripts Python pour générer et lancer les tests de l'API script.
 |    unit/          | Tests unitaires.
 |       core/       | Tests unitaires pour les fonctions du cœur.
 | doc/              | Documentation.
@@ -341,7 +343,13 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |===
 | Chemin/fichier              | Description
 | tests/                      | Racine des tests.
-|    tests.cpp                | Programme utilisé pour lancer les tests.
+|    tests.cpp                | Programme utilisé pour lancer tous les tests.
+|    scripts/                 | Racine des tests de l'API script.
+|       test-scripts.cpp      | Programme utilisé pour lancer les tests de l'API script.
+|       python/               | Scripts Python pour générer et lancer les tests de l'API script.
+|          testapigen.py      | Script Python générant des scripts dans tous les languages pour tester l'API script.
+|          testapi.py         | Script Python avec les tests API, utilisé par le script testapigen.py.
+|          unparse.py         | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
 |    unit/                    | Racine des tests unitaires.
 |       core/                 | Racine des tests unitaires pour le cœur.
 |          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »).

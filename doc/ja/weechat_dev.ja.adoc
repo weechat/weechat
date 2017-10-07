@@ -94,6 +94,9 @@ qweechat::
 |       trigger/    | trigger プラグイン
 |       xfer/       | xfer (IRC DCC ファイル/チャット)
 | tests/            | テスト
+// TRANSLATION MISSING
+|    scripts/       | Scripting API tests.
+|       python/     | Python scripts to generate and run the scripting API tests.
 |    unit/          | 単体テスト
 |       core/       | コア関数の単体テスト
 | doc/              | 文書
@@ -345,7 +348,14 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |===
 | パス/ファイル名             | 説明
 | tests/                      | テスト用のルートディレクトリ
-|    tests.cpp                | テスト実行に使うプログラム
+// TRANSLATION MISSING
+|    tests.cpp                | Program used to run all tests.
+|    scripts/                 | Root of scripting API tests.
+|       test-scripts.cpp      | Program used to run the scripting API tests.
+|       python/               | Python scripts to generate and run the scripting API tests.
+|          testapigen.py      | Python script generating scripts in all languages to test the scripting API.
+|          testapi.py         | Python script with scripting API tests, used by script testapigen.py.
+|          unparse.py         | Convert Python code to other languages, used by script testapigen.py.
 |    unit/                    | 単体テスト用のルートディレクトリ
 |       core/                 | core 向け単体テスト用のルートディレクトリ
 |          test-arraylist.cpp | テスト: 配列リスト

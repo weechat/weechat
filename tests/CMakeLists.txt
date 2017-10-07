@@ -39,6 +39,7 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
   unit/core/test-url.cpp
   unit/core/test-utf8.cpp
   unit/core/test-util.cpp
+  scripts/test-scripts.cpp
 )
 add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})
 
@@ -77,4 +78,5 @@ add_test(NAME unit
   COMMAND tests -v)
 set_property(TEST unit PROPERTY
   ENVIRONMENT "WEECHAT_TESTS_ARGS=-p;"
-  "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src")
+  "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src;"
+  "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python")
