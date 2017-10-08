@@ -680,6 +680,13 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
     /* find next group by parents */
     while ((ptr_group = ptr_group->parent))
     {
+        if (ptr_group->nicks)
+        {
+            *group = NULL;
+            *nick = ptr_group->nicks;
+            return;
+        }
+
         if (ptr_group->next_group)
         {
             *group = ptr_group->next_group;

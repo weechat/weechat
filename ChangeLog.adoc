@@ -35,6 +35,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: fix display of nicks in nicklist when they are in a group with sub-groups (issue #1079)
   * core, plugins: check return code of strftime function
   * core: fix cast of time_t (to "long long" instead of "long") (issue #1051)
   * core: call the config hook when options are renamed or removed
