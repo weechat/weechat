@@ -682,7 +682,7 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
     {
         if (ptr_group->nicks)
         {
-            *group = NULL;
+            *group = ptr_group;
             *nick = ptr_group->nicks;
             return;
         }
