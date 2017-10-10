@@ -50,6 +50,8 @@ class UnparsePython(object):
     the script to test WeeChat scripting API).
     """
 
+    __lineno__ = inspect.currentframe().f_lineno
+
     def __init__(self, output=sys.stdout):
         self.output = output
         self.indent_string = ' ' * 4
@@ -309,6 +311,8 @@ class UnparsePerl(UnparsePython):
     the script to test WeeChat scripting API).
     """
 
+    __lineno__ = inspect.currentframe().f_lineno
+
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
         self.add(
@@ -465,6 +469,8 @@ class UnparseRuby(UnparsePython):
     the script to test WeeChat scripting API).
     """
 
+    __lineno__ = inspect.currentframe().f_lineno
+
     def _ast_attribute(self, node):
         """Add an AST Attribute in output."""
         self.add(
@@ -536,6 +542,8 @@ class UnparseLua(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
+
+    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs):
         super(UnparseLua, self).__init__(*args, **kwargs)
@@ -637,6 +645,8 @@ class UnparseTcl(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
+
+    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs):
         super(UnparseTcl, self).__init__(*args, **kwargs)
@@ -783,6 +793,8 @@ class UnparseGuile(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
+
+    __lineno__ = inspect.currentframe().f_lineno
 
     def __init__(self, *args, **kwargs):
         super(UnparseGuile, self).__init__(*args, **kwargs)
@@ -955,6 +967,8 @@ class UnparseJavascript(UnparsePython):
     the script to test WeeChat scripting API).
     """
 
+    __lineno__ = inspect.currentframe().f_lineno
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -1014,6 +1028,8 @@ class UnparsePhp(UnparsePython):
     Note: only part of AST types are supported (just the types used by
     the script to test WeeChat scripting API).
     """
+
+    __lineno__ = inspect.currentframe().f_lineno
 
     def _ast_assign(self, node):
         """Add an AST Assign in output."""
@@ -1141,25 +1157,18 @@ class UnparsePhp(UnparsePython):
 def get_languages():
     """Return a list of supported languages: ['python', 'perl', ...]."""
 
-    def linenumber_of_member(member):
-        """Return the line number of a member."""
-        try:
-            # python 2
-            return member[1].__init__.im_func.func_code.co_firstlineno
-        except AttributeError:
-            try:
-                # python 3
-                return member[1].__init__.__code__.co_firstlineno
-            except AttributeError:
-                return -1
+    members = [
+        member
+        for member in inspect.getmembers(sys.modules[__name__],
+                                         predicate=inspect.isclass)
+        if inspect.isclass(member[1]) and member[0].startswith('Unparse')
+    ]
 
-    languages = []
-    members = inspect.getmembers(sys.modules[__name__],
-                                 predicate=inspect.isclass)
-    members.sort(key=linenumber_of_member)
-    for name, obj in members:
-        if inspect.isclass(obj) and name.startswith('Unparse'):
-            languages.append(name[7:].lower())
+    languages = [
+        name[7:].lower()
+        for name, obj in sorted(members,
+                                key=lambda member: member[1].__lineno__)
+    ]
 
     return languages
 
