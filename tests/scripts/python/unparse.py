@@ -1166,8 +1166,8 @@ def get_languages():
 
     languages = [
         name[7:].lower()
-        for name, obj in sorted(members,
-                                key=lambda member: member[1].__lineno__)
+        for name, _ in sorted(members,
+                              key=lambda member: member[1].__lineno__)
     ]
 
     return languages
