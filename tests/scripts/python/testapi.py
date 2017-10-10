@@ -117,10 +117,7 @@ def test_lists():
     weechat.list_free(ptr_list)
 
 
-def weechat_init():
-    """Main function."""
-    weechat.register('SCRIPT_NAME', 'SCRIPT_AUTHOR', 'SCRIPT_VERSION',
-                     'SCRIPT_LICENSE', 'SCRIPT_DESCRIPTION', '', '')
+def cmd_test_cb(data, buf, args):
     weechat.prnt('', '>>>')
     weechat.prnt('', '>>> ------------------------------')
     weechat.prnt('', '>>> Testing ' + 'SCRIPT_LANGUAGE' + ' API')
@@ -129,3 +126,11 @@ def weechat_init():
     test_strings()
     test_lists()
     weechat.prnt('', '  > TESTS END')
+    return weechat.WEECHAT_RC_OK
+
+
+def weechat_init():
+    """Main function."""
+    weechat.register('SCRIPT_NAME', 'SCRIPT_AUTHOR', 'SCRIPT_VERSION',
+                     'SCRIPT_LICENSE', 'SCRIPT_DESCRIPTION', '', '')
+    weechat.hook_command('SCRIPT_NAME', '', '', '', '', 'cmd_test_cb', '')

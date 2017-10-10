@@ -28,9 +28,11 @@ extern "C"
 #endif
 #include <stdio.h>
 #include <string.h>
+#include <sys/time.h>
 #include "src/core/weechat.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-hook.h"
+#include "src/core/wee-util.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -132,6 +134,8 @@ TEST(Scripts, API)
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, str_command[4096];
     char *test_scripts_dir;
+    struct timeval time_start, time_end;
+    long long diff;
     const char *ptr_test_scripts_dir;
     const char *languages[][2] = {
         { "python",    "py"  },
@@ -207,15 +211,29 @@ TEST(Scripts, API)
                   languages[i][1]);
         run_cmd (str_command);
 
+        /* get date/time before running tests */
+        gettimeofday (&time_start, NULL);
+
+        /* run tests */
+        snprintf (str_command, sizeof (str_command),
+                  "/testapi.%s",
+                  languages[i][1]);
+        run_cmd (str_command);
+
+        /* compute elapsed time */
+        gettimeofday (&time_end, NULL);
+        diff = util_timeval_diff (&time_start, &time_end);
+
         /* display results */
         printf ("\n");
         printf (">>> Tests %s: %d tests, %d OK, %d errors, "
-                "%d unexpected messages\n",
+                "%d unexpected messages, %lld ms\n",
                 languages[i][0],
                 api_tests_count,
                 api_tests_ok,
                 api_tests_errors,
-                api_tests_other);
+                api_tests_other,
+                diff / 1000);
         printf ("\n");
 
         /* unload script */
