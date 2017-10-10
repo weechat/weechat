@@ -118,6 +118,7 @@ def test_lists():
 
 
 def cmd_test_cb(data, buf, args):
+    """Run all the tests."""
     weechat.prnt('', '>>>')
     weechat.prnt('', '>>> ------------------------------')
     weechat.prnt('', '>>> Testing ' + 'SCRIPT_LANGUAGE' + ' API')
