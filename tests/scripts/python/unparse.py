@@ -456,6 +456,12 @@ class UnparsePerl(UnparsePython):
         """Add an AST Pass in output."""
         pass
 
+    def _ast_return(self, node):
+        """Add an AST Return in output."""
+        self.fill('return')
+        if node.value:
+            self.add(' ', node.value, ';')
+
     def _ast_str(self, node):
         """Add an AST Str in output."""
         self.add('"%s"' % node.s.replace('$', '\\$'))
@@ -954,6 +960,11 @@ class UnparseGuile(UnparsePython):
         """Add an AST Pass in output."""
         pass
 
+    def _ast_return(self, node):
+        """Add an AST Return in output."""
+        if node.value:
+            self.add(self.fill, node.value)
+
     def _ast_str(self, node):
         """Add an AST Str in output."""
         self.add('"%s"' % node.s)
@@ -1148,6 +1159,12 @@ class UnparsePhp(UnparsePython):
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
+
+    def _ast_return(self, node):
+        """Add an AST Return in output."""
+        self.fill('return')
+        if node.value:
+            self.add(' ', node.value, ';')
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
