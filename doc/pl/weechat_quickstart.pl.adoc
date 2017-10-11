@@ -202,6 +202,12 @@ Aby automatycznie wejść na kanały po połączeniu z serwerem:
 /set irc.server.freenode.autojoin "#kanał1,#kanał2"
 ----
 
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyślnej,
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
 

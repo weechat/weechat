@@ -201,6 +201,12 @@ K automatickému připojení některých kanálů při připojování k serveru:
 /set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 K smazání hodnoty serverové volby a k použití výchozí hodnoty místo ní,
 například k požití výchozích přezdívek (irc.server_default.nicks):
 

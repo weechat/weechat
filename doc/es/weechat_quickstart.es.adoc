@@ -222,6 +222,12 @@ Para unirse automáticamente a canales cuando el servidor se conecte:
 /set irc.server.freenode.autojoin "#uncanal,#otrocanal"
 ----
 
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 Para eliminar un valor asignado a una opción de servidor y usar los
 valores por defecto en su lugar, por ejemplo, usar el nick por defecto
 (irc.server_default.nicks):

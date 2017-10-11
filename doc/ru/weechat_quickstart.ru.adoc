@@ -206,6 +206,12 @@ the changes.
 /set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 Для очистки параметра из группы _server_ и установки значения по умолчанию
 используется следующая конструкция, например, для возврата к псевдонимам по
 умолчанию (irc.server_default.nicks):

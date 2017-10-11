@@ -202,6 +202,12 @@ _command_ オプションに複数のコマンドを含める場合は `;` (セ�
 /set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
+// TRANSLATION MISSING
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 サーバオプションの代わりにデフォルトの値を使用する、例えばデフォルトのニックネーム
 (irc.server_default.nicks) を使用する場合:
 

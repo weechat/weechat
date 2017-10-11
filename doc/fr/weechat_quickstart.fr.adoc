@@ -204,6 +204,11 @@ Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
 /set irc.server.freenode.autojoin "#canal1,#canal2"
 ----
 
+[TIP]
+Vous pouvez compléter le nom et la valeur des options avec la touche kbd:[Tab]
+et kbd:[Shift+Tab] pour une complétion partielle (utile pour les mots longs
+comme le nom de l'option).
+
 Pour supprimer la valeur d'une option du serveur et utiliser sa valeur par
 défaut à la place, par exemple pour utiliser les pseudos par défaut
 (irc.server_default.nicks) :

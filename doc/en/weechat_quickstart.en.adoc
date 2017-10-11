@@ -196,6 +196,11 @@ To auto-join some channels when connecting to server:
 /set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
+[TIP]
+You can complete name and value of options with the kbd:[Tab] key
+and kbd:[Shift+Tab] for a partial completion (useful for long words like
+the name of option).
+
 To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
 
