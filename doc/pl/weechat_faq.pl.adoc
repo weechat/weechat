@@ -857,7 +857,9 @@ Możesz, ale *NIE* jest to zalecane.
 
 Zaleca się użycie komendy `/set`:
 
-* możesz użwać dopełnienia za pomocą klawisza Tab
+// TRANSLATION MISSING
+* You can complete the name and value of option with kbd:[Tab] key
+  (or kbd:[Shift+Tab] for partial completion, useful for the name).
 * wartość jest sprawdzana, w razie błędu wyświetlana jest wiadomość
 * wartości zmieniane są od razu, nie trzeba retartować WeeChat ani nic takiego
 

@@ -886,7 +886,9 @@ Das ist möglich, wird aber *NICHT* empfohlen.
 
 Der interne WeeChat Befehl `/set` sollte genutzt werden:
 
-* da die TAB Vervollständigung unterstützt wird
+// TRANSLATION MISSING
+* You can complete the name and value of option with kbd:[Tab] key
+  (or kbd:[Shift+Tab] for partial completion, useful for the name).
 * der neue Wert wird auf Legalität geprüft und bei einem Fehler eine entsprechende Meldung ausgegeben
 * der neue Wert wird umgehend genutzt. Es ist nicht notwendig WeeChat neu zu starten oder irgendwelche Daten neu zu laden
 

@@ -873,7 +873,8 @@ Vous pouvez, mais ce n'est *PAS* recommandé.
 
 La commande `/set` dans WeeChat est recommandée :
 
-* Vous pouvez compléter la valeur avec la touche Tab.
+* Vous pouvez compléter le nom et la valeur de l'option avec la touche kbd:[Tab]
+  (ou kbd:[Shift+Tab] pour une complétion partielle, pratique pour le nom).
 * La valeur est vérifiée, un message est affiché en cas d'erreur.
 * La valeur est utilisée immédiatement, et vous n'avez pas besoin de redémarrer
   quoi que ce soit.

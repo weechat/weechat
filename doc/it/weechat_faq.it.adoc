@@ -901,7 +901,9 @@ You can, but this is *NOT* recommended.
 
 Command `/set` in WeeChat is recommended:
 
-* you can complete value with the Tab key
+// TRANSLATION MISSING
+* You can complete the name and value of option with kbd:[Tab] key
+  (or kbd:[Shift+Tab] for partial completion, useful for the name).
 * the value is checked, a message is displayed in case of error
 * the value is used immediately, you don't need to restart anything
 

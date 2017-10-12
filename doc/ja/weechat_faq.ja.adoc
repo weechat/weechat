@@ -834,7 +834,9 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 
 その代わり WeeChat 内でコマンド `/set` を使うことを推奨します。その理由は:
 
-* Tab キーで値を補完できるからです
+// TRANSLATION MISSING
+* You can complete the name and value of option with kbd:[Tab] key
+  (or kbd:[Shift+Tab] for partial completion, useful for the name).
 * 設定しようとした値は検証され、値に問題があった場合にはメッセージが表示されるからです
 * 設定した値はすぐに反映され、再起動の必要もないからです
 
