@@ -239,6 +239,9 @@ irc_channel_create_buffer (struct t_irc_server *server,
     char str_number[32], *channel_name_lower;
     const char *buffer_name, *short_name, *localvar_channel;
 
+    if (irc_channel_search (server, channel_name))
+        return NULL;
+
     buffer_created = 0;
 
     buffer_name = irc_buffer_build_name (server->name, channel_name);
