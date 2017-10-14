@@ -1095,7 +1095,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.save_config_with_fsync]] *weechat.look.save_config_with_fsync*
-** 説明: pass:none[use fsync to synchronize the configuration file with the storage device (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of configuration file]
+** 説明: pass:none[メモリ上の設定内容をストレージデバイス上のものと同期させるには fsync を使ってください (man fsync を参照してください); fsync は遅いですが、fsync を使えば設定ファイル保存中の停電によるデータ損失を避けられます]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`

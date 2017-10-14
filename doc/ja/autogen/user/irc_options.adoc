@@ -579,7 +579,7 @@
 ** デフォルト値: `+25+`
 
 * [[option_irc.server_default.capabilities]] *irc.server_default.capabilities*
-** 説明: pass:none[サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト (WeeChat がサポートする機能のリストは /help cap を御覧ください) (例: "away-notify,multi-prefix")]
+** 説明: pass:none[サーバで利用可能ならば有効化する "client capabilities" のコンマ区切りリスト (WeeChat がサポートする機能のリストは /help cap を参照してください) (例: "away-notify,multi-prefix")]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
