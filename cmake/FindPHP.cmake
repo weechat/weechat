@@ -28,22 +28,24 @@ endif()
 
 if(NOT PHP_FOUND)
   find_program(PHP_CONFIG_EXECUTABLE NAMES
-    php-config php-config7
     php-config7.2 php-config72
     php-config7.1 php-config71
-    php-config7.0 php-config70)
+    php-config7.0 php-config70
+    php-config php-config7)
   if (PHP_CONFIG_EXECUTABLE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --prefix OUTPUT_VARIABLE PHP_LIB_PREFIX OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --includes OUTPUT_VARIABLE PHP_INCLUDE_DIRS OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --libs OUTPUT_VARIABLE PHP_LIBS OUTPUT_STRIP_TRAILING_WHITESPACE)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --version OUTPUT_VARIABLE PHP_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     if(${PHP_VERSION} MATCHES "^7")
-      find_library(PHP_LIB php7 HINTS ${PHP_LIB_PREFIX} ${PHP_LIB_PREFIX}/lib ${PHP_LIB_PREFIX}/lib64)
+      find_library(PHP_LIB
+        NAMES php7.2 php7.1 php7.0 php7
+        HINTS ${PHP_LIB_PREFIX} ${PHP_LIB_PREFIX}/lib ${PHP_LIB_PREFIX}/lib64)
       if(PHP_LIB)
         get_filename_component(PHP_LIB_DIR ${PHP_LIB} DIRECTORY)
         string(REPLACE "-I" "" PHP_INCLUDE_DIRS ${PHP_INCLUDE_DIRS})
         SEPARATE_ARGUMENTS(PHP_INCLUDE_DIRS)
-        set(PHP_LDFLAGS "-L${PHP_LIB_DIR} ${PHP_LIBS} -lphp7")
+        set(PHP_LDFLAGS "-L${PHP_LIB_DIR} ${PHP_LIBS}")
         set(PHP_FOUND 1)
       endif()
     endif()
