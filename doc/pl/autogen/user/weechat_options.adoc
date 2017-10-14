@@ -1094,6 +1094,12 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_weechat.look.save_config_with_fsync]] *weechat.look.save_config_with_fsync*
+** opis: pass:none[use fsync to synchronize the configuration file with the storage device (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of configuration file]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
 ** opis: pass:none[zapisz układ przy wyjściu (bufory, okna lub oba)]
 ** typ: liczba

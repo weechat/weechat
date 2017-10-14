@@ -1094,6 +1094,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_weechat.look.save_config_with_fsync]] *weechat.look.save_config_with_fsync*
+** description: pass:none[utiliser fsync pour synchroniser le fichier de configuration avec le périphérique de stockage (voir man fsync) ; cela est plus lent mais devrait éviter toute perte de données en cas de panne de courant durant la sauvegarde du fichier de configuration]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_weechat.look.save_layout_on_exit]] *weechat.look.save_layout_on_exit*
 ** description: pass:none[sauvegarder la disposition en quittant (tampons, fenêtres, ou les deux)]
 ** type: entier

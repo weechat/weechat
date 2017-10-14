@@ -2455,6 +2455,17 @@ config_file_write_internal (struct t_config_file *config_file,
     if (fflush (config_file->file) != 0)
         goto error;
 
+    /*
+     * ensure the file is really written on the storage device;
+     * this is disabled by default because it is really slow
+     * (about 20 to 200x slower)
+     */
+    if (CONFIG_BOOLEAN(config_look_save_config_with_fsync))
+    {
+        if (fsync (fileno (config_file->file)) != 0)
+            goto error;
+    }
+
     /* close temp file */
     fclose (config_file->file);
     config_file->file = NULL;

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-09-05 07:26+0200\n"
+"POT-Creation-Date: 2017-10-14 07:47+0200\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3635,6 +3635,12 @@ msgstr ""
 
 msgid "save configuration file on exit"
 msgstr "salva arquivo de configuração na saída"
+
+msgid ""
+"use fsync to synchronize the configuration file with the storage device (see "
+"man fsync); this is slower but should prevent any data loss in case of power "
+"failure during the save of configuration file"
+msgstr ""
 
 #, fuzzy
 msgid "save layout on exit (buffers, windows, or both)"
