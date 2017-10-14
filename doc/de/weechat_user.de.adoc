@@ -3352,18 +3352,16 @@ include::autogen/user/relay_options.adoc[]
 [[scripts_plugins]]
 === Skripten
 
-// TRANSLATION MISSING
 WeeChat unterstützt Erweiterungen für insgesamt acht Skriptsprachen:
 Python, Perl, Ruby, Lua, Tcl, Guile (scheme), JavaScript und PHP.
-Mit diesen Erweiterungen kann für die jeweilige Skriptsprache, Skripten geladen, ausgeführt
-und entfernt werden.
+Mit jeder dieser Erweiterungen können Skripten geladen, ausgeführt und entfernt werden.
 
 Eine sinnvolle Erweiterung ist "script". Dabei handelt es sich um einen Skripten-Manager mit
-dem es möglich ist, unabhängig von der Skript-Sprache, Skripten zu laden und zu entfernen.
+dem es möglich ist, unabhängig von der Skript-Sprache Skripten zu laden und zu entfernen.
 Des Weiteren können Skripten, aus dem Skript-Repositorium, installiert und deinstalliert werden.
 Das Skript-Repositorium kann unter folgender URL eingesehen werden: https://weechat.org/scripts
 
-Sollten wir Ihr Interesse geweckt haben, selber Skripten für WeeChat zu programmieren, dann lesen Sie
+Sollten wir Ihr Interesse geweckt haben selber Skripten für WeeChat zu programmieren, dann lesen Sie
 bitte die link:weechat_scripting.de.html[WeeChat scripting Guide].
 
 [[script_commands]]

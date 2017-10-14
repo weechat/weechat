@@ -886,22 +886,22 @@ Das ist möglich, wird aber *NICHT* empfohlen.
 
 Der interne WeeChat Befehl `/set` sollte genutzt werden:
 
-// TRANSLATION MISSING
-* You can complete the name and value of option with kbd:[Tab] key
-  (or kbd:[Shift+Tab] for partial completion, useful for the name).
-* der neue Wert wird auf Legalität geprüft und bei einem Fehler eine entsprechende Meldung ausgegeben
-* der neue Wert wird umgehend genutzt. Es ist nicht notwendig WeeChat neu zu starten oder irgendwelche Daten neu zu laden
+* Mittels der kbd:[Tab] Taste kann man sehr einfach Namen und Werte von Optionen
+  vervollständigen (oder mittels kbd:[Shift+Tab] kann eine teilweise Vervollständigung
+  durchgeführt werden, was beim Namen nützlich ist).
+* der neue Wert wird auf Plausibilität geprüft und bei einem Fehler eine entsprechende Meldung ausgegeben
+* der neue Wert wird umgehend genutzt. Es ist nicht notwendig WeeChat neu zu starten oder Daten neu zu laden
 
 Solltest Du die Dateien weiter händisch ändern wollen, dann solltest Du vorsichtig sein:
 
-* wird ein ungültiger Wert eingetragen, gibt WeeChat einen Fehler beim Start aus und
-  der ungültigen Wert wird verworfen (der Standardwert, für die entsprechende Option, wird
+* wird ein ungültiger Wert eingetragen gibt WeeChat einen Fehler, beim Start, aus und
+  der ungültigen Wert wird verworfen (der Standardwert für die entsprechende Option wird
   dann genutzt)
-* sollte WeeChat laufen und man nutzt den `/reload` Befehl aber Einstellungen wurden nicht
+* sollte WeeChat laufen und man nutzt den `/reload` Befehl, aber Einstellungen wurden nicht
   vorher mit `/save` gesichert, ist ein Datenverlust unvermeidbar
 
 [[memory_usage]]
-=== Wie kann ich WeeChat dazu bringen weniger Speicher zu verbrauchen?
+=== Wie kann ich erreichen, dass WeeChat weniger Speicher verbraucht?
 
 Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 
@@ -934,7 +934,7 @@ und zusätzlich diese Tipps beherzigen:
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 
 [[security]]
-=== Ich bin ein bisschen Paranoid was Sicherheit betrifft. Welche Einstellungen kann ich vornehmen um noch mehr Privatsphäre zu erlangen?
+=== Ich bin ein bisschen paranoid was Sicherheit betrifft. Welche Einstellungen kann ich vornehmen um noch mehr Privatsphäre zu erlangen?
 
 Deaktiviere IRC part und quit Nachrichten:
 

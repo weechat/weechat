@@ -215,11 +215,11 @@ eine Liste eingetragen werden:
 /set irc.server.freenode.autojoin "#channel1,#channel2"
 ----
 
-// TRANSLATION MISSING
 [TIP]
-You can complete name and value of options with the kbd:[Tab] key
-and kbd:[Shift+Tab] for a partial completion (useful for long words like
-the name of option).
+Mittels der kbd:[Tab] Taste kann man sehr einfach Namen und Werte von Optionen
+vervollständigen und mittels kbd:[Shift+Tab] kann eine teilweise Vervollständigung
+durchgeführt werden (was bei langen Wörtern, wie z.B. der Name einer Option, nützlich
+sein kann).
 
 Um einen Wert der Server-Optionen zu entfernen und stattdessen wieder den
 Vorgabewert zu nutzen, z.B. Nutzen der vorgegebenen Nicknamen
