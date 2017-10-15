@@ -1095,7 +1095,7 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.look.save_config_with_fsync]] *weechat.look.save_config_with_fsync*
-** Beschreibung: pass:none[use fsync to synchronize the configuration file with the storage device (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of configuration file]
+** Beschreibung: pass:none[es wird fsync verwendet um die Konfigurationsdateien mit dem Datenträger zu synchronisieren (siehe man fsync); dies verlangsamt das Sichern der Daten, soll aber zum Beispiel bei einem Stromausfall dafür sorgen, dass keine Daten verloren gehen]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
