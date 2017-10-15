@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index cc7685a70..7904b7454 100644
+index f8f027d8e..1161649fc 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -16,7 +16,7 @@ Build-Depends:
@@ -11,8 +11,17 @@ index cc7685a70..7904b7454 100644
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
      libgnutls28-dev,
+@@ -181,7 +181,7 @@ Description: Fast, light and extensible chat client - javascript plugin
+ Package: weechat-devel-php
+ Architecture: any
+ Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}),
+- libphp7.1-embed
++ libphp7.0-embed
+ Conflicts: weechat-php
+ Description: Fast, light and extensible chat client - php plugin
+  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
 diff --git a/debian-stable/control b/debian-stable/control
-index 2829be49b..e7185abb5 100644
+index a68d181e8..656e2def3 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -16,7 +16,7 @@ Build-Depends:
@@ -24,3 +33,12 @@ index 2829be49b..e7185abb5 100644
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
      libgnutls28-dev,
+@@ -174,7 +174,7 @@ Description: Fast, light and extensible chat client - javascript plugin
+ Package: weechat-php
+ Architecture: any
+ Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}),
+- libphp7.1-embed
++ libphp7.0-embed
+ Description: Fast, light and extensible chat client - php plugin
+  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+  for many operating systems. Everything can be done with a keyboard.

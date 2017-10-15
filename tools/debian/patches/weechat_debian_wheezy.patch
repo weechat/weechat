@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index cc7685a70..465269b3e 100644
+index f8f027d8e..312d315fa 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,9 +3,7 @@ Section: net
@@ -48,17 +48,42 @@ index cc7685a70..465269b3e 100644
    - scripts manager
    - spell checking
    - highly customizable and extensible
-@@ -102,7 +99,7 @@ Description: Fast, light and extensible chat client - plugins
+@@ -178,17 +175,6 @@ Description: Fast, light and extensible chat client - javascript plugin
   .
-  This package provides some plugins to enhance WeeChat. It currently
-  ships the following plugins:
--  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
-+  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
-   - Spell checking (thanks to aspell)
-   - FIFO pipe for remote control
+  This package provides the JavaScript scripting API plugin.
+ 
+-Package: weechat-devel-php
+-Architecture: any
+-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}),
+- libphp7.1-embed
+-Conflicts: weechat-php
+-Description: Fast, light and extensible chat client - php plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the PHP scripting API plugin.
+-
+ Package: weechat-devel-doc
+ Section: doc
+ Architecture: all
+diff --git a/debian-devel/weechat-devel-php.dirs b/debian-devel/weechat-devel-php.dirs
+deleted file mode 120000
+index e4853a588..000000000
+--- a/debian-devel/weechat-devel-php.dirs
++++ /dev/null
+@@ -1 +0,0 @@
+-../debian-stable/weechat-php.dirs
+\ No newline at end of file
+diff --git a/debian-devel/weechat-devel-php.install b/debian-devel/weechat-devel-php.install
+deleted file mode 120000
+index e358b515a..000000000
+--- a/debian-devel/weechat-devel-php.install
++++ /dev/null
+@@ -1 +0,0 @@
+-../debian-stable/weechat-php.install
+\ No newline at end of file
 diff --git a/debian-stable/control b/debian-stable/control
-index 2829be49b..09a7327d3 100644
+index a68d181e8..9554e0884 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,9 +3,7 @@ Section: net
@@ -107,33 +132,45 @@ index 2829be49b..09a7327d3 100644
    - scripts manager
    - spell checking
    - highly customizable and extensible
-@@ -102,7 +99,7 @@ Description: Fast, light and extensible chat client - plugins
+@@ -171,16 +168,6 @@ Description: Fast, light and extensible chat client - javascript plugin
   .
-  This package provides some plugins to enhance WeeChat. It currently
-  ships the following plugins:
--  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
-+  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
-   - Spell checking (thanks to aspell)
-   - FIFO pipe for remote control
-diff --git a/debian-stable/weechat-plugins.install b/debian-stable/weechat-plugins.install
+  This package provides the JavaScript scripting API plugin.
+ 
+-Package: weechat-php
+-Architecture: any
+-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}),
+- libphp7.1-embed
+-Description: Fast, light and extensible chat client - php plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the PHP scripting API plugin.
+-
+ Package: weechat-doc
+ Section: doc
+ Architecture: all
+diff --git a/debian-stable/weechat-javascript.install b/debian-stable/weechat-javascript.install
 old mode 100755
 new mode 100644
-index 2d601e09b..980192fa4
---- a/debian-stable/weechat-plugins.install
-+++ b/debian-stable/weechat-plugins.install
-@@ -1,13 +1,10 @@
+index 428bb933e..e6cabcbec
+--- a/debian-stable/weechat-javascript.install
++++ b/debian-stable/weechat-javascript.install
+@@ -1,3 +1 @@
 -#!/usr/bin/dh-exec
 -
- usr/lib/weechat/plugins/aspell.so
- usr/lib/weechat/plugins/exec.so
- usr/lib/weechat/plugins/fifo.so
- usr/lib/weechat/plugins/guile.so
 -[amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel] usr/lib/weechat/plugins/javascript.so
 +usr/lib/weechat/plugins/javascript.so
- usr/lib/weechat/plugins/lua.so
- usr/lib/weechat/plugins/perl.so
+diff --git a/debian-stable/weechat-php.dirs b/debian-stable/weechat-php.dirs
+deleted file mode 100644
+index 68457717b..000000000
+--- a/debian-stable/weechat-php.dirs
++++ /dev/null
+@@ -1 +0,0 @@
+-usr/lib
+diff --git a/debian-stable/weechat-php.install b/debian-stable/weechat-php.install
+deleted file mode 100644
+index 28b19cc1d..000000000
+--- a/debian-stable/weechat-php.install
++++ /dev/null
+@@ -1 +0,0 @@
 -usr/lib/weechat/plugins/php.so
- usr/lib/weechat/plugins/python.so
- usr/lib/weechat/plugins/relay.so
- usr/lib/weechat/plugins/ruby.so
