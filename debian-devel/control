@@ -106,7 +106,7 @@ Description: Fast, light and extensible chat client - plugins
   - scripts manager
   - Spell checking (thanks to aspell)
   - FIFO pipe for remote control
-  - IRC proxy
+  - Relay (IRC proxy and WeeChat protocol)
   - Trigger
 
 Package: weechat-devel-doc
