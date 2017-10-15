@@ -180,7 +180,8 @@ Description: Fast, light and extensible chat client - javascript plugin
 
 Package: weechat-devel-php
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}),
+ libphp7.1-embed
 Conflicts: weechat-php
 Description: Fast, light and extensible chat client - php plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
