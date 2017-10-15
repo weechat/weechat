@@ -1,0 +1,3 @@
+#!/usr/bin/dh-exec
+
+[amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel] usr/lib/weechat/plugins/javascript.so

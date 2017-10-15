@@ -1,16 +1,6 @@
-#!/usr/bin/dh-exec
-
 usr/lib/weechat/plugins/aspell.so
 usr/lib/weechat/plugins/exec.so
 usr/lib/weechat/plugins/fifo.so
-usr/lib/weechat/plugins/guile.so
-[amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel] usr/lib/weechat/plugins/javascript.so
-usr/lib/weechat/plugins/lua.so
-usr/lib/weechat/plugins/perl.so
-usr/lib/weechat/plugins/php.so
-usr/lib/weechat/plugins/python.so
 usr/lib/weechat/plugins/relay.so
-usr/lib/weechat/plugins/ruby.so
 usr/lib/weechat/plugins/script.so
-usr/lib/weechat/plugins/tcl.so
 usr/lib/weechat/plugins/trigger.so
