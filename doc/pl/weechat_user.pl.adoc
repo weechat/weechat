@@ -564,7 +564,8 @@ Foldery to:
 [NOTE]
 ^(1)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
-Pliki w katalogu domowym:
+// TRANSLATION MISSING
+The files in the WeeChat home directory are:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===

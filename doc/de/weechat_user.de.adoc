@@ -560,7 +560,8 @@ Verzeichnisse:
 [NOTE]
 ^(1)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
 
-Folgende Dateien findet man im Heimatverzeichnis:
+// TRANSLATION MISSING
+The files in the WeeChat home directory are:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===

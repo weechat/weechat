@@ -564,7 +564,7 @@ Les répertoires sont :
 ^(1)^ Ce répertoire contient souvent seulement des liens symboliques vers les
 scripts dans le répertoire parent.
 
-Les fichiers dans le répertoire principal sont :
+Les fichiers dans le répertoire principal de WeeChat sont :
 
 [width="100%",cols="1m,3,6",options="header"]
 |===

@@ -597,7 +597,7 @@ The directories are:
 [NOTE]
 ^(1)^ This directory often contains only symbolic links to scripts in parent directory.
 
-The files in home directory are:
+The files in the WeeChat home directory are:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===

@@ -555,7 +555,8 @@ _~/.weechat_ ディレクトリの中に作成されます
 [NOTE]
 ^(1)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
 
-ホームディレクトリには以下の内容が含まれます:
+// TRANSLATION MISSING
+The files in the WeeChat home directory are:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
