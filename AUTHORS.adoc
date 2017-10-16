@@ -39,6 +39,7 @@ Alphabetically:
 * Evgeny Shmarnev
 * Felix Eckhofer
 * Frank Zacharias
+* Grant Wu
 * Gu1ll4um3r0m41n
 * Guido Berhoerster
 * Gwenn
