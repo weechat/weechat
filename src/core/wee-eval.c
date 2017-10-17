@@ -769,7 +769,7 @@ eval_compare (const char *expr1, int comparison, const char *expr2)
 {
     int rc, string_compare, length1, length2;
     regex_t regex;
-    long value1, value2;
+    double value1, value2;
     char *error;
 
     rc = 0;
@@ -816,12 +816,14 @@ eval_compare (const char *expr1, int comparison, const char *expr2)
 
     if (!string_compare)
     {
-        value1 = strtol (expr1, &error, 10);
+        value1 = strtod (expr1, &error);
         if (!error || error[0])
+        {
             string_compare = 1;
+        }
         else
         {
-            value2 = strtol (expr2, &error, 10);
+            value2 = strtod (expr2, &error);
             if (!error || error[0])
                 string_compare = 1;
         }

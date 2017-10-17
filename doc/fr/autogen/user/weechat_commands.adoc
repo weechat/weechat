@@ -278,8 +278,11 @@ expression : expression à évaluer, les variables avec le format ${variable} s
                  !=  ne correspond PAS au masque (le caractère joker "*" est autorisé)
 
 Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
-La comparaison est faite en utilisant des entiers si les deux expressions sont des entiers valides.
-Pour forcer une comparaison de chaînes, ajoutez des guillemets autour de chaque expression, par exemple :
+La comparaison est faite en utilisant des nombres à virgule si les deux expressions sont des nombres valides, avec l'un de ces formats :
+  - entier (exemples : 5, -7)
+  - nombre à virgule (exemples : 5.2, -7.5, 2.83e-2)
+  - nombre hexadécimal (exemples : 0xA3, -0xA3)
+Pour forcer une comparaison de chaînes, vous pouvez ajouter des guillemets autour de chaque expression, par exemple :
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 

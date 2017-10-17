@@ -1961,7 +1961,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、0.4.3、1.0、1.1、1.2、1.3、1.6、1.8 で更新。_
+_WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、0.4.3、1.0、1.1、1.2、1.3、1.6、1.8、2.0 で更新。_
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -1982,7 +1982,9 @@ char *weechat_string_eval_expression (const char *expr,
 
 引数:
 
-* _expr_: 評価する式 (以下の表を参照)
+// TRANSLATION MISSING
+* _expr_: 評価する式 (see <<eval_conditions,conditions>> and
+  <<eval_variables,variables>>)
 * _pointers_: ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
   (現在のウィンドウやバッファへのポインタを持つ) ハッシュテーブルが "window" と
   "buffer" ポインタを持たない場合はこれらは自動的に追加される (NULL でも可):
@@ -2013,6 +2015,75 @@ char *weechat_string_eval_expression (const char *expr,
 
 * 評価された式 (使用後には必ず "free" を呼び出して領域を開放してください)、失敗した場合は
   NULL (式が不正な場合やメモリが不足している場合)
+
+C 言語での使用例:
+
+[source,C]
+----
+/* 条件式の評価 */
+struct t_hashtable *options1 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+weechat_hashtable_set (options1, "type", "condition");
+char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
+char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
+
+/* 単純な展開 */
+char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
+
+/* 正規表現を用いた置換 */
+struct t_hashtable *options2 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+/* URL に関するブラックリストを追加 */
+weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
+weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
+char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
+
+/* パスワードを隠す */
+weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
+weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
+char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
+
+# 例
+
+# 条件式の評価
+str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# 単純な展開
+str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
+
+# 正規表現を用いた置換: URL に関するブラックリストを追加
+options = {
+    "regex": "\\w+://\\S+",
+    "regex_replace": "[ ${re:0} ]",
+}
+str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
+
+# 正規表現を用いた置換: パスワードを隠す
+options = {
+    "regex": "(password=)(\\S+)",
+    "regex_replace": "${re:1}${hide:*,${re:2}}",
+}
+str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
+----
+
+// TRANSLATION MISSING
+[[eval_conditions]]
+===== Conditions
 
 条件に使える論理演算子のリスト
 (上から優先順位の高い順):
@@ -2131,6 +2202,25 @@ char *weechat_string_eval_expression (const char *expr,
   `+0+` +
   `+1+`
 |===
+
+// TRANSLATION MISSING
+The comparison is made using floating point numbers if the two expressions are
+valid numbers, with one of the following formats:
+
+* integer (examples: 5, -7)
+* floating point number (examples: 5.2, -7.5, 2.83e-2) (_WeeChat ≥ 2.0_)
+* hexadecimal number (examples: 0xA3, -0xA3) (_WeeChat ≥ 2.0_)
+
+// TRANSLATION MISSING
+To force a string comparison, you can add double quotes around each expression,
+for example:
+
+* `50 > 100` returns 0 (number comparison)
+* `"50" > "100"` returns 1 (string comparison)
+
+// TRANSLATION MISSING
+[[eval_variables]]
+===== Variables
 
 式中で展開される変数のリスト
 (優先度の高い順、展開順の早いものを上に遅いものを下に):
@@ -2275,71 +2365,6 @@ char *weechat_string_eval_expression (const char *expr,
   `+core.weechat+` +
   `+1+`
 |===
-
-C 言語での使用例:
-
-[source,C]
-----
-/* 条件式の評価 */
-struct t_hashtable *options1 = weechat_hashtable_new (8,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      NULL,
-                                                      NULL);
-weechat_hashtable_set (options1, "type", "condition");
-char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
-char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
-
-/* 単純な展開 */
-char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
-
-/* 正規表現を用いた置換 */
-struct t_hashtable *options2 = weechat_hashtable_new (8,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      NULL,
-                                                      NULL);
-/* URL に関するブラックリストを追加 */
-weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
-weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
-char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
-
-/* パスワードを隠す */
-weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
-weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
-char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
-----
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
-
-# 例
-
-# 条件式の評価
-str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
-str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
-
-# 単純な展開
-str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
-
-# 正規表現を用いた置換: URL に関するブラックリストを追加
-options = {
-    "regex": "\\w+://\\S+",
-    "regex_replace": "[ ${re:0} ]",
-}
-str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
-
-# 正規表現を用いた置換: パスワードを隠す
-options = {
-    "regex": "(password=)(\\S+)",
-    "regex_replace": "${re:1}${hide:*,${re:2}}",
-}
-str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
-----
 
 ==== string_dyn_alloc
 

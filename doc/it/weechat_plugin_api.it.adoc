@@ -2027,7 +2027,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6 and 1.8._
+_WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8 and 2.0._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.
@@ -2051,7 +2051,8 @@ char *weechat_string_eval_expression (const char *expr,
 Argomenti:
 
 // TRANSLATION MISSING
-* _expr_: the expression to evaluate (see table below)
+* _expr_: the expression to evaluate (see <<eval_conditions,conditions>> and
+  <<eval_variables,variables>>)
 * _pointers_: hashtable with pointers (keys must be string, values must be
   pointer); pointers "window" and "buffer" are automatically added if they are
   not in hashtable (with pointer to current window/buffer) (can be NULL):
@@ -2083,6 +2084,75 @@ Valore restituito:
 // TRANSLATION MISSING
 * evaluated expression (must be freed by calling "free" after use), or NULL
   if problem (invalid expression or not enough memory)
+
+Esempi in C:
+
+[source,C]
+----
+/* conditions */
+struct t_hashtable *options1 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+weechat_hashtable_set (options1, "type", "condition");
+char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
+char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
+
+/* simple expression */
+char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
+
+/* replace with regex */
+struct t_hashtable *options2 = weechat_hashtable_new (8,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      WEECHAT_HASHTABLE_STRING,
+                                                      NULL,
+                                                      NULL);
+/* add brackets around URLs */
+weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
+weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
+char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
+
+/* hide passwords */
+weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
+weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
+char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
+
+# esempi
+
+# conditions
+str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
+str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
+
+# simple expression
+str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
+
+# replace with regex: add brackets around URLs
+options = {
+    "regex": "\\w+://\\S+",
+    "regex_replace": "[ ${re:0} ]",
+}
+str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
+
+# replace with regex: hide passwords
+options = {
+    "regex": "(password=)(\\S+)",
+    "regex_replace": "${re:1}${hide:*,${re:2}}",
+}
+str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
+----
+
+// TRANSLATION MISSING
+[[eval_conditions]]
+===== Conditions
 
 // TRANSLATION MISSING
 List of logical operators that can be used in conditions (by order of priority,
@@ -2205,6 +2275,25 @@ from first used to last):
   `+0+` +
   `+1+`
 |===
+
+// TRANSLATION MISSING
+The comparison is made using floating point numbers if the two expressions are
+valid numbers, with one of the following formats:
+
+* integer (examples: 5, -7)
+* floating point number (examples: 5.2, -7.5, 2.83e-2) (_WeeChat ≥ 2.0_)
+* hexadecimal number (examples: 0xA3, -0xA3) (_WeeChat ≥ 2.0_)
+
+// TRANSLATION MISSING
+To force a string comparison, you can add double quotes around each expression,
+for example:
+
+* `50 > 100` returns 0 (number comparison)
+* `"50" > "100"` returns 1 (string comparison)
+
+// TRANSLATION MISSING
+[[eval_variables]]
+===== Variables
 
 // TRANSLATION MISSING
 List of variables expanded in expression (by order of priority, from first
@@ -2350,71 +2439,6 @@ expanded to last):
   `+core.weechat+` +
   `+1+`
 |===
-
-Esempi in C:
-
-[source,C]
-----
-/* conditions */
-struct t_hashtable *options1 = weechat_hashtable_new (8,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      NULL,
-                                                      NULL);
-weechat_hashtable_set (options1, "type", "condition");
-char *str1 = weechat_string_eval_expression ("${window.win_width} > 100", NULL, NULL, options1);  /* "1" */
-char *str2 = weechat_string_eval_expression ("abc =~ def", NULL, NULL, options1);                 /* "0" */
-
-/* simple expression */
-char *str3 = weechat_string_eval_expression ("${buffer.full_name}", NULL, NULL, NULL);  /* "core.weechat" */
-
-/* replace with regex */
-struct t_hashtable *options2 = weechat_hashtable_new (8,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      WEECHAT_HASHTABLE_STRING,
-                                                      NULL,
-                                                      NULL);
-/* add brackets around URLs */
-weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
-weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
-char *str4 = weechat_string_eval_expression ("test: https://weechat.org", NULL, NULL, NULL);  /* "test: [ https://weechat.org ]" */
-
-/* hide passwords */
-weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
-weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
-char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
-----
-
-Script (Python):
-
-[source,python]
-----
-# prototipo
-str = weechat.string_eval_expression(expr, pointers, extra_vars, options)
-
-# esempi
-
-# conditions
-str1 = weechat.string_eval_expression("${window.win_width} > 100", {}, {}, {"type": "condition"})  # "1"
-str2 = weechat.string_eval_expression("abc =~ def", {}, {}, {"type": "condition"})                 # "0"
-
-# simple expression
-str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core.weechat"
-
-# replace with regex: add brackets around URLs
-options = {
-    "regex": "\\w+://\\S+",
-    "regex_replace": "[ ${re:0} ]",
-}
-str4 = weechat.string_eval_expression("test: https://weechat.org", {}, {}, options)  # "test: [ https://weechat.org ]"
-
-# replace with regex: hide passwords
-options = {
-    "regex": "(password=)(\\S+)",
-    "regex_replace": "${re:1}${hide:*,${re:2}}",
-}
-str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
-----
 
 ==== string_dyn_alloc
 

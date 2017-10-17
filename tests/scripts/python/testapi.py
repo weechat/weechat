@@ -69,6 +69,9 @@ def test_strings():
     check(weechat.string_input_for_buffer('/test') == '')
     check(weechat.string_input_for_buffer('//test') == '/test')
     check(weechat.string_eval_expression("100 > 50", {}, {}, {"type": "condition"}) == '1')
+    check(weechat.string_eval_expression("-50 < 100", {}, {}, {"type": "condition"}) == '1')
+    check(weechat.string_eval_expression("18.2 > 5", {}, {}, {"type": "condition"}) == '1')
+    check(weechat.string_eval_expression("0xA3 > 2", {}, {}, {"type": "condition"}) == '1')
     check(weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) == 'core.weechat')
 
 
