@@ -29,31 +29,81 @@
 #include "buflist-config.h"
 
 
-struct t_gui_bar_item *buflist_bar_item_buflist = NULL;
+struct t_gui_bar_item *buflist_bar_item_buflist[BUFLIST_BAR_NUM_ITEMS];
 struct t_hashtable *buflist_hashtable_pointers = NULL;
 struct t_hashtable *buflist_hashtable_extra_vars = NULL;
 struct t_hashtable *buflist_hashtable_options_conditions = NULL;
-struct t_arraylist *buflist_list_buffers = NULL;
+struct t_arraylist *buflist_list_buffers[BUFLIST_BAR_NUM_ITEMS];
 
-int old_line_number_current_buffer = -1;
+int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS];
 
 
 /*
- * Updates buflist bar item if buflist is enabled.
+ * Returns the bar item name with an index.
+ */
+
+const char *
+buflist_bar_item_get_name (int index)
+{
+    static char item_name[16];
+
+    if (index == 0)
+    {
+        snprintf (item_name, sizeof (item_name), "%s", BUFLIST_BAR_ITEM_NAME);
+    }
+    else
+    {
+        snprintf (item_name, sizeof (item_name),
+                  "%s%d",
+                  BUFLIST_BAR_ITEM_NAME,
+                  index + 1);
+    }
+    return item_name;
+}
+
+/*
+ * Returns the bar item index with an item name, -1 if not found.
+ */
+
+int
+buflist_bar_item_get_index (const char *item_name)
+{
+    int i;
+    const char *ptr_item_name;
+
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        ptr_item_name = buflist_bar_item_get_name (i);
+        if (strcmp (ptr_item_name, item_name) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+/*
+ * Updates buflist bar item if buflist is enabled (or if force argument is 1).
  */
 
 void
-buflist_bar_item_update ()
+buflist_bar_item_update (int force)
 {
-    if (weechat_config_boolean (buflist_config_look_enabled))
-        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+    int i;
+
+    if (force || weechat_config_boolean (buflist_config_look_enabled))
+    {
+        for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+        {
+            weechat_bar_item_update (buflist_bar_item_get_name (i));
+        }
+    }
 }
 
 /*
  * Checks if the bar can be scrolled, the bar must have:
  * - a position "left" or "right"
  * - a filling "vertical"
- * - "buflist" as first item.
+ * - the item_name as first item.
  *
  * Returns:
  *   1: bar can be scrolled
@@ -61,7 +111,7 @@ buflist_bar_item_update ()
  */
 
 int
-buflist_bar_item_bar_can_scroll (struct t_gui_bar *bar)
+buflist_bar_item_bar_can_scroll (struct t_gui_bar *bar, const char *item_name)
 {
     const char *ptr_bar_name, *ptr_bar_position, *ptr_bar_filling;
     int items_count, *items_subcount;
@@ -104,7 +154,7 @@ buflist_bar_item_bar_can_scroll (struct t_gui_bar *bar)
         return 0;
     items_name = weechat_hdata_pointer (buflist_hdata_bar, bar, "items_name");
     if (!items_name || !items_name[0] || !items_name[0][0]
-        || (strcmp (items_name[0][0], BUFLIST_BAR_ITEM_NAME) != 0))
+        || (strcmp (items_name[0][0], item_name) != 0))
     {
         return 0;
     }
@@ -156,11 +206,11 @@ buflist_bar_item_auto_scroll_bar_window (struct t_gui_bar_window *bar_window,
 }
 
 /*
- * Auto-scrolls all bars with buflist item as first item.
+ * Auto-scrolls all bars with a given buflist item as first item.
  */
 
 void
-buflist_bar_item_auto_scroll (int line_number)
+buflist_bar_item_auto_scroll (const char *item_name, int line_number)
 {
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_window;
@@ -175,7 +225,8 @@ buflist_bar_item_auto_scroll (int line_number)
     {
         ptr_bar_window = weechat_hdata_pointer (buflist_hdata_bar, ptr_bar,
                                                 "bar_window");
-        if (ptr_bar_window && buflist_bar_item_bar_can_scroll (ptr_bar))
+        if (ptr_bar_window && buflist_bar_item_bar_can_scroll (ptr_bar,
+                                                               item_name))
         {
             buflist_bar_item_auto_scroll_bar_window (ptr_bar_window,
                                                      line_number);
@@ -193,7 +244,7 @@ buflist_bar_item_auto_scroll (int line_number)
         {
             ptr_bar = weechat_hdata_pointer (buflist_hdata_bar_window,
                                              ptr_bar_window, "bar");
-            if (buflist_bar_item_bar_can_scroll (ptr_bar))
+            if (buflist_bar_item_bar_can_scroll (ptr_bar, item_name))
             {
                 buflist_bar_item_auto_scroll_bar_window (ptr_bar_window,
                                                          line_number);
@@ -234,15 +285,13 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
     const char indent_empty[1] = { '\0' };
-    const char *ptr_lag;
-    int num_buffers, is_channel, is_private;
+    const char *ptr_lag, *ptr_item_name;
+    int item_index, num_buffers, is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count, line_number, line_number_current_buffer;
 
     /* make C compiler happy */
-    (void) pointer;
     (void) data;
-    (void) item;
     (void) window;
     (void) buffer;
     (void) extra_info;
@@ -255,6 +304,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     line_number_current_buffer = 0;
 
     buflist = weechat_string_dyn_alloc (256);
+
+    item_index = (int)((unsigned long)pointer);
+
+    weechat_hashtable_set (buflist_hashtable_pointers, "bar_item", item);
 
     ptr_format = buflist_config_format_buffer_eval;
     ptr_format_current = buflist_config_format_buffer_current_eval;
@@ -273,10 +326,11 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     snprintf (str_format_number_empty, sizeof (str_format_number_empty),
               "%%-%ds", length_max_number);
 
-    if (buflist_list_buffers)
-        weechat_arraylist_free (buflist_list_buffers);
-    buflist_list_buffers = weechat_arraylist_new (16, 0, 1,
-                                                  NULL, NULL, NULL, NULL);
+    if (buflist_list_buffers[item_index])
+        weechat_arraylist_free (buflist_list_buffers[item_index]);
+    buflist_list_buffers[item_index] = weechat_arraylist_new (
+        16, 0, 1,
+        NULL, NULL, NULL, NULL);
 
     buffers = buflist_sort_buffers ();
 
@@ -308,7 +362,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         if (!rc)
             continue;
 
-        weechat_arraylist_add (buflist_list_buffers, ptr_buffer);
+        weechat_arraylist_add (buflist_list_buffers[item_index], ptr_buffer);
 
         current_buffer = (ptr_buffer == ptr_current_buffer);
 
@@ -555,12 +609,15 @@ end:
     weechat_string_dyn_free (buflist, 0);
     weechat_arraylist_free (buffers);
 
-    if ((line_number_current_buffer != old_line_number_current_buffer)
+    if ((line_number_current_buffer != old_line_number_current_buffer[item_index])
         && (weechat_config_integer (buflist_config_look_auto_scroll) >= 0))
     {
-        buflist_bar_item_auto_scroll (line_number_current_buffer);
+        ptr_item_name = weechat_hdata_string (buflist_hdata_bar_item,
+                                              item, "name");
+        buflist_bar_item_auto_scroll (ptr_item_name,
+                                      line_number_current_buffer);
     }
-    old_line_number_current_buffer = line_number_current_buffer;
+    old_line_number_current_buffer[item_index] = line_number_current_buffer;
 
     return str_buflist;
 }
@@ -576,6 +633,8 @@ end:
 int
 buflist_bar_item_init ()
 {
+    int i;
+
     /* create hashtables used by the bar item callback */
     buflist_hashtable_pointers = weechat_hashtable_new (
         32,
@@ -613,9 +672,15 @@ buflist_bar_item_init ()
                            "type", "condition");
 
     /* bar items */
-    buflist_bar_item_buflist = weechat_bar_item_new (
-        BUFLIST_BAR_ITEM_NAME,
-        &buflist_bar_item_buflist_cb, NULL, NULL);
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        buflist_list_buffers[i] = NULL;
+        old_line_number_current_buffer[i] = -1;
+        buflist_bar_item_buflist[i] = weechat_bar_item_new (
+            buflist_bar_item_get_name (i),
+            &buflist_bar_item_buflist_cb,
+            (const void *)((long unsigned)i), NULL);
+    }
 
     return 1;
 }
@@ -627,7 +692,12 @@ buflist_bar_item_init ()
 void
 buflist_bar_item_end ()
 {
-    weechat_bar_item_remove (buflist_bar_item_buflist);
+    int i;
+
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        weechat_bar_item_remove (buflist_bar_item_buflist[i]);
+    }
 
     weechat_hashtable_free (buflist_hashtable_pointers);
     buflist_hashtable_pointers = NULL;
@@ -638,9 +708,12 @@ buflist_bar_item_end ()
     weechat_hashtable_free (buflist_hashtable_options_conditions);
     buflist_hashtable_options_conditions = NULL;
 
-    if (buflist_list_buffers)
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
-        weechat_arraylist_free (buflist_list_buffers);
-        buflist_list_buffers = NULL;
+        if (buflist_list_buffers[i])
+        {
+            weechat_arraylist_free (buflist_list_buffers[i]);
+            buflist_list_buffers[i] = NULL;
+        }
     }
 }

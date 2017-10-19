@@ -40,7 +40,7 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     const char *ptr_bar_item_name, *ptr_bar_item_line, *keys, *ptr_value;
     long item_line;
     char *error, str_value[128], **list_keys;
-    int i, num_keys, type;
+    int i, item_index, num_keys, type;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
@@ -49,12 +49,13 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 
     ptr_buffer = NULL;
 
-    if (!buflist_list_buffers)
-        goto end;
-
     /* check bar item name */
     ptr_bar_item_name = weechat_hashtable_get (info, "_bar_item_name");
-    if (strcmp (ptr_bar_item_name, BUFLIST_BAR_ITEM_NAME) != 0)
+    item_index = buflist_bar_item_get_index (ptr_bar_item_name);
+    if (item_index < 0)
+        goto end;
+
+    if (!buflist_list_buffers[item_index])
         goto end;
 
     /* check bar item line */
@@ -65,13 +66,14 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
     if (!error || error[0])
         goto end;
     if ((item_line < 0)
-        || (item_line >= weechat_arraylist_size (buflist_list_buffers)))
+        || (item_line >= weechat_arraylist_size (buflist_list_buffers[item_index])))
     {
         goto end;
     }
 
     /* check if buffer pointer is still valid */
-    ptr_buffer = weechat_arraylist_get (buflist_list_buffers, item_line);
+    ptr_buffer = weechat_arraylist_get (buflist_list_buffers[item_index],
+                                        item_line);
     if (!ptr_buffer)
         goto end;
     if (!weechat_hdata_check_pointer (
@@ -321,7 +323,13 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
 int
 buflist_mouse_init ()
 {
-    weechat_hook_focus (BUFLIST_BAR_ITEM_NAME, &buflist_focus_cb, NULL, NULL);
+    int i;
+
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        weechat_hook_focus (buflist_bar_item_get_name (i),
+                            &buflist_focus_cb, NULL, NULL);
+    }
 
     weechat_hook_hsignal(BUFLIST_MOUSE_HSIGNAL,
                          &buflist_hsignal_cb, NULL, NULL);

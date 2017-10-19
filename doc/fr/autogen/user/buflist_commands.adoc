@@ -10,7 +10,7 @@
           refresh
 
     bar : ajouter la barre "buflist"
-refresh : forcer le rafraichissement de l'objet de barre "buflist"
+refresh : forcer le rafraichissement des objets de barre (buflist, buflist2 et buflist3)
 
 Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaînes (voir /help eval pour le format), avec ces options :
   - buflist.look.display_conditions : conditions pour afficher un tampon dans la liste
@@ -18,6 +18,8 @@ Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaîn
   - buflist.format.buffer_current: format pour le tampon courant
 
 Les variables suivantes peuvent être utilisées dans ces options :
+  - données de l'objet de barre (voir le hdata "bar_item" dans la doc API pour une liste complète), par exemple :
+    - ${bar_item.name}
   - données du tampon (voir le hdata "buffer" dans la doc API pour une liste complète), par exemple :
     - ${buffer.number}
     - ${buffer.name}

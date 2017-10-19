@@ -127,7 +127,7 @@ buflist_config_signal_buffer_cb (const void *pointer, void *data,
     (void) type_data;
     (void) signal_data;
 
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 
     return WEECHAT_RC_OK;
 }
@@ -228,13 +228,13 @@ buflist_config_change_enabled (const void *pointer, void *data,
         /* buflist enabled */
         buflist_config_hook_signals_refresh ();
         weechat_command (NULL, "/mute /bar show buflist");
-        buflist_bar_item_update ();
+        buflist_bar_item_update (0);
     }
     else
     {
         /* buflist disabled */
         weechat_command (NULL, "/mute /bar hide buflist");
-        weechat_bar_item_update (BUFLIST_BAR_ITEM_NAME);
+        buflist_bar_item_update (1);
     }
 }
 
@@ -258,7 +258,7 @@ buflist_config_change_sort (const void *pointer, void *data,
         weechat_config_string (buflist_config_look_sort),
         ",", 0, 0, &buflist_config_sort_fields_count);
 
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 }
 
 /*
@@ -292,7 +292,7 @@ buflist_config_change_nick_prefix (const void *pointer, void *data,
     (void) option;
 
     buflist_config_change_signals_refresh (NULL, NULL, NULL);
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 }
 
 /*
@@ -308,7 +308,7 @@ buflist_config_change_buflist (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 }
 
 /*
@@ -369,7 +369,7 @@ buflist_config_change_format (const void *pointer, void *data,
     buflist_config_format_hotlist_eval = buflist_config_add_eval_for_formats (
         weechat_config_string (buflist_config_format_hotlist));
 
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 }
 
 /*

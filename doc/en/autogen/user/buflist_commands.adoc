@@ -10,7 +10,7 @@
           refresh
 
     bar: add the "buflist" bar
-refresh: force the refresh of the "buflist" bar item
+refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
 
 The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
   - buflist.look.display_conditions: conditions to display a buffer in the list
@@ -18,6 +18,8 @@ The lines with buffers are displayed using string evaluation (see /help eval for
   - buflist.format.buffer_current: format for the current buffer
 
 The following variables can be used in these options:
+  - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
+    - ${bar_item.name}
   - buffer data (see hdata "buffer" in API doc for a complete list), for example:
     - ${buffer.number}
     - ${buffer.name}

@@ -53,7 +53,7 @@ buflist_command_buflist (const void *pointer, void *data,
 
     if (weechat_strcasecmp (argv[1], "refresh") == 0)
     {
-        buflist_bar_item_update ();
+        buflist_bar_item_update (0);
         return WEECHAT_RC_OK;
     }
 
@@ -72,7 +72,8 @@ buflist_command_init ()
         N_("bar item with list of buffers"),
         "bar || refresh",
         N_("    bar: add the \"buflist\" bar\n"
-           "refresh: force the refresh of the \"buflist\" bar item\n"
+           "refresh: force the refresh of the bar items (buflist, buflist2 "
+           "and buflist3)\n"
            "\n"
            "The lines with buffers are displayed using string evaluation "
            "(see /help eval for the format), with these options:\n"
@@ -83,6 +84,9 @@ buflist_command_init ()
            "  - buflist.format.buffer_current: format for the current buffer\n"
            "\n"
            "The following variables can be used in these options:\n"
+           "  - bar item data (see hdata \"bar_item\" in API doc for a complete "
+           "list), for example:\n"
+           "    - ${bar_item.name}\n"
            "  - buffer data (see hdata \"buffer\" in API doc for a complete "
            "list), for example:\n"
            "    - ${buffer.number}\n"

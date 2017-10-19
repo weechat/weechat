@@ -22,9 +22,13 @@
 
 #define BUFLIST_BAR_ITEM_NAME "buflist"
 
-extern struct t_arraylist *buflist_list_buffers;
+#define BUFLIST_BAR_NUM_ITEMS 3
 
-extern void buflist_bar_item_update ();
+extern struct t_arraylist *buflist_list_buffers[BUFLIST_BAR_NUM_ITEMS];
+
+extern const char *buflist_bar_item_get_name (int index);
+extern int buflist_bar_item_get_index (const char *item_name);
+extern void buflist_bar_item_update (int force);
 extern int buflist_bar_item_init ();
 extern void buflist_bar_item_end ();
 

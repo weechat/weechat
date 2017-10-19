@@ -44,6 +44,7 @@ struct t_hdata *buflist_hdata_window = NULL;
 struct t_hdata *buflist_hdata_buffer = NULL;
 struct t_hdata *buflist_hdata_hotlist = NULL;
 struct t_hdata *buflist_hdata_bar = NULL;
+struct t_hdata *buflist_hdata_bar_item = NULL;
 struct t_hdata *buflist_hdata_bar_window = NULL;
 
 
@@ -403,6 +404,8 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     struct t_hashtable *keys;
+    char str_key[256];
+    int i;
 
     /* make C compiler happy */
     (void) argc;
@@ -414,6 +417,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     buflist_hdata_buffer = weechat_hdata_get ("buffer");
     buflist_hdata_hotlist = weechat_hdata_get ("hotlist");
     buflist_hdata_bar = weechat_hdata_get ("bar");
+    buflist_hdata_bar_item = weechat_hdata_get ("bar_item");
     buflist_hdata_bar_window = weechat_hdata_get ("bar_window");
 
     if (!buflist_config_init ())
@@ -429,7 +433,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (weechat_config_boolean (buflist_config_look_enabled))
         buflist_add_bar ();
 
-    buflist_bar_item_update ();
+    buflist_bar_item_update (0);
 
     buflist_mouse_init ();
 
@@ -453,12 +457,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
         /* default mouse actions */
         weechat_hashtable_remove_all (keys);
-        weechat_hashtable_set (keys,
-                               "@item(" BUFLIST_BAR_ITEM_NAME "):button1*",
-                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
-        weechat_hashtable_set (keys,
-                               "@item(" BUFLIST_BAR_ITEM_NAME "):button2*",
-                               "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+        {
+            snprintf (str_key, sizeof (str_key),
+                      "@item(%s):button1*",
+                      buflist_bar_item_get_name (i));
+            weechat_hashtable_set (keys,
+                                   str_key, "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+            snprintf (str_key, sizeof (str_key),
+                      "@item(%s):button2*",
+                      buflist_bar_item_get_name (i));
+            weechat_hashtable_set (keys,
+                                   str_key, "hsignal:" BUFLIST_MOUSE_HSIGNAL);
+        }
         weechat_hashtable_set (keys,
                                "@bar(" BUFLIST_BAR_NAME "):ctrl-wheelup",
                                "hsignal:" BUFLIST_MOUSE_HSIGNAL);

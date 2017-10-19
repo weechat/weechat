@@ -31,6 +31,7 @@ extern struct t_hdata *buflist_hdata_window;
 extern struct t_hdata *buflist_hdata_buffer;
 extern struct t_hdata *buflist_hdata_hotlist;
 extern struct t_hdata *buflist_hdata_bar;
+extern struct t_hdata *buflist_hdata_bar_item;
 extern struct t_hdata *buflist_hdata_bar_window;
 
 extern void buflist_add_bar ();
