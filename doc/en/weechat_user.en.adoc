@@ -2237,7 +2237,8 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-Buflist plugin displays a list of buffers in a bar item called "buflist". +
+Buflist plugin displays a list of buffers in a bar item called "buflist"
+(two other bar items "buflist2" and "buflist3" are available as well). +
 A default bar "buflist" is created on startup with this item.
 
 [[buflist_commands]]

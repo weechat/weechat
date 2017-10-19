@@ -2236,7 +2236,9 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります。 +
+// TRANSLATION MISSING
+Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
+(two other bar items "buflist2" and "buflist3" are available as well). +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
 
 [[buflist_commands]]

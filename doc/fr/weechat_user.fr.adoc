@@ -2311,7 +2311,8 @@ include::autogen/user/aspell_options.adoc[]
 === Buflist
 
 L'extension Buflist affiche une liste des tampons dans un objet de barre appelé
-"buflist". +
+"buflist" (deux autres objets de barre "buflist2" et "buflist3" sont également
+disponibles). +
 Une barre par défaut "buflist" est créée au démarrage avec cet objet de barre.
 
 [[buflist_commands]]

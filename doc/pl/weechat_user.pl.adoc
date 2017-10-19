@@ -2270,7 +2270,9 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist". +
+// TRANSLATION MISSING
+Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
+(two other bar items "buflist2" and "buflist3" are available as well). +
 Domyślny pasek "buflist" jet tworzony podczas uruchomieina z tą wtyczką włączoną.
 
 [[buflist_commands]]
