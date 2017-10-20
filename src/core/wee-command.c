@@ -1089,11 +1089,22 @@ COMMAND_CALLBACK(buffer)
     /* set a property on buffer */
     if (string_strcasecmp (argv[1], "set") == 0)
     {
-        COMMAND_MIN_ARGS(4, "set");
-        value = string_remove_quotes (argv_eol[3], "'\"");
-        gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
-        if (value)
-            free (value);
+        COMMAND_MIN_ARGS(3, "set");
+        if (argc == 3)
+        {
+            /*
+             * default to empty value for valueless buffer "properties",
+             * e.g. localvar_del_xxx
+             */
+            gui_buffer_set (buffer, argv[2], "");
+        }
+        else
+        {
+            value = string_remove_quotes (argv_eol[3], "'\"");
+            gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
+            if (value)
+                free (value);
+        }
         return WEECHAT_RC_OK;
     }
 
