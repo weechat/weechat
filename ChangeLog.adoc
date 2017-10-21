@@ -31,6 +31,7 @@ New features::
 
 Improvements::
 
+  * core: make value optional in command /buffer set (issue #746, issue #1088)
   * core: allow floating point and hexadecimal numbers in comparison of evaluated values
   * core: add option weechat.look.save_config_with_fsync (issue #1083)
   * api: add argument "recurse_subdirs" in function exec_on_files()
