@@ -13759,7 +13759,7 @@ Arguments:
 * _bar_: bar pointer
 * _property_: name, hidden, priority, conditions, position, filling_top_bottom,
   filling_left_right, size, size_max, color_fg, color_delim, color_bg,
-  separator, items (see <<_bar_new,bar_new>>)
+  color_separator, separator, items (see <<_bar_new,bar_new>>)
 * _value_: new value for property
 
 Return value:

@@ -1148,6 +1148,10 @@ List of bar options:
 | color_delim | color |
   The color for delimiters in bar.
 
+| color_separator | color |
+  The color for the separator (line) (this option is used only if
+  `separator` = `on`).
+
 | hidden | `on`, `off` |
   When option is `on`, the bar is hidden. +
   Note: instead of changing this option, the command `/bar` is preferred, for
