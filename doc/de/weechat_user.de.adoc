@@ -2285,10 +2285,9 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-// TRANSLATION MISSING
-Die Buflist-Erweiterung dient dazu eine Liste der Buffer in einer Bar-Item mit Namen "buflist"
-darzustellen (two other bar items "buflist2" and "buflist3" are available as well). +
-Eine Standardbar, "buflist", wird beim Start automatisch erstellt, mit folgendem Inhalt.
+Die Buflist-Erweiterung dient dazu eine Liste der geöffneten Buffer in einer Bar-Item mit Namen
+"buflist" darzustellen (zwei weiere Bar-Items "buflist2" und "buflist3" sind zusätzlich verfügbar). +
+Eine Standardbar, "buflist", wird beim Programmstart automatisch mit folgendem Inhalt erstellt.
 
 [[buflist_commands]]
 ==== Befehle
