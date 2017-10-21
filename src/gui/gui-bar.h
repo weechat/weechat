@@ -43,6 +43,7 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_COLOR_FG,            /* default text color for bar       */
     GUI_BAR_OPTION_COLOR_DELIM,         /* default delimiter color for bar  */
     GUI_BAR_OPTION_COLOR_BG,            /* default background color for bar */
+    GUI_BAR_OPTION_COLOR_SEPARATOR,     /* separator line color for bar     */
     GUI_BAR_OPTION_SEPARATOR,           /* true if separator line displayed */
     GUI_BAR_OPTION_ITEMS,               /* bar items                        */
     /* number of bar options */

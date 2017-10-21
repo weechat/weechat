@@ -767,32 +767,29 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
 
     if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SEPARATOR]))
     {
+        if (!config_file_option_is_null (bar_window->bar->options[GUI_BAR_OPTION_COLOR_SEPARATOR]))
+        {
+            gui_window_set_custom_color_fg_bg (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
+                                               CONFIG_COLOR(bar_window->bar->options[GUI_BAR_OPTION_COLOR_SEPARATOR]),
+                                               CONFIG_COLOR(config_color_chat_bg), /* same as GUI_COLOR_SEPARATOR bg */
+                                               1);
+        }
+        else
+        {
+            gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
+                                          GUI_COLOR_SEPARATOR);
+        }
+
         switch (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_POSITION]))
         {
             case GUI_BAR_POSITION_BOTTOM:
-                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                              GUI_COLOR_SEPARATOR);
-                gui_window_hline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                  0, 0, bar_window->width,
-                                  CONFIG_STRING(config_look_separator_horizontal));
-                break;
             case GUI_BAR_POSITION_TOP:
-                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                              GUI_COLOR_SEPARATOR);
                 gui_window_hline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                   0, 0, bar_window->width,
                                   CONFIG_STRING(config_look_separator_horizontal));
                 break;
             case GUI_BAR_POSITION_LEFT:
-                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                              GUI_COLOR_SEPARATOR);
-                gui_window_vline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                  0, 0, bar_window->height,
-                                  CONFIG_STRING(config_look_separator_vertical));
-                break;
             case GUI_BAR_POSITION_RIGHT:
-                gui_window_set_weechat_color (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
-                                              GUI_COLOR_SEPARATOR);
                 gui_window_vline (GUI_BAR_WINDOW_OBJECTS(bar_window)->win_separator,
                                   0, 0, bar_window->height,
                                   CONFIG_STRING(config_look_separator_vertical));
