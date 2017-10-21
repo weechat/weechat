@@ -81,7 +81,7 @@ Exemples :
          close [<n1>[-<n2>]|<nom>]
          notify <niveau>
          localvar
-         set <propriété> <valeur>
+         set <propriété> [<valeur>]
          get <propriété>
          <nombre>|<nom>
 

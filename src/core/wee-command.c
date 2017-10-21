@@ -7000,7 +7000,7 @@ command_init ()
            " || close [<n1>[-<n2>]|<name>]"
            " || notify <level>"
            " || localvar"
-           " || set <property> <value>"
+           " || set <property> [<value>]"
            " || get <property>"
            " || <number>|-|+|<name>"),
         N_("    list: list buffers (without argument, this list is displayed)\n"

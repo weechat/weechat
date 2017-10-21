@@ -81,7 +81,7 @@ Przykłady:
          close [<n1>[-<n2>]|<nazwa>]
          notify <poziom>
          localvar
-         set <opcja> <wartość>
+         set <opcja> [<wartość>]
          get <opcja>
          <numer>|-|+|<nazwa>
 
