@@ -7498,7 +7498,7 @@ weechat.key_bind("mouse", keys)
 
 ==== key_unbind
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, mis à jour dans la 2.0._
 
 Supprimer une/des association(s) de touche(s).
 
@@ -7517,7 +7517,9 @@ Paramètres :
 
 * _context_ : contexte pour les touches (voir <<_key_bind,key_bind>>)
 * _key_ : touche à supprimer ou la valeur spéciale "area:XXX" pour supprimer
-  toutes les touches ayant _XXX_ comme première ou deuxième zone
+  toutes les touches ayant _XXX_ comme première ou deuxième zone; si la touche
+  commence par "quiet:", les touches supprimées ne sont pas affichées dans le
+  tampon _core_ (_WeeChat ≥ 2.0_).
 
 Valeur de retour :
 

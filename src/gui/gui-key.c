@@ -927,6 +927,15 @@ gui_key_unbind_plugin (const char *context, const char *key)
     if (ctxt < 0)
         return 0;
 
+    if (strncmp (key, "quiet:", 6) == 0)
+    {
+        key += 6;
+    }
+    else
+    {
+        gui_key_verbose = 1;
+    }
+
     if (strncmp (key, "area:", 5) == 0)
     {
         num_keys = 0;
@@ -944,9 +953,7 @@ gui_key_unbind_plugin (const char *context, const char *key)
                         && ptr_key->area_name[1]
                         && (strcmp (ptr_key->area_name[1], area_name) == 0)))
                 {
-                    gui_key_verbose = 1;
                     num_keys += gui_key_unbind (NULL, ctxt, ptr_key->key);
-                    gui_key_verbose = 0;
                 }
             }
             free (area_name);
@@ -954,10 +961,10 @@ gui_key_unbind_plugin (const char *context, const char *key)
     }
     else
     {
-        gui_key_verbose = 1;
         num_keys = gui_key_unbind (NULL, ctxt, key);
-        gui_key_verbose = 0;
     }
+
+    gui_key_verbose = 0;
 
     return num_keys;
 }

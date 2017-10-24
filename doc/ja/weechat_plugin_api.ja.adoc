@@ -7396,7 +7396,7 @@ weechat.key_bind("mouse", keys)
 
 ==== key_unbind
 
-_WeeChat バージョン 0.3.6 以上で利用可。_
+_WeeChat バージョン 0.3.6 以上で利用可、バージョン 2.0 で更新。_
 
 キー割り当てを削除。
 
@@ -7413,8 +7413,11 @@ int weechat_key_unbind (const char *context, const char *key);
 引数:
 
 * _context_: キーのコンテキスト (<<_key_bind,key_bind>> を参照)
+// TRANSLATION MISSING
 * _key_: 削除するキーまたは特殊値 "area:XXX" で1 番目または 2
-  番目の領域から _XXX_ をもつすべてのキーを削除する
+  番目の領域から _XXX_ をもつすべてのキーを削除する;
+  if the key starts with "quiet:", the keys removed are not displayed in _core_
+  buffer (_WeeChat ≥ 2.0_).
 
 戻り値:
 

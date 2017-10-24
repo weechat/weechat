@@ -7569,7 +7569,7 @@ Argomenti:
 ** _mouse_: tasti per gli eventi del mouse
 // TRANSLATION MISSING
 * _keys_: hashtable with key bindings; it can contain following special keys:
-** _{key_bind_quiet}_: do not display the keys added in core buffer
+** _{key_bind_quiet}_: do not display the keys added in _core_ buffer
    _(WeeChat ≥ 1.8)_
 
 Valore restituito:
@@ -7611,7 +7611,7 @@ weechat.key_bind("mouse", keys)
 
 ==== key_unbind
 
-_WeeChat ≥ 0.3.6._
+_WeeChat ≥ 0.3.6, updated in 2.0._
 
 Rimuove una o più associazioni tasti.
 
@@ -7629,8 +7629,10 @@ int weechat_key_unbind (const char *context, const char *key);
 Argomenti:
 
 * _context_: contesto per i tasti (consultare <<_key_bind,key_bind>>)
+// TRANSLATION MISSING
 * _key_: tasto da rimuovere o un valore speciale "area:XXX" per rimuovere tutti
-  i tasti che hanno _XXX_ come prima o seconda area
+  i tasti che hanno _XXX_ come prima o seconda area; if the key starts with
+  "quiet:", the keys removed are not displayed in _core_ buffer (_WeeChat ≥ 2.0_).
 
 Valore restituito:
 
