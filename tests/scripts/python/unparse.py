@@ -655,9 +655,10 @@ class UnparseTcl(UnparsePython):
             self.fill,
             'set ',
             node.targets[0],
-            ' [',
+            ' ',
+            '[' if not isinstance(node.value, ast.Str) else '',
             node.value,
-            ']',
+            ']' if not isinstance(node.value, ast.Str) else '',
         )
 
     def _ast_attribute(self, node):
