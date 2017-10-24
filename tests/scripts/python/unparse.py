@@ -464,7 +464,7 @@ class UnparsePerl(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
-        self.add('"%s"' % node.s.replace('$', '\\$'))
+        self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
 
 
 class UnparseRuby(UnparsePython):
