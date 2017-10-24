@@ -47,6 +47,12 @@ else()
   endif()
 endif()
 
+find_package(PkgConfig QUIET)
+If(PKG_CONFIG_FOUND)
+  pkg_search_module(NCURSES ncurses)
+  set(NCURSES_LIBRARY ${LIBS} ${NCURSES_LIBRARIES})
+endif()
+
 if(NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
   set(NCURSES_FOUND TRUE)
 endif()
