@@ -540,6 +540,10 @@ class UnparseRuby(UnparsePython):
         """Add an AST Pass in output."""
         pass
 
+    def _ast_str(self, node):
+        """Add an AST Str in output."""
+        self.add('"%s"' % node.s)
+
 
 class UnparseLua(UnparsePython):
     """
