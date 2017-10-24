@@ -565,11 +565,6 @@ class UnparseLua(UnparsePython):
             'Gt': '>',
             'GtE': '>=',
         }
-        self._var_quotes = True
-
-    def _set_var_quotes(self, value):
-        """Set boolean to quote variables."""
-        self._var_quotes = value
 
     def _ast_binop(self, node):
         """Add an AST BinOp in output."""
@@ -590,11 +585,7 @@ class UnparseLua(UnparsePython):
         self.add(
             '{',
             self.make_list([
-                [(self._set_var_quotes, False),
-                 key,
-                 (self._set_var_quotes, True),
-                 '=',
-                 value]
+                ['[', key, ']', '=', value]
                 for key, value in zip(node.keys, node.values)]),
             '}',
         )
@@ -642,10 +633,6 @@ class UnparseLua(UnparsePython):
     def _ast_pass(self, node):
         """Add an AST Pass in output."""
         pass
-
-    def _ast_str(self, node):
-        """Add an AST Str in output."""
-        self.add(repr(node.s) if self._var_quotes else node.s)
 
 
 class UnparseTcl(UnparsePython):
