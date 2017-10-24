@@ -120,6 +120,21 @@ def test_lists():
     weechat.list_free(ptr_list)
 
 
+def test_key():
+    """Test key functions."""
+    check(
+        weechat.key_bind(
+            'mouse',
+            {
+                '@chat(plugin.test):button1': 'hsignal:test_mouse',
+                '@chat(plugin.test):wheelup': '/mycommand up',
+                '@chat(plugin.test):wheeldown': '/mycommand down',
+                '__quiet': '',
+            }
+        ) == 3)
+    check(weechat.key_unbind('mouse', 'quiet:area:chat(plugin.test)') == 3)
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
@@ -129,6 +144,7 @@ def cmd_test_cb(data, buf, args):
     test_plugins()
     test_strings()
     test_lists()
+    test_key()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK
 
