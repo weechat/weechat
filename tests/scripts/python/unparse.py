@@ -334,8 +334,8 @@ class UnparsePerl(UnparsePython):
     def _ast_binop(self, node):
         """Add an AST BinOp in output."""
         if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Str)) or
-                 isinstance(node.right, (ast.Name, ast.Str))):
+                (not self.is_number(node.left) or
+                 not self.is_number(node.right)):
             str_op = '.'
         else:
             str_op = self.binop[node.op.__class__.__name__]
@@ -569,8 +569,8 @@ class UnparseLua(UnparsePython):
     def _ast_binop(self, node):
         """Add an AST BinOp in output."""
         if isinstance(node.op, ast.Add) and \
-                (isinstance(node.left, (ast.Name, ast.Str)) or
-                 isinstance(node.right, (ast.Name, ast.Str))):
+                (not self.is_number(node.left) or
+                 not self.is_number(node.right)):
             str_op = '..'
         else:
             str_op = self.binop[node.op.__class__.__name__]
