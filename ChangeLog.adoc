@@ -61,7 +61,7 @@ Tests::
 
 Build::
 
-  * core: fix build with ncurses and separate tinfo (issue #1090)
+  * core: fix build with ncurses and separate tinfo (bug #41245, issue #1090)
   * javascript: fix detection of libv8 with autotools on Ubuntu Trusty
 
 [[v1.9.1]]
