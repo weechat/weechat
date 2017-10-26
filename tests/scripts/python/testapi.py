@@ -135,6 +135,18 @@ def test_key():
     check(weechat.key_unbind('mouse', 'quiet:area:chat(plugin.test)') == 3)
 
 
+def test_display():
+    """Test display functions."""
+    check(weechat.prefix('action') != '')
+    check(weechat.prefix('error') != '')
+    check(weechat.prefix('join') != '')
+    check(weechat.prefix('network') != '')
+    check(weechat.prefix('quit') != '')
+    check(weechat.prefix('unknown') == '')
+    check(weechat.color('green') != '')
+    check(weechat.color('unknown') == '')
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
@@ -145,6 +157,7 @@ def cmd_test_cb(data, buf, args):
     test_strings()
     test_lists()
     test_key()
+    test_display()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK
 
