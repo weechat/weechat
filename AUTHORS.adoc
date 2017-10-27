@@ -49,7 +49,7 @@ Alphabetically:
 * JD Horelick (jdhore)
 * Jim Ramsay (lack)
 * Jiri Golembiovsky (GolemJ)
-* Joey Pabalinas
+* Joey Pabalinas (alyptik)
 * Juan Francisco Cantero Hurtado
 * Julien Louis (ptitlouis)
 * Karthik K
