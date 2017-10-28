@@ -147,6 +147,50 @@ def test_display():
     check(weechat.color('unknown') == '')
 
 
+def completion_cb(data, completion_item, buf, completion):
+    """Completion callback."""
+    check(data == 'completion_data')
+    check(completion_item == 'SCRIPT_NAME')
+    check(weechat.hook_completion_get_string(completion, 'args') == 'w')
+    weechat.hook_completion_list_add(completion, 'word_completed',
+                                     0, weechat.WEECHAT_LIST_POS_END)
+    return weechat.WEECHAT_RC_OK
+
+
+def command_cb(data, buf, args):
+    """Command callback."""
+    check(data == 'command_data')
+    check(args == 'word_completed')
+    return weechat.WEECHAT_RC_OK
+
+
+def command_run_cb(data, buf, command):
+    """Command_run callback."""
+    check(data == 'command_run_data')
+    check(command == '/cmd' + 'SCRIPT_NAME' + ' word_completed')
+    return weechat.WEECHAT_RC_OK
+
+
+def test_hooks():
+    """Test function hook_command."""
+    # hook_completion / hook_completion_args / and hook_command
+    hook_cmplt = weechat.hook_completion('SCRIPT_NAME', 'description',
+                                         'completion_cb', 'completion_data')
+    hook_cmd = weechat.hook_command('cmd' + 'SCRIPT_NAME', 'description',
+                                    'arguments', 'description arguments',
+                                    '%(' + 'SCRIPT_NAME' + ')',
+                                    'command_cb', 'command_data')
+    weechat.command('', '/input insert /cmd' + 'SCRIPT_NAME' + ' w')
+    weechat.command('', '/input complete_next')
+    # hook_command_run
+    hook_cmd_run = weechat.hook_command_run('/cmd' + 'SCRIPT_NAME' + '*',
+                                            'command_run_cb', 'command_run_data')
+    weechat.command('', '/input return')
+    weechat.unhook(hook_cmd_run)
+    weechat.unhook(hook_cmd)
+    weechat.unhook(hook_cmplt)
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
@@ -158,6 +202,7 @@ def cmd_test_cb(data, buf, args):
     test_lists()
     test_key()
     test_display()
+    test_hooks()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK
 
