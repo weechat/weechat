@@ -988,8 +988,8 @@ path = weechat.string_eval_path_home("%h/test", {}, {}, {})
 
 ==== string_remove_quotes
 
-文字列の最初と最後から引用符号を削除
-(最初の引用符号の前と最後の引用符号の後にある空白文字は無視)。
+文字列の最初と最後から引用符を削除
+(最初の引用符の前と最後の引用符の後にある空白文字は無視)。
 
 プロトタイプ:
 
@@ -1001,11 +1001,11 @@ char *weechat_string_remove_quotes (const char *string, const char *quotes);
 引数:
 
 * _string_: 文字列
-* _quotes_: 引用符号のリストを含む文字列
+* _quotes_: 引用符のリストを含む文字列
 
 戻り値:
 
-* 最初と最後から引用符号を削除した文字列
+* 最初と最後から引用符を削除した文字列
   (使用後には必ず "free" を呼び出して領域を開放してください)
 
 C 言語での使用例:
@@ -1982,9 +1982,8 @@ char *weechat_string_eval_expression (const char *expr,
 
 引数:
 
-// TRANSLATION MISSING
-* _expr_: 評価する式 (see <<eval_conditions,conditions>> and
-  <<eval_variables,variables>>)
+* _expr_: 評価する式
+  (<<eval_conditions,条件>>および<<eval_variables,変数>>を参照してください)
 * _pointers_: ポインタを含むハッシュテーブル (キーは文字列、値はポインタ);
   (現在のウィンドウやバッファへのポインタを持つ) ハッシュテーブルが "window" と
   "buffer" ポインタを持たない場合はこれらは自動的に追加される (NULL でも可):
@@ -2081,9 +2080,8 @@ options = {
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"
 ----
 
-// TRANSLATION MISSING
 [[eval_conditions]]
-===== Conditions
+===== 条件
 
 条件に使える論理演算子のリスト
 (上から優先順位の高い順):
@@ -2203,24 +2201,19 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+1+`
 |===
 
-// TRANSLATION MISSING
-The comparison is made using floating point numbers if the two expressions are
-valid numbers, with one of the following formats:
+浮動小数点数として比較される数値表現の書式は以下です:
 
-* integer (examples: 5, -7)
-* floating point number (examples: 5.2, -7.5, 2.83e-2) (_WeeChat ≥ 2.0_)
-* hexadecimal number (examples: 0xA3, -0xA3) (_WeeChat ≥ 2.0_)
+* 整数 (例: 5、-7)
+* 浮動小数点数 (例: 5.2、-7.5、2.83e-2) (_WeeChat バージョン 2.0 以上で利用可_)
+* 16 進数 (例: 0xA3、-0xA3) (_WeeChat バージョン 2.0 以上で利用可_)
 
-// TRANSLATION MISSING
-To force a string comparison, you can add double quotes around each expression,
-for example:
+数値表現を二重引用符で括ることで、文字列として比較されます。例:
 
-* `50 > 100` returns 0 (number comparison)
-* `"50" > "100"` returns 1 (string comparison)
+* `50 > 100` は 0 を返します (数値として比較)
+* `"50" > "100"` は 1 を返します (文字列として比較)
 
-// TRANSLATION MISSING
 [[eval_variables]]
-===== Variables
+===== 変数
 
 式中で展開される変数のリスト
 (優先度の高い順、展開順の早いものを上に遅いものを下に):
@@ -7413,11 +7406,10 @@ int weechat_key_unbind (const char *context, const char *key);
 引数:
 
 * _context_: キーのコンテキスト (<<_key_bind,key_bind>> を参照)
-// TRANSLATION MISSING
 * _key_: 削除するキーまたは特殊値 "area:XXX" で1 番目または 2
-  番目の領域から _XXX_ をもつすべてのキーを削除する;
-  if the key starts with "quiet:", the keys removed are not displayed in _core_
-  buffer (_WeeChat ≥ 2.0_).
+  番目の領域から _XXX_ をもつすべてのキーを削除しますが、
+  キーの先頭に "quiet:" を付けた場合には、削除されたキーを _core_
+  バッファに表示しません (_WeeChat バージョン 2.0 以上で利用可_)。
 
 戻り値:
 
@@ -8401,7 +8393,7 @@ _WeeChat バージョン 1.5 で更新。_
 WeeChat バージョン 0.3.9.2
 以上の場合、コマンドを実行するためにシェルを使わないようになりました。WeeChat
 が自動的にコマンドと引数を分割します (シェルがやっているように)。 +
-分割 (クォートに基づくコマンド分割)
+分割 (引用符に基づくコマンド分割)
 に失敗する場合、またはシェルを使いたい場合は、ハッシュテーブル _options_
 に引数を入れて <<_hook_process_hashtable,hook_process_hashtable>>
 関数を使ってください _(WeeChat バージョン 0.4.0 以上で利用可)_。

@@ -555,8 +555,7 @@ _~/.weechat_ ディレクトリの中に作成されます
 [NOTE]
 ^(1)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
 
-// TRANSLATION MISSING
-The files in the WeeChat home directory are:
+WeeChat ホームディレクトリには以下のファイルが含まれます:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
@@ -2236,9 +2235,8 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-// TRANSLATION MISSING
 Buflist プラグインを使うことで、"buflist" と呼ばれるバー要素の中にバッファリストを表示させることが可能になります
-(two other bar items "buflist2" and "buflist3" are available as well). +
+(それ以外に "buflist2" と "buflist3" と呼ばれるバー要素も利用可能です)。 +
 プラグインは開始時にバー要素 "buflist" を持つデフォルトバー "buflist" を作成します。
 
 [[buflist_commands]]
@@ -3206,7 +3204,7 @@ IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポ�
 
 Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
 
-リモートインターフェイスを使って接続できます、ダウンロードページのリストを御覧ください:
+リモートインターフェイスを使って接続できます、ダウンロードページのリストを参照してください:
 https://weechat.org/download
 
 [IMPORTANT]
