@@ -40,6 +40,7 @@ Improvements::
 
 Bug fixes::
 
+  * core: do not change the chat prefix size when a filtered line is added (issue #1092)
   * core: fix display of nicks in nicklist when they are in a group with sub-groups (issue #1079)
   * core, plugins: check return code of strftime function
   * core: fix cast of time_t (to "long long" instead of "long") (issue #1051)

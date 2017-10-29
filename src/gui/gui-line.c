@@ -945,13 +945,19 @@ gui_line_add_to_list (struct t_gui_lines *lines,
     line->next_line = NULL;
     lines->last_line = line;
 
-    /* adjust "prefix_max_length" if this prefix length is > max */
-    gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
-                                     &prefix_is_nick);
-    if (prefix_is_nick)
-        prefix_length += config_length_nick_prefix_suffix;
-    if (prefix_length > lines->prefix_max_length)
-        lines->prefix_max_length = prefix_length;
+    /*
+     * adjust "prefix_max_length" if this prefix length is > max
+     * (only if the line is displayed
+     */
+    if (line->data->displayed)
+    {
+        gui_line_get_prefix_for_display (line, NULL, &prefix_length, NULL,
+                                         &prefix_is_nick);
+        if (prefix_is_nick)
+            prefix_length += config_length_nick_prefix_suffix;
+        if (prefix_length > lines->prefix_max_length)
+            lines->prefix_max_length = prefix_length;
+    }
 
     /* adjust "lines_hidden" if the line is hidden */
     if (!line->data->displayed)
