@@ -958,10 +958,11 @@ gui_line_add_to_list (struct t_gui_lines *lines,
         if (prefix_length > lines->prefix_max_length)
             lines->prefix_max_length = prefix_length;
     }
-
-    /* adjust "lines_hidden" if the line is hidden */
-    if (!line->data->displayed)
+    else
+    {
+        /* adjust "lines_hidden" if the line is hidden */
         (lines->lines_hidden)++;
+    }
 
     lines->lines_count++;
 }
