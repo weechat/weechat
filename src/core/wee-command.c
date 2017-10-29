@@ -7573,7 +7573,7 @@ command_init ()
            "format: \"@area:key\" or \"@area1>area2:key\" where area can be:\n"
            "          *: any area on screen\n"
            "       chat: chat area (any buffer)\n"
-           "  chat(xxx): char area for buffer with name \"xxx\" (full name "
+           "  chat(xxx): chat area for buffer with name \"xxx\" (full name "
            "including plugin)\n"
            "     bar(*): any bar\n"
            "   bar(xxx): bar \"xxx\"\n"
