@@ -3679,7 +3679,7 @@ Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
 
 * `+${re:0}+` à `+${re:99}+` : `+${re:0}+` est la correspondance complète, `+${re:1}+`
   à `+${re:99}+` sont les groupes capturés
-* `+${re:+}+` : la dernière correspondance (avec le numéro le plus élevé)
+* `+${re:+++}+` : la dernière correspondance (avec le numéro le plus élevé)
 * `+${hide:c,${re:N}}+` : la correspondance "N" avec tous les caractères
   remplacés par "c" (exemple : `+${hide:*,${re:2}}+` est le groupe n°2 avec tous
   les caractères remplacés par `+*+`).

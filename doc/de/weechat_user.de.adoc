@@ -3647,7 +3647,7 @@ Matching groups können in "replace" genutzt werden:
 
 * `+${re:0}+` bis `+${re:99}+`: `+${re:0}+` um alles zu matchen, `+${re:1}+` bis
   `+${re:99}+` um Gruppen zu fangen
-* `+${re:+}+`: der letzte match (mit der höchsten Nummer)
+* `+${re:+++}+`: der letzte match (mit der höchsten Nummer)
 * `+${hide:c,${re:N}}+`: match "N" mit allen Zeichen die durch "c" ersetzt wurden
   (Beispiel: `+${hide:*,${re:2}}+` ist die group #2 mit allen Zeichen die durch
   `+*+` ersetzt wurden).

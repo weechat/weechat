@@ -3624,7 +3624,7 @@ Dopasowane grupy, które mogą zostać użyte w "zamień":
 
 * `+${re:0}+` to `+${re:99}+`: `+${re:0}+` to pełne dopasowanie, `+${re:1}+` do
   `+${re:99}+` to przechwycone grupy
-* `+${re:+}+`: ostatnie dopasowanie (z najwyższym numerem)
+* `+${re:+++}+`: ostatnie dopasowanie (z najwyższym numerem)
 * `+${hide:c,${re:N}}+`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c"
   (przykład: `+${hide:*,${re:2}}+` to grupa #2 ze znakami zastąpionymi `+*+`).
 
