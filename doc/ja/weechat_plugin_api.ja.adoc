@@ -424,7 +424,8 @@ const char *weechat_gettext (const char *string);
 
 戻り値:
 
-* 翻訳済み文字列
+// TRANSLATION MISSING
+* translated string or _string_ if there is no translation available in local language
 
 C 言語での使用例:
 
@@ -466,7 +467,9 @@ const char *weechat_ngettext (const char *string, const char *plural,
 
 戻り値:
 
-* 翻訳済みの文字列
+// TRANSLATION MISSING
+* translated string or _string_ / _plural_ if there is no translation available
+  in local language
 
 C 言語での使用例:
 

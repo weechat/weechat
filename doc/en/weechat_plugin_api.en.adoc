@@ -418,7 +418,7 @@ Arguments:
 
 Return value:
 
-* translated string
+* translated string or _string_ if there is no translation available in local language
 
 C example:
 
@@ -460,7 +460,8 @@ Arguments:
 
 Return value:
 
-* translated string
+* translated string or _string_ / _plural_ if there is no translation available
+  in local language
 
 C example:
 

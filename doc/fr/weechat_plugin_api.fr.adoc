@@ -427,7 +427,7 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne traduite
+* chaîne traduite ou _string_ s'il n'y a pas de traduction disponible dans la langue locale
 
 Exemple en C :
 
@@ -469,7 +469,8 @@ Paramètres :
 
 Valeur de retour :
 
-* chaîne traduite
+* chaîne traduite ou _string_ / _plural_ s'il n'y a pas de traduction disponible
+  dans la langue locale
 
 Exemple en C :
 

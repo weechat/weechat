@@ -442,7 +442,8 @@ Argomenti:
 
 Valore restituito:
 
-* stringa tradotta
+// TRANSLATION MISSING
+* translated string or _string_ if there is no translation available in local language
 
 Esempio in C:
 
@@ -484,7 +485,9 @@ Argomenti:
 
 Valore restituito:
 
-* stringa tradotta
+// TRANSLATION MISSING
+* translated string or _string_ / _plural_ if there is no translation available
+  in local language
 
 Esempio in C:
 
