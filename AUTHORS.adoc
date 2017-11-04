@@ -28,6 +28,7 @@ Alphabetically:
 * Benoit Papillault (benoit)
 * Christian Heinz
 * Christopher O'Neill (deltafire)
+* coypoop
 * David Flatz
 * Dmitry Kobylin
 * Dominik Honnef
