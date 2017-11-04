@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <string.h>

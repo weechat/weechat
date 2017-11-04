@@ -20,6 +20,8 @@
 #ifndef WEECHAT_PLUGIN_LOGGER_BUFFER_H
 #define WEECHAT_PLUGIN_LOGGER_BUFFER_H
 
+#include <stdio.h>
+
 struct t_infolist;
 
 struct t_logger_buffer

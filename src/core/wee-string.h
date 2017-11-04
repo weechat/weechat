@@ -20,6 +20,7 @@
 #ifndef WEECHAT_STRING_H
 #define WEECHAT_STRING_H
 
+#include <stdio.h>
 #include <stdint.h>
 #include <regex.h>
 
