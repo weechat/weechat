@@ -46,7 +46,7 @@ struct t_irc_channel;
 /* list of supported capabilities (for completion in command /cap) */
 #define IRC_COMMAND_CAP_SUPPORTED_COMPLETION \
     "account-notify|away-notify|cap-notify|extended-join|"              \
-    "multi-prefix|server-time|userhost-in-names|%*"
+    "invite-notify|multi-prefix|server-time|userhost-in-names|%*"
 
 extern void irc_command_away_server (struct t_irc_server *server,
                                      const char *arguments,
