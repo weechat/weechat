@@ -20,6 +20,38 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.0]]
 == Version 2.0 (under dev)
 
+[[v2.0_debian_packaging]]
+=== Split of scripting Debian packages
+
+The Debian packaging has changed (for now only on weechat.org repositories,
+not in Debian official repositories). +
+The package `weechat-plugins` has been split into 9 packages:
+
+- weechat-plugins (with only the following plugins: aspell, exec, fifo, relay,
+  script, trigger)
+- weechat-python
+- weechat-perl
+- weechat-ruby
+- weechat-lua
+- weechat-tcl
+- weechat-guile
+- weechat-javascript
+- weechat-php.
+
+If you are using the packages from weechat.org, you will have to install
+manually the scripting packages (according to the languages you'll use
+in WeeChat), for example Python/Perl only:
+
+----
+sudo apt-get install weechat-python weechat-perl
+----
+
+For development packages:
+
+----
+sudo apt-get install weechat-devel-python weechat-devel-perl
+----
+
 [[v2.0_buflist_eval]]
 === Evaluation in buflist
 
