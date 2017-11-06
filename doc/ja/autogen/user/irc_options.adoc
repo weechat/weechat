@@ -309,7 +309,7 @@
 ** デフォルト値: `+auto+`
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** 説明: pass:none[ようこそ通知メッセージは対象となるバッファに自動リダイレクト; ようこそ通知の通知先はニックネームとなっていますが、通知メッセージの最初チャンネル名が含まれています、freenode サーバが送信する通知メッセージの例: "[#channel\] Welcome to this channel..."]
+** 説明: pass:none[automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example the ENTRYMSG notices sent by Atheme IRC Services which look like: "[#channel\] Welcome to this channel..."]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

@@ -2816,9 +2816,10 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "notice_welcome_redirect", "boolean",
         N_("automatically redirect channel welcome notices to the channel "
-           "buffer; such notices have the nick as target but a channel name in "
-           "beginning of notice message, for example notices sent by freenode "
-           "server which look like: \"[#channel] Welcome to this channel...\""),
+           "buffer; such notices have the nick as target but a channel name "
+           "in beginning of notice message, for example the ENTRYMSG notices "
+           "sent by Atheme IRC Services which look like: "
+           "\"[#channel] Welcome to this channel...\""),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notice_welcome_tags = weechat_config_new_option (

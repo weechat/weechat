@@ -309,7 +309,7 @@
 ** valeur par défaut: `+auto+`
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** description: pass:none[rediriger automatiquement les notices de bienvenue sur le canal vers le tampon du canal ; de telles notices ont le pseudo comme cible mais le nom du canal au début du message de notice, par exemple les notices envoyées par le serveur freenode qui ressemblent à : "[#canal\] Bienvenue sur ce canal..."]
+** description: pass:none[rediriger automatiquement les notices de bienvenue sur le canal vers le tampon du canal ; de telles notices ont le pseudo comme cible mais le nom du canal au début du message de notice, par exemple les notices ENTRYMSG envoyées par les services Atheme IRC qui ressemblent à : "[#canal\] Bienvenue sur ce canal..."]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
