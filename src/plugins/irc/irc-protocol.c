@@ -492,6 +492,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     {
                         server->cap_account_notify = 1;
                     }
+                    else if (strcmp (caps_supported[i], "echo-message") == 0)
+                    {
+                        server->cap_echo_message = 1;
+                    }
                     else if (strcmp (caps_supported[i], "extended-join") == 0)
                     {
                         server->cap_extended_join = 1;

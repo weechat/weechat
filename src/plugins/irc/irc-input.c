@@ -180,7 +180,8 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, int flags,
             str_args = weechat_hashtable_get (hashtable, hash_key);
             if (!str_args)
                 break;
-            irc_input_user_message_display (buffer, action, str_args);
+            if (!ptr_server->cap_echo_message)
+                irc_input_user_message_display (buffer, action, str_args);
             number++;
         }
         weechat_hashtable_free (hashtable);
