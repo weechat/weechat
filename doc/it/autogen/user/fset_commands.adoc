@@ -30,7 +30,7 @@
       -left: scroll the fset buffer by "percent" of width on the left
      -right: scroll the fset buffer by "percent" of width on the right
         -go: select a line by number, first line number is 0 ("end" to select the last line)
-    -toggle: toggle the boolean value, set a new value for other types
+    -toggle: toggle the boolean value
        -add: add "value" (which can be a negative number) for integers and colors, set/append to value for other types (set for a negative value, append for a positive value)
      -reset: reset the value of option
      -unset: unset the option

@@ -30,7 +30,7 @@
       -left : faire défier le tampon fset de "pourcentage" de largeur vers la gauche
      -right : faire défier le tampon fset de "pourcentage" de largeur vers la droite
         -go : sélectionner une ligne par numéro, la première ligne est 0 ("end" pour sélectionner la dernière ligne)
-    -toggle : basculer la valeur booléenne, définir une nouvelle valeur pour les autres types
+    -toggle : basculer la valeur booléenne
        -add : ajouter "valeur" (qui peut être un nombre négatif) pour les entiers et couleurs, définir/ajouter à la valeur pour les autres types (définir pour une valeur négative, ajouter pour un nombre positif)
      -reset : réinitialiser la valeur de l'option
      -unset : supprimer/réinitialiser l'option
@@ -97,8 +97,8 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${newline} : insérer une nouvelle ligne à cet endroit, pour afficher l'option sur plusieurs lignes
 
 Touches et entrées pour le déplacement dans le tampon fset :
-  up                        se déplacer d'une ligne vers le haut
-  down                      se déplacer d'une ligne vers le bas
+  haut                      se déplacer d'une ligne vers le haut
+  bas                       se déplacer d'une ligne vers le bas
   pgup                      se déplacer d'une page vers le haut
   pgdn                      se déplacer d'une page vers le bas
   alt-home          <<      se déplacer à la première ligne
@@ -107,17 +107,17 @@ Touches et entrées pour le déplacement dans le tampon fset :
   F12               >       faire défiler horizontalement vers la droite
 
 Touches et entrées pour définir les options sur le tampon fset :
-  alt+space         t       basculer la valeur booléenne
+  alt+espace        t       basculer la valeur booléenne
   alt+'-'           -       soustraire 1 de la valeur pour un entier/couleur, définir la valeur pour les autres types
   alt+'+'           +       ajouter 1 à la valeur pour un entier/couleur, ajouter à la valeur pour les autres types
   alt+f, alt+r      r       réinitialiser la valeur
   alt+f, alt+u      u       supprimer/réinitialiser la valeur
-  alt+enter         s       définir la valeur
+  alt+entrée        s       définir la valeur
   alt+f, alt+n      n       définie une nouvelle valeur
   alt+f, alt+a      a       ajouter à la valeur
   alt+','           ,       marquer/démarquer l'option
-  shift+up                  se déplacer d'une ligne vers le haut et marquer/démarquer l'option
-  shift+down                marquer/démarquer l'option et se déplacer d'une ligne vers le bas
+  shift+haut                se déplacer d'une ligne vers le haut et marquer/démarquer l'option
+  shift+bas                 marquer/démarquer l'option et se déplacer d'une ligne vers le bas
                     m:xxx   marquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
                     u:xxx   démarquer les options affichées qui correspondent au filtre "xxx" (tout filtre sur une option ou valeur est autorisé, voir les filtres ci-dessus)
 
@@ -136,11 +136,11 @@ Autres touches et entrées sur le tampon fset :
                     q       fermer le tampon fset
 
 Actions de la souris sur le tampon fset :
-  wheel up/down                   se déplacer vers le haut/bas
-  left button                     se déplacer à cette ligne
-  right button                    basculer le booleén (on/off) ou éditer la valeur de l'option
-  right button + drag left/right  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
-  right button + drag up/down     marquer/démarquer plusieurs options
+  roulette haut/bas                     se déplacer vers le haut/bas
+  bouton gauche                         se déplacer à cette ligne
+  bouton droit                          basculer le booleén (on/off) ou éditer la valeur de l'option
+  bouton droit + glisser geuche/droite  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
+  bouton droit + glisser haut/bas       marquer/démarquer plusieurs options
 
 Note : si l'entrée comporte un ou plusieurs espaces en tête, le texte suivant est interprété comme un filtre, sans les espaces. Par exemple " q" cherche toutes les options avec "q" dans le nom, tandis que "q" ferme le tampon fset.
 

@@ -23,136 +23,136 @@
        -export [-help|-nohelp] <filename>
        <filter>
 
-       -bar: fügt eine Hilfe in einer Bar hinzu
-   -refresh: der Bildschirm wird neu gezeichnet (Befehl: /window refresh)
-        -up: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach oben
-      -down: bewegt die ausgewählte Zeile um die Anzahl an Zeilen nach unten
-      -left: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach links verschoben
-     -right: der fset Buffer wird wird prozentual entsprechend der Fensterbreite nach rechts verschoben
-        -go: wählt eine Zeile mit der entsprechenden Nummer aus, die erste Zeile beginnt mit 0 (mit "end" wird die letzte Zeile ausgewählt)
-    -toggle: eine Variable vom Typ boolean wird umgeschaltet,  andere Variablen werden in die Eingabezeilen kopiert
-       -add: addiert "Wert" (kann auch eine negative Zahl sein) für Integer und  Farbe, für andere Typen wird die Variable in die Eingabezeile kopiert und der Cursor positioniert (Cursor an Begin der Variable bei negativem Wert, bei positivem Wert wird der Cursor an das Ende gesetzt)
-     -reset: löscht den Wert von der Option
-     -unset: Option wird zurückgesetzt
-       -set: der /set Befehl wird in die Eingabezeile kopiert um den Wert der Option zu editieren (der Cursor wird auf den Anfang des Wertes gesetzt)
-    -setnew: der /set Befehl wird in die Eingabezeile kopiert um den Wert add the /set command in input to edit a new value for the option
-    -append: der /set Befehl wird in die Eingabezeile kopiert um einen zusätzlichen Wert einzugeben (der Cursor wird an das Ende der Variable positioniert)
-      -mark: Markierung umschalten
-    -format: es wird zum nächsten verfügbaren Format gewechselt
-    -export: exportiert die Optionen und Werte, welche angezeigt werden, in eine Datei (jede Zeile hat das Format: "/set Name Wert" oder "/unset Name")
-      -help: der Hilfstext für eine Option wird in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
-    -nohelp: der Hilfetext für eine Option wird nicht in die exportierte Datei geschrieben (siehe /help fset.look.export_help_default)
-     filter: setzt einen neuen Filter um nur ausgewählte Optionen anzuzeigen (die Filterfunktion kann direkt in der Eingabezeile eingegeben werden); mögliche Formate sind:
-               *       alle Optionen werden angezeigt  (keine Filterung)
-               xxx     zeigt nur Optionen mit "xxx" im Namen
-               f:xxx   zeigt nur Konfigurationsdatei "xxx" an
-               t:xxx   zeigt nur Optionen des entsprechenden Typs, "xxx" (bool/int/str/col)
-               d       zeigt nur Optionen die verändert wurden
-               d:xxx   zeigt nur Optionen die verändert wurden und "xxx" im Namen haben
-               d=xxx   zeigt nur veränderte Optionen, die "xxx" als Wert haben
-               d==xxx  zeigt nur veränderte Optionen die exakt "xxx" als Wert haben
-               =xxx    zeigt nur Optionen mit "xxx" als Wert
-               ==xxx   zeigt nur Optionen die exakt "xxx" als Wert haben
-               c:xxx   zeigt nur Optionen auf die die evaluierte Bedingung "xxx" zutrifft, folgende Variable können verwendet werden: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+       -bar: add the help bar
+   -refresh: refresh list of options, then whole screen (command: /window refresh)
+        -up: move the selected line up by "number" lines
+      -down: move the selected line down by "number" lines
+      -left: scroll the fset buffer by "percent" of width on the left
+     -right: scroll the fset buffer by "percent" of width on the right
+        -go: select a line by number, first line number is 0 ("end" to select the last line)
+    -toggle: toggle the boolean value
+       -add: add "value" (which can be a negative number) for integers and colors, set/append to value for other types (set for a negative value, append for a positive value)
+     -reset: reset the value of option
+     -unset: unset the option
+       -set: add the /set command in input to edit the value of option (move the cursor at the beginning of value)
+    -setnew: add the /set command in input to edit a new value for the option
+    -append: add the /set command to append something in the value of option (move the cursor at the end of value)
+      -mark: toggle mark
+    -format: switch to the next available format
+    -export: export the options and values displayed in a file (each line has format: "/set name value" or "/unset name")
+      -help: force writing of help on options in exported file (see /help fset.look.export_help_default)
+    -nohelp: do not write help on options in exported file (see /help fset.look.export_help_default)
+     filter: set a new filter to see only matching options (this filter can be used as input in fset buffer as well); allowed formats are:
+               *       show all options (no filter)
+               xxx     show only options with "xxx" in name
+               f:xxx   show only configuration file "xxx"
+               t:xxx   show only type "xxx" (bool/int/str/col)
+               d       show only changed options
+               d:xxx   show only changed options with "xxx" in name
+               d=xxx   show only changed options with "xxx" in value
+               d==xxx  show only changed options with exact value "xxx"
+               =xxx    show only options with "xxx" in value
+               ==xxx   show only options with exact value "xxx"
+               c:xxx   show only options matching the evaluated condition "xxx", using following variables: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
-Zeilen werden mittels evaluierten Ausdrücken dargestellt (siehe /help eval für das Format), dazu werden diese Optionen verwendet:
-  - fset.format.option1: erstes Format für eine Option
-  - fset.format.option2: zweites Format für eine Option
+The lines with options are displayed using string evaluation (see /help eval for the format), with these options:
+  - fset.format.option1: first format for an option
+  - fset.format.option2: second format for an option
 
-Die nachfolgenden Variablen können in den Optionen genutzt werden:
-  - Optionsdaten, mit Farbe und  durch Leerzeichen auf der rechten Seite aufgefüllt:
-    - ${file}: Konfigurationsdatei (zum Beispiel "weechat" oder "irc")
-    - ${section}: Sektion
-    - ${option}: Name der Option
-    - ${name}: vollständiger Name der Option (file.section.option)
-    - ${parent_name}: übergeordneter Name der Option
-    - ${type}: Optionstyp (übersetzt)
-    - ${type_en}: Optionstyp (auf  englisch)
-    - ${type_short}: Optionstyp Kurzform (bool/int/str/col)
-    - ${type_tiny}: Optionstyp klein (b/i/s/c)
-    - ${default_value}: Standardwert einer Option
-    - ${default_value_undef}: "1" falls Standardwert null ist, andernfalls "0"
-    - ${value}: Optionswert
-    - ${value_undef}: "1" wenn Wert null ist, andernfalls "0"
-    - ${value_changed}: "1" wenn Wert abweichend vom Standardwert ist, andernfalls "0"
-    - ${value2}: Optionswert, mit geerbtem Wert falls null
-    - ${parent_value}: übergeordneter Optionswert
-    - ${min}: minimaler Wert
-    - ${max}: maximaler Wert
-    - ${description}: Beschreibung der Option (übersetzt)
-    - ${description2}: Beschreibung der Option (übersetzt), "(keine Beschreibung)" (übersetzt) falls keine Beschreibung vorhanden
-    - ${description_en}: Beschreibung der Option (in englisch)
-    - ${description_en2}: Beschreibung der Option (in englisch), "(keine Beschreibung)" falls keine Beschreibung vorhanden
-    - ${string_values}: Zeichenketten sind für Integer Optionen erlaubt
-    - ${marked}: "1" wenn Option markiert ist, andernfalls "0"
-    - ${index}: Index der Option in der Liste
-  - Optionsdaten, mit Farbe aber ohne Leerzeichen:
-    - selbe Namen, vorangestellt mit Unterstrich, zum Beispiel: ${_name}, ${_type}, ...
-  - Optionsdaten, Rohformat (keine Farben/Leerzeichen):
-    - selbe Namen, mit zwei vorangestellten Unterstrichen, zum Beispiel: ${__name}, ${__type}, ...
-  - Optionsdaten, nur Leerzeichen:
-    - selbe Namen, mit vorangestelltem "empty_", zum Beispiel: ${empty_name}, ${empty_type}
-  - andere Daten:
-    - ${selected_line}: "1" wenn Zeile ausgewählt ist, andernfalls "0"
-    - ${newline}: fügt einen Zeilenumbruch an diese Position, dadurch wird die Option über mehrere Zeilen angezeigt
+The following variables can be used in these options:
+  - option data, with color and padded by spaces on the right:
+    - ${file}: configuration file (for example "weechat" or "irc")
+    - ${section}: section
+    - ${option}: option name
+    - ${name}: full option name (file.section.option)
+    - ${parent_name}: parent option name
+    - ${type}: option type (translated)
+    - ${type_en}: option type (in English)
+    - ${type_short}: short option type (bool/int/str/col)
+    - ${type_tiny}: tiny option type (b/i/s/c)
+    - ${default_value}: option default value
+    - ${default_value_undef}: "1" if default value is null, otherwise "0"
+    - ${value}: option value
+    - ${value_undef}: "1" if value is null, otherwise "0"
+    - ${value_changed}: "1" if value is different from default value, otherwise "0"
+    - ${value2}: option value, with inherited value if null
+    - ${parent_value}: parent option value
+    - ${min}: min value
+    - ${max}: max value
+    - ${description}: option description (translated)
+    - ${description2}: option description (translated), "(no description)" (translated) if there's no description
+    - ${description_en}: option description (in English)
+    - ${description_en2}: option description (in English), "(no description)" if there's no description
+    - ${string_values}: string values allowed for set of an integer option using strings
+    - ${marked}: "1" if option is marked, otherwise "0"
+    - ${index}: index of option in list
+  - option data, with color but no spaces:
+    - same names prefixed by underscore, for example: ${_name}, ${_type}, ...
+  - option data, raw format (no colors/spaces):
+    - same names prefixed by two underscores, for example: ${__name}, ${__type}, ...
+  - option data, only spaces:
+    - same names prefixed with "empty_", for example: ${empty_name}, ${empty_type}
+  - other data:
+    - ${selected_line}: "1" if the line is selected, otherwise "0"
+    - ${newline}: insert a new line at point, so the option is displayed on multiple lines
 
-Tasten und Eingaben um sich im fset Buffer zu bewegen:
-  hoch                      eine Zeile nach oben
-  runter                    eine Zeile nach unten
-  pgup                      eine Seite nach oben
-  pgdn                      eine Seite nach unten
-  alt-home          <<      springe zur ersten Zeile
-  alt-end           >>      springe zur letzten Zeile
-  F11               <       horizontal nach links scrollen
-  F12               >       horizontal nach rechts scrollen
+Keys and input to move in on fset buffer:
+  up                        move one line up
+  down                      move one line down
+  pgup                      move one page up
+  pgdn                      move one page down
+  alt-home          <<      move to first line
+  alt-end           >>      move to last line
+  F11               <       scroll horizontally on the left
+  F12               >       scroll horizontally on the right
 
-Tasten und Eingaben um Optionen im fset Buffer zu editieren:
-  alt+space         t       boolean Werte umschalten
-  alt+'-'           -       subtrahiert 1 vom Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
-  alt+'+'           +       addiert 1 zum Wert, bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden
-  alt+f, alt+r      r       Wert resetten
-  alt+f, alt+u      u       Wert zurücksetzen
-  alt+enter         s       Wert setzen
-  alt+f, alt+n      n       ein neuer Wert wird gesetzt, der alte Wert wird gelöscht
-  alt+f, alt+a      a       dem Wert was hinzufügen
-  alt+','           ,       markieren/demarkieren  einer Option
-  shift+hoch                eine Zeile nach oben und markiert/demarkiert Option
-  shift+runter              markiert/demarkiert Option und geht eine Zeile nach unten
-                    m:xxx   markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
-                    u:xxx   demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
+Keys and input to set options on fset buffer:
+  alt+space         t       toggle boolean value
+  alt+'-'           -       subtract 1 from value for integer/color, set value for other types
+  alt+'+'           +       add 1 to value for integer/color, append to value for other types
+  alt+f, alt+r      r       reset value
+  alt+f, alt+u      u       unset value
+  alt+enter         s       set value
+  alt+f, alt+n      n       set new value
+  alt+f, alt+a      a       append to value
+  alt+','           ,       mark/unmark option
+  shift+up                  move one line up and mark/unmark option
+  shift+down                mark/unmark option and move one line down
+                    m:xxx   mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
+                    u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
-weitere Tasten und Eingaben im fset Buffer:
-  ctrl+L                    der Bildschirm wird neu gezeichnet (Befehl: /fset -refresh)
-                    $       Optionen neu einlesen (markierte Optionen werden beibehalten)
-                    $$      Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht)
-  alt+p             p       umschalten zwischen Beschreibung von Erweiterungen (plugins.desc.*)
-  alt+v             v       Hilfe-Bar Ein-/Ausschalten
-                    s:x,y   sortiert Optionen nach Bereichen x,y (siehe /help fset.look.sort)
-                    s:      setzt Sortierung wieder auf Standardwerte (siehe /help fset.look.sort)
-                    w:xxx   exportiert Optionen in Datei "xxx"
-                    w-:xxx  exportiert Optionen in Datei "xxx", ohne Hilfstext
-                    w+:xxx  exportiert Optionen in Datei "xxx", mit Hilfstext
-  ctrl+X            x       umschalten zwischen der Darstellung von Optionen
-                    q       schließt fset Buffer
+Other keys and input on fset buffer:
+  ctrl+L                    refresh options and whole screen (command: /fset -refresh)
+                    $       refresh options (keep marked options)
+                    $$      refresh options (unmark all options)
+  alt+p             p       toggle plugin description options (plugins.desc.*)
+  alt+v             v       toggle help bar
+                    s:x,y   sort options by fields x,y (see /help fset.look.sort)
+                    s:      reset sort to its default value (see /help fset.look.sort)
+                    w:xxx   export options in file "xxx"
+                    w-:xxx  export options in file "xxx" without help
+                    w+:xxx  export options in file "xxx" with help
+  ctrl+X            x       switch the format used to display options
+                    q       close fset buffer
 
-Mausaktionen im fset Buffer:
-  Mausrad hoch/runter              Zeile hoch/runter
-  linke Maustaste                  Zeile auswählen
-  rechte Maustaste                 boolean umschalten (an/aus) oder editiere den Wert einer Option
-  rechte Maustaste + links/rechts  Integer/Farbwerte werden erhöht/verringert, andere Variabletypen werden in die Eingabezeile kopiert
-  rechte Maustaste + hoch/runter   markieren/demarkieren von mehreren Optionen
+Mouse actions on fset buffer:
+  wheel up/down                   move line up/down
+  left button                     move line here
+  right button                    toggle boolean (on/off) or edit the option value
+  right button + drag left/right  increase/decrease value for integer/color, set/append to value for other types
+  right button + drag up/down     mark/unmark multiple options
 
-Hinweis: Leerzeichen am Anfang der Eingabezeile werden ignoriert und der folgende Text wird als Filter verwendet. Ein Beispiel: "q" schließt den fset Buffer wobei hingegen " q" alle Optionen anzeigt die ein "q" im Namen beinhalten.
+Note: if input has one or more leading spaces, the following text is interpreted as a filter, without the spaces. For example " q" searches all options with "q" inside name while "q" closes the fset buffer.
 
-Beispiele:
-  zeigt alle IRC Optionen an die verändert wurden:
+Examples:
+  show IRC options changed:
     /fset d:irc.*
-  zeigt alle Optionen die "nicklist" im Namen tragen:
+  show all options with "nicklist" in name:
     /fset nicklist
-  zeigt alle Werte die "red" beinhalten:
+  show all values which contain "red":
     /fset =red
-  zeigt alle Werte die exakt "red" lauten:
+  show all values which are exactly "red":
     /fset ==red
-  zeigt alle Integer-Optionen der IRC-Erweiterung:
+  show all integer options in irc plugin:
     /fset c:${file} == irc && ${type_en} == integer
 ----
