@@ -1171,7 +1171,7 @@ trigger_command_init ()
            "      regex: one or more regular expressions to replace strings "
            "in variables\n"
            "    command: command to execute (many commands can be separated by "
-           "\";\"\n"
+           "\";\")\n"
            "return_code: return code in callback (ok (default), ok_eat, error)\n"
            "post_action: action to take after execution (none (default), "
            "disable, delete)\n"

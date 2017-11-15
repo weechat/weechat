@@ -40,7 +40,7 @@ listdefault: zeigt die standardmäßig genutzen Trigger an
              focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
  conditions: evaluierte Bedingungen für den Trigger
       regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
-    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden
+    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden)
 return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
 post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (none (Standardwert), disable, delete)
    addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage

@@ -40,7 +40,7 @@ listdefault: lista domyślnych triggerów
              focus: nazwa(-y) obszarów (wymagane)
  warunki: przetwarzane warunki dla triggera
       regex: jedno lub więcej wyrażeń regularnych do zastępowania ciągów w zmiennych
-    komenda: komenda do wykonania (wiele komend można oddzielić ";"
+    komenda: komenda do wykonania (wiele komend można oddzielić ";")
 zwracany_kod: kod zwracany w callbacku (ok (domyślne), ok_eat, error)
 post_action: akcja do wykonania po zakończeniu (none (domylślne), disable, delete)
    addinput: ustawia wejście z domyślnymi argumentami do stworzenia triggera
