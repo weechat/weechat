@@ -760,9 +760,8 @@ buffer = weechat.info_get("irc_buffer", "freenode,#weechat")
 weechat.prnt(buffer, "wiadomość na kanale #weechat")
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Print function is called `prnt` in Python and `print` in other languages.
+Funkcja print dla języka Python nazywa się `prnt`, dla pozostałych `print`.
 
 [[buffers_send_text]]
 ==== Wysyłanie tekstu do bufora

@@ -160,8 +160,7 @@ $ make
 $ sudo make install
 ----
 
-// TRANSLATION MISSING
-* Instalacja w wybranym katalogu (for example your home):
+* Instalacja w wybranym katalogu (na przykład w katalogu domowym):
 
 ----
 $ mkdir build
@@ -324,8 +323,7 @@ $ make
 $ sudo make install
 ----
 
-// TRANSLATION MISSING
-* Instalacja w wybranym katalogu (for example your home):
+* Instalacja w wybranym katalogu (na przykład w katalogu domowym):
 
 ----
 $ ./autogen.sh
@@ -343,22 +341,21 @@ za pomocą tej komendy:
 $ ./configure --help
 ----
 
-// TRANSLATION MISSING
 [[run_tests]]
-==== Run tests
+==== Uruchamianie testów
 
-Following packages are *required* to compile tests:
+Następujące pakiety są *wymagane* do kompilacji testów:
 
 * libcpputest-dev
-* C++ compiler
+* kompilator C++
 
-Tests must be enabled when compiling WeeChat (with cmake):
+Testy muszą być włączone podczas kompilacji WeeChat (z użyciem cmake):
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-They can be launched after compilation from the build directory (with cmake):
+Można je uruchomić po skompilowaniu z katalogu kompilacji (z użyciem cmake):
 
 ----
 $ ctest -V
@@ -512,23 +509,21 @@ Parametry z linii poleceń:
 
 include::cmdline_options.pl.adoc[]
 
-// TRANSLATION MISSING
-When you run WeeChat for the first time, the default configuration files are
-created in _~/.weechat_ with default options and values
-(see <<files_and_directories,Pliki i foldery>>).
+Podczas pierwszego uruchomienia WeeChat tworzone są domyślne pliki konfiguracyjne
+w  _~/.weechat_ z domyślnymi opcjami i wartościami
+(zobacz <<files_and_directories,Pliki i foldery>>).
 
-// TRANSLATION MISSING
 [[environment_variables]]
-=== Environment variables
+=== Zmienne środowiskowe
 
-Some environment variables are used by WeeChat if they are defined:
+Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefiniowane:
 
 [width="100%",cols="1m,6",options="header"]
 |===
-| Name                 | Description
-| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...).
-| WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
-| WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
+| Nazwa                | Opis
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...).
+| WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
+| WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===
 
 [[files_and_directories]]
@@ -564,8 +559,7 @@ Foldery to:
 [NOTE]
 ^(1)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
-// TRANSLATION MISSING
-The files in the WeeChat home directory are:
+Pliki tworzone w katalogu domowym WeeChat:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
@@ -639,8 +633,7 @@ Ekran składa się z następujących obszarów:
 ** prefiks (przed "|")
 ** wiadomość (za "|")
 * paski dookoła obszaru rozmowy, domyślne paski to:
-// TRNSLATION MISSING
-** pasek _buflist_, on the left
+** pasek _buflist_, po lewej
 ** pasek _title_, nad obszarem rozmowy
 ** pasek _status_, pod obszarem rozmowy
 ** pasek _input_, pod paskiem statusu
@@ -651,8 +644,7 @@ Pasek _buflist_ posiada następujące domyślne elementy:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Element | Przykład    | Opis
-// TRANSLATION MISSING
-| buflist | `1.weechat` | List of buffers.
+| buflist | `1.weechat` | Lista buforów.
 |===
 
 Pasek _title_ posiada następujące domyślne elementy:
@@ -660,8 +652,7 @@ Pasek _title_ posiada następujące domyślne elementy:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Element      | Przykład           | Opis
-// TRANSLATION MISSING
-| buffer_title | `Welcome to #test` | Buffer title.
+| buffer_title | `Witaj na #test`   | Tytuł buforu.
 |===
 
 Pasek _status_ posiada następujące domyślne elementy:
@@ -701,8 +692,7 @@ Pasek _nicklist_ posiada następujące domyślne elementy:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Element         | Przykład  | Opis
-// TRANSLATION MISSING
-| buffer_nicklist | `@Flashy` | List of nicks on current buffer.
+| buffer_nicklist | `@Flashy` | Lita nicków w obecnym buforze.
 |===
 
 Inne dostępne elementy (nie używane domyślnie w paskach):
@@ -1129,13 +1119,12 @@ Lista opcji dla pasków:
 | Opcja | Wartości | Opis
 
 | type | `root`, `window` |
-// TRANSLATION MISSING
-  A bar with type `root` is displayed exactly one time on screen, outside all
-  windows. The default bar _buflist_ has type `root`. +
-  A bar with type `window` is displayed in each window, for example if you
-  split one time the screen (with `/window splith` or `/window splitv`), you
-  will have one bar in each window. The default bars _title_, _status_,
-  _input_ and _nicklist_ have type `window`.
+  Pasek z typem `root` jest wyświetlany dokładnie jeden raz na ekranie, poza
+  wszystkimi oknami. Domyślny pasek _buflist_ ma typ `root`. +
+  Pasek z typem `window` wyświetlany jest w każdym oknie, na przykład jeśli
+  podzielisz jednorazowo ekran (używając `/window splith` lun `/window splitv`)
+  otrzymasz po jednym pasku w każdym oknie. Domyślnie paski _title_, _status_,
+  _input_ i _nicklist_ mają typ `window`.
 
 | position | `top`, `bottom`, `left`, `right` |
   Pozycja paska: powyżej/poniżej ekranu rozmowy, po jego lewej/prawej stronie.
@@ -2017,8 +2006,7 @@ include::autogen/user/weechat_commands.adoc[]
 [[sec_options]]
 ==== Opcje dla bezpiecznych danych
 
-// TRANSLATION MISSING
-Sections in file _sec.conf_:
+Sekcje w pliku _sec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2034,8 +2022,7 @@ include::autogen/user/sec_options.adoc[]
 [[weechat_options]]
 ==== Opcje WeeChat
 
-// TRANSLATION MISSING
-Sections in file _weechat.conf_:
+Sekcje w pliku _weechat.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2106,8 +2093,7 @@ Domyślne wtyczki:
 | charset    | Ustawianie kodowania dla buforów.
 | exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat.
 | fifo       | Kolejka FIFO używana do zdalnego wysyłania poleceń dla WeeChat.
-// TRANSLATION MISSING
-| fset       | Fast set of WeeChat and plugins options.
+| fset       | Szybkie ustawianie opcji WeeChat i wtyczek.
 | irc        | Protokół IRC.
 | logger     | Logowanie zawartości buforów do plików.
 | relay      | Przekazuje dane przez sieć.
@@ -2133,13 +2119,11 @@ link:weechat_scripting.pl.html[Poradniku pisania skryptów].
 
 Wtyczka alias pozwala tworzyć aliasy dla komend (z WeeChat lub innych wtyczek).
 
-// TRANSLATION MISSING
-Some aliases are created by default, with name in upper case (to make them
-different from standard commands); commands are not case sensitive in WeeChat,
-so for example `/close` runs the alias `/CLOSE`.
+Niektóre aliasy tworzone są domyślnie z nazwami pisanymi wielkimi literami
+(żeby można było je odróżnić od standardowch poleceń); komendy w WeeChat nie
+rozróżniają wielkości znaków dlatego na przykład `/close` wywoła alias `/CLOSE`.
 
-// TRANSLATION MISSING
-List of default aliases:
+Lista domyślnych aliasów:
 
 include::autogen/user/alias_default_aliases.adoc[]
 
@@ -2151,8 +2135,7 @@ include::autogen/user/alias_commands.adoc[]
 [[alias_options]]
 ==== Options
 
-// TRANSLATION MISSING
-Sections in file _alias.conf_:
+Ssekcje w pliku _alias.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2169,33 +2152,31 @@ Sections in file _alias.conf_:
 Wtyczka aspell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
 ustawienie wielu języków dla bufora.
 
-// TRANSLATION MISSING
-Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+Sprawdzenie pisowni jest domyślnie wyłączone i możę być przełączone za pomocą kbd:[Alt+s].
 
-// TRANSLATION MISSING
 [[aspell_dictionaries]]
-==== Dictionaries
+==== Słowniki
 
-Before using spell checking, dictionaries must be defined, either globally or
-specific to buffers.
+Przed użyciem sprawdzania pisowni należy zdefiniować słowniki można to zrobić
+zarówno globalnie jak i dla poszczególnych buforów.
 
-Multiple dictionaries can be used at same time: WeeChat will check words in all
-dictionaries.
+Możliwe jest użycie kilku słowników równocześnie: WeeChat sprawdzi słowa we wszystkich
+słownikach.
 
-For example to use English and French:
+Na przykład dla angielskiego i francuskiego:
 
 ----
 /set aspell.check.default_dict "en,fr"
 ----
 
-It is possible to use a different dictionary on a specific buffer, for example
-on a German channel:
+Możliwe jest użycie innego słownika dla konkretnego buforu, na przykład na kanale
+niemieckojęzycnzym:
 
 ----
 /aspell setdict de
 ----
 
-For more information, see the command <<command_aspell_aspell,/aspell>>.
+Więcej informacji można znaleźć w opisie komendy <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]
 ==== Opcje słowników
@@ -2249,8 +2230,7 @@ include::autogen/user/aspell_commands.adoc[]
 [[aspell_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _aspell.conf_:
+Sekcje w pliku _aspell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2270,10 +2250,9 @@ include::autogen/user/aspell_options.adoc[]
 [[buflist_plugin]]
 === Buflist
 
-// TRANSLATION MISSING
 Wtyczka buflist wyświetla listę buforów w elemencie paska nazwanym "buflist"
-(two other bar items "buflist2" and "buflist3" are available as well). +
-Domyślny pasek "buflist" jet tworzony podczas uruchomieina z tą wtyczką włączoną.
+(dostępne są również dwa dodatkowe elementy "buflist2" oraz "buflist3"). +
+Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtyczką.
 
 [[buflist_commands]]
 ==== Komendy
@@ -2283,8 +2262,7 @@ include::autogen/user/buflist_commands.adoc[]
 [[buflist_options]]
 ==== Options
 
-// TRANSLATION MISSING
-Sections in file _buflist.conf_:
+Sekcje w pliku _buflist.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2399,8 +2377,7 @@ include::autogen/user/charset_commands.adoc[]
 [[charset_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _charset.conf_:
+Sekcje w pliku _charset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2430,8 +2407,7 @@ include::autogen/user/exec_commands.adoc[]
 [[exec_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _exec.conf_:
+Sekcje w pliku _exec.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2495,8 +2471,7 @@ include::autogen/user/fifo_commands.adoc[]
 [[fifo_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _fifo.conf_:
+Sekcje w pliku _fifo.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -2511,9 +2486,8 @@ include::autogen/user/fifo_options.adoc[]
 [[fset_plugin]]
 === Fset
 
-// TRANSLATION MISSING
-Fast Set plugin displays a list of options in a buffer, and helps to set WeeChat
-and plugin options.
+Wtyczka Fast Set wyświetla listę opcji w buforze i pomaga w ustawianiu opcji
+WeeChat i wtyczek.
 
 [[fset_commands]]
 ==== Komendy
@@ -2523,15 +2497,13 @@ include::autogen/user/fset_commands.adoc[]
 [[fset_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _fset.conf_:
+Sekcje w pliku _fset.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
 | Sekcja | Komenda            | Opis
 | color  | /set fset.color.*  | Kolory.
-// TRANSLATION MISSING
-| format | /set fset.format.* | Formats used to display list of options.
+| format | /set fset.format.* | Formaty używane do wyświetlenia listy opcji.
 | look   | /set fset.look.*   | Wygląd.
 |===
 
@@ -3004,8 +2976,7 @@ include::autogen/user/irc_commands.adoc[]
 [[irc_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _irc.conf_:
+Sekcje w pliku _irc.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3162,8 +3133,7 @@ include::autogen/user/logger_commands.adoc[]
 [[logger_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _logger.conf_:
+Sekcje w pliku _logger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3311,8 +3281,7 @@ include::autogen/user/relay_commands.adoc[]
 [[relay_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _relay.conf_:
+Sekcje w pliku _relay.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3392,8 +3361,7 @@ include::autogen/user/php_commands.adoc[]
 [[script_options]]
 ==== Opcje wtyczki script
 
-// TRANSLATION MISSING
-Sections in file _script.conf_:
+Sekcje w pliku _script.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3415,10 +3383,9 @@ Trigger to scyzoryk szwajcarski dla WeeChat: może być podpięty do wielu rzecz
 jedną lub więcej komend. Można użyć warunków w celu ograniczenia działania
 w określonych przypadkach.
 
-// TRANSLATION MISSING
-Using triggers require you to know how the signals, modifiers, ... are working.
-So you might consider reading the
-link:weechat_plugin_api.en.html#hooks[WeeChat plugin API reference / Hooks] (Angielski).
+Używanie triggerów wymaga znajomości jak działają sygnały, modyfikatory, ... .
+Warto rozważyć przeczytanie
+link:weechat_plugin_api.en.html#hooks[Opisu Api wtyczek WeeChat / Hooks] (Angielski).
 
 [[trigger_anatomy]]
 ==== Anatomia triggera
@@ -3495,8 +3462,7 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
 
 [width="100%",cols="2,6,7,2",options="header"]
 |===
-// TRANSLATION MISSING
-| Uchwyt | Argumenty | Przykłady | Documentation (API)
+| Uchwyt | Argumenty | Przykłady | Dokumentacja (API)
 
 | signal |
   1. nazwa sygnału (dozwolony priorytet) (wymagane) +
@@ -3937,8 +3903,7 @@ include::autogen/user/trigger_commands.adoc[]
 [[trigger_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _trigger.conf_:
+Sekcje w pliku _trigger.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
@@ -3971,8 +3936,7 @@ include::autogen/user/xfer_commands.adoc[]
 [[xfer_options]]
 ==== Opcje
 
-// TRANSLATION MISSING
-Sections in file _xfer.conf_:
+Sekcje w pliku _xfer.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
