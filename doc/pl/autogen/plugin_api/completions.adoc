@@ -16,7 +16,7 @@
 
 | exec | exec_commands_ids | id (numery i nazwy) wykonywanych komend
 
-| fset | fset_options | configuration files, sections, options and words of options
+| fset | fset_options | pliki konfiguracyjne, sekcje, opcje i slowa w opcjach
 
 | guile | guile_script | lista skryptów
 

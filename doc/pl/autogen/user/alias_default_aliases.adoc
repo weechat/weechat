@@ -4,7 +4,7 @@
 //
 [width="100%",cols="2m,5m,5",options="header"]
 |===
-| Alias | Command | Completion
+| Alias | Komenda | Dopełnienie
 
 | /AAWAY | /allserv /away | -
 | /AME | /allchan /me | -

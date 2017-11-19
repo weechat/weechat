@@ -8,9 +8,9 @@
 
 | alias | alias | lista aliasów | wskaźnik aliasu (opcjonalny) | nazwa aliasu (wildcard "*" jest dozwolony) (opcjonalne)
 
-| alias | alias_default | list of default aliases | - | -
+| alias | alias_default | lista domyślnych aliasów | - | -
 
-| fset | fset_option | list of fset options | fset option pointer (optional) | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
+| fset | fset_option | lista opcji fset | wskaźnik opcji fset (opcjonalne) | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
 
 | guile | guile_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)
 

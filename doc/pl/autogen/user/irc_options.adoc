@@ -309,7 +309,7 @@
 ** domyślna wartość: `+auto+`
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** opis: pass:none[automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example the ENTRYMSG notices sent by Atheme IRC Services which look like: "[#channel\] Welcome to this channel..."]
+** opis: pass:none[automatyczne przekierowanie powiadomień powitalnych do bufora kanału; takie powiadomienia mają nick jako cel i nazwę kanału na początku wiadomości, na przykład powiadomienia ENTRYMSG wysyłane przez Atheme IRC Services wyglądają następująco: "[#kanał\] Witaj na tym kanale..."]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
