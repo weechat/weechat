@@ -309,7 +309,7 @@
 ** デフォルト値: `+auto+`
 
 * [[option_irc.look.notice_welcome_redirect]] *irc.look.notice_welcome_redirect*
-** 説明: pass:none[automatically redirect channel welcome notices to the channel buffer; such notices have the nick as target but a channel name in beginning of notice message, for example the ENTRYMSG notices sent by Atheme IRC Services which look like: "[#channel\] Welcome to this channel..."]
+** 説明: pass:none[チャンネルからの歓迎メッセージをチャンネルを表示するバッファへ自動リダイレクト; 歓迎メッセージの宛先はニックネームですが、メッセージの先頭に含まれるチャンネル名をもとに、そのチャンネルを表示するバッファへメッセージをリダイレクトします。Atheme IRC サービスが送信する ENTRYMSG 通知の例: "[#channel\] Welcome to this channel..."]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
