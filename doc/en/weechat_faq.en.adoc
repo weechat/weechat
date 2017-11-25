@@ -846,6 +846,23 @@ And update scripts again in WeeChat:
 /script update
 ----
 
+If you still have an error, then you must remove the automatic update of file
+in WeeChat and download the file manually outside WeeChat (that means you'll
+have to update manually the file yourself to get updates):
+
+* in WeeChat:
+
+----
+/set script.scripts.cache_expire -1
+----
+
+* in your shell, with curl installed:
+
+----
+$ cd ~/.weechat/script
+$ curl -O https://weechat.org/files/plugins.xml.gz
+----
+
 [[settings]]
 == Settings
 

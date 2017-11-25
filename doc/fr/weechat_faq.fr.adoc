@@ -882,6 +882,24 @@ Et mettez à jour les scripts à nouveau dans WeeChat :
 /script update
 ----
 
+Si vous avez toujours une erreur, alors vous devez supprimer la mise à jour
+automatique du fichier dans WeeChat et télécharger le fichier manuellement
+en dehors de WeeChat (cela signifie que vous devrez mettre à jour le fichier
+vous-même pour obtenir les mises à jour) :
+
+* dans WeeChat :
+
+----
+/set script.scripts.cache_expire -1
+----
+
+* dans votre shell, avec curl installé :
+
+----
+$ cd ~/.weechat/script
+$ curl -O https://weechat.org/files/plugins.xml.gz
+----
+
 [[settings]]
 == Réglages
 
