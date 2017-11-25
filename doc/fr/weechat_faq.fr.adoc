@@ -863,6 +863,25 @@ Vous pouvez utiliser la commande `/script` pour installer et gérer les scripts
 
 Les scripts ne sont pas compatibles avec d'autres clients IRC.
 
+[[scripts_update]]
+=== La commande "/script update" ne peut pas lire les scripts, comment corriger ça ?
+
+Consultez d'abord les questions à propos des connexions SSL dans cette FAQ
+(en particulier l'option _weechat.network.gnutls_ca_file_).
+
+Si cela ne fonctionne toujours pas, essayez de supprimer manuellement le fichier
+avec les scripts (dans votre shell) :
+
+----
+$ rm ~/.weechat/script/plugins.xml.gz
+----
+
+Et mettez à jour les scripts à nouveau dans WeeChat :
+
+----
+/script update
+----
+
 [[settings]]
 == Réglages
 
