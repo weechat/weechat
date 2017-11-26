@@ -49,6 +49,16 @@ Il plugin deve includere il file "weechat-plugin.h" (disponibile nel codice
 sorgente di WeeChat).
 Il file definisce strutture e tipi utilizzati per comunicare con WeeChat.
 
+// TRANSLATION MISSING
+In order to call WeeChat functions in the format displayed in <<plugin_api>>,
+the following global pointer must be declared and initialized in the function
+<<_weechat_plugin_init,weechat_plugin_init>>:
+
+[source,C]
+----
+struct t_weechat_plugin *weechat_plugin;
+----
+
 [[macros]]
 === Macro
 
@@ -93,7 +103,9 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 Argomenti:
 
-* _plugin_: puntatore alla struttura del plugin di WeeChat
+// TRANSLATION MISSING
+* _plugin_: puntatore alla struttura del plugin di WeeChat, used to initialize
+  the convenience global pointer `weechat_plugin`
 * _argc_: numero di argomenti per il plugin (fornito dalla riga di comando
   dall'utente)
 * _argv_: argomenti per il plugin

@@ -44,6 +44,15 @@ source WeeChat).
 Ce fichier définit les structures et types utilisés pour communiquer avec
 WeeChat.
 
+Pour appeler les fonctions de WeeChat dans le format affiché dans <<plugin_api>>,
+le pointeur global suivant doit être déclaré et initialisé dans la fonction
+<<_weechat_plugin_init,weechat_plugin_init>> :
+
+[source,C]
+----
+struct t_weechat_plugin *weechat_plugin;
+----
+
 [[macros]]
 === Macros
 
@@ -86,7 +95,8 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 Paramètres :
 
-* _plugin_ : pointeur vers la structure d'extension WeeChat
+* _plugin_ : pointeur vers la structure d'extension WeeChat, utilisé pour
+  initialiser le pointeur global `weechat_plugin`
 * _argc_ : nombre de paramètres pour l'extension (donnés sur la ligne de
   commande par l'utilisateur)
 * _argv_ : paramètres pour l'extension
