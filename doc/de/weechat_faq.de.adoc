@@ -876,28 +876,28 @@ Zum installieren und verwalten von Skripten kann der Befehl `/script` genutzt we
 
 Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice versa.
 
-// TRANSLATION MISSING
 [[scripts_update]]
-=== The command "/script update" can not read scripts, how to fix that?
+=== Der Befehl "/script update" liest die Skriptliste nicht ein, wie kann ich das beheben?
 
-First check questions about SSL connection in this FAQ
-(especially the option _weechat.network.gnutls_ca_file_).
+Als erstes sollte das Kapitel über SSL Verbindungen in dieser FAQ gelesen werden
+(besonders über die Option _weechat.network.gnutls_ca_file_).
 
+Sollte das nicht helfen, sollte man manuell die Skriptliste löschen (in der shell):
 If still not working, try to manually delete the scripts file (in your shell):
 
 ----
 $ rm ~/.weechat/script/plugins.xml.gz
 ----
 
-And update scripts again in WeeChat:
+danach sollte man noch mal versuchen die Datei herunter zu laden:
 
 ----
 /script update
 ----
 
-If you still have an error, then you must remove the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
-have to update manually the file yourself to get updates):
+Tritt weiterhin der Fehler auf dann muss in WeeChat das automatische Update
+der Datei deaktiviert werden und die Datei muss manuell aus einer Shell
+herunter geladen werden (das bedeutet das man manuell für Updates zuständig ist):
 
 * in WeeChat:
 
@@ -905,7 +905,7 @@ have to update manually the file yourself to get updates):
 /set script.scripts.cache_expire -1
 ----
 
-* in your shell, with curl installed:
+* in der Shell, mit installiertem curl:
 
 ----
 $ cd ~/.weechat/script
