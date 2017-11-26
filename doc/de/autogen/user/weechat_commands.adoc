@@ -333,7 +333,7 @@ Beispiele (Bedingungen):
   /eval -n -c abcd =~ (?-i)^ABC            ==> 0
   /eval -n -c abcd =~ (?-i)^abc            ==> 1
   /eval -n -c abcd !~ abc                  ==> 0
-  /eval -n -c abcd =* a*d                 ==> 1
+  /eval -n -c abcd =* a*d                  ==> 1
 ----
 
 [[command_weechat_filter]]
@@ -516,7 +516,7 @@ listdefault: zeigt die Standardeinstellung der Tastenbelegung an
    resetall: die Tastenbelegung wird auf die Standardeinstellungen zurück gesetzt. Dies löscht ALLE persönlichen Tastenbelegungen (Vorsicht!)
     missing: fügt fehlende Tastenbelegungen hinzu (dazu wird die Standardbelegung genutzt). Dies kann sinnvoll sein wenn man auf eine neue WeeChat Version umgestiegen ist
 
-Falls einer Taste ein Befehl zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die neu zu belegende Taste zu greifen. Durch diesen Schritt wird der entsprechende Tasten-Code in die Befehlszeile übernommen.
+Falls ein Befehl einer Taste zugeordnet werden soll ist es ratsam zuerst mit der Tastenkombination alt+k (oder Esc + k) einen Fangmodus zu aktivieren um damit die zu belegende Taste zu ermitteln. Durch diesen Schritt wird der benötigte Tasten-Code in die Befehlszeile übernommen.
 
 Für Kontext "mouse" (Kontext "cursor" ist auch möglich), hat der zu verwendende Schlüssel folgendes Format: "@area:Schlüssel" oder "@area1>area2:Schlüssel". "area" kann folgende Werte habe:
           *: jedweder Bereich des Bildschirms
@@ -785,7 +785,7 @@ passphrase: ändern der Passphrase (ohne Passphrase, werden die Daten in der Dat
 Ohne Angabe von Argumenten wird ein neuer Buffer geöffnet und die schutzwürdigen Informationen können dort eingesehen werden.
 
 Tastenbefehle für den secure-Buffer:
-  alt+v  Werte werden ein-ausgeblendet
+  alt+v Werte werden ein-ausgeblendet
 
 Wird eine Passphrase verwendet (Daten liegen verschlüsselt vor), fragt WeeChat beim Start die Passphrase ab.
 Es ist möglich eine Umgebungsvariable "WEECHAT_PASSPHRASE" zu setzen um die Eingabeaufforderung beim Programmstart zu vermeiden (diese Variable wird auch von WeeChat beim /upgrade verwendet).
