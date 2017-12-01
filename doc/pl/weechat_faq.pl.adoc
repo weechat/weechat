@@ -836,36 +836,35 @@ Możesz użyć komendy `/script` do instalowania i zarządzania skryptami
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
-// TRANSLATION MISSING
 [[scripts_update]]
-=== The command "/script update" can not read scripts, how to fix that?
+=== Komenda "/script update" nie może odczytać skryptów, jak to naprawić?
 
-First check questions about SSL connection in this FAQ
-(especially the option _weechat.network.gnutls_ca_file_).
+Najpierw zapoznaj się z zagadnieniami dotyczącymi połączeń SSL znajdującymi się
+w tym dokumencie (zwłaszcza opcji _weechat.network.gnutls_ca_file_).
 
-If still not working, try to manually delete the scripts file (in your shell):
+Jeśli to nie pomoże spróuj ręcznie usunąć plik z listą skryptów (z poziomu powłoki):
 
 ----
 $ rm ~/.weechat/script/plugins.xml.gz
 ----
 
-And update scripts again in WeeChat:
+Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
 
 ----
 /script update
 ----
 
-If you still have an error, then you must remove the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
-have to update manually the file yourself to get updates):
+Jeśli w dalszym ciągu otrzymujesz błąd, wtedy musisz wyłączyć automatyczną aktualizacje
+pliku z listą skryptów przez WeeChat i ręcznie pobrać ten plik (oznacza to, że musisz
+ręcznie aktualizować plik do najnowszej wersji):
 
-* in WeeChat:
+* w WeeChat:
 
 ----
 /set script.scripts.cache_expire -1
 ----
 
-* in your shell, with curl installed:
+* w powłoce, z zainstalowanym programem curl:
 
 ----
 $ cd ~/.weechat/script
