@@ -5344,7 +5344,7 @@ COMMAND_CALLBACK(secure)
         }
         else
         {
-            if (string_strcasecmp (temp_secure_passphrase, argv_eol[2]))
+            if (temp_secure_passphrase == NULL || strcmp (temp_secure_passphrase, argv_eol[2]))
             {
                 temp_secure_passphrase = strdup (argv_eol[2]);
                 gui_chat_printf (NULL, "Run the passphrase command again to confirm!");
