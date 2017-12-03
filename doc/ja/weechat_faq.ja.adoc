@@ -824,36 +824,33 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 
 スクリプトは他の IRC クライアントのものと互換性がありません。
 
-// TRANSLATION MISSING
 [[scripts_update]]
-=== The command "/script update" can not read scripts, how to fix that?
+=== コマンド "/script update" でスクリプトを読み込むことができません。どうすればいいですか。
 
-First check questions about SSL connection in this FAQ
-(especially the option _weechat.network.gnutls_ca_file_).
+手始めに、この FAQ の SSL 接続に関する質問を確認してください
+(特にオプション _weechat.network.gnutls_ca_file_ に関する質問)。
 
-If still not working, try to manually delete the scripts file (in your shell):
+それでもだめなら、手作業で (シェルから) スクリプトリストファイルを削除してください:
 
 ----
 $ rm ~/.weechat/script/plugins.xml.gz
 ----
 
-And update scripts again in WeeChat:
+その後、WeeChat からスクリプトリストを更新してください:
 
 ----
 /script update
 ----
 
-If you still have an error, then you must remove the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
-have to update manually the file yourself to get updates):
+それでもまだエラーが出るなら、更新を受け取るにはスクリプトリストファイルを必ず手作業で更新しなければいけないということです。これを行うには以下の手順に従ってください:
 
-* in WeeChat:
+* WeeChat から WeeChat のファイル自動更新機能を無効化してください:
 
 ----
 /set script.scripts.cache_expire -1
 ----
 
-* in your shell, with curl installed:
+* シェルからスクリプトリストファイルをダウンロードしてください (必要なら curl をインストールしてください):
 
 ----
 $ cd ~/.weechat/script

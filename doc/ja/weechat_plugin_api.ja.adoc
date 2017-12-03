@@ -47,10 +47,9 @@ GNU/Linux では ".so"、Windows
 (WeeChat ソースコードに含まれています)。このファイルでは WeeChat
 と通信する際に使う構造体や型が定義されています。
 
-// TRANSLATION MISSING
-In order to call WeeChat functions in the format displayed in <<plugin_api>>,
-the following global pointer must be declared and initialized in the function
-<<_weechat_plugin_init,weechat_plugin_init>>:
+WeeChat 関数を <<plugin_api>>
+に表示された書式で呼び出すには、以下のグローバルポインタを定義して
+<<_weechat_plugin_init,weechat_plugin_init>> 関数の中でそれを初期化しなければいけません:
 
 [source,C]
 ----
@@ -99,9 +98,8 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 引数:
 
-// TRANSLATION MISSING
-* _plugin_: WeeChat プラグイン構造体へのポインタ, used to initialize the
-  convenience global pointer `weechat_plugin`
+* _plugin_: WeeChat プラグイン構造体へのポインタ。これはグローバルポインタ
+  `weechat_plugin` を初期化する際に使われます
 * _argc_: プラグインに対する引数の数 (ユーザがコマンドラインで指定)
 * _argv_: プラグインに対する引数
 
