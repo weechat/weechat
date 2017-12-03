@@ -5344,7 +5344,14 @@ COMMAND_CALLBACK(secure)
         }
         else
         {
+            if (string_strcasecmp (temp_secure_passphrase, argv_eol[2]))
+            {
+                temp_secure_passphrase = strdup (argv_eol[2]);
+                gui_chat_printf (NULL, "Run the passphrase command again to confirm!");
+                return WEECHAT_RC_OK;
+            }
             secure_passphrase = strdup (argv_eol[2]);
+            free(temp_secure_passphrase);
             gui_chat_printf (NULL,
                              (passphrase_was_set) ?
                              _("Passphrase changed") : _("Passphrase added"));

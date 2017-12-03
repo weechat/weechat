@@ -52,6 +52,7 @@ extern struct t_config_option *secure_config_crypt_passphrase_file;
 extern struct t_config_option *secure_config_crypt_salt;
 
 extern char *secure_passphrase;
+extern char *temp_secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
 extern struct t_hashtable *secure_hashtable_data_encrypted;
 
