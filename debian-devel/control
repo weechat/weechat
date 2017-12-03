@@ -31,7 +31,7 @@ Architecture: all
 Depends: ${misc:Depends}, weechat-devel-curses (>= ${source:Version})
 Suggests: weechat-devel-doc (= ${source:Version})
 Conflicts: weechat
-Description: Fast, light and extensible chat client
+Description: Fast, light and extensible chat client (metapackage)
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  It is customizable and extensible with plugins/scripts, and includes:
