@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.0]]
-== Version 2.0 (under dev)
+== Version 2.0 (2017-12-03)
 
 [[v2.0_debian_packaging]]
 === Split of scripting Debian packages
