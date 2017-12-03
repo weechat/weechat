@@ -45,7 +45,7 @@ int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS];
 const char *
 buflist_bar_item_get_name (int index)
 {
-    static char item_name[16];
+    static char item_name[32];
 
     if (index == 0)
     {
