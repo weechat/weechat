@@ -15,6 +15,14 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v2.1]]
+== Version 2.1 (under dev)
+
+Bug fixes::
+
+  * python: fix arguments status/gnutls_rc/sock in hook_connect() callback
+  * python: fix argument fd in hook_fd() callback
+
 [[v2.0]]
 == Version 2.0 (2017-12-03)
 
