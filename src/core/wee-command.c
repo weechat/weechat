@@ -5352,14 +5352,14 @@ COMMAND_CALLBACK(secure)
             }
             if (strcmp (temp_secure_passphrase, argv_eol[2]))
             {
-                temp_secure_passphrase = NULL;
                 free (temp_secure_passphrase);
+                temp_secure_passphrase = NULL;
                 gui_chat_printf (NULL, _("Passphrase does not match"));
                 return WEECHAT_RC_OK;
             }
             secure_passphrase = strdup (argv_eol[2]);
-            temp_secure_passphrase = NULL;
             free (temp_secure_passphrase);
+            temp_secure_passphrase = NULL;
             gui_chat_printf (NULL,
                              (passphrase_was_set) ?
                              _("Passphrase changed") : _("Passphrase added"));
