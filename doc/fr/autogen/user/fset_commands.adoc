@@ -53,7 +53,7 @@
                d==xxx  afficher seulement les options changées avec la valeur exacte "xxx"
                =xxx    afficher seulement les options avec "xxx" dans la valeur
                ==xxx   afficher seulement les options avec la valeur exacte "xxx"
-               c:xxx   afficher seulement les options qui correspondent à la condition évaluée "xxx", en utilisant les variables suiantes : file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
+               c:xxx   afficher seulement les options qui correspondent à la condition évaluée "xxx", en utilisant les variables suivantes : file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
 Les lignes avec des options sont affichées en utilisant l'évaluation de chaîne (voir /help eval pour le format), avec ces options :
   - fset.format.option1 : premier format pour une option
@@ -138,8 +138,8 @@ Autres touches et entrées sur le tampon fset :
 Actions de la souris sur le tampon fset :
   roulette haut/bas                     se déplacer vers le haut/bas
   bouton gauche                         se déplacer à cette ligne
-  bouton droit                          basculer le booleén (on/off) ou éditer la valeur de l'option
-  bouton droit + glisser geuche/droite  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
+  bouton droit                          basculer le booléen (on/off) ou éditer la valeur de l'option
+  bouton droit + glisser gauche/droite  incrémenter/décrémenter la valeur pour un entier/couleur, définir/ajouter à la valeur pour les autres types
   bouton droit + glisser haut/bas       marquer/démarquer plusieurs options
 
 Note : si l'entrée comporte un ou plusieurs espaces en tête, le texte suivant est interprété comme un filtre, sans les espaces. Par exemple " q" cherche toutes les options avec "q" dans le nom, tandis que "q" ferme le tampon fset.
