@@ -2255,12 +2255,12 @@ weechat_python_api_hook_fd_cb (const void *pointer, void *data, int fd)
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = &fd;
+        func_argv[1] = PyLong_FromLong((long)fd);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           ptr_function,
-                                          "si", func_argv);
+                                          "sO", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2268,6 +2268,10 @@ weechat_python_api_hook_fd_cb (const void *pointer, void *data, int fd)
         {
             ret = *rc;
             free (rc);
+        }
+        if (func_argv[1])
+        {
+            Py_XDECREF((PyObject *)func_argv[1]);
         }
 
         return ret;
@@ -2449,16 +2453,16 @@ weechat_python_api_hook_connect_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = &status;
-        func_argv[2] = &gnutls_rc;
-        func_argv[3] = &sock;
+        func_argv[1] = PyLong_FromLong((long)status);
+        func_argv[2] = PyLong_FromLong((long)gnutls_rc);
+        func_argv[3] = PyLong_FromLong((long)sock);
         func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
         func_argv[5] = (error) ? (char *)error : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           ptr_function,
-                                          "siiiss", func_argv);
+                                          "sOOOss", func_argv);
 
         if (!rc)
             ret = WEECHAT_RC_ERROR;
@@ -2466,6 +2470,18 @@ weechat_python_api_hook_connect_cb (const void *pointer, void *data,
         {
             ret = *rc;
             free (rc);
+        }
+        if (func_argv[1])
+        {
+            Py_XDECREF((PyObject *)func_argv[1]);
+        }
+        if (func_argv[2])
+        {
+            Py_XDECREF((PyObject *)func_argv[2]);
+        }
+        if (func_argv[3])
+        {
+            Py_XDECREF((PyObject *)func_argv[3]);
         }
 
         return ret;
