@@ -3422,8 +3422,7 @@ Il plugin Relay può inviare dati alle interfacce remote usando il protocollo
 WeeChat.
 
 // TRANSLATION MISSING
-You can connect with a remote interface, see the list on download page:
-https://weechat.org/download
+You can connect with a remote interface, see the list in <<relay_plugin>>.
 
 [IMPORTANT]
 // TRANSLATION MISSING

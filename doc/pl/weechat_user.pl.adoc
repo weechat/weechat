@@ -3237,8 +3237,8 @@ serwer nie został podany w przekaźniku).
 Wtyczka relay może wysyłać dane do zdalnego interfejsu korzystając z protokołu
 WeeChat.
 
-Możesz połączyć się za pomocą zdalnego interfejsu, listę znajdziesz na stronie:
-https://weechat.org/download
+// TRANSLATION MISSING
+You can connect with a remote interface, see the list in <<relay_plugin>>.
 
 [IMPORTANT]
 WeeChat NIE MOŻE się połączyć z innym WeeChat za pomocą tego protokołu.

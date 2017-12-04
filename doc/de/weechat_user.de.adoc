@@ -3287,9 +3287,8 @@ herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-Nun kann man mittels einer remote Oberfläche Kontakt zu WeeChat herstellen.
-Eine Liste der remote Oberflächen findet man auf der Homepage:
-https://weechat.org/download
+// TRANSLATION MISSING
+You can connect with a remote interface, see the list in <<relay_plugin>>.
 
 [IMPORTANT]
 WeeChat selber kann sich NICHT mit einer anderen WeeChat Instanz über
