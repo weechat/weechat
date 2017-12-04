@@ -5344,14 +5344,22 @@ COMMAND_CALLBACK(secure)
         }
         else
         {
-            if (temp_secure_passphrase == NULL || strcmp (temp_secure_passphrase, argv_eol[2]))
+            if (temp_secure_passphrase == NULL)
             {
                 temp_secure_passphrase = strdup (argv_eol[2]);
-                gui_chat_printf (NULL, "Run the passphrase command again to confirm!");
+                gui_chat_printf (NULL, _("Run the passphrase command again to confirm"));
+                return WEECHAT_RC_OK;
+            }
+            if (strcmp (temp_secure_passphrase, argv_eol[2]))
+            {
+                temp_secure_passphrase = NULL;
+                free (temp_secure_passphrase);
+                gui_chat_printf (NULL, _("Passphrase does not match"));
                 return WEECHAT_RC_OK;
             }
             secure_passphrase = strdup (argv_eol[2]);
-            free(temp_secure_passphrase);
+            temp_secure_passphrase = NULL;
+            free (temp_secure_passphrase);
             gui_chat_printf (NULL,
                              (passphrase_was_set) ?
                              _("Passphrase changed") : _("Passphrase added"));
