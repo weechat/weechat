@@ -20,6 +20,30 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.0]]
 == Version 2.0 (2017-12-03)
 
+[[v2.0_fset_plugin]]
+=== Fset plugin
+
+A new plugin "fset" has been added, it replaces the script iset.pl and has many
+new features.
+
+By default the fset plugin changes the behavior of `/set` command when it is
+used with only an option name: it opens the fset buffer if at least one option
+is found.
+
+The old behavior was to display the list of options in the core buffer.
+
+If you prefer the old behavior, you can restore it with this command:
+
+----
+/set fset.look.condition_catch_set ""
+----
+
+For more information about this feature, you can read help with:
+
+----
+/help fset.look.condition_catch_set
+----
+
 [[v2.0_debian_packaging]]
 === Split of scripting Debian packages
 
