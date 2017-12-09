@@ -17,6 +17,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.0.1]]
+== Version 2.0.1 (under dev)
+
+Bug fix and maintenance release.
+
 [[v2.0]]
 == Version 2.0 (2017-12-03)
 
