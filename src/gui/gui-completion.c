@@ -36,6 +36,7 @@
 #include "../core/wee-arraylist.h"
 #include "../core/wee-completion.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-list.h"
@@ -114,6 +115,7 @@ gui_completion_buffer_init (struct t_gui_completion *completion,
     completion->direction = 0;
     completion->add_space = 1;
     completion->force_partial_completion = 0;
+    completion->reverse_partial_completion = 0;
 
     completion->list = arraylist_new (
         32, 1, 0,
@@ -509,6 +511,12 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                                                                         pos_end - pos);
                                     if (custom_completion)
                                     {
+                                        if (hashtable_has_key (
+                                                config_hashtable_completion_partial_templates,
+                                                custom_completion))
+                                        {
+                                            completion->reverse_partial_completion = 1;
+                                        }
                                         gui_completion_custom (completion,
                                                                custom_completion,
                                                                plugin);
@@ -1073,6 +1081,9 @@ gui_completion_complete (struct t_gui_completion *completion)
             partial_completion = CONFIG_BOOLEAN(config_completion_partial_completion_other);
     }
 
+    if (completion->reverse_partial_completion)
+        partial_completion ^= 1;
+
     common_prefix_size = 0;
     if (partial_completion
         && completion->list && (completion->list->size > 0))
@@ -1387,6 +1398,7 @@ gui_completion_hdata_completion_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_completion, direction, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, add_space, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, force_partial_completion, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_completion, reverse_partial_completion, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, list, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_completion, word_found_is_nick, INTEGER, 0, NULL, NULL);
@@ -1427,23 +1439,24 @@ void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
     log_printf ("[completion (addr:0x%lx)]", completion);
-    log_printf ("  buffer. . . . . . . . . : 0x%lx", completion->buffer);
-    log_printf ("  context . . . . . . . . : %d",    completion->context);
-    log_printf ("  base_command. . . . . . : '%s'",  completion->base_command);
-    log_printf ("  base_command_arg_index. : %d",    completion->base_command_arg_index);
-    log_printf ("  base_word . . . . . . . : '%s'",  completion->base_word);
-    log_printf ("  base_word_pos . . . . . : %d",    completion->base_word_pos);
-    log_printf ("  position. . . . . . . . : %d",    completion->position);
-    log_printf ("  args. . . . . . . . . . : '%s'",  completion->args);
-    log_printf ("  direction . . . . . . . : %d",    completion->direction);
-    log_printf ("  add_space . . . . . . . : %d",    completion->add_space);
-    log_printf ("  force_partial_completion: %d",    completion->force_partial_completion);
-    log_printf ("  list. . . . . . . . . . : 0x%lx", completion->list);
-    log_printf ("  word_found. . . . . . . : '%s'",  completion->word_found);
-    log_printf ("  word_found_is_nick. . . : %d",    completion->word_found_is_nick);
-    log_printf ("  position_replace. . . . : %d",    completion->position_replace);
-    log_printf ("  diff_size . . . . . . . : %d",    completion->diff_size);
-    log_printf ("  diff_length . . . . . . : %d",    completion->diff_length);
+    log_printf ("  buffer. . . . . . . . . . : 0x%lx", completion->buffer);
+    log_printf ("  context . . . . . . . . . : %d",    completion->context);
+    log_printf ("  base_command. . . . . . . : '%s'",  completion->base_command);
+    log_printf ("  base_command_arg_index. . : %d",    completion->base_command_arg_index);
+    log_printf ("  base_word . . . . . . . . : '%s'",  completion->base_word);
+    log_printf ("  base_word_pos . . . . . . : %d",    completion->base_word_pos);
+    log_printf ("  position. . . . . . . . . : %d",    completion->position);
+    log_printf ("  args. . . . . . . . . . . : '%s'",  completion->args);
+    log_printf ("  direction . . . . . . . . : %d",    completion->direction);
+    log_printf ("  add_space . . . . . . . . : %d",    completion->add_space);
+    log_printf ("  force_partial_completion. : %d",    completion->force_partial_completion);
+    log_printf ("  reverse_partial_completion: %d",    completion->reverse_partial_completion);
+    log_printf ("  list. . . . . . . . . . . : 0x%lx", completion->list);
+    log_printf ("  word_found. . . . . . . . : '%s'",  completion->word_found);
+    log_printf ("  word_found_is_nick. . . . : %d",    completion->word_found_is_nick);
+    log_printf ("  position_replace. . . . . : %d",    completion->position_replace);
+    log_printf ("  diff_size . . . . . . . . : %d",    completion->diff_size);
+    log_printf ("  diff_length . . . . . . . : %d",    completion->diff_length);
     if (completion->list)
     {
         log_printf ("");

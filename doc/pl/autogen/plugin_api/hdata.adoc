@@ -623,6 +623,7 @@ _args_   (string) +
 _direction_   (integer) +
 _add_space_   (integer) +
 _force_partial_completion_   (integer) +
+_reverse_partial_completion_   (integer) +
 _list_   (pointer) +
 _word_found_   (string) +
 _word_found_is_nick_   (integer) +

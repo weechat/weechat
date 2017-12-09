@@ -464,6 +464,12 @@
 ** valori: on, off
 ** valore predefinito: `+off+`
 
+* [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
+** descrizione: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab)]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"config_options"+`
+
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** descrizione: pass:none[numero massimo predefinito di comandi da visualizzare nella cronologia (0 = nessun limite)]
 ** tipo: intero

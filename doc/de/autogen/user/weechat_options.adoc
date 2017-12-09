@@ -464,6 +464,12 @@
 ** Werte: on, off
 ** Standardwert: `+off+`
 
+* [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
+** Beschreibung: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"config_options"+`
+
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** Beschreibung: pass:none[Wert für die maximale Anzahl der angezeigten Befehle im Verlaufsspeicher, die mittels /history angezeigt werden (0: unbegrenzt)]
 ** Typ: integer

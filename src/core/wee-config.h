@@ -320,6 +320,7 @@ extern struct t_config_option *config_completion_partial_completion_command;
 extern struct t_config_option *config_completion_partial_completion_command_arg;
 extern struct t_config_option *config_completion_partial_completion_count;
 extern struct t_config_option *config_completion_partial_completion_other;
+extern struct t_config_option *config_completion_partial_completion_templates;
 
 extern struct t_config_option *config_history_display_default;
 extern struct t_config_option *config_history_max_buffer_lines_minutes;
@@ -354,6 +355,7 @@ extern int config_word_chars_input_count;
 extern char **config_nick_colors;
 extern int config_num_nick_colors;
 extern struct t_hashtable *config_hashtable_nick_color_force;
+extern struct t_hashtable *config_hashtable_completion_partial_templates;
 
 extern void config_set_nick_colors ();
 extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);

@@ -464,6 +464,12 @@
 ** values: on, off
 ** default value: `+off+`
 
+* [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
+** description: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab)]
+** type: string
+** values: any string
+** default value: `+"config_options"+`
+
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** description: pass:none[maximum number of commands to display by default in history listing (0 = unlimited)]
 ** type: integer

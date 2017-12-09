@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.1]]
 == Version 2.1 (under dev)
 
+New features::
+
+  * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
+
 Bug fixes::
 
   * python: fix arguments status/gnutls_rc/sock in hook_connect() callback

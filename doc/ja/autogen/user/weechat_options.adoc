@@ -464,6 +464,12 @@
 ** 値: on, off
 ** デフォルト値: `+off+`
 
+* [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
+** 説明: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"config_options"+`
+
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** 説明: pass:none[履歴をリストアップする際にデフォルトで表示するコマンドの最大数 (0 = 制限無し)]
 ** タイプ: 整数

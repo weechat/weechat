@@ -46,7 +46,8 @@ struct t_gui_completion
     char *args;                   /* command line args (including base word) */
     int direction;                /* +1=search next word, -1=previous word   */
     int add_space;                /* add space after completion?             */
-    int force_partial_completion; /* force partial completion?               */
+    int force_partial_completion;   /* force partial completion?             */
+    int reverse_partial_completion; /* reverse partial completion?           */
 
     /* for command argument completion */
     struct t_arraylist *list;     /* data list for completion                */

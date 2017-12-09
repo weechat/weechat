@@ -273,6 +273,7 @@ struct t_config_option *config_completion_partial_completion_command;
 struct t_config_option *config_completion_partial_completion_command_arg;
 struct t_config_option *config_completion_partial_completion_count;
 struct t_config_option *config_completion_partial_completion_other;
+struct t_config_option *config_completion_partial_completion_templates;
 
 /* config, history section */
 
@@ -318,6 +319,7 @@ char **config_nick_colors = NULL;
 int config_num_nick_colors = 0;
 struct t_hashtable *config_hashtable_nick_color_force = NULL;
 char *config_item_time_evaluated = NULL;
+struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
 
 
 /*
@@ -1172,6 +1174,51 @@ config_change_nick_colors (const void *pointer, void *data,
 
     config_set_nick_colors ();
     gui_color_buffer_display ();
+}
+
+/*
+ * Callback for changes on option
+ * "weechat.completion.partial_completion_templates".
+ */
+
+void
+config_change_completion_partial_completion_templates (const void *pointer,
+                                                       void *data,
+                                                       struct t_config_option *option)
+{
+    char **items;
+    int num_items, i;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!config_hashtable_completion_partial_templates)
+    {
+        config_hashtable_completion_partial_templates = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_POINTER,
+            NULL, NULL);
+    }
+    else
+    {
+        hashtable_remove_all (config_hashtable_completion_partial_templates);
+    }
+
+    items = string_split (
+        CONFIG_STRING(config_completion_partial_completion_templates),
+        ",", 0, 0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            hashtable_set (config_hashtable_completion_partial_templates,
+                           items[i], NULL);
+        }
+        string_free_split (items);
+    }
 }
 
 /*
@@ -4179,6 +4226,15 @@ config_weechat_init_options ()
            "begin with same letters)"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_templates = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_templates", "string",
+        N_("comma-separated list of templates for which partial completion is "
+           "enabled by default (with Tab key instead of shift-Tab)"),
+        NULL, 0, 0, "config_options", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_completion_partial_completion_templates, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* history */
     ptr_section = config_file_new_section (weechat_config_file, "history",
@@ -4488,6 +4544,8 @@ config_weechat_init ()
         config_change_word_chars_highlight (NULL, NULL, NULL);
     if (!config_word_chars_input)
         config_change_word_chars_input (NULL, NULL, NULL);
+    if (!config_hashtable_completion_partial_templates)
+        config_change_completion_partial_completion_templates (NULL, NULL, NULL);
 
     return rc;
 }
@@ -4595,5 +4653,11 @@ config_weechat_free ()
     {
         free (config_item_time_evaluated);
         config_item_time_evaluated = NULL;
+    }
+
+    if (config_hashtable_completion_partial_templates)
+    {
+        hashtable_free (config_hashtable_completion_partial_templates);
+        config_hashtable_completion_partial_templates = NULL;
     }
 }

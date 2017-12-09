@@ -464,6 +464,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
 
+* [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
+** description: pass:none[liste de modèles de complétion séparés par des virgules pour lesquels la complétion partielle est activée par défaut (avec la touche Tab au lieu de shift-Tab)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"config_options"+`
+
 * [[option_weechat.history.display_default]] *weechat.history.display_default*
 ** description: pass:none[nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)]
 ** type: entier
