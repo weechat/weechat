@@ -3287,11 +3287,11 @@ herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 Die Relay-Erweiterung kann Daten, mittels dem WeeChat Protokoll, an eine
 externe Oberfläche senden.
 
-// TRANSLATION MISSING
-You can connect with a remote interface, see the list in <<relay_plugin>>.
+Man kann sich mittels einer externen Oberfläche verbinden, für eine Liste
+siehe <<relay_plugin>>.
 
 [IMPORTANT]
-WeeChat selber kann sich NICHT mit einer anderen WeeChat Instanz über
+Eine WeeChat Instanz kann sich NICHT mit einer anderen WeeChat Instanz über
 dieses Protokoll verbinden.
 
 Zum Beispiel:
