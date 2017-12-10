@@ -4230,7 +4230,9 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "partial_completion_templates", "string",
         N_("comma-separated list of templates for which partial completion is "
-           "enabled by default (with Tab key instead of shift-Tab)"),
+           "enabled by default (with Tab key instead of shift-Tab); "
+           "the list of templates is in documentation: plugin API reference, "
+           "function \"weechat_hook_command\""),
         NULL, 0, 0, "config_options", NULL, 0,
         NULL, NULL, NULL,
         &config_change_completion_partial_completion_templates, NULL, NULL,

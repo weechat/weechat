@@ -465,7 +465,7 @@
 ** Standardwert: `+off+`
 
 * [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
-** Beschreibung: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab)]
+** Beschreibung: pass:none[comma-separated list of templates for which partial completion is enabled by default (with Tab key instead of shift-Tab); the list of templates is in documentation: plugin API reference, function "weechat_hook_command"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"config_options"+`

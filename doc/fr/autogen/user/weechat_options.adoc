@@ -465,7 +465,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_weechat.completion.partial_completion_templates]] *weechat.completion.partial_completion_templates*
-** description: pass:none[liste de modèles de complétion séparés par des virgules pour lesquels la complétion partielle est activée par défaut (avec la touche Tab au lieu de shift-Tab)]
+** description: pass:none[liste de modèles de complétion séparés par des virgules pour lesquels la complétion partielle est activée par défaut (avec la touche Tab au lieu de shift-Tab) ; la liste des modèles est dans la documentation : Référence API extension, fonction "weechat_hook_command"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"config_options"+`
