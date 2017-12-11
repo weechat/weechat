@@ -129,7 +129,7 @@
 ** Standardwert: `+on+`
 
 * [[option_buflist.look.nick_prefix]] *buflist.look.nick_prefix*
-** Beschreibung: pass:none[holt den Nick-Präfix und die dazugehörige Farbe aus der Nicklist  um diese mit der Variable ${nick_prefix} zu nutzen; diese Option ist standardmäßig deaktiviert, da bei einer umfangreichen Nickliste es zu Verzögerungen kommen kann]
+** Beschreibung: pass:none[holt den Nick-Präfix und die dazugehörige Farbe aus der Nicklist um diese mit der Variable ${nick_prefix} zu nutzen; diese Option ist standardmäßig deaktiviert, da bei einer umfangreichen Nickliste es zu Verzögerungen kommen kann]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
