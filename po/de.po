@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-12-10 08:29+0100\n"
-"PO-Revision-Date: 2017-12-10 14:56+0100\n"
+"PO-Revision-Date: 2017-12-11 20:59+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -5352,7 +5352,7 @@ msgstr "abwesend"
 #, c-format
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
-"Benachrichtigung wurde von \"%s%s%s\": \"%s%s%s\" zu \"%s%s%s\" geändert"
+"Benachrichtigung wurde für \"%s%s%s\": von \"%s%s%s\" auf \"%s%s%s\" geändert"
 
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
