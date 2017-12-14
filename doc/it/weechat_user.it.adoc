@@ -1568,7 +1568,7 @@ For example to disable highlights from "joe" and "mike" on current buffer:
 [NOTE]
 The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
 You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+with `/script install buffer_autoset.py` and get help with `/help buffer_autoset`.
 
 // TRANSLATION MISSING
 [[highlights]]
@@ -1634,7 +1634,7 @@ For example to force the highlight on all messages in the current buffer:
 [NOTE]
 The buffer property "highlight_regex" is not saved in configuration. +
 You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help autosetbuffer`.
+with `/script install buffer_autoset.py` and get help with `/help buffer_autoset`.
 
 [[key_bindings]]
 === Associazione tasti predefinita

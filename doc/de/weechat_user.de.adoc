@@ -1512,7 +1512,7 @@ Um zum Bespiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivier
 Die Buffer-Eigenschaft "hotlist_max_level_nicks" ist keine permanente Einstellung und wird nicht
 in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
 das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
-und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
+und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 
 [[highlights]]
 === Highlights
@@ -1582,7 +1582,7 @@ Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzu
 Die Buffer-Eigenschaft "highlight_regex" ist keine permanente Einstellung und wird nicht
 in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
 das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
-und um eine Hilfe zu erhalten wie man es nutzt: `/help autosetbuffer`.
+und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 
 [[key_bindings]]
 === Standard Tastenbelegung

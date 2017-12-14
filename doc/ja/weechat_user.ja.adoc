@@ -1485,7 +1485,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [NOTE]
 バッファプロパティ "hotlist_max_level_nicks" は設定ファイルに保存されません。 +
 これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help autosetbuffer` コマンドを使ってください。
+`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help buffer_autoset` コマンドを使ってください。
 
 [[highlights]]
 === ハイライト
@@ -1550,7 +1550,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 [NOTE]
 バッファプロパティ "highlight_regex" は設定ファイルに保存されません。 +
 これを保存するには _buffer_autoset.py_ スクリプトを使ってください: このスクリプトをインストールするには
-`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help autosetbuffer` コマンドを使ってください。
+`/script install buffer_autoset.py` コマンドを使い、ヘルプを見るには `/help buffer_autoset` コマンドを使ってください。
 
 [[key_bindings]]
 === デフォルトのキー割り当て

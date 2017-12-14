@@ -1530,7 +1530,7 @@ La propriété de tampon "hotlist_max_level_nicks" n'est pas sauvegardée dans l
 configuration. +
 Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
 pouvez l'installer avec `/script install buffer_autoset.py` et obtenir de l'aide
-avec `/help autosetbuffer`.
+avec `/help buffer_autoset`.
 
 [[highlights]]
 === Highlights
@@ -1600,7 +1600,7 @@ La propriété de tampon "highlight_regex" n'est pas sauvegardée dans la
 configuration. +
 Vous pouvez facilement la sauvegarder avec le script _buffer_autoset.py_ : vous
 pouvez l'installer avec `/script install buffer_autoset.py` et obtenir de l'aide
-avec `/help autosetbuffer`.
+avec `/help buffer_autoset`.
 
 [[key_bindings]]
 === Raccourcis clavier par défaut

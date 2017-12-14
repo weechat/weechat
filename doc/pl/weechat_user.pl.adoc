@@ -1495,7 +1495,7 @@ Na przykład, żeby wyłączyć podświetlenia od "joe" oraz "mike" w obecnym bu
 [NOTE]
 Właściwość bufora "hotlist_max_level_nicks" nie jest zapisywana w konfiguracji. +
 Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
-`/script install buffer_autoset.py`, informacje o używaniu `/help autosetbuffer`.
+`/script install buffer_autoset.py`, informacje o używaniu `/help buffer_autoset`.
 
 [[highlights]]
 === Podświetlenia
@@ -1559,7 +1559,7 @@ Na przykład żeby wymusić podświetlenie dla wszytkich wiadomości w obecnym b
 [NOTE]
 Właściwość bufora "highlight_regex" nie jest zapisywana w konfiguracji. +
 Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalować za pomocą
-`/script install buffer_autoset.py`, informacje o używaniu `/help autosetbuffer`.
+`/script install buffer_autoset.py`, informacje o używaniu `/help buffer_autoset`.
 
 [[key_bindings]]
 === Domyślne skróty klawiszowe
