@@ -40,6 +40,11 @@ For more information about this feature, you can read help with:
 /help weechat.completion.partial_completion_templates
 ----
 
+[[v2.0.1]]
+== Version 2.0.1 (2017-12-20)
+
+Bug fix and maintenance release.
+
 [[v2.0]]
 == Version 2.0 (2017-12-03)
 
