@@ -10,6 +10,7 @@
       load [-q] <filename>
       autoload
       reload|unload [-q] [<name>]
+      version
 
     list: list loaded scripts
 listfull: list loaded scripts (verbose)
@@ -20,6 +21,7 @@ autoload: load all scripts in "autoload" directory
 filename: script (file) to load
     name: a script name (name used in call to "register" function)
       -q: quiet mode: do not display messages
+ version: display the version of interpreter used
 
 Without argument, this command lists all loaded scripts.
 ----

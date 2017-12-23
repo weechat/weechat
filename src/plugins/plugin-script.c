@@ -84,6 +84,55 @@ plugin_script_config_cb (const void *pointer, void *data,
 }
 
 /*
+ * Displays name and version of interpreter used.
+ */
+
+void
+plugin_script_display_interpreter (struct t_weechat_plugin *weechat_plugin,
+                                   int indent)
+{
+    const char *ptr_name, *ptr_version;
+
+    ptr_name = weechat_hashtable_get (weechat_plugin->variables,
+                                      "interpreter_name");
+    ptr_version = weechat_hashtable_get (weechat_plugin->variables,
+                                         "interpreter_version");
+    if (ptr_name)
+    {
+        weechat_printf (NULL,
+                        "%s%s: %s",
+                        (indent) ? "  " : "",
+                        ptr_name,
+                        (ptr_version && ptr_version[0]) ? ptr_version : "(?)");
+    }
+}
+
+/*
+ * Callback for signal "debug_libs".
+ */
+
+int
+plugin_script_signal_debug_libs_cb (const void *pointer, void *data,
+                                    const char *signal,
+                                    const char *type_data,
+                                    void *signal_data)
+{
+    struct t_weechat_plugin *plugin;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+
+    plugin = (struct t_weechat_plugin *)pointer;
+
+    plugin_script_display_interpreter (plugin, 1);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Creates directories for plugin in WeeChat home:
  * - ~/.weechat/XXX/
  * - ~/.weechat/XXX/autoload/
@@ -156,7 +205,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                              " || load %(filename)"
                                              " || autoload"
                                              " || reload %s"
-                                             " || unload %s",
+                                             " || unload %s"
+                                             " || version",
                                              "%s",
                                              string);
     }
@@ -166,7 +216,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
         N_("list|listfull [<name>]"
            " || load [-q] <filename>"
            " || autoload"
-           " || reload|unload [-q] [<name>]"),
+           " || reload|unload [-q] [<name>]"
+           " || version"),
         N_("    list: list loaded scripts\n"
            "listfull: list loaded scripts (verbose)\n"
            "    load: load a script\n"
@@ -178,6 +229,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            "    name: a script name (name used in call to \"register\" "
            "function)\n"
            "      -q: quiet mode: do not display messages\n"
+           " version: display the version of interpreter used\n"
            "\n"
            "Without argument, this command lists all loaded scripts."),
         completion,
@@ -211,7 +263,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
 
     /* add signal for "debug_libs" */
     weechat_hook_signal ("debug_libs",
-                         init->callback_signal_debug_libs, NULL, NULL);
+                         plugin_script_signal_debug_libs_cb,
+                         weechat_plugin, NULL);
 
     /* add signals for script actions (install/remove/autoload) */
     for (i = 0; action_signals[i]; i++)

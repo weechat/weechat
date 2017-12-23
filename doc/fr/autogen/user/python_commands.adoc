@@ -10,6 +10,7 @@
          load [-q] <fichier>
          autoload
          reload|unload [-q] [<nom>]
+         version
 
     list : lister les scripts chargés
 listfull : lister les scripts chargés (verbeux)
@@ -20,6 +21,7 @@ autoload : charger tous les scripts dans le répertoire "autoload"
  fichier : script (fichier) à charger
      nom : nom de script (nom utilisé dans l'appel à la fonction "register")
       -q : mode silencieux : ne pas afficher de messages
+ version : afficher la version de l'interpréteur utilisé
 
 Sans paramètre, cette commande liste les scripts chargés.
 ----

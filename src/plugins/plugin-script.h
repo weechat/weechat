@@ -87,10 +87,6 @@ struct t_plugin_script_init
                                       const char *signal,
                                       const char *type_data,
                                       void *signal_data);
-    int (*callback_signal_debug_libs)(const void *pointer, void *data,
-                                      const char *signal,
-                                      const char *type_data,
-                                      void *signal_data);
     int (*callback_signal_script_action)(const void *pointer, void *data,
                                          const char *signal,
                                          const char *type_data,
@@ -98,6 +94,8 @@ struct t_plugin_script_init
     void (*callback_load_file)(void *data, const char *filename);
 };
 
+extern void plugin_script_display_interpreter (struct t_weechat_plugin *plugin,
+                                               int indent);
 extern void plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                 int argc, char *argv[],
                                 struct t_plugin_script_init *init);

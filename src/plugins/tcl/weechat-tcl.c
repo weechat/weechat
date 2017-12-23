@@ -559,6 +559,10 @@ weechat_tcl_command_cb (const void *pointer, void *data,
         {
             weechat_tcl_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_tcl_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -705,31 +709,6 @@ weechat_tcl_signal_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Display infos about external libraries used.
- */
-
-int
-weechat_tcl_signal_debug_libs_cb (const void *pointer, void *data,
-                                  const char *signal,
-                                  const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-#ifdef TCL_VERSION
-    weechat_printf (NULL, "  %s: %s", TCL_PLUGIN_NAME, TCL_VERSION);
-#else
-    weechat_printf (NULL, "  %s: (?)", TCL_PLUGIN_NAME);
-#endif /* TCL_VERSION */
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
@@ -827,12 +806,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_tcl_plugin = plugin;
 
+    /* set interpreter name and version */
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           plugin->name);
+#ifdef TCL_VERSION
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           TCL_VERSION);
+#else
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           "");
+#endif /* TCL_VERSION */
+
     init.callback_command = &weechat_tcl_command_cb;
     init.callback_completion = &weechat_tcl_completion_cb;
     init.callback_hdata = &weechat_tcl_hdata_cb;
     init.callback_infolist = &weechat_tcl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_tcl_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
     init.callback_load_file = &weechat_tcl_load_cb;
 

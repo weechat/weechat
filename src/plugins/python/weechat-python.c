@@ -968,6 +968,10 @@ weechat_python_command_cb (const void *pointer, void *data,
         {
             weechat_python_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_python_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -1149,31 +1153,6 @@ weechat_python_signal_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Display infos about external libraries used.
- */
-
-int
-weechat_python_signal_debug_libs_cb (const void *pointer, void *data,
-                                     const char *signal,
-                                     const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-#ifdef PY_VERSION
-    weechat_printf (NULL, "  %s: %s", PYTHON_PLUGIN_NAME, PY_VERSION);
-#else
-    weechat_printf (NULL, "  %s: (?)", PYTHON_PLUGIN_NAME);
-#endif /* PY_VERSION */
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
@@ -1272,6 +1251,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_python_plugin = plugin;
 
+    /* set interpreter name and version */
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           plugin->name);
+#ifdef PY_VERSION
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           PY_VERSION);
+#else
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           "");
+#endif /* PY_VERSION */
+
     /*
      * hook info to get path to python 2.x interpreter
      * (some scripts using hook_process need that)
@@ -1317,7 +1307,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_python_hdata_cb;
     init.callback_infolist = &weechat_python_infolist_cb;
     init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_python_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_python_signal_script_action_cb;
     init.callback_load_file = &weechat_python_load_cb;
 

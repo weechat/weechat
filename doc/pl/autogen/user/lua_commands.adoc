@@ -6,20 +6,22 @@
 * `+lua+`: list/load/unload skrypt
 
 ----
-/lua  list|listfull [<nazwa>]
-      load [-q] <nazwapliku>
+/lua  list|listfull [<name>]
+      load [-q] <filename>
       autoload
-      reload|unload [-q] [<nazwa>]
+      reload|unload [-q] [<name>]
+      version
 
-    list: lista załadowanych wtyczek
-listfull: lista załadowanych wtyczek (szczegółowa)
-    load: ładuje wtyczkę
-autoload: automatycznie ładuje wtyczki w katalogu systemowym lub użytkownika
-  reload: przeładuje pojedynczą wtyczkę (jeśli nie podano nazwy, wyładuje wszystkie wtyczki, następnie automatycznie załaduje wtyczki)
-  unload: wyładowuje jedną albo wszystkie wtyczki
-nazwa_pliku: skrypt (plik) do załadowania
-    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji "register")
-      -q: tryb cichy: nie wyświetla wiadomości
+    list: list loaded scripts
+listfull: list loaded scripts (verbose)
+    load: load a script
+autoload: load all scripts in "autoload" directory
+  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
+  unload: unload a script (if no name given, unload all scripts)
+filename: script (file) to load
+    name: a script name (name used in call to "register" function)
+      -q: quiet mode: do not display messages
+ version: display the version of interpreter used
 
-Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
+Without argument, this command lists all loaded scripts.
 ----

@@ -629,6 +629,10 @@ weechat_guile_command_cb (const void *pointer, void *data,
         {
             weechat_guile_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_guile_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -786,35 +790,6 @@ weechat_guile_signal_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Display infos about external libraries used.
- */
-
-int
-weechat_guile_signal_debug_libs_cb (const void *pointer, void *data,
-                                    const char *signal,
-                                    const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-#if defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION)
-    weechat_printf (NULL, "  %s: %d.%d.%d",
-                    GUILE_PLUGIN_NAME,
-                    SCM_MAJOR_VERSION,
-                    SCM_MINOR_VERSION,
-                    SCM_MICRO_VERSION);
-#else
-    weechat_printf (NULL, "  %s: (?)", GUILE_PLUGIN_NAME);
-#endif /* defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION) */
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
@@ -964,8 +939,26 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     struct t_plugin_script_init init;
+    char str_version[128];
 
     weechat_guile_plugin = plugin;
+
+    /* set interpreter name and version */
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           plugin->name);
+#if defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION)
+    snprintf (str_version, sizeof (str_version),
+              "%d.%d.%d",
+              SCM_MAJOR_VERSION,
+              SCM_MINOR_VERSION,
+              SCM_MICRO_VERSION);
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           str_version);
+#else
+    (void) str_version;
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           "");
+#endif /* defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION) */
 
     guile_stdout = NULL;
 
@@ -991,7 +984,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_guile_hdata_cb;
     init.callback_infolist = &weechat_guile_infolist_cb;
     init.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_guile_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
     init.callback_load_file = &weechat_guile_load_cb;
 

@@ -816,6 +816,10 @@ weechat_ruby_command_cb (const void *pointer, void *data,
         {
             weechat_ruby_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_ruby_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -957,31 +961,6 @@ weechat_ruby_signal_debug_dump_cb (const void *pointer, void *data,
     {
         plugin_script_print_log (weechat_ruby_plugin, ruby_scripts);
     }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
- * Display infos about external libraries used.
- */
-
-int
-weechat_ruby_signal_debug_libs_cb (const void *pointer, void *data,
-                                   const char *signal,
-                                   const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-#ifdef HAVE_RUBY_VERSION_H
-    weechat_printf (NULL, "  %s: %s", RUBY_PLUGIN_NAME, ruby_version);
-#else
-    weechat_printf (NULL, "  %s: (?)", RUBY_PLUGIN_NAME);
-#endif /* HAVE_RUBY_VERSION_H */
 
     return WEECHAT_RC_OK;
 }
@@ -1139,6 +1118,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_ruby_plugin = plugin;
 
+    /* set interpreter name and version */
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           plugin->name);
+#ifdef HAVE_RUBY_VERSION_H
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           ruby_version);
+#else
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           "");
+#endif /* HAVE_RUBY_VERSION_H */
+
     ruby_error = 0;
 
     /* init stdout/stderr buffer */
@@ -1185,7 +1175,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_hdata = &weechat_ruby_hdata_cb;
     init.callback_infolist = &weechat_ruby_infolist_cb;
     init.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_ruby_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
     init.callback_load_file = &weechat_ruby_load_cb;
 

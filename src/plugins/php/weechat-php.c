@@ -840,6 +840,10 @@ weechat_php_command_cb (const void *pointer, void *data,
         {
             weechat_php_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_php_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -986,31 +990,6 @@ weechat_php_signal_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Display infos about external libraries used.
- */
-
-int
-weechat_php_signal_debug_libs_cb (const void *pointer, void *data,
-                                  const char *signal,
-                                  const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-#ifdef PHP_VERSION
-    weechat_printf (NULL, "  %s: %s", PHP_PLUGIN_NAME, PHP_VERSION);
-#else
-    weechat_printf (NULL, "  %s: (?)", PHP_PLUGIN_NAME);
-#endif /* PHP_VERSION */
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
@@ -1149,12 +1128,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_php_plugin = plugin;
 
+    /* set interpreter name and version */
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           plugin->name);
+#ifdef PHP_VERSION
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           PHP_VERSION);
+#else
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           "");
+#endif /* PHP_VERSION */
+
     init.callback_command = &weechat_php_command_cb;
     init.callback_completion = &weechat_php_completion_cb;
     init.callback_hdata = &weechat_php_hdata_cb;
     init.callback_infolist = &weechat_php_infolist_cb;
     init.callback_signal_debug_dump = &weechat_php_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_php_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_php_signal_script_action_cb;
     init.callback_load_file = &weechat_php_load_cb;
 

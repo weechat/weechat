@@ -557,6 +557,10 @@ weechat_js_command_cb (const void *pointer, void *data,
         {
             weechat_js_unload_all ();
         }
+        else if (weechat_strcasecmp (argv[1], "version") == 0)
+        {
+            plugin_script_display_interpreter (weechat_js_plugin, 0);
+        }
         else
             WEECHAT_COMMAND_ERROR;
     }
@@ -703,28 +707,6 @@ weechat_js_signal_debug_dump_cb (const void *pointer, void *data,
 }
 
 /*
- * Display infos about external libraries used.
- */
-
-int
-weechat_js_signal_debug_libs_cb (const void *pointer, void *data,
-                                 const char *signal,
-                                 const char *type_data, void *signal_data)
-{
-    /* make C++ compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-
-    weechat_printf (NULL, "  %s (v8): %s",
-                    JS_PLUGIN_NAME, v8::V8::GetVersion());
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Timer for executing actions.
  */
 
@@ -820,15 +802,23 @@ EXPORT int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     struct t_plugin_script_init init;
+    char str_interpreter[64];
 
     weechat_js_plugin = plugin;
+
+    /* set interpreter name and version */
+    snprintf (str_interpreter, sizeof (str_interpreter),
+              "%s (v8)", plugin->name);
+    weechat_hashtable_set (plugin->variables, "interpreter_name",
+                           str_interpreter);
+    weechat_hashtable_set (plugin->variables, "interpreter_version",
+                           v8::V8::GetVersion());
 
     init.callback_command = &weechat_js_command_cb;
     init.callback_completion = &weechat_js_completion_cb;
     init.callback_hdata = &weechat_js_hdata_cb;
     init.callback_infolist = &weechat_js_infolist_cb;
     init.callback_signal_debug_dump = &weechat_js_signal_debug_dump_cb;
-    init.callback_signal_debug_libs = &weechat_js_signal_debug_libs_cb;
     init.callback_signal_script_action = &weechat_js_signal_script_action_cb;
     init.callback_load_file = &weechat_js_load_cb;
 
