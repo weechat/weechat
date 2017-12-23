@@ -1485,7 +1485,9 @@ plugin_print_log ()
         log_printf ("  handle . . . . . . . . : 0x%lx", ptr_plugin->handle);
         log_printf ("  name . . . . . . . . . : '%s'",  ptr_plugin->name);
         log_printf ("  description. . . . . . : '%s'",  ptr_plugin->description);
+        log_printf ("  author . . . . . . . . : '%s'",  ptr_plugin->author);
         log_printf ("  version. . . . . . . . : '%s'",  ptr_plugin->version);
+        log_printf ("  license. . . . . . . . : '%s'",  ptr_plugin->license);
         log_printf ("  charset. . . . . . . . : '%s'",  ptr_plugin->charset);
         log_printf ("  priority . . . . . . . : %d",    ptr_plugin->priority);
         log_printf ("  initialized. . . . . . : %d",    ptr_plugin->initialized);
