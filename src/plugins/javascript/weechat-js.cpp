@@ -553,10 +553,12 @@ weechat_js_command_cb (const void *pointer, void *data,
             weechat_js_unload_all ();
             plugin_script_auto_load (weechat_js_plugin, &weechat_js_load_cb);
         }
-        else if (weechat_strcasecmp(argv[1], "unload"))
+        else if (weechat_strcasecmp(argv[1], "unload") == 0)
         {
             weechat_js_unload_all ();
         }
+        else
+            WEECHAT_COMMAND_ERROR;
     }
     else
     {
