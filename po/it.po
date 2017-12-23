@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 20:29+0100\n"
+"POT-Creation-Date: 2017-12-23 21:13+0100\n"
 "PO-Revision-Date: 2017-10-17 20:14+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10780,6 +10780,13 @@ msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 "nome script (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
+
+#, fuzzy
+msgid "name of the interpreter used"
+msgstr "%s%s: impossibile liberare l'interprete"
+
+msgid "version of the interpreter used"
+msgstr ""
 
 #, c-format
 msgid ""

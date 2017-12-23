@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 20:29+0100\n"
+"POT-Creation-Date: 2017-12-23 21:13+0100\n"
 "PO-Revision-Date: 2017-12-11 20:59+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -12005,6 +12005,13 @@ msgstr "Skript Pointer (optional)"
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "Name des Skriptes (Platzhalter \"*\" kann verwendet werden) (optional)"
+
+#, fuzzy
+msgid "name of the interpreter used"
+msgstr "%s%s: Interpreter kann nicht freigeben werden"
+
+msgid "version of the interpreter used"
+msgstr ""
 
 #, c-format
 msgid ""

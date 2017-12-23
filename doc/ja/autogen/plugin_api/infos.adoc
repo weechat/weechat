@@ -10,6 +10,10 @@
 
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
+| guile | guile_interpreter | name of the interpreter used | -
+
+| guile | guile_version | version of the interpreter used | -
+
 | irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick は任意)
 
 | irc | irc_is_channel | 文字列がサーバの有効な IRC チャンネル名なら 1 | サーバ、チャンネル (サーバは任意)
@@ -28,9 +32,37 @@
 
 | irc | irc_server_isupport_value | サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う) | サーバ、機能
 
+| javascript | javascript_interpreter | name of the interpreter used | -
+
+| javascript | javascript_version | version of the interpreter used | -
+
+| lua | lua_interpreter | name of the interpreter used | -
+
+| lua | lua_version | version of the interpreter used | -
+
+| perl | perl_interpreter | name of the interpreter used | -
+
+| perl | perl_version | version of the interpreter used | -
+
+| php | php_interpreter | name of the interpreter used | -
+
+| php | php_version | version of the interpreter used | -
+
 | python | python2_bin | python 2.x インタプリタへのパス | -
 
+| python | python_interpreter | name of the interpreter used | -
+
+| python | python_version | version of the interpreter used | -
+
 | relay | relay_client_count | 中継するクライアントのリスト | 状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected
+
+| ruby | ruby_interpreter | name of the interpreter used | -
+
+| ruby | ruby_version | version of the interpreter used | -
+
+| tcl | tcl_interpreter | name of the interpreter used | -
+
+| tcl | tcl_version | version of the interpreter used | -
 
 | weechat | charset_internal | WeeChat 内部文字セット | -
 

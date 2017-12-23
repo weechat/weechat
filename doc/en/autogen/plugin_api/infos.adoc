@@ -10,6 +10,10 @@
 
 | fifo | fifo_filename | name of FIFO pipe | -
 
+| guile | guile_interpreter | name of the interpreter used | -
+
+| guile | guile_version | version of the interpreter used | -
+
 | irc | irc_buffer | get buffer pointer for an IRC server/channel/nick | server,channel,nick (channel and nicks are optional)
 
 | irc | irc_is_channel | 1 if string is a valid IRC channel name for server | server,channel (server is optional)
@@ -28,9 +32,37 @@
 
 | irc | irc_server_isupport_value | value of feature, if supported by server (from IRC message 005) | server,feature
 
+| javascript | javascript_interpreter | name of the interpreter used | -
+
+| javascript | javascript_version | version of the interpreter used | -
+
+| lua | lua_interpreter | name of the interpreter used | -
+
+| lua | lua_version | version of the interpreter used | -
+
+| perl | perl_interpreter | name of the interpreter used | -
+
+| perl | perl_version | version of the interpreter used | -
+
+| php | php_interpreter | name of the interpreter used | -
+
+| php | php_version | version of the interpreter used | -
+
 | python | python2_bin | path to python 2.x interpreter | -
 
+| python | python_interpreter | name of the interpreter used | -
+
+| python | python_version | version of the interpreter used | -
+
 | relay | relay_client_count | number of clients for relay | status name (optional): connecting, waiting_auth, connected, auth_failed, disconnected
+
+| ruby | ruby_interpreter | name of the interpreter used | -
+
+| ruby | ruby_version | version of the interpreter used | -
+
+| tcl | tcl_interpreter | name of the interpreter used | -
+
+| tcl | tcl_version | version of the interpreter used | -
 
 | weechat | charset_internal | WeeChat internal charset | -
 

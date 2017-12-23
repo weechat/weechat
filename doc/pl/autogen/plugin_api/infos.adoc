@@ -10,6 +10,10 @@
 
 | fifo | fifo_filename | nazwa strumienia FIFO | -
 
+| guile | guile_interpreter | name of the interpreter used | -
+
+| guile | guile_version | version of the interpreter used | -
+
 | irc | irc_buffer | pobiera wskaźnik dla serwera/kanału/nicku IRC | serwer,kanał,nick (kanał oraz nick są opcjonalne)
 
 | irc | irc_is_channel | 1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera | serwer,kanał (serWer jest opcjonalny)
@@ -28,9 +32,37 @@
 
 | irc | irc_server_isupport_value | wartość opcji, jeśli jest wpierana przez serwer (z wiadomości IRC 005) | serwer,właściwość
 
+| javascript | javascript_interpreter | name of the interpreter used | -
+
+| javascript | javascript_version | version of the interpreter used | -
+
+| lua | lua_interpreter | name of the interpreter used | -
+
+| lua | lua_version | version of the interpreter used | -
+
+| perl | perl_interpreter | name of the interpreter used | -
+
+| perl | perl_version | version of the interpreter used | -
+
+| php | php_interpreter | name of the interpreter used | -
+
+| php | php_version | version of the interpreter used | -
+
 | python | python2_bin | ścieżka do interpretera pythona 2.x | -
 
+| python | python_interpreter | name of the interpreter used | -
+
+| python | python_version | version of the interpreter used | -
+
 | relay | relay_client_count | liczba podłączonych klientów | nazwa statusu (opcjonalne): łączenie, oczekiwanie na uwierzytelnienie, połączono, uwierzytelnienie nieudane, rozłączono
+
+| ruby | ruby_interpreter | name of the interpreter used | -
+
+| ruby | ruby_version | version of the interpreter used | -
+
+| tcl | tcl_interpreter | name of the interpreter used | -
+
+| tcl | tcl_version | version of the interpreter used | -
 
 | weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
 

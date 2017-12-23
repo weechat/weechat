@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 20:29+0100\n"
+"POT-Creation-Date: 2017-12-23 21:13+0100\n"
 "PO-Revision-Date: 2017-11-15 07:23+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11484,6 +11484,13 @@ msgstr "wskaźnik skryptu (opcjonalne)"
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "nazwa skryptu (wildcard \"*\" jest dozwolony) (opcjonalne)"
+
+#, fuzzy
+msgid "name of the interpreter used"
+msgstr "%s%s: nie można zwolnić interpretera"
+
+msgid "version of the interpreter used"
+msgstr ""
 
 #, c-format
 msgid ""

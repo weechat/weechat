@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 20:29+0100\n"
+"POT-Creation-Date: 2017-12-23 21:13+0100\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8750,6 +8750,12 @@ msgid "script pointer (optional)"
 msgstr ""
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
+msgstr ""
+
+msgid "name of the interpreter used"
+msgstr ""
+
+msgid "version of the interpreter used"
 msgstr ""
 
 #, c-format

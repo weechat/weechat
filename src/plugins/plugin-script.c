@@ -133,6 +133,50 @@ plugin_script_signal_debug_libs_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for info "xxx_interpreter".
+ */
+
+const char *
+plugin_script_info_interpreter_cb (const void *pointer, void *data,
+                                   const char *info_name,
+                                   const char *arguments)
+{
+    struct t_weechat_plugin *weechat_plugin;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    weechat_plugin = (struct t_weechat_plugin *)pointer;
+
+    return weechat_hashtable_get (weechat_plugin->variables,
+                                  "interpreter_name");
+}
+
+/*
+ * Callback for info "xxx_version".
+ */
+
+const char *
+plugin_script_info_version_cb (const void *pointer, void *data,
+                               const char *info_name,
+                               const char *arguments)
+{
+    struct t_weechat_plugin *weechat_plugin;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    weechat_plugin = (struct t_weechat_plugin *)pointer;
+
+    return weechat_hashtable_get (weechat_plugin->variables,
+                                  "interpreter_version");
+}
+
+/*
  * Creates directories for plugin in WeeChat home:
  * - ~/.weechat/XXX/
  * - ~/.weechat/XXX/autoload/
@@ -170,46 +214,36 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                     int argc, char *argv[],
                     struct t_plugin_script_init *init)
 {
-    char *string, *completion, signal_name[128];
+    char string[512], *completion;
     char *action_signals[] = { "install", "remove", "autoload", NULL };
-    int length, i, auto_load_scripts;
+    int i, auto_load_scripts;
 
     /* read script configuration */
     plugin_script_config_read (weechat_plugin);
 
     /* add hook for configuration option */
-    length = strlen (weechat_plugin->name) + 64;
-    string = malloc (length);
-    if (string)
-    {
-        snprintf (string, length, "plugins.var.%s.%s",
-                  weechat_plugin->name, SCRIPT_OPTION_CHECK_LICENSE);
-        weechat_hook_config (string,
-                             &plugin_script_config_cb, weechat_plugin, NULL);
-        free (string);
-    }
+    snprintf (string, sizeof (string),
+              "plugins.var.%s.%s",
+              weechat_plugin->name,
+              SCRIPT_OPTION_CHECK_LICENSE);
+    weechat_hook_config (string,
+                         &plugin_script_config_cb, weechat_plugin, NULL);
 
     /* create directories in WeeChat home */
     plugin_script_create_dirs (weechat_plugin);
 
     /* add command */
     completion = NULL;
-    length = strlen (weechat_plugin->name) + 16;
-    string = malloc (length);
-    if (string)
-    {
-        snprintf (string, length, "%%(%s_script)",
-                  weechat_plugin->name);
-        completion = weechat_string_replace ("list %s"
-                                             " || listfull %s"
-                                             " || load %(filename)"
-                                             " || autoload"
-                                             " || reload %s"
-                                             " || unload %s"
-                                             " || version",
-                                             "%s",
-                                             string);
-    }
+    snprintf (string, sizeof (string), "%%(%s_script)", weechat_plugin->name);
+    completion = weechat_string_replace ("list %s"
+                                         " || listfull %s"
+                                         " || load %(filename)"
+                                         " || autoload"
+                                         " || reload %s"
+                                         " || unload %s"
+                                         " || version",
+                                         "%s",
+                                         string);
     weechat_hook_command (
         weechat_plugin->name,
         N_("list/load/unload scripts"),
@@ -234,28 +268,20 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            "Without argument, this command lists all loaded scripts."),
         completion,
         init->callback_command, NULL, NULL);
-    if (string)
-        free (string);
     if (completion)
         free (completion);
 
     /* add completion, hdata and infolist */
-    length = strlen (weechat_plugin->name) + 64;
-    string = malloc (length);
-    if (string)
-    {
-        snprintf (string, length, "%s_script", weechat_plugin->name);
-        weechat_hook_completion (string, N_("list of scripts"),
-                                 init->callback_completion, NULL, NULL);
-        weechat_hook_hdata (string, N_("list of scripts"),
-                            init->callback_hdata, weechat_plugin, NULL);
-        weechat_hook_infolist (string, N_("list of scripts"),
-                               N_("script pointer (optional)"),
-                               N_("script name (wildcard \"*\" is allowed) "
-                                  "(optional)"),
-                               init->callback_infolist, NULL, NULL);
-        free (string);
-    }
+    snprintf (string, sizeof (string), "%s_script", weechat_plugin->name);
+    weechat_hook_completion (string, N_("list of scripts"),
+                             init->callback_completion, NULL, NULL);
+    weechat_hook_hdata (string, N_("list of scripts"),
+                        init->callback_hdata, weechat_plugin, NULL);
+    weechat_hook_infolist (string, N_("list of scripts"),
+                           N_("script pointer (optional)"),
+                           N_("script name (wildcard \"*\" is allowed) "
+                              "(optional)"),
+                           init->callback_infolist, NULL, NULL);
 
     /* add signal for "debug_dump" */
     weechat_hook_signal ("debug_dump",
@@ -269,12 +295,21 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     /* add signals for script actions (install/remove/autoload) */
     for (i = 0; action_signals[i]; i++)
     {
-        snprintf (signal_name, sizeof (signal_name), "%s_script_%s",
-                  weechat_plugin->name,
-                  action_signals[i]);
-        weechat_hook_signal (signal_name,
+        snprintf (string, sizeof (string),
+                  "%s_script_%s", weechat_plugin->name, action_signals[i]);
+        weechat_hook_signal (string,
                              init->callback_signal_script_action, NULL, NULL);
     }
+
+    /* add infos */
+    snprintf (string, sizeof (string), "%s_interpreter", weechat_plugin->name);
+    weechat_hook_info (string, N_("name of the interpreter used"), NULL,
+                       &plugin_script_info_interpreter_cb,
+                       weechat_plugin, NULL);
+    snprintf (string, sizeof (string), "%s_version", weechat_plugin->name);
+    weechat_hook_info (string, N_("version of the interpreter used"), NULL,
+                       &plugin_script_info_version_cb,
+                       weechat_plugin, NULL);
 
     /* parse arguments */
     auto_load_scripts = 1;

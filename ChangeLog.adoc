@@ -22,6 +22,7 @@ New features::
 
   * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
   * api: add hashtable with variables in plugin structure
+  * scripts: add infos "xxx_interpreter" and "xxx_version" in script plugins (issue #1075)
   * scripts: add option "version" in script commands (issue #1075)
 
 [[v2.0.1]]
