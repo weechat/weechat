@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
+  * api: add hashtable with variables in plugin structure
 
 [[v2.0.1]]
 == Version 2.0.1 (2017-12-20)

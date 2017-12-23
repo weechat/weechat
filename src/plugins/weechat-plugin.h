@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20170704-01"
+#define WEECHAT_PLUGIN_API_VERSION "20171223-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -255,6 +255,7 @@ struct t_weechat_plugin
     int priority;                      /* plugin priority (default is 1000) */
     int initialized;                   /* plugin initialized? (init called) */
     int debug;                         /* debug level for plugin (0=off)    */
+    struct t_hashtable *variables;     /* plugin custom variables           */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
 

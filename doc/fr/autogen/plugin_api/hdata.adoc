@@ -941,6 +941,7 @@ _charset_   (string) +
 _priority_   (integer) +
 _initialized_   (integer) +
 _debug_   (integer) +
+_variables_   (hashtable) +
 _prev_plugin_   (pointer, hdata: "plugin") +
 _next_plugin_   (pointer, hdata: "plugin") +
 
