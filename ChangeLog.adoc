@@ -44,7 +44,7 @@ New features::
   * alias: add infolist "alias_default" (list of default aliases)
   * buflist: add two new bar items ("buflist2" and "buflist3") using the same format configuration options (issue #990)
   * buflist: add option buflist.look.add_newline (issue #1027)
-  * fset: new plugin "fset" (fast set of WeeChat and plugins options)
+  * fset: new plugin "fset" (fast set of WeeChat and plugins options) (issue #584)
   * php: new plugin "php" (issue #909)
 
 Improvements::
