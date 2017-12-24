@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-12-11 20:59+0100\n"
+"PO-Revision-Date: 2017-12-23 21:50+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -11956,15 +11956,13 @@ msgstr "Beschreibung der Erweiterungsoption"
 msgid "list/load/unload scripts"
 msgstr "auflisten/installieren/beenden von Skripten"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || version"
 msgstr ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
+"[-q] [<name>] || version"
 
-#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -11993,6 +11991,7 @@ msgstr ""
 "    name: Name eines Skriptes (der Name der in der \"register\" Funktion der "
 "Skript-API genutzt wird)\n"
 "      -q: unterdrückter Modus: Es werden keine Nachrichten ausgegeben\n"
+" version: zeigt die Version des verwendeten Interpreters an\n"
 "\n"
 "Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten "
 "auf."
@@ -12006,12 +12005,11 @@ msgstr "Skript Pointer (optional)"
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "Name des Skriptes (Platzhalter \"*\" kann verwendet werden) (optional)"
 
-#, fuzzy
 msgid "name of the interpreter used"
-msgstr "%s%s: Interpreter kann nicht freigeben werden"
+msgstr "Name des verwendeten Interpreters"
 
 msgid "version of the interpreter used"
-msgstr ""
+msgstr "Version des verwendeten Interpreters"
 
 #, c-format
 msgid ""
