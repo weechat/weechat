@@ -10,9 +10,9 @@
 
 | fifo | fifo_filename | Name der FIFO-Pipe | -
 
-| guile | guile_interpreter | name of the interpreter used | -
+| guile | guile_interpreter | Name des verwendeten Interpreters | -
 
-| guile | guile_version | version of the interpreter used | -
+| guile | guile_version | Version des verwendeten Interpreters | -
 
 | irc | irc_buffer | holt Buffer Pointer für einen IRC Server/Channel/Nick | server,channel,nick (Channel und Nicks sind optional)
 
@@ -32,37 +32,37 @@
 
 | irc | irc_server_isupport_value | Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message 005) | Server,Funktion
 
-| javascript | javascript_interpreter | name of the interpreter used | -
+| javascript | javascript_interpreter | Name des verwendeten Interpreters | -
 
-| javascript | javascript_version | version of the interpreter used | -
+| javascript | javascript_version | Version des verwendeten Interpreters | -
 
-| lua | lua_interpreter | name of the interpreter used | -
+| lua | lua_interpreter | Name des verwendeten Interpreters | -
 
-| lua | lua_version | version of the interpreter used | -
+| lua | lua_version | Version des verwendeten Interpreters | -
 
-| perl | perl_interpreter | name of the interpreter used | -
+| perl | perl_interpreter | Name des verwendeten Interpreters | -
 
-| perl | perl_version | version of the interpreter used | -
+| perl | perl_version | Version des verwendeten Interpreters | -
 
-| php | php_interpreter | name of the interpreter used | -
+| php | php_interpreter | Name des verwendeten Interpreters | -
 
-| php | php_version | version of the interpreter used | -
+| php | php_version | Version des verwendeten Interpreters | -
 
 | python | python2_bin | Pfad für Python 2.x Interpreter | -
 
-| python | python_interpreter | name of the interpreter used | -
+| python | python_interpreter | Name des verwendeten Interpreters | -
 
-| python | python_version | version of the interpreter used | -
+| python | python_version | Version des verwendeten Interpreters | -
 
 | relay | relay_client_count | Anzahl an Clients für Relay | Statusname (optional): connecting, waiting_auth, connected, auth_failed, disconnected
 
-| ruby | ruby_interpreter | name of the interpreter used | -
+| ruby | ruby_interpreter | Name des verwendeten Interpreters | -
 
-| ruby | ruby_version | version of the interpreter used | -
+| ruby | ruby_version | Version des verwendeten Interpreters | -
 
-| tcl | tcl_interpreter | name of the interpreter used | -
+| tcl | tcl_interpreter | Name des verwendeten Interpreters | -
 
-| tcl | tcl_version | version of the interpreter used | -
+| tcl | tcl_version | Version des verwendeten Interpreters | -
 
 | weechat | charset_internal | Interner WeeChat Zeichensatz | -
 
