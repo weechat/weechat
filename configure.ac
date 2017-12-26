@@ -611,7 +611,7 @@ RUBY_VERSION=
 if test "x$enable_ruby" = "xyes" ; then
     RUBY_CFLAGS=""
     RUBY_LFLAGS=""
-    for v in "2.3" "2.2" "2.1" "2.0" "1.9" "1.8" ; do
+    for v in "2.5" "2.4" "2.3" "2.2" "2.1" "2.0" "1.9" "1.8" ; do
         pkgconfig_ruby_found=`$PKGCONFIG --exists ruby-$v 2>/dev/null`
         if test "x$?" = "x0" ; then
             RUBY_VERSION=`$PKGCONFIG --modversion ruby-$v`
@@ -621,6 +621,7 @@ if test "x$enable_ruby" = "xyes" ; then
         fi
     done
 
+    # detect old Ruby versions
     if test "x$RUBY_CFLAGS" = "x" -o "x$RUBY_LFLAGS" = "x" ; then
         AC_PATH_PROGS(RUBY, ruby1.9.3 ruby1.9.2 ruby1.9.1 ruby1.9 ruby1.8 ruby)
         if test -z $RUBY ; then
