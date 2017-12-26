@@ -25,6 +25,10 @@ New features::
   * scripts: add infos "xxx_interpreter" and "xxx_version" in script plugins (issue #1075)
   * scripts: add option "version" in script commands (issue #1075)
 
+Build::
+
+  * ruby: add detection of Ruby 2.5 (issue #1122)
+
 [[v2.0.1]]
 == Version 2.0.1 (2017-12-20)
 
