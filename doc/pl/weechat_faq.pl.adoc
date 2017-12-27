@@ -485,6 +485,11 @@ UXTerm*metaSendsEscape: true
 
 Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
+// TRANSLATION MISSING
+If you are using the Mac OS X Terminal app, enable the option
+"Use option as meta key" in menu Settings / Keyboard. And then you can use the
+kbd:[Option] key as meta key.
+
 [[customize_key_bindings]]
 === Jak mogę zmienić przypisania klawiszy?
 

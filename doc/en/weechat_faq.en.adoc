@@ -481,6 +481,10 @@ UXTerm*metaSendsEscape: true
 
 And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
 
+If you are using the Mac OS X Terminal app, enable the option
+"Use option as meta key" in menu Settings / Keyboard. And then you can use the
+kbd:[Option] key as meta key.
+
 [[customize_key_bindings]]
 === How can I customize key bindings?
 

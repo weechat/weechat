@@ -511,6 +511,11 @@ UXTerm*metaSendsEscape: true
 Danach muss resources neu geladen werden (`xrdb -override ~/.Xresources`) oder
 man startet X neu.
 
+// TRANSLATION MISSING
+If you are using the Mac OS X Terminal app, enable the option
+"Use option as meta key" in menu Settings / Keyboard. And then you can use the
+kbd:[Option] key as meta key.
+
 [[customize_key_bindings]]
 === Wie kann ich die Tastaturbelegung anpassen?
 

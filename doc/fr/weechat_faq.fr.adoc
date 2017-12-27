@@ -501,6 +501,10 @@ UXTerm*metaSendsEscape: true
 
 Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
 
+Si vous utilisez l'application Terminal sous Mac OS X, activez l'option
+"Use option as meta key" dans le menu Réglages / Clavier. Vous pouvez alors
+utiliser la touche kbd:[Option] comme touche meta.
+
 [[customize_key_bindings]]
 === Comment puis-je configurer les raccourcis clavier ?
 
