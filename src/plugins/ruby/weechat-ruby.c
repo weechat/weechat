@@ -67,12 +67,31 @@ struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
 int ruby_quiet = 0;
 int ruby_hide_errors = 0;
+
+struct t_plugin_script *ruby_script_eval = NULL;
+int ruby_eval_mode = 0;
+int ruby_eval_send_input = 0;
+int ruby_eval_exec_commands = 0;
+struct t_gui_buffer *ruby_eval_buffer = NULL;
+char *ruby_eval_output = NULL;
+#define RUBY_EVAL_SCRIPT                                                \
+    "def weechat_init\n"                                                \
+    "  Weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "    \
+    "'" WEECHAT_LICENSE "', 'Evaluation of script code', '', '')\n"     \
+    "  return Weechat::WEECHAT_RC_OK\n"                                 \
+    "end\n"                                                             \
+    "\n"                                                                \
+    "def script_ruby_eval(code)\n"                                      \
+    "  module_eval(code)\n"                                             \
+    "end\n"
+
 struct t_plugin_script *ruby_scripts = NULL;
 struct t_plugin_script *last_ruby_script = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
 struct t_plugin_script *ruby_registered_script = NULL;
 const char *ruby_current_script_filename = NULL;
 VALUE ruby_current_module;
+char **ruby_buffer_output = NULL;
 
 /*
  * string used to execute action "install":
@@ -102,8 +121,6 @@ VALUE ruby_mWeechat, ruby_mWeechatOutputs;
 
 #define MOD_NAME_PREFIX "WeechatRubyModule"
 int ruby_num = 0;
-
-char ruby_buffer_output[128];
 
 typedef struct protect_call_arg {
     VALUE recv;
@@ -319,6 +336,114 @@ weechat_ruby_print_exception (VALUE err)
 }
 
 /*
+ * Function used for compatibility.
+ */
+
+static VALUE
+weechat_ruby_output_flush_ruby (VALUE self)
+{
+    /* make C compiler happy */
+    (void) self;
+
+    return Qnil;
+}
+
+/*
+ * Flushes output.
+ */
+
+void
+weechat_ruby_output_flush ()
+{
+    const char *ptr_command;
+    char *command;
+    int length;
+
+    if (!*ruby_buffer_output[0])
+        return;
+
+    if (ruby_eval_mode)
+    {
+        /* if there's no buffer, we catch the output, so there's no flush */
+        if (!ruby_eval_buffer)
+            return;
+
+        if (ruby_eval_send_input)
+        {
+            if (ruby_eval_exec_commands)
+                ptr_command = *ruby_buffer_output;
+            else
+                ptr_command = weechat_string_input_for_buffer (*ruby_buffer_output);
+            if (ptr_command)
+            {
+                weechat_command (ruby_eval_buffer, *ruby_buffer_output);
+            }
+            else
+            {
+                length = 1 + strlen (*ruby_buffer_output) + 1;
+                command = malloc (length);
+                if (command)
+                {
+                    snprintf (command, length, "%c%s",
+                              *ruby_buffer_output[0], *ruby_buffer_output);
+                    weechat_command (ruby_eval_buffer,
+                                     (command[0]) ? command : " ");
+                    free (command);
+                }
+            }
+        }
+        else
+        {
+            weechat_printf (ruby_eval_buffer, "%s", *ruby_buffer_output);
+        }
+    }
+    else
+    {
+        /* script (no eval mode) */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: stdout/stderr: %s"),
+                        RUBY_PLUGIN_NAME, *ruby_buffer_output);
+    }
+
+    weechat_string_dyn_copy (ruby_buffer_output, NULL);
+}
+
+/*
+ * Redirection for stdout and stderr.
+ */
+
+static VALUE
+weechat_ruby_output (VALUE self, VALUE str)
+{
+    char *msg, *m, *p;
+
+    /* make C compiler happy */
+    (void) self;
+
+    if (ruby_hide_errors)
+        return Qnil;
+
+    msg = strdup (StringValuePtr (str));
+
+    m = msg;
+    while ((p = strchr (m, '\n')) != NULL)
+    {
+        *p = '\0';
+        weechat_string_dyn_concat (ruby_buffer_output, m);
+        weechat_ruby_output_flush ();
+        *p = '\n';
+        m = ++p;
+    }
+
+    weechat_string_dyn_concat (ruby_buffer_output, m);
+
+    if (msg)
+        free (msg);
+
+    return Qnil;
+}
+
+/*
  * Executes a ruby function.
  */
 
@@ -332,6 +457,8 @@ weechat_ruby_exec (struct t_plugin_script *script,
     VALUE argv2[16];
     void *ret_value;
     struct t_plugin_script *old_ruby_current_script;
+
+    ret_value = NULL;
 
     old_ruby_current_script = ruby_current_script;
     ruby_current_script = script;
@@ -370,6 +497,8 @@ weechat_ruby_exec (struct t_plugin_script *script,
                                  &ruby_error, 0, NULL);
     }
 
+    weechat_ruby_output_flush ();
+
     if (ruby_error)
     {
         weechat_printf (NULL,
@@ -405,22 +534,21 @@ weechat_ruby_exec (struct t_plugin_script *script,
     }
     else
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: function \"%s\" must return a "
-                                         "valid value"),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
-        ruby_current_script = old_ruby_current_script;
-        return WEECHAT_RC_OK;
+        if (ret_type != WEECHAT_SCRIPT_EXEC_IGNORE)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: function \"%s\" must "
+                                             "return a valid value"),
+                            weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                            function);
+        }
     }
 
-    if (ret_value == NULL)
+    if ((ret_type != WEECHAT_SCRIPT_EXEC_IGNORE) && !ret_value)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: not enough memory in function "
-                                         "\"%s\""),
+                        weechat_gettext ("%s%s: error in function \"%s\""),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
-        ruby_current_script = old_ruby_current_script;
-        return NULL;
     }
 
     ruby_current_script = old_ruby_current_script;
@@ -429,90 +557,32 @@ weechat_ruby_exec (struct t_plugin_script *script,
 }
 
 /*
- * Redirection for stdout and stderr.
- */
-
-static VALUE
-weechat_ruby_output (VALUE self, VALUE str)
-{
-    char *msg, *p, *m;
-
-    /* make C compiler happy */
-    (void) self;
-
-    if (ruby_hide_errors)
-        return Qnil;
-
-    msg = strdup(StringValuePtr(str));
-
-    m = msg;
-    while ((p = strchr (m, '\n')) != NULL)
-    {
-        *p = '\0';
-        if (strlen (m) + strlen (ruby_buffer_output) > 0)
-        {
-            weechat_printf (NULL,
-                            weechat_gettext ("%s%s: stdout/stderr: %s%s"),
-                            weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                            ruby_buffer_output, m);
-        }
-        *p = '\n';
-        ruby_buffer_output[0] = '\0';
-        m = ++p;
-    }
-
-    if (strlen(m) + strlen(ruby_buffer_output) > sizeof(ruby_buffer_output))
-    {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: stdout/stderr: %s%s"),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
-                        ruby_buffer_output, m);
-        ruby_buffer_output[0] = '\0';
-    }
-    else
-        strcat (ruby_buffer_output, m);
-
-    if (msg)
-        free (msg);
-
-    return Qnil;
-}
-
-/*
- * Function used for compatibility.
- */
-
-static VALUE
-weechat_ruby_output_flush (VALUE self)
-{
-    /* make C compiler happy */
-    (void) self;
-
-    return Qnil;
-}
-
-/*
  * Loads a ruby script.
  *
- * Returns:
- *   1: OK
- *   0: error
+ * If code is NULL, the content of filename is read and executed.
+ * If code is not NULL, it is executed (the file is not read).
+ *
+ * Returns pointer to new registered script, NULL if error.
  */
 
-int
-weechat_ruby_load (const char *filename)
+struct t_plugin_script *
+weechat_ruby_load (const char *filename, const char *code)
 {
     char modname[64];
     VALUE ruby_retcode, err, argv[1];
     int ruby_error;
     struct stat buf;
 
-    if (stat (filename, &buf) != 0)
+    if (!code)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: script \"%s\" not found"),
-                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
-        return 0;
+        if (stat (filename, &buf) != 0)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: script \"%s\" not found"),
+                            weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                            filename);
+            return NULL;
+        }
     }
 
     if ((weechat_ruby_plugin->debug >= 2) || !ruby_quiet)
@@ -533,15 +603,16 @@ weechat_ruby_load (const char *filename)
     ruby_current_script_filename = filename;
 
     argv[0] = rb_str_new2 (filename);
+    argv[1] = rb_str_new2 ((code) ? code : "");
     ruby_retcode = rb_protect_funcall (ruby_current_module,
                                        rb_intern ("load_eval_file"),
-                                       &ruby_error, 1, argv);
+                                       &ruby_error, 2, argv);
 
     if (ruby_retcode == Qnil)
     {
         err = rb_gv_get("$!");
         weechat_ruby_print_exception(err);
-        return 0;
+        return NULL;
     }
 
     if (NUM2INT(ruby_retcode) != 0)
@@ -578,7 +649,7 @@ weechat_ruby_load (const char *filename)
                                                      "@load_eval_file_error"));
         }
 
-        return 0;
+        return NULL;
     }
 
     (void) rb_protect_funcall (ruby_current_module, rb_intern ("weechat_init"),
@@ -602,7 +673,7 @@ weechat_ruby_load (const char *filename)
             ruby_current_script = NULL;
         }
 
-        return 0;
+        return NULL;
     }
 
     if (!ruby_registered_script)
@@ -611,7 +682,7 @@ weechat_ruby_load (const char *filename)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
-        return 0;
+        return NULL;
     }
     ruby_current_script = ruby_registered_script;
 
@@ -631,7 +702,7 @@ weechat_ruby_load (const char *filename)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      ruby_current_script->filename);
 
-    return 1;
+    return ruby_current_script;
 }
 
 /*
@@ -644,7 +715,7 @@ weechat_ruby_load_cb (void *data, const char *filename)
     /* make C compiler happy */
     (void) data;
 
-    weechat_ruby_load (filename);
+    weechat_ruby_load (filename, NULL);
 }
 
 /*
@@ -745,7 +816,7 @@ weechat_ruby_reload_name (const char *name)
                                 weechat_gettext ("%s: script \"%s\" unloaded"),
                                 RUBY_PLUGIN_NAME, name);
             }
-            weechat_ruby_load (filename);
+            weechat_ruby_load (filename, NULL);
             free (filename);
         }
     }
@@ -771,6 +842,57 @@ weechat_ruby_unload_all ()
 }
 
 /*
+ * Evaluates ruby code.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+weechat_ruby_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
+                   int exec_commands, const char *code)
+{
+    void *func_argv[1], *result;
+    char empty_arg[1] = { '\0' };
+
+    if (!ruby_script_eval)
+    {
+        ruby_quiet = 1;
+        ruby_script_eval = weechat_ruby_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                              RUBY_EVAL_SCRIPT);
+        ruby_quiet = 0;
+        if (!ruby_script_eval)
+            return 0;
+    }
+
+    weechat_ruby_output_flush ();
+
+    ruby_eval_mode = 1;
+    ruby_eval_send_input = send_to_buffer_as_input;
+    ruby_eval_exec_commands = exec_commands;
+    ruby_eval_buffer = buffer;
+
+    func_argv[0] = (code) ? (char *)code : empty_arg;
+    result = weechat_ruby_exec (ruby_script_eval,
+                                WEECHAT_SCRIPT_EXEC_IGNORE,
+                                "script_ruby_eval",
+                                "s", func_argv);
+    /* result is ignored */
+    if (result)
+        free (result);
+
+    weechat_ruby_output_flush ();
+
+    ruby_eval_mode = 0;
+    ruby_eval_send_input = 0;
+    ruby_eval_exec_commands = 0;
+    ruby_eval_buffer = NULL;
+
+    return 1;
+}
+
+/*
  * Callback for command "/ruby".
  */
 
@@ -779,12 +901,12 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                          struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
-    char *ptr_name, *path_script;
+    char *ptr_name, *ptr_code, *path_script;
+    int i, send_to_buffer_as_input, exec_commands;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) buffer;
 
     if (argc == 1)
     {
@@ -854,7 +976,8 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                 /* load ruby script */
                 path_script = plugin_script_search_path (weechat_ruby_plugin,
                                                          ptr_name);
-                weechat_ruby_load ((path_script) ? path_script : ptr_name);
+                weechat_ruby_load ((path_script) ? path_script : ptr_name,
+                                   NULL);
                 if (path_script)
                     free (path_script);
             }
@@ -869,6 +992,39 @@ weechat_ruby_command_cb (const void *pointer, void *data,
                 weechat_ruby_unload_name (ptr_name);
             }
             ruby_quiet = 0;
+        }
+        else if (weechat_strcasecmp (argv[1], "eval") == 0)
+        {
+            send_to_buffer_as_input = 0;
+            exec_commands = 0;
+            ptr_code = argv_eol[2];
+            for (i = 2; i < argc; i++)
+            {
+                if (argv[i][0] == '-')
+                {
+                    if (strcmp (argv[i], "-o") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 0;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                    else if (strcmp (argv[i], "-oc") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 1;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                }
+                else
+                    break;
+            }
+            if (!weechat_ruby_eval (buffer, send_to_buffer_as_input,
+                                    exec_commands, ptr_code))
+                WEECHAT_COMMAND_ERROR;
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -913,6 +1069,29 @@ weechat_ruby_hdata_cb (const void *pointer, void *data,
     return plugin_script_hdata_script (weechat_plugin,
                                        &ruby_scripts, &last_ruby_script,
                                        hdata_name);
+}
+
+/*
+ * Returns ruby info "ruby_eval".
+ */
+
+const char *
+weechat_ruby_info_eval_cb (const void *pointer, void *data,
+                           const char *info_name,
+                           const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    weechat_ruby_eval (NULL, 0, 0, (arguments) ? arguments : "");
+    if (ruby_eval_output)
+        free (ruby_eval_output);
+    ruby_eval_output = strdup (*ruby_buffer_output);
+    weechat_string_dyn_copy (ruby_buffer_output, NULL);
+
+    return ruby_eval_output;
 }
 
 /*
@@ -1061,6 +1240,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     struct t_plugin_script_init init;
     int ruby_error;
+    VALUE err;
     char *weechat_ruby_code = {
         "$stdout = WeechatOutputs\n"
         "$stderr = WeechatOutputs\n"
@@ -1081,12 +1261,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         "\n"
         "class Module\n"
         "\n"
-        "  def load_eval_file (file)\n"
-        "    lines = ''\n"
-        "    begin\n"
-        "      lines = File.read(file)\n"
-        "    rescue => e\n"
-        "      return 1\n"
+        "  def load_eval_file (file, code)\n"
+        "    if !code.empty?\n"
+        "      lines = code\n"
+        "    else\n"
+        "      lines = ''\n"
+        "      begin\n"
+        "        lines = File.read(file)\n"
+        "      rescue => e\n"
+        "        return 1\n"
+        "      end\n"
         "    end\n"
         "\n"
         "    begin\n"
@@ -1113,6 +1297,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         "\n"
         "    return 0\n"
         "  end\n"
+        "\n"
+        "  def eval_code (code)\n"
+        "    module_eval(code)\n"
+        "  end\n"
         "end\n"
     };
 
@@ -1132,7 +1320,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     ruby_error = 0;
 
     /* init stdout/stderr buffer */
-    ruby_buffer_output[0] = '\0';
+    ruby_buffer_output = weechat_string_dyn_alloc (256);
+    if (!ruby_buffer_output)
+        return WEECHAT_RC_ERROR;
 
 #if (defined(RUBY_API_VERSION_MAJOR) && defined(RUBY_API_VERSION_MINOR)) && (RUBY_API_VERSION_MAJOR >= 2 || (RUBY_API_VERSION_MAJOR == 1 && RUBY_API_VERSION_MINOR >= 9))
     RUBY_INIT_STACK;
@@ -1149,7 +1339,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     rb_define_singleton_method (ruby_mWeechatOutputs, "p",
                                 weechat_ruby_output, 1);
     rb_define_singleton_method (ruby_mWeechatOutputs, "flush",
-                                weechat_ruby_output_flush, 0);
+                                weechat_ruby_output_flush_ruby, 0);
 
     ruby_script ("__weechat_plugin__");
 
@@ -1163,8 +1353,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                         weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
                         weechat_prefix ("error"), RUBY_PLUGIN_NAME);
-        VALUE err = rb_gv_get ("$!");
+        err = rb_gv_get ("$!");
         weechat_ruby_print_exception (err);
+        weechat_string_dyn_free (ruby_buffer_output, 1);
         return WEECHAT_RC_ERROR;
     }
 
@@ -1173,6 +1364,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_command = &weechat_ruby_command_cb;
     init.callback_completion = &weechat_ruby_completion_cb;
     init.callback_hdata = &weechat_ruby_hdata_cb;
+    init.callback_info_eval = &weechat_ruby_info_eval_cb;
     init.callback_infolist = &weechat_ruby_infolist_cb;
     init.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
     init.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
@@ -1199,6 +1391,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* unload all scripts */
     ruby_quiet = 1;
     plugin_script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
+    if (ruby_script_eval)
+    {
+        weechat_ruby_unload (ruby_script_eval);
+        ruby_script_eval = NULL;
+    }
     ruby_quiet = 0;
 
     ruby_cleanup (0);
@@ -1210,6 +1407,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (ruby_action_remove_list);
     if (ruby_action_autoload_list)
         free (ruby_action_autoload_list);
+    weechat_string_dyn_free (ruby_buffer_output, 1);
+    if (ruby_eval_output)
+        free (ruby_eval_output);
 
     return WEECHAT_RC_OK;
 }

@@ -45,6 +45,14 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 struct t_weechat_plugin *weechat_tcl_plugin = NULL;
 
 int tcl_quiet = 0;
+
+struct t_plugin_script *tcl_script_eval = NULL;
+int tcl_eval_mode = 0;
+int tcl_eval_send_input = 0;
+int tcl_eval_exec_commands = 0;
+struct t_gui_buffer *tcl_eval_buffer = NULL;
+char *tcl_eval_output = NULL;
+
 struct t_plugin_script *tcl_scripts = NULL;
 struct t_plugin_script *last_tcl_script = NULL;
 struct t_plugin_script *tcl_current_script = NULL;
@@ -237,8 +245,9 @@ weechat_tcl_exec (struct t_plugin_script *script,
 
     if (Tcl_EvalObjEx (interp, cmdlist, TCL_EVAL_DIRECT) == TCL_OK)
     {
-        Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
-        Tcl_DecrRefCount (cmdlist); /* -1 */
+        /* remove elements, decrement their ref count */
+        Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL);
+        Tcl_DecrRefCount (cmdlist);  /* -1 */
         ret_val = NULL;
         if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
         {
@@ -269,15 +278,21 @@ weechat_tcl_exec (struct t_plugin_script *script,
         if (ret_val)
             return ret_val;
 
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: function \"%s\" must return a "
-                                         "valid value"),
-                        weechat_prefix ("error"), TCL_PLUGIN_NAME, function);
+        if (ret_type != WEECHAT_SCRIPT_EXEC_IGNORE)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: function \"%s\" must "
+                                             "return a valid value"),
+                            weechat_prefix ("error"), TCL_PLUGIN_NAME,
+                            function);
+        }
+
         return NULL;
     }
 
-    Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL); /* remove elements, decrement their ref count */
-    Tcl_DecrRefCount (cmdlist); /* -1 */
+    /* remove elements, decrement their ref count */
+    Tcl_ListObjReplace (interp, cmdlist, 0, llength, 0, NULL);
+    Tcl_DecrRefCount (cmdlist);  /* -1 */
     weechat_printf (NULL,
                     weechat_gettext ("%s%s: unable to run function \"%s\": %s"),
                     weechat_prefix ("error"), TCL_PLUGIN_NAME, function,
@@ -290,13 +305,14 @@ weechat_tcl_exec (struct t_plugin_script *script,
 /*
  * Loads a tcl script.
  *
- * Returns:
- *   1: OK
- *   0: error
+ * If code is NULL, the content of filename is read and executed.
+ * If code is not NULL, it is executed (the file is not read).
+ *
+ * Returns pointer to new registered script, NULL if error.
  */
 
-int
-weechat_tcl_load (const char *filename)
+struct t_plugin_script *
+weechat_tcl_load (const char *filename, const char *code)
 {
     int i;
     Tcl_Interp *interp;
@@ -307,7 +323,7 @@ weechat_tcl_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not found"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename);
-        return 0;
+        return NULL;
     }
 
     if ((weechat_tcl_plugin->debug >= 2) || !tcl_quiet)
@@ -325,7 +341,7 @@ weechat_tcl_load (const char *filename)
                         weechat_gettext ("%s%s: unable to create new "
                                          "interpreter"),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME);
-        return 0;
+        return NULL;
     }
     tcl_current_script_filename = filename;
 
@@ -348,7 +364,7 @@ weechat_tcl_load (const char *filename)
             tcl_current_script = NULL;
         }
 
-        return 0;
+        return NULL;
     }
 
     if (!tcl_registered_script)
@@ -358,7 +374,7 @@ weechat_tcl_load (const char *filename)
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), TCL_PLUGIN_NAME, filename);
         Tcl_DeleteInterp (interp);
-        return 0;
+        return NULL;
     }
     tcl_current_script = tcl_registered_script;
 
@@ -376,7 +392,7 @@ weechat_tcl_load (const char *filename)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      tcl_current_script->filename);
 
-    return 1;
+    return tcl_current_script;
 }
 
 /*
@@ -389,7 +405,7 @@ weechat_tcl_load_cb (void *data, const char *filename)
     /* make C compiler happy */
     (void) data;
 
-    weechat_tcl_load (filename);
+    weechat_tcl_load (filename, NULL);
 }
 
 /*
@@ -501,7 +517,7 @@ weechat_tcl_reload_name (const char *name)
                                 weechat_gettext ("%s: script \"%s\" unloaded"),
                                 TCL_PLUGIN_NAME, name);
             }
-            weechat_tcl_load (filename);
+            weechat_tcl_load (filename, NULL);
             free (filename);
         }
     }
@@ -514,6 +530,27 @@ weechat_tcl_reload_name (const char *name)
 }
 
 /*
+ * Evaluates tcl code.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+weechat_tcl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
+                  int exec_commands, const char *code)
+{
+    /* TODO: implement tcl eval */
+    (void) buffer;
+    (void) send_to_buffer_as_input;
+    (void) exec_commands;
+    (void) code;
+
+    return 1;
+}
+
+/*
  * Callback for command "/tcl".
  */
 
@@ -522,12 +559,12 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                         struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
-    char *ptr_name, *path_script;
+    char *ptr_name, *ptr_code, *path_script;
+    int i, send_to_buffer_as_input, exec_commands;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) buffer;
 
     if (argc == 1)
     {
@@ -597,7 +634,8 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                 /* load tcl script */
                 path_script = plugin_script_search_path (weechat_tcl_plugin,
                                                          ptr_name);
-                weechat_tcl_load ((path_script) ? path_script : ptr_name);
+                weechat_tcl_load ((path_script) ? path_script : ptr_name,
+                                  NULL);
                 if (path_script)
                     free (path_script);
             }
@@ -612,6 +650,43 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                 weechat_tcl_unload_name (ptr_name);
             }
             tcl_quiet = 0;
+        }
+        else if (weechat_strcasecmp (argv[1], "eval") == 0)
+        {
+            send_to_buffer_as_input = 0;
+            exec_commands = 0;
+            ptr_code = argv_eol[2];
+            for (i = 2; i < argc; i++)
+            {
+                if (argv[i][0] == '-')
+                {
+                    if (strcmp (argv[i], "-o") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 0;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                    else if (strcmp (argv[i], "-oc") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 1;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                }
+                else
+                    break;
+            }
+            if (!weechat_tcl_eval (buffer, send_to_buffer_as_input,
+                                   exec_commands, ptr_code))
+                WEECHAT_COMMAND_ERROR;
+            /* TODO: implement /tcl eval */
+            weechat_printf (NULL,
+                            "%sCommand \"/tcl eval\" is not yet implemented",
+                            weechat_prefix ("error"));
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -656,6 +731,28 @@ weechat_tcl_hdata_cb (const void *pointer, void *data,
     return plugin_script_hdata_script (weechat_plugin,
                                        &tcl_scripts, &last_tcl_script,
                                        hdata_name);
+}
+
+/*
+ * Returns tcl info "tcl_eval".
+ */
+
+const char *
+weechat_tcl_info_eval_cb (const void *pointer, void *data,
+                          const char *info_name,
+                          const char *arguments)
+{
+    static const char *not_implemented = "not yet implemented";
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    (void) arguments;
+    return not_implemented;
+
+    return NULL;
 }
 
 /*
@@ -820,6 +917,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_command = &weechat_tcl_command_cb;
     init.callback_completion = &weechat_tcl_completion_cb;
     init.callback_hdata = &weechat_tcl_hdata_cb;
+    init.callback_info_eval = &weechat_tcl_info_eval_cb;
     init.callback_infolist = &weechat_tcl_infolist_cb;
     init.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
     init.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
@@ -846,6 +944,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* unload all scripts */
     tcl_quiet = 1;
     plugin_script_end (plugin, &tcl_scripts, &weechat_tcl_unload_all);
+    if (tcl_script_eval)
+    {
+        weechat_tcl_unload (tcl_script_eval);
+        tcl_script_eval = NULL;
+    }
     tcl_quiet = 0;
 
     /* free some data */
@@ -855,6 +958,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (tcl_action_remove_list);
     if (tcl_action_autoload_list)
         free (tcl_action_autoload_list);
+    /* weechat_string_dyn_free (tcl_buffer_output, 1); */
+    if (tcl_eval_output)
+        free (tcl_eval_output);
 
     return WEECHAT_RC_OK;
 }

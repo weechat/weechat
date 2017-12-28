@@ -241,6 +241,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                          " || autoload"
                                          " || reload %s"
                                          " || unload %s"
+                                         " || eval"
                                          " || version",
                                          "%s",
                                          string);
@@ -251,6 +252,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            " || load [-q] <filename>"
            " || autoload"
            " || reload|unload [-q] [<name>]"
+           " || eval [-o|-oc] <code>"
            " || version"),
         N_("    list: list loaded scripts\n"
            "listfull: list loaded scripts (verbose)\n"
@@ -260,9 +262,16 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            "then load all scripts in \"autoload\" directory)\n"
            "  unload: unload a script (if no name given, unload all scripts)\n"
            "filename: script (file) to load\n"
+           "      -q: quiet mode: do not display messages\n"
            "    name: a script name (name used in call to \"register\" "
            "function)\n"
-           "      -q: quiet mode: do not display messages\n"
+           "    eval: evaluate script code and display result on current "
+           "buffer\n"
+           "      -o: send evaluation result to the buffer without executing "
+           "commands\n"
+           "     -oc: send evaluation result to the buffer and execute "
+           "commands\n"
+           "    code: the script code to evaluate\n"
            " version: display the version of interpreter used\n"
            "\n"
            "Without argument, this command lists all loaded scripts."),
@@ -282,6 +291,10 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                            N_("script name (wildcard \"*\" is allowed) "
                               "(optional)"),
                            init->callback_infolist, NULL, NULL);
+    snprintf (string, sizeof (string), "%s_eval", weechat_plugin->name);
+    weechat_hook_info (string, N_("evaluation of script code"),
+                       N_("code to execute"),
+                       init->callback_info_eval, NULL, NULL);
 
     /* add signal for "debug_dump" */
     weechat_hook_signal ("debug_dump",
@@ -316,7 +329,7 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     for (i = 0; i < argc; i++)
     {
         if ((strcmp (argv[i], "-s") == 0)
-                 || (strcmp (argv[i], "--no-script") == 0))
+            || (strcmp (argv[i], "--no-script") == 0))
         {
             auto_load_scripts = 0;
         }
@@ -707,6 +720,41 @@ plugin_script_insert_sorted (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Allocates a new script.
+ *
+ * Returns pointer to new script, NULL if error.
+ */
+
+struct t_plugin_script *
+plugin_script_alloc (const char *filename, const char *name,
+                     const char *author, const char *version,
+                     const char *license, const char *description,
+                     const char *shutdown_func, const char *charset)
+{
+    struct t_plugin_script *new_script;
+
+    new_script = malloc (sizeof (*new_script));
+    if (!new_script)
+        return NULL;
+
+    new_script->filename = strdup (filename);
+    new_script->interpreter = NULL;
+    new_script->name = strdup (name);
+    new_script->author = strdup (author);
+    new_script->version = strdup (version);
+    new_script->license = strdup (license);
+    new_script->description = strdup (description);
+    new_script->shutdown_func = (shutdown_func) ?
+        strdup (shutdown_func) : NULL;
+    new_script->charset = (charset) ? strdup (charset) : NULL;
+    new_script->unloading = 0;
+    new_script->prev_script = NULL;
+    new_script->next_script = NULL;
+
+    return new_script;
+}
+
+/*
  * Adds a script to list of scripts.
  *
  * Returns pointer to new script, NULL if error.
@@ -743,32 +791,25 @@ plugin_script_add (struct t_weechat_plugin *weechat_plugin,
                         license, name, weechat_plugin->license);
     }
 
-    new_script = malloc (sizeof (*new_script));
-    if (new_script)
+    new_script = plugin_script_alloc (filename, name, author, version, license,
+                                      description, shutdown_func, charset);
+    if (!new_script)
     {
-        new_script->filename = strdup (filename);
-        new_script->interpreter = NULL;
-        new_script->name = strdup (name);
-        new_script->author = strdup (author);
-        new_script->version = strdup (version);
-        new_script->license = strdup (license);
-        new_script->description = strdup (description);
-        new_script->shutdown_func = (shutdown_func) ?
-            strdup (shutdown_func) : NULL;
-        new_script->charset = (charset) ? strdup (charset) : NULL;
-        new_script->unloading = 0;
-
-        plugin_script_insert_sorted (weechat_plugin, scripts, last_script,
-                                     new_script);
-
-        return new_script;
+        weechat_printf (NULL,
+                        _("%s: error loading script \"%s\" "
+                          "(not enough memory)"),
+                        weechat_plugin->name, name);
+        return NULL;
     }
 
-    weechat_printf (NULL,
-                    _("%s: error loading script \"%s\" (not enough memory)"),
-                    weechat_plugin->name, name);
+    /* add script to the list (except the internal "eval" fake script) */
+    if (strcmp (new_script->name, WEECHAT_SCRIPT_EVAL_NAME) != 0)
+    {
+        plugin_script_insert_sorted (weechat_plugin, scripts, last_script,
+                                     new_script);
+    }
 
-    return NULL;
+    return new_script;
 }
 
 /*
@@ -998,6 +1039,33 @@ plugin_script_remove_configs (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Frees a script.
+ */
+
+void
+plugin_script_free (struct t_plugin_script *script)
+{
+    if (script->filename)
+        free (script->filename);
+    if (script->name)
+        free (script->name);
+    if (script->author)
+        free (script->author);
+    if (script->version)
+        free (script->version);
+    if (script->license)
+        free (script->license);
+    if (script->description)
+        free (script->description);
+    if (script->shutdown_func)
+        free (script->shutdown_func);
+    if (script->charset)
+        free (script->charset);
+
+    free (script);
+}
+
+/*
  * Removes a script from list of scripts.
  */
 
@@ -1018,24 +1086,6 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
     /* remove all hooks created by this script */
     weechat_unhook_all (script->name);
 
-    /* free data */
-    if (script->filename)
-        free (script->filename);
-    if (script->name)
-        free (script->name);
-    if (script->author)
-        free (script->author);
-    if (script->version)
-        free (script->version);
-    if (script->license)
-        free (script->license);
-    if (script->description)
-        free (script->description);
-    if (script->shutdown_func)
-        free (script->shutdown_func);
-    if (script->charset)
-        free (script->charset);
-
     /* remove script from list */
     if (script->prev_script)
         (script->prev_script)->next_script = script->next_script;
@@ -1046,8 +1096,8 @@ plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
     if (*last_script == script)
         *last_script = script->prev_script;
 
-    /* free script */
-    free (script);
+    /* free data and script */
+    plugin_script_free (script);
 }
 
 /*
@@ -1189,7 +1239,8 @@ void
 plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts,
                               void (*script_unload)(struct t_plugin_script *script),
-                              int (*script_load)(const char *filename),
+                              struct t_plugin_script *(*script_load)(const char *filename,
+                                                                     const char *code),
                               int *quiet,
                               char **list)
 {
@@ -1302,7 +1353,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                              * - script was loaded
                              */
                             if ((!existing_script && autoload) || script_loaded)
-                                (*script_load) (new_path);
+                                (*script_load) (new_path, NULL);
                         }
                         else
                         {

@@ -46,7 +46,23 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_guile_plugin = NULL;
 
-int guile_quiet;
+int guile_quiet = 0;
+
+struct t_plugin_script *guile_script_eval = NULL;
+int guile_eval_mode = 0;
+int guile_eval_send_input = 0;
+int guile_eval_exec_commands = 0;
+struct t_gui_buffer *guile_eval_buffer = NULL;
+char *guile_eval_output = NULL;
+#define GUILE_EVAL_SCRIPT                                               \
+    "(weechat:register \"" WEECHAT_SCRIPT_EVAL_NAME "\" \"\" \"1.0\" "  \
+    "\"" WEECHAT_LICENSE "\" \"Evaluation of script code\" "            \
+    "\"\" \"\")\n"                                                      \
+    "\n"                                                                \
+    "(define (script_guile_eval code)\n"                                \
+    "  (eval-string code)\n"                                            \
+    ")\n"
+
 struct t_plugin_script *guile_scripts = NULL;
 struct t_plugin_script *last_guile_script = NULL;
 struct t_plugin_script *guile_current_script = NULL;
@@ -54,7 +70,7 @@ struct t_plugin_script *guile_registered_script = NULL;
 const char *guile_current_script_filename = NULL;
 SCM guile_module_weechat;
 SCM guile_port;
-char *guile_stdout = NULL;
+char **guile_buffer_output = NULL;
 
 struct t_guile_function
 {
@@ -89,20 +105,63 @@ char *guile_action_autoload_list = NULL;
 
 
 /*
- * Flushes stdout.
+ * Flushes output.
  */
 
 void
-weechat_guile_stdout_flush ()
+weechat_guile_output_flush ()
 {
-    if (guile_stdout)
+    const char *ptr_command;
+    char *command;
+    int length;
+
+    if (!*guile_buffer_output[0])
+        return;
+
+    if (guile_eval_mode)
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s%s"),
-                        GUILE_PLUGIN_NAME, guile_stdout, "");
-        free (guile_stdout);
-        guile_stdout = NULL;
+        /* if there's no buffer, we catch the output, so there's no flush */
+        if (!guile_eval_buffer)
+            return;
+
+        if (guile_eval_send_input)
+        {
+            if (guile_eval_exec_commands)
+                ptr_command = *guile_buffer_output;
+            else
+                ptr_command = weechat_string_input_for_buffer (*guile_buffer_output);
+            if (ptr_command)
+            {
+                weechat_command (guile_eval_buffer, *guile_buffer_output);
+            }
+            else
+            {
+                length = 1 + strlen (*guile_buffer_output) + 1;
+                command = malloc (length);
+                if (command)
+                {
+                    snprintf (command, length, "%c%s",
+                              *guile_buffer_output[0], *guile_buffer_output);
+                    weechat_command (guile_eval_buffer,
+                                     (command[0]) ? command : " ");
+                    free (command);
+                }
+            }
+        }
+        else
+        {
+            weechat_printf (guile_eval_buffer, "%s", *guile_buffer_output);
+        }
     }
+    else
+    {
+        /* script (no eval mode) */
+        weechat_printf (NULL,
+                        weechat_gettext ("%s: stdout/stderr: %s"),
+                        GUILE_PLUGIN_NAME, *guile_buffer_output);
+    }
+
+    weechat_string_dyn_copy (guile_buffer_output, NULL);
 }
 
 /*
@@ -272,6 +331,8 @@ weechat_guile_exec (struct t_plugin_script *script,
     void *argv2[17], *ret_value;
     int i, argc, *ret_int;
 
+    ret_value = NULL;
+
     old_guile_current_script = guile_current_script;
     old_current_module = NULL;
     if (script->interpreter)
@@ -310,7 +371,7 @@ weechat_guile_exec (struct t_plugin_script *script,
         rc = weechat_guile_exec_function (function, NULL, 0);
     }
 
-    ret_value = NULL;
+    weechat_guile_output_flush ();
 
     if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (scm_is_string (rc)))
     {
@@ -332,13 +393,17 @@ weechat_guile_exec (struct t_plugin_script *script,
     }
     else
     {
-        weechat_printf (NULL,
-                        weechat_gettext ("%s%s: function \"%s\" must return "
-                                         "a valid value"),
-                        weechat_prefix ("error"), GUILE_PLUGIN_NAME, function);
+        if (ret_type != WEECHAT_SCRIPT_EXEC_IGNORE)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: function \"%s\" must "
+                                             "return a valid value"),
+                            weechat_prefix ("error"), GUILE_PLUGIN_NAME,
+                            function);
+        }
     }
 
-    if (ret_value == NULL)
+    if ((ret_type != WEECHAT_SCRIPT_EXEC_IGNORE) && !ret_value)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error in function \"%s\""),
@@ -354,16 +419,43 @@ weechat_guile_exec (struct t_plugin_script *script,
 }
 
 /*
- * Initializes guile module for script.
+ * Initializes guile module for a script file.
  */
 
 void
-weechat_guile_module_init_script (void *data)
+weechat_guile_module_init_file (void *filename)
 {
     SCM rc;
 
     weechat_guile_catch (scm_c_eval_string, "(use-modules (weechat))");
-    rc = weechat_guile_catch (scm_c_primitive_load, data);
+    rc = weechat_guile_catch (scm_c_primitive_load, filename);
+
+    /* error loading script? */
+    if (rc == SCM_BOOL_F)
+    {
+        /* if script was registered, remove it from list */
+        if (guile_current_script)
+        {
+            plugin_script_remove (weechat_guile_plugin,
+                                  &guile_scripts, &last_guile_script,
+                                  guile_current_script);
+        }
+        guile_current_script = NULL;
+        guile_registered_script = NULL;
+    }
+}
+
+/*
+ * Initializes guile module for a string with guile code.
+ */
+
+void
+weechat_guile_module_init_code (void *code)
+{
+    SCM rc;
+
+    weechat_guile_catch (scm_c_eval_string, "(use-modules (weechat))");
+    rc = weechat_guile_catch (scm_c_eval_string, code);
 
     /* error loading script? */
     if (rc == SCM_BOOL_F)
@@ -383,16 +475,30 @@ weechat_guile_module_init_script (void *data)
 /*
  * Loads a guile script.
  *
- * Returns:
- *   1: OK
- *   0: error
+ * If code is NULL, the content of filename is read and executed.
+ * If code is not NULL, it is executed (the file is not read).
+ *
+ * Returns pointer to new registered script, NULL if error.
  */
 
-int
-weechat_guile_load (const char *filename)
+struct t_plugin_script *
+weechat_guile_load (const char *filename, const char *code)
 {
     char *filename2, *ptr_base_name, *base_name;
     SCM module;
+    struct stat buf;
+
+    if (!code)
+    {
+        if (stat (filename, &buf) != 0)
+        {
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: script \"%s\" not found"),
+                            weechat_prefix ("error"), GUILE_PLUGIN_NAME,
+                            filename);
+            return NULL;
+        }
+    }
 
     if ((weechat_guile_plugin->debug >= 2) || !guile_quiet)
     {
@@ -405,15 +511,24 @@ weechat_guile_load (const char *filename)
     guile_registered_script = NULL;
     guile_current_script_filename = filename;
 
-    filename2 = strdup (filename);
-    if (!filename2)
-        return 0;
-
-    ptr_base_name = basename (filename2);
-    base_name = strdup (ptr_base_name);
-    module = scm_c_define_module (base_name,
-                                  &weechat_guile_module_init_script, filename2);
-    free (filename2);
+    if (code)
+    {
+        module = scm_c_define_module (filename,
+                                      &weechat_guile_module_init_code,
+                                      (char *)code);
+    }
+    else
+    {
+        filename2 = strdup (filename);
+        if (!filename2)
+            return NULL;
+        ptr_base_name = basename (filename2);
+        base_name = strdup (ptr_base_name);
+        module = scm_c_define_module (base_name,
+                                      &weechat_guile_module_init_file,
+                                      filename2);
+        free (filename2);
+    }
 
     if (!guile_registered_script)
     {
@@ -421,7 +536,7 @@ weechat_guile_load (const char *filename)
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), GUILE_PLUGIN_NAME, filename);
-        return 0;
+        return NULL;
     }
 
     weechat_guile_catch (scm_gc_protect_object, (void *)module);
@@ -442,7 +557,7 @@ weechat_guile_load (const char *filename)
                                      WEECHAT_HOOK_SIGNAL_STRING,
                                      guile_current_script->filename);
 
-    return 1;
+    return guile_current_script;
 }
 
 /*
@@ -455,7 +570,7 @@ weechat_guile_load_cb (void *data, const char *filename)
     /* make C compiler happy */
     (void) data;
 
-    weechat_guile_load (filename);
+    weechat_guile_load (filename, NULL);
 }
 
 /*
@@ -570,7 +685,7 @@ weechat_guile_reload_name (const char *name)
                                 weechat_gettext ("%s: script \"%s\" unloaded"),
                                 GUILE_PLUGIN_NAME, name);
             }
-            weechat_guile_load (filename);
+            weechat_guile_load (filename, NULL);
             free (filename);
         }
     }
@@ -583,6 +698,56 @@ weechat_guile_reload_name (const char *name)
 }
 
 /*
+ * Evaluates guile code.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+weechat_guile_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
+                    int exec_commands, const char *code)
+{
+    void *func_argv[1], *result;
+
+    if (!guile_script_eval)
+    {
+        guile_quiet = 1;
+        guile_script_eval = weechat_guile_load (WEECHAT_SCRIPT_EVAL_NAME,
+                                                GUILE_EVAL_SCRIPT);
+        guile_quiet = 0;
+        if (!guile_script_eval)
+            return 0;
+    }
+
+    weechat_guile_output_flush ();
+
+    guile_eval_mode = 1;
+    guile_eval_send_input = send_to_buffer_as_input;
+    guile_eval_exec_commands = exec_commands;
+    guile_eval_buffer = buffer;
+
+    func_argv[0] = (char *)code;
+    result = weechat_guile_exec (guile_script_eval,
+                                  WEECHAT_SCRIPT_EXEC_IGNORE,
+                                  "script_guile_eval",
+                                  "s", func_argv);
+    /* result is ignored */
+    if (result)
+        free (result);
+
+    weechat_guile_output_flush ();
+
+    guile_eval_mode = 0;
+    guile_eval_send_input = 0;
+    guile_eval_exec_commands = 0;
+    guile_eval_buffer = NULL;
+
+    return 1;
+}
+
+/*
  * Callback for command "/guile".
  */
 
@@ -591,13 +756,12 @@ weechat_guile_command_cb (const void *pointer, void *data,
                           struct t_gui_buffer *buffer,
                           int argc, char **argv, char **argv_eol)
 {
-    char *ptr_name, *path_script;
-    SCM value;
+    char *ptr_name, *ptr_code, *path_script;
+    int i, send_to_buffer_as_input, exec_commands;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) buffer;
 
     if (argc == 1)
     {
@@ -667,7 +831,8 @@ weechat_guile_command_cb (const void *pointer, void *data,
                 /* load guile script */
                 path_script = plugin_script_search_path (weechat_guile_plugin,
                                                          ptr_name);
-                weechat_guile_load ((path_script) ? path_script : ptr_name);
+                weechat_guile_load ((path_script) ? path_script : ptr_name,
+                                    NULL);
                 if (path_script)
                     free (path_script);
             }
@@ -685,14 +850,36 @@ weechat_guile_command_cb (const void *pointer, void *data,
         }
         else if (weechat_strcasecmp (argv[1], "eval") == 0)
         {
-            /* eval guile code */
-            value = weechat_guile_catch (scm_c_eval_string, argv_eol[2]);
-            if (!SCM_EQ_P (value, SCM_UNDEFINED)
-                && !SCM_EQ_P (value, SCM_UNSPECIFIED))
+            send_to_buffer_as_input = 0;
+            exec_commands = 0;
+            ptr_code = argv_eol[2];
+            for (i = 2; i < argc; i++)
             {
-                scm_display (value, guile_port);
+                if (argv[i][0] == '-')
+                {
+                    if (strcmp (argv[i], "-o") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 0;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                    else if (strcmp (argv[i], "-oc") == 0)
+                    {
+                        if (i + 1 >= argc)
+                            WEECHAT_COMMAND_ERROR;
+                        send_to_buffer_as_input = 1;
+                        exec_commands = 1;
+                        ptr_code = argv_eol[i + 1];
+                    }
+                }
+                else
+                    break;
             }
-            weechat_guile_stdout_flush ();
+            if (!weechat_guile_eval (buffer, send_to_buffer_as_input,
+                                     exec_commands, ptr_code))
+                WEECHAT_COMMAND_ERROR;
         }
         else
             WEECHAT_COMMAND_ERROR;
@@ -737,6 +924,29 @@ weechat_guile_hdata_cb (const void *pointer, void *data,
     return plugin_script_hdata_script (weechat_plugin,
                                        &guile_scripts, &last_guile_script,
                                        hdata_name);
+}
+
+/*
+ * Returns guile info "guile_eval".
+ */
+
+const char *
+weechat_guile_info_eval_cb (const void *pointer, void *data,
+                            const char *info_name,
+                            const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    weechat_guile_eval (NULL, 0, 0, (arguments) ? arguments : "");
+    if (guile_eval_output)
+        free (guile_eval_output);
+    guile_eval_output = strdup (*guile_buffer_output);
+    weechat_string_dyn_copy (guile_buffer_output, NULL);
+
+    return guile_eval_output;
 }
 
 /*
@@ -896,39 +1106,28 @@ weechat_guile_port_fill_input (SCM port)
 void
 weechat_guile_port_write (SCM port, const void *data, size_t size)
 {
-    char *new_stdout;
-    int length_stdout;
+    char *data2, *ptr_data, *ptr_newline;
 
     /* make C compiler happy */
     (void) port;
 
-    /* concatenate str to guile_stdout */
-    if (guile_stdout)
-    {
-        length_stdout = strlen (guile_stdout);
-        new_stdout = realloc (guile_stdout, length_stdout + size + 1);
-        if (!new_stdout)
-        {
-            free (guile_stdout);
-            return;
-        }
-        guile_stdout = new_stdout;
-        memcpy (guile_stdout + length_stdout, data, size);
-        guile_stdout[length_stdout + size] = '\0';
-    }
-    else
-    {
-        guile_stdout = malloc (size + 1);
-        if (guile_stdout)
-        {
-            memcpy (guile_stdout, data, size);
-            guile_stdout[size] = '\0';
-        }
-    }
+    data2 = malloc (size + 1);
+    if (!data2)
+        return;
 
-    /* flush stdout if at least "\n" is in string */
-    if (guile_stdout && (strchr (guile_stdout, '\n')))
-        weechat_guile_stdout_flush ();
+    memcpy (data2, data, size);
+    data2[size] = '\0';
+
+    ptr_data = data2;
+    while ((ptr_newline = strchr (ptr_data, '\n')) != NULL)
+    {
+        ptr_newline[0] = '\0';
+        weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+        weechat_guile_output_flush ();
+        ptr_newline[0] = '\n';
+        ptr_data = ++ptr_newline;
+    }
+    weechat_string_dyn_concat (guile_buffer_output, ptr_data);
 }
 
 /*
@@ -960,7 +1159,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "");
 #endif /* defined(SCM_MAJOR_VERSION) && defined(SCM_MINOR_VERSION) && defined(SCM_MICRO_VERSION) */
 
-    guile_stdout = NULL;
+    /* init stdout/stderr buffer */
+    guile_buffer_output = weechat_string_dyn_alloc (256);
+    if (!guile_buffer_output)
+        return WEECHAT_RC_ERROR;
 
 #ifdef HAVE_GUILE_GMP_MEMORY_FUNCTIONS
     /*
@@ -982,6 +1184,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     init.callback_command = &weechat_guile_command_cb;
     init.callback_completion = &weechat_guile_completion_cb;
     init.callback_hdata = &weechat_guile_hdata_cb;
+    init.callback_info_eval = &weechat_guile_info_eval_cb;
     init.callback_infolist = &weechat_guile_infolist_cb;
     init.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
     init.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
@@ -1008,6 +1211,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* unload all scripts */
     guile_quiet = 1;
     plugin_script_end (plugin, &guile_scripts, &weechat_guile_unload_all);
+    if (guile_script_eval)
+    {
+        weechat_guile_unload (guile_script_eval);
+        guile_script_eval = NULL;
+    }
     guile_quiet = 0;
 
     /* unprotect module */
@@ -1020,6 +1228,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (guile_action_remove_list);
     if (guile_action_autoload_list)
         free (guile_action_autoload_list);
+    weechat_string_dyn_free (guile_buffer_output, 1);
+    if (guile_eval_output)
+        free (guile_eval_output);
 
     return WEECHAT_RC_OK;
 }

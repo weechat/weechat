@@ -41,6 +41,7 @@ extern HV *weechat_perl_hashtable_to_hash (struct t_hashtable *hashtable);
 extern struct t_hashtable *weechat_perl_hash_to_hashtable (SV *hash, int size,
                                                            const char *type_keys,
                                                            const char *type_values);
+extern XS (weechat_perl_output);
 extern void *weechat_perl_exec (struct t_plugin_script *script,
                                 int ret_type, const char *function,
                                 const char *format, void **argv);

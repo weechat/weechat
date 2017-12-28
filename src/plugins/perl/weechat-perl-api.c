@@ -108,9 +108,6 @@ API_FUNC(register)
     char *charset;
     dXSARGS;
 
-    /* make C compiler happy */
-    (void) items;
-
     API_INIT_FUNC(0, "register", API_RETURN_ERROR);
     if (perl_registered_script)
     {
@@ -5063,6 +5060,7 @@ weechat_perl_api_init (pTHX)
     HV *stash;
 
     newXS ("DynaLoader::boot_DynaLoader", boot_DynaLoader, __FILE__);
+    newXS ("weechat::__output__", weechat_perl_output, "weechat");
 
     /* interface functions */
     API_DEF_FUNC(register);

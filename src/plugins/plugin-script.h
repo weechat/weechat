@@ -27,9 +27,12 @@ enum t_weechat_script_exec_type
     WEECHAT_SCRIPT_EXEC_INT = 0,
     WEECHAT_SCRIPT_EXEC_STRING,
     WEECHAT_SCRIPT_EXEC_HASHTABLE,
+    WEECHAT_SCRIPT_EXEC_IGNORE,
 };
 
 #define WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE 16
+
+#define WEECHAT_SCRIPT_EVAL_NAME "__eval__"
 
 #define WEECHAT_SCRIPT_MSG_NOT_INIT(__current_script,                   \
                                     __function)                         \
@@ -78,6 +81,10 @@ struct t_plugin_script_init
     struct t_hdata *(*callback_hdata)(const void *pointer,
                                       void *data,
                                       const char *hdata_name);
+    const char *(*callback_info_eval)(const void *pointer,
+                                      void *data,
+                                      const char *info_name,
+                                      const char *arguments);
     struct t_infolist *(*callback_infolist)(const void *pointer,
                                             void *data,
                                             const char *infolist_name,
@@ -119,13 +126,25 @@ extern struct t_plugin_script *plugin_script_search (struct t_weechat_plugin *we
                                                      const char *name);
 extern char *plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
                                         const char *filename);
+extern struct t_plugin_script *plugin_script_alloc (const char *filename,
+                                                    const char *name,
+                                                    const char *author,
+                                                    const char *version,
+                                                    const char *license,
+                                                    const char *description,
+                                                    const char *shutdown_func,
+                                                    const char *charset);
 extern struct t_plugin_script *plugin_script_add (struct t_weechat_plugin *weechat_plugin,
                                                   struct t_plugin_script **scripts,
                                                   struct t_plugin_script **last_script,
-                                                  const char *filename, const char *name,
-                                                  const char *author, const char *version,
-                                                  const char *license, const char *description,
-                                                  const char *shutdown_func, const char *charset);
+                                                  const char *filename,
+                                                  const char *name,
+                                                  const char *author,
+                                                  const char *version,
+                                                  const char *license,
+                                                  const char *description,
+                                                  const char *shutdown_func,
+                                                  const char *charset);
 extern void plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat_plugin,
                                                 struct t_plugin_script *scripts,
                                                 struct t_plugin_script *script,
@@ -136,6 +155,7 @@ extern void plugin_script_set_buffer_callbacks (struct t_weechat_plugin *weechat
                                                 int (*callback_buffer_close) (const void *pointer,
                                                                               void *data,
                                                                               struct t_gui_buffer *buffer));
+extern void plugin_script_free (struct t_plugin_script *script);
 extern void plugin_script_remove (struct t_weechat_plugin *weechat_plugin,
                                   struct t_plugin_script **scripts,
                                   struct t_plugin_script **last_script,
@@ -147,7 +167,8 @@ extern void plugin_script_action_add (char **action_list, const char *name);
 extern void plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                           struct t_plugin_script *scripts,
                                           void (*script_unload)(struct t_plugin_script *script),
-                                          int (*script_load)(const char *filename),
+                                          struct t_plugin_script *(*script_load)(const char *filename,
+                                                                                 const char *code),
                                           int *quiet,
                                           char **list);
 extern void plugin_script_action_remove (struct t_weechat_plugin *weechat_plugin,
