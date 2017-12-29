@@ -5128,6 +5128,7 @@ API_FUNC(upgrade_close)
  */
 
 const struct luaL_Reg weechat_lua_api_funcs[] = {
+    { "__output__", weechat_lua_output },
     API_DEF_FUNC(register),
     API_DEF_FUNC(plugin_get_name),
     API_DEF_FUNC(charset_set),
