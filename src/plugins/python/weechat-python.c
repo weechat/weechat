@@ -808,9 +808,8 @@ weechat_python_load (const char *filename, const char *code)
         if (PyErr_Occurred ())
         {
             weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to create eval script"),
-                            weechat_prefix ("error"),
-                            PYTHON_PLUGIN_NAME);
+                            weechat_gettext ("%s%s: unable to execute code"),
+                            weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
             PyErr_Print ();
             if (rc)
                 Py_XDECREF(rc);
