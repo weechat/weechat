@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-11-18 09:00+0900\n"
+"PO-Revision-Date: 2017-12-30 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -4342,14 +4342,14 @@ msgid ""
 msgstr ""
 "コマンド外での部分補完 (同じ文字を含む多くのコマンドが見つかった場合は止め)"
 
-#, fuzzy
 msgid ""
 "comma-separated list of templates for which partial completion is enabled by "
 "default (with Tab key instead of shift-Tab); the list of templates is in "
 "documentation: plugin API reference, function \"weechat_hook_command\""
 msgstr ""
-"スペルチェックを有効化するコマンドのコンマ区切りリスト (これ以外のコマンドで"
-"はスペルチェックは無効)"
+"部分補完がデフォルトで有効化される (shift-Tab キーの代わりに Tab キーを使う) "
+"テンプレートのコンマ区切りリスト; テンプレートのリストは WeeChat プラグイン "
+"API リファレンスの \"weechat_hook_command\" 関数の節を参照してください"
 
 msgid ""
 "maximum number of commands to display by default in history listing (0 = "
@@ -11246,15 +11246,13 @@ msgstr "プラグインオプションの説明"
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || version"
 msgstr ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>]"
+"[-q] [<name>] || version"
 
-#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -11281,6 +11279,7 @@ msgstr ""
 "filename: ロードするスクリプト (ファイル)\n"
 "    name: スクリプト名 (名前は \"register\" 関数を呼び出すために使われる)\n"
 "      -q: 出力抑制モード: メッセージを表示しない\n"
+" version: 使用中のインタプリタのバージョンを表示\n"
 "\n"
 "引数無しの場合、全てのロード済みスクリプトをリストアップします。"
 
@@ -11293,12 +11292,11 @@ msgstr "スクリプトポインタ (任意)"
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "スクリプト名 (ワイルドカード \"*\" を使うことができます) (任意)"
 
-#, fuzzy
 msgid "name of the interpreter used"
-msgstr "%s%s: インタプリタの開放に失敗"
+msgstr "使用中のインタプリタの名前"
 
 msgid "version of the interpreter used"
-msgstr ""
+msgstr "使用中のインタプリタのバージョン"
 
 #, c-format
 msgid ""
