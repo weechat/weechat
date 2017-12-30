@@ -10,9 +10,9 @@
 
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
-| guile | guile_interpreter | name of the interpreter used | -
+| guile | guile_interpreter | 使用中のインタプリタの名前 | -
 
-| guile | guile_version | version of the interpreter used | -
+| guile | guile_version | 使用中のインタプリタのバージョン | -
 
 | irc | irc_buffer | ある IRC サーバ/チャンネル/ニックネームのバッファポインタを取得 | server,channel,nick (channel と nick は任意)
 
@@ -32,37 +32,37 @@
 
 | irc | irc_server_isupport_value | サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う) | サーバ、機能
 
-| javascript | javascript_interpreter | name of the interpreter used | -
+| javascript | javascript_interpreter | 使用中のインタプリタの名前 | -
 
-| javascript | javascript_version | version of the interpreter used | -
+| javascript | javascript_version | 使用中のインタプリタのバージョン | -
 
-| lua | lua_interpreter | name of the interpreter used | -
+| lua | lua_interpreter | 使用中のインタプリタの名前 | -
 
-| lua | lua_version | version of the interpreter used | -
+| lua | lua_version | 使用中のインタプリタのバージョン | -
 
-| perl | perl_interpreter | name of the interpreter used | -
+| perl | perl_interpreter | 使用中のインタプリタの名前 | -
 
-| perl | perl_version | version of the interpreter used | -
+| perl | perl_version | 使用中のインタプリタのバージョン | -
 
-| php | php_interpreter | name of the interpreter used | -
+| php | php_interpreter | 使用中のインタプリタの名前 | -
 
-| php | php_version | version of the interpreter used | -
+| php | php_version | 使用中のインタプリタのバージョン | -
 
 | python | python2_bin | python 2.x インタプリタへのパス | -
 
-| python | python_interpreter | name of the interpreter used | -
+| python | python_interpreter | 使用中のインタプリタの名前 | -
 
-| python | python_version | version of the interpreter used | -
+| python | python_version | 使用中のインタプリタのバージョン | -
 
 | relay | relay_client_count | 中継するクライアントのリスト | 状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected
 
-| ruby | ruby_interpreter | name of the interpreter used | -
+| ruby | ruby_interpreter | 使用中のインタプリタの名前 | -
 
-| ruby | ruby_version | version of the interpreter used | -
+| ruby | ruby_version | 使用中のインタプリタのバージョン | -
 
-| tcl | tcl_interpreter | name of the interpreter used | -
+| tcl | tcl_interpreter | 使用中のインタプリタの名前 | -
 
-| tcl | tcl_version | version of the interpreter used | -
+| tcl | tcl_version | 使用中のインタプリタのバージョン | -
 
 | weechat | charset_internal | WeeChat 内部文字セット | -
 
