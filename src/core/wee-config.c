@@ -301,7 +301,6 @@ struct t_config_option *config_plugin_save_config_on_unload;
 
 /* other */
 
-int config_length_buffer_time_same = 0;
 int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 struct t_hook *config_day_change_timer = NULL;
@@ -321,6 +320,7 @@ char **config_nick_colors = NULL;
 int config_num_nick_colors = 0;
 struct t_hashtable *config_hashtable_nick_color_force = NULL;
 char *config_item_time_evaluated = NULL;
+char *config_buffer_time_same_evaluated = NULL;
 struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
 
 
@@ -668,8 +668,10 @@ config_change_buffer_time_same (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    config_length_buffer_time_same =
-        gui_chat_strlen_screen (CONFIG_STRING(config_look_buffer_time_same));
+    if (config_buffer_time_same_evaluated)
+        free (config_buffer_time_same_evaluated);
+    config_buffer_time_same_evaluated = eval_expression (
+        CONFIG_STRING(config_look_buffer_time_same), NULL, NULL, NULL);
 
     gui_window_ask_refresh (1);
 }
@@ -2667,10 +2669,12 @@ config_weechat_init_options ()
     config_look_buffer_time_same = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_same", "string",
-        N_("time displayed for a message with same time as previous "
-           "message: use a space \" \" to hide time, another string to "
-           "display this string instead of time, or an empty string to "
-           "disable feature (display time)"),
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("time displayed for a message with same time as previous message: "
+           "use a space \" \" to hide time, another string to display this "
+           "string instead of time, or an empty string to disable feature "
+           "(display time) (note: content is evaluated, so you can use colors "
+           "with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_time_same, NULL, NULL,
@@ -4687,6 +4691,12 @@ config_weechat_free ()
     {
         free (config_item_time_evaluated);
         config_item_time_evaluated = NULL;
+    }
+
+    if (config_buffer_time_same_evaluated)
+    {
+        free (config_buffer_time_same_evaluated);
+        config_buffer_time_same_evaluated = NULL;
     }
 
     if (config_hashtable_completion_partial_templates)

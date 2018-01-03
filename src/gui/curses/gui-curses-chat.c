@@ -749,14 +749,14 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
             && CONFIG_STRING(config_look_buffer_time_same)[0]
             && gui_chat_line_time_is_same_as_previous (line))
         {
-            length_allowed = gui_chat_strlen_screen (line->data->str_time);
-            num_spaces = length_allowed - config_length_buffer_time_same;
+            length_allowed = gui_chat_time_length;
+            num_spaces = length_allowed - gui_chat_strlen_screen (config_buffer_time_same_evaluated);
 
             /* not enough space to display full buffer_time_same? => truncate it! */
-            gui_chat_display_word (window, line, CONFIG_STRING(config_look_buffer_time_same),
+            gui_chat_display_word (window, line, config_buffer_time_same_evaluated,
                                    (num_spaces < 0) ?
-                                       CONFIG_STRING(config_look_buffer_time_same) +
-                                       gui_chat_string_real_pos (CONFIG_STRING(config_look_buffer_time_same),
+                                       config_buffer_time_same_evaluated +
+                                       gui_chat_string_real_pos (config_buffer_time_same_evaluated,
                                                                  length_allowed,
                                                                  1) :
                                        NULL,

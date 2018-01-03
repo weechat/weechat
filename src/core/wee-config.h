@@ -340,7 +340,6 @@ extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
-extern int config_length_buffer_time_same;
 extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
 extern int config_emphasized_attributes;
@@ -357,6 +356,7 @@ extern int config_word_chars_input_count;
 extern char **config_nick_colors;
 extern int config_num_nick_colors;
 extern struct t_hashtable *config_hashtable_nick_color_force;
+extern char *config_buffer_time_same_evaluated;
 extern struct t_hashtable *config_hashtable_completion_partial_templates;
 
 extern void config_set_nick_colors ();
