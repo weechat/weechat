@@ -98,6 +98,7 @@ struct t_config_option *config_look_buffer_search_force_default;
 struct t_config_option *config_look_buffer_search_regex;
 struct t_config_option *config_look_buffer_search_where;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_buffer_time_same;
 struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_message;
@@ -300,6 +301,7 @@ struct t_config_option *config_plugin_save_config_on_unload;
 
 /* other */
 
+int config_length_buffer_time_same = 0;
 int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
 struct t_hook *config_day_change_timer = NULL;
@@ -651,6 +653,25 @@ config_change_buffer_time_format (const void *pointer, void *data,
     gui_chat_change_time_format ();
     if (gui_init_ok)
         gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.buffer_time_same".
+ */
+
+void
+config_change_buffer_time_same (const void *pointer, void *data,
+                                struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    config_length_buffer_time_same =
+        gui_chat_strlen_screen (CONFIG_STRING(config_look_buffer_time_same));
+
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -2642,6 +2663,17 @@ config_weechat_init_options ()
         NULL, 0, 0, "%H:%M:%S", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_time_format, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_buffer_time_same = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_time_same", "string",
+        N_("time displayed for a message with same time as previous "
+           "message: use a space \" \" to hide time, another string to "
+           "display this string instead of time, or an empty string to "
+           "disable feature (display time)"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_buffer_time_same, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,

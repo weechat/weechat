@@ -682,6 +682,31 @@ gui_chat_display_day_changed (struct t_gui_window *window,
 }
 
 /*
+ * Checks if time on line is the same as time on previous line.
+ *
+ * Returns:
+ *   1: prefix is same as time on previous line
+ *   0: prefix is different from time on previous line
+ */
+
+int
+gui_chat_line_time_is_same_as_previous (struct t_gui_line *line)
+{
+    struct t_gui_line *prev_line;
+
+    /*
+     * previous line is not found => display standard time
+     */
+    prev_line = gui_line_get_prev_displayed (line);
+    if (!prev_line)
+        return 0;
+    // TODO find prev line with existing str_time
+
+    /* time can be hidden/replaced if times are equal */
+    return (strcmp (line->data->str_time, prev_line->data->str_time) == 0) ? 1 : 0;
+}
+
+/*
  * Displays time, buffer name (for merged buffers) and prefix for a line.
  */
 
@@ -719,12 +744,48 @@ gui_chat_display_time_to_prefix (struct t_gui_window *window,
     {
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].time_x1 = window->win_chat_cursor_x;
-        gui_chat_display_word (window, line, line->data->str_time,
-                               NULL, 1, num_lines, count,
-                               pre_lines_displayed, lines_displayed,
-                               simulate,
-                               CONFIG_BOOLEAN(config_look_color_inactive_time),
-                               0);
+
+        if (CONFIG_STRING(config_look_buffer_time_same)
+            && CONFIG_STRING(config_look_buffer_time_same)[0]
+            && gui_chat_line_time_is_same_as_previous (line))
+        {
+            length_allowed = gui_chat_strlen_screen (line->data->str_time);
+            num_spaces = length_allowed - config_length_buffer_time_same;
+
+            /* not enough space to display full buffer_time_same? => truncate it! */
+            gui_chat_display_word (window, line, CONFIG_STRING(config_look_buffer_time_same),
+                                   (num_spaces < 0) ?
+                                       CONFIG_STRING(config_look_buffer_time_same) +
+                                       gui_chat_string_real_pos (CONFIG_STRING(config_look_buffer_time_same),
+                                                                 length_allowed,
+                                                                 1) :
+                                       NULL,
+                                   1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate,
+                                   CONFIG_BOOLEAN(config_look_color_inactive_time),
+                                   0);
+            /* not enough space to display full buffer_time_same? => loop doesn't do anything */
+            for (i = 0; i < num_spaces; i++)
+            {
+                gui_chat_display_word (window, line, str_space,
+                                       NULL, 1, num_lines, count,
+                                       pre_lines_displayed, lines_displayed,
+                                       simulate,
+                                       CONFIG_BOOLEAN(config_look_color_inactive_time),
+                                       0);
+            }
+        }
+        else
+        {
+            gui_chat_display_word (window, line, line->data->str_time,
+                                   NULL, 1, num_lines, count,
+                                   pre_lines_displayed, lines_displayed,
+                                   simulate,
+                                   CONFIG_BOOLEAN(config_look_color_inactive_time),
+                                   0);
+        }
+
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].time_x2 = window->win_chat_cursor_x - 1;
 

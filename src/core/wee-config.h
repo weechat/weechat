@@ -149,6 +149,7 @@ extern struct t_config_option *config_look_buffer_search_force_default;
 extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
 extern struct t_config_option *config_look_buffer_time_format;
+extern struct t_config_option *config_look_buffer_time_same;
 extern struct t_config_option *config_look_color_basic_force_bold;
 extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_message;
@@ -339,6 +340,7 @@ extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
+extern int config_length_buffer_time_same;
 extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
 extern int config_emphasized_attributes;
