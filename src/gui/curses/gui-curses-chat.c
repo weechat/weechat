@@ -700,7 +700,13 @@ gui_chat_line_time_is_same_as_previous (struct t_gui_line *line)
     prev_line = gui_line_get_prev_displayed (line);
     if (!prev_line)
         return 0;
-    // TODO find prev line with existing str_time
+
+    /*
+     * previous line has no time => display standard time
+     */
+    if (!line->data->str_time
+        || !prev_line->data->str_time)
+        return 0;
 
     /* time can be hidden/replaced if times are equal */
     return (strcmp (line->data->str_time, prev_line->data->str_time) == 0) ? 1 : 0;
