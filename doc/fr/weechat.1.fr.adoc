@@ -111,7 +111,7 @@ Cette page de manuel a été écrite par {author}.
 WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
 est dans le fichier AUTHORS.adoc).
 
-Copyright (C) 2003-2017 {author}
+Copyright (C) 2003-2018 {author}
 
 WeeChat est un logiciel libre; vous pouvez le redistribuer et/ou le modifier
 sous les termes de la GNU General Public License telle que publiée par la

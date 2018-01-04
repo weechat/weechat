@@ -112,7 +112,7 @@ Tłumaczenie Krzysztof Korościk.
 WeeChat jest tworzony przez Sébastien Helleu i społeczność (pełna lista dostępna
 jest w pliku AUTHORS.adoc).
 
-Copyright (C) 2003-2017 {author}
+Copyright (C) 2003-2018 {author}
 
 WeeChat is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

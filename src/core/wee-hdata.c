@@ -1,7 +1,7 @@
 /*
  * wee-hdata.c - direct access to WeeChat data using hashtables
  *
- * Copyright (C) 2011-2017 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2011-2018 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
