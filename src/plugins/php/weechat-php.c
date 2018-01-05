@@ -642,6 +642,10 @@ weechat_php_load (const char *filename, const char *code)
 {
     zend_file_handle file_handle;
 
+    /* make C compiler happy */
+    /* TODO: implement load of code in PHP */
+    (void) code;
+
     if ((weechat_php_plugin->debug >= 2) || !php_quiet)
     {
         weechat_printf (NULL,
