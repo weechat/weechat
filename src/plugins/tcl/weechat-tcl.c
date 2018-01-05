@@ -318,6 +318,10 @@ weechat_tcl_load (const char *filename, const char *code)
     Tcl_Interp *interp;
     struct stat buf;
 
+    /* make C compiler happy */
+    /* TODO: implement load of code in TCL */
+    (void) code;
+
     if (stat (filename, &buf) != 0)
     {
         weechat_printf (NULL,
