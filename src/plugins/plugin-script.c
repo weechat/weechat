@@ -265,13 +265,13 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
            "      -q: quiet mode: do not display messages\n"
            "    name: a script name (name used in call to \"register\" "
            "function)\n"
-           "    eval: evaluate script code and display result on current "
+           "    eval: evaluate source code and display result on current "
            "buffer\n"
            "      -o: send evaluation result to the buffer without executing "
            "commands\n"
            "     -oc: send evaluation result to the buffer and execute "
            "commands\n"
-           "    code: the script code to evaluate\n"
+           "    code: source code to evaluate\n"
            " version: display the version of interpreter used\n"
            "\n"
            "Without argument, this command lists all loaded scripts."),
@@ -292,8 +292,8 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                               "(optional)"),
                            init->callback_infolist, NULL, NULL);
     snprintf (string, sizeof (string), "%s_eval", weechat_plugin->name);
-    weechat_hook_info (string, N_("evaluation of script code"),
-                       N_("code to execute"),
+    weechat_hook_info (string, N_("evaluation of source code"),
+                       N_("source code to execute"),
                        init->callback_info_eval, NULL, NULL);
 
     /* add signal for "debug_dump" */

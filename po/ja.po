@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-12-30 09:00+0900\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
+"PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -6992,8 +6992,8 @@ msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されま�
 msgid "Support of scheme scripts (with Guile)"
 msgstr "scheme スクリプトサポート (Guile を利用)"
 
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
+#, fuzzy, c-format
+msgid "%s: stdout/stderr: %s"
 msgstr "%s: 標準出力/標準エラー: %s%s"
 
 #, c-format
@@ -7003,6 +7003,10 @@ msgstr "%s%s: 関数 \"%s\" は有効な値を返さなければいけません"
 #, c-format
 msgid "%s%s: error in function \"%s\""
 msgstr "%s%s: 関数 \"%s\" にエラー"
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: スクリプト \"%s\" が見つかりません"
 
 #, c-format
 msgid "%s: loading script \"%s\""
@@ -10619,10 +10623,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: 関数 \"%s\" を実行できません"
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: スクリプト \"%s\" が見つかりません"
-
-#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: 新しい sub-interpreter を作成できません"
 
@@ -10633,6 +10633,10 @@ msgstr "%s%s: ファイル \"%s\" をロードできません"
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%s色 \"%s\" はパレットで定義されていません"
 
 msgid "Log buffers to files"
 msgstr "ファイルにバッファログを保存"
@@ -10854,20 +10858,28 @@ msgstr "lua スクリプトサポート"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: ファイル \"%s\" をロードできません"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: ファイル \"%s\" を実行できません"
+
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"
 
 #, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: 関数 \"%s\" は値を一つ返さなければいけません (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: 関数 \"%s\" は内部的に誤用されています"
-
-#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: 関数 \"%s\" 内に十分なメモリがありません"
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error:"
+msgstr "%s%s: エラー: %s"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -11246,13 +11258,15 @@ msgstr "プラグインオプションの説明"
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"
 
+#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || version"
 
+#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -11262,8 +11276,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -11291,6 +11309,13 @@ msgstr "スクリプトポインタ (任意)"
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "スクリプト名 (ワイルドカード \"*\" を使うことができます) (任意)"
+
+#, fuzzy
+msgid "evaluation of source code"
+msgstr "スクリプトのリスト"
+
+msgid "source code to execute"
+msgstr ""
 
 msgid "name of the interpreter used"
 msgstr "使用中のインタプリタの名前"
@@ -11968,10 +11993,6 @@ msgstr ""
 
 msgid "Support of ruby scripts"
 msgstr "ruby スクリプトサポート"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: 標準入力/標準エラー: %s%s"
 
 #, c-format
 msgid "%s%s: unable to read file \"%s\""

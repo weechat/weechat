@@ -10,6 +10,8 @@
 
 | fifo | fifo_filename | name of FIFO pipe | -
 
+| guile | guile_eval | evaluation of source code | source code to execute
+
 | guile | guile_interpreter | name of the interpreter used | -
 
 | guile | guile_version | version of the interpreter used | -
@@ -32,17 +34,25 @@
 
 | irc | irc_server_isupport_value | value of feature, if supported by server (from IRC message 005) | server,feature
 
+| javascript | javascript_eval | evaluation of source code | source code to execute
+
 | javascript | javascript_interpreter | name of the interpreter used | -
 
 | javascript | javascript_version | version of the interpreter used | -
+
+| lua | lua_eval | evaluation of source code | source code to execute
 
 | lua | lua_interpreter | name of the interpreter used | -
 
 | lua | lua_version | version of the interpreter used | -
 
+| perl | perl_eval | evaluation of source code | source code to execute
+
 | perl | perl_interpreter | name of the interpreter used | -
 
 | perl | perl_version | version of the interpreter used | -
+
+| php | php_eval | evaluation of source code | source code to execute
 
 | php | php_interpreter | name of the interpreter used | -
 
@@ -50,15 +60,21 @@
 
 | python | python2_bin | path to python 2.x interpreter | -
 
+| python | python_eval | evaluation of source code | source code to execute
+
 | python | python_interpreter | name of the interpreter used | -
 
 | python | python_version | version of the interpreter used | -
 
 | relay | relay_client_count | number of clients for relay | status name (optional): connecting, waiting_auth, connected, auth_failed, disconnected
 
+| ruby | ruby_eval | evaluation of source code | source code to execute
+
 | ruby | ruby_interpreter | name of the interpreter used | -
 
 | ruby | ruby_version | version of the interpreter used | -
+
+| tcl | tcl_eval | evaluation of source code | source code to execute
 
 | tcl | tcl_interpreter | name of the interpreter used | -
 

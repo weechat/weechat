@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5120,7 +5120,7 @@ msgid "Support of scheme scripts (with Guile)"
 msgstr ""
 
 #, c-format
-msgid "%s: stdout/stderr: %s%s"
+msgid "%s: stdout/stderr: %s"
 msgstr ""
 
 #, c-format
@@ -5129,6 +5129,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -8041,10 +8045,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr ""
-
-#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr ""
 
@@ -8054,6 +8054,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr ""
 
 msgid "Log buffers to files"
@@ -8225,19 +8229,27 @@ msgstr ""
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr ""
 
+#, c-format
+msgid "%s%s: unable to load source code"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to execute source code"
+msgstr ""
+
 msgid "Support of perl scripts"
 msgstr ""
 
 #, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr ""
-
-#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, c-format
+msgid "%s: error:"
 msgstr ""
 
 #, c-format
@@ -8605,7 +8617,7 @@ msgstr ""
 
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 
 msgid ""
@@ -8617,8 +8629,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -8631,6 +8647,12 @@ msgid "script pointer (optional)"
 msgstr ""
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
+msgstr ""
+
+msgid "evaluation of source code"
+msgstr ""
+
+msgid "source code to execute"
 msgstr ""
 
 msgid "name of the interpreter used"
@@ -9197,10 +9219,6 @@ msgid ""
 msgstr ""
 
 msgid "Support of ruby scripts"
-msgstr ""
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
 msgstr ""
 
 #, c-format

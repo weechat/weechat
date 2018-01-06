@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-10-17 20:12+0200\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
+"PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -6086,8 +6086,8 @@ msgstr "%s: zaregistrován skript \"%s\", verze %s (%s)"
 msgid "Support of scheme scripts (with Guile)"
 msgstr "Podpora scriptů v Sheme (pomocí Guile)"
 
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
+#, fuzzy, c-format
+msgid "%s: stdout/stderr: %s"
 msgstr "%s: stdout/stderr: %s%s"
 
 #, c-format
@@ -6097,6 +6097,10 @@ msgstr "%s%s: funkce \"%s\" musí vracet korektní hodnotu"
 #, c-format
 msgid "%s%s: error in function \"%s\""
 msgstr "%s%s: chyba ve funkci \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: skript \"%s\" nenalezen"
 
 #, c-format
 msgid "%s: loading script \"%s\""
@@ -9552,10 +9556,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: nemůžu spustit funkci \"%s\""
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: skript \"%s\" nenalezen"
-
-#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: nemohu vytvořit nový pod-interpreter"
 
@@ -9566,6 +9566,10 @@ msgstr "%s%s: nemůžu načíst soubor \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sBarva \"%s\" není definovávána v paletě"
 
 #, fuzzy
 msgid "Log buffers to files"
@@ -9793,20 +9797,28 @@ msgstr "podpora skriptů v lua"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nemohu přesměrovat stdout a stderr"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: nemůžu načíst soubor \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
 msgid "Support of perl scripts"
 msgstr "Podpora skriptů v perlu"
 
 #, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: funkce \"%s\" musí vracet jednu validní hodnotu (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: funkce \"%s\" je vnitřně špatně použitá"
-
-#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: nedostatek paměti ve funkci \"%s\""
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error:"
+msgstr "%s%s: chyba: %s"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -10204,7 +10216,7 @@ msgstr "seznam/načíst/odebrat skirpty"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<jméno>] || load <jméno_souboru> || autoload || reload|unload "
 "[<jméno>]"
@@ -10219,8 +10231,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -10247,6 +10263,13 @@ msgstr "ukazatel skriptu (volitelný)"
 #, fuzzy
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
+
+#, fuzzy
+msgid "evaluation of source code"
+msgstr "seznam skriptů"
+
+msgid "source code to execute"
+msgstr ""
 
 #, fuzzy
 msgid "name of the interpreter used"
@@ -10872,10 +10895,6 @@ msgstr ""
 
 msgid "Support of ruby scripts"
 msgstr "Podpora skriptů v ruby"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: stdout/stderr: %s%s"
 
 #, c-format
 msgid "%s%s: unable to read file \"%s\""

@@ -77,7 +77,7 @@ char *ruby_eval_output = NULL;
 #define RUBY_EVAL_SCRIPT                                                \
     "def weechat_init\n"                                                \
     "  Weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "    \
-    "'" WEECHAT_LICENSE "', 'Evaluation of script code', '', '')\n"     \
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '')\n"     \
     "  return Weechat::WEECHAT_RC_OK\n"                                 \
     "end\n"                                                             \
     "\n"                                                                \
@@ -842,7 +842,7 @@ weechat_ruby_unload_all ()
 }
 
 /*
- * Evaluates ruby code.
+ * Evaluates ruby source code.
  *
  * Returns:
  *   1: OK

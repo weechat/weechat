@@ -56,7 +56,7 @@ struct t_gui_buffer *guile_eval_buffer = NULL;
 char *guile_eval_output = NULL;
 #define GUILE_EVAL_SCRIPT                                               \
     "(weechat:register \"" WEECHAT_SCRIPT_EVAL_NAME "\" \"\" \"1.0\" "  \
-    "\"" WEECHAT_LICENSE "\" \"Evaluation of script code\" "            \
+    "\"" WEECHAT_LICENSE "\" \"Evaluation of source code\" "            \
     "\"\" \"\")\n"                                                      \
     "\n"                                                                \
     "(define (script_guile_eval code)\n"                                \
@@ -698,7 +698,7 @@ weechat_guile_reload_name (const char *name)
 }
 
 /*
- * Evaluates guile code.
+ * Evaluates guile source code.
  *
  * Returns:
  *   1: OK

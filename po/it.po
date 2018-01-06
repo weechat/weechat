@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-10-17 20:14+0200\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
+"PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: it\n"
@@ -6489,8 +6489,8 @@ msgstr "%s: script \"%s\" registrato, versione %s (%s)"
 msgid "Support of scheme scripts (with Guile)"
 msgstr "Supporto agli script scheme (con Guile)"
 
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
+#, fuzzy, c-format
+msgid "%s: stdout/stderr: %s"
 msgstr "%s: stdout/stderr: %s%s"
 
 #, c-format
@@ -6500,6 +6500,10 @@ msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido"
 #, c-format
 msgid "%s%s: error in function \"%s\""
 msgstr "%s%s: errore nella funzioe \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" non trovato"
 
 #, c-format
 msgid "%s: loading script \"%s\""
@@ -10065,10 +10069,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: impossibile eseguire la funzione \"%s\""
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" non trovato"
-
-#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: impossibile creare un nuovo sub-interprete"
 
@@ -10079,6 +10079,10 @@ msgstr "%s%s: impossibile caricare il file \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: impossibile eseguire il file \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sColore \"%s\" non definito nella tavolozza"
 
 msgid "Log buffers to files"
 msgstr "Registra i buffer su file"
@@ -10311,20 +10315,28 @@ msgstr "Supporto agli script lua"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: impossibile reindirizzare verso stdout e stderr"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: impossibile caricare il file \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: impossibile eseguire il file \"%s\""
+
 msgid "Support of perl scripts"
 msgstr "Supporto agli script perl"
 
 #, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: la funzione \"%s\" deve restituire un valore valido (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: uso improprio della funzione interna \"%s\""
-
-#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: memoria non sufficiente nella funzione \"%s\""
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error:"
+msgstr "%s%s: errore: %s"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -10733,7 +10745,7 @@ msgstr "elenca/carica/scarica script"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<nome>] || load [-q] <nomefile> || autoload || reload|unload "
 "[-q][<nome>]"
@@ -10748,8 +10760,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -10780,6 +10796,13 @@ msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 "nome script (può iniziare o terminare con \"*\" come carattere jolly) "
 "(opzionale)"
+
+#, fuzzy
+msgid "evaluation of source code"
+msgstr "elenco degli script"
+
+msgid "source code to execute"
+msgstr ""
 
 #, fuzzy
 msgid "name of the interpreter used"
@@ -11437,10 +11460,6 @@ msgstr ""
 
 msgid "Support of ruby scripts"
 msgstr "Supporto agli script ruby"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: stdout/stderr: %s%s"
 
 #, c-format
 msgid "%s%s: unable to read file \"%s\""

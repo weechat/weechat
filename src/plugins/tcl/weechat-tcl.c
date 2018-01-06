@@ -534,7 +534,7 @@ weechat_tcl_reload_name (const char *name)
 }
 
 /*
- * Evaluates tcl code.
+ * Evaluates TCL source code.
  *
  * Returns:
  *   1: OK
@@ -689,8 +689,9 @@ weechat_tcl_command_cb (const void *pointer, void *data,
                 WEECHAT_COMMAND_ERROR;
             /* TODO: implement /tcl eval */
             weechat_printf (NULL,
-                            "%sCommand \"/tcl eval\" is not yet implemented",
-                            weechat_prefix ("error"));
+                            _("%sCommand \"/%s eval\" is not yet implemented"),
+                            weechat_prefix ("error"),
+                            weechat_tcl_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;

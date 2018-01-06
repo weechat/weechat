@@ -54,7 +54,7 @@ char *perl_eval_output = NULL;
     "    eval \"$_[0]\";\n"                                             \
     "}\n"                                                               \
     "weechat::register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "     \
-    "'" WEECHAT_LICENSE "', 'Evaluation of script code', '', '');\n"
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '');\n"
 
 struct t_plugin_script *perl_scripts = NULL;
 struct t_plugin_script *last_perl_script = NULL;
@@ -790,7 +790,7 @@ weechat_perl_reload_name (const char *name)
 }
 
 /*
- * Evaluates perl code.
+ * Evaluates perl source code.
  *
  * Returns:
  *   1: OK

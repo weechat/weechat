@@ -63,7 +63,7 @@ char *lua_eval_output = NULL;
     "end\n"                                                             \
     "\n"                                                                \
     "weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "      \
-    "'" WEECHAT_LICENSE "', 'Evaluation of script code', '', '')\n"
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '')\n"
 
 struct t_plugin_script *lua_scripts = NULL;
 struct t_plugin_script *last_lua_script = NULL;
@@ -562,7 +562,8 @@ weechat_lua_load (const char *filename, const char *code)
         if (luaL_loadstring (lua_current_interpreter, code) != 0)
         {
             weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to load code"),
+                            weechat_gettext ("%s%s: unable to load source "
+                                             "code"),
                             weechat_prefix ("error"), LUA_PLUGIN_NAME);
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: error: %s"),
@@ -595,7 +596,8 @@ weechat_lua_load (const char *filename, const char *code)
         if (code)
         {
             weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to execute code"),
+                            weechat_gettext ("%s%s: unable to execute source "
+                                             "code"),
                             weechat_prefix ("error"), LUA_PLUGIN_NAME);
         }
         else
@@ -796,7 +798,7 @@ weechat_lua_unload_all ()
 }
 
 /*
- * Evaluates lua code.
+ * Evaluates lua source code.
  *
  * Returns:
  *   1: OK

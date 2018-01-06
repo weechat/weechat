@@ -823,7 +823,7 @@ weechat_php_reload_name (const char *name)
 }
 
 /*
- * Evaluates PHP code.
+ * Evaluates PHP source code.
  *
  * Returns:
  *   1: OK
@@ -978,8 +978,9 @@ weechat_php_command_cb (const void *pointer, void *data,
                 WEECHAT_COMMAND_ERROR;
             /* TODO: implement /php eval */
             weechat_printf (NULL,
-                            "%sCommand \"/php eval\" is not yet implemented",
-                            weechat_prefix ("error"));
+                            _("%sCommand \"/%s eval\" is not yet implemented"),
+                            weechat_prefix ("error"),
+                            weechat_php_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;

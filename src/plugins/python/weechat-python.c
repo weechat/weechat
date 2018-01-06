@@ -59,7 +59,7 @@ char *python_eval_output = NULL;
     "    exec(code)\n"                                                  \
     "\n"                                                                \
     "weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "      \
-    "'" WEECHAT_LICENSE "', 'Evaluation of script code', '', '')\n"
+    "'" WEECHAT_LICENSE "', 'Evaluation of source code', '', '')\n"
 
 struct t_plugin_script *python_scripts = NULL;
 struct t_plugin_script *last_python_script = NULL;
@@ -808,7 +808,8 @@ weechat_python_load (const char *filename, const char *code)
         if (PyErr_Occurred ())
         {
             weechat_printf (NULL,
-                            weechat_gettext ("%s%s: unable to execute code"),
+                            weechat_gettext ("%s%s: unable to execute source "
+                                             "code"),
                             weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
             PyErr_Print ();
             if (rc)
@@ -1042,7 +1043,7 @@ weechat_python_reload_name (const char *name)
 }
 
 /*
- * Evaluates python code.
+ * Evaluates python source code.
  *
  * Returns:
  *   1: OK

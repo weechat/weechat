@@ -10,6 +10,7 @@
              load [-q] <filename>
              autoload
              reload|unload [-q] [<name>]
+             eval [-o|-oc] <code>
              version
 
     list: list loaded scripts
@@ -19,8 +20,12 @@ autoload: load all scripts in "autoload" directory
   reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
   unload: unload a script (if no name given, unload all scripts)
 filename: script (file) to load
-    name: a script name (name used in call to "register" function)
       -q: quiet mode: do not display messages
+    name: a script name (name used in call to "register" function)
+    eval: evaluate source code and display result on current buffer
+      -o: send evaluation result to the buffer without executing commands
+     -oc: send evaluation result to the buffer and execute commands
+    code: source code to evaluate
  version: display the version of interpreter used
 
 Without argument, this command lists all loaded scripts.

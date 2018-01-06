@@ -528,7 +528,7 @@ weechat_js_reload_name (const char *name)
 }
 
 /*
- * Evaluates javascript code.
+ * Evaluates javascript source code.
  *
  * Returns:
  *   1: OK
@@ -683,8 +683,9 @@ weechat_js_command_cb (const void *pointer, void *data,
                 WEECHAT_COMMAND_ERROR;
             /* TODO: implement /javascript eval */
             weechat_printf (NULL,
-                            "%sCommand \"/javascript eval\" is not yet implemented",
-                            weechat_prefix ("error"));
+                            _("%sCommand \"/%s eval\" is not yet implemented"),
+                            weechat_prefix ("error"),
+                            weechat_js_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;

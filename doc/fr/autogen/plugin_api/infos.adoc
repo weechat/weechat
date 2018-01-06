@@ -10,6 +10,8 @@
 
 | fifo | fifo_filename | nom du tube FIFO | -
 
+| guile | guile_eval | évaluation de code source | code source à exécuter
+
 | guile | guile_interpreter | nom de l'interpréteur utilisé | -
 
 | guile | guile_version | version de l'interpréteur utilisé | -
@@ -32,17 +34,25 @@
 
 | irc | irc_server_isupport_value | valeur de la fonctionnalité, si supportée par le serveur (du message IRC 005) | serveur,fonctionnalité
 
+| javascript | javascript_eval | évaluation de code source | code source à exécuter
+
 | javascript | javascript_interpreter | nom de l'interpréteur utilisé | -
 
 | javascript | javascript_version | version de l'interpréteur utilisé | -
+
+| lua | lua_eval | évaluation de code source | code source à exécuter
 
 | lua | lua_interpreter | nom de l'interpréteur utilisé | -
 
 | lua | lua_version | version de l'interpréteur utilisé | -
 
+| perl | perl_eval | évaluation de code source | code source à exécuter
+
 | perl | perl_interpreter | nom de l'interpréteur utilisé | -
 
 | perl | perl_version | version de l'interpréteur utilisé | -
+
+| php | php_eval | évaluation de code source | code source à exécuter
 
 | php | php_interpreter | nom de l'interpréteur utilisé | -
 
@@ -50,15 +60,21 @@
 
 | python | python2_bin | chemin vers l'interpréteur python 2.x | -
 
+| python | python_eval | évaluation de code source | code source à exécuter
+
 | python | python_interpreter | nom de l'interpréteur utilisé | -
 
 | python | python_version | version de l'interpréteur utilisé | -
 
 | relay | relay_client_count | nombre de clients pour le relai | nom du statut (optionnel) : connecting, waiting_auth, connected, auth_failed, disconnected
 
+| ruby | ruby_eval | évaluation de code source | code source à exécuter
+
 | ruby | ruby_interpreter | nom de l'interpréteur utilisé | -
 
 | ruby | ruby_version | version de l'interpréteur utilisé | -
+
+| tcl | tcl_eval | évaluation de code source | code source à exécuter
 
 | tcl | tcl_interpreter | nom de l'interpréteur utilisé | -
 

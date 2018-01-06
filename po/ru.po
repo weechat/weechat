@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-10-17 20:14+0200\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
+"PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -5650,9 +5650,9 @@ msgstr ""
 msgid "Support of scheme scripts (with Guile)"
 msgstr ""
 
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s: stdout/stderr: %s"
+msgstr "%sСервер: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
@@ -5661,6 +5661,10 @@ msgstr "%s plugin \"%s\" не найден\n"
 #, fuzzy, c-format
 msgid "%s%s: error in function \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s: loading script \"%s\""
@@ -8974,10 +8978,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s не могу создать сервер\n"
 
@@ -8988,6 +8988,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sЦвет \"%s\" не определён в палитре"
 
 #, fuzzy
 msgid "Log buffers to files"
@@ -9170,21 +9174,29 @@ msgstr "Список сокращений:\n"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s не могу создать сервер\n"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
 #, fuzzy
 msgid "Support of perl scripts"
 msgstr "Список сокращений:\n"
 
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s plugin \"%s\" не найден\n"
-
 #, fuzzy, c-format
 msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error:"
+msgstr "%sСервер: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -9612,7 +9624,7 @@ msgstr "перечислить/загрузить/выгрузить plugin'ы"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
 "[имя]] | [unload [имя]]"
@@ -9627,8 +9639,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -9652,6 +9668,13 @@ msgid "script pointer (optional)"
 msgstr ""
 
 msgid "script name (wildcard \"*\" is allowed) (optional)"
+msgstr ""
+
+#, fuzzy
+msgid "evaluation of source code"
+msgstr "Список сокращений:\n"
+
+msgid "source code to execute"
 msgstr ""
 
 #, fuzzy
@@ -10254,10 +10277,6 @@ msgstr ""
 #, fuzzy
 msgid "Support of ruby scripts"
 msgstr "Список сокращений:\n"
-
-#, fuzzy, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%sСервер: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to read file \"%s\""

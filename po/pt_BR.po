@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2017-12-23 21:13+0100\n"
-"PO-Revision-Date: 2017-10-17 20:14+0200\n"
+"POT-Creation-Date: 2018-01-06 14:03+0100\n"
+"PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -6272,8 +6272,8 @@ msgstr "%s: script \"%s\" registrado, versão %s (%s)"
 msgid "Support of scheme scripts (with Guile)"
 msgstr ""
 
-#, c-format
-msgid "%s: stdout/stderr: %s%s"
+#, fuzzy, c-format
+msgid "%s: stdout/stderr: %s"
 msgstr "%s: stdout/stderr: %s%s"
 
 #, c-format
@@ -6283,6 +6283,10 @@ msgstr "%s%s: função \"%s\" deve retornar um valor válido"
 #, c-format
 msgid "%s%s: error in function \"%s\""
 msgstr "%s%s: erro na função \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" não encontrado"
 
 #, c-format
 msgid "%s: loading script \"%s\""
@@ -9413,10 +9417,6 @@ msgid "%s%s: unable to run function \"%s\""
 msgstr "%s%s: não foi possível executar função \"%s\""
 
 #, c-format
-msgid "%s%s: script \"%s\" not found"
-msgstr "%s%s: script \"%s\" não encontrado"
-
-#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: não foi possível criar novo sub-interpretador"
 
@@ -9427,6 +9427,10 @@ msgstr "%s%s: não foi possível carregar arquivo \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: não foi possível executar arquivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sCor \"%s\" não está definida na palheta"
 
 #, fuzzy
 msgid "Log buffers to files"
@@ -9631,21 +9635,29 @@ msgid "%s%s: unable to redirect stdout and stderr"
 msgstr ""
 "%s%s: não foi possível redirecionar saídas padrão (stdout) e de erro (stderr)"
 
+#, fuzzy, c-format
+msgid "%s%s: unable to load source code"
+msgstr "%s%s: não foi possível carregar arquivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to execute source code"
+msgstr "%s%s: não foi possível executar arquivo \"%s\""
+
 #, fuzzy
 msgid "Support of perl scripts"
 msgstr "list de scripts"
 
 #, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: função \"%s\" deve retornar um valor válido (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: função \"%s\" é mal utilizada internamente"
-
-#, c-format
 msgid "%s%s: not enough memory in function \"%s\""
 msgstr "%s%s: memória insuficiente na função \"%s\""
+
+#, c-format
+msgid "%s: warning:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error:"
+msgstr "%s%s: erro: %s"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -10051,7 +10063,7 @@ msgstr "listar/carregar/descarregar scripts"
 #, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<nome>] || load <arquivo> || autoload || reload|unload "
 "[<name>]"
@@ -10067,8 +10079,12 @@ msgid ""
 "all scripts in \"autoload\" directory)\n"
 "  unload: unload a script (if no name given, unload all scripts)\n"
 "filename: script (file) to load\n"
-"    name: a script name (name used in call to \"register\" function)\n"
 "      -q: quiet mode: do not display messages\n"
+"    name: a script name (name used in call to \"register\" function)\n"
+"    eval: evaluate source code and display result on current buffer\n"
+"      -o: send evaluation result to the buffer without executing commands\n"
+"     -oc: send evaluation result to the buffer and execute commands\n"
+"    code: source code to evaluate\n"
 " version: display the version of interpreter used\n"
 "\n"
 "Without argument, this command lists all loaded scripts."
@@ -10099,6 +10115,13 @@ msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 "nome do script (pode começar ou terminar com \"*\" como um coringa) "
 "(opcional)"
+
+#, fuzzy
+msgid "evaluation of source code"
+msgstr "list de scripts"
+
+msgid "source code to execute"
+msgstr ""
 
 #, fuzzy
 msgid "name of the interpreter used"
@@ -10703,10 +10726,6 @@ msgstr ""
 #, fuzzy
 msgid "Support of ruby scripts"
 msgstr "list de scripts"
-
-#, c-format
-msgid "%s%s: stdout/stderr: %s%s"
-msgstr "%s%s: stdout/stderr: %s%s"
 
 #, c-format
 msgid "%s%s: unable to read file \"%s\""
