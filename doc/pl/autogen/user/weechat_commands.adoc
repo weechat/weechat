@@ -69,75 +69,77 @@ Przykłady:
 
 ----
 /buffer  list
-         clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]]
-         move <numer>|-|+
-         swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
-         cycle <numer>|<nazwa> [<numer>|<nazwa>...]
-         merge <numer>
-         unmerge [<numer>|-all]
-         hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
-         unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
-         renumber [<numer1> [<numer2> [<start>]]]
-         close [<n1>[-<n2>]|<nazwa>]
-         notify <poziom>
+         add [-free] [-switch] <name>
+         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
+         move <number>|-|+
+         swap <number1>|<name1> [<number2>|<name2>]
+         cycle <number>|<name> [<number>|<name>...]
+         merge <number>
+         unmerge [<number>|-all]
+         hide [<number>|<name>|-all [<number>|<name>...]]
+         unhide [<number>|<name>|-all [<number>|<name>...]]
+         renumber [<number1> [<number2> [<start>]]]
+         close [<n1>[-<n2>]|<name>]
+         notify <level>
          localvar
-         set <opcja> [<wartość>]
-         get <opcja>
-         <numer>|-|+|<nazwa>
+         set <property> [<value>]
+         get <property>
+         <number>|-|+|<name>
 
-    list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
-   clear: czyści zawartość bufora (numer bufora, -merged dla połączonych buforów, -all dla wszystkich buforów, lub nic dla obecnego bufora)
-    move: przesuwa bufor na liście (może być względne, np -1); "-" = przesuwa na pierwszy numer, "+" = przesuwa na ostatni numer bufora +1
-    swap: zamienia miejscami dwa bufory (zamienia z obecnym buforem, jeśli podano tylko jeden numer/nazwę)
-   cycle: przełącza w pętli między listą buforów
-   merge: łączy obecny bufor z innym (obszar rozmowy zostanie pomieszany między oba bufory)
-          (domyślnie ctrl-x przełącza pomiędzy połączonymi buforami)
- unmerge: odłącza bufor od innych mających taki sam numer
-    hide: ukrywa bufor
-  unhide: przywraca ukryty bufor
-renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_auto_renumber jest wyłączona)
-   close: zamyka bufor (numer/przedział są opcjonalne)
-  notify: ustawia poziom powiadomień dla obecnego bufora: ten poziom określa czy bufor zostanie dodany do hotlisty czy nie:
-               none: nigdy
-          highlight: tylko dla higlightów
-            message: wiadomości od użytkowników + highlighty
-                all: wszystkie wiadomości
-              reset: przywraca wartości domyślne (all)
-localvar: wyświetla zmienne lokalne obecnego bufora
-     set: ustawia właściwość obecnego bufora
-     get: wyświetla właściwości obecnego bufora
-  numer: przechodzi do bufora o numerze, dostępne prefiksy:
-          '+': przejście względne, dodaje numer do obecnego
-          '-': przejście względne, odejmuje numer od obecnego
-          '*': przejście do numeru, używając opcji "weechat.look.jump_current_to_previous_buffer"
-       -: przejście do pierwszego bufora
-       +: przejście do ostatniego bufora
-    nazwa: przejście do bufora o (częściowej) nazwie
+    list: list buffers (without argument, this list is displayed)
+     add: add a new buffer (it can be closed with "/buffer close" or input "q")
+   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
+    swap: swap two buffers (swap with current buffer if only one number/name given)
+   cycle: jump loop between a list of buffers
+   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
+          (by default ctrl-x switches between merged buffers)
+ unmerge: unmerge buffer from other buffers which have same number
+    hide: hide the buffer
+  unhide: unhide the buffer
+renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
+   close: close buffer (number/range or name is optional)
+  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+               none: never
+          highlight: for highlights only
+            message: for messages from users + highlights
+                all: all messages
+              reset: reset to default value (all)
+localvar: display local variables for current buffer
+     set: set a property for current buffer
+     get: display a property of current buffer
+  number: jump to buffer by number, possible prefix:
+          '+': relative jump, add number to current
+          '-': relative jump, sub number to current
+          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
+       -: jump to first buffer number
+       +: jump to last buffer number
+    name: jump to buffer by (partial) name
 
-Przykłady:
-  czyści zawartość obecnego bufora:
+Examples:
+  clear current buffer:
     /buffer clear
-  przenosi bufor na numer 5:
+  move buffer to number 5:
     /buffer move 5
-  zamienia bufor 1 z 3:
+  swap buffer 1 with 3:
     /buffer swap 1 3
-  zamienia bufor #weechat z obecnym buforem:
+  swap buffer #weechat with current buffer:
     /buffer swap #weechat
-  przełączajw pętli między #chan1, #chan2, #chan3:
+  jump on #chan1, #chan2, #chan3 and loop:
     /buffer cycle #chan1 #chan2 #chan3
-  łączy z głównym buforem:
+  merge with core buffer:
     /buffer merge 1
-  odłącza bufory:
+  unmerge buffer:
     /buffer unmerge
-  zamyka obecny bufor:
+  close current buffer:
     /buffer close
-  zamyka bufory od 5 do 7:
+  close buffers 5 to 7:
     /buffer close 5-7
-  przechodzi do #weechat:
+  jump to #weechat:
     /buffer #weechat
-  przechodzi do następnego bufora:
+  jump to next buffer:
     /buffer +1
-  przechodzi do ostatniego bufora:
+  jump to last buffer number:
     /buffer +
 ----
 

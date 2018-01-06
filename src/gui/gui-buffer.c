@@ -42,6 +42,7 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
 #include "../core/wee-log.h"
+#include "../core/wee-secure.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
@@ -72,6 +73,11 @@ int gui_buffers_visited_index = -1;             /* index of pointer in list */
 int gui_buffers_visited_count = 0;              /* number of visited buffers*/
 int gui_buffers_visited_frozen = 0;             /* 1 to forbid list updates */
 struct t_gui_buffer *gui_buffer_last_displayed = NULL; /* last b. displayed */
+
+char *gui_buffer_reserved_names[] =
+{ GUI_BUFFER_MAIN, SECURE_BUFFER_NAME, GUI_COLOR_BUFFER_NAME,
+  NULL
+};
 
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };

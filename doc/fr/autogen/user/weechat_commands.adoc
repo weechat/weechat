@@ -69,6 +69,7 @@ Exemples :
 
 ----
 /buffer  list
+         add [-free] [-switch] <nom>
          clear [<nombre>|<nom>|-merged|-all [<nombre>|<nom>...]]
          move <nombre>|-|+
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
@@ -86,6 +87,7 @@ Exemples :
          <nombre>|<nom>
 
     list : lister les tampons ouverts (sans paramètre, cette liste est affichée)
+     add : ajouter un nouveau tampon (il peut être fermé avec "/buffer close" ou l'entrée "q")
    clear : effacer le contenu du tampon (un numéro pour un tampon, -merged pour les tampons mélangés, -all pour tous les tampons, ou rien pour le tampon courant)
     move : déplacer le tampon dans la liste (peut être relatif, par exemple -1) ; "-" = déplacer vers le premier numéro de tampon, "+" = déplacer vers le dernier numéro de tampon + 1
     swap : échanger deux tampons (échanger avec le tampon courant si un seul numéro/nom donné)

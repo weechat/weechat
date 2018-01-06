@@ -69,6 +69,7 @@ Examples:
 
 ----
 /buffer  list
+         add [-free] [-switch] <name>
          clear [<number>|<name>|-merged|-all [<number>|<name>...]]
          move <number>|-|+
          swap <number1>|<name1> [<number2>|<name2>]
@@ -86,6 +87,7 @@ Examples:
          <number>|-|+|<name>
 
     list: list buffers (without argument, this list is displayed)
+     add: add a new buffer (it can be closed with "/buffer close" or input "q")
    clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
     move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
     swap: swap two buffers (swap with current buffer if only one number/name given)

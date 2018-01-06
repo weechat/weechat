@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option "add" in command /buffer (issue #1113)
   * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
   * api: add hashtable with variables in plugin structure
   * scripts: add "eval" option in script commands and info "xxx_eval" (python, perl, ruby, lua and guile) (issue #128)

@@ -537,6 +537,28 @@ command_buffer_display_localvar (void *data,
 }
 
 /*
+ * Input callback for custom buffers.
+ */
+
+int
+command_buffer_input_cb (const void *pointer,
+                         void *data,
+                         struct t_gui_buffer *buffer,
+                         const char *input_data)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (string_strcasecmp (input_data, "q") == 0)
+    {
+        gui_buffer_close (buffer);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for command "/buffer": manages buffers.
  */
 
@@ -547,7 +569,7 @@ COMMAND_CALLBACK(buffer)
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
     int i, error_main_buffer, num_buffers, count, prev_number, clear_number;
-    int buffer_found;
+    int buffer_found, arg_name, type_free, switch_to_buffer;
 
     /* make C compiler happy */
     (void) pointer;
@@ -581,6 +603,49 @@ COMMAND_CALLBACK(buffer)
                              (ptr_buffer->hidden) ? _("(hidden)") : "");
         }
 
+        return WEECHAT_RC_OK;
+    }
+
+    /* create a new buffer */
+    if (string_strcasecmp (argv[1], "add") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "add");
+        arg_name = 2;
+        type_free = 0;
+        switch_to_buffer = 0;
+        for (i = 2; i < argc; i++)
+        {
+            if (string_strcasecmp (argv[i], "-free") == 0)
+                type_free = 1;
+            else if (string_strcasecmp (argv[i], "-switch") == 0)
+                switch_to_buffer = 1;
+            else
+                arg_name = i;
+        }
+        for (i = 0; gui_buffer_reserved_names[i]; i++)
+        {
+            if (strcmp (argv[arg_name], gui_buffer_reserved_names[i]) == 0)
+                break;
+        }
+        if (gui_buffer_reserved_names[i])
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: name \"%s\" is reserved for WeeChat"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[arg_name]);
+            return WEECHAT_RC_OK;
+        }
+        ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE, argv[arg_name]);
+        if (!ptr_buffer)
+        {
+            ptr_buffer = gui_buffer_new (NULL, argv[arg_name],
+                                         &command_buffer_input_cb, NULL, NULL,
+                                         NULL, NULL, NULL);
+            if (ptr_buffer && type_free)
+                gui_buffer_set (ptr_buffer, "type", "free");
+        }
+        if (ptr_buffer && switch_to_buffer)
+            gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
         return WEECHAT_RC_OK;
     }
 
@@ -6988,6 +7053,7 @@ command_init ()
         NULL, "buffer",
         N_("manage buffers"),
         N_("list"
+           " || add [-free] [-switch] <name>"
            " || clear [<number>|<name>|-merged|-all [<number>|<name>...]]"
            " || move <number>|-|+"
            " || swap <number1>|<name1> [<number2>|<name2>]"
@@ -7004,6 +7070,8 @@ command_init ()
            " || get <property>"
            " || <number>|-|+|<name>"),
         N_("    list: list buffers (without argument, this list is displayed)\n"
+           "     add: add a new buffer (it can be closed with \"/buffer close\" "
+           "or input \"q\")\n"
            "   clear: clear buffer content (number for a buffer, -merged for "
            "merged buffers, -all for all buffers, or nothing for current buffer)\n"
            "    move: move buffer in the list (may be relative, for example -1); "
@@ -7065,7 +7133,8 @@ command_init ()
            "    /buffer +1\n"
            "  jump to last buffer number:\n"
            "    /buffer +"),
-        "clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
+        "add -free|-switch"
+        " || clear -merged|-all|%(buffers_numbers)|%(buffers_plugins_names) "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || move %(buffers_numbers)"
         " || swap %(buffers_numbers)|%(buffers_plugins_names) "

@@ -235,6 +235,7 @@ extern int gui_buffers_visited_index;
 extern int gui_buffers_visited_count;
 extern int gui_buffers_visited_frozen;
 extern struct t_gui_buffer *gui_buffer_last_displayed;
+extern char *gui_buffer_reserved_names[];
 extern char *gui_buffer_notify_string[];
 extern char *gui_buffer_properties_get_integer[];
 extern char *gui_buffer_properties_get_string[];
