@@ -575,29 +575,29 @@ TEST(String, Regex)
     string_regex_flags ("", REG_EXTENDED, &flags);
     LONGS_EQUAL(REG_EXTENDED, flags);
 
-    ptr = string_regex_flags ("test", REG_EXTENDED, &flags);
+    ptr = string_regex_flags ("test1", REG_EXTENDED, &flags);
     LONGS_EQUAL(REG_EXTENDED, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test1", ptr);
 
-    string_regex_flags ("(?e)test", 0, &flags);
+    ptr = string_regex_flags ("(?e)test2", 0, &flags);
     LONGS_EQUAL(REG_EXTENDED, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test2", ptr);
 
-    string_regex_flags ("(?ei)test", 0, &flags);
+    ptr = string_regex_flags ("(?ei)test3", 0, &flags);
     LONGS_EQUAL(REG_EXTENDED | REG_ICASE, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test3", ptr);
 
-    string_regex_flags ("(?eins)test", 0, &flags);
+    ptr = string_regex_flags ("(?eins)test4", 0, &flags);
     LONGS_EQUAL(REG_EXTENDED | REG_ICASE | REG_NEWLINE | REG_NOSUB, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test4", ptr);
 
-    string_regex_flags ("(?ins)test", REG_EXTENDED, &flags);
+    ptr = string_regex_flags ("(?ins)test5", REG_EXTENDED, &flags);
     LONGS_EQUAL(REG_EXTENDED | REG_ICASE | REG_NEWLINE | REG_NOSUB, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test5", ptr);
 
-    string_regex_flags ("(?ins-e)test", REG_EXTENDED, &flags);
+    ptr = string_regex_flags ("(?ins-e)test6", REG_EXTENDED, &flags);
     LONGS_EQUAL(REG_ICASE | REG_NEWLINE | REG_NOSUB, flags);
-    STRCMP_EQUAL("test", ptr);
+    STRCMP_EQUAL("test6", ptr);
 
     /* compile regular expression */
     LONGS_EQUAL(-1, string_regcomp (&regex, NULL, 0));
