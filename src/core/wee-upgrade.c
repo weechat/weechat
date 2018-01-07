@@ -854,6 +854,8 @@ upgrade_weechat_load ()
     gui_color_buffer_assign ();
     gui_color_buffer_display ();
 
+    gui_buffer_user_set_callbacks ();
+
     secure_buffer_assign ();
     secure_buffer_display ();
 

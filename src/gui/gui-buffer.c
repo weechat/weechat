@@ -553,6 +553,31 @@ gui_buffer_input_buffer_init (struct t_gui_buffer *buffer)
 }
 
 /*
+ * Checks if the name is reserved for WeeChat.
+ *
+ * Returns:
+ *   0: name is not reserved for WeeChat
+ *   1: name is reserved for WeeChat
+ */
+
+int
+gui_buffer_is_reserved_name (const char *name)
+{
+    int i;
+
+    if (!name)
+        return 0;
+
+    for (i = 0; gui_buffer_reserved_names[i]; i++)
+    {
+        if (strcmp (name, gui_buffer_reserved_names[i]) == 0)
+            break;
+    }
+
+    return (gui_buffer_reserved_names[i]) ? 1 : 0;
+}
+
+/*
  * Creates a new buffer in current window.
  *
  * Returns pointer to new buffer, NULL if error.
@@ -760,6 +785,71 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     }
 
     return new_buffer;
+}
+
+/*
+ * Input callback for user buffers.
+ */
+
+int
+gui_buffer_user_input_cb (const void *pointer, void *data,
+                          struct t_gui_buffer *buffer, const char *input_data)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (string_strcasecmp (input_data, "q") == 0)
+    {
+        gui_buffer_close (buffer);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Creates a new user buffer in current window.
+ *
+ * Returns pointer to new buffer, NULL if error.
+ */
+
+struct t_gui_buffer *
+gui_buffer_new_user (const char *name)
+{
+    struct t_gui_buffer *new_buffer;
+
+    new_buffer = gui_buffer_new (NULL, name,
+                                 &gui_buffer_user_input_cb, NULL, NULL,
+                                 NULL, NULL, NULL);
+    if (new_buffer)
+        gui_buffer_set (new_buffer, "localvar_set_type", "user");
+
+    return new_buffer;
+}
+
+/*
+ * Sets callbacks on user buffers.
+ */
+
+void
+gui_buffer_user_set_callbacks ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    const char *ptr_type;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (!ptr_buffer->plugin
+            && !gui_buffer_is_reserved_name (ptr_buffer->name))
+        {
+            ptr_type = gui_buffer_get_string (ptr_buffer, "localvar_type");
+            if (ptr_type && (strcmp (ptr_type, "user") == 0))
+            {
+                ptr_buffer->input_callback = &gui_buffer_user_input_cb;
+            }
+        }
+    }
 }
 
 /*

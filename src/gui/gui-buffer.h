@@ -249,6 +249,7 @@ extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_notify_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
+extern int gui_buffer_is_reserved_name (const char *name);
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             const char *name,
                                             int (*input_callback)(const void *pointer,
@@ -262,6 +263,8 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   struct t_gui_buffer *buffer),
                                             const void *close_callback_pointer,
                                             void *close_callback_data);
+extern struct t_gui_buffer *gui_buffer_new_user (const char *name);
+extern void gui_buffer_user_set_callbacks ();
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                   const char *string);

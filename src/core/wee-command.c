@@ -537,28 +537,6 @@ command_buffer_display_localvar (void *data,
 }
 
 /*
- * Input callback for custom buffers.
- */
-
-int
-command_buffer_input_cb (const void *pointer,
-                         void *data,
-                         struct t_gui_buffer *buffer,
-                         const char *input_data)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-
-    if (string_strcasecmp (input_data, "q") == 0)
-    {
-        gui_buffer_close (buffer);
-    }
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Callback for command "/buffer": manages buffers.
  */
 
@@ -622,12 +600,7 @@ COMMAND_CALLBACK(buffer)
             else
                 arg_name = i;
         }
-        for (i = 0; gui_buffer_reserved_names[i]; i++)
-        {
-            if (strcmp (argv[arg_name], gui_buffer_reserved_names[i]) == 0)
-                break;
-        }
-        if (gui_buffer_reserved_names[i])
+        if (gui_buffer_is_reserved_name (argv[arg_name]))
         {
             gui_chat_printf (NULL,
                              _("%sError: name \"%s\" is reserved for WeeChat"),
@@ -638,9 +611,7 @@ COMMAND_CALLBACK(buffer)
         ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE, argv[arg_name]);
         if (!ptr_buffer)
         {
-            ptr_buffer = gui_buffer_new (NULL, argv[arg_name],
-                                         &command_buffer_input_cb, NULL, NULL,
-                                         NULL, NULL, NULL);
+            ptr_buffer = gui_buffer_new_user (argv[arg_name]);
             if (ptr_buffer && type_free)
                 gui_buffer_set (ptr_buffer, "type", "free");
         }
