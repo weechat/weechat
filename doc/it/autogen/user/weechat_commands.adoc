@@ -640,13 +640,15 @@ Senza argomento, questo comando elenca i plugin caricati.
 * `+print+`: display text on a buffer
 
 ----
-/print  [-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
+/print  [-buffer <number>|<name>] [-core|-current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
         -stdout|-stderr [<text>]
         -beep
 
  -buffer: display text in this buffer (default: buffer where command is executed)
    -core: alias of "-buffer core.weechat"
 -current: display text on current buffer
+      -y: display on a custom line (for buffer with free content only)
+    line: line number for buffer with free content (first line is 0, a negative number displays after last line: -1 = after last line, -2 = two lines after last line, ...)
  -escape: interpret escaped chars (for example \a, \07, \x07)
    -date: message date, format can be:
             -n: 'n' seconds before now

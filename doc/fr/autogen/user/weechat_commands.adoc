@@ -640,13 +640,15 @@ Sans paramètre, cette commande liste les extensions chargées.
 * `+print+`: afficher du texte dans un tampon
 
 ----
-/print  [-buffer <numéro>|<nom>] [-core] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
+/print  [-buffer <numéro>|<nom>] [-core|-current] [-y <ligne>] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
         -stdout|-stderr [<texte>]
         -beep
 
  -buffer : afficher le texte dans ce tampon (par défaut : tampon où est exécutée la commande)
    -core : alias de "-buffer core.weechat"
 -current : afficher le texte dans le tampon courant
+      -y : afficher sur une ligne personnalisée (pour un tampon avec contenu libre seulement)
+   ligne : numéro de ligne pour un tampon avec contenu libre (la première ligne est 0, un nombre négatif affiche après la dernière ligne : -1 = après la dernière ligne, -2 = deux lignes après la dernière ligne, etc...)
  -escape : interpréter les caractères échappés (par exemple \a, \07, \x07)
    -date : date du message, le format peut être :
              -n : 'n' secondes avant maintenant

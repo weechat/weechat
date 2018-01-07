@@ -4639,7 +4639,7 @@ COMMAND_CALLBACK(plugin)
 COMMAND_CALLBACK(print)
 {
     struct t_gui_buffer *ptr_buffer;
-    int i, escape, to_stdout, to_stderr;
+    int i, y, escape, to_stdout, to_stderr, free_content;
     time_t date, date_now;
     struct tm tm_date;
     char *tags, *pos, *text, *text2, *error, empty_string[1] = { '\0' };
@@ -4651,6 +4651,7 @@ COMMAND_CALLBACK(print)
     (void) data;
 
     ptr_buffer = buffer;
+    y = -1;
     date = 0;
     tags = NULL;
     prefix = NULL;
@@ -4681,6 +4682,17 @@ COMMAND_CALLBACK(print)
         else if (string_strcasecmp (argv[i], "-escape") == 0)
         {
             escape = 1;
+        }
+        else if (string_strcasecmp (argv[i], "-y") == 0)
+        {
+            if (i + 1 >= argc)
+                COMMAND_ERROR;
+            i++;
+            error = NULL;
+            value = strtol (argv[i], &error, 10);
+            if (!error || error[0])
+                COMMAND_ERROR;
+            y = (int)value;
         }
         else if (string_strcasecmp (argv[i], "-date") == 0)
         {
@@ -4783,7 +4795,9 @@ COMMAND_CALLBACK(print)
             argv_eol[i] + 1 : argv_eol[i];
     }
     else
+    {
         ptr_text = empty_string;
+    }
 
     if (to_stdout || to_stderr)
     {
@@ -4797,6 +4811,9 @@ COMMAND_CALLBACK(print)
     }
     else
     {
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_main ();
+        free_content = (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FREE));
         text = strdup (ptr_text);
         if (text)
         {
@@ -4806,7 +4823,7 @@ COMMAND_CALLBACK(print)
                 pos = strstr (text, "\\t");
                 if (pos)
                 {
-                    pos[0] = '\t';
+                    pos[0] = (free_content) ? ' ' : '\t';
                     memmove (pos + 1, pos + 2, strlen (pos + 2) + 1);
                 }
             }
@@ -4814,11 +4831,21 @@ COMMAND_CALLBACK(print)
                 string_convert_escaped_chars (text) : strdup (text);
             if (text2)
             {
-                gui_chat_printf_date_tags (
-                    ptr_buffer, date, tags,
-                    "%s%s",
-                    (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
-                    text2);
+                if (free_content)
+                {
+                    gui_chat_printf_y (ptr_buffer, y,
+                                       "%s%s",
+                                       (prefix) ? prefix : "",
+                                       text2);
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (
+                        ptr_buffer, date, tags,
+                        "%s%s",
+                        (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
+                        text2);
+                }
                 free (text2);
             }
             free (text);
@@ -7784,14 +7811,20 @@ command_init ()
     hook_command (
         NULL, "print",
         N_("display text on a buffer"),
-        N_("[-buffer <number>|<name>] [-core] [-escape] [-date <date>] "
-           "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
+        N_("[-buffer <number>|<name>] [-core|-current] [-y <line>] [-escape] "
+           "[-date <date>] [-tags <tags>] "
+           "[-action|-error|-join|-network|-quit] [<text>]"
            " || -stdout|-stderr [<text>]"
            " || -beep"),
         N_(" -buffer: display text in this buffer (default: buffer where "
            "command is executed)\n"
            "   -core: alias of \"-buffer core.weechat\"\n"
            "-current: display text on current buffer\n"
+           "      -y: display on a custom line (for buffer with free content "
+           "only)\n"
+           "    line: line number for buffer with free content (first line "
+           "is 0, a negative number displays after last line: -1 = after last "
+           "line, -2 = two lines after last line, ...)\n"
            " -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
            "   -date: message date, format can be:\n"
            "            -n: 'n' seconds before now\n"
@@ -7829,7 +7862,9 @@ command_init ()
            "  send alert (BEL):\n"
            "    /print -beep"),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
-        " || -core|-escape|-date|-tags|-action|-error|-join|-network|-quit"
+        " || -y -1|0|1|2|3"
+        " || -core|-current|-escape|-date|-tags|-action|-error|-join|"
+        "-network|-quit"
         " || -stdout"
         " || -stderr"
         " || -beep",
