@@ -1061,9 +1061,6 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
     if (flags)
         *flags = default_flags;
 
-    if (!regex)
-        return NULL;
-
 #ifdef HAVE_PCRE
     if (flags)
     {
@@ -1074,8 +1071,10 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
     }
 
     return regex;
-
 #else /* HAVE_PCRE */
+    if (!regex)
+        return NULL;
+
     ptr_regex = regex;
     while (strncmp (ptr_regex, "(?", 2) == 0)
     {
