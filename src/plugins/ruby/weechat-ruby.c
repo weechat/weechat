@@ -569,7 +569,7 @@ struct t_plugin_script *
 weechat_ruby_load (const char *filename, const char *code)
 {
     char modname[64];
-    VALUE ruby_retcode, err, argv[1];
+    VALUE ruby_retcode, err, argv[2];
     int ruby_error;
     struct stat buf;
 
