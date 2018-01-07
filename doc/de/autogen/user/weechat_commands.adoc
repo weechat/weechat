@@ -86,60 +86,60 @@ Beispiele:
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-     add: add a new buffer (it can be closed with "/buffer close" or input "q")
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: alle geöffneten Buffer werden aufgelistet (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+     add: öffnet einen neuen Buffer (dieser kann mit "/buffer close" oder "q" in der Eingabezeile, beendet werden)
+   clear: leert den Inhalt des Buffers (entweder durch Angabe der entsprechenden Nummer des Buffers oder "-merged " für zusammengefügte Buffer oder "-all" für alle Buffer. Ohne Angabe eines Arguments wird der aktuelle Buffer gelöscht)
+    move: Buffer in der Liste verschieben (kann auch relativ sein, z.B. -1); "-" = auf erste Position verschieben, "+" = auf letzte Position + 1 verschieben
+    swap: tauscht zwei Buffer miteinander aus (bei Angabe von nur einem Buffer (Buffernummer/-name), wird der aktuelle Buffer mit dem angegebenen Buffer getauscht)
+   cycle: springt in einer Schleife von einem Buffer zum nächsten, die in einer Liste angegeben werden
+   merge: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei einem Chat-Buffer entsteht eine Zusammenfügung von zwei Buffer
+         (Bei der Standardtastenbelegung kann mittels "CTRL-x" zwischen zusammengefügten Buffern umgeschaltet werden)
+ unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
+    hide: versteckt einen Buffer
+  unhide: macht Buffer wieder sichtbar
+renumber: Buffer werden um nummeriert (Einstellung weechat.look.buffer_auto_renumber muss deaktiviert sein)
+   close: Buffer schließen (Nummer oder Bereich ist optional)
+  notify: setzt den Status der Benachrichtigung für den aktuellen Buffer. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung:
+            none: keine Benachrichtigung
+       highlight: Benachrichtigung bei hervorgehobenen Nachrichten (Highlights)
+         message: Benachrichtigung bei Nachrichten von Usern + Highlights
+             all: Benachrichtigung bei allen Nachrichten
+           reset: Benachrichtigung auf Standardwert zurück setzen (all)
+localvar: zeigt die lokalen Variablen für den aktuellen Buffer an
+     set: setzt eine Eigenschaft für den aktuellen Buffer
+     get: zeigt eine Eigenschaft für den aktuellen Buffer an
+  number: wechselt von einem Buffer zu einem anderen, mögliche Optionen:
+          '+': relativer Sprung um 'n'-Buffer
+          '-': relativer Sprung, um 'n'-Buffer
+          '*': wechselt zum Buffer mit der Nummer 'n'; nutzt die interne Einstellung "weechat.look.jump_current_to_previous_buffer"
+       -: springt zum ersten Buffer
+       +: springt zum letzten Buffer
+    name: wechselt zum Buffer mit dem angegebenen Namen (Name muss nicht vollständig sein!)
 
-Examples:
-  clear current buffer:
+Beispiele:
+  leert den aktuellen Buffer:
     /buffer clear
-  move buffer to number 5:
+  verschiebt Buffer auf Position 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  tauscht Buffer 1 und 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  tauscht Buffer #weechat und den aktuellen Buffer:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  springt in einer Schleife zu den Buffern #chan1, #chan2, #chan3:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  verbindet Buffer mit dem Core-Buffer:
     /buffer merge 1
-  unmerge buffer:
+  trennt Buffer voneinander:
     /buffer unmerge
-  close current buffer:
+  schließt aktuellen Buffer:
     /buffer close
-  close buffers 5 to 7:
+  schließt Buffer 5 bis 7:
     /buffer close 5-7
-  jump to #weechat:
+  wechselt zum Buffer: #weechat:
     /buffer #weechat
-  jump to next buffer:
+  wechselt zum nächsten Buffer:
     /buffer +1
-  jump to last buffer number:
+  springt zum letzten Buffer:
     /buffer +
 ----
 
@@ -644,41 +644,41 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
         -stdout|-stderr [<text>]
         -beep
 
- -buffer: display text in this buffer (default: buffer where command is executed)
-   -core: alias of "-buffer core.weechat"
--current: display text on current buffer
-      -y: display on a custom line (for buffer with free content only)
-    line: line number for buffer with free content (first line is 0, a negative number displays after last line: -1 = after last line, -2 = two lines after last line, ...)
- -escape: interpret escaped chars (for example \a, \07, \x07)
-   -date: message date, format can be:
-            -n: 'n' seconds before now
-            +n: 'n' seconds in the future
-             n: 'n' seconds since the Epoch (see man time)
-            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-            time: hh:mm:ss (example: 04:32:55)
-   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
- -stdout: display text on stdout (escaped chars are interpreted)
- -stderr: display text on stderr (escaped chars are interpreted)
-   -beep: alias of "-stderr \a"
+-buffer: Buffer in welchem der Text ausgegeben werden soll (standardmäßig: aktueller Buffer)
+  -core: Alternativname für "-buffer core.weechat"
+-current: Text wird im aktuell genutzten Buffer ausgegeben
+      -y: schreibt den Text in die angegebene Zeile (nur bei Buffern mit freiem Inhalt)
+    line: Zeilennummer bei einem Buffer mit freiem Inhalt (erste Zeile ist 0, bei einer negative Zahl wird der Text nach der letzten Zeile eingefügt: -1 = nach der letzten Zeile, -2 = zwei Zeilen, nach der letzten Zeile, ...)
+-escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
+  -date: Datum der Nachricht, mögliche Formatierung:
+           -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
+           +n: 'n' in Zukunft, in Sekunden
+            n: 'n' Sekunden seit der Epoche (siehe man time)
+           date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, Beispiel: 2014-01-19T04:32:55
+           time: hh:mm:ss (Beispiel: 04:32:55)
+  -tags: durch Kommata getrennte Liste von Tags (siehe /help filter für eine Liste von Tags die häufig genutzt werden)
+   text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden)
+-stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
+-stderr: Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
+  -beep: Alias für "-stderr \a"
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Das Argument -action ... -quit nutzt den Präfix der in der Einstellung "weechat.look.prefix_*" definiert ist.
 
-Following escaped chars are supported:
+Folgende Escapesequenzen werden unterstützt:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Beispiele:
+  zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
+    /print -core -tags notify_highlight Reminder: Milch kaufen
+  zeigt eine Fehlernachricht im Core-Buffer an:
+    /print -core -error irgend ein Fehler
+  zeigt eine Nachricht im Core-Buffer mit dem Präfix "abc" an:
+    /print -core abc\tmeine Nachricht
+  es wird eine Nachricht im Channel #weechat ausgegeben:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  gibt einen Schneemann aus (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  verschickt Alarm (BEL):
     /print -beep
 ----
 

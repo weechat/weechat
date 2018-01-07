@@ -10,7 +10,7 @@
 
 | fifo | fifo_filename | Name der FIFO-Pipe | -
 
-| guile | guile_eval | evaluation of source code | source code to execute
+| guile | guile_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | guile | guile_interpreter | Name des verwendeten Interpreters | -
 
@@ -34,25 +34,25 @@
 
 | irc | irc_server_isupport_value | Wert der Funktion, sofern es vom Server unterstützt wird (durch IRC Message 005) | Server,Funktion
 
-| javascript | javascript_eval | evaluation of source code | source code to execute
+| javascript | javascript_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | javascript | javascript_interpreter | Name des verwendeten Interpreters | -
 
 | javascript | javascript_version | Version des verwendeten Interpreters | -
 
-| lua | lua_eval | evaluation of source code | source code to execute
+| lua | lua_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | lua | lua_interpreter | Name des verwendeten Interpreters | -
 
 | lua | lua_version | Version des verwendeten Interpreters | -
 
-| perl | perl_eval | evaluation of source code | source code to execute
+| perl | perl_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | perl | perl_interpreter | Name des verwendeten Interpreters | -
 
 | perl | perl_version | Version des verwendeten Interpreters | -
 
-| php | php_eval | evaluation of source code | source code to execute
+| php | php_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | php | php_interpreter | Name des verwendeten Interpreters | -
 
@@ -60,7 +60,7 @@
 
 | python | python2_bin | Pfad für Python 2.x Interpreter | -
 
-| python | python_eval | evaluation of source code | source code to execute
+| python | python_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | python | python_interpreter | Name des verwendeten Interpreters | -
 
@@ -68,13 +68,13 @@
 
 | relay | relay_client_count | Anzahl an Clients für Relay | Statusname (optional): connecting, waiting_auth, connected, auth_failed, disconnected
 
-| ruby | ruby_eval | evaluation of source code | source code to execute
+| ruby | ruby_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | ruby | ruby_interpreter | Name des verwendeten Interpreters | -
 
 | ruby | ruby_version | Version des verwendeten Interpreters | -
 
-| tcl | tcl_eval | evaluation of source code | source code to execute
+| tcl | tcl_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
 | tcl | tcl_interpreter | Name des verwendeten Interpreters | -
 
