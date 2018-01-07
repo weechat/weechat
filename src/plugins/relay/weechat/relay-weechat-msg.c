@@ -904,9 +904,9 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                 relay_weechat_msg_add_pointer (msg, ptr_nick);
                 relay_weechat_msg_add_char (msg, 0); /* group */
                 relay_weechat_msg_add_char (msg,
-                                            (char)weechat_hdata_integer(ptr_hdata_nick,
-                                                                        ptr_nick,
-                                                                        "visible"));
+                                            (char)weechat_hdata_integer (ptr_hdata_nick,
+                                                                         ptr_nick,
+                                                                         "visible"));
                 relay_weechat_msg_add_int (msg, 0); /* level */
                 relay_weechat_msg_add_string (msg,
                                               weechat_hdata_string (ptr_hdata_nick,
@@ -932,9 +932,9 @@ relay_weechat_msg_add_nicklist_buffer (struct t_relay_weechat_msg *msg,
                 relay_weechat_msg_add_pointer (msg, ptr_group);
                 relay_weechat_msg_add_char (msg, 1); /* group */
                 relay_weechat_msg_add_char (msg,
-                                            (char)weechat_hdata_integer(ptr_hdata_group,
-                                                                        ptr_group,
-                                                                        "visible"));
+                                            (char)weechat_hdata_integer (ptr_hdata_group,
+                                                                         ptr_group,
+                                                                         "visible"));
                 relay_weechat_msg_add_int (msg,
                                            weechat_hdata_integer (ptr_hdata_group,
                                                                   ptr_group,

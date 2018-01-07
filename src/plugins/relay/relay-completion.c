@@ -47,7 +47,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     (void) buffer;
     (void) completion_item;
 
-    infolist = weechat_infolist_get("irc_server", NULL, NULL);
+    infolist = weechat_infolist_get ("irc_server", NULL, NULL);
     if (infolist)
     {
         while (weechat_infolist_next (infolist))

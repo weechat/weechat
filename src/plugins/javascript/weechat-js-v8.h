@@ -27,21 +27,21 @@
 class WeechatJsV8
 {
 public:
-    WeechatJsV8(void);
-    ~WeechatJsV8(void);
+    WeechatJsV8 (void);
+    ~WeechatJsV8 (void);
 
-    bool load(v8::Handle<v8::String>);
-    bool load(const char *);
+    bool load (v8::Handle<v8::String>);
+    bool load (const char *);
 
-    bool execScript(void);
-    bool functionExists(const char *);
-    v8::Handle<v8::Value> execFunction(const char *,
-                                       int argc, v8::Handle<v8::Value> *);
+    bool execScript (void);
+    bool functionExists (const char *);
+    v8::Handle<v8::Value> execFunction (const char *,
+                                        int argc, v8::Handle<v8::Value> *);
 
-    void addGlobal(v8::Handle<v8::String>, v8::Handle<v8::Template>);
-    void addGlobal(const char *, v8::Handle<v8::Template>);
+    void addGlobal (v8::Handle<v8::String>, v8::Handle<v8::Template>);
+    void addGlobal (const char *, v8::Handle<v8::Template>);
 
-    void loadLibs(void);
+    void loadLibs (void);
 
 private:
     v8::HandleScope handle_scope;

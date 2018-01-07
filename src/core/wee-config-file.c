@@ -1947,7 +1947,7 @@ int config_file_option_has_changed (struct t_config_option *option)
         case CONFIG_OPTION_TYPE_INTEGER:
             return CONFIG_INTEGER(option) != CONFIG_INTEGER_DEFAULT(option);
         case CONFIG_OPTION_TYPE_STRING:
-            return strcmp(CONFIG_STRING(option), CONFIG_STRING_DEFAULT(option)) != 0;
+            return strcmp (CONFIG_STRING(option), CONFIG_STRING_DEFAULT(option)) != 0;
         case CONFIG_OPTION_TYPE_COLOR:
             return CONFIG_COLOR(option) != CONFIG_COLOR_DEFAULT(option);
         case CONFIG_NUM_OPTION_TYPES:
@@ -2668,7 +2668,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         {
                             undefined_value = 0;
                             /* remove simple or double quotes and spaces at the end */
-                            if (strlen(pos) > 1)
+                            if (strlen (pos) > 1)
                             {
                                 pos2 = pos + strlen (pos) - 1;
                                 while ((pos2 > pos) && (pos2[0] == ' '))
@@ -3203,11 +3203,11 @@ config_file_hdata_config_option_cb (const void *pointer, void *data,
  */
 
 int
-config_file_add_option_to_infolist(struct t_infolist *infolist,
-                                   struct t_config_file *config_file,
-                                   struct t_config_section *section,
-                                   struct t_config_option *option,
-                                   const char *option_name)
+config_file_add_option_to_infolist (struct t_infolist *infolist,
+                                    struct t_config_file *config_file,
+                                    struct t_config_section *section,
+                                    struct t_config_option *option,
+                                    const char *option_name)
 {
     char *option_full_name, *value, *string_values;
     struct t_config_option *ptr_parent_option;

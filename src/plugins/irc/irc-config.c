@@ -224,7 +224,7 @@ irc_config_compute_nick_colors ()
     }
 
     /* if colors are displayed for nicks in nicklist, refresh them */
-    if (weechat_config_boolean(irc_config_look_color_nicks_in_nicklist))
+    if (weechat_config_boolean (irc_config_look_color_nicks_in_nicklist))
         irc_nick_nicklist_set_color_all ();
 }
 

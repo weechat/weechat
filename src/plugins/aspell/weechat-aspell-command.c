@@ -158,7 +158,7 @@ weechat_aspell_command_speller_list_dicts ()
     enchant_broker_list_dicts (broker, weechat_aspell_enchant_dict_describe_cb,
                                NULL);
 #else
-    config = new_aspell_config();
+    config = new_aspell_config ();
     list = get_aspell_dict_info_list (config);
     elements = aspell_dict_info_list_elements (list);
 

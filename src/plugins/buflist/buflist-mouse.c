@@ -331,8 +331,8 @@ buflist_mouse_init ()
                             &buflist_focus_cb, NULL, NULL);
     }
 
-    weechat_hook_hsignal(BUFLIST_MOUSE_HSIGNAL,
-                         &buflist_hsignal_cb, NULL, NULL);
+    weechat_hook_hsignal (BUFLIST_MOUSE_HSIGNAL,
+                          &buflist_hsignal_cb, NULL, NULL);
 
     return 1;
 }

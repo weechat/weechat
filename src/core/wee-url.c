@@ -871,7 +871,7 @@ weeurl_get_mask_value (struct t_url_constant *constants,
     {
         for (i = 0; i < num_items; i++)
         {
-            item = string_remove_quotes(items[i], "'\"");
+            item = string_remove_quotes (items[i], "'\"");
             if (item)
             {
                 index = weeurl_search_constant (constants, item);
@@ -1115,7 +1115,7 @@ weeurl_download (const char *url, struct t_hashtable *options)
         goto end;
     }
 
-    curl = curl_easy_init();
+    curl = curl_easy_init ();
     if (!curl)
     {
         rc = 3;

@@ -1920,22 +1920,22 @@ gui_key_hdata_key_cb (const void *pointer, void *data,
                       "gui_keys%s%s",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list(hdata, str_list, &gui_keys[i], 0);
+            hdata_new_list (hdata, str_list, &gui_keys[i], 0);
             snprintf (str_list, sizeof (str_list),
                       "last_gui_key%s%s",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list(hdata, str_list, &last_gui_key[i], 0);
+            hdata_new_list (hdata, str_list, &last_gui_key[i], 0);
             snprintf (str_list, sizeof (str_list),
                       "gui_default_keys%s%s",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list(hdata, str_list, &gui_default_keys[i], 0);
+            hdata_new_list (hdata, str_list, &gui_default_keys[i], 0);
             snprintf (str_list, sizeof (str_list),
                       "last_gui_default_key%s%s",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : "_",
                       (i == GUI_KEY_CONTEXT_DEFAULT) ? "" : gui_key_context_string[i]);
-            hdata_new_list(hdata, str_list, &last_gui_default_key[i], 0);
+            hdata_new_list (hdata, str_list, &last_gui_default_key[i], 0);
         }
     }
     return hdata;

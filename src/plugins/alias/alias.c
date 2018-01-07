@@ -312,7 +312,7 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
     struct t_gui_buffer *old_current_buffer, *new_current_buffer;
 
     /* save current buffer pointer */
-    old_current_buffer = weechat_current_buffer();
+    old_current_buffer = weechat_current_buffer ();
 
     /* execute command */
     string = weechat_buffer_string_replace_local_var (*buffer, command);
@@ -322,7 +322,7 @@ alias_run_command (struct t_gui_buffer **buffer, const char *command)
         free (string);
 
     /* get new current buffer */
-    new_current_buffer = weechat_current_buffer();
+    new_current_buffer = weechat_current_buffer ();
 
     /*
      * if current buffer was changed by command, then we'll use this one for
@@ -415,7 +415,7 @@ alias_cb (const void *pointer, void *data,
                     }
                     else
                     {
-                        alias_command = malloc (1 + strlen((args_replaced) ? args_replaced : *ptr_cmd) + 1);
+                        alias_command = malloc (1 + strlen ((args_replaced) ? args_replaced : *ptr_cmd) + 1);
                         if (alias_command)
                         {
                             strcpy (alias_command, "/");

@@ -2954,7 +2954,7 @@ IRC_COMMAND_CALLBACK(list)
                              REG_EXTENDED | REG_ICASE | REG_NOSUB)) != 0)
                     {
                         regerror (ret, ptr_server->cmd_list_regexp,
-                                  buf, sizeof(buf));
+                                  buf, sizeof (buf));
                         weechat_printf (
                             ptr_server->buffer,
                             _("%s%s: \"%s\" is not a valid regular expression "

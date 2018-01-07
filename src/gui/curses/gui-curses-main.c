@@ -265,13 +265,13 @@ gui_main_handle_quit_signals ()
     switch (weechat_quit_signal)
     {
         case SIGHUP:
-            snprintf (str_signal, sizeof(str_signal), "SIGHUP");
+            snprintf (str_signal, sizeof (str_signal), "SIGHUP");
             break;
         case SIGQUIT:
-            snprintf (str_signal, sizeof(str_signal), "SIGQUIT");
+            snprintf (str_signal, sizeof (str_signal), "SIGQUIT");
             break;
         case SIGTERM:
-            snprintf (str_signal, sizeof(str_signal), "SIGTERM");
+            snprintf (str_signal, sizeof (str_signal), "SIGTERM");
             break;
         default:
             str_signal[0] = '\0';
@@ -280,9 +280,9 @@ gui_main_handle_quit_signals ()
 
     if (str_signal[0])
     {
-        snprintf (str_weechat_signal, sizeof(str_weechat_signal),
+        snprintf (str_weechat_signal, sizeof (str_weechat_signal),
                   "signal_%s", str_signal);
-        string_tolower(str_weechat_signal);
+        string_tolower (str_weechat_signal);
         rc = hook_signal_send (str_weechat_signal,
                                WEECHAT_HOOK_SIGNAL_STRING, NULL);
         if ((rc != WEECHAT_RC_OK_EAT) && !weechat_quit)

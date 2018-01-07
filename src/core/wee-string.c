@@ -2175,7 +2175,7 @@ string_split_command (const char *command, char separator)
 
     nb_substr = 1;
     ptr = command;
-    while ((p = strchr(ptr, separator)) != NULL)
+    while ((p = strchr (ptr, separator)) != NULL)
     {
         nb_substr++;
         ptr = ++p;
@@ -2185,7 +2185,7 @@ string_split_command (const char *command, char separator)
     if (!array)
         return NULL;
 
-    buffer = malloc (strlen(command) + 1);
+    buffer = malloc (strlen (command) + 1);
     if (!buffer)
     {
         free (array);
@@ -2195,7 +2195,7 @@ string_split_command (const char *command, char separator)
     ptr = command;
     str_idx = 0;
     arr_idx = 0;
-    while(*ptr != '\0')
+    while (*ptr != '\0')
     {
         type = 0;
         if (*ptr == separator)
@@ -2235,7 +2235,7 @@ string_split_command (const char *command, char separator)
 
     free (buffer);
 
-    array2 = realloc (array, (arr_idx + 1) * sizeof(array[0]));
+    array2 = realloc (array, (arr_idx + 1) * sizeof (array[0]));
     if (!array2)
     {
         if (array)
@@ -2288,7 +2288,7 @@ string_iconv (int from_utf8, const char *from_code, const char *to_code,
 
 #ifdef HAVE_ICONV
     if (from_code && from_code[0] && to_code && to_code[0]
-        && (string_strcasecmp(from_code, to_code) != 0))
+        && (string_strcasecmp (from_code, to_code) != 0))
     {
         cd = iconv_open (to_code, from_code);
         if (cd == (iconv_t)(-1))

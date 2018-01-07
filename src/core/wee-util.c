@@ -359,7 +359,7 @@ util_catch_signal (int signum, void (*handler)(int))
     sigemptyset (&act.sa_mask);
     act.sa_flags = 0;
     act.sa_handler = handler;
-    sigaction(signum, &act, NULL);
+    sigaction (signum, &act, NULL);
 }
 
 /*
@@ -562,7 +562,7 @@ util_search_full_lib_name_ext (const char *filename, const char *extension,
     {
         length = strlen (extra_libdir) + strlen (name_with_ext) +
             strlen (plugins_dir) + 16;
-        final_name = malloc(length);
+        final_name = malloc (length);
         if (!final_name)
         {
             free (name_with_ext);
@@ -719,7 +719,7 @@ util_file_get_content (const char *filename)
         if (!buffer2)
             goto error;
         buffer = buffer2;
-        count = fread (&buffer[fp], sizeof(char), 1024, f);
+        count = fread (&buffer[fp], sizeof (char), 1024, f);
         if (count <= 0)
             goto error;
         fp += count;
@@ -739,7 +739,7 @@ error:
     if (buffer)
 	free (buffer);
     if (f)
-	fclose(f);
+	fclose (f);
     return NULL;
 }
 

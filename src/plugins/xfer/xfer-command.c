@@ -147,8 +147,8 @@ xfer_command_xfer_list (int full)
                                 ptr_xfer->remote_nick,
                                 ptr_xfer->local_nick,
                                 date,
-                                weechat_color(
-                                    weechat_config_string(
+                                weechat_color (
+                                    weechat_config_string (
                                         xfer_config_color_status[ptr_xfer->status])),
                                 _(xfer_status_string[ptr_xfer->status]));
             }

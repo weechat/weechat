@@ -688,11 +688,11 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     if (XFER_IS_RECV(type))
     {
         new_xfer->local_address_str = strdup ("");
-        xfer_set_remote_address(new_xfer, address, address_length, str_address);
+        xfer_set_remote_address (new_xfer, address, address_length, str_address);
     }
     else
     {
-        xfer_set_local_address(new_xfer, address, address_length, str_address);
+        xfer_set_local_address (new_xfer, address, address_length, str_address);
         new_xfer->remote_address_str = strdup ("");
     }
 
@@ -1184,7 +1184,7 @@ xfer_add_cb (const void *pointer, void *data,
     }
     else
     {
-        memset(&bind_addr, 0, sizeof(bind_addr));
+        memset (&bind_addr, 0, sizeof (bind_addr));
 
         /* determine bind_addr family from either own_ip or default */
         if (weechat_config_string (xfer_config_network_own_ip)

@@ -1062,9 +1062,9 @@ hook_timer_init (struct t_hook *hook)
 
     gettimeofday (&HOOK_TIMER(hook, last_exec), NULL);
     time_now = time (NULL);
-    local_time = localtime(&time_now);
+    local_time = localtime (&time_now);
     local_hour = local_time->tm_hour;
-    gm_time = gmtime(&time_now);
+    gm_time = gmtime (&time_now);
     gm_hour = gm_time->tm_hour;
     if ((local_time->tm_year > gm_time->tm_year)
         || (local_time->tm_mon > gm_time->tm_mon)
@@ -3680,7 +3680,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
     if (string_strcasecmp (property, "subplugin") == 0)
     {
         if (hook->subplugin)
-            free(hook->subplugin);
+            free (hook->subplugin);
         hook->subplugin = strdup (value);
     }
     else if (string_strcasecmp (property, "stdin") == 0)

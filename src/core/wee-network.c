@@ -160,7 +160,7 @@ network_end ()
         if (!weechat_no_gnutls)
         {
             gnutls_certificate_free_credentials (gnutls_xcred);
-            gnutls_global_deinit();
+            gnutls_global_deinit ();
         }
 #endif /* HAVE_GNUTLS */
         network_init_gnutls_ok = 0;
@@ -321,7 +321,7 @@ network_resolve (const char *hostname, char *ip, int *version)
     if (!res)
         return 0;
 
-    if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer),
+    if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof (ipbuffer),
                      NULL, 0, NI_NUMERICHOST) != 0)
     {
         freeaddrinfo (res);
@@ -494,9 +494,9 @@ network_pass_socks5proxy (struct t_proxy *proxy, int sock, const char *address,
     }
 
     /* authentication successful then giving address/port to connect */
-    addr_len = strlen(address);
+    addr_len = strlen (address);
     addr_buffer_len = 4 + 1 + addr_len + 2;
-    addr_buffer = malloc (addr_buffer_len * sizeof(*addr_buffer));
+    addr_buffer = malloc (addr_buffer_len * sizeof (*addr_buffer));
     if (!addr_buffer)
         return 0;
     addr_buffer[0] = 5;   /* version 5 */
@@ -984,7 +984,7 @@ network_connect_child (struct t_hook *hook_connect)
             if (tmp_num_groups >= retry)
             {
                 /* shuffle while adding */
-                rand_num = tmp_host + (rand() % ((i + 1) - tmp_host));
+                rand_num = tmp_host + (rand () % ((i + 1) - tmp_host));
                 if (rand_num == i)
                     res_reorder[i++] = ptr_res;
                 else
@@ -1015,7 +1015,7 @@ network_connect_child (struct t_hook *hook_connect)
             if (tmp_num_groups < retry)
             {
                 /* shuffle while adding */
-                rand_num = tmp_host + (rand() % ((i + 1) - tmp_host));
+                rand_num = tmp_host + (rand () % ((i + 1) - tmp_host));
                 if (rand_num == i)
                     res_reorder[i++] = ptr_res;
                 else
@@ -1208,7 +1208,7 @@ network_connect_child (struct t_hook *hook_connect)
             cmsg->cmsg_level = SOL_SOCKET;
             cmsg->cmsg_type = SCM_RIGHTS;
             cmsg->cmsg_len = CMSG_LEN(sizeof (sock));
-            memcpy(CMSG_DATA(cmsg), &sock, sizeof (sock));
+            memcpy (CMSG_DATA(cmsg), &sock, sizeof (sock));
             msg.msg_controllen = cmsg->cmsg_len;
             num_written = sendmsg (HOOK_CONNECT(hook_connect, child_send), &msg, 0);
             (void) num_written;
@@ -1470,7 +1470,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                         && cmsg->cmsg_type == SCM_RIGHTS
                         && cmsg->cmsg_len >= sizeof (sock))
                     {
-                        memcpy(&sock, CMSG_DATA(cmsg), sizeof (sock));
+                        memcpy (&sock, CMSG_DATA(cmsg), sizeof (sock));
                     }
                 }
             }

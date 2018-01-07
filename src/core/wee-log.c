@@ -273,7 +273,7 @@ log_crash_rename ()
                   local_time->tm_year + 1900,
                   local_time->tm_mon + 1,
                   local_time->tm_mday,
-                  getpid());
+                  getpid ());
         if (rename (old_name, new_name) == 0)
         {
             string_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",

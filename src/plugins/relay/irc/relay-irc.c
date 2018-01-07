@@ -1499,7 +1499,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              "weechat-relay-irc, running version %s",
                              RELAY_IRC_DATA(client, address),
                              RELAY_IRC_DATA(client, nick),
-                             weechat_info_get("version", NULL));
+                             weechat_info_get ("version", NULL));
             snprintf (str_time, sizeof (str_time), "%s",
                       ctime (&client->listen_start_time));
             if (str_time[0])
@@ -1514,7 +1514,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              RELAY_IRC_DATA(client, address),
                              RELAY_IRC_DATA(client, nick),
                              RELAY_IRC_DATA(client, address),
-                             weechat_info_get("version", NULL));
+                             weechat_info_get ("version", NULL));
             infolist_server = weechat_infolist_get ("irc_server", NULL,
                                                     client->protocol_args);
             if (infolist_server)

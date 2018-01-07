@@ -1497,7 +1497,7 @@ gui_color_init_weechat ()
 void
 gui_color_alloc ()
 {
-    if (has_colors())
+    if (has_colors ())
     {
         start_color ();
         use_default_colors ();

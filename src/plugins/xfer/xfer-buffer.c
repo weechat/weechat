@@ -57,9 +57,9 @@ xfer_buffer_refresh (const char *hotlist)
         xfer_selected = xfer_search_by_number (xfer_buffer_selected_line);
         weechat_printf_y (xfer_buffer, 0,
                           "%s%s%s%s%s%s%s%s",
-                          weechat_color("green"),
+                          weechat_color ("green"),
                           _("Actions (letter+enter):"),
-                          weechat_color("lightgreen"),
+                          weechat_color ("lightgreen"),
                           /* accept */
                           (xfer_selected && XFER_IS_RECV(xfer_selected->type)
                            && (xfer_selected->status == XFER_STATUS_WAITING)) ?
@@ -116,7 +116,7 @@ xfer_buffer_refresh (const char *hotlist)
             /* display first line with remote nick, filename and plugin name/id */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
                               "%s%s%-24s %s%s%s%s (%s.%s)%s%s",
-                              weechat_color(str_color),
+                              weechat_color (str_color),
                               (line == xfer_buffer_selected_line) ?
                               "*** " : "    ",
                               ptr_xfer->remote_nick,
@@ -154,12 +154,12 @@ xfer_buffer_refresh (const char *hotlist)
                 }
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%s",
-                                  weechat_color(str_color),
+                                  weechat_color (str_color),
                                   (line == xfer_buffer_selected_line) ?
                                   "*** " : "    ",
                                   (XFER_IS_SEND(ptr_xfer->type)) ?
                                   "<<--" : "-->>",
-                                  weechat_color(weechat_config_string (xfer_config_color_status[ptr_xfer->status])),
+                                  weechat_color (weechat_config_string (xfer_config_color_status[ptr_xfer->status])),
                                   status,
                                   weechat_color ("reset"),
                                   weechat_color (str_color),
@@ -228,10 +228,10 @@ xfer_buffer_refresh (const char *hotlist)
                 /* display second line for file with status, progress bar and estimated time */
                 weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   "%s%s%s %s%s%s%s%3llu%%   %s / %s  (%s%s/s)",
-                                  weechat_color(str_color),
+                                  weechat_color (str_color),
                                   (line == xfer_buffer_selected_line) ? "*** " : "    ",
                                   (XFER_IS_SEND(ptr_xfer->type)) ? "<<--" : "-->>",
-                                  weechat_color(weechat_config_string (xfer_config_color_status[ptr_xfer->status])),
+                                  weechat_color (weechat_config_string (xfer_config_color_status[ptr_xfer->status])),
                                   status,
                                   weechat_color (str_color),
                                   (progress_bar) ? progress_bar : "",

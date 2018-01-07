@@ -356,7 +356,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
         }
 
         /* set highlights settings on channel buffer */
-        weechat_buffer_set(
+        weechat_buffer_set (
             ptr_buffer,
             "highlight_words_add",
             (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ?
@@ -711,8 +711,8 @@ irc_channel_check_whox (struct t_irc_server *server,
         }
         else
         {
-            irc_channel_remove_account(server, channel);
-            irc_channel_remove_away(server, channel);
+            irc_channel_remove_account (server, channel);
+            irc_channel_remove_away (server, channel);
         }
     }
 }

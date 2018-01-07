@@ -138,7 +138,7 @@ utf8_is_valid (const char *string, int length, char **error)
             {
                 goto invalid;
             }
-            code_point = utf8_char_int(string);
+            code_point = utf8_char_int (string);
             if ((code_point < 0x10000) || (code_point > 0x1FFFFF))
                 goto invalid;
             string += 4;
@@ -433,7 +433,7 @@ utf8_char_size (const char *string)
 
 /*
  * Gets length of an UTF-8 string in number of chars (not bytes).
- * Result is <= strlen(string).
+ * Result is <= strlen (string).
  *
  * Returns length of string (>= 0).
  */

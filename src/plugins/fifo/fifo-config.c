@@ -50,7 +50,7 @@ fifo_config_change_file_enabled (const void *pointer, void *data,
     fifo_remove ();
 
     if (weechat_config_boolean (fifo_config_file_enabled))
-        fifo_create();
+        fifo_create ();
 }
 
 /*

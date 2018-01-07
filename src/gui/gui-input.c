@@ -364,7 +364,7 @@ gui_input_clipboard_copy (const char *buffer, int size)
     if (gui_input_clipboard != NULL)
         free (gui_input_clipboard);
 
-    gui_input_clipboard = malloc((size + 1) * sizeof(*gui_input_clipboard));
+    gui_input_clipboard = malloc ((size + 1) * sizeof (*gui_input_clipboard));
 
     if (gui_input_clipboard)
     {

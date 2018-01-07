@@ -320,7 +320,7 @@ irc_nick_get_color_for_nicklist (struct t_irc_server *server,
     if (nick->away)
         return nick_color_away;
 
-    if (weechat_config_boolean(irc_config_look_color_nicks_in_nicklist))
+    if (weechat_config_boolean (irc_config_look_color_nicks_in_nicklist))
     {
         if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
             return nick_color_self;

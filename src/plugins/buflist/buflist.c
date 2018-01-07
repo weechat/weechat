@@ -71,8 +71,8 @@ buflist_add_bar ()
  */
 
 void
-buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
-                                void **irc_server, void **irc_channel)
+buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
+                                 void **irc_server, void **irc_channel)
 {
     const char *ptr_server_name, *ptr_channel_name, *ptr_name;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;

@@ -159,7 +159,7 @@ weechat_tcl_dict_to_hashtable (Tcl_Interp *interp, Tcl_Obj *dict,
 
     if (Tcl_DictObjFirst (interp, dict, &search, &key, &value, &done) == TCL_OK)
     {
-        for (; !done ; Tcl_DictObjNext(&search, &key, &value, &done))
+        for (; !done ; Tcl_DictObjNext (&search, &key, &value, &done))
         {
             if (strcmp (type_values, WEECHAT_HASHTABLE_STRING) == 0)
             {
@@ -449,7 +449,7 @@ weechat_tcl_unload (struct t_plugin_script *script)
 
     plugin_script_remove (weechat_tcl_plugin, &tcl_scripts, &last_tcl_script, script);
 
-    Tcl_DeleteInterp(interp);
+    Tcl_DeleteInterp (interp);
 
     (void) weechat_hook_signal_send ("tcl_script_unloaded",
                                      WEECHAT_HOOK_SIGNAL_STRING, filename);

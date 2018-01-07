@@ -999,7 +999,7 @@ COMMAND_CALLBACK(buffer)
     /* close buffer */
     if (string_strcasecmp (argv[1], "close") == 0)
     {
-        weechat_buffer = gui_buffer_search_main();
+        weechat_buffer = gui_buffer_search_main ();
 
         if (argc < 3)
         {
@@ -5599,7 +5599,7 @@ command_set_display_option_list (const char *message, const char *search,
          * if we are displaying only changed options, skip options plugins.*
          * because they are all "changed" (default value is always empty string)
          */
-        if (display_only_changed && strcmp(ptr_config->name, "plugins") == 0)
+        if (display_only_changed && (strcmp (ptr_config->name, "plugins") == 0))
             continue;
         for (ptr_section = ptr_config->sections; ptr_section;
              ptr_section = ptr_section->next_section)
@@ -6266,7 +6266,7 @@ COMMAND_CALLBACK(uptime)
 
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
-        snprintf (str_first_start, sizeof(str_first_start),
+        snprintf (str_first_start, sizeof (str_first_start),
                   "%s", ctime (&weechat_first_start_time));
         if (str_first_start[0])
             str_first_start[strlen (str_first_start) - 1] = '\0';
@@ -6342,20 +6342,20 @@ command_version_display (struct t_gui_buffer *buffer,
 
         if (send_to_buffer_as_input && !translated_string)
         {
-            snprintf (str_first_start, sizeof(str_first_start),
+            snprintf (str_first_start, sizeof (str_first_start),
                       "%s", ctime (&weechat_first_start_time));
             if (str_first_start[0])
                 str_first_start[strlen (str_first_start) - 1] = '\0';
-            snprintf (str_last_start, sizeof(str_last_start),
+            snprintf (str_last_start, sizeof (str_last_start),
                       "%s", ctime (&weechat_last_start_time));
             if (str_last_start[0])
                 str_last_start[strlen (str_last_start) - 1] = '\0';
         }
         else
         {
-            snprintf (str_first_start, sizeof(str_first_start),
+            snprintf (str_first_start, sizeof (str_first_start),
                       "%s", util_get_time_string (&weechat_first_start_time));
-            snprintf (str_last_start, sizeof(str_last_start),
+            snprintf (str_last_start, sizeof (str_last_start),
                       "%s", util_get_time_string (&weechat_last_start_time));
         }
     }
@@ -8291,9 +8291,9 @@ command_startup (int plugins_loaded)
 {
     if (plugins_loaded)
     {
-        command_exec_list(CONFIG_STRING(config_startup_command_after_plugins));
-        command_exec_list(weechat_startup_commands);
+        command_exec_list (CONFIG_STRING(config_startup_command_after_plugins));
+        command_exec_list (weechat_startup_commands);
     }
     else
-        command_exec_list(CONFIG_STRING(config_startup_command_before_plugins));
+        command_exec_list (CONFIG_STRING(config_startup_command_before_plugins));
 }

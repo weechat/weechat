@@ -2565,7 +2565,7 @@ gui_window_term_display_infos ()
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Terminal infos:"));
     gui_chat_printf (NULL, _("  TERM='%s', size: %dx%d"),
-                     getenv("TERM"), gui_term_cols, gui_term_lines);
+                     getenv ("TERM"), gui_term_cols, gui_term_lines);
 }
 
 /*

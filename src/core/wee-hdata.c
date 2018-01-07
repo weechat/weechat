@@ -557,7 +557,7 @@ hdata_move (struct t_hdata *hdata, void *pointer, int count)
         return NULL;
 
     ptr_var = (count < 0) ? hdata->var_prev : hdata->var_next;
-    abs_count = abs(count);
+    abs_count = abs (count);
 
     for (i = 0; i < abs_count; i++)
     {

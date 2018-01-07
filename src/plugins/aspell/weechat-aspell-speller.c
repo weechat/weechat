@@ -161,7 +161,7 @@ weechat_aspell_speller_new (const char *lang)
     }
 #else
     /* create a speller instance for the newly created cell */
-    config = new_aspell_config();
+    config = new_aspell_config ();
     aspell_config_replace (config, "lang", lang);
 #endif /* USE_ENCHANT */
 

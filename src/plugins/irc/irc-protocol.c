@@ -508,7 +508,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                     snprintf (str_msg_auth, sizeof (str_msg_auth),
                               "AUTHENTICATE %s",
                               irc_sasl_mechanism_string[sasl_mechanism]);
-                    weechat_string_toupper(str_msg_auth);
+                    weechat_string_toupper (str_msg_auth);
                     irc_server_sendf (server, 0, NULL, str_msg_auth);
                     if (server->hook_timer_sasl)
                         weechat_unhook (server->hook_timer_sasl);
@@ -1348,7 +1348,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                    address),
                                 _("%s%s%s%s is now known as %s%s%s"),
                                 weechat_prefix ("network"),
-                                weechat_config_boolean(irc_config_look_color_nicks_in_server_messages) ?
+                                weechat_config_boolean (irc_config_look_color_nicks_in_server_messages) ?
                                 old_color : IRC_COLOR_CHAT_NICK,
                                 nick,
                                 IRC_COLOR_RESET,
@@ -4502,7 +4502,7 @@ IRC_PROTOCOL_CALLBACK(354)
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
             "%s%s[%s%s%s] %s%s %s%s%s%s%s%s(%s%s@%s%s)%s %s%s%s%s(%s)",
-            weechat_prefix("network"),
+            weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
             argv[3],

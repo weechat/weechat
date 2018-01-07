@@ -103,7 +103,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     }
 
     strcpy (xfer->local_filename, path);
-    dir_separator = weechat_info_get("dir_separator", "");
+    dir_separator = weechat_info_get ("dir_separator", "");
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
         strcat (xfer->local_filename, dir_separator);

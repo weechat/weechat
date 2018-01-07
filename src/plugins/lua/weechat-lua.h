@@ -55,8 +55,8 @@ extern void *weechat_lua_exec (struct t_plugin_script *script,
                                int ret_type,
                                const char *function,
                                const char *format, void **argv);
-extern void weechat_lua_register_lib(lua_State *L, const char *libname,
-                                     const luaL_Reg *lua_api_funcs,
-                                     struct t_lua_const lua_api_consts[]);
+extern void weechat_lua_register_lib (lua_State *L, const char *libname,
+                                      const luaL_Reg *lua_api_funcs,
+                                      struct t_lua_const lua_api_consts[]);
 
 #endif /* WEECHAT_PLUGIN_LUA_H */

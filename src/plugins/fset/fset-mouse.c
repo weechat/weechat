@@ -324,8 +324,8 @@ fset_mouse_init ()
 
     weechat_hook_focus ("chat", &fset_mouse_focus_cb, NULL, NULL);
 
-    weechat_hook_hsignal(FSET_MOUSE_HSIGNAL,
-                         &fset_mouse_hsignal_cb, NULL, NULL);
+    weechat_hook_hsignal (FSET_MOUSE_HSIGNAL,
+                          &fset_mouse_hsignal_cb, NULL, NULL);
 
     weechat_hashtable_set (
         keys,

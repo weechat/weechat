@@ -2255,7 +2255,7 @@ weechat_python_api_hook_fd_cb (const void *pointer, void *data, int fd)
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = PyLong_FromLong((long)fd);
+        func_argv[1] = PyLong_FromLong ((long)fd);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -2347,7 +2347,7 @@ weechat_python_api_hook_process_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (command) ? (char *)command : empty_arg;
-        func_argv[2] = PyLong_FromLong((long)return_code);
+        func_argv[2] = PyLong_FromLong ((long)return_code);
         func_argv[3] = (out) ? (char *)out : empty_arg;
         func_argv[4] = (err) ? (char *)err : empty_arg;
 
@@ -2453,9 +2453,9 @@ weechat_python_api_hook_connect_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = PyLong_FromLong((long)status);
-        func_argv[2] = PyLong_FromLong((long)gnutls_rc);
-        func_argv[3] = PyLong_FromLong((long)sock);
+        func_argv[1] = PyLong_FromLong ((long)status);
+        func_argv[2] = PyLong_FromLong ((long)gnutls_rc);
+        func_argv[3] = PyLong_FromLong ((long)sock);
         func_argv[4] = (ip_address) ? (char *)ip_address : empty_arg;
         func_argv[5] = (error) ? (char *)error : empty_arg;
 
@@ -2559,8 +2559,8 @@ weechat_python_api_hook_print_cb (const void *pointer, void *data,
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!func_argv[3])
             func_argv[3] = strdup ("");
-        func_argv[4] = PyLong_FromLong((long)displayed);
-        func_argv[5] = PyLong_FromLong((long)highlight);
+        func_argv[4] = PyLong_FromLong ((long)displayed);
+        func_argv[5] = PyLong_FromLong ((long)highlight);
         func_argv[6] = (prefix) ? (char *)prefix : empty_arg;
         func_argv[7] = (message) ? (char *)message : empty_arg;
 

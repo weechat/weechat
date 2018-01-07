@@ -159,7 +159,7 @@ weechat_display_usage ()
           "(see /help upgrade in WeeChat)\n"
           "  -v, --version            display WeeChat version\n"
           "  plugin:option            option for plugin (see man weechat)\n"));
-    string_fprintf(stdout, "\n");
+    string_fprintf (stdout, "\n");
 }
 
 /*
@@ -594,7 +594,7 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_local_charset);
 
     if (crash)
-        abort();
+        abort ();
     else if (return_code >= 0)
         exit (return_code);
 }

@@ -549,8 +549,8 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
 
     /* Invoke func */
     ret_value = NULL;
-    memset(&fci, 0, sizeof (zend_fcall_info));
-    memset(&fci_cache, 0, sizeof (zend_fcall_info_cache));
+    memset (&fci, 0, sizeof (zend_fcall_info));
+    memset (&fci_cache, 0, sizeof (zend_fcall_info_cache));
 
     zfunc = weechat_php_func_map_get (function);
     if (zfunc && zend_fcall_info_init (zfunc, 0, &fci, &fci_cache, NULL, NULL) == SUCCESS)

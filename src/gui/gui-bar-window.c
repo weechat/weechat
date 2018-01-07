@@ -828,7 +828,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
             total_items = 0;
             max_length = 1;
             max_length_screen = 1;
-            split_items = malloc(bar_window->items_count * sizeof(*split_items));
+            split_items = malloc (bar_window->items_count * sizeof (*split_items));
             for (i = 0; i < bar_window->items_count; i++)
             {
                 if (bar_window->items_subcount[i] > 0)

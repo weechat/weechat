@@ -35,8 +35,9 @@ extern struct t_hdata *buflist_hdata_bar_item;
 extern struct t_hdata *buflist_hdata_bar_window;
 
 extern void buflist_add_bar ();
-extern void buflist_buffer_get_irc_pointers(struct t_gui_buffer *buffer,
-                                            void **irc_server, void **irc_channel);
+extern void buflist_buffer_get_irc_pointers (struct t_gui_buffer *buffer,
+                                             void **irc_server,
+                                             void **irc_channel);
 extern struct t_arraylist *buflist_sort_buffers ();
 
 #endif /* WEECHAT_PLUGIN_BUFLIST_H */

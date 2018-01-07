@@ -686,7 +686,7 @@ irc_redirect_message_add (struct t_irc_redirect *redirect, const char *message,
     /* add message to output */
     if (redirect->output)
     {
-        redirect->output_size += strlen("\n") + strlen (message);
+        redirect->output_size += strlen ("\n") + strlen (message);
         output2 = realloc (redirect->output, redirect->output_size);
         if (!output2)
         {

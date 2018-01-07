@@ -280,7 +280,7 @@ irc_bar_item_buffer_modes (const void *pointer, void *data,
         modes_without_args = NULL;
         if (!irc_config_display_channel_modes_arguments (channel->modes))
         {
-            pos_space = strchr(channel->modes, ' ');
+            pos_space = strchr (channel->modes, ' ');
             if (pos_space)
             {
                 modes_without_args = weechat_strndup (

@@ -616,7 +616,7 @@ completion_list_add_commands_cb (const void *pointer, void *data,
         {
             if (pos)
             {
-                snprintf (str_command, sizeof(str_command),
+                snprintf (str_command, sizeof (str_command),
                           "%s%s",
                           pos,
                           HOOK_COMMAND(ptr_hook, command));
@@ -1000,7 +1000,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
             {
                 if (pos)
                 {
-                    snprintf (str_command, sizeof(str_command),
+                    snprintf (str_command, sizeof (str_command),
                               "%s%s",
                               pos,
                               HOOK_COMMAND(ptr_hook, command));
@@ -1017,7 +1017,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
         }
     }
 
-    string_free_split(argv);
+    string_free_split (argv);
 
     return WEECHAT_RC_OK;
 }
@@ -1281,7 +1281,7 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
         {
             if (pos)
             {
-                snprintf (str_command, sizeof(str_command),
+                snprintf (str_command, sizeof (str_command),
                           "%s%s",
                           pos,
                           HOOK_COMMAND(ptr_hook, command));

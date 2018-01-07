@@ -493,7 +493,7 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     length_answer = 2 + length_key + length_username + length_password;
     answer = malloc (length_answer);
     ptr_answer = answer;
-    *((unsigned int *)ptr_answer) = htons(length_key);
+    *((unsigned int *)ptr_answer) = htons (length_key);
     ptr_answer += 2;
     memcpy (ptr_answer, public_bin, length_key);
     ptr_answer += length_key;
@@ -554,7 +554,7 @@ irc_sasl_mechanism_dh_aes (const char *data_base64,
     secret_bin = NULL;
     public_bin = NULL;
 
-    if (irc_sasl_dh(data_base64, &public_bin, &secret_bin, &length_key) == 0)
+    if (irc_sasl_dh (data_base64, &public_bin, &secret_bin, &length_key) == 0)
         goto aesend;
 
     /* Select cipher algorithm: key length * 8 = cipher bit size */
@@ -596,7 +596,7 @@ irc_sasl_mechanism_dh_aes (const char *data_base64,
         goto aesend;
     if (gcry_cipher_setkey (gcrypt_handle, secret_bin, length_key) != 0)
         goto aesend;
-    if (gcry_cipher_setiv (gcrypt_handle, iv, sizeof(iv)) != 0)
+    if (gcry_cipher_setiv (gcrypt_handle, iv, sizeof (iv)) != 0)
         goto aesend;
     if (gcry_cipher_encrypt (gcrypt_handle,
                              userpass_crypted, length_userpass,
@@ -615,7 +615,7 @@ irc_sasl_mechanism_dh_aes (const char *data_base64,
     length_answer = 2 + length_key + sizeof (iv) + length_userpass;
     answer = malloc (length_answer);
     ptr_answer = answer;
-    *((unsigned int *)ptr_answer) = htons(length_key);
+    *((unsigned int *)ptr_answer) = htons (length_key);
     ptr_answer += 2;
     memcpy (ptr_answer, public_bin, length_key);
     ptr_answer += length_key;

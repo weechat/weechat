@@ -405,7 +405,7 @@ weechat_lua_add_constant (lua_State *L, struct t_lua_const *ptr_const)
 #else
         lua_pushnumber (L, ptr_const->int_value);
 #endif /* LUA_VERSION_NUM >= 503 */
-    lua_settable(L, -3);
+    lua_settable (L, -3);
 }
 
 /*
@@ -415,7 +415,7 @@ weechat_lua_add_constant (lua_State *L, struct t_lua_const *ptr_const)
 int
 weechat_lua_newindex (lua_State *L)
 {
-    luaL_error(L, "Error: read-only constant");
+    luaL_error (L, "Error: read-only constant");
 
     return 0;
 }
@@ -514,7 +514,7 @@ weechat_lua_load (const char *filename, const char *code)
     lua_current_script = NULL;
     lua_registered_script = NULL;
 
-    lua_current_interpreter = luaL_newstate();
+    lua_current_interpreter = luaL_newstate ();
 
     if (lua_current_interpreter == NULL)
     {

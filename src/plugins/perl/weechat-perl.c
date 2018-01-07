@@ -351,14 +351,14 @@ weechat_perl_exec (struct t_plugin_script *script,
             switch (format[i])
             {
                 case 's': /* string */
-                    XPUSHs(sv_2mortal(newSVpv((char *)argv[i], 0)));
+                    XPUSHs (sv_2mortal(newSVpv((char *)argv[i], 0)));
                     break;
                 case 'i': /* integer */
-                    XPUSHs(sv_2mortal(newSViv(*((int *)argv[i]))));
+                    XPUSHs (sv_2mortal(newSViv(*((int *)argv[i]))));
                     break;
                 case 'h': /* hash */
                     hash = weechat_perl_hashtable_to_hash (argv[i]);
-                    XPUSHs(sv_2mortal(newRV_inc((SV *)hash)));
+                    XPUSHs (sv_2mortal(newRV_inc((SV *)hash)));
                     break;
             }
         }
@@ -400,7 +400,7 @@ weechat_perl_exec (struct t_plugin_script *script,
         {
             if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
             {
-                ret_s = newSVsv(POPs);
+                ret_s = newSVsv (POPs);
                 ret_value = strdup (SvPV_nolen (ret_s));
                 SvREFCNT_dec (ret_s);
             }
@@ -520,7 +520,7 @@ weechat_perl_load (const char *filename, const char *code)
     perl_registered_script = NULL;
 
 #ifdef MULTIPLICITY
-    perl_current_interpreter = perl_alloc();
+    perl_current_interpreter = perl_alloc ();
 
     if (!perl_current_interpreter)
     {
@@ -584,7 +584,7 @@ weechat_perl_load (const char *filename, const char *code)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME,
-                        SvPV_nolen(ERRSV));
+                        SvPV_nolen (ERRSV));
 #ifdef MULTIPLICITY
         perl_destruct (perl_current_interpreter);
         perl_free (perl_current_interpreter);

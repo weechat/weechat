@@ -1039,7 +1039,7 @@ script_repo_file_exists ()
     int rc;
     struct stat st;
 
-    filename = script_config_get_xml_filename();
+    filename = script_config_get_xml_filename ();
     if (!filename)
         return 0;
 

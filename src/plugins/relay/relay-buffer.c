@@ -56,9 +56,9 @@ relay_buffer_refresh (const char *hotlist)
         client_selected = relay_client_search_by_number (relay_buffer_selected_line);
         weechat_printf_y (relay_buffer, 0,
                           "%s%s%s%s%s%s%s",
-                          weechat_color("green"),
+                          weechat_color ("green"),
                           _("Actions (letter+enter):"),
-                          weechat_color("lightgreen"),
+                          weechat_color ("lightgreen"),
                           /* disconnect */
                           (client_selected
                            && !RELAY_CLIENT_HAS_ENDED(client_selected)) ?
@@ -119,9 +119,9 @@ relay_buffer_refresh (const char *hotlist)
             /* first line with status, description and bytes recv/sent */
             weechat_printf_y (relay_buffer, (line * 2) + 2,
                               _("%s%s[%s%s%s%s] %s, received: %s, sent: %s"),
-                              weechat_color(str_color),
+                              weechat_color (str_color),
                               (line == relay_buffer_selected_line) ? "*** " : "    ",
-                              weechat_color(weechat_config_string (relay_config_color_status[ptr_client->status])),
+                              weechat_color (weechat_config_string (relay_config_color_status[ptr_client->status])),
                               str_status,
                               weechat_color ("reset"),
                               weechat_color (str_color),
@@ -132,7 +132,7 @@ relay_buffer_refresh (const char *hotlist)
             /* second line with start/end time */
             weechat_printf_y (relay_buffer, (line * 2) + 3,
                               _("%s%-26s started on: %s, ended on: %s"),
-                              weechat_color(str_color),
+                              weechat_color (str_color),
                               " ",
                               str_date_start,
                               str_date_end);

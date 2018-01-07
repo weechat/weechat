@@ -219,7 +219,7 @@ gui_nicklist_search_group_internal (struct t_gui_buffer *buffer,
     while (ptr_group)
     {
         ptr_name = (skip_digits) ?
-            gui_nicklist_get_group_start(ptr_group->name) : ptr_group->name;
+            gui_nicklist_get_group_start (ptr_group->name) : ptr_group->name;
         if (strcmp (ptr_name, name) == 0)
             return ptr_group;
         ptr_group = ptr_group->next_group;

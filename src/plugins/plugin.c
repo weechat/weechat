@@ -423,7 +423,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         gui_chat_printf (NULL,
                          _("%sError: unable to load plugin \"%s\": %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         filename, dlerror());
+                         filename, dlerror ());
         gui_chat_printf (NULL,
                          _("%sIf you're trying to load a script and not a C "
                            "plugin, try command to load scripts (/perl, "
