@@ -7830,7 +7830,6 @@ command_init ()
            "    /print -beep"),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
         " || -core|-escape|-date|-tags|-action|-error|-join|-network|-quit"
-        " || -prefix"
         " || -stdout"
         " || -stderr"
         " || -beep",
