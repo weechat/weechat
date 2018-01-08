@@ -696,6 +696,7 @@ TEST(String, Highlight)
     WEE_HAS_HL_STR(0, "", "test");
     WEE_HAS_HL_STR(0, "test-here", "test");
     WEE_HAS_HL_STR(0, "this is a test here", "abc,def");
+    WEE_HAS_HL_STR(0, "test", "(?-i)TEST"); /* default case insensitive */
     WEE_HAS_HL_STR(1, "test", "test");
     WEE_HAS_HL_STR(1, "this is a test", "test");
     WEE_HAS_HL_STR(1, "test here", "test");
@@ -705,6 +706,7 @@ TEST(String, Highlight)
     WEE_HAS_HL_STR(1, "test\u00A0:here", "test");  /* unbreakable space */
     WEE_HAS_HL_STR(1, "this is a test here", "test");
     WEE_HAS_HL_STR(1, "this is a test here", "abc,test");
+    WEE_HAS_HL_STR(1, "test", "TEST");      /* default case insensitive */
 
     /*
      * check highlight with a regex, each call of macro
