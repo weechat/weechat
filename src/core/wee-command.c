@@ -4610,7 +4610,8 @@ COMMAND_CALLBACK(plugin)
 COMMAND_CALLBACK(print)
 {
     struct t_gui_buffer *ptr_buffer;
-    int i, y, escape, to_stdout, to_stderr, free_content;
+    int i, y, escape, to_stdout, to_stderr, arg_new_buffer_name;
+    int new_buffer_type_free, free_content, switch_to_buffer;
     time_t date, date_now;
     struct tm tm_date;
     char *tags, *pos, *text, *text2, *error, empty_string[1] = { '\0' };
@@ -4622,6 +4623,9 @@ COMMAND_CALLBACK(print)
     (void) data;
 
     ptr_buffer = buffer;
+    arg_new_buffer_name = -1;
+    new_buffer_type_free = 0;
+    switch_to_buffer = 0;
     y = -1;
     date = 0;
     tags = NULL;
@@ -4641,6 +4645,21 @@ COMMAND_CALLBACK(print)
             ptr_buffer = gui_buffer_search_by_number_or_name (argv[i]);
             if (!ptr_buffer)
                 COMMAND_ERROR;
+        }
+        else if (string_strcasecmp (argv[i], "-newbuffer") == 0)
+        {
+            if (i + 1 >= argc)
+                COMMAND_ERROR;
+            i++;
+            arg_new_buffer_name = i;
+        }
+        else if (string_strcasecmp (argv[i], "-free") == 0)
+        {
+            new_buffer_type_free = 1;
+        }
+        else if (string_strcasecmp (argv[i], "-switch") == 0)
+        {
+            switch_to_buffer = 1;
         }
         else if (string_strcasecmp (argv[i], "-current") == 0)
         {
@@ -4770,6 +4789,7 @@ COMMAND_CALLBACK(print)
         ptr_text = empty_string;
     }
 
+    /* print to stdout or stderr */
     if (to_stdout || to_stderr)
     {
         text = string_convert_escaped_chars (ptr_text);
@@ -4779,49 +4799,77 @@ COMMAND_CALLBACK(print)
             fflush ((to_stdout) ? stdout : stderr);
             free (text);
         }
+        return WEECHAT_RC_OK;
+    }
+
+    if (arg_new_buffer_name >= 0)
+    {
+        /* print to new buffer */
+        if (gui_buffer_is_reserved_name (argv[arg_new_buffer_name]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: name \"%s\" is reserved for WeeChat"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[arg_new_buffer_name]);
+            return WEECHAT_RC_OK;
+        }
+        ptr_buffer = gui_buffer_search_by_name (PLUGIN_CORE,
+                                                argv[arg_new_buffer_name]);
+        if (!ptr_buffer)
+        {
+            ptr_buffer = gui_buffer_new_user (argv[arg_new_buffer_name]);
+            if (ptr_buffer && new_buffer_type_free)
+                gui_buffer_set (ptr_buffer, "type", "free");
+        }
     }
     else
     {
+        /* print to existing buffer */
         if (!ptr_buffer)
             ptr_buffer = gui_buffer_search_main ();
-        free_content = (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FREE));
-        text = strdup (ptr_text);
-        if (text)
-        {
-            pos = NULL;
-            if (!prefix)
-            {
-                pos = strstr (text, "\\t");
-                if (pos)
-                {
-                    pos[0] = (free_content) ? ' ' : '\t';
-                    memmove (pos + 1, pos + 2, strlen (pos + 2) + 1);
-                }
-            }
-            text2 = (escape) ?
-                string_convert_escaped_chars (text) : strdup (text);
-            if (text2)
-            {
-                if (free_content)
-                {
-                    gui_chat_printf_y (ptr_buffer, y,
-                                       "%s%s",
-                                       (prefix) ? prefix : "",
-                                       text2);
-                }
-                else
-                {
-                    gui_chat_printf_date_tags (
-                        ptr_buffer, date, tags,
-                        "%s%s",
-                        (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
-                        text2);
-                }
-                free (text2);
-            }
-            free (text);
-        }
     }
+
+    free_content = (ptr_buffer && (ptr_buffer->type == GUI_BUFFER_TYPE_FREE));
+
+    text = strdup (ptr_text);
+    if (text)
+    {
+        pos = NULL;
+        if (!prefix)
+        {
+            pos = strstr (text, "\\t");
+            if (pos)
+            {
+                pos[0] = (free_content) ? ' ' : '\t';
+                memmove (pos + 1, pos + 2, strlen (pos + 2) + 1);
+            }
+        }
+        text2 = (escape) ?
+            string_convert_escaped_chars (text) : strdup (text);
+        if (text2)
+        {
+            if (free_content)
+            {
+                gui_chat_printf_y (ptr_buffer, y,
+                                   "%s%s",
+                                   (prefix) ? prefix : "",
+                                   text2);
+            }
+            else
+            {
+                gui_chat_printf_date_tags (
+                    ptr_buffer, date, tags,
+                    "%s%s",
+                    (prefix) ? prefix : ((!prefix && !pos) ? "\t" : ""),
+                    text2);
+            }
+            free (text2);
+        }
+        free (text);
+    }
+
+    if (ptr_buffer && switch_to_buffer)
+        gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
 
     return WEECHAT_RC_OK;
 }
@@ -7782,35 +7830,39 @@ command_init ()
     hook_command (
         NULL, "print",
         N_("display text on a buffer"),
-        N_("[-buffer <number>|<name>] [-core|-current] [-y <line>] [-escape] "
-           "[-date <date>] [-tags <tags>] "
-           "[-action|-error|-join|-network|-quit] [<text>]"
+        N_("[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] "
+           "[-core|-current] [-y <line>] [-escape] [-date <date>] "
+           "[-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]"
            " || -stdout|-stderr [<text>]"
            " || -beep"),
-        N_(" -buffer: display text in this buffer (default: buffer where "
+        N_("   -buffer: display text in this buffer (default: buffer where "
            "command is executed)\n"
-           "   -core: alias of \"-buffer core.weechat\"\n"
-           "-current: display text on current buffer\n"
-           "      -y: display on a custom line (for buffer with free content "
+           "-newbuffer: create a new buffer and display text in this buffer\n"
+           "     -free: create a buffer with free content "
+           "(with -newbuffer only)\n"
+           "   -switch: switch to the buffer\n"
+           "     -core: alias of \"-buffer core.weechat\"\n"
+           "  -current: display text on current buffer\n"
+           "        -y: display on a custom line (for buffer with free content "
            "only)\n"
-           "    line: line number for buffer with free content (first line "
+           "      line: line number for buffer with free content (first line "
            "is 0, a negative number displays after last line: -1 = after last "
            "line, -2 = two lines after last line, ...)\n"
-           " -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
-           "   -date: message date, format can be:\n"
-           "            -n: 'n' seconds before now\n"
-           "            +n: 'n' seconds in the future\n"
-           "             n: 'n' seconds since the Epoch (see man time)\n"
-           "            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
+           "   -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
+           "     -date: message date, format can be:\n"
+           "              -n: 'n' seconds before now\n"
+           "              +n: 'n' seconds in the future\n"
+           "               n: 'n' seconds since the Epoch (see man time)\n"
+           "              date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: "
            "2014-01-19T04:32:55\n"
-           "            time: hh:mm:ss (example: 04:32:55)\n"
-           "   -tags: comma-separated list of tags (see /help filter for a "
+           "              time: hh:mm:ss (example: 04:32:55)\n"
+           "     -tags: comma-separated list of tags (see /help filter for a "
            "list of tags most commonly used)\n"
-           "    text: text to display (prefix and message must be separated by "
+           "      text: text to display (prefix and message must be separated by "
            "\"\\t\", if text starts with \"-\", then add a \"\\\" before)\n"
-           " -stdout: display text on stdout (escaped chars are interpreted)\n"
-           " -stderr: display text on stderr (escaped chars are interpreted)\n"
-           "   -beep: alias of \"-stderr \\a\"\n"
+           "   -stdout: display text on stdout (escaped chars are interpreted)\n"
+           "   -stderr: display text on stderr (escaped chars are interpreted)\n"
+           "     -beep: alias of \"-stderr \\a\"\n"
            "\n"
            "The options -action ... -quit use the prefix defined in options "
            "\"weechat.look.prefix_*\".\n"
@@ -7833,9 +7885,10 @@ command_init ()
            "  send alert (BEL):\n"
            "    /print -beep"),
         "-buffer %(buffers_numbers)|%(buffers_plugins_names)"
+        " || -newbuffer"
         " || -y -1|0|1|2|3"
-        " || -core|-current|-escape|-date|-tags|-action|-error|-join|"
-        "-network|-quit"
+        " || -free|-switch|-core|-current|-escape|-date|-tags|-action|-error|"
+        "-join|-network|-quit"
         " || -stdout"
         " || -stderr"
         " || -beep",

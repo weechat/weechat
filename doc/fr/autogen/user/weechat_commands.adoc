@@ -640,27 +640,30 @@ Sans paramètre, cette commande liste les extensions chargées.
 * `+print+`: afficher du texte dans un tampon
 
 ----
-/print  [-buffer <numéro>|<nom>] [-core|-current] [-y <ligne>] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
+/print  [-buffer <numéro>|<nom>] [-newbuffer <nom>] [-free] [-switch] [-core|-current] [-y <ligne>] [-escape] [-date <date>] [-tags <étiquettes>] [-action|-error|-join|-network|-quit] [<texte>]
         -stdout|-stderr [<texte>]
         -beep
 
- -buffer : afficher le texte dans ce tampon (par défaut : tampon où est exécutée la commande)
-   -core : alias de "-buffer core.weechat"
--current : afficher le texte dans le tampon courant
-      -y : afficher sur une ligne personnalisée (pour un tampon avec contenu libre seulement)
-   ligne : numéro de ligne pour un tampon avec contenu libre (la première ligne est 0, un nombre négatif affiche après la dernière ligne : -1 = après la dernière ligne, -2 = deux lignes après la dernière ligne, etc...)
- -escape : interpréter les caractères échappés (par exemple \a, \07, \x07)
-   -date : date du message, le format peut être :
-             -n : 'n' secondes avant maintenant
-             +n : 'n' secondes dans le futur
-              n : 'n' secondes depuis l'époque (voir man time)
-             date/heure (ISO 8601) : yyyy-mm-ddThh:mm:ss, exemple : 2014-01-19T04:32:55
-             heure : hh:mm:ss (exemple : 04:32:55)
-   -tags : liste d'étiquettes séparées par des virgules (voir /help filter pour une liste des étiquettes couramment utilisées)
-   texte : texte à afficher (le préfixe et le message doivent être séparés par "\t", si le texte commence par "-", ajoutez "\" avant)
- -stdout : afficher le texte sur stdout (les caractères échappés sont interprétés)
- -stderr : afficher le texte sur stderr (les caractères échappés sont interprétés)
-   -beep : alias de "-stderr \a"
+   -buffer : afficher le texte dans ce tampon (par défaut : tampon où est exécutée la commande)
+-newbuffer : créer un nouveau tampon et afficher le texte dans ce tampon
+     -free : créer un tampon avec contenu libre (avec -newbuffer seulement)
+   -switch : basculer vers le tampon
+     -core : alias de "-buffer core.weechat"
+  -current : afficher le texte dans le tampon courant
+        -y : afficher sur une ligne personnalisée (pour un tampon avec contenu libre seulement)
+     ligne : numéro de ligne pour un tampon avec contenu libre (la première ligne est 0, un nombre négatif affiche après la dernière ligne : -1 = après la dernière ligne, -2 = deux lignes après la dernière ligne, etc...)
+   -escape : interpréter les caractères échappés (par exemple \a, \07, \x07)
+     -date : date du message, le format peut être :
+               -n : 'n' secondes avant maintenant
+               +n : 'n' secondes dans le futur
+                n : 'n' secondes depuis l'époque (voir man time)
+               date/heure (ISO 8601) : yyyy-mm-ddThh:mm:ss, exemple : 2014-01-19T04:32:55
+               heure : hh:mm:ss (exemple : 04:32:55)
+     -tags : liste d'étiquettes séparées par des virgules (voir /help filter pour une liste des étiquettes couramment utilisées)
+     texte : texte à afficher (le préfixe et le message doivent être séparés par "\t", si le texte commence par "-", ajoutez "\" avant)
+   -stdout : afficher le texte sur stdout (les caractères échappés sont interprétés)
+   -stderr : afficher le texte sur stderr (les caractères échappés sont interprétés)
+     -beep : alias de "-stderr \a"
 
 Les options -action ... -quit utilisent le préfixe défini dans les options "weechat.look.prefix_*".
 
