@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2017 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2018 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-01-07 11:55+0100\n"
-"PO-Revision-Date: 2018-01-06 13:50+0100\n"
+"PO-Revision-Date: 2018-01-08 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -350,7 +350,7 @@ msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (通知: %s)%s%s"
 
 #, c-format
 msgid "%sError: name \"%s\" is reserved for WeeChat"
-msgstr ""
+msgstr "%sエラー: \"%s\" は WeeChat の予約名です"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -1141,7 +1141,6 @@ msgstr ""
 msgid "manage buffers"
 msgstr "バッファの管理"
 
-#, fuzzy
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
 "[<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
@@ -1152,15 +1151,15 @@ msgid ""
 "notify <level> || localvar || set <property> [<value>] || get <property> || "
 "<number>|-|+|<name>"
 msgstr ""
-"list || clear [<number>|<name>|-merged|-all [<number>|<name>...]] || move "
-"<number>|-|+ || swap <number1>|<name1> [<number2>|<name2>] || cycle <number>|"
-"<name> [<number>|<name>...] || merge <number> || unmerge [<number>|-all] || "
-"hide [<number>|<name>|-all [<number>|<name>...]] || unhide [<number>|<name>|-"
-"all [<number>|<name>...]] || renumber [<number1> [<number2> [<start>]]] || "
-"close [<n1>[-<n2>]|<name>] || notify <level> || localvar || set <property> "
-"[<value>] || get <property> || <number>|-|+|<name>"
+"list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
+"[<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
+"[<number2>|<name2>] || cycle <number>|<name> [<number>|<name>...] || merge "
+"<number> || unmerge [<number>|-all] || hide [<number>|<name>|-all [<number>|"
+"<name>...]] || unhide [<number>|<name>|-all [<number>|<name>...]] || "
+"renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|<name>] || "
+"notify <level> || localvar || set <property> [<value>] || get <property> || "
+"<number>|-|+|<name>"
 
-#, fuzzy
 msgid ""
 "    list: list buffers (without argument, this list is displayed)\n"
 "     add: add a new buffer (it can be closed with \"/buffer close\" or input "
@@ -1227,6 +1226,8 @@ msgid ""
 "    /buffer +"
 msgstr ""
 "    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)\n"
+"     add: 新しいバッファを追加 (バッファを閉じるには \"/buffer close\" また"
+"は \"q\" を使ってください)\n"
 "   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対して"
 "は -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)\n"
 "    move: リストにバッファを移動 (相対指定も可能、例えば -1); \"-\" = 最初の"
@@ -2282,17 +2283,15 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr "バッファ内にテキストを表示"
 
-#, fuzzy
 msgid ""
 "[-buffer <number>|<name>] [-core|-current] [-y <line>] [-escape] [-date "
 "<date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>] || -"
 "stdout|-stderr [<text>] || -beep"
 msgstr ""
-"[-buffer <number>|<name>] [-core] [-escape] [-date <date>] [-tags <tags>] [-"
-"action|-error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -"
-"beep"
+"[-buffer <number>|<name>] [-core|-current] [-y <line>] [-escape] [-date "
+"<date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>] || -"
+"stdout|-stderr [<text>] || -beep"
 
-#, fuzzy
 msgid ""
 " -buffer: display text in this buffer (default: buffer where command is "
 "executed)\n"
@@ -2343,6 +2342,9 @@ msgstr ""
 "バッファ)\n"
 "   -core: \"-buffer core.weechat\" のエイリアス\n"
 "-current: 現在のバッファにテキストを表示\n"
+"      -y: 指定した行番号に表示 (自由内容バッファ専用)\n"
+"    line: 自由内容バッファの行番号 (1 行目は 0、負数は最後の行から数えた行: "
+"-1 = 最終行から数えて 1 行目、-2 = 最終行から数えて 2 行目、...)\n"
 " -escape: エスケープ文字を解釈 (例えば \\a、\\07、\\x07)\n"
 "   -date: メッセージの日付、書式:\n"
 "            -n: 今から 'n' 秒前\n"
@@ -7007,9 +7009,9 @@ msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されま�
 msgid "Support of scheme scripts (with Guile)"
 msgstr "scheme スクリプトサポート (Guile を利用)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: stdout/stderr: %s"
-msgstr "%s: 標準出力/標準エラー: %s%s"
+msgstr "%s: 標準出力/標準エラー: %s"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
@@ -10649,9 +10651,9 @@ msgstr "%s%s: ファイル \"%s\" をロードできません"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: ファイル \"%s\" を実行できません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%s色 \"%s\" はパレットで定義されていません"
+msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
 
 msgid "Log buffers to files"
 msgstr "ファイルにバッファログを保存"
@@ -10873,13 +10875,13 @@ msgstr "lua スクリプトサポート"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: 標準出力と標準エラーをリダイレクトできません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to load source code"
-msgstr "%s%s: ファイル \"%s\" をロードできません"
+msgstr "%s%s: ソースコードをロードできません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "%s%s: ファイル \"%s\" を実行できません"
+msgstr "%s%s: ソースコードを実行できません"
 
 msgid "Support of perl scripts"
 msgstr "perl スクリプトサポート"
@@ -10890,11 +10892,11 @@ msgstr "%s%s: 関数 \"%s\" 内に十分なメモリがありません"
 
 #, c-format
 msgid "%s: warning:"
-msgstr ""
+msgstr "%s: 警告:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error:"
-msgstr "%s%s: エラー: %s"
+msgstr "%s: エラー:"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -11273,15 +11275,13 @@ msgstr "プラグインオプションの説明"
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
-"[-q] [<name>] || version"
+"[-q] [<name>] || eval [-o|-oc] <code> || version"
 
-#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -11310,8 +11310,12 @@ msgstr ""
 "  unload: スクリプトのアンロード (名前を指定しなかった場合、全てのスクリプト"
 "をアンロード)\n"
 "filename: ロードするスクリプト (ファイル)\n"
-"    name: スクリプト名 (名前は \"register\" 関数を呼び出すために使われる)\n"
 "      -q: 出力抑制モード: メッセージを表示しない\n"
+"    name: スクリプト名 (名前は \"register\" 関数を呼び出すために使われる)\n"
+"    eval: ソースコードを評価して現在のバッファへ結果を表示\n"
+"      -o: バッファへ評価結果を送信するがコマンドを実行しない\n"
+"     -oc: バッファへ評価結果を送信してコマンドを実行\n"
+"    code: 評価するソースコード\n"
 " version: 使用中のインタプリタのバージョンを表示\n"
 "\n"
 "引数無しの場合、全てのロード済みスクリプトをリストアップします。"
@@ -11325,12 +11329,11 @@ msgstr "スクリプトポインタ (任意)"
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "スクリプト名 (ワイルドカード \"*\" を使うことができます) (任意)"
 
-#, fuzzy
 msgid "evaluation of source code"
-msgstr "スクリプトのリスト"
+msgstr "ソースコードの評価"
 
 msgid "source code to execute"
-msgstr ""
+msgstr "実行するソースコード"
 
 msgid "name of the interpreter used"
 msgstr "使用中のインタプリタの名前"
