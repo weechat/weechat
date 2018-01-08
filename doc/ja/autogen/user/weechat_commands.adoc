@@ -86,60 +86,60 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-     add: add a new buffer (it can be closed with "/buffer close" or input "q")
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+     add: 新しいバッファを追加 (バッファを閉じるには "/buffer close" または "q" を使ってください)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1); "-" = 最初のバッファ番号に移動、"+" = 最後のバッファ番号 + 1 に移動
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   cycle: 指定したバッファ間でバッファを循環させる
+   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+    hide: バッファを隠す
+  unhide: バッファを隠すことを止める
+renumber: バッファを記憶 (weechat.look.buffer_auto_renumber オプションがオフの場合にのみ有効)
+   close: バッファを閉じる (番号/範囲または名前は任意)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+       -: 最初のバッファ番号に移動
+       +: 最後のバッファ番号に移動
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  #chan1、#chan2、#chan3 に移動してそれを繰り返す:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
-  jump to last buffer number:
+  最後のバッファ番号に移動:
     /buffer +
 ----
 
@@ -644,41 +644,41 @@ arguments: ロードするプラグインに与える引数
         -stdout|-stderr [<text>]
         -beep
 
- -buffer: display text in this buffer (default: buffer where command is executed)
-   -core: alias of "-buffer core.weechat"
--current: display text on current buffer
-      -y: display on a custom line (for buffer with free content only)
-    line: line number for buffer with free content (first line is 0, a negative number displays after last line: -1 = after last line, -2 = two lines after last line, ...)
- -escape: interpret escaped chars (for example \a, \07, \x07)
-   -date: message date, format can be:
-            -n: 'n' seconds before now
-            +n: 'n' seconds in the future
-             n: 'n' seconds since the Epoch (see man time)
-            date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-            time: hh:mm:ss (example: 04:32:55)
-   -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-    text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
- -stdout: display text on stdout (escaped chars are interpreted)
- -stderr: display text on stderr (escaped chars are interpreted)
-   -beep: alias of "-stderr \a"
+ -buffer: 指定したバッファにテキストを表示 (デフォルト: コマンドを実行したバッファ)
+   -core: "-buffer core.weechat" のエイリアス
+-current: 現在のバッファにテキストを表示
+      -y: 指定した行番号に表示 (自由内容バッファ専用)
+    line: 自由内容バッファの行番号 (1 行目は 0、負数は最後の行から数えた行: -1 = 最終行から数えて 1 行目、-2 = 最終行から数えて 2 行目、...)
+ -escape: エスケープ文字を解釈 (例えば \a、\07、\x07)
+   -date: メッセージの日付、書式:
+            -n: 今から 'n' 秒前
+            +n: 今から 'n' 秒後
+             n: エポックから 'n' 秒目 (man time を参照)
+            日付/時間 (ISO 8601): yyyy-mm-ddThh:mm:ss、例: 2014-01-19T04:32:55
+           時間: hh:mm:ss (example: 04:32:55)
+   -tags: タグのコンマ区切りリスト (よく使うタグのリストは /help filter を参照)
+    text: 表示するテキスト (プレフィックスとメッセージは必ず \t で区切ってください、"-" で始まるテキストは "\" を前置してください)
+ -stdout: 標準出力にテキストを表示 (エスケープ文字を解釈)
+ -stderr: 標準エラー出力にテキストを表示 (エスケープ文字を解釈)
+   -beep: "-stderr \a" の別名
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+オプション -action ... -quit をつけた場合、プレフィックスは "weechat.look.prefix_*" で定義されているものになります。
 
-Following escaped chars are supported:
+以下のエスケープ文字を使うことができます:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
+例:
+  コアバッファにハイライトを付けてリマインダを表示:
     /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
+  コアバッファにエラーを表示:
     /print -core -error Some error here
-  display message on core buffer with prefix "abc":
+  コアバッファにプレフィックス "abc" を付けてメッセージを表示:
     /print -core abc\tThe message
-  display a message on channel #weechat:
+  チャンネル #weechat にメッセージを表示:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  雪だるまを表示 (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  警告を送信 (BEL):
     /print -beep
 ----
 
