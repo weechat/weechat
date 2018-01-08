@@ -11,7 +11,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2017
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2018
 
 
 この文書は WeeChat リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat
