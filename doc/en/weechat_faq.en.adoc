@@ -432,8 +432,10 @@ You must enable the focus events with a special code sent to terminal.
 
 *Important*:
 
-* Currently, *only* _xterm_ seems to support this feature.
-* It does *not* work under screen/tmux.
+* You must use a modern xterm-compatible terminal.
+* Additionally, it seems to be important that your value of `$TERM` equals to `xterm` or `xterm-256color`.
+* If you use tmux, you must additionally enable focus events by adding `set -g focus-events on` to your `.tmux.conf` file. 
+* This does *not* work under screen.
 
 To send the code when WeeChat is starting:
 
