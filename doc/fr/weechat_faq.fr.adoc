@@ -451,8 +451,12 @@ terminal.
 
 *Important* :
 
-* Actuellement, *seulement* _xterm_ semble supporter cette fonctionnalité.
-* Cela ne fonctionne *pas* sous screen/tmux.
+* Vous devez utiliser un terminal moderne compatible avec xterm.
+* Il semble également important que la valeur de votre variable TERM soit égale à
+  _xterm_ ou _xterm-256color_.
+* Si vous utilisez tmux, vous devez activer en plus les évènements focus
+  en ajoutant `set -g focus-events on` dans votre fichier _.tmux.conf_.
+* Cela ne fonctionne *pas* sous screen.
 
 Pour envoyer le code au démarrage de WeeChat :
 

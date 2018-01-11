@@ -436,8 +436,16 @@ Musisz włączyć obsługę tego zdarzenia za pomocą specjalnego kodu wysyłane
 
 *Ważne*:
 
-* Obecnie *tylko* _xterm_ wspiera tą funkcję.
-* *Nie* działa to pod screen/tmux.
+// TRANSLATION MISSING
+* You must use a modern xterm-compatible terminal.
+// TRANSLATION MISSING
+* Additionally, it seems to be important that your value of the TERM variable
+  equals to _xterm_ or _xterm-256color_.
+// TRANSLATION MISSING
+* If you use tmux, you must additionally enable focus events by adding
+  `set -g focus-events on` to your _.tmux.conf_ file.
+// TRANSLATION MISSING
+* This does *not* work under screen.
 
 Żeby wysłać kod podczas uruchamiania WeeChat:
 
