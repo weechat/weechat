@@ -79,3 +79,9 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647
 ** valore predefinito: `+20+`
+
+* [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
+** descrizione: pass:none[conditions to display the backlog (note: content is evaluated, see /help eval); empty value displays the backlog on all buffers; for example to display backlog on private buffers only: "${type} == private"]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+""+`

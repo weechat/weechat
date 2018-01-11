@@ -79,3 +79,9 @@
 ** type: entier
 ** valeurs: 0 .. 2147483647
 ** valeur par défaut: `+20+`
+
+* [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
+** description: pass:none[conditions pour afficher l'historique (note : le contenu est évalué, voir /help eval) ; une valeur vide affiche l'historique sur tous les tampons ; par exemple pour afficher l'historique seulement sur les tampons privés : "${type} == private"]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`

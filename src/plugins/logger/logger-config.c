@@ -36,6 +36,7 @@ int logger_config_loading = 0;
 /* logger config, look section */
 
 struct t_config_option *logger_config_look_backlog;
+struct t_config_option *logger_config_look_backlog_conditions;
 
 /* logger config, color section */
 
@@ -396,6 +397,16 @@ logger_config_init ()
         N_("maximum number of lines to display from log file when creating "
            "new buffer (0 = no backlog)"),
         NULL, 0, INT_MAX, "20", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_look_backlog_conditions = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "backlog_conditions", "string",
+        N_("conditions to display the backlog "
+           "(note: content is evaluated, see /help eval); "
+           "empty value displays the backlog on all buffers; "
+           "for example to display backlog on private buffers only: "
+           "\"${type} == private\""),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* color */

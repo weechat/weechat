@@ -24,6 +24,7 @@
 
 
 extern struct t_config_option *logger_config_look_backlog;
+extern struct t_config_option *logger_config_look_backlog_conditions;
 
 extern struct t_config_option *logger_config_color_backlog_end;
 extern struct t_config_option *logger_config_color_backlog_line;

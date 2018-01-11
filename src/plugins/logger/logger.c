@@ -954,6 +954,62 @@ logger_buffer_renamed_signal_cb (const void *pointer, void *data,
 }
 
 /*
+ * Checks conditions to display the backlog.
+ *
+ * Returns:
+ *   1: conditions OK (backlog is displayed)
+ *   0: conditions not OK (backlog is NOT displayed)
+ */
+
+int
+logger_backlog_check_conditions (struct t_gui_buffer *buffer)
+{
+    struct t_hashtable *pointers, *options;
+    const char *ptr_condition;
+    char *result;
+    int condition_ok;
+
+    ptr_condition = weechat_config_string (logger_config_look_backlog_conditions);
+
+    /* empty condition displays the backlog everywhere */
+    if (!ptr_condition || !ptr_condition[0])
+        return 1;
+
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (pointers)
+    {
+        weechat_hashtable_set (pointers, "window",
+                               weechat_window_search_with_buffer (buffer));
+        weechat_hashtable_set (pointers, "buffer", buffer);
+    }
+
+    options = weechat_hashtable_new (32,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     NULL,
+                                     NULL);
+    if (options)
+        weechat_hashtable_set (options, "type", "condition");
+
+    result = weechat_string_eval_expression (ptr_condition,
+                                             pointers, NULL, options);
+    condition_ok = (result && (strcmp (result, "1") == 0));
+    if (result)
+        free (result);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (options)
+        weechat_hashtable_free (options);
+
+    return condition_ok;
+}
+
+/*
  * Displays backlog for a buffer (by reading end of log file).
  */
 
@@ -1053,24 +1109,24 @@ logger_backlog_signal_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    if (weechat_config_integer (logger_config_look_backlog) >= 0)
+    if (weechat_config_integer (logger_config_look_backlog) == 0)
+        return WEECHAT_RC_OK;
+
+    if (!logger_backlog_check_conditions (signal_data))
+        return WEECHAT_RC_OK;
+
+    ptr_logger_buffer = logger_buffer_search_buffer (signal_data);
+    if (ptr_logger_buffer && ptr_logger_buffer->log_enabled)
     {
-        ptr_logger_buffer = logger_buffer_search_buffer (signal_data);
-        if (ptr_logger_buffer && ptr_logger_buffer->log_enabled)
+        if (!ptr_logger_buffer->log_filename)
+            logger_set_log_filename (ptr_logger_buffer);
+        if (ptr_logger_buffer->log_filename)
         {
-            if (!ptr_logger_buffer->log_filename)
-                logger_set_log_filename (ptr_logger_buffer);
-
-            if (ptr_logger_buffer->log_filename)
-            {
-                ptr_logger_buffer->log_enabled = 0;
-
-                logger_backlog (signal_data,
-                                ptr_logger_buffer->log_filename,
-                                weechat_config_integer (logger_config_look_backlog));
-
-                ptr_logger_buffer->log_enabled = 1;
-            }
+            ptr_logger_buffer->log_enabled = 0;
+            logger_backlog (signal_data,
+                            ptr_logger_buffer->log_filename,
+                            weechat_config_integer (logger_config_look_backlog));
+            ptr_logger_buffer->log_enabled = 1;
         }
     }
 

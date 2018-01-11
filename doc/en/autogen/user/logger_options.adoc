@@ -79,3 +79,9 @@
 ** type: integer
 ** values: 0 .. 2147483647
 ** default value: `+20+`
+
+* [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
+** description: pass:none[conditions to display the backlog (note: content is evaluated, see /help eval); empty value displays the backlog on all buffers; for example to display backlog on private buffers only: "${type} == private"]
+** type: string
+** values: any string
+** default value: `+""+`
