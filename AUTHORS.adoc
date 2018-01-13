@@ -78,6 +78,7 @@ Alphabetically:
 * Odin
 * Ondřej Súkup
 * Patrick Steinhardt
+* Patrik Janoušek
 * Paul Komkoff
 * Pavel Shevchuk (Stalwart)
 * Peter Boström (pbos)
