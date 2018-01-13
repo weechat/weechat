@@ -10178,7 +10178,7 @@ msgid ""
 "%sIf you're trying to load a script and not a C plugin, try command to load "
 "scripts (/perl, /python, ...)"
 msgstr ""
-"%sZkuste příkaz pro načtení skriptu (/perl, /pzthon, ...), pokud se snažíte "
+"%sZkuste příkaz pro načtení skriptu (/perl, /python, ...), pokud se snažíte "
 "načíst skript místo C pluginu"
 
 #, c-format
