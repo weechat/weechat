@@ -429,16 +429,12 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 
 *重要*:
 
-// TRANSLATION MISSING
-* You must use a modern xterm-compatible terminal.
-// TRANSLATION MISSING
-* Additionally, it seems to be important that your value of the TERM variable
-  equals to _xterm_ or _xterm-256color_.
-// TRANSLATION MISSING
-* If you use tmux, you must additionally enable focus events by adding
-  `set -g focus-events on` to your _.tmux.conf_ file.
-// TRANSLATION MISSING
-* This does *not* work under screen.
+* 必ず最新の xterm 互換の端末を使ってください。
+* 加えて、TERM 環境変数を _xterm_ または _xterm-256color_
+  にすることが重要かもしれません。
+* tmux を使っているなら、必ず `set -g focus-events on` を
+  _.tmux.conf_ に追加して、フォーカスイベントを有効化してください。
+* screen ではこの機能を *使えません*。
 
 WeeChat の開始時にコードを送信するには:
 
