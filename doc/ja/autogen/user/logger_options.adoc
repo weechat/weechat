@@ -81,7 +81,7 @@
 ** デフォルト値: `+20+`
 
 * [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
-** 説明: pass:none[conditions to display the backlog (note: content is evaluated, see /help eval); empty value displays the backlog on all buffers; for example to display backlog on private buffers only: "${type} == private"]
+** 説明: pass:none[バックログの表示条件 (注意: 内容は評価されません、/help eval を参照してください); 値が空の場合、すべてのバッファでバックログを表示します; 例えばプライベートバッファのみでバックログを表示するには、"${type} == private" のように値を設定します]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

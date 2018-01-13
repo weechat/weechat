@@ -81,7 +81,7 @@
 ** Standardwert: `+20+`
 
 * [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
-** Beschreibung: pass:none[conditions to display the backlog (note: content is evaluated, see /help eval); empty value displays the backlog on all buffers; for example to display backlog on private buffers only: "${type} == private"]
+** Beschreibung: pass:none[Bedingungen um die Protokolldatei anzuzeigen (Hinweis: Der Inhalt ist evaluiert, siehe /help eval); wird kein Wert angegeben, wird die Protokolldatei bei allen Buffern angezeigt ; Beispiel: um nur bei privaten Buffern die Protokolldatei anzuzeigen: "${type} == private"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
