@@ -995,6 +995,8 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
 {
     int index_option, proxy_found;
     const char *pos_error, *proxy_name;
+    char *error;
+    long number;
     struct t_infolist *infolist;
 #ifdef HAVE_GNUTLS
     char *fingerprint_eval, **fingerprints, *str_sizes;
@@ -1126,6 +1128,31 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                         return 0;
                 }
 #endif /* HAVE_GNUTLS */
+                break;
+            case IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH:
+                if (!value || !value[0])
+                    break;
+                error = NULL;
+                number = strtol (value, &error, 10);
+                if (!error || error[0])
+                {
+                    /*
+                     * not a valid number, but we return 1 (OK) to let WeeChat
+                     * display the appropriate error
+                     */
+                    return 1;
+                }
+                if ((number < 0)
+                    || ((number > 0) && (number < 128))
+                    || (number > 4096))
+                {
+                    weechat_printf (
+                            NULL,
+                            _("%s%s: invalid length for split, it must be "
+                              "either 0 or any integer between 128 and 4096"),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+                    return 0;
+                }
                 break;
         }
     }
@@ -2257,6 +2284,29 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 null_value_allowed,
                 (section == irc_config_section_server_default) ?
                 &irc_config_server_default_check_notify : callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
+        case IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("split outgoing IRC messages to fit in this number of chars; "
+                   "the default value is 512, this is a safe and recommended "
+                   "value); "
+                   "value 0 disables the split (not recommended, unless you "
+                   "know what you do); allowed values are 0 or "
+                   "any integer between 128 and 4096; "
+                   "this option should be changed only on non-standard IRC "
+                   "servers, for example gateways like bitlbee"),
+                NULL, 0, 4096,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
                 callback_check_value_pointer,
                 callback_check_value_data,
                 callback_change,

@@ -9524,14 +9524,18 @@ List of signals sent by WeeChat and plugins:
   utilizzato dal plugin irc, il segnale viene inviato
   anche se il messaggio è stato ignorato).
 
+// TRANSLATION MISSING
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   String: messaggio. |
-  Messaggio IRC inviato al server (prima della divisione automatica da adattare in 512 byte).
+  IRC message sent to server before automatic split
+  (to fit in 512 bytes by default).
 
+// TRANSLATION MISSING
 | irc | xxx,irc_out_yyy ^(1)^ |
   String: messaggio. |
-  Messaggio IRC inviato al server (dopo la divisione automatica da adattare in 512 byte).
+  IRC message sent to server after automatic split
+  (to fit in 512 bytes by default).
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
@@ -11032,15 +11036,19 @@ List of modifiers used by WeeChat and plugins:
   Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri). |
   Nuovo contenuto del messaggio.
 
+// TRANSLATION MISSING
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nome server |
-  Contenuto del messaggio che sta per essere inviato al server IRC (prima della divisione automatica da adattare in 512 byte). |
+  Content of message about to be sent to IRC server before automatic split
+  (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
+// TRANSLATION MISSING
 | irc_out_xxx ^(1)^ |
   Nome server |
-  Contenuto del messaggio che sta per essere inviato al server IRC (dopo la divisione automatica da adattare in 512 byte). |
+  Content of message about to be sent to IRC server after automatic split
+  (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING

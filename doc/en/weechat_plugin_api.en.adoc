@@ -9223,11 +9223,13 @@ List of signals sent by WeeChat and plugins:
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   String: message. |
-  IRC message sent to server (before automatic split to fit in 512 bytes).
+  IRC message sent to server before automatic split
+  (to fit in 512 bytes by default).
 
 | irc | xxx,irc_out_yyy ^(1)^ |
   String: message. |
-  IRC message sent to server (after automatic split to fit in 512 bytes).
+  IRC message sent to server after automatic split
+  (to fit in 512 bytes by default).
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
@@ -10615,14 +10617,14 @@ List of modifiers used by WeeChat and plugins:
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Server name |
-  Content of message about to be sent to IRC server (before automatic split to
-  fit in 512 bytes). |
+  Content of message about to be sent to IRC server before automatic split
+  (to fit in 512 bytes by default). |
   New content of message.
 
 | irc_out_xxx ^(1)^ |
   Server name |
-  Content of message about to be sent to IRC server (after automatic split to
-  fit in 512 bytes). |
+  Content of message about to be sent to IRC server after automatic split
+  (to fit in 512 bytes by default). |
   New content of message.
 
 | color_decode_ansi +

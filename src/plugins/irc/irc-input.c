@@ -139,7 +139,8 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, int action,
 }
 
 /*
- * Sends a PRIVMSG message, and split it if message size is > 512 bytes.
+ * Sends a PRIVMSG message, and split it if message size is > 512 bytes
+ * (by default).
  *
  * Warning: this function makes temporary changes in "message".
  */

@@ -8,6 +8,6 @@
 
 | irc | irc_message_parse | przetwarza wiadomość IRC | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "tags": tagi, "message_without_tags": wiadomość bez tagów, "nick": nick, "host": host, "command": komenda, "channel": kanał, "arguments": argumenty (razem z kanałem), "text": tekst (na przykład wiadomość użytkownika), "pos_command": indeks wiadomości "command" message ("-1" jeśli "command" nie zostało znalezione), "pos_arguments": indeks wiadomości "arguments" ("-1" jeśli "arguments" nie zostało znalezione), "pos_channel": indeks wiadomości "channel" ("-1" jeśli "channel" nie został znaleziony), "pos_text": indeks słowa "text" ("-1" jeśli "text" nie został znaleziony)
 
-| irc | irc_message_split | dziel wiadomość IRC (aby zmieściła się w 512 bajtach) | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "msg1" ... "msgN": wiadomości do wysłania (bez kończącego "\r\n"), "args1" ... "argsN": argumenty wiadomości, "count": ilość wiadomości
+| irc | irc_message_split | split an IRC message (to fit in 512 bytes by default) | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "msg1" ... "msgN": wiadomości do wysłania (bez kończącego "\r\n"), "args1" ... "argsN": argumenty wiadomości, "count": ilość wiadomości
 
 |===

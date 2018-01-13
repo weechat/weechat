@@ -9404,13 +9404,13 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Chaîne : message. |
-  Message IRC envoyé au serveur (avant découpage automatique pour tenir dans les
-  512 octets).
+  Message IRC envoyé au serveur avant découpage automatique
+  (pour tenir dans les 512 octets par défaut).
 
 | irc | xxx,irc_out_yyy ^(1)^ |
   Chaîne : message. |
-  Message IRC envoyé au serveur (après découpage automatique pour tenir dans les
-  512 octets).
+  Message IRC envoyé au serveur après découpage automatique
+  (pour tenir dans les 512 octets par défaut).
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
@@ -10831,14 +10831,14 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 | irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nom de serveur |
-  Contenu du message qui va être envoyé au serveur IRC (avant découpage
-  automatique pour tenir dans les 512 octets). |
+  Contenu du message qui va être envoyé au serveur IRC avant découpage automatique
+  (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
 | irc_out_xxx ^(1)^ |
   Nom de serveur |
-  Contenu du message qui va être envoyé au serveur IRC (après découpage
-  automatique pour tenir dans les 512 octets). |
+  Contenu du message qui va être envoyé au serveur IRC après découpage automatique
+  (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
 | color_decode_ansi +

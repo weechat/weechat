@@ -704,6 +704,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
+* [[option_irc.server_default.split_msg_max_length]] *irc.server_default.split_msg_max_length*
+** Beschreibung: pass:none[split outgoing IRC messages to fit in this number of chars; the default value is 512, this is a safe and recommended value); value 0 disables the split (not recommended, unless you know what you do); allowed values are 0 or any integer between 128 and 4096; this option should be changed only on non-standard IRC servers, for example gateways like bitlbee]
+** Typ: integer
+** Werte: 0 .. 4096
+** Standardwert: `+512+`
+
 * [[option_irc.server_default.ssl]] *irc.server_default.ssl*
 ** Beschreibung: pass:none[Server über SSL ansprechen]
 ** Typ: boolesch

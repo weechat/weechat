@@ -25,6 +25,7 @@ New features::
   * core: add option "add" in command /buffer (issue #1113)
   * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
   * api: add hashtable with variables in plugin structure
+  * irc: add server option "split_msg_max_length"
   * logger: add option logger.look.backlog_conditions (issue #1132)
   * scripts: add "eval" option in script commands and info "xxx_eval" (python, perl, ruby, lua and guile) (issue #128)
   * scripts: add infos "xxx_interpreter" and "xxx_version" in script plugins (issue #1075)

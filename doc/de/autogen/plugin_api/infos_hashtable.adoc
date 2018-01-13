@@ -8,6 +8,6 @@
 
 | irc | irc_message_parse | Parse eine IRC Nachricht | "message": IRC Nachricht, "server": Servername (optional) | "tags": Tags, "message_without_tags": Nachrichten ohne Tags, "nick": Nick, "host": Host, "command": Befehl, "channel": Channel, "arguments": Argumente (schließt Channel ein), "text": Text (zum Beispiel eine Nachricht von einem User), "pos_command": Index der "command" Nachricht ("-1" falls "command" nicht gefunden wird), "pos_arguments": Index der "arguments" Nachricht ("-1" falls "arguments" nicht gefunden wird), "pos_channel": Index der "channel" Nachricht ("-1" falls "channel" nicht gefunden wird),"pos_text": Index für "text" Nachricht ("-1" falls "text" nicht gefunden wird)
 
-| irc | irc_message_split | dient zum Aufteilen einer überlangen IRC Nachricht (in maximal 512 Bytes große Nachrichten) | "message": IRC Nachricht, "server": Servername (optional) | "msg1" ... "msgN": Nachrichten die versendet werden sollen (ohne abschließendes "\r\n"), "args1" ... "argsN": Argumente für Nachrichten, "count": Anzahl der Nachrichten
+| irc | irc_message_split | split an IRC message (to fit in 512 bytes by default) | "message": IRC Nachricht, "server": Servername (optional) | "msg1" ... "msgN": Nachrichten die versendet werden sollen (ohne abschließendes "\r\n"), "args1" ... "argsN": Argumente für Nachrichten, "count": Anzahl der Nachrichten
 
 |===

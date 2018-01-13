@@ -117,6 +117,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "msg_part",             "WeeChat ${info:version}" },
   { "msg_quit",             "WeeChat ${info:version}" },
   { "notify",               ""                        },
+  { "split_msg_max_length", "512"                     },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -2489,7 +2490,10 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
                                     (new_msg) ? new_msg : items[i],
                                     NULL);
 
-            /* split message if needed (max is 512 bytes including final "\r\n") */
+            /*
+             * split message if needed (max is 512 bytes by default,
+             * including the final "\r\n")
+             */
             hashtable = irc_message_split (server,
                                            (new_msg) ? new_msg : items[i]);
             if (hashtable)

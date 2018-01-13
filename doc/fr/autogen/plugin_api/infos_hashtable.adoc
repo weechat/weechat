@@ -8,6 +8,6 @@
 
 | irc | irc_message_parse | analyse un message IRC | "message" : message IRC, "server" : nom du serveur (optionnel) | "tags" : étiquettes, "message_without_tags" : message sans les étiquettes, "nick" : pseudo, "host" : nom d'hôte, "command" : commande, "channel" : canal, "arguments" : paramètres (inclut le canal), "text" : texte (par exemple message utilisateur), "pos_command" : index de "command" dans le message ("-1" si "command" n'a pas été trouvé), "pos_arguments" : index de "arguments" dans le message ("-1" si "arguments" n'a pas été trouvé), "pos_channel" : index de "channel" dans le message ("-1" si "channel" n'a pas été trouvé), "pos_text" : index de "text" dans le message ("-1" si "text" n'a pas été trouvé)
 
-| irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets) | "message" : message IRC, "server" : nom du serveur (optionnel) | "msg1" ... "msgN" : messages à envoyer (sans le "\r\n" final), "args1" ... "argsN" : paramètres des messages, "count" : nombre de messages
+| irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets par défaut) | "message" : message IRC, "server" : nom du serveur (optionnel) | "msg1" ... "msgN" : messages à envoyer (sans le "\r\n" final), "args1" ... "argsN" : paramètres des messages, "count" : nombre de messages
 
 |===

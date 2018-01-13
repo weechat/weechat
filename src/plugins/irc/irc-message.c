@@ -25,8 +25,9 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
-#include "irc-server.h"
 #include "irc-channel.h"
+#include "irc-config.h"
+#include "irc-server.h"
 
 
 /*
@@ -653,13 +654,14 @@ irc_message_split_string (struct t_hashtable *hashtable,
                           const char *arguments,
                           const char *suffix,
                           const char delimiter,
-                          int max_length_host)
+                          int max_length_host,
+                          int max_length)
 {
     const char *pos, *pos_max, *pos_next, *pos_last_delim;
-    char message[1024], *dup_arguments;
-    int max_length, number;
+    char message[8192], *dup_arguments;
+    int number;
 
-    max_length = 510;
+    max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
     if (max_length_host >= 0)
         max_length -= max_length_host;
     else
@@ -753,12 +755,15 @@ irc_message_split_string (struct t_hashtable *hashtable,
 int
 irc_message_split_join (struct t_hashtable *hashtable,
                         const char *tags, const char *host,
-                        const char *arguments)
+                        const char *arguments,
+                        int max_length)
 {
     int number, channels_count, keys_count, length, length_no_channel;
     int length_to_add, index_channel;
     char **channels, **keys, *pos, *str;
-    char msg_to_send[2048], keys_to_add[2048];
+    char msg_to_send[16384], keys_to_add[16384];
+
+    max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
 
     number = 1;
 
@@ -799,7 +804,8 @@ irc_message_split_join (struct t_hashtable *hashtable,
         length_to_add = 1 + strlen (channels[index_channel]);
         if (index_channel < keys_count)
             length_to_add += 1 + strlen (keys[index_channel]);
-        if ((length + length_to_add < 510) || (length == length_no_channel))
+        if ((length + length_to_add < max_length)
+            || (length == length_no_channel))
         {
             if (length + length_to_add < (int)sizeof (msg_to_send))
             {
@@ -864,9 +870,10 @@ int
 irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
                                   char *tags, char *host, char *command,
                                   char *target, char *arguments,
-                                  int max_length_host)
+                                  int max_length_host,
+                                  int max_length)
 {
-    char prefix[512], suffix[2], *pos, saved_char;
+    char prefix[4096], suffix[2], *pos, saved_char;
     int length, rc;
 
     /*
@@ -903,7 +910,7 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
 
     rc = irc_message_split_string (hashtable, tags, host, command, target,
                                    prefix, arguments, suffix,
-                                   ' ', max_length_host);
+                                   ' ', max_length_host, max_length);
 
     return rc;
 }
@@ -919,9 +926,9 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
 int
 irc_message_split_005 (struct t_hashtable *hashtable,
                        char *tags, char *host, char *command, char *target,
-                       char *arguments)
+                       char *arguments, int max_length)
 {
-    char *pos, suffix[512];
+    char *pos, suffix[4096];
 
     /*
      * 005 message looks like:
@@ -941,7 +948,8 @@ irc_message_split_005 (struct t_hashtable *hashtable,
     }
 
     return irc_message_split_string (hashtable, tags, host, command, target,
-                                     NULL, arguments, suffix, ' ', -1);
+                                     NULL, arguments, suffix, ' ', -1,
+                                     max_length);
 }
 
 /*
@@ -950,6 +958,10 @@ irc_message_split_005 (struct t_hashtable *hashtable,
  * The maximum length of an IRC message is 510 bytes for user data + final
  * "\r\n", so full size is 512 bytes (the user data does not include the
  * optional tags before the host).
+ *
+ * The 512 max length is the default (recommended) and can be changed with the
+ * server option called "split_msg_max_length" (0 to disable completely the
+ * split).
  *
  * The split takes care about type of message to do a split at best place in
  * message.
@@ -972,9 +984,10 @@ struct t_hashtable *
 irc_message_split (struct t_irc_server *server, const char *message)
 {
     struct t_hashtable *hashtable;
-    char **argv, **argv_eol, *tags, *host, *command, *arguments, target[512];
+    char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
     char *pos, monitor_action[3];
     int split_ok, argc, index_args, max_length_nick, max_length_host;
+    int split_msg_max_length;
 
     split_ok = 0;
     tags = NULL;
@@ -984,9 +997,22 @@ irc_message_split (struct t_irc_server *server, const char *message)
     argv = NULL;
     argv_eol = NULL;
 
+    if (server)
+    {
+        split_msg_max_length = IRC_SERVER_OPTION_INTEGER(
+            server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
+    }
+    else
+    {
+        split_msg_max_length = 512;  /* max length by default */
+    }
+
     /* debug message */
     if (weechat_irc_plugin->debug >= 2)
-        weechat_printf (NULL, "irc_message_split: message='%s'", message);
+    {
+        weechat_printf (NULL, "irc_message_split: message='%s', max length=%d",
+                        message, split_msg_max_length);
+    }
 
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
@@ -1030,6 +1056,10 @@ irc_message_split (struct t_irc_server *server, const char *message)
         index_args = 1;
     }
 
+    /* split disabled? just add the message as-is */
+    if (split_msg_max_length == 0)
+        goto end;
+
     max_length_nick = (server && (server->nick_max_length > 0)) ?
         server->nick_max_length : 16;
     max_length_host = 1 + /* ":"  */
@@ -1049,7 +1079,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
             hashtable, tags, host, command, NULL, ":",
             (argv_eol[index_args][0] == ':') ?
             argv_eol[index_args] + 1 : argv_eol[index_args],
-            NULL, ' ', max_length_host);
+            NULL, ' ', max_length_host, split_msg_max_length);
     }
     else if (weechat_strcasecmp (command, "monitor") == 0)
     {
@@ -1064,7 +1094,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
                       "%c ", argv_eol[index_args][0]);
             split_ok = irc_message_split_string (
                 hashtable, tags, host, command, NULL, monitor_action,
-                argv_eol[index_args] + 2, NULL, ',', max_length_host);
+                argv_eol[index_args] + 2, NULL, ',', max_length_host,
+                split_msg_max_length);
         }
         else
         {
@@ -1072,17 +1103,17 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 hashtable, tags, host, command, NULL, ":",
                 (argv_eol[index_args][0] == ':') ?
                 argv_eol[index_args] + 1 : argv_eol[index_args],
-                NULL, ',', max_length_host);
+                NULL, ',', max_length_host, split_msg_max_length);
         }
     }
     else if (weechat_strcasecmp (command, "join") == 0)
     {
         /* JOIN #channel1,#channel2,#channel3 key1,key2 */
-        if (strlen (message) > 510)
+        if ((int)strlen (message) > split_msg_max_length - 2)
         {
-            /* split join if it's more than 510 bytes */
+            /* split join if it's too long */
             split_ok = irc_message_split_join (hashtable, tags, host,
-                                               arguments);
+                                               arguments, split_msg_max_length);
         }
     }
     else if ((weechat_strcasecmp (command, "privmsg") == 0)
@@ -1098,7 +1129,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 hashtable, tags, host, command, argv[index_args],
                 (argv_eol[index_args + 1][0] == ':') ?
                 argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
-                max_length_host);
+                max_length_host, split_msg_max_length);
         }
     }
     else if (weechat_strcasecmp (command, "005") == 0)
@@ -1109,7 +1140,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
             split_ok = irc_message_split_005 (
                 hashtable, tags, host, command, argv[index_args],
                 (argv_eol[index_args + 1][0] == ':') ?
-                argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1]);
+                argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
+                split_msg_max_length);
         }
     }
     else if (weechat_strcasecmp (command, "353") == 0)
@@ -1128,7 +1160,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                     hashtable, tags, host, command, target, ":",
                     (argv_eol[index_args + 2][0] == ':') ?
                     argv_eol[index_args + 2] + 1 : argv_eol[index_args + 2],
-                    NULL, ' ', -1);
+                    NULL, ' ', -1, split_msg_max_length);
             }
             else
             {
@@ -1141,7 +1173,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                         hashtable, tags, host, command, target, ":",
                         (argv_eol[index_args + 3][0] == ':') ?
                         argv_eol[index_args + 3] + 1 : argv_eol[index_args + 3],
-                        NULL, ' ', -1);
+                        NULL, ' ', -1, split_msg_max_length);
                 }
             }
         }

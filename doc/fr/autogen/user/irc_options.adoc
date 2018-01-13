@@ -704,6 +704,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_irc.server_default.split_msg_max_length]] *irc.server_default.split_msg_max_length*
+** description: pass:none[découper les messages IRC sortants pour tenir dans ce nombre de caractères ; la valeur par défaut est 512, c'est une valeur sûre et recommandée ; la valeur 0 désactive le découpage (non recommandé, sauf si vous êtes sûr de ce que vous faites) ; les valeurs autorisées sont 0 ou tout entier compris entre 128 et 4096 ; cette option devrait être changée seulement sur les serveurs IRC non standards, par exemple sur les passerelles comme bitlbee]
+** type: entier
+** valeurs: 0 .. 4096
+** valeur par défaut: `+512+`
+
 * [[option_irc.server_default.ssl]] *irc.server_default.ssl*
 ** description: pass:none[utiliser SSL pour la communication avec le serveur]
 ** type: booléen

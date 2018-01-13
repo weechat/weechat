@@ -898,7 +898,7 @@ irc_info_init ()
         &irc_info_info_hashtable_irc_message_parse_cb, NULL, NULL);
     weechat_hook_info_hashtable (
         "irc_message_split",
-        N_("split an IRC message (to fit in 512 bytes)"),
+        N_("split an IRC message (to fit in 512 bytes by default)"),
         N_("\"message\": IRC message, \"server\": server name (optional)"),
         /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
         N_("\"msg1\" ... \"msgN\": messages to send (without final \"\\r\\n\"), "

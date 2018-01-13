@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-11 15:55+0100\n"
+"POT-Creation-Date: 2018-01-13 22:15+0100\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -8661,6 +8661,12 @@ msgstr ""
 
 #, c-format
 msgid ""
+"%s%s: invalid length for split, it must be either 0 or any integer between "
+"128 and 4096"
+msgstr ""
+
+#, c-format
+msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
@@ -9000,6 +9006,14 @@ msgid ""
 msgstr ""
 "lista de notificação do servidor (não deve alterar esta opção, mas sim usar "
 "o comando /notify)"
+
+msgid ""
+"split outgoing IRC messages to fit in this number of chars; the default "
+"value is 512, this is a safe and recommended value); value 0 disables the "
+"split (not recommended, unless you know what you do); allowed values are 0 "
+"or any integer between 128 and 4096; this option should be changed only on "
+"non-standard IRC servers, for example gateways like bitlbee"
+msgstr ""
 
 #, c-format
 msgid "%s%s: error adding server \"%s\""
@@ -9696,7 +9710,8 @@ msgstr ""
 "\"channel\"), \"pos_text\": índice de \"text\" na mensagem (\"-1\" se não "
 "encontrar \"text\")"
 
-msgid "split an IRC message (to fit in 512 bytes)"
+#, fuzzy
+msgid "split an IRC message (to fit in 512 bytes by default)"
 msgstr "dividir uma mensagem de IRC (para caber em 512 bytes)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
