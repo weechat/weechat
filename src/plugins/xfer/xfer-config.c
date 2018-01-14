@@ -126,6 +126,7 @@ xfer_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
+        xfer_config_file = NULL;
         return 0;
     }
 
@@ -162,6 +163,7 @@ xfer_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
+        xfer_config_file = NULL;
         return 0;
     }
 
@@ -248,6 +250,7 @@ xfer_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
+        xfer_config_file = NULL;
         return 0;
     }
 
@@ -304,6 +307,7 @@ xfer_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
+        xfer_config_file = NULL;
         return 0;
     }
 

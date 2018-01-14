@@ -388,6 +388,7 @@ logger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
+        logger_config_file = NULL;
         return 0;
     }
 
@@ -420,6 +421,7 @@ logger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
+        logger_config_file = NULL;
         return 0;
     }
 
@@ -447,6 +449,7 @@ logger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
+        logger_config_file = NULL;
         return 0;
     }
 
@@ -547,6 +550,7 @@ logger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
+        logger_config_file = NULL;
         return 0;
     }
 
@@ -564,6 +568,7 @@ logger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (logger_config_file);
+        logger_config_file = NULL;
         return 0;
     }
 

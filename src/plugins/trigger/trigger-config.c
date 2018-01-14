@@ -661,6 +661,7 @@ trigger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);
+        trigger_config_file = NULL;
         return 0;
     }
 
@@ -690,6 +691,7 @@ trigger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);
+        trigger_config_file = NULL;
         return 0;
     }
 
@@ -761,6 +763,7 @@ trigger_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (trigger_config_file);
+        trigger_config_file = NULL;
         return 0;
     }
 

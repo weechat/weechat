@@ -109,6 +109,7 @@ exec_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (exec_config_file);
+        exec_config_file = NULL;
         return 0;
     }
 
@@ -141,6 +142,7 @@ exec_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (exec_config_file);
+        exec_config_file = NULL;
         return 0;
     }
 

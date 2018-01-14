@@ -2426,6 +2426,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -2442,6 +2443,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -2496,6 +2498,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -3559,6 +3562,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -3573,6 +3577,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4133,6 +4138,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4249,6 +4255,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4302,6 +4309,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4318,6 +4326,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4365,6 +4374,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4419,6 +4429,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4436,6 +4447,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4451,6 +4463,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4468,6 +4481,7 @@ config_weechat_init_options ()
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
         return 0;
     }
 
@@ -4489,6 +4503,7 @@ config_weechat_init_options ()
         if (!ptr_section)
         {
             config_file_free (weechat_config_file);
+            weechat_config_file = NULL;
             return 0;
         }
     }

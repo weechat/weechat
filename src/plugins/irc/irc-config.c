@@ -2560,6 +2560,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
 
@@ -3019,6 +3020,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
 
@@ -3148,6 +3150,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
 
@@ -3293,6 +3296,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
     irc_config_section_msgbuffer = ptr_section;
@@ -3309,6 +3313,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
     irc_config_section_ctcp = ptr_section;
@@ -3325,6 +3330,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
 
@@ -3340,6 +3346,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
     irc_config_section_server_default = ptr_section;
@@ -3358,6 +3365,7 @@ irc_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
+        irc_config_file = NULL;
         return 0;
     }
     irc_config_section_server = ptr_section;

@@ -398,6 +398,7 @@ script_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
+        script_config_file = NULL;
         return 0;
     }
 
@@ -489,6 +490,7 @@ script_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
+        script_config_file = NULL;
         return 0;
     }
 
@@ -712,6 +714,7 @@ script_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (script_config_file);
+        script_config_file = NULL;
         return 0;
     }
 

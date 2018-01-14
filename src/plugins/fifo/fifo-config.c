@@ -103,6 +103,7 @@ fifo_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (fifo_config_file);
+        fifo_config_file = NULL;
         return 0;
     }
 

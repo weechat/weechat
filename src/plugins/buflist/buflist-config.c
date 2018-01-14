@@ -401,6 +401,7 @@ buflist_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (buflist_config_file);
+        buflist_config_file = NULL;
         return 0;
     }
 
@@ -532,6 +533,7 @@ buflist_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (buflist_config_file);
+        buflist_config_file = NULL;
         return 0;
     }
 

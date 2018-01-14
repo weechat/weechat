@@ -386,6 +386,7 @@ alias_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (alias_config_file);
+        alias_config_file = NULL;
         return 0;
     }
     alias_config_section_cmd = ptr_section;
@@ -402,6 +403,7 @@ alias_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (alias_config_file);
+        alias_config_file = NULL;
         return 0;
     }
     alias_config_section_completion = ptr_section;

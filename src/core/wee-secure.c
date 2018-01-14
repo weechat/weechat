@@ -952,6 +952,7 @@ secure_init_options ()
     if (!ptr_section)
     {
         config_file_free (secure_config_file);
+        secure_config_file = NULL;
         return 0;
     }
 
@@ -1006,6 +1007,7 @@ secure_init_options ()
     if (!ptr_section)
     {
         config_file_free (secure_config_file);
+        secure_config_file = NULL;
         return 0;
     }
 

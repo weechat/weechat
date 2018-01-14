@@ -635,6 +635,7 @@ relay_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
         return 0;
     }
 
@@ -663,6 +664,7 @@ relay_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
         return 0;
     }
 
@@ -748,6 +750,7 @@ relay_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
         return 0;
     }
 
@@ -862,6 +865,7 @@ relay_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
         return 0;
     }
 
@@ -925,6 +929,7 @@ relay_config_init ()
     if (!ptr_section)
     {
         weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
         return 0;
     }
 
