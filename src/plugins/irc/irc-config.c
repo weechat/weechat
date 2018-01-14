@@ -2297,7 +2297,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "integer",
                 N_("split outgoing IRC messages to fit in this number of chars; "
                    "the default value is 512, this is a safe and recommended "
-                   "value); "
+                   "value; "
                    "value 0 disables the split (not recommended, unless you "
                    "know what you do); allowed values are 0 or "
                    "any integer between 128 and 4096; "
