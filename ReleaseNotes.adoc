@@ -20,12 +20,12 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.1]]
 == Version 2.1 (under dev)
 
-[[v2.1_set_completion]]
-=== Completion for /set command
+[[v2.1_option_name_completion]]
+=== Completion for /set and /help commands
 
 A new option weechat.completion.partial_completion_templates has been added to
 force partial completion on some templates.  By default, the option name
-completed in `/set` command is now using partial completion.
+completed in `/set` and `/help` commands are now using partial completion.
 
 If you prefer old behavior, you can remove the templates from the new option
 with this command:
