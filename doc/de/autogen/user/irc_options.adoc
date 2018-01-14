@@ -705,7 +705,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.split_msg_max_length]] *irc.server_default.split_msg_max_length*
-** Beschreibung: pass:none[trennt ausgehende IRC Nachrichten auf die angegebene Anzahl an Zeichen; der Standardwert beträgt 512, dies sich ein sicherer Wert; ein Wert von 0 deaktiviert eine Trennung von Nachrichten (dies wird nicht empfohlen, außer Du weißt was Du tust); erlaubte Werte sind 0 oder jeder Wert zwischen 128 und 4096; diese Option sollte nur bei nicht-Standard IRC Servern verwendet werden, zum Beispiel ein bitlbee Gateway]
+** Beschreibung: pass:none[ausgehende IRC Nachrichten werden bei der angegebene Anzahl an Zeichen getrennt; der Standardwert beträgt 512, dabei handelt es sich um einen empfohlenen Wert; ein Wert von 0 deaktiviert eine Trennung von Nachrichten (dies wird nicht empfohlen, außer Du weißt was Du tust); erlaubte Werte sind 0 oder jeder Wert zwischen 128 und 4096; diese Option sollte nur bei nicht-Standard IRC Servern verändert werden, zum Beispiel ein bitlbee Gateway]
 ** Typ: integer
 ** Werte: 0 .. 4096
 ** Standardwert: `+512+`
