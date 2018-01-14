@@ -42,7 +42,7 @@ WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(4000);
 
-struct t_weechat_plugin *weechat_lua_plugin;
+struct t_weechat_plugin *weechat_lua_plugin = NULL;
 
 int lua_quiet = 0;
 

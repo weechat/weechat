@@ -41,7 +41,7 @@ WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(4000);
 
-struct t_weechat_plugin *weechat_js_plugin;
+struct t_weechat_plugin *weechat_js_plugin = NULL;
 
 int js_quiet = 0;
 
