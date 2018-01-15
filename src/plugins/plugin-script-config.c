@@ -39,7 +39,6 @@ plugin_script_config_init (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script_data *plugin_data)
 {
     struct t_config_section *ptr_section;
-    char str_description[4096];
 
     *(plugin_data->config_file) = weechat_config_new (weechat_plugin->name,
                                                       NULL, NULL, NULL);
@@ -69,18 +68,14 @@ plugin_script_config_init (struct t_weechat_plugin *weechat_plugin,
            "is different from the plugin license, a warning is displayed"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    snprintf (str_description, sizeof (str_description),
-              N_("keep context between two calls to /%s eval "
-                 "(or info \"%s_eval\"); a hidden script is used to eval "
-                 "script code; if this option is disabled, this hidden script "
-                 "is unloaded after each eval: this uses less memory, but is "
-                 "slower"),
-              weechat_plugin->name,
-              weechat_plugin->name);
     *(plugin_data->config_look_eval_keep_context) = weechat_config_new_option (
         *(plugin_data->config_file), ptr_section,
         "eval_keep_context", "boolean",
-        str_description,
+        N_("keep context between two calls to the source code evaluation "
+           "(option \"eval\" of script command or info \"%s_eval\"); "
+           "a hidden script is used to eval script code; "
+           "if this option is disabled, this hidden script is unloaded after "
+           "each eval: this uses less memory, but is slower"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 

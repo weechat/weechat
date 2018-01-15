@@ -9,7 +9,7 @@
 ** Standardwert: `+off+`
 
 * [[option_perl.look.eval_keep_context]] *perl.look.eval_keep_context*
-** Beschreibung: pass:none[keep context between two calls to /perl eval (or info "perl_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** Beschreibung: pass:none[keep context between two calls to the source code evaluation (option "eval" of script command or info "%s_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
