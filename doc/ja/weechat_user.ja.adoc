@@ -559,24 +559,32 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| ファイル     | 説明                                    | データ保護
-| weechat.conf | WeeChat の主要設定ファイル              | 保護される場合もあります (例: 保存されたバッファレイアウトに含まれるチャンネルのリスト)
-| sec.conf     | 機密データを含む設定ファイル            | *保護されます、機密性の高いデータ*: このファイルを誰かと共有してはいけません
-| plugins.conf | プラグイン設定ファイル                  | 保護される場合もあります、プラグインおよびスクリプトに依存します
-| alias.conf   | _alias_ プラグイン用の設定ファイル      | 保護される場合もあります、エイリアスに依存します
-| aspell.conf  | _aspell_ プラグイン用の設定ファイル     | 保護されません
-| buflist.conf | _buflist_ プラグイン用の設定ファイル    | 保護されません
-| charset.conf | _charset_ プラグイン用の設定ファイル    | 保護されません
-| exec.conf    | _exec_ プラグイン用の設定ファイル       | 保護されません
-| fifo.conf    | _fifo_ プラグイン用の設定ファイル       | 保護されません
-| fset.conf    | _fset_ プラグイン用の設定ファイル       | 保護されません
-| irc.conf     | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
-| logger.conf  | _logger_ プラグイン用の設定ファイル     | 保護されません
-| relay.conf   | _relay_ プラグイン用の設定ファイル      | 保護されません
-| script.conf  | _script_ プラグイン用の設定ファイル     | 保護されません
-| trigger.conf | _trigger_ プラグイン用の設定ファイル    | 保護される場合もあります、トリガに依存します
-| xfer.conf    | _xfer_ プラグイン用の設定ファイル       | 保護されません
-| weechat.log  | WeeChat ログファイル                    | 保護されません
+| ファイル        | 説明                                    | データ保護
+| weechat.conf    | WeeChat の主要設定ファイル              | 保護される場合もあります (例: 保存されたバッファレイアウトに含まれるチャンネルのリスト)
+| sec.conf        | 機密データを含む設定ファイル            | *保護されます、機密性の高いデータ*: このファイルを誰かと共有してはいけません
+| plugins.conf    | プラグイン設定ファイル                  | 保護される場合もあります、プラグインおよびスクリプトに依存します
+| alias.conf      | _alias_ プラグイン用の設定ファイル      | 保護される場合もあります、エイリアスに依存します
+| aspell.conf     | _aspell_ プラグイン用の設定ファイル     | 保護されません
+| buflist.conf    | _buflist_ プラグイン用の設定ファイル    | 保護されません
+| charset.conf    | _charset_ プラグイン用の設定ファイル    | 保護されません
+| exec.conf       | _exec_ プラグイン用の設定ファイル       | 保護されません
+| fifo.conf       | _fifo_ プラグイン用の設定ファイル       | 保護されません
+| fset.conf       | _fset_ プラグイン用の設定ファイル       | 保護されません
+| guile.conf      | _guile_ プラグイン用の設定ファイル      | 保護されません
+| irc.conf        | _irc_ プラグイン用の設定ファイル        | *保護されます*: サーバ、nickserv、チャンネルのパスワードを保存することが可能です (これらのデータが `sec.conf` に保存されない場合)
+| javascript.conf | _javascript_ プラグイン用の設定ファイル | 保護されません
+| logger.conf     | _logger_ プラグイン用の設定ファイル     | 保護されません
+| lua.conf        | _lua_ プラグイン用の設定ファイル        | 保護されません
+| perl.conf       | _perl_ プラグイン用の設定ファイル       | 保護されません
+| php.conf        | _php_ プラグイン用の設定ファイル        | 保護されません
+| python.conf     | _python_ プラグイン用の設定ファイル     | 保護されません
+| relay.conf      | _relay_ プラグイン用の設定ファイル      | 保護されません
+| ruby.conf       | _ruby_ プラグイン用の設定ファイル       | 保護されません
+| script.conf     | _script_ プラグイン用の設定ファイル     | 保護されません
+| tcl.conf        | _tcl_ プラグイン用の設定ファイル        | 保護されません
+| trigger.conf    | _trigger_ プラグイン用の設定ファイル    | 保護される場合もあります、トリガに依存します
+| xfer.conf       | _xfer_ プラグイン用の設定ファイル       | 保護されません
+| weechat.log     | WeeChat ログファイル                    | 保護されません
 |===
 
 [IMPORTANT]
@@ -3339,6 +3347,134 @@ _script.conf_ ファイル内のセクション:
 オプション:
 
 include::autogen/user/script_options.adoc[]
+
+// TRANSLATION MISSING
+[[python_options]]
+==== Python options
+
+_python.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド       | 説明
+| look       | /set python.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/python_options.adoc[]
+
+// TRANSLATION MISSING
+[[perl_options]]
+==== Perl options
+
+_perl.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド     | 説明
+| look       | /set perl.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/perl_options.adoc[]
+
+// TRANSLATION MISSING
+[[ruby_options]]
+==== Ruby options
+
+_ruby.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド     | 説明
+| look       | /set ruby.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/ruby_options.adoc[]
+
+// TRANSLATION MISSING
+[[lua_options]]
+==== Lua options
+
+_lua.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set lua.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/lua_options.adoc[]
+
+// TRANSLATION MISSING
+[[tcl_options]]
+==== Tcl options
+
+_tcl.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set tcl.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/tcl_options.adoc[]
+
+// TRANSLATION MISSING
+[[guile_options]]
+==== Guile options
+
+_guile.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド      | 説明
+| look       | /set guile.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/guile_options.adoc[]
+
+// TRANSLATION MISSING
+[[javascript_options]]
+==== Javascript options
+
+_javascript.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド           | 説明
+| look       | /set javascript.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/javascript_options.adoc[]
+
+// TRANSLATION MISSING
+[[php_options]]
+==== PHP options
+
+_php.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド    | 説明
+| look       | /set php.look.* | 外観
+|===
+
+オプション:
+
+include::autogen/user/php_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

@@ -69,43 +69,53 @@ struct t_plugin_script
     struct t_plugin_script *next_script; /* link to next script             */
 };
 
-struct t_plugin_script_init
+struct t_plugin_script_data
 {
-    int (*callback_command)(const void *pointer, void *data,
-                            struct t_gui_buffer *buffer,
-                            int argc, char **argv, char **argv_eol);
-    int (*callback_completion)(const void *pointer, void *data,
-                               const char *completion_item,
-                               struct t_gui_buffer *buffer,
-                               struct t_gui_completion *completion);
-    struct t_hdata *(*callback_hdata)(const void *pointer,
-                                      void *data,
-                                      const char *hdata_name);
-    const char *(*callback_info_eval)(const void *pointer,
-                                      void *data,
-                                      const char *info_name,
-                                      const char *arguments);
-    struct t_infolist *(*callback_infolist)(const void *pointer,
-                                            void *data,
-                                            const char *infolist_name,
-                                            void *obj_pointer,
-                                            const char *arguments);
-    int (*callback_signal_debug_dump)(const void *pointer, void *data,
-                                      const char *signal,
-                                      const char *type_data,
-                                      void *signal_data);
-    int (*callback_signal_script_action)(const void *pointer, void *data,
-                                         const char *signal,
-                                         const char *type_data,
-                                         void *signal_data);
-    void (*callback_load_file)(void *data, const char *filename);
+    /* variables */
+    struct t_config_file **config_file;
+    struct t_config_option **config_look_check_license;
+    struct t_plugin_script **scripts;
+    struct t_plugin_script **last_script;
+
+    /* callbacks */
+    int (*callback_command) (const void *pointer, void *data,
+                             struct t_gui_buffer *buffer,
+                             int argc, char **argv, char **argv_eol);
+    int (*callback_completion) (const void *pointer, void *data,
+                                const char *completion_item,
+                                struct t_gui_buffer *buffer,
+                                struct t_gui_completion *completion);
+    struct t_hdata *(*callback_hdata) (const void *pointer,
+                                       void *data,
+                                       const char *hdata_name);
+    const char *(*callback_info_eval) (const void *pointer,
+                                       void *data,
+                                       const char *info_name,
+                                       const char *arguments);
+    struct t_infolist *(*callback_infolist) (const void *pointer,
+                                             void *data,
+                                             const char *infolist_name,
+                                             void *obj_pointer,
+                                             const char *arguments);
+    int (*callback_signal_debug_dump) (const void *pointer, void *data,
+                                       const char *signal,
+                                       const char *type_data,
+                                       void *signal_data);
+    int (*callback_signal_script_action) (const void *pointer, void *data,
+                                          const char *signal,
+                                          const char *type_data,
+                                          void *signal_data);
+    void (*callback_load_file) (void *data, const char *filename);
+
+    /* functions */
+    void (*unload_all) ();
 };
 
 extern void plugin_script_display_interpreter (struct t_weechat_plugin *plugin,
                                                int indent);
 extern void plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                 int argc, char *argv[],
-                                struct t_plugin_script_init *init);
+                                struct t_plugin_script_data *plugin_data);
 extern int plugin_script_valid (struct t_plugin_script *scripts,
                                 struct t_plugin_script *script);
 extern char *plugin_script_ptr2str (void *pointer);
@@ -135,8 +145,7 @@ extern struct t_plugin_script *plugin_script_alloc (const char *filename,
                                                     const char *shutdown_func,
                                                     const char *charset);
 extern struct t_plugin_script *plugin_script_add (struct t_weechat_plugin *weechat_plugin,
-                                                  struct t_plugin_script **scripts,
-                                                  struct t_plugin_script **last_script,
+                                                  struct t_plugin_script_data *plugin_data,
                                                   const char *filename,
                                                   const char *name,
                                                   const char *author,
@@ -196,8 +205,7 @@ extern struct t_infolist *plugin_script_infolist_list_scripts (struct t_weechat_
                                                                void *pointer,
                                                                const char *arguments);
 extern void plugin_script_end (struct t_weechat_plugin *weechat_plugin,
-                               struct t_plugin_script **scripts,
-                               void (*callback_unload_all)());
+                               struct t_plugin_script_data *plugin_data);
 extern void plugin_script_print_log (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *scripts);
 

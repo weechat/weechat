@@ -160,7 +160,7 @@ API_FUNC(register)
 
     /* register script */
     js_current_script = plugin_script_add (weechat_js_plugin,
-                                           &js_scripts, &last_js_script,
+                                           &js_data,
                                            (js_current_script_filename) ?
                                            js_current_script_filename : "",
                                            *name, *author, *version,

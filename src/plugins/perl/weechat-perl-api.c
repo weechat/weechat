@@ -146,7 +146,7 @@ API_FUNC(register)
 
     /* register script */
     perl_current_script = plugin_script_add (weechat_perl_plugin,
-                                             &perl_scripts, &last_perl_script,
+                                             &perl_data,
                                              (perl_current_script_filename) ?
                                              perl_current_script_filename : "",
                                              name, author, version, license,

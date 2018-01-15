@@ -137,7 +137,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
 
     /* register script */
     ruby_current_script = plugin_script_add (weechat_ruby_plugin,
-                                             &ruby_scripts, &last_ruby_script,
+                                             &ruby_data,
                                              (ruby_current_script_filename) ?
                                              ruby_current_script_filename : "",
                                              c_name, c_author, c_version, c_license,

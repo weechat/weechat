@@ -35,6 +35,8 @@ struct t_lua_const
 
 extern struct t_weechat_plugin *weechat_lua_plugin;
 
+extern struct t_plugin_script_data lua_data;
+
 extern int lua_quiet;
 extern struct t_plugin_script *lua_scripts;
 extern struct t_plugin_script *last_lua_script;

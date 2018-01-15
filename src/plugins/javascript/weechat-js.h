@@ -42,6 +42,8 @@ class WeechatJsV8;
 
 extern struct t_weechat_plugin *weechat_js_plugin;
 
+extern struct t_plugin_script_data js_data;
+
 extern int js_quiet;
 extern struct t_plugin_script *js_scripts;
 extern struct t_plugin_script *last_js_script;

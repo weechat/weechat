@@ -564,24 +564,32 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| Datei        | Beschreibung                            | sensible Daten
-| weechat.conf | Hauptkonfiguration von WeeChat          | möglich (Beispiel: Auflistung der Channels im Buffers-Layout).
-| sec.conf     | Konfigurationsdatei mit sensiblen Daten | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden.
-| plugins.conf | Konfigurationsdatei für Erweiterungen   | möglich, hängt von der Erweiterung/Skript ab.
-| alias.conf   | Konfigurationsdatei: Alias-Erweiterung  | möglich, hängt von den Aliases ab.
-| aspell.conf  | Konfiguration für _aspell_-Erweiterung  | Nein.
-| buflist.conf | Konfiguration für _buflist_-Erweiterung | Nein.
-| charset.conf | Konfiguration für _charset_-Erweiterung | Nein.
-| exec.conf    | Konfiguration für _exec_-Erweiterung    | Nein.
-| fifo.conf    | Konfiguration für _fifo_-Erweiterung    | Nein.
-| fset.conf    | Konfiguration für _fset_-Erweiterung    | Nein.
-| irc.conf     | Konfiguration für _irc_-Erweiterung     | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
-| logger.conf  | Konfiguration für _logger_-Erweiterung  | Nein.
-| relay.conf   | Konfiguration für _relay_-Erweiterung   | Nein.
-| script.conf  | Konfiguration für _script_-Erweiterung  | Nein.
-| trigger.conf | Konfiguration für _trigger_-Erweiterung | möglich, hängt von den Triggern ab.
-| xfer.conf    | Konfiguration für _xfer_-Erweiterung    | Nein.
-| weechat.log  | WeeChat Logdateien                      | Nein.
+| Datei           | Beschreibung                               | sensible Daten
+| weechat.conf    | Hauptkonfiguration von WeeChat             | möglich (Beispiel: Auflistung der Channels im Buffers-Layout).
+| sec.conf        | Konfigurationsdatei mit sensiblen Daten    | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden.
+| plugins.conf    | Konfigurationsdatei für Erweiterungen      | möglich, hängt von der Erweiterung/Skript ab.
+| alias.conf      | Konfigurationsdatei: Alias-Erweiterung     | möglich, hängt von den Aliases ab.
+| aspell.conf     | Konfiguration für _aspell_-Erweiterung     | Nein.
+| buflist.conf    | Konfiguration für _buflist_-Erweiterung    | Nein.
+| charset.conf    | Konfiguration für _charset_-Erweiterung    | Nein.
+| exec.conf       | Konfiguration für _exec_-Erweiterung       | Nein.
+| fifo.conf       | Konfiguration für _fifo_-Erweiterung       | Nein.
+| fset.conf       | Konfiguration für _fset_-Erweiterung       | Nein.
+| guile.conf      | Konfiguration für _guile_-Erweiterung      | Nein.
+| irc.conf        | Konfiguration für _irc_-Erweiterung        | *Ja*: Datei kann Passwörter für Server, Nickserv oder Channels enthalten (sofern diese nicht in `sec.conf` gesichert sind).
+| javascript.conf | Konfiguration für _javascript_-Erweiterung | Nein.
+| logger.conf     | Konfiguration für _logger_-Erweiterung     | Nein.
+| lua.conf        | Konfiguration für _lua_-Erweiterung        | Nein.
+| perl.conf       | Konfiguration für _perl_-Erweiterung       | Nein.
+| php.conf        | Konfiguration für _php_-Erweiterung        | Nein.
+| python.conf     | Konfiguration für _python_-Erweiterung     | Nein.
+| relay.conf      | Konfiguration für _relay_-Erweiterung      | Nein.
+| ruby.conf       | Konfiguration für _ruby_-Erweiterung       | Nein.
+| script.conf     | Konfiguration für _script_-Erweiterung     | Nein.
+| tcl.conf        | Konfiguration für _tcl_-Erweiterung        | Nein.
+| trigger.conf    | Konfiguration für _trigger_-Erweiterung    | möglich, hängt von den Triggern ab.
+| xfer.conf       | Konfiguration für _xfer_-Erweiterung       | Nein.
+| weechat.log     | WeeChat Logdateien                         | Nein.
 |===
 
 [IMPORTANT]
@@ -3424,6 +3432,126 @@ Sektionen in Datei _script.conf_:
 Optionen:
 
 include::autogen/user/script_options.adoc[]
+
+[[python_options]]
+==== Python Optionen
+
+Sektionen in Datei _python.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl       | Beschreibung
+| look    | /set python.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/python_options.adoc[]
+
+[[perl_options]]
+==== Perl Optionen
+
+Sektionen in Datei _perl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl     | Beschreibung
+| look    | /set perl.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/perl_options.adoc[]
+
+[[ruby_options]]
+==== Ruby Optionen
+
+Sektionen in Datei _ruby.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl     | Beschreibung
+| look    | /set ruby.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/ruby_options.adoc[]
+
+[[lua_options]]
+==== Lua Optionen
+
+Sektionen in Datei _lua.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl    | Beschreibung
+| look    | /set lua.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/lua_options.adoc[]
+
+[[tcl_options]]
+==== Tcl Optionen
+
+Sektionen in Datei _tcl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl    | Beschreibung
+| look    | /set tcl.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/tcl_options.adoc[]
+
+[[guile_options]]
+==== Guile Optionen
+
+Sektionen in Datei _guile.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl      | Beschreibung
+| look    | /set guile.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/guile_options.adoc[]
+
+[[javascript_options]]
+==== Javascript Optionen
+
+Sektionen in Datei _javascript.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl           | Beschreibung
+| look    | /set javascript.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/javascript_options.adoc[]
+
+[[php_options]]
+==== PHP Optionen
+
+Sektionen in Datei _php.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion | Steuerbefehl    | Beschreibung
+| look    | /set php.look.* | Erscheinungsbild.
+|===
+
+Optionen:
+
+include::autogen/user/php_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

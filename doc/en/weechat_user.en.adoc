@@ -556,24 +556,32 @@ The files in the WeeChat home directory are:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| File         | Description                             | Sensitive data
-| weechat.conf | Main WeeChat configuration file         | Possible (example: list of channels in a saved buffers layout).
-| sec.conf     | Configuration file with secured data    | *Yes, highly sensitive*: this file must never be shared with anyone.
-| plugins.conf | Plugins configuration file              | Possible, depends on plugins/scripts.
-| alias.conf   | Configuration file for _alias_ plugin   | Possible, depends on aliases.
-| aspell.conf  | Configuration file for _aspell_ plugin  | No.
-| buflist.conf | Configuration file for _buflist_ plugin | No.
-| charset.conf | Configuration file for _charset_ plugin | No.
-| exec.conf    | Configuration file for _exec_ plugin    | No.
-| fifo.conf    | Configuration file for _fifo_ plugin    | No.
-| fset.conf    | Configuration file for _fset_ plugin    | No.
-| irc.conf     | Configuration file for _irc_ plugin     | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
-| logger.conf  | Configuration file for _logger_ plugin  | No.
-| relay.conf   | Configuration file for _relay_ plugin   | No.
-| script.conf  | Configuration file for _script_ plugin  | No.
-| trigger.conf | Configuration file for _trigger_ plugin | Possible, depends on triggers.
-| xfer.conf    | Configuration file for _xfer_ plugin    | No.
-| weechat.log  | WeeChat log file                        | No.
+| File            | Description                                | Sensitive data
+| weechat.conf    | Main WeeChat configuration file            | Possible (example: list of channels in a saved buffers layout).
+| sec.conf        | Configuration file with secured data       | *Yes, highly sensitive*: this file must never be shared with anyone.
+| plugins.conf    | Plugins configuration file                 | Possible, depends on plugins/scripts.
+| alias.conf      | Configuration file for _alias_ plugin      | Possible, depends on aliases.
+| aspell.conf     | Configuration file for _aspell_ plugin     | No.
+| buflist.conf    | Configuration file for _buflist_ plugin    | No.
+| charset.conf    | Configuration file for _charset_ plugin    | No.
+| exec.conf       | Configuration file for _exec_ plugin       | No.
+| fifo.conf       | Configuration file for _fifo_ plugin       | No.
+| fset.conf       | Configuration file for _fset_ plugin       | No.
+| guile.conf      | Configuration file for _guile_ plugin      | No.
+| irc.conf        | Configuration file for _irc_ plugin        | *Yes*: it can contain passwords for servers, nickserv and channels (if not stored in `sec.conf`).
+| javascript.conf | Configuration file for _javascript_ plugin | No.
+| logger.conf     | Configuration file for _logger_ plugin     | No.
+| lua.conf        | Configuration file for _lua_ plugin        | No.
+| perl.conf       | Configuration file for _perl_ plugin       | No.
+| php.conf        | Configuration file for _php_ plugin        | No.
+| python.conf     | Configuration file for _python_ plugin     | No.
+| relay.conf      | Configuration file for _relay_ plugin      | No.
+| ruby.conf       | Configuration file for _ruby_ plugin       | No.
+| script.conf     | Configuration file for _script_ plugin     | No.
+| tcl.conf        | Configuration file for _tcl_ plugin        | No.
+| trigger.conf    | Configuration file for _trigger_ plugin    | Possible, depends on triggers.
+| xfer.conf       | Configuration file for _xfer_ plugin       | No.
+| weechat.log     | WeeChat log file                           | No.
 |===
 
 [IMPORTANT]
@@ -3345,6 +3353,126 @@ Sections in file _script.conf_:
 Options:
 
 include::autogen/user/script_options.adoc[]
+
+[[python_options]]
+==== Python options
+
+Sections in file _python.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command    | Description
+| look    | /set python.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/python_options.adoc[]
+
+[[perl_options]]
+==== Perl options
+
+Sections in file _perl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command  | Description
+| look    | /set perl.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/perl_options.adoc[]
+
+[[ruby_options]]
+==== Ruby options
+
+Sections in file _ruby.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command  | Description
+| look    | /set ruby.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/ruby_options.adoc[]
+
+[[lua_options]]
+==== Lua options
+
+Sections in file _lua.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set lua.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/lua_options.adoc[]
+
+[[tcl_options]]
+==== Tcl options
+
+Sections in file _tcl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set tcl.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/tcl_options.adoc[]
+
+[[guile_options]]
+==== Guile options
+
+Sections in file _guile.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command   | Description
+| look    | /set guile.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/guile_options.adoc[]
+
+[[javascript_options]]
+==== Javascript options
+
+Sections in file _javascript.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command        | Description
+| look    | /set javascript.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/javascript_options.adoc[]
+
+[[php_options]]
+==== PHP options
+
+Sections in file _php.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Control command | Description
+| look    | /set php.look.* | Look and feel.
+|===
+
+Options:
+
+include::autogen/user/php_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

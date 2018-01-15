@@ -185,6 +185,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    plugin-config.c                | Options de configuration des extensions (fichier plugins.conf).
 |    plugin-script.c                | Fonctions communes utilisés par les extensions pour les scripts.
 |    plugin-script-api.c            | Fonctions pour l'API script : enveloppes autour de quelques fonctions de l'API extension.
+|    plugin-script-config.c         | Options de configuration des extensions pour les scripts (fichiers python.conf, perl.conf, ...).
 |    weechat-plugin.h               | En-tête destiné à être distribué avec les extensions WeeChat, pour les compiler.
 |    alias/                         | Extension Alias.
 |       alias.c                     | Fonctions principales pour les alias.

@@ -44,6 +44,8 @@
 
 extern struct t_weechat_plugin *weechat_python_plugin;
 
+extern struct t_plugin_script_data python_data;
+
 extern int python_quiet;
 extern struct t_plugin_script *python_scripts;
 extern struct t_plugin_script *last_python_script;

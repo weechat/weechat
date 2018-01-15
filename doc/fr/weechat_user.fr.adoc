@@ -568,24 +568,32 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| Fichier      | Description                                          | Données sensibles
-| weechat.conf | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons).
-| sec.conf     | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque.
-| plugins.conf | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
-| alias.conf   | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
-| aspell.conf  | Fichier de configuration de l'extension _aspell_     | Non.
-| buflist.conf | Fichier de configuration de l'extension _buflist_    | Non.
-| charset.conf | Fichier de configuration de l'extension _charset_    | Non.
-| exec.conf    | Fichier de configuration de l'extension _exec_       | Non.
-| fifo.conf    | Fichier de configuration de l'extension _fifo_       | Non.
-| fset.conf    | Fichier de configuration de l'extension _fset_       | Non.
-| irc.conf     | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
-| logger.conf  | Fichier de configuration de l'extension _logger_     | Non.
-| relay.conf   | Fichier de configuration de l'extension _relay_      | Non.
-| script.conf  | Fichier de configuration de l'extension _script_     | Non.
-| trigger.conf | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers.
-| xfer.conf    | Fichier de configuration de l'extension _xfer_       | Non.
-| weechat.log  | Fichier de log WeeChat                               | Non.
+| Fichier         | Description                                          | Données sensibles
+| weechat.conf    | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons).
+| sec.conf        | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque.
+| plugins.conf    | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
+| alias.conf      | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
+| aspell.conf     | Fichier de configuration de l'extension _aspell_     | Non.
+| buflist.conf    | Fichier de configuration de l'extension _buflist_    | Non.
+| charset.conf    | Fichier de configuration de l'extension _charset_    | Non.
+| exec.conf       | Fichier de configuration de l'extension _exec_       | Non.
+| fifo.conf       | Fichier de configuration de l'extension _fifo_       | Non.
+| fset.conf       | Fichier de configuration de l'extension _fset_       | Non.
+| guile.conf      | Fichier de configuration de l'extension _guile_      | Non.
+| irc.conf        | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
+| javascript.conf | Fichier de configuration de l'extension _javascript_ | Non.
+| logger.conf     | Fichier de configuration de l'extension _logger_     | Non.
+| lua.conf        | Fichier de configuration de l'extension _lua_        | Non.
+| perl.conf       | Fichier de configuration de l'extension _perl_       | Non.
+| php.conf        | Fichier de configuration de l'extension _php_        | Non.
+| python.conf     | Fichier de configuration de l'extension _python_     | Non.
+| relay.conf      | Fichier de configuration de l'extension _relay_      | Non.
+| ruby.conf       | Fichier de configuration de l'extension _ruby_       | Non.
+| script.conf     | Fichier de configuration de l'extension _script_     | Non.
+| tcl.conf        | Fichier de configuration de l'extension _tcl_        | Non.
+| trigger.conf    | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers.
+| xfer.conf       | Fichier de configuration de l'extension _xfer_       | Non.
+| weechat.log     | Fichier de log WeeChat                               | Non.
 |===
 
 [IMPORTANT]
@@ -3455,6 +3463,126 @@ Sections dans le fichier _script.conf_ :
 Options :
 
 include::autogen/user/script_options.adoc[]
+
+[[python_options]]
+==== Options Python
+
+Sections dans le fichier _python.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set python.look.*   | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/python_options.adoc[]
+
+[[perl_options]]
+==== Options Perl
+
+Sections dans le fichier _perl.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set perl.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/perl_options.adoc[]
+
+[[ruby_options]]
+==== Options Ruby
+
+Sections dans le fichier _ruby.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set ruby.look.*     | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/ruby_options.adoc[]
+
+[[lua_options]]
+==== Options Lua
+
+Sections dans le fichier _lua.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set lua.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/lua_options.adoc[]
+
+[[tcl_options]]
+==== Options Tcl
+
+Sections dans le fichier _tcl.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set tcl.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/tcl_options.adoc[]
+
+[[guile_options]]
+==== Options Guile
+
+Sections dans le fichier _guile.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set guile.look.*    | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/guile_options.adoc[]
+
+[[javascript_options]]
+==== Options Javascript
+
+Sections dans le fichier _javascript.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle   | Description
+| look    | /set javascript.look.* | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/javascript_options.adoc[]
+
+[[php_options]]
+==== Options PHP
+
+Sections dans le fichier _php.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section | Commande de contrôle | Description
+| look    | /set php.look.*      | Aspect/présentation.
+|===
+
+Options :
+
+include::autogen/user/php_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

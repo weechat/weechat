@@ -28,6 +28,8 @@
 
 extern struct t_weechat_plugin *weechat_ruby_plugin;
 
+extern struct t_plugin_script_data ruby_data;
+
 extern int ruby_quiet;
 extern struct t_plugin_script *ruby_scripts;
 extern struct t_plugin_script *last_ruby_script;

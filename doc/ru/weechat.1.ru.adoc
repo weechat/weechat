@@ -64,9 +64,8 @@ $HOME/.weechat/alias.conf::
 $HOME/.weechat/aspell.conf::
     файл конфигурации для плагина _aspell_
 
-// TRANSLATION MISSING
 $HOME/.weechat/buflist.conf::
-    configuration file for _buflist_ plugin
+    файл конфигурации для плагина _buflist_
 
 $HOME/.weechat/charset.conf::
     файл конфигурации для плагина _charset_
@@ -74,25 +73,47 @@ $HOME/.weechat/charset.conf::
 $HOME/.weechat/exec.conf::
     файл конфигурации для плагина _exec_
 
-// TRANSLATION MISSING
 $HOME/.weechat/fifo.conf::
-    configuration file for _fifo_ plugin
+    файл конфигурации для плагина _fifo_
 
-// TRANSLATION MISSING
 $HOME/.weechat/fset.conf::
-    configuration file for _fset_ plugin
+    файл конфигурации для плагина _fset_
+
+$HOME/.weechat/guile.conf::
+    файл конфигурации для плагина _guile_
 
 $HOME/.weechat/irc.conf::
     файл конфигурации для плагина _irc_
 
+$HOME/.weechat/javascript.conf::
+    файл конфигурации для плагина _javascript_
+
 $HOME/.weechat/logger.conf::
     файл конфигурации для плагина _logger_
+
+$HOME/.weechat/lua.conf::
+    файл конфигурации для плагина _lua_
+
+$HOME/.weechat/perl.conf::
+    файл конфигурации для плагина _perl_
+
+$HOME/.weechat/php.conf::
+    файл конфигурации для плагина _php_
+
+$HOME/.weechat/python.conf::
+    файл конфигурации для плагина _python_
 
 $HOME/.weechat/relay.conf::
     файл конфигурации для плагина _relay_
 
+$HOME/.weechat/ruby.conf::
+    файл конфигурации для плагина _ruby_
+
 $HOME/.weechat/script.conf::
     файл конфигурации для плагина _script_
+
+$HOME/.weechat/tcl.conf::
+    файл конфигурации для плагина _tcl_
 
 $HOME/.weechat/trigger.conf::
     файл конфигурации для плагина _trigger_

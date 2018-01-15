@@ -34,11 +34,13 @@ struct t_php_const
     char *str_value;
 };
 
-extern int php_quiet;
 extern struct t_weechat_plugin *weechat_php_plugin;
+
+extern struct t_plugin_script_data php_data;
 
 extern struct t_hashtable *weechat_php_function_map;
 
+extern int php_quiet;
 extern struct t_plugin_script *php_scripts;
 extern struct t_plugin_script *last_php_script;
 extern struct t_plugin_script *php_current_script;

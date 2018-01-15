@@ -255,6 +255,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/plugin.h
 ./src/plugins/plugin-script-api.c
 ./src/plugins/plugin-script-api.h
+./src/plugins/plugin-script-config.c
+./src/plugins/plugin-script-config.h
 ./src/plugins/plugin-script.c
 ./src/plugins/plugin-script.h
 ./src/plugins/python/weechat-python-api.c

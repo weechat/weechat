@@ -27,6 +27,8 @@
 
 extern struct t_weechat_plugin *weechat_guile_plugin;
 
+extern struct t_plugin_script_data guile_data;
+
 extern int guile_quiet;
 extern struct t_plugin_script *guile_scripts;
 extern struct t_plugin_script *last_guile_script;

@@ -44,6 +44,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_lua_plugin = NULL;
 
+struct t_plugin_script_data lua_data;
+
+struct t_config_file *lua_config_file = NULL;
+struct t_config_option *lua_config_look_check_license = NULL;
+
 int lua_quiet = 0;
 
 struct t_plugin_script *lua_script_eval = NULL;
@@ -1193,8 +1198,6 @@ weechat_lua_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
-
     weechat_lua_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1213,17 +1216,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (!lua_buffer_output)
         return WEECHAT_RC_ERROR;
 
-    init.callback_command = &weechat_lua_command_cb;
-    init.callback_completion = &weechat_lua_completion_cb;
-    init.callback_hdata = &weechat_lua_hdata_cb;
-    init.callback_info_eval = &weechat_lua_info_eval_cb;
-    init.callback_infolist = &weechat_lua_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_lua_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_lua_signal_script_action_cb;
-    init.callback_load_file = &weechat_lua_load_cb;
+    lua_data.config_file = &lua_config_file;
+    lua_data.config_look_check_license = &lua_config_look_check_license;
+    lua_data.scripts = &lua_scripts;
+    lua_data.last_script = &last_lua_script;
+    lua_data.callback_command = &weechat_lua_command_cb;
+    lua_data.callback_completion = &weechat_lua_completion_cb;
+    lua_data.callback_hdata = &weechat_lua_hdata_cb;
+    lua_data.callback_info_eval = &weechat_lua_info_eval_cb;
+    lua_data.callback_infolist = &weechat_lua_infolist_cb;
+    lua_data.callback_signal_debug_dump = &weechat_lua_signal_debug_dump_cb;
+    lua_data.callback_signal_script_action = &weechat_lua_signal_script_action_cb;
+    lua_data.callback_load_file = &weechat_lua_load_cb;
+    lua_data.unload_all = &weechat_lua_unload_all;
 
     lua_quiet = 1;
-    plugin_script_init (weechat_lua_plugin, argc, argv, &init);
+    plugin_script_init (weechat_lua_plugin, argc, argv, &lua_data);
     lua_quiet = 0;
 
     plugin_script_display_short_list (weechat_lua_plugin,
@@ -1242,7 +1250,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     lua_quiet = 1;
-    plugin_script_end (plugin, &lua_scripts, &weechat_lua_unload_all);
+    plugin_script_end (plugin, &lua_data);
     if (lua_script_eval)
     {
         weechat_lua_unload (lua_script_eval);

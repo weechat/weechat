@@ -128,7 +128,7 @@ API_FUNC(register)
 
     /* register script */
     python_current_script = plugin_script_add (weechat_python_plugin,
-                                               &python_scripts, &last_python_script,
+                                               &python_data,
                                                (python_current_script_filename) ?
                                                python_current_script_filename : "",
                                                name, author, version, license,

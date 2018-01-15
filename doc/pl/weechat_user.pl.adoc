@@ -563,24 +563,32 @@ Pliki tworzone w katalogu domowym WeeChat:
 
 [width="100%",cols="1m,3,6",options="header"]
 |===
-| Plik         | Opis                                          | Wrażliwe dane
-| weechat.conf | Główny plik konfiguracyjny WeeChat            | Możliwe (przykład: lista kanałów w zapisanym układzie buforów).
-| sec.conf     | Plik konfiguracyjny z zabezpieczonymi danymi  | *Tak, bardzo prażliwe*: Tym plikiem nie powinno się z nikim dzielić.
-| plugins.conf | Plik konfiguracyjny wtyczek                   | Możliwe, zależy od wtyczki/skryptu.
-| alias.conf   | Plik konfiguracyjny wtyczki _alias_           | Możliwe, zależy od aliasu.
-| aspell.conf  | Plik konfiguracyjny wtyczki _aspell_          | Nie.
-| buflist.conf | Plik konfiguracyjny wtyczki _buflist_         | Nie.
-| charset.conf | Plik konfiguracyjny wtyczki _charset_         | Nie.
-| exec.conf    | Plik konfiguracyjny wtyczki _exec_            | Nie.
-| fifo.conf    | Plik konfiguracyjny wtyczki _fifo_            | Nie.
-| fset.conf    | Plik konfiguracyjny wtyczki _fset_            | Nie.
-| irc.conf     | Plik konfiguracyjny wtyczki _irc_             | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
-| logger.conf  | Plik konfiguracyjny wtyczki _logger_          | Nie.
-| relay.conf   | Plik konfiguracyjny wtyczki _relay_           | Nie.
-| script.conf  | Plik konfiguracyjny wtyczki _script_          | Nie.
-| trigger.conf | Plik konfiguracyjny wtyczki _trigger_         | Możliwe, zależy od triggerów.
-| xfer.conf    | Plik konfiguracyjny wtyczki _xfer_            | Nie.
-| weechat.log  | Plik z logami WeeChat                         | Nie.
+| Plik            | Opis                                         | Wrażliwe dane
+| weechat.conf    | Główny plik konfiguracyjny WeeChat           | Możliwe (przykład: lista kanałów w zapisanym układzie buforów).
+| sec.conf        | Plik konfiguracyjny z zabezpieczonymi danymi | *Tak, bardzo prażliwe*: Tym plikiem nie powinno się z nikim dzielić.
+| plugins.conf    | Plik konfiguracyjny wtyczek                  | Możliwe, zależy od wtyczki/skryptu.
+| alias.conf      | Plik konfiguracyjny wtyczki _alias_          | Możliwe, zależy od aliasu.
+| aspell.conf     | Plik konfiguracyjny wtyczki _aspell_         | Nie.
+| buflist.conf    | Plik konfiguracyjny wtyczki _buflist_        | Nie.
+| charset.conf    | Plik konfiguracyjny wtyczki _charset_        | Nie.
+| exec.conf       | Plik konfiguracyjny wtyczki _exec_           | Nie.
+| fifo.conf       | Plik konfiguracyjny wtyczki _fifo_           | Nie.
+| fset.conf       | Plik konfiguracyjny wtyczki _fset_           | Nie.
+| guile.conf      | Plik konfiguracyjny wtyczki _guile_          | Nie.
+| irc.conf        | Plik konfiguracyjny wtyczki _irc_            | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
+| javascript.conf | Plik konfiguracyjny wtyczki _javascript_     | Nie.
+| logger.conf     | Plik konfiguracyjny wtyczki _logger_         | Nie.
+| lua.conf        | Plik konfiguracyjny wtyczki _lua_            | Nie.
+| perl.conf       | Plik konfiguracyjny wtyczki _perl_           | Nie.
+| php.conf        | Plik konfiguracyjny wtyczki _php_            | Nie.
+| python.conf     | Plik konfiguracyjny wtyczki _python_         | Nie.
+| relay.conf      | Plik konfiguracyjny wtyczki _relay_          | Nie.
+| ruby.conf       | Plik konfiguracyjny wtyczki _ruby_           | Nie.
+| script.conf     | Plik konfiguracyjny wtyczki _script_         | Nie.
+| tcl.conf        | Plik konfiguracyjny wtyczki _tcl_            | Nie.
+| trigger.conf    | Plik konfiguracyjny wtyczki _trigger_        | Możliwe, zależy od triggerów.
+| xfer.conf       | Plik konfiguracyjny wtyczki _xfer_           | Nie.
+| weechat.log     | Plik z logami WeeChat                        | Nie.
 |===
 
 [IMPORTANT]
@@ -3374,6 +3382,134 @@ Sekcje w pliku _script.conf_:
 Opcje:
 
 include::autogen/user/script_options.adoc[]
+
+// TRANSLATION MISSING
+[[python_options]]
+==== Python options
+
+Sekcje w pliku _python.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda            | Opis
+| look    | /set python.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/python_options.adoc[]
+
+// TRANSLATION MISSING
+[[perl_options]]
+==== Perl options
+
+Sekcje w pliku _perl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda          | Opis
+| look    | /set perl.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/perl_options.adoc[]
+
+// TRANSLATION MISSING
+[[ruby_options]]
+==== Ruby options
+
+Sekcje w pliku _ruby.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda          | Opis
+| look    | /set ruby.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/ruby_options.adoc[]
+
+// TRANSLATION MISSING
+[[lua_options]]
+==== Lua options
+
+Sekcje w pliku _lua.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda         | Opis
+| look    | /set lua.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/lua_options.adoc[]
+
+// TRANSLATION MISSING
+[[tcl_options]]
+==== Tcl options
+
+Sekcje w pliku _tcl.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda         | Opis
+| look    | /set tcl.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/tcl_options.adoc[]
+
+// TRANSLATION MISSING
+[[guile_options]]
+==== Guile options
+
+Sekcje w pliku _guile.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda           | Opis
+| look    | /set guile.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/guile_options.adoc[]
+
+// TRANSLATION MISSING
+[[javascript_options]]
+==== Javascript options
+
+Sekcje w pliku _javascript.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda                | Opis
+| look    | /set javascript.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/javascript_options.adoc[]
+
+// TRANSLATION MISSING
+[[php_options]]
+==== PHP options
+
+Sekcje w pliku _php.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja  | Komenda         | Opis
+| look    | /set php.look.* | Wygląd.
+|===
+
+Opcje:
+
+include::autogen/user/php_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

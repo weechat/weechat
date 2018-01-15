@@ -39,6 +39,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_php_plugin = NULL;
 
+struct t_plugin_script_data php_data;
+
+struct t_config_file *php_config_file = NULL;
+struct t_config_option *php_config_look_check_license = NULL;
+
 int php_quiet = 0;
 
 struct t_plugin_script *php_script_eval = NULL;
@@ -1234,8 +1239,6 @@ php_weechat_log_message (char *message)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
-
     weechat_php_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1249,14 +1252,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "");
 #endif /* PHP_VERSION */
 
-    init.callback_command = &weechat_php_command_cb;
-    init.callback_completion = &weechat_php_completion_cb;
-    init.callback_hdata = &weechat_php_hdata_cb;
-    init.callback_info_eval = &weechat_php_info_eval_cb;
-    init.callback_infolist = &weechat_php_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_php_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_php_signal_script_action_cb;
-    init.callback_load_file = &weechat_php_load_cb;
+    php_data.config_file = &php_config_file;
+    php_data.config_look_check_license = &php_config_look_check_license;
+    php_data.scripts = &php_scripts;
+    php_data.last_script = &last_php_script;
+    php_data.callback_command = &weechat_php_command_cb;
+    php_data.callback_completion = &weechat_php_completion_cb;
+    php_data.callback_hdata = &weechat_php_hdata_cb;
+    php_data.callback_info_eval = &weechat_php_info_eval_cb;
+    php_data.callback_infolist = &weechat_php_infolist_cb;
+    php_data.callback_signal_debug_dump = &weechat_php_signal_debug_dump_cb;
+    php_data.callback_signal_script_action = &weechat_php_signal_script_action_cb;
+    php_data.callback_load_file = &weechat_php_load_cb;
+    php_data.unload_all = &weechat_php_unload_all;
 
     php_embed_module.startup = php_weechat_startup;
     php_embed_module.ub_write = php_weechat_ub_write;
@@ -1269,7 +1277,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     PG(report_zend_debug) = 0;  /* Turn off --enable-debug output */
 
     php_quiet = 1;
-    plugin_script_init (weechat_php_plugin, argc, argv, &init);
+    plugin_script_init (weechat_php_plugin, argc, argv, &php_data);
     php_quiet = 0;
 
     plugin_script_display_short_list (weechat_php_plugin,
@@ -1288,7 +1296,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     php_quiet = 1;
-    plugin_script_end (plugin, &php_scripts, &weechat_php_unload_all);
+    plugin_script_end (plugin, &php_data);
     if (php_script_eval)
     {
         weechat_php_unload (php_script_eval);

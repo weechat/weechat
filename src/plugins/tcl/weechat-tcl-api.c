@@ -259,7 +259,7 @@ API_FUNC(register)
 
     /* register script */
     tcl_current_script = plugin_script_add (weechat_tcl_plugin,
-                                            &tcl_scripts, &last_tcl_script,
+                                            &tcl_data,
                                             (tcl_current_script_filename) ?
                                             tcl_current_script_filename : "",
                                             name, author, version, license,

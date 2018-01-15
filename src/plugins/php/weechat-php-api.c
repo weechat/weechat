@@ -130,7 +130,7 @@ API_FUNC(register)
 
     /* register script */
     php_current_script = plugin_script_add (weechat_php_plugin,
-                                            &php_scripts, &last_php_script,
+                                            &php_data,
                                             (php_current_script_filename) ?
                                             php_current_script_filename : "",
                                             ZSTR_VAL(name),

@@ -28,6 +28,8 @@
 
 extern struct t_weechat_plugin *weechat_tcl_plugin;
 
+extern struct t_plugin_script_data tcl_data;
+
 extern int tcl_quiet;
 extern struct t_plugin_script *tcl_scripts;
 extern struct t_plugin_script *last_tcl_script;

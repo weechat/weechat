@@ -65,6 +65,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
+struct t_plugin_script_data ruby_data;
+
+struct t_config_file *ruby_config_file = NULL;
+struct t_config_option *ruby_config_look_check_license = NULL;
+
 int ruby_quiet = 0;
 int ruby_hide_errors = 0;
 
@@ -1238,7 +1243,6 @@ weechat_ruby_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
     int ruby_error;
     VALUE err;
     char *weechat_ruby_code = {
@@ -1361,17 +1365,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     ruby_init_loadpath ();
 
-    init.callback_command = &weechat_ruby_command_cb;
-    init.callback_completion = &weechat_ruby_completion_cb;
-    init.callback_hdata = &weechat_ruby_hdata_cb;
-    init.callback_info_eval = &weechat_ruby_info_eval_cb;
-    init.callback_infolist = &weechat_ruby_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
-    init.callback_load_file = &weechat_ruby_load_cb;
+    ruby_data.config_file = &ruby_config_file;
+    ruby_data.config_look_check_license = &ruby_config_look_check_license;
+    ruby_data.scripts = &ruby_scripts;
+    ruby_data.last_script = &last_ruby_script;
+    ruby_data.callback_command = &weechat_ruby_command_cb;
+    ruby_data.callback_completion = &weechat_ruby_completion_cb;
+    ruby_data.callback_hdata = &weechat_ruby_hdata_cb;
+    ruby_data.callback_info_eval = &weechat_ruby_info_eval_cb;
+    ruby_data.callback_infolist = &weechat_ruby_infolist_cb;
+    ruby_data.callback_signal_debug_dump = &weechat_ruby_signal_debug_dump_cb;
+    ruby_data.callback_signal_script_action = &weechat_ruby_signal_script_action_cb;
+    ruby_data.callback_load_file = &weechat_ruby_load_cb;
+    ruby_data.unload_all = &weechat_ruby_unload_all;
 
     ruby_quiet = 1;
-    plugin_script_init (weechat_ruby_plugin, argc, argv, &init);
+    plugin_script_init (weechat_ruby_plugin, argc, argv, &ruby_data);
     ruby_quiet = 0;
 
     plugin_script_display_short_list (weechat_ruby_plugin,
@@ -1390,7 +1399,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     ruby_quiet = 1;
-    plugin_script_end (plugin, &ruby_scripts, &weechat_ruby_unload_all);
+    plugin_script_end (plugin, &ruby_data);
     if (ruby_script_eval)
     {
         weechat_ruby_unload (ruby_script_eval);

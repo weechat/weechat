@@ -41,6 +41,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_perl_plugin = NULL;
 
+struct t_plugin_script_data perl_data;
+
+struct t_config_file *perl_config_file = NULL;
+struct t_config_option *perl_config_look_check_license = NULL;
+
 int perl_quiet = 0;
 
 struct t_plugin_script *perl_script_eval = NULL;
@@ -1207,7 +1212,6 @@ weechat_perl_signal_quit_upgrade_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
 #ifdef PERL_SYS_INIT3
     int a;
     char **perl_args_local;
@@ -1253,17 +1257,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                 perl_args, NULL);
 #endif /* MULTIPLICITY */
 
-    init.callback_command = &weechat_perl_command_cb;
-    init.callback_completion = &weechat_perl_completion_cb;
-    init.callback_hdata = &weechat_perl_hdata_cb;
-    init.callback_info_eval = &weechat_perl_info_eval_cb;
-    init.callback_infolist = &weechat_perl_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_perl_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_perl_signal_script_action_cb;
-    init.callback_load_file = &weechat_perl_load_cb;
+    perl_data.config_file = &perl_config_file;
+    perl_data.config_look_check_license = &perl_config_look_check_license;
+    perl_data.scripts = &perl_scripts;
+    perl_data.last_script = &last_perl_script;
+    perl_data.callback_command = &weechat_perl_command_cb;
+    perl_data.callback_completion = &weechat_perl_completion_cb;
+    perl_data.callback_hdata = &weechat_perl_hdata_cb;
+    perl_data.callback_info_eval = &weechat_perl_info_eval_cb;
+    perl_data.callback_infolist = &weechat_perl_infolist_cb;
+    perl_data.callback_signal_debug_dump = &weechat_perl_signal_debug_dump_cb;
+    perl_data.callback_signal_script_action = &weechat_perl_signal_script_action_cb;
+    perl_data.callback_load_file = &weechat_perl_load_cb;
+    perl_data.unload_all = &weechat_perl_unload_all;
 
     perl_quiet = 1;
-    plugin_script_init (weechat_perl_plugin, argc, argv, &init);
+    plugin_script_init (weechat_perl_plugin, argc, argv, &perl_data);
     perl_quiet = 0;
 
     plugin_script_display_short_list (weechat_perl_plugin,
@@ -1287,7 +1296,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     perl_quiet = 1;
-    plugin_script_end (plugin, &perl_scripts, &weechat_perl_unload_all);
+    plugin_script_end (plugin, &perl_data);
     if (perl_script_eval)
     {
         weechat_perl_unload (perl_script_eval);

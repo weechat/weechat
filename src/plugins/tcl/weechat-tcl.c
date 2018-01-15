@@ -44,6 +44,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_tcl_plugin = NULL;
 
+struct t_plugin_script_data tcl_data;
+
+struct t_config_file *tcl_config_file = NULL;
+struct t_config_option *tcl_config_look_check_license = NULL;
+
 int tcl_quiet = 0;
 
 struct t_plugin_script *tcl_script_eval = NULL;
@@ -904,8 +909,6 @@ weechat_tcl_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
-
     weechat_tcl_plugin = plugin;
 
     /* set interpreter name and version */
@@ -919,17 +922,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                            "");
 #endif /* TCL_VERSION */
 
-    init.callback_command = &weechat_tcl_command_cb;
-    init.callback_completion = &weechat_tcl_completion_cb;
-    init.callback_hdata = &weechat_tcl_hdata_cb;
-    init.callback_info_eval = &weechat_tcl_info_eval_cb;
-    init.callback_infolist = &weechat_tcl_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
-    init.callback_load_file = &weechat_tcl_load_cb;
+    tcl_data.config_file = &tcl_config_file;
+    tcl_data.config_look_check_license = &tcl_config_look_check_license;
+    tcl_data.scripts = &tcl_scripts;
+    tcl_data.last_script = &last_tcl_script;
+    tcl_data.callback_command = &weechat_tcl_command_cb;
+    tcl_data.callback_completion = &weechat_tcl_completion_cb;
+    tcl_data.callback_hdata = &weechat_tcl_hdata_cb;
+    tcl_data.callback_info_eval = &weechat_tcl_info_eval_cb;
+    tcl_data.callback_infolist = &weechat_tcl_infolist_cb;
+    tcl_data.callback_signal_debug_dump = &weechat_tcl_signal_debug_dump_cb;
+    tcl_data.callback_signal_script_action = &weechat_tcl_signal_script_action_cb;
+    tcl_data.callback_load_file = &weechat_tcl_load_cb;
+    tcl_data.unload_all = &weechat_tcl_unload_all;
 
     tcl_quiet = 1;
-    plugin_script_init (weechat_tcl_plugin, argc, argv, &init);
+    plugin_script_init (weechat_tcl_plugin, argc, argv, &tcl_data);
     tcl_quiet = 0;
 
     plugin_script_display_short_list (weechat_tcl_plugin,
@@ -948,7 +956,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     tcl_quiet = 1;
-    plugin_script_end (plugin, &tcl_scripts, &weechat_tcl_unload_all);
+    plugin_script_end (plugin, &tcl_data);
     if (tcl_script_eval)
     {
         weechat_tcl_unload (tcl_script_eval);

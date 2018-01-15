@@ -20,6 +20,27 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.1]]
 == Version 2.1 (under dev)
 
+[[v2.1_script_plugin_check_license]]
+=== Option to check license of scripts loaded
+
+A configuration file has been added for each script plugin: _python.conf_,
+_perl.conf_, _ruby.conf_, ...
+
+Therefore the option to check license of loaded scripts has been moved from
+_plugins.var.<language>.check_license_ (type: string) to the plugin
+configuration file (type: boolean, default is _off_).
+
+List of options moved:
+
+* _plugins.var.python.check_license_ (string) moved to _python.look.check_license_ (boolean)
+* _plugins.var.perl.check_license_ (string) moved to _perl.look.check_license_ (boolean)
+* _plugins.var.ruby.check_license_ (string) moved to _ruby.look.check_license_ (boolean)
+* _plugins.var.lua.check_license_ (string) moved to _lua.look.check_license_ (boolean)
+* _plugins.var.tcl.check_license_ (string) moved to _tcl.look.check_license_ (boolean)
+* _plugins.var.guile.check_license_ (string) moved to _guile.look.check_license_ (boolean)
+* _plugins.var.javascript.check_license_ (string) moved to _javascript.look.check_license_ (boolean)
+* _plugins.var.php.check_license_ (string) moved to _php.look.check_license_ (boolean)
+
 [[v2.1_option_name_completion]]
 === Completion for /set and /help commands
 

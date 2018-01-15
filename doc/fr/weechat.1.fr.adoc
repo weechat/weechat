@@ -81,17 +81,41 @@ $HOME/.weechat/fifo.conf::
 $HOME/.weechat/fset.conf::
     fichier de configuration pour l'extension _fset_
 
+$HOME/.weechat/guile.conf::
+    fichier de configuration pour l'extension _guile_
+
 $HOME/.weechat/irc.conf::
     fichier de configuration pour l'extension _irc_
+
+$HOME/.weechat/javascript.conf::
+    fichier de configuration pour l'extension _javascript_
 
 $HOME/.weechat/logger.conf::
     fichier de configuration pour l'extension _logger_
 
+$HOME/.weechat/lua.conf::
+    fichier de configuration pour l'extension _lua_
+
+$HOME/.weechat/perl.conf::
+    fichier de configuration pour l'extension _perl_
+
+$HOME/.weechat/php.conf::
+    fichier de configuration pour l'extension _php_
+
+$HOME/.weechat/python.conf::
+    fichier de configuration pour l'extension _python_
+
 $HOME/.weechat/relay.conf::
     fichier de configuration pour l'extension _relay_
 
+$HOME/.weechat/ruby.conf::
+    fichier de configuration pour l'extension _ruby_
+
 $HOME/.weechat/script.conf::
     fichier de configuration pour l'extension _script_
+
+$HOME/.weechat/tcl.conf::
+    fichier de configuration pour l'extension _tcl_
 
 $HOME/.weechat/trigger.conf::
     fichier de configuration pour l'extension _trigger_

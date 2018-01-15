@@ -149,7 +149,7 @@ API_FUNC(register)
 
     /* register script */
     lua_current_script = plugin_script_add (weechat_lua_plugin,
-                                            &lua_scripts, &last_lua_script,
+                                            &lua_data,
                                             (lua_current_script_filename) ?
                                             lua_current_script_filename : "",
                                             name,

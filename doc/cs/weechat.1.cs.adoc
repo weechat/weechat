@@ -74,25 +74,47 @@ $HOME/.weechat/charset.conf::
 $HOME/.weechat/exec.conf::
     konfigurační soubor pro _exec_ plugin
 
-// TRANSLATION MISSING
 $HOME/.weechat/fifo.conf::
-    configuration file for _fifo_ plugin
+    konfigurační soubor pro _fifo_ plugin
 
-// TRANSLATION MISSING
 $HOME/.weechat/fset.conf::
-    configuration file for _fset_ plugin
+    konfigurační soubor pro _fset_ plugin
+
+$HOME/.weechat/guile.conf::
+    konfigurační soubor pro _guile_ plugin
 
 $HOME/.weechat/irc.conf::
     konfigurační soubor pro _irc_ plugin
 
+$HOME/.weechat/javascript.conf::
+    konfigurační soubor pro _javascript_ plugin
+
 $HOME/.weechat/logger.conf::
     konfigurační soubor pro _logger_ plugin
+
+$HOME/.weechat/lua.conf::
+    konfigurační soubor pro _lua_ plugin
+
+$HOME/.weechat/perl.conf::
+    konfigurační soubor pro _perl_ plugin
+
+$HOME/.weechat/php.conf::
+    konfigurační soubor pro _php_ plugin
+
+$HOME/.weechat/python.conf::
+    konfigurační soubor pro _python_ plugin
 
 $HOME/.weechat/relay.conf::
     konfigurační soubor pro _relay_ plugin
 
+$HOME/.weechat/ruby.conf::
+    konfigurační soubor pro _ruby_ plugin
+
 $HOME/.weechat/script.conf::
     konfigurační soubor pro _script_ plugin
+
+$HOME/.weechat/tcl.conf::
+    konfigurační soubor pro _tcl_ plugin
 
 $HOME/.weechat/trigger.conf::
     konfigurační soubor pro _trigger_ plugin

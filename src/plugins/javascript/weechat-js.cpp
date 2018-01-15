@@ -43,6 +43,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_js_plugin = NULL;
 
+struct t_plugin_script_data js_data;
+
+struct t_config_file *js_config_file = NULL;
+struct t_config_option *js_config_look_check_license = NULL;
+
 int js_quiet = 0;
 
 struct t_plugin_script *js_script_eval = NULL;
@@ -899,7 +904,6 @@ weechat_js_signal_script_action_cb (const void *pointer, void *data,
 EXPORT int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
     char str_interpreter[64];
 
     weechat_js_plugin = plugin;
@@ -912,17 +916,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hashtable_set (plugin->variables, "interpreter_version",
                            v8::V8::GetVersion());
 
-    init.callback_command = &weechat_js_command_cb;
-    init.callback_completion = &weechat_js_completion_cb;
-    init.callback_hdata = &weechat_js_hdata_cb;
-    init.callback_info_eval = &weechat_js_info_eval_cb;
-    init.callback_infolist = &weechat_js_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_js_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_js_signal_script_action_cb;
-    init.callback_load_file = &weechat_js_load_cb;
+    js_data.config_file = &js_config_file;
+    js_data.config_look_check_license = &js_config_look_check_license;
+    js_data.scripts = &js_scripts;
+    js_data.last_script = &last_js_script;
+    js_data.callback_command = &weechat_js_command_cb;
+    js_data.callback_completion = &weechat_js_completion_cb;
+    js_data.callback_hdata = &weechat_js_hdata_cb;
+    js_data.callback_info_eval = &weechat_js_info_eval_cb;
+    js_data.callback_infolist = &weechat_js_infolist_cb;
+    js_data.callback_signal_debug_dump = &weechat_js_signal_debug_dump_cb;
+    js_data.callback_signal_script_action = &weechat_js_signal_script_action_cb;
+    js_data.callback_load_file = &weechat_js_load_cb;
+    js_data.unload_all = &weechat_js_unload_all;
 
     js_quiet = 1;
-    plugin_script_init (plugin, argc, argv, &init);
+    plugin_script_init (plugin, argc, argv, &js_data);
     js_quiet = 0;
 
     plugin_script_display_short_list (weechat_js_plugin, js_scripts);
@@ -938,7 +947,7 @@ EXPORT int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     js_quiet = 1;
-    plugin_script_end (plugin, &js_scripts, &weechat_js_unload_all);
+    plugin_script_end (plugin, &js_data);
     if (js_script_eval)
     {
         weechat_js_unload (js_script_eval);

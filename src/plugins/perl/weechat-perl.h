@@ -27,6 +27,8 @@
 
 extern struct t_weechat_plugin *weechat_perl_plugin;
 
+extern struct t_plugin_script_data perl_data;
+
 extern int perl_quiet;
 extern struct t_plugin_script *perl_scripts;
 extern struct t_plugin_script *last_perl_script;

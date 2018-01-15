@@ -35,7 +35,9 @@ noinst_LTLIBRARIES = lib_weechat_plugins_scripts.la
 lib_weechat_plugins_scripts_la_SOURCES = plugin-script.c \
                                          plugin-script.h \
                                          plugin-script-api.c \
-                                         plugin-script-api.h
+                                         plugin-script-api.h \
+                                         plugin-script-config.c \
+                                         plugin-script-config.h
 
 if PLUGIN_ALIAS
 alias_dir = alias

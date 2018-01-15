@@ -44,6 +44,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_python_plugin = NULL;
 
+struct t_plugin_script_data python_data;
+
+struct t_config_file *python_config_file = NULL;
+struct t_config_option *python_config_look_check_license = NULL;
+
 int python_quiet = 0;
 
 struct t_plugin_script *python_script_eval = NULL;
@@ -1470,8 +1475,6 @@ weechat_python_signal_script_action_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
-
     weechat_python_plugin = plugin;
 
     /* set interpreter name and version */
@@ -1529,17 +1532,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     }
 
-    init.callback_command = &weechat_python_command_cb;
-    init.callback_completion = &weechat_python_completion_cb;
-    init.callback_hdata = &weechat_python_hdata_cb;
-    init.callback_info_eval = &weechat_python_info_eval_cb;
-    init.callback_infolist = &weechat_python_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_python_signal_script_action_cb;
-    init.callback_load_file = &weechat_python_load_cb;
+    python_data.config_file = &python_config_file;
+    python_data.config_look_check_license = &python_config_look_check_license;
+    python_data.scripts = &python_scripts;
+    python_data.last_script = &last_python_script;
+    python_data.callback_command = &weechat_python_command_cb;
+    python_data.callback_completion = &weechat_python_completion_cb;
+    python_data.callback_hdata = &weechat_python_hdata_cb;
+    python_data.callback_info_eval = &weechat_python_info_eval_cb;
+    python_data.callback_infolist = &weechat_python_infolist_cb;
+    python_data.callback_signal_debug_dump = &weechat_python_signal_debug_dump_cb;
+    python_data.callback_signal_script_action = &weechat_python_signal_script_action_cb;
+    python_data.callback_load_file = &weechat_python_load_cb;
+    python_data.unload_all = &weechat_python_unload_all;
 
     python_quiet = 1;
-    plugin_script_init (weechat_python_plugin, argc, argv, &init);
+    plugin_script_init (weechat_python_plugin, argc, argv, &python_data);
     python_quiet = 0;
 
     plugin_script_display_short_list (weechat_python_plugin,
@@ -1558,7 +1566,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     python_quiet = 1;
-    plugin_script_end (plugin, &python_scripts, &weechat_python_unload_all);
+    plugin_script_end (plugin, &python_data);
     if (python_script_eval)
     {
         weechat_python_unload (python_script_eval);

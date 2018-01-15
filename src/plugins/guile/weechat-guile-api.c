@@ -185,7 +185,7 @@ weechat_guile_api_register (SCM name, SCM author, SCM version, SCM license,
 
     /* register script */
     guile_current_script = plugin_script_add (weechat_guile_plugin,
-                                              &guile_scripts, &last_guile_script,
+                                              &guile_data,
                                               (guile_current_script_filename) ?
                                               guile_current_script_filename : "",
                                               API_SCM_TO_STRING(name),

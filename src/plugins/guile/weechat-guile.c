@@ -46,6 +46,11 @@ WEECHAT_PLUGIN_PRIORITY(4000);
 
 struct t_weechat_plugin *weechat_guile_plugin = NULL;
 
+struct t_plugin_script_data guile_data;
+
+struct t_config_file *guile_config_file = NULL;
+struct t_config_option *guile_config_look_check_license = NULL;
+
 int guile_quiet = 0;
 
 struct t_plugin_script *guile_script_eval = NULL;
@@ -1137,7 +1142,6 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    struct t_plugin_script_init init;
     char str_version[128];
 
     weechat_guile_plugin = plugin;
@@ -1181,17 +1185,22 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     scm_c_use_module ("weechat");
     weechat_guile_catch (scm_gc_protect_object, (void *)guile_module_weechat);
 
-    init.callback_command = &weechat_guile_command_cb;
-    init.callback_completion = &weechat_guile_completion_cb;
-    init.callback_hdata = &weechat_guile_hdata_cb;
-    init.callback_info_eval = &weechat_guile_info_eval_cb;
-    init.callback_infolist = &weechat_guile_infolist_cb;
-    init.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
-    init.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
-    init.callback_load_file = &weechat_guile_load_cb;
+    guile_data.config_file = &guile_config_file;
+    guile_data.config_look_check_license = &guile_config_look_check_license;
+    guile_data.scripts = &guile_scripts;
+    guile_data.last_script = &last_guile_script;
+    guile_data.callback_command = &weechat_guile_command_cb;
+    guile_data.callback_completion = &weechat_guile_completion_cb;
+    guile_data.callback_hdata = &weechat_guile_hdata_cb;
+    guile_data.callback_info_eval = &weechat_guile_info_eval_cb;
+    guile_data.callback_infolist = &weechat_guile_infolist_cb;
+    guile_data.callback_signal_debug_dump = &weechat_guile_signal_debug_dump_cb;
+    guile_data.callback_signal_script_action = &weechat_guile_signal_script_action_cb;
+    guile_data.callback_load_file = &weechat_guile_load_cb;
+    guile_data.unload_all = &weechat_guile_unload_all;
 
     guile_quiet = 1;
-    plugin_script_init (weechat_guile_plugin, argc, argv, &init);
+    plugin_script_init (weechat_guile_plugin, argc, argv, &guile_data);
     guile_quiet = 0;
 
     plugin_script_display_short_list (weechat_guile_plugin,
@@ -1210,7 +1219,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     guile_quiet = 1;
-    plugin_script_end (plugin, &guile_scripts, &weechat_guile_unload_all);
+    plugin_script_end (plugin, &guile_data);
     if (guile_script_eval)
     {
         weechat_guile_unload (guile_script_eval);
