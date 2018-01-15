@@ -7,3 +7,9 @@
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
+
+* [[option_php.look.eval_keep_context]] *php.look.eval_keep_context*
+** description: pass:none[keep context between two calls to /php eval (or info "php_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`

@@ -48,6 +48,7 @@ struct t_plugin_script_data python_data;
 
 struct t_config_file *python_config_file = NULL;
 struct t_config_option *python_config_look_check_license = NULL;
+struct t_config_option *python_config_look_eval_keep_context = NULL;
 
 int python_quiet = 0;
 
@@ -1094,6 +1095,12 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
     python_eval_exec_commands = 0;
     python_eval_buffer = NULL;
 
+    if (!weechat_config_boolean (python_config_look_eval_keep_context))
+    {
+        weechat_python_unload (python_script_eval);
+        python_script_eval = NULL;
+    }
+
     return 1;
 }
 
@@ -1534,6 +1541,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     python_data.config_file = &python_config_file;
     python_data.config_look_check_license = &python_config_look_check_license;
+    python_data.config_look_eval_keep_context = &python_config_look_eval_keep_context;
     python_data.scripts = &python_scripts;
     python_data.last_script = &last_python_script;
     python_data.callback_command = &weechat_python_command_cb;

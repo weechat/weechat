@@ -7,3 +7,9 @@
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
+
+* [[option_lua.look.eval_keep_context]] *lua.look.eval_keep_context*
+** opis: pass:none[keep context between two calls to /lua eval (or info "lua_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`

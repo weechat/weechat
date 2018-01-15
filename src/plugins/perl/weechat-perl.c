@@ -45,6 +45,7 @@ struct t_plugin_script_data perl_data;
 
 struct t_config_file *perl_config_file = NULL;
 struct t_config_option *perl_config_look_check_license = NULL;
+struct t_config_option *perl_config_look_eval_keep_context = NULL;
 
 int perl_quiet = 0;
 
@@ -841,6 +842,12 @@ weechat_perl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
     perl_eval_exec_commands = 0;
     perl_eval_buffer = NULL;
 
+    if (!weechat_config_boolean (perl_config_look_eval_keep_context))
+    {
+        weechat_perl_unload (perl_script_eval);
+        perl_script_eval = NULL;
+    }
+
     return 1;
 }
 
@@ -1259,6 +1266,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     perl_data.config_file = &perl_config_file;
     perl_data.config_look_check_license = &perl_config_look_check_license;
+    perl_data.config_look_eval_keep_context = &perl_config_look_eval_keep_context;
     perl_data.scripts = &perl_scripts;
     perl_data.last_script = &last_perl_script;
     perl_data.callback_command = &weechat_perl_command_cb;

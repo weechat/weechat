@@ -50,6 +50,7 @@ struct t_plugin_script_data guile_data;
 
 struct t_config_file *guile_config_file = NULL;
 struct t_config_option *guile_config_look_check_license = NULL;
+struct t_config_option *guile_config_look_eval_keep_context = NULL;
 
 int guile_quiet = 0;
 
@@ -749,6 +750,12 @@ weechat_guile_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
     guile_eval_exec_commands = 0;
     guile_eval_buffer = NULL;
 
+    if (!weechat_config_boolean (guile_config_look_eval_keep_context))
+    {
+        weechat_guile_unload (guile_script_eval);
+        guile_script_eval = NULL;
+    }
+
     return 1;
 }
 
@@ -1187,6 +1194,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     guile_data.config_file = &guile_config_file;
     guile_data.config_look_check_license = &guile_config_look_check_license;
+    guile_data.config_look_eval_keep_context = &guile_config_look_eval_keep_context;
     guile_data.scripts = &guile_scripts;
     guile_data.last_script = &last_guile_script;
     guile_data.callback_command = &weechat_guile_command_cb;

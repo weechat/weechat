@@ -48,6 +48,7 @@ struct t_plugin_script_data lua_data;
 
 struct t_config_file *lua_config_file = NULL;
 struct t_config_option *lua_config_look_check_license = NULL;
+struct t_config_option *lua_config_look_eval_keep_context = NULL;
 
 int lua_quiet = 0;
 
@@ -849,6 +850,12 @@ weechat_lua_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
     lua_eval_exec_commands = 0;
     lua_eval_buffer = NULL;
 
+    if (!weechat_config_boolean (lua_config_look_eval_keep_context))
+    {
+        weechat_lua_unload (lua_script_eval);
+        lua_script_eval = NULL;
+    }
+
     return 1;
 }
 
@@ -1218,6 +1225,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     lua_data.config_file = &lua_config_file;
     lua_data.config_look_check_license = &lua_config_look_check_license;
+    lua_data.config_look_eval_keep_context = &lua_config_look_eval_keep_context;
     lua_data.scripts = &lua_scripts;
     lua_data.last_script = &last_lua_script;
     lua_data.callback_command = &weechat_lua_command_cb;

@@ -7,3 +7,9 @@
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
+
+* [[option_tcl.look.eval_keep_context]] *tcl.look.eval_keep_context*
+** Beschreibung: pass:none[keep context between two calls to /tcl eval (or info "tcl_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`

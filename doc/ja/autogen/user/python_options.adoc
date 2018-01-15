@@ -7,3 +7,9 @@
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
+
+* [[option_python.look.eval_keep_context]] *python.look.eval_keep_context*
+** 説明: pass:none[keep context between two calls to /python eval (or info "python_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`

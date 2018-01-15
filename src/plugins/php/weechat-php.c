@@ -43,6 +43,7 @@ struct t_plugin_script_data php_data;
 
 struct t_config_file *php_config_file = NULL;
 struct t_config_option *php_config_look_check_license = NULL;
+struct t_config_option *php_config_look_eval_keep_context = NULL;
 
 int php_quiet = 0;
 
@@ -1254,6 +1255,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     php_data.config_file = &php_config_file;
     php_data.config_look_check_license = &php_config_look_check_license;
+    php_data.config_look_eval_keep_context = &php_config_look_eval_keep_context;
     php_data.scripts = &php_scripts;
     php_data.last_script = &last_php_script;
     php_data.callback_command = &weechat_php_command_cb;

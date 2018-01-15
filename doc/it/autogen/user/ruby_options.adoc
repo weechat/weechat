@@ -7,3 +7,9 @@
 ** tipo: bool
 ** valori: on, off
 ** valore predefinito: `+off+`
+
+* [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
+** descrizione: pass:none[keep context between two calls to /ruby eval (or info "ruby_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`

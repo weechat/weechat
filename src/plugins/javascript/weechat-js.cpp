@@ -47,6 +47,7 @@ struct t_plugin_script_data js_data;
 
 struct t_config_file *js_config_file = NULL;
 struct t_config_option *js_config_look_check_license = NULL;
+struct t_config_option *js_config_look_eval_keep_context = NULL;
 
 int js_quiet = 0;
 
@@ -918,6 +919,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     js_data.config_file = &js_config_file;
     js_data.config_look_check_license = &js_config_look_check_license;
+    js_data.config_look_eval_keep_context = &js_config_look_eval_keep_context;
     js_data.scripts = &js_scripts;
     js_data.last_script = &last_js_script;
     js_data.callback_command = &weechat_js_command_cb;

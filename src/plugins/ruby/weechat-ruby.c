@@ -69,6 +69,7 @@ struct t_plugin_script_data ruby_data;
 
 struct t_config_file *ruby_config_file = NULL;
 struct t_config_option *ruby_config_look_check_license = NULL;
+struct t_config_option *ruby_config_look_eval_keep_context = NULL;
 
 int ruby_quiet = 0;
 int ruby_hide_errors = 0;
@@ -894,6 +895,12 @@ weechat_ruby_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
     ruby_eval_exec_commands = 0;
     ruby_eval_buffer = NULL;
 
+    if (!weechat_config_boolean (ruby_config_look_eval_keep_context))
+    {
+        weechat_ruby_unload (ruby_script_eval);
+        ruby_script_eval = NULL;
+    }
+
     return 1;
 }
 
@@ -1367,6 +1374,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     ruby_data.config_file = &ruby_config_file;
     ruby_data.config_look_check_license = &ruby_config_look_check_license;
+    ruby_data.config_look_eval_keep_context = &ruby_config_look_eval_keep_context;
     ruby_data.scripts = &ruby_scripts;
     ruby_data.last_script = &last_ruby_script;
     ruby_data.callback_command = &weechat_ruby_command_cb;

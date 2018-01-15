@@ -74,6 +74,7 @@ struct t_plugin_script_data
     /* variables */
     struct t_config_file **config_file;
     struct t_config_option **config_look_check_license;
+    struct t_config_option **config_look_eval_keep_context;
     struct t_plugin_script **scripts;
     struct t_plugin_script **last_script;
 

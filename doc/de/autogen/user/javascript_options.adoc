@@ -7,3 +7,9 @@
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
+
+* [[option_javascript.look.eval_keep_context]] *javascript.look.eval_keep_context*
+** Beschreibung: pass:none[keep context between two calls to /javascript eval (or info "javascript_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`

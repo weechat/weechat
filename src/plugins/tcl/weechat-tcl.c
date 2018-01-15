@@ -48,6 +48,7 @@ struct t_plugin_script_data tcl_data;
 
 struct t_config_file *tcl_config_file = NULL;
 struct t_config_option *tcl_config_look_check_license = NULL;
+struct t_config_option *tcl_config_look_eval_keep_context = NULL;
 
 int tcl_quiet = 0;
 
@@ -924,6 +925,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     tcl_data.config_file = &tcl_config_file;
     tcl_data.config_look_check_license = &tcl_config_look_check_license;
+    tcl_data.config_look_eval_keep_context = &tcl_config_look_eval_keep_context;
     tcl_data.scripts = &tcl_scripts;
     tcl_data.last_script = &last_tcl_script;
     tcl_data.callback_command = &weechat_tcl_command_cb;
