@@ -3,13 +3,13 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_perl.look.check_license]] *perl.look.check_license*
-** Beschreibung: pass:none[check the license of scripts when they are loaded: if the license is different from the plugin license, a warning is displayed]
+** Beschreibung: pass:none[Überprüft die Lizenz von Skripten, wenn sie geladen werden: Sollte die Lizenz abweichend von der Erweiterungslizenz sein, wird eine Warnung ausgegeben]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
 
 * [[option_perl.look.eval_keep_context]] *perl.look.eval_keep_context*
-** Beschreibung: pass:none[keep context between two calls to the source code evaluation (option "eval" of script command or info "%s_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** Beschreibung: pass:none[behält den Inhalt zwischen zwei Aufrufen bei Quellcode Evaluierung (Option "eval" des Skript-Befehls oder Info "%s_eval"); ein Hintergrundskript wird für die Evaluierung verwendet; wird diese Option deaktiviert, dann wird das Hintergrundskript nach jeder Evaluierung entfernt: das bedeutet weniger Speicherbedarf, ist aber langsamer]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
