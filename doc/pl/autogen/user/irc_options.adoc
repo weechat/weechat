@@ -705,7 +705,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.split_msg_max_length]] *irc.server_default.split_msg_max_length*
-** opis: pass:none[split outgoing IRC messages to fit in this number of chars; the default value is 512, this is a safe and recommended value; value 0 disables the split (not recommended, unless you know what you do); allowed values are 0 or any integer between 128 and 4096; this option should be changed only on non-standard IRC servers, for example gateways like bitlbee]
+** opis: pass:none[podziel wychodzące wiadomości IRC aby mieściły się w podanej ilości znaków; domyślna wartość to 512, jest to bezpieczna i zalecana wartość; wartość 0 wyłącza podział (nie zalecane, chyba ze wiesz co robisz); dozwolone wartości to 0 lub dowolna liczba pomiędzy 128 a 4096; ta opcja powinna być zmieniana tylko dla niestandardowych serwerów IRC, na przykład dla bramek jak bitlbee]
 ** typ: liczba
 ** wartości: 0 .. 4096
 ** domyślna wartość: `+512+`

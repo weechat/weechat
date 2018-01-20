@@ -6,27 +6,27 @@
 * `+php+`: list/load/unload skrypt
 
 ----
-/php  list|listfull [<name>]
-      load [-q] <filename>
+/php  list|listfull [<nazwa>]
+      load [-q] <nazwapliku>
       autoload
-      reload|unload [-q] [<name>]
-      eval [-o|-oc] <code>
+      reload|unload [-q] [<nazwa>]
+      eval [-o|-oc] <kode>
       version
 
-    list: list loaded scripts
-listfull: list loaded scripts (verbose)
-    load: load a script
-autoload: load all scripts in "autoload" directory
-  reload: reload a script (if no name given, unload all scripts, then load all scripts in "autoload" directory)
-  unload: unload a script (if no name given, unload all scripts)
-filename: script (file) to load
-      -q: quiet mode: do not display messages
-    name: a script name (name used in call to "register" function)
-    eval: evaluate source code and display result on current buffer
-      -o: send evaluation result to the buffer without executing commands
-     -oc: send evaluation result to the buffer and execute commands
-    code: source code to evaluate
- version: display the version of interpreter used
+    list: lista załadowanych wtyczek
+listfull: lista załadowanych wtyczek (szczegółowa)
+    load: ładuje wtyczkę
+autoload: automatycznie ładuje wtyczki w katalogu systemowym lub użytkownika
+  reload: przeładuje pojedynczą wtyczkę (jeśli nie podano nazwy, wyładuje wszystkie wtyczki, następnie automatycznie załaduje wtyczki)
+  unload: wyładowuje jedną albo wszystkie wtyczki
+nazwa_pliku: skrypt (plik) do załadowania
+      -q: tryb cichy: nie wyświetla wiadomości
+    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji "register")
+    eval: wykonuje kod źródłowy i wyświetla wynik w obecnym buforze
+      -o: wysyła wynik do bufora bez wykonywania komend
+     -oc: wysyła wynik do bufora i wykonuje komendy
+    code: kod źródłowy do wykonania
+ version: wyświetla wersję używanego interpretera
 
-Without argument, this command lists all loaded scripts.
+Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 ----

@@ -10,11 +10,11 @@
 
 | fifo | fifo_filename | nazwa strumienia FIFO | -
 
-| guile | guile_eval | evaluation of source code | source code to execute
+| guile | guile_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| guile | guile_interpreter | name of the interpreter used | -
+| guile | guile_interpreter | nazwa użytego interpretera | -
 
-| guile | guile_version | version of the interpreter used | -
+| guile | guile_version | wersja użytego interpretera | -
 
 | irc | irc_buffer | pobiera wskaźnik dla serwera/kanału/nicku IRC | serwer,kanał,nick (kanał oraz nick są opcjonalne)
 
@@ -34,51 +34,51 @@
 
 | irc | irc_server_isupport_value | wartość opcji, jeśli jest wpierana przez serwer (z wiadomości IRC 005) | serwer,właściwość
 
-| javascript | javascript_eval | evaluation of source code | source code to execute
+| javascript | javascript_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| javascript | javascript_interpreter | name of the interpreter used | -
+| javascript | javascript_interpreter | nazwa użytego interpretera | -
 
-| javascript | javascript_version | version of the interpreter used | -
+| javascript | javascript_version | wersja użytego interpretera | -
 
-| lua | lua_eval | evaluation of source code | source code to execute
+| lua | lua_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| lua | lua_interpreter | name of the interpreter used | -
+| lua | lua_interpreter | nazwa użytego interpretera | -
 
-| lua | lua_version | version of the interpreter used | -
+| lua | lua_version | wersja użytego interpretera | -
 
-| perl | perl_eval | evaluation of source code | source code to execute
+| perl | perl_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| perl | perl_interpreter | name of the interpreter used | -
+| perl | perl_interpreter | nazwa użytego interpretera | -
 
-| perl | perl_version | version of the interpreter used | -
+| perl | perl_version | wersja użytego interpretera | -
 
-| php | php_eval | evaluation of source code | source code to execute
+| php | php_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| php | php_interpreter | name of the interpreter used | -
+| php | php_interpreter | nazwa użytego interpretera | -
 
-| php | php_version | version of the interpreter used | -
+| php | php_version | wersja użytego interpretera | -
 
 | python | python2_bin | ścieżka do interpretera pythona 2.x | -
 
-| python | python_eval | evaluation of source code | source code to execute
+| python | python_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| python | python_interpreter | name of the interpreter used | -
+| python | python_interpreter | nazwa użytego interpretera | -
 
-| python | python_version | version of the interpreter used | -
+| python | python_version | wersja użytego interpretera | -
 
 | relay | relay_client_count | liczba podłączonych klientów | nazwa statusu (opcjonalne): łączenie, oczekiwanie na uwierzytelnienie, połączono, uwierzytelnienie nieudane, rozłączono
 
-| ruby | ruby_eval | evaluation of source code | source code to execute
+| ruby | ruby_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| ruby | ruby_interpreter | name of the interpreter used | -
+| ruby | ruby_interpreter | nazwa użytego interpretera | -
 
-| ruby | ruby_version | version of the interpreter used | -
+| ruby | ruby_version | wersja użytego interpretera | -
 
-| tcl | tcl_eval | evaluation of source code | source code to execute
+| tcl | tcl_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 
-| tcl | tcl_interpreter | name of the interpreter used | -
+| tcl | tcl_interpreter | nazwa użytego interpretera | -
 
-| tcl | tcl_version | version of the interpreter used | -
+| tcl | tcl_version | wersja użytego interpretera | -
 
 | weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
 
@@ -92,7 +92,7 @@
 
 | weechat | cursor_mode | 1 jeśli tryb kursora jest aktywny | -
 
-| weechat | date | WeeChat compilation date/time | -
+| weechat | date | data kompilacji WeeChat | -
 
 | weechat | dir_separator | separator katalogów | -
 

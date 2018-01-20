@@ -69,77 +69,77 @@ Przykłady:
 
 ----
 /buffer  list
-         add [-free] [-switch] <name>
-         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
-         move <number>|-|+
-         swap <number1>|<name1> [<number2>|<name2>]
-         cycle <number>|<name> [<number>|<name>...]
-         merge <number>
-         unmerge [<number>|-all]
-         hide [<number>|<name>|-all [<number>|<name>...]]
-         unhide [<number>|<name>|-all [<number>|<name>...]]
-         renumber [<number1> [<number2> [<start>]]]
-         close [<n1>[-<n2>]|<name>]
-         notify <level>
+         add [-free] [-switch] <nazwa>
+         clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]]
+         move <numer>|-|+
+         swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
+         cycle <numer>|<nazwa> [<numer>|<nazwa>...]
+         merge <numer>
+         unmerge [<numer>|-all]
+         hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
+         renumer [<numer1> [<numer2> [<start>]]]
+         close [<n1>[-<n2>]|<nazwa>]
+         notify <poziom>
          localvar
-         set <property> [<value>]
-         get <property>
-         <number>|-|+|<name>
+         set <opcja> [<value>]
+         get <opcja>
+         <numer>|-|+|<nazwa>
 
-    list: list buffers (without argument, this list is displayed)
-     add: add a new buffer (it can be closed with "/buffer close" or input "q")
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
+     add: dodaje nowy bufor (może zotać zamknięty komendą "/buffer close" albo "q")
+   clear: czyści zawartość bufora (numer bufora, -merged dla połączonych buforów, -all dla wszystkich buforów, lub nic dla obecnego bufora)
+    move: przesuwa bufor na liście (może być względne, np -1); "-" = przesuwa na pierwszy numer, "+" = przesuwa na ostatni numer bufora +1
+    swap: zamienia miejscami dwa bufory (zamienia z obecnym buforem, jeśli podano tylko jeden numer/nazwę)
+   cycle: przełącza w pętli między listą buforów
+   merge: łączy obecny bufor z innym (obszar rozmowy zostanie pomieszany między oba bufory)
+          (domyślnie ctrl-x przełącza pomiędzy połączonymi buforami)
+ unmerge: odłącza bufor od innych mających taki sam numer
+    hide: ukrywa bufor
+  unhide: przywraca ukryty bufor
+renumber: zmienia numer bufora (działa tylko, jeśli opcja weechat.look.buffer_auto_renumber jest wyłączona)
+   close: zamyka bufor (numer/przedział są opcjonalne)
+  notify: ustawia poziom powiadomień dla obecnego bufora: ten poziom określa czy bufor zostanie dodany do hotlisty czy nie:
+               none: nigdy
+          highlight: tylko dla higlightów
+            message: wiadomości od użytkowników + highlighty
+                all: wszystkie wiadomości
+              reset: przywraca wartości domyślne (all)
+localvar: wyświetla zmienne lokalne obecnego bufora
+     set: ustawia właściwość obecnego bufora
+     get: wyświetla właściwości obecnego bufora
+  numer: przechodzi do bufora o numerze, dostępne prefiksy:
+          '+': przejście względne, dodaje numer do obecnego
+          '-': przejście względne, odejmuje numer od obecnego
+          '*': przejście do numeru, używając opcji "weechat.look.jump_current_to_previous_buffer"
+       -: przejście do pierwszego bufora
+       +: przejście do ostatniego bufora
+    nazwa: przejście do bufora o (częściowej) nazwie
 
-Examples:
-  clear current buffer:
+Przykłady:
+  czyści zawartość obecnego bufora:
     /buffer clear
-  move buffer to number 5:
+  przenosi bufor na numer 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  zamienia bufor 1 z 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  zamienia bufor #weechat z obecnym buforem:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  przełączajw pętli między #chan1, #chan2, #chan3:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  łączy z głównym buforem:
     /buffer merge 1
-  unmerge buffer:
+  odłącza bufory:
     /buffer unmerge
-  close current buffer:
+  zamyka obecny bufor:
     /buffer close
-  close buffers 5 to 7:
+  zamyka bufory od 5 do 7:
     /buffer close 5-7
-  jump to #weechat:
+  przechodzi do #weechat:
     /buffer #weechat
-  jump to next buffer:
+  przechodzi do następnego bufora:
     /buffer +1
-  jump to last buffer number:
+  przechodzi do ostatniego bufora:
     /buffer +
 ----
 
@@ -640,48 +640,48 @@ Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki.
 * `+print+`: wyświetl tekst w buforze
 
 ----
-/print  [-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-error|-join|-network|-quit] [<text>]
-        -stdout|-stderr [<text>]
+/print  [-buffer <numer>|<nazwa>] [-newbuffer <nazwa>] [-free] [-switch] [-core|-current] [-y <linia>] [-escape] [-date <data>] [-tags <tagi>] [-action|-error|-join|-network|-quit] [<tekst>]
+        -stdout|-stderr [<tekst>]
         -beep
 
-   -buffer: display text in this buffer (default: buffer where command is executed)
--newbuffer: create a new buffer and display text in this buffer
-     -free: create a buffer with free content (with -newbuffer only)
-   -switch: switch to the buffer
-     -core: alias of "-buffer core.weechat"
-  -current: display text on current buffer
-        -y: display on a custom line (for buffer with free content only)
-      line: line number for buffer with free content (first line is 0, a negative number displays after last line: -1 = after last line, -2 = two lines after last line, ...)
-   -escape: interpret escaped chars (for example \a, \07, \x07)
-     -date: message date, format can be:
-              -n: 'n' seconds before now
-              +n: 'n' seconds in the future
-               n: 'n' seconds since the Epoch (see man time)
-              date/time (ISO 8601): yyyy-mm-ddThh:mm:ss, example: 2014-01-19T04:32:55
-              time: hh:mm:ss (example: 04:32:55)
-     -tags: comma-separated list of tags (see /help filter for a list of tags most commonly used)
-      text: text to display (prefix and message must be separated by "\t", if text starts with "-", then add a "\" before)
-   -stdout: display text on stdout (escaped chars are interpreted)
-   -stderr: display text on stderr (escaped chars are interpreted)
-     -beep: alias of "-stderr \a"
+   -buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny bufor)
+-newbuffer: tworzy nowy bufor i wyświetla w nim tekst
+     -free: tworzy nowy bufor z dowolną zawartością (tylko z -newbuffer)
+   -switch: przełącza się do bufora
+     -core: alias dla bufora "-buffer core.weechat"
+  -current: wyświetl tekst w obecnym buforze
+        -y: wyświetla niestandardową linię (tylko dla buforów z dowolną zawartością)
+      line: numer linii bufora z dowolną zawartością (pierwsza linia to 0, wartość ujemna wyświetla linie od ostatniej: -1 = przedostatnia linia, -2 = dwie linie po ostatniej, ...)
+   -escape: interpretuj znaki poprzedzone \ (na przykład \a, \07, \x07)
+     -date: data wiadomości, możliwe formaty:
+              -n: 'n' sekund wcześniej
+              +n: 'n' sekund później
+              n: 'n' sekund od Epoch (zobacz man time)
+              data/czas (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: 2014-01-19T04:32:55
+              czas: hh:mm:ss (przykład: 04:32:55)
+     -tags: oddzielona przecinkami lista tagów (zobacz /help filter w celu wyświetlenia listy najczęstszych tagów)
+      tekst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone za pomocą "\t", jeśli tekst zaczyna się od "-" dodaj "\" przed nim)
+   -stdout: wyświetl tekst na standardowe wyjście (znaki poprzedzone \ są interpretowane)
+   -stderr: wyświetl tekst na standardowe wyjście błędów (znaki poprzedzone \ są interpretowane)
+     -beep: alias dla "-stderr \a"
 
-The options -action ... -quit use the prefix defined in options "weechat.look.prefix_*".
+Opcje -action ... -quit używają prefiksów zdefiniowanych w opcjach "weechat.look.prefix_*".
 
-Following escaped chars are supported:
+Wspierane znaczniki specjalne:
   \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
-Examples:
-  display a reminder on core buffer with a highlight:
-    /print -core -tags notify_highlight Reminder: buy milk
-  display an error on core buffer:
-    /print -core -error Some error here
-  display message on core buffer with prefix "abc":
-    /print -core abc\tThe message
-  display a message on channel #weechat:
+Przykłady:
+  wyświetla przypomnienie w buforze głównym z higlightem:
+    /print -core -tags notify_highlight Reminder: kup mleko
+  wyświetla błąd w głównym buforze:
+    /print -core -error Jakiś błąd
+  wyświetla wiadomość w głównym buforze z prefiksem "abc":
+    /print -core abc\tWiadomość
+  wyświetla wiadomość na kanale #weechat:
     /print -buffer irc.freenode.#weechat Message on #weechat
-  display a snowman (U+2603):
+  wyświetla bałwana (U+2603):
     /print -escape \u2603
-  send alert (BEL):
+  wysyła alert (BEL):
     /print -beep
 ----
 

@@ -81,7 +81,7 @@
 ** domyślna wartość: `+20+`
 
 * [[option_logger.look.backlog_conditions]] *logger.look.backlog_conditions*
-** opis: pass:none[conditions to display the backlog (note: content is evaluated, see /help eval); empty value displays the backlog on all buffers; for example to display backlog on private buffers only: "${type} == private"]
+** opis: pass:none[warunki do wyświetlania backlogu (uwaga: zawartość jest przetwarzana, zobacz /help eval); pusta wartość wyświetla backlog we wszystkich buforach; na przykład żeby wyświetlić backlog tylko w prywatnych buforach: "${type} == private"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

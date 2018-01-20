@@ -3,13 +3,13 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_ruby.look.check_license]] *ruby.look.check_license*
-** opis: pass:none[check the license of scripts when they are loaded: if the license is different from the plugin license, a warning is displayed]
+** opis: pass:none[sprawdza licencję skryptów podczas ich ładowania: jeśli licencja jest inna niż licencja wtyczki wyświetlane jest ostrzeżenie]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
 
 * [[option_ruby.look.eval_keep_context]] *ruby.look.eval_keep_context*
-** opis: pass:none[keep context between two calls to the source code evaluation (option "eval" of script command or info "%s_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** opis: pass:none[przechowuj kontekst pomiędzy dwoma odwołaniami do wykonania tego samego kodu źródłowego (opcja "eval" komendy script lub info "%s_eval"); ukryty sktypt jest używany do wykonania kodu skryptu; jeśli ta opcja jest wyłączona, ukryty skrypt jest wyładowywany po każdym wykonaniu: zajmuje to mniej pamięci, ale jest wolniejsze]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
