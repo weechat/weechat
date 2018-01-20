@@ -3348,9 +3348,8 @@ _script.conf_ ファイル内のセクション:
 
 include::autogen/user/script_options.adoc[]
 
-// TRANSLATION MISSING
 [[python_options]]
-==== Python options
+==== Python オプション
 
 _python.conf_ ファイル内のセクション:
 
@@ -3364,9 +3363,8 @@ _python.conf_ ファイル内のセクション:
 
 include::autogen/user/python_options.adoc[]
 
-// TRANSLATION MISSING
 [[perl_options]]
-==== Perl options
+==== Perl オプション
 
 _perl.conf_ ファイル内のセクション:
 
@@ -3380,9 +3378,8 @@ _perl.conf_ ファイル内のセクション:
 
 include::autogen/user/perl_options.adoc[]
 
-// TRANSLATION MISSING
 [[ruby_options]]
-==== Ruby options
+==== Ruby オプション
 
 _ruby.conf_ ファイル内のセクション:
 
@@ -3396,9 +3393,8 @@ _ruby.conf_ ファイル内のセクション:
 
 include::autogen/user/ruby_options.adoc[]
 
-// TRANSLATION MISSING
 [[lua_options]]
-==== Lua options
+==== Lua オプション
 
 _lua.conf_ ファイル内のセクション:
 
@@ -3412,9 +3408,8 @@ _lua.conf_ ファイル内のセクション:
 
 include::autogen/user/lua_options.adoc[]
 
-// TRANSLATION MISSING
 [[tcl_options]]
-==== Tcl options
+==== Tcl オプション
 
 _tcl.conf_ ファイル内のセクション:
 
@@ -3428,9 +3423,8 @@ _tcl.conf_ ファイル内のセクション:
 
 include::autogen/user/tcl_options.adoc[]
 
-// TRANSLATION MISSING
 [[guile_options]]
-==== Guile options
+==== Guile オプション
 
 _guile.conf_ ファイル内のセクション:
 
@@ -3444,9 +3438,8 @@ _guile.conf_ ファイル内のセクション:
 
 include::autogen/user/guile_options.adoc[]
 
-// TRANSLATION MISSING
 [[javascript_options]]
-==== Javascript options
+==== Javascript オプション
 
 _javascript.conf_ ファイル内のセクション:
 
@@ -3460,9 +3453,8 @@ _javascript.conf_ ファイル内のセクション:
 
 include::autogen/user/javascript_options.adoc[]
 
-// TRANSLATION MISSING
 [[php_options]]
-==== PHP options
+==== PHP オプション
 
 _php.conf_ ファイル内のセクション:
 

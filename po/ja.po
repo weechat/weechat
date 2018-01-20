@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-01-20 08:35+0100\n"
-"PO-Revision-Date: 2018-01-13 09:00+0900\n"
+"PO-Revision-Date: 2018-01-20 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -8817,6 +8817,8 @@ msgid ""
 "%s%s: invalid length for split, it must be either 0 or any integer between "
 "128 and 4096"
 msgstr ""
+"%s%s: 分割長が間違っています、分割長を 0 もしくは 128 から 4096 までの任意の"
+"整数にしてください"
 
 #, c-format
 msgid ""
@@ -9148,6 +9150,12 @@ msgid ""
 "or any integer between 128 and 4096; this option should be changed only on "
 "non-standard IRC servers, for example gateways like bitlbee"
 msgstr ""
+"送信 IRC メッセージを指定した文字数に分割します; デフォルトの文字数は 512 で"
+"あり、この安全なデフォルト値を使うことを推奨します; 0 は分割機能を無効化しま"
+"す (自分のしていることがわかっている場合を除いて非推奨です); 値は 0 もしくは "
+"128 から 4096 までの任意の整数にしてください; 標準的でない IRC サーバ (例え"
+"ば bitlbee などのゲートウェイ) を使う場合に限り、このオプションを変更すべきで"
+"す"
 
 #, c-format
 msgid "%s%s: error adding server \"%s\""
@@ -9831,9 +9839,9 @@ msgstr ""
 "が見つからない場合 \"-1\")、\"pos_text\": \"text\" メッセージのインデックス "
 "(\"text\" が見つからない場合 \"-1\")"
 
-#, fuzzy
 msgid "split an IRC message (to fit in 512 bytes by default)"
-msgstr "IRC メッセージを分割 (512 バイトに収める)"
+msgstr ""
+"IRC メッセージを分割 (デフォルトでは 512 バイト内に収まるように分割します)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -10953,9 +10961,8 @@ msgstr ""
 "WeeChat の git バージョン (開発バージョンではコマンド \"git describe\" の出"
 "力、安定版リリースでは空文字が出力されます)"
 
-#, fuzzy
 msgid "WeeChat compilation date/time"
-msgstr "WeeChat のコンパイル日"
+msgstr "WeeChat のコンパイル日付/時間"
 
 msgid "WeeChat PID (process ID)"
 msgstr "WeeChat の PID (プロセス ID)"
@@ -11308,6 +11315,8 @@ msgid ""
 "check the license of scripts when they are loaded: if the license is "
 "different from the plugin license, a warning is displayed"
 msgstr ""
+"スクリプトをロードしたら、ライセンスを確認してください: ライセンスがプラグイ"
+"ンのライセンスと異なる場合、警告が表示されます"
 
 #, c-format
 msgid ""
@@ -11316,6 +11325,10 @@ msgid ""
 "script code; if this option is disabled, this hidden script is unloaded "
 "after each eval: this uses less memory, but is slower"
 msgstr ""
+"ソースコード評価 (スクリプトコマンドのオプション \"eval\" またはインフォ "
+"\"%s_eval\") の呼び出し間にコンテキストを保持します; スクリプトコードを評価す"
+"る際は隠しスクリプトが使われます; このオプションを無効化した場合、評価毎に隠"
+"しスクリプトをアンロードします: メモリ使用量を節約できますが、遅いです"
 
 msgid "list/load/unload scripts"
 msgstr "スクリプトをリストアップ/ロード/アンロード"

@@ -9225,18 +9225,16 @@ WeeChat とプラグインが送信するシグナルのリスト:
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
   プラグインがメッセージを処理した後に、シグナルが送信される)
 
-// TRANSLATION MISSING
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.7 以上で利用可)_ |
   String: メッセージ |
-  IRC message sent to server before automatic split
-  (to fit in 512 bytes by default).
+  サーバに送信する IRC メッセージ
+  (自動分割前、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。
 
-// TRANSLATION MISSING
 | irc | xxx,irc_out_yyy ^(1)^ |
   String: メッセージ |
-  IRC message sent to server after automatic split
-  (to fit in 512 bytes by default).
+  サーバに送信する IRC メッセージ
+  (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.4 以上で利用可)_ |
@@ -10621,19 +10619,17 @@ WeeChat とプラグインが使う修飾子のリスト:
   IRC サーバから受信したメッセージの内容 (文字セットをデコードした後) |
   メッセージの新しい内容
 
-// TRANSLATION MISSING
 | irc_out1_xxx ^(1)^ +
   _(WeeChat バージョン 0.3.7 以上で利用可)_ |
   サーバ名 |
-  Content of message about to be sent to IRC server before automatic split
-  (to fit in 512 bytes by default). |
+  IRC サーバに送信するメッセージの内容
+  (自動分割前、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
 
-// TRANSLATION MISSING
 | irc_out_xxx ^(1)^ |
   サーバ名 |
-  Content of message about to be sent to IRC server after automatic split
-  (to fit in 512 bytes by default). |
+  IRC サーバに送信するメッセージの内容
+  (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
 
 | color_decode_ansi +
