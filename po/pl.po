@@ -353,7 +353,7 @@ msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (powiadomienie: %s)%s%s"
 
 #, c-format
 msgid "%sError: name \"%s\" is reserved for WeeChat"
-msgstr ""
+msgstr "%sBłąd: nazwa \"%s\" jest zarezerwowana dla WeeChat"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -1169,7 +1169,6 @@ msgstr ""
 msgid "manage buffers"
 msgstr "zarządzaj buforami"
 
-#, fuzzy
 msgid ""
 "list || add [-free] [-switch] <name> || clear [<number>|<name>|-merged|-all "
 "[<number>|<name>...]] || move <number>|-|+ || swap <number1>|<name1> "
@@ -1180,15 +1179,15 @@ msgid ""
 "notify <level> || localvar || set <property> [<value>] || get <property> || "
 "<number>|-|+|<name>"
 msgstr ""
-"list || clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]] || move "
-"<numer>|-|+ || swap <numer1>|<nazwa1> [<numer2>|<nazwa2>] || cycle <numer>|"
-"<nazwa> [<numer>|<nazwa>...] || merge <numer> || unmerge [<numer>|-all] || "
-"hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]] || unhide [<numer>|<nazwa>|-"
-"all [<numer>|<nazwa>...]] || renumber [<numer1> [<numer2> [<start>]]] || "
-"close [<n1>[-<n2>]|<nazwa>] || notify <poziom> || localvar || set <opcja> "
-"[<wartość>] || get <opcja> || <numer>|-|+|<nazwa>"
+"list || add [-free] [-switch] <nazwa> || clear [<numer>|<nazwa>|-merged|-all "
+"[<numer>|<nazwa>...]] || move <numer>|-|+ || swap <numer1>|<nazwa1> "
+"[<numer2>|<nazwa2>] || cycle <numer>|<nazwa> [<numer>|<nazwa>...] || merge "
+"<numer> || unmerge [<numer>|-all] || hide [<numer>|<nazwa>|-all [<numer>|"
+"<nazwa>...]] || unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]] || "
+"renumer [<numer1> [<numer2> [<start>]]] || close [<n1>[-<n2>]|<nazwa>] || "
+"notify <poziom> || localvar || set <opcja> [<value>] || get <opcja> || "
+"<numer>|-|+|<nazwa>"
 
-#, fuzzy
 msgid ""
 "    list: list buffers (without argument, this list is displayed)\n"
 "     add: add a new buffer (it can be closed with \"/buffer close\" or input "
@@ -1256,6 +1255,8 @@ msgid ""
 msgstr ""
 "    list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta "
 "lista)\n"
+"     add: dodaje nowy bufor (może zotać zamknięty komendą \"/buffer close\" albo "
+"\"q\")\n"
 "   clear: czyści zawartość bufora (numer bufora, -merged dla połączonych "
 "buforów, -all dla wszystkich buforów, lub nic dla obecnego bufora)\n"
 "    move: przesuwa bufor na liście (może być względne, np -1); \"-\" = "
@@ -2330,17 +2331,15 @@ msgstr ""
 msgid "display text on a buffer"
 msgstr "wyświetl tekst w buforze"
 
-#, fuzzy
 msgid ""
 "[-buffer <number>|<name>] [-newbuffer <name>] [-free] [-switch] [-core|-"
 "current] [-y <line>] [-escape] [-date <date>] [-tags <tags>] [-action|-"
 "error|-join|-network|-quit] [<text>] || -stdout|-stderr [<text>] || -beep"
 msgstr ""
-"[-buffer <numer>|<nazwa>] [-core] [-escape] [-date <data>] [-tags <tagi>] [-"
-"action|-error|-join|-network|-quit] <tekst> || -stdout|-stderr <tekst> || -"
-"beep"
+"[-buffer <numer>|<nazwa>] [-newbuffer <nazwa>] [-free] [-switch] [-core|-"
+"current] [-y <linia>] [-escape] [-date <data>] [-tags <tagi>] [-action|-"
+"error|-join|-network|-quit] [<tekst>] || -stdout|-stderr [<tekst>] || -beep"
 
-#, fuzzy
 msgid ""
 "   -buffer: display text in this buffer (default: buffer where command is "
 "executed)\n"
@@ -2390,27 +2389,34 @@ msgid ""
 "  send alert (BEL):\n"
 "    /print -beep"
 msgstr ""
-"-buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny "
+"   -buffer: bufor, w którym zostanie wyświetlony tekst (domyślnie: obecny "
 "bufor)\n"
-"  -core: alias dla bufora \"-buffer core.weechat\"\n"
-"-current: wyświetl tekst w obecnym buforze\n"
-"-escape: interpretuj znaki poprzedzone \\ (na przykład \\a, \\07, \\x07)\n"
-"  -date: data wiadomości, możliwe formaty:\n"
-"           -n: 'n' sekund wcześniej\n"
-"           +n: 'n' sekund później\n"
-"            n: 'n' sekund od Epoch (zobacz man time)\n"
-"           data/czas (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: "
+"-newbuffer: tworzy nowy bufor i wyświetla w nim tekst\n"
+"     -free: tworzy nowy bufor z dowolną zawartością (tylko z -newbuffer)\n"
+"   -switch: przełącza się do bufora\n"
+"     -core: alias dla bufora \"-buffer core.weechat\"\n"
+"  -current: wyświetl tekst w obecnym buforze\n"
+"        -y: wyświetla niestandardową linię (tylko dla buforów z dowolną zawartością)\n"
+"      line: numer linii bufora z dowolną zawartością (pierwsza linia to 0, "
+"wartość ujemna wyświetla linie od ostatniej: -1 = przedostatnia linia, -2 = dwie "
+"linie po ostatniej, ...)\n"
+"   -escape: interpretuj znaki poprzedzone \\ (na przykład \\a, \\07, \\x07)\n"
+"     -date: data wiadomości, możliwe formaty:\n"
+"              -n: 'n' sekund wcześniej\n"
+"              +n: 'n' sekund później\n"
+"              n: 'n' sekund od Epoch (zobacz man time)\n"
+"              data/czas (ISO 8601): yyyy-mm-ddThh:mm:ss, przykład: "
 "2014-01-19T04:32:55\n"
-"           czas: hh:mm:ss (przykład: 04:32:55)\n"
-"  -tags: oddzielona przecinkami lista tagów (zobacz /help filter w celu "
+"              czas: hh:mm:ss (przykład: 04:32:55)\n"
+"     -tags: oddzielona przecinkami lista tagów (zobacz /help filter w celu "
 "wyświetlenia listy najczęstszych tagów)\n"
-"   tekst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone za "
+"      tekst: tekst do wyświetlenia (prefiks i wiadomość muszą być oddzielone za "
 "pomocą \"\\t\", jeśli tekst zaczyna się od \"-\" dodaj \"\\\" przed nim)\n"
-"-stdout: wyświetl tekst na standardowe wyjście (znaki poprzedzone \\ są "
+"   -stdout: wyświetl tekst na standardowe wyjście (znaki poprzedzone \\ są "
 "interpretowane)\n"
-"-stderr: wyświetl tekst na standardowe wyjście błędów (znaki poprzedzone \\ "
+"   -stderr: wyświetl tekst na standardowe wyjście błędów (znaki poprzedzone \\ "
 "są interpretowane)\n"
-"   -beep: alias dla \"-stderr \\a\"\n"
+"     -beep: alias dla \"-stderr \\a\"\n"
 "\n"
 "Opcje -action ... -quit używają prefiksów zdefiniowanych w opcjach \"weechat."
 "look.prefix_*\".\n"
@@ -4465,14 +4471,14 @@ msgstr ""
 "częściowe dopełnienie zewnętrznych komend (zatrzymaj, kiedy wiele słów "
 "zaczyna się takimi samymi literami)"
 
-#, fuzzy
 msgid ""
 "comma-separated list of templates for which partial completion is enabled by "
 "default (with Tab key instead of shift-Tab); the list of templates is in "
 "documentation: plugin API reference, function \"weechat_hook_command\""
 msgstr ""
-"oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna "
-"pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)"
+"oddzielona przecinkiem lista wzorców, dla których częściowe doprłnienia są "
+"domyślnie włączone (za pomocą klawisza Tab zamiast shift-Tab); listę wzorców "
+"wzorców można znaleźć w dokumentacji: opis API wtyczek, funkcja \"weechat_hook_command\""
 
 msgid ""
 "maximum number of commands to display by default in history listing (0 = "
@@ -7144,9 +7150,9 @@ msgstr "%s: zarejestrowano skrypt \"%s\", wersja %s (%s)"
 msgid "Support of scheme scripts (with Guile)"
 msgstr "Wsparcie dla skryptów scheme (za pomocą Guile)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: stdout/stderr: %s"
-msgstr "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
@@ -8963,6 +8969,8 @@ msgid ""
 "%s%s: invalid length for split, it must be either 0 or any integer between "
 "128 and 4096"
 msgstr ""
+"%s%s: nieprawidłowa długość do podzielenia, musi być albo 0 albo liczba pomiędzy "
+"128 a 4096"
 
 #, c-format
 msgid ""
@@ -9313,6 +9321,11 @@ msgid ""
 "or any integer between 128 and 4096; this option should be changed only on "
 "non-standard IRC servers, for example gateways like bitlbee"
 msgstr ""
+"podziel wychodzące wiadomości IRC aby mieściły się w podanej ilości znaków; "
+"domyślna wartość to 512, jest to bezpieczna i zalecana wartość; wartość 0 "
+"wyłącza podział (nie zalecane, chyba ze wiesz co robisz); dozwolone wartości "
+"to 0 lub dowolna liczba pomiędzy 128 a 4096; ta opcja powinna być zmieniana tylko "
+"dla niestandardowych serwerów IRC, na przykład dla bramek jak bitlbee"
 
 #, c-format
 msgid "%s%s: error adding server \"%s\""
@@ -10007,9 +10020,8 @@ msgstr ""
 "\"channel\" nie został znaleziony), \"pos_text\": indeks słowa \"text"
 "\" (\"-1\" jeśli \"text\" nie został znaleziony)"
 
-#, fuzzy
 msgid "split an IRC message (to fit in 512 bytes by default)"
-msgstr "dziel wiadomość IRC (aby zmieściła się w 512 bajtach)"
+msgstr "dziel wiadomość IRC (aby zmieściła się domyślnie w 512 bajtach)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
@@ -10847,9 +10859,9 @@ msgstr "%s%s: nie można wczytać pliku \"%s\""
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nie można wykonać pliku \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sKolor \"%s\" nie jest zdefiniowany w palecie"
+msgstr "%sKomenda \"/%s eval\" nie jest jeszcze zaimplementowana"
 
 msgid "Log buffers to files"
 msgstr "Zapisuj bufory do plików"
@@ -10999,6 +11011,9 @@ msgid ""
 "eval); empty value displays the backlog on all buffers; for example to "
 "display backlog on private buffers only: \"${type} == private\""
 msgstr ""
+"warunki do wyświetlania backlogu (uwaga: zawartość jest przetwarzana, zobacz "
+"/help eval); pusta wartość wyświetla backlog we wszystkich buforach; na przykład "
+"żeby wyświetlić backlog tylko w prywatnych buforach: \"${type} == private\""
 
 msgid "color for line ending the backlog"
 msgstr "kolor linii kończącej backloga"
@@ -11084,13 +11099,13 @@ msgstr "Wsparcie dla skryptów lua"
 msgid "%s%s: unable to redirect stdout and stderr"
 msgstr "%s%s: nie można przekierować standardowego wyjścia i wyjścia błędu"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to load source code"
-msgstr "%s%s: nie można wczytać pliku \"%s\""
+msgstr "%s%s: nie można wczytać kodu źródłowego"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to execute source code"
-msgstr "%s%s: nie można wykonać pliku \"%s\""
+msgstr "%s%s: nie można wykonać kodu źródłowego"
 
 msgid "Support of perl scripts"
 msgstr "Wsparcie dla skryptów perla"
@@ -11101,11 +11116,11 @@ msgstr "%s%s: za mało pamięci wewnątrz funkcji \"%s\""
 
 #, c-format
 msgid "%s: warning:"
-msgstr ""
+msgstr "%s: ostrzeżenie:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: error:"
-msgstr "%s%s: błąd: %s"
+msgstr "%s: błąd:"
 
 #, c-format
 msgid "%s%s: unable to parse file \"%s\""
@@ -11131,7 +11146,6 @@ msgstr ""
 "wersja git WeeChat (wyjście komendy \"git describe\" dla tylko dla wersji "
 "rozwojowej, puste dla wersji stabilnej)"
 
-#, fuzzy
 msgid "WeeChat compilation date/time"
 msgstr "data kompilacji WeeChat"
 
@@ -11491,6 +11505,8 @@ msgid ""
 "check the license of scripts when they are loaded: if the license is "
 "different from the plugin license, a warning is displayed"
 msgstr ""
+"sprawdza licencję skryptów podczas ich ładowania: jeśli licencja jest "
+"inna niż licencja wtyczki wyświetlane jest ostrzeżenie"
 
 #, c-format
 msgid ""
@@ -11499,19 +11515,21 @@ msgid ""
 "script code; if this option is disabled, this hidden script is unloaded "
 "after each eval: this uses less memory, but is slower"
 msgstr ""
+"przechowuj kontekst pomiędzy dwoma odwołaniami do wykonania tego samego kodu "
+"źródłowego (opcja \"eval\" komendy script lub info \"%s_eval\"); ukryty sktypt "
+"jest używany do wykonania kodu skryptu; jeśli ta opcja jest wyłączona, ukryty skrypt "
+"jest wyładowywany po każdym wykonaniu: zajmuje to mniej pamięci, ale jest wolniejsze"
 
 msgid "list/load/unload scripts"
 msgstr "list/load/unload skrypt"
 
-#, fuzzy
 msgid ""
 "list|listfull [<name>] || load [-q] <filename> || autoload || reload|unload "
 "[-q] [<name>] || eval [-o|-oc] <code> || version"
 msgstr ""
 "list|listfull [<nazwa>] || load [-q] <nazwapliku> || autoload || reload|"
-"unload [-q] [<nazwa>]"
+"unload [-q] [<nazwa>] || eval [-o|-oc] <kode> || version"
 
-#, fuzzy
 msgid ""
 "    list: list loaded scripts\n"
 "listfull: list loaded scripts (verbose)\n"
@@ -11540,8 +11558,13 @@ msgstr ""
 "wszystkie wtyczki, następnie automatycznie załaduje wtyczki)\n"
 "  unload: wyładowuje jedną albo wszystkie wtyczki\n"
 "nazwa_pliku: skrypt (plik) do załadowania\n"
-"    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji \"register\")\n"
 "      -q: tryb cichy: nie wyświetla wiadomości\n"
+"    nazwa: nazwa skryptu (nazwa użyta do wywołania funkcji \"register\")\n"
+"    eval: wykonuje kod źródłowy i wyświetla wynik w obecnym buforze\n"
+"      -o: wysyła wynik do bufora bez wykonywania komend\n"
+"     -oc: wysyła wynik do bufora i wykonuje komendy\n"
+"    code: kod źródłowy do wykonania\n"
+" version: wyświetla wersję używanego interpretera\n"
 "\n"
 "Bez argumentów ta komenda wyświetli wszystkie załadowane wtyczki."
 
@@ -11554,19 +11577,17 @@ msgstr "wskaźnik skryptu (opcjonalne)"
 msgid "script name (wildcard \"*\" is allowed) (optional)"
 msgstr "nazwa skryptu (wildcard \"*\" jest dozwolony) (opcjonalne)"
 
-#, fuzzy
 msgid "evaluation of source code"
-msgstr "lista skryptów"
+msgstr "wykonywanie kodu źródłowego"
 
 msgid "source code to execute"
-msgstr ""
+msgstr "kod źródłowy do wykonania"
 
-#, fuzzy
 msgid "name of the interpreter used"
-msgstr "%s%s: nie można zwolnić interpretera"
+msgstr "nazwa użytego interpretera"
 
 msgid "version of the interpreter used"
-msgstr ""
+msgstr "wersja użytego interpretera"
 
 #, c-format
 msgid ""
