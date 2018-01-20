@@ -436,16 +436,11 @@ Musisz włączyć obsługę tego zdarzenia za pomocą specjalnego kodu wysyłane
 
 *Ważne*:
 
-// TRANSLATION MISSING
-* You must use a modern xterm-compatible terminal.
-// TRANSLATION MISSING
-* Additionally, it seems to be important that your value of the TERM variable
-  equals to _xterm_ or _xterm-256color_.
-// TRANSLATION MISSING
-* If you use tmux, you must additionally enable focus events by adding
-  `set -g focus-events on` to your _.tmux.conf_ file.
-// TRANSLATION MISSING
-* This does *not* work under screen.
+* Musisz użyć współczesnego terminala zgodnego z xterm.
+* Dodatkowo, istotne jest, any zmenna TERM była utawiona na wartość _xterm_ lub _xterm-256color_.
+* Jeśli używaz tmuxa, musisz dodatkowo włączyć obsługę zdarzeń aktywności poprzez dodanie
+  `set -g focus-events on` do pliku _.tmux.conf_.
+* *Nie* działa to pod screenem.
 
 Żeby wysłać kod podczas uruchamiania WeeChat:
 
@@ -493,10 +488,9 @@ UXTerm*metaSendsEscape: true
 
 Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
-// TRANSLATION MISSING
-If you are using the Mac OS X Terminal app, enable the option
-"Use option as meta key" in menu Settings / Keyboard. And then you can use the
-kbd:[Option] key as meta key.
+Jeśli używasz aplikacji Terminal na Mac OS X włącz opcję
+"Use option as meta key" w menu Settings / Keyboard. Następnie możesz używać klawisza
+kbd:[Option] jako klawisza meta.
 
 [[customize_key_bindings]]
 === Jak mogę zmienić przypisania klawiszy?
