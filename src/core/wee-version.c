@@ -134,3 +134,16 @@ version_get_compilation_time ()
 {
     return __TIME__;
 }
+
+/*
+ * Returns date/time of WeeChat compilation.
+ *
+ * Example:
+ *   Dec 16 2012 18:10:22
+ */
+
+const char *
+version_get_compilation_date_time ()
+{
+    return __DATE__ " " __TIME__;
+}

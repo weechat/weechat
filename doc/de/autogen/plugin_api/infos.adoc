@@ -92,7 +92,7 @@
 
 | weechat | cursor_mode | 1, falls Cursor-Modus aktiviert ist | -
 
-| weechat | date | Datum der WeeChat Kompilierung | -
+| weechat | date | WeeChat compilation date/time | -
 
 | weechat | dir_separator | Trennzeichen für Verzeichnis | -
 

@@ -92,7 +92,7 @@
 
 | weechat | cursor_mode | カーソルモードが有効の場合 1 | -
 
-| weechat | date | WeeChat のコンパイル日 | -
+| weechat | date | WeeChat compilation date/time | -
 
 | weechat | dir_separator | ディレクトリ区切り | -
 

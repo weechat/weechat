@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-15 22:36+0100\n"
+"POT-Creation-Date: 2018-01-20 08:35+0100\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11131,7 +11131,8 @@ msgstr ""
 "wersja git WeeChat (wyjście komendy \"git describe\" dla tylko dla wersji "
 "rozwojowej, puste dla wersji stabilnej)"
 
-msgid "WeeChat compilation date"
+#, fuzzy
+msgid "WeeChat compilation date/time"
 msgstr "data kompilacji WeeChat"
 
 msgid "WeeChat PID (process ID)"

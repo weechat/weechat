@@ -388,7 +388,7 @@ plugin_api_info_date_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return version_get_compilation_date ();
+    return version_get_compilation_date_time ();
 }
 
 /*
@@ -1905,7 +1905,7 @@ plugin_api_init ()
                   "release)"),
                NULL, &plugin_api_info_version_git_cb, NULL, NULL);
     hook_info (NULL, "date",
-               N_("WeeChat compilation date"),
+               N_("WeeChat compilation date/time"),
                NULL, &plugin_api_info_date_cb, NULL, NULL);
     hook_info (NULL, "pid",
                N_("WeeChat PID (process ID)"),

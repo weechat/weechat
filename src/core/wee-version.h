@@ -27,5 +27,6 @@ extern const char *version_get_git ();
 extern const char *version_get_version_with_git ();
 extern const char *version_get_compilation_date ();
 extern const char *version_get_compilation_time ();
+extern const char *version_get_compilation_date_time ();
 
 #endif /* WEECHAT_VERSION_H */

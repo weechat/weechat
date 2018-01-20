@@ -92,7 +92,7 @@
 
 | weechat | cursor_mode | 1 if cursor mode is enabled | -
 
-| weechat | date | WeeChat compilation date | -
+| weechat | date | WeeChat compilation date/time | -
 
 | weechat | dir_separator | directory separator | -
 
