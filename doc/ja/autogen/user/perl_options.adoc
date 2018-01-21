@@ -3,13 +3,13 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_perl.look.check_license]] *perl.look.check_license*
-** 説明: pass:none[check the license of scripts when they are loaded: if the license is different from the plugin license, a warning is displayed]
+** 説明: pass:none[スクリプトをロードしたら、ライセンスを確認してください: ライセンスがプラグインのライセンスと異なる場合、警告が表示されます]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
 
 * [[option_perl.look.eval_keep_context]] *perl.look.eval_keep_context*
-** 説明: pass:none[keep context between two calls to the source code evaluation (option "eval" of script command or info "%s_eval"); a hidden script is used to eval script code; if this option is disabled, this hidden script is unloaded after each eval: this uses less memory, but is slower]
+** 説明: pass:none[ソースコード評価 (スクリプトコマンドのオプション "eval" またはインフォ "%s_eval") の呼び出し間にコンテキストを保持します; スクリプトコードを評価する際は隠しスクリプトが使われます; このオプションを無効化した場合、評価毎に隠しスクリプトをアンロードします: メモリ使用量を節約できますが、遅いです]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
