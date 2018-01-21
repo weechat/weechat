@@ -8690,8 +8690,8 @@ struct t_hook *my_process_hook = weechat_hook_process ("ls", 5000,
 
 /* exemple avec la fonction de rappel appelée dans le processus fils */
 int
-my_process_cb (const void *pointer, void *data, const char *command,
-               int return_code, const char *out, const char *err)
+my_process_func_cb (const void *pointer, void *data, const char *command,
+                    int return_code, const char *out, const char *err)
 {
     if (return_code == WEECHAT_HOOK_PROCESS_CHILD)
     {
@@ -8732,7 +8732,7 @@ my_process_cb (const void *pointer, void *data, const char *command,
 }
 
 struct t_hook *my_process_hook = weechat_hook_process ("func:get_status", 5000,
-                                                       &my_process_cb, NULL, NULL);
+                                                       &my_process_func_cb, NULL, NULL);
 ----
 
 Script (Python) :
