@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-20 08:35+0100\n"
+"POT-Creation-Date: 2018-01-29 20:59+0100\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9566,10 +9566,12 @@ msgstr ""
 msgid "Scripts"
 msgstr "Betikler"
 
-msgid "Scripts manager"
+#, fuzzy
+msgid "Script manager"
 msgstr "Betik yöneticisi"
 
-msgid "WeeChat scripts manager"
+#, fuzzy
+msgid "WeeChat script manager"
 msgstr "WeeChat betik yöneticisi"
 
 msgid ""

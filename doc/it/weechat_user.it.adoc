@@ -3505,7 +3505,7 @@ Questi plugin possono caricare, eseguire e scaricare gli script per questi
 linguaggi.
 
 // TRANSLATION MISSING
-Another plugin called "script" is a scripts manager and is used to load/unload
+Another plugin called "script" is a script manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
 repository, which are visible at this URL: https://weechat.org/scripts
 

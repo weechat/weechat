@@ -23,7 +23,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-20 08:35+0100\n"
+"POT-Creation-Date: 2018-01-29 20:59+0100\n"
 "PO-Revision-Date: 2018-01-20 14:49+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -13006,10 +13006,12 @@ msgstr ""
 msgid "Scripts"
 msgstr "Skripten"
 
-msgid "Scripts manager"
+#, fuzzy
+msgid "Script manager"
 msgstr "Skripten-Manager"
 
-msgid "WeeChat scripts manager"
+#, fuzzy
+msgid "WeeChat script manager"
 msgstr "WeeChat Skripten-Manager"
 
 msgid ""

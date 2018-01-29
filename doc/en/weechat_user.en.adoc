@@ -2091,7 +2091,7 @@ Default plugins are:
 | irc        | IRC chat protocol.
 | logger     | Log buffers to files.
 | relay      | Relay data via network.
-| script     | Scripts manager.
+| script     | Script manager.
 | python     | Python scripting API.
 | perl       | Perl scripting API.
 | ruby       | Ruby scripting API.
@@ -3285,7 +3285,7 @@ WeeChat provides 8 scripting plugins: Python, Perl, Ruby, Lua, Tcl, Guile
 (scheme), JavaScript and PHP.
 These plugins can load, execute and unload scripts for these languages.
 
-Another plugin called "script" is a scripts manager and is used to load/unload
+Another plugin called "script" is a script manager and is used to load/unload
 scripts of any language, and install/remove scripts of WeeChat scripts
 repository, which are visible at this URL: https://weechat.org/scripts
 

@@ -1197,7 +1197,7 @@ New features::
   * relay: add support of SSL (for irc and weechat protocols), new option relay.network.ssl_cert_key (task #12044)
   * relay: add option relay.color.client
   * relay: add object type "arr" (array) in WeeChat protocol
-  * script: new plugin "script" (scripts manager, replacing scripts weeget.py and script.pl)
+  * script: new plugin "script" (script manager, replacing scripts weeget.py and script.pl)
   * scripts: add signals for scripts loaded/unloaded/installed/removed
   * scripts: add hdata with list of scripts for each language
 
@@ -1884,7 +1884,7 @@ New features::
   * xfer: add speed limit for DCC files sending (task #6178)
   * xfer: add new option xfer.file.use_nick_in_filename for Xfer files (task #7140)
   * plugins: add some other plugins: alias, demo, fifo, tcl, xfer
-  * scripts: new scripts: weeget.py (scripts manager), jabber.py (jabber/XMPP protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of buffers), iset.pl (set options interactively), weetris.pl (tetris-like game), mastermind.pl, ...
+  * scripts: new scripts: weeget.py (script manager), jabber.py (jabber/XMPP protocol), go.py (quick jump to buffers), buffers.pl (sidebar with list of buffers), iset.pl (set options interactively), weetris.pl (tetris-like game), mastermind.pl, ...
   * api: add hooks: command, timer, file descriptor, process, connection, print, signal, config, completion, modifier, info, infolist
   * api: new plugin API with many new functions: hooks, buffer management and nicklist, bars, configuration files, network, infos/infolists, lists, upgrade
 

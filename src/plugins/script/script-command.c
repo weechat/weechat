@@ -289,7 +289,7 @@ script_command_init ()
 {
     weechat_hook_command (
         "script",
-        N_("WeeChat scripts manager"),
+        N_("WeeChat script manager"),
         N_("list [-o|-i]"
            " || search <text>"
            " || show <script>"

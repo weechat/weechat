@@ -33,7 +33,7 @@ index f8f027d8e..d382c2c9d 100644
    - dynamic filtering of buffer content
 -  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
 +  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
+   - script manager
    - spell checking
    - highly customizable and extensible
 @@ -71,7 +68,7 @@ Description: Fast, light and extensible chat client - console client
@@ -42,7 +42,7 @@ index f8f027d8e..d382c2c9d 100644
    - dynamic filtering of buffer content
 -  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
 +  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
+   - script manager
    - spell checking
    - highly customizable and extensible
 @@ -178,17 +175,6 @@ Description: Fast, light and extensible chat client - javascript plugin
@@ -114,7 +114,7 @@ index a68d181e8..6c5ef314a 100644
    - dynamic filtering of buffer content
 -  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
 +  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
+   - script manager
    - spell checking
    - highly customizable and extensible
 @@ -71,7 +68,7 @@ Description: Fast, light and extensible chat client - console client
@@ -123,7 +123,7 @@ index a68d181e8..6c5ef314a 100644
    - dynamic filtering of buffer content
 -  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
 +  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
-   - scripts manager
+   - script manager
    - spell checking
    - highly customizable and extensible
 @@ -171,16 +168,6 @@ Description: Fast, light and extensible chat client - javascript plugin

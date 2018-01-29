@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-20 08:35+0100\n"
+"POT-Creation-Date: 2018-01-29 20:59+0100\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10481,11 +10481,12 @@ msgstr ""
 msgid "Scripts"
 msgstr ""
 
-msgid "Scripts manager"
-msgstr ""
+#, fuzzy
+msgid "Script manager"
+msgstr "WeeChat szlogen"
 
 #, fuzzy
-msgid "WeeChat scripts manager"
+msgid "WeeChat script manager"
 msgstr "WeeChat szlogen"
 
 msgid ""

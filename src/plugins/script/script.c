@@ -1,5 +1,5 @@
 /*
- * script.c - scripts manager for WeeChat
+ * script.c - script manager for WeeChat
  *
  * Copyright (C) 2003-2018 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -37,7 +37,7 @@
 
 
 WEECHAT_PLUGIN_NAME(SCRIPT_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION(N_("Scripts manager"));
+WEECHAT_PLUGIN_DESCRIPTION(N_("Script manager"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);

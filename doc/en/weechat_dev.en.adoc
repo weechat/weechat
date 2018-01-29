@@ -83,7 +83,7 @@ The main WeeChat directories are:
 |       python/     | Python scripting API.
 |       relay/      | Relay plugin (irc proxy + relay for remote interfaces).
 |       ruby/       | Ruby scripting API.
-|       script/     | Scripts manager.
+|       script/     | Script manager.
 |       tcl/        | Tcl scripting API.
 |       trigger/    | Trigger plugin.
 |       xfer/       | Xfer plugin (IRC DCC file/chat).
@@ -301,13 +301,13 @@ WeeChat "core" is located in following directories:
 |    ruby/                          | Ruby plugin.
 |       weechat-ruby.c              | Main ruby functions (load/unload scripts, execute ruby code).
 |       weechat-ruby-api.c          | Ruby scripting API functions.
-|    script/                        | Scripts manager.
-|       script.c                    | Main functions for scripts manager.
+|    script/                        | Script manager.
+|       script.c                    | Main functions for script manager.
 |       script-action.c             | Actions on scripts (load/unload, install/remove, ...).
-|       script-buffer.c             | Buffer for scripts manager.
-|       script-command.c            | Commands for scripts manager.
-|       script-completion.c         | Completions for scripts manager.
-|       script-config.c             | Config options for scripts manager (file script.conf).
+|       script-buffer.c             | Buffer for script manager.
+|       script-command.c            | Commands for script manager.
+|       script-completion.c         | Completions for script manager.
+|       script-config.c             | Config options for script manager (file script.conf).
 |       script-info.c               | Script manager info/infolists/hdata.
 |       script-mouse.c              | Script mouse actions.
 |       script-repo.c               | Download and read repository file.
