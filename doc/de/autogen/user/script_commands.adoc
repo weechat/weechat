@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_script_script]]
-* `+script+`: WeeChat script manager
+* `+script+`: WeeChat Skriptmanager
 
 ----
 /script  list [-o|-i]
