@@ -8,7 +8,7 @@ image:https://img.shields.io/badge/diaspora*-follow-blue.svg["Diaspora*", link="
 image:https://img.shields.io/badge/google%2B-follow-blue.svg["Google+", link="https://plus.google.com/+WeeChat"]
 image:https://img.shields.io/badge/devel%20blog-follow-blue.svg["Devel blog", link="https://weechat.org/blog/"]
 image:https://img.shields.io/badge/slant-recommend-28acad.svg["Slant", link="http://www.slant.co/topics/1323/~irc-clients-for-linux"]
-image:https://img.shields.io/badge/paypal-donate%20%E2%9D%A4-yellow.svg["Paypal", link="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=4LSMSNLUAJWNS"]
+image:https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg["Donate", link="https://weechat.org/about/donate/"]
 
 image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 
