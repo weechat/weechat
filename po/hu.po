@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-01-29 20:59+0100\n"
+"POT-Creation-Date: 2018-02-05 21:21+0100\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7294,21 +7294,6 @@ msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: the evaluated fingerprint must not be empty"
-msgstr "%s nem sikerült a szervert létrehozni\n"
-
-#, c-format
-msgid ""
-"%s%s: invalid fingerprint size, the number of hexadecimal digits must be one "
-"of: %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: invalid fingerprint, it must contain only hexadecimal digits (0-9, a-f)"
-msgstr ""
-
 #, c-format
 msgid ""
 "%s%s: invalid length for split, it must be either 0 or any integer between "
@@ -7343,7 +7328,8 @@ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 #, fuzzy
 msgid ""
 "list of hostname/port or IP/port for server (separated by comma) (note: "
-"content is evaluated, see /help eval)"
+"content is evaluated, see /help eval; server options are evaluated with "
+"${irc_server.xxx} and ${server} is replaced by the server name)"
 msgstr "felhasználónév az IRC szerveren"
 
 msgid ""
@@ -7382,14 +7368,22 @@ msgid ""
 "chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many "
 "fingerprints can be separated by commas; if this option is set, the other "
 "checks on certificates are NOT performed (option \"ssl_verify\") (note: "
-"content is evaluated, see /help eval)"
+"content is evaluated, see /help eval; server options are evaluated with "
+"${irc_server.xxx} and ${server} is replaced by the server name)"
 msgstr ""
 
 msgid "check that the SSL connection is fully trusted"
 msgstr ""
 
-msgid "password for server (note: content is evaluated, see /help eval)"
+#, fuzzy
+msgid ""
+"password for server (note: content is evaluated, see /help eval; server "
+"options are evaluated with ${irc_server.xxx} and ${server} is replaced by "
+"the server name)"
 msgstr ""
+"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+"       név: a kirúgandó neve\n"
+"megjegyzés: megjegyzés a kirúgáshoz"
 
 #. TRANSLATORS: please keep words "client capabilities" between brackets if translation is different (see fr.po)
 msgid ""
@@ -7406,16 +7400,27 @@ msgid ""
 "AES crypted password (insecure, not recommended)"
 msgstr ""
 
+#, fuzzy
 msgid ""
 "username for SASL authentication; this option is not used for mechanism "
-"\"external\" (note: content is evaluated, see /help eval)"
+"\"external\" (note: content is evaluated, see /help eval; server options are "
+"evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
+"name)"
 msgstr ""
+"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+"       név: a kirúgandó neve\n"
+"megjegyzés: megjegyzés a kirúgáshoz"
 
+#, fuzzy
 msgid ""
 "password for SASL authentication; this option is not used for mechanisms "
 "\"ecdsa-nist256p-challenge\" and \"external\" (note: content is evaluated, "
-"see /help eval)"
+"see /help eval; server options are evaluated with ${irc_server.xxx} and "
+"${server} is replaced by the server name)"
 msgstr ""
+"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+"       név: a kirúgandó neve\n"
+"megjegyzés: megjegyzés a kirúgáshoz"
 
 #, fuzzy
 msgid ""
@@ -7448,7 +7453,8 @@ msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
 #, fuzzy
 msgid ""
 "nicknames to use on server (separated by comma) (note: content is evaluated, "
-"see /help eval)"
+"see /help eval; server options are evaluated with ${irc_server.xxx} and "
+"${server} is replaced by the server name)"
 msgstr "felhasználónév az IRC szerveren"
 
 msgid ""
@@ -7458,11 +7464,25 @@ msgid ""
 "nick not used on server"
 msgstr ""
 
-msgid "user name to use on server (note: content is evaluated, see /help eval)"
+#, fuzzy
+msgid ""
+"user name to use on server (note: content is evaluated, see /help eval; "
+"server options are evaluated with ${irc_server.xxx} and ${server} is "
+"replaced by the server name)"
 msgstr ""
+"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+"       név: a kirúgandó neve\n"
+"megjegyzés: megjegyzés a kirúgáshoz"
 
-msgid "real name to use on server (note: content is evaluated, see /help eval)"
+#, fuzzy
+msgid ""
+"real name to use on server (note: content is evaluated, see /help eval; "
+"server options are evaluated with ${irc_server.xxx} and ${server} is "
+"replaced by the server name)"
 msgstr ""
+"     szoba: a szoba, ahol a felhasználó tartózkodik\n"
+"       név: a kirúgandó neve\n"
+"megjegyzés: megjegyzés a kirúgáshoz"
 
 #, fuzzy
 msgid ""
@@ -7477,7 +7497,9 @@ msgid ""
 "user mode(s) to set after connection to server and before executing command "
 "and the auto-join of channels; examples: \"+R\" (to set mode \"R\"), \"+R-i"
 "\" (to set mode \"R\" and remove \"i\"); see /help mode for the complete "
-"mode syntax (note: content is evaluated, see /help eval)"
+"mode syntax (note: content is evaluated, see /help eval; server options are "
+"evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
+"name)"
 msgstr ""
 "szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
 "';'-vel kell elválasztani, használja a '\\;' sorozatot, ha "
@@ -7489,7 +7511,9 @@ msgid ""
 "command(s) to run after connection to server and before auto-join of "
 "channels (many commands can be separated by \";\", use \"\\;\" for a "
 "semicolon, special variables $nick, $channel and $server are replaced by "
-"their value) (note: content is evaluated, see /help eval)"
+"their value) (note: content is evaluated, see /help eval; server options are "
+"evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
+"name)"
 msgstr ""
 "szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
 "';'-vel kell elválasztani, használja a '\\;' sorozatot, ha "
@@ -7510,7 +7534,9 @@ msgid ""
 "a key must be at beginning of the list, and all the keys must be given after "
 "the channels (separated by a space) (example: \"#channel1,#channel2,"
 "#channel3 key1,key2\" where #channel1 and #channel2 are protected by key1 "
-"and key2) (note: content is evaluated, see /help eval)"
+"and key2) (note: content is evaluated, see /help eval; server options are "
+"evaluated with ${irc_server.xxx} and ${server} is replaced by the server "
+"name)"
 msgstr ""
 
 msgid ""
@@ -8697,6 +8723,22 @@ msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 #, c-format
 msgid ""
 "%sgnutls: version >= 3.0.21 is required for SASL \"ecdsa-nist256p-challenge\""
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, c-format
+msgid ""
+"%s%s: invalid fingerprint size for server \"%s\", the number of hexadecimal "
+"digits must be one of: %s"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: invalid fingerprint for server \"%s\", it must contain only "
+"hexadecimal digits (0-9, a-f)"
 msgstr ""
 
 #, fuzzy, c-format

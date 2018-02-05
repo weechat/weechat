@@ -513,7 +513,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** 説明: pass:none[サーバのホスト名/ポート番号または IP アドレス/ポート番号のリスト (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -537,7 +537,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** 説明: pass:none[サーバに接続した後 (設定されていればさらにコマンドを実行し、遅延時間待った後) に参加するチャンネルのコンマ区切りリスト;鍵が必要なチャンネルはリストの最初に指定し、すべての鍵はチャンネルの後に指定してください (チャンネルと鍵の区切りは空白) (例: "#channel1,#channel2,#channel3 key1,key2" この場合 #channel1 と #channel2 への参加に必要な鍵はそれぞれ key1 と key2) (注意: 値は評価されます、/help eval を参照)]
+** 説明: pass:none[comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -585,7 +585,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** 説明: pass:none[サーバに接続した後、チャンネルに自動参加する前に実行するコマンド (";" で分けて 複数のコマンドを列挙できます、セミコロンは "\;" のように使ってください、特殊変数 $nick、$channel、$server はそれぞれの値に置換されます) (注意: 値は評価されます、/help eval を参照)]
+** 説明: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -633,7 +633,7 @@
 ** デフォルト値: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** 説明: pass:none[サーバで使用するニックネーム (コンマ区切り) (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -651,7 +651,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** 説明: pass:none[サーバのパスワード (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[password for server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -663,7 +663,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** 説明: pass:none[サーバで使用する実名 (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[real name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -687,7 +687,7 @@
 ** デフォルト値: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** 説明: pass:none[SASL 認証のパスワード; このオプションは "ecdsa-nist256p-challenge" および "external" メカニズムの場合には利用されません (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -699,7 +699,7 @@
 ** デフォルト値: `+15+`
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** 説明: pass:none[SASL 認証のユーザ名; このオプションは "external" メカニズムの場合には利用されません (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -729,7 +729,7 @@
 ** デフォルト値: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** 説明: pass:none[信頼でき、通信を認めるサーバ証明書の指紋; 16 進数で使える文字 (0-9, a-f) 以外は指定できません: SHA-512 の場合 64 文字、SHA-256 の場合 32 文字、SHA-1 の場合 20 文字 (危険、非推奨) です。複数の指紋を設定する場合はコンマで区切ってください; このオプションを設定した場合、証明書に対する他の妥当性確認は行われません (オプション "ssl_verify") (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -747,13 +747,13 @@
 ** デフォルト値: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** 説明: pass:none[サーバへの接続後、コマンドの実行とチャンネルへの自動参加前に設定するユーザモード; 例: "+R" (モード "R" を設定)、"+R-i" (モード "R" を設定、モード "i" を未設定); 完全なモード書式を見るには /help mode を参照してください (注意: 値は評価されます、/help eval を参照)]
+** 説明: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** 説明: pass:none[サーバで使用するユーザ名 (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[user name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

@@ -467,9 +467,9 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
      * $username: user name, example:
      *   name
      */
-    username = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME),
-        NULL, NULL, NULL);
+    username = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME));
     if (username)
     {
         temp = weechat_string_replace (res, "$username", username);
@@ -484,9 +484,9 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
      * $realname: real name, example:
      *   John doe
      */
-    realname = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME),
-        NULL, NULL, NULL);
+    realname = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME));
     if (realname)
     {
         temp = weechat_string_replace (res, "$realname", realname);

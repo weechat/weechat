@@ -23,7 +23,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <ctype.h>
 #include <time.h>
 #include <limits.h>
 #include <pwd.h>
@@ -998,10 +997,6 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
     char *error;
     long number;
     struct t_infolist *infolist;
-#ifdef HAVE_GNUTLS
-    char *fingerprint_eval, **fingerprints, *str_sizes;
-    int i, j, rc, algo, length;
-#endif /* HAVE_GNUTLS */
 
     /* make C compiler happy */
     (void) data;
@@ -1052,82 +1047,6 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_error);
                     return 0;
                 }
-                break;
-            case IRC_SERVER_OPTION_SSL_FINGERPRINT:
-#ifdef HAVE_GNUTLS
-                if (!value || !value[0])
-                    break;
-                fingerprint_eval = weechat_string_eval_expression (
-                    value, NULL, NULL, NULL);
-                if (!fingerprint_eval || !fingerprint_eval[0])
-                {
-                    weechat_printf (
-                        NULL,
-                        _("%s%s: the evaluated fingerprint must not be "
-                          "empty"),
-                        weechat_prefix ("error"),
-                        IRC_PLUGIN_NAME);
-                    if (fingerprint_eval)
-                        free (fingerprint_eval);
-                    return 0;
-                }
-                fingerprints = weechat_string_split (
-                    (fingerprint_eval) ? fingerprint_eval : value,
-                    ",", 0, 0, NULL);
-                if (!fingerprints)
-                {
-                    free (fingerprint_eval);
-                    return 1;
-                }
-                rc = 0;
-                for (i = 0; fingerprints[i]; i++)
-                {
-                    length = strlen (fingerprints[i]);
-                    algo = irc_server_fingerprint_search_algo_with_size (
-                        length * 4);
-                    if (algo < 0)
-                    {
-                        rc = -1;
-                        break;
-                    }
-                    for (j = 0; j < length; j++)
-                    {
-                        if (!isxdigit ((unsigned char)fingerprints[i][j]))
-                        {
-                            rc = -2;
-                            break;
-                        }
-                    }
-                    if (rc < 0)
-                        break;
-                }
-                weechat_string_free_split (fingerprints);
-                free (fingerprint_eval);
-                switch (rc)
-                {
-                    case -1:  /* invalid size */
-                        str_sizes = irc_server_fingerprint_str_sizes ();
-                        weechat_printf (
-                            NULL,
-                            _("%s%s: invalid fingerprint size, the "
-                              "number of hexadecimal digits must be "
-                              "one of: %s"),
-                            weechat_prefix ("error"),
-                            IRC_PLUGIN_NAME,
-                            (str_sizes) ? str_sizes : "?");
-                        if (str_sizes)
-                            free (str_sizes);
-                        return 0;
-                    case -2:  /* invalid content */
-                        weechat_printf (
-                            NULL,
-                            _("%s%s: invalid fingerprint, it must "
-                              "contain only hexadecimal digits (0-9, "
-                              "a-f)"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                        return 0;
-                }
-#endif /* HAVE_GNUTLS */
                 break;
             case IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH:
                 if (!value || !value[0])
@@ -1560,7 +1479,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("list of hostname/port or IP/port for server (separated by "
                    "comma) "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1687,7 +1608,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "fingerprints can be separated by commas; if this option "
                    "is set, the other checks on certificates are NOT "
                    "performed (option \"ssl_verify\") "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1720,7 +1643,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("password for server "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1784,7 +1709,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("username for SASL authentication; this option is not used "
                    "for mechanism \"external\" "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1803,7 +1730,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 N_("password for SASL authentication; this option is not used "
                    "for mechanisms \"ecdsa-nist256p-challenge\" and "
                    "\"external\" "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1925,7 +1854,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("nicknames to use on server (separated by comma) "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1962,7 +1893,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("user name to use on server "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -1979,7 +1912,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("real name to use on server "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2016,7 +1951,10 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "executing command and the auto-join of channels; examples: "
                    "\"+R\" (to set mode \"R\"), \"+R-i\" (to set mode \"R\" "
                    "and remove \"i\"); see /help mode for the complete mode "
-                   "syntax (note: content is evaluated, see /help eval)"),
+                   "syntax "
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2036,7 +1974,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "auto-join of channels (many commands can be separated by "
                    "\";\", use \"\\;\" for a semicolon, special variables "
                    "$nick, $channel and $server are replaced by their value) "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
@@ -2077,7 +2017,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                    "channels (separated by a space) (example: \"#channel1,"
                    "#channel2,#channel3 key1,key2\" where #channel1 and "
                    "#channel2 are protected by key1 and key2) "
-                   "(note: content is evaluated, see /help eval)"),
+                   "(note: content is evaluated, see /help eval; server "
+                   "options are evaluated with ${irc_server.xxx} and "
+                   "${server} is replaced by the server name)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

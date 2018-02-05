@@ -513,7 +513,7 @@
 ** valore predefinito: `+off+`
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** descrizione: pass:none[list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -537,7 +537,7 @@
 ** valore predefinito: `+off+`
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** descrizione: pass:none[comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -585,7 +585,7 @@
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** descrizione: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -633,7 +633,7 @@
 ** valore predefinito: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** descrizione: pass:none[nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -651,7 +651,7 @@
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** descrizione: pass:none[password per il server (nota: il contenuto viene valutato, consultare /help eval)]
+** descrizione: pass:none[password for server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -663,7 +663,7 @@
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** descrizione: pass:none[real name to use on server (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[real name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -687,7 +687,7 @@
 ** valore predefinito: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** descrizione: pass:none[password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -699,7 +699,7 @@
 ** valore predefinito: `+15+`
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** descrizione: pass:none[username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -729,7 +729,7 @@
 ** valore predefinito: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** descrizione: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
@@ -747,13 +747,13 @@
 ** valore predefinito: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** descrizione: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** descrizione: pass:none[user name to use on server (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[user name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`

@@ -29,6 +29,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <ctype.h>
 #include <time.h>
 #ifdef _WIN32
 #include <winsock.h>
@@ -338,6 +339,152 @@ irc_server_strncasecmp (struct t_irc_server *server,
 }
 
 /*
+ * Evaluates a string using the server as context:
+ * ${irc_server.xxx} and ${server} are replaced by a server option and the
+ * server name.
+ *
+ * Returns the evaluated string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_eval_expression (struct t_irc_server *server, const char *string)
+{
+    struct t_hashtable *pointers, *extra_vars;
+    char *value;
+
+    pointers = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
+        NULL, NULL);
+    extra_vars = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+
+    if (server)
+    {
+        if (pointers)
+            weechat_hashtable_set (pointers, "irc_server", server);
+        if (extra_vars)
+            weechat_hashtable_set (extra_vars, "server", server->name);
+    }
+
+    value = weechat_string_eval_expression (string,
+                                            pointers, extra_vars, NULL);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+
+    return value;
+}
+
+/*
+ * Evaluates and returns the fingerprint.
+ *
+ * Returns the evaluated fingerprint, NULL if the fingerprint option is
+ * invalid.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_eval_fingerprint (struct t_irc_server *server)
+{
+#ifdef HAVE_GNUTLS
+    const char *ptr_fingerprint;
+    char *fingerprint_eval, **fingerprints, *str_sizes;
+    int i, j, rc, algo, length;
+
+    ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
+                                               IRC_SERVER_OPTION_SSL_FINGERPRINT);
+
+    /* empty fingerprint is just ignored (considered OK) */
+    if (!ptr_fingerprint || !ptr_fingerprint[0])
+        return strdup ("");
+
+    /* evaluate fingerprint */
+    fingerprint_eval = irc_server_eval_expression (server, ptr_fingerprint);
+    if (!fingerprint_eval || !fingerprint_eval[0])
+    {
+        weechat_printf (
+            server->buffer,
+            _("%s%s: the evaluated fingerprint for server \"%s\" must not be "
+              "empty"),
+            weechat_prefix ("error"),
+            IRC_PLUGIN_NAME,
+            server->name);
+        if (fingerprint_eval)
+            free (fingerprint_eval);
+        return NULL;
+    }
+
+    /* split fingerprint */
+    fingerprints = weechat_string_split (fingerprint_eval, ",", 0, 0, NULL);
+    if (!fingerprints)
+        return fingerprint_eval;
+
+    rc = 0;
+    for (i = 0; fingerprints[i]; i++)
+    {
+        length = strlen (fingerprints[i]);
+        algo = irc_server_fingerprint_search_algo_with_size (length * 4);
+        if (algo < 0)
+        {
+            rc = -1;
+            break;
+        }
+        for (j = 0; j < length; j++)
+        {
+            if (!isxdigit ((unsigned char)fingerprints[i][j]))
+            {
+                rc = -2;
+                break;
+            }
+        }
+        if (rc < 0)
+            break;
+    }
+    weechat_string_free_split (fingerprints);
+    switch (rc)
+    {
+        case -1:  /* invalid size */
+            str_sizes = irc_server_fingerprint_str_sizes ();
+            weechat_printf (
+                server->buffer,
+                _("%s%s: invalid fingerprint size for server \"%s\", the "
+                  "number of hexadecimal digits must be "
+                  "one of: %s"),
+                weechat_prefix ("error"),
+                IRC_PLUGIN_NAME,
+                server->name,
+                (str_sizes) ? str_sizes : "?");
+            if (str_sizes)
+                free (str_sizes);
+            free (fingerprint_eval);
+            return NULL;
+        case -2:  /* invalid content */
+            weechat_printf (
+                server->buffer,
+                _("%s%s: invalid fingerprint for server \"%s\", it must "
+                  "contain only hexadecimal digits (0-9, "
+                  "a-f)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME, server->name);
+            free (fingerprint_eval);
+            return NULL;
+    }
+    return fingerprint_eval;
+#else
+    return strdup ("");
+#endif /* HAVE_GNUTLS */
+}
+
+/*
  * Checks if SASL is enabled on server.
  *
  * Returns:
@@ -354,12 +501,12 @@ irc_server_sasl_enabled (struct t_irc_server *server)
 
     sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
         server, IRC_SERVER_OPTION_SASL_MECHANISM);
-    sasl_username = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME),
-        NULL, NULL, NULL);
-    sasl_password = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD),
-        NULL, NULL, NULL);
+    sasl_username = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
+    sasl_password = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
     sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
 
     /*
@@ -423,8 +570,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 
     if (addresses && addresses[0])
     {
-        addresses_eval = weechat_string_eval_expression (addresses,
-                                                         NULL, NULL, NULL);
+        addresses_eval = irc_server_eval_expression (server, addresses);
         if (server->addresses_eval
             && (strcmp (server->addresses_eval, addresses_eval) == 0))
         {
@@ -551,7 +697,7 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
     }
 
     /* evaluate value */
-    nicks2 = weechat_string_eval_expression (nicks, NULL, NULL, NULL);
+    nicks2 = irc_server_eval_expression (server, nicks);
 
     /* set new nicks */
     server->nicks_array = weechat_string_split (
@@ -3503,15 +3649,15 @@ irc_server_login (struct t_irc_server *server)
     const char *capabilities;
     char *password, *username, *realname, *username2;
 
-    password = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD),
-        NULL, NULL, NULL);
-    username = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME),
-        NULL, NULL, NULL);
-    realname = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME),
-        NULL, NULL, NULL);
+    password = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_PASSWORD));
+    username = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERNAME));
+    realname = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REALNAME));
 
     capabilities = IRC_SERVER_OPTION_STRING(
         server, IRC_SERVER_OPTION_CAPABILITIES);
@@ -4230,8 +4376,12 @@ irc_server_gnutls_callback (const void *pointer, void *data,
         /* get fingerprint option in server */
         ptr_fingerprint = IRC_SERVER_OPTION_STRING(server,
                                                    IRC_SERVER_OPTION_SSL_FINGERPRINT);
-        fingerprint_eval = weechat_string_eval_expression (ptr_fingerprint,
-                                                           NULL, NULL, NULL);
+        fingerprint_eval = irc_server_eval_fingerprint (server);
+        if (!fingerprint_eval)
+        {
+            rc = -1;
+            goto end;
+        }
 
         /* set match options */
         fingerprint_match = (ptr_fingerprint && ptr_fingerprint[0]) ? 0 : 1;
@@ -4963,9 +5113,9 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
         return;
 
     /* evaluate server option "autojoin" */
-    autojoin = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN),
-        NULL, NULL, NULL);
+    autojoin = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
 
     /* extract channel names from autojoin option */
     if (autojoin && autojoin[0])
@@ -5036,9 +5186,9 @@ irc_server_autojoin_channels (struct t_irc_server *server)
     else
     {
         /* auto-join when connecting to server for first time */
-        autojoin = weechat_string_eval_expression (
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN),
-            NULL, NULL, NULL);
+        autojoin = irc_server_eval_expression (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_AUTOJOIN));
         if (!server->disable_autojoin && autojoin && autojoin[0])
             irc_command_join_server (server, autojoin, 0, 0);
         if (autojoin)

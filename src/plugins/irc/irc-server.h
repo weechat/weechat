@@ -280,6 +280,8 @@ extern int irc_server_strcasecmp (struct t_irc_server *server,
 extern int irc_server_strncasecmp (struct t_irc_server *server,
                                    const char *string1, const char *string2,
                                    int max);
+extern char *irc_server_eval_expression (struct t_irc_server *server,
+                                         const char *string);
 extern int irc_server_sasl_enabled (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern int irc_server_set_addresses (struct t_irc_server *server,

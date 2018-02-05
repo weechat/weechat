@@ -35,6 +35,7 @@ New features::
 Improvements::
 
   * api: add time in info "date" (WeeChat compilation date/time) (issue #1138)
+  * irc: allow ${irc_server.xxx} and ${server} in server evaluated options (issue #1144)
 
 Build::
 

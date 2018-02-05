@@ -513,7 +513,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** description: pass:none[liste de nom/port ou IP/port pour le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[liste de nom/port ou IP/port pour le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -537,7 +537,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** description: pass:none[liste des canaux (séparés par des virgules) à rejoindre après la connexion au serveur (et après exécution de la commande + délai s'ils sont définis) ; les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple : "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[liste des canaux (séparés par des virgules) à rejoindre après la connexion au serveur (et après exécution de la commande + délai s'ils sont définis) ; les canaux nécessitant une clé doivent être en début de liste, et toutes les clés doivent être données après les canaux (séparées par un espace) (exemple : "#canal1,#canal2,#canal3 clé1,clé2" où #canal1 et #canal2 sont protégés par clé1 et clé2) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -585,7 +585,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -633,7 +633,7 @@
 ** valeur par défaut: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** description: pass:none[pseudos à utiliser sur le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[pseudos à utiliser sur le serveur (séparés par des virgules) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -651,7 +651,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** description: pass:none[mot de passe pour le serveur (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[mot de passe pour le serveur (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -663,7 +663,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** description: pass:none[nom réel pour le serveur (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[nom réel pour le serveur (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -687,7 +687,7 @@
 ** valeur par défaut: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** description: pass:none[mot de passe pour l'authentification SASL ; cette option n'est pas utilisée pour les mécanismes "ecdsa-nist256p-challenge" et "external" (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[mot de passe pour l'authentification SASL ; cette option n'est pas utilisée pour les mécanismes "ecdsa-nist256p-challenge" et "external" (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -699,7 +699,7 @@
 ** valeur par défaut: `+15+`
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** description: pass:none[nom d'utilisateur pour l'authentification SASL ; cette option n'est pas utilisée pour le mécanisme "external" (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[nom d'utilisateur pour l'authentification SASL ; cette option n'est pas utilisée pour le mécanisme "external" (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -729,7 +729,7 @@
 ** valeur par défaut: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** description: pass:none[empreinte du certificat qui est de confiance et accepté pour le serveur ; seuls les chiffres hexadécimaux sont autorisés (0-9, a-f) : 64 caractères pour SHA-512, 32 caractères pour SHA-256, 20 caractères pour SHA-1 (non sûr, non recommandé) ; plusieurs empreintes peuvent être séparées par des virgules ; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify") (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[empreinte du certificat qui est de confiance et accepté pour le serveur ; seuls les chiffres hexadécimaux sont autorisés (0-9, a-f) : 64 caractères pour SHA-512, 32 caractères pour SHA-256, 20 caractères pour SHA-1 (non sûr, non recommandé) ; plusieurs empreintes peuvent être séparées par des virgules ; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify") (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -747,13 +747,13 @@
 ** valeur par défaut: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** description: pass:none[mode(s) utilisateur à définir après la connexion au serveur et avant d'exécuter la commande et de rejoindre automatiquement les canaux ; exemples : "+R" (pour définir le mode "R"), "+R-i" (pour définir le mode "R" et supprimer "i") ; voir /help mode pour la syntaxe complète du mode (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[mode(s) utilisateur à définir après la connexion au serveur et avant d'exécuter la commande et de rejoindre automatiquement les canaux ; exemples : "+R" (pour définir le mode "R"), "+R-i" (pour définir le mode "R" et supprimer "i") ; voir /help mode pour la syntaxe complète du mode (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** description: pass:none[nom d'utilisateur pour le serveur (note : le contenu est évalué, voir /help eval)]
+** description: pass:none[nom d'utilisateur pour le serveur (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

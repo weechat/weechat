@@ -248,12 +248,12 @@ IRC_PROTOCOL_CALLBACK(authenticate)
     {
         sasl_mechanism = IRC_SERVER_OPTION_INTEGER(
             server, IRC_SERVER_OPTION_SASL_MECHANISM);
-        sasl_username = weechat_string_eval_expression (
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME),
-            NULL, NULL, NULL);
-        sasl_password = weechat_string_eval_expression (
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD),
-            NULL, NULL, NULL);
+        sasl_username = irc_server_eval_expression (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_USERNAME));
+        sasl_password = irc_server_eval_expression (
+            server,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_PASSWORD));
         sasl_key = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SASL_KEY);
         answer = NULL;
         switch (sasl_mechanism)
@@ -2496,9 +2496,9 @@ IRC_PROTOCOL_CALLBACK(001)
                                      WEECHAT_HOOK_SIGNAL_STRING, server->name);
 
     /* set usermode when connected */
-    usermode = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE),
-        NULL, NULL, NULL);
+    usermode = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_USERMODE));
     if (usermode && usermode[0])
     {
         irc_server_sendf (server,
@@ -2510,9 +2510,9 @@ IRC_PROTOCOL_CALLBACK(001)
         free (usermode);
 
     /* execute command when connected */
-    server_command = weechat_string_eval_expression (
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND),
-        NULL, NULL, NULL);
+    server_command = irc_server_eval_expression (
+        server,
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_COMMAND));
     if (server_command && server_command[0])
     {
         /* split command on ';' which can be escaped with '\;' */
