@@ -17,7 +17,7 @@
        -del <id>|-all [<id>...]
 
    -list: list commands
-     -sh: use the shell to execute the command (WARNING: use this option ONLY if all arguments are safe, see option -nosh)
+     -sh: use the shell to execute the command, many commands can be piped (WARNING: use this option ONLY if all arguments are safe, see option -nosh)
    -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user) (default)
      -bg: run process in background: do not display process output neither return code (not compatible with options -o/-oc/-n/-nf/-pipe/-hsignal)
    -nobg: catch process output and display return code (default)
