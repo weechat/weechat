@@ -192,7 +192,7 @@
 ** opis: pass:none[domyślne sortowania dla skryptów: oddzielona przecinkami lista identyfikatorów: a=autor, A=automatycznie ładowany, d=data dodania, e=rozszerzenie, i=zainstalowany, l=język, n=nazwa, o=przestarzały, p=popularność, r=uruchomiony, u=data aktualizacji; znak "-" może zostać użyty przed identyfikatorem w celu odwrócenia kolejności; przykład: "i,u": najpierw zainstalowane skrypty, sortowane po dacie aktualizacji]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"p,n"+`
+** domyślna wartość: `+"i,p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** opis: pass:none[przetłumaczony opis skryptu (jeśli tłumaczenie jest dostępne w twoim języku, w przeciwnym wypadku zostanie użyta angielska wersja)]

@@ -192,7 +192,7 @@
 ** description: pass:none[tri par défaut des scripts : liste d'identifiants séparés par des virgules : a=auteur, A=chargé auto, d=date d'ajout, e=extension, i=installé, l=langage, n=nom, o=obsolète, p=populaire, r=chargé, u=date de mise à jour ; le caractère "-" peut être utilisé avant l'identifiant pour inverser l'ordre ; exemple : "i,u" : scripts installés en premier, triés par date de mise à jour]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"p,n"+`
+** valeur par défaut: `+"i,p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** description: pass:none[traduire la description des scripts (si une traduction est disponible dans votre langue, sinon la version anglaise est utilisée)]

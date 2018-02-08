@@ -192,7 +192,7 @@
 ** description: pass:none[default sort keys for scripts: comma-separated list of identifiers: a=author, A=autoloaded, d=date added, e=extension, i=installed, l=language, n=name, o=obsolete, p=popularity, r=running, u=date updated; char "-" can be used before identifier to reverse order; example: "i,u": installed scripts first, sorted by update date]
 ** type: string
 ** values: any string
-** default value: `+"p,n"+`
+** default value: `+"i,p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** description: pass:none[translate description of scripts (if translation is available in your language, otherwise English version is used)]

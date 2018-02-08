@@ -192,7 +192,7 @@
 ** Beschreibung: pass:none[Standardsortierung für Skripten im Skript Buffer: durch Kommata getrennte Liste von Bezeichnern: a=Autor, A=automatisch geladen, d=Datum wann das Skript hinzugefügt wurde, e=Dateierweiterung, i=installiert, l=Programmiersprache, n=Skriptname, o=obsolete, p=empfohlen, r=Skript wird ausgeführt, u=Datum der letzten Überarbeitung; mit Hilfe des Zeichens "-", vor dem entsprechenden Bezeichner, kann die Darstellung umgekehrt werden. Beispiel: "i,u": installierte Skripten werden zuerst dargestellt, sortiert nach dem Datum ihrer letzten Überarbeitung]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"p,n"+`
+** Standardwert: `+"i,p,n"+`
 
 * [[option_script.look.translate_description]] *script.look.translate_description*
 ** Beschreibung: pass:none[für die Beschreibung der Skripten wird die Muttersprache verwendet (sollte keine Übersetzung in der eigenen Sprache verfügbar sein, wird auf die englische Beschreibung zurückgegriffen)]

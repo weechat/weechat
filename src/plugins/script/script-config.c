@@ -455,7 +455,7 @@ script_config_init ()
            "u=date updated; char \"-\" can be used before identifier to reverse "
            "order; example: \"i,u\": installed scripts first, sorted by update "
            "date"),
-        NULL, 0, 0, "p,n", NULL, 0,
+        NULL, 0, 0, "i,p,n", NULL, 0,
         NULL, NULL, NULL,
         &script_config_reload_scripts_cb, NULL, NULL,
         NULL, NULL, NULL);
