@@ -16,55 +16,55 @@
        -set <id> <property> <value>
        -del <id>|-all [<id>...]
 
-   -list: list commands
-     -sh: use the shell to execute the command, many commands can be piped (WARNING: use this option ONLY if all arguments are safe, see option -nosh)
-   -nosh: do not use the shell to execute the command (required if the command has some unsafe data, for example the content of a message from another user) (default)
-     -bg: run process in background: do not display process output neither return code (not compatible with options -o/-oc/-n/-nf/-pipe/-hsignal)
-   -nobg: catch process output and display return code (default)
-  -stdin: create a pipe for sending data to the process (with /exec -in/-inclose)
--nostdin: do not create a pipe for stdin (default)
- -buffer: display/send output of command on this buffer (if the buffer is not found, a new buffer with name "exec.exec.xxx" is created)
-      -l: display locally output of command on buffer (default)
-      -o: send output of command to the buffer without executing commands (not compatible with options -bg/-pipe/-hsignal)
-     -oc: send output of command to the buffer and execute commands (lines starting with "/" or another custom command char) (not compatible with options -bg/-pipe/-hsignal)
-      -n: display output of command in a new buffer (not compatible with options -bg/-pipe/-hsignal)
-     -nf: display output of command in a new buffer with free content (no word-wrap, no limit on number of lines) (not compatible with options -bg/-pipe/-hsignal)
-     -cl: clear the new buffer before displaying output
-   -nocl: append to the new buffer without clear (default)
-     -sw: switch to the output buffer (default)
-   -nosw: don't switch to the output buffer
-     -ln: display line numbers (default in new buffer only)
-   -noln: don't display line numbers
-  -flush: display output of command in real time (default)
--noflush: display output of command after its end
-  -color: action on ANSI colors in output:
-             ansi: keep ANSI codes as-is
-             auto: convert ANSI colors to WeeChat/IRC (default)
-              irc: convert ANSI colors to IRC colors
-          weechat: convert ANSI colors to WeeChat colors
-            strip: remove ANSI colors
-     -rc: display return code (default)
-   -norc: don't display return code
--timeout: set a timeout for the command (in seconds)
-   -name: set a name for the command (to name it later with /exec)
-   -pipe: send the output to a WeeChat/plugin command (line by line); if there are spaces in command/arguments, enclose them with double quotes; variable $line is replaced by the line (by default the line is added after the command, separated by a space) (not compatible with options -bg/-o/-oc/-n/-nf)
--hsignal: send the output as a hsignal (to be used for example in a trigger) (not compatible with options -bg/-o/-oc/-n/-nf)
- command: the command to execute; if beginning with "url:", the shell is disabled and the content of URL is downloaded and sent as output
-      id: command identifier: either its number or name (if set with "-name xxx")
-     -in: send text on standard input of process
--inclose: same as -in, but stdin is closed after (and text is optional: without text, the stdin is just closed)
- -signal: send a signal to the process; the signal can be an integer or one of these names: hup, int, quit, kill, term, usr1, usr2
-   -kill: alias of "-signal <id> kill"
--killall: kill all running processes
-    -set: set a hook property (see function hook_set in plugin API reference)
-property: hook property
-   value: new value for hook property
-    -del: delete a terminated command
-    -all: delete all terminated commands
+   -list: コマンドをリストアップ
+     -sh: コマンドを実行する際にシェルを使う、複数のコマンドをパイプすることも可能 (警告: このオプションを使えるのは、全ての引数が安全な場合だけです、オプション -nosh を参照してください)
+   -nosh: コマンドを実行する際にシェルを使わない (コマンドに安全でないデータが含まれる場合に必要、例えば他のユーザからのメッセージの内容) (デフォルト)
+     -bg: プロセスをバックグラウンド実行: プロセスの出力およびリターンコードを表示しない (オプション -o/-oc/-n/-nf/-pipe/-hsignal と同時に利用できません)
+   -nobg: プロセスの出力を受け取り、リターンコードを表示する (デフォルト)
+  -stdin: プロセスにデータを送信するパイプを作成する (/exec -in/-inclose を使う)
+-nostdin: 標準入力用にパイプを作成しない (デフォルト)
+ -buffer: コマンドの出力をこのバッファに表示 / 送信する (バッファが見つからない場合、新しいバッファ "exec.exec.xxx" が作られます)
+      -l: コマンドの出力をカレントバッファに表示 (デフォルト)
+      -o: コマンドの出力をカレントバッファに送信、カレントバッファは受信した内容をコマンドとして実行しません (オプション -bg/-pipe/-hsignal と同時に利用できません)
+     -oc: コマンドの出力をカレントバッファに送信、カレントバッファは受信した内容 (先頭に "/" もしくはそれ以外のコマンド開始文字を含む行) をコマンドとして実行します (オプション -bg/-pipe/-hsignal と同時に利用できません)
+      -n: コマンドの出力を新しいバッファに表示 (オプション -bg/-pipe/-hsignal と同時に利用できません)
+     -nf: コマンドの出力を自由内容 (禁則処理なし、行数制限なし) の新しいバッファに表示 (オプション -bg/-pipe/-hsignal と同時に利用できません)
+     -cl: 出力を表示する前に新しいバッファをクリア
+   -nocl: 新しいバッファをクリアせずに追加 (デフォルト)
+     -sw: 出力バッファに移動 (デフォルト)
+   -nosw: 出力バッファに移動しない
+     -ln: 行数を表示 (新しいバッファに表示する場合はデフォルト)
+   -noln: 行数を表示しない
+  -flush: コマンドの出力をすぐに表示 (デフォルト)
+-noflush: コマンドの出力をコマンドの終了後に表示
+  -color: 出力に含まれる ANSI 色に対する挙動:
+             ansi: ANSI 色をそのままにする
+             auto: ANSI 色を WeeChat/IRC 色に変換 (デフォルト)
+              irc: ANSI 色を IRC 色に変換
+          weechat: ANSI 色を WeeChat 色に変換
+            strip: ANSI 色を削除
+     -rc: リターンコードを表示 (デフォルト)
+   -norc: リターンコードを表示しない
+-timeout: コマンドのタイムアウトを設定 (秒単位)
+   -name: コマンドの名前を設定 (後から名前を付けるには /exec を使う)
+   -pipe: WeeChat およびプラグインコマンドに出力を送信 (1 行ごと); コマンドおよび引数に空白が含まれる場合、2 重引用符で囲ってください; 引数 $line はその行で置換されます (デフォルトではコマンドの後ろに空白を付けてから行を追加します) (オプション -bg/-o/-oc/-n/-nf と同時に利用できません)
+-hsignal: hsignal として出力を送信 (例えばトリガで使われます) (オプション -bg/-o/-oc/-n/-nf と同時に利用できません)
+ command: 実行するコマンド; "url:" で始まる場合、シェルは無効化され、URL の内容がダウンロードされ、出力として送信されます
+      id: コマンド識別子: 番号か名前 ("-name xxx" で設定した場合) のどちらか一方
+     -in: プロセスの標準入力にテキストを送信
+-inclose: -in と同じ、ただし使用後に標準入力を閉じる (テキストは任意: テキストが無い場合、標準入力をすぐに閉じる)
+ -signal: プロセスにシグナルを送信; シグナルは整数値または次の名前の 1 つ: hup、int、quit、kill、term、usr1、usr2
+   -kill: "-signal <id> kill" のエイリアス
+-killall: 全ての実行中プロセスを kill する
+    -set: フックプロパティを設定 (プラグイン API リファレンスの hook_set 関数を参照してください)
+property: フックプロパティ
+   value: フックプロパティの新しい値
+    -del: 中断されたコマンドを削除
+    -all: 全ての中断されたコマンドを削除
 
-Default options can be set in the option exec.command.default_options.
+オプション exec.command.default_options でデフォルトオプションの設定が可能です。
 
-Examples:
+例:
   /exec -n ls -l /tmp
   /exec -sh -n ps xu | grep weechat
   /exec -n -norc url:http://pastebin.com/raw.php?i=xxxxxxxx

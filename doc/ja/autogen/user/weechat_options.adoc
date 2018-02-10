@@ -399,7 +399,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.completion.default_template]] *weechat.completion.default_template*
-** 説明: pass:none[デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照: プラグイン API リファレンス、"weechat_hook_command" 関数)]
+** 説明: pass:none[デフォルトの補完テンプレート (テンプレートコードと値のドキュメントを参照してください: プラグイン API リファレンス、"weechat_hook_command" 関数)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%(nicks)|%(irc_channels)"+`
@@ -543,7 +543,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.bare_display_time_format]] *weechat.look.bare_display_time_format*
-** 説明: pass:none[最小限表示モードで使う時間書式 (日付/時間指定子は strftime の man を参照)]
+** 説明: pass:none[最小限表示モードで使う時間書式 (日付/時間指定子は strftime の man を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%H:%M"+`
@@ -591,7 +591,7 @@
 ** デフォルト値: `+prefix_message+`
 
 * [[option_weechat.look.buffer_time_format]] *weechat.look.buffer_time_format*
-** 説明: pass:none[バッファに表示される行に付く時間書式 (日付/時間の指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照); 例えばグレースケールを使う時間の例 (256 色のサポートが必要): "${color:252}%H${color:245}%M${color:240}%S"]
+** 説明: pass:none[バッファに表示される行に付く時間書式 (日付/時間の指定子は strftime の man を参照してください) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照してください); 例えばグレースケールを使う時間の例 (256 色のサポートが必要): "${color:252}%H${color:245}%M${color:240}%S"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%H:%M:%S"+`
@@ -687,13 +687,13 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.day_change_message_1date]] *weechat.look.day_change_message_1date*
-** 説明: pass:none[日付が変わった時に表示される時間の書式、1 つの日付を表示 (例えばバッファの最初に) (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照)]
+** 説明: pass:none[日付が変わった時に表示される時間の書式、1 つの日付を表示 (例えばバッファの最初に) (日付/時間指定子は strftime の man を参照してください) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"-- %a, %d %b %Y --"+`
 
 * [[option_weechat.look.day_change_message_2dates]] *weechat.look.day_change_message_2dates*
-** 説明: pass:none[日付が変わった時に表示される時間の書式、2 つの日付を表示 (2 つのメッセージの間に); 文字列に対して strftime は 2 回呼び出されるため、2 番目の日付指定子は 2 つの "%" で始めてください (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照)]
+** 説明: pass:none[日付が変わった時に表示される時間の書式、2 つの日付を表示 (2 つのメッセージの間に); 文字列に対して strftime は 2 回呼び出されるため、2 番目の日付指定子は 2 つの "%" で始めてください (日付/時間指定子は strftime の man を参照してください) (注意: 値は評価されるため "${color:xxx}" 書式で色を指定出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"-- %%a, %%d %%b %%Y (%a, %d %b %Y) --"+`
@@ -861,7 +861,7 @@
 ** デフォルト値: `+"M"+`
 
 * [[option_weechat.look.item_time_format]] *weechat.look.item_time_format*
-** 説明: pass:none["time" バー要素の時間書式 (日付/時間指定子は strftime の man を参照) (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none["time" バー要素の時間書式 (日付/時間指定子は strftime の man を参照してください) (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%H:%M"+`
@@ -963,7 +963,7 @@
 ** デフォルト値: `+1+`
 
 * [[option_weechat.look.prefix_action]] *weechat.look.prefix_action*
-** 説明: pass:none[アクションメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none[アクションメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+" *"+`
@@ -1023,25 +1023,25 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.prefix_error]] *weechat.look.prefix_error*
-** 説明: pass:none[エラーメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none[エラーメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"=!="+`
 
 * [[option_weechat.look.prefix_join]] *weechat.look.prefix_join*
-** 説明: pass:none[参加メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none[参加メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"-->"+`
 
 * [[option_weechat.look.prefix_network]] *weechat.look.prefix_network*
-** 説明: pass:none[ネットワークメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none[ネットワークメッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"--"+`
 
 * [[option_weechat.look.prefix_quit]] *weechat.look.prefix_quit*
-** 説明: pass:none[終了メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照)]
+** 説明: pass:none[終了メッセージのプレフィックス (注意: 値は評価されるため、"${color:xxx}" 書式を使えば色を指定することも出来ます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"<--"+`
@@ -1071,7 +1071,7 @@
 ** デフォルト値: `+">"+`
 
 * [[option_weechat.look.quote_time_format]] *weechat.look.quote_time_format*
-** 説明: pass:none[メッセージを引用する際の時間書式 (/help cursor を参照)]
+** 説明: pass:none[メッセージを引用する際の時間書式 (/help cursor を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%H:%M:%S"+`
@@ -1101,7 +1101,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.save_config_with_fsync]] *weechat.look.save_config_with_fsync*
-** 説明: pass:none[メモリ上の設定内容をストレージデバイス上のものと同期させるには fsync を使ってください (man fsync を参照してください); fsync は遅いですが、fsync を使えば設定ファイル保存中の停電によるデータ損失を避けられます]
+** 説明: pass:none[fsync を使って設定データをストレージデバイス上の設定ファイルと同期させる (man fsync を参照してください); fsync は遅いですが、fsync を使えば設定ファイル保存中の停電によるデータ損失を避けられます]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
@@ -1155,7 +1155,7 @@
 ** デフォルト値: `+1+`
 
 * [[option_weechat.look.time_format]] *weechat.look.time_format*
-** 説明: pass:none[文字列へ変換されてメッセージ中に表示される日付の時間書式 (日付/時間指定子は strftime の man を参照)]
+** 説明: pass:none[文字列へ変換されてメッセージ中に表示される日付の時間書式 (日付/時間指定子は strftime の man を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"%a, %d %b %Y %T"+`
@@ -1185,13 +1185,13 @@
 ** デフォルト値: `+"WeeChat ${info:version}"+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** 説明: pass:none[ハイライトする部分または文字と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照)]
+** 説明: pass:none[ハイライトする部分または文字と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** 説明: pass:none[コマンドラインの一部または単語と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照)]
+** 説明: pass:none[コマンドラインの一部または単語と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"!\u00A0,-,_,|,alnum"+`
@@ -1251,13 +1251,13 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
-** 説明: pass:none[WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価されます、/help eval を参照)]
+** 説明: pass:none[WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_weechat.startup.command_before_plugins]] *weechat.startup.command_before_plugins*
-** 説明: pass:none[WeeChat が実行され、プラグインのロード前に実行されるコマンド (注意: 値は評価されます、/help eval を参照)]
+** 説明: pass:none[WeeChat が実行され、プラグインのロード前に実行されるコマンド (注意: 値は評価されます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -1275,7 +1275,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.startup.sys_rlimit]] *weechat.startup.sys_rlimit*
-** 説明: pass:none[WeeChat プロセスのリソースを制限する、書式: "res1:limit1,res2:limit2"; リソース名は定数 (RLIMIT_XXX) の最後の語を小文字で (値は man setrlimit を参照) 記述; 値の -1 は "無制限" の意; 例: core ファイルのサイズ制限を無制限に仮想メモリを 1GB に制限: "core:-1,as:1000000000"]
+** 説明: pass:none[WeeChat プロセスのリソースを制限する、書式: "res1:limit1,res2:limit2"; リソース名は定数 (RLIMIT_XXX) の最後の語を小文字で (値は man setrlimit を参照してください) 記述; 値の -1 は "無制限" の意; 例: core ファイルのサイズ制限を無制限に仮想メモリを 1GB に制限: "core:-1,as:1000000000"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

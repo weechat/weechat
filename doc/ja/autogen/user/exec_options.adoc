@@ -15,7 +15,7 @@
 ** デフォルト値: `+lightgreen+`
 
 * [[option_exec.command.default_options]] *exec.command.default_options*
-** 説明: pass:none[/exec コマンドのデフォルトオプション (/help exec を参照); 例: "-nosh -bg" は全てのコマンドをバックグラウンドで実行し (出力なし)、シェルを使わない]
+** 説明: pass:none[/exec コマンドのデフォルトオプション (/help exec を参照してください); 例: "-nosh -bg" は全てのコマンドをバックグラウンドで実行し (出力なし)、シェルを使わない]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

@@ -87,7 +87,7 @@
 ** デフォルト値: `+"irc_privmsg"+`
 
 * [[option_relay.irc.backlog_time_format]] *relay.irc.backlog_time_format*
-** 説明: pass:none[バックログメッセージの時間書式 (書式は man strftime を参照) (メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "server-time" 機能を利用可能にした場合、これは利用されません); 空文字列 = バックログメッセージで時間を表示しない]
+** 説明: pass:none[バックログメッセージの時間書式 (書式は man strftime を参照してください) (メッセージの irc タグ内に時間の情報が含まれるため、クライアントがサーバの "server-time" 機能を利用可能にした場合、これは利用されません); 空文字列 = バックログメッセージで時間を表示しない]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"[%H:%M] "+`
@@ -135,7 +135,7 @@
 ** デフォルト値: `+6+`
 
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
-** 説明: pass:none[デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参照)]
+** 説明: pass:none[デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参照してください)]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
@@ -159,7 +159,7 @@
 ** デフォルト値: `+"%h/ssl/relay.pem"+`
 
 * [[option_relay.network.ssl_priorities]] *relay.network.ssl_priorities*
-** 説明: pass:none[gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
+** 説明: pass:none[gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照してください、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"NORMAL:-VERS-SSL3.0"+`
