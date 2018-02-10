@@ -606,6 +606,8 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         if (!logger_timer)
         {
             fflush (logger_buffer->log_file);
+            if (weechat_config_boolean (logger_config_file_fsync))
+                fsync (fileno (logger_buffer->log_file));
             logger_buffer->flush_needed = 0;
         }
         free (vbuffer);
