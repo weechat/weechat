@@ -26,6 +26,12 @@
 ** 値: 0 .. 3600
 ** デフォルト値: `+120+`
 
+* [[option_logger.file.fsync]] *logger.file.fsync*
+** 説明: pass:none[use fsync to synchronize the log file with the storage device after the flush (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of log file]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
+
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** 説明: pass:none[バッファのログ保存の開始時と終了時にログファイルへ情報行を書き込む]
 ** タイプ: ブール

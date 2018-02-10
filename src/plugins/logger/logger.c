@@ -844,6 +844,8 @@ logger_flush ()
                                           ptr_logger_buffer->log_filename);
             }
             fflush (ptr_logger_buffer->log_file);
+            if (weechat_config_boolean (logger_config_file_fsync))
+                fsync (fileno (ptr_logger_buffer->log_file));
             ptr_logger_buffer->flush_needed = 0;
         }
     }

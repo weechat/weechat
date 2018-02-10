@@ -26,6 +26,12 @@
 ** wartości: 0 .. 3600
 ** domyślna wartość: `+120+`
 
+* [[option_logger.file.fsync]] *logger.file.fsync*
+** opis: pass:none[use fsync to synchronize the log file with the storage device after the flush (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of log file]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+off+`
+
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** opis: pass:none[zapisuje informacje w pliku z logami o rozpoczęciu i zakończeniu logowania buforu]
 ** typ: bool

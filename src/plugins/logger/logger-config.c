@@ -47,6 +47,7 @@ struct t_config_option *logger_config_color_backlog_line;
 
 struct t_config_option *logger_config_file_auto_log;
 struct t_config_option *logger_config_file_flush_delay;
+struct t_config_option *logger_config_file_fsync;
 struct t_config_option *logger_config_file_info_lines;
 struct t_config_option *logger_config_file_mask;
 struct t_config_option *logger_config_file_name_lower_case;
@@ -469,6 +470,15 @@ logger_config_init ()
         NULL, NULL, NULL,
         &logger_config_flush_delay_change, NULL, NULL,
         NULL, NULL, NULL);
+    logger_config_file_fsync = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "fsync", "boolean",
+        N_("use fsync to synchronize the log file with the storage device "
+           "after the flush (see man fsync); this is slower but should "
+           "prevent any data loss in case of power failure during the save of "
+           "log file"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     logger_config_file_info_lines = weechat_config_new_option (
         logger_config_file, ptr_section,
         "info_lines", "boolean",

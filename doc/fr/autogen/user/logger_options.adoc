@@ -26,6 +26,12 @@
 ** valeurs: 0 .. 3600
 ** valeur par défaut: `+120+`
 
+* [[option_logger.file.fsync]] *logger.file.fsync*
+** description: pass:none[utiliser fsync pour synchroniser le fichier de log avec le périphérique de stockage après le flush (voir man fsync) ; cela est plus lent mais devrait éviter toute perte de données en cas de panne de courant durant la sauvegarde du fichier de log]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** description: pass:none[écrire une ligne d'information dans le fichier log quand le log démarre ou se termine pour un tampon]
 ** type: booléen

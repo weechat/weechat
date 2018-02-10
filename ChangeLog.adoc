@@ -26,6 +26,7 @@ New features::
   * core: add option weechat.completion.partial_completion_templates to force partial completion on specific templates
   * api: add hashtable with variables in plugin structure
   * irc: add server option "split_msg_max_length"
+  * logger: add option logger.file.fsync (issue #1145)
   * logger: add option logger.look.backlog_conditions (issue #1132)
   * scripts: add configuration file for each script plugin (_python.conf_, _perl.conf_, ...)
   * scripts: add "eval" option in script commands and info "xxx_eval" (python, perl, ruby, lua and guile) (issue #128)

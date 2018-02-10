@@ -26,6 +26,12 @@
 ** values: 0 .. 3600
 ** default value: `+120+`
 
+* [[option_logger.file.fsync]] *logger.file.fsync*
+** description: pass:none[use fsync to synchronize the log file with the storage device after the flush (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of log file]
+** type: boolean
+** values: on, off
+** default value: `+off+`
+
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** description: pass:none[write information line in log file when log starts or ends for a buffer]
 ** type: boolean

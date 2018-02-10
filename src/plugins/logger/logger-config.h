@@ -31,6 +31,7 @@ extern struct t_config_option *logger_config_color_backlog_line;
 
 extern struct t_config_option *logger_config_file_auto_log;
 extern struct t_config_option *logger_config_file_flush_delay;
+extern struct t_config_option *logger_config_file_fsync;
 extern struct t_config_option *logger_config_file_info_lines;
 extern struct t_config_option *logger_config_file_mask;
 extern struct t_config_option *logger_config_file_name_lower_case;

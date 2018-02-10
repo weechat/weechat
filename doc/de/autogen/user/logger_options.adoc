@@ -26,6 +26,12 @@
 ** Werte: 0 .. 3600
 ** Standardwert: `+120+`
 
+* [[option_logger.file.fsync]] *logger.file.fsync*
+** Beschreibung: pass:none[use fsync to synchronize the log file with the storage device after the flush (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of log file]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
+
 * [[option_logger.file.info_lines]] *logger.file.info_lines*
 ** Beschreibung: pass:none[fügt eine Information in die Protokoll-Datei ein, wenn die Protokollierung gestartet oder beendet wird]
 ** Typ: boolesch
