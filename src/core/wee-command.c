@@ -8099,7 +8099,7 @@ command_init ()
         &command_unset, NULL, NULL);
     hook_command (
         NULL, "upgrade",
-        N_("upgrade WeeChat without disconnecting from servers"),
+        N_("reload the WeeChat binary without disconnecting from servers"),
         N_("[-yes] [<path_to_binary>|-quit]"),
         N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
            "is enabled\n"

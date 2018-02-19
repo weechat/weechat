@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:26+0100\n"
+"POT-Creation-Date: 2018-02-19 21:27+0100\n"
 "PO-Revision-Date: 2018-02-10 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -2736,7 +2736,8 @@ msgstr ""
 "  全ての色関連オプションをリセット:\n"
 "    /unset -mask weechat.color.*"
 
-msgid "upgrade WeeChat without disconnecting from servers"
+#, fuzzy
+msgid "reload the WeeChat binary without disconnecting from servers"
 msgstr "サーバとの接続を維持して WeeChat をアップグレード"
 
 msgid "[-yes] [<path_to_binary>|-quit]"

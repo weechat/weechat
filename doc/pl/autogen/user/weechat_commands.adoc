@@ -872,7 +872,7 @@ Przykłady:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: uaktualnia WeeChat bez rozłączania z serwerami
+* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
 
 ----
 /upgrade  [-yes] [<ścieżka_do_binarki>|-quit]

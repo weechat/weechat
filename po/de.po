@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:26+0100\n"
+"POT-Creation-Date: 2018-02-19 21:27+0100\n"
 "PO-Revision-Date: 2018-02-10 10:14+0100\n"
 "Last-Translator: w8rabbit <w8rabbit@mail.i2p>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -2888,7 +2888,8 @@ msgstr ""
 "  Alle Farbeinstellungen zurücksetzen:\n"
 "    /unset -mask weechat.color.*"
 
-msgid "upgrade WeeChat without disconnecting from servers"
+#, fuzzy
+msgid "reload the WeeChat binary without disconnecting from servers"
 msgstr "Aktualisiert WeeChat ohne die Verbindung zum Server zu trennen"
 
 msgid "[-yes] [<path_to_binary>|-quit]"
