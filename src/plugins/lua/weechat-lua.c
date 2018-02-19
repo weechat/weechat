@@ -234,9 +234,12 @@ weechat_lua_output_flush ()
     else
     {
         /* script (no eval mode) */
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s"),
-                        LUA_PLUGIN_NAME, *lua_buffer_output);
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            LUA_PLUGIN_NAME,
+            (lua_current_script) ? lua_current_script->name : "?",
+            *lua_buffer_output);
     }
 
     weechat_string_dyn_copy (lua_buffer_output, NULL);

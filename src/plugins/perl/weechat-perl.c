@@ -270,9 +270,12 @@ weechat_perl_output_flush ()
     else
     {
         /* script (no eval mode) */
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s"),
-                        PERL_PLUGIN_NAME, *perl_buffer_output);
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            PERL_PLUGIN_NAME,
+            (perl_current_script) ? perl_current_script->name : "?",
+            *perl_buffer_output);
     }
 
     weechat_string_dyn_copy (perl_buffer_output, NULL);

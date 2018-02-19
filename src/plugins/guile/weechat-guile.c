@@ -162,9 +162,12 @@ weechat_guile_output_flush ()
     else
     {
         /* script (no eval mode) */
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s"),
-                        GUILE_PLUGIN_NAME, *guile_buffer_output);
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            GUILE_PLUGIN_NAME,
+            (guile_current_script) ? guile_current_script->name : "?",
+            *guile_buffer_output);
     }
 
     weechat_string_dyn_copy (guile_buffer_output, NULL);

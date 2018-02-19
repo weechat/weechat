@@ -381,9 +381,12 @@ weechat_python_output_flush ()
     else
     {
         /* script (no eval mode) */
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s"),
-                        PYTHON_PLUGIN_NAME, *python_buffer_output);
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            PYTHON_PLUGIN_NAME,
+            (python_current_script) ? python_current_script->name : "?",
+            *python_buffer_output);
     }
 
     weechat_string_dyn_copy (python_buffer_output, NULL);

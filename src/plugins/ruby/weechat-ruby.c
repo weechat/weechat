@@ -406,9 +406,12 @@ weechat_ruby_output_flush ()
     else
     {
         /* script (no eval mode) */
-        weechat_printf (NULL,
-                        weechat_gettext ("%s: stdout/stderr: %s"),
-                        RUBY_PLUGIN_NAME, *ruby_buffer_output);
+        weechat_printf (
+            NULL,
+            weechat_gettext ("%s: stdout/stderr (%s): %s"),
+            RUBY_PLUGIN_NAME,
+            (ruby_current_script) ? ruby_current_script->name : "?",
+            *ruby_buffer_output);
     }
 
     weechat_string_dyn_copy (ruby_buffer_output, NULL);
