@@ -381,7 +381,7 @@ Die am häufigsten gebrauchten Schlagwörter lauten:
   host_xxx (xxx ist der Username + Host in Nachricht),
   irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw oder /debug tags)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-Mittels "/debug tags" kann man sich die Tags jeder einzelnen Zeile darstellen lassen.
+Mittels "/debug tags" kann man sich die Schlagwörter jeder einzelnen Zeile darstellen lassen.
 
 Beispiele:
   aktiviert den intelligenten IRC Filter für alle Buffer:
@@ -872,7 +872,7 @@ Beispiele:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: WeeChat Binärdatei neu laden, ohne die Verbindung zum Server zu trennen
 
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
