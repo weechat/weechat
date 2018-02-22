@@ -70,7 +70,7 @@ fset_buffer_set_title ()
                 "alt+'-'(-)=subtract 1 or set, "
                 "alt+'+'(+)=add 1 or append, "
                 "alt+f,alt+r(r)=reset, "
-                "alf+f,alt+u(u)=unset, "
+                "alt+f,alt+u(u)=unset, "
                 "alt+enter(s)=set, "
                 "alt+f,alt+n(n)=set new value, "
                 "alt+f,alt+a(a)=append, "
