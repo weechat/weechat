@@ -15690,7 +15690,8 @@ Arguments:
 
 Return value:
 
-* pointer to element reached, NULL if an error occurred
+* pointer to element reached, NULL if element is not found (for example end
+  of list), or if an error occurred
 
 C example:
 

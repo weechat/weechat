@@ -15693,7 +15693,9 @@ void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 
 戻り値:
 
-* 移動先の要素へのポインタ、エラーが起きた場合は NULL
+// TRANSLATION MISSING
+* pointer to element reached, NULL if element is not found (for example end
+  of list), or if an error occurred
 
 C 言語での使用例:
 

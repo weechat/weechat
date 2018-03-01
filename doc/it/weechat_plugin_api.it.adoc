@@ -16293,7 +16293,9 @@ Argomenti:
 
 Valore restituito:
 
-* puntatore all'elemento raggiunto, NULL in caso di errore
+// TRANSLATION MISSING
+* pointer to element reached, NULL if element is not found (for example end
+  of list), or if an error occurred
 
 Esempio in C:
 

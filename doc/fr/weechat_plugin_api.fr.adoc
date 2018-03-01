@@ -16012,7 +16012,8 @@ Paramètres :
 
 Valeur de retour :
 
-* pointeur vers l'élément atteint, NULL en cas d'erreur
+* pointeur vers l'élément atteint, NULL si l'élément n'est pas trouvé
+  (par exemple fin de la liste), ou en cas d'erreur
 
 Exemple en C :
 
