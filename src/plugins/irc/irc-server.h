@@ -23,7 +23,12 @@
 
 #include <time.h>
 #include <sys/time.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>

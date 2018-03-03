@@ -26,7 +26,12 @@
 #include <stdlib.h>
 #include <stddef.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"

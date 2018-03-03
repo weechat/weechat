@@ -22,7 +22,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #include "../weechat-plugin.h"
 #include "relay.h"

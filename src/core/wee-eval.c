@@ -25,7 +25,14 @@
 
 #include <stdlib.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#include <pcre.h>
+#else
 #include <regex.h>
+#endif
+
 #include <time.h>
 
 #include "weechat.h"
@@ -483,7 +490,14 @@ eval_replace_vars_cb (void *data, const char *text)
             {
                 number = strtol (text + 3, &error, 10);
                 if (!error || error[0])
+                {
+#ifdef HAVE_PCRE
+                    number = pcre_get_stringnumber((pcre*)eval_regex->regex->re_pcre,
+                                                   text + 3);
+#else /* HAVE_PCRE */
                     number = -1;
+#endif /* HAVE_PCRE */
+                }
             }
             if ((number >= 0) && (number <= eval_regex->last_match))
             {
@@ -1131,6 +1145,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 
     if (!string || !regex || !replace)
         return NULL;
+
+    eval_regex.regex = regex;
 
     length = strlen (string) + 1;
     result = malloc (length);

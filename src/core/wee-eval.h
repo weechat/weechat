@@ -20,7 +20,11 @@
 #ifndef WEECHAT_EVAL_H
 #define WEECHAT_EVAL_H
 
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
 
 #define EVAL_STR_FALSE      "0"
 #define EVAL_STR_TRUE       "1"
@@ -56,6 +60,7 @@ enum t_eval_comparison
 
 struct t_eval_regex
 {
+    regex_t *regex;
     const char *result;
     regmatch_t match[100];
     int last_match;

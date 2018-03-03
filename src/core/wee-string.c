@@ -30,7 +30,13 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include <wchar.h>
 #include <stdint.h>
 
@@ -1046,13 +1052,26 @@ string_mask_to_regex (const char *mask)
 const char *
 string_regex_flags (const char *regex, int default_flags, int *flags)
 {
+#ifndef HAVE_PCRE
     const char *ptr_regex, *ptr_flags;
     int set_flag, flag;
     char *pos;
+#endif /* HAVE_PCRE */
 
     if (flags)
         *flags = default_flags;
 
+#ifdef HAVE_PCRE
+    if (flags)
+    {
+        /* enable UTF-8 support */
+        *flags |= REG_UTF8;
+        /* enable submatches, pcreposix disables backrefs otherwise */
+        *flags &= ~REG_NOSUB;
+    }
+
+    return regex;
+#else /* HAVE_PCRE */
     if (!regex)
         return NULL;
 
@@ -1101,6 +1120,7 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
     }
 
     return ptr_regex;
+#endif /* HAVE_PCRE */
 }
 
 /*
@@ -1138,7 +1158,8 @@ string_has_highlight (const char *string, const char *highlight_words)
 {
     const char *match, *match_pre, *match_post, *msg_pos;
     char *msg, *highlight, *pos, *pos_end;
-    int end, length, startswith, endswith, wildcard_start, wildcard_end, flags;
+    int end, length, startswith, endswith, wildcard_start, wildcard_end;
+    int case_sensitive;
 
     if (!string || !string[0] || !highlight_words || !highlight_words[0])
         return 0;
@@ -1158,8 +1179,12 @@ string_has_highlight (const char *string, const char *highlight_words)
     end = 0;
     while (!end)
     {
-        flags = 0;
-        pos = (char *)string_regex_flags (pos, REG_ICASE, &flags);
+        case_sensitive = 0;
+        if (strncmp (pos, "(?-i)", 5) == 0)
+        {
+            case_sensitive = 1;
+            pos += 5;
+        }
 
         pos_end = strchr (pos, ',');
         if (!pos_end)
@@ -1196,7 +1221,7 @@ string_has_highlight (const char *string, const char *highlight_words)
             msg_pos = msg;
             while (1)
             {
-                match = (flags & REG_ICASE) ?
+                match = (!case_sensitive) ?
                     string_strcasestr (msg_pos, pos) : strstr (msg_pos, pos);
                 if (!match)
                     break;

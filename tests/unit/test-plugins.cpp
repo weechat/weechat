@@ -25,7 +25,13 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include "src/core/wee-hdata.h"
 #include "src/core/wee-hook.h"
 #include "src/plugins/plugin.h"

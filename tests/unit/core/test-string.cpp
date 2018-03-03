@@ -29,7 +29,13 @@ extern "C"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
+#ifdef HAVE_PCRE
+#include <pcreposix.h>
+#else
 #include <regex.h>
+#endif
+
 #include "tests/tests.h"
 #include "src/core/weechat.h"
 #include "src/core/wee-string.h"
@@ -563,6 +569,64 @@ TEST(String, Regex)
     const char *ptr;
     regex_t regex;
 
+#ifdef HAVE_PCRE
+    string_regex_flags (NULL, 0, NULL);
+    string_regex_flags ("", 0, NULL);
+
+    /* always enable UTF-8 support */
+    string_regex_flags (NULL, 0, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    string_regex_flags ("", 0, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    string_regex_flags (NULL, REG_EXTENDED, &flags);
+    LONGS_EQUAL(REG_UTF8 | REG_EXTENDED, flags);
+    string_regex_flags ("", REG_EXTENDED, &flags);
+    LONGS_EQUAL(REG_UTF8 | REG_EXTENDED, flags);
+
+    ptr = string_regex_flags ("test1", REG_EXTENDED, &flags);
+    LONGS_EQUAL(REG_UTF8 | REG_EXTENDED, flags);
+    STRCMP_EQUAL("test1", ptr);
+
+    /* always enable submatches (needed for backrefs) */
+    ptr = string_regex_flags ("test1a", REG_NOSUB, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    STRCMP_EQUAL("test1a", ptr);
+
+    /* let PCRE parse flags itself */
+    ptr = string_regex_flags ("(?e)test2", 0, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    STRCMP_EQUAL("(?e)test2", ptr);
+
+    ptr = string_regex_flags ("(?ei)test3", 0, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    STRCMP_EQUAL("(?ei)test3", ptr);
+
+    ptr = string_regex_flags ("(?eins)test4", 0, &flags);
+    LONGS_EQUAL(REG_UTF8, flags);
+    STRCMP_EQUAL("(?eins)test4", ptr);
+
+    ptr = string_regex_flags ("(?ins)test5", REG_EXTENDED, &flags);
+    LONGS_EQUAL(REG_UTF8 | REG_EXTENDED, flags);
+    STRCMP_EQUAL("(?ins)test5", ptr);
+
+    ptr = string_regex_flags ("(?ins-e)test6", REG_EXTENDED, &flags);
+    LONGS_EQUAL(REG_UTF8 | REG_EXTENDED, flags);
+    STRCMP_EQUAL("(?ins-e)test6", ptr);
+
+    /* compile regular expression */
+    LONGS_EQUAL(-1, string_regcomp (&regex, NULL, 0));
+    LONGS_EQUAL(0, string_regcomp (&regex, "", 0));
+    regfree (&regex);
+    LONGS_EQUAL(0, string_regcomp (&regex, "test", 0));
+    regfree (&regex);
+    LONGS_EQUAL(0, string_regcomp (&regex, "test", REG_EXTENDED));
+    regfree (&regex);
+    LONGS_EQUAL(0, string_regcomp (&regex, "(?i)test", REG_EXTENDED));
+    regfree (&regex);
+    /* non-PCRE flags => pattern error */
+    LONGS_EQUAL(REG_BADPAT, string_regcomp (&regex, "(?ins)test", REG_EXTENDED));
+    regfree (&regex);
+#else  /* HAVE_PCRE */
     string_regex_flags (NULL, 0, NULL);
     string_regex_flags ("", 0, NULL);
 
@@ -609,6 +673,7 @@ TEST(String, Regex)
     regfree (&regex);
     LONGS_EQUAL(0, string_regcomp (&regex, "(?ins)test", REG_EXTENDED));
     regfree (&regex);
+#endif  /* HAVE_PCRE */
 }
 
 /*
@@ -631,6 +696,7 @@ TEST(String, Highlight)
     WEE_HAS_HL_STR(0, "", "test");
     WEE_HAS_HL_STR(0, "test-here", "test");
     WEE_HAS_HL_STR(0, "this is a test here", "abc,def");
+    WEE_HAS_HL_STR(0, "test", "(?-i)TEST"); /* default case insensitive */
     WEE_HAS_HL_STR(1, "test", "test");
     WEE_HAS_HL_STR(1, "this is a test", "test");
     WEE_HAS_HL_STR(1, "test here", "test");
@@ -640,6 +706,7 @@ TEST(String, Highlight)
     WEE_HAS_HL_STR(1, "test\u00A0:here", "test");  /* unbreakable space */
     WEE_HAS_HL_STR(1, "this is a test here", "test");
     WEE_HAS_HL_STR(1, "this is a test here", "abc,test");
+    WEE_HAS_HL_STR(1, "test", "TEST");      /* default case insensitive */
 
     /*
      * check highlight with a regex, each call of macro
