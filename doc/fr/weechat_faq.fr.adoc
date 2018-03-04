@@ -1009,6 +1009,20 @@ Par exemple :
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
 ----
 
+[[sharing_config_files]]
+=== Je souhaite partager ma configuration de WeeChat, quels fichiers dois-je partager et que dois-je garder privé ?
+
+Vous pouvez partager les fichiers _~/.weechat/*.conf_ sauf le fichier
+_sec.conf_ qui contient vos mots de passes chiffrés avec votre phrase
+de chiffrement.
+
+Quelques autres fichiers comme _irc.conf_ peuvent contenir des informations
+sensibles comme les mots de passes des serveurs/canaux (s'ils ne sont pas
+stockés dans _sec.conf_ avec la commande `/secure`).
+
+Voir le link:weechat_user.fr.html#files_and_directories[Guide utilisateur / Fichiers et répertoires]
+pour plus d'informations sur les fichiers de configuration.
+
 [[development]]
 == Développement
 
