@@ -116,8 +116,10 @@ compile WeeChat.
 | tcl-dev                     | ≥ 8.5         |          | Tcl plugin.
 | guile-2.0-dev               | ≥ 2.0         |          | Guile (scheme) plugin.
 | libv8-dev                   | ≤ 3.24.3      |          | JavaScript plugin.
-| php7.1-dev, libphp7.1-embed | ≥ 7.0         |          | PHP plugin.
+| php7.2-dev, libphp7.2-embed | ≥ 7.0         |          | PHP plugin.
 | libxml2-dev                 |               |          | PHP plugin.
+| libargon2-0-dev             |               |          | PHP plugin (if PHP ≥ 7.2).
+| libsodium-dev               |               |          | PHP plugin (if PHP ≥ 7.2).
 | asciidoctor                 | ≥ 1.5.4       |          | Build man page and documentation.
 | libcpputest-dev             | ≥ 3.4         |          | Build and run tests.
 |===

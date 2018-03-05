@@ -121,8 +121,12 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | tcl-dev                     | 8.5 以上         |        | tcl プラグイン
 | guile-2.0-dev               | 2.0 以上         |        | guile (scheme) プラグイン
 | libv8-dev                   | 3.24.3 以下      |        | javascript プラグイン
-| php7.1-dev, libphp7.1-embed | 7.0 以上         |        | PHP プラグイン
+| php7.2-dev, libphp7.2-embed | 7.0 以上         |        | PHP プラグイン
 | libxml2-dev                 |                  |        | PHP プラグイン
+// TRANSLATION MISSING
+| libargon2-0-dev             |                  |        | PHP plugin (if PHP ≥ 7.2).
+// TRANSLATION MISSING
+| libsodium-dev               |                  |        | PHP plugin (if PHP ≥ 7.2).
 | asciidoctor                 | 1.5.4 以上       |        | man ページと文書のビルド
 | libcpputest-dev             | 3.4 以上         |        | ビルドとテストの実行
 |===

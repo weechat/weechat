@@ -119,8 +119,10 @@ compiler WeeChat.
 | tcl-dev                     | ≥ 8.5         |        | Extension tcl.
 | guile-2.0-dev               | ≥ 2.0         |        | Extension guile (scheme).
 | libv8-dev                   | ≤ 3.24.3      |        | Extension javascript.
-| php7.1-dev, libphp7.1-embed | ≥ 7.0         |        | Extension PHP.
+| php7.2-dev, libphp7.2-embed | ≥ 7.0         |        | Extension PHP.
 | libxml2-dev                 |               |        | Extension PHP.
+| libargon2-0-dev             |               |        | Extension PHP (si PHP ≥ 7.2).
+| libsodium-dev               |               |        | Extension PHP (si PHP ≥ 7.2).
 | asciidoctor                 | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
 | libcpputest-dev             | ≥ 3.4         |        | Construction et lancement des tests.
 |===

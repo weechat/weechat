@@ -138,8 +138,12 @@ compilare WeeChat.
 | tcl-dev                     | ≥ 8.5         |           | Plugin tcl.
 | guile-2.0-dev               | ≥ 2.0         |           | Plugin guile (scheme).
 | libv8-dev                   | ≤ 3.24.3      |           | Plugin javascript.
-| php7.1-dev, libphp7.1-embed | ≥ 7.0         |           | Plugin php.
+| php7.2-dev, libphp7.2-embed | ≥ 7.0         |           | Plugin php.
 | libxml2-dev                 |               |           | Plugin php.
+// TRANSLATION MISSING
+| libargon2-0-dev             |               |           | Plugin php (if PHP ≥ 7.2).
+// TRANSLATION MISSING
+| libsodium-dev               |               |           | Plugin php (if PHP ≥ 7.2).
 // TRANSLATION MISSING
 | asciidoctor                 | ≥ 1.5.4       |           | Build man page and documentation.
 // TRANSLATION MISSING
