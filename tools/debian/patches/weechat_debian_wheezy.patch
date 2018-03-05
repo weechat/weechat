@@ -20,7 +20,7 @@ index f8f027d8e..312d315fa 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.1-dev, libphp7.1-embed, libxml2-dev,
+-    php7.2-dev, libphp7.2-embed, libxml2-dev, libargon2-0-dev, libsodium-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -55,7 +55,7 @@ index f8f027d8e..312d315fa 100644
 -Package: weechat-devel-php
 -Architecture: any
 -Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}),
-- libphp7.1-embed
+- libphp7.2-embed
 -Conflicts: weechat-php
 -Description: Fast, light and extensible chat client - php plugin
 - WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -104,7 +104,7 @@ index a68d181e8..9554e0884 100644
 +    tcl8.5-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.1-dev, libphp7.1-embed, libxml2-dev,
+-    php7.2-dev, libphp7.2-embed, libxml2-dev, libargon2-0-dev, libsodium-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -139,7 +139,7 @@ index a68d181e8..9554e0884 100644
 -Package: weechat-php
 -Architecture: any
 -Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}),
-- libphp7.1-embed
+- libphp7.2-embed
 -Description: Fast, light and extensible chat client - php plugin
 - WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
 - for many operating systems. Everything can be done with a keyboard.
