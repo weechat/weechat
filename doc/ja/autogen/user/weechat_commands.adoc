@@ -872,7 +872,7 @@ option: オプションの名前
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: サーバとの接続を維持して WeeChat 実行バイナリを再読込
 
 ----
 /upgrade  [-yes] [<path_to_binary>|-quit]
