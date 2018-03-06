@@ -15693,9 +15693,8 @@ void *weechat_hdata_move (struct t_hdata *hdata, void *pointer, int count);
 
 戻り値:
 
-// TRANSLATION MISSING
-* pointer to element reached, NULL if element is not found (for example end
-  of list), or if an error occurred
+* 移動に成功した場合は移動先へのポインタ、要素が見つからないかエラーが発生した場合
+  (例えばリストの最後に到達した場合) は NULL
 
 C 言語での使用例:
 
@@ -15704,10 +15703,10 @@ C 言語での使用例:
 struct t_hdata *hdata = weechat_hdata_get ("buffer");
 struct t_gui_buffer *buffer = weechat_buffer_search_main ();
 
-/* move to next buffer, 2 times */
+/* バッファを次のバッファに 2 回移動 */
 buffer = weechat_hdata_move (hdata, buffer, 2);
 
-/* move to previous buffer */
+/* 1 つ前のバッファに移動 */
 if (buffer)
     buffer = weechat_hdata_move (hdata, buffer, -1);
 ----
@@ -15723,10 +15722,10 @@ pointer = weechat.hdata_move(hdata, pointer, count)
 hdata = weechat.hdata_get("buffer")
 buffer = weechat.buffer_search_main()
 
-# move to next buffer, 2 times
+# バッファを次のバッファに 2 回移動
 buffer = weechat.hdata_move(hdata, buffer, 2)
 
-# move to previous buffer
+# 1 つ前のバッファに移動
 if buffer:
     buffer = weechat.hdata_move(hdata, buffer, -1)
 ----

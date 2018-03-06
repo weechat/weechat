@@ -123,10 +123,8 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | libv8-dev                   | 3.24.3 以下      |        | javascript プラグイン
 | php7.2-dev, libphp7.2-embed | 7.0 以上         |        | PHP プラグイン
 | libxml2-dev                 |                  |        | PHP プラグイン
-// TRANSLATION MISSING
-| libargon2-0-dev             |                  |        | PHP plugin (if PHP ≥ 7.2).
-// TRANSLATION MISSING
-| libsodium-dev               |                  |        | PHP plugin (if PHP ≥ 7.2).
+| libargon2-0-dev             |                  |        | PHP プラグイン (PHP 7.2 以上の場合)
+| libsodium-dev               |                  |        | PHP プラグイン (PHP 7.2 以上の場合)
 | asciidoctor                 | 1.5.4 以上       |        | man ページと文書のビルド
 | libcpputest-dev             | 3.4 以上         |        | ビルドとテストの実行
 |===

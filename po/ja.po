@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-02-19 21:27+0100\n"
-"PO-Revision-Date: 2018-02-10 09:00+0900\n"
+"PO-Revision-Date: 2018-03-06 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -2736,9 +2736,8 @@ msgstr ""
 "  全ての色関連オプションをリセット:\n"
 "    /unset -mask weechat.color.*"
 
-#, fuzzy
 msgid "reload the WeeChat binary without disconnecting from servers"
-msgstr "サーバとの接続を維持して WeeChat をアップグレード"
+msgstr "サーバとの接続を維持して WeeChat 実行バイナリを再読込"
 
 msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[-yes] [<path_to_binary>|-quit]"
@@ -7022,9 +7021,9 @@ msgstr "%s: スクリプト \"%s\"、バージョン %s (%s) が登録されま�
 msgid "Support of scheme scripts (with Guile)"
 msgstr "scheme スクリプトサポート (Guile を利用)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: stdout/stderr (%s): %s"
-msgstr "%s: 標準出力/標準エラー: %s"
+msgstr "%s: 標準出力/標準エラー (%s): %s"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return a valid value"

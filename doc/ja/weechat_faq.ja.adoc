@@ -959,19 +959,17 @@ IRC の退出および終了メッセージを無効化します:
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
 ----
 
-// TRANSLATION MISSING
 [[sharing_config_files]]
-=== I want to share my WeeChat configuration, what files should I share and what should I keep private?
+=== WeeChat の設定を共有したいのですが、公開しても良いファイルと秘密にしておくべきファイルを教えてください。
 
-You can share files _~/.weechat/*.conf_ except the file _sec.conf_ which
-contains your passwords ciphered with your passphrase.
+_~/.weechat/*.conf_ ファイルは公開しても問題ありませんが、
+パスフレーズで暗号化されたパスワードが含まれる _sec.conf_ ファイルは秘密にしてください。
 
-Some other files like _irc.conf_ may contain sensitive info like passwords
-for servers/channels (if they are not stored in _sec.conf_ with the `/secure`
-command).
+サーバおよびチャンネルパスワード等の機密情報を `/secure` コマンドで
+_sec.conf_ に保存していない場合、これらの情報は _irc.conf_
+などのファイルに保存されます。
 
-See the link:weechat_user.ja.html#files_and_directories[User's guide / Files and directories]
-for more information about configuration files.
+設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ]を参照してください。
 
 [[development]]
 == 開発
