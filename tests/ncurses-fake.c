@@ -1,5 +1,5 @@
 /*
- * ncurses.c - fake ncurses lib used for tests
+ * ncurses-fake.c - fake ncurses lib used for tests
  *
  * Copyright (C) 2014-2018 Sébastien Helleu <flashcode@flashtux.org>
  *
