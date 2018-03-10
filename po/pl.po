@@ -2794,9 +2794,8 @@ msgstr ""
 "  resetowanie wszystkich opcji dotyczących kolorów:\n"
 "    /unset weechat.color.*"
 
-#, fuzzy
 msgid "reload the WeeChat binary without disconnecting from servers"
-msgstr "uaktualnia WeeChat bez rozłączania z serwerami"
+msgstr "przeładowanie pliku binarnego WeeChat bez rozłączania z serwerami"
 
 msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[-yes] [<ścieżka_do_binarki>|-quit]"
@@ -7154,9 +7153,9 @@ msgstr "%s: zarejestrowano skrypt \"%s\", wersja %s (%s)"
 msgid "Support of scheme scripts (with Guile)"
 msgstr "Wsparcie dla skryptów scheme (za pomocą Guile)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: stdout/stderr (%s): %s"
-msgstr "%s: stdout/stderr: %s"
+msgstr "%s: stdout/stderr (%s): %s"
 
 #, c-format
 msgid "%s%s: function \"%s\" must return a valid value"
@@ -8990,14 +8989,14 @@ msgstr ""
 msgid "%s%s: error creating CTCP \"%s\" => \"%s\""
 msgstr "%s%s: błąd podczas tworzenia CTCP \"%s\" => \"%s\""
 
-#, fuzzy
 msgid ""
 "list of hostname/port or IP/port for server (separated by comma) (note: "
 "content is evaluated, see /help eval; server options are evaluated with "
 "${irc_server.xxx} and ${server} is replaced by the server name)"
 msgstr ""
 "lista nazw hostów/port lub IP/port dla serwera (oddzielone przecinkiem) "
-"(uwaga: zawartość jest przetwarzana, zobacz /help eval)"
+"(uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera "
+"${irc_server.xxx} i ${server} są zamieniane na nazwę serwera)"
 
 msgid ""
 "name of proxy used for this server (optional, proxy must be defined with "
@@ -10600,25 +10599,25 @@ msgstr ""
 "%sgnutls: wersja >= 3.0.21 jest wymagana dla SASL \"ecdsa-nist256p-challenge"
 "\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: the evaluated fingerprint for server \"%s\" must not be empty"
-msgstr "%s%s: wyliczony fingerprint nie może być pusty"
+msgstr "%s%s: wyliczony fingerprint dla serwera \"%s\" nie może być pusty"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid fingerprint size for server \"%s\", the number of hexadecimal "
 "digits must be one of: %s"
 msgstr ""
-"%s%s: niewłaściwy rozmiar skrótu, ilość znaków heksadecymalnych musi być "
-"jedną z: %s"
+"%s%s: niewłaściwy rozmiar skrótu dla serwera \"%s\", ilość znaków "
+"heksadecymalnych musi być jedną z: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: invalid fingerprint for server \"%s\", it must contain only "
 "hexadecimal digits (0-9, a-f)"
 msgstr ""
-"%s%s: niepoprawny skrót, może on zawierać tylko znaki heksadecymalne (0-9, a-"
-"f)"
+"%s%s: niepoprawny skrót dla serwera \"%s\", może on zawierać tylko "
+"znaki heksadecymalne (0-9, a-f)"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -12515,11 +12514,9 @@ msgstr ""
 msgid "Scripts"
 msgstr "Skrypty"
 
-#, fuzzy
 msgid "Script manager"
 msgstr "Manager skryptów"
 
-#, fuzzy
 msgid "WeeChat script manager"
 msgstr "Manager skryptów  WeeChat"
 
