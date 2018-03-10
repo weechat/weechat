@@ -124,10 +124,8 @@ WeeChat.
 | libv8-dev                   | ≤ 3.24.3      |          | Wtyczka javascript.
 | php7.2-dev, libphp7.2-embed | ≥ 7.0         |          | Wtyczka PHP.
 | libxml2-dev                 |               |          | Wtyczka PHP.
-// TRANSLATION MISSING
-| libargon2-0-dev             |               |          | Wtyczka PHP (if PHP ≥ 7.2).
-// TRANSLATION MISSING
-| libsodium-dev               |               |          | Wtyczka PHP (if PHP ≥ 7.2).
+| libargon2-0-dev             |               |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
+| libsodium-dev               |               |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
 | asciidoctor                 | ≥ 1.5.4       |          | Tworzenie strony man i dokumentacji.
 | libcpputest-dev             | ≥ 3.4         |          | Kompilacja i uruchamianie testów.
 |===

@@ -972,19 +972,17 @@ Na przykład:
 /set irc.server.freenode.sasl_password "${sec.data.freenode_password}"
 ----
 
-// TRANSLATION MISSING
 [[sharing_config_files]]
-=== I want to share my WeeChat configuration, what files should I share and what should I keep private?
+=== Chcę się podzielić moją konfiguracją WeeChat, które pliki powinienem pokazać, a które nie?
 
-You can share files _~/.weechat/*.conf_ except the file _sec.conf_ which
-contains your passwords ciphered with your passphrase.
+Możesz pokazywać pliki z _~/.weechat/*.conf_ poza plikiem _sec.conf_, który
+zawiera Twoje hasla zaszywrowane Twoim kluczem.
 
-Some other files like _irc.conf_ may contain sensitive info like passwords
-for servers/channels (if they are not stored in _sec.conf_ with the `/secure`
-command).
+Niektóre pliki jak _irc.conf_ mogą zawierać wrażliwe dane jak hasła do
+serwerów/kanałów (jeśli nie zostały dodane do _sec.conf_ za pomocą komendy `/secure`).
 
-See the link:weechat_user.pl.html#files_and_directories[User's guide / Files and directories]
-for more information about configuration files.
+Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery],
+gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 
 [[development]]
 == Rozwój
