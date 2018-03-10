@@ -513,7 +513,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.server_default.addresses]] *irc.server_default.addresses*
-** opis: pass:none[list of hostname/port or IP/port for server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[lista nazw hostów/port lub IP/port dla serwera (oddzielone przecinkiem) (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera ${irc_server.xxx} i ${server} są zamieniane na nazwę serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
