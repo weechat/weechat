@@ -124,10 +124,8 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | libv8-dev                   | ≤ 3.24.3      |          | JavaScript Erweiterung.
 | php7.2-dev, libphp7.2-embed | ≥ 7.0         |          | PHP Erweiterung.
 | libxml2-dev                 |               |          | PHP Erweiterung.
-// TRANSLATION MISSING
-| libargon2-0-dev             |               |          | PHP Erweiterung (if PHP ≥ 7.2).
-// TRANSLATION MISSING
-| libsodium-dev               |               |          | PHP Erweiterung (if PHP ≥ 7.2).
+| libargon2-0-dev             |               |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| libsodium-dev               |               |          | PHP Erweiterung (wenn PHP ≥ 7.2).
 | asciidoctor                 | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
 | libcpputest-dev             | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
 |===
