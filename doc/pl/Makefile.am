@@ -78,6 +78,7 @@ install-data-hook: $(man_install) $(doc_install)
 install-man:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/pl/man1/
 	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/pl/man1/
+	(cd '$(DESTDIR)$(mandir)/pl/man1/' && $(RM) weechat-headless.1 && $(LN_S) weechat.1 weechat-headless.1)
 
 install-doc:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
@@ -89,6 +90,7 @@ uninstall-hook: $(man_uninstall) $(doc_uninstall)
 
 uninstall-man:
 	$(RM) $(DESTDIR)$(mandir)/pl/man1/weechat.1
+	$(RM) $(DESTDIR)$(mandir)/pl/man1/weechat-headless.1
 	-rmdir $(DESTDIR)$(mandir)/pl/man1
 
 uninstall-doc:
