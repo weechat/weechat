@@ -44,7 +44,7 @@ void
 daemonize ()
 {
     pid_t pid;
-    int fd, i;
+    int fd, i, new_fd;
 
     printf (_("Running WeeChat in background..."));
     printf (" ");
@@ -77,8 +77,9 @@ daemonize ()
         close (i);
     }
     fd = open ("/dev/null", O_RDWR);
-    dup (fd);
-    dup (fd);
+    new_fd = dup (fd);
+    new_fd = dup (fd);
+    (void) new_fd;
 }
 
 /*
