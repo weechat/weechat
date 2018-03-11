@@ -19,10 +19,6 @@
 
 enable_language(CXX)
 
-# fake ncurses lib (it does nothing)
-set(LIB_WEECHAT_NCURSES_FAKE_SRC ncurses-fake.c)
-add_library(weechat_ncurses_fake STATIC ${LIB_WEECHAT_NCURSES_FAKE_SRC})
-
 remove_definitions(-DHAVE_CONFIG_H)
 include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
@@ -58,8 +54,8 @@ set(LIBS
   ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${PROJECT_BINARY_DIR}/src/plugins/libweechat_plugins.a
   ${PROJECT_BINARY_DIR}/src/gui/libweechat_gui_common.a
-  ${PROJECT_BINARY_DIR}/src/gui/curses/libweechat_gui_curses.a
-  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_ncurses_fake.a
+  ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_gui_headless.a
+  ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_ncurses_fake.a
   ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a
   # due to circular references, we must link two times with libweechat_core.a
   ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:27+0100\n"
+"POT-Creation-Date: 2018-03-10 19:09+0100\n"
 "PO-Revision-Date: 2018-02-22 20:54+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -182,6 +182,19 @@ msgstr ""
 "  plugin:option            Einstellungen für Erweiterungen (siehe man "
 "weechat)\n"
 
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Fehler: fehlendes Argument für die Einstellung \"%s\"\n"
@@ -204,6 +217,9 @@ msgstr "Fehler: HOME (%s) ist kein Verzeichnis\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Fehler: Das Verzeichnis \"%s\" kann nicht anlegt werden\n"
+
+msgid "WeeChat is running in headless mode."
+msgstr ""
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -5282,6 +5298,18 @@ msgstr "Maus ist inaktiv"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', Größe: %dx%d"
+
+#, c-format
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "fork error"
+msgstr "Fehler"
+
+#, c-format
+msgid "OK"
+msgstr "OK"
 
 #, c-format
 msgid ""
@@ -14110,9 +14138,6 @@ msgstr "gesendet an"
 
 msgid "received from"
 msgstr "empfangen von"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "FAILED"
 msgstr "FEHLGESCHLAGEN"

@@ -97,6 +97,7 @@
 #define WEECHAT_EXTRA_LIBDIR "WEECHAT_EXTRA_LIBDIR"
 
 /* global variables and functions */
+extern int weechat_headless;
 extern int weechat_debug_core;
 extern char *weechat_argv0;
 extern int weechat_upgrading;
@@ -115,6 +116,7 @@ extern char *weechat_startup_commands;
 
 extern void weechat_term_check ();
 extern void weechat_shutdown (int return_code, int crash);
+extern void weechat_init_gettext ();
 extern void weechat_init (int argc, char *argv[], void (*gui_init_cb)());
 extern void weechat_end (void (*gui_end_cb)(int clean_exit));
 

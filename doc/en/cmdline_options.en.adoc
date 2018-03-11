@@ -4,6 +4,10 @@
 *-c*, *--colors*::
     Display default colors in terminal.
 
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<path>_::
     Set path as home for WeeChat (used for configuration files, logs, user
     plugins and scripts), default value is "~/.weechat" (note: directory is

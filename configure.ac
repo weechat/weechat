@@ -137,6 +137,7 @@ AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 # Arguments for ./configure
 
 AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
+AC_ARG_ENABLE(headless,     [  --disable-headless      turn off headless binary (default=compiled), this is required for tests],enable_headless=$enableval,enable_headless=yes)
 AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
@@ -184,6 +185,10 @@ AC_DEFINE_UNQUOTED(CA_FILE, "$CA_FILE")
 
 not_asked=""
 not_found=""
+
+if test "x$enable_headless" != "xyes" && test "x$enable_tests" = "xyes"; then
+    AC_MSG_ERROR([*** Headless mode is required for tests.])
+fi
 
 # ------------------------------------------------------------------------------
 #                                  pkg-config
@@ -239,6 +244,14 @@ if test "x$enable_ncurses" = "xyes" ; then
     AC_SUBST(NCURSES_LFLAGS)
 else
     not_asked="$not_asked ncurses"
+fi
+
+# ------------------------------------------------------------------------------
+#                                   headless
+# ------------------------------------------------------------------------------
+
+if test "x$enable_headless" != "xyes" ; then
+    not_asked="$not_asked headless"
 fi
 
 # ------------------------------------------------------------------------------
@@ -1375,6 +1388,7 @@ AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
 AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
+AM_CONDITIONAL(HEADLESS,                test "$enable_headless" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
 AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_BUFLIST,          test "$enable_buflist" = "yes")
@@ -1437,6 +1451,8 @@ AC_OUTPUT([Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
+           src/gui/curses/normal/Makefile
+           src/gui/curses/headless/Makefile
            tests/Makefile
            intl/Makefile
            po/Makefile.in])
@@ -1449,11 +1465,14 @@ listgui=""
 if test "x$enable_ncurses" = "xyes" ; then
     listgui="$listgui ncurses"
 fi
+if test "x$enable_headless" = "xyes" ; then
+    listgui="$listgui headless"
+fi
 
 if test "x$listgui" = "x" ; then
     AC_MSG_ERROR([
 *** No interface specified...
-*** Please enable at least ncurses.])
+*** Please enable at least ncurses or headless.])
 fi
 
 listplugins=""

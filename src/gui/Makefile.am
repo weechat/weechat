@@ -63,10 +63,6 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-window.c \
                                    gui-window.h
 
-if GUI_NCURSES
-curses_dir=curses
-endif
-
-SUBDIRS = . $(curses_dir)
+SUBDIRS = . curses
 
 EXTRA_DIST = CMakeLists.txt

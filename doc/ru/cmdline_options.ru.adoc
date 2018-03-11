@@ -4,6 +4,11 @@
 *-c*, *--colors*::
     Вывести в терминал умолчальные цвета.
 
+// TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<путь>_::
     Установить <путь> как домашнюю директорию для WeeChat (используется для
     конфигурационных файлов, логов, пользовательских плагинов и скриптов).

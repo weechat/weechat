@@ -20,32 +20,33 @@
 #
 
 set(LIB_CORE_SRC
-weechat.c weechat.h
-wee-arraylist.c wee-arraylist.h
-wee-backtrace.c wee-backtrace.h
-wee-command.c wee-command.h
-wee-completion.c wee-completion.h
-wee-config.c wee-config.h
-wee-config-file.c wee-config-file.h
-wee-debug.c wee-debug.h
-wee-eval.c wee-eval.h
-wee-hashtable.c wee-hashtable.h
-wee-hdata.c wee-hdata.h
-wee-hook.c wee-hook.h
-wee-infolist.c wee-infolist.h
-wee-input.c wee-input.h
-wee-list.c wee-list.h
-wee-log.c wee-log.h
-wee-network.c wee-network.h
-wee-proxy.c wee-proxy.h
-wee-secure.c wee-secure.h
-wee-string.c wee-string.h
-wee-upgrade.c wee-upgrade.h
-wee-upgrade-file.c wee-upgrade-file.h
-wee-url.c wee-url.h
-wee-utf8.c wee-utf8.h
-wee-util.c wee-util.h
-wee-version.c wee-version.h)
+  weechat.c weechat.h
+  wee-arraylist.c wee-arraylist.h
+  wee-backtrace.c wee-backtrace.h
+  wee-command.c wee-command.h
+  wee-completion.c wee-completion.h
+  wee-config.c wee-config.h
+  wee-config-file.c wee-config-file.h
+  wee-debug.c wee-debug.h
+  wee-eval.c wee-eval.h
+  wee-hashtable.c wee-hashtable.h
+  wee-hdata.c wee-hdata.h
+  wee-hook.c wee-hook.h
+  wee-infolist.c wee-infolist.h
+  wee-input.c wee-input.h
+  wee-list.c wee-list.h
+  wee-log.c wee-log.h
+  wee-network.c wee-network.h
+  wee-proxy.c wee-proxy.h
+  wee-secure.c wee-secure.h
+  wee-string.c wee-string.h
+  wee-upgrade.c wee-upgrade.h
+  wee-upgrade-file.c wee-upgrade-file.h
+  wee-url.c wee-url.h
+  wee-utf8.c wee-utf8.h
+  wee-util.c wee-util.h
+  wee-version.c wee-version.h
+)
 
 # Check for flock support
 include(CheckSymbolExists)

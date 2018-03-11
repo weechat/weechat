@@ -79,6 +79,7 @@
 #include "../plugins/plugin-api.h"
 
 
+int weechat_headless = 0;              /* 1 if running headless (no GUI)    */
 int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
@@ -160,6 +161,21 @@ weechat_display_usage ()
           "  -v, --version            display WeeChat version\n"
           "  plugin:option            option for plugin (see man weechat)\n"));
     string_fprintf (stdout, "\n");
+
+    /* extra options in headless mode */
+    if (weechat_headless)
+    {
+        string_fprintf (stdout, _("Extra options in headless mode:\n"));
+        string_fprintf (
+            stdout,
+            _("      --daemon             run WeeChat as a daemon (fork, "
+              "new process group, file descriptors closed);\n"));
+        string_fprintf (
+            stdout,
+            _("                           (by default in headless mode "
+              "WeeChat is blocking and does not run in background)\n"));
+        string_fprintf (stdout, "\n");
+    }
 }
 
 /*
@@ -403,6 +419,12 @@ weechat_create_home_dir ()
 void
 weechat_startup_message ()
 {
+    if (weechat_headless)
+    {
+        string_fprintf (stdout, _("WeeChat is running in headless mode."));
+        string_fprintf (stdout, "\n");
+    }
+
     if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
         gui_chat_printf (
@@ -600,15 +622,12 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * Initializes WeeChat.
+ * Initializes gettext.
  */
 
 void
-weechat_init (int argc, char *argv[], void (*gui_init_cb)())
+weechat_init_gettext ()
 {
-    weechat_first_start_time = time (NULL); /* initialize start time        */
-    gettimeofday (&weechat_current_start_timeval, NULL);
-
     weechat_locale_ok = (setlocale (LC_ALL, "") != NULL);   /* init gettext */
 #ifdef ENABLE_NLS
     bindtextdomain (PACKAGE, LOCALEDIR);
@@ -622,6 +641,17 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_local_charset = strdup ("");
 #endif /* HAVE_LANGINFO_CODESET */
     utf8_init ();
+}
+
+/*
+ * Initializes WeeChat.
+ */
+
+void
+weechat_init (int argc, char *argv[], void (*gui_init_cb)())
+{
+    weechat_first_start_time = time (NULL); /* initialize start time        */
+    gettimeofday (&weechat_current_start_timeval, NULL);
 
     /* catch signals */
     util_catch_signal (SIGINT, SIG_IGN);           /* signal ignored        */

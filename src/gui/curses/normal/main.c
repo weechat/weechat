@@ -25,9 +25,9 @@
 
 #include <stdlib.h>
 
-#include "../../core/weechat.h"
-#include "../gui-main.h"
-#include "gui-curses.h"
+#include "../../../core/weechat.h"
+#include "../../gui-main.h"
+#include "../gui-curses.h"
 
 
 /*
@@ -37,6 +37,8 @@
 int
 main (int argc, char *argv[])
 {
+    /* init, main loop and end */
+    weechat_init_gettext ();
     weechat_init (argc, argv, &gui_main_init);
     gui_main_loop ();
     weechat_end (&gui_main_end);

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add binary weechat-headless to run WeeChat without interface, with optional daemon mode (command line option "--daemon") (issue #1120)
   * core: add options "-newbuffer", "-free" and "-switch" in command /print (issue #1113)
   * core: add option "-y" in command /print, add support of buffers with free content
   * core: add option "add" in command /buffer (issue #1113)

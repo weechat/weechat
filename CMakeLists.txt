@@ -82,7 +82,8 @@ else()
   set(INCLUDEDIR ${CMAKE_INSTALL_PREFIX}/include/${PROJECT_NAME})
 endif()
 
-option(ENABLE_NCURSES    "Enable Ncurses interface"                  ON)
+option(ENABLE_NCURSES    "Compile the Ncurses interface"             ON)
+option(ENABLE_HEADLESS   "Compile the headless binary (required for tests)" ON)
 option(ENABLE_NLS        "Enable Native Language Support"            ON)
 option(ENABLE_GNUTLS     "Enable SSLv3/TLS support"                  ON)
 option(ENABLE_LARGEFILE  "Enable Large File Support"                 ON)
@@ -113,6 +114,11 @@ option(ENABLE_XFER       "Enable Xfer plugin"                        ON)
 option(ENABLE_MAN        "Enable build of man page"                  OFF)
 option(ENABLE_DOC        "Enable build of documentation"             OFF)
 option(ENABLE_TESTS      "Enable tests"                              OFF)
+
+# headless mode is required for tests
+if(ENABLE_TESTS AND NOT ENABLE_HEADLESS)
+  message(FATAL_ERROR "Headless mode is required for tests.")
+endif()
 
 # option WEECHAT_HOME
 if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")

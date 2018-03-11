@@ -4,6 +4,11 @@
 *-c*, *--colors*::
     zeigt die Standardfarben im Terminal an.
 
+// TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<path>_::
     legt den Konfigurationsordner für WeeChat fest in welchem die Erweiterungen,
     Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: "~/.weechat").

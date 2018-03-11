@@ -62,41 +62,43 @@ Les répertoires principaux de WeeChat sont :
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Répertoire        | Description
-| src/              | Racine des sources.
-|    core/          | Fonctions du cœur : point d'entrée, structures internes.
-|    gui/           | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
-|       curses/     | Interface Curses.
-|    plugins/       | API extension/script.
-|       alias/      | Extension Alias.
-|       aspell/     | Extension Aspell.
-|       buflist/    | Extension Buflist.
-|       charset/    | Extension Charset.
-|       exec/       | Extension Exec.
-|       fifo/       | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat).
-|       fset/       | Extension Fset (Fast Set).
-|       guile/      | API script Guile (scheme).
-|       irc/        | Extension IRC (Internet Relay Chat).
-|       javascript/ | API script JavaScript.
-|       logger/     | Extension Logger (enregistrer les messages affichés dans des fichiers).
-|       lua/        | API script Lua.
-|       perl/       | API script Perl.
-|       php/        | API script PHP.
-|       python/     | API script Python.
-|       relay/      | Extension Relay (proxy IRC + relai pour interfaces distantes).
-|       ruby/       | API script Ruby.
-|       script/     | Gestionnaire de scripts.
-|       tcl/        | API script Tcl.
-|       trigger/    | Extension Trigger.
-|       xfer/       | Extension Xfer (IRC DCC fichier/discussion).
-| tests/            | Tests.
-|    scripts/       | Tests de l'API script.
-|       python/     | Scripts Python pour générer et lancer les tests de l'API script.
-|    unit/          | Tests unitaires.
-|       core/       | Tests unitaires pour les fonctions du cœur.
-| doc/              | Documentation.
-| po/               | Fichiers de traductions (gettext).
-| debian/           | Empaquetage Debian.
+| Répertoire         | Description
+| src/               | Racine des sources.
+|    core/           | Fonctions du cœur : point d'entrée, structures internes.
+|    gui/            | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
+|       curses/      | Interface Curses.
+|          headless/ | Mode sans interface (« headless »).
+|          normal/   | Interface Curses.
+|    plugins/        | API extension/script.
+|       alias/       | Extension Alias.
+|       aspell/      | Extension Aspell.
+|       buflist/     | Extension Buflist.
+|       charset/     | Extension Charset.
+|       exec/        | Extension Exec.
+|       fifo/        | Extension Fifo (tube FIFO utilisé pour envoyer des commandes à WeeChat).
+|       fset/        | Extension Fset (Fast Set).
+|       guile/       | API script Guile (scheme).
+|       irc/         | Extension IRC (Internet Relay Chat).
+|       javascript/  | API script JavaScript.
+|       logger/      | Extension Logger (enregistrer les messages affichés dans des fichiers).
+|       lua/         | API script Lua.
+|       perl/        | API script Perl.
+|       php/         | API script PHP.
+|       python/      | API script Python.
+|       relay/       | Extension Relay (proxy IRC + relai pour interfaces distantes).
+|       ruby/        | API script Ruby.
+|       script/      | Gestionnaire de scripts.
+|       tcl/         | API script Tcl.
+|       trigger/     | Extension Trigger.
+|       xfer/        | Extension Xfer (IRC DCC fichier/discussion).
+| tests/             | Tests.
+|    scripts/        | Tests de l'API script.
+|       python/      | Scripts Python pour générer et lancer les tests de l'API script.
+|    unit/           | Tests unitaires.
+|       core/        | Tests unitaires pour les fonctions du cœur.
+| doc/               | Documentation.
+| po/                | Fichiers de traductions (gettext).
+| debian/            | Empaquetage Debian.
 |===
 
 [[sources]]
@@ -170,7 +172,11 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       gui-curses-mouse.c      | Souris.
 |       gui-curses-term.c       | Fonctions pour le terminal.
 |       gui-curses-window.c     | Fenêtres.
-|       main.c                  | Point d'entrée.
+|       headless/               | Mode sans interface (« headless »).
+|          main.c               | Point d'entrée pour le mode sans interface.
+|          ncurses-fake.c       | Fausse bibliothèque ncurses.
+|       normal/                 | Interface Curses.
+|          main.c               | Point d'entrée pour l'interface Curses.
 |===
 
 [[sources_plugins]]

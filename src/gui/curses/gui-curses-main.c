@@ -78,12 +78,20 @@ gui_main_get_password (const char **prompt, char *password, int size)
 {
     int line, i, ch;
 
+    memset (password, '\0', size);
+
+    if (weechat_headless)
+    {
+        password[0] = ' ';
+        return;
+    }
+
     initscr ();
     cbreak ();
     noecho ();
     raw ();
 
-    clear();
+    clear ();
 
     line = 0;
 
@@ -96,7 +104,6 @@ gui_main_get_password (const char **prompt, char *password, int size)
     mvaddstr (line, 0, "=> ");
     refresh ();
 
-    memset (password, '\0', size);
     i = 0;
     while (i < size - 1)
     {
@@ -432,11 +439,19 @@ gui_main_loop ()
     send_signal_sigwinch = 0;
 
     /* catch SIGWINCH signal: redraw screen */
-    util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
+    if (!weechat_headless)
+        util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
 
     /* hook stdin (read keyboard) */
-    hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
-                                &gui_key_read_cb, NULL, NULL);
+    if (weechat_headless)
+    {
+        hook_fd_keyboard = NULL;
+    }
+    else
+    {
+        hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
+                                    &gui_key_read_cb, NULL, NULL);
+    }
 
     gui_window_ask_refresh (1);
 
@@ -486,7 +501,8 @@ gui_main_loop ()
     }
 
     /* remove keyboard hook */
-    unhook (hook_fd_keyboard);
+    if (hook_fd_keyboard)
+        unhook (hook_fd_keyboard);
 }
 
 /*

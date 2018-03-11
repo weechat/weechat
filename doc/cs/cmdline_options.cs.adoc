@@ -4,6 +4,11 @@
 *-c*, *--colors*::
     Zobraz defaultní barvy v terminálu.
 
+// TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<path>_::
     Nastav cestu jako dovmský adresář pro WeeChat (použitou pro konfigurační
     soubory, logy, uživatelské pluginy a skripty), výchozí hodnota je

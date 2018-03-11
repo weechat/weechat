@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:27+0100\n"
+"POT-Creation-Date: 2018-03-10 19:09+0100\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -148,6 +148,19 @@ msgid ""
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
 
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr ""
@@ -168,6 +181,9 @@ msgstr ""
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Hata: \"%s\" dizini oluşturulamaz\n"
+
+msgid "WeeChat is running in headless mode."
+msgstr ""
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -3626,6 +3642,18 @@ msgstr ""
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr ""
+
+#, c-format
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "fork error"
+msgstr "hata"
+
+#, c-format
+msgid "OK"
+msgstr "TAMAM"
 
 #, c-format
 msgid ""
@@ -10385,9 +10413,6 @@ msgstr ""
 
 msgid "received from"
 msgstr ""
-
-msgid "OK"
-msgstr "TAMAM"
 
 msgid "FAILED"
 msgstr "BAŞARISIZ"

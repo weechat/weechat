@@ -197,6 +197,7 @@ main (int argc, char *argv[])
 
     /* init WeeChat */
     printf ("------------------------------------------------------------\n");
+    weechat_init_gettext ();
     weechat_init (weechat_argc, weechat_argv, &test_gui_init);
     if (weechat_argv)
         string_free_split (weechat_argv);

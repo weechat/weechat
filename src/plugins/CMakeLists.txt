@@ -19,15 +19,17 @@
 #
 
 set(LIB_PLUGINS_SRC
-weechat-plugin.h
-plugin.c plugin.h
-plugin-api.c plugin-api.h
-plugin-config.h plugin-config.c)
+  weechat-plugin.h
+  plugin.c plugin.h
+  plugin-api.c plugin-api.h
+  plugin-config.h plugin-config.c
+)
 
 set(LIB_PLUGINS_SCRIPTS_SRC
-plugin-script.c plugin-script.h
-plugin-script-api.c plugin-script-api.h
-plugin-script-config.c plugin-script-config.h)
+  plugin-script.c plugin-script.h
+  plugin-script-api.c plugin-script-api.h
+  plugin-script-config.c plugin-script-config.h
+)
 
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_plugins STATIC ${LIB_PLUGINS_SRC})

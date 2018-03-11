@@ -4,6 +4,11 @@
 *-c*, *--colors*::
     端末にデフォルト色を表示
 
+// TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<path>_::
     WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
     ユーザプラグイン、スクリプトに利用される)、初期値は "~/.weechat" 。

@@ -66,41 +66,44 @@ qweechat::
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| ディレクトリ      | 説明
-| src/              | ソースコードのルートディレクトリ
-|    core/          | コア関数: エントリポイント、内部構造体
-|    gui/           | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
-|       curses/     | curses インターフェイス
-|    plugins/       | プラグインとスクリプト向け API
-|       alias/      | alias プラグイン
-|       aspell/     | aspell プラグイン
-|       buflist/    | buflist プラグイン
-|       charset/    | charset プラグイン
-|       exec/       | exec プラグイン
-|       fifo/       | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
-|       fset/       | fset (高速設定) プラグイン
-|       guile/      | guile (scheme) スクリプト用 API
-|       irc/        | IRC (Internet Relay Chat) プラグイン
-|       javascript/ | javascript スクリプト用 API
-|       logger/     | logger プラグイン (表示されたメッセージをファイルに書き込む)
-|       lua/        | lua スクリプト用 API
-|       perl/       | perl スクリプト用 API
-|       php/        | php スクリプト用 API
-|       python/     | python スクリプト用 API
-|       relay/      | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
-|       ruby/       | ruby スクリプト用 API
-|       script/     | スクリプトマネージャ
-|       tcl/        | tcl スクリプト用 API
-|       trigger/    | trigger プラグイン
-|       xfer/       | xfer (IRC DCC ファイル/チャット)
-| tests/            | テスト
-|    scripts/       | スクリプト API テスト
-|       python/     | スクリプト API テストを生成、実行する Python スクリプト
-|    unit/          | 単体テスト
-|       core/       | コア関数の単体テスト
-| doc/              | 文書
-| po/               | 翻訳ファイル (gettext)
-| debian/           | Debian パッケージ用
+| ディレクトリ       | 説明
+| src/               | ソースコードのルートディレクトリ
+|    core/           | コア関数: エントリポイント、内部構造体
+|    gui/            | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
+|       curses/      | curses インターフェイス
+// TRANSLATION MISSING
+|          headless/ | Headless mode (no interface).
+|          normal/   | curses インターフェイス
+|    plugins/        | プラグインとスクリプト向け API
+|       alias/       | alias プラグイン
+|       aspell/      | aspell プラグイン
+|       buflist/     | buflist プラグイン
+|       charset/     | charset プラグイン
+|       exec/        | exec プラグイン
+|       fifo/        | fifo プラグイン (WeeChat にコマンドを送信する FIFO パイプ)
+|       fset/        | fset (高速設定) プラグイン
+|       guile/       | guile (scheme) スクリプト用 API
+|       irc/         | IRC (Internet Relay Chat) プラグイン
+|       javascript/  | javascript スクリプト用 API
+|       logger/      | logger プラグイン (表示されたメッセージをファイルに書き込む)
+|       lua/         | lua スクリプト用 API
+|       perl/        | perl スクリプト用 API
+|       php/         | php スクリプト用 API
+|       python/      | python スクリプト用 API
+|       relay/       | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
+|       ruby/        | ruby スクリプト用 API
+|       script/      | スクリプトマネージャ
+|       tcl/         | tcl スクリプト用 API
+|       trigger/     | trigger プラグイン
+|       xfer/        | xfer (IRC DCC ファイル/チャット)
+| tests/             | テスト
+|    scripts/        | スクリプト API テスト
+|       python/      | スクリプト API テストを生成、実行する Python スクリプト
+|    unit/           | 単体テスト
+|       core/        | コア関数の単体テスト
+| doc/               | 文書
+| po/                | 翻訳ファイル (gettext)
+| debian/            | Debian パッケージ用
 |===
 
 [[sources]]
@@ -174,7 +177,16 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       gui-curses-mouse.c      | マウス
 |       gui-curses-term.c       | 端末についての関数
 |       gui-curses-window.c     | ウィンドウ
-|       main.c                  | エントリポイント
+// TRANSLATION MISSING
+|       headless/               | Headless mode (no interface).
+// TRANSLATION MISSING
+|          main.c               | Entry point for headless mode.
+// TRANSLATION MISSING
+|          ncurses-fake.c       | Fake ncurses library.
+// TRANSLATION MISSING
+|       normal/                 | Curses interface.
+// TRANSLATION MISSING
+|          main.c               | Entry point for Curses interface.
 |===
 
 [[sources_plugins]]

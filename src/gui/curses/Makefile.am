@@ -17,46 +17,14 @@
 # along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
+if GUI_NCURSES
+normal_dir=normal
+endif
 
-noinst_LIBRARIES = lib_weechat_gui_curses.a
+if HEADLESS
+headless_dir=headless
+endif
 
-lib_weechat_gui_curses_a_SOURCES = gui-curses-bar-window.c \
-                                   gui-curses-chat.c \
-                                   gui-curses-color.c \
-                                   gui-curses-key.c \
-                                   gui-curses-main.c \
-                                   gui-curses-mouse.c \
-                                   gui-curses-term.c \
-                                   gui-curses-window.c \
-                                   gui-curses.h
-
-bin_PROGRAMS = weechat
-
-# Due to circular references, we must link two times with libweechat_core.a
-# (and with two different path/names to be kept by linker)
-weechat_LDADD = ./../../core/lib_weechat_core.a \
-                ../../plugins/lib_weechat_plugins.a \
-                ../lib_weechat_gui_common.a \
-                lib_weechat_gui_curses.a \
-                ../../core/lib_weechat_core.a \
-                $(PLUGINS_LFLAGS) \
-                $(NCURSES_LFLAGS) \
-                $(GCRYPT_LFLAGS) \
-                $(GNUTLS_LFLAGS) \
-                $(CURL_LFLAGS) \
-                -lm
-
-weechat_SOURCES = main.c
+SUBDIRS = . $(normal_dir) $(headless_dir)
 
 EXTRA_DIST = CMakeLists.txt
-
-# Create a symbolic link weechat-curses -> weechat
-# This link is created for compatibility with old versions on /upgrade.
-# It may be removed in future.
-install-exec-hook:
-	(cd '$(DESTDIR)$(bindir)' && rm -f weechat-curses$(EXEEXT) && $(LN_S) weechat weechat-curses$(EXEEXT))
-
-# Remove symbolic link on uninstall
-uninstall-hook:
-	(cd '$(DESTDIR)$(bindir)' && rm -f weechat-curses$(EXEEXT))

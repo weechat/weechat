@@ -19,9 +19,7 @@
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(CPPUTEST_CFLAGS) -I$(abs_top_srcdir)
 
-noinst_LIBRARIES = lib_ncurses_fake.a lib_weechat_unit_tests.a
-
-lib_ncurses_fake_a_SOURCES = ncurses-fake.c
+noinst_LIBRARIES = lib_weechat_unit_tests.a
 
 lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
                                    unit/core/test-arraylist.cpp \
@@ -43,8 +41,8 @@ noinst_PROGRAMS = tests
 tests_LDADD = ./../src/core/lib_weechat_core.a \
               ../src/plugins/lib_weechat_plugins.a \
               ../src/gui/lib_weechat_gui_common.a \
-              ../src/gui/curses/lib_weechat_gui_curses.a \
-              lib_ncurses_fake.a \
+              ../src/gui/curses/headless/lib_weechat_gui_headless.a \
+              ../src/gui/curses/headless/lib_weechat_ncurses_fake.a \
               lib_weechat_unit_tests.a \
               ../src/core/lib_weechat_core.a \
               $(PLUGINS_LFLAGS) \

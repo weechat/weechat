@@ -19,11 +19,17 @@ weechat - rozszerzalny klient rozmów
 *weechat* [-l|--license]
 *weechat* [-v|--version]
 
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+
 == OPIS
 
 WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
 i lekki, przeznaczony dla wielu systemów operacyjnych.
 Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
+
+// TRANSLATION MISSING
+The command *weechat-headless* runs WeeChat in a headless mode (no interface).
+It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == OPCJE
 

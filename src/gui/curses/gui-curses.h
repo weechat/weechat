@@ -22,6 +22,9 @@
 
 #include <time.h>
 
+#ifdef WEECHAT_HEADLESS
+#include "ncurses-fake.h"
+#else
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
 #elif HAVE_NCURSES_H
@@ -29,6 +32,7 @@
 #else
 #include <curses.h>
 #endif /* HAVE_NCURSESW_CURSES_H */
+#endif /* WEECHAT_HEADLESS */
 
 struct t_gui_buffer;
 struct t_gui_line;

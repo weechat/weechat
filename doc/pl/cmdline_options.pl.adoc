@@ -4,6 +4,11 @@
 *-c*, *--colors*::
     Wyświetla domślne kolory w terminalu.
 
+// TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
 *-d*, *--dir* _<ścieżka>_::
     Ustawia ścieżkę jako katalog domowy WeeChat (używany dla plików
     konfiguracyjnych, logów, wtyczek użytkownika i skryptów), domyślna wartość

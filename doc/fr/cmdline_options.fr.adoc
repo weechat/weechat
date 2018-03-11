@@ -4,6 +4,10 @@
 *-c*, *--colors*::
     Afficher les couleurs par défaut du terminal.
 
+*--daemon*::
+    Lancer WeeChat en tâche de fond, comme un daemon (fonctionne seulement avec
+    la commande *weechat-headless*).
+
 *-d*, *--dir* _<répertoire>_::
     Définir le répertoire comme étant la base de WeeChat
     (utilisé pour les fichiers de configuration, logs, extensions

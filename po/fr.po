@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:27+0100\n"
-"PO-Revision-Date: 2018-02-19 21:27+0100\n"
+"POT-Creation-Date: 2018-03-10 12:03+0100\n"
+"PO-Revision-Date: 2018-03-10 12:06+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -173,6 +173,23 @@ msgstr ""
 "  -v, --version            afficher la version de WeeChat\n"
 "  extension:option         option pour une extension (voir man weechat)\n"
 
+msgid "Extra options in headless mode:\n"
+msgstr "Options supplémentaires en mode sans interface (« headless ») :\n"
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+"      --daemon             lancer WeeChat comme un « daemon » (fork, nouveau "
+"groupe pour le processus, fermeture des descripteurs de fichiers);\n"
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+"                           (par défaut en mode sans interface WeeChat est "
+"bloquant et ne tourne pas en tâche de fond)\n"
+
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Erreur : paramètre manquant pour l'option \"%s\"\n"
@@ -195,6 +212,9 @@ msgstr "Erreur : la base (%s) n'est pas un répertoire\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur : impossible de créer le répertoire \"%s\"\n"
+
+msgid "WeeChat is running in headless mode."
+msgstr "WeeChat tourne sans interface (« headless »)."
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -5158,6 +5178,18 @@ msgstr "La souris est désactivée"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', taille : %dx%d"
+
+#, c-format
+msgid "Running WeeChat in background..."
+msgstr "Lancement de WeeChat en tâche de fond..."
+
+#, c-format
+msgid "fork error"
+msgstr "erreur de fork"
+
+#, c-format
+msgid "OK"
+msgstr "OK"
 
 #, c-format
 msgid ""
@@ -13818,9 +13850,6 @@ msgstr "envoyé à"
 
 msgid "received from"
 msgstr "reçu de"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "FAILED"
 msgstr "ÉCHOUÉ"

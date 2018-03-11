@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:27+0100\n"
+"POT-Creation-Date: 2018-03-10 19:09+0100\n"
 "PO-Revision-Date: 2018-02-05 21:30+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -173,6 +173,19 @@ msgstr ""
 "  -v, --version\t\t\t\tzobraz verzi WeeChatu\n"
 "  plugin:option\t\t\t\tvolba pro plugin (viz: man weechat)\n"
 
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "Chyba: chybí argument pro volbu \"%s\"\n"
@@ -193,6 +206,9 @@ msgstr "Chyba: domovský adresář (%s) není adresářem\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Chyba: nemohu vytvořit adresář \"%s\"\n"
+
+msgid "WeeChat is running in headless mode."
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -4422,6 +4438,18 @@ msgstr "Myš je vypnuta"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s', velikost: %dx%d"
+
+#, c-format
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "fork error"
+msgstr "chyba"
+
+#, c-format
+msgid "OK"
+msgstr "OK"
 
 #, c-format
 msgid ""
@@ -12068,9 +12096,6 @@ msgstr "poslán"
 
 msgid "received from"
 msgstr "obdržen od"
-
-msgid "OK"
-msgstr "OK"
 
 msgid "FAILED"
 msgstr "SELHALO"

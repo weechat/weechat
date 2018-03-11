@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-02-19 21:27+0100\n"
+"POT-Creation-Date: 2018-03-10 19:09+0100\n"
 "PO-Revision-Date: 2018-03-06 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -171,6 +171,19 @@ msgstr ""
 "  plugin:option            プラグイン用オプション (man weechat を参照してくだ"
 "さい)\n"
 
+msgid "Extra options in headless mode:\n"
+msgstr ""
+
+msgid ""
+"      --daemon             run WeeChat as a daemon (fork, new process group, "
+"file descriptors closed);\n"
+msgstr ""
+
+msgid ""
+"                           (by default in headless mode WeeChat is blocking "
+"and does not run in background)\n"
+msgstr ""
+
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "エラー: \"%s\" オプションの引数がありません\n"
@@ -193,6 +206,9 @@ msgstr "エラー: ホーム (%s) はディレクトリではありません\n"
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました\n"
+
+msgid "WeeChat is running in headless mode."
+msgstr ""
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -4927,6 +4943,18 @@ msgstr "マウスを無効化しました"
 #, c-format
 msgid "  TERM='%s', size: %dx%d"
 msgstr "  TERM='%s'、サイズ: %dx%d"
+
+#, c-format
+msgid "Running WeeChat in background..."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "fork error"
+msgstr "エラー"
+
+#, c-format
+msgid "OK"
+msgstr "成功"
 
 #, c-format
 msgid ""
@@ -13296,9 +13324,6 @@ msgstr "送信先"
 
 msgid "received from"
 msgstr "受信元"
-
-msgid "OK"
-msgstr "成功"
 
 msgid "FAILED"
 msgstr "失敗"

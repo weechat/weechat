@@ -28,8 +28,22 @@ if(ENABLE_MAN)
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat.1 (pl)"
   )
-  add_custom_target(doc-man-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
+  add_custom_target(doc-man-weechat-pl ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/pl/man1)
+
+  # symbolic link weechat-headless.1 -> weechat.1
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
+    COMMAND ${CMAKE_COMMAND} -E remove -f "weechat-headless.1"
+    COMMAND ${CMAKE_COMMAND} -E create_symlink "weechat.1" "weechat-headless.1"
+    DEPENDS
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.pl.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.adoc
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Creating symbolic link weechat-headless.1 (pl)"
+  )
+  add_custom_target(doc-man-weechat-headless-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/pl/man1)
 endif()
 
 if(ENABLE_DOC)

@@ -5,6 +5,11 @@
     Mostra i colori prefefiniti nel terminale.
 
 // TRANSLATION MISSING
+*--daemon*::
+    Run WeeChat in background, as a daemon (works only with the command
+    *weechat-headless*).
+
+// TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
     Imposta una directory come home per WeeChat (utilizzata per i file di
     configurazione, log, plugin e script dell'utente), il valore predefinito

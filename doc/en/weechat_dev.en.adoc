@@ -60,41 +60,43 @@ The main WeeChat directories are:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Directory         | Description
-| src/              | Root of sources.
-|    core/          | Core functions: entry point, internal structures.
-|    gui/           | Functions for buffers, windows, ... (used by all interfaces).
-|       curses/     | Curses interface.
-|    plugins/       | Plugin and scripting API.
-|       alias/      | Alias plugin.
-|       aspell/     | Aspell plugin.
-|       buflist/    | Buflist plugin.
-|       charset/    | Charset plugin.
-|       exec/       | Exec plugin.
-|       fifo/       | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat).
-|       fset/       | Fset (Fast Set) plugin.
-|       guile/      | Guile (scheme) scripting API.
-|       irc/        | IRC (Internet Relay Chat) plugin.
-|       javascript/ | JavaScript scripting API.
-|       logger/     | Logger plugin (write messages displayed to files).
-|       lua/        | Lua scripting API.
-|       perl/       | Perl scripting API.
-|       php/        | PHP scripting API.
-|       python/     | Python scripting API.
-|       relay/      | Relay plugin (irc proxy + relay for remote interfaces).
-|       ruby/       | Ruby scripting API.
-|       script/     | Script manager.
-|       tcl/        | Tcl scripting API.
-|       trigger/    | Trigger plugin.
-|       xfer/       | Xfer plugin (IRC DCC file/chat).
-| tests/            | Tests.
-|    scripts/       | Scripting API tests.
-|       python/     | Python scripts to generate and run the scripting API tests.
-|    unit/          | Unit tests.
-|       core/       | Unit tests for core functions.
-| doc/              | Documentation.
-| po/               | Translations files (gettext).
-| debian/           | Debian packaging.
+| Directory          | Description
+| src/               | Root of sources.
+|    core/           | Core functions: entry point, internal structures.
+|    gui/            | Functions for buffers, windows, ... (used by all interfaces).
+|       curses/      | Curses interface.
+|          headless/ | Headless mode (no interface).
+|          normal/   | Curses interface.
+|    plugins/        | Plugin and scripting API.
+|       alias/       | Alias plugin.
+|       aspell/      | Aspell plugin.
+|       buflist/     | Buflist plugin.
+|       charset/     | Charset plugin.
+|       exec/        | Exec plugin.
+|       fifo/        | Fifo plugin (FIFO pipe used to remotely send commands to WeeChat).
+|       fset/        | Fset (Fast Set) plugin.
+|       guile/       | Guile (scheme) scripting API.
+|       irc/         | IRC (Internet Relay Chat) plugin.
+|       javascript/  | JavaScript scripting API.
+|       logger/      | Logger plugin (write messages displayed to files).
+|       lua/         | Lua scripting API.
+|       perl/        | Perl scripting API.
+|       php/         | PHP scripting API.
+|       python/      | Python scripting API.
+|       relay/       | Relay plugin (irc proxy + relay for remote interfaces).
+|       ruby/        | Ruby scripting API.
+|       script/      | Script manager.
+|       tcl/         | Tcl scripting API.
+|       trigger/     | Trigger plugin.
+|       xfer/        | Xfer plugin (IRC DCC file/chat).
+| tests/             | Tests.
+|    scripts/        | Scripting API tests.
+|       python/      | Python scripts to generate and run the scripting API tests.
+|    unit/           | Unit tests.
+|       core/        | Unit tests for core functions.
+| doc/               | Documentation.
+| po/                | Translations files (gettext).
+| debian/            | Debian packaging.
 |===
 
 [[sources]]
@@ -168,7 +170,11 @@ WeeChat "core" is located in following directories:
 |       gui-curses-mouse.c      | Mouse.
 |       gui-curses-term.c       | Functions about terminal.
 |       gui-curses-window.c     | Windows.
-|       main.c                  | Entry point.
+|       headless/               | Headless mode (no interface).
+|          main.c               | Entry point for headless mode.
+|          ncurses-fake.c       | Fake ncurses library.
+|       normal/                 | Curses interface.
+|          main.c               | Entry point for Curses interface.
 |===
 
 [[sources_plugins]]
