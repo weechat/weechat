@@ -42,7 +42,7 @@ if(ENABLE_MAN)
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Creating symbolic link weechat-headless.1 (it)"
   )
-  add_custom_target(doc-man-weechat-headless-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
+  add_custom_target(doc-man-weechat-headless-it ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/it/man1)
 endif()
 
