@@ -68,4 +68,4 @@ uninstall-doc:
 # clean
 
 clean-local:
-	-rm -f weechat_*.html
+	-$(RM) weechat_*.html
