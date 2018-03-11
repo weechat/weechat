@@ -41,6 +41,10 @@ Improvements::
   * script: change default value of option script.look.sort from "p,n" to "i,p,n"
   * scripts: display the script name in stdout/stderr output from scripts
 
+Bug fixes::
+
+  * core: fix regression on execution of hook_print callbacks (introduced in version 2.0)
+
 Build::
 
   * ruby: add detection of Ruby 2.5 (issue #1122)
