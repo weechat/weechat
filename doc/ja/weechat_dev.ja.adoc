@@ -71,8 +71,7 @@ qweechat::
 |    core/           | コア関数: エントリポイント、内部構造体
 |    gui/            | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
 |       curses/      | curses インターフェイス
-// TRANSLATION MISSING
-|          headless/ | Headless mode (no interface).
+|          headless/ | ヘッドレスモード (インターフェイスなし)
 |          normal/   | curses インターフェイス
 |    plugins/        | プラグインとスクリプト向け API
 |       alias/       | alias プラグイン
@@ -177,16 +176,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       gui-curses-mouse.c      | マウス
 |       gui-curses-term.c       | 端末についての関数
 |       gui-curses-window.c     | ウィンドウ
-// TRANSLATION MISSING
-|       headless/               | Headless mode (no interface).
-// TRANSLATION MISSING
-|          main.c               | Entry point for headless mode.
-// TRANSLATION MISSING
-|          ncurses-fake.c       | Fake ncurses library.
-// TRANSLATION MISSING
-|       normal/                 | Curses interface.
-// TRANSLATION MISSING
-|          main.c               | Entry point for Curses interface.
+|       headless/               | ヘッドレスモード (インターフェイスなし)
+|          main.c               | ヘッドレスモード用のエントリポイント
+|          ncurses-fake.c       | ダミーの ncurses ライブラリ
+|       normal/                 | curses インターフェイス
+|          main.c               | curses インターフェイス用のエントリポイント
 |===
 
 [[sources_plugins]]

@@ -27,9 +27,8 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 高速で軽量、多くのオペレーティングシステムで動くように設計されています。
 スクリプトを使って高度にカスタマイズと拡張可能です。
 
-// TRANSLATION MISSING
-The command *weechat-headless* runs WeeChat in a headless mode (no interface).
-It can be used for tests or to daemonize WeeChat with the option "--daemon".
+*weechat-headless* コマンドを使うことで、WeeChat をヘッドレスモード (インターフェイスなし) で実行できます。
+ヘッドレスモードはテストや WeeChat をデーモン化する (オプション "--daemon" を使います) ために使われます。
 
 == オプション
 
