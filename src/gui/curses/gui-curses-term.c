@@ -23,6 +23,7 @@
 #include "config.h"
 #endif
 
+#ifndef WEECHAT_HEADLESS
 #ifdef HAVE_NCURSESW_CURSES_H
 #ifdef __sun
 #include <ncurses/term.h>
@@ -32,6 +33,7 @@
 #else
 #include <term.h>
 #endif /* HAVE_NCURSESW_CURSES_H */
+#endif /* WEECHAT_HEADLESS */
 
 
 /*
@@ -45,10 +47,10 @@
 void
 gui_term_set_eat_newline_glitch (int value)
 {
-#ifdef HAVE_EAT_NEWLINE_GLITCH
+#if !defined(WEECHAT_HEADLESS) && defined(HAVE_EAT_NEWLINE_GLITCH)
     eat_newline_glitch = value;
 #else
     /* make C compiler happy */
     (void) value;
-#endif /* HAVE_EAT_NEWLINE_GLITCH */
+#endif
 }
