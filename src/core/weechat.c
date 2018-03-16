@@ -88,7 +88,7 @@ time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 struct timeval weechat_current_start_timeval; /* start time used to display */
                                        /* duration of /upgrade              */
-int weechat_quit = 0;                  /* = 1 if quit request from user     */
+volatile sig_atomic_t weechat_quit = 0;   /* = 1 if quit request from user  */
 volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
@@ -421,7 +421,9 @@ weechat_startup_message ()
 {
     if (weechat_headless)
     {
-        string_fprintf (stdout, _("WeeChat is running in headless mode."));
+        string_fprintf (stdout,
+                        _("WeeChat is running in headless mode "
+                          "(Ctrl-C to quit)."));
         string_fprintf (stdout, "\n");
     }
 

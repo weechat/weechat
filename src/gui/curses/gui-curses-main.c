@@ -143,6 +143,16 @@ gui_main_get_password (const char **prompt, char *password, int size)
 }
 
 /*
+ * Callback for system signal SIGINT: quits WeeChat.
+ */
+
+void
+gui_main_signal_sigint ()
+{
+    weechat_quit = 1;
+}
+
+/*
  * Initializes GUI.
  */
 
@@ -153,6 +163,11 @@ gui_main_init ()
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_window *ptr_bar_win;
     char title[256];
+
+#ifdef WEECHAT_HEADLESS
+    /* allow Ctrl-C to quit WeeChat in headless mode */
+    util_catch_signal (SIGINT, &gui_main_signal_sigint);
+#endif /* WEECHAT_HEADLESS */
 
     initscr ();
 
