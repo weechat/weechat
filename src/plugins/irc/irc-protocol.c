@@ -945,6 +945,7 @@ IRC_PROTOCOL_CALLBACK(kick)
     char *pos_comment;
     const char *ptr_autorejoin;
     int rejoin;
+    char *nick_kicked;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
 
@@ -958,8 +959,20 @@ IRC_PROTOCOL_CALLBACK(kick)
     if (!ptr_channel)
         return WEECHAT_RC_OK;
 
+    nick_kicked = argv[3];
+
     ptr_nick = irc_nick_search (server, ptr_channel, nick);
-    ptr_nick_kicked = irc_nick_search (server, ptr_channel, argv[3]);
+    ptr_nick_kicked = irc_nick_search (server, ptr_channel, nick_kicked);
+
+    irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+    irc_channel_nick_speaking_add (ptr_channel, nick, 0);
+    irc_channel_nick_speaking_time_remove_old (ptr_channel);
+    irc_channel_nick_speaking_time_add (server, ptr_channel, nick, time (NULL));
+
+    irc_channel_join_smart_filtered_unmask (ptr_channel, nick_kicked);
+    irc_channel_nick_speaking_add (ptr_channel, nick_kicked, 0);
+    irc_channel_nick_speaking_time_remove_old (ptr_channel);
+    irc_channel_nick_speaking_time_add (server, ptr_channel, nick_kicked, time (NULL));
 
     if (pos_comment)
     {
@@ -973,8 +986,8 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_QUIT,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, nick_kicked),
+            nick_kicked,
             IRC_COLOR_MESSAGE_QUIT,
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
@@ -993,12 +1006,12 @@ IRC_PROTOCOL_CALLBACK(kick)
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
             IRC_COLOR_MESSAGE_QUIT,
-            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
-            argv[3],
+            irc_nick_color_for_msg (server, 1, ptr_nick_kicked, nick_kicked),
+            nick_kicked,
             IRC_COLOR_MESSAGE_QUIT);
     }
 
-    if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
+    if (irc_server_strcasecmp (server, nick_kicked, server->nick) == 0)
     {
         /*
          * my nick was kicked => free all nicks, channel is not active any
@@ -1160,14 +1173,14 @@ IRC_PROTOCOL_CALLBACK(mode)
     {
         smart_filter = 0;
         ptr_channel = irc_channel_search (server, argv[2]);
-        if (ptr_channel)
-        {
-            smart_filter = irc_mode_channel_set (server, ptr_channel,
-                                                 pos_modes);
-        }
         local_mode = (irc_server_strcasecmp (server, nick, server->nick) == 0);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
+        if (ptr_channel)
+        {
+            smart_filter = irc_mode_channel_set (server, ptr_channel,
+                                                 pos_modes, ptr_nick);
+        }
         weechat_printf_date_tags (
             irc_msgbuffer_get_target_buffer (server, NULL, command, NULL,
                                              ptr_buffer),
@@ -1213,7 +1226,7 @@ IRC_PROTOCOL_CALLBACK(mode)
  * Callback for the IRC message "NICK".
  *
  * Message looks like:
- *   :oldnick!user@host NICK :newnick
+ *   :oldnick!user@host NICK :new_nick
  */
 
 IRC_PROTOCOL_CALLBACK(nick)
@@ -1223,7 +1236,6 @@ IRC_PROTOCOL_CALLBACK(nick)
     char *new_nick, *old_color, str_tags[512];
     const char *buffer_name;
     int local_nick, smart_filter;
-    struct t_irc_channel_speaking *ptr_nick_speaking;
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1330,12 +1342,10 @@ IRC_PROTOCOL_CALLBACK(nick)
                         if (!irc_ignore_check (server, ptr_channel->name,
                                                nick, host))
                         {
-                            ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
-                                                 && (weechat_config_boolean (irc_config_look_smart_filter_nick))) ?
-                                irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
                             smart_filter = (weechat_config_boolean (irc_config_look_smart_filter)
                                             && weechat_config_boolean (irc_config_look_smart_filter_nick)
-                                            && !ptr_nick_speaking);
+                                            && !irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1)
+                                            && !irc_channel_nick_speaking_time_search (server, ptr_channel, new_nick, 1));
                             snprintf (str_tags, sizeof (str_tags),
                                       "%sirc_nick1_%s,irc_nick2_%s",
                                       (smart_filter) ? "irc_smart_filter," : "",
@@ -1497,10 +1507,19 @@ IRC_PROTOCOL_CALLBACK(notice)
 
             /*
              * unmask a smart filtered join if it is in hashtable
-             * "join_smart_filtered" of channel
+             * "join_smart_filtered" of channel, set speaking time
              */
             if (ptr_channel)
+            {
                 irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+                irc_channel_nick_speaking_add (ptr_channel,
+                                               nick,
+                                               weechat_string_has_highlight (pos_args,
+                                                                             server->nick));
+                irc_channel_nick_speaking_time_remove_old (ptr_channel);
+                irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
+                                                    time (NULL));
+            }
 
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
             weechat_printf_date_tags (
@@ -1919,9 +1938,12 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         {
             /*
              * unmask a smart filtered join if it is in hashtable
-             * "join_smart_filtered" of channel
+             * "join_smart_filtered" of channel, set speaking time
              */
             irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+            irc_channel_nick_speaking_time_remove_old (ptr_channel);
+            irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
+                                                time (NULL));
 
             /* CTCP to channel */
             if (pos_args[0] == '\01')
@@ -1983,9 +2005,6 @@ IRC_PROTOCOL_CALLBACK(privmsg)
                 nick,
                 weechat_string_has_highlight (pos_args,
                                               server->nick));
-            irc_channel_nick_speaking_time_remove_old (ptr_channel);
-            irc_channel_nick_speaking_time_add (server, ptr_channel, nick,
-                                                time (NULL));
         }
     }
     else
@@ -2303,10 +2322,15 @@ IRC_PROTOCOL_CALLBACK(topic)
 
     /*
      * unmask a smart filtered join if it is in hashtable
-     * "join_smart_filtered" of channel
+     * "join_smart_filtered" of channel, set speaking time
      */
     if (ptr_channel)
+    {
         irc_channel_join_smart_filtered_unmask (ptr_channel, nick);
+        irc_channel_nick_speaking_add (ptr_channel, nick, 0);
+        irc_channel_nick_speaking_time_remove_old (ptr_channel);
+        irc_channel_nick_speaking_time_add (server, ptr_channel, nick, time (NULL));
+    }
 
     if (pos_topic && pos_topic[0])
     {
@@ -3295,7 +3319,7 @@ IRC_PROTOCOL_CALLBACK(324)
         if (argc > 4)
         {
             (void) irc_mode_channel_set (server, ptr_channel,
-                                         ptr_channel->modes);
+                                         ptr_channel->modes, NULL);
         }
     }
     if (!ptr_channel

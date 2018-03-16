@@ -25,11 +25,11 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-nick.h"
 #include "irc-mode.h"
 #include "irc-config.h"
 #include "irc-server.h"
 #include "irc-channel.h"
-#include "irc-nick.h"
 
 
 /*
@@ -287,9 +287,10 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
     if (strcmp (ptr_modes, "*") == 0)
         return 1;
 
-    /* if var is "+", modes from server prefixes are filtered */
-    if (strcmp (ptr_modes, "+") == 0)
-        return strchr (irc_server_get_prefix_modes (server), mode) ? 1 : 0;
+    /* if var has "+", modes from server prefixes are filtered */
+    if (strchr (ptr_modes, '+')
+        && strchr (irc_server_get_prefix_modes (server), mode))
+        return 1;
 
     /*
      * if var starts with "-", smart filter all modes except following modes
@@ -317,12 +318,13 @@ irc_mode_smart_filtered (struct t_irc_server *server, char mode)
 int
 irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel,
-                      const char *modes)
+                      const char *modes,
+                      struct t_irc_nick *ptr_origin_nick)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg, chanmode_type;
     int argc, current_arg, update_channel_modes, channel_modes_updated;
     int smart_filter;
-    struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_target_nick;
 
     if (!server || !channel || !modes)
         return 0;
@@ -396,8 +398,17 @@ irc_mode_channel_set (struct t_irc_server *server,
                     if (ptr_arg)
                         current_arg++;
 
+                    /*
+                     * filtering disabled for this mode char or the mode setter
+                     * has spoken recently => don't filter
+                     */
                     if (smart_filter
-                        && !irc_mode_smart_filtered (server, pos[0]))
+                        && (!irc_mode_smart_filtered (server, pos[0])
+                            || (ptr_origin_nick
+                                && irc_channel_nick_speaking_time_search (server,
+                                                                          channel,
+                                                                          ptr_origin_nick->name,
+                                                                          1))))
                     {
                         smart_filter = 0;
                     }
@@ -440,23 +451,23 @@ irc_mode_channel_set (struct t_irc_server *server,
                         update_channel_modes = 0;
                         if (ptr_arg)
                         {
-                            ptr_nick = irc_nick_search (server, channel,
-                                                        ptr_arg);
-                            if (ptr_nick)
+                            ptr_target_nick = irc_nick_search (server, channel,
+                                                               ptr_arg);
+                            if (ptr_target_nick)
                             {
-                                irc_nick_set_mode (server, channel, ptr_nick,
+                                irc_nick_set_mode (server, channel, ptr_target_nick,
                                                    (set_flag == '+'), pos[0]);
                                 /*
-                                 * disable smart filtering if mode is sent
-                                 * to me, or based on the nick speaking time
+                                 * disable smart filtering if the mode is sent to me
+                                 * or if the mode recipient has spoken recently
                                  */
                                 if (smart_filter
                                     && ((irc_server_strcasecmp (server,
-                                                                ptr_nick->name,
+                                                                ptr_target_nick->name,
                                                                 server->nick) == 0)
                                         || irc_channel_nick_speaking_time_search (server,
                                                                                   channel,
-                                                                                  ptr_nick->name,
+                                                                                  ptr_target_nick->name,
                                                                                   1)))
                                 {
                                     smart_filter = 0;
