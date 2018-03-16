@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-10 19:09+0100\n"
+"POT-Creation-Date: 2018-03-16 20:13+0100\n"
 "PO-Revision-Date: 2018-03-14 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -211,7 +211,8 @@ msgstr "エラー: ホーム (%s) はディレクトリではありません\n"
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "エラー: ディレクトリ \"%s\" の作成に失敗しました\n"
 
-msgid "WeeChat is running in headless mode."
+#, fuzzy
+msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
 msgstr "WeeChat はヘッドレスモードで実行中です。"
 
 msgid ""
