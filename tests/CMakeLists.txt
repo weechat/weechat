@@ -64,7 +64,7 @@ set(LIBS
   ${CPPUTEST_LIBRARIES})
 target_link_libraries(tests ${LIBS})
 add_dependencies(tests
-  weechat_core weechat_plugins weechat_gui_common weechat_gui_curses
+  weechat_core weechat_plugins weechat_gui_common weechat_gui_headless
   weechat_ncurses_fake
   weechat_unit_tests)
 
