@@ -27,9 +27,9 @@ WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
 i lekki, przeznaczony dla wielu systemów operacyjnych.
 Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
 
-// TRANSLATION MISSING
-The command *weechat-headless* runs WeeChat in a headless mode (no interface).
-It can be used for tests or to daemonize WeeChat with the option "--daemon".
+Komenda *weechat-headless* uruchamia WeeChat w trybie headless (bez interfejsu).
+Może być używana do testów lub do uruchamiania WeeChat w trybie demona za pomocą
+opcji "--daemon".
 
 == OPCJE
 
