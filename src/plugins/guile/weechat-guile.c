@@ -755,7 +755,9 @@ weechat_guile_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (guile_config_look_eval_keep_context))
     {
+        guile_quiet = 1;
         weechat_guile_unload (guile_script_eval);
+        guile_quiet = 0;
         guile_script_eval = NULL;
     }
 

@@ -1100,7 +1100,9 @@ weechat_python_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (python_config_look_eval_keep_context))
     {
+        python_quiet = 1;
         weechat_python_unload (python_script_eval);
+        python_quiet = 0;
         python_script_eval = NULL;
     }
 

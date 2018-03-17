@@ -855,7 +855,9 @@ weechat_lua_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (lua_config_look_eval_keep_context))
     {
+        lua_quiet = 1;
         weechat_lua_unload (lua_script_eval);
+        lua_quiet = 0;
         lua_script_eval = NULL;
     }
 

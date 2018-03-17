@@ -847,7 +847,9 @@ weechat_perl_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (perl_config_look_eval_keep_context))
     {
+        perl_quiet = 1;
         weechat_perl_unload (perl_script_eval);
+        perl_quiet = 0;
         perl_script_eval = NULL;
     }
 

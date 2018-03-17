@@ -900,7 +900,9 @@ weechat_ruby_eval (struct t_gui_buffer *buffer, int send_to_buffer_as_input,
 
     if (!weechat_config_boolean (ruby_config_look_eval_keep_context))
     {
+        ruby_quiet = 1;
         weechat_ruby_unload (ruby_script_eval);
+        ruby_quiet = 0;
         ruby_script_eval = NULL;
     }
 
