@@ -537,7 +537,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.server_default.autojoin]] *irc.server_default.autojoin*
-** opis: pass:none[comma separated list of channels to join after connection to server (and after executing command + delay if they are set); the channels that require a key must be at beginning of the list, and all the keys must be given after the channels (separated by a space) (example: "#channel1,#channel2,#channel3 key1,key2" where #channel1 and #channel2 are protected by key1 and key2) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[oddzielona przecinkami lista kanałów do wejścia po połączeniu z serwerem (po wykonaniu komendy + opóźnienie jeśli są ustawione); kanały wymagające hasła muszą znajdować się na początku listy, wszystkie hasła muszą zostać podane po kanałach (oddzielone spacją) (przykład: "#kanał1,#kanał2,#kanał3 hasło1,hasło2", gdzie #kanał1 i #kanał2 wymagają odpowiednio hasło1 i hasło2) (zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -585,7 +585,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
-** opis: pass:none[command(s) to run after connection to server and before auto-join of channels (many commands can be separated by ";", use "\;" for a semicolon, special variables $nick, $channel and $server are replaced by their value) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[komenda(y) do wykonania po połączeniu z serwerem przed automatycznym wejściem na kanały (wiele komend powinno zostać oddzielone ";", użyj "\;" dla średnika, specjalne zmienne $nick, $channel oraz $server są zastępowane ich wartościami) (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -633,7 +633,7 @@
 ** domyślna wartość: `+"WeeChat ${info:version}"+`
 
 * [[option_irc.server_default.nicks]] *irc.server_default.nicks*
-** opis: pass:none[nicknames to use on server (separated by comma) (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[nicki do użycia na serwerze (oddzielone przecinkiem) (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -651,7 +651,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.password]] *irc.server_default.password*
-** opis: pass:none[password for server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[hasło dla serwera (uwaga: zawartość jest przetwarzana zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -663,7 +663,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.realname]] *irc.server_default.realname*
-** opis: pass:none[real name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[real name używany na serwerze (uwaga: zawartość jest przetwarzana zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -687,7 +687,7 @@
 ** domyślna wartość: `+plain+`
 
 * [[option_irc.server_default.sasl_password]] *irc.server_default.sasl_password*
-** opis: pass:none[password for SASL authentication; this option is not used for mechanisms "ecdsa-nist256p-challenge" and "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[hasło dla uwierzytelniania SASL; ta opcja nie jest używana dla mechanizmów "ecdsa-nist256p-challenge" oraz "external"  (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -699,7 +699,7 @@
 ** domyślna wartość: `+15+`
 
 * [[option_irc.server_default.sasl_username]] *irc.server_default.sasl_username*
-** opis: pass:none[username for SASL authentication; this option is not used for mechanism "external" (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[nazwa użytkownika dla uwierzytelniania SASL; ta opcja nie jest używana dla mechanizmu "external"  (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -729,7 +729,7 @@
 ** domyślna wartość: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: pass:none[fingerprint of certificate which is trusted and accepted for the server; only hexadecimal digits are allowed (0-9, a-f): 64 chars for SHA-512, 32 chars for SHA-256, 20 chars for SHA-1 (insecure, not recommended); many fingerprints can be separated by commas; if this option is set, the other checks on certificates are NOT performed (option "ssl_verify") (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[skrót certyfikatu, który jest zaufany i akceptowany dla serwera; tylko cyfry heksadecymalne są dozwolone (0-9, a-f): 64 znaki dla SHA-512, 32 znaki dla SHA-256, 20 znaków dla SHA-1 (mało bezpieczne, nie zalecane); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify") (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -747,13 +747,13 @@
 ** domyślna wartość: `+on+`
 
 * [[option_irc.server_default.usermode]] *irc.server_default.usermode*
-** opis: pass:none[user mode(s) to set after connection to server and before executing command and the auto-join of channels; examples: "+R" (to set mode "R"), "+R-i" (to set mode "R" and remove "i"); see /help mode for the complete mode syntax (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[tryb(y) użytkowniak do ustawienia po połączeniu z serwerem przed wykonaniem komend oraz automatycznym wejściem na kanały; przykłady "+R" (w celu ustawienia trybu "R"), "+R-i" (w celu utawienia trbu "R" i zdjęcia trybu "i"); zobacz /help mode dla pełnej lity składni (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.username]] *irc.server_default.username*
-** opis: pass:none[user name to use on server (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** opis: pass:none[nazwa użytkownika używana na serwerze (uwaga: zawartość jest przetwarzana zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

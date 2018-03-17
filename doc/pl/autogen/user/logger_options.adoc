@@ -27,7 +27,7 @@
 ** domyślna wartość: `+120+`
 
 * [[option_logger.file.fsync]] *logger.file.fsync*
-** opis: pass:none[use fsync to synchronize the log file with the storage device after the flush (see man fsync); this is slower but should prevent any data loss in case of power failure during the save of log file]
+** opis: pass:none[użyj fsync do synchronizacji plików z logami z zewnętrznym nośnikiem (zobacz man fsync); jest to wolniejsze ale powinno zapobiec utracie danych w przypadku zaniku napięcia podczas zapisu plików z logami]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
