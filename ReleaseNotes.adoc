@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.1]]
-== Version 2.1 (under dev)
+== Version 2.1 (2018-03-18)
 
 [[v2.1_script_plugin_check_license]]
 === Option to check license of scripts loaded
