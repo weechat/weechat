@@ -72,7 +72,7 @@ daemonize ()
     setsid ();
 
     /* close all file descriptors */
-    for (i = getdtablesize(); i >= 0; --i)
+    for (i = sysconf(_SC_OPEN_MAX); i >= 0; --i)
     {
         close (i);
     }
