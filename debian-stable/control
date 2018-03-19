@@ -28,7 +28,8 @@ Vcs-Browser: https://anonscm.debian.org/git/users/kolter/weechat.git
 
 Package: weechat
 Architecture: all
-Depends: ${misc:Depends}, weechat-curses (>= ${source:Version})
+Depends: ${misc:Depends}, weechat-curses (>= ${source:Version}) |
+ weechat-headless (>= ${source:Version})
 Suggests: weechat-doc (= ${source:Version})
 Description: Fast, light and extensible chat client (metapackage)
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -79,6 +80,35 @@ Description: Fast, light and extensible chat client - console client
  .
  This package provides the console client (ncurses).
 
+Package: weechat-headless
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-core (= ${binary:Version})
+Conflicts: weechat-common
+Breaks: weechat-scripts (<= 20090221-1)
+Recommends: weechat-plugins (= ${binary:Version})
+Suggests: weechat-doc (= ${source:Version})
+Description: Fast, light and extensible chat client - console client
+ WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+ for many operating systems. Everything can be done with a keyboard.
+ It is customizable and extensible with plugins/scripts, and includes:
+  - support of IRC protocol (native)
+  - support of XMPP/Jabber protocol (with additional script)
+  - nicklist
+  - smart hotlist
+  - horizontal and vertical split
+  - double charset support (decode/encode)
+  - FIFO pipe for remote control
+  - 256 colors support
+  - incremental text search
+  - dynamic filtering of buffer content
+  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
+  - script manager
+  - spell checking
+  - highly customizable and extensible
+  - and much more!
+ .
+ This package provides the headless client.
+
 Package: weechat-core
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
@@ -90,11 +120,12 @@ Description: Fast, light and extensible chat client - core files
  .
  This package provides core plugins and locales files for WeeChat. It
  currently ships the following plugins: alias, buflist, charset, fset, irc,
- logger and xfer. It is useless without weechat-curses.
+ logger and xfer. It is useless without weechat-curses or weechat-headless.
 
 Package: weechat-plugins
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Suggests: weechat-scripts (>> 20090221-1)
 Description: Fast, light and extensible chat client - plugins
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -110,7 +141,8 @@ Description: Fast, light and extensible chat client - plugins
 
 Package: weechat-python
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - python plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -119,7 +151,8 @@ Description: Fast, light and extensible chat client - python plugin
 
 Package: weechat-perl
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - perl plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -128,7 +161,8 @@ Description: Fast, light and extensible chat client - perl plugin
 
 Package: weechat-ruby
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - ruby plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -137,7 +171,8 @@ Description: Fast, light and extensible chat client - ruby plugin
 
 Package: weechat-lua
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - lua plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -146,7 +181,8 @@ Description: Fast, light and extensible chat client - lua plugin
 
 Package: weechat-tcl
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - tcl plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -155,7 +191,8 @@ Description: Fast, light and extensible chat client - tcl plugin
 
 Package: weechat-guile
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - guile plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -164,7 +201,8 @@ Description: Fast, light and extensible chat client - guile plugin
 
 Package: weechat-javascript
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version})
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version})
 Description: Fast, light and extensible chat client - javascript plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -173,8 +211,8 @@ Description: Fast, light and extensible chat client - javascript plugin
 
 Package: weechat-php
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}),
- libphp7.2-embed
+Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+ weechat-headless (= ${binary:Version}), libphp7.2-embed
 Description: Fast, light and extensible chat client - php plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
@@ -206,7 +244,8 @@ Section: debug
 Priority: extra
 Architecture: any
 Depends: ${misc:Depends}, weechat-curses (= ${binary:Version}) |
- weechat-core (= ${binary:Version}), weechat-plugins (= ${binary:Version})
+ weechat-headless (= ${binary:Version}) | weechat-core (= ${binary:Version}),
+ weechat-plugins (= ${binary:Version})
 Description: Fast, light and extensible chat client - debugging symbols
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.

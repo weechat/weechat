@@ -25,6 +25,7 @@ Documentation::
 Build::
 
   * core: fix build with CMake and Ninja
+  * debian: add package weechat-headless with the headless binary and its man page
 
 [[v2.1]]
 == Version 2.1 (2018-03-18)

@@ -17,6 +17,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.2]]
+== Version 2.2 (under dev)
+
+[[v2.2_debian_headless_package]]
+=== New Debian package for headless version
+
+A new Debian package has been added: _weechat-headless_ which contains the
+binary _weechat-headless_ and its man page.
+
+In version 2.0, this binary was in the package _weechat-curses_.
+
 [[v2.1]]
 == Version 2.1 (2018-03-18)
 
@@ -98,7 +109,7 @@ For more information about this feature, you can read help with:
 
 The Debian packaging has changed (for now only on weechat.org repositories,
 not in Debian official repositories). +
-The package `weechat-plugins` has been split into 9 packages:
+The package _weechat-plugins_ has been split into 9 packages:
 
 - weechat-plugins (with only the following plugins: aspell, exec, fifo, relay,
   script, trigger)

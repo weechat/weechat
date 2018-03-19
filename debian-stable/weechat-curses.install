@@ -1,7 +1,4 @@
 usr/bin/weechat
-usr/bin/weechat-headless
 debian/weechat.xpm usr/share/pixmaps
 usr/share/man/man1/weechat.1
 usr/share/man/*/man1/weechat.1
-usr/share/man/man1/weechat-headless.1
-usr/share/man/*/man1/weechat-headless.1
