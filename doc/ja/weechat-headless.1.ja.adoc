@@ -1,4 +1,5 @@
-= weechat(1)
+// TRANSLATION MISSING
+= weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
@@ -8,22 +9,25 @@
 
 == 名前
 
-weechat - 拡張可能なチャットクライアント
+weechat-headless - 拡張可能なチャットクライアント (headless version)
 
 == 書式
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-*weechat* [-c|--colors]
-*weechat* [-h|--help]
-*weechat* [-l|--license]
-*weechat* [-v|--version]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat-headless* [-c|--colors]
+*weechat-headless* [-h|--help]
+*weechat-headless* [-l|--license]
+*weechat-headless* [-v|--version]
 
 == 説明
 
 WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライアントです。
 高速で軽量、多くのオペレーティングシステムで動くように設計されています。
 スクリプトを使って高度にカスタマイズと拡張可能です。
+
+*weechat-headless* コマンドを使うことで、WeeChat をヘッドレスモード (インターフェイスなし) で実行できます。
+ヘッドレスモードはテストや WeeChat をデーモン化する (オプション "--daemon" を使います) ために使われます。
 
 == オプション
 
@@ -40,7 +44,7 @@ include::man_files.ja.adoc[]
 // TRANSLATION MISSING
 == SEE ALSO
 
-*weechat-headless*(1)
+*weechat*(1)
 
 == 著者
 

@@ -1,0 +1,15 @@
+For complete doc on plugin options, please look at plugins documentation in
+https://weechat.org/doc[WeeChat user's guide].
+
+With irc plugin, you can connect to temporary server with an URL like:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+To join WeeChat IRC channel support with nick "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 address can be enclosed in brackets to add a port after address, for
+example:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test

@@ -1,0 +1,16 @@
+Kompletna dokumentacja na temat opcji wtyczek dostępna jest
+w https://weechat.org/doc[WeeChat user's guide].
+
+Dzięki wtyczce irc możliwe jest połączenie z serwerami tymczasowymi za pomocą
+URLi jak:
+
+    irc[6][s]://[[nick][:hasło]@]serwer[:port][/#kanał1[,#kanał2...]]
+
+Aby wejść na kanał IRC poświęcony WeeChat pod nickiem "mójnick":
+
+    irc://mójnick@chat.freenode.net/#weechat
+
+Adresy IPv6 mogą być otoczone nawiasami kwadratowymi, aby możliwe było podanie
+numeru potyu po adresie, na przykład:
+
+    irc://mójnick@[2001:db8:0:85a3::ac1f:8001]:6668/#test

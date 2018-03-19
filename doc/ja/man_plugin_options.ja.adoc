@@ -1,0 +1,15 @@
+プラグインオプションに関する完全な文書は
+https://weechat.org/doc[WeeChat ユーザーズガイド] のプラグインの章を参照してください。
+
+irc プラグインでは以下の様な URL で一時的なサーバに接続することができます:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+"mynick" というニックネームで WeeChat IRC チャンネルサポートに参加するには:
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 アドレスの後にポートを指定するには IPv6
+アドレスを括弧に入れてください、例えば:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test

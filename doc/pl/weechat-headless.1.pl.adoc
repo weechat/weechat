@@ -1,4 +1,5 @@
-= weechat(1)
+// TRANSLATION MISSING
+= weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
@@ -8,22 +9,26 @@
 
 == NAZWA
 
-weechat - rozszerzalny klient rozmów
+weechat-headless - rozszerzalny klient rozmów (headless version)
 
 == SKŁADNIA
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
-*weechat* [-c|--colors]
-*weechat* [-h|--help]
-*weechat* [-l|--license]
-*weechat* [-v|--version]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat-headless* [-c|--colors]
+*weechat-headless* [-h|--help]
+*weechat-headless* [-l|--license]
+*weechat-headless* [-v|--version]
 
 == OPIS
 
 WeeChat (Wee Enhanced Environment for Chat) to darmowy klient rozmów, szybki
 i lekki, przeznaczony dla wielu systemów operacyjnych.
 Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
+
+Komenda *weechat-headless* uruchamia WeeChat w trybie headless (bez interfejsu).
+Może być używana do testów lub do uruchamiania WeeChat w trybie demona za pomocą
+opcji "--daemon".
 
 == OPCJE
 
@@ -40,7 +45,7 @@ include::man_files.pl.adoc[]
 // TRANSLATION MISSING
 == SEE ALSO
 
-*weechat-headless*(1)
+*weechat*(1)
 
 == AUTORZY
 

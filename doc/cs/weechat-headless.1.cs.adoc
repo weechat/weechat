@@ -1,4 +1,5 @@
-= weechat(1)
+// TRANSLATION MISSING
+= weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
@@ -9,22 +10,27 @@
 
 == JMÉNO
 
-weechat - the extensible chat client
+weechat-headless - the extensible chat client (headless version)
 
 == PŘEHLED
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
-*weechat* [-c|--colors]
-*weechat* [-h|--help]
-*weechat* [-l|--license]
-*weechat* [-v|--version]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat-headless* [-c|--colors]
+*weechat-headless* [-h|--help]
+*weechat-headless* [-l|--license]
+*weechat-headless* [-v|--version]
 
 == POPIS
 
 WeeChat (Wee Enhanced Environment for Chat) je svobodný chatovací klient.
 Je lehký, plně konfigurovatelný a lehce rozšiřitelný pomocí pluginů a scriptů
 v obvyklých sciptovacích jazycích.
+
+// TRANSLATION MISSING
+The command *weechat-headless* runs WeeChat in a headless mode (no interface).
+It can be used for tests or to daemonize WeeChat with the option "--daemon".
+
 
 == VOLBY
 
@@ -41,7 +47,7 @@ include::man_files.cs.adoc[]
 // TRANSLATION MISSING
 == SEE ALSO
 
-*weechat-headless*(1)
+*weechat*(1)
 
 == AUTOŘI
 

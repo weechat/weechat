@@ -18,29 +18,34 @@
 #
 
 if(ENABLE_MAN)
-  # man page
+  # man page: weechat
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat.1
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.adoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_files.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.cs.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat.1 (cs)"
   )
   add_custom_target(doc-man-weechat-cs ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/cs/man1)
 
-  # symbolic link weechat-headless.1 -> weechat.1
+  # man page: weechat-headless
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
-    COMMAND ${CMAKE_COMMAND} -E remove -f "weechat-headless.1"
-    COMMAND ${CMAKE_COMMAND} -E create_symlink "weechat.1" "weechat-headless.1"
+    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.cs.adoc
     DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.cs.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_files.cs.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.cs.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Creating symbolic link weechat-headless.1 (cs)"
+    COMMENT "Building weechat-headless.1 (cs)"
   )
   add_custom_target(doc-man-weechat-headless-cs ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/cs/man1)

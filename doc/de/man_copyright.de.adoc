@@ -1,0 +1,13 @@
+WeeChat wird programmiert von Sébastien Helleu und weiteren Beteiligten (eine vollständige Auflistung
+findet man in der AUTHORS.adoc Datei).
+
+Copyright (C) 2003-2018 {author}
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Please read the COPYING file for more information.
+
+Web: https://weechat.org/

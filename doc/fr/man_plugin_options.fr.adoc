@@ -1,0 +1,17 @@
+Pour une documentation complète sur les options des extensions, merci de
+consulter la documentation des extensions dans le
+https://weechat.org/doc[guide utilisateur de WeeChat].
+
+Avec l'extension irc, vous pouvez vous connecter à un serveur de manière
+temporaire avec une URL, comme ceci :
+
+    irc[6][s]://[[pseudo][:motdepasse]@]serveur[:port][/#canal1[,#canal2...]]
+
+Pour rejoindre le canal IRC de support WeeChat avec le pseudo "monpseudo" :
+
+    irc://monpseudo@chat.freenode.net/#weechat
+
+Les adresses IPv6 peuvent être entourées par des crochets pour ajouter un port
+après, par exemple :
+
+    irc://monpseudo@[2001:db8:0:85a3::ac1f:8001]:6668/#test

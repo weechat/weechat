@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.2]]
 == Version 2.2 (under dev)
 
+Documentation::
+
+  * core: split man pages weechat and weechat-headless
+
 Build::
 
   * core: fix build with CMake and Ninja

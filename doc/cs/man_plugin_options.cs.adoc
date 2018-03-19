@@ -1,0 +1,14 @@
+Pro kompletní dokumentaci nastavení pluginů a jejich volby podívejte se na
+https://weechat.org/doc[WeeChat user's guide].
+
+S irc pluginem se můžete doččasně připojit na server s URL jako:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+K připojení na IRC kanál Weechatu pro podporu s přezdívkou "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 adresa může být uzavřena do hranatých závorek k přidání portu, například:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test

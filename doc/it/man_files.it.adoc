@@ -1,0 +1,75 @@
+// TRANSLATION MISSING
+$HOME/.weechat/weechat.conf::
+    main WeeChat configuration file
+
+$HOME/.weechat/plugins.conf::
+    plugins configuration file
+
+$HOME/.weechat/sec.conf::
+    configuration file with secured data
+
+$HOME/.weechat/alias.conf::
+    configuration file for _alias_ plugin
+
+$HOME/.weechat/aspell.conf::
+    configuration file for _aspell_ plugin
+
+$HOME/.weechat/buflist.conf::
+    configuration file for _buflist_ plugin
+
+$HOME/.weechat/charset.conf::
+    configuration file for _charset_ plugin
+
+$HOME/.weechat/exec.conf::
+    configuration file for _exec_ plugin
+
+$HOME/.weechat/fifo.conf::
+    configuration file for _fifo_ plugin
+
+$HOME/.weechat/fset.conf::
+    configuration file for _fset_ plugin
+
+$HOME/.weechat/guile.conf::
+    configuration file for _guile_ plugin
+
+$HOME/.weechat/irc.conf::
+    configuration file for _irc_ plugin
+
+$HOME/.weechat/javascript.conf::
+    configuration file for _javascript_ plugin
+
+$HOME/.weechat/logger.conf::
+    configuration file for _logger_ plugin
+
+$HOME/.weechat/lua.conf::
+    configuration file for _lua_ plugin
+
+$HOME/.weechat/perl.conf::
+    configuration file for _perl_ plugin
+
+$HOME/.weechat/php.conf::
+    configuration file for _php_ plugin
+
+$HOME/.weechat/python.conf::
+    configuration file for _python_ plugin
+
+$HOME/.weechat/relay.conf::
+    configuration file for _relay_ plugin
+
+$HOME/.weechat/ruby.conf::
+    configuration file for _ruby_ plugin
+
+$HOME/.weechat/script.conf::
+    configuration file for _script_ plugin
+
+$HOME/.weechat/tcl.conf::
+    configuration file for _tcl_ plugin
+
+$HOME/.weechat/trigger.conf::
+    configuration file for _trigger_ plugin
+
+$HOME/.weechat/xfer.conf::
+    configuration file for _xfer_ plugin
+
+$HOME/.weechat/weechat.log::
+    WeeChat log file

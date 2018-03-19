@@ -1,0 +1,13 @@
+WeeChat est écrit par Sébastien Helleu et des contributeurs (la liste complète
+est dans le fichier AUTHORS.adoc).
+
+Copyright (C) 2003-2018 {author}
+
+WeeChat est un logiciel libre; vous pouvez le redistribuer et/ou le modifier
+sous les termes de la GNU General Public License telle que publiée par la
+Free Software Foundation; soit la version 3 de la licence, ou (selon votre
+choix) toute version ultérieure.
+
+Merci de consulter le fichier COPYING pour plus d'informations.
+
+Site web : https://weechat.org/

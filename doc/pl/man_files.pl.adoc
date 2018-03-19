@@ -1,0 +1,74 @@
+$HOME/.weechat/weechat.conf::
+    główny plik konfiguracyjny WeeChat
+
+$HOME/.weechat/plugins.conf::
+    plik konfiguracyjny wtyczek
+
+$HOME/.weechat/sec.conf::
+    plik konfiguracyjny z zabezpieczonymi danymi
+
+$HOME/.weechat/alias.conf::
+    plik konfiguracyjny wtyczki _alias_
+
+$HOME/.weechat/aspell.conf::
+    plik konfiguracyjny wtyczki _aspell_
+
+$HOME/.weechat/buflist.conf::
+    plik konfiguracyjny wtyczki _buflist_
+
+$HOME/.weechat/charset.conf::
+    plik konfiguracyjny wtyczki _charset_
+
+$HOME/.weechat/exec.conf::
+    plik konfiguracyjny wtyczki _exec_
+
+$HOME/.weechat/fifo.conf::
+    plik konfiguracyjny wtyczki _fifo_
+
+$HOME/.weechat/fset.conf::
+    plik konfiguracyjny wtyczki _fset_
+
+$HOME/.weechat/guile.conf::
+    plik konfiguracyjny wtyczki _guile_
+
+$HOME/.weechat/irc.conf::
+    plik konfiguracyjny wtyczki _irc_
+
+$HOME/.weechat/javascript.conf::
+    plik konfiguracyjny wtyczki _javascript_
+
+$HOME/.weechat/logger.conf::
+    plik konfiguracyjny wtyczki _logger_
+
+$HOME/.weechat/lua.conf::
+    plik konfiguracyjny wtyczki _lua_
+
+$HOME/.weechat/perl.conf::
+    plik konfiguracyjny wtyczki _perl_
+
+$HOME/.weechat/php.conf::
+    plik konfiguracyjny wtyczki _php_
+
+$HOME/.weechat/python.conf::
+    plik konfiguracyjny wtyczki _python_
+
+$HOME/.weechat/relay.conf::
+    plik konfiguracyjny wtyczki _relay_
+
+$HOME/.weechat/ruby.conf::
+    plik konfiguracyjny wtyczki _ruby_
+
+$HOME/.weechat/script.conf::
+    plik konfiguracyjny wtyczki _script_
+
+$HOME/.weechat/tcl.conf::
+    plik konfiguracyjny wtyczki _tcl_
+
+$HOME/.weechat/trigger.conf::
+    plik konfiguracyjny wtyczki _trigger_
+
+$HOME/.weechat/xfer.conf::
+    plik konfiguracyjny wtyczki _xfer_
+
+$HOME/.weechat/weechat.log::
+    plik z logami WeeChat

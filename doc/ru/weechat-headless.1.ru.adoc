@@ -1,4 +1,5 @@
-= weechat(1)
+// TRANSLATION MISSING
+= weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
@@ -9,22 +10,26 @@
 
 == НАЗВАНИЕ
 
-weechat - расширяемый чат-клиент
+weechat-headless - расширяемый чат-клиент (headless version)
 
 == ОБЗОР
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <путь>] [-p|--no-plugin] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
-*weechat* [-c|--colors]
-*weechat* [-h|--help]
-*weechat* [-l|--license]
-*weechat* [-v|--version]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat-headless* [-c|--colors]
+*weechat-headless* [-h|--help]
+*weechat-headless* [-l|--license]
+*weechat-headless* [-v|--version]
 
 == ОПИСАНИЕ
 
 WeeChat (Wee Enhanced Environment for Chat) это свободный чат-клиент - быстрый и легкий,
 он подходит для большинства операционных систем.
 Его легко настроить, кроме того, вы можете расширить его функицонал при помощи скриптов.
+
+// TRANSLATION MISSING
+The command *weechat-headless* runs WeeChat in a headless mode (no interface).
+It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == ПАРАМЕТРЫ
 
@@ -41,7 +46,7 @@ include::man_files.ru.adoc[]
 // TRANSLATION MISSING
 == SEE ALSO
 
-*weechat-headless*(1)
+*weechat*(1)
 
 == АВТОРЫ
 
