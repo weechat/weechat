@@ -96,6 +96,7 @@ Alphabetically:
 * Rob Campbell
 * Romero B. de S. Malaquias
 * Rudolf Polzer (divVerent)
+* Ruslan Bekenev
 * Ryuunosuke Ayanokouzi
 * scumjr
 * Sergio Durigan Junior
