@@ -2687,7 +2687,7 @@ dadurch kein Passwort während des Verbindungsaufbaus benötigt).
 Ein Schlüssel kann mit folgendem Befehl erzeugt werden:
 
 ----
-$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+$ openssl ecparam -genkey -name prime256v1 -out ~/.weechat/ecdsa.pem
 ----
 
 Um den öffentlichen Schlüssel zu erhalten (base64 enkodiert) muss

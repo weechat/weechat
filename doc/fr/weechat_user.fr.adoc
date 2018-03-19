@@ -2721,7 +2721,7 @@ connexion).
 Vous pouvez générer la clé avec cette commande :
 
 ----
-$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+$ openssl ecparam -genkey -name prime256v1 -out ~/.weechat/ecdsa.pem
 ----
 
 Récupérez la clé publique (encodée en base64) avec cette commande :

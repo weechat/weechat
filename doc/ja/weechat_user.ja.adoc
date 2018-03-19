@@ -2626,7 +2626,7 @@ ECDSA-NIST256P-CHALLENGE を使って認証を行うためには、秘密鍵を�
 鍵を作成するには、以下のコマンドを使ってください:
 
 ----
-$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+$ openssl ecparam -genkey -name prime256v1 -out ~/.weechat/ecdsa.pem
 ----
 
 公開鍵を (base64 エンコード形式で) 作成するには、以下のコマンドを使ってください:
