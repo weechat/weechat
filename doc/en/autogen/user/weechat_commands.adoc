@@ -74,7 +74,7 @@ Examples:
          move <number>|-|+
          swap <number1>|<name1> [<number2>|<name2>]
          cycle <number>|<name> [<number>|<name>...]
-         merge <number>
+         merge <number>|<name>
          unmerge [<number>|-all]
          hide [<number>|<name>|-all [<number>|<name>...]]
          unhide [<number>|<name>|-all [<number>|<name>...]]
@@ -129,6 +129,8 @@ Examples:
     /buffer cycle #chan1 #chan2 #chan3
   merge with core buffer:
     /buffer merge 1
+  merge with #weechat buffer:
+    /buffer merge #weechat
   unmerge buffer:
     /buffer unmerge
   close current buffer:

@@ -74,7 +74,7 @@ Exemples :
          move <nombre>|-|+
          swap <nombre1>|<nom1> [<nombre2>|<nom2>]
          cycle <nombre>|<nom> [<nombre>|<nom>...]
-         merge <nombre>
+         merge <nombre>|<nom>
          unmerge [<nombre>|-all]
          hide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          unhide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
@@ -129,6 +129,8 @@ Exemples :
     /buffer cycle #canal1 #canal2 #canal3
   mélanger avec le tampon core :
     /buffer merge 1
+  mélanger avec le tampon #weechat :
+    /buffer merge #weechat
   détacher le tampon :
     /buffer unmerge
   fermer le tampon courant :
