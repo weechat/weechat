@@ -792,27 +792,20 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
-    /* merge buffer with another number in the list */
+    /* merge buffer with another buffer in the list */
     if (string_strcasecmp (argv[1], "merge") == 0)
     {
         COMMAND_MIN_ARGS(3, "merge");
         error = NULL;
-        number = strtol (argv[2], &error, 10);
-        if (error && !error[0])
+        ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
+        if (!ptr_buffer)
         {
-            ptr_buffer = gui_buffer_search_by_number ((int) number);
-            if (ptr_buffer)
-                gui_buffer_merge (buffer, ptr_buffer);
-        }
-        else
-        {
-            /* invalid number */
             gui_chat_printf (NULL,
-                             _("%sError: incorrect buffer number"),
+                             _("%sError: buffer not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
         }
-
+        gui_buffer_merge (buffer, ptr_buffer);
         return WEECHAT_RC_OK;
     }
 
@@ -7104,7 +7097,7 @@ command_init ()
            " || move <number>|-|+"
            " || swap <number1>|<name1> [<number2>|<name2>]"
            " || cycle <number>|<name> [<number>|<name>...]"
-           " || merge <number>"
+           " || merge <number>|<name>"
            " || unmerge [<number>|-all]"
            " || hide [<number>|<name>|-all [<number>|<name>...]]"
            " || unhide [<number>|<name>|-all [<number>|<name>...]]"
@@ -7167,6 +7160,8 @@ command_init ()
            "    /buffer cycle #chan1 #chan2 #chan3\n"
            "  merge with core buffer:\n"
            "    /buffer merge 1\n"
+           "  merge with #weechat buffer:\n"
+           "    /buffer merge #weechat\n"
            "  unmerge buffer:\n"
            "    /buffer unmerge\n"
            "  close current buffer:\n"
