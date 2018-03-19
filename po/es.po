@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:48+0100\n"
+"POT-Creation-Date: 2018-03-19 21:54+0100\n"
 "PO-Revision-Date: 2018-02-05 21:30+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4071,7 +4071,8 @@ msgstr "completar únicamente con el primer apodo encontrado"
 msgid "chars ignored for nick completion"
 msgstr "caracteres ignorados para el completado de un apodo"
 
-msgid "alert user when a partial completion occurs"
+#, fuzzy
+msgid "send alert (BEL) when a partial completion occurs"
 msgstr "alertar al usuario cuando ocurre un completado parcial"
 
 msgid ""

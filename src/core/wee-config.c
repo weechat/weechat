@@ -4202,7 +4202,7 @@ config_weechat_init_options ()
     config_completion_partial_completion_alert = config_file_new_option (
         weechat_config_file, ptr_section,
         "partial_completion_alert", "boolean",
-        N_("alert user when a partial completion occurs"),
+        N_("send alert (BEL) when a partial completion occurs"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_partial_completion_command = config_file_new_option (

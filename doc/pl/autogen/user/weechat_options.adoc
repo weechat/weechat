@@ -435,7 +435,7 @@
 ** domyślna wartość: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** opis: pass:none[powiadom użytkownika o częściowym dopełnieniu]
+** opis: pass:none[send alert (BEL) when a partial completion occurs]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:48+0100\n"
+"POT-Creation-Date: 2018-03-19 21:54+0100\n"
 "PO-Revision-Date: 2018-03-17 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4367,7 +4367,8 @@ msgstr "最初に見つかったニックネームだけを補完"
 msgid "chars ignored for nick completion"
 msgstr "ニックネーム補完で無視する文字"
 
-msgid "alert user when a partial completion occurs"
+#, fuzzy
+msgid "send alert (BEL) when a partial completion occurs"
 msgstr "補完候補が複数あった場合にユーザに警告"
 
 msgid ""

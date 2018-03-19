@@ -435,7 +435,7 @@
 ** valeur par défaut: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** description: pass:none[alerte l'utilisateur lorsqu'une complétion partielle survient]
+** description: pass:none[envoyer une alerte (BEL) lorsqu'une complétion partielle survient]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

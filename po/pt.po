@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:48+0100\n"
+"POT-Creation-Date: 2018-03-19 21:54+0100\n"
 "PO-Revision-Date: 2018-02-05 21:30+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -4424,7 +4424,8 @@ msgstr "completar só com o primeiro nick encontrado"
 msgid "chars ignored for nick completion"
 msgstr "carateres ignorados ao completar um nick"
 
-msgid "alert user when a partial completion occurs"
+#, fuzzy
+msgid "send alert (BEL) when a partial completion occurs"
 msgstr "alertar o utilizador ao completar parcialmente"
 
 msgid ""

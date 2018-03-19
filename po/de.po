@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:48+0100\n"
+"POT-Creation-Date: 2018-03-19 21:54+0100\n"
 "PO-Revision-Date: 2018-03-17 08:03+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -4682,7 +4682,8 @@ msgstr ""
 msgid "chars ignored for nick completion"
 msgstr "Zeichen, die bei der Vervollständigung von Nicks ignoriert werden"
 
-msgid "alert user when a partial completion occurs"
+#, fuzzy
+msgid "send alert (BEL) when a partial completion occurs"
 msgstr "informiert User wenn eine teilweise Vervollständigung auftritt"
 
 msgid ""
