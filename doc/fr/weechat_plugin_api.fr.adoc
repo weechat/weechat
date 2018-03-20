@@ -5065,8 +5065,8 @@ Paramètres :
 
 * _name_ : nom du nouveau fichier de configuration (sans chemin ou extension)
 * _callback_reload_ : fonction appelée quand le fichier de configuration est
-  rechargé avec `/reload` (optionnel, peut être NULL), paramètres et valeur de
-  retour :
+  rechargé avec `/reload` (optionnel, peut être NULL, voir ci-dessous),
+  paramètres et valeur de retour :
 ** _const void *pointer_ : pointeur
 ** _void *data_ : pointeur
 ** _struct t_config_file *config_file_ : pointeur vers le fichier de
@@ -5081,6 +5081,17 @@ Paramètres :
   est appelée  par WeeChat; si non NULL, doit avoir été alloué par malloc (ou
   une fonction similaire) et est automatiquement libéré (par free) lorsque le
   fichier de configuration est libéré
+
+Fonction de rechargement :
+
+* La fonction de rappel doit appeler seulement la fonction
+  <<_config_reload,config_reload>>, elle ne doit pas supprimer le fichier de
+  configuration.
+* Une fonction de rappel est nécessaire seulement si des choses sont faites
+  avant ou après l'appel à la fonction <<_config_reload,config_reload>>. +
+  Si aucune fonction de rappel n'est donnée, WeeChat appellera sa fonction
+  interne de rechargement, donc le fichier de configuration sera rechargé dans
+  tous les cas.
 
 Valeur de retour :
 

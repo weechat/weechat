@@ -4988,7 +4988,7 @@ Arguments:
 
 * _name_: name of configuration file (without path or extension)
 * _callback_reload_: function called when configuration file is reloaded with
-  `/reload` (optional, can be NULL), arguments and return value:
+  `/reload` (optional, can be NULL, see below), arguments and return value:
 ** _const void *pointer_: pointer
 ** _void *data_: pointer
 ** _struct t_config_file *config_file_: configuration file pointer
@@ -5001,6 +5001,15 @@ Arguments:
 * _callback_reload_data_: pointer given to callback when it is called by
   WeeChat; if not NULL, it must have been allocated with malloc (or similar
   function) and it is automatically freed when the configuration file is freed
+
+Reload callback:
+
+* The callback must only call the function <<_config_reload,config_reload>>,
+  it must not remove the configuration file.
+* A callback is needed only if it does some things before and/or after the
+  call to the function <<_config_reload,config_reload>>. +
+  If no callback is given, WeeChat will call its internal reload function,
+  so the configuration file will be reloaded in all cases.
 
 Return value:
 
