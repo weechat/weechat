@@ -1,5 +1,5 @@
 diff --git a/debian-devel/control b/debian-devel/control
-index f8f027d8e..2d8385074 100644
+index 46b2f9a7e..3cb558e4e 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,7 +3,6 @@ Section: net
@@ -18,7 +18,7 @@ index f8f027d8e..2d8385074 100644
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
      libgnutls28-dev,
-@@ -45,7 +43,7 @@ Description: Fast, light and extensible chat client
+@@ -46,7 +44,7 @@ Description: Fast, light and extensible chat client (metapackage)
    - 256 colors support
    - incremental text search
    - dynamic filtering of buffer content
@@ -27,7 +27,7 @@ index f8f027d8e..2d8385074 100644
    - script manager
    - spell checking
    - highly customizable and extensible
-@@ -71,7 +69,7 @@ Description: Fast, light and extensible chat client - console client
+@@ -72,7 +70,7 @@ Description: Fast, light and extensible chat client - console client
    - 256 colors support
    - incremental text search
    - dynamic filtering of buffer content
@@ -36,14 +36,23 @@ index f8f027d8e..2d8385074 100644
    - script manager
    - spell checking
    - highly customizable and extensible
-@@ -178,17 +176,6 @@ Description: Fast, light and extensible chat client - javascript plugin
+@@ -100,7 +98,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -215,17 +213,6 @@ Description: Fast, light and extensible chat client - javascript plugin
   .
   This package provides the JavaScript scripting API plugin.
  
 -Package: weechat-devel-php
 -Architecture: any
--Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}),
-- libphp7.2-embed
+-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}) |
+- weechat-devel-headless (= ${binary:Version}), libphp7.2-embed
 -Conflicts: weechat-php
 -Description: Fast, light and extensible chat client - php plugin
 - WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
@@ -71,7 +80,7 @@ index e358b515a..000000000
 -../debian-stable/weechat-php.install
 \ No newline at end of file
 diff --git a/debian-stable/control b/debian-stable/control
-index a68d181e8..e71154b6d 100644
+index 4ed65f37e..7e9821af6 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,7 +3,6 @@ Section: net
@@ -90,7 +99,7 @@ index a68d181e8..e71154b6d 100644
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
      libgnutls28-dev,
-@@ -44,7 +42,7 @@ Description: Fast, light and extensible chat client
+@@ -45,7 +43,7 @@ Description: Fast, light and extensible chat client (metapackage)
    - 256 colors support
    - incremental text search
    - dynamic filtering of buffer content
@@ -99,7 +108,7 @@ index a68d181e8..e71154b6d 100644
    - script manager
    - spell checking
    - highly customizable and extensible
-@@ -71,7 +69,7 @@ Description: Fast, light and extensible chat client - console client
+@@ -72,7 +70,7 @@ Description: Fast, light and extensible chat client - console client
    - 256 colors support
    - incremental text search
    - dynamic filtering of buffer content
@@ -108,14 +117,23 @@ index a68d181e8..e71154b6d 100644
    - script manager
    - spell checking
    - highly customizable and extensible
-@@ -171,16 +169,6 @@ Description: Fast, light and extensible chat client - javascript plugin
+@@ -101,7 +99,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and JavaScript scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -209,16 +207,6 @@ Description: Fast, light and extensible chat client - javascript plugin
   .
   This package provides the JavaScript scripting API plugin.
  
 -Package: weechat-php
 -Architecture: any
--Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}),
-- libphp7.2-embed
+-Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
+- weechat-headless (= ${binary:Version}), libphp7.2-embed
 -Description: Fast, light and extensible chat client - php plugin
 - WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
 - for many operating systems. Everything can be done with a keyboard.
