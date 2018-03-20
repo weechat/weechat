@@ -33,12 +33,17 @@
 #   1. version               devel, devel-2, stable, stable-2, 1.9, 1.9-2
 #   2. distro type/name      debian/sid, ubuntu/artful, raspbian/stretch
 #
+# The script can also just check that all Debian/Ubuntu patches apply fine
+# with a single argument: "test-patches".
+#
 # Examples:
 #
 #   …/build-debian.sh devel debian/sid
 #   …/build-debian.sh stable debian/stretch
 #   …/build-debian.sh 1.9 ubuntu/artful
 #   …/build-debian.sh 1.9-2 ubuntu/zesty
+#
+#   …/build-debian.sh test-patches
 #
 # Environment variables that can be used:
 #
@@ -62,11 +67,14 @@ usage ()
     cat <<-EOF
 
 Syntax: $0 devel|stable|<version> distro
+        $0 test-patches
 
-  version  version to build: stable, devel or specific version
-           (debian package revision is allowed after name (default is 1),
-           for example: devel-2, stable-2, 1.9-2)
-   distro  the distro type/name (debian/sid, ubuntu/artful, raspbian/stretch, ...)
+       version  version to build: stable, devel or specific version
+                (debian package revision is allowed after name (default is 1),
+                for example: devel-2, stable-2, 1.9-2)
+        distro  the distro type/name (debian/sid, ubuntu/artful, raspbian/stretch, ...)
+
+  test-patches  test that all Debian/Ubuntu patches apply fine (with git apply --check)
 
 IMPORTANT: the current OS must match the distro, and the WeeChat sources
            must be checkouted in the appropriate version (this script
@@ -78,6 +86,7 @@ Examples:
   $0 stable debian/stretch
   $0 1.9 ubuntu/artful
   $0 1.9-2 ubuntu/zesty
+  $0 test-patches
 
 EOF
     exit ${RC}
@@ -93,6 +102,20 @@ error_usage ()
 {
     echo >&2 "ERROR: $*"
     usage 1
+}
+
+test_patches ()
+{
+    set +e
+    RET_CODE=0
+    for file in ${ROOT_DIR}/tools/debian/patches/*.patch; do
+        echo "=== Testing patch ${file} ==="
+        git apply --check "${file}"
+        if [ $? -ne 0 ]; then
+            RET_CODE=1
+        fi
+    done
+    exit ${RET_CODE}
 }
 
 # ================================== START ==================================
@@ -117,6 +140,10 @@ cd "${ROOT_DIR}"
 # check command line arguments
 if [ $# -eq 0 ]; then
     usage 0
+fi
+if [ "$1" = "test-patches" ]; then
+    test_patches
+    exit 0
 fi
 if [ $# -lt 2 ]; then
     error_usage "missing arguments"
