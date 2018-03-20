@@ -34,6 +34,7 @@ script:
     - pylint tests/scripts/python/testapigen.py
     - pylint tests/scripts/python/testapi.py
     - pylint tests/scripts/python/unparse.py
+    - ./tools/build-debian.sh test-patches
 
 after_success:
     - weechat --help
