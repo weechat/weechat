@@ -1,5 +1,7 @@
 #!/usr/bin/make -f
 
+export DEB_BUILD_MAINT_OPTIONS=hardening=+all
+
 BUILDDIR = builddir
 
 $(BUILDDIR)/Makefile:
@@ -7,6 +9,7 @@ $(BUILDDIR)/Makefile:
 	cd $(BUILDDIR) && \
 	cmake .. \
 		-DCMAKE_INSTALL_PREFIX:FILEPATH=/usr \
+		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
 		-DENABLE_DOC:BOOL=ON \
 		-DENABLE_MAN:BOOL=ON \
 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
@@ -15,19 +18,16 @@ $(BUILDDIR)/Makefile:
 		-DCMAKE_SKIP_RPATH:BOOL=ON \
 		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
-override_dh_auto_build: $(BUILDDIR)/Makefile
-	dh_auto_build
-
 override_dh_auto_configure:
 	# the package also has autotools buildsys and
 	# debhelper try to use it but that's not needed
 	echo
 
+override_dh_auto_build: $(BUILDDIR)/Makefile
+	dh_auto_build
+
 override_dh_installchangelogs:
 	dh_installchangelogs ChangeLog.adoc
 
-override_dh_strip:
-	dh_strip --dbg-package=weechat-dbg
-
 %:
-	dh $@ --parallel --builddirectory=$(BUILDDIR)
+	dh $@ --builddirectory=$(BUILDDIR) --without autoreconf

@@ -1,3 +1,16 @@
+weechat (2.1-1) unstable; urgency=medium
+
+  This release introduces a new headless client and a new PHP plugin for
+  scripting (respectively weechat-headless and weechat-php binary
+  packages).
+  To avoid at least unnecessary dependencies, each plugin has its own
+  separate binary package:
+    weechat-{perl,python,ruby,lua,guile,javascript,php}
+  Depending on your needs about scripting with weechat you should consider
+  to install the missing packages.
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 21 Mar 2018 07:53:40 +0100
+
 weechat (1.1.1-1) unstable; urgency=medium
 
   Since version 1.1, there is a new format for regexp replacement in

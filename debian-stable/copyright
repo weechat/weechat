@@ -5,13 +5,152 @@ Source: https://weechat.org/
 
 Files: *
 Copyright: 2003-2018, Sébastien Helleu <flashcode@flashtux.org>
-           2005-2009, Emmanuel Bouthenot <kolter@openics.org>
-           2008-2009, Dmitry Kobylin <fnfal@academ.tsc.ru>
+License: GPL-3+
+
+Files: src/core/wee-command.c
+       src/core/wee-command.h
+Copyright: 2005-2006, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/core/wee-config-file.c
+       src/core/wee-config-file.h
+       src/core/wee-config.c
+       src/core/wee-config.h
+Copyright: 2005-2006, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/core/wee-hook.c
+Copyright: 2012, Simon Arlott
+License: GPL-3+
+
+Files: src/core/wee-hook.h
+Copyright: 2012, Simon Arlott
+License: GPL-3+
+
+Files: src/gui/gui-history.c
+Copyright: 2005, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/core/wee-completion.c
+       src/core/wee-log.c
+       src/core/wee-utf8.c
+       src/core/weechat.h
+       src/plugins/aspell/weechat-aspell-config.c
+       src/plugins/aspell/weechat-aspell-config.h
+       src/plugins/aspell/weechat-aspell-speller.c
+       src/plugins/aspell/weechat-aspell-speller.h
+       src/plugins/aspell/weechat-aspell.h
+       src/plugins/irc/irc-command.c
+       src/plugins/irc/irc.h
+Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/core/wee-network.c
+Copyright: 2005-2010, Emmanuel Bouthenot <kolter@openics.org>
+           2010, Gu1ll4um3r0m41n <aeroxteam@gmail.com>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/aspell/weechat-aspell-bar-item.c
+       src/plugins/aspell/weechat-aspell-bar-item.h
+Copyright: 2012, Nils Görs <weechatter@arcor.de>
+License: GPL-3+
+
+Files: src/plugins/aspell/weechat-aspell.c
+Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Nils Görs <weechatter@arcor.de>
+License: GPL-3+
+
+Files: src/plugins/guile/weechat-guile-api.c
+       src/plugins/irc/irc-server.h
+       src/plugins/plugin-script-api.c
+       src/plugins/plugin-script-api.h
+Copyright: 2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/irc/irc-protocol.c
+Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
+           2014, Shawn Smith <ShawnSmith0828@gmail.com>
+License: GPL-3+
+
+Files: src/plugins/irc/irc-server.c
+Copyright: 2005-2010, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/javascript/weechat-js-api.cpp
+       src/plugins/javascript/weechat-js-api.h
+       src/plugins/javascript/weechat-js-v8.cpp
+       src/plugins/javascript/weechat-js-v8.h
+       src/plugins/javascript/weechat-js.cpp
+       src/plugins/javascript/weechat-js.h
+Copyright: 2013, Koka El Kiwi <kokakiwi@kokakiwi.net>
+License: GPL-3+
+
+Files: src/plugins/lua/weechat-lua-api.c
+Copyright: 2006-2007, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/lua/weechat-lua-api.h
+       src/plugins/lua/weechat-lua.c
+       src/plugins/lua/weechat-lua.h
+Copyright: 2006-2007, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/plugins/perl/weechat-perl-api.c
+Copyright: 2005-2008, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/perl/weechat-perl.c
+Copyright: 2005-2008, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/plugins/php/weechat-php-api.c
+       src/plugins/php/weechat-php-api.h
+       src/plugins/php/weechat-php.c
+       src/plugins/php/weechat-php.h
+Copyright: 2006-2017, Adam Saponara <as@php.net>
+License: GPL-3-with-openssl-exception
+
+Files: src/plugins/python/weechat-python-api.c
+Copyright: 2005-2007, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/python/weechat-python-api.h
+       src/plugins/ruby/weechat-ruby-api.h
+       src/plugins/ruby/weechat-ruby.c
+       src/plugins/ruby/weechat-ruby.h
+Copyright: 2005-2007, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/plugins/python/weechat-python.c
+       src/plugins/ruby/weechat-ruby-api.c
+Copyright: 2005-2007, Emmanuel Bouthenot <kolter@openics.org>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/python/weechat-python.h
+Copyright: 2005-2007, Emmanuel Bouthenot <kolter@openics.org>
+License: GPL-3+
+
+Files: src/plugins/tcl/weechat-tcl-api.c
+Copyright: 2008-2010, Dmitry Kobylin <fnfal@academ.tsc.ru>
+           2008, Julien Louis <ptitlouis@sysif.net>
+           2012, Simon Arlott
+License: GPL-3+
+
+Files: src/plugins/tcl/weechat-tcl-api.h
+       src/plugins/tcl/weechat-tcl.c
+       src/plugins/tcl/weechat-tcl.h
+Copyright: 2008-2010, Dmitry Kobylin <fnfal@academ.tsc.ru>
 License: GPL-3+
 
 Files: debian/*
 Copyright: 2005-2008, Julien Louis <ptitlouis@sysif.net>
-           2008-2016, Emmanuel Bouthenot <kolter@openics.org>
+           2008-2018, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
 License: GPL-3+
@@ -30,3 +169,31 @@ License: GPL-3+
  .
  On Debian systems, the complete text of the GNU General Public License,
  Version 3 can be found in the file /usr/share/common-licenses/GPL-3
+
+License: GPL-3-with-openssl-exception
+ WeeChat is free software: you can redistribute it and/or modify it
+ under the terms of the GNU General Public License as published by the
+ Free Software Foundation, either version 3 of the License, or (at your
+ option) any later version.
+ .
+ WeeChat is distributed in the hope that it will be useful, but
+ WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ General Public License for more details.
+ .
+ You should have received a copy of the GNU General Public License along
+ with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public License,
+ Version 3 can be found in the file /usr/share/common-licenses/GPL-3
+ .
+ Additional permission under GNU GPL version 3 section 7:
+ .
+ If you modify the Program, or any covered work, by linking or
+ combining it with the OpenSSL project's OpenSSL library (or a
+ modified version of that library), containing parts covered by the
+ terms of the OpenSSL or SSLeay licenses, the licensors of the Program
+ grant you additional permission to convey the resulting work.
+ Corresponding Source for a non-source form of such a combination
+ shall include the source code for the parts of OpenSSL used as well
+ as that of the covered work.

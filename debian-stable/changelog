@@ -1,3 +1,77 @@
+weechat (2.1-1) unstable; urgency=medium
+
+  * New upstream release (Closes: #887114)
+    - Enable build against Ruby 2.5 (Closes: #892072)
+    - New PHP plugin (update build dependencies accordingly)
+  * Split up the package so that plugins are now separated in multiple
+    binary packages to avoid unnecessary dependencies (Closes: #745266)
+  * Switch debhelper compatibility to 11
+  * Bump Standards-Version to 4.1.3
+  * Add debian/upstream/metadata (DEP 12)
+  * Rewrite debian/copyright to be more accurate
+  * Update Vcs-Git and Vcs-Browser with new repository on salsa.debian.org
+  * Update debian/NEWS to introduces weechat-headless and the package split
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 21 Mar 2018 07:46:21 +0100
+
+weechat (1.9.1-1) unstable; urgency=medium
+
+  * New upstream release
+    - CVE-2017-14727 - Include a patch which fix a possible crash in logger
+      plugin (Closes: #876553)
+  * Disable build of javascript plugin to fix weechat autoremoval from
+    testing (RC bugs in libv8)
+  * Bump Standards-Version to 4.1.0
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 23 Sep 2017 21:47:32 +0200
+
+weechat (1.9-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove useless weechat-dbg binary package
+  * Bump Standards-Version to 4.0.0
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 04 Jul 2017 13:29:55 +0200
+
+weechat (1.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove usless patches (backports from upstream)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 16 May 2017 14:53:07 +0200
+
+weechat (1.7-3) unstable; urgency=medium
+
+  * Add a patch to fix CVE-2017-8073 which allows a remote crash by
+    sending a filename via DCC to the IRC plugin (Closes: #861121)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 25 Apr 2017 10:46:10 +0200
+
+weechat (1.7-2) unstable; urgency=medium
+
+  * Add a patch to fix slowness after terminal resize (Closes: #855079)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 24 Feb 2017 16:43:09 +0100
+
+weechat (1.7-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove lintian-override for weechat-curses manpage
+  * Add a lintian-override about no hardening flags on fifo.so plugin
+    (false positive)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Thu, 09 Feb 2017 20:15:48 +0100
+
+weechat (1.6-1) unstable; urgency=medium
+
+  * New upstream release
+  * Add a patch to build html documentation without requiring data
+    (javascript, fonts) on external websites (potential privacy breach)
+  * Documentation is now built with asciidoctor (adjust dependencies
+    accordingly)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Thu, 06 Oct 2016 13:55:35 +0200
+
 weechat (1.5-1) unstable; urgency=medium
 
   * New upstream release
