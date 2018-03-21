@@ -1,1 +1,58 @@
-weechat_debian_stretch.patch
+diff --git a/debian-devel/compat b/debian-devel/compat
+index b4de39476..ec635144f 100644
+--- a/debian-devel/compat
++++ b/debian-devel/compat
+@@ -1 +1 @@
+-11
++9
+diff --git a/debian-devel/control b/debian-devel/control
+index d3a1dad8b..b078f38ac 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 11),
++    debhelper (>= 9),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -15,7 +15,7 @@ Build-Depends:
+     tcl8.6-dev,
+     guile-2.0-dev,
+     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+-    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    php-dev, libphp-embed,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+     libgcrypt20-dev,
+diff --git a/debian-stable/compat b/debian-stable/compat
+index b4de39476..ec635144f 100644
+--- a/debian-stable/compat
++++ b/debian-stable/compat
+@@ -1 +1 @@
+-11
++9
+diff --git a/debian-stable/control b/debian-stable/control
+index 8fbf582b3..cb34db2da 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 11),
++    debhelper (>= 9),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -15,7 +15,7 @@ Build-Depends:
+     tcl8.6-dev,
+     guile-2.0-dev,
+     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+-    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    php-dev, libphp-embed,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+     libgcrypt20-dev,

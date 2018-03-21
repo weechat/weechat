@@ -1,44 +1,58 @@
+diff --git a/debian-devel/compat b/debian-devel/compat
+index b4de39476..f599e28b8 100644
+--- a/debian-devel/compat
++++ b/debian-devel/compat
+@@ -1 +1 @@
+-11
++10
 diff --git a/debian-devel/control b/debian-devel/control
-index 46b2f9a7e..3a29e501a 100644
+index d3a1dad8b..401f9c519 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -16,7 +16,7 @@ Build-Depends:
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Sébastien Helleu <flashcode@flashtux.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 11),
++    debhelper (>= 10),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -15,7 +15,7 @@ Build-Depends:
      tcl8.6-dev,
      guile-2.0-dev,
-     libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.2-dev, libphp7.2-embed, libxml2-dev, libargon2-0-dev, libsodium-dev,
-+    php7.0-dev, libphp7.0-embed, libxml2-dev,
+     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+-    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    php-dev, libphp-embed,
+     libxml2-dev,
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
-     libgnutls28-dev,
-@@ -218,7 +218,7 @@ Description: Fast, light and extensible chat client - javascript plugin
- Package: weechat-devel-php
- Architecture: any
- Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-devel-curses (= ${binary:Version}) |
-- weechat-devel-headless (= ${binary:Version}), libphp7.2-embed
-+ weechat-devel-headless (= ${binary:Version}), libphp7.0-embed
- Conflicts: weechat-php
- Description: Fast, light and extensible chat client - php plugin
-  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+diff --git a/debian-stable/compat b/debian-stable/compat
+index b4de39476..f599e28b8 100644
+--- a/debian-stable/compat
++++ b/debian-stable/compat
+@@ -1 +1 @@
+-11
++10
 diff --git a/debian-stable/control b/debian-stable/control
-index 4ed65f37e..2e1e55446 100644
+index 8fbf582b3..20cd5038f 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -16,7 +16,7 @@ Build-Depends:
+@@ -4,7 +4,7 @@ Priority: optional
+ Maintainer: Emmanuel Bouthenot <kolter@debian.org>
+ Build-Depends:
+     asciidoctor (>= 1.5.4),
+-    debhelper (>= 11),
++    debhelper (>= 10),
+     cmake, pkg-config,
+     libncursesw5-dev,
+     gem2deb,
+@@ -15,7 +15,7 @@ Build-Depends:
      tcl8.6-dev,
      guile-2.0-dev,
-     libv8-dev [amd64 armel armhf hurd-i386 i386 kfreebsd-amd64 kfreebsd-i386 mips mipsel],
--    php7.2-dev, libphp7.2-embed, libxml2-dev, libargon2-0-dev, libsodium-dev,
-+    php7.0-dev, libphp7.0-embed, libxml2-dev,
+     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+-    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    php-dev, libphp-embed,
+     libxml2-dev,
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
-     libgnutls28-dev,
-@@ -212,7 +212,7 @@ Description: Fast, light and extensible chat client - javascript plugin
- Package: weechat-php
- Architecture: any
- Depends: ${misc:Depends}, ${shlibs:Depends}, weechat-curses (= ${binary:Version}) |
-- weechat-headless (= ${binary:Version}), libphp7.2-embed
-+ weechat-headless (= ${binary:Version}), libphp7.0-embed
- Description: Fast, light and extensible chat client - php plugin
-  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
-  for many operating systems. Everything can be done with a keyboard.
