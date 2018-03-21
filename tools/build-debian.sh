@@ -243,8 +243,8 @@ fi
 echo " - Updating changelog: ${DEB_NAME} ${DEB_VERSION} (${DCH_DISTRO}, ${DCH_URGENCY}), ${PACKAGER_NAME} <${PACKAGER_EMAIL}>: ${DCH_CHANGELOG}"
 DEBFULLNAME="${PACKAGER_NAME}" DEBEMAIL="${PACKAGER_EMAIL}" dch "${DCH_CREATE}" --package "${DEB_NAME}" --newversion "${DEB_VERSION}" --distribution "${DCH_DISTRO}" --urgency "${DCH_URGENCY}" "${DCH_CHANGELOG}"
 
-# build packages
-dpkg-buildpackage -us -uc -j${JOBS} --source-option="--tar-ignore=.git" --source-option="--tar-ignore=build*"
+# build packages (without debug symbols)
+DEB_BUILD_OPTIONS="noddebs" dpkg-buildpackage -us -uc -j${JOBS} --source-option="--tar-ignore=.git" --source-option="--tar-ignore=build*"
 
 # all OK!
 echo " - Build OK [${DEB_NAME}-${DEB_VERSION}]"
