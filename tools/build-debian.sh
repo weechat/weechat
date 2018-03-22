@@ -107,15 +107,19 @@ error_usage ()
 test_patches ()
 {
     set +e
-    RET_CODE=0
+    PATCHES_OK=0
+    PATCHES_ERROR=0
     for file in ${ROOT_DIR}/tools/debian/patches/*.patch; do
         echo "=== Testing patch ${file} ==="
         git apply --check "${file}"
-        if [ $? -ne 0 ]; then
-            RET_CODE=1
+        if [ $? -eq 0 ]; then
+            PATCHES_OK=$((PATCHES_OK+1))
+        else
+            PATCHES_ERROR=$((PATCHES_ERROR+1))
         fi
     done
-    exit ${RET_CODE}
+    echo "Patches: ${PATCHES_OK} OK, ${PATCHES_ERROR} in error."
+    exit ${PATCHES_ERROR}
 }
 
 # ================================== START ==================================
