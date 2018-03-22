@@ -117,7 +117,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
   ∥ libenchant-dev       |               |          | Aspell Erweiterung.
 | python-dev             | ≥ 2.6 ^(4)^   |          | Python Erweiterung.
 | libperl-dev            |               |          | Perl Erweiterung.
-| ruby-2.3, ruby2.3-dev  | ≥ 1.8         |          | Ruby Erweiterung.
+| ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Ruby Erweiterung.
 | liblua5.3-dev          |               |          | Lua Erweiterung.
 | tcl-dev                | ≥ 8.5         |          | Tcl Erweiterung.
 | guile-2.0-dev          | ≥ 2.0         |          | Guile (scheme) Erweiterung.
