@@ -35,7 +35,7 @@ struct t_irc_modelist_item
 {
     int number;                            /* item number                   */
     char *mask;                            /* modelist mask                 */
-    char *setter;                          /* hostmask of setter            */
+    char *setter;                          /* hostmask of setter (optional) */
     time_t datetime;                       /* datetime of setting (optional)*/
 
     struct t_irc_modelist_item *prev_item; /* pointer to previous item      */
