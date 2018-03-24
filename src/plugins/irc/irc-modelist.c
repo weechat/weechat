@@ -475,13 +475,13 @@ void
 irc_modelist_item_print_log (struct t_irc_modelist_item *item)
 {
     weechat_log_printf ("");
-    weechat_log_printf ("  => modelist item %d (addr:0x%lx):", item->number, item);
-    weechat_log_printf ("       mask . . . . . . . . . . : '%s'", item->mask);
-    weechat_log_printf ("       setter . . . . . . . . . : '%s'", item->setter);
-    weechat_log_printf ("       datetime . . . . . . . . : %lld",
+    weechat_log_printf ("      => modelist item %d (addr:0x%lx):", item->number, item);
+    weechat_log_printf ("           mask . . . . . . . . . . : '%s'", item->mask);
+    weechat_log_printf ("           setter . . . . . . . . . : '%s'", item->setter);
+    weechat_log_printf ("           datetime . . . . . . . . : %lld",
                         (long long)(item->datetime));
-    weechat_log_printf ("       prev_item  . . . . . . . : 0x%lx", item->prev_item);
-    weechat_log_printf ("       next_item  . . . . . . . : 0x%lx", item->next_item);
+    weechat_log_printf ("           prev_item  . . . . . . . : 0x%lx", item->prev_item);
+    weechat_log_printf ("           next_item  . . . . . . . : 0x%lx", item->next_item);
 }
 
 /*
@@ -494,10 +494,10 @@ irc_modelist_print_log (struct t_irc_modelist *modelist)
     struct t_irc_modelist_item *ptr_item;
 
     weechat_log_printf ("");
-    weechat_log_printf ("  => modelist %c (addr:0x%lx):", modelist->type, modelist);
-    weechat_log_printf ("       state. . . . . . . . . . : %d",    modelist->state);
-    weechat_log_printf ("       prev_modelist  . . . . . : 0x%lx", modelist->prev_modelist);
-    weechat_log_printf ("       next_modelist  . . . . . : 0x%lx", modelist->next_modelist);
+    weechat_log_printf ("    => modelist \"%c\" (addr:0x%lx):", modelist->type, modelist);
+    weechat_log_printf ("         state. . . . . . . . . . : %d",    modelist->state);
+    weechat_log_printf ("         prev_modelist  . . . . . : 0x%lx", modelist->prev_modelist);
+    weechat_log_printf ("         next_modelist  . . . . . : 0x%lx", modelist->next_modelist);
     for (ptr_item = modelist->items; ptr_item; ptr_item = ptr_item->next_item)
     {
         irc_modelist_item_print_log (ptr_item);
