@@ -475,7 +475,7 @@ void
 irc_modelist_item_print_log (struct t_irc_modelist_item *item)
 {
     weechat_log_printf ("");
-    weechat_log_printf ("  => modelist item %d (addr:0x%lx):", item, item->number);
+    weechat_log_printf ("  => modelist item %d (addr:0x%lx):", item->number, item);
     weechat_log_printf ("       mask . . . . . . . . . . : '%s'", item->mask);
     weechat_log_printf ("       setter . . . . . . . . . : '%s'", item->setter);
     weechat_log_printf ("       datetime . . . . . . . . : %lld",
