@@ -204,6 +204,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-message.h
 ./src/plugins/irc/irc-mode.c
 ./src/plugins/irc/irc-mode.h
+./src/plugins/irc/irc-modelist.c
+./src/plugins/irc/irc-modelist.h
 ./src/plugins/irc/irc-msgbuffer.c
 ./src/plugins/irc/irc-msgbuffer.h
 ./src/plugins/irc/irc-nick.c
