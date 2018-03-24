@@ -4990,9 +4990,8 @@ struct t_config_file *weechat_config_new (const char *name,
 引数:
 
 * _name_: 設定ファイルの名前 (パスと拡張子は不要)
-// TRANSLATION MISSING
 * _callback_reload_: `/reload` で設定ファイルをリロードする際に呼び出すコールバック関数
-  (任意、NULL でも可, see below)、引数と戻り値:
+  (任意、NULL でも可、下の説明を参照)、引数と戻り値:
 ** _const void *pointer_: ポインタ
 ** _void *data_: ポインタ
 ** _struct t_config_file *config_file_: 設定ファイルへのポインタ
@@ -5006,15 +5005,14 @@ struct t_config_file *weechat_config_new (const char *name,
   このポインタが NULL でない場合、このポインタは malloc (または類似の関数)
   によって割り当てられたものでなければいけません。さらに、このポインタはここで作成した設定ファイルが開放された時点で自動的に開放されます
 
-// TRANSLATION MISSING
-Reload callback:
+リロードコールバック:
 
-* The callback must only call the function <<_config_reload,config_reload>>,
-  it must not remove the configuration file.
-* A callback is needed only if it does some things before and/or after the
-  call to the function <<_config_reload,config_reload>>. +
-  If no callback is given, WeeChat will call its internal reload function,
-  so the configuration file will be reloaded in all cases.
+* リロードコールバックは必ず <<_config_reload,config_reload>>
+  を呼び出してください。<<_config_reload,config_reload>> 関数は設定ファイルを削除してはいけません。
+* <<_config_reload,config_reload>>
+  関数の前処理や後処理が必要な場合に限り、これらを行うリロードコールバックを指定します。 +
+  リロードコールバックを指定しなかった場合、WeeChat
+  は内部リロード関数を呼び出し、常に設定ファイルがリロードされます。
 
 戻り値:
 
