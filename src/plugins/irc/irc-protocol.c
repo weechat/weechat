@@ -4081,7 +4081,7 @@ IRC_PROTOCOL_CALLBACK(348)
             ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
         }
 
-        sprintf (str_number, "%s[%s%d%s] ",
+        sprintf (str_number, " %s[%s%d%s]",
                  IRC_COLOR_CHAT_DELIMITERS,
                  IRC_COLOR_RESET,
                  ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
@@ -4106,7 +4106,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 date,
                 irc_protocol_tags (command, "irc_numeric", NULL, NULL),
                 /* TRANSLATORS: "%s" after "on" is a date */
-                _("%s%s[%s%s%s] %s%sexception %s%s%s by %s on %s"),
+                _("%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
@@ -4129,7 +4129,7 @@ IRC_PROTOCOL_CALLBACK(348)
                     server, NULL, command, "exceptionlist", ptr_buffer),
                 date,
                 irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-                _("%s%s[%s%s%s] %s%sexception %s%s%s by %s"),
+                _("%s%s[%s%s%s]%s%s exception %s%s%s by %s"),
                 weechat_prefix ("network"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_CHAT_CHANNEL,
@@ -4152,7 +4152,7 @@ IRC_PROTOCOL_CALLBACK(348)
                 server, NULL, command, "exceptionlist", ptr_buffer),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            _("%s%s[%s%s%s] %s%sexception %s%s"),
+            _("%s%s[%s%s%s]%s%s exception %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
