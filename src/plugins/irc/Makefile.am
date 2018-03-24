@@ -53,6 +53,8 @@ irc_la_SOURCES = irc.c \
                  irc-message.h \
                  irc-mode.c \
                  irc-mode.h \
+                 irc-modelist.c \
+                 irc-modelist.h \
                  irc-msgbuffer.c \
                  irc-msgbuffer.h \
                  irc-nick.c \

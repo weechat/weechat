@@ -30,6 +30,7 @@
 #include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-input.h"
+#include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-raw.h"
@@ -39,6 +40,7 @@
 
 struct t_irc_server *irc_upgrade_current_server = NULL;
 struct t_irc_channel *irc_upgrade_current_channel = NULL;
+struct t_irc_modelist *irc_upgrade_current_modelist = NULL;
 
 
 /*
@@ -59,6 +61,8 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
     struct t_irc_redirect *ptr_redirect;
     struct t_irc_redirect_pattern *ptr_redirect_pattern;
     struct t_irc_notify *ptr_notify;
+    struct t_irc_modelist *ptr_modelist;
+    struct t_irc_modelist_item *ptr_item;
     struct t_irc_raw_message *ptr_raw_message;
     int rc;
 
@@ -119,6 +123,46 @@ irc_upgrade_save_all_data (struct t_upgrade_file *upgrade_file)
                 weechat_infolist_free (infolist);
                 if (!rc)
                     return 0;
+            }
+
+            for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
+                 ptr_modelist = ptr_modelist->next_modelist)
+            {
+                /* save modelist */
+                infolist = weechat_infolist_new ();
+                if (!infolist)
+                    return 0;
+                if (!irc_modelist_add_to_infolist (infolist, ptr_modelist))
+                {
+                    weechat_infolist_free (infolist);
+                    return 0;
+                }
+                rc = weechat_upgrade_write_object (upgrade_file,
+                                                   IRC_UPGRADE_TYPE_MODELIST,
+                                                   infolist);
+                weechat_infolist_free (infolist);
+                if (!rc)
+                    return 0;
+
+                for (ptr_item = ptr_modelist->items; ptr_item;
+                     ptr_item = ptr_item->next_item)
+                {
+                    /* save modelist item */
+                    infolist = weechat_infolist_new ();
+                    if (!infolist)
+                        return 0;
+                    if (!irc_modelist_item_add_to_infolist (infolist, ptr_item))
+                    {
+                        weechat_infolist_free (infolist);
+                        return 0;
+                    }
+                    rc = weechat_upgrade_write_object (upgrade_file,
+                                                       IRC_UPGRADE_TYPE_MODELIST_ITEM,
+                                                       infolist);
+                    weechat_infolist_free (infolist);
+                    if (!rc)
+                        return 0;
+                }
             }
         }
 
@@ -304,6 +348,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
     struct t_irc_nick *ptr_nick;
     struct t_irc_redirect *ptr_redirect;
     struct t_irc_notify *ptr_notify;
+    struct t_irc_modelist_item *ptr_item;
     struct t_gui_buffer *ptr_buffer;
 
     /* make C compiler happy */
@@ -654,6 +699,33 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                                    ptr_nick, 1, 'u');
                             }
                         }
+                    }
+                }
+                break;
+            case IRC_UPGRADE_TYPE_MODELIST:
+                if (irc_upgrade_current_server && irc_upgrade_current_channel)
+                {
+                    /* modelists are already created by the channel */
+                    irc_upgrade_current_modelist = irc_modelist_search (
+                        irc_upgrade_current_channel,
+                        weechat_infolist_string (infolist, "type")[0]);
+                    if (irc_upgrade_current_modelist)
+                    {
+                        irc_upgrade_current_modelist->state = weechat_infolist_integer (infolist, "state");
+                    }
+                }
+                break;
+            case IRC_UPGRADE_TYPE_MODELIST_ITEM:
+                if (irc_upgrade_current_server && irc_upgrade_current_channel && irc_upgrade_current_modelist)
+                {
+                    ptr_item = irc_modelist_item_new (
+                        irc_upgrade_current_modelist,
+                        weechat_infolist_string (infolist, "mask"),
+                        weechat_infolist_string (infolist, "setter"),
+                        weechat_infolist_time (infolist, "datetime"));
+                    if (ptr_item)
+                    {
+                        ptr_item->number = weechat_infolist_integer (infolist, "number");
                     }
                 }
                 break;
