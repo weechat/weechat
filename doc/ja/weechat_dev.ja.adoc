@@ -259,6 +259,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       irc-input.c                 | コマンドおよびテキストの入力
 |       irc-message.c               | IRC メッセージを操作する関数
 |       irc-mode.c                  | チャンネルおよびニックネームのモードを操作する関数
+// TRANSLATION MISSING
+|       irc-modelist.c              | IRC channel mode lists (+b, +e, +I, ...).
 |       irc-msgbuffer.c             | IRC メッセージを送るバッファ
 |       irc-nick.c                  | IRC ニックネーム
 |       irc-notify.c                | IRC 通知リスト

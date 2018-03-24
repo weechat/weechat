@@ -255,6 +255,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       irc-input.c                 | Entrée de commandes/texte.
 |       irc-message.c               | Fonctions pour manipuler les messages IRC.
 |       irc-mode.c                  | Fonctions pour les modes de canal/pseudo.
+|       irc-modelist.c              | Listes de modes de canaux IRC (+b, +e, +I, ...).
 |       irc-msgbuffer.c             | Tampon cible pour les messages IRC.
 |       irc-nick.c                  | Pseudos IRC.
 |       irc-notify.c                | Listes de notification IRC.
