@@ -1,4 +1,3 @@
-// TRANSLATION MISSING
 = weechat-headless(1)
 :doctype: manpage
 :author: Sébastien Helleu
@@ -9,7 +8,7 @@
 
 == 名前
 
-weechat-headless - 拡張可能なチャットクライアント (headless version)
+weechat-headless - 拡張可能なチャットクライアント (ヘッドレスモード)
 
 == 書式
 
@@ -41,8 +40,7 @@ include::man_plugin_options.ja.adoc[]
 
 include::man_files.ja.adoc[]
 
-// TRANSLATION MISSING
-== SEE ALSO
+== 関連項目
 
 *weechat*(1)
 
