@@ -86,62 +86,62 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-     add: add a new buffer (it can be closed with "/buffer close" or input "q")
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
-localvar: display local variables for current buffer
-     set: set a property for current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: バッファをリストアップ (引数無しの場合、このリストが表示されます)
+     add: 新しいバッファを追加 (バッファを閉じるには "/buffer close" または "q" を使ってください)
+   clear: バッファの内容を削除 (number はバッファ番号、マージバッファに対しては -merged、全てのバッファに対しては -all、何も無ければ現在のバッファ)
+    move: リストにバッファを移動 (相対指定も可能、例えば -1); "-" = 最初のバッファ番号に移動、"+" = 最後のバッファ番号 + 1 に移動
+    swap: 2 つのバッファを入れ替え (現在のバッファと引数で与えた番号/名称で指定されるバッファを入れ替える)
+   cycle: 指定したバッファ間でバッファを循環させる
+   merge: 現在のバッファを他のバッファにマージ (2 つのバッファのチャットエリアが一緒になります)
+          (デフォルトでは ctrl-x でマージバッファの切り替え)
+ unmerge: 同じ番号を持つ他のバッファとのマージを解除
+    hide: バッファを隠す
+  unhide: バッファを隠すことを止める
+renumber: バッファを記憶 (weechat.look.buffer_auto_renumber オプションがオフの場合にのみ有効)
+   close: バッファを閉じる (番号/範囲または名前は任意)
+  notify: 現在のバッファの通知レベルを設定: このレベルでバッファがホットリストに追加されるかどうかを定義します:
+               none: 通知しない
+          highlight: ハイライトがあった場合のみ通知
+            message: ユーザからのメッセージとハイライトがあった場合に通知
+                all: 全てのメッセージを通知
+              reset: デフォルトの値 (all) にリセット
+localvar: 現在のバッファのローカル変数を表示
+     set: 現在のバッファのプロパティを設定
+     get: 現在のバッファのプロパティを表示
+  number: 番号でバッファ移動、可能なプレフィックス:
+          '+': 相対移動、現在の番号に数を足す
+          '-': 相対移動、現在の番号から数を引く
+          '*': 番号に移動、オプション "weechat.look.jump_current_to_previous_buffer" が使われる
+       -: 最初のバッファ番号に移動
+       +: 最後のバッファ番号に移動
+    name: バッファ名 (一部) でバッファに移動
 
-Examples:
-  clear current buffer:
+例:
+  現在のバッファの内容を消去:
     /buffer clear
-  move buffer to number 5:
+  バッファを 5 番に移動:
     /buffer move 5
-  swap buffer 1 with 3:
+  バッファ 1 番と 3 番を入れ替え:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  現在のバッファと #weechat バッファを入れ替え:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  #chan1、#chan2、#chan3 に移動してそれを繰り返す:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  コアバッファとマージ:
     /buffer merge 1
-  merge with #weechat buffer:
+  #weechat バッファとマージ:
     /buffer merge #weechat
-  unmerge buffer:
+  バッファマージの解除:
     /buffer unmerge
-  close current buffer:
+  現在のバッファを閉じる:
     /buffer close
-  close buffers 5 to 7:
+  バッファ番号 5 から 7 を閉じる:
     /buffer close 5-7
-  jump to #weechat:
+  #weechat バッファに移動:
     /buffer #weechat
-  jump to next buffer:
+  次のバッファに移動:
     /buffer +1
-  jump to last buffer number:
+  最後のバッファ番号に移動:
     /buffer +
 ----
 

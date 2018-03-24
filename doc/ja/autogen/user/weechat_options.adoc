@@ -435,7 +435,7 @@
 ** デフォルト値: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** 説明: pass:none[send alert (BEL) when a partial completion occurs]
+** 説明: pass:none[補完候補が複数あった場合に警告 (BEL) を送信]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
