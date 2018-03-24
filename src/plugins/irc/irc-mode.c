@@ -327,6 +327,7 @@ irc_mode_channel_set (struct t_irc_server *server,
     int smart_filter;
     struct t_irc_nick *ptr_nick;
     struct t_irc_modelist *ptr_modelist;
+    struct t_irc_modelist_item *ptr_item;
 
     if (!server || !channel || !modes)
         return 0;
@@ -481,8 +482,10 @@ irc_mode_channel_set (struct t_irc_server *server,
                             }
                             else if (set_flag == '-')
                             {
-                                irc_modelist_item_free (ptr_modelist,
-                                    irc_modelist_item_search (ptr_modelist, ptr_arg));
+                                ptr_item = irc_modelist_item_search (ptr_modelist,
+                                                                     ptr_arg);
+                                if (ptr_item)
+                                    irc_modelist_item_free (ptr_modelist, ptr_item);
                             }
                         }
                     }
