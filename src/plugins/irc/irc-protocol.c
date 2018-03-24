@@ -1010,7 +1010,9 @@ IRC_PROTOCOL_CALLBACK(kick)
 
         for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
              ptr_modelist = ptr_modelist->next_modelist)
+        {
             ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
+        }
 
         /* read option "autorejoin" in server */
         rejoin = IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN);
@@ -1129,7 +1131,9 @@ IRC_PROTOCOL_CALLBACK(kill)
 
             for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
                  ptr_modelist = ptr_modelist->next_modelist)
+            {
                 ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
+            }
 
             irc_bar_item_update_channel ();
         }
@@ -1771,7 +1775,9 @@ IRC_PROTOCOL_CALLBACK(part)
 
         for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
              ptr_modelist = ptr_modelist->next_modelist)
+        {
             ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
+        }
 
         /* cycling ? => rejoin channel immediately */
         if (ptr_channel->cycle)
@@ -3906,7 +3912,8 @@ IRC_PROTOCOL_CALLBACK(346)
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'I');
 
-    if (ptr_modelist) {
+    if (ptr_modelist)
+    {
         /* start receiving new list */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
@@ -4065,7 +4072,8 @@ IRC_PROTOCOL_CALLBACK(348)
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'e');
 
-    if (ptr_modelist) {
+    if (ptr_modelist)
+    {
         /* start receiving new list */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
@@ -4857,7 +4865,8 @@ IRC_PROTOCOL_CALLBACK(367)
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, 'b');
 
-    if (ptr_modelist) {
+    if (ptr_modelist)
+    {
         /* start receiving new list */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {
@@ -5317,7 +5326,8 @@ IRC_PROTOCOL_CALLBACK(728)
         ptr_channel->buffer : server->buffer;
     ptr_modelist = irc_modelist_search (ptr_channel, argv[4][0]);
 
-    if (ptr_modelist) {
+    if (ptr_modelist)
+    {
         /* start receiving new list */
         if (ptr_modelist->state != IRC_MODELIST_STATE_RECEIVING)
         {

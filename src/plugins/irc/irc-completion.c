@@ -450,7 +450,8 @@ irc_completion_modelist_cb (const void *pointer, void *data,
         ptr_modelist = irc_modelist_search (ptr_channel, pos[0]);
         if (ptr_modelist)
         {
-            for (ptr_item = ptr_modelist->items; ptr_item; ptr_item = ptr_item->next_item)
+            for (ptr_item = ptr_modelist->items; ptr_item;
+                 ptr_item = ptr_item->next_item)
             {
                 weechat_hook_completion_list_add (completion,
                                                   ptr_item->mask,

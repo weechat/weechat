@@ -279,7 +279,7 @@ irc_command_mode_masks (struct t_irc_server *server,
         if (ptr_channel)
         {
             /* use modelist item for number arguments */
-            if (set[0] == '-' && ptr_modelist)
+            if (ptr_modelist && (set[0] == '-'))
             {
                 error = NULL;
                 number = strtol (argv[pos_masks], &error, 10);

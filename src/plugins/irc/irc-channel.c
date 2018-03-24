@@ -427,7 +427,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *ptr_buffer;
-    const char *chanmodes;
+    const char *ptr_chanmode;
 
     /* create buffer for channel (or use existing one) */
     ptr_buffer = irc_channel_create_buffer (server, channel_type,
@@ -483,9 +483,11 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->last_nick_speaking_time = NULL;
     new_channel->modelists = NULL;
     new_channel->last_modelist = NULL;
-    for (chanmodes = irc_server_get_chanmodes (server); chanmodes[0] && chanmodes[0] != ','; chanmodes++)
+    for (ptr_chanmode = irc_server_get_chanmodes (server); ptr_chanmode[0];
+         ptr_chanmode++)
     {
-        irc_modelist_new (new_channel, chanmodes[0]);
+        if (ptr_chanmode[0] != ',')
+            irc_modelist_new (new_channel, ptr_chanmode[0]);
     }
     new_channel->join_smart_filtered = NULL;
     new_channel->buffer = ptr_buffer;
@@ -1709,7 +1711,8 @@ irc_channel_print_log (struct t_irc_channel *channel)
     {
         irc_nick_print_log (ptr_nick);
     }
-    for (ptr_modelist = channel->modelists; ptr_modelist; ptr_modelist = ptr_modelist->next_modelist)
+    for (ptr_modelist = channel->modelists; ptr_modelist;
+         ptr_modelist = ptr_modelist->next_modelist)
     {
         irc_modelist_print_log (ptr_modelist);
     }

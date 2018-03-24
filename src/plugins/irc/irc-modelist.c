@@ -2,6 +2,7 @@
  * irc-modelist.c - channel mode list management for IRC plugin
  *
  * Copyright (C) 2015 Simmo Saan <simmo.saan@gmail.com>
+ * Copyright (C) 2018 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -41,7 +42,8 @@
  */
 
 int
-irc_modelist_item_valid (struct t_irc_modelist *modelist, struct t_irc_modelist_item *item)
+irc_modelist_item_valid (struct t_irc_modelist *modelist,
+                         struct t_irc_modelist_item *item)
 {
     struct t_irc_modelist_item *ptr_item;
 
@@ -81,7 +83,8 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
     }
 
     /* initialize new item */
-    new_item->number = (modelist->last_item) ? modelist->last_item->number + 1 : 0;
+    new_item->number = (modelist->last_item) ?
+        modelist->last_item->number + 1 : 0;
     new_item->mask = strdup (mask);
     new_item->setter = (setter) ? strdup (setter) : NULL;
     new_item->datetime = datetime;
@@ -95,9 +98,11 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
         modelist->items = new_item;
     modelist->last_item = new_item;
 
-    if (modelist->state == IRC_MODELIST_STATE_EMPTY ||
-        modelist->state == IRC_MODELIST_STATE_RECEIVED)
+    if ((modelist->state == IRC_MODELIST_STATE_EMPTY) ||
+        (modelist->state == IRC_MODELIST_STATE_RECEIVED))
+    {
         modelist->state = IRC_MODELIST_STATE_MODIFIED;
+    }
 
     /* all is OK, return address of new item */
     return new_item;
@@ -108,14 +113,15 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
  */
 
 void
-irc_modelist_item_free (struct t_irc_modelist *modelist, struct t_irc_modelist_item *item)
+irc_modelist_item_free (struct t_irc_modelist *modelist,
+                        struct t_irc_modelist_item *item)
 {
     struct t_irc_modelist_item *new_items;
 
     if (!modelist || !item)
         return;
 
-    /* remove channel from channels list */
+    /* remove item from modelist list */
     if (modelist->last_item == item)
         modelist->last_item = item->prev_item;
     if (item->prev_item)
@@ -211,7 +217,8 @@ irc_modelist_item_number (struct t_irc_modelist *modelist, int number)
  */
 
 int
-irc_modelist_valid (struct t_irc_channel *channel, struct t_irc_modelist *modelist)
+irc_modelist_valid (struct t_irc_channel *channel,
+                    struct t_irc_modelist *modelist)
 {
     struct t_irc_modelist *ptr_modelist;
 
@@ -273,7 +280,8 @@ irc_modelist_new (struct t_irc_channel *channel, char type)
  */
 
 void
-irc_modelist_free (struct t_irc_channel *channel, struct t_irc_modelist *modelist)
+irc_modelist_free (struct t_irc_channel *channel,
+                   struct t_irc_modelist *modelist)
 {
     struct t_irc_modelist *new_modelists;
 
@@ -343,7 +351,8 @@ irc_modelist_search (struct t_irc_channel *channel, char type)
  */
 
 struct t_hdata *
-irc_modelist_hdata_item_cb (const void *pointer, void *data, const char *hdata_name)
+irc_modelist_hdata_item_cb (const void *pointer, void *data,
+                            const char *hdata_name)
 {
     struct t_hdata *hdata;
 

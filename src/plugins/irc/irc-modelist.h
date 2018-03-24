@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2015 Simmo Saan <simmo.saan@gmail.com>
+ * Copyright (C) 2018 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -17,8 +18,10 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_IRC_MODELIST_H
-#define WEECHAT_IRC_MODELIST_H 1
+#ifndef WEECHAT_PLUGIN_IRC_MODELIST_H
+#define WEECHAT_PLUGIN_IRC_MODELIST_H
+
+#include <time.h>
 
 /* modelist states */
 #define IRC_MODELIST_STATE_EMPTY      0
@@ -75,7 +78,8 @@ extern void irc_modelist_free_all (struct t_irc_channel *channel);
 extern struct t_irc_modelist *irc_modelist_search (struct t_irc_channel *channel,
                                                    char type);
 
-extern struct t_hdata *irc_modelist_hdata_item_cb (const void *pointer, void *data,
+extern struct t_hdata *irc_modelist_hdata_item_cb (const void *pointer,
+                                                   void *data,
                                                    const char *hdata_name);
 extern struct t_hdata *irc_modelist_hdata_modelist_cb (const void *pointer,
                                                        void *data,
@@ -87,4 +91,4 @@ extern int irc_modelist_add_to_infolist (struct t_infolist *infolist,
 extern void irc_modelist_item_print_log (struct t_irc_modelist_item *item);
 extern void irc_modelist_print_log (struct t_irc_modelist *modelist);
 
-#endif /* WEECHAT_IRC_MODELIST_H */
+#endif /* WEECHAT_PLUGIN_IRC_MODELIST_H */
