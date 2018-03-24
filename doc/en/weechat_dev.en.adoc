@@ -253,6 +253,7 @@ WeeChat "core" is located in following directories:
 |       irc-input.c                 | Input of commands/text.
 |       irc-message.c               | Functions to manipulate IRC messages.
 |       irc-mode.c                  | Functions about channel/nick modes.
+|       irc-modelist.c              | IRC channel mode lists (+b, +e, +I)
 |       irc-msgbuffer.c             | Target buffer for IRC messages.
 |       irc-nick.c                  | IRC nicks.
 |       irc-notify.c                | IRC notify lists.

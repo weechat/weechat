@@ -42,6 +42,7 @@
 #include "irc-input.h"
 #include "irc-message.h"
 #include "irc-mode.h"
+#include "irc-modelist.h"
 #include "irc-msgbuffer.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
@@ -238,6 +239,10 @@ irc_command_mode_masks (struct t_irc_server *server,
     char modes[128+1], masks[1024], *mask;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_modelist *ptr_modelist;
+    struct t_irc_modelist_item *ptr_item;
+    long number;
+    char *error;
 
     if (irc_mode_get_chanmode_type (server, mode[0]) != 'A')
     {
@@ -265,15 +270,30 @@ irc_command_mode_masks (struct t_irc_server *server,
     masks[0] = '\0';
 
     ptr_channel = irc_channel_search (server, channel_name);
+    ptr_modelist = irc_modelist_search (ptr_channel, mode[0]);
 
     for (; argv[pos_masks]; pos_masks++)
     {
         mask = NULL;
 
-        /* use default_ban_mask for nick arguments */
         if (ptr_channel)
         {
-            if (!strchr (argv[pos_masks], '!')
+            /* use modelist item for number arguments */
+            if (set[0] == '-' && ptr_modelist)
+            {
+                error = NULL;
+                number = strtol (argv[pos_masks], &error, 10);
+                if (error && !error[0])
+                {
+                    ptr_item = irc_modelist_item_number (ptr_modelist, number - 1);
+                    if (ptr_item)
+                        mask = strdup (ptr_item->mask);
+                }
+            }
+
+            /* use default_ban_mask for nick arguments */
+            if (!mask
+                && !strchr (argv[pos_masks], '!')
                 && !strchr (argv[pos_masks], '@'))
             {
                 ptr_nick = irc_nick_search (server, ptr_channel,
@@ -6957,15 +6977,15 @@ irc_command_init ()
         N_("unban nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
-           "   nick: nick or host"),
-        NULL, &irc_command_unban, NULL, NULL);
+           "   nick: nick, host or ban number"),
+        "%(irc_modelist:b)", &irc_command_unban, NULL, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
         N_("[<channel>] <nick> [<nick>...]"),
         N_("channel: channel name\n"
-           "   nick: nick or host"),
-        "%(irc_channel_nicks_hosts)", &irc_command_unquiet, NULL, NULL);
+           "   nick: nick, host or quiet number"),
+        "%(irc_modelist:q)", &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),

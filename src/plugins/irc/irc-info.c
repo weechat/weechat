@@ -30,6 +30,7 @@
 #include "irc-config.h"
 #include "irc-ignore.h"
 #include "irc-message.h"
+#include "irc-modelist.h"
 #include "irc-nick.h"
 #include "irc-notify.h"
 #include "irc-protocol.h"
@@ -574,6 +575,203 @@ irc_info_infolist_irc_channel_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns IRC infolist "irc_modelist".
+ */
+
+struct t_infolist *
+irc_info_infolist_irc_modelist_cb (const void *pointer, void *data,
+                                   const char *infolist_name,
+                                   void *obj_pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_modelist *ptr_modelist;
+    char **argv;
+    int argc;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) infolist_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    argv = weechat_string_split (arguments, ",", 0, 0, &argc);
+    if (!argv)
+        return NULL;
+
+    if (argc >= 2)
+    {
+        ptr_server = irc_server_search (argv[0]);
+        if (!ptr_server)
+        {
+            weechat_string_free_split (argv);
+            return NULL;
+        }
+        ptr_channel = irc_channel_search (ptr_server, argv[1]);
+        if (!ptr_channel)
+        {
+            weechat_string_free_split (argv);
+            return NULL;
+        }
+        if (!obj_pointer && (argc >= 3))
+        {
+            obj_pointer = irc_modelist_search (ptr_channel, argv[2][0]);
+
+            if (!obj_pointer)
+            {
+                weechat_string_free_split (argv);
+                return NULL;
+            }
+        }
+    }
+    weechat_string_free_split (argv);
+
+    if (!ptr_server || !ptr_channel)
+        return NULL;
+
+    if (obj_pointer && !irc_modelist_valid (ptr_channel, obj_pointer))
+        return NULL;
+
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
+
+    if (obj_pointer)
+    {
+        /* build list with only one modelist */
+        if (!irc_modelist_add_to_infolist (ptr_infolist, obj_pointer))
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all modelists of channel */
+        for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
+             ptr_modelist = ptr_modelist->next_modelist)
+        {
+            if (!irc_modelist_add_to_infolist (ptr_infolist, ptr_modelist))
+            {
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
+ * Returns IRC infolist "irc_modelist_item".
+ */
+
+struct t_infolist *
+irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
+                                        const char *infolist_name,
+                                        void *obj_pointer, const char *arguments)
+{
+    struct t_infolist *ptr_infolist;
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_modelist *ptr_modelist;
+    struct t_irc_modelist_item *ptr_item;
+    char **argv;
+    int argc;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) infolist_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_server = NULL;
+    ptr_channel = NULL;
+    argv = weechat_string_split (arguments, ",", 0, 0, &argc);
+    if (!argv)
+        return NULL;
+
+    if (argc >= 3)
+    {
+        ptr_server = irc_server_search (argv[0]);
+        if (!ptr_server)
+        {
+            weechat_string_free_split (argv);
+            return NULL;
+        }
+        ptr_channel = irc_channel_search (ptr_server, argv[1]);
+        if (!ptr_channel)
+        {
+            weechat_string_free_split (argv);
+            return NULL;
+        }
+        ptr_modelist = irc_modelist_search (ptr_channel, argv[2][0]);
+        if (!ptr_modelist)
+        {
+            weechat_string_free_split (argv);
+            return NULL;
+        }
+        if (!obj_pointer && (argc >= 4))
+        {
+            obj_pointer = irc_modelist_item_number (ptr_modelist, atoi(argv[3]));
+
+            if (!obj_pointer)
+            {
+                weechat_string_free_split (argv);
+                return NULL;
+            }
+        }
+    }
+    weechat_string_free_split (argv);
+
+    if (!ptr_server || !ptr_channel || !ptr_modelist)
+        return NULL;
+
+    if (obj_pointer && !irc_modelist_item_valid (ptr_modelist, obj_pointer))
+        return NULL;
+
+    ptr_infolist = weechat_infolist_new ();
+    if (!ptr_infolist)
+        return NULL;
+
+    if (obj_pointer)
+    {
+        /* build list with only one modelist item */
+        if (!irc_modelist_item_add_to_infolist (ptr_infolist, obj_pointer))
+        {
+            weechat_infolist_free (ptr_infolist);
+            return NULL;
+        }
+        return ptr_infolist;
+    }
+    else
+    {
+        /* build list with all modelist items of modelist */
+        for (ptr_item = ptr_modelist->items; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            if (!irc_modelist_item_add_to_infolist (ptr_infolist, ptr_item))
+            {
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
+            }
+        }
+        return ptr_infolist;
+    }
+
+    return NULL;
+}
+
+/*
  * Returns IRC infolist "irc_nick".
  */
 
@@ -920,6 +1118,18 @@ irc_info_init ()
         N_("server,channel (channel is optional)"),
         &irc_info_infolist_irc_channel_cb, NULL, NULL);
     weechat_hook_infolist (
+        "irc_modelist",
+        N_("list of channel mode lists for an IRC channel"),
+        N_("mode list pointer (optional)"),
+        N_("server,channel,type (type is optional)"),
+        &irc_info_infolist_irc_modelist_cb, NULL, NULL);
+    weechat_hook_infolist (
+        "irc_modelist_item",
+        N_("list of channel mode list items for a channel mode list"),
+        N_("mode list item pointer (optional)"),
+        N_("server,channel,type,number (number is optional)"),
+        &irc_info_infolist_irc_modelist_item_cb, NULL, NULL);
+    weechat_hook_infolist (
         "irc_nick",
         N_("list of nicks for an IRC channel"),
         N_("nick pointer (optional)"),
@@ -948,6 +1158,12 @@ irc_info_init ()
     weechat_hook_hdata (
         "irc_nick", N_("irc nick"),
         &irc_nick_hdata_nick_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_modelist", N_("irc modelist"),
+        &irc_modelist_hdata_modelist_cb, NULL, NULL);
+    weechat_hook_hdata (
+        "irc_modelist_item", N_("irc modelist item"),
+        &irc_modelist_hdata_item_cb, NULL, NULL);
     weechat_hook_hdata (
         "irc_channel", N_("irc channel"),
         &irc_channel_hdata_channel_cb, NULL, NULL);
