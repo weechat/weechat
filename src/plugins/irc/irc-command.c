@@ -6979,7 +6979,7 @@ irc_command_init ()
         N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
         N_("channel: channel name\n"
            "   nick: nick or host\n"
-           " number: ban number (as displayed in output of /ban)"),
+           " number: ban number (as displayed by command /ban)"),
         "%(irc_modelist_masks:b)|%(irc_modelist_numbers:b)",
         &irc_command_unban, NULL, NULL);
     weechat_hook_command (
@@ -6988,7 +6988,7 @@ irc_command_init ()
         N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
         N_("channel: channel name\n"
            "   nick: nick or host\n"
-           " number: quiet number (as displayed in output of /quiet)"),
+           " number: quiet number (as displayed by command /quiet)"),
         "%(irc_modelist_masks:q)|%(irc_modelist_numbers:q)",
         &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
