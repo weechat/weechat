@@ -54,8 +54,22 @@ struct t_irc_modelist
     struct t_irc_modelist *next_modelist;  /* pointer to next modelist      */
 };
 
+extern int irc_modelist_valid (struct t_irc_channel *channel,
+                               struct t_irc_modelist *modelist);
+extern struct t_irc_modelist *irc_modelist_search (struct t_irc_channel *channel,
+                                                   char type);
+extern struct t_irc_modelist *irc_modelist_new (struct t_irc_channel *channel,
+                                                char type);
+extern void irc_modelist_free (struct t_irc_channel *channel,
+                               struct t_irc_modelist *modelist);
+extern void irc_modelist_free_all (struct t_irc_channel *channel);
+
 extern int irc_modelist_item_valid (struct t_irc_modelist *modelist,
                                     struct t_irc_modelist_item *item);
+extern struct t_irc_modelist_item *irc_modelist_item_search (struct t_irc_modelist *modelist,
+                                                             const char *mask);
+extern struct t_irc_modelist_item *irc_modelist_item_number (struct t_irc_modelist *modelist,
+                                                             int number);
 extern struct t_irc_modelist_item *irc_modelist_item_new (struct t_irc_modelist *modelist,
                                                           const char *mask,
                                                           const char *setter,
@@ -63,20 +77,6 @@ extern struct t_irc_modelist_item *irc_modelist_item_new (struct t_irc_modelist 
 extern void irc_modelist_item_free (struct t_irc_modelist *modelist,
                                     struct t_irc_modelist_item *item);
 extern void irc_modelist_item_free_all (struct t_irc_modelist *modelist);
-extern struct t_irc_modelist_item *irc_modelist_item_search (struct t_irc_modelist *modelist,
-                                                             const char *mask);
-extern struct t_irc_modelist_item *irc_modelist_item_number (struct t_irc_modelist *modelist,
-                                                             int number);
-
-extern int irc_modelist_valid (struct t_irc_channel *channel,
-                               struct t_irc_modelist *modelist);
-extern struct t_irc_modelist *irc_modelist_new (struct t_irc_channel *channel,
-                                                char type);
-extern void irc_modelist_free (struct t_irc_channel *channel,
-                               struct t_irc_modelist *modelist);
-extern void irc_modelist_free_all (struct t_irc_channel *channel);
-extern struct t_irc_modelist *irc_modelist_search (struct t_irc_channel *channel,
-                                                   char type);
 
 extern struct t_hdata *irc_modelist_hdata_item_cb (const void *pointer,
                                                    void *data,

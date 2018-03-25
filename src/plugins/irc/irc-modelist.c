@@ -34,6 +34,144 @@
 
 
 /*
+ * Checks if a modelist pointer is valid for a channel.
+ *
+ * Returns:
+ *   1: modelist exists for channel
+ *   0: modelist does not exist for channel
+ */
+
+int
+irc_modelist_valid (struct t_irc_channel *channel,
+                    struct t_irc_modelist *modelist)
+{
+    struct t_irc_modelist *ptr_modelist;
+
+    if (!channel || !modelist)
+        return 0;
+
+    for (ptr_modelist = channel->modelists; ptr_modelist;
+         ptr_modelist = ptr_modelist->next_modelist)
+    {
+        if (ptr_modelist == modelist)
+            return 1;
+    }
+
+    /* modelist not found */
+    return 0;
+}
+
+/*
+ * Searches for a modelist by type.
+ *
+ * Returns pointer to modelist found, NULL if not found.
+ */
+
+struct t_irc_modelist *
+irc_modelist_search (struct t_irc_channel *channel, char type)
+{
+    struct t_irc_modelist *ptr_modelist;
+
+    if (!channel)
+        return NULL;
+
+    for (ptr_modelist = channel->modelists; ptr_modelist;
+         ptr_modelist = ptr_modelist->next_modelist)
+    {
+        if (ptr_modelist->type == type)
+            return ptr_modelist;
+    }
+    return NULL;
+}
+
+/*
+ * Creates a new modelist in a channel.
+ *
+ * Returns pointer to new modelist, NULL if error.
+ */
+
+struct t_irc_modelist *
+irc_modelist_new (struct t_irc_channel *channel, char type)
+{
+    struct t_irc_modelist *new_modelist;
+
+    /* alloc memory for new modelist */
+    if ((new_modelist = malloc (sizeof (*new_modelist))) == NULL)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: cannot allocate new modelist"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        return NULL;
+    }
+
+    /* initialize new modelist */
+    new_modelist->type = type;
+    new_modelist->state = IRC_MODELIST_STATE_EMPTY;
+    new_modelist->items = NULL;
+    new_modelist->last_item = NULL;
+
+    /* add new modelist to channel */
+    new_modelist->prev_modelist = channel->last_modelist;
+    new_modelist->next_modelist = NULL;
+    if (channel->modelists)
+        (channel->last_modelist)->next_modelist = new_modelist;
+    else
+        channel->modelists = new_modelist;
+    channel->last_modelist = new_modelist;
+
+    /* all is OK, return address of new modelist */
+    return new_modelist;
+}
+
+/*
+ * Frees a modelist and remove it from channel.
+ */
+
+void
+irc_modelist_free (struct t_irc_channel *channel,
+                   struct t_irc_modelist *modelist)
+{
+    struct t_irc_modelist *new_modelists;
+
+    if (!channel || !modelist)
+        return;
+
+    /* remove modelist from channel modelists */
+    if (channel->last_modelist == modelist)
+        channel->last_modelist = modelist->prev_modelist;
+    if (modelist->prev_modelist)
+    {
+        (modelist->prev_modelist)->next_modelist = modelist->next_modelist;
+        new_modelists = channel->modelists;
+    }
+    else
+        new_modelists = modelist->next_modelist;
+
+    if (modelist->next_modelist)
+        (modelist->next_modelist)->prev_modelist = modelist->prev_modelist;
+
+    /* free linked lists */
+    irc_modelist_item_free_all (modelist);
+
+    free (modelist);
+
+    channel->modelists = new_modelists;
+}
+
+/*
+ * Frees all modelists for a channel.
+ */
+
+void
+irc_modelist_free_all (struct t_irc_channel *channel)
+{
+    while (channel->modelists)
+    {
+        irc_modelist_free (channel, channel->modelists);
+    }
+}
+
+/*
  * Checks if a modelist item pointer is valid for a modelist.
  *
  * Returns:
@@ -59,6 +197,52 @@ irc_modelist_item_valid (struct t_irc_modelist *modelist,
 
     /* item not found */
     return 0;
+}
+
+/*
+ * Searches for an item by mask.
+ *
+ * Returns pointer to item found, NULL if not found.
+ */
+
+struct t_irc_modelist_item *
+irc_modelist_item_search (struct t_irc_modelist *modelist, const char *mask)
+{
+    struct t_irc_modelist_item *ptr_item;
+
+    if (!modelist || !mask)
+        return NULL;
+
+    for (ptr_item = modelist->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (strcmp (ptr_item->mask, mask) == 0)
+            return ptr_item;
+    }
+    return NULL;
+}
+
+/*
+ * Searches for an item by number.
+ *
+ * Returns pointer to item found, NULL if not found.
+ */
+
+struct t_irc_modelist_item *
+irc_modelist_item_number (struct t_irc_modelist *modelist, int number)
+{
+    struct t_irc_modelist_item *ptr_item;
+
+    if (!modelist)
+        return NULL;
+
+    for (ptr_item = modelist->items; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        if (ptr_item->number == number)
+            return ptr_item;
+    }
+    return NULL;
 }
 
 /*
@@ -160,190 +344,6 @@ irc_modelist_item_free_all (struct t_irc_modelist *modelist)
         irc_modelist_item_free (modelist, modelist->items);
     }
     modelist->state = IRC_MODELIST_STATE_EMPTY;
-}
-
-/*
- * Searches for an item by mask.
- *
- * Returns pointer to item found, NULL if not found.
- */
-
-struct t_irc_modelist_item *
-irc_modelist_item_search (struct t_irc_modelist *modelist, const char *mask)
-{
-    struct t_irc_modelist_item *ptr_item;
-
-    if (!modelist || !mask)
-        return NULL;
-
-    for (ptr_item = modelist->items; ptr_item;
-         ptr_item = ptr_item->next_item)
-    {
-        if (strcmp (ptr_item->mask, mask) == 0)
-            return ptr_item;
-    }
-    return NULL;
-}
-
-/*
- * Searches for an item by number.
- *
- * Returns pointer to item found, NULL if not found.
- */
-
-struct t_irc_modelist_item *
-irc_modelist_item_number (struct t_irc_modelist *modelist, int number)
-{
-    struct t_irc_modelist_item *ptr_item;
-
-    if (!modelist)
-        return NULL;
-
-    for (ptr_item = modelist->items; ptr_item;
-         ptr_item = ptr_item->next_item)
-    {
-        if (ptr_item->number == number)
-            return ptr_item;
-    }
-    return NULL;
-}
-
-/*
- * Checks if a modelist pointer is valid for a channel.
- *
- * Returns:
- *   1: modelist exists for channel
- *   0: modelist does not exist for channel
- */
-
-int
-irc_modelist_valid (struct t_irc_channel *channel,
-                    struct t_irc_modelist *modelist)
-{
-    struct t_irc_modelist *ptr_modelist;
-
-    if (!channel || !modelist)
-        return 0;
-
-    for (ptr_modelist = channel->modelists; ptr_modelist;
-         ptr_modelist = ptr_modelist->next_modelist)
-    {
-        if (ptr_modelist == modelist)
-            return 1;
-    }
-
-    /* modelist not found */
-    return 0;
-}
-
-/*
- * Creates a new modelist in a channel.
- *
- * Returns pointer to new modelist, NULL if error.
- */
-
-struct t_irc_modelist *
-irc_modelist_new (struct t_irc_channel *channel, char type)
-{
-    struct t_irc_modelist *new_modelist;
-
-    /* alloc memory for new modelist */
-    if ((new_modelist = malloc (sizeof (*new_modelist))) == NULL)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: cannot allocate new modelist"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        return NULL;
-    }
-
-    /* initialize new modelist */
-    new_modelist->type = type;
-    new_modelist->state = IRC_MODELIST_STATE_EMPTY;
-    new_modelist->items = NULL;
-    new_modelist->last_item = NULL;
-
-    /* add new modelist to channel */
-    new_modelist->prev_modelist = channel->last_modelist;
-    new_modelist->next_modelist = NULL;
-    if (channel->modelists)
-        (channel->last_modelist)->next_modelist = new_modelist;
-    else
-        channel->modelists = new_modelist;
-    channel->last_modelist = new_modelist;
-
-    /* all is OK, return address of new modelist */
-    return new_modelist;
-}
-
-/*
- * Frees a modelist and remove it from channel.
- */
-
-void
-irc_modelist_free (struct t_irc_channel *channel,
-                   struct t_irc_modelist *modelist)
-{
-    struct t_irc_modelist *new_modelists;
-
-    if (!channel || !modelist)
-        return;
-
-    /* remove modelist from channel modelists */
-    if (channel->last_modelist == modelist)
-        channel->last_modelist = modelist->prev_modelist;
-    if (modelist->prev_modelist)
-    {
-        (modelist->prev_modelist)->next_modelist = modelist->next_modelist;
-        new_modelists = channel->modelists;
-    }
-    else
-        new_modelists = modelist->next_modelist;
-
-    if (modelist->next_modelist)
-        (modelist->next_modelist)->prev_modelist = modelist->prev_modelist;
-
-    /* free linked lists */
-    irc_modelist_item_free_all (modelist);
-
-    free (modelist);
-
-    channel->modelists = new_modelists;
-}
-
-/*
- * Frees all modelists for a channel.
- */
-
-void
-irc_modelist_free_all (struct t_irc_channel *channel)
-{
-    while (channel->modelists)
-    {
-        irc_modelist_free (channel, channel->modelists);
-    }
-}
-
-/*
- * Searches for a modelist by type.
- *
- * Returns pointer to modelist found, NULL if not found.
- */
-
-struct t_irc_modelist *
-irc_modelist_search (struct t_irc_channel *channel, char type)
-{
-    struct t_irc_modelist *ptr_modelist;
-
-    if (!channel)
-        return NULL;
-
-    for (ptr_modelist = channel->modelists; ptr_modelist;
-         ptr_modelist = ptr_modelist->next_modelist)
-    {
-        if (ptr_modelist->type == type)
-            return ptr_modelist;
-    }
-    return NULL;
 }
 
 /*
