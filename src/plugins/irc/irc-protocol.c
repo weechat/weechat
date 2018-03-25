@@ -5874,16 +5874,15 @@ irc_protocol_get_message_tag_time (struct t_hashtable *tags)
 void
 irc_protocol_recv_command (struct t_irc_server *server,
                            const char *irc_message,
-                           const char *msg_tags,
                            const char *msg_command,
                            const char *msg_channel)
 {
     int i, cmd_found, return_code, argc, decode_color, keep_trailing_spaces;
     int message_ignored;
-    char *dup_irc_message, *pos_space;
+    char *message_colors_decoded, *pos_space, *tags;
     struct t_irc_channel *ptr_channel;
     t_irc_recv_func *cmd_recv_func;
-    const char *cmd_name;
+    const char *cmd_name, *ptr_msg_after_tags;
     time_t date;
     const char *nick1, *address1, *host1;
     char *nick, *address, *address_color, *host, *host_no_color, *host_color;
@@ -6045,29 +6044,48 @@ irc_protocol_recv_command (struct t_irc_server *server,
     if (!msg_command)
         return;
 
-    dup_irc_message = NULL;
+    message_colors_decoded = NULL;
     argv = NULL;
     argv_eol = NULL;
     hash_tags = NULL;
     date = 0;
 
+    ptr_msg_after_tags = irc_message;
+
     /* get tags as hashtable */
-    if (msg_tags)
+    if (irc_message && (irc_message[0] == '@'))
     {
-        hash_tags = irc_protocol_get_message_tags (msg_tags);
-        if (hash_tags)
-            date = irc_protocol_get_message_tag_time (hash_tags);
+        pos_space = strchr (irc_message, ' ');
+        if (pos_space)
+        {
+            tags = weechat_strndup (irc_message + 1,
+                                    pos_space - (irc_message + 1));
+            if (tags)
+            {
+                hash_tags = irc_protocol_get_message_tags (tags);
+                if (hash_tags)
+                    date = irc_protocol_get_message_tag_time (hash_tags);
+                free (tags);
+            }
+            ptr_msg_after_tags = pos_space;
+            while (ptr_msg_after_tags[0] == ' ')
+            {
+                ptr_msg_after_tags++;
+            }
+        }
+        else
+            ptr_msg_after_tags = NULL;
     }
 
     /* get nick/host/address from IRC message */
     nick1 = NULL;
     address1 = NULL;
     host1 = NULL;
-    if (irc_message && (irc_message[0] == ':'))
+    if (ptr_msg_after_tags && (ptr_msg_after_tags[0] == ':'))
     {
-        nick1 = irc_message_get_nick_from_host (irc_message);
-        address1 = irc_message_get_address_from_host (irc_message);
-        host1 = irc_message + 1;
+        nick1 = irc_message_get_nick_from_host (ptr_msg_after_tags);
+        address1 = irc_message_get_address_from_host (ptr_msg_after_tags);
+        host1 = ptr_msg_after_tags + 1;
     }
     nick = (nick1) ? strdup (nick1) : NULL;
     address = (address1) ? strdup (address1) : NULL;
@@ -6155,23 +6173,23 @@ irc_protocol_recv_command (struct t_irc_server *server,
 
     if (cmd_recv_func != NULL)
     {
-        if (irc_message)
+        if (ptr_msg_after_tags)
         {
             if (decode_color)
             {
-                dup_irc_message = irc_color_decode (
-                    irc_message,
+                message_colors_decoded = irc_color_decode (
+                    ptr_msg_after_tags,
                     weechat_config_boolean (irc_config_network_colors_receive));
             }
             else
             {
-                dup_irc_message = strdup (irc_message);
+                message_colors_decoded = strdup (ptr_msg_after_tags);
             }
         }
         else
-            dup_irc_message = NULL;
-        argv = weechat_string_split (dup_irc_message, " ", 0, 0, &argc);
-        argv_eol = weechat_string_split (dup_irc_message, " ",
+            message_colors_decoded = NULL;
+        argv = weechat_string_split (message_colors_decoded, " ", 0, 0, &argc);
+        argv_eol = weechat_string_split (message_colors_decoded, " ",
                                          1 + keep_trailing_spaces, 0, NULL);
 
         return_code = (int) (cmd_recv_func) (server,
@@ -6217,8 +6235,8 @@ end:
         free (host_no_color);
     if (host_color)
         free (host_color);
-    if (dup_irc_message)
-        free (dup_irc_message);
+    if (message_colors_decoded)
+        free (message_colors_decoded);
     if (argv)
         weechat_string_free_split (argv);
     if (argv_eol)

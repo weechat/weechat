@@ -2848,8 +2848,8 @@ void
 irc_server_msgq_flush ()
 {
     struct t_irc_message *next;
-    char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *ptr_msg3, *pos;
-    char *tags, *nick, *host, *command, *channel, *arguments;
+    char *ptr_data, *new_msg, *new_msg2, *ptr_msg, *ptr_msg2, *pos;
+    char *nick, *host, *command, *channel, *arguments;
     char *msg_decoded, *msg_decoded_without_color;
     char str_modifier[128], modifier_data[256];
     int pos_channel, pos_text, pos_decode;
@@ -2914,7 +2914,7 @@ irc_server_msgq_flush ()
                             }
 
                             irc_message_parse (irc_recv_msgq->server, ptr_msg,
-                                               &tags, NULL, &nick, &host,
+                                               NULL, NULL, &nick, &host,
                                                &command, &channel, &arguments,
                                                NULL, NULL, NULL,
                                                &pos_channel, &pos_text);
@@ -3001,25 +3001,9 @@ irc_server_msgq_flush ()
                                 else
                                 {
                                     /* message not redirected, display it */
-                                    ptr_msg3 = ptr_msg2;
-                                    if (ptr_msg3[0] == '@')
-                                    {
-                                        /* skip tags in message */
-                                        ptr_msg3 = strchr (ptr_msg3, ' ');
-                                        if (ptr_msg3)
-                                        {
-                                            while (ptr_msg3[0] == ' ')
-                                            {
-                                                ptr_msg3++;
-                                            }
-                                        }
-                                        else
-                                            ptr_msg3 = ptr_msg2;
-                                    }
                                     irc_protocol_recv_command (
                                         irc_recv_msgq->server,
-                                        ptr_msg3,
-                                        tags,
+                                        ptr_msg2,
                                         command,
                                         channel);
                                 }
@@ -3027,8 +3011,6 @@ irc_server_msgq_flush ()
 
                             if (new_msg2)
                                 free (new_msg2);
-                            if (tags)
-                                free (tags);
                             if (nick)
                                 free (nick);
                             if (host)

@@ -9212,27 +9212,35 @@ WeeChat とプラグインが送信するシグナルのリスト:
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Scheme スクリプトを削除
 
+// TRANSLATION MISSING
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
-  プラグインがメッセージを処理する前に、シグナルが送信される)
+  プラグインがメッセージを処理する前に、シグナルが送信される) +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを *無視しない* 場合のみ irc
-  プラグインがメッセージを処理した後に、シグナルが送信される)
+  プラグインがメッセージを処理した後に、シグナルが送信される) +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
-  プラグインがメッセージを処理する前に、シグナルが送信される)
+  プラグインがメッセージを処理する前に、シグナルが送信される) +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |
   String: メッセージ |
   サーバから IRC メッセージを受信 (メッセージを無視する場合でも irc
-  プラグインがメッセージを処理した後に、シグナルが送信される)
+  プラグインがメッセージを処理した後に、シグナルが送信される) +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.7 以上で利用可)_ |

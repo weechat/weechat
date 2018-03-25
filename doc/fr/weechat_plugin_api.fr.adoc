@@ -9393,24 +9393,32 @@ Liste des signaux envoyés par WeeChat et les extensions :
 | irc | xxx,irc_in_yyy ^(1)^ |
   Chaîne : message. |
   Message IRC du serveur (avant utilisation par l'extension irc,
-  signal envoyé uniquement si le message n'est *pas* ignoré).
+  signal envoyé uniquement si le message n'est *pas* ignoré). +
+  Depuis la version 2.2, le message IRC entier est envoyé, en incluant
+  les étiquettes.
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
   Chaîne : message. |
   Message IRC du serveur (après utilisation par l'extension irc,
-  signal envoyé uniquement si le message n'est *pas* ignoré).
+  signal envoyé uniquement si le message n'est *pas* ignoré). +
+  Depuis la version 2.2, le message IRC entier est envoyé, en incluant
+  les étiquettes.
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne : message. |
   Message IRC du serveur (avant utilisation par l'extension irc,
-  signal envoyé même si le message est ignoré).
+  signal envoyé même si le message est ignoré). +
+  Depuis la version 2.2, le message IRC entier est envoyé, en incluant
+  les étiquettes.
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne : message. |
   Message IRC du serveur (après utilisation par l'extension irc,
-  signal envoyé même si le message est ignoré).
+  signal envoyé même si le message est ignoré). +
+  Depuis la version 2.2, le message IRC entier est envoyé, en incluant
+  les étiquettes.
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |

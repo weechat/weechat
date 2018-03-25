@@ -87,7 +87,6 @@ extern const char *irc_protocol_tags (const char *command, const char *tags,
                                       const char *nick, const char *address);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *irc_message,
-                                       const char *msg_tags,
                                        const char *msg_command,
                                        const char *msg_channel);
 

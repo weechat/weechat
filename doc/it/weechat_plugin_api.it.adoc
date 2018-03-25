@@ -9509,31 +9509,39 @@ List of signals sent by WeeChat and plugins:
   String: comma-separated list of scripts removed. |
   Scheme script(s) removed.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato solo se il
-  messaggio *non* viene ignorato).
+  messaggio *non* viene ignorato). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
-  solo se il messaggio *non* viene ignorato).
+  solo se il messaggio *non* viene ignorato). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: messaggio. |
   Messaggio IRC dal server (prima di essere utilizzato
   dal plugin irc, il segnale viene inviato anche se il
-  messaggio è stato ignorato).
+  messaggio è stato ignorato). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: messaggio. |
   Messaggio IRC dal server (dopo essere stato
   utilizzato dal plugin irc, il segnale viene inviato
-  anche se il messaggio è stato ignorato).
+  anche se il messaggio è stato ignorato). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 // TRANSLATION MISSING
 | irc | xxx,irc_out1_yyy ^(1)^ +

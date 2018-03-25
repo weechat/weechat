@@ -28,7 +28,8 @@ Improvements::
 
 Bug fixes::
 
-  * irc: fix memory leak when receiving a message with tags
+  * irc: send whole IRC message including IRCv3 tags in the signals irc_in, irc_in2, irc_raw_in and irc_raw_in2 (issue #787)
+  * irc: fix memory leak when receiving a message with IRCv3 tags
 
 Documentation::
 

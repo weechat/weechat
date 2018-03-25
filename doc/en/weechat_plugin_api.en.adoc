@@ -9210,24 +9210,28 @@ List of signals sent by WeeChat and plugins:
 | irc | xxx,irc_in_yyy ^(1)^ |
   String: message. |
   IRC message from server (before irc plugin uses it,
-  signal sent only if message is *not* ignored).
+  signal sent only if message is *not* ignored). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 | irc | xxx,irc_in2_yyy ^(1)^ |
   String: message. |
   IRC message from server (after irc plugin uses it,
-  signal sent only if message is *not* ignored).
+  signal sent only if message is *not* ignored). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 | irc | xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: message. |
   IRC message from server (before irc plugin uses it,
-  signal sent even if message is ignored).
+  signal sent even if message is ignored). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 | irc | xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: message. |
   IRC message from server (after irc plugin uses it,
-  signal sent even if message is ignored).
+  signal sent even if message is ignored). +
+  Since version 2.2, the whole IRC message is sent, including tags.
 
 | irc | xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
