@@ -20,6 +20,38 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.2]]
 == Version 2.2 (under dev)
 
+[[v2.2_irc_signals_tags]]
+=== Tags in IRC "in" signals
+
+The IRCv3 tags are now sent in these IRC signals for received messages:
+
+* +*,irc_in_*+
+* +*,irc_in2_*+
+* +*,irc_raw_in_*+
+* +*,irc_raw_in2_*+
+
+This could break plugins or scripts that parse IRC messages and don't expect
+to receive tags (even if tags *are* part of the IRC message, so this was a bug
+in the IRC signals).
+
+See issue #787 for more information.
+
+[NOTE]
+It is recommended for plugins and scripts to use the WeeChat IRC parser:
+see the function "info_get_hashtable" in the Plugin API reference.
+
+Now the whole IRC message is received by the signal callback, for example:
+
+----
+@tag1=abc;tag2=def :nick!user@host PRIVMSG #test :this is a test
+----
+
+In older releases, this message was received:
+
+----
+:nick!user@host PRIVMSG #test :this is a test
+----
+
 [[v2.2_debian_headless_package]]
 === New Debian package for headless version
 
