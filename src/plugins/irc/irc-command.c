@@ -6975,17 +6975,21 @@ irc_command_init ()
     weechat_hook_command (
         "unban",
         N_("unban nicks or hosts"),
-        N_("[<channel>] <nick> [<nick>...]"),
+        N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
         N_("channel: channel name\n"
-           "   nick: nick, host or ban number"),
-        "%(irc_modelist:b)", &irc_command_unban, NULL, NULL);
+           "   nick: nick or host\n"
+           " number: ban number (as displayed in output of /ban)"),
+        "%(irc_modelist_masks:b)|%(irc_modelist_numbers:b)",
+        &irc_command_unban, NULL, NULL);
     weechat_hook_command (
         "unquiet",
         N_("unquiet nicks or hosts"),
-        N_("[<channel>] <nick> [<nick>...]"),
+        N_("[<channel>] <nick>|<number> [<nick>|<number>...]"),
         N_("channel: channel name\n"
-           "   nick: nick, host or quiet number"),
-        "%(irc_modelist:q)", &irc_command_unquiet, NULL, NULL);
+           "   nick: nick or host\n"
+           " number: quiet number (as displayed in output of /quiet)"),
+        "%(irc_modelist_masks:q)|%(irc_modelist_numbers:q)",
+        &irc_command_unquiet, NULL, NULL);
     weechat_hook_command (
         "userhost",
         N_("return a list of information about nicks"),
