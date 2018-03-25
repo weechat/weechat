@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.2]]
 == Version 2.2 (under dev)
 
+New features::
+
+  * irc: add indexed ban list, add completion for /unban and /unquiet (issue #597, task #11374, task #10876)
+
 Improvements::
 
   * core: allow merge of buffers by name in command /buffer (issue #1159)
