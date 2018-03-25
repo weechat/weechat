@@ -112,9 +112,9 @@ irc_message_parse (struct t_irc_server *server, const char *message,
     if (ptr_message[0] == '@')
     {
         /*
-         * read tags (they are optional and enabled only if client enabled
-         * a server capability, see:
-         * http://ircv3.atheme.org/specification/message-tags-3.2)
+         * Read tags: they are optional and enabled only if client enabled
+         * a server capability.
+         * See: https://ircv3.github.io/specs/core/message-tags-3.2.html
          */
         pos = strchr (ptr_message, ' ');
         if (pos)
