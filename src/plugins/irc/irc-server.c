@@ -3027,6 +3027,8 @@ irc_server_msgq_flush ()
 
                             if (new_msg2)
                                 free (new_msg2);
+                            if (tags)
+                                free (tags);
                             if (nick)
                                 free (nick);
                             if (host)

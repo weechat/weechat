@@ -26,6 +26,10 @@ Improvements::
 
   * core: allow merge of buffers by name in command /buffer (issue #1159)
 
+Bug fixes::
+
+  * irc: fix memory leak when receiving a message with tags
+
 Documentation::
 
   * core: split man pages weechat and weechat-headless
