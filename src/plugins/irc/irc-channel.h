@@ -161,6 +161,8 @@ extern int irc_channel_autorejoin_cb (const void *pointer, void *data,
 extern void irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                                                  struct t_irc_nick *nick,
                                                  const char *nickname);
+extern void irc_channel_modelist_set_state (struct t_irc_channel *channel,
+                                            int state);
 extern struct t_hdata *irc_channel_hdata_channel_cb (const void *pointer,
                                                      void *data,
                                                      const char *hdata_name);

@@ -1370,6 +1370,22 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
 }
 
 /*
+ * Sets state for modelists in a channel.
+ */
+
+void
+irc_channel_modelist_set_state (struct t_irc_channel *channel, int state)
+{
+    struct t_irc_modelist *ptr_modelist;
+
+    for (ptr_modelist = channel->modelists; ptr_modelist;
+         ptr_modelist = ptr_modelist->next_modelist)
+    {
+        ptr_modelist->state = state;
+    }
+}
+
+/*
  * Frees a channel and remove it from channels list.
  */
 

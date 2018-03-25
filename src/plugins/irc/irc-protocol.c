@@ -948,7 +948,6 @@ IRC_PROTOCOL_CALLBACK(kick)
     int rejoin;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_kicked;
-    struct t_irc_modelist *ptr_modelist;
 
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1008,11 +1007,8 @@ IRC_PROTOCOL_CALLBACK(kick)
          */
         irc_nick_free_all (server, ptr_channel);
 
-        for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
-             ptr_modelist = ptr_modelist->next_modelist)
-        {
-            ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
-        }
+        irc_channel_modelist_set_state (ptr_channel,
+                                        IRC_MODELIST_STATE_MODIFIED);
 
         /* read option "autorejoin" in server */
         rejoin = IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_AUTOREJOIN);
@@ -1074,7 +1070,6 @@ IRC_PROTOCOL_CALLBACK(kill)
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick, *ptr_nick_killed;
-    struct t_irc_modelist *ptr_modelist;
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1129,11 +1124,8 @@ IRC_PROTOCOL_CALLBACK(kill)
              */
             irc_nick_free_all (server, ptr_channel);
 
-            for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
-                 ptr_modelist = ptr_modelist->next_modelist)
-            {
-                ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
-            }
+            irc_channel_modelist_set_state (ptr_channel,
+                                            IRC_MODELIST_STATE_MODIFIED);
 
             irc_bar_item_update_channel ();
         }
@@ -1676,7 +1668,6 @@ IRC_PROTOCOL_CALLBACK(part)
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
-    struct t_irc_modelist *ptr_modelist;
 
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
@@ -1773,11 +1764,8 @@ IRC_PROTOCOL_CALLBACK(part)
     {
         irc_nick_free_all (server, ptr_channel);
 
-        for (ptr_modelist = ptr_channel->modelists; ptr_modelist;
-             ptr_modelist = ptr_modelist->next_modelist)
-        {
-            ptr_modelist->state = IRC_MODELIST_STATE_MODIFIED;
-        }
+        irc_channel_modelist_set_state (ptr_channel,
+                                        IRC_MODELIST_STATE_MODIFIED);
 
         /* cycling ? => rejoin channel immediately */
         if (ptr_channel->cycle)
