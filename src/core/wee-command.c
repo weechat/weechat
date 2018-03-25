@@ -7181,7 +7181,7 @@ command_init ()
         " || swap %(buffers_numbers)|%(buffers_plugins_names) "
         "%(buffers_numbers)|%(buffers_plugins_names)"
         " || cycle %(buffers_numbers)|%(buffers_plugins_names)|%*"
-        " || merge %(buffers_numbers)"
+        " || merge %(buffers_numbers)|%(buffers_plugins_names)"
         " || unmerge %(buffers_numbers)|-all"
         " || hide %(buffers_numbers)|%(buffers_plugins_names)|-all "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
