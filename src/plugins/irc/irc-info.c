@@ -730,7 +730,8 @@ irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
                 weechat_string_free_split (argv);
                 return NULL;
             }
-            obj_pointer = irc_modelist_item_number (ptr_modelist, (int)number);
+            obj_pointer = irc_modelist_item_search_number (ptr_modelist,
+                                                           (int)number);
             if (!obj_pointer)
             {
                 weechat_string_free_split (argv);

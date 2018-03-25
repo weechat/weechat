@@ -482,8 +482,8 @@ irc_mode_channel_set (struct t_irc_server *server,
                             }
                             else if (set_flag == '-')
                             {
-                                ptr_item = irc_modelist_item_search (ptr_modelist,
-                                                                     ptr_arg);
+                                ptr_item = irc_modelist_item_search_mask (
+                                    ptr_modelist, ptr_arg);
                                 if (ptr_item)
                                     irc_modelist_item_free (ptr_modelist, ptr_item);
                             }

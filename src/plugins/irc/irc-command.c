@@ -285,7 +285,8 @@ irc_command_mode_masks (struct t_irc_server *server,
                 number = strtol (argv[pos_masks], &error, 10);
                 if (error && !error[0])
                 {
-                    ptr_item = irc_modelist_item_number (ptr_modelist, number - 1);
+                    ptr_item = irc_modelist_item_search_number (ptr_modelist,
+                                                                number - 1);
                     if (ptr_item)
                         mask = strdup (ptr_item->mask);
                 }

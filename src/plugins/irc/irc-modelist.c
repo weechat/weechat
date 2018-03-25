@@ -206,7 +206,7 @@ irc_modelist_item_valid (struct t_irc_modelist *modelist,
  */
 
 struct t_irc_modelist_item *
-irc_modelist_item_search (struct t_irc_modelist *modelist, const char *mask)
+irc_modelist_item_search_mask (struct t_irc_modelist *modelist, const char *mask)
 {
     struct t_irc_modelist_item *ptr_item;
 
@@ -229,7 +229,7 @@ irc_modelist_item_search (struct t_irc_modelist *modelist, const char *mask)
  */
 
 struct t_irc_modelist_item *
-irc_modelist_item_number (struct t_irc_modelist *modelist, int number)
+irc_modelist_item_search_number (struct t_irc_modelist *modelist, int number)
 {
     struct t_irc_modelist_item *ptr_item;
 

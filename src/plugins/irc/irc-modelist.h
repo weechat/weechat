@@ -66,10 +66,10 @@ extern void irc_modelist_free_all (struct t_irc_channel *channel);
 
 extern int irc_modelist_item_valid (struct t_irc_modelist *modelist,
                                     struct t_irc_modelist_item *item);
-extern struct t_irc_modelist_item *irc_modelist_item_search (struct t_irc_modelist *modelist,
-                                                             const char *mask);
-extern struct t_irc_modelist_item *irc_modelist_item_number (struct t_irc_modelist *modelist,
-                                                             int number);
+extern struct t_irc_modelist_item *irc_modelist_item_search_mask (struct t_irc_modelist *modelist,
+                                                                  const char *mask);
+extern struct t_irc_modelist_item *irc_modelist_item_search_number (struct t_irc_modelist *modelist,
+                                                                    int number);
 extern struct t_irc_modelist_item *irc_modelist_item_new (struct t_irc_modelist *modelist,
                                                           const char *mask,
                                                           const char *setter,
