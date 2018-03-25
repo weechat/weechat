@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2018-02-05 21:30+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7674,19 +7674,31 @@ msgstr "najít cestu k určenému serveru"
 msgid "unban nicks or hosts"
 msgstr "zruší zakázání pro přezdívku nebo hosta"
 
-msgid "[<channel>] <nick> [<nick>...]"
+#, fuzzy
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<kanál>] <přezdívka> [<přezdívka>...]"
 
+#, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
-"kanál: jméno kanálu\n"
-"   přezdívka: přezdívka nebo host"
+"    kanál: kanál pro zrušení zakázání\n"
+"přezdívka: uživatel nebo host, kterému zrušit zakázání"
 
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "ztichnout přezdívky nebo hosty"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+"    kanál: kanál pro zrušení zakázání\n"
+"přezdívka: uživatel nebo host, kterému zrušit zakázání"
 
 msgid "return a list of information about nicks"
 msgstr "vrátí seznam informací o přezdívkách"
@@ -7822,6 +7834,13 @@ msgstr "přezdívky na aktuálním IRC kanálu"
 
 msgid "nicks and hostnames of current IRC channel"
 msgstr "přezdívky a jména hostů na aktuálním IRC kanálu"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr ""
 
 msgid "topic of current IRC channel"
 msgstr "téma hovoru na aktuálním IRC kanálu"
@@ -8825,6 +8844,30 @@ msgstr "ukazatel kanálu (volitelné)"
 msgid "server,channel (channel is optional)"
 msgstr "server,kanál (kanál je volitelný)"
 
+#, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "seznam uživatelů pro IRC kanál"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "ukazatel aliasu (volitelné)"
+
+#, fuzzy
+msgid "server,channel,type (type is optional)"
+msgstr "server,kanál (kanál je volitelný)"
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "barva módů kanálu, blízko jména kanálu"
+
+#, fuzzy
+msgid "mode list item pointer (optional)"
+msgstr "ukazatel položky pole (volitelný)"
+
+#, fuzzy
+msgid "server,channel,type,number (number is optional)"
+msgstr "server,kanál (kanál je volitelný)"
+
 msgid "list of nicks for an IRC channel"
 msgstr "seznam uživatelů pro IRC kanál"
 
@@ -8851,6 +8894,12 @@ msgstr "mapování mezi kódy IRC barev a Názvy barev WeeChatu"
 
 msgid "irc nick"
 msgstr "irc přezdívka"
+
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
 
 msgid "irc channel"
 msgstr "irc kanál"
@@ -8881,6 +8930,14 @@ msgstr "%s%s: nejste připojen k serveru"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: tenhle buffer není kanál!"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s%s: nemohu přidělit nový kanál"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s%s: nemohu přidělit nový kanál"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 msgid "unknown"
@@ -9153,28 +9210,28 @@ msgstr "%sReop kanálu %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%sByl jsi pozván na %s%s%s od %s%s%s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%sByl jsi pozván na %s%s%s od %s%s%s"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s pozván"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr "%sMód %s%s %s[%s%s%s]%s od %s%s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%s%s[%s%s%s]%s vyjímka %s%s"
 
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr "%s%s[%s%s%s]%s vyjímka %s%s"
 
 #, c-format
@@ -9219,15 +9276,15 @@ msgstr[2] "přezdívek"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s zakázán"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%s%s[%s%s%s] %s%s%s zakázán uživatelem %s"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%s%s[%s%s%s] %s%s%s zakázán"
 
 #, c-format
@@ -9263,15 +9320,15 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr "%s%s%s %s(%s%s%s)%s se zpet na serveru"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%s%s%s %s(%s%s%s)%s se zpet na serveru"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%sMód %s%s %s[%s%s%s]"
 
 #, c-format
@@ -12473,3 +12530,10 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ "kanál: jméno kanálu\n"
+#~ "   přezdívka: přezdívka nebo host"

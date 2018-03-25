@@ -851,20 +851,22 @@ target: server name
 * `+unban+`: unban nicks or hosts
 
 ----
-/unban  [<channel>] <nick> [<nick>...]
+/unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
 channel: channel name
    nick: nick or host
+ number: ban number (as displayed by command /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: unquiet nicks or hosts
 
 ----
-/unquiet  [<channel>] <nick> [<nick>...]
+/unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
 channel: channel name
    nick: nick or host
+ number: quiet number (as displayed by command /quiet)
 ----
 
 [[command_irc_userhost]]

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6366,15 +6366,22 @@ msgstr ""
 msgid "unban nicks or hosts"
 msgstr ""
 
-msgid "[<channel>] <nick> [<nick>...]"
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr ""
 
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
 
 msgid "unquiet nicks or hosts"
+msgstr ""
+
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
 msgstr ""
 
 msgid "return a list of information about nicks"
@@ -6494,6 +6501,13 @@ msgid "nicks of current IRC channel"
 msgstr ""
 
 msgid "nicks and hostnames of current IRC channel"
+msgstr ""
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
 msgstr ""
 
 msgid "topic of current IRC channel"
@@ -7342,6 +7356,24 @@ msgstr ""
 msgid "server,channel (channel is optional)"
 msgstr ""
 
+msgid "list of channel mode lists for an IRC channel"
+msgstr ""
+
+msgid "mode list pointer (optional)"
+msgstr ""
+
+msgid "server,channel,type (type is optional)"
+msgstr ""
+
+msgid "list of items in a channel mode list"
+msgstr ""
+
+msgid "mode list item pointer (optional)"
+msgstr ""
+
+msgid "server,channel,type,number (number is optional)"
+msgstr ""
+
 msgid "list of nicks for an IRC channel"
 msgstr ""
 
@@ -7367,6 +7399,12 @@ msgid "mapping between IRC color codes and WeeChat color names"
 msgstr ""
 
 msgid "irc nick"
+msgstr ""
+
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
 msgstr ""
 
 msgid "irc channel"
@@ -7396,6 +7434,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist item"
 msgstr ""
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
@@ -7662,28 +7708,28 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr ""
 
 #, c-format
@@ -7724,15 +7770,15 @@ msgstr[1] ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr ""
 
 #, c-format
@@ -7761,15 +7807,15 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr ""
 
 #, c-format

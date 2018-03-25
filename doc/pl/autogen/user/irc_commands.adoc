@@ -850,20 +850,22 @@ cel: nazwa serwera
 * `+unban+`: odbanowuje nicki lub hosty
 
 ----
-/unban  [<kanał>] <nick> [<nick> ...]
+/unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-kanał: nazwa kanału
-   nick: użytkownik lub host
+channel: channel name
+   nick: nick or host
+ number: ban number (as displayed by command /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: nicki albo hosty przestają być uciszone
 
 ----
-/unquiet  [<kanał>] <nick> [<nick> ...]
+/unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-kanał: nazwa kanału
-   nick: użytkownik lub host
+channel: channel name
+   nick: nick or host
+ number: quiet number (as displayed by command /quiet)
 ----
 
 [[command_irc_userhost]]

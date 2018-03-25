@@ -1133,7 +1133,7 @@ irc_info_init ()
         &irc_info_infolist_irc_modelist_cb, NULL, NULL);
     weechat_hook_infolist (
         "irc_modelist_item",
-        N_("list of channel mode list items for a channel mode list"),
+        N_("list of items in a channel mode list"),
         N_("mode list item pointer (optional)"),
         N_("server,channel,type,number (number is optional)"),
         &irc_info_infolist_irc_modelist_item_cb, NULL, NULL);

@@ -30,6 +30,10 @@
 
 | irc | irc_ignores_numbers | 無視エントリの数
 
+| irc | irc_modelist_masks | modelist masks of current IRC channel; required argument: modelist mode
+
+| irc | irc_modelist_numbers | modelist numbers of current IRC channel; required argument: modelist mode
+
 | irc | irc_msg_kick | デフォルトのキックメッセージ
 
 | irc | irc_msg_part | IRC チャンネルのデフォルト退出メッセージ

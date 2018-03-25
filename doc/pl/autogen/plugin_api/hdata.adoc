@@ -74,6 +74,8 @@ _last_nick_   (pointer, hdata: "irc_nick") +
 _nicks_speaking_   (pointer) +
 _nicks_speaking_time_   (pointer, hdata: "irc_channel_speaking") +
 _last_nick_speaking_time_   (pointer, hdata: "irc_channel_speaking") +
+_modelists_   (pointer, hdata: "irc_modelist") +
+_last_modelist_   (pointer, hdata: "irc_modelist") +
 _join_smart_filtered_   (hashtable) +
 _buffer_   (pointer, hdata: "buffer") +
 _buffer_as_string_   (string) +
@@ -104,6 +106,30 @@ _server_   (string) +
 _channel_   (string) +
 _prev_ignore_   (pointer, hdata: "irc_ignore") +
 _next_ignore_   (pointer, hdata: "irc_ignore") +
+
+
+| irc
+| [[hdata_irc_modelist]]<<hdata_irc_modelist,irc_modelist>>
+| irc modelist
+| -
+| _type_   (char) +
+_state_   (integer) +
+_items_   (pointer, hdata: "irc_modelist_item") +
+_last_item_   (pointer, hdata: "irc_modelist_item") +
+_prev_modelist_   (pointer, hdata: "irc_modelist") +
+_next_modelist_   (pointer, hdata: "irc_modelist") +
+
+
+| irc
+| [[hdata_irc_modelist_item]]<<hdata_irc_modelist_item,irc_modelist_item>>
+| irc modelist item
+| -
+| _number_   (integer) +
+_mask_   (string) +
+_setter_   (string) +
+_datetime_   (time) +
+_prev_item_   (pointer, hdata: "irc_modelist_item") +
+_next_item_   (pointer, hdata: "irc_modelist_item") +
 
 
 | irc

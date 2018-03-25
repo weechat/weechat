@@ -20,6 +20,10 @@
 
 | irc | irc_ignore | list of IRC ignores | ignore pointer (optional) | -
 
+| irc | irc_modelist | list of channel mode lists for an IRC channel | mode list pointer (optional) | server,channel,type (type is optional)
+
+| irc | irc_modelist_item | list of items in a channel mode list | mode list item pointer (optional) | server,channel,type,number (number is optional)
+
 | irc | irc_nick | list of nicks for an IRC channel | nick pointer (optional) | server,channel,nick (nick is optional)
 
 | irc | irc_notify | list of notify | notify pointer (optional) | server name (wildcard "*" is allowed) (optional)

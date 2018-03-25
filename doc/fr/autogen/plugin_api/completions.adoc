@@ -30,6 +30,10 @@
 
 | irc | irc_ignores_numbers | numéros pour les ignores définis
 
+| irc | irc_modelist_masks | masques de la liste de modes du canal IRC courant ; argument obligatoire : mode de la liste de modes
+
+| irc | irc_modelist_numbers | nombres de la liste de modes du canal IRC courant ; argument obligatoire : mode de la liste de modes
+
 | irc | irc_msg_kick | message d'éjection par défaut
 
 | irc | irc_msg_part | message de fin par défaut pour le canal IRC

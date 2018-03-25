@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7143,13 +7143,14 @@ msgid "unban nicks or hosts"
 msgstr "снимает бан с хоста или ника"
 
 #, fuzzy
-msgid "[<channel>] <nick> [<nick>...]"
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[канал] ник [ник ...]"
 
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
 "канал: канал для снятия бана\n"
 "  ник: ник или хост для снятия бана"
@@ -7157,6 +7158,15 @@ msgstr ""
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "снимает бан с хоста или ника"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+"канал: канал для снятия бана\n"
+"  ник: ник или хост для снятия бана"
 
 #, fuzzy
 msgid "return a list of information about nicks"
@@ -7309,6 +7319,13 @@ msgstr "список ников на канале"
 #, fuzzy
 msgid "nicks and hostnames of current IRC channel"
 msgstr "список ников на канале"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr ""
 
 #, fuzzy
 msgid "topic of current IRC channel"
@@ -8269,6 +8286,30 @@ msgid "server,channel (channel is optional)"
 msgstr "канал: название канала"
 
 #, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "список ников на канале"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "server,channel,type (type is optional)"
+msgstr "канал: название канала"
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "цвет имён при действиях"
+
+#, fuzzy
+msgid "mode list item pointer (optional)"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "server,channel,type,number (number is optional)"
+msgstr "канал: название канала"
+
+#, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "список ников на канале"
 
@@ -8301,6 +8342,12 @@ msgstr ""
 msgid "irc nick"
 msgstr "ник: ник"
 
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
+
 #, fuzzy
 msgid "irc channel"
 msgstr "%d канал"
@@ -8332,6 +8379,14 @@ msgstr "%s вы не подключены к серверу\n"
 #, fuzzy, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Это окно не является каналом!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s не могу расположить новый канал"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s не могу расположить новый канал"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 #, fuzzy
@@ -8601,28 +8656,28 @@ msgstr "Реоп канала %s%s%s: %s%s\n"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
@@ -8671,15 +8726,15 @@ msgstr[2] "ник"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
@@ -8709,15 +8764,15 @@ msgstr "%s: ник \"%s\" уже используется, пробую втор
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
@@ -11800,3 +11855,11 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ "канал: канал для снятия бана\n"
+#~ "  ник: ник или хост для снятия бана"

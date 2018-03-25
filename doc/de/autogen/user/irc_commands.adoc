@@ -851,20 +851,22 @@ target: Servername
 * `+unban+`: Bann von Nicks oder Hosts aufheben
 
 ----
-/unban  [<channel>] <nick> [<nick>...]
+/unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
-   nick: Nick oder Host
+channel: channel name
+   nick: nick or host
+ number: ban number (as displayed by command /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: Nicks oder Hosts das Wort erteilen
 
 ----
-/unquiet  [<channel>] <nick> [<nick>...]
+/unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: Name des Channel
-   nick: Nick oder Host
+channel: channel name
+   nick: nick or host
+ number: quiet number (as displayed by command /quiet)
 ----
 
 [[command_irc_userhost]]

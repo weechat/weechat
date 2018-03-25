@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6480,17 +6480,26 @@ msgstr ""
 msgid "unban nicks or hosts"
 msgstr ""
 
-msgid "[<channel>] <nick> [<nick>...]"
+#, fuzzy
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<kanal>] <rumuz> [<rumuz>...]"
 
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr "kanal: kanal ismi"
 
 msgid "unquiet nicks or hosts"
 msgstr ""
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr "kanal: kanal ismi"
 
 msgid "return a list of information about nicks"
 msgstr ""
@@ -6611,6 +6620,13 @@ msgid "nicks of current IRC channel"
 msgstr ""
 
 msgid "nicks and hostnames of current IRC channel"
+msgstr ""
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
 msgstr ""
 
 msgid "topic of current IRC channel"
@@ -7464,6 +7480,27 @@ msgstr ""
 msgid "server,channel (channel is optional)"
 msgstr ""
 
+#, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "seçeneklerin listesi"
+
+msgid "server,channel,type (type is optional)"
+msgstr ""
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "İRC kanalı için varsayılan ayrılma iletisi"
+
+msgid "mode list item pointer (optional)"
+msgstr ""
+
+msgid "server,channel,type,number (number is optional)"
+msgstr ""
+
 msgid "list of nicks for an IRC channel"
 msgstr ""
 
@@ -7490,6 +7527,12 @@ msgstr ""
 
 msgid "irc nick"
 msgstr "irc rumuz"
+
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
 
 msgid "irc channel"
 msgstr "irc kanal"
@@ -7518,6 +7561,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist item"
 msgstr ""
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
@@ -7783,29 +7834,29 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -7842,15 +7893,15 @@ msgstr[0] "rumuz"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%s%s%s%s%s%s%s%s%s%s katıldı %s%s%s"
 
 #, c-format
@@ -7879,15 +7930,15 @@ msgstr "%s%s: \"%s\" takma adı kullanılamıyor,  \"%s\" takma adı deneniyor"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr "%s%s%s%s%s%s%s%s%s%s çıktı %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%s%s[%s%s%s]%s uzakta: %s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s%s%s%s%s%s%s%s%s çıktı"
 
 #, c-format

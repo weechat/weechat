@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2018-03-24 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8635,18 +8635,34 @@ msgstr "指定されたサーバへのルートを探す"
 msgid "unban nicks or hosts"
 msgstr "ニックネームかホストの禁止設定を解除"
 
-msgid "[<channel>] <nick> [<nick>...]"
+#, fuzzy
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<channel>] <nick> [<nick>...]"
 
+#, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
 "channel: チャンネル名\n"
-"   nick: ニックネームまたはホスト名"
+"   nick: ニックネームまたはホスト名\n"
+"\n"
+"引数無しの場合は、現在のチャンネルのバンリストを表示。"
 
 msgid "unquiet nicks or hosts"
 msgstr "ニックネームまたはホスト名に対する発言禁止を解除"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+"channel: チャンネル名\n"
+"   nick: ニックネームまたはホスト名\n"
+"\n"
+"引数無しの場合は、現在のチャンネルのバンリストを表示。"
 
 msgid "return a list of information about nicks"
 msgstr "ニックネームに関する情報のリストを返す"
@@ -8791,6 +8807,13 @@ msgstr "現在の IRC チャンネルにいるニックネーム"
 
 msgid "nicks and hostnames of current IRC channel"
 msgstr "現在の IRC チャンネルにいるニックネームとホスト名"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr ""
 
 msgid "topic of current IRC channel"
 msgstr "現在の IRC チャンネルのトピック"
@@ -9927,6 +9950,30 @@ msgstr "チャンネルポインタ (任意)"
 msgid "server,channel (channel is optional)"
 msgstr "server,channel (チャンネルは任意)"
 
+#, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "IRC チャンネルのニックネームのリスト"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "別名のポインタ (任意)"
+
+#, fuzzy
+msgid "server,channel,type (type is optional)"
+msgstr "サーバ、チャンネル (サーバは任意)"
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "チャンネル名付近のチャンネルモードに使う色"
+
+#, fuzzy
+msgid "mode list item pointer (optional)"
+msgstr "バー要素ポインタ (任意)"
+
+#, fuzzy
+msgid "server,channel,type,number (number is optional)"
+msgstr "サーバ、チャンネル (サーバは任意)"
+
 msgid "list of nicks for an IRC channel"
 msgstr "IRC チャンネルのニックネームのリスト"
 
@@ -9953,6 +10000,12 @@ msgstr "IRC 色コードと WeeChat 色名の対応"
 
 msgid "irc nick"
 msgstr "irc ニックネーム"
+
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
 
 msgid "irc channel"
 msgstr "irc チャンネル"
@@ -9982,6 +10035,14 @@ msgstr "%s%s: サーバに接続していません"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: このバッファはチャンネルではありません"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s%s: 新しいチャンネルの割り当てに失敗"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s%s: 新しいチャンネルの割り当てに失敗"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 msgid "unknown"
@@ -10251,30 +10312,30 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sチャンネルは %s%s%s を reop しました: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s を招待しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s を招待しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s を招待しました"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr ""
 "%1$s%2$s[%3$s%4$s%5$s]%6$s %11$s に %10$s が除外 %7$s%8$s%9$s を設定しました"
 
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%1$s%2$s[%3$s%4$s%5$s]%6$s %10$s が除外 %7$s%8$s%9$s を設定しました"
 
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr "%s%s[%s%s%s]%s 除外 %s%s を設定しました"
 
 #, c-format
@@ -10310,17 +10371,17 @@ msgid_plural "nicks"
 msgstr[0] "ニックネーム"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr ""
 "%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s の参加を禁止しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s の参加を禁止しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %6$s%7$s%8$s の参加を禁止しました"
 
 #, c-format
@@ -10357,17 +10418,17 @@ msgstr ""
 "ます"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr ""
 "%1$s%2$s[%3$s%4$s%5$s] %10$s に %9$s が %6$s%7$s%8$s の発言を禁止しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %9$s が %6$s%7$s%8$s の発言を禁止しました"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%1$s%2$s[%3$s%4$s%5$s] %6$s%7$s%8$s の発言を禁止しました"
 
 #, c-format
@@ -13700,3 +13761,10 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ "channel: チャンネル名\n"
+#~ "   nick: ニックネームまたはホスト名"

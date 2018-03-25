@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
-"PO-Revision-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
+"PO-Revision-Date: 2018-03-25 10:21+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -8990,18 +8990,29 @@ msgstr "trouver le chemin jusqu'à un serveur spécifique"
 msgid "unban nicks or hosts"
 msgstr "supprimer le bannissement sur des pseudos ou hôtes"
 
-msgid "[<channel>] <nick> [<nick>...]"
-msgstr "[<canal>] <pseudo> [<pseudo>...]"
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
+msgstr "[<canal>] <pseudo>|<nombre> [<pseudo>|<nombre>...]"
 
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
 " canal : nom du canal\n"
-"pseudo : pseudo ou hôte"
+"pseudo : pseudo ou hôte\n"
+"nombre : numéro de bannissement (comme affiché par la commande /ban)"
 
 msgid "unquiet nicks or hosts"
 msgstr "ne plus taire des pseudos ou hôtes"
+
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+" canal : nom du canal\n"
+"pseudo : pseudo ou hôte\n"
+"nombre : numéro de \"quiet\" (comme affiché par la commande /quiet)"
 
 msgid "return a list of information about nicks"
 msgstr "retourner une liste d'informations sur des pseudos"
@@ -9147,6 +9158,13 @@ msgstr "pseudos du canal IRC courant"
 
 msgid "nicks and hostnames of current IRC channel"
 msgstr "pseudos et noms d'hôtes du canal IRC courant"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr "masques de la liste de modes du canal IRC courant ; argument obligatoire : mode de la liste de modes"
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr "nombres de la liste de modes du canal IRC courant ; argument obligatoire : mode de la liste de modes"
 
 msgid "topic of current IRC channel"
 msgstr "titre du canal IRC courant"
@@ -10339,6 +10357,24 @@ msgstr "pointeur vers le canal (optionnel)"
 msgid "server,channel (channel is optional)"
 msgstr "serveur,canal (le canal est optionnel)"
 
+msgid "list of channel mode lists for an IRC channel"
+msgstr "liste des listes de modes pour un canal IRC"
+
+msgid "mode list pointer (optional)"
+msgstr "pointeur vers une liste de modes (optionnel)"
+
+msgid "server,channel,type (type is optional)"
+msgstr "serveur,canal,type (le type est optionnel)"
+
+msgid "list of items in a channel mode list"
+msgstr "listes des éléments dans une liste de modes de canal"
+
+msgid "mode list item pointer (optional)"
+msgstr "pointeur vers un élément de liste de modes (optionnel)"
+
+msgid "server,channel,type,number (number is optional)"
+msgstr "serveur,canal,type,nombre (le nombre est optionnel)"
+
 msgid "list of nicks for an IRC channel"
 msgstr "liste des pseudos pour un canal IRC"
 
@@ -10366,6 +10402,12 @@ msgstr ""
 
 msgid "irc nick"
 msgstr "pseudo irc"
+
+msgid "irc modelist"
+msgstr "liste de modes irc"
+
+msgid "irc modelist item"
+msgstr "élément de liste de modes irc"
 
 msgid "irc channel"
 msgstr "canal irc"
@@ -10395,6 +10437,14 @@ msgstr "%s%s : vous n'êtes pas connecté au serveur"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s : ce tampon n'est pas un canal !"
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s%s : impossible d'allouer une nouvelle liste de modes"
+
+#, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s%s : impossible d'allouer un nouvel élément de liste de modes"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 msgid "unknown"
@@ -10666,29 +10716,29 @@ msgstr "%sReop canal %s%s%s : %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s invité par %s le %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s invité par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
-msgstr "%s%s[%s%s%s] %s%s%s invité par %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s invité par %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
-msgstr "%s%s[%s%s%s] %s%s%s invité"
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
+msgstr "%s%s[%s%s%s] %s%s%s%s invité"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
-msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s le %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
+msgstr "%s%s[%s%s%s]%s%s exception %s%s%s par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
-msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
+msgstr "%s%s[%s%s%s]%s%s exception %s%s%s par %s"
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
-msgstr "%s%s[%s%s%s]%s exception %s%s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
+msgstr "%s%s[%s%s%s]%s%s exception %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -10728,16 +10778,16 @@ msgstr[1] "pseudos"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s banni par %s le %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s banni par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
-msgstr "%s%s[%s%s%s] %s%s%s banni par %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s banni par %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s banni"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s%s banni"
 
 #, c-format
 msgid ""
@@ -10772,16 +10822,16 @@ msgstr ""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s le %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s rendu silencieux par %s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
-msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux par %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s rendu silencieux par %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
-msgstr "%s%s[%s%s%s] %s%s%s rendu silencieux"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
+msgstr "%s%s[%s%s%s] %s%s%s%s rendu silencieux"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -14244,3 +14294,10 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ " canal : nom du canal\n"
+#~ "pseudo : pseudo ou hôte"

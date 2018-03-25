@@ -851,20 +851,22 @@ target: サーバ名
 * `+unban+`: ニックネームかホストの禁止設定を解除
 
 ----
-/unban  [<channel>] <nick> [<nick>...]
+/unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: チャンネル名
-   nick: ニックネームまたはホスト名
+channel: channel name
+   nick: nick or host
+ number: ban number (as displayed by command /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: ニックネームまたはホスト名に対する発言禁止を解除
 
 ----
-/unquiet  [<channel>] <nick> [<nick>...]
+/unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: チャンネル名
-   nick: ニックネームまたはホスト名
+channel: channel name
+   nick: nick or host
+ number: quiet number (as displayed by command /quiet)
 ----
 
 [[command_irc_userhost]]

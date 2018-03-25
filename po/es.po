@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2018-02-05 21:30+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7929,20 +7929,35 @@ msgstr "encontrar la ruta al servidor especificado"
 msgid "unban nicks or hosts"
 msgstr "remueve vetos a apodos o máquinas"
 
-msgid "[<channel>] <nick> [<nick>...]"
+#, fuzzy
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[<canal>] <apodo> [<apodo> ...]"
 
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
-"canal: canal donde remover el veto\n"
-"apodo: apodo o host con el veto"
+"canal: canal para el veto\n"
+"apodo: apodo o host a vetar\n"
+"\n"
+"Sin argumentos, este comando muestra la lista de vetos del canal actual."
 
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "silencia apodos o máquinas"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+"canal: canal para el veto\n"
+"apodo: apodo o host a vetar\n"
+"\n"
+"Sin argumentos, este comando muestra la lista de vetos del canal actual."
 
 msgid "return a list of information about nicks"
 msgstr "devuelve una lista con información sobre los apodos"
@@ -8081,6 +8096,13 @@ msgstr "apodos del canal IRC actual"
 
 msgid "nicks and hostnames of current IRC channel"
 msgstr "apodos y hostnames del canal IRC actual"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr ""
 
 msgid "topic of current IRC channel"
 msgstr "tema del canal IRC actual"
@@ -9147,6 +9169,30 @@ msgstr "puntero del canal (opcional)"
 msgid "server,channel (channel is optional)"
 msgstr "servidor,canal (canal es opcional)"
 
+#, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "lista de apodos de un canal IRC"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "puntero del alias (opcional)"
+
+#, fuzzy
+msgid "server,channel,type (type is optional)"
+msgstr "servidor,canal (servidor es opcional)"
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "color para los modos del canal, junto al nombre del canal"
+
+#, fuzzy
+msgid "mode list item pointer (optional)"
+msgstr "puntero del elemento de barra (opcional)"
+
+#, fuzzy
+msgid "server,channel,type,number (number is optional)"
+msgstr "servidor,canal (servidor es opcional)"
+
 msgid "list of nicks for an IRC channel"
 msgstr "lista de apodos de un canal IRC"
 
@@ -9174,6 +9220,12 @@ msgstr ""
 
 msgid "irc nick"
 msgstr "apodo irc"
+
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
 
 msgid "irc channel"
 msgstr "canal irc"
@@ -9203,6 +9255,14 @@ msgstr "%s%s: no estas conectado a ningún servidor"
 #, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: ¡este buffer no es un canal!"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s%s: no se pudo crear un nuevo canal"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s%s: no se pudo crear un nuevo canal"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 msgid "unknown"
@@ -9475,28 +9535,28 @@ msgstr "%sCanal reop %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s invitado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%s%s[%s%s%s] %s%s%s invitado"
 
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s%s[%s%s%s] %s%s%s invitado"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr "%s%s[%s%s%s]%s excepción %s%s%s por %s%s %s(%s%s%s)%s el %s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%s%s[%s%s%s]%s excepción %s%s"
 
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr "%s%s[%s%s%s]%s excepción %s%s"
 
 #, c-format
@@ -9538,15 +9598,15 @@ msgstr[1] "apodos"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s vetado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%s%s[%s%s%s] %s%s%s vetado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%s%s[%s%s%s] %s%s%s invitado"
 
 #, c-format
@@ -9579,15 +9639,15 @@ msgstr "%s%s: el apodo \"%s\" no está disponible, probando con el apodo \"%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr "%s%s[%s%s%s] %s%s%s silenciado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%s%s[%s%s%s] %s%s%s silenciado por %s%s %s(%s%s%s)"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s%s[%s%s%s] %s%s%s invitado"
 
 #, c-format
@@ -12751,3 +12811,11 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#, fuzzy
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ "canal: canal donde remover el veto\n"
+#~ "apodo: apodo o host con el veto"

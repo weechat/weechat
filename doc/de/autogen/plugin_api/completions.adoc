@@ -30,6 +30,10 @@
 
 | irc | irc_ignores_numbers | Anzahl für festgelegte Ignorierungen
 
+| irc | irc_modelist_masks | modelist masks of current IRC channel; required argument: modelist mode
+
+| irc | irc_modelist_numbers | modelist numbers of current IRC channel; required argument: modelist mode
+
 | irc | irc_msg_kick | Standardmitteilung wenn man jemanden aus einem Channel wirft
 
 | irc | irc_msg_part | Standardmitteilung beim Verlassen (/part) eines IRC-Channels

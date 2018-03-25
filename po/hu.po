@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-19 21:54+0100\n"
+"POT-Creation-Date: 2018-03-25 10:15+0200\n"
 "PO-Revision-Date: 2018-01-06 13:50+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7109,13 +7109,14 @@ msgid "unban nicks or hosts"
 msgstr "gép vagy felhasználó tiltásának visszavonása"
 
 #, fuzzy
-msgid "[<channel>] <nick> [<nick>...]"
+msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
 msgstr "[szoba] név [név ...]"
 
 #, fuzzy
 msgid ""
 "channel: channel name\n"
-"   nick: nick or host"
+"   nick: nick or host\n"
+" number: ban number (as displayed by command /ban)"
 msgstr ""
 "szoba: szoba ahol a parancsot végrehajtjuk\n"
 "  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
@@ -7123,6 +7124,15 @@ msgstr ""
 #, fuzzy
 msgid "unquiet nicks or hosts"
 msgstr "gép vagy felhasználó tiltásának visszavonása"
+
+#, fuzzy
+msgid ""
+"channel: channel name\n"
+"   nick: nick or host\n"
+" number: quiet number (as displayed by command /quiet)"
+msgstr ""
+"szoba: szoba ahol a parancsot végrehajtjuk\n"
+"  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"
 
 #, fuzzy
 msgid "return a list of information about nicks"
@@ -7279,6 +7289,13 @@ msgstr "felhasználók listája a szobában"
 #, fuzzy
 msgid "nicks and hostnames of current IRC channel"
 msgstr "felhasználók listája a szobában"
+
+msgid "modelist masks of current IRC channel; required argument: modelist mode"
+msgstr ""
+
+msgid ""
+"modelist numbers of current IRC channel; required argument: modelist mode"
+msgstr ""
 
 #, fuzzy
 msgid "topic of current IRC channel"
@@ -8232,6 +8249,30 @@ msgid "server,channel (channel is optional)"
 msgstr "szoba: szoba neve"
 
 #, fuzzy
+msgid "list of channel mode lists for an IRC channel"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "mode list pointer (optional)"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "server,channel,type (type is optional)"
+msgstr "szoba: szoba neve"
+
+#, fuzzy
+msgid "list of items in a channel mode list"
+msgstr "szobanevek színe az eseményekben"
+
+#, fuzzy
+msgid "mode list item pointer (optional)"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "server,channel,type,number (number is optional)"
+msgstr "szoba: szoba neve"
+
+#, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "felhasználók listája a szobában"
 
@@ -8264,6 +8305,12 @@ msgstr ""
 msgid "irc nick"
 msgstr "név: név"
 
+msgid "irc modelist"
+msgstr ""
+
+msgid "irc modelist item"
+msgstr ""
+
 #, fuzzy
 msgid "irc channel"
 msgstr "%d szoba"
@@ -8295,6 +8342,14 @@ msgstr "%s nincs csatlakozva szerverhez!\n"
 #, fuzzy, c-format
 msgid "%s%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist"
+msgstr "%s nem sikerült új csatornát lefoglalni"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot allocate new modelist item"
+msgstr "%s nem sikerült új csatornát lefoglalni"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 #, fuzzy
@@ -8563,28 +8618,28 @@ msgstr "%s szoba: %s> %s"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s invited"
+msgid "%s%s[%s%s%s] %s%s%s%s invited"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s on %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s by %s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s"
+msgid "%s%s[%s%s%s]%s%s exception %s%s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
@@ -8629,15 +8684,15 @@ msgstr[1] "név"
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
@@ -8668,15 +8723,15 @@ msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s on %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted by %s"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s quieted"
+msgid "%s%s[%s%s%s] %s%s%s%s quieted"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
@@ -11768,3 +11823,11 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "channel: channel name\n"
+#~ "   nick: nick or host"
+#~ msgstr ""
+#~ "szoba: szoba ahol a parancsot végrehajtjuk\n"
+#~ "  név: felhasználó vagy gép melyen a parancsot végrehajtjuk"

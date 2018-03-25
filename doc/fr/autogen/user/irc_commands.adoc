@@ -851,20 +851,22 @@ cible : nom du serveur
 * `+unban+`: supprimer le bannissement sur des pseudos ou hôtes
 
 ----
-/unban  [<canal>] <pseudo> [<pseudo>...]
+/unban  [<canal>] <pseudo>|<nombre> [<pseudo>|<nombre>...]
 
  canal : nom du canal
 pseudo : pseudo ou hôte
+nombre : numéro de bannissement (comme affiché par la commande /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: ne plus taire des pseudos ou hôtes
 
 ----
-/unquiet  [<canal>] <pseudo> [<pseudo>...]
+/unquiet  [<canal>] <pseudo>|<nombre> [<pseudo>|<nombre>...]
 
  canal : nom du canal
 pseudo : pseudo ou hôte
+nombre : numéro de "quiet" (comme affiché par la commande /quiet)
 ----
 
 [[command_irc_userhost]]

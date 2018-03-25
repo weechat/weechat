@@ -20,6 +20,10 @@
 
 | irc | irc_ignore | liste des ignores IRC | pointeur vers l'ignore (optionnel) | -
 
+| irc | irc_modelist | liste des listes de modes pour un canal IRC | pointeur vers une liste de modes (optionnel) | serveur,canal,type (le type est optionnel)
+
+| irc | irc_modelist_item | listes des éléments dans une liste de modes de canal | pointeur vers un élément de liste de modes (optionnel) | serveur,canal,type,nombre (le nombre est optionnel)
+
 | irc | irc_nick | liste des pseudos pour un canal IRC | pointeur vers le pseudo (optionnel) | serveur,canal,pseudo (le pseudo est optionnel)
 
 | irc | irc_notify | liste des notifications | pointeur vers la notification (optionnel) | nom de serveur (le caractère joker "*" est autorisé) (optionnel)
