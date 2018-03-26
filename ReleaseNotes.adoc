@@ -23,12 +23,13 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.2_irc_signals_tags]]
 === Tags in IRC "in" signals
 
-The IRCv3 tags are now sent in these IRC signals for received messages:
+The IRCv3 tags are now sent in these IRC signals for received messages
+(_xxx_ is IRC server name, _yyy_ is IRC command name):
 
-* +*,irc_in_*+
-* +*,irc_in2_*+
-* +*,irc_raw_in_*+
-* +*,irc_raw_in2_*+
+* _xxx,irc_in_yyy_
+* _xxx,irc_in2_yyy_
+* _xxx,irc_raw_in_yyy_
+* _xxx,irc_raw_in2_yyy_
 
 This could break plugins or scripts that parse IRC messages and don't expect
 to receive tags (even if tags *are* part of the IRC message, so this was a bug
