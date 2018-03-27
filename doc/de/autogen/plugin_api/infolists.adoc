@@ -20,9 +20,9 @@
 
 | irc | irc_ignore | Liste von ignorierten IRCs | Ignore Pointer (optional) | -
 
-| irc | irc_modelist | list of channel mode lists for an IRC channel | mode list pointer (optional) | server,channel,type (type is optional)
+| irc | irc_modelist | Liste der Channel-Mode-Liste für einen IRC-Channel | Modelist Pointer (optional) | Server,Channel,Type (Type ist optional)
 
-| irc | irc_modelist_item | list of items in a channel mode list | mode list item pointer (optional) | server,channel,type,number (number is optional)
+| irc | irc_modelist_item | Liste der Items in der Channel-Modeliste | Modelist Item Pointer (optional) | Server,Channel,Type,Nummer (Nummer ist optional)
 
 | irc | irc_nick | Liste der Nicks im IRC-Channel | Nick Pointer (optional) | server,channel,nick (nick ist optional)
 

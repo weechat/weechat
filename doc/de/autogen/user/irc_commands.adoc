@@ -853,9 +853,9 @@ target: Servername
 ----
 /unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: channel name
-   nick: nick or host
- number: ban number (as displayed by command /ban)
+channel: Name des Channel
+   nick: Nick oder Host
+ number: ban Nummer (wird beim Befehl /ban angezeigt)
 ----
 
 [[command_irc_unquiet]]
@@ -864,9 +864,9 @@ channel: channel name
 ----
 /unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: channel name
-   nick: nick or host
- number: quiet number (as displayed by command /quiet)
+channel: Name des Channel
+   nick: Nick oder Host
+ number: Quiet-Nummer (wird beim Befehl /quiet angezeigt)
 ----
 
 [[command_irc_userhost]]
