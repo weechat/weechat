@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-03-25 10:15+0200\n"
-"PO-Revision-Date: 2018-03-20 20:10+0100\n"
+"PO-Revision-Date: 2018-03-27 21:49+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -9179,11 +9179,9 @@ msgstr "Route zum angegebenen Server ermitteln"
 msgid "unban nicks or hosts"
 msgstr "Bann von Nicks oder Hosts aufheben"
 
-#, fuzzy
 msgid "[<channel>] <nick>|<number> [<nick>|<number>...]"
-msgstr "[<channel>] <nick> [<nick>...]"
+msgstr "[<channel>] <nick>|<number> [<nick>|<number>...]"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   nick: nick or host\n"
@@ -9191,14 +9189,11 @@ msgid ""
 msgstr ""
 "channel: Name des Channel\n"
 "   nick: Nick oder Host\n"
-"\n"
-"Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel "
-"angezeigt."
+" number: ban Nummer (wird beim Befehl /ban angezeigt)"
 
 msgid "unquiet nicks or hosts"
 msgstr "Nicks oder Hosts das Wort erteilen"
 
-#, fuzzy
 msgid ""
 "channel: channel name\n"
 "   nick: nick or host\n"
@@ -9206,9 +9201,7 @@ msgid ""
 msgstr ""
 "channel: Name des Channel\n"
 "   nick: Nick oder Host\n"
-"\n"
-"Ohne Angabe von Argumenten wird die Ban-Liste für den aktuellen Channel "
-"angezeigt."
+" number: Quiet-Nummer (wird beim Befehl /quiet angezeigt)"
 
 msgid "return a list of information about nicks"
 msgstr "zeigt Informationen zu Nicknamen an"
@@ -9359,10 +9352,13 @@ msgstr "Liste der Nicks und Hostnamen des aktuellen Channels"
 
 msgid "modelist masks of current IRC channel; required argument: modelist mode"
 msgstr ""
+"Modelist Maske für aktuellen IRC Channel; benötigtes Argument: modelist mode"
 
 msgid ""
 "modelist numbers of current IRC channel; required argument: modelist mode"
 msgstr ""
+"Modelist Nummern für aktuellen IRC Channel; benötigtes Argument: modelist "
+"mode"
 
 msgid "topic of current IRC channel"
 msgstr "Thema des aktuellen IRC-Channels"
@@ -10616,29 +10612,23 @@ msgstr "Channel Pointer (optional)"
 msgid "server,channel (channel is optional)"
 msgstr "Server,Channel (Channel ist optional)"
 
-#, fuzzy
 msgid "list of channel mode lists for an IRC channel"
-msgstr "Liste der Nicks im IRC-Channel"
+msgstr "Liste der Channel-Mode-Liste für einen IRC-Channel"
 
-#, fuzzy
 msgid "mode list pointer (optional)"
-msgstr "Alias Pointer (optional)"
+msgstr "Modelist Pointer (optional)"
 
-#, fuzzy
 msgid "server,channel,type (type is optional)"
-msgstr "Server,Channel (Server ist optional)"
+msgstr "Server,Channel,Type (Type ist optional)"
 
-#, fuzzy
 msgid "list of items in a channel mode list"
-msgstr "Farbe der Channel-Modes (neben dem Channelnamen)"
+msgstr "Liste der Items in der Channel-Modeliste"
 
-#, fuzzy
 msgid "mode list item pointer (optional)"
-msgstr "Bar Item Pointer (optional)"
+msgstr "Modelist Item Pointer (optional)"
 
-#, fuzzy
 msgid "server,channel,type,number (number is optional)"
-msgstr "Server,Channel (Server ist optional)"
+msgstr "Server,Channel,Type,Nummer (Nummer ist optional)"
 
 msgid "list of nicks for an IRC channel"
 msgstr "Liste der Nicks im IRC-Channel"
@@ -10668,10 +10658,10 @@ msgid "irc nick"
 msgstr "IRC-Nick"
 
 msgid "irc modelist"
-msgstr ""
+msgstr "IRC Modelist"
 
 msgid "irc modelist item"
-msgstr ""
+msgstr "IRC Modelist-Item"
 
 msgid "irc channel"
 msgstr "IRC-Channel"
@@ -10702,13 +10692,13 @@ msgstr "%s%s: Es besteht keine Verbindung zum Server"
 msgid "%s%s: this buffer is not a channel!"
 msgstr "%s%s: Dieser Buffer ist kein Channel!"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot allocate new modelist"
-msgstr "%s%s: Neuer Channel konnte nicht alloziert werden"
+msgstr "%s%s: Neue Modeliste konnte nicht alloziert werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot allocate new modelist item"
-msgstr "%s%s: Neuer Channel konnte nicht alloziert werden"
+msgstr "%s%s: Neues Modeliste Item konnte nicht alloziert werden"
 
 #. TRANSLATORS: "unknown" is the status for /notify when ison answer has not been received (check pending)
 msgid "unknown"
@@ -10982,30 +10972,30 @@ msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sChannel-Reop %s%s%s: %s%s"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde von %s am %s eingeladen"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde von %s am %s eingeladen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited by %s"
-msgstr "%s%s[%s%s%s] %s%s%s eingeladen von %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s eingeladen von %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s invited"
-msgstr "%s%s[%s%s%s] %s%s%s eingeladen"
+msgstr "%s%s[%s%s%s] %s%s%s%s eingeladen"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s on %s"
-msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s%s von %s am %s"
+msgstr "%s%s[%s%s%s]%s%s Ausnahmefehler %s%s%s von %s am %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s%s by %s"
-msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s%s von %s"
+msgstr "%s%s[%s%s%s]%s%s Ausnahmefehler %s%s%s von %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s]%s%s exception %s%s"
-msgstr "%s%s[%s%s%s]%s Ausnahmefehler %s%s"
+msgstr "%s%s[%s%s%s]%s%s Ausnahmefehler %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -11045,17 +11035,17 @@ msgstr[0] "Nick"
 msgstr[1] "Nicks"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde gebannt von %s am %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde gebannt von %s am %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde gebannt von %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde gebannt von %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s gebannt"
+msgstr "%s%s[%s%s%s] %s%s%s%s gebannt"
 
 #, c-format
 msgid ""
@@ -11092,17 +11082,17 @@ msgstr ""
 "Nicknamen \"%s\" zu nutzen"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde durch %s das Wort entzogen, am %s"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde durch %s das Wort entzogen, am %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted by %s"
-msgstr "%s%s[%s%s%s] %s%s%s wurde durch %s das Wort entzogen"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde durch %s das Wort entzogen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s quieted"
-msgstr "%s%s[%s%s%s] %s%s%s wurde das Wort entzogen"
+msgstr "%s%s[%s%s%s] %s%s%s%s wurde das Wort entzogen"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
