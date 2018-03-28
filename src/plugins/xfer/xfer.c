@@ -501,6 +501,7 @@ xfer_alloc ()
     new_xfer->filename_suffix = -1;
     new_xfer->pos = 0;
     new_xfer->ack = 0;
+    new_xfer->send_ack = weechat_config_boolean (xfer_config_network_send_ack);
     new_xfer->start_resume = 0;
     new_xfer->last_check_time = time_now;
     new_xfer->last_check_pos = time_now;

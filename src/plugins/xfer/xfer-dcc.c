@@ -309,7 +309,7 @@ xfer_dcc_resume_hash (struct t_xfer *xfer)
 void
 xfer_dcc_recv_file_child (struct t_xfer *xfer)
 {
-    int flags, num_read, ack_enabled, ready;
+    int flags, num_read, ready;
     static char buffer[XFER_BLOCKSIZE_MAX];
     time_t last_sent, new_time;
     unsigned long long pos_last_ack;
@@ -362,7 +362,6 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK);
 
     last_sent = time (NULL);
-    ack_enabled = 1;
     pos_last_ack = 0;
 
     while (1)
@@ -498,7 +497,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         }
 
         /* send ACK to sender (if needed) */
-        if (ack_enabled && (xfer->pos > pos_last_ack))
+        if (xfer->send_ack && (xfer->pos > pos_last_ack))
         {
             switch (xfer_dcc_recv_file_send_ack (xfer))
             {
@@ -509,7 +508,7 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                     return;
                 case 1:
                     /* send error, not fatal (buffer full?): disable ACKs */
-                    ack_enabled = 0;
+                    xfer->send_ack = 0;
                     break;
                 case 2:
                     /* send OK: save position in file as last ACK sent */

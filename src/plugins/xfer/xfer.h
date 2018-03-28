@@ -156,6 +156,7 @@ struct t_xfer
     char *remote_nick_color;           /* color name for remote nick        */
                                        /* (returned by IRC plugin)          */
     int fast_send;                     /* fast send file: does not wait ACK */
+    int send_ack;                      /* send ack on file receive          */
     int blocksize;                     /* block size for sending file       */
     time_t start_time;                 /* time when xfer started            */
     time_t start_transfer;             /* time when xfer transfer started   */
