@@ -28,6 +28,7 @@
 #include <sys/socket.h>
 #include <poll.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 #include <fcntl.h>
 #include <time.h>
 #include <netdb.h>
@@ -344,6 +345,11 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
                                  XFER_ERROR_CONNECT_SENDER);
         return;
     }
+
+    /* set TCP_NODELAY to be more aggressive with acks */
+    /* ignore error as transfer should still work if this fails */
+    flags = 1;
+    setsockopt(xfer->sock, IPPROTO_TCP, TCP_NODELAY, &flags, sizeof(flags));
 
     /* connection is OK, change DCC status (inform parent process) */
     xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
