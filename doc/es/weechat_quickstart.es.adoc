@@ -250,10 +250,10 @@ donde "xxx" es el nombre de la opción.
 /connect freenode
 ----
 
+// TRANSLATION MISSING
 [NOTE]
 Este comando también puede usarse para crear y conectarse a un nuevo
-servidor sin usar el comando `/server` (¿debo reiterar que se puede ver
-la ayuda de este comando con `/help connect`?).
+servidor sin usar el comando `/server` (see `/help connect`).
 
 Por defecto, todos los buffers del servidor están junto al buffer de
 núcleo. Para cambiar entre el buffer del núcleo y el buffer de los
@@ -333,9 +333,6 @@ Comandos para manipular buffer y ventana:
 /buffer
 /window
 ----
-
-(le reitero que puede obtener ayuda de los comandos con /help buffer y
-/help ventana respectivamente)
 
 Por ejemplo, para dividir la pantalla una pequeña ventana (1/3)
 junto a otras mas grande (2/3) use el comando

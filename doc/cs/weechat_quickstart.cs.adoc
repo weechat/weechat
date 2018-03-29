@@ -228,10 +228,10 @@ název volby):
 /connect freenode
 ----
 
+// TRANSLATION MISSING
 [NOTE]
 Tento příkaz může být použit k vytvoření nového připojení k serveru bez
-použití příkazu `/server` (mohu zopakovat že můžete zobrazit nápovědu
-pro tento příkaz s `/help connect` ?).
+použití příkazu `/server` (see `/help connect`).
 
 Ve výchozím nastavení jsou serverové bufery spojen s Weechat _core_ buferem.
 K přepnutí mezi _core_ a server bufery můžete použít klávesu kbd:[Ctrl+x].
@@ -308,8 +308,6 @@ Příkazy k spravování buferů a oken:
 /buffer
 /window
 ----
-
-(nebudu se zde opakovat, můžete k těmto příkazům získat nápovědu pomocí /help)
 
 Například, k svislému rozdělení obrazovky na malé okno (1/3 šířky), a velké
 okno (2/3), použijte příkaz:

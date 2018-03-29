@@ -224,8 +224,7 @@ option name):
 
 [NOTE]
 This command can be used to create and connect to a new server without using
-`/server` command (should I repeat you can see help for this command with
-`/help connect` ?).
+`/server` command (see `/help connect`).
 
 By default, server buffers are merged with WeeChat _core_ buffer. To switch
 between _core_ buffer and server buffers, you can use kbd:[Ctrl+x].
@@ -300,8 +299,6 @@ Commands to manage buffers and windows:
 /buffer
 /window
 ----
-
-(I'll not repeat here that you can get help with /help on these commands)
 
 For example, to vertically split your screen into a small window (1/3 width),
 and a large window (2/3), use command:

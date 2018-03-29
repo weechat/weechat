@@ -244,10 +244,10 @@ Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 /connect freenode
 ----
 
+// TRANSLATION MISSING
 [NOTE]
 Questo comando può essere usato per creare e connettersi ad un nuovo server
-senza utilizzare il comando `/server` (è necessario ripetere che è possibile
-visualizzare l'aiuto per questo comando con `/help connect`?).
+senza utilizzare il comando `/server` (see `/help connect`).
 
 I buffer dei server vengono uniti al buffer _core_ di WeeChat in modo
 predefinito. Per passare tra buffer _core_ e buffer server, si può digitare
@@ -328,8 +328,6 @@ I comandi per gestire buffer e finestre:
 /buffer
 /window
 ----
-
-(Qui non si ripeterà che è possibile avere aiuto su questi comandi con /help)
 
 Per esempio, per dividere verticalmente lo schermo in una finestra piccola
 (1/3 della larghezza) ed una grande (2/3), utilizzare il comando:

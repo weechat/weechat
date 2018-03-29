@@ -233,8 +233,7 @@ suivante ("xxx" est le nom d'une option) :
 
 [NOTE]
 Cette commande peut aussi être utilisée pour créer et se connecter au serveur
-sans utiliser la commande `/server` (dois-je répéter que vous pouvez voir
-l'aide pour cette commande avec `/help connect` ?).
+sans utiliser la commande `/server` (voir `/help connect`).
 
 Par défaut, les tampons des serveurs sont mélangés avec le tampon _core_
 WeeChat. Pour basculer entre le tampon _core_ et les tampons des serveurs, il
@@ -309,9 +308,6 @@ Commandes pour gérer les tampons et les fenêtres :
 /buffer
 /window
 ----
-
-(je ne répéterai pas que vous pouvez avoir de l'aide sur ces commandes
-avec /help)
 
 Par exemple, pour découper verticalement l'écran en une petite fenêtre
 (1/3 de la largeur) et une large (2/3), utilisez la commande :

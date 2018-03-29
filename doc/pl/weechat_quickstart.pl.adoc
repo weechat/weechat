@@ -228,10 +228,10 @@ nazwa opcji):
 /connect freenode
 ----
 
+// TRANSLATION MISSING
 [NOTE]
 Ta komenda może być użyta do utworzenia i połączenia się z nowym serwerem bez
-użycia komendy `/server` (czy mam powtarzać, że pomoc dla tej komendy można
-uzyskać dzięki `/help connect` ?).
+użycia komendy `/server` (see `/help connect`).
 
 Domyślnie bufory serwerów są połączone z buforem WeeChat _core_. Aby przełączać
 się pomiędzy buforem _core_ a buforami serwerów możesz użyć kbd:[Ctrl+x].
@@ -304,8 +304,6 @@ Komendy do zarządzania buforami i oknami:
 /buffer
 /window
 ----
-
-(Nie będę powtarzać, że możesz uzyskać pomoc za pomocą /help na tych komendach)
 
 Na przykład, aby pionowo podzielić ekran na małe okno (1/3 szerokości),
 oraz duże okno (2/3), użyj komendy:
