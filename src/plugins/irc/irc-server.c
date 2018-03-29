@@ -516,7 +516,8 @@ irc_server_sasl_enabled (struct t_irc_server *server)
      * - another mechanism with username/password set
      */
     rc = ((sasl_mechanism == IRC_SASL_MECHANISM_EXTERNAL)
-          || ((sasl_mechanism == IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE)
+          || (((sasl_mechanism == IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE)
+               || (sasl_mechanism == IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE_DELEGATED))
               && sasl_username && sasl_username[0]
               && sasl_key && sasl_key[0])
           || (sasl_username && sasl_username[0]

@@ -272,6 +272,10 @@ IRC_PROTOCOL_CALLBACK(authenticate)
                 answer = irc_sasl_mechanism_ecdsa_nist256p_challenge (
                     server, argv[1], sasl_username, sasl_key);
                 break;
+            case IRC_SASL_MECHANISM_ECDSA_NIST256P_CHALLENGE_DELEGATED:
+                answer = irc_sasl_mechanism_ecdsa_nist256p_challenge_delegated (
+                    server, argv[1], sasl_username, sasl_key);
+                break;
             case IRC_SASL_MECHANISM_EXTERNAL:
                 answer = strdup ("+");
                 break;

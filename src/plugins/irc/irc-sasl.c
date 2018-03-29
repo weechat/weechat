@@ -44,7 +44,8 @@
  * valid values for the AUTHENTICATE command (example: "AUTHENTICATE PLAIN")
  */
 char *irc_sasl_mechanism_string[IRC_NUM_SASL_MECHANISMS] =
-{ "plain", "ecdsa-nist256p-challenge", "external", "dh-blowfish", "dh-aes" };
+{ "plain", "ecdsa-nist256p-challenge", "ecdsa-nist256p-challenge-delegated",
+  "external", "dh-blowfish", "dh-aes" };
 
 
 /*
@@ -314,6 +315,77 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
     return NULL;
 #endif /* defined(HAVE_GNUTLS) && (LIBGNUTLS_VERSION_NUMBER >= 0x030015) */
 }
+
+
+/*
+ * Builds answer for SASL authentication, using mechanism
+ * "ECDSA-NIST256P-CHALLENGE-DELEGATED", namely delegating
+ * signature creation to the specified external application
+ * and reading its output.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_sasl_mechanism_ecdsa_nist256p_challenge_delegated (struct t_irc_server *server,
+                                                       const char *data_base64,
+                                                       const char *sasl_username,
+                                                       const char *sasl_key)
+{
+    int command_len, response_len, len;
+    char *command, *response;
+    FILE *fp;
+
+    /* construct command string */
+    command_len = strlen (sasl_key) + strlen (sasl_username) + strlen (data_base64) + 3;
+    command = malloc (command_len);
+    len = snprintf (command, command_len, "%s %s %s", sasl_key, sasl_username, data_base64);
+    if (len > command_len)
+    {
+        weechat_printf (server->buffer,
+                        _("%sdelegated SASL: failed to construct "
+                          "delegation command"),
+                        weechat_prefix ("error"));
+        free (command);
+        return NULL;
+    }
+
+    /* start an agent program and open pipe to its STDOUT */
+    if ((fp = popen (command, "r")) == NULL)
+    {
+        weechat_printf (server->buffer,
+                        _("%sdelegated SASL: cannot open pipe "
+                          "for \"%s\" command"),
+                        weechat_prefix ("error"),
+                        command);
+        free (command);
+        return NULL;
+    }
+
+    /* allocate response buffer and read agent's output to it */
+    /* TODO: somehow get signature length */
+    response_len = 32;
+    response = malloc (response_len);
+    fgets (response, response_len, fp);
+
+    /* cleanup open pipe and allocated command buffer */
+    free (command);
+    if (pclose (fp))
+    {
+        weechat_printf (server->buffer,
+                        _("%sdelegated SASL: command \"%s\" "
+                          "not found or exited with error"),
+                        weechat_prefix ("error"),
+                        command);
+        free (response);
+        return NULL;
+    }
+
+    /* trim trailing newlines and return response */
+    response[strcspn(response, "\r\n")] = '\0';
+    return response;
+}
+
 
 /*
  * Reads key sent by server (Diffie-Hellman key exchange).
