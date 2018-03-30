@@ -326,6 +326,8 @@ WeeChat
 はデフォルトでたくさんのショートカットキーが設定されています。これらはドキュメントに記載されていますが、いくつか重要なキーがあります:
 
 - kbd:[Alt+←] / kbd:[Alt+→] または kbd:[F5] / kbd:[F6]: 前後のバッファに切り替える
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: 前後のウィンドウに切り替える (画面分割時)
 - kbd:[F9] / kbd:[F10]: タイトルバーをスクロール表示
 - kbd:[F11] / kbd:[F12]: ニックネーム一覧をスクロール表示

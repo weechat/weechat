@@ -349,6 +349,8 @@ kurz erläutert:
 
 - kbd:[Alt+←] / kbd:[Alt+→] oder kbd:[F5] / kbd:[F6]: Wechsel zum
   vorherigen/nächsten Buffer
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: Wechsel zum vorherigen/nächsten Fenster (falls der
   Bildschirm aufgeteilt ist)
 - kbd:[F9] / kbd:[F10]: scrollt die Titelleiste

@@ -351,6 +351,8 @@ ma si dovrebbero conoscere almeno quelli vitali:
 
 - kbd:[Alt+←] / kbd:[Alt+→] oppure kbd:[F5] / kbd:[F6]: passa al buffer
   precedente/successivo
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: passa alla finestra precedente/successiva (quando lo schermo
   è diviso)
 - kbd:[F9] / kbd:[F10]: scorre la barra del titolo

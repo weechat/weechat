@@ -330,6 +330,8 @@ Weechat používá ve výchozím nastavení mnoho klávesových zkratek, Všechn
 najdete v dokumentaci, ale je dobré znát alespoň pár těchto důležitých:
 
 - kbd:[Alt+←] / kbd:[Alt+→] nebo kbd:[F5] / kbd:[F6]: přepnout na předchozí/další bufer
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: přepnout na předchozí/další okno (pokud je obrazovka rozdělena)
 - kbd:[F9] / kbd:[F10]: posunoutí titulku
 - kbd:[F11] / kbd:[F12]: posunutí seznamu přezdívek

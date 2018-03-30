@@ -334,7 +334,10 @@ _foo_):
 необходимых:
 
 - kbd:[Alt+←] / kbd:[Alt+→] или kbd:[F5] / kbd:[F6]: к следующему или предыдущему буферу
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: следующее или предыдущее окно (когда экран разделён)
+// TRANSLATION MISSING
 - kbd:[F9] / kbd:[F10]: прокрутка title bar
 - kbd:[F11] / kbd:[F12]: прокрутка списка псевдонимов
 - kbd:[Tab]: дополнить текст в строке ввода, как в шелле

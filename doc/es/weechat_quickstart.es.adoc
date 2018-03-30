@@ -357,6 +357,8 @@ importantes.
 
 - kbd:[Alt+←] / kbd:[Alt+→] o kbd:[F5] / kbd:[F6]: Cambiara al buffer
   siguiente/anterior
+// TRANSLATION MISSING
+- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
 - kbd:[F7] / kbd:[F8]: Cambiara a la siguiente/anterior ventana (cuando la pantalla
   este dividida)
 - kbd:[F9] / kbd:[F10]: desplazamiento del texto en la barra de titulo
