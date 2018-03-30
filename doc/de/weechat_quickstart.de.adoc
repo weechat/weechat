@@ -57,36 +57,6 @@ der Name der entsprechenden Option).
 WeeChat verwendet umgehend einen neu eingestellten Wert (WeeChat muss also zu *keinem* Zeitpunkt
 neu gestartet werden, nach dem die Konfiguration verändert wurde).
 
-Beim `/set` Befehl kann beim Optionnamen ein Platzhalter "*" zu Beginn oder am Ende
-der Zeichenkette verwendet werden um sich alle Optionen anzeigen zu lassen, die
-dem Suchmuster entsprechen.
-
-Zum Beispiel:
-
-zeigt alle Optionen an (WeeChat und Erweiterungen):
-
-----
-/set
-----
-
-zeigt alle WeeChat Optionen an:
-
-----
-/set weechat.*
-----
-
-zeigt alle Optionen der IRC-Erweiterung an:
-
-----
-/set irc.*
-----
-
-Du kannst dir mit dem Befehl `/help` eine Hilfe für Optionen anzeigen lassen, z.B.:
-
-----
-/help weechat.look.highlight
-----
-
 Beim Beenden von WeeChat werden alle Einstellungen gespeichert (mittels des
 Befehls `/save` kann das Sichern der Optionen manuell durchgeführt werden).
 
@@ -98,6 +68,33 @@ geladen werden (mit dem Risiko von Datenverlust da Optionen kommentarlos übersc
 bevor man diese ggf. gesichert hat `/save`). +
 Aus diesen Gründen sollte immer der `/set` Befehl genutzt werden, da
 zusätzlich auch die Eingabe auf Plausibilität geprüft wird und Änderungen sofort wirksam werden.
+
+// TRANSLATION MISSING
+Help is available for options:
+
+----
+/help config.section.option
+----
+
+// TRANSLATION MISSING
+The plugin _fset_ allows you to easily browse options and change them.
+
+// TRANSLATION MISSING
+For example to display WeeChat options:
+
+----
+/fset weechat.*
+----
+
+// TRANSLATION MISSING
+IRC options:
+
+----
+/fset irc.*
+----
+
+// TRANSLATION MISSING
+For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen

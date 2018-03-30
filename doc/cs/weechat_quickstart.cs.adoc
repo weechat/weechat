@@ -47,34 +47,6 @@ K nastavení voleb napište:
 WeeChat okamžitě použije novou hodnotu (*nikdy* nebudete potřebovat restart
 WeeChatu po změně konfigurace).
 
-Můžete použít v příkazu `/set` volbu s částečným jménem a zástupným znakem "*"
-na konci nebo začátku k zobrazení všech voleb obsahující dané znaky.
-Například:
-
-* zobrazí všechny volby (WeeChatu a pluginů):
-
-----
-/set
-----
-
-* zobraz volby WeeChatu:
-
-----
-/set weechat.*
-----
-
-* zobraz volby IRC pluginu:
-
-----
-/set irc.*
-----
-
-Můžete zobrazit nápovědu pro voblby s `/help`, například:
-
-----
-/help weechat.look.highlight
-----
-
 Všechna nastavení jsou uložena při ukončení WeeChatu (nebo použitím příkazu
 `/save` k vynucení zapsaní voleb).
 
@@ -86,6 +58,33 @@ you must run the command `/reload` (with the risk of losing other changes
 that were not yet saved with `/save`). +
 You can use the command `/set`, which checks the value and applies immediately
 the changes.
+
+// TRANSLATION MISSING
+Help is available for options:
+
+----
+/help config.section.option
+----
+
+// TRANSLATION MISSING
+The plugin _fset_ allows you to easily browse options and change them.
+
+// TRANSLATION MISSING
+For example to display WeeChat options:
+
+----
+/fset weechat.*
+----
+
+// TRANSLATION MISSING
+IRC options:
+
+----
+/fset irc.*
+----
+
+// TRANSLATION MISSING
+For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == Jádro versus pluginy

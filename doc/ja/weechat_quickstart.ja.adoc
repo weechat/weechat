@@ -53,34 +53,6 @@ WeeChat はすべてのコマンドにヘルプがあります。ヘルプを見
 オプション設定はすぐに反映されます (設定変更後に
 WeeChat を再起動する必要は *ありません*)。
 
-`/set` オプションはすべての指定された文字を含むオプションを表示するために部分一致指定や先頭や最後にワイルドカード
-"*" を指定することができます。
-例:
-
-* 全ての設定名を表示します (WeeChat およびプラグイン)
-
-----
-/set
-----
-
-* WeeChat のオプションを表示します
-
-----
-/set weechat.*
-----
-
-* IRC プラグインのオプションを表示します
-
-----
-/set irc.*
-----
-
-`/help` とオプション名を指定することでヘルプを表示できます、例:
-
-----
-/help weechat.look.highlight
-----
-
 すべての設定は WeeChat の終了時 (または強制的に設定保存を行う
 `/save` コマンドを使用した場合) に保存されます。
 
@@ -92,6 +64,33 @@ WeeChat は常時 (例えば `/quit` コマンドの実行時など)
 を使って保存されていない変更を失うリスクがある) からです。 +
 設定を編集するには `/set`
 コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
+
+// TRANSLATION MISSING
+Help is available for options:
+
+----
+/help config.section.option
+----
+
+// TRANSLATION MISSING
+The plugin _fset_ allows you to easily browse options and change them.
+
+// TRANSLATION MISSING
+For example to display WeeChat options:
+
+----
+/fset weechat.*
+----
+
+// TRANSLATION MISSING
+IRC options:
+
+----
+/fset irc.*
+----
+
+// TRANSLATION MISSING
+For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == コア vs プラグイン

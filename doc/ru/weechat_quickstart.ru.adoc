@@ -54,34 +54,6 @@ $ weechat
 WeeChat немедленно применяет все изменения (вам *никогда* не потребуется
 перезапускать WeeChat после изменений в параметрах).
 
-В команде `/set` можно указывать неполные названия параметров с шаблоном "*" в
-начале или конце, чтобы отобразить все параметры с данными буквами.
-Пример:
-
-* Показать все параметры (WeeChat и плагинов):
-
-----
-/set
-----
-
-* Показать параметры WeeChat:
-
-----
-/set weechat.*
-----
-
-* Показать параметры IRC-плагина:
-
-----
-/set irc.*
-----
-
-Справку по любому параметру можно получить, используя `/help`, например:
-
-----
-/help weechat.look.highlight
-----
-
 Все параметры сохраняются при выходе из WeeChat (или путём принудительной
 записи с помощью команды `/save`).
 
@@ -93,6 +65,33 @@ you must run the command `/reload` (with the risk of losing other changes
 that were not yet saved with `/save`). +
 You can use the command `/set`, which checks the value and applies immediately
 the changes.
+
+// TRANSLATION MISSING
+Help is available for options:
+
+----
+/help config.section.option
+----
+
+// TRANSLATION MISSING
+The plugin _fset_ allows you to easily browse options and change them.
+
+// TRANSLATION MISSING
+For example to display WeeChat options:
+
+----
+/fset weechat.*
+----
+
+// TRANSLATION MISSING
+IRC options:
+
+----
+/fset irc.*
+----
+
+// TRANSLATION MISSING
+For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == Ядро и плагины

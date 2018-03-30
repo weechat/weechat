@@ -55,34 +55,6 @@ e `opzione` il nome dell'opzione).
 WeeChat utilizza subito il nuovo valore (non c'è *mai* bisogno di riavviare
 WeeChat dopo aver cambiato la configurazione).
 
-È possibile utilizzare l'opzione `/set` con un nome parziale e il carattere jolly "*"
-all'inizio o alla fine per visualizzare tutte le opzioni contenenti le lettere.
-Per esempio:
-
-* visualizza tutte le opzioni (WeeChat e plugin):
-
-----
-/set
-----
-
-* visualizza le opzioni di WeeChat:
-
-----
-/set weechat.*
-----
-
-* visualizza le opzioni del plugin IRC:
-
-----
-/set irc.*
-----
-
-È possibile visualizzare l'aiuto per ogni opzione con `/help`, per esempio:
-
-----
-/help weechat.look.highlight
-----
-
 Tutte le impostazioni vengono salvato all'uscita di WeeChat (o con il comando
 `/save` per forzare il salvataggio di una o più opzioni).
 
@@ -94,6 +66,33 @@ you must run the command `/reload` (with the risk of losing other changes
 that were not yet saved with `/save`). +
 You can use the command `/set`, which checks the value and applies immediately
 the changes.
+
+// TRANSLATION MISSING
+Help is available for options:
+
+----
+/help config.section.option
+----
+
+// TRANSLATION MISSING
+The plugin _fset_ allows you to easily browse options and change them.
+
+// TRANSLATION MISSING
+For example to display WeeChat options:
+
+----
+/fset weechat.*
+----
+
+// TRANSLATION MISSING
+IRC options:
+
+----
+/fset irc.*
+----
+
+// TRANSLATION MISSING
+For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == Core vs plugin

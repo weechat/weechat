@@ -49,36 +49,6 @@ un nom d'extension), `section` la section de cette configuration et
 WeeChat utilise immédiatement la nouvelle valeur (vous n'avez *jamais*
 besoin de redémarrer WeeChat après avoir changé la configuration).
 
-Vous pouvez utiliser `/set` avec un nom partiel d'option et le caractère
-joker "*" au début ou à la fin pour afficher toutes les options contenant
-ces lettres.
-
-Par exemple :
-
-* Afficher toutes les options (WeeChat et extensions) :
-
-----
-/set
-----
-
-* Afficher les options WeeChat :
-
-----
-/set weechat.*
-----
-
-* Afficher les options de l'extension IRC :
-
-----
-/set irc.*
-----
-
-Vous pouvez afficher de l'aide sur une option avec `/help`, par exemple :
-
-----
-/help weechat.look.highlight
-----
-
 Toutes les options sont sauvées quand WeeChat quitte (ou avec la commande
 `/save` pour forcer une écriture des options).
 
@@ -89,6 +59,29 @@ chaque changement vous devez lancer la commande `/reload` (avec le risque de
 perdre d'autres changements qui n'auraient pas été sauvés avec `/save`). +
 Vous pouvez utiliser la commande `/set`, qui vérifie la valeur et applique
 les changements immédiatement.
+
+L'aide est disponible pour les options ;
+
+----
+/help config.section.option
+----
+
+L'extension _fset_ vous permet de parcourir les options facilement et de les
+modifier.
+
+Par exemple pour afficher les options WeeChat :
+
+----
+/fset weechat.*
+----
+
+Les options IRC :
+
+----
+/fset irc.*
+----
+
+Pour plus d'informations sur la commande `/fset` et les touches, voir `/help fset`.
 
 [[core_vs_plugins]]
 == Cœur vs extensions
