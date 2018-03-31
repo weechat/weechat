@@ -741,7 +741,7 @@
 ** valore predefinito: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** descrizione: pass:none[numero massimo del conteggio di messaggi da mostrare nella hotlist per un buffer (0 = non mostrare mai il contatore messaggi)]
+** descrizione: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, 1 = display count for highlights/private messages, 2 = display count for highlight/private messages and messages, 3 = display count for all types of messages]
 ** tipo: intero
 ** valori: 0 .. 4
 ** valore predefinito: `+2+`

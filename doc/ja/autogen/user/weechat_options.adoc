@@ -741,7 +741,7 @@
 ** デフォルト値: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** 説明: pass:none[任意のバッファに関するホットリストに表示されるメッセージ数の最大値 (0 = メッセージ数は非表示)]
+** 説明: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, 1 = display count for highlights/private messages, 2 = display count for highlight/private messages and messages, 3 = display count for all types of messages]
 ** タイプ: 整数
 ** 値: 0 .. 4
 ** デフォルト値: `+2+`
