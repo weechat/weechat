@@ -158,6 +158,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
+* [[option_xfer.network.send_ack]] *xfer.network.send_ack*
+** opis: pass:none[send acks when receiving files; if disabled, the transfer may freeze if the sender is waiting for acks (for example a WeeChat sending a file with option xfer.network.fast_send set to off); on the other hand, disabling send of acks may prevent a freeze if the acks are not sent immediately to the sender]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
 ** opis: pass:none[limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak limitu)]
 ** typ: liczba

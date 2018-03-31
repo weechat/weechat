@@ -158,6 +158,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_xfer.network.send_ack]] *xfer.network.send_ack*
+** description: pass:none[envoyer des acks lors de la réception de fichiers ; si désactivé, le transfert peut échouer si l'envoyeur attend des acks (par exemple un WeeChat qui envoie le fichier avec l'option xfer.network.fast_send à off) ; d'un autre côté, désactiver l'envoi des acks peut éviter un gel si les acks ne sont pas envoyés immédiatement à l'envoyeur]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
 ** description: pass:none[limitation de vitesse pour l'envoi des fichiers, en kilo-octets par seconde (0 signifie pas de limite)]
 ** type: entier

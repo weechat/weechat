@@ -158,6 +158,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_xfer.network.send_ack]] *xfer.network.send_ack*
+** 説明: pass:none[send acks when receiving files; if disabled, the transfer may freeze if the sender is waiting for acks (for example a WeeChat sending a file with option xfer.network.fast_send set to off); on the other hand, disabling send of acks may prevent a freeze if the acks are not sent immediately to the sender]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
 ** 説明: pass:none[ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)]
 ** タイプ: 整数
