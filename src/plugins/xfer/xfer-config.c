@@ -287,7 +287,11 @@ xfer_config_init ()
     xfer_config_network_send_ack = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "send_ack", "boolean",
-        N_("does not send acks when receiving files"),
+        N_("send acks when receiving files; if disabled, the transfer may "
+           "freeze if the sender is waiting for acks (for example a weechat "
+           "sender with option xfer.network.fast_send set to off); on the "
+           "other hand, disabling send of acks may prevent a freeze if the "
+           "acks are not sent immediately to the sender"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_speed_limit = weechat_config_new_option (
