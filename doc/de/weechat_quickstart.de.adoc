@@ -69,37 +69,34 @@ bevor man diese ggf. gesichert hat `/save`). +
 Aus diesen Gründen sollte immer der `/set` Befehl genutzt werden, da
 zusätzlich auch die Eingabe auf Plausibilität geprüft wird und Änderungen sofort wirksam werden.
 
-// TRANSLATION MISSING
-Help is available for options:
+Hilfe ist für Optionen verfügbar:
 
 ----
 /help config.section.option
 ----
 
-// TRANSLATION MISSING
-The plugin _fset_ allows you to easily browse options and change them.
+Mit der _fset_ Erweiterung kann man sehr einfach Optionen finden und diese
+den eigenen Bedürfnissen anpassen.
 
-// TRANSLATION MISSING
-For example to display WeeChat options:
+Um zum Beispiel alle WeeChat Optionen anzuzeigen:
 
 ----
 /fset weechat.*
 ----
 
-// TRANSLATION MISSING
-IRC options:
+zeigt alle IRC Optionen an:
 
 ----
 /fset irc.*
 ----
 
-// TRANSLATION MISSING
-The `/fset` command has completion on part of option names, so for example if
-you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
-If you press kbd:[Enter], options about the hotlist are displayed.
+Der `/fset` Befehl hat eine teilweise Vervollständigung von Optionsnamen, wenn
+man also `/fset hot` eingibt und kbd:[Tab] drückt, wird die Eingabe durch
+`/fset hotlist` vervollständigt. Wenn man nun kbd:[Enter] drückt, werden alle
+hotlist Optionen angezeigt.
 
-// TRANSLATION MISSING
-For more information about `/fset` command and keys, see `/help fset`.
+Um weitere Informationen zum `/fset` Befehl und seine Tastenbefehle zu behalten,
+siehe `/help fset`.
 
 [[core_vs_plugins]]
 == Kern (Core) vs Erweiterungen
@@ -245,18 +242,17 @@ ist der Optionsname):
 /connect freenode
 ----
 
-// TRANSLATION MISSING
 [NOTE]
 Dieser Befehl kann dazu benutzt werden um einen neuen Server zu erstellen und
-sich mit ihm zu verbinden, ohne den Befehl `/server` zu benutzen
-(see `/help connect`).
+sich mit diesem zu verbinden, ohne den Befehl `/server` zu benutzen
+(siehe `/help connect`).
 
-Standardmäßig werden alle Server-Buffer und der Buffer des Kerns von WeeChat -der
-core-Buffer- zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
+Alle Server-Buffer und der WeeChat Kernbuffer, der sogenannte -core-Buffer-, werden
+standardmäßig zusammengelegt. Um zwischen dem core-Buffer und den Server-Buffern
 zu wechseln, kannst Du kbd:[Ctrl+x] benutzen.
 
 Es ist möglich das automatische Zusammenlegen der Server-Buffer zu deaktivieren,
-um eigenständige Server-Buffer zu verwenden:
+um dadurch separate Server-Buffer zu erhalten:
 
 ----
 /set irc.look.server_buffer independent
@@ -351,8 +347,7 @@ kurz erläutert:
 
 - kbd:[Alt+←] / kbd:[Alt+→] oder kbd:[F5] / kbd:[F6]: Wechsel zum
   vorherigen/nächsten Buffer
-// TRANSLATION MISSING
-- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
+- kbd:[F1] / kbd:[F2]: scrollt die Liste mit Buffern ("buflist")
 - kbd:[F7] / kbd:[F8]: Wechsel zum vorherigen/nächsten Fenster (falls der
   Bildschirm aufgeteilt ist)
 - kbd:[F9] / kbd:[F10]: scrollt die Titelleiste

@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2017 Nils Görs <weechatter@arcor.de>
+# Copyright (C) 2009-2018 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-03-31 13:44+0200\n"
-"PO-Revision-Date: 2018-03-27 21:49+0200\n"
+"PO-Revision-Date: 2018-03-31 14:32+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -14447,6 +14447,11 @@ msgid ""
 "xfer.network.fast_send set to off); on the other hand, disabling send of "
 "acks may prevent a freeze if the acks are not sent immediately to the sender"
 msgstr ""
+"sendet ACK-Nachrichten wenn Dateien empfangen wurden; wenn deaktiviert kann "
+"der Transfer einfrieren, wenn der Absender auf eine ACK-Nachrichtet wartet "
+"(zum Beispiel wenn WeeChat eine Datei sendet und die Option xfer.network."
+"fast_send aktiviert ist); andererseits kann die Deaktivierung ein Einfrieren "
+"verhindern da die ACK-Nachricht nicht umgehend an den Sender verschickt wird"
 
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
@@ -14596,10 +14601,3 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
-
-#~ msgid ""
-#~ "channel: channel name\n"
-#~ "   nick: nick or host"
-#~ msgstr ""
-#~ "channel: Name des Channel\n"
-#~ "   nick: Nick oder Host"
