@@ -853,9 +853,9 @@ target: サーバ名
 ----
 /unban  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: channel name
-   nick: nick or host
- number: ban number (as displayed by command /ban)
+channel: チャンネル名
+   nick: ニックネームまたはホスト名
+ number: バンするニックネームの番号 (コマンド /ban で表示される番号)
 ----
 
 [[command_irc_unquiet]]
@@ -864,9 +864,9 @@ channel: channel name
 ----
 /unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
 
-channel: channel name
-   nick: nick or host
- number: quiet number (as displayed by command /quiet)
+channel: チャンネル名
+   nick: ニックネームまたはホスト名
+ number: 発言禁止するニックネームの番号 (コマンド /quiet で表示される番号)
 ----
 
 [[command_irc_userhost]]

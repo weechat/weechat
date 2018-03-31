@@ -20,9 +20,9 @@
 
 | irc | irc_ignore | IRC 無視のリスト | 無視ポインタ (任意) | -
 
-| irc | irc_modelist | list of channel mode lists for an IRC channel | mode list pointer (optional) | server,channel,type (type is optional)
+| irc | irc_modelist | IRC チャンネルのチャンネルモードリストのリスト | モードリストポインタ (任意) | サーバ、チャンネル、タイプ (タイプは任意)
 
-| irc | irc_modelist_item | list of items in a channel mode list | mode list item pointer (optional) | server,channel,type,number (number is optional)
+| irc | irc_modelist_item | チャンネルモードリスト内の要素のリスト | モードリスト要素のポインタ (任意) | サーバ、チャンネル、タイプ、番号 (番号は任意)
 
 | irc | irc_nick | IRC チャンネルのニックネームのリスト | ニックネームポインタ (任意) | サーバ、チャンネル、ニックネーム (ニックネームは任意)
 
