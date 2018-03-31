@@ -2886,9 +2886,8 @@ config_weechat_init_options ()
         "hotlist_count_max", "integer",
         N_("max number of messages count to display in hotlist for a buffer: "
            "0 = never display messages count, "
-           "1 = display count for highlights/private messages, "
-           "2 = display count for highlight/private messages and messages, "
-           "3 = display count for all types of messages"),
+           "other number = display max N messages count (from the highest to "
+           "lowest priority)"),
         NULL, 0, GUI_HOTLIST_NUM_PRIORITIES, "2", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,

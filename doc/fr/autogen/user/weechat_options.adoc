@@ -741,7 +741,7 @@
 ** valeur par défaut: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** description: pass:none[nombre maximum de compteurs de messages à afficher dans la hotlist pour un tampon : 0 = ne jamais afficher les compteurs de messages, 1 = afficher les compteurs pour les highlights/messages privés, 2 = afficher les compteurs pour les highlights/messages privés et messages, 3 = afficher les compteurs pour tous les types de messages]
+** description: pass:none[nombre maximum de compteurs de messages à afficher dans la hotlist pour un tampon : 0 = ne jamais afficher les compteurs de messages, autre nombre = afficher un maximum de N compteurs de messages (de la plus haute à la plus basse priorité)]
 ** type: entier
 ** valeurs: 0 .. 4
 ** valeur par défaut: `+2+`

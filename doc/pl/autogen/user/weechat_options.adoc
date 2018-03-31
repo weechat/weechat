@@ -741,7 +741,7 @@
 ** domyślna wartość: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** opis: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, 1 = display count for highlights/private messages, 2 = display count for highlight/private messages and messages, 3 = display count for all types of messages]
+** opis: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, other number = display max N messages count (from the highest to lowest priority)]
 ** typ: liczba
 ** wartości: 0 .. 4
 ** domyślna wartość: `+2+`
