@@ -181,7 +181,7 @@ rm -rf $RPM_BUILD_ROOT
 - Released version 0.1.3
 * Sat May 21 2005 Sébastien Helleu <flashcode@flashtux.org> 0.1.2-1
 - Released version 0.1.2
-* Sat Mar 20 2005 Sébastien Helleu <flashcode@flashtux.org> 0.1.1-1
+* Sun Mar 20 2005 Sébastien Helleu <flashcode@flashtux.org> 0.1.1-1
 - Released version 0.1.1
 * Sat Feb 12 2005 Sébastien Helleu <flashcode@flashtux.org> 0.1.0-1
 - Released version 0.1.0
@@ -189,11 +189,11 @@ rm -rf $RPM_BUILD_ROOT
 - Released version 0.0.9
 * Sat Oct 30 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.8-1
 - Released version 0.0.8
-* Sat Aug 08 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.7-1
+* Sun Aug 08 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.7-1
 - Released version 0.0.7
 * Sat Jun 05 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.6-1
 - Released version 0.0.6
-* Thu Feb 02 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.5-1
+* Sat Feb 07 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.5-1
 - Released version 0.0.5
 * Thu Jan 01 2004 Sébastien Helleu <flashcode@flashtux.org> 0.0.4-1
 - Released version 0.0.4
