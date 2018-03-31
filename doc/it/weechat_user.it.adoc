@@ -2811,7 +2811,7 @@ ECDSA-NIST256P-CHALLENGE mechanism (no password is required on connection).
 You can generate the key with this command:
 
 ----
-$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+$ openssl ecparam -genkey -name prime256v1 -out ~/.weechat/ecdsa.pem
 ----
 
 Get the public key (encoded as base64) with this command:

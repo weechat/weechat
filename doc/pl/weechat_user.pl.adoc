@@ -2648,7 +2648,7 @@ ECDSA-NIST256P-CHALLENGE (hasło nie potrzebne do połączenia).
 Klucz można wygenerować za pomocą komendy:
 
 ----
-$ openssl ecparam -genkey -name prime256v1 >~/.weechat/ecdsa.pem
+$ openssl ecparam -genkey -name prime256v1 -out ~/.weechat/ecdsa.pem
 ----
 
 Klucz publiczny (zakodowany za pomocą base64) uzyskujemy wywołując komendę:
