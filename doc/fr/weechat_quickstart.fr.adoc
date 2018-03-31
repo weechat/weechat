@@ -81,6 +81,11 @@ Les options IRC :
 /fset irc.*
 ----
 
+La commande `/fset` a la complétion sur les bouts de noms d'options, donc par
+exemple si vous tapez `/fset hot` et appuyez sur kbd:[Tab] cela est complété en
+`/fset hotlist`. Si vous appuyez sur kbd:[Enter], les options sur la hotlist
+sont affichées.
+
 Pour plus d'informations sur la commande `/fset` et les touches, voir `/help fset`.
 
 [[core_vs_plugins]]

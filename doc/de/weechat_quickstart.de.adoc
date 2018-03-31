@@ -94,6 +94,11 @@ IRC options:
 ----
 
 // TRANSLATION MISSING
+The `/fset` command has completion on part of option names, so for example if
+you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
+If you press kbd:[Enter], options about the hotlist are displayed.
+
+// TRANSLATION MISSING
 For more information about `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
