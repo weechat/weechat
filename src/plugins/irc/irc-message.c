@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -1001,6 +1002,13 @@ irc_message_split (struct t_irc_server *server, const char *message)
     {
         split_msg_max_length = IRC_SERVER_OPTION_INTEGER(
             server, IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH);
+
+        /*
+         * split disabled? use a very high max_length so the message should
+         * never be split
+         */
+        if (split_msg_max_length == 0)
+            split_msg_max_length = INT_MAX - 16;
     }
     else
     {
@@ -1055,10 +1063,6 @@ irc_message_split (struct t_irc_server *server, const char *message)
         arguments = argv_eol[1];
         index_args = 1;
     }
-
-    /* split disabled? just add the message as-is */
-    if (split_msg_max_length == 0)
-        goto end;
 
     max_length_nick = (server && (server->nick_max_length > 0)) ?
         server->nick_max_length : 16;
