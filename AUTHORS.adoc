@@ -118,6 +118,7 @@ Alphabetically:
 * Vasco Almeida
 * Voroskoi
 * Wojciech Kwolek
+* W. Trevor King
 * Yannick Palanque
 
 == Contact
