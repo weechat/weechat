@@ -49,9 +49,9 @@ struct t_config_option *xfer_config_network_blocksize;
 struct t_config_option *xfer_config_network_fast_send;
 struct t_config_option *xfer_config_network_own_ip;
 struct t_config_option *xfer_config_network_port_range;
+struct t_config_option *xfer_config_network_send_ack;
 struct t_config_option *xfer_config_network_speed_limit;
 struct t_config_option *xfer_config_network_timeout;
-struct t_config_option *xfer_config_network_send_ack;
 
 /* xfer config, file section */
 
@@ -284,6 +284,12 @@ xfer_config_init ()
            "below 1024)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_send_ack = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "send_ack", "boolean",
+        N_("does not send acks when receiving files"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_speed_limit = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "speed_limit", "integer",
@@ -296,12 +302,6 @@ xfer_config_init ()
         "timeout", "integer",
         N_("timeout for xfer request (in seconds)"),
         NULL, 5, INT_MAX, "300", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_network_send_ack = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "send_ack", "boolean",
-        N_("does not send acks when receiving files"),
-        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     ptr_section = weechat_config_new_section (xfer_config_file, "file",

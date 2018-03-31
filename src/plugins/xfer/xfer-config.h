@@ -39,9 +39,9 @@ extern struct t_config_option *xfer_config_network_blocksize;
 extern struct t_config_option *xfer_config_network_fast_send;
 extern struct t_config_option *xfer_config_network_own_ip;
 extern struct t_config_option *xfer_config_network_port_range;
+extern struct t_config_option *xfer_config_network_send_ack;
 extern struct t_config_option *xfer_config_network_speed_limit;
 extern struct t_config_option *xfer_config_network_timeout;
-extern struct t_config_option *xfer_config_network_send_ack;
 
 extern struct t_config_option *xfer_config_file_auto_accept_chats;
 extern struct t_config_option *xfer_config_file_auto_accept_files;
