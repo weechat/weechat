@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-04-01 08:41+0200\n"
-"PO-Revision-Date: 2018-03-31 16:29+0200\n"
+"PO-Revision-Date: 2018-04-01 14:12+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -8558,28 +8558,22 @@ msgstr ""
 msgid "list all servernames which are known by the server answering the query"
 msgstr "alle Servernamen auflisten die dem antwortenden Server bekannt sind"
 
-#, fuzzy
 msgid "[[<target>] <server_mask>]"
-msgstr "[[<server>] <server_mask>]"
+msgstr "[[<target>] <server_mask>]"
 
-#, fuzzy
 msgid ""
 "     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
-"     server: dieser Server soll die Anfrage beantworten\n"
+"     target: dieser Remote-Server soll die Anfrage beantworten\n"
 "server_mask: die aufzulistenden Server sollen diesem Muster entsprechen"
 
 msgid "list channels and their topic"
 msgstr "Channels mit ihrem Thema auflisten"
 
-#, fuzzy
 msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
-msgstr ""
-"[-noswitch] [-server <server>] [<channel1>[,<channel2>...]] [<key1>[,"
-"<key2>...]]"
+msgstr "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
 
-#, fuzzy
 msgid ""
 " server: send to this server (internal name)\n"
 "  regex: POSIX extended regular expression used to filter results (case "
@@ -8596,12 +8590,13 @@ msgid ""
 "networks):\n"
 "    /list -re #weechat.*"
 msgstr ""
-"channel: aufzulistender Channel\n"
-" server: Servername\n"
+" server: an diesen Server senden (interner Name)\n"
 " regexp: erweiterter regulärer POSIX Ausdruck, der auf die Ausgabe "
 "angewendet werden soll (zwischen Groß- und Kleinschreibung wird nicht "
 "unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss "
 "zu Beginn \"(?-i)\" genutzt werden)\n"
+"channel: aufzulistender Channel\n"
+" target: Servername\n"
 "\n"
 "Beispiele:\n"
 "  listet alle Channels des Servers auf (dies kann bei großen Netzwerken sehr "
@@ -8848,17 +8843,15 @@ msgstr ""
 msgid "send a ping to server"
 msgstr "sendet einen Ping an den Server"
 
-#, fuzzy
 msgid "<target1> [<target2>]"
-msgstr "[<mask> [<target>]]"
+msgstr "<target1> [<target2>]"
 
-#, fuzzy
 msgid ""
 "target1: server\n"
 "target2: forward ping to this server"
 msgstr ""
-"server1: Server\n"
-"server2: Ping an diesen Server weiterleiten"
+"target1: Server\n"
+"target2: Ping an diesen Server weiterleiten"
 
 msgid "answer to a ping message"
 msgstr "Auf Ping antworten"
@@ -9120,32 +9113,28 @@ msgstr ""
 msgid "disconnect server links"
 msgstr "Verbindung zum Server trennen"
 
-#, fuzzy
 msgid "<target> <comment>"
-msgstr "<server> <comment>"
+msgstr "<target> <comment>"
 
-#, fuzzy
 msgid ""
 " target: server name\n"
 "comment: comment"
 msgstr ""
-" server: Name des Servers\n"
+" target: Name des Servers\n"
 "comment: Kommentar"
 
 msgid "query statistics about server"
 msgstr "Serverstatistik abfragen"
 
-#, fuzzy
 msgid "[<query> [<target>]]"
-msgstr "[<query> [<server>]]"
+msgstr "[<query> [<target>]]"
 
-#, fuzzy
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
 "target: server name"
 msgstr ""
 " query: c/h/i/k/l/m/o/y/u (siehe RFC1459)\n"
-"server: Name des Servers"
+"target: Name des Servers"
 
 msgid ""
 "give users who are on a host running an IRC server a message asking them to "
@@ -9228,16 +9217,14 @@ msgstr ""
 "Versionsinformation des Nicknamen oder Servers ermitteln (des aktuellen oder "
 "angegebenen Nick/Server)"
 
-#, fuzzy
 msgid "[<target>|<nick>]"
-msgstr "[<server>|<nick>]"
+msgstr "[<target>|<nick>]"
 
-#, fuzzy
 msgid ""
 "target: server name\n"
 "  nick: nick"
 msgstr ""
-"server: Servername\n"
+"target: Servername\n"
 "  nick: Nickname"
 
 msgid "give voice to nick(s)"
@@ -9290,11 +9277,9 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "Information über User abfragen"
 
-#, fuzzy
 msgid "[<target>] [<nick>[,<nick>...]]"
-msgstr "[<server>] [<nick>[,<nick>...]]"
+msgstr "[<target>] [<nick>[,<nick>...]]"
 
-#, fuzzy
 msgid ""
 "target: server name\n"
 "  nick: nick (may be a mask)\n"
@@ -9306,11 +9291,11 @@ msgid ""
 "If option irc.network.whois_double_nick is enabled, two nicks are sent (if "
 "only one nick is given), to get idle time in answer."
 msgstr ""
-"server: Name des Servers (interner Servername)\n"
+"target: Name des Servers (interner Servername)\n"
 "  nick: Nick, welcher abgefragt werden soll (es kann auch eine Maske genutzt "
 "werden)\n"
 "\n"
-"Ohne Angabe von Argumenten, nutzt /whois folgende Nicks:\n"
+"Ohne Angabe von Argumenten, nutzt /whois folgende Regel:\n"
 "- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt\n"
 "- den Nick des Gesprächspartners, falls es sich um einen privaten Buffer "
 "handelt.\n"
