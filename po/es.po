@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-01 07:56+0200\n"
+"POT-Creation-Date: 2018-04-01 08:41+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6582,12 +6582,12 @@ msgid "%s%s: mask must begin with nick"
 msgstr "%s%s: la máscara debe empezar con el apodo"
 
 #, c-format
-msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
-msgstr "%s%s: \"%s\" no es una expresión regular válida (%s)"
-
-#, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s%s: no hay suficiente memoria para la expresión regular"
+
+#, c-format
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgstr "%s%s: \"%s\" no es una expresión regular válida (%s)"
 
 #, c-format
 msgid ""
@@ -7324,15 +7324,16 @@ msgid "list channels and their topic"
 msgstr "lista canales y sus temas"
 
 #, fuzzy
-msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
-msgstr "[<canal>[,<canal>...]] [<servidor>] [-re <regex>]"
+msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
+msgstr "[-server <servidor>] [<canal1>[,<canal2>...]] [<clave1>[,<clave2>...]]"
 
 #, fuzzy
 msgid ""
-"channel: channel to list\n"
-" target: server name\n"
+" server: send to this server (internal name)\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
+"channel: channel to list\n"
+" target: server name\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"
@@ -12828,6 +12829,10 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
+#~ msgstr "[<canal>[,<canal>...]] [<servidor>] [-re <regex>]"
 
 #~ msgid "<server1> [<server2>]"
 #~ msgstr "<servidor1> [<servidor2>]"

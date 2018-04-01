@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-01 07:56+0200\n"
+"POT-Creation-Date: 2018-04-01 08:41+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5371,11 +5371,11 @@ msgid "%s%s: mask must begin with nick"
 msgstr ""
 
 #, c-format
-msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgid "%s%s: not enough memory for regular expression"
 msgstr ""
 
 #, c-format
-msgid "%s%s: not enough memory for regular expression"
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr ""
 
 #, c-format
@@ -5929,14 +5929,15 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr ""
 
-msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
+msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
 msgstr ""
 
 msgid ""
-"channel: channel to list\n"
-" target: server name\n"
+" server: send to this server (internal name)\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
+"channel: channel to list\n"
+" target: server name\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"

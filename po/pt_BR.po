@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-01 07:56+0200\n"
+"POT-Creation-Date: 2018-04-01 08:41+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6530,11 +6530,11 @@ msgid "%s%s: mask must begin with nick"
 msgstr ""
 
 #, c-format
-msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgid "%s%s: not enough memory for regular expression"
 msgstr ""
 
 #, c-format
-msgid "%s%s: not enough memory for regular expression"
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr ""
 
 #, c-format
@@ -7115,14 +7115,15 @@ msgid "list channels and their topic"
 msgstr "listar canais e seus tópicos"
 
 #, fuzzy
-msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
-msgstr "[<canal>[,<canal>...]] [<servidor>] [-re <expressão_regular>]"
+msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
+msgstr "<target> <tipo> [<argumentos>]"
 
 msgid ""
-"channel: channel to list\n"
-" target: server name\n"
+" server: send to this server (internal name)\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
+"channel: channel to list\n"
+" target: server name\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"
@@ -12294,6 +12295,10 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
+#~ msgstr "[<canal>[,<canal>...]] [<servidor>] [-re <expressão_regular>]"
 
 #~ msgid "<server1> [<server2>]"
 #~ msgstr "<server1> [<server2>]"

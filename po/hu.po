@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-01 07:56+0200\n"
+"POT-Creation-Date: 2018-04-01 08:41+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5870,12 +5870,12 @@ msgid "%s%s: mask must begin with nick"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
-msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
-
-#, fuzzy, c-format
 msgid "%s%s: not enough memory for regular expression"
 msgstr "%s nincs elég memória a reguláris kifejezéshez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
 #, c-format
 msgid ""
@@ -6518,14 +6518,15 @@ msgid "list channels and their topic"
 msgstr "szobák listája témájukkal együtt"
 
 #, fuzzy
-msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
-msgstr "[szoba[,szoba] [szerver]]"
+msgid "[-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]"
+msgstr "szoba[,szoba] [kulcs[,kulcs]]"
 
 msgid ""
-"channel: channel to list\n"
-" target: server name\n"
+" server: send to this server (internal name)\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
+"channel: channel to list\n"
+" target: server name\n"
 "\n"
 "Examples:\n"
 "  list all channels on server (can be very slow on large networks):\n"
@@ -11833,6 +11834,10 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
+#~ msgstr "[szoba[,szoba] [szerver]]"
 
 #, fuzzy
 #~ msgid "<server1> [<server2>]"

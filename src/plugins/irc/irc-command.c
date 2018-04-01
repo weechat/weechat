@@ -6581,13 +6581,14 @@ irc_command_init ()
     weechat_hook_command (
         "list",
         N_("list channels and their topic"),
-        N_("[<channel>[,<channel>...]] [<target>] "
-           "[-re <regex>]"),
-        N_("channel: channel to list\n"
-           " target: server name\n"
+        N_("[-server <server>] [-re <regex>] [<channel>[,<channel>...]] "
+           "[<target>]"),
+        N_(" server: send to this server (internal name)\n"
            "  regex: POSIX extended regular expression used to filter results "
            "(case insensitive, can start by \"(?-i)\" to become case "
            "sensitive)\n"
+           "channel: channel to list\n"
+           " target: server name\n"
            "\n"
            "Examples:\n"
            "  list all channels on server (can be very slow on large networks):\n"

@@ -386,11 +386,12 @@ masque_serveur : liste des serveurs correspondant au masque
 * `+list+`: lister les canaux et leur titre
 
 ----
-/list  [<canal>[,<canal>...]] [<cible>] [-re <regex>]
+/list  [-server <serveur>] [-re <regex>] [<canal>[,<canal>...]] [<cible>]
 
- canal : canal à lister
- cible : nom du serveur
- regex : expression régulière POSIX étendue utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
+serveur : envoyer à ce serveur (nom interne)
+  regex : expression régulière POSIX étendue utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
+  canal : canal à lister
+  cible : nom du serveur
 
 Exemples :
   lister tous les canaux du serveur (peut être très lent pour les grands réseaux) :

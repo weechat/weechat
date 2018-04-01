@@ -386,11 +386,12 @@ server_mask: list of servers must match this mask
 * `+list+`: Channels mit ihrem Thema auflisten
 
 ----
-/list  [<channel>[,<channel>...]] [<target>] [-re <regex>]
+/list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
 
+ server: send to this server (internal name)
+  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 channel: channel to list
  target: server name
-  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
 Examples:
   list all channels on server (can be very slow on large networks):
