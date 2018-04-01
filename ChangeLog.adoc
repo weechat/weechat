@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * irc: add option "-server" in command /list (issue #1165)
   * irc: add indexed ban list, add completion for /unban and /unquiet (issue #597, task #11374, task #10876)
 
 Improvements::

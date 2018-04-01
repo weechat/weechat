@@ -30,6 +30,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <netdb.h>
+#include <regex.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -2918,97 +2919,94 @@ IRC_COMMAND_CALLBACK(links)
 IRC_COMMAND_CALLBACK(list)
 {
     char buf[512], *ptr_channel_name, *ptr_server_name, *ptr_regex;
+    regex_t *new_regexp;
     int i, ret;
 
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("list", 1);
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
 
-    if (ptr_server->cmd_list_regexp)
+    ptr_channel_name = NULL;
+    ptr_server_name = NULL;
+    ptr_regex = NULL;
+    new_regexp = NULL;
+
+    for (i = 1; i < argc; i++)
+    {
+        if (weechat_strcasecmp (argv[i], "-server") == 0)
+        {
+            if (argc <= i + 1)
+                WEECHAT_COMMAND_ERROR;
+            ptr_server = irc_server_search (argv[i + 1]);
+            if (!ptr_server)
+                WEECHAT_COMMAND_ERROR;
+            i++;
+        }
+        else if (weechat_strcasecmp (argv[i], "-re") == 0)
+        {
+            if (argc <= i + 1)
+                WEECHAT_COMMAND_ERROR;
+            ptr_regex = argv_eol[i + 1];
+            i++;
+        }
+        else if (!ptr_channel_name)
+            ptr_channel_name = argv[i];
+        else if (!ptr_server_name)
+            ptr_server_name = argv[i];
+        else
+            WEECHAT_COMMAND_ERROR;
+    }
+
+    IRC_COMMAND_CHECK_SERVER("list", 1);
+
+    if (ptr_regex)
+    {
+        new_regexp = malloc (sizeof (*new_regexp));
+        if (!new_regexp)
+        {
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: not enough memory for regular expression"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME);
+            return WEECHAT_RC_OK;
+        }
+        ret = weechat_string_regcomp (new_regexp,
+                                      ptr_regex,
+                                      REG_EXTENDED | REG_ICASE | REG_NOSUB);
+        if (ret != 0)
+        {
+            regerror (ret, new_regexp, buf, sizeof (buf));
+            weechat_printf (
+                ptr_server->buffer,
+                _("%s%s: \"%s\" is not a valid regular expression "
+                  "(%s)"),
+                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                ptr_regex, buf);
+            free (new_regexp);
+            return WEECHAT_RC_OK;
+        }
+        if (ptr_server->cmd_list_regexp)
+        {
+            regfree (ptr_server->cmd_list_regexp);
+            free (ptr_server->cmd_list_regexp);
+        }
+        ptr_server->cmd_list_regexp = new_regexp;
+    }
+    else if (ptr_server->cmd_list_regexp)
     {
         regfree (ptr_server->cmd_list_regexp);
         free (ptr_server->cmd_list_regexp);
         ptr_server->cmd_list_regexp = NULL;
     }
 
-    if (argc > 1)
-    {
-        ptr_channel_name = NULL;
-        ptr_server_name = NULL;
-        ptr_regex = NULL;
-        for (i = 1; i < argc; i++)
-        {
-            if (weechat_strcasecmp (argv[i], "-re") == 0)
-            {
-                if (i < argc - 1)
-                {
-                    ptr_regex = argv_eol[i + 1];
-                    i++;
-                }
-            }
-            else
-            {
-                if (!ptr_channel_name)
-                    ptr_channel_name = argv[i];
-                else if (!ptr_server_name)
-                    ptr_server_name = argv[i];
-            }
-        }
-        if (!ptr_channel_name && !ptr_server_name && !ptr_regex)
-        {
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "LIST");
-        }
-        else
-        {
-            if (ptr_regex)
-            {
-                ptr_server->cmd_list_regexp = malloc (
-                    sizeof (*ptr_server->cmd_list_regexp));
-                if (ptr_server->cmd_list_regexp)
-                {
-                    if ((ret = weechat_string_regcomp (
-                             ptr_server->cmd_list_regexp, ptr_regex,
-                             REG_EXTENDED | REG_ICASE | REG_NOSUB)) != 0)
-                    {
-                        regerror (ret, ptr_server->cmd_list_regexp,
-                                  buf, sizeof (buf));
-                        weechat_printf (
-                            ptr_server->buffer,
-                            _("%s%s: \"%s\" is not a valid regular expression "
-                              "(%s)"),
-                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
-                            argv_eol[1], buf);
-                        free (ptr_server->cmd_list_regexp);
-                        ptr_server->cmd_list_regexp = NULL;
-                        return WEECHAT_RC_OK;
-                    }
-                }
-                else
-                {
-                    weechat_printf (
-                        ptr_server->buffer,
-                        _("%s%s: not enough memory for regular expression"),
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                    return WEECHAT_RC_OK;
-                }
-            }
-            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                              "LIST%s%s%s%s",
-                              (ptr_channel_name) ? " " : "",
-                              (ptr_channel_name) ? ptr_channel_name : "",
-                              (ptr_server_name) ? " " : "",
-                              (ptr_server_name) ? ptr_server_name : "");
-        }
-    }
-    else
-    {
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "LIST");
-    }
+    irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                      "LIST%s%s%s%s",
+                      (ptr_channel_name) ? " " : "",
+                      (ptr_channel_name) ? ptr_channel_name : "",
+                      (ptr_server_name) ? " " : "",
+                      (ptr_server_name) ? ptr_server_name : "");
 
     return WEECHAT_RC_OK;
 }
@@ -6599,7 +6597,9 @@ irc_command_init ()
            "  list all channels beginning with \"#weechat\" (can be very slow "
            "on large networks):\n"
            "    /list -re #weechat.*"),
-        NULL, &irc_command_list, NULL, NULL);
+        "-server %(irc_servers)"
+        " || -re",
+        &irc_command_list, NULL, NULL);
     weechat_hook_command (
         "lusers",
         N_("get statistics about the size of the IRC network"),
