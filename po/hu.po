@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6503,11 +6503,12 @@ msgstr ""
 "ismer"
 
 #, fuzzy
-msgid "[[<server>] <server_mask>]"
+msgid "[[<target>] <server_mask>]"
 msgstr "[[szerver] szerver_maszk]"
 
+#, fuzzy
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 "      szerver: ennek a szervernek a válaszát várjuk\n"
@@ -6517,12 +6518,12 @@ msgid "list channels and their topic"
 msgstr "szobák listája témájukkal együtt"
 
 #, fuzzy
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
 msgstr "[szoba[,szoba] [szerver]]"
 
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -6751,13 +6752,13 @@ msgid "send a ping to server"
 msgstr "szerver pingelése"
 
 #, fuzzy
-msgid "<server1> [<server2>]"
-msgstr "szerver1 [szerver2]"
+msgid "<target1> [<target2>]"
+msgstr "[maszk [cél]]"
 
 #, fuzzy
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 "szerver1: pingelni kívánt szerver\n"
 "szerver2: ping továbbítása erre a szerverre"
@@ -7034,12 +7035,12 @@ msgid "disconnect server links"
 msgstr "szerver linkek lecsatlakoztatása"
 
 #, fuzzy
-msgid "<server> <comment>"
+msgid "<target> <comment>"
 msgstr "szerver megjegyzés"
 
 #, fuzzy
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 "   szerver: szerver neve\n"
@@ -7049,12 +7050,13 @@ msgid "query statistics about server"
 msgstr "szerver statisztika lekérdezése"
 
 #, fuzzy
-msgid "[<query> [<server>]]"
+msgid "[<query> [<target>]]"
 msgstr "[kérdés [szerver]]"
 
+#, fuzzy
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 " kérdés: c/h/i/k/l/m/o/y/u (lásd RFC1459)\n"
 "szerver: szerver neve"
@@ -7149,12 +7151,12 @@ msgstr ""
 "megadott)"
 
 #, fuzzy
-msgid "[<server>|<nick>]"
+msgid "[<target>|<nick>]"
 msgstr "[szerver | név]"
 
 #, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "szerver: szerver neve\n"
@@ -7219,11 +7221,11 @@ msgid "query information about user(s)"
 msgstr "felhasználó(k) információjának lekérdezése"
 
 #, fuzzy
-msgid "[<server>] [<nick>[,<nick>...]]"
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[szerver] felhasználó[,felhasználó]"
 
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"
@@ -11831,3 +11833,7 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "<server1> [<server2>]"
+#~ msgstr "szerver1 [szerver2]"

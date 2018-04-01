@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8031,11 +8031,13 @@ msgstr ""
 msgid "list all servernames which are known by the server answering the query"
 msgstr "このクエリに応答するサーバが知っている全てのサーバ名をリストアップ"
 
-msgid "[[<server>] <server_mask>]"
+#, fuzzy
+msgid "[[<target>] <server_mask>]"
 msgstr "[[<server>] <server_mask>]"
 
+#, fuzzy
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 "     server: このクエリに応答するべきサーバ\n"
@@ -8044,12 +8046,14 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr "チャンネルとトピックをリストアップ"
 
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
 msgstr "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
 
+#, fuzzy
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -8306,12 +8310,14 @@ msgstr ""
 msgid "send a ping to server"
 msgstr "サーバにピンを送信"
 
-msgid "<server1> [<server2>]"
-msgstr "<server1> [<server2>]"
+#, fuzzy
+msgid "<target1> [<target2>]"
+msgstr "[<mask> [<target>]]"
 
+#, fuzzy
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 "server1: サーバ\n"
 "server2: このサーバにピンを転送"
@@ -8565,11 +8571,13 @@ msgstr ""
 msgid "disconnect server links"
 msgstr "サーバリンクを切断"
 
-msgid "<server> <comment>"
+#, fuzzy
+msgid "<target> <comment>"
 msgstr "<server> <comment>"
 
+#, fuzzy
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 " server: サーバ名\n"
@@ -8578,12 +8586,14 @@ msgstr ""
 msgid "query statistics about server"
 msgstr "サーバに関するクエリ統計"
 
-msgid "[<query> [<server>]]"
+#, fuzzy
+msgid "[<query> [<target>]]"
 msgstr "[<query> [<server>]]"
 
+#, fuzzy
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 " query: c/h/i/k/l/m/o/y/u (RFC1459 を参照してください)\n"
 "server: サーバ名"
@@ -8668,11 +8678,13 @@ msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "ニックネームかサーバのバージョン情報を取得 (現在のサーバか指定したサーバ)"
 
-msgid "[<server>|<nick>]"
+#, fuzzy
+msgid "[<target>|<nick>]"
 msgstr "[<server>|<nick>]"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "server: サーバ名\n"
@@ -8729,11 +8741,13 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "ユーザに関する情報を要求"
 
-msgid "[<server>] [<nick>[,<nick>...]]"
+#, fuzzy
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[<server>] [<nick>[,<nick>...]]"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"
@@ -13761,3 +13775,6 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "<server1> [<server2>]"
+#~ msgstr "<server1> [<server2>]"

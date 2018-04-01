@@ -376,28 +376,28 @@ powód: powód
 * `+links+`: wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my
 
 ----
-/links  [[<serwer>] <maska_serwera>]
+/links  [[<target>] <server_mask>]
 
-     serwer: ten serwer powinien odpowiedzieć na zapytanie
-maska: lista serwerów musi pasować do maski
+     target: this remote server should answer the query
+server_mask: list of servers must match this mask
 ----
 
 [[command_irc_list]]
 * `+list+`: wyświetla kanały i ich tematy
 
 ----
-/list  [<kanał>[,<kanał>...]] [<serwer>] [-re <regex>]
+/list  [<channel>[,<channel>...]] [<target>] [-re <regex>]
 
-kanał: kanał do listowania
- serwer: nazwa serwera
-  regexp: rozszerzone wyrażenie regularne POSIX użyte do filtrowania wyników (wielkość znaków nie ma znaczenia, jeśli poprzedzone "(?-i)" to wielkość znaków ma znaczenie)
+channel: channel to list
+ target: server name
+  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
-Przykłady:
-  wyświetla wszystkie kanały na serwerze (może być bardzo wolny w dużych sieciach):
+Examples:
+  list all channels on server (can be very slow on large networks):
     /list
-  wyświetla kanał #weechat:
+  list channel #weechat:
     /list #weechat
-  wyświetla wszystkie kanały zaczynające się od "#weechat" (może być bardzo wolny w dużych sieciach):
+  list all channels beginning with "#weechat" (can be very slow on large networks):
     /list -re #weechat.*
 ----
 
@@ -573,10 +573,10 @@ wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
 * `+ping+`: wyślij ping do serwera
 
 ----
-/ping  <serwer1> [<serwer2>]
+/ping  <target1> [<target2>]
 
-serwer1: serwer
-serwer2: przekieruj ping do tego serwera
+target1: server
+target2: forward ping to this server
 ----
 
 [[command_irc_pong]]
@@ -790,20 +790,20 @@ usługa: nazwa usługi
 * `+squit+`: rozłącza od podłączonych serwerów
 
 ----
-/squit  <serwer> <komentarz>
+/squit  <target> <comment>
 
- serwer: nazwa serwera
-komentarz: komentarz
+ target: server name
+comment: comment
 ----
 
 [[command_irc_stats]]
 * `+stats+`: zapytanie o statystyki serwera
 
 ----
-/stats  [<zapytanie> [<serwer>]]
+/stats  [<query> [<target>]]
 
- zapytanie: c/h/i/k/l/m/o/y/u (zobacz RFC1459)
-serwer: nazwa serwera
+ query: c/h/i/k/l/m/o/y/u (see RFC1459)
+target: server name
 ----
 
 [[command_irc_summon]]
@@ -890,10 +890,10 @@ cel: nazwa serwera
 * `+version+`: podaje informację o wersji nicka lub serwera (obecnego lub określonego)
 
 ----
-/version  [<serwer>|<nick>]
+/version  [<target>|<nick>]
 
-serwer: nazwa serwera
-  nick: nazwa użytkownika
+target: server name
+  nick: nick
 ----
 
 [[command_irc_voice]]
@@ -939,16 +939,16 @@ maska: tylko informacje pasujące do maski
 * `+whois+`: zapytanie o informacje o użytkowniku(ach)
 
 ----
-/whois  [<serwer>] [<nick>[,<nick>...]]
+/whois  [<target>] [<nick>[,<nick>...]]
 
-serwer: nazwa serwera
-  nick: nick (może być maska)
+target: server name
+  nick: nick (may be a mask)
 
-Bez argumentu, komenda ta wykona whois na:
-- twoim własnym nicki, jeśli bufor to serwer/kanał
-- zdalnym nicku, jeśli bufor to rozmowa prywatna.
+Without argument, this command will do a whois on:
+- your own nick if buffer is a server/channel
+- remote nick if buffer is a private.
 
-Jeśli opcja irc.network.whois_double_nick jest włączona, wysyłane są dwa nicki (jeśli został podany tylko jeden), aby uzyskać czas bezczynności w odpowiedzi.
+If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
 ----
 
 [[command_irc_whowas]]

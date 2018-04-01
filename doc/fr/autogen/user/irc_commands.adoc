@@ -376,9 +376,9 @@ raison : raison
 * `+links+`: lister tous les noms de serveurs connus du serveur qui répondent à la requête
 
 ----
-/links  [[<serveur>] <masque_serveur>]
+/links  [[<cible>] <masque_serveur>]
 
-       serveur : ce serveur doit répondre à la requête
+         cible : ce serveur doit répondre à la requête
 masque_serveur : liste des serveurs correspondant au masque
 ----
 
@@ -386,11 +386,11 @@ masque_serveur : liste des serveurs correspondant au masque
 * `+list+`: lister les canaux et leur titre
 
 ----
-/list  [<canal>[,<canal>...]] [<serveur>] [-re <regex>]
+/list  [<canal>[,<canal>...]] [<cible>] [-re <regex>]
 
-  canal : canal à lister
-serveur : nom du serveur
-  regex : expression régulière POSIX étendue utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
+ canal : canal à lister
+ cible : nom du serveur
+ regex : expression régulière POSIX étendue utilisée pour filtrer les résultats (insensible à la casse, peut commencer par "(?-i)" pour devenir sensible à la casse)
 
 Exemples :
   lister tous les canaux du serveur (peut être très lent pour les grands réseaux) :
@@ -573,10 +573,10 @@ message : message de fin (affiché aux autres utilisateurs)
 * `+ping+`: envoyer un ping au serveur
 
 ----
-/ping  <serveur1> [<serveur2>]
+/ping  <cible1> [<cible2>]
 
-serveur1 : serveur
-serveur2 : faire suivre le ping à ce serveur
+cible1 : serveur
+cible2 : faire suivre le ping à ce serveur
 ----
 
 [[command_irc_pong]]
@@ -791,9 +791,9 @@ service : nom du service
 * `+squit+`: déconnecter les liens vers un serveur
 
 ----
-/squit  <serveur> <commentaire>
+/squit  <cible> <commentaire>
 
-    serveur : nom du serveur
+      cible : nom du serveur
 commentaire : commentaire
 ----
 
@@ -801,10 +801,10 @@ commentaire : commentaire
 * `+stats+`: demander des statistiques sur le serveur
 
 ----
-/stats  [<requête> [<serveur>]]
+/stats  [<requête> [<cible>]]
 
 requête : c/h/i/k/l/m/o/y/u (voir la RFC1459)
-serveur : nom du serveur
+  cible : nom du serveur
 ----
 
 [[command_irc_summon]]
@@ -891,10 +891,10 @@ cible : nom du serveur
 * `+version+`: retourner la version du pseudo ou du serveur (courant ou spécifié)
 
 ----
-/version  [<serveur>|<pseudo>]
+/version  [<cible>|<pseudo>]
 
-serveur : nom du serveur
- pseudo : pseudo
+ cible : nom du serveur
+pseudo : pseudo
 ----
 
 [[command_irc_voice]]
@@ -940,10 +940,10 @@ masque : information qui correspond à ce masque uniquement
 * `+whois+`: demander les informations sur le(s) utilisateur(s)
 
 ----
-/whois  [<serveur>] [<pseudo>[,<pseudo>...]]
+/whois  [<cible>] [<pseudo>[,<pseudo>...]]
 
-serveur : nom de serveur
- pseudo : pseudo (peut être un masque)
+ cible : nom de serveur
+pseudo : pseudo (peut être un masque)
 
 Sans paramètre, cette commande effectuera un whois sur :
 - votre propre pseudo si le tampon est un serveur/canal

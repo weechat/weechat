@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7061,11 +7061,13 @@ msgid "list all servernames which are known by the server answering the query"
 msgstr ""
 "vypsat všechny jména serverů, které jsou známy serveru odpovídajícím na query"
 
-msgid "[[<server>] <server_mask>]"
+#, fuzzy
+msgid "[[<target>] <server_mask>]"
 msgstr "[[<server>] <maska_serveru>]"
 
+#, fuzzy
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 "       server: tento server by měl odpovědět na query\n"
@@ -7074,13 +7076,14 @@ msgstr ""
 msgid "list channels and their topic"
 msgstr "vypsat kanály a jejich témata"
 
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
 msgstr "[<kanál>[,<kanál>...]] [<server>] [-re <regexp>]"
 
 #, fuzzy
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -7341,12 +7344,14 @@ msgstr ""
 msgid "send a ping to server"
 msgstr "poslat ping serveru"
 
-msgid "<server1> [<server2>]"
-msgstr "<server1> [<server2>]"
+#, fuzzy
+msgid "<target1> [<target2>]"
+msgstr "[<maska> [<cíl>]]"
 
+#, fuzzy
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 "server1: server\n"
 "server2: přeposlat ping na tento server"
@@ -7603,11 +7608,13 @@ msgstr ""
 msgid "disconnect server links"
 msgstr "odpojit spojení serveru"
 
-msgid "<server> <comment>"
+#, fuzzy
+msgid "<target> <comment>"
 msgstr "<server> <komentář>"
 
+#, fuzzy
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 "  server: jméno serveru\n"
@@ -7616,12 +7623,14 @@ msgstr ""
 msgid "query statistics about server"
 msgstr "dotázat se na statistiku o serveru"
 
-msgid "[<query> [<server>]]"
+#, fuzzy
+msgid "[<query> [<target>]]"
 msgstr "[<dotaz> [<server>]]"
 
+#, fuzzy
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 " dotaz: c/h/i/k/l/m/o/y/u (viz. RFC1459)\n"
 "server: jméno serveru"
@@ -7708,11 +7717,13 @@ msgstr "seznam uživatelů přihlášených k serveru"
 msgid "give the version info of nick or server (current or specified)"
 msgstr "získat informace o verzi přezdívky nebo serveru (aktuální nebo určené)"
 
-msgid "[<server>|<nick>]"
+#, fuzzy
+msgid "[<target>|<nick>]"
 msgstr "[<server>|<přezdívka>]"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "server: jméno serveru\n"
@@ -7770,11 +7781,12 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr "dotázat se na informace o uživateli (uživatelích)"
 
-msgid "[<server>] [<nick>[,<nick>...]]"
+#, fuzzy
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[<server>] [<přezdívka>[,<přezdívka>...]]"
 
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"
@@ -12536,3 +12548,6 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "<server1> [<server2>]"
+#~ msgstr "<server1> [<server2>]"

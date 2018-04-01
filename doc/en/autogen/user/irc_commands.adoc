@@ -376,9 +376,9 @@ reason: reason
 * `+links+`: list all servernames which are known by the server answering the query
 
 ----
-/links  [[<server>] <server_mask>]
+/links  [[<target>] <server_mask>]
 
-     server: this server should answer the query
+     target: this remote server should answer the query
 server_mask: list of servers must match this mask
 ----
 
@@ -386,10 +386,10 @@ server_mask: list of servers must match this mask
 * `+list+`: list channels and their topic
 
 ----
-/list  [<channel>[,<channel>...]] [<server>] [-re <regex>]
+/list  [<channel>[,<channel>...]] [<target>] [-re <regex>]
 
 channel: channel to list
- server: server name
+ target: server name
   regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
 
 Examples:
@@ -573,10 +573,10 @@ message: part message (displayed to other users)
 * `+ping+`: send a ping to server
 
 ----
-/ping  <server1> [<server2>]
+/ping  <target1> [<target2>]
 
-server1: server
-server2: forward ping to this server
+target1: server
+target2: forward ping to this server
 ----
 
 [[command_irc_pong]]
@@ -791,9 +791,9 @@ service: name of service
 * `+squit+`: disconnect server links
 
 ----
-/squit  <server> <comment>
+/squit  <target> <comment>
 
- server: server name
+ target: server name
 comment: comment
 ----
 
@@ -801,10 +801,10 @@ comment: comment
 * `+stats+`: query statistics about server
 
 ----
-/stats  [<query> [<server>]]
+/stats  [<query> [<target>]]
 
  query: c/h/i/k/l/m/o/y/u (see RFC1459)
-server: server name
+target: server name
 ----
 
 [[command_irc_summon]]
@@ -891,9 +891,9 @@ target: server name
 * `+version+`: give the version info of nick or server (current or specified)
 
 ----
-/version  [<server>|<nick>]
+/version  [<target>|<nick>]
 
-server: server name
+target: server name
   nick: nick
 ----
 
@@ -940,9 +940,9 @@ mask: only information which match this mask
 * `+whois+`: query information about user(s)
 
 ----
-/whois  [<server>] [<nick>[,<nick>...]]
+/whois  [<target>] [<nick>[,<nick>...]]
 
-server: server name
+target: server name
   nick: nick (may be a mask)
 
 Without argument, this command will do a whois on:

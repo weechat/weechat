@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2017-06-26 23:33+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5984,23 +5984,25 @@ msgstr ""
 msgid "list all servernames which are known by the server answering the query"
 msgstr ""
 
-msgid "[[<server>] <server_mask>]"
-msgstr ""
+#, fuzzy
+msgid "[[<target>] <server_mask>]"
+msgstr "<sunucu1> [<sunucu2>]"
 
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 
 msgid "list channels and their topic"
 msgstr ""
 
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
-msgstr ""
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
+msgstr "[<kanal>[,<kanal>...]] [<ileti>]"
 
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -6184,12 +6186,13 @@ msgstr ""
 msgid "send a ping to server"
 msgstr ""
 
-msgid "<server1> [<server2>]"
-msgstr "<sunucu1> [<sunucu2>]"
+#, fuzzy
+msgid "<target1> [<target2>]"
+msgstr "[<hedef>]"
 
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 
 msgid "answer to a ping message"
@@ -6417,12 +6420,13 @@ msgstr ""
 msgid "disconnect server links"
 msgstr ""
 
-msgid "<server> <comment>"
+#, fuzzy
+msgid "<target> <comment>"
 msgstr "<sunucu> <açıklama>"
 
 #, fuzzy
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 "server: sunucu ismi\n"
@@ -6431,12 +6435,13 @@ msgstr ""
 msgid "query statistics about server"
 msgstr ""
 
-msgid "[<query> [<server>]]"
-msgstr ""
+#, fuzzy
+msgid "[<query> [<target>]]"
+msgstr "<kullanıcı> [<hedef> [<kanal>]]"
 
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 
 msgid ""
@@ -6511,11 +6516,13 @@ msgstr ""
 msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 
-msgid "[<server>|<nick>]"
+#, fuzzy
+msgid "[<target>|<nick>]"
 msgstr "[<sunucu>|<rumuz>]"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "server: sunucu ismi\n"
@@ -6565,11 +6572,12 @@ msgstr ""
 msgid "query information about user(s)"
 msgstr ""
 
-msgid "[<server>] [<nick>[,<nick>...]]"
+#, fuzzy
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[<sunucu>] [<rumuz>[,<rumuz>...]]"
 
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6541,11 +6541,12 @@ msgid "list all servernames which are known by the server answering the query"
 msgstr "перечислить все серверы известные серверу, отвечающему на запрос"
 
 #, fuzzy
-msgid "[[<server>] <server_mask>]"
+msgid "[[<target>] <server_mask>]"
 msgstr "[[сервер] маска_сервера]"
 
+#, fuzzy
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 "сервер: сервер, отвечающий на запрос\n"
@@ -6555,12 +6556,12 @@ msgid "list channels and their topic"
 msgstr "перечислить каналы и их темы"
 
 #, fuzzy
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
 msgstr "[канал[,канал] [сервер]]"
 
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -6789,13 +6790,13 @@ msgid "send a ping to server"
 msgstr "ping'ануть сервер"
 
 #, fuzzy
-msgid "<server1> [<server2>]"
-msgstr "сервер1 [сервер2]"
+msgid "<target1> [<target2>]"
+msgstr "[маска [цель]]"
 
 #, fuzzy
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 "сервер1: цель для ping'а\n"
 "сервер2: перенаправить пинг на этот сервер"
@@ -7068,12 +7069,12 @@ msgid "disconnect server links"
 msgstr "отключить ссылки сервера"
 
 #, fuzzy
-msgid "<server> <comment>"
+msgid "<target> <comment>"
 msgstr "сервер комментарий"
 
 #, fuzzy
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 "    сервер: название сервера\n"
@@ -7083,12 +7084,13 @@ msgid "query statistics about server"
 msgstr "запросить статистику сервера"
 
 #, fuzzy
-msgid "[<query> [<server>]]"
+msgid "[<query> [<target>]]"
 msgstr "[запрос [сервер]]"
 
+#, fuzzy
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 "запрос: c/h/i/k/l/m/o/y/u (см. RFC1459)\n"
 "сервер: название сервера"
@@ -7182,12 +7184,12 @@ msgstr ""
 "предоставляет информацию о версии ника или сервера (текущего или указанного)"
 
 #, fuzzy
-msgid "[<server>|<nick>]"
+msgid "[<target>|<nick>]"
 msgstr "[сервер | ник]"
 
 #, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "сервер: название сервера\n"
@@ -7249,11 +7251,11 @@ msgid "query information about user(s)"
 msgstr "запросить информацию и пользователе(-ях)"
 
 #, fuzzy
-msgid "[<server>] [<nick>[,<nick>...]]"
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "[сервер] ник[, ник]"
 
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"
@@ -11863,3 +11865,7 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "<server1> [<server2>]"
+#~ msgstr "сервер1 [сервер2]"

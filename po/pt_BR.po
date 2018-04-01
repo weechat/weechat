@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-03-31 15:55+0200\n"
+"POT-Creation-Date: 2018-04-01 07:56+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7102,23 +7102,25 @@ msgstr ""
 "listar todos os nomes de servidores que são conhecidos pelo servidor "
 "respondendo a pergunta"
 
-msgid "[[<server>] <server_mask>]"
+#, fuzzy
+msgid "[[<target>] <server_mask>]"
 msgstr "[[<servidor>] <máscara_do_servidor>]"
 
 msgid ""
-"     server: this server should answer the query\n"
+"     target: this remote server should answer the query\n"
 "server_mask: list of servers must match this mask"
 msgstr ""
 
 msgid "list channels and their topic"
 msgstr "listar canais e seus tópicos"
 
-msgid "[<channel>[,<channel>...]] [<server>] [-re <regex>]"
+#, fuzzy
+msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
 msgstr "[<canal>[,<canal>...]] [<servidor>] [-re <expressão_regular>]"
 
 msgid ""
 "channel: channel to list\n"
-" server: server name\n"
+" target: server name\n"
 "  regex: POSIX extended regular expression used to filter results (case "
 "insensitive, can start by \"(?-i)\" to become case sensitive)\n"
 "\n"
@@ -7307,12 +7309,14 @@ msgstr ""
 msgid "send a ping to server"
 msgstr "enviar um ping para o servidor"
 
-msgid "<server1> [<server2>]"
-msgstr "<server1> [<server2>]"
+#, fuzzy
+msgid "<target1> [<target2>]"
+msgstr "[<máscara> [<target>]]"
 
+#, fuzzy
 msgid ""
-"server1: server\n"
-"server2: forward ping to this server"
+"target1: server\n"
+"target2: forward ping to this server"
 msgstr ""
 "server1: servidor\n"
 "server2: redireciona ping para o servidor"
@@ -7512,23 +7516,24 @@ msgstr ""
 msgid "disconnect server links"
 msgstr ""
 
-msgid "<server> <comment>"
+msgid "<target> <comment>"
 msgstr ""
 
 msgid ""
-" server: server name\n"
+" target: server name\n"
 "comment: comment"
 msgstr ""
 
 msgid "query statistics about server"
 msgstr ""
 
-msgid "[<query> [<server>]]"
-msgstr ""
+#, fuzzy
+msgid "[<query> [<target>]]"
+msgstr "[<máscara> [<target>]]"
 
 msgid ""
 " query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-"server: server name"
+"target: server name"
 msgstr ""
 
 msgid ""
@@ -7603,11 +7608,13 @@ msgstr "lista os usuários logados no servidor"
 msgid "give the version info of nick or server (current or specified)"
 msgstr "mostra a versão do nick ou servidor (corrent ou especificado)"
 
-msgid "[<server>|<nick>]"
+#, fuzzy
+msgid "[<target>|<nick>]"
 msgstr "[<server>|<nick>]"
 
+#, fuzzy
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick"
 msgstr ""
 "server: nome do servidor\n"
@@ -7664,11 +7671,11 @@ msgid "query information about user(s)"
 msgstr "requisitar informações sobre usuário(s)"
 
 #, fuzzy
-msgid "[<server>] [<nick>[,<nick>...]]"
+msgid "[<target>] [<nick>[,<nick>...]]"
 msgstr "<apelido> [<apelido>...]"
 
 msgid ""
-"server: server name\n"
+"target: server name\n"
 "  nick: nick (may be a mask)\n"
 "\n"
 "Without argument, this command will do a whois on:\n"
@@ -12287,3 +12294,6 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#~ msgid "<server1> [<server2>]"
+#~ msgstr "<server1> [<server2>]"

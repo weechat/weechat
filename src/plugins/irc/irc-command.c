@@ -6576,17 +6576,17 @@ irc_command_init ()
         "links",
         N_("list all servernames which are known by the server answering the "
            "query"),
-        N_("[[<server>] <server_mask>]"),
-        N_("     server: this server should answer the query\n"
+        N_("[[<target>] <server_mask>]"),
+        N_("     target: this remote server should answer the query\n"
            "server_mask: list of servers must match this mask"),
         NULL, &irc_command_links, NULL, NULL);
     weechat_hook_command (
         "list",
         N_("list channels and their topic"),
-        N_("[<channel>[,<channel>...]] [<server>] "
+        N_("[<channel>[,<channel>...]] [<target>] "
            "[-re <regex>]"),
         N_("channel: channel to list\n"
-           " server: server name\n"
+           " target: server name\n"
            "  regex: POSIX extended regular expression used to filter results "
            "(case insensitive, can start by \"(?-i)\" to become case "
            "sensitive)\n"
@@ -6745,9 +6745,9 @@ irc_command_init ()
     weechat_hook_command (
         "ping",
         N_("send a ping to server"),
-        N_("<server1> [<server2>]"),
-        N_("server1: server\n"
-           "server2: forward ping to this server"),
+        N_("<target1> [<target2>]"),
+        N_("target1: server\n"
+           "target2: forward ping to this server"),
         NULL, &irc_command_ping, NULL, NULL);
     weechat_hook_command (
         "pong",
@@ -6932,16 +6932,16 @@ irc_command_init ()
     weechat_hook_command (
         "squit",
         N_("disconnect server links"),
-        N_("<server> <comment>"),
-        N_( " server: server name\n"
+        N_("<target> <comment>"),
+        N_( " target: server name\n"
             "comment: comment"),
         NULL, &irc_command_squit, NULL, NULL);
     weechat_hook_command (
         "stats",
         N_("query statistics about server"),
-        N_("[<query> [<server>]]"),
+        N_("[<query> [<target>]]"),
         N_(" query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-           "server: server name"),
+           "target: server name"),
         NULL, &irc_command_stats, NULL, NULL);
     weechat_hook_command (
         "summon",
@@ -7006,8 +7006,8 @@ irc_command_init ()
     weechat_hook_command (
         "version",
         N_("give the version info of nick or server (current or specified)"),
-        N_("[<server>|<nick>]"),
-        N_("server: server name\n"
+        N_("[<target>|<nick>]"),
+        N_("target: server name\n"
            "  nick: nick"),
         "%(nicks)", &irc_command_version, NULL, NULL);
     weechat_hook_command (
@@ -7041,8 +7041,8 @@ irc_command_init ()
     weechat_hook_command (
         "whois",
         N_("query information about user(s)"),
-        N_("[<server>] [<nick>[,<nick>...]]"),
-        N_("server: server name\n"
+        N_("[<target>] [<nick>[,<nick>...]]"),
+        N_("target: server name\n"
            "  nick: nick (may be a mask)\n"
            "\n"
            "Without argument, this command will do a whois on:\n"
