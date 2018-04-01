@@ -52,7 +52,7 @@ struct t_irc_channel;
 /* list of supported capabilities (for completion in command /cap) */
 #define IRC_COMMAND_CAP_SUPPORTED_COMPLETION \
     "account-notify|away-notify|cap-notify|extended-join|"              \
-    "multi-prefix|server-time|userhost-in-names|%*"
+    "metadata-notify|multi-prefix|server-time|userhost-in-names|%*"
 
 /* list of supported CTCPs (for completion in command /ctcp) */
 #define IRC_COMMAND_CTCP_SUPPORTED_COMPLETION \

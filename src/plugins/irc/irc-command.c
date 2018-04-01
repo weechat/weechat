@@ -3098,6 +3098,77 @@ IRC_COMMAND_CALLBACK(me)
 }
 
 /*
+ * Callback for command "/metadata": channel or user metadata management.
+ *
+ * Docs on metadata management:
+ *   http://ircv3.net/specs/core/metadata-3.2.html
+ */
+
+int
+irc_command_metadata (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
+{
+    char *metadata_cmd;
+
+    IRC_BUFFER_GET_SERVER(buffer);
+    IRC_COMMAND_CHECK_SERVER("metadata", 1);
+
+    /* make C compiler happy */
+    (void) data;
+
+    WEECHAT_COMMAND_MIN_ARGS(2, "");
+
+    if (argc > 2)
+    {
+        if (weechat_strcasecmp (argv[2], "set") == 0)
+        {
+            if (argc > 3)
+            {
+                irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                  "METADATA %s SET %s%s%s",
+                                  argv[1],
+                                  argv[3],
+                                  (argv_eol[4]) ? " :" : "",
+                                  (argv_eol[4]) ? argv_eol[4] : "");
+            }
+            else
+            {
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%s%s: you must specify a key to set with \"%s\""),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, "metadata set");
+                return WEECHAT_RC_OK;
+            }
+        }
+        else
+        {
+            metadata_cmd = strdup (argv[2]);
+            if (!metadata_cmd)
+                WEECHAT_COMMAND_ERROR;
+
+            weechat_string_toupper (metadata_cmd);
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "METADATA %s %s%s%s",
+                              argv[1],
+                              metadata_cmd,
+                              (argv_eol[3]) ? " " : "",
+                              (argv_eol[3]) ? argv_eol[3] : "");
+            free (metadata_cmd);
+        }
+    }
+    else
+    {
+        /*
+         * by default, list metadata for given target
+         */
+        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                          "METADATA %s LIST", argv[1]);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Sends MODE command on a server.
  */
 
@@ -6329,7 +6400,7 @@ irc_command_init ()
            "\n"
            "Capabilities supported by WeeChat are: "
            "account-notify, away-notify, cap-notify, extended-join, "
-           "multi-prefix, server-time, userhost-in-names.\n"
+           "metadata-notify, multi-prefix, server-time, userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "
            "in option irc.server_default.capabilities (or by server in "
@@ -6620,6 +6691,30 @@ irc_command_init ()
         N_("<message>"),
         N_("message: message to send"),
         NULL, &irc_command_me, NULL, NULL);
+    weechat_hook_command (
+        "metadata",
+        N_("channel or user metadata management"),
+        N_("<target> || <target> get [<key> [<key>...]] || <target> list"
+           " || <target> set <key> [<value>] || <target> clear"),
+        N_("  get: look up metadata keys\n"
+           " list: list all metadata\n"
+           "  set: set metadata (removes without value)\n"
+           "clear: remove all metadata\n"
+           "\n"
+           "Without subcommand, \"list\" is sent for specified target.\n"
+           "Target can be \"*\" to refer to yourself.\n"
+           "\n"
+           "Examples:\n"
+           "  get \"url\" key of #channel:\n"
+           "    /metadata #channel get url\n"
+           "  list all keys of nick:\n"
+           "    /metadata nick list\n"
+           "  set \"url\" of yourself:\n"
+           "    /metadata * set url http://example.com\n"
+           "  clear all keys of #channel:\n"
+           "    /metadata #channel clear"),
+        "%(irc_channel)|%(nicks) get|list|set|clear",
+        &irc_command_metadata, NULL);
     weechat_hook_command (
         "mode",
         N_("change channel or user mode"),

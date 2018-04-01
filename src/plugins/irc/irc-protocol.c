@@ -1144,6 +1144,81 @@ IRC_PROTOCOL_CALLBACK(kill)
 }
 
 /*
+ * Callback for the IRC message "metadata": metadata (cap metadata-notify).
+ *
+ * Format:
+ *   METADATA <Target> <Key> <Visibility> :<Value>
+ */
+
+IRC_PROTOCOL_CALLBACK(metadata)
+{
+    const char *nick_address, *target;
+
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    nick_address = irc_protocol_nick_address (server, 1, NULL, nick, address);
+    target = (strcmp (argv[2], "*") == 0 ? server->nick : argv[2]);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, target, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, NULL, NULL, NULL),
+            _("%sMetadata %s by %s: %s[%s%s%s] %s%s%s%s%s"),
+            weechat_prefix ("network"),
+            (argc > 5) ? "set" : "removed",
+            (nick_address[0]) ? nick_address : "?",
+            IRC_COLOR_CHAT_DELIMITERS,
+            (irc_nick_is_nick (target)) ?
+                irc_nick_color_for_msg (server, 1, NULL, target) :
+                IRC_COLOR_RESET,
+            target,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, target, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, NULL, NULL, NULL),
+            _("%sMetadata %s by %s: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
+            weechat_prefix ("network"),
+            (argc > 5) ? "set" : "removed",
+            (nick_address[0]) ? nick_address : "?",
+            IRC_COLOR_CHAT_DELIMITERS,
+            (irc_nick_is_nick (target)) ?
+                irc_nick_color_for_msg (server, 1, NULL, target) :
+                IRC_COLOR_RESET,
+            target,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+/*
  * Callback for the IRC message "MODE".
  *
  * Message looks like:
@@ -2568,9 +2643,12 @@ IRC_PROTOCOL_CALLBACK(001)
 
 IRC_PROTOCOL_CALLBACK(005)
 {
-    char *pos, *pos2, *pos_start, *error, *isupport2;
+    char *pos, *pos2, *pos_start, *error, *isupport2, mask[512];
+    const char *option_name;
     int length_isupport, length, casemapping;
     long value;
+    struct t_infolist *infolist;
+    struct t_config_option *ptr_option;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -2666,6 +2744,66 @@ IRC_PROTOCOL_CALLBACK(005)
             server->monitor = (int)value;
         if (pos2)
             pos2[0] = ' ';
+    }
+
+    /* set metadata */
+    if (strstr (argv_eol[3], "METADATA"))
+    {
+        /* global metadata */
+        infolist = weechat_infolist_get ("option", NULL, "irc.metadata.*");
+        if (infolist)
+        {
+            while (weechat_infolist_next (infolist))
+            {
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
+                {
+                    pos = strchr (option_name, '.');
+                    if (!pos)
+                    {
+                        snprintf (mask, sizeof (mask), "%s.%s",
+                                  server->name, option_name);
+
+                        /* search for metadata, for server */
+                        ptr_option = weechat_config_search_option (
+                            irc_config_file, irc_config_section_metadata, mask);
+
+                        /* server does not override global metadata */
+                        if (!ptr_option)
+                        {
+                            irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                              "METADATA * SET %s :%s",
+                                              option_name,
+                                              weechat_infolist_string (infolist, "value"));
+                        }
+                    }
+                }
+            }
+            weechat_infolist_free (infolist);
+        }
+        /* server metadata */
+        snprintf (mask, sizeof (mask), "irc.metadata.%s.*", server->name);
+        infolist = weechat_infolist_get ("option", NULL, mask);
+        if (infolist)
+        {
+            while (weechat_infolist_next (infolist))
+            {
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
+                {
+                    pos = strchr (option_name, '.');
+                    if (pos)
+                    {
+                        pos++;
+                        irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                                          "METADATA * SET %s :%s",
+                                          pos,
+                                          weechat_infolist_string (infolist, "value"));
+                    }
+                }
+            }
+            weechat_infolist_free (infolist);
+        }
     }
 
     /* save whole message (concatenate to existing isupport, if any) */
@@ -5652,6 +5790,280 @@ IRC_PROTOCOL_CALLBACK(734)
 }
 
 /*
+ * Callback for the IRC message "760": metadata whois value.
+ *
+ * Format:
+ *   <Target> <Key> <Visibility> :<Value>
+ */
+
+IRC_PROTOCOL_CALLBACK(760)
+{
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]),
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, argv[2], command, "whois", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            "%s%s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s",
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            irc_nick_color_for_msg (server, 1, NULL, argv[2]),
+            argv[2],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "761": metadata value.
+ *
+ * Format:
+ *   <Target> <Key> <Visibility>[ :<Value>]
+ *
+ * Message looks like:
+ *   :irc.example.com 761 * url * :http://www.example.com
+ *   :irc.example.com 761 #example url * :http://www.example.com
+ *   :irc.example.com 761 user1 bot-likeliness-score visible-only-for-admin :42
+ */
+
+IRC_PROTOCOL_CALLBACK(761)
+{
+    const char *target;
+
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    target = (strcmp (argv[2], "*") == 0 ? server->nick : argv[2]);
+
+    /* public visibility */
+    if (strcmp (argv[4], "*") == 0)
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, target, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            _("%sMetadata: %s[%s%s%s] %s%s%s%s%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            (irc_nick_is_nick (target)) ?
+                irc_nick_color_for_msg (server, 1, NULL, target) :
+                IRC_COLOR_RESET,
+            target,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+    else
+    {
+        weechat_printf_date_tags (
+            irc_msgbuffer_get_target_buffer (
+                server, target, command, "metadata", NULL),
+            date,
+            irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+            _("%sMetadata: %s[%s%s%s] %s%s %s(%s%s%s)%s%s%s%s"),
+            weechat_prefix ("network"),
+            IRC_COLOR_CHAT_DELIMITERS,
+            (irc_nick_is_nick (target)) ?
+                irc_nick_color_for_msg (server, 1, NULL, target) :
+                IRC_COLOR_RESET,
+            target,
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[3],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            argv[4],
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (argc > 5) ? ": " : "",
+            IRC_COLOR_CHAT_VALUE,
+            (argc > 5) ?
+                ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) :
+                "");
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC message "762": metadata end.
+ *
+ * Format:
+ *   :end of metadata
+ *
+ * Message looks like:
+ *   :irc.example.com 762 :end of metadata
+ */
+
+IRC_PROTOCOL_CALLBACK(762)
+{
+    IRC_PROTOCOL_MIN_ARGS(3);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        _("%sMetadata: %s"),
+        weechat_prefix ("network"),
+        (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC messages "764" (metadata limit reached), and "765"
+ * (invalid metadata target).
+ *
+ * Format:
+ *   <Target> :metadata limit reached
+ *   <Target> :invalid metadata target
+ *
+ * Message looks like:
+ *   :irc.example.com 764 * :metadata limit reached
+ *   :irc.example.com 765 $a:user :invalid metadata target
+ */
+
+IRC_PROTOCOL_CALLBACK(764_765)
+{
+    const char *target;
+
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    target = (strcmp (argv[2], "*") == 0 ? server->nick : argv[2]);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, target, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        _("%sMetadata: %s[%s%s%s] %s%s"),
+        weechat_prefix ("error"),
+        IRC_COLOR_CHAT_DELIMITERS,
+        (irc_nick_is_nick (target)) ?
+            irc_nick_color_for_msg (server, 1, NULL, target) :
+            IRC_COLOR_RESET,
+        target,
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for the IRC messages "766" (no matching metadata key), "768"
+ * (metadata key not set) and "769" (metadata permission denied).
+ *
+ * Format:
+ *   <Target> <Key> :key not set
+ *   <Target> <Key> :permission denied
+ *
+ * Message looks like:
+ *   :irc.example.com 766 user1 blargh :no matching key
+ *   :irc.example.com 769 user1 url :permission denied
+ */
+
+IRC_PROTOCOL_CALLBACK(766_768_769)
+{
+    const char *target;
+
+    IRC_PROTOCOL_MIN_ARGS(5);
+
+    target = (strcmp (argv[2], "*") == 0 ? server->nick : argv[2]);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, target, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        _("%sMetadata: %s[%s%s%s] %s%s: %s"),
+        weechat_prefix ("error"),
+        IRC_COLOR_CHAT_DELIMITERS,
+        (irc_nick_is_nick (target)) ?
+            irc_nick_color_for_msg (server, 1, NULL, target) :
+            IRC_COLOR_RESET,
+        target,
+        IRC_COLOR_CHAT_DELIMITERS,
+        IRC_COLOR_RESET,
+        argv[3],
+        (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]);
+
+    return WEECHAT_RC_OK;
+}
+
+
+/*
+ * Callback for the IRC message "767": invalid metadata key.
+ *
+ * Format:
+ *   <Key> :invalid metadata key
+ *
+ * Message looks like:
+ *   :irc.example.com 767 $url$ :invalid metadata key
+ */
+
+IRC_PROTOCOL_CALLBACK(767)
+{
+    IRC_PROTOCOL_MIN_ARGS(4);
+
+    weechat_printf_date_tags (
+        irc_msgbuffer_get_target_buffer (
+            server, NULL, command, "metadata", NULL),
+        date,
+        irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+        _("%sMetadata: %s: %s"),
+        weechat_prefix ("error"),
+        argv[2],
+        (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for the IRC message "900": logged in as (SASL).
  *
  * Message looks like:
@@ -5898,6 +6310,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "join", /* join a channel */ 1, 0, &irc_protocol_cb_join },
           { "kick", /* forcibly remove a user from a channel */ 1, 1, &irc_protocol_cb_kick },
           { "kill", /* close client-server connection */ 1, 1, &irc_protocol_cb_kill },
+          { "metadata", /* metadata (cap metadata-notify) */ 1, 1, &irc_protocol_cb_metadata },
           { "mode", /* change channel or user mode */ 1, 0, &irc_protocol_cb_mode },
           { "nick", /* change current nickname */ 1, 0, &irc_protocol_cb_nick },
           { "notice", /* send notice message to user */ 1, 1, &irc_protocol_cb_notice },
@@ -6026,6 +6439,15 @@ irc_protocol_recv_command (struct t_irc_server *server,
           { "732", /* list of monitored nicks */ 1, 0, &irc_protocol_cb_732 },
           { "733", /* end of monitor list */ 1, 0, &irc_protocol_cb_733 },
           { "734", /* monitor list is full */ 1, 0, &irc_protocol_cb_734 },
+          { "760", /* metadata whois value */ 1, 0, &irc_protocol_cb_760 },
+          { "761", /* metadata value */ 1, 0, &irc_protocol_cb_761 },
+          { "762", /* metadata end */ 1, 0, &irc_protocol_cb_762 },
+          { "764", /* metadata limit reached */ 1, 0, &irc_protocol_cb_764_765 },
+          { "765", /* invalid metadata target */ 1, 0, &irc_protocol_cb_764_765 },
+          { "766", /* no matching metadata key */ 1, 0, &irc_protocol_cb_766_768_769 },
+          { "767", /* invalid metadata key */ 1, 0, &irc_protocol_cb_767 },
+          { "768", /* metadata key not set */ 1, 0, &irc_protocol_cb_766_768_769 },
+          { "769", /* metadata permission denied */ 1, 0, &irc_protocol_cb_766_768_769 },
           { "900", /* logged in as (SASL) */ 1, 0, &irc_protocol_cb_900 },
           { "901", /* you are now logged in */ 1, 0, &irc_protocol_cb_901 },
           { "902", /* SASL authentication failed (account locked/held) */ 1, 0, &irc_protocol_cb_sasl_end_fail },
