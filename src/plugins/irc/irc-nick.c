@@ -749,18 +749,11 @@ void
 irc_nick_set_away (struct t_irc_server *server, struct t_irc_channel *channel,
                    struct t_irc_nick *nick, int is_away)
 {
-    if (!is_away
-        || server->cap_away_notify
-        || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
-            && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
-                || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))))
+    if (is_away != nick->away)
     {
-        if ((is_away && !nick->away) || (!is_away && nick->away))
-        {
-            nick->away = is_away;
-            irc_nick_nicklist_set (channel, nick, "color",
-                                   irc_nick_get_color_for_nicklist (server, nick));
-        }
+        nick->away = is_away;
+        irc_nick_nicklist_set (channel, nick, "color",
+                               irc_nick_get_color_for_nicklist (server, nick));
     }
 }
 

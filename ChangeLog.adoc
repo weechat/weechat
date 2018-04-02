@@ -30,6 +30,7 @@ Improvements::
 
 Bug fixes::
 
+  * irc: always set nick away status on WHO response (sent manually or automatically with server option "away_check")
   * irc: fix a crash when calling the function hdata_string on the "prefix" variable in the nick
   * irc: fix split of messages when server option "split_msg_max_length" is set to 0 (no split) (issue #1173)
   * irc: send whole IRC message including IRCv3 tags in the signals irc_in, irc_in2, irc_raw_in and irc_raw_in2 (issue #787)
