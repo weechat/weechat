@@ -490,7 +490,8 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     new_nick->realname = (realname) ? strdup (realname) : NULL;
     length = strlen (irc_server_get_prefix_chars (server));
     new_nick->prefixes = malloc (length + 1);
-    if (!new_nick->name || !new_nick->prefixes)
+    new_nick->prefix = malloc (2);
+    if (!new_nick->name || !new_nick->prefixes || !new_nick->prefix)
     {
         if (new_nick->name)
             free (new_nick->name);
@@ -502,14 +503,13 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
             free (new_nick->realname);
         if (new_nick->prefixes)
             free (new_nick->prefixes);
+        if (new_nick->prefix)
+            free (new_nick->prefix);
         free (new_nick);
         return NULL;
     }
-    if (new_nick->prefixes)
-    {
-        memset (new_nick->prefixes, ' ', length);
-        new_nick->prefixes[length] = '\0';
-    }
+    memset (new_nick->prefixes, ' ', length);
+    new_nick->prefixes[length] = '\0';
     new_nick->prefix[0] = ' ';
     new_nick->prefix[1] = '\0';
     irc_nick_set_prefixes (server, new_nick, prefixes);
@@ -640,6 +640,8 @@ irc_nick_free (struct t_irc_server *server, struct t_irc_channel *channel,
         free (nick->host);
     if (nick->prefixes)
         free (nick->prefixes);
+    if (nick->prefix)
+        free (nick->prefix);
     if (nick->account)
         free (nick->account);
     if (nick->realname)
