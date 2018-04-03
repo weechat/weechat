@@ -120,6 +120,16 @@ if(ENABLE_TESTS AND NOT ENABLE_HEADLESS)
   message(FATAL_ERROR "Headless mode is required for tests.")
 endif()
 
+# Set this to override aspell's dictionary directory 
+if(ASPELL_DICT_DIR)
+  add_definitions(-DASPELL_DICT_DIR=${ASPELL_DICT_DIR})
+endif()
+
+# Set this to override the myspell dictionary directory when using enchant
+if(ENCHANT_MYSPELL_DICT_DIR)
+  add_definitions(-DENCHANT_MYSPELL_DICT_DIR=${ENCHANT_MYSPELL_DICT_DIR})
+endif()
+
 # option WEECHAT_HOME
 if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
   set(WEECHAT_HOME "~/.weechat")

@@ -1049,6 +1049,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     broker = enchant_broker_init ();
     if (!broker)
         return WEECHAT_RC_ERROR;
+#ifdef ENCHANT_MYSPELL_DICT_DIR
+    enchant_broker_set_param(broker, "enchant.myspell.dictionary.path", ENCHANT_MYSPELL_DICT_DIR);
+#endif
 #endif /* USE_ENCHANT */
 
     if (!weechat_aspell_speller_init ())
