@@ -614,7 +614,8 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     char *result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
     char *word_for_suggestions, *old_suggestions, *suggestions;
-    char *word_and_suggestions;
+    char *word_and_suggestions, *old_word;
+    ptrdiff_t old_word_offset;
     const char *color_normal, *color_error, *ptr_suggestions;
     int code_point, char_size;
     int length, index_result, length_word, word_ok;
@@ -871,32 +872,43 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     /* if there is a misspelled word, get suggestions and set them in buffer */
     if (word_for_suggestions)
     {
-        suggestions = weechat_aspell_get_suggestions (ptr_speller_buffer,
-                                                      word_for_suggestions);
-        if (suggestions)
+        old_word = NULL;
+        if (old_suggestions)
         {
-            length = strlen (word_for_suggestions) + 1 /* ":" */
-                + strlen (suggestions) + 1;
-            word_and_suggestions = malloc (length);
-            if (word_and_suggestions)
+            old_word_offset = strchr(old_suggestions, ':') - old_suggestions;
+            old_word = strndup(old_suggestions, old_word_offset);
+        }
+
+        if ( (old_word && strcmp(word_for_suggestions,old_word)) || !old_word)
+        {
+            suggestions = weechat_aspell_get_suggestions (ptr_speller_buffer,
+                    word_for_suggestions);
+            if (suggestions)
             {
-                snprintf (word_and_suggestions, length, "%s:%s",
-                          word_for_suggestions, suggestions);
-                weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
-                                    word_and_suggestions);
-                free (word_and_suggestions);
+                length = strlen (word_for_suggestions) + 1 /* ":" */
+                    + strlen (suggestions) + 1;
+                word_and_suggestions = malloc (length);
+                if (word_and_suggestions)
+                {
+                    snprintf (word_and_suggestions, length, "%s:%s",
+                            word_for_suggestions, suggestions);
+                    weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                            word_and_suggestions);
+                    free (word_and_suggestions);
+                }
+                else
+                {
+                    weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
+                }
+                free (suggestions);
             }
             else
             {
                 weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
             }
-            free (suggestions);
+            free (word_for_suggestions);
         }
-        else
-        {
-            weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
-        }
-        free (word_for_suggestions);
+        free (old_word);
     }
     else
     {
