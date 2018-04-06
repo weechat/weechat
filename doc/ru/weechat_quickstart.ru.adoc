@@ -119,6 +119,11 @@ For more information about `/fset` command and keys, see `/help fset`.
 /server add freenode chat.freenode.net
 ----
 
+// TRANSLATION MISSING
+In this command, `freenode` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect freenode` and the server options
+are _irc.server.freenode.xxx_.
+
 Вы всегда можете обратиться к справке, набрав:
 
 ----

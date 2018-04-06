@@ -118,6 +118,11 @@ IRC サーバを追加するには `/server` コマンドを使ってくださ�
 /server add freenode chat.freenode.net
 ----
 
+// TRANSLATION MISSING
+In this command, `freenode` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect freenode` and the server options
+are _irc.server.freenode.xxx_.
+
 書式が思い出せない場合はヘルプを利用してください:
 
 ----

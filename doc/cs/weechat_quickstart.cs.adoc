@@ -112,6 +112,11 @@ Můžete přidat irc server příkazem `/server`, například:
 /server add freenode chat.freenode.net
 ----
 
+// TRANSLATION MISSING
+In this command, `freenode` is the internal server name used by WeeChat:
+you'll be able to connect with `/connect freenode` and the server options
+are _irc.server.freenode.xxx_.
+
 Jako obvykle je poskytována nápověda pokud se ztratíte:
 
 ----
