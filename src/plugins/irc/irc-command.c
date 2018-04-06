@@ -6863,18 +6863,20 @@ irc_command_init ()
     weechat_hook_command (
         "server",
         N_("list, add or remove IRC servers"),
-        N_("list|listfull [<server>]"
-           " || add <server> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
+        N_("list|listfull [<name>]"
+           " || add <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] "
            "[-no<option>]"
-           " || copy|rename <server> <new_name>"
-           " || reorder <server> [<server>...]"
-           " || open <server>|-all [<server>...]"
-           " || del|keep <server>"
+           " || copy|rename <name> <new_name>"
+           " || reorder <name> [<name>...]"
+           " || open <name>|-all [<name>...]"
+           " || del|keep <name>"
            " || deloutq|jump|raw"),
         N_("    list: list servers (without argument, this list is displayed)\n"
            "listfull: list servers with detailed info for each server\n"
            "     add: add a new server\n"
-           "  server: server name, for internal and display use\n"
+           "    name: server name, for internal and display use; this name "
+           "is used to connect to the server (/connect name) and to set server "
+           "options: irc.server.name.xxx\n"
            "hostname: name or IP address of server, with optional port "
            "(default: 6667), many addresses can be separated by a comma\n"
            "   -temp: add a temporary server (not saved)\n"

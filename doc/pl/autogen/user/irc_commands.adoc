@@ -720,32 +720,33 @@ powód: powód
 * `+server+`: wyświetla, dodaje lub usuwa serwery IRC
 
 ----
-/server  list|listfull [<serwer>]
-         add <serwera> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <serwer> <nowa_nazwa>
-         reorder <serwer> [<serwer>...]
-         open <serwer>|-all [<serwer>...]
-         del|keep <serwer>
+/server  list|listfull [<name>]
+         add <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
+         copy|rename <name> <new_name>
+         reorder <name> [<name>...]
+         open <name>|-all [<name>...]
+         del|keep <name>
          deloutq|jump|raw
 
-    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
-listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
-     add: tworzy nowy serwer
-  serwer: nazwa serwera, do użytku wewnętrznego i  wyświetlania
-host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
-   -temp: tworzy serwer tymczasowy (nie zapisany)
-  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
-noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
-    copy: duplikuje serwer
-  rename: zmienia nazwę serwera
- reorder: zmienia kolejność na liście serwerów
-    open: otwiera bufor serwera nie łącząc się z nim
-    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
-     del: usuwa serwer
- deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
-    jump: przechodzi do bufora serwera
-     raw: otwiera bufor z nieprzetworzonymi danymi IRC
+    list: list servers (without argument, this list is displayed)
+listfull: list servers with detailed info for each server
+     add: add a new server
+    name: server name, for internal and display use; this name is used to connect to the server (/connect name) and to set server options: irc.server.name.xxx
+hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+   -temp: add a temporary server (not saved)
+  option: set option for server (for boolean option, value can be omitted)
+nooption: set boolean option to 'off' (for example: -nossl)
+    copy: duplicate a server
+  rename: rename a server
+ reorder: reorder list of servers
+    open: open the server buffer without connecting
+    keep: keep server in config file (for temporary servers only)
+     del: delete a server
+ deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    jump: jump to server buffer
+     raw: open buffer with raw IRC data
 
-Przykłady:
+Examples:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect

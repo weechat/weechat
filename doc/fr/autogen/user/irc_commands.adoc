@@ -720,31 +720,31 @@ raison : raison
 * `+server+`: lister, ajouter ou retirer des serveurs IRC
 
 ----
-/server  list|listfull [<serveur>]
-         add <serveur> <nom>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
-         copy|rename <serveur> <nouveau_nom>
-         reorder <serveur> [<serveur>...]
-         open <serveur>|-all [<serveur>...]
-         del|keep <serveur>
+/server  list|listfull [<nom>]
+         add <nom> <nom_machine>[/<port>] [-temp] [-<option>[=<valeur>]] [-no<option>]
+         copy|rename <nom> <nouveau_nom>
+         reorder <nom> [<nom>...]
+         open <nom>|-all [<nom>...]
+         del|keep <nom>
          deloutq|jump|raw
 
-    list : afficher les serveurs (sans paramètre, cette liste est affichée)
-listfull : afficher les serveurs avec de l'info détaillée pour chaque
-     add : ajouter un nouveau serveur
- serveur : nom du serveur, pour usage interne et affichage
-     nom : nom ou adresse IP du serveur avec port en option (défaut : 6667), plusieurs adresses peuvent être séparées par une virgule
-   -temp : ajouter un serveur temporaire (non sauvé)
-  option : définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
-nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
-    copy : dupliquer un serveur
-  rename : renommer un serveur
- reorder : réordonner la liste des serveurs
-    open : ouvrir le tampon du serveur sans s'y connecter
-    keep : garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
-     del : supprimer un serveur
- deloutq : supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
-    jump : sauter au tampon du serveur
-     raw : ouvre le tampon avec les données brutes IRC
+       list : afficher les serveurs (sans paramètre, cette liste est affichée)
+   listfull : afficher les serveurs avec de l'info détaillée pour chaque
+        add : ajouter un nouveau serveur
+        nom : nom du serveur, pour usage interne et affichage ; ce nom est utilisé pour se connecter au serveur (/connect nom) et pour définir les options du serveur : irc.server.name.xxx
+nom_machine : nom ou adresse IP du serveur avec port en option (défaut : 6667), plusieurs adresses peuvent être séparées par une virgule
+      -temp : ajouter un serveur temporaire (non sauvé)
+     option : définir l'option pour le serveur (pour une option booléenne, la valeur peut être omise)
+   nooption : définir l'option booléenne à 'off' (par exemple : -nossl)
+       copy : dupliquer un serveur
+     rename : renommer un serveur
+    reorder : réordonner la liste des serveurs
+       open : ouvrir le tampon du serveur sans s'y connecter
+       keep : garder le serveur dans le fichier de configuration (pour les serveurs temporaires seulement)
+        del : supprimer un serveur
+    deloutq : supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
+       jump : sauter au tampon du serveur
+        raw : ouvre le tampon avec les données brutes IRC
 
 Exemples :
   /server listfull
