@@ -378,8 +378,8 @@ reason: Grund der Abmeldung
 ----
 /links  [[<target>] <server_mask>]
 
-     target: this remote server should answer the query
-server_mask: list of servers must match this mask
+     target: dieser Remote-Server soll die Anfrage beantworten
+server_mask: die aufzulistenden Server sollen diesem Muster entsprechen
 ----
 
 [[command_irc_list]]
@@ -388,17 +388,17 @@ server_mask: list of servers must match this mask
 ----
 /list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
 
- server: send to this server (internal name)
-  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
-channel: channel to list
- target: server name
+ server: an diesen Server senden (interner Name)
+ regexp: erweiterter regulärer POSIX Ausdruck, der auf die Ausgabe angewendet werden soll (zwischen Groß- und Kleinschreibung wird nicht unterschieden. Um zwischen Groß- und Kleinschreibung zu unterscheiden muss zu Beginn "(?-i)" genutzt werden)
+channel: aufzulistender Channel
+ target: Servername
 
-Examples:
-  list all channels on server (can be very slow on large networks):
+Beispiele:
+  listet alle Channels des Servers auf (dies kann bei großen Netzwerken sehr lange dauern):
     /list
-  list channel #weechat:
+  listet den Channel #weechat auf:
     /list #weechat
-  list all channels beginning with "#weechat" (can be very slow on large networks):
+  listet alle Channels auf die mit "#weechat" beginnen (dies kann bei großen Netzwerken sehr lange dauern):
     /list -re #weechat.*
 ----
 
@@ -576,8 +576,8 @@ message: Abschiedsnachricht (wird anderen Usern angezeigt)
 ----
 /ping  <target1> [<target2>]
 
-target1: server
-target2: forward ping to this server
+target1: Server
+target2: Ping an diesen Server weiterleiten
 ----
 
 [[command_irc_pong]]
@@ -794,8 +794,8 @@ service: Name des Service
 ----
 /squit  <target> <comment>
 
- target: server name
-comment: comment
+ target: Name des Servers
+comment: Kommentar
 ----
 
 [[command_irc_stats]]
@@ -804,8 +804,8 @@ comment: comment
 ----
 /stats  [<query> [<target>]]
 
- query: c/h/i/k/l/m/o/y/u (see RFC1459)
-target: server name
+ query: c/h/i/k/l/m/o/y/u (siehe RFC1459)
+target: Name des Servers
 ----
 
 [[command_irc_summon]]
@@ -894,8 +894,8 @@ target: Servername
 ----
 /version  [<target>|<nick>]
 
-target: server name
-  nick: nick
+target: Servername
+  nick: Nickname
 ----
 
 [[command_irc_voice]]
@@ -943,14 +943,14 @@ mask: nur Information über betreffende Nicknamen abfragen
 ----
 /whois  [<target>] [<nick>[,<nick>...]]
 
-target: server name
-  nick: nick (may be a mask)
+target: Name des Servers (interner Servername)
+  nick: Nick, welcher abgefragt werden soll (es kann auch eine Maske genutzt werden)
 
-Without argument, this command will do a whois on:
-- your own nick if buffer is a server/channel
-- remote nick if buffer is a private.
+Ohne Angabe von Argumenten, nutzt /whois folgende Regel:
+- den eigenen Nick, falls es sich um einen Server/Channel Buffer handelt
+- den Nick des Gesprächspartners, falls es sich um einen privaten Buffer handelt.
 
-If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
+Sollte die Einstellung irc.network.whois_double_nick aktiviert sein dann wird ein Nick zweimal verwendet (sofern der Nick nur einmal angegeben wurde), um die Idle-Zeit zu erhalten.
 ----
 
 [[command_irc_whowas]]
