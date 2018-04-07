@@ -111,6 +111,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_string_has_highlight, NULL)
     PHP_FE(weechat_string_has_highlight_regex, NULL)
     PHP_FE(weechat_string_mask_to_regex, NULL)
+    PHP_FE(weechat_string_format_size, NULL)
     PHP_FE(weechat_string_remove_color, NULL)
     PHP_FE(weechat_string_is_command_char, NULL)
     PHP_FE(weechat_string_input_for_buffer, NULL)

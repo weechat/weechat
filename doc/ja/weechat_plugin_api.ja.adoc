@@ -1724,8 +1724,16 @@ char *str = weechat_string_format_size (2097152);  /* str == "2.10 MB" */
 free (str);
 ----
 
-[NOTE]
-スクリプト API ではこの関数を利用できません。
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+str = weechat.string_format_size(size)
+
+# 例
+str = weechat.string_format_size(15200)  # == "15.2 KB"
+----
 
 ==== string_remove_color
 

@@ -443,6 +443,21 @@ API_FUNC(string_mask_to_regex)
     API_RETURN_STRING(retval);
 }
 
+API_FUNC(string_format_size)
+{
+    zend_long z_size;
+    char *retval;
+
+    API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(),
+                               "l", &z_size) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    retval = weechat_string_format_size ((unsigned long long)z_size);
+
+    API_RETURN_STRING(retval);
+}
+
 API_FUNC(string_remove_color)
 {
     zend_string *z_string, *z_replacement;

@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
+  * api: add function string_format_size in scripting API
   * irc: add option "-server" in command /list (issue #1165)
   * irc: add indexed ban list, add completion for /unban and /unquiet (issue #597, task #11374, task #10876)
   * xfer: add option xfer.network.send_ack (issue #1171)

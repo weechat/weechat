@@ -57,6 +57,7 @@ PHP_FUNCTION(weechat_string_match);
 PHP_FUNCTION(weechat_string_has_highlight);
 PHP_FUNCTION(weechat_string_has_highlight_regex);
 PHP_FUNCTION(weechat_string_mask_to_regex);
+PHP_FUNCTION(weechat_string_format_size);
 PHP_FUNCTION(weechat_string_remove_color);
 PHP_FUNCTION(weechat_string_is_command_char);
 PHP_FUNCTION(weechat_string_input_for_buffer);

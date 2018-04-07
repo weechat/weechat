@@ -401,6 +401,26 @@ weechat_ruby_api_string_mask_to_regex (VALUE class, VALUE mask)
 }
 
 static VALUE
+weechat_ruby_api_string_format_size (VALUE class, VALUE size)
+{
+    unsigned long long c_size;
+    char *result;
+    VALUE return_value;
+
+    API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
+    if (NIL_P (size))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (size, T_FIXNUM);
+
+    c_size = FIX2LONG (size);
+
+    result = weechat_string_format_size (c_size);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+static VALUE
 weechat_ruby_api_string_remove_color (VALUE class, VALUE string,
                                       VALUE replacement)
 {
@@ -6208,6 +6228,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);
+    API_DEF_FUNC(string_format_size, 1);
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);

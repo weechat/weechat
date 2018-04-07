@@ -351,6 +351,20 @@ API_FUNC(string_mask_to_regex)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_format_size)
+{
+    char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_string_format_size (SvUV (ST (0)));
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(string_remove_color)
 {
     char *result, *string, *replacement;
@@ -5075,6 +5089,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);
+    API_DEF_FUNC(string_format_size);
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);

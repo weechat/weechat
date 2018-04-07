@@ -443,6 +443,7 @@ Liste der Skript API Funktionen:
   string_has_highlight +
   string_has_highlight_regex +
   string_mask_to_regex +
+  string_format_size +
   string_remove_color +
   string_is_command_char +
   string_input_for_buffer +

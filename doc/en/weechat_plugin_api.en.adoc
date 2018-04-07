@@ -1718,8 +1718,16 @@ char *str = weechat_string_format_size (2097152);  /* str == "2.10 MB" */
 free (str);
 ----
 
-[NOTE]
-This function is not available in scripting API.
+Script (Python):
+
+[source,python]
+----
+# prototype
+str = weechat.string_format_size(size)
+
+# example
+str = weechat.string_format_size(15200)  # == "15.2 KB"
+----
 
 ==== string_remove_color
 

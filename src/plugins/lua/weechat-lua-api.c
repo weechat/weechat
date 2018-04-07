@@ -368,6 +368,22 @@ API_FUNC(string_mask_to_regex)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_format_size)
+{
+    unsigned long long size;
+    char *result;
+
+    API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    size = lua_tonumber (L, -1);
+
+    result = weechat_string_format_size (size);
+
+    API_RETURN_STRING_FREE(result);
+}
+
 API_FUNC(string_remove_color)
 {
     const char *string, *replacement;
@@ -5141,6 +5157,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(string_has_highlight),
     API_DEF_FUNC(string_has_highlight_regex),
     API_DEF_FUNC(string_mask_to_regex),
+    API_DEF_FUNC(string_format_size),
     API_DEF_FUNC(string_remove_color),
     API_DEF_FUNC(string_is_command_char),
     API_DEF_FUNC(string_input_for_buffer),

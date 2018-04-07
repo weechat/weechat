@@ -74,6 +74,7 @@ extern "C"
     {                                                                   \
         if (((js_args[num] == 's') && (!args[num]->IsString()))         \
             || ((js_args[num] == 'i') && (!args[num]->IsInt32()))       \
+            || ((js_args[num] == 'n') && (!args[num]->IsNumber()))      \
             || ((js_args[num] == 'h') && (!args[num]->IsObject())))     \
         {                                                               \
             WEECHAT_SCRIPT_MSG_WRONG_ARGS(JS_CURRENT_SCRIPT_NAME,       \
@@ -340,6 +341,20 @@ API_FUNC(string_mask_to_regex)
     v8::String::Utf8Value mask(args[0]);
 
     result = weechat_string_mask_to_regex (*mask);
+
+    API_RETURN_STRING_FREE(result);
+}
+
+API_FUNC(string_format_size)
+{
+    unsigned long long size;
+    char *result;
+
+    API_INIT_FUNC(1, "string_format_size", "n", API_RETURN_EMPTY);
+
+    size = args[0]->IntegerValue();
+
+    result = weechat_string_format_size (size);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -4808,6 +4823,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);
+    API_DEF_FUNC(string_format_size);
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);

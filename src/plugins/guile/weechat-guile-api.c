@@ -394,6 +394,21 @@ weechat_guile_api_string_mask_to_regex (SCM mask)
 }
 
 SCM
+weechat_guile_api_string_format_size (SCM size)
+{
+    char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
+    if (!scm_is_integer (size))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_string_format_size (scm_to_ulong_long (size));
+
+    API_RETURN_STRING_FREE(result);
+}
+
+SCM
 weechat_guile_api_string_remove_color (SCM string, SCM replacement)
 {
     char *result;
@@ -4863,6 +4878,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);
+    API_DEF_FUNC(string_format_size, 1);
     API_DEF_FUNC(string_remove_color, 2);
     API_DEF_FUNC(string_is_command_char, 1);
     API_DEF_FUNC(string_input_for_buffer, 1);
