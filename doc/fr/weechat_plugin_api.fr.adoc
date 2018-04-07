@@ -1751,7 +1751,7 @@ char *str = weechat_string_format_size (2097152);  /* str == "2.10 Mo" */
 free (str);
 ----
 
-Script (Python) :
+Script (Python), _WeeChat ≥ 2.2_ :
 
 [source,python]
 ----

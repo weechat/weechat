@@ -1724,7 +1724,8 @@ char *str = weechat_string_format_size (2097152);  /* str == "2.10 MB" */
 free (str);
 ----
 
-スクリプト (Python) での使用例:
+// TRANSLATION MISSING
+Script (Python), _WeeChat ≥ 2.2_:
 
 [source,python]
 ----
