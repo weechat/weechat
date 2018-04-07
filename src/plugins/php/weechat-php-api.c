@@ -72,6 +72,14 @@
 #define API_RETURN_EMPTY RETURN_NULL()
 #define API_RETURN_STRING(__string)                                     \
     RETURN_STRING((__string) ? (__string) : "")
+#define API_RETURN_STRING_FREE(__string)                                \
+    if (__string)                                                       \
+    {                                                                   \
+        RETVAL_STRING(__string);                                        \
+        free (__string);                                                \
+        return;                                                         \
+    }                                                                   \
+    RETURN_STRING("");
 #define API_RETURN_INT(__int) RETURN_LONG(__int)
 #define API_RETURN_LONG(__long) RETURN_LONG(__long)
 #define weechat_php_get_function_name(__zfunc, __str)                   \
@@ -287,7 +295,7 @@ API_FUNC(iconv_to_internal)
     retval = weechat_iconv_to_internal ((const char *)charset,
                                         (const char *)string);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(iconv_from_internal)
@@ -305,7 +313,7 @@ API_FUNC(iconv_from_internal)
     retval = weechat_iconv_from_internal ((const char *)charset,
                                           (const char *)string);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(gettext)
@@ -440,7 +448,7 @@ API_FUNC(string_mask_to_regex)
     mask = ZSTR_VAL(z_mask);
     retval = weechat_string_mask_to_regex ((const char *)mask);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(string_format_size)
@@ -455,7 +463,7 @@ API_FUNC(string_format_size)
 
     retval = weechat_string_format_size ((unsigned long long)z_size);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(string_remove_color)
@@ -473,7 +481,7 @@ API_FUNC(string_remove_color)
     retval = weechat_string_remove_color ((const char *)string,
                                           (const char *)replacement);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(string_is_command_char)
@@ -542,7 +550,7 @@ API_FUNC(string_eval_expression)
                                              extra_vars,
                                              options);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(string_eval_path_home)
@@ -579,7 +587,7 @@ API_FUNC(string_eval_path_home)
                                             extra_vars,
                                             options);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(mkdir_home)
@@ -653,7 +661,7 @@ API_FUNC(list_new)
     retval = weechat_list_new ();
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_add)
@@ -680,7 +688,7 @@ API_FUNC(list_add)
                                user_data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_search)
@@ -700,7 +708,7 @@ API_FUNC(list_search)
     retval = weechat_list_search (weelist, (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_search_pos)
@@ -739,7 +747,7 @@ API_FUNC(list_casesearch)
     retval = weechat_list_casesearch (weelist, (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_casesearch_pos)
@@ -779,7 +787,7 @@ API_FUNC(list_get)
     retval = weechat_list_get (weelist, position);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_set)
@@ -813,7 +821,7 @@ API_FUNC(list_next)
     retval = weechat_list_next (item);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_prev)
@@ -830,7 +838,7 @@ API_FUNC(list_prev)
     retval = weechat_list_prev (item);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(list_string)
@@ -958,7 +966,7 @@ API_FUNC(config_new)
         (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -1148,7 +1156,7 @@ API_FUNC(config_new_section)
         (const char *)data_delete_option);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(config_search_section)
@@ -1170,7 +1178,7 @@ API_FUNC(config_search_section)
                                             (const char *)section_name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -1294,7 +1302,7 @@ API_FUNC(config_new_option)
         (const char *)data_delete);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(config_search_option)
@@ -1318,7 +1326,7 @@ API_FUNC(config_search_option)
                                            (const char *)option_name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(config_string_to_boolean)
@@ -1763,7 +1771,7 @@ API_FUNC(config_get)
     retval = weechat_config_get ((const char *)option_name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(config_get_plugin)
@@ -2081,7 +2089,7 @@ API_FUNC(hook_command)
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2134,7 +2142,7 @@ API_FUNC(hook_completion)
                                                 (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hook_completion_get_string)
@@ -2227,7 +2235,7 @@ API_FUNC(hook_command_run)
                                                  (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2275,7 +2283,7 @@ API_FUNC(hook_timer)
                                            (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2325,7 +2333,7 @@ API_FUNC(hook_fd)
                                         (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2375,7 +2383,7 @@ API_FUNC(hook_process)
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2433,7 +2441,7 @@ API_FUNC(hook_process_hashtable)
                                                        (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2505,7 +2513,7 @@ API_FUNC(hook_connect)
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2569,7 +2577,7 @@ API_FUNC(hook_print)
                                            (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static int
@@ -2614,7 +2622,7 @@ API_FUNC(hook_signal)
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hook_signal_send)
@@ -2680,7 +2688,7 @@ API_FUNC(hook_hsignal)
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hook_hsignal_send)
@@ -2747,7 +2755,7 @@ API_FUNC(hook_config)
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static char *
@@ -2793,7 +2801,7 @@ API_FUNC(hook_modifier)
                                               (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hook_modifier_exec)
@@ -2814,7 +2822,7 @@ API_FUNC(hook_modifier_exec)
                                          (const char *)modifier_data,
                                          (const char *)string);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 static const char *
@@ -2864,7 +2872,7 @@ API_FUNC(hook_info)
                                           (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 struct t_hashtable *
@@ -2917,7 +2925,7 @@ API_FUNC(hook_info_hashtable)
                                                     data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 struct t_infolist *
@@ -2975,7 +2983,7 @@ API_FUNC(hook_infolist)
                                               data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 struct t_hashtable *
@@ -3016,7 +3024,7 @@ API_FUNC(hook_focus)
                                            data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hook_set)
@@ -3136,7 +3144,7 @@ API_FUNC(buffer_new)
                                            (const char *)data_close);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(buffer_search)
@@ -3155,7 +3163,7 @@ API_FUNC(buffer_search)
     retval = weechat_buffer_search ((const char *)plugin, (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(buffer_search_main)
@@ -3169,7 +3177,7 @@ API_FUNC(buffer_search_main)
     retval = weechat_buffer_search_main ();
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(current_buffer)
@@ -3183,7 +3191,7 @@ API_FUNC(current_buffer)
     retval = weechat_current_buffer ();
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(buffer_clear)
@@ -3309,7 +3317,7 @@ API_FUNC(buffer_get_pointer)
     retval = weechat_buffer_get_pointer (buffer, (const char *)property);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(buffer_set)
@@ -3348,7 +3356,7 @@ API_FUNC(buffer_string_replace_local_var)
     retval = weechat_buffer_string_replace_local_var (buffer,
                                                       (const char *)string);
 
-    API_RETURN_STRING(retval);
+    API_RETURN_STRING_FREE(retval);
 }
 
 API_FUNC(buffer_match_list)
@@ -3381,7 +3389,7 @@ API_FUNC(current_window)
     retval = weechat_current_window ();
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(window_search_with_buffer)
@@ -3398,7 +3406,7 @@ API_FUNC(window_search_with_buffer)
     retval = weechat_window_search_with_buffer (buffer);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(window_get_integer)
@@ -3456,7 +3464,7 @@ API_FUNC(window_get_pointer)
     retval = weechat_window_get_pointer (window, (const char *)property);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(window_set_title)
@@ -3501,7 +3509,7 @@ API_FUNC(nicklist_add_group)
                                          visible);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_search_group)
@@ -3526,7 +3534,7 @@ API_FUNC(nicklist_search_group)
                                             (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_add_nick)
@@ -3563,7 +3571,7 @@ API_FUNC(nicklist_add_nick)
                                         visible);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_search_nick)
@@ -3588,7 +3596,7 @@ API_FUNC(nicklist_search_nick)
                                            (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_remove_group)
@@ -3712,7 +3720,7 @@ API_FUNC(nicklist_group_get_pointer)
                                                  (const char *)property);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_group_set)
@@ -3810,7 +3818,7 @@ API_FUNC(nicklist_nick_get_pointer)
                                                 (const char *)property);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(nicklist_nick_set)
@@ -3852,7 +3860,7 @@ API_FUNC(bar_item_search)
     retval = weechat_bar_item_search ((const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 static char *
@@ -3907,7 +3915,7 @@ API_FUNC(bar_item_new)
                                              (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(bar_item_update)
@@ -3954,7 +3962,7 @@ API_FUNC(bar_search)
     retval = weechat_bar_search ((const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(bar_new)
@@ -4010,7 +4018,7 @@ API_FUNC(bar_new)
         (const char *)items);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(bar_set)
@@ -4138,7 +4146,7 @@ API_FUNC(infolist_new)
     retval = weechat_infolist_new ();
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_new_item)
@@ -4155,7 +4163,7 @@ API_FUNC(infolist_new_item)
     retval = weechat_infolist_new_item (infolist);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_new_var_integer)
@@ -4180,7 +4188,7 @@ API_FUNC(infolist_new_var_integer)
                                                value);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_new_var_string)
@@ -4203,7 +4211,7 @@ API_FUNC(infolist_new_var_string)
                                               (const char *)value);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_new_var_pointer)
@@ -4227,7 +4235,7 @@ API_FUNC(infolist_new_var_pointer)
                                                pointer);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_new_var_time)
@@ -4250,7 +4258,7 @@ API_FUNC(infolist_new_var_time)
     retval = weechat_infolist_new_var_time (item, (const char *)name, time);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_search_var)
@@ -4270,7 +4278,7 @@ API_FUNC(infolist_search_var)
     retval = weechat_infolist_search_var (infolist, (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_get)
@@ -4294,7 +4302,7 @@ API_FUNC(infolist_get)
                                    (const char *)arguments);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_next)
@@ -4415,7 +4423,7 @@ API_FUNC(infolist_pointer)
     retval = weechat_infolist_pointer (infolist, (const char *)var);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(infolist_time)
@@ -4466,7 +4474,7 @@ API_FUNC(hdata_get)
     retval = weechat_hdata_get ((const char *)hdata_name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hdata_get_var_offset)
@@ -4589,7 +4597,7 @@ API_FUNC(hdata_get_list)
     retval = weechat_hdata_get_list (hdata, (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hdata_check_pointer)
@@ -4632,7 +4640,7 @@ API_FUNC(hdata_move)
     retval = weechat_hdata_move (hdata, pointer, count);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hdata_search)
@@ -4658,7 +4666,7 @@ API_FUNC(hdata_search)
     retval = weechat_hdata_search (hdata, pointer, (const char *)search, move);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hdata_char)
@@ -4762,7 +4770,7 @@ API_FUNC(hdata_pointer)
     retval = weechat_hdata_pointer (hdata, pointer, (const char *)name);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(hdata_time)
@@ -4927,7 +4935,7 @@ API_FUNC(upgrade_new)
                                             (const char *)data);
     char *__retstr = API_PTR2STR(retval);
 
-    API_RETURN_STRING(__retstr);
+    API_RETURN_STRING_FREE(__retstr);
 }
 
 API_FUNC(upgrade_write_object)
