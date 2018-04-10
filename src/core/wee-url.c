@@ -1126,6 +1126,12 @@ weeurl_download (const char *url, struct t_hashtable *options)
     curl_easy_setopt (curl, CURLOPT_URL, url);
     curl_easy_setopt (curl, CURLOPT_FOLLOWLOCATION, 1L);
 
+    /* use $CURL_CA_BUNDLE if it's set */
+    char * env_ca = getenv("CURL_CA_BUNDLE");
+    if (env_ca) {
+	curl_easy_setopt (curl, CURLOPT_CAINFO, env_ca);
+    }
+    
     /* set proxy (if option weechat.network.proxy_curl is set) */
     if (CONFIG_STRING(config_network_proxy_curl)
         && CONFIG_STRING(config_network_proxy_curl)[0])
