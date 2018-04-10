@@ -4284,27 +4284,16 @@ weechat_guile_api_infolist_pointer (SCM infolist, SCM variable)
 SCM
 weechat_guile_api_infolist_time (SCM infolist, SCM variable)
 {
-    char timebuffer[64], *result;
     time_t time;
-    struct tm *date_tmp;
-    SCM return_value;
 
-    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
     if (!scm_is_string (infolist) || !scm_is_string (variable))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
-    timebuffer[0] = '\0';
     time = weechat_infolist_time (API_STR2PTR(API_SCM_TO_STRING(infolist)),
                                   API_SCM_TO_STRING(variable));
-    date_tmp = localtime (&time);
-    if (date_tmp)
-    {
-        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
-            timebuffer[0] = '\0';
-    }
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 SCM

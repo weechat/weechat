@@ -5403,14 +5403,12 @@ weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
 static VALUE
 weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
 {
-    char *c_infolist, *c_variable, timebuffer[64], *result;
+    char *c_infolist, *c_variable;
     time_t time;
-    struct tm *date_tmp;
-    VALUE return_value;
 
-    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
     if (NIL_P (infolist) || NIL_P (variable))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     Check_Type (infolist, T_STRING);
     Check_Type (variable, T_STRING);
@@ -5418,17 +5416,9 @@ weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
     c_infolist = StringValuePtr (infolist);
     c_variable = StringValuePtr (variable);
 
-    timebuffer[0] = '\0';
     time = weechat_infolist_time (API_STR2PTR(c_infolist), c_variable);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-    {
-        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
-            timebuffer[0] = '\0';
-    }
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 static VALUE

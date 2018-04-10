@@ -4184,11 +4184,9 @@ API_FUNC(infolist_pointer)
 
 API_FUNC(infolist_time)
 {
-    char timebuffer[64], *result;
     time_t time;
-    struct tm *date_tmp;
 
-    API_INIT_FUNC(1, "infolist_time", "ss", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", "ss", API_RETURN_LONG(0));
 
     v8::String::Utf8Value infolist(args[0]);
     v8::String::Utf8Value variable(args[1]);
@@ -4196,12 +4194,8 @@ API_FUNC(infolist_time)
     time = weechat_infolist_time (
         (struct t_infolist *)API_STR2PTR(*infolist),
         *variable);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-        strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp);
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(infolist_free)

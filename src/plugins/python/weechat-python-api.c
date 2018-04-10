@@ -4460,29 +4460,18 @@ API_FUNC(infolist_pointer)
 
 API_FUNC(infolist_time)
 {
-    char *infolist, *variable, timebuffer[64], *result;
+    char *infolist, *variable;
     time_t time;
-    struct tm *date_tmp;
-    PyObject *return_value;
 
-    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
     infolist = NULL;
     variable = NULL;
     if (!PyArg_ParseTuple (args, "ss", &infolist, &variable))
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
-    timebuffer[0] = '\0';
-    time = weechat_infolist_time (API_STR2PTR(infolist),
-                                  variable);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-    {
-        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
-            timebuffer[0] = '\0';
-    }
-    result = strdup (timebuffer);
+    time = weechat_infolist_time (API_STR2PTR(infolist), variable);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(infolist_free)

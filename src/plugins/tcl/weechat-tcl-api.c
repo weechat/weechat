@@ -4818,28 +4818,19 @@ API_FUNC(infolist_time)
 {
     Tcl_Obj *objp;
     time_t time;
-    struct tm *date_tmp;
-    char timebuffer[64], *result, *infolist, *variable;
+    char *infolist, *variable;
     int i;
 
-    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
     if (objc < 3)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     infolist = Tcl_GetStringFromObj (objv[1], &i);
     variable = Tcl_GetStringFromObj (objv[2], &i);
 
-    timebuffer[0] = '\0';
     time = weechat_infolist_time (API_STR2PTR(infolist), variable);
-    date_tmp = localtime (&time);
-    if (date_tmp)
-    {
-        if (strftime (timebuffer, sizeof (timebuffer), "%F %T", date_tmp) == 0)
-            timebuffer[0] = '\0';
-    }
-    result = strdup (timebuffer);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(infolist_free)

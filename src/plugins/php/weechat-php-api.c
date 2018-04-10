@@ -4422,18 +4422,19 @@ API_FUNC(infolist_time)
     zend_string *z_infolist, *z_var;
     struct t_infolist *infolist;
     char *var;
-    time_t result;
+    time_t time;
 
-    API_INIT_FUNC(1, "infolist_time", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
                                "SS", &z_infolist, &z_var) == FAILURE)
-        API_WRONG_ARGS(API_RETURN_EMPTY);
+        API_WRONG_ARGS(API_RETURN_LONG(0));
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
     var = ZSTR_VAL(z_var);
-    result = weechat_infolist_time (infolist, (const char *)var);
 
-    API_RETURN_INT(result);
+    time = weechat_infolist_time (infolist, (const char *)var);
+
+    API_RETURN_LONG(time);
 }
 
 API_FUNC(infolist_free)
