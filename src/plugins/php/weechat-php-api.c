@@ -4786,7 +4786,7 @@ API_FUNC(hdata_time)
     name = ZSTR_VAL(z_name);
     result = weechat_hdata_time (hdata, pointer, (const char *)name);
 
-    API_RETURN_INT(result);
+    API_RETURN_LONG(result);
 }
 
 API_FUNC(hdata_hashtable)
