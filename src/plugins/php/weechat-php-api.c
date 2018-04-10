@@ -1577,7 +1577,6 @@ API_FUNC(config_write_option)
     zend_string *z_config_file, *z_option;
     struct t_config_file *config_file;
     struct t_config_option *option;
-    int result;
 
     API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
@@ -1586,9 +1585,10 @@ API_FUNC(config_write_option)
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
-    result = weechat_config_write_option (config_file, option);
 
-    API_RETURN_INT(result);
+    weechat_config_write_option (config_file, option);
+
+    API_RETURN_OK;
 }
 
 API_FUNC(config_write_line)
@@ -1596,7 +1596,6 @@ API_FUNC(config_write_line)
     zend_string *z_config_file, *z_option_name, *z_value;
     struct t_config_file *config_file;
     char *option_name, *value;
-    int result;
 
     API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
     if (zend_parse_parameters (ZEND_NUM_ARGS(),
@@ -1607,11 +1606,12 @@ API_FUNC(config_write_line)
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
     option_name = ZSTR_VAL(z_option_name);
     value = ZSTR_VAL(z_value);
-    result = weechat_config_write_line (config_file,
-                                        (const char *)option_name,
-                                        (const char *)value);
 
-    API_RETURN_INT(result);
+    weechat_config_write_line (config_file,
+                               (const char *)option_name,
+                               (const char *)value);
+
+    API_RETURN_OK;
 }
 
 API_FUNC(config_write)
