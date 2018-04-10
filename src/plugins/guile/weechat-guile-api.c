@@ -585,7 +585,7 @@ weechat_guile_api_list_new ()
 
     result = API_PTR2STR(weechat_list_new ());
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -604,7 +604,7 @@ weechat_guile_api_list_add (SCM weelist, SCM data, SCM where, SCM user_data)
                                            API_SCM_TO_STRING(where),
                                            API_STR2PTR(API_SCM_TO_STRING(user_data))));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -620,7 +620,7 @@ weechat_guile_api_list_search (SCM weelist, SCM data)
     result = API_PTR2STR(weechat_list_search (API_STR2PTR(API_SCM_TO_STRING(weelist)),
                                               API_SCM_TO_STRING(data)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -651,7 +651,7 @@ weechat_guile_api_list_casesearch (SCM weelist, SCM data)
     result = API_PTR2STR(weechat_list_casesearch (API_STR2PTR(API_SCM_TO_STRING(weelist)),
                                                   API_SCM_TO_STRING(data)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -682,7 +682,7 @@ weechat_guile_api_list_get (SCM weelist, SCM position)
     result = API_PTR2STR(weechat_list_get (API_STR2PTR(API_SCM_TO_STRING(weelist)),
                                            scm_to_int (position)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -710,7 +710,7 @@ weechat_guile_api_list_next (SCM item)
 
     result = API_PTR2STR(weechat_list_next (API_STR2PTR(API_SCM_TO_STRING(item))));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
@@ -725,7 +725,7 @@ weechat_guile_api_list_prev (SCM item)
 
     result = API_PTR2STR(weechat_list_prev (API_STR2PTR(API_SCM_TO_STRING(item))));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 SCM
