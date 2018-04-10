@@ -645,12 +645,13 @@ static VALUE
 weechat_ruby_api_list_new (VALUE class)
 {
     char *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_new", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
@@ -658,6 +659,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
                            VALUE user_data)
 {
     char *c_weelist, *c_data, *c_where, *c_user_data, *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data) || NIL_P (where) || NIL_P (user_data))
@@ -678,13 +680,14 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where,
                                            c_where,
                                            API_STR2PTR(c_user_data)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
 weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
 {
     char *c_weelist, *c_data, *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data))
@@ -699,7 +702,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
     result = API_PTR2STR(weechat_list_search (API_STR2PTR(c_weelist),
                                               c_data));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
@@ -727,6 +730,7 @@ static VALUE
 weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
 {
     char *c_weelist, *c_data, *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (data))
@@ -741,7 +745,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     result = API_PTR2STR(weechat_list_casesearch (API_STR2PTR(c_weelist),
                                                   c_data));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
@@ -770,6 +774,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
 {
     char *c_weelist, *result;
     int c_position;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     if (NIL_P (weelist) || NIL_P (position))
@@ -784,7 +789,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     result = API_PTR2STR(weechat_list_get (API_STR2PTR(c_weelist),
                                            c_position));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
@@ -812,6 +817,7 @@ static VALUE
 weechat_ruby_api_list_next (VALUE class, VALUE item)
 {
     char *c_item, *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     if (NIL_P (item))
@@ -823,13 +829,14 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
 
     result = API_PTR2STR(weechat_list_next (API_STR2PTR(c_item)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
 weechat_ruby_api_list_prev (VALUE class, VALUE item)
 {
     char *c_item, *result;
+    VALUE return_value;
 
     API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     if (NIL_P (item))
@@ -841,7 +848,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
 
     result = API_PTR2STR(weechat_list_prev (API_STR2PTR(c_item)));
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 static VALUE
