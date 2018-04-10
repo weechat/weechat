@@ -487,11 +487,11 @@ weechat_php_func_map_get (const char* func_name)
     return weechat_hashtable_get (weechat_php_func_map, func_name);
 }
 
-char *
+const char *
 weechat_php_func_map_add (zval *ofunc)
 {
     zval *func;
-    char *func_name;
+    const char *func_name;
 
     if (!weechat_php_func_map)
     {

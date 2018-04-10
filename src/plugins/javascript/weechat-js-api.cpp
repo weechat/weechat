@@ -520,18 +520,18 @@ API_FUNC(mkdir_parents)
 
 API_FUNC(list_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_new", "", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_list_new ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_add)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_add", "ssss", API_RETURN_EMPTY);
 
@@ -546,12 +546,12 @@ API_FUNC(list_add)
                           *where,
                           API_STR2PTR(*user_data)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_search)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_search", "ss", API_RETURN_EMPTY);
 
@@ -562,7 +562,7 @@ API_FUNC(list_search)
         weechat_list_search (
             (struct t_weelist *)API_STR2PTR(*weelist), *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_search_pos)
@@ -582,7 +582,7 @@ API_FUNC(list_search_pos)
 
 API_FUNC(list_casesearch)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_casesearch", "ss", API_RETURN_EMPTY);
 
@@ -593,7 +593,7 @@ API_FUNC(list_casesearch)
         weechat_list_casesearch (
             (struct t_weelist *)API_STR2PTR(*weelist), *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_casesearch_pos)
@@ -614,7 +614,7 @@ API_FUNC(list_casesearch_pos)
 API_FUNC(list_get)
 {
     int position;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_get", "si", API_RETURN_EMPTY);
 
@@ -625,7 +625,7 @@ API_FUNC(list_get)
         weechat_list_get ((struct t_weelist *)API_STR2PTR(*weelist),
                           position));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_set)
@@ -642,7 +642,7 @@ API_FUNC(list_set)
 
 API_FUNC(list_next)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_next", "s", API_RETURN_EMPTY);
 
@@ -651,12 +651,12 @@ API_FUNC(list_next)
     result = API_PTR2STR(
         weechat_list_next ((struct t_weelist_item *)API_STR2PTR(*item)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_prev)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "list_prev", "s", API_RETURN_EMPTY);
 
@@ -665,7 +665,7 @@ API_FUNC(list_prev)
     result = API_PTR2STR(
         weechat_list_prev ((struct t_weelist_item *)API_STR2PTR(*item)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_string)
@@ -748,7 +748,7 @@ weechat_js_api_config_reload_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
@@ -762,8 +762,6 @@ weechat_js_api_config_reload_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -773,7 +771,7 @@ weechat_js_api_config_reload_cb (const void *pointer, void *data,
 
 API_FUNC(config_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_new", "sss", API_RETURN_EMPTY);
 
@@ -789,7 +787,7 @@ API_FUNC(config_new)
                                       *function,
                                       *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -810,8 +808,8 @@ weechat_js_api_config_read_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
@@ -827,10 +825,6 @@ weechat_js_api_config_read_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -855,7 +849,7 @@ weechat_js_api_config_section_write_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -870,8 +864,6 @@ weechat_js_api_config_section_write_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -896,7 +888,7 @@ weechat_js_api_config_section_write_default_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -911,8 +903,6 @@ weechat_js_api_config_section_write_default_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -939,8 +929,8 @@ weechat_js_api_config_section_create_option_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
@@ -956,10 +946,6 @@ weechat_js_api_config_section_create_option_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -985,9 +971,9 @@ weechat_js_api_config_section_delete_option_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
-        func_argv[3] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
+        func_argv[3] = (char *)API_PTR2STR(option);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
@@ -1001,12 +987,6 @@ weechat_js_api_config_section_delete_option_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -1017,7 +997,7 @@ weechat_js_api_config_section_delete_option_cb (const void *pointer, void *data,
 API_FUNC(config_new_section)
 {
     int user_can_add_options, user_can_delete_options;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_new_section", "ssiissssssssss", API_RETURN_EMPTY);
 
@@ -1060,12 +1040,12 @@ API_FUNC(config_new_section)
             *function_delete_option,
             *data_delete_option));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_search_section)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_search_section", "ss", API_RETURN_EMPTY);
 
@@ -1077,7 +1057,7 @@ API_FUNC(config_search_section)
             (struct t_config_file *) API_STR2PTR(*config_file),
             *section_name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -1097,7 +1077,7 @@ weechat_js_api_config_option_check_value_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
         func_argv[2] = (value) ? (char *)value : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -1112,8 +1092,6 @@ weechat_js_api_config_option_check_value_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -1137,15 +1115,12 @@ weechat_js_api_config_option_change_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
                                      ptr_function,
                                      "ss", func_argv);
-
-        if (func_argv[1])
-            free (func_argv[1]);
 
         if (rc)
             free (rc);
@@ -1168,15 +1143,12 @@ weechat_js_api_config_option_delete_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
                                      ptr_function,
                                      "ss", func_argv);
-
-        if (func_argv[1])
-            free (func_argv[1]);
 
         if (rc)
             free (rc);
@@ -1186,7 +1158,7 @@ weechat_js_api_config_option_delete_cb (const void *pointer, void *data,
 API_FUNC(config_new_option)
 {
     int min, max, null_value_allowed;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_new_option", "ssssssiississssss", API_RETURN_EMPTY);
 
@@ -1233,12 +1205,12 @@ API_FUNC(config_new_option)
             *function_delete,
             *data_delete));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_search_option)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_search_option", "sss", API_RETURN_EMPTY);
 
@@ -1252,7 +1224,7 @@ API_FUNC(config_search_option)
             (struct t_config_section *)API_STR2PTR(*section),
             *option_name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_string_to_boolean)
@@ -1603,7 +1575,7 @@ API_FUNC(config_free)
 
 API_FUNC(config_get)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "config_get", "s", API_RETURN_EMPTY);
 
@@ -1611,7 +1583,7 @@ API_FUNC(config_get)
 
     result = API_PTR2STR(weechat_config_get (*option));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_get_plugin)
@@ -1843,7 +1815,7 @@ weechat_js_api_hook_command_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -1858,8 +1830,6 @@ weechat_js_api_hook_command_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -1869,7 +1839,7 @@ weechat_js_api_hook_command_cb (const void *pointer, void *data,
 
 API_FUNC(hook_command)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_command", "sssssss", API_RETURN_EMPTY);
 
@@ -1893,7 +1863,7 @@ API_FUNC(hook_command)
                                         *function,
                                         *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -1915,8 +1885,8 @@ weechat_js_api_hook_completion_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
+        func_argv[2] = (char *)API_PTR2STR(buffer);
+        func_argv[3] = (char *)API_PTR2STR(completion);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
@@ -1930,10 +1900,6 @@ weechat_js_api_hook_completion_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -1943,7 +1909,7 @@ weechat_js_api_hook_completion_cb (const void *pointer, void *data,
 
 API_FUNC(hook_completion)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_completion", "ssss", API_RETURN_EMPTY);
 
@@ -1962,7 +1928,7 @@ API_FUNC(hook_completion)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_completion_get_string)
@@ -2018,7 +1984,7 @@ weechat_js_api_hook_command_run_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (command) ? (char *)command : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -2033,8 +1999,6 @@ weechat_js_api_hook_command_run_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -2044,7 +2008,7 @@ weechat_js_api_hook_command_run_cb (const void *pointer, void *data,
 
 API_FUNC(hook_command_run)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_command_run", "sss", API_RETURN_EMPTY);
 
@@ -2061,7 +2025,7 @@ API_FUNC(hook_command_run)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2107,7 +2071,7 @@ weechat_js_api_hook_timer_cb (const void *pointer, void *data,
 API_FUNC(hook_timer)
 {
     int interval, align_second, max_calls;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_timer", "iiiss", API_RETURN_EMPTY);
 
@@ -2128,7 +2092,7 @@ API_FUNC(hook_timer)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2170,7 +2134,7 @@ weechat_js_api_hook_fd_cb (const void *pointer, void *data, int fd)
 API_FUNC(hook_fd)
 {
     int fd, read, write, exception;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_fd", "iiiiss", API_RETURN_EMPTY);
 
@@ -2193,7 +2157,7 @@ API_FUNC(hook_fd)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2259,7 +2223,7 @@ weechat_js_api_hook_process_cb (const void *pointer, void *data,
 API_FUNC(hook_process)
 {
     int timeout;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_process", "siss", API_RETURN_EMPTY);
 
@@ -2278,14 +2242,14 @@ API_FUNC(hook_process)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_process_hashtable)
 {
     struct t_hashtable *options;
     int timeout;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_process_hashtable", "shiss", API_RETURN_EMPTY);
 
@@ -2313,7 +2277,7 @@ API_FUNC(hook_process_hashtable)
     if (options)
         weechat_hashtable_free (options);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2362,7 +2326,7 @@ weechat_js_api_hook_connect_cb (const void *pointer, void *data,
 API_FUNC(hook_connect)
 {
     int port, ipv6, retry;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_connect", "ssiiisss", API_RETURN_EMPTY);
 
@@ -2393,7 +2357,7 @@ API_FUNC(hook_connect)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2422,7 +2386,7 @@ weechat_js_api_hook_print_cb (const void *pointer, void *data,
         snprintf (timebuffer, sizeof (timebuffer), "%ld", (long int)date);
 
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = timebuffer;
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!func_argv[3])
@@ -2444,8 +2408,6 @@ weechat_js_api_hook_print_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
         if (func_argv[3])
             free (func_argv[3]);
 
@@ -2458,7 +2420,7 @@ weechat_js_api_hook_print_cb (const void *pointer, void *data,
 API_FUNC(hook_print)
 {
     int strip_colors;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_print", "sssiss", API_RETURN_EMPTY);
 
@@ -2481,7 +2443,7 @@ API_FUNC(hook_print)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2494,7 +2456,7 @@ weechat_js_api_hook_signal_cb (const void *pointer, void *data,
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     static char str_value[64];
-    int *rc, ret, free_needed;
+    int *rc, ret;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -2503,7 +2465,6 @@ weechat_js_api_hook_signal_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (signal) ? (char *)signal : empty_arg;
-        free_needed = 0;
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
         {
             func_argv[2] = (signal_data) ? (char *)signal_data : empty_arg;
@@ -2520,8 +2481,7 @@ weechat_js_api_hook_signal_cb (const void *pointer, void *data,
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
         {
-            func_argv[2] = API_PTR2STR(signal_data);
-            free_needed = 1;
+            func_argv[2] = (char *)API_PTR2STR(signal_data);
         }
         else
             func_argv[2] = empty_arg;
@@ -2538,8 +2498,6 @@ weechat_js_api_hook_signal_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (free_needed && func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -2549,7 +2507,7 @@ weechat_js_api_hook_signal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_signal)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_signal", "sss", API_RETURN_EMPTY);
 
@@ -2566,7 +2524,7 @@ API_FUNC(hook_signal)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_signal_send)
@@ -2646,7 +2604,7 @@ weechat_js_api_hook_hsignal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_hsignal)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_hsignal", "sss", API_RETURN_EMPTY);
 
@@ -2663,7 +2621,7 @@ API_FUNC(hook_hsignal)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_hsignal_send)
@@ -2728,7 +2686,7 @@ weechat_js_api_hook_config_cb (const void *pointer, void *data,
 
 API_FUNC(hook_config)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_config", "sss", API_RETURN_EMPTY);
 
@@ -2745,7 +2703,7 @@ API_FUNC(hook_config)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 char *
@@ -2779,7 +2737,7 @@ weechat_js_api_hook_modifier_cb (const void *pointer, void *data,
 
 API_FUNC(hook_modifier)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_modifier", "sss", API_RETURN_EMPTY);
 
@@ -2796,7 +2754,7 @@ API_FUNC(hook_modifier)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_modifier_exec)
@@ -2844,7 +2802,7 @@ weechat_js_api_hook_info_cb (const void *pointer, void *data,
 
 API_FUNC(hook_info)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_info", "sssss", API_RETURN_EMPTY);
 
@@ -2865,7 +2823,7 @@ API_FUNC(hook_info)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_hashtable *
@@ -2902,7 +2860,7 @@ weechat_js_api_hook_info_hashtable_cb (const void *pointer, void *data,
 
 API_FUNC(hook_info_hashtable)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_info_hashtable", "ssssss", API_RETURN_EMPTY);
 
@@ -2925,7 +2883,7 @@ API_FUNC(hook_info_hashtable)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_infolist *
@@ -2946,7 +2904,7 @@ weechat_js_api_hook_infolist_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
-        func_argv[2] = API_PTR2STR(obj_pointer);
+        func_argv[2] = (char *)API_PTR2STR(obj_pointer);
         func_argv[3] = (arguments) ? (char *)arguments : empty_arg;
 
         result = (struct t_infolist *)weechat_js_exec (
@@ -2954,9 +2912,6 @@ weechat_js_api_hook_infolist_cb (const void *pointer, void *data,
             WEECHAT_SCRIPT_EXEC_STRING,
             ptr_function,
             "ssss", func_argv);
-
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return result;
     }
@@ -2966,7 +2921,7 @@ weechat_js_api_hook_infolist_cb (const void *pointer, void *data,
 
 API_FUNC(hook_infolist)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_infolist", "ssssss", API_RETURN_EMPTY);
 
@@ -2989,7 +2944,7 @@ API_FUNC(hook_infolist)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_hashtable *
@@ -3024,7 +2979,7 @@ weechat_js_api_hook_focus_cb (const void *pointer, void *data,
 
 API_FUNC(hook_focus)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_focus", "sss", API_RETURN_EMPTY);
 
@@ -3041,7 +2996,7 @@ API_FUNC(hook_focus)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_set)
@@ -3096,7 +3051,7 @@ weechat_js_api_buffer_input_data_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (input_data) ? (char *)input_data : empty_arg;
 
         rc = (int *)weechat_js_exec (script,
@@ -3111,9 +3066,6 @@ weechat_js_api_buffer_input_data_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -3137,7 +3089,7 @@ weechat_js_api_buffer_close_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
@@ -3152,9 +3104,6 @@ weechat_js_api_buffer_close_cb (const void *pointer, void *data,
             free (rc);
         }
 
-        if (func_argv[1])
-            free (func_argv[1]);
-
         return ret;
     }
 
@@ -3163,7 +3112,7 @@ weechat_js_api_buffer_close_cb (const void *pointer, void *data,
 
 API_FUNC(buffer_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_new", "sssss", API_RETURN_EMPTY);
 
@@ -3185,12 +3134,12 @@ API_FUNC(buffer_new)
             *function_close,
             *data_close));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_search)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_search", "ss", API_RETURN_EMPTY);
 
@@ -3199,29 +3148,29 @@ API_FUNC(buffer_search)
 
     result = API_PTR2STR(weechat_buffer_search (*plugin, *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_search_main)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_search_main", "", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(current_buffer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "current_buffer", "", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_buffer ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_clear)
@@ -3308,7 +3257,7 @@ API_FUNC(buffer_get_string)
 
 API_FUNC(buffer_get_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_get_pointer", "ss", API_RETURN_EMPTY);
 
@@ -3320,7 +3269,7 @@ API_FUNC(buffer_get_pointer)
             (struct t_gui_buffer *)API_STR2PTR(*buffer),
             *property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_set)
@@ -3373,18 +3322,18 @@ API_FUNC(buffer_match_list)
 
 API_FUNC(current_window)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "current_window", "", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_current_window ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_search_with_buffer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "window_search_with_buffer", "s", API_RETURN_EMPTY);
 
@@ -3394,7 +3343,7 @@ API_FUNC(window_search_with_buffer)
         weechat_window_search_with_buffer (
             (struct t_gui_buffer *)API_STR2PTR(*buffer)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_get_integer)
@@ -3431,7 +3380,7 @@ API_FUNC(window_get_string)
 
 API_FUNC(window_get_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "window_get_pointer", "ss", API_RETURN_EMPTY);
 
@@ -3443,7 +3392,7 @@ API_FUNC(window_get_pointer)
             (struct t_gui_window *)API_STR2PTR(*window),
             *property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_set_title)
@@ -3460,7 +3409,7 @@ API_FUNC(window_set_title)
 API_FUNC(nicklist_add_group)
 {
     int visible;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_add_group", "ssssi", API_RETURN_EMPTY);
 
@@ -3478,12 +3427,12 @@ API_FUNC(nicklist_add_group)
             *color,
             visible));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_search_group)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_group", "sss", API_RETURN_EMPTY);
 
@@ -3497,13 +3446,13 @@ API_FUNC(nicklist_search_group)
             (struct t_gui_nick_group *)API_STR2PTR(*from_group),
             *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_add_nick)
 {
     int visible;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_add_nick", "ssssssi", API_RETURN_EMPTY);
 
@@ -3525,12 +3474,12 @@ API_FUNC(nicklist_add_nick)
             *prefix_color,
             visible));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_search_nick)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_nick", "sss", API_RETURN_EMPTY);
 
@@ -3544,7 +3493,7 @@ API_FUNC(nicklist_search_nick)
             (struct t_gui_nick_group *)API_STR2PTR(*from_group),
             *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_remove_group)
@@ -3624,7 +3573,7 @@ API_FUNC(nicklist_group_get_string)
 
 API_FUNC(nicklist_group_get_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_group_get_pointer", "sss", API_RETURN_EMPTY);
 
@@ -3638,7 +3587,7 @@ API_FUNC(nicklist_group_get_pointer)
             (struct t_gui_nick_group *)API_STR2PTR(*group),
             *property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_group_set)
@@ -3697,7 +3646,7 @@ API_FUNC(nicklist_nick_get_string)
 
 API_FUNC(nicklist_nick_get_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_nick_get_pointer", "sss", API_RETURN_EMPTY);
 
@@ -3711,7 +3660,7 @@ API_FUNC(nicklist_nick_get_pointer)
             (struct t_gui_nick *)API_STR2PTR(*nick),
             *property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_nick_set)
@@ -3734,7 +3683,7 @@ API_FUNC(nicklist_nick_set)
 
 API_FUNC(bar_item_search)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_item_search", "s", API_RETURN_EMPTY);
 
@@ -3742,7 +3691,7 @@ API_FUNC(bar_item_search)
 
     result = API_PTR2STR(weechat_bar_item_search (*name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 char *
@@ -3766,39 +3715,27 @@ weechat_js_api_bar_item_build_cb (const void *pointer, void *data,
         {
             /* new callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-            func_argv[1] = API_PTR2STR(item);
-            func_argv[2] = API_PTR2STR(window);
-            func_argv[3] = API_PTR2STR(buffer);
+            func_argv[1] = (char *)API_PTR2STR(item);
+            func_argv[2] = (char *)API_PTR2STR(window);
+            func_argv[3] = (char *)API_PTR2STR(buffer);
             func_argv[4] = extra_info;
 
             ret = (char *)weechat_js_exec (script,
                                            WEECHAT_SCRIPT_EXEC_STRING,
                                            ptr_function + 7,
                                            "ssssh", func_argv);
-
-            if (func_argv[1])
-                free (func_argv[1]);
-            if (func_argv[2])
-                free (func_argv[2]);
-            if (func_argv[3])
-                free (func_argv[3]);
         }
         else
         {
             /* old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-            func_argv[1] = API_PTR2STR(item);
-            func_argv[2] = API_PTR2STR(window);
+            func_argv[1] = (char *)API_PTR2STR(item);
+            func_argv[2] = (char *)API_PTR2STR(window);
 
             ret = (char *)weechat_js_exec (script,
                                            WEECHAT_SCRIPT_EXEC_STRING,
                                            ptr_function,
                                            "sss", func_argv);
-
-            if (func_argv[1])
-                free (func_argv[1]);
-            if (func_argv[2])
-                free (func_argv[2]);
         }
 
         return ret;
@@ -3809,7 +3746,7 @@ weechat_js_api_bar_item_build_cb (const void *pointer, void *data,
 
 API_FUNC(bar_item_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_item_new", "sss", API_RETURN_EMPTY);
 
@@ -3826,7 +3763,7 @@ API_FUNC(bar_item_new)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_item_update)
@@ -3853,7 +3790,7 @@ API_FUNC(bar_item_remove)
 
 API_FUNC(bar_search)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_search", "s", API_RETURN_EMPTY);
 
@@ -3861,12 +3798,12 @@ API_FUNC(bar_search)
 
     result = API_PTR2STR(weechat_bar_search (*name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_new", "sssssssssssssss", API_RETURN_EMPTY);
 
@@ -3902,7 +3839,7 @@ API_FUNC(bar_new)
                                           *separator,
                                           *items));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_set)
@@ -4004,18 +3941,18 @@ API_FUNC(info_get_hashtable)
 
 API_FUNC(infolist_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new", "", API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_infolist_new ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_item)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_item", "s", API_RETURN_EMPTY);
 
@@ -4025,13 +3962,13 @@ API_FUNC(infolist_new_item)
         weechat_infolist_new_item (
             (struct t_infolist *)API_STR2PTR(*infolist)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_integer)
 {
     int value;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", "ssi", API_RETURN_EMPTY);
 
@@ -4045,12 +3982,12 @@ API_FUNC(infolist_new_var_integer)
             *name,
             value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_string)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_string", "sss", API_RETURN_EMPTY);
 
@@ -4064,12 +4001,12 @@ API_FUNC(infolist_new_var_string)
             *name,
             *value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", "sss", API_RETURN_EMPTY);
 
@@ -4083,13 +4020,13 @@ API_FUNC(infolist_new_var_pointer)
             *name,
             API_STR2PTR(*value)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_time)
 {
     int value;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_time", "ssi", API_RETURN_EMPTY);
 
@@ -4103,12 +4040,12 @@ API_FUNC(infolist_new_var_time)
             *name,
             value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_search_var)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_search_var", "ss", API_RETURN_EMPTY);
 
@@ -4120,12 +4057,12 @@ API_FUNC(infolist_search_var)
             (struct t_infolist *)API_STR2PTR(*infolist),
             *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_get)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_get", "sss", API_RETURN_EMPTY);
 
@@ -4139,7 +4076,7 @@ API_FUNC(infolist_get)
             API_STR2PTR(*pointer),
             *arguments));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_next)
@@ -4242,7 +4179,7 @@ API_FUNC(infolist_pointer)
             (struct t_infolist *)API_STR2PTR(*infolist),
             *variable));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_time)
@@ -4280,7 +4217,7 @@ API_FUNC(infolist_free)
 
 API_FUNC(hdata_get)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_get", "s", API_RETURN_EMPTY);
 
@@ -4288,7 +4225,7 @@ API_FUNC(hdata_get)
 
     result = API_PTR2STR(weechat_hdata_get (*name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_get_var_offset)
@@ -4377,7 +4314,7 @@ API_FUNC(hdata_get_var_hdata)
 
 API_FUNC(hdata_get_list)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_get_list", "s", API_RETURN_EMPTY);
 
@@ -4389,7 +4326,7 @@ API_FUNC(hdata_get_list)
             (struct t_hdata *)API_STR2PTR(*hdata),
             *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_check_pointer)
@@ -4413,7 +4350,7 @@ API_FUNC(hdata_check_pointer)
 API_FUNC(hdata_move)
 {
     int count;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_move", "ssi", API_RETURN_EMPTY);
 
@@ -4427,13 +4364,13 @@ API_FUNC(hdata_move)
             API_STR2PTR(*pointer),
             count));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_search)
 {
     int move;
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_search", "sssi", API_RETURN_EMPTY);
 
@@ -4449,7 +4386,7 @@ API_FUNC(hdata_search)
             *search,
             move));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_char)
@@ -4526,7 +4463,7 @@ API_FUNC(hdata_string)
 
 API_FUNC(hdata_pointer)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_pointer", "sss", API_RETURN_EMPTY);
 
@@ -4540,7 +4477,7 @@ API_FUNC(hdata_pointer)
             API_STR2PTR(*pointer),
             *name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_time)
@@ -4664,9 +4601,9 @@ weechat_js_api_upgrade_read_cb (const void *pointer, void *data,
         snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
 
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(upgrade_file);
+        func_argv[1] = (char *)API_PTR2STR(upgrade_file);
         func_argv[2] = str_object_id;
-        func_argv[3] = API_PTR2STR(infolist);
+        func_argv[3] = (char *)API_PTR2STR(infolist);
 
         rc = (int *)weechat_js_exec (script,
                                      WEECHAT_SCRIPT_EXEC_INT,
@@ -4680,10 +4617,6 @@ weechat_js_api_upgrade_read_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -4693,7 +4626,7 @@ weechat_js_api_upgrade_read_cb (const void *pointer, void *data,
 
 API_FUNC(upgrade_new)
 {
-    char *result;
+    const char *result;
 
     API_INIT_FUNC(1, "upgrade_new", "sss", API_RETURN_EMPTY);
 
@@ -4710,7 +4643,7 @@ API_FUNC(upgrade_new)
             *function,
             *data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(upgrade_write_object)

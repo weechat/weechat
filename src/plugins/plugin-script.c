@@ -324,22 +324,24 @@ plugin_script_valid (struct t_plugin_script *scripts,
  * Converts a pointer to a string for usage in a script.
  *
  * Returns string with format "0x12345678".
- *
- * Note: result must be freed after use.
  */
 
-char *
+const char *
 plugin_script_ptr2str (void *pointer)
 {
-    char pointer_str[128];
+    static char str_pointer[32][32];
+    static int index_pointer = 0;
+
+    index_pointer = (index_pointer + 1) % 32;
+    str_pointer[index_pointer][0] = '\0';
 
     if (!pointer)
-        return strdup ("");
+        return str_pointer[index_pointer];
 
-    snprintf (pointer_str, sizeof (pointer_str),
+    snprintf (str_pointer[index_pointer], sizeof (str_pointer[index_pointer]),
               "0x%lx", (long unsigned int)pointer);
 
-    return strdup (pointer_str);
+    return str_pointer[index_pointer];
 }
 
 /*

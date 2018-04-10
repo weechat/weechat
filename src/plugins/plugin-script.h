@@ -119,7 +119,7 @@ extern void plugin_script_init (struct t_weechat_plugin *weechat_plugin,
                                 struct t_plugin_script_data *plugin_data);
 extern int plugin_script_valid (struct t_plugin_script *scripts,
                                 struct t_plugin_script *script);
-extern char *plugin_script_ptr2str (void *pointer);
+extern const char *plugin_script_ptr2str (void *pointer);
 extern void *plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
                                     const char *script_name,
                                     const char *function_name,

@@ -524,8 +524,7 @@ API_FUNC(mkdir_parents)
 
 API_FUNC(list_new)
 {
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     /* make C compiler happy */
     (void) args;
@@ -534,13 +533,13 @@ API_FUNC(list_new)
 
     result = API_PTR2STR(weechat_list_new ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_add)
 {
-    char *weelist, *data, *where, *user_data, *result;
-    PyObject *return_value;
+    char *weelist, *data, *where, *user_data;
+    const char *result;
 
     API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
     weelist = NULL;
@@ -555,13 +554,13 @@ API_FUNC(list_add)
                                            where,
                                            API_STR2PTR(user_data)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_search)
 {
-    char *weelist, *data, *result;
-    PyObject *return_value;
+    char *weelist, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
     weelist = NULL;
@@ -572,7 +571,7 @@ API_FUNC(list_search)
     result = API_PTR2STR(weechat_list_search (API_STR2PTR(weelist),
                                               data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_search_pos)
@@ -593,8 +592,8 @@ API_FUNC(list_search_pos)
 
 API_FUNC(list_casesearch)
 {
-    char *weelist, *data, *result;
-    PyObject *return_value;
+    char *weelist, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
     weelist = NULL;
@@ -605,7 +604,7 @@ API_FUNC(list_casesearch)
     result = API_PTR2STR(weechat_list_casesearch (API_STR2PTR(weelist),
                                                   data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_casesearch_pos)
@@ -626,9 +625,9 @@ API_FUNC(list_casesearch_pos)
 
 API_FUNC(list_get)
 {
-    char *weelist, *result;
+    char *weelist;
+    const char *result;
     int position;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
     weelist = NULL;
@@ -638,7 +637,7 @@ API_FUNC(list_get)
 
     result = API_PTR2STR(weechat_list_get (API_STR2PTR(weelist),
                                            position));
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_set)
@@ -659,8 +658,8 @@ API_FUNC(list_set)
 
 API_FUNC(list_next)
 {
-    char *item, *result;
-    PyObject *return_value;
+    char *item;
+    const char *result;
 
     API_INIT_FUNC(1, "list_next", API_RETURN_EMPTY);
     item = NULL;
@@ -669,13 +668,13 @@ API_FUNC(list_next)
 
     result = API_PTR2STR(weechat_list_next (API_STR2PTR(item)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_prev)
 {
-    char *item, *result;
-    PyObject *return_value;
+    char *item;
+    const char *result;
 
     API_INIT_FUNC(1, "list_prev", API_RETURN_EMPTY);
     item = NULL;
@@ -684,7 +683,7 @@ API_FUNC(list_prev)
 
     result = API_PTR2STR(weechat_list_prev (API_STR2PTR(item)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(list_string)
@@ -777,7 +776,7 @@ weechat_python_api_config_reload_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -791,8 +790,6 @@ weechat_python_api_config_reload_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -802,8 +799,8 @@ weechat_python_api_config_reload_cb (const void *pointer, void *data,
 
 API_FUNC(config_new)
 {
-    char *name, *function, *data, *result;
-    PyObject *return_value;
+    char *name, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
     name = NULL;
@@ -819,7 +816,7 @@ API_FUNC(config_new)
                                                        function,
                                                        data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -840,8 +837,8 @@ weechat_python_api_config_read_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
@@ -857,10 +854,6 @@ weechat_python_api_config_read_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -885,7 +878,7 @@ weechat_python_api_config_section_write_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -900,8 +893,6 @@ weechat_python_api_config_section_write_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -926,7 +917,7 @@ weechat_python_api_config_section_write_default_cb (const void *pointer, void *d
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
         func_argv[2] = (section_name) ? (char *)section_name : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -941,8 +932,6 @@ weechat_python_api_config_section_write_default_cb (const void *pointer, void *d
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -969,8 +958,8 @@ weechat_python_api_config_section_create_option_cb (const void *pointer, void *d
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
         func_argv[3] = (option_name) ? (char *)option_name : empty_arg;
         func_argv[4] = (value) ? (char *)value : empty_arg;
 
@@ -986,10 +975,6 @@ weechat_python_api_config_section_create_option_cb (const void *pointer, void *d
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -1015,9 +1000,9 @@ weechat_python_api_config_section_delete_option_cb (const void *pointer, void *d
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(config_file);
-        func_argv[2] = API_PTR2STR(section);
-        func_argv[3] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(config_file);
+        func_argv[2] = (char *)API_PTR2STR(section);
+        func_argv[3] = (char *)API_PTR2STR(option);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -1031,12 +1016,6 @@ weechat_python_api_config_section_delete_option_cb (const void *pointer, void *d
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -1049,9 +1028,9 @@ API_FUNC(config_new_section)
     char *config_file, *name, *function_read, *data_read, *function_write;
     char *data_write, *function_write_default, *data_write_default;
     char *function_create_option, *data_create_option, *function_delete_option;
-    char *data_delete_option, *result;
+    char *data_delete_option;
+    const char *result;
     int user_can_add_options, user_can_delete_options;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "config_new_section", API_RETURN_EMPTY);
     config_file = NULL;
@@ -1101,13 +1080,13 @@ API_FUNC(config_new_section)
             function_delete_option,
             data_delete_option));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_search_section)
 {
-    char *config_file, *section_name, *result;
-    PyObject *return_value;
+    char *config_file, *section_name;
+    const char *result;
 
     API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
     config_file = NULL;
@@ -1118,7 +1097,7 @@ API_FUNC(config_search_section)
     result = API_PTR2STR(weechat_config_search_section (API_STR2PTR(config_file),
                                                         section_name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -1139,7 +1118,7 @@ weechat_python_api_config_option_check_value_cb (const void *pointer,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
         func_argv[2] = (value) ? (char *)value : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -1154,8 +1133,6 @@ weechat_python_api_config_option_check_value_cb (const void *pointer,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -1179,15 +1156,12 @@ weechat_python_api_config_option_change_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           ptr_function,
                                           "ss", func_argv);
-
-        if (func_argv[1])
-            free (func_argv[1]);
 
         if (rc)
             free (rc);
@@ -1210,15 +1184,12 @@ weechat_python_api_config_option_delete_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(option);
+        func_argv[1] = (char *)API_PTR2STR(option);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           ptr_function,
                                           "ss", func_argv);
-
-        if (func_argv[1])
-            free (func_argv[1]);
 
         if (rc)
             free (rc);
@@ -1228,11 +1199,11 @@ weechat_python_api_config_option_delete_cb (const void *pointer, void *data,
 API_FUNC(config_new_option)
 {
     char *config_file, *section, *name, *type, *description, *string_values;
-    char *default_value, *value, *result;
+    char *default_value, *value;
     char *function_check_value, *data_check_value, *function_change;
     char *data_change, *function_delete, *data_delete;
+    const char *result;
     int min, max, null_value_allowed;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "config_new_option", API_RETURN_EMPTY);
     config_file = NULL;
@@ -1280,13 +1251,13 @@ API_FUNC(config_new_option)
                                                               function_delete,
                                                               data_delete));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_search_option)
 {
-    char *config_file, *section, *option_name, *result;
-    PyObject *return_value;
+    char *config_file, *section, *option_name;
+    const char *result;
 
     API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
     config_file = NULL;
@@ -1299,7 +1270,7 @@ API_FUNC(config_search_option)
                                                        API_STR2PTR(section),
                                                        option_name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_string_to_boolean)
@@ -1689,8 +1660,8 @@ API_FUNC(config_free)
 
 API_FUNC(config_get)
 {
-    char *option, *result;
-    PyObject *return_value;
+    char *option;
+    const char *result;
 
     API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
     option = NULL;
@@ -1699,7 +1670,7 @@ API_FUNC(config_get)
 
     result = API_PTR2STR(weechat_config_get (option));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(config_get_plugin)
@@ -1960,7 +1931,7 @@ weechat_python_api_hook_command_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (argc > 1) ? argv_eol[1] : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -1975,8 +1946,6 @@ weechat_python_api_hook_command_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -1987,8 +1956,8 @@ weechat_python_api_hook_command_cb (const void *pointer, void *data,
 API_FUNC(hook_command)
 {
     char *command, *description, *arguments, *args_description, *completion;
-    char *function, *data, *result;
-    PyObject *return_value;
+    char *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
     command = NULL;
@@ -2013,7 +1982,7 @@ API_FUNC(hook_command)
                                                          function,
                                                          data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2035,8 +2004,8 @@ weechat_python_api_hook_completion_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (completion_item) ? (char *)completion_item : empty_arg;
-        func_argv[2] = API_PTR2STR(buffer);
-        func_argv[3] = API_PTR2STR(completion);
+        func_argv[2] = (char *)API_PTR2STR(buffer);
+        func_argv[3] = (char *)API_PTR2STR(completion);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -2050,10 +2019,6 @@ weechat_python_api_hook_completion_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[2])
-            free (func_argv[2]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -2063,8 +2028,8 @@ weechat_python_api_hook_completion_cb (const void *pointer, void *data,
 
 API_FUNC(hook_completion)
 {
-    char *completion, *description, *function, *data, *result;
-    PyObject *return_value;
+    char *completion, *description, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
     completion = NULL;
@@ -2083,7 +2048,7 @@ API_FUNC(hook_completion)
                                                             function,
                                                             data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_completion_get_string)
@@ -2142,7 +2107,7 @@ weechat_python_api_hook_command_run_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (command) ? (char *)command : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -2157,8 +2122,6 @@ weechat_python_api_hook_command_run_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -2168,8 +2131,8 @@ weechat_python_api_hook_command_run_cb (const void *pointer, void *data,
 
 API_FUNC(hook_command_run)
 {
-    char *command, *function, *data, *result;
-    PyObject *return_value;
+    char *command, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
     command = NULL;
@@ -2185,7 +2148,7 @@ API_FUNC(hook_command_run)
                                                              function,
                                                              data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2231,8 +2194,8 @@ weechat_python_api_hook_timer_cb (const void *pointer, void *data,
 API_FUNC(hook_timer)
 {
     int interval, align_second, max_calls;
-    char *function, *data, *result;
-    PyObject *return_value;
+    char *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
     interval = 10;
@@ -2253,7 +2216,7 @@ API_FUNC(hook_timer)
                                                        function,
                                                        data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2299,8 +2262,8 @@ weechat_python_api_hook_fd_cb (const void *pointer, void *data, int fd)
 API_FUNC(hook_fd)
 {
     int fd, read, write, exception;
-    char *function, *data, *result;
-    PyObject *return_value;
+    char *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
     fd = 0;
@@ -2323,7 +2286,7 @@ API_FUNC(hook_fd)
                                                     function,
                                                     data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2392,9 +2355,9 @@ weechat_python_api_hook_process_cb (const void *pointer, void *data,
 
 API_FUNC(hook_process)
 {
-    char *command, *function, *data, *result;
+    char *command, *function, *data;
+    const char *result;
     int timeout;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
     command = NULL;
@@ -2412,15 +2375,16 @@ API_FUNC(hook_process)
                                                          function,
                                                          data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_process_hashtable)
 {
-    char *command, *function, *data, *result;
+    char *command, *function, *data;
+    const char *result;
     int timeout;
     struct t_hashtable *options;
-    PyObject *dict, *return_value;
+    PyObject *dict;
 
     API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
     command = NULL;
@@ -2448,7 +2412,7 @@ API_FUNC(hook_process_hashtable)
     if (options)
         weechat_hashtable_free (options);
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2508,9 +2472,9 @@ weechat_python_api_hook_connect_cb (const void *pointer, void *data,
 
 API_FUNC(hook_connect)
 {
-    char *proxy, *address, *local_hostname, *function, *data, *result;
+    char *proxy, *address, *local_hostname, *function, *data;
+    const char *result;
     int port, ipv6, retry;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hook_connect", API_RETURN_EMPTY);
     proxy = NULL;
@@ -2541,7 +2505,7 @@ API_FUNC(hook_connect)
                                                          function,
                                                          data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2570,7 +2534,7 @@ weechat_python_api_hook_print_cb (const void *pointer, void *data,
         snprintf (timebuffer, sizeof (timebuffer), "%lld", (long long)date);
 
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = timebuffer;
         func_argv[3] = weechat_string_build_with_split_string (tags, ",");
         if (!func_argv[3])
@@ -2592,8 +2556,6 @@ weechat_python_api_hook_print_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
         if (func_argv[3])
             free (func_argv[3]);
         if (func_argv[4])
@@ -2613,9 +2575,9 @@ weechat_python_api_hook_print_cb (const void *pointer, void *data,
 
 API_FUNC(hook_print)
 {
-    char *buffer, *tags, *message, *function, *data, *result;
+    char *buffer, *tags, *message, *function, *data;
+    const char *result;
     int strip_colors;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
     buffer = NULL;
@@ -2638,7 +2600,7 @@ API_FUNC(hook_print)
                                                        function,
                                                        data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 int
@@ -2651,7 +2613,7 @@ weechat_python_api_hook_signal_cb (const void *pointer, void *data,
     char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
     static char str_value[64];
-    int *rc, ret, free_needed;
+    int *rc, ret;
 
     script = (struct t_plugin_script *)pointer;
     plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
@@ -2660,7 +2622,6 @@ weechat_python_api_hook_signal_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (signal) ? (char *)signal : empty_arg;
-        free_needed = 0;
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
         {
             func_argv[2] = (signal_data) ? (char *)signal_data : empty_arg;
@@ -2677,8 +2638,7 @@ weechat_python_api_hook_signal_cb (const void *pointer, void *data,
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
         {
-            func_argv[2] = API_PTR2STR(signal_data);
-            free_needed = 1;
+            func_argv[2] = (char *)API_PTR2STR(signal_data);
         }
         else
             func_argv[2] = empty_arg;
@@ -2695,8 +2655,6 @@ weechat_python_api_hook_signal_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (free_needed && func_argv[2])
-            free (func_argv[2]);
 
         return ret;
     }
@@ -2706,8 +2664,8 @@ weechat_python_api_hook_signal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_signal)
 {
-    char *signal, *function, *data, *result;
-    PyObject *return_value;
+    char *signal, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
     signal = NULL;
@@ -2723,7 +2681,7 @@ API_FUNC(hook_signal)
                                                         function,
                                                         data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_signal_send)
@@ -2808,8 +2766,8 @@ weechat_python_api_hook_hsignal_cb (const void *pointer, void *data,
 
 API_FUNC(hook_hsignal)
 {
-    char *signal, *function, *data, *result;
-    PyObject *return_value;
+    char *signal, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
     signal = NULL;
@@ -2825,7 +2783,7 @@ API_FUNC(hook_hsignal)
                                                          function,
                                                          data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_hsignal_send)
@@ -2894,8 +2852,8 @@ weechat_python_api_hook_config_cb (const void *pointer, void *data,
 
 API_FUNC(hook_config)
 {
-    char *option, *function, *data, *result;
-    PyObject *return_value;
+    char *option, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
     option = NULL;
@@ -2911,7 +2869,7 @@ API_FUNC(hook_config)
                                                         function,
                                                         data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 char *
@@ -2946,8 +2904,8 @@ weechat_python_api_hook_modifier_cb (const void *pointer, void *data,
 
 API_FUNC(hook_modifier)
 {
-    char *modifier, *function, *data, *result;
-    PyObject *return_value;
+    char *modifier, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
     modifier = NULL;
@@ -2963,7 +2921,7 @@ API_FUNC(hook_modifier)
                                                           function,
                                                           data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_modifier_exec)
@@ -3013,8 +2971,8 @@ weechat_python_api_hook_info_cb (const void *pointer, void *data,
 
 API_FUNC(hook_info)
 {
-    char *info_name, *description, *args_description, *function, *data, *result;
-    PyObject *return_value;
+    char *info_name, *description, *args_description, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
     info_name = NULL;
@@ -3035,7 +2993,7 @@ API_FUNC(hook_info)
                                                       function,
                                                       data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_hashtable *
@@ -3077,8 +3035,8 @@ weechat_python_api_hook_info_hashtable_cb (const void *pointer, void *data,
 API_FUNC(hook_info_hashtable)
 {
     char *info_name, *description, *args_description, *output_description;
-    char *function, *data, *result;
-    PyObject *return_value;
+    char *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
     info_name = NULL;
@@ -3102,7 +3060,7 @@ API_FUNC(hook_info_hashtable)
                                                                 function,
                                                                 data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_infolist *
@@ -3123,7 +3081,7 @@ weechat_python_api_hook_infolist_cb (const void *pointer, void *data,
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
         func_argv[1] = (infolist_name) ? (char *)infolist_name : empty_arg;
-        func_argv[2] = API_PTR2STR(obj_pointer);
+        func_argv[2] = (char *)API_PTR2STR(obj_pointer);
         func_argv[3] = (arguments) ? (char *)arguments : empty_arg;
 
         result = (struct t_infolist *)weechat_python_exec (
@@ -3131,9 +3089,6 @@ weechat_python_api_hook_infolist_cb (const void *pointer, void *data,
             WEECHAT_SCRIPT_EXEC_STRING,
             ptr_function,
             "ssss", func_argv);
-
-        if (func_argv[2])
-            free (func_argv[2]);
 
         return result;
     }
@@ -3144,8 +3099,8 @@ weechat_python_api_hook_infolist_cb (const void *pointer, void *data,
 API_FUNC(hook_infolist)
 {
     char *infolist_name, *description, *pointer_description, *args_description;
-    char *function, *data, *result;
-    PyObject *return_value;
+    char *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
     infolist_name = NULL;
@@ -3169,7 +3124,7 @@ API_FUNC(hook_infolist)
                                                           function,
                                                           data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 struct t_hashtable *
@@ -3207,8 +3162,8 @@ weechat_python_api_hook_focus_cb (const void *pointer, void *data,
 
 API_FUNC(hook_focus)
 {
-    char *area, *function, *data, *result;
-    PyObject *return_value;
+    char *area, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "hook_focus", API_RETURN_EMPTY);
     area = NULL;
@@ -3224,7 +3179,7 @@ API_FUNC(hook_focus)
                                                        function,
                                                        data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hook_set)
@@ -3288,7 +3243,7 @@ weechat_python_api_buffer_input_data_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
         func_argv[2] = (input_data) ? (char *)input_data : empty_arg;
 
         rc = (int *) weechat_python_exec (script,
@@ -3302,8 +3257,6 @@ weechat_python_api_buffer_input_data_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -3327,7 +3280,7 @@ weechat_python_api_buffer_close_cb (const void *pointer, void *data,
     if (ptr_function && ptr_function[0])
     {
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(buffer);
+        func_argv[1] = (char *)API_PTR2STR(buffer);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -3340,8 +3293,6 @@ weechat_python_api_buffer_close_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
 
         return ret;
     }
@@ -3352,8 +3303,7 @@ weechat_python_api_buffer_close_cb (const void *pointer, void *data,
 API_FUNC(buffer_new)
 {
     char *name, *function_input, *data_input, *function_close, *data_close;
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
     name = NULL;
@@ -3375,14 +3325,13 @@ API_FUNC(buffer_new)
                                                        function_close,
                                                        data_close));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_search)
 {
     char *plugin, *name;
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
     plugin = NULL;
@@ -3392,13 +3341,12 @@ API_FUNC(buffer_search)
 
     result = API_PTR2STR(weechat_buffer_search (plugin, name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_search_main)
 {
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     /* make C compiler happy */
     (void) args;
@@ -3407,13 +3355,12 @@ API_FUNC(buffer_search_main)
 
     result = API_PTR2STR(weechat_buffer_search_main ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(current_buffer)
 {
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     /* make C compiler happy */
     (void) args;
@@ -3422,7 +3369,7 @@ API_FUNC(current_buffer)
 
     result = API_PTR2STR(weechat_current_buffer ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_clear)
@@ -3519,8 +3466,8 @@ API_FUNC(buffer_get_string)
 
 API_FUNC(buffer_get_pointer)
 {
-    char *buffer, *property, *result;
-    PyObject *return_value;
+    char *buffer, *property;
+    const char *result;
 
     API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3531,7 +3478,7 @@ API_FUNC(buffer_get_pointer)
     result = API_PTR2STR(weechat_buffer_get_pointer (API_STR2PTR(buffer),
                                                      property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(buffer_set)
@@ -3586,8 +3533,7 @@ API_FUNC(buffer_match_list)
 
 API_FUNC(current_window)
 {
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     /* make C compiler happy */
     (void) args;
@@ -3596,13 +3542,13 @@ API_FUNC(current_window)
 
     result = API_PTR2STR(weechat_current_window ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_search_with_buffer)
 {
-    char *buffer, *result;
-    PyObject *return_value;
+    char *buffer;
+    const char *result;
 
     API_INIT_FUNC(1, "window_search_with_buffer", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3611,7 +3557,7 @@ API_FUNC(window_search_with_buffer)
 
     result = API_PTR2STR(weechat_window_search_with_buffer (API_STR2PTR(buffer)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_get_integer)
@@ -3648,8 +3594,8 @@ API_FUNC(window_get_string)
 
 API_FUNC(window_get_pointer)
 {
-    char *window, *property, *result;
-    PyObject *return_value;
+    char *window, *property;
+    const char *result;
 
     API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
     window = NULL;
@@ -3660,7 +3606,7 @@ API_FUNC(window_get_pointer)
     result = API_PTR2STR(weechat_window_get_pointer (API_STR2PTR(window),
                                                      property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(window_set_title)
@@ -3679,9 +3625,9 @@ API_FUNC(window_set_title)
 
 API_FUNC(nicklist_add_group)
 {
-    char *buffer, *parent_group, *name, *color, *result;
+    char *buffer, *parent_group, *name, *color;
+    const char *result;
     int visible;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3699,13 +3645,13 @@ API_FUNC(nicklist_add_group)
                                                      color,
                                                      visible));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_search_group)
 {
-    char *buffer, *from_group, *name, *result;
-    PyObject *return_value;
+    char *buffer, *from_group, *name;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3718,14 +3664,14 @@ API_FUNC(nicklist_search_group)
                                                         API_STR2PTR(from_group),
                                                         name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_add_nick)
 {
-    char *buffer, *group, *name, *color, *prefix, *prefix_color, *result;
+    char *buffer, *group, *name, *color, *prefix, *prefix_color;
+    const char *result;
     int visible;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3747,13 +3693,13 @@ API_FUNC(nicklist_add_nick)
                                                     prefix_color,
                                                     visible));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_search_nick)
 {
-    char *buffer, *from_group, *name, *result;
-    PyObject *return_value;
+    char *buffer, *from_group, *name;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3766,7 +3712,7 @@ API_FUNC(nicklist_search_nick)
                                                        API_STR2PTR(from_group),
                                                        name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_remove_group)
@@ -3855,8 +3801,8 @@ API_FUNC(nicklist_group_get_string)
 
 API_FUNC(nicklist_group_get_pointer)
 {
-    char *buffer, *group, *property, *result;
-    PyObject *return_value;
+    char *buffer, *group, *property;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3869,7 +3815,7 @@ API_FUNC(nicklist_group_get_pointer)
                                                              API_STR2PTR(group),
                                                              property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_group_set)
@@ -3932,8 +3878,8 @@ API_FUNC(nicklist_nick_get_string)
 
 API_FUNC(nicklist_nick_get_pointer)
 {
-    char *buffer, *nick, *property, *result;
-    PyObject *return_value;
+    char *buffer, *nick, *property;
+    const char *result;
 
     API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
     buffer = NULL;
@@ -3946,7 +3892,7 @@ API_FUNC(nicklist_nick_get_pointer)
                                                             API_STR2PTR(nick),
                                                             property));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(nicklist_nick_set)
@@ -3971,8 +3917,8 @@ API_FUNC(nicklist_nick_set)
 
 API_FUNC(bar_item_search)
 {
-    char *name, *result;
-    PyObject *return_value;
+    char *name;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_item_search", API_RETURN_EMPTY);
     name = NULL;
@@ -3981,7 +3927,7 @@ API_FUNC(bar_item_search)
 
     result = API_PTR2STR(weechat_bar_item_search (name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 char *
@@ -4005,9 +3951,9 @@ weechat_python_api_bar_item_build_cb (const void *pointer, void *data,
         {
             /* new callback: data, item, window, buffer, extra_info */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-            func_argv[1] = API_PTR2STR(item);
-            func_argv[2] = API_PTR2STR(window);
-            func_argv[3] = API_PTR2STR(buffer);
+            func_argv[1] = (char *)API_PTR2STR(item);
+            func_argv[2] = (char *)API_PTR2STR(window);
+            func_argv[3] = (char *)API_PTR2STR(buffer);
             func_argv[4] = weechat_python_hashtable_to_dict (extra_info);
 
             ret = (char *)weechat_python_exec (script,
@@ -4015,12 +3961,6 @@ weechat_python_api_bar_item_build_cb (const void *pointer, void *data,
                                                ptr_function + 7,
                                                "ssssO", func_argv);
 
-            if (func_argv[1])
-                free (func_argv[1]);
-            if (func_argv[2])
-                free (func_argv[2]);
-            if (func_argv[3])
-                free (func_argv[3]);
             if (func_argv[4])
             {
                 Py_XDECREF((PyObject *)func_argv[4]);
@@ -4030,18 +3970,13 @@ weechat_python_api_bar_item_build_cb (const void *pointer, void *data,
         {
             /* old callback: data, item, window */
             func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-            func_argv[1] = API_PTR2STR(item);
-            func_argv[2] = API_PTR2STR(window);
+            func_argv[1] = (char *)API_PTR2STR(item);
+            func_argv[2] = (char *)API_PTR2STR(window);
 
             ret = (char *)weechat_python_exec (script,
                                                WEECHAT_SCRIPT_EXEC_STRING,
                                                ptr_function,
                                                "sss", func_argv);
-
-            if (func_argv[1])
-                free (func_argv[1]);
-            if (func_argv[2])
-                free (func_argv[2]);
         }
 
         return ret;
@@ -4052,8 +3987,8 @@ weechat_python_api_bar_item_build_cb (const void *pointer, void *data,
 
 API_FUNC(bar_item_new)
 {
-    char *name, *function, *data, *result;
-    PyObject *return_value;
+    char *name, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
     name = NULL;
@@ -4069,7 +4004,7 @@ API_FUNC(bar_item_new)
                                                          function,
                                                          data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_item_update)
@@ -4102,8 +4037,8 @@ API_FUNC(bar_item_remove)
 
 API_FUNC(bar_search)
 {
-    char *name, *result;
-    PyObject *return_value;
+    char *name;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_search", API_RETURN_EMPTY);
     name = NULL;
@@ -4112,15 +4047,15 @@ API_FUNC(bar_search)
 
     result = API_PTR2STR(weechat_bar_search (name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_new)
 {
     char *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max;
-    char *color_fg, *color_delim, *color_bg, *separator, *items, *result;
-    PyObject *return_value;
+    char *color_fg, *color_delim, *color_bg, *separator, *items;
+    const char *result;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     name = NULL;
@@ -4160,7 +4095,7 @@ API_FUNC(bar_new)
                                           separator,
                                           items));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(bar_set)
@@ -4273,8 +4208,7 @@ API_FUNC(info_get_hashtable)
 
 API_FUNC(infolist_new)
 {
-    char *result;
-    PyObject *return_value;
+    const char *result;
 
     /* make C compiler happy */
     (void) args;
@@ -4282,13 +4216,13 @@ API_FUNC(infolist_new)
     API_INIT_FUNC(1, "infolist_new", API_RETURN_EMPTY);
     result = API_PTR2STR(weechat_infolist_new ());
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_item)
 {
-    char *infolist, *result;
-    PyObject *return_value;
+    char *infolist;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_item", API_RETURN_EMPTY);
     infolist = NULL;
@@ -4297,14 +4231,14 @@ API_FUNC(infolist_new_item)
 
     result = API_PTR2STR(weechat_infolist_new_item (API_STR2PTR(infolist)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_integer)
 {
-    char *item, *name, *result;
+    char *item, *name;
+    const char *result;
     int value;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
     item = NULL;
@@ -4317,13 +4251,13 @@ API_FUNC(infolist_new_var_integer)
                                                            name,
                                                            value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_string)
 {
-    char *item, *name, *value, *result;
-    PyObject *return_value;
+    char *item, *name, *value;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
     item = NULL;
@@ -4336,13 +4270,13 @@ API_FUNC(infolist_new_var_string)
                                                           name,
                                                           value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_pointer)
 {
-    char *item, *name, *value, *result;
-    PyObject *return_value;
+    char *item, *name, *value;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
     item = NULL;
@@ -4355,14 +4289,14 @@ API_FUNC(infolist_new_var_pointer)
                                                            name,
                                                            API_STR2PTR(value)));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_new_var_time)
 {
-    char *item, *name, *result;
+    char *item, *name;
+    const char *result;
     int value;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     item = NULL;
@@ -4375,13 +4309,13 @@ API_FUNC(infolist_new_var_time)
                                                         name,
                                                         value));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_search_var)
 {
-    char *infolist, *name, *result;
-    PyObject *return_value;
+    char *infolist, *name;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
     infolist = NULL;
@@ -4392,13 +4326,13 @@ API_FUNC(infolist_search_var)
     result = API_PTR2STR(weechat_infolist_search_var (API_STR2PTR(infolist),
                                                       name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_get)
 {
-    char *name, *pointer, *arguments, *result;
-    PyObject *return_value;
+    char *name, *pointer, *arguments;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
     name = NULL;
@@ -4411,7 +4345,7 @@ API_FUNC(infolist_get)
                                                API_STR2PTR(pointer),
                                                arguments));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_next)
@@ -4509,8 +4443,8 @@ API_FUNC(infolist_string)
 
 API_FUNC(infolist_pointer)
 {
-    char *infolist, *variable, *result;
-    PyObject *return_value;
+    char *infolist, *variable;
+    const char *result;
 
     API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
     infolist = NULL;
@@ -4521,7 +4455,7 @@ API_FUNC(infolist_pointer)
     result = API_PTR2STR(weechat_infolist_pointer (API_STR2PTR(infolist),
                                                    variable));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(infolist_time)
@@ -4567,8 +4501,8 @@ API_FUNC(infolist_free)
 
 API_FUNC(hdata_get)
 {
-    char *name, *result;
-    PyObject *return_value;
+    char *name;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_get", API_RETURN_EMPTY);
     name = NULL;
@@ -4577,7 +4511,7 @@ API_FUNC(hdata_get)
 
     result = API_PTR2STR(weechat_hdata_get (name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_get_var_offset)
@@ -4668,8 +4602,8 @@ API_FUNC(hdata_get_var_hdata)
 
 API_FUNC(hdata_get_list)
 {
-    char *hdata, *name, *result;
-    PyObject *return_value;
+    char *hdata, *name;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
     hdata = NULL;
@@ -4680,7 +4614,7 @@ API_FUNC(hdata_get_list)
     result = API_PTR2STR(weechat_hdata_get_list (API_STR2PTR(hdata),
                                                  name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_check_pointer)
@@ -4704,9 +4638,9 @@ API_FUNC(hdata_check_pointer)
 
 API_FUNC(hdata_move)
 {
-    char *result, *hdata, *pointer;
+    char *hdata, *pointer;
+    const char *result;
     int count;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
     hdata = NULL;
@@ -4719,14 +4653,14 @@ API_FUNC(hdata_move)
                                              API_STR2PTR(pointer),
                                              count));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_search)
 {
-    char *result, *hdata, *pointer, *search;
+    char *hdata, *pointer, *search;
+    const char *result;
     int move;
-    PyObject *return_value;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
     hdata = NULL;
@@ -4741,7 +4675,7 @@ API_FUNC(hdata_search)
                                                search,
                                                move));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_char)
@@ -4822,8 +4756,8 @@ API_FUNC(hdata_string)
 
 API_FUNC(hdata_pointer)
 {
-    char *hdata, *pointer, *name, *result;
-    PyObject *return_value;
+    char *hdata, *pointer, *name;
+    const char *result;
 
     API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
     hdata = NULL;
@@ -4836,7 +4770,7 @@ API_FUNC(hdata_pointer)
                                                 API_STR2PTR(pointer),
                                                 name));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(hdata_time)
@@ -4966,9 +4900,9 @@ weechat_python_api_upgrade_read_cb (const void *pointer, void *data,
         snprintf (str_object_id, sizeof (str_object_id), "%d", object_id);
 
         func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
-        func_argv[1] = API_PTR2STR(upgrade_file);
+        func_argv[1] = (char *)API_PTR2STR(upgrade_file);
         func_argv[2] = str_object_id;
-        func_argv[3] = API_PTR2STR(infolist);
+        func_argv[3] = (char *)API_PTR2STR(infolist);
 
         rc = (int *) weechat_python_exec (script,
                                           WEECHAT_SCRIPT_EXEC_INT,
@@ -4982,10 +4916,6 @@ weechat_python_api_upgrade_read_cb (const void *pointer, void *data,
             ret = *rc;
             free (rc);
         }
-        if (func_argv[1])
-            free (func_argv[1]);
-        if (func_argv[3])
-            free (func_argv[3]);
 
         return ret;
     }
@@ -4995,8 +4925,8 @@ weechat_python_api_upgrade_read_cb (const void *pointer, void *data,
 
 API_FUNC(upgrade_new)
 {
-    char *filename, *function, *data, *result;
-    PyObject *return_value;
+    char *filename, *function, *data;
+    const char *result;
 
     API_INIT_FUNC(1, "upgrade_new", API_RETURN_EMPTY);
     filename = NULL;
@@ -5014,7 +4944,7 @@ API_FUNC(upgrade_new)
             function,
             data));
 
-    API_RETURN_STRING_FREE(result);
+    API_RETURN_STRING(result);
 }
 
 API_FUNC(upgrade_write_object)

@@ -67,7 +67,7 @@ extern struct t_hashtable *weechat_php_array_to_hashtable (zval* arr,
                                                            const char *type_keys,
                                                            const char *type_values);
 extern zval *weechat_php_func_map_get (const char *func_name);
-extern char *weechat_php_func_map_add (zval *ofunc);
+extern const char *weechat_php_func_map_add (zval *ofunc);
 extern void *weechat_php_exec (struct t_plugin_script *script,
                                int ret_type,
                                const char *function,
