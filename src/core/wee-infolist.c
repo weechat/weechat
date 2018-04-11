@@ -147,6 +147,7 @@ infolist_new_var_integer (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (int));
         if (new_var->value)
             *((int *)new_var->value) = value;
+        new_var->size = 0;  /* not used for an integer */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -181,6 +182,7 @@ infolist_new_var_string (struct t_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = INFOLIST_STRING;
         new_var->value = (value) ? strdup (value) : NULL;
+        new_var->size = 0;  /* not used for a string */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -215,6 +217,7 @@ infolist_new_var_pointer (struct t_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = INFOLIST_POINTER;
         new_var->value = pointer;
+        new_var->size = 0;  /* not used for a pointer */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -288,6 +291,7 @@ infolist_new_var_time (struct t_infolist_item *item,
         new_var->value = malloc (sizeof (time_t));
         if (new_var->value)
             *((time_t *)new_var->value) = time;
+        new_var->size = 0;  /* not used for a time */
 
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
