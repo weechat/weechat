@@ -589,6 +589,13 @@ weechat_php_exec (struct t_plugin_script *script, int ret_type,
                 convert_to_string (&zretval);
                 ret_value = strdup ((char *)Z_STRVAL(zretval));
             }
+            else if (ret_type == WEECHAT_SCRIPT_EXEC_POINTER)
+            {
+                convert_to_string (&zretval);
+                ret_value = plugin_script_str2ptr (weechat_php_plugin,
+                                                   script->name, function,
+                                                   (char *)Z_STRVAL(zretval));
+            }
             else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
             {
                 convert_to_long (&zretval);

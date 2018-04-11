@@ -231,6 +231,20 @@ weechat_js_exec (struct t_plugin_script *script,
             v8::String::Utf8Value temp_str(ret_js);
             ret_value = (*temp_str) ? strdup(*temp_str) : NULL;
         }
+        else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (ret_js->IsString()))
+        {
+            v8::String::Utf8Value temp_str(ret_js);
+            if (*temp_str)
+            {
+                ret_value = plugin_script_str2ptr (weechat_js_plugin,
+                                                   script->name, function,
+                                                   *temp_str);
+            }
+            else
+            {
+                ret_value = NULL;
+            }
+        }
         else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (ret_js->IsInt32()))
         {
             ret_int = (int *)malloc (sizeof (*ret_int));

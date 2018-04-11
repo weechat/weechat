@@ -413,6 +413,14 @@ weechat_perl_exec (struct t_plugin_script *script,
                 ret_value = strdup (SvPV_nolen (ret_s));
                 SvREFCNT_dec (ret_s);
             }
+            else if (ret_type == WEECHAT_SCRIPT_EXEC_POINTER)
+            {
+                ret_s = newSVsv (POPs);
+                ret_value = plugin_script_str2ptr (weechat_perl_plugin,
+                                                   script->name, function,
+                                                   SvPV_nolen (ret_s));
+                SvREFCNT_dec (ret_s);
+            }
             else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
             {
                 ret_i = malloc (sizeof (*ret_i));

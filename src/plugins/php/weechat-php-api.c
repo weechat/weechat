@@ -2930,7 +2930,7 @@ weechat_php_api_hook_infolist_cb (const void *pointer, void *data,
     func_argv[3] = (arguments) ? (char *)arguments : weechat_php_empty_arg;
 
     weechat_php_cb (pointer, data, func_argv, "ssss",
-                    WEECHAT_SCRIPT_EXEC_STRING, &rc);
+                    WEECHAT_SCRIPT_EXEC_POINTER, &rc);
 
     return rc;
 }

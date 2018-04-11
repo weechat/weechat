@@ -440,7 +440,7 @@ weechat_python_exec (struct t_plugin_script *script,
     struct t_plugin_script *old_python_current_script;
     PyThreadState *old_interpreter;
     PyObject *evMain, *evDict, *evFunc, *rc;
-    void *argv2[16], *ret_value;
+    void *argv2[16], *ret_value, *ret_temp;
     int i, argc, *ret_int;
 
     ret_value = NULL;
@@ -516,6 +516,36 @@ weechat_python_exec (struct t_plugin_script *script,
             ret_value = strdup (PyBytes_AsString (rc));
         else
             ret_value = NULL;
+        Py_XDECREF(rc);
+    }
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (PyUnicode_Check (rc)))
+    {
+        ret_temp = weechat_python_unicode_to_string (rc);
+        if (ret_temp)
+        {
+            ret_value = plugin_script_str2ptr (weechat_python_plugin,
+                                               script->name, function,
+                                               ret_temp);
+            free (ret_temp);
+        }
+        else
+        {
+            ret_value = NULL;
+        }
+        Py_XDECREF(rc);
+    }
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (PyBytes_Check (rc)))
+    {
+        if (PyBytes_AsString (rc))
+        {
+            ret_value = plugin_script_str2ptr (weechat_python_plugin,
+                                               script->name, function,
+                                               PyBytes_AsString (rc));
+        }
+        else
+        {
+            ret_value = NULL;
+        }
         Py_XDECREF(rc);
     }
     else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (PY_INTEGER_CHECK(rc)))

@@ -527,6 +527,19 @@ weechat_ruby_exec (struct t_plugin_script *script,
         else
             ret_value = NULL;
     }
+    else if ((TYPE(rc) == T_STRING) && (ret_type == WEECHAT_SCRIPT_EXEC_POINTER))
+    {
+        if (StringValuePtr (rc))
+        {
+            ret_value = plugin_script_str2ptr (weechat_ruby_plugin,
+                                               script->name, function,
+                                               StringValuePtr (rc));
+        }
+        else
+        {
+            ret_value = NULL;
+        }
+    }
     else if ((TYPE(rc) == T_FIXNUM) && (ret_type == WEECHAT_SCRIPT_EXEC_INT))
     {
         ret_i = malloc (sizeof (*ret_i));

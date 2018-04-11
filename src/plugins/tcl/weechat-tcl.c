@@ -263,6 +263,18 @@ weechat_tcl_exec (struct t_plugin_script *script,
             else
                 ret_val = NULL;
         }
+        else if (ret_type == WEECHAT_SCRIPT_EXEC_POINTER)
+        {
+            ret_cv = Tcl_GetStringFromObj (Tcl_GetObjResult (interp), &i);
+            if (ret_cv)
+            {
+                ret_val = plugin_script_str2ptr (weechat_tcl_plugin,
+                                                 script->name, function,
+                                                 ret_cv);
+            }
+            else
+                ret_val = NULL;
+        }
         else if ( ret_type == WEECHAT_SCRIPT_EXEC_INT
                   && Tcl_GetIntFromObj (interp, Tcl_GetObjResult (interp), &i) == TCL_OK)
         {

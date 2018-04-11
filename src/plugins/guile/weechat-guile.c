@@ -337,7 +337,7 @@ weechat_guile_exec (struct t_plugin_script *script,
 {
     struct t_plugin_script *old_guile_current_script;
     SCM rc, old_current_module;
-    void *argv2[17], *ret_value;
+    void *argv2[17], *ret_value, *ret_temp;
     int i, argc, *ret_int;
 
     ret_value = NULL;
@@ -385,6 +385,21 @@ weechat_guile_exec (struct t_plugin_script *script,
     if ((ret_type == WEECHAT_SCRIPT_EXEC_STRING) && (scm_is_string (rc)))
     {
         ret_value = scm_to_locale_string (rc);
+    }
+    else if ((ret_type == WEECHAT_SCRIPT_EXEC_POINTER) && (scm_is_string (rc)))
+    {
+        ret_temp = scm_to_locale_string (rc);
+        if (ret_temp)
+        {
+            ret_value = plugin_script_str2ptr (weechat_guile_plugin,
+                                               script->name, function,
+                                               ret_temp);
+            free (ret_temp);
+        }
+        else
+        {
+            ret_value = NULL;
+        }
     }
     else if ((ret_type == WEECHAT_SCRIPT_EXEC_INT) && (scm_is_integer (rc)))
     {

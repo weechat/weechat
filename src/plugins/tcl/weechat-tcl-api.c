@@ -3343,7 +3343,7 @@ weechat_tcl_api_hook_infolist_cb (const void *pointer, void *data,
 
         result = (struct t_infolist *)weechat_tcl_exec (
             script,
-            WEECHAT_SCRIPT_EXEC_STRING,
+            WEECHAT_SCRIPT_EXEC_POINTER,
             ptr_function,
             "ssss", func_argv);
 
