@@ -1163,7 +1163,13 @@ class UnparsePhp(UnparsePython):
         """Add an AST Return in output."""
         self.fill('return')
         if node.value:
-            self.add(' ', node.value, ';')
+            self.add(
+                ' ',
+                (self.prefix, '$'),
+                node.value,
+                (self.prefix, None),
+                ';',
+            )
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
