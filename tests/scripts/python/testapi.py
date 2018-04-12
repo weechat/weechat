@@ -195,6 +195,38 @@ def test_hooks():
     weechat.unhook(hook_cmplt)
 
 
+def infolist_cb(data, infolist_name, pointer, arguments):
+    """Infolist callback."""
+    infolist = weechat.infolist_new()
+    check(infolist != '')
+    item = weechat.infolist_new_item(infolist)
+    check(item != '')
+    check(weechat.infolist_new_var_integer(item, 'integer', 123) != '')
+    check(weechat.infolist_new_var_string(item, 'string', 'test string') != '')
+    check(weechat.infolist_new_var_pointer(item, 'pointer', '0xabcdef') != '')
+    check(weechat.infolist_new_var_time(item, 'time', 1231231230) != '')
+    return infolist
+
+
+def test_infolist():
+    """Test infolist functions."""
+    hook_infolist = weechat.hook_infolist('infolist_test_script',
+                                          'description', '', '',
+                                          'infolist_cb', '')
+    check(weechat.infolist_get('infolist_does_not_exist', '', '') == '')
+    ptr_infolist = weechat.infolist_get('infolist_test_script', '', '')
+    check(ptr_infolist != '')
+    check(weechat.infolist_next(ptr_infolist) == 1)
+    check(weechat.infolist_integer(ptr_infolist, 'integer') == 123)
+    check(weechat.infolist_string(ptr_infolist, 'string') == 'test string')
+    check(weechat.infolist_pointer(ptr_infolist, 'pointer') == '0xabcdef')
+    check(weechat.infolist_time(ptr_infolist, 'time') == 1231231230)
+    check(weechat.infolist_fields(ptr_infolist) == 'i:integer,s:string,p:pointer,t:time')
+    check(weechat.infolist_next(ptr_infolist) == 0)
+    weechat.infolist_free(ptr_infolist)
+    weechat.unhook(hook_infolist)
+
+
 def cmd_test_cb(data, buf, args):
     """Run all the tests."""
     weechat.prnt('', '>>>')
@@ -207,6 +239,7 @@ def cmd_test_cb(data, buf, args):
     test_key()
     test_display()
     test_hooks()
+    test_infolist()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK
 

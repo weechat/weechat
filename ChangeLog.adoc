@@ -45,6 +45,10 @@ Documentation::
 
   * core: split man pages weechat and weechat-headless
 
+Tests::
+
+  * unit, scripts: add tests on infolists
+
 Build::
 
   * core: fix build with CMake and Ninja
