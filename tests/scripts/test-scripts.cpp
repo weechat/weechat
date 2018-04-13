@@ -138,15 +138,15 @@ TEST(Scripts, API)
     long long diff;
     const char *ptr_test_scripts_dir;
     const char *languages[][2] = {
-        { "python",    "py"  },
-        { "perl",      "pl"  },
-        { "ruby",      "rb"  },
-        { "lua",       "lua" },
-        { "tcl",       "tcl" },
-        { "scm",       "scm" },
-        { "jvascript", "js"  },
-        { "php",       "php" },
-        { NULL,        NULL  }
+        { "python",     "py"  },
+        { "perl",       "pl"  },
+        { "ruby",       "rb"  },
+        { "lua",        "lua" },
+        { "tcl",        "tcl" },
+        { "scm",        "scm" },
+        { "javascript", "js"  },
+        { "php",        "php" },
+        { NULL,         NULL  }
     };
     int i;
 
