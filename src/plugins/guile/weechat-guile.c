@@ -1247,12 +1247,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     guile_quiet = 1;
-    plugin_script_end (plugin, &guile_data);
     if (guile_script_eval)
     {
         weechat_guile_unload (guile_script_eval);
         guile_script_eval = NULL;
     }
+    plugin_script_end (plugin, &guile_data);
     guile_quiet = 0;
 
     /* unprotect module */

@@ -1281,12 +1281,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     lua_quiet = 1;
-    plugin_script_end (plugin, &lua_data);
     if (lua_script_eval)
     {
         weechat_lua_unload (lua_script_eval);
         lua_script_eval = NULL;
     }
+    plugin_script_end (plugin, &lua_data);
     lua_quiet = 0;
 
     /* free some data */

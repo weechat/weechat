@@ -963,12 +963,12 @@ EXPORT int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     js_quiet = 1;
-    plugin_script_end (plugin, &js_data);
     if (js_script_eval)
     {
         weechat_js_unload (js_script_eval);
         js_script_eval = NULL;
     }
+    plugin_script_end (plugin, &js_data);
     js_quiet = 0;
 
     /* free some data */

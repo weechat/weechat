@@ -1609,12 +1609,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     python_quiet = 1;
-    plugin_script_end (plugin, &python_data);
     if (python_script_eval)
     {
         weechat_python_unload (python_script_eval);
         python_script_eval = NULL;
     }
+    plugin_script_end (plugin, &python_data);
     python_quiet = 0;
 
     /* free python interpreter */

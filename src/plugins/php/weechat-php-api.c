@@ -67,6 +67,8 @@
     plugin_script_str2ptr (weechat_php_plugin,                          \
                            PHP_CURRENT_SCRIPT_NAME,                     \
                            php_function_name, __string)
+#define API_STATIC_STRING(__string)                                     \
+    plugin_script_get_static_string(&php_data, __string);
 #define API_RETURN_OK RETURN_LONG((long)1)
 #define API_RETURN_ERROR RETURN_LONG((long)0)
 #define API_RETURN_EMPTY RETURN_NULL()
@@ -2824,7 +2826,7 @@ weechat_php_api_hook_info_cb (const void *pointer,
     weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_STRING, &rc);
 
-    return rc;
+    return API_STATIC_STRING(rc);
 }
 
 API_FUNC(hook_info)

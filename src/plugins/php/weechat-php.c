@@ -1319,12 +1319,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     php_quiet = 1;
-    plugin_script_end (plugin, &php_data);
     if (php_script_eval)
     {
         weechat_php_unload (php_script_eval);
         php_script_eval = NULL;
     }
+    plugin_script_end (plugin, &php_data);
     php_quiet = 0;
 
     if (weechat_php_func_map)

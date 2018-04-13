@@ -33,6 +33,8 @@ enum t_weechat_script_exec_type
 
 #define WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE 16
 
+#define WEECHAT_SCRIPT_STATIC_STRINGS 32
+
 #define WEECHAT_SCRIPT_EVAL_NAME "__eval__"
 
 #define WEECHAT_SCRIPT_MSG_NOT_INIT(__current_script,                   \
@@ -78,6 +80,8 @@ struct t_plugin_script_data
     struct t_config_option **config_look_eval_keep_context;
     struct t_plugin_script **scripts;
     struct t_plugin_script **last_script;
+    char *static_string[WEECHAT_SCRIPT_STATIC_STRINGS];
+    int index_static_string;
 
     /* callbacks */
     int (*callback_command) (const void *pointer, void *data,
@@ -125,6 +129,8 @@ extern void *plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
                                     const char *script_name,
                                     const char *function_name,
                                     const char *pointer_str);
+extern char *plugin_script_get_static_string (struct t_plugin_script_data *plugin_data,
+                                              char *string);
 extern char *plugin_script_build_function_and_data (const char *function,
                                                     const char *data);
 extern void plugin_script_get_function_and_data (void *callback_data,

@@ -1317,12 +1317,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     perl_quiet = 1;
-    plugin_script_end (plugin, &perl_data);
     if (perl_script_eval)
     {
         weechat_perl_unload (perl_script_eval);
         perl_script_eval = NULL;
     }
+    plugin_script_end (plugin, &perl_data);
     perl_quiet = 0;
 
 #ifndef MULTIPLICITY

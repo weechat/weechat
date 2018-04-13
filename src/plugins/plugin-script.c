@@ -171,6 +171,13 @@ plugin_script_init (struct t_weechat_plugin *weechat_plugin,
     char *action_signals[] = { "install", "remove", "autoload", NULL };
     int i, auto_load_scripts;
 
+    /* initialize static strings */
+    plugin_data->index_static_string = 0;
+    for (i = 0; i < WEECHAT_SCRIPT_STATIC_STRINGS; i++)
+    {
+        plugin_data->static_string[i] = NULL;
+    }
+
     /* initialize script configuration file (file: "<language>.conf") */
     plugin_script_config_init (weechat_plugin, plugin_data);
 
@@ -385,6 +392,29 @@ invalid:
         }
     }
     return NULL;
+}
+
+/*
+ * Gets a "static string": a string allocated that will be freed later
+ * (or when the plugin is unloaded).
+ *
+ * The "string" argument must have been allocated by free (or strdup, ...)
+ * and will be automatically freed later.
+ */
+
+char *
+plugin_script_get_static_string (struct t_plugin_script_data *plugin_data,
+                                 char *string)
+{
+    plugin_data->index_static_string = (plugin_data->index_static_string + 1) %
+        WEECHAT_SCRIPT_STATIC_STRINGS;
+
+    if (plugin_data->static_string[plugin_data->index_static_string])
+        free (plugin_data->static_string[plugin_data->index_static_string]);
+
+    plugin_data->static_string[plugin_data->index_static_string] = string;
+
+    return plugin_data->static_string[plugin_data->index_static_string];
 }
 
 /*
@@ -1742,7 +1772,7 @@ void
 plugin_script_end (struct t_weechat_plugin *weechat_plugin,
                    struct t_plugin_script_data *plugin_data)
 {
-    int scripts_loaded;
+    int scripts_loaded, i;
 
     /* unload all scripts */
     scripts_loaded = (*(plugin_data->scripts)) ? 1 : 0;
@@ -1756,6 +1786,16 @@ plugin_script_end (struct t_weechat_plugin *weechat_plugin,
     /* write config file (file: "<language>.conf") */
     weechat_config_write (*(plugin_data->config_file));
     weechat_config_free (*(plugin_data->config_file));
+
+    /* free static strings */
+    for (i = 0; i < WEECHAT_SCRIPT_STATIC_STRINGS; i++)
+    {
+        if (plugin_data->static_string[i])
+        {
+            free (plugin_data->static_string[i]);
+            plugin_data->static_string[i] = NULL;
+        }
+    }
 }
 
 /*

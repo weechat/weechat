@@ -57,6 +57,8 @@
     plugin_script_str2ptr (weechat_guile_plugin,                        \
                            GUILE_CURRENT_SCRIPT_NAME,                   \
                            guile_function_name, __string)
+#define API_STATIC_STRING(__string)                                     \
+    plugin_script_get_static_string(&guile_data, __string);
 #define API_SCM_TO_STRING(__str)                                        \
     weechat_guile_api_scm_to_string(__str,                              \
                                     guile_strings, &guile_num_strings)
@@ -2875,7 +2877,7 @@ weechat_guile_api_hook_info_cb (const void *pointer, void *data,
 {
     struct t_plugin_script *script;
     void *func_argv[3];
-    char empty_arg[1] = { '\0' };
+    char empty_arg[1] = { '\0' }, *result;
     const char *ptr_function, *ptr_data;
 
     script = (struct t_plugin_script *)pointer;
@@ -2887,10 +2889,12 @@ weechat_guile_api_hook_info_cb (const void *pointer, void *data,
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = (arguments) ? (char *)arguments : empty_arg;
 
-        return (const char *)weechat_guile_exec (script,
-                                                 WEECHAT_SCRIPT_EXEC_STRING,
-                                                 ptr_function,
-                                                 "sss", func_argv);
+        result = (char *)weechat_guile_exec (script,
+                                             WEECHAT_SCRIPT_EXEC_STRING,
+                                             ptr_function,
+                                             "sss", func_argv);
+
+        return API_STATIC_STRING(result);
     }
 
     return NULL;

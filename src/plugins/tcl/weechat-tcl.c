@@ -970,12 +970,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     tcl_quiet = 1;
-    plugin_script_end (plugin, &tcl_data);
     if (tcl_script_eval)
     {
         weechat_tcl_unload (tcl_script_eval);
         tcl_script_eval = NULL;
     }
+    plugin_script_end (plugin, &tcl_data);
     tcl_quiet = 0;
 
     /* free some data */

@@ -1425,12 +1425,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* unload all scripts */
     ruby_quiet = 1;
-    plugin_script_end (plugin, &ruby_data);
     if (ruby_script_eval)
     {
         weechat_ruby_unload (ruby_script_eval);
         ruby_script_eval = NULL;
     }
+    plugin_script_end (plugin, &ruby_data);
     ruby_quiet = 0;
 
     ruby_cleanup (0);
