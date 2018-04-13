@@ -97,12 +97,6 @@ TEST_GROUP(Scripts)
 
     void setup()
     {
-        /*
-         * TODO: fix memory leaks in javascript plugin
-         * and keep memory leak detection enabled
-         */
-        MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
-
         api_hook_print = hook_print (NULL,  /* plugin */
                                      NULL,  /* buffer */
                                      NULL,  /* tags */
@@ -116,12 +110,6 @@ TEST_GROUP(Scripts)
     void teardown()
     {
         unhook (api_hook_print);
-
-        /*
-         * TODO: fix memory leaks in javascript plugin
-         * and keep memory leak detection enabled
-         */
-        MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
     }
 };
 
@@ -148,7 +136,7 @@ TEST(Scripts, API)
         { "php",        "php" },
         { NULL,         NULL  }
     };
-    int i;
+    int i, turnoff_memleak;
 
     printf ("...\n");
 
@@ -198,6 +186,15 @@ TEST(Scripts, API)
     /* test the scripting API */
     for (i = 0; languages[i][0]; i++)
     {
+        /*
+         * TODO: fix memory leaks in javascript plugin
+         * and keep memory leak detection enabled
+         */
+        turnoff_memleak = (strcmp (languages[i][0], "javascript") == 0);
+
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOffNewDeleteOverloads();
+
         api_tests_ok = 0;
         api_tests_errors = 0;
         api_tests_count = 0;
@@ -260,6 +257,9 @@ TEST(Scripts, API)
          * and 2 messages when it is unloaded, so total is 4)
          */
         LONGS_EQUAL(0, api_tests_other);
+
+        if (turnoff_memleak)
+            MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
     }
 
     free (path_testapi_output_dir);
