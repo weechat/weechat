@@ -7425,6 +7425,7 @@ command_init ()
            "  /eval -n ${info:version}                       ==> 0.4.3\n"
            "  /eval -n ${env:HOME}                           ==> /home/user\n"
            "  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
+           "  /eval -n ${sec.data.freenode_password}         ==> secret\n"
            "  /eval -n ${window}                             ==> 0x2549aa0\n"
            "  /eval -n ${window.buffer}                      ==> 0x2549320\n"
            "  /eval -n ${window.buffer.full_name}            ==> core.weechat\n"

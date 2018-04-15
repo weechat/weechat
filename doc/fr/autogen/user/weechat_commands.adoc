@@ -317,6 +317,7 @@ Exemples (chaînes simples) :
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
+  /eval -n ${sec.data.freenode_password}         ==> secret
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
