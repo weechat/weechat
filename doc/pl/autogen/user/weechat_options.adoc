@@ -1179,10 +1179,10 @@
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** opis: pass:none[tytuł dla okna (terminal dla GUI Curses), ustawiany na starcie; pusty ciąg pozostawi tytuł bez zmian (zawartość jest przetwarzana, zobacz /help eval)]
+** opis: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"WeeChat ${info:version}"+`
+** domyślna wartość: `+""+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
 ** opis: pass:none[oddzielona przecinkami lista znaków (lub zakres znaków) rozważanych jako część słowa podświetlenia; każdy element może być pojedynczym znakiem, zakresem znaków (format: a-z), klasą znaków (przykład "alnum", zobacz man wctype); znak "!" przed elementem neguje go (znak NIE jest uznawany za część słowa); wartość "*" pasuje do dowolnego znaku; znaki unikodu są dozwolone w formacie \u1234, na przykład \u00A0 dla niełamliwej spacji (wspierane formaty można znaleźć w /help print)]

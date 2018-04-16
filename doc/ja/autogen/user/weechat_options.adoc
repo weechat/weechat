@@ -1179,10 +1179,10 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** 説明: pass:none[起動時に設定するウィンドウタイトル (Curses GUI 端末タイトル); 空文字列の場合、タイトルは変更されません (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"WeeChat ${info:version}"+`
+** デフォルト値: `+""+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
 ** 説明: pass:none[ハイライトする部分または文字と見なす文字 (または文字範囲) のカンマ区切りリスト; それぞれの要素は単一文字、文字範囲 (書式: a-z)、全角文字のクラス (例えば "alnum"、wctype の man 参照); 要素の前の "!" は否定を意味します (この文字は単語の一部とみなされません); "*" は任意の文字にマッチします; unicode 文字は \u1234 書式で使うことができます、例えば \u00A0 は固定スペースを意味します (サポートされる書式は /help print を参照してください)]

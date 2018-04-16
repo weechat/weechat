@@ -1179,10 +1179,10 @@
 ** valore predefinito: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** descrizione: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval)]
+** descrizione: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"WeeChat ${info:version}"+`
+** valore predefinito: `+""+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
 ** descrizione: pass:none[comma-separated list of chars (or range of chars) that are considered part or words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)]

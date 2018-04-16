@@ -3514,8 +3514,9 @@ config_weechat_init_options ()
         "window_title", "string",
         N_("title for window (terminal for Curses GUI), set on startup; "
            "an empty string will keep title unchanged "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "WeeChat ${info:version}", NULL, 0,
+           "(note: content is evaluated, see /help eval); example: "
+           "\"WeeChat ${info:version}\""),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &config_change_window_title, NULL, NULL,
         NULL, NULL, NULL);
