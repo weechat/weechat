@@ -61,6 +61,16 @@ struct t_eval_regex
     int last_match;
 };
 
+struct t_eval_context
+{
+    struct t_hashtable *pointers;
+    struct t_hashtable *extra_vars;
+    int extra_vars_eval;
+    const char *prefix;
+    const char *suffix;
+    struct t_eval_regex *regex;
+};
+
 extern int eval_is_true (const char *value);
 extern char *eval_expression (const char *expr,
                               struct t_hashtable *pointers,
