@@ -28,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix infinite loop in evaluation of strings (issue #1183)
   * core: change default value of option weechat.look.window_title from "WeeChat ${info:version}" to empty string (issue #1182)
   * irc: always set nick away status on WHO response (sent manually or automatically with server option "away_check")
   * irc: fix a crash when calling the function hdata_string on the "prefix" variable in the nick

@@ -717,14 +717,28 @@ char *
 eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 {
     const char *no_replace_prefix_list[] = { "if:", NULL };
+    char *result;
 
-    return string_replace_with_callback (expr,
-                                         eval_context->prefix,
-                                         eval_context->suffix,
-                                         no_replace_prefix_list,
-                                         &eval_replace_vars_cb,
-                                         eval_context,
-                                         NULL);
+    eval_context->recursion_count++;
+
+    if (eval_context->recursion_count < EVAL_RECURSION_MAX)
+    {
+        result = string_replace_with_callback (expr,
+                                               eval_context->prefix,
+                                               eval_context->suffix,
+                                               no_replace_prefix_list,
+                                               &eval_replace_vars_cb,
+                                               eval_context,
+                                               NULL);
+    }
+    else
+    {
+        result = strdup ("");
+    }
+
+    eval_context->recursion_count--;
+
+    return result;
 }
 
 /*
@@ -1253,6 +1267,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context.prefix = default_prefix;
     eval_context.suffix = default_suffix;
     eval_context.regex = NULL;
+    eval_context.recursion_count = 0;
 
     /*
      * set window/buffer with pointer to current window/buffer

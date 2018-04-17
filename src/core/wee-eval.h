@@ -28,6 +28,8 @@
 #define EVAL_DEFAULT_PREFIX "${"
 #define EVAL_DEFAULT_SUFFIX "}"
 
+#define EVAL_RECURSION_MAX  32
+
 struct t_hashtable;
 
 enum t_eval_logical_op
@@ -69,6 +71,7 @@ struct t_eval_context
     const char *prefix;
     const char *suffix;
     struct t_eval_regex *regex;
+    int recursion_count;
 };
 
 extern int eval_is_true (const char *value);
