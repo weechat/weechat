@@ -201,6 +201,14 @@ TEST(Eval, EvalCondition)
     hashtable_set (extra_vars, "test", "${buffer.number}");
     WEE_CHECK_EVAL("1", "${test} == 1");
 
+    /* test with another prefix/suffix */
+    hashtable_set (options, "prefix", "%(");
+    WEE_CHECK_EVAL("0", "${buffer.number} == 1");
+    WEE_CHECK_EVAL("1", "%(buffer.number} == 1");
+    hashtable_set (options, "suffix", ")%");
+    WEE_CHECK_EVAL("0", "${buffer.number} == 1");
+    WEE_CHECK_EVAL("1", "%(buffer.number)% == 1");
+
     hashtable_free (extra_vars);
     hashtable_free (options);
 }
@@ -387,7 +395,27 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("core.weechat", "${buffer.full_name}");
     WEE_CHECK_EVAL("core.weechat", "${window.buffer.full_name}");
 
+    /* test with another prefix/suffix */
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+    CHECK(options);
+    hashtable_set (options, "prefix", "<<<");
+    WEE_CHECK_EVAL("${info:version}", "${info:version}");
+    WEE_CHECK_EVAL("<info:version}", "<info:version}");
+    WEE_CHECK_EVAL("<<info:version}", "<<info:version}");
+    WEE_CHECK_EVAL(version_get_version (), "<<<info:version}");
+    WEE_CHECK_EVAL("1", "<<<buffer.number}");
+    hashtable_set (options, "suffix", ">>>");
+    WEE_CHECK_EVAL("${info:version}", "${info:version}");
+    WEE_CHECK_EVAL("<info:version>", "<info:version>");
+    WEE_CHECK_EVAL("<<info:version>>", "<<info:version>>");
+    WEE_CHECK_EVAL(version_get_version (), "<<<info:version>>>");
+    WEE_CHECK_EVAL("1", "<<<buffer.number>>>");
+
     hashtable_free (extra_vars);
+    hashtable_free (options);
 }
 
 /*
