@@ -1179,7 +1179,7 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** Beschreibung: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
+** Beschreibung: pass:none[Fenstertitel für Fenster (Terminal in dem Curses GUI läuft), wird beim Programmstart gesetzt; ein leerer Eintrag belässt den original Fenstertitel (Hinweis: Inhalt wird evaluiert, siehe /help eval); Beispiel: "WeeChat ${info:version}"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
