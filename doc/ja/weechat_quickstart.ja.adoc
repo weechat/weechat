@@ -65,37 +65,31 @@ WeeChat は常時 (例えば `/quit` コマンドの実行時など)
 設定を編集するには `/set`
 コマンドを使ってください。これは値を検査し、設定の変更をすぐに適用します。
 
-// TRANSLATION MISSING
-Help is available for options:
+ヘルプはオプションにも用意されています:
 
 ----
 /help config.section.option
 ----
 
-// TRANSLATION MISSING
-The plugin _fset_ allows you to easily browse options and change them.
+_fset_ プラグインを使えばオプションを簡単に閲覧、変更できます。
 
-// TRANSLATION MISSING
-For example to display WeeChat options:
+WeeChat オプションの表示:
 
 ----
 /fset weechat.*
 ----
 
-// TRANSLATION MISSING
-IRC options:
+IRC オプションの表示:
 
 ----
 /fset irc.*
 ----
 
-// TRANSLATION MISSING
-The `/fset` command has completion on part of option names, so for example if
-you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
-If you press kbd:[Enter], options about the hotlist are displayed.
+`/fset` コマンドに対してもオプション名の部分補完機能が使えるため、例えば `/fset hot`
+を入力した後、kbd:[Tab] を押すことで、`/fset hotlist` のように補完されます。その後
+kbd:[Enter] を押すことで、ホットリストに関するオプションが表示されます。
 
-// TRANSLATION MISSING
-For more information about `/fset` command and keys, see `/help fset`.
+`/fset` コマンドとキーについては `/help fset` を参照してください。
 
 [[core_vs_plugins]]
 == コア vs プラグイン
@@ -118,10 +112,9 @@ IRC サーバを追加するには `/server` コマンドを使ってくださ�
 /server add freenode chat.freenode.net
 ----
 
-// TRANSLATION MISSING
-In this command, `freenode` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect freenode` and the server options
-are _irc.server.freenode.xxx_.
+このコマンドにおいて、`freenode` は WeeChat が使う内部サーバ名です:
+接続時には `/connect freenode` を使うことが可能で、このサーバに関するオプションは
+_irc.server.freenode.xxx_ になります。
 
 書式が思い出せない場合はヘルプを利用してください:
 
@@ -237,10 +230,9 @@ kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
 /connect freenode
 ----
 
-// TRANSLATION MISSING
 [NOTE]
 このコマンドは、`/server`
-を使わずに新しいサーバの作成および接続ができます (see `/help connect`)。
+を使わずに新しいサーバの作成および接続ができます (`/help connect` を参照してください)。
 
 デフォルトでは、サーババッファは Weechat の _core_ バッファとマージされます。_core_
 バッファとサーババッファ間で切り替えたい場合は、kbd:[Ctrl+x] が使用できます。
@@ -335,8 +327,7 @@ WeeChat
 はデフォルトでたくさんのショートカットキーが設定されています。これらはドキュメントに記載されていますが、いくつか重要なキーがあります:
 
 - kbd:[Alt+←] / kbd:[Alt+→] または kbd:[F5] / kbd:[F6]: 前後のバッファに切り替える
-// TRANSLATION MISSING
-- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
+- kbd:[F1] / kbd:[F2]: バッファリストを含むバー ("buflist") をスクロール表示
 - kbd:[F7] / kbd:[F8]: 前後のウィンドウに切り替える (画面分割時)
 - kbd:[F9] / kbd:[F10]: タイトルバーをスクロール表示
 - kbd:[F11] / kbd:[F12]: ニックネーム一覧をスクロール表示
