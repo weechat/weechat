@@ -474,6 +474,86 @@ gui_hotlist_resort ()
     gui_hotlist_changed_signal (NULL);
 }
 
+struct t_gui_hotlist *
+gui_hotlist_get ()
+{
+    struct t_gui_hotlist *ptr_hotlist, *selected;
+
+    selected = gui_hotlist;
+
+    switch (CONFIG_INTEGER(config_look_hotlist_get_sort))
+    {
+        case CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_TIME_ASC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((ptr_hotlist->priority > selected->priority)
+                    || ((ptr_hotlist->priority == selected->priority)
+                        && (util_timeval_diff (&(ptr_hotlist->creation_time),
+                                               &(selected->creation_time)) > 0)))
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_TIME_DESC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((ptr_hotlist->priority > selected->priority)
+                    || ((ptr_hotlist->priority == selected->priority)
+                        && (util_timeval_diff (&(ptr_hotlist->creation_time),
+                                               &(selected->creation_time)) < 0)))
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_NUMBER_ASC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((ptr_hotlist->priority > selected->priority)
+                    || ((ptr_hotlist->priority == selected->priority)
+                        && (ptr_hotlist->buffer->number < selected->buffer->number)))
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_NUMBER_DESC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((ptr_hotlist->priority > selected->priority)
+                    || ((ptr_hotlist->priority == selected->priority)
+                        && (ptr_hotlist->buffer->number > selected->buffer->number)))
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_NUMBER_ASC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if (ptr_hotlist->buffer->number < selected->buffer->number)
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_NUMBER_DESC:
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if (ptr_hotlist->buffer->number > selected->buffer->number)
+                    selected = ptr_hotlist;
+            }
+            return selected;
+            break;
+        case CONFIG_LOOK_HOTLIST_GET_SORT_DEFAULT:
+            return ptr_hotlist;
+            break;
+    }
+    return NULL;
+}
+
 /*
  * Clears hotlist.
  *
