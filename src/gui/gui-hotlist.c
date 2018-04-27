@@ -518,7 +518,11 @@ gui_hotlist_smart_jump_target ()
 
     selected = gui_hotlist;
 
-    t_gui_hotlist_cmp cmp_gt = gui_hotlist_cmp_gt(CONFIG_INTEGER(config_look_hotlist_get_sort));
+    t_gui_hotlist_cmp cmp_gt = gui_hotlist_cmp_gt(
+            (!config_file_option_is_null(config_look_hotlist_smart_jump_order)) ?
+                CONFIG_INTEGER(config_look_hotlist_smart_jump_order) :
+                CONFIG_INTEGER(config_look_hotlist_sort)
+                );
 
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
             ptr_hotlist = ptr_hotlist->next_hotlist)

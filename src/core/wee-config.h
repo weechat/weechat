@@ -90,17 +90,6 @@ enum t_config_look_hotlist_sort
     CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC,
 };
 
-enum t_config_look_hotlist_get_sort
-{
-    CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_TIME_ASC = 0,
-    CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_TIME_DESC,
-    CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_NUMBER_ASC,
-    CONFIG_LOOK_HOTLIST_GET_SORT_GROUP_NUMBER_DESC,
-    CONFIG_LOOK_HOTLIST_GET_SORT_NUMBER_ASC,
-    CONFIG_LOOK_HOTLIST_GET_SORT_NUMBER_DESC,
-    CONFIG_LOOK_HOTLIST_GET_SORT_DEFAULT,
-};
-
 enum t_config_look_input_share
 {
     CONFIG_LOOK_INPUT_SHARE_NONE = 0,
@@ -193,8 +182,8 @@ extern struct t_config_option *config_look_hotlist_names_merged_buffers;
 extern struct t_config_option *config_look_hotlist_prefix;
 extern struct t_config_option *config_look_hotlist_remove;
 extern struct t_config_option *config_look_hotlist_short_names;
+extern struct t_config_option *config_look_hotlist_smart_jump_order;
 extern struct t_config_option *config_look_hotlist_sort;
-extern struct t_config_option *config_look_hotlist_get_sort;
 extern struct t_config_option *config_look_hotlist_suffix;
 extern struct t_config_option *config_look_hotlist_unique_numbers;
 extern struct t_config_option *config_look_input_cursor_scroll;
