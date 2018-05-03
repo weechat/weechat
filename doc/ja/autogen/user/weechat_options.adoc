@@ -741,7 +741,7 @@
 ** デフォルト値: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** 説明: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, other number = display max N messages count (from the highest to lowest priority)]
+** 説明: pass:none[任意のバッファに関するホットリストに表示されるメッセージ数の最大値: 0 = メッセージ数を表示しない、0 以外の数 = 最大で N 個のメッセージ数を表示 (最大から最低の優先度を持つメッセージ数)]
 ** タイプ: 整数
 ** 値: 0 .. 4
 ** デフォルト値: `+2+`
@@ -1179,7 +1179,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** 説明: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
+** 説明: pass:none[起動時に設定するウィンドウタイトル (Curses GUI 端末タイトル); 空文字列の場合、タイトルは変更されません (注意: 値は評価されます、/help eval を参照してください); 例: "WeeChat ${info:version}"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

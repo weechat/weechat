@@ -159,7 +159,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_xfer.network.send_ack]] *xfer.network.send_ack*
-** 説明: pass:none[send acks when receiving files; if disabled, the transfer may freeze if the sender is waiting for acks (for example a WeeChat sending a file with option xfer.network.fast_send set to off); on the other hand, disabling send of acks may prevent a freeze if the acks are not sent immediately to the sender]
+** 説明: pass:none[ファイル受信時に ack を送信; ack 送信を無効化すると、送信側が ack の受信を待つ (例えば送信側が xfer.network.fast_send を off に設定した WeeChat を使う) 場合にファイル転送が途中で停止される可能性があります; その一方で、ack 送信を無効化すると、送信側へすぐに ack を送信しなくとも途中停止を避けることができるかもしれません]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
