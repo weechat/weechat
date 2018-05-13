@@ -272,6 +272,7 @@ alias_command_init ()
            "       $n-: arguments from 'n' to last\n"
            "      $n-m: arguments from 'n' to 'm'\n"
            "        $*: all arguments\n"
+           "        $&: all arguments, with \" replaced by \\\"\n"
            "        $~: last argument\n"
            "      $var: where \"var\" is a local variable of buffer (see "
            "/buffer localvar)\n"
