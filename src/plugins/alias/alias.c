@@ -101,10 +101,11 @@ alias_search (const char *alias_name)
  */
 
 void
-alias_string_add_word (char **alias, int *length, const char *word)
+alias_string_add_word (char **alias, int *length, const char *word, int autoesc)
 {
     int length_word;
-    char *alias2;
+    char *alias2, *ac;
+    const char *c;
 
     if (!word)
         return;
@@ -113,10 +114,21 @@ alias_string_add_word (char **alias, int *length, const char *word)
     if (length_word == 0)
         return;
 
+    if (autoesc)
+    {
+        c = word;
+        while (*c)
+            if (*c++ == '"')
+                length_word++;
+        c = word;
+    }
     if (*alias == NULL)
     {
         *alias = malloc (length_word + 1);
-        strcpy (*alias, word);
+        if (autoesc)
+            ac = *alias;
+        else
+            strcpy (*alias, word);
     }
     else
     {
@@ -131,7 +143,20 @@ alias_string_add_word (char **alias, int *length, const char *word)
             return;
         }
         *alias = alias2;
-        strcat (*alias, word);
+        if (autoesc)
+           ac = *alias + strlen (*alias);
+        else
+           strcat (*alias, word);
+    }
+    if (autoesc)
+    {
+        while (*c)
+        {
+            if (*c == '"')
+                *ac++ = '\\';
+            *ac++ = *c++;
+        }
+        *ac = '\0';
     }
     *length += length_word;
 }
@@ -149,7 +174,7 @@ alias_string_add_word_range (char **alias, int *length, const char *start,
     word = weechat_strndup (start, end - start);
     if (word)
     {
-        alias_string_add_word (alias, length, word);
+        alias_string_add_word (alias, length, word, 0);
         free (word);
     }
 }
@@ -167,8 +192,8 @@ alias_string_add_arguments (char **alias, int *length, char **argv, int start,
     for (i = start; i <= end; i++)
     {
         if (i != start)
-            alias_string_add_word (alias, length, " ");
-        alias_string_add_word (alias, length, argv[i]);
+            alias_string_add_word (alias, length, " ", 0);
+        alias_string_add_word (alias, length, argv[i], 0);
     }
 }
 
@@ -212,7 +237,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
         {
             offset = 2;
             alias_string_add_word_range (&res, &length_res, start, pos);
-            alias_string_add_word (&res, &length_res, "$");
+            alias_string_add_word (&res, &length_res, "$", 0);
         }
         else
         {
@@ -225,7 +250,16 @@ alias_replace_args (const char *alias_args, const char *user_args)
                     offset = 2;
                     if (pos > start)
                         alias_string_add_word_range (&res, &length_res, start, pos);
-                    alias_string_add_word (&res, &length_res, user_args);
+                    alias_string_add_word (&res, &length_res, user_args, 0);
+                }
+                else if (pos[1] == '&')
+                {
+                    /* replace with all arguments, auto-escaping double quotes */
+                    args_count++;
+                    offset = 2;
+                    if (pos > start)
+                        alias_string_add_word_range (&res, &length_res, start, pos);
+                    alias_string_add_word (&res, &length_res, user_args, 1);
                 }
                 else if (pos[1] == '~')
                 {
@@ -235,7 +269,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                     if (pos > start)
                         alias_string_add_word_range (&res, &length_res, start, pos);
                     if (argc > 0)
-                        alias_string_add_word (&res, &length_res, argv[argc - 1]);
+                        alias_string_add_word (&res, &length_res, argv[argc - 1], 0);
                 }
                 else if ((pos[1] == '-') && ALIAS_IS_ARG_NUMBER(pos[2]))
                 {
@@ -261,7 +295,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
                         /* replace with argument n */
                         offset = 2;
                         if (n < argc)
-                            alias_string_add_word (&res, &length_res, argv[n]);
+                            alias_string_add_word (&res, &length_res, argv[n], 0);
                     }
                     else
                     {
@@ -300,7 +334,7 @@ alias_replace_args (const char *alias_args, const char *user_args)
     }
 
     if (pos > start)
-        alias_string_add_word (&res, &length_res, start);
+        alias_string_add_word (&res, &length_res, start, 0);
 
     if (argv)
         weechat_string_free_split (argv);
