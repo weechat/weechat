@@ -563,7 +563,8 @@ gui_hotlist_smart_jump_target (struct t_gui_buffer* buffer)
     }
 
     if (CONFIG_BOOLEAN(config_look_hotlist_smart_jump_prefer_forward)
-        && selected_forward)
+        && selected_forward
+        && selected_forward->priority >= selected->priority)
     {
         return selected_forward;
     }
