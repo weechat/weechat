@@ -183,6 +183,7 @@ extern struct t_config_option *config_look_hotlist_prefix;
 extern struct t_config_option *config_look_hotlist_remove;
 extern struct t_config_option *config_look_hotlist_short_names;
 extern struct t_config_option *config_look_hotlist_smart_jump_order;
+extern struct t_config_option *config_look_hotlist_smart_jump_prefer_forward;
 extern struct t_config_option *config_look_hotlist_sort;
 extern struct t_config_option *config_look_hotlist_suffix;
 extern struct t_config_option *config_look_hotlist_unique_numbers;

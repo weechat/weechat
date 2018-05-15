@@ -132,6 +132,7 @@ struct t_config_option *config_look_hotlist_prefix;
 struct t_config_option *config_look_hotlist_remove;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_smart_jump_order;
+struct t_config_option *config_look_hotlist_smart_jump_prefer_forward;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_hotlist_suffix;
 struct t_config_option *config_look_hotlist_unique_numbers;
@@ -2959,6 +2960,18 @@ config_weechat_init_options ()
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, NULL, NULL, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_hotlist_smart_jump_prefer_forward = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "smart_jump_prefer_forward", "boolean",
+        N_("if set and smart_jump_order is "
+           "num_asc, group_num_asc, num_desc or group_num_desc "
+           "smart jump prefers going forwards in the hotlist "
+           "instead of jumping to the first buffer with highest "
+           "priority activity."),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
