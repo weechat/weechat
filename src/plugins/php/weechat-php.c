@@ -299,7 +299,8 @@ const zend_function_entry weechat_functions[] = {
 
 PHP_MINIT_FUNCTION(weechat)
 {
-    (void)type;
+    /* make C compiler happy */
+    (void) type;
 
     /* Register integer constants */
     #define PHP_WEECHAT_CONSTANT(NAME) \
@@ -1228,7 +1229,9 @@ php_weechat_ub_write (const char *str, size_t str_length)
 void
 php_weechat_sapi_error (int type, const char *format, ...)
 {
+    /* make C compiler happy */
     (void) type;
+
     weechat_va_format (format);
     if (vbuffer)
     {
@@ -1242,6 +1245,7 @@ php_weechat_sapi_error (int type, const char *format, ...)
 void
 php_weechat_log_message (char *message, int syslog_type_int)
 {
+    /* make C compiler happy */
     (void) syslog_type_int;
 
     php_weechat_ub_write (message, strlen (message));
