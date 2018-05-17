@@ -1432,6 +1432,7 @@ fset_option_config_changed (const char *option_name)
             ptr_fset_option = weechat_arraylist_get (fset_options, line);
             if (ptr_fset_option
                 && ptr_fset_option->parent_name
+                && option_name
                 && (strcmp (ptr_fset_option->parent_name, option_name) == 0))
             {
                 ptr_option = weechat_config_get (ptr_fset_option->name);
