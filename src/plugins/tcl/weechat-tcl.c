@@ -771,11 +771,9 @@ weechat_tcl_info_eval_cb (const void *pointer, void *data,
     (void) pointer;
     (void) data;
     (void) info_name;
-
     (void) arguments;
-    return not_implemented;
 
-    return NULL;
+    return not_implemented;
 }
 
 /*
