@@ -1232,8 +1232,11 @@ php_weechat_sapi_error (int type, const char *format, ...)
 {
     (void) type;
     weechat_va_format (format);
-    php_weechat_ub_write (vbuffer, strlen (vbuffer));
-    free (vbuffer);
+    if (vbuffer)
+    {
+        php_weechat_ub_write (vbuffer, strlen (vbuffer));
+        free (vbuffer);
+    }
 }
 
 #if PHP_VERSION_ID >= 70100
