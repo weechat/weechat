@@ -39,6 +39,7 @@ Bug fixes::
   * php: fix return code of functions config_write_option and config_write_line
   * php: fix memory leak in 72 functions returning allocated strings
   * ruby: fix memory leak in 7 functions returning allocated strings
+  * script: fix memory leak in case of invalid XML content in list of scripts
   * scripts: fix memory leak in hook_info callback
   * scripts: fix return value of hook_infolist callback (pointer instead of string)
   * scripts: return long integer instead of string in function infolist_time

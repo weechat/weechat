@@ -1411,6 +1411,8 @@ script_repo_file_read (int quiet)
                         SCRIPT_PLUGIN_NAME);
     }
 
+    if (script)
+        script_repo_free (script);
     if (locale)
         free (locale);
     if (locale_language)
