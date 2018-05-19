@@ -393,13 +393,13 @@
 ** Standardwert: `+"/unset ${name}"+`
 
 * [[option_fset.format.option1]] *fset.format.option1*
-** Beschreibung: pass:none[erstes Format um Optionen anzuzeigen die weder markiert noch ausgewählt sind (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name}  ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
+** Beschreibung: pass:none[erstes Format um Optionen anzuzeigen die weder markiert noch ausgewählt sind (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name} ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_fset.format.option2]] *fset.format.option2*
-** Beschreibung: pass:none[zweites Format um Optionen anzuzeigen die weder markiert noch ausgewählt sind (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name}  ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
+** Beschreibung: pass:none[zweites Format um Optionen anzuzeigen die weder markiert noch ausgewählt sind (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name} ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
@@ -411,7 +411,7 @@
 ** Standardwert: `+off+`
 
 * [[option_fset.look.condition_catch_set]] *fset.look.condition_catch_set*
-** Beschreibung: pass:none[Bedingung um den /set Befehl abzufangen und die Ausgabe im fset Buffer darzustellen; folgende Variablen können verwendet werden:  ${name} (Name der Option die dem /set Befehl übergeben wurde), ${count} (Anzahl der Optionen die mit /set gefunden wurden); eine leere Zeichenkette deaktiviert die Funktion; der Wert "1", nutzt immer den fset Buffer für die Ausgabe des /set Befehls]
+** Beschreibung: pass:none[Bedingung um den /set Befehl abzufangen und die Ausgabe im fset Buffer darzustellen; folgende Variablen können verwendet werden: ${name} (Name der Option die dem /set Befehl übergeben wurde), ${count} (Anzahl der Optionen die mit /set gefunden wurden); eine leere Zeichenkette deaktiviert die Funktion; der Wert "1", nutzt immer den fset Buffer für die Ausgabe des /set Befehls]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${count} >= 1"+`
@@ -447,7 +447,7 @@
 ** Standardwert: `+off+`
 
 * [[option_fset.look.sort]] *fset.look.sort*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Optionen zu sortieren (siehe /help fset um eine Auflistung der Felder zu erhalten); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen  "~" verwendet; Beispiel: "-~name" sortiert die Optionsnamen in umgekehrter Reihenfolge und es wird dabei nicht zwischen Groß-und Kleinschreibung unterschieden]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Feldern um die Optionen zu sortieren (siehe /help fset um eine Auflistung der Felder zu erhalten); wird das "-" Zeichen vor einem Feld angewendet, wird die Ausgabe umgekehrt, um bei einem Vergleich nicht zwischen Groß- und Kleinschreibung zu unterscheiden wird das Zeichen "~" verwendet; Beispiel: "-~name" sortiert die Optionsnamen in umgekehrter Reihenfolge und es wird dabei nicht zwischen Groß-und Kleinschreibung unterschieden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"~name"+`
