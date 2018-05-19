@@ -335,7 +335,7 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             if (argv[i][0] == '"')
             {
                 /* search the ending double quote */
-                length_total = 1;
+                length_total = 2;
                 end = i;
                 while (end < argc)
                 {
