@@ -189,7 +189,7 @@ weechat_parse_args (int argc, char *argv[])
 {
     int i;
 
-    weechat_argv0 = (argv && argv[0]) ? strdup (argv[0]) : NULL;
+    weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
     weechat_upgrading = 0;
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
