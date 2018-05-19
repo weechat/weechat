@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-19 09:04+0200\n"
+"POT-Creation-Date: 2018-05-19 14:46+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5130,11 +5130,14 @@ msgid ""
 "and reverse sort on buffer short name"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "format of each line with a buffer (note: content is evaluated, see /help "
-"buflist)"
-msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
+"buflist); example: standard format for bar item \"buflist\" and only the "
+"buffer number between square brackets for other bar items (\"buflist2\" and "
+"\"buflist3\"): \"${if:${bar_item.name}==buflist?"
+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:"
+"[${number}]}\""
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -12557,6 +12560,12 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy
+#~ msgid ""
+#~ "format of each line with a buffer (note: content is evaluated, see /help "
+#~ "buflist)"
+#~ msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
 
 #, fuzzy
 #~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"

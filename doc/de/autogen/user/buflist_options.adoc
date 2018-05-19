@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** Beschreibung: pass:none[Format für eine Zeile mit einem Buffer (Hinweis: Inhalt wird evaluiert, siehe /help buflist)]
+** Beschreibung: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist); example: standard format for bar item "buflist" and only the buffer number between square brackets for other bar items ("buflist2" and "buflist3"): "${if:${bar_item.name}==buflist?${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:[${number}\]}"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`

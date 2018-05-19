@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist)]
+** description: pass:none[format pour chaque ligne avec un tampon (note : le contenu est évalué, voir /help buflist) ; exemple : format standard pour l'objet de barre "buflist" et seulement le numéro du tampon entre crochets pour les autres objets de barre ("buflist2" et "buflist3") : "${if:${bar_item.name}==buflist?${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:[${number}\]}"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`

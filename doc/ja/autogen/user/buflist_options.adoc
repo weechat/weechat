@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** 説明: pass:none[各バッファの表示書式 (注意: 値は評価されます、/help eval を参照してください)]
+** 説明: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist); example: standard format for bar item "buflist" and only the buffer number between square brackets for other bar items ("buflist2" and "buflist3"): "${if:${bar_item.name}==buflist?${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:[${number}\]}"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`

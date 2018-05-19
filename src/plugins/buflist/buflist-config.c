@@ -541,7 +541,13 @@ buflist_config_init ()
         buflist_config_file, ptr_section,
         "buffer", "string",
         N_("format of each line with a buffer "
-           "(note: content is evaluated, see /help buflist)"),
+           "(note: content is evaluated, see /help buflist); "
+           "example: standard format for bar item \"buflist\" and only the "
+           "buffer number between square brackets for other bar items "
+           "(\"buflist2\" and \"buflist3\"): "
+           "\"${if:${bar_item.name}==buflist?${format_number}${indent}"
+           "${format_nick_prefix}${color_hotlist}${format_name}:"
+           "[${number}]}\""),
         NULL, 0, 0,
         "${format_number}${indent}${format_nick_prefix}${color_hotlist}"
         "${format_name}",

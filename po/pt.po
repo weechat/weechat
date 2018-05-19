@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-19 09:04+0200\n"
+"POT-Creation-Date: 2018-05-19 14:46+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -5746,12 +5746,14 @@ msgid ""
 "and reverse sort on buffer short name"
 msgstr ""
 
-#, fuzzy
 msgid ""
 "format of each line with a buffer (note: content is evaluated, see /help "
-"buflist)"
+"buflist); example: standard format for bar item \"buflist\" and only the "
+"buffer number between square brackets for other bar items (\"buflist2\" and "
+"\"buflist3\"): \"${if:${bar_item.name}==buflist?"
+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:"
+"[${number}]}\""
 msgstr ""
-"nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
 
 #, fuzzy
 msgid ""
@@ -13708,6 +13710,13 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#, fuzzy
+#~ msgid ""
+#~ "format of each line with a buffer (note: content is evaluated, see /help "
+#~ "buflist)"
+#~ msgstr ""
+#~ "nome real a usar no servidor (nota: o conteúdo é avaliado, ver /help eval)"
 
 #, fuzzy
 #~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
