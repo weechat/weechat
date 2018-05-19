@@ -710,7 +710,7 @@ irc_message_split_string (struct t_hashtable *hashtable,
         pos = arguments;
         pos_max = pos + max_length;
         pos_last_delim = NULL;
-        while (pos && pos[0])
+        while (pos[0])
         {
             if (pos[0] == delimiter)
                 pos_last_delim = pos;
