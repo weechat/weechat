@@ -1364,7 +1364,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     /* server capabilities */
     if (irc_command && (weechat_strcasecmp (irc_command, "cap") == 0))
     {
-        if ((irc_argc > 0) && irc_argv)
+        if (irc_argc > 0)
         {
             relay_irc_recv_command_capab (client,
                                           irc_argc, irc_argv, irc_argv_eol);
