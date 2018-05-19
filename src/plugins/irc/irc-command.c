@@ -5006,7 +5006,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             num_pv = irc_server_get_pv_count (server);
             weechat_printf (
                 NULL,
-                " %s %s%s %s[%s%s%s]%s%s, %d %s, %d pv",
+                " %s %s%s %s[%s%s%s]%s%s%s%s, %d %s, %d pv",
                 (server->is_connected) ? "*" : " ",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
@@ -5017,6 +5017,8 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
                 (server->temp_server) ? _(" (temporary)") : "",
+                (server->nick) ? " nick: " : "",
+                (server->nick) ? server->nick : "",
                 num_channels,
                 NG_("channel", "channels", num_channels),
                 num_pv);
