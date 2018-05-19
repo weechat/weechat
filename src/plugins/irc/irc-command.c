@@ -4608,13 +4608,22 @@ IRC_COMMAND_CALLBACK(saquit)
 void
 irc_command_display_server (struct t_irc_server *server, int with_detail)
 {
-    char *cmd_pwd_hidden;
+    char *cmd_pwd_hidden, str_nick[1024];
     int num_channels, num_pv;
+
+    str_nick[0] = '\0';
+    if (server->nick)
+    {
+        snprintf (str_nick, sizeof (str_nick),
+                  ", %s %s",
+                  _("nick:"),
+                  server->nick);
+    }
 
     if (with_detail)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s"),
+        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s%s"),
                         IRC_COLOR_CHAT_SERVER,
                         server->name,
                         IRC_COLOR_CHAT_DELIMITERS,
@@ -4623,6 +4632,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                         _("connected") : _("not connected"),
                         IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_RESET,
+                        str_nick,
                         (server->temp_server) ? _(" (temporary)") : "");
         /* addresses */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ADDRESSES]))
@@ -5006,16 +5016,16 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             num_pv = irc_server_get_pv_count (server);
             weechat_printf (
                 NULL,
-                " %s %s%s %s[%s%s%s]%s%s, %d %s, %d pv",
+                " %s %s%s %s[%s%s%s]%s%s%s, %d %s, %d pv",
                 (server->is_connected) ? "*" : " ",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
-                (server->is_connected) ?
-                _("connected") : _("not connected"),
+                (server->is_connected) ? _("connected") : _("not connected"),
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
+                str_nick,
                 (server->temp_server) ? _(" (temporary)") : "",
                 num_channels,
                 NG_("channel", "channels", num_channels),

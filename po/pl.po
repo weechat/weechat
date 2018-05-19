@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-16 21:24+0200\n"
+"POT-Creation-Date: 2018-05-19 09:04+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <>\n"
@@ -7489,8 +7489,12 @@ msgstr "%s%s: komenda \"%s\" może być tylko wykonana z nazwą kanału (\"%s\")
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: nie można utworzyć nowego bufora prywatnego \"%s\""
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
+#, fuzzy
+msgid "nick:"
+msgstr "nick"
+
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Serwer: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"

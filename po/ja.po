@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-16 21:24+0200\n"
+"POT-Creation-Date: 2018-05-19 09:04+0200\n"
 "PO-Revision-Date: 2018-04-21 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7351,8 +7351,12 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: 新しいプライベートバッファ \"%s\" の作成に失敗"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
+#, fuzzy
+msgid "nick:"
+msgstr "ニックネーム"
+
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "サーバ: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"

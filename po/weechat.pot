@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-16 21:24+0200\n"
+"POT-Creation-Date: 2018-05-19 09:04+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5435,8 +5435,11 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
 
+msgid "nick:"
+msgstr ""
+
 #, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr ""
 
 msgid "connected"

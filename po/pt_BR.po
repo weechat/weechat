@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-16 21:24+0200\n"
+"POT-Creation-Date: 2018-05-19 09:04+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6594,8 +6594,12 @@ msgstr "%s%s: não foi possível criar novo canal \"%s\""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr ""
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
+#, fuzzy
+msgid "nick:"
+msgstr "apelido"
+
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Servidor: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"

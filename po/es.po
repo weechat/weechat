@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-04-16 21:24+0200\n"
+"POT-Creation-Date: 2018-05-19 09:04+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6649,8 +6649,12 @@ msgstr "%s%s: el comando \"%s\" solo puede ser ejecutado en un canal"
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: no es posible crear la conversación privada \"%s\""
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s"
+#, fuzzy
+msgid "nick:"
+msgstr "apodo"
+
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s"
 msgstr "Servidor: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"
