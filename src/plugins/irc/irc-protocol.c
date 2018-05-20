@@ -350,6 +350,7 @@ irc_protocol_cap_print_cb (void *data,
 
     str_caps = (char **)data;
 
+    weechat_string_dyn_concat (str_caps, " ");
     weechat_string_dyn_concat (str_caps, key);
     if (value)
     {
