@@ -4891,7 +4891,7 @@ This function is not available in scripting API.
 
 _WeeChat ≥ 2.2._
 
-Add hashtable items from an infolist.
+Add infolist items in a hashtable.
 
 Prototype:
 
@@ -4904,9 +4904,9 @@ int weechat_hashtable_add_from_infolist (struct t_hashtable *hashtable,
 
 Arguments:
 
-* 'hashtable': hashtable pointer
-* 'infolist': infolist pointer
-* 'prefix': string used as prefix for names in infolist
+* _hashtable_: hashtable pointer
+* _infolist_: infolist pointer
+* _prefix_: string used as prefix for names in infolist
 
 Return value:
 
