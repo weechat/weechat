@@ -4964,6 +4964,51 @@ weechat_hashtable_add_to_infolist (hashtable, infolist_item, "testhash");
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
+==== hashtable_add_from_infolist
+
+_WeeChat ≥ 2.2._
+
+Ajouter les éléments d'une infolist dans une table de hachage.
+
+Prototype:
+
+[source,C]
+----
+int weechat_hashtable_add_from_infolist (struct t_hashtable *hashtable,
+                                         struct t_infolist *infolist,
+                                         const char *prefix);
+----
+
+Paramètres :
+
+* _hashtable_ : pointeur vers la table de hachage
+* _infolist_ : pointeur vers l'infolist
+* _prefix_ : chaîne utilisée comme préfixe pour les noms dans l'infolist
+
+Valeur de retour :
+
+* 1 si ok, 0 en cas d'erreur
+
+Exemple en C :
+
+[source,C]
+----
+weechat_hashtable_add_from_infolist (hashtable, infolist, "testhash");
+
+/* si l'infolist contient :
+     "testhash_name_00000"  = "cle1"
+     "testhash_value_00000" = "valeur 1"
+     "testhash_name_00001"  = "cle2"
+     "testhash_value_00001" = "valeur 2"
+   alors les variables suivantes seront ajoutées dans la table de hachage :
+     "cle1" => "valeur 1"
+     "cle2" => "valeur 2"
+*/
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
 ==== hashtable_remove
 
 _WeeChat ≥ 0.3.3._
