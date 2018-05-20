@@ -350,7 +350,8 @@ irc_protocol_cap_print_cb (void *data,
 
     str_caps = (char **)data;
 
-    weechat_string_dyn_concat (str_caps, " ");
+    if (*str_caps[0])
+        weechat_string_dyn_concat (str_caps, " ");
     weechat_string_dyn_concat (str_caps, key);
     if (value)
     {
@@ -540,7 +541,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                               str_caps);
                 weechat_printf_date_tags (
                     server->buffer, date, NULL,
-                    _("%s%s: client capability, server supports:%s"),
+                    _("%s%s: client capability, server supports: %s"),
                     weechat_prefix ("network"),
                     IRC_PLUGIN_NAME,
                     *str_caps);
@@ -616,7 +617,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                                               str_caps);
                 weechat_printf_date_tags (
                     server->buffer, date, NULL,
-                    _("%s%s: client capability, currently enabled:%s"),
+                    _("%s%s: client capability, currently enabled: %s"),
                     weechat_prefix ("network"),
                     IRC_PLUGIN_NAME,
                     *str_caps);

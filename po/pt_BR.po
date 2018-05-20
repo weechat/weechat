@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-20 22:24+0200\n"
+"POT-Creation-Date: 2018-05-20 22:43+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8871,11 +8871,11 @@ msgid "%s%s: client capability: SASL not supported"
 msgstr "%s: script removido: %s"
 
 #, fuzzy, c-format
-msgid "%s%s: client capability, server supports:%s"
+msgid "%s%s: client capability, server supports: %s"
 msgstr "%s: script removido: %s"
 
 #, fuzzy, c-format
-msgid "%s%s: client capability, currently enabled:%s"
+msgid "%s%s: client capability, currently enabled: %s"
 msgstr "%s: script removido: %s"
 
 #, c-format
