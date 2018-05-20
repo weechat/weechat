@@ -1062,8 +1062,6 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                           hashtable_to_string (hashtable->type_keys,
                                                                ptr_item->key)))
                 return 0;
-            /* TODO: implement other key types */
-
             snprintf (option_name, sizeof (option_name),
                       "%s_value_%05d", prefix, item_number);
             switch (hashtable->type_values)
