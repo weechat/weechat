@@ -22,6 +22,7 @@
 
 struct t_hashtable;
 struct t_infolist_item;
+struct t_infolist;
 
 typedef unsigned long long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                                   const void *key);
@@ -149,6 +150,9 @@ extern void hashtable_set_pointer (struct t_hashtable *hashtable,
 extern int hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                       struct t_infolist_item *infolist_item,
                                       const char *prefix);
+extern int hashtable_add_from_infolist (struct t_hashtable *hashtable,
+                                        struct t_infolist *infolist,
+                                        const char *prefix);
 extern void hashtable_remove (struct t_hashtable *hashtable, const void *key);
 extern void hashtable_remove_all (struct t_hashtable *hashtable);
 extern void hashtable_free (struct t_hashtable *hashtable);

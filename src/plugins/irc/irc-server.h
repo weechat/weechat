@@ -122,6 +122,9 @@ enum t_irc_server_option
 #define IRC_SERVER_SEND_OUTQ_PRIO_LOW    2
 #define IRC_SERVER_SEND_RETURN_HASHTABLE 4
 
+/* version strings */
+#define IRC_SERVER_VERSION_CAP "302"
+
 /* casemapping (string comparisons for nicks/channels) */
 enum t_irc_server_casemapping
 {
@@ -189,9 +192,10 @@ struct t_irc_server
                                     /* (nick____1, nick____2, ...)           */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
-    int cap_away_notify;            /* 1 if capability away-notify is enabled*/
-    int cap_account_notify;         /* 1 if CAP account-notify is enabled    */
-    int cap_extended_join;          /* 1 if CAP extended-join is enabled     */
+    int checking_cap_ls;            /* 1 if checking supported capabilities  */
+    struct t_hashtable *cap_ls;     /* list of supported capabilities        */
+    int checking_cap_list;          /* 1 if checking enabled capabilities    */
+    struct t_hashtable *cap_list;   /* list of enabled capabilities          */
     char *isupport;                 /* copy of message 005 (ISUPPORT)        */
     char *prefix_modes;             /* prefix modes from msg 005 (eg "ohv")  */
     char *prefix_chars;             /* prefix chars from msg 005 (eg "@%+")  */

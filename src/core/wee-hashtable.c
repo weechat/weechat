@@ -1062,6 +1062,8 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
                                           hashtable_to_string (hashtable->type_keys,
                                                                ptr_item->key)))
                 return 0;
+            /* TODO: implement other key types */
+
             snprintf (option_name, sizeof (option_name),
                       "%s_value_%05d", prefix, item_number);
             switch (hashtable->type_values)
@@ -1098,6 +1100,83 @@ hashtable_add_to_infolist (struct t_hashtable *hashtable,
             item_number++;
         }
     }
+    return 1;
+}
+
+/*
+ * Adds hashtable keys and values from an infolist.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+hashtable_add_from_infolist (struct t_hashtable *hashtable,
+                             struct t_infolist *infolist,
+                             const char *prefix)
+{
+    struct t_infolist_var *ptr_name, *ptr_value;
+    char prefix_name[128], option_value[128];
+    int prefix_length;
+
+    if (!hashtable || !infolist || !prefix)
+        return 0;
+
+    if (hashtable->type_keys != HASHTABLE_STRING)
+        return 0;
+    /* TODO: implement other key types */
+
+    snprintf (prefix_name, sizeof (prefix_name),
+              "%s_name_", prefix);
+    prefix_length = strlen (prefix_name);
+
+    for (ptr_name = infolist->ptr_item->vars; ptr_name; ptr_name = ptr_name->next_var)
+    {
+        if (string_strncasecmp (ptr_name->name, prefix_name, prefix_length) == 0)
+        {
+            snprintf (option_value, sizeof (option_value),
+                      "%s_value_%s", prefix, ptr_name->name + prefix_length);
+
+            ptr_value = infolist_search_var (infolist, option_value);
+            if (ptr_value)
+            {
+                switch (hashtable->type_values)
+                {
+                    case HASHTABLE_INTEGER:
+                        if (ptr_value->type != INFOLIST_INTEGER)
+                            return 0;
+                        break;
+                    case HASHTABLE_STRING:
+                        if (ptr_value->type != INFOLIST_STRING)
+                            return 0;
+                        break;
+                    case HASHTABLE_POINTER:
+                        if (ptr_value->type != INFOLIST_POINTER)
+                            return 0;
+                        break;
+                    case HASHTABLE_BUFFER:
+                        if (ptr_value->type != INFOLIST_BUFFER)
+                            return 0;
+                        break;
+                    case HASHTABLE_TIME:
+                        if (ptr_value->type != INFOLIST_TIME)
+                            return 0;
+                        break;
+                    case HASHTABLE_NUM_TYPES:
+                        break;
+                }
+                if (hashtable->type_values == HASHTABLE_BUFFER)
+                {
+                    hashtable_set_with_size (hashtable, ptr_name->value, 0,
+                                             ptr_value->value, ptr_value->size);
+                }
+                else
+                    hashtable_set (hashtable, ptr_name->value, ptr_value->value);
+            }
+        }
+    }
+
     return 1;
 }
 

@@ -699,8 +699,8 @@ irc_channel_check_whox (struct t_irc_server *server,
 {
     if ((channel->type == IRC_CHANNEL_TYPE_CHANNEL) && channel->nicks)
     {
-        if (server->cap_away_notify
-            || server->cap_account_notify
+        if (weechat_hashtable_has_key (server->cap_list, "away-notify")
+            || weechat_hashtable_has_key (server->cap_list, "account-notify")
             || ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK) > 0)
                 && ((IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS) == 0)
                     || (channel->nicks_count <= IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_AWAY_CHECK_MAX_NICKS)))))

@@ -1223,6 +1223,8 @@ IRC_COMMAND_CALLBACK(ban)
 
 IRC_COMMAND_CALLBACK(cap)
 {
+    char *cap_cmd;
+
     IRC_BUFFER_GET_SERVER(buffer);
     IRC_COMMAND_CHECK_SERVER("cap", 1);
 
@@ -1232,11 +1234,27 @@ IRC_COMMAND_CALLBACK(cap)
 
     if (argc > 1)
     {
-        irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "CAP %s%s%s",
-                          argv[1],
-                          (argv_eol[2]) ? " :" : "",
-                          (argv_eol[2]) ? argv_eol[2] : "");
+        cap_cmd = strdup (argv[1]);
+        if (!cap_cmd)
+            WEECHAT_COMMAND_ERROR;
+
+        weechat_string_toupper (cap_cmd);
+
+        if ((weechat_strcasecmp (argv[1], "ls") == 0) && !argv_eol[2])
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "CAP LS " IRC_SERVER_VERSION_CAP);
+        }
+        else
+        {
+            irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "CAP %s%s%s",
+                              cap_cmd,
+                              (argv_eol[2]) ? " :" : "",
+                              (argv_eol[2]) ? argv_eol[2] : "");
+        }
+
+        free (cap_cmd);
     }
     else
     {
@@ -1245,7 +1263,7 @@ IRC_COMMAND_CALLBACK(cap)
          * enabled
          */
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "CAP LS");
+                          "CAP LS " IRC_SERVER_VERSION_CAP);
         irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                           "CAP LIST");
     }
