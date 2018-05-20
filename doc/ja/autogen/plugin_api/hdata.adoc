@@ -243,9 +243,10 @@ _nick_first_tried_   (integer) +
 _nick_alternate_number_   (integer) +
 _nick_   (string) +
 _nick_modes_   (string) +
-_cap_away_notify_   (integer) +
-_cap_account_notify_   (integer) +
-_cap_extended_join_   (integer) +
+_checking_cap_ls_   (integer) +
+_cap_ls_   (hashtable) +
+_checking_cap_list_   (integer) +
+_cap_list_   (hashtable) +
 _isupport_   (string) +
 _prefix_modes_   (string) +
 _prefix_chars_   (string) +
