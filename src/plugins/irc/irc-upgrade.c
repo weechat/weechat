@@ -420,7 +420,10 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     str = weechat_infolist_string (infolist, "nick_modes");
                     if (str)
                         irc_upgrade_current_server->nick_modes = strdup (str);
-                    /* "cap_ls" and "cap_list" replace "cap_away_notify" and "cap_account_notify" in WeeChat x.y.z */
+                    /*
+                     * "cap_ls" and "cap_list" replace "cap_away_notify" and
+                     * "cap_account_notify" in WeeChat 2.2
+                     */
                     if (weechat_infolist_integer (infolist, "cap_away_notify"))
                     {
                         weechat_hashtable_set (irc_upgrade_current_server->cap_ls, "away-notify", NULL);
