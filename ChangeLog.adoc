@@ -23,6 +23,7 @@ New features::
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
   * api: add function hashtable_add_from_infolist()
   * api: add function string_format_size in scripting API
+  * irc: add support for IRCv3.2 invite-notify (issue #639)
   * irc: add support for IRCv3.2 Client Capability Negotiation (issue #586, issue #623)
   * irc: display current nick on connected servers in output of /server list|listfull (issue #1193)
   * irc: add option "-server" in command /list (issue #1165)
