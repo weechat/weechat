@@ -338,48 +338,50 @@ IRC_PROTOCOL_CALLBACK(away)
  * Callback for IRC server capabilities string length hashtable map.
  */
 
-void irc_protocol_cap_length_cb (void *data,
-                                 struct t_hashtable *hashtable,
-                                 const char *key, const char *value)
+void
+irc_protocol_cap_length_cb (void *data,
+                            struct t_hashtable *hashtable,
+                            const char *key, const char *value)
 {
     int *length;
 
     /* make C compiler happy */
     (void) hashtable;
 
-    length = (int*)data;
-    *length += 1 + strlen (key); // separator + key
+    length = (int *)data;
+    *length += 1 + strlen (key);  /* separator (space) + key */
     if (value)
-        *length += 1 + strlen (value); // equals sign + value
+        *length += 1 + strlen (value);  /* equals sign + value */
 }
 
 /*
  * Callback for IRC server capabilities string hashtable map.
  */
 
-void irc_protocol_cap_print_cb (void *data,
-                                struct t_hashtable *hashtable,
-                                const char *key, const char *value)
+void
+irc_protocol_cap_print_cb (void *data,
+                           struct t_hashtable *hashtable,
+                           const char *key, const char *value)
 {
-    char *str, *pos;
+    char *str;
 
     /* make C compiler happy */
     (void) hashtable;
 
-    str = (char*)data;
-    pos = str + strlen (str);
+    str = (char *)data;
 
-    sprintf (pos, " %s%s%s",
+    sprintf (str + strlen (str), " %s%s%s",
              key,
              (value) ? "=" : "",
              (value) ? value : "");
 }
 
 /*
- * Synchronize requested capabilities for IRC server
+ * Synchronizes requested capabilities for IRC server.
  */
 
-void irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
+void
+irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 {
     char *cap_option, *cap_req, **caps_requested;
     const char *ptr_cap_option;
@@ -568,6 +570,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                         weechat_prefix ("network"),
                         IRC_PLUGIN_NAME,
                         str_caps);
+
                     free (str_caps);
                 }
             }
@@ -633,7 +636,6 @@ IRC_PROTOCOL_CALLBACK(cap)
                 }
             }
 
-
             if (last_reply)
             {
                 length = 0;
@@ -653,10 +655,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                         server->buffer, date, NULL,
                         _("%s%s: client capability, currently enabled:%s"),
                         weechat_prefix ("network"), IRC_PLUGIN_NAME, str_caps);
+
                     free (str_caps);
                 }
             }
-
 
             if (caps_enabled)
                 weechat_string_free_split (caps_enabled);
@@ -678,7 +680,8 @@ IRC_PROTOCOL_CALLBACK(cap)
             {
                 for (i = 0; i < num_caps_supported; i++)
                 {
-                    weechat_hashtable_set (server->cap_list, caps_supported[i], NULL);
+                    weechat_hashtable_set (server->cap_list,
+                                           caps_supported[i], NULL);
 
                     if (strcmp (caps_supported[i], "sasl") == 0)
                     {
@@ -762,9 +765,7 @@ IRC_PROTOCOL_CALLBACK(cap)
                 weechat_string_free_split (caps_added);
             }
 
-            /*
-             * TODO: SASL Reauthentication
-             */
+            /* TODO: SASL Reauthentication */
             irc_protocol_cap_sync (server, 0);
         }
     }
@@ -4485,9 +4486,15 @@ IRC_PROTOCOL_CALLBACK(352)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        ptr_nick->realname = (pos_realname &&
-                weechat_hashtable_has_key (server->cap_list, "extended-join")) ?
-            strdup (pos_realname) : NULL;
+        if (pos_realname &&
+            weechat_hashtable_has_key (server->cap_list, "extended-join"))
+        {
+            ptr_nick->realname = strdup (pos_realname);
+        }
+        else
+        {
+            ptr_nick->realname = NULL;
+        }
     }
 
     /* display output of who (manual who from user) */
@@ -4721,9 +4728,15 @@ IRC_PROTOCOL_CALLBACK(354)
     {
         if (ptr_nick->account)
             free (ptr_nick->account);
-        ptr_nick->account = (ptr_channel && pos_account
-                             && weechat_hashtable_has_key (server->cap_list, "account-notify")) ?
-            strdup (pos_account) : NULL;
+        if (ptr_channel && pos_account
+            && weechat_hashtable_has_key (server->cap_list, "account-notify"))
+        {
+            ptr_nick->account = strdup (pos_account);
+        }
+        else
+        {
+            ptr_nick->account = NULL;
+        }
     }
 
     /* update realname in nick */
@@ -4731,9 +4744,15 @@ IRC_PROTOCOL_CALLBACK(354)
     {
         if (ptr_nick->realname)
             free (ptr_nick->realname);
-        ptr_nick->realname = (ptr_channel && pos_realname
-                              && weechat_hashtable_has_key (server->cap_list, "extended-join")) ?
-            strdup (pos_realname) : NULL;
+        if (ptr_channel && pos_realname
+            && weechat_hashtable_has_key (server->cap_list, "extended-join"))
+        {
+            ptr_nick->realname = strdup (pos_realname);
+        }
+        else
+        {
+            ptr_nick->realname = NULL;
+        }
     }
 
     /* display output of who (manual who from user) */

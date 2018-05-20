@@ -3359,7 +3359,8 @@ irc_server_timer_cb (const void *pointer, void *data, int remaining_calls)
                 /* check away (only if lag check was not done) */
                 away_check = IRC_SERVER_OPTION_INTEGER(
                     ptr_server, IRC_SERVER_OPTION_AWAY_CHECK);
-                if (!weechat_hashtable_has_key (ptr_server->cap_list, "away-notify")
+                if (!weechat_hashtable_has_key (ptr_server->cap_list,
+                                                "away-notify")
                     && (away_check > 0)
                     && ((ptr_server->last_away_check == 0)
                         || (current_time >= ptr_server->last_away_check + (away_check * 60))))
