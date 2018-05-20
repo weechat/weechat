@@ -335,26 +335,6 @@ IRC_PROTOCOL_CALLBACK(away)
 }
 
 /*
- * Callback for IRC server capabilities string length hashtable map.
- */
-
-void
-irc_protocol_cap_length_cb (void *data,
-                            struct t_hashtable *hashtable,
-                            const char *key, const char *value)
-{
-    int *length;
-
-    /* make C compiler happy */
-    (void) hashtable;
-
-    length = (int *)data;
-    *length += 1 + strlen (key);  /* separator (space) + key */
-    if (value)
-        *length += 1 + strlen (value);  /* equals sign + value */
-}
-
-/*
  * Callback for IRC server capabilities string hashtable map.
  */
 
@@ -363,17 +343,19 @@ irc_protocol_cap_print_cb (void *data,
                            struct t_hashtable *hashtable,
                            const char *key, const char *value)
 {
-    char *str;
+    char **str_caps;
 
     /* make C compiler happy */
     (void) hashtable;
 
-    str = (char *)data;
+    str_caps = (char **)data;
 
-    sprintf (str + strlen (str), " %s%s%s",
-             key,
-             (value) ? "=" : "",
-             (value) ? value : "");
+    weechat_string_dyn_concat (str_caps, key);
+    if (value)
+    {
+        weechat_string_dyn_concat (str_caps, "=");
+        weechat_string_dyn_concat (str_caps, value);
+    }
 }
 
 /*
@@ -488,11 +470,11 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
 IRC_PROTOCOL_CALLBACK(cap)
 {
     char *ptr_caps, **caps_supported, **caps_added, **caps_removed;
-    char **caps_enabled, *pos_value, *str_name, *str_caps;
+    char **caps_enabled, *pos_value, *str_name, **str_caps;
     char str_msg_auth[512];
     int num_caps_supported, num_caps_added, num_caps_removed;
     int num_caps_enabled, sasl_to_do, sasl_mechanism;
-    int i, timeout, length, last_reply;
+    int i, timeout, last_reply;
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
@@ -551,28 +533,17 @@ IRC_PROTOCOL_CALLBACK(cap)
 
             if (last_reply)
             {
-                length = 0;
+                str_caps = weechat_string_dyn_alloc (128);
                 weechat_hashtable_map_string (server->cap_ls,
-                                              irc_protocol_cap_length_cb,
-                                              &length);
-
-                str_caps = malloc (length + 1);
-                if (str_caps)
-                {
-                    str_caps[0] = '\0';
-                    weechat_hashtable_map_string (server->cap_ls,
-                                                  irc_protocol_cap_print_cb,
-                                                  str_caps);
-
-                    weechat_printf_date_tags (
-                        server->buffer, date, NULL,
-                        _("%s%s: client capability, server supports:%s"),
-                        weechat_prefix ("network"),
-                        IRC_PLUGIN_NAME,
-                        str_caps);
-
-                    free (str_caps);
-                }
+                                              irc_protocol_cap_print_cb,
+                                              str_caps);
+                weechat_printf_date_tags (
+                    server->buffer, date, NULL,
+                    _("%s%s: client capability, server supports:%s"),
+                    weechat_prefix ("network"),
+                    IRC_PLUGIN_NAME,
+                    *str_caps);
+                weechat_string_dyn_free (str_caps, 1);
             }
 
             /* auto-enable capabilities only when connecting to server */
@@ -638,26 +609,17 @@ IRC_PROTOCOL_CALLBACK(cap)
 
             if (last_reply)
             {
-                length = 0;
+                str_caps = weechat_string_dyn_alloc (128);
                 weechat_hashtable_map_string (server->cap_list,
-                                              irc_protocol_cap_length_cb,
-                                              &length);
-
-                str_caps = malloc (length + 1);
-                if (str_caps)
-                {
-                    str_caps[0] = '\0';
-                    weechat_hashtable_map_string (server->cap_list,
-                                                  irc_protocol_cap_print_cb,
-                                                  str_caps);
-
-                    weechat_printf_date_tags (
-                        server->buffer, date, NULL,
-                        _("%s%s: client capability, currently enabled:%s"),
-                        weechat_prefix ("network"), IRC_PLUGIN_NAME, str_caps);
-
-                    free (str_caps);
-                }
+                                              irc_protocol_cap_print_cb,
+                                              str_caps);
+                weechat_printf_date_tags (
+                    server->buffer, date, NULL,
+                    _("%s%s: client capability, currently enabled:%s"),
+                    weechat_prefix ("network"),
+                    IRC_PLUGIN_NAME,
+                    *str_caps);
+                weechat_string_dyn_free (str_caps, 1);
             }
 
             if (caps_enabled)
