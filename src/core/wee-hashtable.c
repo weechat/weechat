@@ -1120,7 +1120,7 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
     char prefix_name[128], option_value[128];
     int prefix_length;
 
-    if (!hashtable || !infolist || !prefix)
+    if (!hashtable || !infolist || !infolist->ptr_item || !prefix)
         return 0;
 
     if (hashtable->type_keys != HASHTABLE_STRING)
