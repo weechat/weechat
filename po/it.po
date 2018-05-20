@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-20 21:19+0200\n"
+"POT-Creation-Date: 2018-05-20 22:24+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7104,7 +7104,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, extended-join, multi-prefix, server-time, userhost-in-names.\n"
+"notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-"
+"names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -9575,6 +9576,10 @@ msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "%sSei stato invitato su %s%s%s da %s%s%s"
 
 #, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
+msgstr "%s%s%s%s ha invitato %s%s%s in %s%s%s"
+
+#, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: impossibile creare il nuovo canale \"%s\""
 
@@ -9740,10 +9745,6 @@ msgstr "%sArgomento per %s%s%s impostato da %s%s%s%s%s%s%s%s%s il %s"
 #, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "%sArgomento per %s%s%s impostato il %s"
-
-#, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
-msgstr "%s%s%s%s ha invitato %s%s%s in %s%s%s"
 
 #, c-format
 msgid "%sChannel reop %s%s%s: %s%s"

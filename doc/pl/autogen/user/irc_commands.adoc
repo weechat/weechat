@@ -103,19 +103,19 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: wyświetla opcje wspierane przez zerwer
- list: wyświetla obeznie włączone opcje
-  req: żądanie opcji
-  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
-  end: kończy negocjacje opcji
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a capability
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-Bez argumentu, wysyłane są "ls" i "list".
+Without argument, "ls" and "list" are sent.
 
-Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
 
-Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-Przykłady:
+Examples:
    /cap
    /cap req multi-prefix away-notify
 ----

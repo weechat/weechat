@@ -103,19 +103,19 @@ channel: チャンネル名
       req|ack [<capability> [<capability>...]]
       end
 
-   ls: サーバがサポートする機能をリスト
- list: 現在有効化されている機能をリスト
-  req: 機能情報を要求
-  ack: クライアント側に承認を要求する機能を承認
-  end: 機能情報交換を終了
+   ls: list the capabilities supported by the server
+ list: list the capabilities currently enabled
+  req: request a capability
+  ack: acknowledge capabilities which require client-side acknowledgement
+  end: end the capability negotiation
 
-引数無しの場合、"ls" と "list" を送信します。
+Without argument, "ls" and "list" are sent.
 
-WeeChat がサポートする機能: account-notify、away-notify、cap-notify、extended-join、multi-prefix、server-time、userhost-in-names。
+Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
 
-自動的に有効化する機能を設定するにはオプション irc.server_default.capabilities (または対象のサーバに関するオプション irc.server.xxx.capabilities) を使ってください。
+The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
 
-例:
+Examples:
    /cap
    /cap req multi-prefix away-notify
 ----

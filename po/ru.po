@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-20 21:19+0200\n"
+"POT-Creation-Date: 2018-05-20 22:24+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6221,7 +6221,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, extended-join, multi-prefix, server-time, userhost-in-names.\n"
+"notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-"
+"names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8498,6 +8499,10 @@ msgid "%sYou have been invited to %s%s%s by %s%s%s"
 msgstr "Вас пригласил на %s%s%s пользователь %s%s\n"
 
 #, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
+msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s не могу создать новый канал \"%s\"\n"
 
@@ -8660,10 +8665,6 @@ msgstr "Тема установлена пользователем %s%s%s, %s"
 #, fuzzy, c-format
 msgid "%sTopic for %s%s%s set on %s"
 msgstr "Тема канала %s%s%s: "
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has invited %s%s%s to %s%s%s"
-msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 
 #, fuzzy, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
