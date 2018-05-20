@@ -4889,7 +4889,7 @@ This function is not available in scripting API.
 
 ==== hashtable_add_from_infolist
 
-_WeeChat ≥ x.y.z._
+_WeeChat ≥ 2.2._
 
 Add hashtable items from an infolist.
 
