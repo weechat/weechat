@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-19 14:46+0200\n"
+"POT-Creation-Date: 2018-05-20 21:19+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8461,10 +8461,6 @@ msgid ""
 "%s%s: error building answer for SASL authentication, using mechanism \"%s\""
 msgstr ""
 
-#, c-format
-msgid "%s%s: client capability, server supports: %s"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: client capability, requesting: %s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
@@ -8474,7 +8470,11 @@ msgid "%s%s: client capability: SASL not supported"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: client capability, currently enabled: %s"
+msgid "%s%s: client capability, server supports:%s"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, currently enabled:%s"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, c-format

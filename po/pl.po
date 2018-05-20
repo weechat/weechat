@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-19 14:46+0200\n"
+"POT-Creation-Date: 2018-05-20 21:19+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <>\n"
@@ -10311,10 +10311,6 @@ msgstr ""
 "mechanizmu \"%s\""
 
 #, c-format
-msgid "%s%s: client capability, server supports: %s"
-msgstr "%s%s: możliwości klienta, serwer wspiera: %s"
-
-#, c-format
 msgid "%s%s: client capability, requesting: %s"
 msgstr "%s%s: możliwości klienta, żądanie: %s"
 
@@ -10322,8 +10318,12 @@ msgstr "%s%s: możliwości klienta, żądanie: %s"
 msgid "%s%s: client capability: SASL not supported"
 msgstr "%s%s: możliwości klienta: SASL nie wspierany"
 
-#, c-format
-msgid "%s%s: client capability, currently enabled: %s"
+#, fuzzy, c-format
+msgid "%s%s: client capability, server supports:%s"
+msgstr "%s%s: możliwości klienta, serwer wspiera: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, currently enabled:%s"
 msgstr "%s%s: możliwości klienta, aktualnie włączone: %s"
 
 #, c-format

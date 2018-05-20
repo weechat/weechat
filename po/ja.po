@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-19 14:46+0200\n"
+"POT-Creation-Date: 2018-05-20 21:19+0200\n"
 "PO-Revision-Date: 2018-04-21 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10107,10 +10107,6 @@ msgid ""
 msgstr "%s%s: SASL 認証の応答を作成中にエラー、\"%s\" メカニズムを使用"
 
 #, c-format
-msgid "%s%s: client capability, server supports: %s"
-msgstr "%s%s: クライアントの機能、サーバは以下をサポート: %s"
-
-#, c-format
 msgid "%s%s: client capability, requesting: %s"
 msgstr "%s%s: クライアントの機能、リクエスト中: %s"
 
@@ -10118,8 +10114,12 @@ msgstr "%s%s: クライアントの機能、リクエスト中: %s"
 msgid "%s%s: client capability: SASL not supported"
 msgstr "%s%s: クライアントの機能: SASL はサポートされていません"
 
-#, c-format
-msgid "%s%s: client capability, currently enabled: %s"
+#, fuzzy, c-format
+msgid "%s%s: client capability, server supports:%s"
+msgstr "%s%s: クライアントの機能、サーバは以下をサポート: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, currently enabled:%s"
 msgstr "%s%s: クライアントの機能、現在有効化されているもの: %s"
 
 #, c-format
