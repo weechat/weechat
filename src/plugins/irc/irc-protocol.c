@@ -4028,11 +4028,12 @@ IRC_PROTOCOL_CALLBACK(346)
             ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
         }
 
-        sprintf (str_number, "%s[%s%d%s] ",
-                 IRC_COLOR_CHAT_DELIMITERS,
-                 IRC_COLOR_RESET,
-                 ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
-                 IRC_COLOR_CHAT_DELIMITERS);
+        snprintf (str_number, sizeof (str_number),
+                  "%s[%s%d%s] ",
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_RESET,
+                  ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                  IRC_COLOR_CHAT_DELIMITERS);
     }
     else
         str_number[0] = '\0';
@@ -4198,11 +4199,12 @@ IRC_PROTOCOL_CALLBACK(348)
             ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
         }
 
-        sprintf (str_number, " %s[%s%d%s]",
-                 IRC_COLOR_CHAT_DELIMITERS,
-                 IRC_COLOR_RESET,
-                 ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
-                 IRC_COLOR_CHAT_DELIMITERS);
+        snprintf (str_number, sizeof (str_number),
+                  " %s[%s%d%s]",
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_RESET,
+                  ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                  IRC_COLOR_CHAT_DELIMITERS);
     }
     else
         str_number[0] = '\0';
@@ -5006,11 +5008,12 @@ IRC_PROTOCOL_CALLBACK(367)
             ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
         }
 
-        sprintf (str_number, "%s[%s%d%s] ",
-                 IRC_COLOR_CHAT_DELIMITERS,
-                 IRC_COLOR_RESET,
-                 ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
-                 IRC_COLOR_CHAT_DELIMITERS);
+        snprintf (str_number, sizeof (str_number),
+                  "%s[%s%d%s] ",
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_RESET,
+                  ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                  IRC_COLOR_CHAT_DELIMITERS);
     }
     else
         str_number[0] = '\0';
@@ -5477,11 +5480,12 @@ IRC_PROTOCOL_CALLBACK(728)
             ptr_modelist->state = IRC_MODELIST_STATE_RECEIVING;
         }
 
-        sprintf (str_number, "%s[%s%d%s] ",
-                 IRC_COLOR_CHAT_DELIMITERS,
-                 IRC_COLOR_RESET,
-                 ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
-                 IRC_COLOR_CHAT_DELIMITERS);
+        snprintf (str_number, sizeof (str_number),
+                  "%s[%s%d%s] ",
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_RESET,
+                  ((ptr_modelist->last_item) ? ptr_modelist->last_item->number + 1 : 0) + 1,
+                  IRC_COLOR_CHAT_DELIMITERS);
     }
     else
         str_number[0] = '\0';
