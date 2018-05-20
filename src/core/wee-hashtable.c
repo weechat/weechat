@@ -1123,17 +1123,18 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
     if (!hashtable || !infolist || !infolist->ptr_item || !prefix)
         return 0;
 
+    /* TODO: implement other key types */
     if (hashtable->type_keys != HASHTABLE_STRING)
         return 0;
-    /* TODO: implement other key types */
 
-    snprintf (prefix_name, sizeof (prefix_name),
-              "%s_name_", prefix);
+    snprintf (prefix_name, sizeof (prefix_name), "%s_name_", prefix);
     prefix_length = strlen (prefix_name);
 
-    for (ptr_name = infolist->ptr_item->vars; ptr_name; ptr_name = ptr_name->next_var)
+    for (ptr_name = infolist->ptr_item->vars; ptr_name;
+         ptr_name = ptr_name->next_var)
     {
-        if (string_strncasecmp (ptr_name->name, prefix_name, prefix_length) == 0)
+        if (string_strncasecmp (ptr_name->name, prefix_name,
+                                prefix_length) == 0)
         {
             snprintf (option_value, sizeof (option_value),
                       "%s_value_%s", prefix, ptr_name->name + prefix_length);
@@ -1168,11 +1169,18 @@ hashtable_add_from_infolist (struct t_hashtable *hashtable,
                 }
                 if (hashtable->type_values == HASHTABLE_BUFFER)
                 {
-                    hashtable_set_with_size (hashtable, ptr_name->value, 0,
-                                             ptr_value->value, ptr_value->size);
+                    hashtable_set_with_size (hashtable,
+                                             ptr_name->value,
+                                             0,
+                                             ptr_value->value,
+                                             ptr_value->size);
                 }
                 else
-                    hashtable_set (hashtable, ptr_name->value, ptr_value->value);
+                {
+                    hashtable_set (hashtable,
+                                   ptr_name->value,
+                                   ptr_value->value);
+                }
             }
         }
     }

@@ -21,8 +21,8 @@
 #define WEECHAT_HASHTABLE_H
 
 struct t_hashtable;
-struct t_infolist_item;
 struct t_infolist;
+struct t_infolist_item;
 
 typedef unsigned long long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                                   const void *key);
