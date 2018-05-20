@@ -1240,7 +1240,7 @@ IRC_COMMAND_CALLBACK(cap)
 
         weechat_string_toupper (cap_cmd);
 
-        if ((weechat_strcasecmp (argv[1], "ls") == 0) && !argv_eol[2])
+        if ((strcmp (cap_cmd, "LS") == 0) && !argv_eol[2])
         {
             irc_server_sendf (ptr_server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
                               "CAP LS " IRC_SERVER_VERSION_CAP);
