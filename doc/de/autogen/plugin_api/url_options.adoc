@@ -114,9 +114,13 @@
 
 | postfields | string |
 
+| httppost | list |
+
 | referer | string |
 
 | useragent | string |
+
+| httpheader | list |
 
 | cookie | string |
 
@@ -133,6 +137,8 @@
 | http_version | long | none, 1_0, 1_1, 2_0, 2, 2tls, 2_prior_knowledge
 
 | cookiesession | long |
+
+| http200aliases | list |
 
 | unrestricted_auth | long |
 
@@ -158,11 +164,15 @@
 
 | headeropt | mask | unified, separate
 
+| proxyheader | list |
+
 | pipewait | long |
 
 | stream_weight | long |
 
 | mail_from | string |
+
+| mail_rcpt | list |
 
 | mail_auth | string |
 
@@ -172,7 +182,13 @@
 
 | ftpport | string |
 
+| quote | list |
+
+| postquote | list |
+
 | ftp_use_epsv | long |
+
+| prequote | list |
 
 | ftp_use_eprt | long |
 
@@ -270,6 +286,8 @@
 
 | use_ssl | long | none, try, control, all
 
+| resolve | list |
+
 | dns_servers | string |
 
 | accepttimeout_ms | long |
@@ -279,6 +297,8 @@
 | dns_local_ip4 | string |
 
 | dns_local_ip6 | string |
+
+| connect_to | list |
 
 | sslcert | string |
 
@@ -354,6 +374,8 @@
 
 | proxy_sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3
 
+| proxy_ssl_cipher_list | list |
+
 | proxy_ssl_options | long | allow_beast, no_revoke
 
 | proxy_ssl_verifyhost | long |
@@ -379,5 +401,7 @@
 | new_file_perms | long |
 
 | new_directory_perms | long |
+
+| telnetoptions | list |
 
 |===
