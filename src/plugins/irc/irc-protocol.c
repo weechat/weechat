@@ -762,7 +762,7 @@ IRC_PROTOCOL_CALLBACK(cap)
 /*
  * Callback for the IRC message "CHGHOST": user/host change of a nick (with
  * capability "chghost"):
- * http://ircv3.net/specs/extensions/chghost-3.2.html
+ * https://ircv3.net/specs/extensions/chghost-3.2.html
  *
  * Message looks like:
  *   :nick!user@host CHGHOST user new.host.goes.here
@@ -941,7 +941,7 @@ IRC_PROTOCOL_CALLBACK(generic_error)
  *   :nick!user@host INVITE mynick :#channel
  *
  * With invite-notify capability
- * (http://ircv3.net/specs/extensions/invite-notify-3.2.html):
+ * (https://ircv3.net/specs/extensions/invite-notify-3.2.html):
  *   :<inviter> INVITE <target> <channel>
  *   :ChanServ!ChanServ@example.com INVITE Attila #channel
  */
