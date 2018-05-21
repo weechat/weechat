@@ -8726,6 +8726,7 @@ URL では、入力/出力ファイル用に 2 つのオプション (文字列)
 
 C 言語での使用例:
 
+// TRANSLATION MISSING
 [source,C]
 ----
 int
@@ -8757,22 +8758,40 @@ my_process_cb (const void *pointer, void *data, const char *command,
 }
 
 /* 例 1: URL をダウンロード */
-struct t_hashtable *options = weechat_hashtable_new (8,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
-if (options)
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
 {
     weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
-                                                                     options,
+                                                                     options_url1,
                                                                      20000,
                                                                      &my_process_cb, NULL, NULL);
-    weechat_hashtable_free (options);
+    weechat_hashtable_free (options_url1);
 }
 
-/* 例 2: メッセージを渡して通知プログラムを実行 */
+/* 例 2: open URL with custom HTTP headers */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options, "httpheader",
+                           "Header1: value1\n"
+                           "Header2: value2");
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://localhost:8080/",
+                                                                     options_url2,
+                                                                     20000,
+                                                                     &my_process_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+
+/* 例 3: メッセージを渡して通知プログラムを実行 */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -8791,7 +8810,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* 例 3: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください) */
+/* 例 4: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -8811,6 +8830,7 @@ if (options_cmd2)
 
 スクリプト (Python) での使用例:
 
+// TRANSLATION MISSING
 [source,python]
 ----
 # プロトタイプ
@@ -8834,16 +8854,27 @@ hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
-# 例 2: メッセージを渡して通知プログラムを実行
-hook2 = weechat.hook_process_hashtable("my-notify-command",
+# 例 2: open URL with custom HTTP headers
+options = {
+    "httpheader": "\n".join([
+        "Header1: value1",
+        "Header2: value2",
+    ]),
+}
+hook2 = weechat.hook_process_hashtable("url:http://localhost:8080/",
+                                       options,
+                                       20000, "my_process_cb", "")
+
+# 例 3: メッセージを渡して通知プログラムを実行
+hook3 = weechat.hook_process_hashtable("my-notify-command",
                                        {"arg1": "-from",
                                         "arg2": nick,
                                         "arg3": "-msg",
                                         "arg4": message},  # untrusted argument
                                        20000, "my_process_cb", "")
 
-# 例 3: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください)
-hook3 = weechat.hook_process_hashtable("sh",
+# 例 4: コマンドを実行するためにシェルを呼び出す (必ず安全なコマンドを実行してください)
+hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")

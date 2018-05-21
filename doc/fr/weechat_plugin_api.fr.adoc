@@ -8965,22 +8965,40 @@ my_process_cb (const void *pointer, void *data, const char *command,
 }
 
 /* exemple 1 : téléchargement d'une URL */
-struct t_hashtable *options = weechat_hashtable_new (8,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     WEECHAT_HASHTABLE_STRING,
-                                                     NULL,
-                                                     NULL);
-if (options)
+struct t_hashtable *options_url1 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url1)
 {
     weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
-                                                                     options,
+                                                                     options_url1,
                                                                      20000,
                                                                      &my_process_cb, NULL, NULL);
-    weechat_hashtable_free (options);
+    weechat_hashtable_free (options_url1);
 }
 
-/* exemple 2 : exécution d'un programme de notification avec le message de quelqu'un */
+/* exemple 2 : ouverture d'une URL avec des en-têtes HTTP personnalisés */
+struct t_hashtable *options_url2 = weechat_hashtable_new (8,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          WEECHAT_HASHTABLE_STRING,
+                                                          NULL,
+                                                          NULL);
+if (options_url2)
+{
+    weechat_hashtable_set (options, "httpheader",
+                           "Header1: valeur1\n"
+                           "Header2: valeur2");
+    struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://localhost:8080/",
+                                                                     options_url2,
+                                                                     20000,
+                                                                     &my_process_cb, NULL, NULL);
+    weechat_hashtable_free (options_url2);
+}
+
+/* exemple 3 : exécution d'un programme de notification avec le message de quelqu'un */
 struct t_hashtable *options_cmd1 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -8999,7 +9017,7 @@ if (options_cmd1)
     weechat_hashtable_free (options_cmd1);
 }
 
-/* exemple 3 : appeler le shell pour exécuter la commande (la commande doit être SURE) */
+/* exemple 4 : appeler le shell pour exécuter la commande (la commande doit être SURE) */
 struct t_hashtable *options_cmd2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -9042,16 +9060,27 @@ hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
-# exemple 2 : exécution d'un programme de notification avec le message de quelqu'un
-hook2 = weechat.hook_process_hashtable("my-notify-command",
+# exemple 2 : ouverture d'une URL avec des en-têtes HTTP personnalisés
+options = {
+    "httpheader": "\n".join([
+        "Header1: valeur1",
+        "Header2: valeur2",
+    ]),
+}
+hook2 = weechat.hook_process_hashtable("url:http://localhost:8080/",
+                                       options,
+                                       20000, "my_process_cb", "")
+
+# exemple 3 : exécution d'un programme de notification avec le message de quelqu'un
+hook3 = weechat.hook_process_hashtable("my-notify-command",
                                        {"arg1": "-from",
                                         "arg2": nick,
                                         "arg3": "-msg",
                                         "arg4": message},  # paramètre non sûr
                                        20000, "my_process_cb", "")
 
-# exemple 3 : appeler le shell pour exécuter la commande (la commande doit être SURE)
-hook3 = weechat.hook_process_hashtable("sh",
+# exemple 4 : appeler le shell pour exécuter la commande (la commande doit être SURE)
+hook4 = weechat.hook_process_hashtable("sh",
                                        {"arg1": "-c",
                                         "arg2": "ls -l /tmp | grep something"},
                                        20000, "my_process_cb", "")
