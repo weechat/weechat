@@ -54,6 +54,7 @@ Alphabetically:
 * Jim Ramsay (lack)
 * Jiri Golembiovsky (GolemJ)
 * Joey Pabalinas (alyptik)
+* Joseph Kichline
 * Juan Francisco Cantero Hurtado
 * Julien Louis (ptitlouis)
 * Karthik K
