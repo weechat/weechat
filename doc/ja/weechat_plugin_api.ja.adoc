@@ -8710,9 +8710,12 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 include::autogen/plugin_api/url_options.adoc[]
 
+// TRANSLATION MISSING
 [NOTE]
-^(1)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。"mask"
-型のオプションでは、以下の書式に従ってください: "value1+value2+value3"。
+^(1)^ For options with type "mask", format is: "value1+value2+value3";
+for options with type "list", the list items must be separated by a newline
+(`\n`). +
+^(2)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。
 
 URL では、入力/出力ファイル用に 2 つのオプション (文字列) を使うことができます:
 

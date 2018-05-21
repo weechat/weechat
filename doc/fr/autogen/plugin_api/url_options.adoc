@@ -4,7 +4,7 @@
 //
 [width="100%",cols="2,^1,7",options="header"]
 |===
-| Option | Type | Constantes ^(1)^
+| Option | Type ^(1)^ | Constantes ^(2)^
 
 | verbose | long |
 

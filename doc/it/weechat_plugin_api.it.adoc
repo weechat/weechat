@@ -9032,10 +9032,13 @@ Per il comando "url:..." sono disponibili le seguenti opzioni (consultare
 
 include::autogen/plugin_api/url_options.adoc[]
 
+// TRANSLATION MISSING
 [NOTE]
-^(1)^ Quando sono disponibili le costanti, esse vanno usate come valore per
-l'opzione. Per le opzioni con il tipo "mask" il formato è:
-"value1+value2+value3".
+^(1)^ Per le opzioni con il tipo "mask" il formato è: "value1+value2+value3";
+for options with type "list", the list items must be separated by a newline
+(`\n`). +
+^(2)^ Quando sono disponibili le costanti, esse vanno usate come valore per
+l'opzione.
 
 Per un URL, sono consentite due opzioni aggiuntive (stringhe) per il file in
 input/output:

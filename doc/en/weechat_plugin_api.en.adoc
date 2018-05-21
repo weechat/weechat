@@ -8751,8 +8751,10 @@ For command "url:...", following options are available (see
 include::autogen/plugin_api/url_options.adoc[]
 
 [NOTE]
-^(1)^ When constants are available they must be used as value for option. For
-options with type "mask", format is: "value1+value2+value3".
+^(1)^ For options with type "mask", format is: "value1+value2+value3";
+for options with type "list", the list items must be separated by a newline
+(`\n`). +
+^(2)^ When constants are available they must be used as value for option.
 
 For URL, two extra options (strings) are allowed for input/output file:
 

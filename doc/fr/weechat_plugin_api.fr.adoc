@@ -8917,9 +8917,12 @@ Pour la commande "url:...", les options suivantes sont disponibles (voir
 include::autogen/plugin_api/url_options.adoc[]
 
 [NOTE]
-^(1)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
-comme valeur pour l'option. Pour les options avec le type "mask", le format
-est : "valeur1+valeur2+valeur3".
+^(1)^ Pour les options avec le type "mask", le format est :
+"value1+value2+value3" ;
+pour les options avec le type "list", les éléments de la liste doivent être
+séparés par un retour à la ligne (`\n`). +
+^(2)^ Lorsque des constantes sont disponibles, elles doivent être utilisées
+comme valeur pour l'option.
 
 Pour l'URL, deux options supplémentaires (chaînes) sont autorisées, pour le
 fichier en entrée/sortie :

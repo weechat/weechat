@@ -720,8 +720,9 @@ def docgen_cmd_cb(data, buf, args):
         doc.write('[width="100%",cols="2,^1,7",options="header"]\n')
         doc.write('|===\n')
         doc.write('| {0} | {1} | {2}\n\n'
-                  ''.format(_('Option'), _('Type'),
-                            _('Constants') + ' ^(1)^'))
+                  ''.format(_('Option'),
+                            _('Type') + ' ^(1)^',
+                            _('Constants') + ' ^(2)^'))
         for option in url_options:
             constants = option['constants']
             if constants:
