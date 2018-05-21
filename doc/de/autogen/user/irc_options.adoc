@@ -33,7 +33,7 @@
 ** Standardwert: `+default+`
 
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
-** Beschreibung: pass:none[color for text in chghost messages]
+** Beschreibung: pass:none[Textfarbe in der chghost Nachrichten dargestellt werden]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+brown+`
@@ -375,7 +375,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.smart_filter_chghost]] *irc.look.smart_filter_chghost*
-** Beschreibung: pass:none[enable smart filter for "chghost" messages]
+** Beschreibung: pass:none[aktiviert einen intelligenten Filter für "chghost" Nachrichten]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
