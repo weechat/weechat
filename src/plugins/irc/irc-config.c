@@ -97,6 +97,7 @@ struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
+struct t_config_option *irc_config_look_smart_filter_chghost;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
 struct t_config_option *irc_config_look_smart_filter_join_unmask;
@@ -114,6 +115,7 @@ struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
 struct t_config_option *irc_config_color_message_join;
+struct t_config_option *irc_config_color_message_chghost;
 struct t_config_option *irc_config_color_message_quit;
 struct t_config_option *irc_config_color_mirc_remap;
 struct t_config_option *irc_config_color_nick_prefixes;
@@ -2885,6 +2887,13 @@ irc_config_init ()
            "\"irc_smart_filter\")"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_chghost = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_chghost", "boolean",
+        /* TRANSLATORS: please do not translate "chghost" */
+        N_("enable smart filter for \"chghost\" messages"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
@@ -3012,6 +3021,12 @@ irc_config_init ()
         "message_join", "color",
         N_("color for text in join messages"),
         NULL, -1, 0, "green", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_color_message_chghost = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_chghost", "color",
+        N_("color for text in chghost messages"),
+        NULL, -1, 0, "brown", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_quit = weechat_config_new_option (
         irc_config_file, ptr_section,

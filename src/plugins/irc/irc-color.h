@@ -84,6 +84,7 @@
 #define IRC_COLOR_STATUS_NAME weechat_color("status_name")
 #define IRC_COLOR_STATUS_NAME_SSL weechat_color("status_name_ssl")
 #define IRC_COLOR_MESSAGE_JOIN weechat_color(weechat_config_string(irc_config_color_message_join))
+#define IRC_COLOR_MESSAGE_CHGHOST weechat_color(weechat_config_string(irc_config_color_message_chghost))
 #define IRC_COLOR_MESSAGE_QUIT weechat_color(weechat_config_string(irc_config_color_message_quit))
 #define IRC_COLOR_REASON_QUIT weechat_color(weechat_config_string(irc_config_color_reason_quit))
 #define IRC_COLOR_TOPIC_CURRENT weechat_color(weechat_config_string(irc_config_color_topic_current))

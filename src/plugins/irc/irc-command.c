@@ -6356,7 +6356,7 @@ irc_command_init ()
            "Without argument, \"ls\" and \"list\" are sent.\n"
            "\n"
            "Capabilities supported by WeeChat are: "
-           "account-notify, away-notify, cap-notify, extended-join, "
+           "account-notify, away-notify, cap-notify, chghost, extended-join, "
            "invite-notify, multi-prefix, server-time, userhost-in-names.\n"
            "\n"
            "The capabilities to automatically enable on servers can be set "
