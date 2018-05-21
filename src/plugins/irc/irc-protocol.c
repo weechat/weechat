@@ -785,9 +785,16 @@ IRC_PROTOCOL_CALLBACK(chghost)
 
     length = strlen (argv[2]) + 1 + strlen (argv[3]) + 1;
     str_host = malloc (length);
-    if (str_host)
-        snprintf (str_host, length, "%s@%s", argv[2], argv[3]);
+    if (!str_host)
+    {
+        weechat_printf (
+            server->buffer,
+            _("%s%s: not enough memory for \"%s\" command"),
+            weechat_prefix ("error"), IRC_PLUGIN_NAME, "chghost");
+        return WEECHAT_RC_OK;
+    }
 
+    snprintf (str_host, length, "%s@%s", argv[2], argv[3]);
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -808,9 +815,10 @@ IRC_PROTOCOL_CALLBACK(chghost)
                     irc_msgbuffer_get_target_buffer (
                         server, NULL, command, NULL, ptr_channel->buffer),
                     date,
-                    irc_protocol_tags (command,
-                                       smart_filter ? "irc_smart_filter" : NULL,
-                                       nick, address),
+                    irc_protocol_tags (
+                        command,
+                        smart_filter ? "irc_smart_filter" : NULL,
+                        nick, address),
                     _("%s%s%s%s (%s%s%s)%s has changed host to %s%s"),
                     weechat_prefix ("network"),
                     irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -830,8 +838,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
         }
     }
 
-    if (str_host)
-        free (str_host);
+    free (str_host);
 
     return WEECHAT_RC_OK;
 }
