@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-05-21 08:47+0200\n"
-"PO-Revision-Date: 2018-05-19 15:10+0200\n"
+"PO-Revision-Date: 2018-05-21 09:58+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -8150,7 +8150,6 @@ msgstr "Aushandlung der Clientfähigkeit"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -8182,9 +8181,10 @@ msgstr ""
 "Ohne Angaben von Argumenten werden \"ls\" und \"list\" gesendet.\n"
 "\n"
 "Fähigkeiten die von WeeChat unterstützt werden: account-notify, away-notify, "
-"cap-notify, extended-join, multi-prefix, server-time, userhost-in-names.\n"
+"cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-"
+"time, userhost-in-names.\n"
 "\n"
-"Fähigkeiten die standardmäßig genutzt werden sollen können mit der Option  "
+"Fähigkeiten die standardmäßig genutzt werden sollen, können mit der Option  "
 "irc.server_default.capabilities gesetzt werden (oder individuell für jeden "
 "Server mit der Option irc.server.xxx.capabilities).\n"
 "\n"
@@ -10214,9 +10214,8 @@ msgstr ""
 "\"irc_smart_filter\" erstellt werden"
 
 #. TRANSLATORS: please do not translate "chghost"
-#, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
-msgstr "aktiviert einen intelligenten Filter für \"join\" Nachrichten"
+msgstr "aktiviert einen intelligenten Filter für \"chghost\" Nachrichten"
 
 msgid ""
 "delay for filtering join/part/quit messages (in minutes): if the nick did "
@@ -10307,11 +10306,8 @@ msgstr ""
 "Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
 "werden soll"
 
-#, fuzzy
 msgid "color for text in chghost messages"
-msgstr ""
-"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
-"werden soll"
+msgstr "Textfarbe in der chghost Nachrichten dargestellt werden"
 
 msgid "color for text in part/quit messages"
 msgstr ""
@@ -10802,13 +10798,13 @@ msgstr "%s%s: Clientfähigkeit, Anfrage: %s"
 msgid "%s%s: client capability: SASL not supported"
 msgstr "%s%s: Clientfähigkeit: SASL wird nicht unterstützt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, server supports: %s"
-msgstr "%s%s: Clientfähigkeit, Server unterstützt: %s"
+msgstr "%s%s: Clientfähigkeiten, Server unterstützt: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, currently enabled: %s"
-msgstr "%s%s: Clientfähigkeit (CAP), aktuell aktiviert: %s"
+msgstr "%s%s: Clientfähigkeiten (CAP), aktuell aktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
@@ -10826,9 +10822,9 @@ msgstr "%s%s: Clientfähigkeit, nicht verfügbar: %s"
 msgid "%s%s: client capability, removed: %s"
 msgstr "%s%s: Clientfähigkeit, entfernt: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s verließ %s%s%s"
+msgstr "%s%s%s%s (%s%s%s)%s hat den Host nach %s%s geändert"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
