@@ -32,6 +32,12 @@
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+default+`
 
+* [[option_irc.color.message_chghost]] *irc.color.message_chghost*
+** description: pass:none[couleur pour le texte dans les messages chghost]
+** type: couleur
+** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
+** valeur par défaut: `+brown+`
+
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** description: pass:none[couleur pour le texte dans les messages join]
 ** type: couleur
@@ -364,6 +370,12 @@
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** description: pass:none[filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur l'étiquette "irc_smart_filter")]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
+* [[option_irc.look.smart_filter_chghost]] *irc.look.smart_filter_chghost*
+** description: pass:none[activer le filtre intelligent pour les messages "chghost"]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-20 22:43+0200\n"
+"POT-Creation-Date: 2018-05-21 08:47+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6818,8 +6818,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-"
-"names.\n"
+"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
+"userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -8369,6 +8369,10 @@ msgid ""
 "minutes on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "chghost"
+msgid "enable smart filter for \"chghost\" messages"
+msgstr ""
+
 msgid ""
 "delay for filtering join/part/quit messages (in minutes): if the nick did "
 "not speak during the last N minutes, the join/part/quit is filtered"
@@ -8433,6 +8437,10 @@ msgstr ""
 
 msgid "color for text in join messages"
 msgstr ""
+
+#, fuzzy
+msgid "color for text in chghost messages"
+msgstr "cor de texto para valores"
 
 msgid "color for text in part/quit messages"
 msgstr ""
@@ -8893,6 +8901,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: client capability, removed: %s"
 msgstr "%s: script removido: %s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s entrou %s%s%s"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"

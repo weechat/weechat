@@ -32,6 +32,12 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+default+`
 
+* [[option_irc.color.message_chghost]] *irc.color.message_chghost*
+** opis: pass:none[color for text in chghost messages]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+brown+`
+
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** opis: pass:none[kolor tekstu w wiadomościach o wejściu na kanał]
 ** typ: kolor
@@ -364,6 +370,12 @@
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** opis: pass:none[filtruj wiadomości wejścia/opuszczenia/wyjścia/nick od nicków nie będących aktywnymi od kilku minut na kanale (musisz stworzyć filtr na tagu "irc_smart_filter")]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
+* [[option_irc.look.smart_filter_chghost]] *irc.look.smart_filter_chghost*
+** opis: pass:none[enable smart filter for "chghost" messages]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-05-20 22:43+0200\n"
+"POT-Creation-Date: 2018-05-21 08:47+0200\n"
 "PO-Revision-Date: 2018-04-21 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7645,8 +7645,8 @@ msgid ""
 "Without argument, \"ls\" and \"list\" are sent.\n"
 "\n"
 "Capabilities supported by WeeChat are: account-notify, away-notify, cap-"
-"notify, extended-join, invite-notify, multi-prefix, server-time, userhost-in-"
-"names.\n"
+"notify, chghost, extended-join, invite-notify, multi-prefix, server-time, "
+"userhost-in-names.\n"
 "\n"
 "The capabilities to automatically enable on servers can be set in option irc."
 "server_default.capabilities (or by server in option irc.server.xxx."
@@ -9581,6 +9581,11 @@ msgstr ""
 "ジをフィルタする (\"irc_smart_filter\" タグのフィルタを作らなければいけませ"
 "ん)"
 
+#. TRANSLATORS: please do not translate "chghost"
+#, fuzzy
+msgid "enable smart filter for \"chghost\" messages"
+msgstr "\"join\" メッセージのスマートフィルタを有効化"
+
 msgid ""
 "delay for filtering join/part/quit messages (in minutes): if the nick did "
 "not speak during the last N minutes, the join/part/quit is filtered"
@@ -9656,6 +9661,10 @@ msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "\"input_prompt\" バー要素内のニックネームモードに付ける色"
 
 msgid "color for text in join messages"
+msgstr "参加メッセージの色"
+
+#, fuzzy
+msgid "color for text in chghost messages"
 msgstr "参加メッセージの色"
 
 msgid "color for text in part/quit messages"
@@ -10139,6 +10148,10 @@ msgstr "%s%s: クライアントの機能、現在利用可能なもの: %s"
 #, c-format
 msgid "%s%s: client capability, removed: %s"
 msgstr "%s%s: クライアントの機能、削除されたもの: %s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s が %s%s%s から退出"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"

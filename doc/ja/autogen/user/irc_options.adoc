@@ -32,6 +32,12 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+default+`
 
+* [[option_irc.color.message_chghost]] *irc.color.message_chghost*
+** 説明: pass:none[color for text in chghost messages]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+brown+`
+
 * [[option_irc.color.message_join]] *irc.color.message_join*
 ** 説明: pass:none[参加メッセージの色]
 ** タイプ: 色
@@ -364,6 +370,12 @@
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** 説明: pass:none[チャンネルで何分か会話のないニックネームの参加/退出/終了/ニックネームメッセージをフィルタする ("irc_smart_filter" タグのフィルタを作らなければいけません)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_irc.look.smart_filter_chghost]] *irc.look.smart_filter_chghost*
+** 説明: pass:none[enable smart filter for "chghost" messages]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
