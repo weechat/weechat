@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add support of list options in curl (issue #826)
+  * core: add support of list options in curl (issue #826, issue #219)
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
   * api: add function hashtable_add_from_infolist()
   * api: add function string_format_size in scripting API
