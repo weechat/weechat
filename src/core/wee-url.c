@@ -940,12 +940,11 @@ weeurl_option_map_cb (void *data,
                       const void *key, const void *value)
 {
     CURL *curl;
-    int index, index_constant, rc;
+    int i, index, index_constant, rc, num_items;
     long long_value;
     long long long_long_value;
     struct curl_slist *slist;
-    char *list_copy, *list_entry_walker;
-    const char *list_entry_start;
+    char **items;
 
     /* make C compiler happy */
     (void) hashtable;
@@ -1015,27 +1014,18 @@ weeurl_option_map_cb (void *data,
                 }
                 break;
             case URL_TYPE_LIST:
-                slist = NULL;
-                list_copy = malloc (strlen ((const char *)value) + 1);
-                if (list_copy)
+                items = string_split (value, "\n", 0, 0, &num_items);
+                if (items)
                 {
-                    strcpy (list_copy, (const char *)value);
-                    list_entry_start = list_copy;
-                    list_entry_walker = list_copy;
-                    while (*list_entry_walker)
+                    slist = NULL;
+                    for (i = 0; i < num_items; i++)
                     {
-                        if (*list_entry_walker == '\n')
-                        {
-                            *list_entry_walker = '\0';
-                            slist = curl_slist_append (slist, list_entry_start);
-                            list_entry_start = list_entry_walker + 1;
-                        }
-                        ++list_entry_walker;
+                        slist = curl_slist_append (slist, items[i]);
                     }
-                    slist = curl_slist_append (slist, list_entry_start);
-                    free (list_copy);
-                    curl_easy_setopt (curl, url_options[index].option,
+                    curl_easy_setopt (curl,
+                                      url_options[index].option,
                                       slist);
+                    string_free_split (items);
                 }
                 break;
         }
