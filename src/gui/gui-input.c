@@ -851,27 +851,22 @@ gui_input_delete_previous_word (struct t_gui_buffer *buffer)
         start = (char *)utf8_add_offset (buffer->input_buffer,
                                          buffer->input_buffer_pos - 1);
         string = start;
+        /* move to the left until we reach a word char */
         while (string && !string_is_word_char_input (string))
         {
             string = (char *)utf8_prev_char (buffer->input_buffer, string);
         }
+        /* move to the left to skip the whole word */
         if (string)
         {
             while (string && string_is_word_char_input (string))
             {
                 string = (char *)utf8_prev_char (buffer->input_buffer, string);
             }
-            if (string)
-            {
-                while (string && !string_is_word_char_input (string))
-                {
-                    string = (char *)utf8_prev_char (buffer->input_buffer, string);
-                }
-            }
         }
 
         if (string)
-            string = (char *)utf8_next_char (utf8_next_char (string));
+            string = (char *)utf8_next_char (string);
         else
             string = buffer->input_buffer;
 
@@ -913,10 +908,15 @@ gui_input_delete_next_word (struct t_gui_buffer *buffer)
                                          buffer->input_buffer_pos);
         string = start;
         length_deleted = 0;
-        while (string[0])
+        /* move to the right until we reach a word char */
+        while (string[0] && !string_is_word_char_input (string))
         {
-            if (!string_is_word_char_input (string) && (string > start))
-                break;
+            string = (char *)utf8_next_char (string);
+            length_deleted++;
+        }
+        /* move to the right to skip the whole word */
+        while (string[0] && string_is_word_char_input (string))
+        {
             string = (char *)utf8_next_char (string);
             length_deleted++;
         }
