@@ -8710,10 +8710,9 @@ struct t_hook *weechat_hook_process_hashtable (const char *command,
 
 include::autogen/plugin_api/url_options.adoc[]
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ For options with type "mask", format is: "value1+value2+value3";
-for options with type "list", the list items must be separated by a newline
+^(1)^ "mask" タイプのオプションでは、フォーマットは "value1+value2+value3" です。
+"list" タイプのオプションでは、リスト要素を改行で区切ってください。
 (`\n`). +
 ^(2)^ 定数が利用可能な場合、定数は必ずオプションの値に含めてください。
 
@@ -8729,7 +8728,6 @@ URL では、入力/出力ファイル用に 2 つのオプション (文字列)
 
 C 言語での使用例:
 
-// TRANSLATION MISSING
 [source,C]
 ----
 int
@@ -8776,7 +8774,7 @@ if (options_url1)
     weechat_hashtable_free (options_url1);
 }
 
-/* 例 2: open URL with custom HTTP headers */
+/* 例 2: 任意の HTTP ヘッダを付けて URL を開く */
 struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           WEECHAT_HASHTABLE_STRING,
                                                           WEECHAT_HASHTABLE_STRING,
@@ -8833,7 +8831,6 @@ if (options_cmd2)
 
 スクリプト (Python) での使用例:
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # プロトタイプ
@@ -8857,7 +8854,7 @@ hook1 = weechat.hook_process_hashtable("url:https://weechat.org/",
                                        {"file_out": "/tmp/weechat.org.html"},
                                        20000, "my_process_cb", "")
 
-# 例 2: open URL with custom HTTP headers
+# 例 2: 任意の HTTP ヘッダを付けて URL を開く
 options = {
     "httpheader": "\n".join([
         "Header1: value1",

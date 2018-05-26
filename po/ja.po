@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-05-21 08:47+0200\n"
-"PO-Revision-Date: 2018-04-21 09:00+0900\n"
+"PO-Revision-Date: 2018-05-26 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -5765,6 +5765,12 @@ msgid ""
 "${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:"
 "[${number}]}\""
 msgstr ""
+"各バッファの表示書式 (注意: 値は評価されます、/help buflist を参照してくださ"
+"い); 例: バー要素 \"buflist\" は標準書式、それ以外のバー要素  (\"buflist2\" "
+"や \"buflist3\") は角括弧内にバッファ番号を入れた書式: \"${if:${bar_item."
+"name}==buflist?"
+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:"
+"[${number}]}\""
 
 msgid ""
 "format for the line with current buffer (note: content is evaluated, see /"
@@ -7354,13 +7360,12 @@ msgstr ""
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s%s: 新しいプライベートバッファ \"%s\" の作成に失敗"
 
-#, fuzzy
 msgid "nick:"
-msgstr "ニックネーム"
+msgstr "ニックネーム:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "Server: %s%s %s[%s%s%s]%s%s%s"
-msgstr "サーバ: %s%s %s[%s%s%s]%s%s"
+msgstr "サーバ: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
 msgstr "接続済み"
@@ -7634,7 +7639,6 @@ msgstr "クライアント機能情報の交換"
 msgid "ls || list || req|ack [<capability> [<capability>...]] || end"
 msgstr "ls || list || req|ack [<capability> [<capability>...]] || end"
 
-#, fuzzy
 msgid ""
 "   ls: list the capabilities supported by the server\n"
 " list: list the capabilities currently enabled\n"
@@ -7665,7 +7669,8 @@ msgstr ""
 "引数無しの場合、\"ls\" と \"list\" を送信します。\n"
 "\n"
 "WeeChat がサポートする機能: account-notify、away-notify、cap-notify、"
-"extended-join、multi-prefix、server-time、userhost-in-names。\n"
+"chghost、extended-join、invite-notify、multi-prefix、server-time、userhost-"
+"in-names。\n"
 "\n"
 "自動的に有効化する機能を設定するにはオプション irc.server_default."
 "capabilities (または対象のサーバに関するオプション irc.server.xxx."
@@ -9582,9 +9587,8 @@ msgstr ""
 "ん)"
 
 #. TRANSLATORS: please do not translate "chghost"
-#, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
-msgstr "\"join\" メッセージのスマートフィルタを有効化"
+msgstr "\"chghost\" メッセージのスマートフィルタを有効化"
 
 msgid ""
 "delay for filtering join/part/quit messages (in minutes): if the nick did "
@@ -9663,9 +9667,8 @@ msgstr "\"input_prompt\" バー要素内のニックネームモードに付け�
 msgid "color for text in join messages"
 msgstr "参加メッセージの色"
 
-#, fuzzy
 msgid "color for text in chghost messages"
-msgstr "参加メッセージの色"
+msgstr "chghost メッセージの色"
 
 msgid "color for text in part/quit messages"
 msgstr "退出/終了 メッセージの色"
@@ -10125,11 +10128,11 @@ msgstr "%s%s: クライアントの機能、リクエスト中: %s"
 msgid "%s%s: client capability: SASL not supported"
 msgstr "%s%s: クライアントの機能: SASL はサポートされていません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, server supports: %s"
 msgstr "%s%s: クライアントの機能、サーバは以下をサポート: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, currently enabled: %s"
 msgstr "%s%s: クライアントの機能、現在有効化されているもの: %s"
 
@@ -10149,9 +10152,9 @@ msgstr "%s%s: クライアントの機能、現在利用可能なもの: %s"
 msgid "%s%s: client capability, removed: %s"
 msgstr "%s%s: クライアントの機能、削除されたもの: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s (%s%s%s)%s has changed host to %s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s が %s%s%s から退出"
+msgstr "%s%s%s%s (%s%s%s)%s がホストを %s%s に変更しました"
 
 #, c-format
 msgid "%sYou have been invited to %s%s%s by %s%s%s"
