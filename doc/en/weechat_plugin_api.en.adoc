@@ -9717,7 +9717,7 @@ List of signals sent by WeeChat and plugins:
   Filters disabled.
 
 | weechat | hotlist_changed |
-  - |
+  Pointer: buffer (can be NULL). |
   Hotlist changed.
 
 | weechat | input_paste_pending |

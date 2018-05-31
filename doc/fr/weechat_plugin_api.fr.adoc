@@ -9907,7 +9907,7 @@ Liste des signaux envoyés par WeeChat et les extensions :
   Filtres désactivés.
 
 | weechat | hotlist_changed |
-  - |
+  Pointeur : tampon (peut être NULL). |
   La hotlist a changé.
 
 | weechat | input_paste_pending |

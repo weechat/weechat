@@ -59,10 +59,10 @@ int gui_add_hotlist = 1;                    /* 0 is for temporarily disable */
  */
 
 void
-gui_hotlist_changed_signal ()
+gui_hotlist_changed_signal (struct t_gui_buffer *buffer)
 {
     (void) hook_signal_send ("hotlist_changed",
-                             WEECHAT_HOOK_SIGNAL_STRING, NULL);
+                             WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -382,7 +382,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
         if (ptr_hotlist->priority >= priority)
         {
             ptr_hotlist->count[priority]++;
-            gui_hotlist_changed_signal ();
+            gui_hotlist_changed_signal (buffer);
             return ptr_hotlist;
         }
 
@@ -415,7 +415,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer,
 
     gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, new_hotlist);
 
-    gui_hotlist_changed_signal ();
+    gui_hotlist_changed_signal (buffer);
 
     return new_hotlist;
 }
@@ -471,7 +471,7 @@ gui_hotlist_resort ()
     gui_hotlist = new_hotlist;
     last_gui_hotlist = last_new_hotlist;
 
-    gui_hotlist_changed_signal ();
+    gui_hotlist_changed_signal (NULL);
 }
 
 /*
@@ -510,7 +510,7 @@ gui_hotlist_clear (int level_mask)
     }
 
     if (hotlist_changed)
-        gui_hotlist_changed_signal ();
+        gui_hotlist_changed_signal (NULL);
 }
 
 /*
@@ -562,7 +562,7 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer,
     }
 
     if (hotlist_changed)
-        gui_hotlist_changed_signal ();
+        gui_hotlist_changed_signal (NULL);
 }
 
 /*

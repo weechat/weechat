@@ -10080,8 +10080,9 @@ List of signals sent by WeeChat and plugins:
   - |
   Filtri disabilitati.
 
+// TRANSLATION MISSING
 | weechat | hotlist_changed |
-  - |
+  Pointer: buffer (can be NULL). |
   Hotlist modificata.
 
 | weechat | input_paste_pending |

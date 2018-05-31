@@ -9676,8 +9676,9 @@ WeeChat とプラグインが送信するシグナルのリスト:
   - |
   フィルタを無効化
 
+// TRANSLATION MISSING
 | weechat | hotlist_changed |
-  - |
+  Pointer: バッファ (can be NULL) |
   ホットリストが変更された
 
 | weechat | input_paste_pending |
