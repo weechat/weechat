@@ -20,6 +20,18 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.2]]
 == Version 2.2 (under dev)
 
+[[v2.2_default_triggers]]
+=== Default triggers
+
+The existing trigger "cmd_pass" has been updated to hide password in command
+`/msg nickserv set password`.
+
+You can restore the default trigger with the following command:
+
+----
+/trigger restore cmd_pass
+----
+
 [[v2.2_irc_signals_tags]]
 === Tags in IRC "in" signals
 

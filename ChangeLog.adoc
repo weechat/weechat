@@ -31,6 +31,7 @@ New features::
   * irc: display current nick on connected servers in output of /server list|listfull (issue #1193)
   * irc: add option "-server" in command /list (issue #1165)
   * irc: add indexed ban list, add completion for /unban and /unquiet (issue #597, task #11374, task #10876)
+  * trigger: hide password in command "/msg nickserv set password"
   * xfer: add option xfer.network.send_ack (issue #1171)
 
 Bug fixes::

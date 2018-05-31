@@ -80,7 +80,7 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "",
       "==^("
       "(/(msg|m|quote) +nickserv "
-      "+(id|identify|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
+      "+(id|identify|set +password|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|"
       "recover +[^ ]+) +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"
