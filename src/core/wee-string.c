@@ -134,7 +134,7 @@ string_cut (const char *string, int length, int count_suffix, int screen,
             if (screen)
                 length -= utf8_strlen_screen (cut_suffix);
             else
-                length -= length_cut_suffix;
+                length -= utf8_strlen (cut_suffix);
             if (length < 0)
                 return strdup ("");
             if (screen)

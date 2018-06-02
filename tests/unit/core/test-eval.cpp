@@ -296,7 +296,7 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("tes…", "${cutscr:3,…,test}");
     WEE_CHECK_EVAL("te+", "${cut:+3,+,test}");
     WEE_CHECK_EVAL("te+", "${cutscr:+3,+,test}");
-    WEE_CHECK_EVAL("…", "${cut:+3,…,test}");
+    WEE_CHECK_EVAL("te…", "${cut:+3,…,test}");
     WEE_CHECK_EVAL("te…", "${cutscr:+3,…,test}");
     WEE_CHECK_EVAL("t++", "${cut:+3,++,test}");
     WEE_CHECK_EVAL("t++", "${cutscr:+3,++,test}");
