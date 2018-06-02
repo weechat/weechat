@@ -112,6 +112,9 @@ string_cut (const char *string, int length, int count_suffix, int screen,
     char *result;
     const char *ptr_string;
 
+    if (!string)
+        return NULL;
+
     if (screen)
         ptr_string = gui_chat_string_add_offset_screen (string, length);
     else
