@@ -166,6 +166,110 @@ TEST(String, Case)
 
 /*
  * Tests functions:
+ *   string_cut
+ */
+
+TEST(String, Cut)
+{
+    POINTERS_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
+    STRCMP_EQUAL("", string_cut ("", 0, 0, 0, NULL));
+
+    /* cut with length == 0 */
+    STRCMP_EQUAL("", string_cut ("noël", 0, 0, 0, NULL));
+    STRCMP_EQUAL("+", string_cut ("noël", 0, 0, 0, "+"));
+    STRCMP_EQUAL("…", string_cut ("noël", 0, 0, 0, "…"));
+    STRCMP_EQUAL("", string_cut ("noël", 0, 1, 0, NULL));
+    STRCMP_EQUAL("", string_cut ("noël", 0, 1, 0, "+"));
+    STRCMP_EQUAL("", string_cut ("noël", 0, 1, 0, "…"));
+
+    /* cut with length == 1 */
+    STRCMP_EQUAL("n", string_cut ("noël", 1, 0, 0, NULL));
+    STRCMP_EQUAL("n+", string_cut ("noël", 1, 0, 0, "+"));
+    STRCMP_EQUAL("n…", string_cut ("noël", 1, 0, 0, "…"));
+    STRCMP_EQUAL("n", string_cut ("noël", 1, 1, 0, NULL));
+    STRCMP_EQUAL("+", string_cut ("noël", 1, 1, 0, "+"));
+    STRCMP_EQUAL("…", string_cut ("noël", 1, 1, 0, "…"));
+
+    /* cut with length == 2 */
+    STRCMP_EQUAL("no", string_cut ("noël", 2, 0, 0, NULL));
+    STRCMP_EQUAL("no+", string_cut ("noël", 2, 0, 0, "+"));
+    STRCMP_EQUAL("no…", string_cut ("noël", 2, 0, 0, "…"));
+    STRCMP_EQUAL("no", string_cut ("noël", 2, 1, 0, NULL));
+    STRCMP_EQUAL("n+", string_cut ("noël", 2, 1, 0, "+"));
+    STRCMP_EQUAL("n…", string_cut ("noël", 2, 1, 0, "…"));
+
+    /* cut with length == 3 */
+    STRCMP_EQUAL("noë", string_cut ("noël", 3, 0, 0, NULL));
+    STRCMP_EQUAL("noë+", string_cut ("noël", 3, 0, 0, "+"));
+    STRCMP_EQUAL("noë…", string_cut ("noël", 3, 0, 0, "…"));
+    STRCMP_EQUAL("noë", string_cut ("noël", 3, 1, 0, NULL));
+    STRCMP_EQUAL("no+", string_cut ("noël", 3, 1, 0, "+"));
+    STRCMP_EQUAL("no…", string_cut ("noël", 3, 1, 0, "…"));
+
+    /* cut with length == 4 */
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 0, 0, NULL));
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 0, 0, "+"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 0, 0, "…"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 1, 0, NULL));
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 1, 0, "+"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 4, 1, 0, "…"));
+
+    /* cut with length == 5 */
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 0, 0, NULL));
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 0, 0, "+"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 0, 0, "…"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 1, 0, NULL));
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 1, 0, "+"));
+    STRCMP_EQUAL("noël", string_cut ("noël", 5, 1, 0, "…"));
+
+    /* cut with length == 1, screen == 0 then 1 */
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 1, 0, 0, NULL));
+    STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 1, 0, 0, "+"));
+    STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 1, 0, 0, "…"));
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 1, 1, 0, NULL));
+    STRCMP_EQUAL("+", string_cut ("こんにちは世界", 1, 1, 0, "+"));
+    STRCMP_EQUAL("…", string_cut ("こんにちは世界", 1, 1, 0, "…"));
+
+    STRCMP_EQUAL("", string_cut ("こんにちは世界", 1, 0, 1, NULL));
+    STRCMP_EQUAL("+", string_cut ("こんにちは世界", 1, 0, 1, "+"));
+    STRCMP_EQUAL("…", string_cut ("こんにちは世界", 1, 0, 1, "…"));
+    STRCMP_EQUAL("", string_cut ("こんにちは世界", 1, 1, 1, NULL));
+    STRCMP_EQUAL("+", string_cut ("こんにちは世界", 1, 1, 1, "+"));
+    STRCMP_EQUAL("…", string_cut ("こんにちは世界", 1, 1, 1, "…"));
+
+    /* cut with length == 2, screen == 0 then 1 */
+    STRCMP_EQUAL("こん", string_cut ("こんにちは世界", 2, 0, 0, NULL));
+    STRCMP_EQUAL("こん+", string_cut ("こんにちは世界", 2, 0, 0, "+"));
+    STRCMP_EQUAL("こん…", string_cut ("こんにちは世界", 2, 0, 0, "…"));
+    STRCMP_EQUAL("こん", string_cut ("こんにちは世界", 2, 1, 0, NULL));
+    STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 2, 1, 0, "+"));
+    STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 2, 1, 0, "…"));
+
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 2, 0, 1, NULL));
+    STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 2, 0, 1, "+"));
+    STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 2, 0, 1, "…"));
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 2, 1, 1, NULL));
+    STRCMP_EQUAL("+", string_cut ("こんにちは世界", 2, 1, 1, "+"));
+    STRCMP_EQUAL("…", string_cut ("こんにちは世界", 2, 1, 1, "…"));
+
+    /* cut with length == 3, screen == 0 then 1 */
+    STRCMP_EQUAL("こんに", string_cut ("こんにちは世界", 3, 0, 0, NULL));
+    STRCMP_EQUAL("こんに+", string_cut ("こんにちは世界", 3, 0, 0, "+"));
+    STRCMP_EQUAL("こんに…", string_cut ("こんにちは世界", 3, 0, 0, "…"));
+    STRCMP_EQUAL("こんに", string_cut ("こんにちは世界", 3, 1, 0, NULL));
+    STRCMP_EQUAL("こん+", string_cut ("こんにちは世界", 3, 1, 0, "+"));
+    STRCMP_EQUAL("こん…", string_cut ("こんにちは世界", 3, 1, 0, "…"));
+
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 3, 0, 1, NULL));
+    STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 3, 0, 1, "+"));
+    STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 3, 0, 1, "…"));
+    STRCMP_EQUAL("こ", string_cut ("こんにちは世界", 3, 1, 1, NULL));
+    STRCMP_EQUAL("こ+", string_cut ("こんにちは世界", 3, 1, 1, "+"));
+    STRCMP_EQUAL("こ…", string_cut ("こんにちは世界", 3, 1, 1, "…"));
+}
+
+/*
+ * Tests functions:
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range
