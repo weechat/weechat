@@ -2292,6 +2292,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+thi…+` +
   `+こ>>+`
 
+// TRANSLATION MISSING
+| `+${rev:xxx}+` +
+  (_WeeChat ≥ 2.2_) |
+  Reversed string. |
+  `+${rev:Hello, world!}+` |
+  `+!dlrow ,olleH+`
+
 | `+${re:N}+` +
   (_WeeChat バージョン 1.1 以上で利用可_) |
   正規表現のキャプチャグループ: `0` = マッチするすべての文字列、`1` から `99` =

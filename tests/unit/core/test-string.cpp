@@ -270,6 +270,30 @@ TEST(String, Cut)
 
 /*
  * Tests functions:
+ *   string_reverse
+ */
+
+TEST(String, Reverse)
+{
+    POINTERS_EQUAL(NULL, string_reverse (NULL));
+    STRCMP_EQUAL("", string_reverse (""));
+
+    /* reverse of UTF-8 string */
+    STRCMP_EQUAL("n", string_reverse ("n"));
+    STRCMP_EQUAL("on", string_reverse ("no"));
+    STRCMP_EQUAL("ëon", string_reverse ("noë"));
+    STRCMP_EQUAL("lëon", string_reverse ("noël"));
+    STRCMP_EQUAL("界世はちにんこ", string_reverse ("こんにちは世界"));
+
+    /*
+     * reverse of ISO-8859-15 string: the result may not be what you expect:
+     * the function string_reverse accepts only an UTF-8 string as input
+     */
+    STRCMP_EQUAL("\xeblon", string_reverse ("no\xebl"));
+}
+
+/*
+ * Tests functions:
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range

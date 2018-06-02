@@ -339,6 +339,10 @@ TEST(Eval, EvalExpression)
     WEE_CHECK_EVAL("a+", "${cut:1,+,a${\\u0308}}");
     WEE_CHECK_EVAL("a\u0308", "${cutscr:1,+,a${\\u0308}}");
 
+    /* test reverse of string */
+    WEE_CHECK_EVAL("!dlrow ,olleH", "${rev:Hello, world!}");
+    WEE_CHECK_EVAL("界世はちにんこ", "${rev:こんにちは世界}");
+
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");

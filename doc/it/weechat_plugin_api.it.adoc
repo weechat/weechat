@@ -2381,6 +2381,12 @@ expanded to last):
   `+thi…+` +
   `+こ>>+`
 
+| `+${rev:xxx}+` +
+  (_WeeChat ≥ 2.2_) |
+  Reversed string. |
+  `+${rev:Hello, world!}+` |
+  `+!dlrow ,olleH+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Regex captured group: `0` = whole string matching, `1` to `99` = group

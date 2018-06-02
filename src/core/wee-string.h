@@ -39,6 +39,7 @@ struct t_hashtable;
 extern char *string_strndup (const char *string, int length);
 extern char *string_cut (const char *string, int length, int count_suffix,
                          int screen, const char *cut_suffix);
+extern char *string_reverse (const char *string);
 extern void string_tolower (char *string);
 extern void string_toupper (char *string);
 extern int string_strcasecmp (const char *string1, const char *string2);

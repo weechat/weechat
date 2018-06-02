@@ -2331,6 +2331,12 @@ première étendue à la dernière) :
   `+cec…+` +
   `+こ>>+`
 
+| `+${rev:xxx}+` +
+  (_WeeChat ≥ 2.2_) |
+  Chaîne inversée. |
+  `+${rev:Bonjour !}+` |
+  `+! ruojnoB+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Groupe regex capturé : `0` = toute la chaîne correspondante,

@@ -163,6 +163,46 @@ string_cut (const char *string, int length, int count_suffix, int screen,
 }
 
 /*
+ * Reverses a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_reverse (const char *string)
+{
+    int length, char_size;
+    const char *ptr_string;
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (!string[0])
+        return strdup (string);
+
+    length = strlen (string);
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    ptr_string = string;
+    ptr_result = result + length;
+    ptr_result[0] = '\0';
+
+    while (ptr_string && ptr_string[0])
+    {
+        char_size = utf8_char_size (ptr_string);
+
+        ptr_result -= char_size;
+        memcpy (ptr_result, ptr_string, char_size);
+        ptr_string += char_size;
+    }
+
+    return result;
+}
+
+/*
  * Converts string to lower case (locale independent).
  */
 

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add reverse of string in evaluation of expressions with "rev:" (issue #1200)
   * core: send buffer pointer (when possible) in signal "hotlist_changed" (issue #1133)
   * core: add support of list options in curl (issue #826, issue #219)
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
