@@ -33,7 +33,7 @@ WeeChat (Wee Enhanced Environment for Chat)
 [[plugins_in_weechat]]
 == WeeChat プラグイン
 
-プラグインは C 言語のプログラムであり、インターフェイスが定義する
+プラグインは C 言語のプログラムであり、インターフェースが定義する
 WeeChat 関数を呼び出すことができます。
 
 この C 言語プログラムはコンパイルの際に WeeChat のソースを必要としません、WeeChat
@@ -2292,10 +2292,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+thi…+` +
   `+こ>>+`
 
-// TRANSLATION MISSING
 | `+${rev:xxx}+` +
-  (_WeeChat ≥ 2.2_) |
-  Reversed string. |
+  (_WeeChat バージョン 2.2 以上で利用可_) |
+  文字順を反転させた文字列。|
   `+${rev:Hello, world!}+` |
   `+!dlrow ,olleH+`
 
@@ -9683,9 +9682,8 @@ WeeChat とプラグインが送信するシグナルのリスト:
   - |
   フィルタを無効化
 
-// TRANSLATION MISSING
 | weechat | hotlist_changed |
-  Pointer: バッファ (can be NULL) |
+  Pointer: バッファ (NULL も可) |
   ホットリストが変更された
 
 | weechat | input_paste_pending |
