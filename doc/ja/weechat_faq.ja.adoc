@@ -148,12 +148,15 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 === weechat を screen/tmux の中で使っている場合、おかしなランダム文字列が表示されます。どうすれば直りますか。
 
 シェルの TERM 変数に間違った値が設定されている可能性があります
-(端末、*screen/tmux の外* で `echo $TERM` の出力を確認してください)。
-
+(端末、*screen/tmux の外* で `echo $TERM` の出力を確認してください)。 +
 例えば、_xterm-color_ の場合、おかしな文字列が表示される可能性があります。_xterm_
-と設定すればこのようなことは起こらないので (その他多くの値でも問題は起きません)、これを使ってください。
-
+と設定すればこのようなことは起こらないので (その他多くの値でも問題は起きません)、これを使ってください。 +
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
+
+// TRANSLATION MISSING
+If you are using gnome-terminal, check that the option
+"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
+is set to `narrow`.
 
 [[osx_display_broken]]
 === OS X 上で WeeChat をコンパイルした場合、"(null)" という文字列が至る所に表示されます。

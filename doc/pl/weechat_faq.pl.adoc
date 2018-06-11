@@ -150,12 +150,15 @@ W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 === Podczas używania WeeChat pod screenem/tmuxem pojawiają mi się dziwne, losowe znaki, jak to naprawić?
 
 Może to być spowodowane przez złą wartość zmiennej TERM w swojej powłoce (spójrz
-na wynik `echo $TERM` w swoim terminalu, *poza screenem/tmuxem*).
-
+na wynik `echo $TERM` w swoim terminalu, *poza screenem/tmuxem*). +
 Na przykład, _xterm-color_ może wyświetlać takie dziwne znaki, możesz użyć _xterm_,
-który działa dobrze (jak wiele innych wartości).
-
+który działa dobrze (jak wiele innych wartości). +
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
+
+// TRANSLATION MISSING
+If you are using gnome-terminal, check that the option
+"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
+is set to `narrow`.
 
 [[osx_display_broken]]
 === Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
@@ -489,7 +492,7 @@ UXTerm*metaSendsEscape: true
 Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
 Jeśli używasz aplikacji Terminal na Mac OS X włącz opcję
-"Use option as meta key" w menu Settings / Keyboard. Następnie możesz używać klawisza
+"Use option as meta key" w menu Settings/Keyboard. Następnie możesz używać klawisza
 kbd:[Option] jako klawisza meta.
 
 [[customize_key_bindings]]

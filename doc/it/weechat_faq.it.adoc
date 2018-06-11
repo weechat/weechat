@@ -168,12 +168,15 @@ Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
 
 Potrebbe essere causato da un valore errato della variabile TERM nella propria
 shell (consultare l'output di `echo $TERM` nel terminale *al di fuori di
-screen/tmux*).
-
+screen/tmux*). +
 Per esempio, _xterm-color_ potrebbe visualizzare questo tipo di caratteri strani,
-è meglio utilizzare _xterm_ che funziona (come molti altri valori).
-
+è meglio utilizzare _xterm_ che funziona (come molti altri valori). +
 Se necessario, correggere la variabile TERM: `export TERM="xxx"`.
+
+// TRANSLATION MISSING
+If you are using gnome-terminal, check that the option
+"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
+is set to `narrow`.
 
 [[osx_display_broken]]
 === Ho compilato WeeChat su OS X, e vedo "(null)" dovunque sullo schermo, cosa non va?
@@ -530,7 +533,7 @@ Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riav
 
 // TRANSLATION MISSING
 If you are using the Mac OS X Terminal app, enable the option
-"Use option as meta key" in menu Settings / Keyboard. And then you can use the
+"Use option as meta key" in menu Settings/Keyboard. And then you can use the
 kbd:[Option] key as meta key.
 
 [[customize_key_bindings]]

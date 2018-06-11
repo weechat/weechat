@@ -145,12 +145,14 @@ If needed, fix your TERM variable: `export TERM="xxx"`.
 === When I'm using weechat under screen/tmux, I have weird random chars, how do I fix that?
 
 This may be caused by bad value of the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal, *outside screen/tmux*).
-
+output of `echo $TERM` in your terminal, *outside screen/tmux*). +
 For example, _xterm-color_ may display such weird chars, you can use _xterm_
-which is OK (like many other values).
-
+which is OK (like many other values). +
 If needed, fix your TERM variable: `export TERM="xxx"`.
+
+If you are using gnome-terminal, check that the option
+"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
+is set to `narrow`.
 
 [[osx_display_broken]]
 === I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
@@ -486,7 +488,7 @@ UXTerm*metaSendsEscape: true
 And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
 
 If you are using the Mac OS X Terminal app, enable the option
-"Use option as meta key" in menu Settings / Keyboard. And then you can use the
+"Use option as meta key" in menu Settings/Keyboard. And then you can use the
 kbd:[Option] key as meta key.
 
 [[customize_key_bindings]]
