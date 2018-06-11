@@ -1235,6 +1235,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
 {
     struct t_eval_context eval_context;
     int condition, rc, pointers_allocated, regex_allocated;
+    int ptr_window_added, ptr_buffer_added;
     char *value;
     const char *default_prefix = EVAL_DEFAULT_PREFIX;
     const char *default_suffix = EVAL_DEFAULT_SUFFIX;
@@ -1250,6 +1251,8 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     regex_allocated = 0;
     regex = NULL;
     regex_replace = NULL;
+    ptr_window_added = 0;
+    ptr_buffer_added = 0;
 
     if (pointers)
     {
@@ -1283,12 +1286,18 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     if (gui_current_window)
     {
         if (!hashtable_has_key (pointers, "window"))
+        {
             hashtable_set (pointers, "window", gui_current_window);
+            ptr_window_added = 1;
+        }
         if (!hashtable_has_key (pointers, "buffer"))
         {
             window = (struct t_gui_window *)hashtable_get (pointers, "window");
             if (window)
+            {
                 hashtable_set (pointers, "buffer", window->buffer);
+                ptr_buffer_added = 1;
+            }
         }
     }
 
@@ -1366,7 +1375,16 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     }
 
     if (pointers_allocated)
+    {
         hashtable_free (pointers);
+    }
+    else
+    {
+        if (ptr_window_added)
+            hashtable_remove (pointers, "window");
+        if (ptr_buffer_added)
+            hashtable_remove (pointers, "buffer");
+    }
     if (regex && regex_allocated)
     {
         regfree (regex);
