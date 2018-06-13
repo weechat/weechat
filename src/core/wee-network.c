@@ -1305,6 +1305,7 @@ network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
     }
     else if (rc != GNUTLS_E_SUCCESS)
     {
+        unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_pointer,
              hook_connect->callback_data,
@@ -1326,6 +1327,7 @@ network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
          */
         if (hook_connect_gnutls_verify_certificates (*HOOK_CONNECT(hook_connect, gnutls_sess)) != 0)
         {
+            unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_pointer,
                  hook_connect->callback_data,
@@ -1371,6 +1373,7 @@ network_connect_gnutls_handshake_timer_cb (const void *pointer,
 
     HOOK_CONNECT(hook_connect, handshake_hook_timer) = NULL;
 
+    unhook (HOOK_CONNECT(hook_connect, handshake_hook_fd));
     (void) (HOOK_CONNECT(hook_connect, callback))
         (hook_connect->callback_pointer,
          hook_connect->callback_data,
