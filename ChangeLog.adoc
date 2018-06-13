@@ -37,6 +37,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix TLS handshake failure on server connection when there are multiple addresses in the server (issue #1196)
   * core: count number of chars instead of bytes for suffix in function string_cut
   * core: fix delete of previous/next word (keys kbd:[Ctrl+w] and kbd:[Alt+d]) (issue #1195)
   * core: fix infinite loop in evaluation of strings (issue #1183)
