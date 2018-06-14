@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -37,7 +38,9 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
                                        const char *arguments)
 {
     static char str_count[32];
-    int count, status;
+    const char *ptr_count;
+    char **items;
+    int count, protocol, status, num_items;
     struct t_relay_client *ptr_client;
 
     /* make C compiler happy */
@@ -45,25 +48,65 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
-    str_count[0] = '\0';
-    count = relay_client_count;
-    if (arguments && arguments[0])
+    items = NULL;
+    ptr_count = NULL;
+    count = 0;
+    protocol = -1;
+    status = -1;
+
+    items = weechat_string_split (arguments, ",", 0, 0, &num_items);
+    if (num_items > 2)
+        goto end;
+
+    if (num_items == 1)
     {
-        status = relay_client_status_search (arguments);
-        if (status < 0)
-            return NULL;
-        count = 0;
-        for (ptr_client = relay_clients; ptr_client;
-             ptr_client = ptr_client->next_client)
+        /* one argument: try to guess if it's a protocol or a status */
+        if (strcmp (items[0], "*") != 0)
         {
-            if ((int)ptr_client->status == status)
-                count++;
+            protocol = relay_protocol_search (items[0]);
+            if (protocol < 0)
+            {
+                status = relay_client_status_search (items[0]);
+                if (status < 0)
+                    goto end;
+            }
         }
     }
-    snprintf (str_count, sizeof (str_count), "%d", count);
-    return str_count;
+    else if (num_items == 2)
+    {
+        /* two arguments: protocol,status */
+        if (strcmp (items[0], "*") != 0)
+        {
+            protocol = relay_protocol_search (items[0]);
+            if (protocol < 0)
+                goto end;
+        }
+        if (strcmp (items[1], "*") != 0)
+        {
+            status = relay_client_status_search (items[1]);
+            if (status < 0)
+                goto end;
+        }
+    }
 
-    return NULL;
+    for (ptr_client = relay_clients; ptr_client;
+         ptr_client = ptr_client->next_client)
+    {
+        if ((protocol >= 0) && ((int)ptr_client->protocol != protocol))
+            continue;
+        if ((status >= 0) && ((int)ptr_client->status != status))
+            continue;
+        count++;
+    }
+
+    snprintf (str_count, sizeof (str_count), "%d", count);
+    ptr_count = str_count;
+
+end:
+    if (items)
+        weechat_string_free_split (items);
+
+    return ptr_count;
 }
 
 /*
@@ -131,8 +174,9 @@ relay_info_init ()
         "relay_client_count",
         N_("number of clients for relay"),
         /* TRANSLATORS: please do not translate the status names, they must be used in English */
-        N_("status name (optional): connecting, waiting_auth, "
-           "connected, auth_failed, disconnected"),
+        N_("protocol,status (both are optional, for each argument \"*\" "
+           "means all; protocols: irc, weechat; statuses: connecting, "
+           "waiting_auth, connected, auth_failed, disconnected)"),
         &relay_info_info_relay_client_count_cb, NULL, NULL);
 
     /* infolist hooks */

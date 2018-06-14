@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-06-14 21:40+0200\n"
+"POT-Creation-Date: 2018-06-14 21:51+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10379,8 +10379,9 @@ msgstr "Нет сервера.\n"
 
 #. TRANSLATORS: please do not translate the status names, they must be used in English
 msgid ""
-"status name (optional): connecting, waiting_auth, connected, auth_failed, "
-"disconnected"
+"protocol,status (both are optional, for each argument \"*\" means all; "
+"protocols: irc, weechat; statuses: connecting, waiting_auth, connected, "
+"auth_failed, disconnected)"
 msgstr ""
 
 #, fuzzy

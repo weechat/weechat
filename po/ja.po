@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-06-14 21:40+0200\n"
+"POT-Creation-Date: 2018-06-14 21:51+0200\n"
 "PO-Revision-Date: 2018-06-11 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12135,9 +12135,11 @@ msgid "number of clients for relay"
 msgstr "中継するクライアントのリスト"
 
 #. TRANSLATORS: please do not translate the status names, they must be used in English
+#, fuzzy
 msgid ""
-"status name (optional): connecting, waiting_auth, connected, auth_failed, "
-"disconnected"
+"protocol,status (both are optional, for each argument \"*\" means all; "
+"protocols: irc, weechat; statuses: connecting, waiting_auth, connected, "
+"auth_failed, disconnected)"
 msgstr ""
 "状態名 (任意): connecting、waiting_auth、connected、auth_failed、disconnected"
 
