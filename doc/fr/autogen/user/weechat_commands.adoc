@@ -376,7 +376,7 @@ Exemples (conditions) :
              - deux expressions régulières sont créées : une pour le préfixe et une pour le message
              - les expressions régulières sont insensibles à la casse, elles peuvent commencer par "(?-i)" pour devenir sensibles à la casse
 
-La touche par défaut alt+'=' active/désactive le filtrage.
+La touche par défaut alt+'=' active/désactive le filtrage globalement et alt+'-' active/désactive le filtrage sur le tampon courant.
 
 Les étiquettes les plus couramment utilisées :
   no_filter, no_highlight, no_log, log0..log9 (niveau de log),
