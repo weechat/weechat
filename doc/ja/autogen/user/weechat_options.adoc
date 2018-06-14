@@ -732,7 +732,7 @@
 ** 説明: pass:none[ホットリストでバッファを追加する条件 (追加するバッファの通知レベルが OK の場合); 以下の条件を使うことができます: "window" (現在のウィンドウポインタ)、"buffer" (ホットリストに追加するバッファポインタ)、"priority" (0 = 低い、1 = メッセージ、2 = プライベートメッセージ、3 = ハイライト); デフォルトでは離席状態またはバッファが画面に表示されていない場合にホットリストへバッファを追加します]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"${away} || ${buffer.num_displayed} == 0"+`
+** デフォルト値: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** 説明: pass:none[ホットリストにあるバッファの間に表示される文字列]

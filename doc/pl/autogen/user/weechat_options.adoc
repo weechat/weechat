@@ -732,7 +732,7 @@
 ** opis: pass:none[warunki dla dodania buforu na hotlistę (jeśli poziom powiadomień jest OK dla bufora); możesz użyć następujących warunków:  "window" (wskaźnik obecnego okna), "buffer" (wskaźnik bufora do dodania na hotlistę), "priority" (0 = niski, 1 = wiadomość, 2 = rozmowa prywatna, 3 = highlight); domyślnie bufor jest dodawany do hotlisty jeśli jesteś niedostępny lub jeśli bufor nie jest widoczny na ekranie (nie jest wyświetlany w żadnym oknie)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"${away} || ${buffer.num_displayed} == 0"+`
+** domyślna wartość: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** opis: pass:none[ciąg znaków wyświetlany pomiędzy buforami w hotliście]

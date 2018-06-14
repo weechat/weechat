@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: change default value of option weechat.look.hotlist_add_conditions to check connected relay clients via weechat protocol (issue #1206)
   * core: add reverse of string in evaluation of expressions with "rev:" (issue #1200)
   * core: send buffer pointer (when possible) in signal "hotlist_changed" (issue #1133)
   * core: add support of list options in curl (issue #826, issue #219)

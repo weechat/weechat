@@ -732,7 +732,7 @@
 ** Beschreibung: pass:none[Bedingungen um einen Buffer in die Hotlist einzutragen (sofern der Notify-Level für den Buffer korrekt ist); es können folgende Bedingungen genutzt werden: "window" (zur Zeit genutzter Window-Pointer), "buffer" (Buffer-Pointer welcher zur Hotlist hinzugefügt werden soll), "priority" (0 = niedrig, 1 = Nachricht, 2 = Privat, 3 = Highlight); standardmäßig wird ein Buffer in die Hotlist eingetragen falls man abwesend sein sollte oder falls der Buffer nicht auf dem Bildschirm sichtbar ist (Buffer wird nicht in einem Fenster dargestellt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"${away} || ${buffer.num_displayed} == 0"+`
+** Standardwert: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
 
 * [[option_weechat.look.hotlist_buffer_separator]] *weechat.look.hotlist_buffer_separator*
 ** Beschreibung: pass:none[Zeichen welches zum Trennen zwischen den verschiedenen Buffern in der Hotlist genutzt werden soll]

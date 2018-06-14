@@ -2868,9 +2868,14 @@ config_weechat_init_options ()
            "the buffer); you can use in these conditions: \"window\" (current "
            "window pointer), \"buffer\" (buffer pointer to add in hotlist), "
            "\"priority\" (0 = low, 1 = message, 2 = private, 3 = highlight); "
-           "by default a buffer is added to hotlist if you are away, or if the "
-           "buffer is not visible on screen (not displayed in any window)"),
-        NULL, 0, 0, "${away} || ${buffer.num_displayed} == 0",
+           "by default a buffer is added to hotlist if you are away, or "
+           "if the buffer is not visible on screen (not displayed in any "
+           "window), or if at least one relay client is connected via the "
+           "weechat protocol"),
+        NULL, 0, 0,
+        "${away} "
+        "|| ${buffer.num_displayed} == 0 "
+        "|| ${info:relay_client_count,weechat,connected} > 0",
         NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_hotlist_buffer_separator = config_file_new_option (
