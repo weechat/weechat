@@ -163,14 +163,12 @@ Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 Dies kann durch einen falschen Wert in der TERM-Umgebungsvariable Deiner Shell hervorgerufen
 werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal (*außerhalb von screen/tmux*). +
-Als Beispiel, _xterm-color_ könnte solche merkwürdigen Zeichen produzieren.
+Als Beispiel, _xterm-color_ kann solche merkwürdigen Zeichen produzieren.
 Nutzte stattdessen lieber _xterm_. +
 Falls notwendig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 
-// TRANSLATION MISSING
-If you are using gnome-terminal, check that the option
-"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
-is set to `narrow`.
+Wird das gnome-terminal genutzt sollte unter Bearbeiten/Profileinstellungen/Kompatibilität
+die Option "Zeichen mit unbekannter Breite" auf `schmal` stehen.
 
 [[osx_display_broken]]
 === Ich habe WeeChat unter OS X kompiliert und erhalte nur "(null)" als Textausgabe. Was läuft da schief?
