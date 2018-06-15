@@ -66,7 +66,7 @@
 
 | python | python_version | Version des verwendeten Interpreters | -
 
-| relay | relay_client_count | Anzahl an Clients für Relay | protocol,status (both are optional, for each argument "*" means all; protocols: irc, weechat; statuses: connecting, waiting_auth, connected, auth_failed, disconnected)
+| relay | relay_client_count | Anzahl an Clients für Relay | Protokoll,Status (beide sind Optional, bei beiden Argumenten bedeutet "*", alle; Protokolle: irc, weechat; Status: connecting, waiting_auth, connected, auth_failed, disconnected)
 
 | ruby | ruby_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 

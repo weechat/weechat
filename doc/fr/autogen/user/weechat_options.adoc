@@ -729,7 +729,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** description: pass:none[conditions pour ajouter un tampon dans la hotlist (si le niveau de notification est OK pour le tampon) ; vous pouvez utiliser dans ces conditions : \"window\" (pointeur de la fenêtre courante), \"buffer\" (pointeur du tampon à ajouter dans la hotlist), "priority" (0 = faible, 1 = message, 2 = privé, 3 = highlight) ; par défaut un tampon est ajouté dans la hotlist si vous êtes absent, ou si le tampon n'est pas visible à l'écran (pas affiché dans une fenêtre)]
+** description: pass:none[conditions pour ajouter un tampon dans la hotlist (si le niveau de notification est OK pour le tampon) ; vous pouvez utiliser dans ces conditions : \"window\" (pointeur de la fenêtre courante), \"buffer\" (pointeur du tampon à ajouter dans la hotlist), "priority" (0 = faible, 1 = message, 2 = privé, 3 = highlight) ; par défaut un tampon est ajouté dans la hotlist si vous êtes absent, ou si le tampon n'est pas visible à l'écran (pas affiché dans une fenêtre), ou si au moins un client relay est connecté via le protocole weechat]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
