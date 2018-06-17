@@ -26,6 +26,7 @@ Alphabetically:
 * Asakura
 * Bazerka
 * Benoit Papillault (benoit)
+* Chris Hills
 * Christian Heinz
 * Christopher O'Neill (deltafire)
 * coypoop
