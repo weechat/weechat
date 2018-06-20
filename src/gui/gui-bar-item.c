@@ -1345,7 +1345,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
     char str_hotlist[4096], *buffer_without_name_displayed, *buffer_name;
     const char *hotlist_suffix, *ptr_buffer_name;
     struct t_gui_hotlist *ptr_hotlist;
-    int numbers_count, names_count, display_name, count_max;
+    int entries_count, names_count, display_name, count_max;
     int priority, priority_min, priority_min_displayed, private;
 
     /* make C compiler happy */
@@ -1371,7 +1371,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
             memset (buffer_without_name_displayed, 0, last_gui_buffer->number);
     }
 
-    numbers_count = 0;
+    entries_count = 0;
     names_count = 0;
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
@@ -1404,7 +1404,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
         if (display_name || !buffer_without_name_displayed
             || (buffer_without_name_displayed[ptr_hotlist->buffer->number - 1] == 0))
         {
-            if ((numbers_count > 0)
+            if ((entries_count > 0)
                 && (CONFIG_STRING(config_look_hotlist_buffer_separator))
                 && (CONFIG_STRING(config_look_hotlist_buffer_separator)[0]))
             {
@@ -1438,16 +1438,22 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
                      */
                     break;
             }
-            snprintf (str_hotlist + strlen (str_hotlist), 16,
-                      "%d", ptr_hotlist->buffer->number);
-            numbers_count++;
+            if (CONFIG_BOOLEAN(config_look_hotlist_names_and_numbers) || !display_name)
+            {
+                snprintf (str_hotlist + strlen (str_hotlist), 16,
+                          "%d", ptr_hotlist->buffer->number);
+            }
+            entries_count++;
 
             if (display_name)
             {
                 names_count++;
 
-                strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_DELIM);
-                strcat (str_hotlist, ":");
+                if (CONFIG_BOOLEAN(config_look_hotlist_names_and_numbers))
+                {
+                    strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_DELIM);
+                    strcat (str_hotlist, ":");
+                }
                 strcat (str_hotlist, GUI_COLOR_CUSTOM_BAR_FG);
                 ptr_buffer_name = (CONFIG_BOOLEAN(config_look_hotlist_short_names)) ?
                     gui_buffer_get_short_name (ptr_hotlist->buffer) : ptr_hotlist->buffer->name;

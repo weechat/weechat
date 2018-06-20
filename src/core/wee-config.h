@@ -175,6 +175,7 @@ extern struct t_config_option *config_look_hotlist_add_conditions;
 extern struct t_config_option *config_look_hotlist_buffer_separator;
 extern struct t_config_option *config_look_hotlist_count_max;
 extern struct t_config_option *config_look_hotlist_count_min_msg;
+extern struct t_config_option *config_look_hotlist_names_and_numbers;
 extern struct t_config_option *config_look_hotlist_names_count;
 extern struct t_config_option *config_look_hotlist_names_length;
 extern struct t_config_option *config_look_hotlist_names_level;

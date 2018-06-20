@@ -129,6 +129,7 @@ struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_names_merged_buffers;
 struct t_config_option *config_look_hotlist_prefix;
+struct t_config_option *config_look_hotlist_names_and_numbers;
 struct t_config_option *config_look_hotlist_remove;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
@@ -2903,6 +2904,15 @@ config_weechat_init_options ()
         N_("display messages count if number of messages is greater or equal "
            "to this value"),
         NULL, 1, 100, "2", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_buffer_content, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_hotlist_names_and_numbers = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_names_and_numbers", "boolean",
+        N_("if set, buffer numbers are displayed in the hotlist even when "
+           "the name is also displayed"),
+        NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
