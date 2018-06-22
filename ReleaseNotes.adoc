@@ -20,6 +20,35 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.2]]
 == Version 2.2 (under dev)
 
+[[v2.2_default_hotlist_conditions]]
+=== Default conditions for hotlist
+
+The default value for option `weechat.look.hotlist_add_conditions` has been
+changed to take care about the number of connected clients on the relay
+with weechat protocol: if at least one client is connected, the buffer is
+always added to the hotlist.
+
+The new value contains three conditions, if one of them is true, the buffer
+is added to the hotlist:
+
+* `${away}`: true if you are away on the server matching the buffer,
+* `${buffer.num_displayed} == 0`: true if the buffer is not displayed in any
+  window
+* `${info:relay_client_count,weechat,connected} > 0` (new): true if at least
+  one client is connected on a weechat relay.
+
+To use the new default value, you can reset the option with this command:
+
+----
+/unset weechat.look.hotlist_add_conditions
+----
+
+Or set explicitly the value:
+
+----
+/set weechat.look.hotlist_add_conditions "${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"
+----
+
 [[v2.2_default_triggers]]
 === Default triggers
 
