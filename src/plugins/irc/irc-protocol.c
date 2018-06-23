@@ -4766,9 +4766,26 @@ IRC_PROTOCOL_CALLBACK(354)
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
-    /* silently ignore 354 messages we don't parse (missing infos) */
+    /*
+     * if there are less than 11 arguments, we are unable to parse the message,
+     * some infos are missing but we don't know which ones; in this case we
+     * just display the message as-is
+     */
     if (argc < 11)
+    {
+        if (argc > 3)
+        {
+            weechat_printf_date_tags (
+                irc_msgbuffer_get_target_buffer (
+                    server, NULL, command, "who", NULL),
+                date,
+                irc_protocol_tags (command, "irc_numeric", NULL, NULL),
+                "%s%s",
+                weechat_prefix ("network"),
+                argv_eol[3]);
+        }
         return WEECHAT_RC_OK;
+    }
 
     pos_attr = argv[8];
     pos_hopcount = argv[9];
