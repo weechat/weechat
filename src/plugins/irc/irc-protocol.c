@@ -4782,9 +4782,15 @@ IRC_PROTOCOL_CALLBACK(354)
                     server, NULL, command, "who", NULL),
                 date,
                 irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-                "%s%s",
+                "%s%s[%s%s%s]%s%s%s",
                 weechat_prefix ("network"),
-                argv_eol[3]);
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_CHAT_CHANNEL,
+                argv[3],
+                IRC_COLOR_CHAT_DELIMITERS,
+                IRC_COLOR_RESET,
+                (argc > 4) ? " " : "",
+                (argc > 4) ? argv_eol[4] : "");
         }
         return WEECHAT_RC_OK;
     }
