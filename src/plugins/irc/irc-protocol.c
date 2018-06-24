@@ -4766,6 +4766,8 @@ IRC_PROTOCOL_CALLBACK(354)
 
     IRC_PROTOCOL_MIN_ARGS(4);
 
+    ptr_channel = irc_channel_search (server, argv[3]);
+
     /*
      * if there are less than 11 arguments, we are unable to parse the message,
      * some infos are missing but we don't know which ones; in this case we
@@ -4773,7 +4775,7 @@ IRC_PROTOCOL_CALLBACK(354)
      */
     if (argc < 11)
     {
-        if (argc > 3)
+        if ((argc > 3) && (!ptr_channel || (ptr_channel->checking_whox <= 0)))
         {
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
@@ -4787,15 +4789,13 @@ IRC_PROTOCOL_CALLBACK(354)
         return WEECHAT_RC_OK;
     }
 
+    ptr_nick = (ptr_channel) ?
+        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
     pos_attr = argv[8];
     pos_hopcount = argv[9];
     pos_account = (strcmp (argv[10], "0") != 0) ? argv[10] : NULL;
     pos_realname = (argc > 11) ?
         ((argv_eol[11][0] == ':') ? argv_eol[11] + 1 : argv_eol[11]) : NULL;
-
-    ptr_channel = irc_channel_search (server, argv[3]);
-    ptr_nick = (ptr_channel) ?
-        irc_nick_search (server, ptr_channel, argv[7]) : NULL;
 
     /* update host in nick */
     if (ptr_nick)
