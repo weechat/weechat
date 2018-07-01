@@ -451,7 +451,7 @@ relay_server_create_socket (struct t_relay_server *server)
         return 0;
     }
 
-#ifdef IPV6_V6ONLY
+#if defined(IPV6_V6ONLY) && !defined(__OpenBSD__)
     /* set option IPV6_V6ONLY to 0 or 1 */
     if (server->ipv6)
     {
@@ -469,7 +469,7 @@ relay_server_create_socket (struct t_relay_server *server)
             return 0;
         }
     }
-#endif /* IPV6_V6ONLY */
+#endif
 
     /* set option SO_REUSEADDR to 1 */
     set = 1;
