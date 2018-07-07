@@ -216,7 +216,7 @@ défaut à la place, par exemple pour utiliser les pseudos par défaut
 (irc.server_default.nicks) :
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Autres options : vous pouvez modifier les autres options avec la commande

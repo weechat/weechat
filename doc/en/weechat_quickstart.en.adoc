@@ -207,7 +207,7 @@ To remove a value of a server option, and use the default value instead,
 for example to use default nicks (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Other options: you can setup other options with following command ("xxx" is

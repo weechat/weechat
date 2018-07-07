@@ -220,7 +220,7 @@ Aby usunąć wartość dla opcji serwera, używając w zamian wartości domyśln
 na przykład, aby używać domyślnych nicków (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Inne opcje: możesz ustawić pozostałe opcje za pomocą komendy ("xxx" to

@@ -229,7 +229,7 @@ Vorgabewert zu nutzen, z.B. Nutzen der vorgegebenen Nicknamen
 (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Andere Optionen: Du kannst andere Optionen mit folgendem Befehl festlegen ("xxx"

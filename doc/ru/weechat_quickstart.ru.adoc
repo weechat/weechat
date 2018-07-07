@@ -226,7 +226,7 @@ the name of option).
 умолчанию (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Другие параметры можно установить, используя следующую команду ("xxx"

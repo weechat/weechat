@@ -241,7 +241,7 @@ valores por defecto en su lugar, por ejemplo, usar el nick por defecto
 (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Otras opciones: pude configurar otras opciones con el siguiente comando,

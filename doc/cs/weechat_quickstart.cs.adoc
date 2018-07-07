@@ -220,7 +220,7 @@ K smazání hodnoty serverové volby a k použití výchozí hodnoty místo ní,
 například k požití výchozích přezdívek (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Ostatní volby: můžete nastavit ostatní volby s následujícím příkazem ("xxx" je

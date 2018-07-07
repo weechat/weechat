@@ -236,7 +236,7 @@ predefinito, per esempio per utilizzare i nick predefiniti
 (irc.server_default.nicks):
 
 ----
-/set irc.server.freenode.nicks null
+/unset irc.server.freenode.nicks
 ----
 
 Altre opzioni: è possibile impostare altre opzioni con il seguente comando
