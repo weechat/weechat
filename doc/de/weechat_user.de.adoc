@@ -3568,6 +3568,44 @@ Um Trigger nutzen zu können ist es von Vorteil zu wissen wie signals,
 modifiers, ... in WeeChat überhaupt funktionieren. Deshalb sollte man überlegen,
 ob man nicht folgende Anleitung lesen sollte link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
+// TRANSLATION MISSING
+[[trigger_default]]
+==== Default triggers
+
+WeeChat creates 5 triggers by default, which can be disabled, updated or
+deleted:
+
+* a _beep_ trigger for notifications
+* four other triggers to hide passwords on screen
+
+List of default triggers:
+
+[width="100%",cols="5m,3,22",options="header"]
+|===
+| Name | Hook | Description
+
+| beep | print |
+  Beep on highlight/private message.
+
+| cmd_pass | modifier |
+  Hide password in commands:
+  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
+  `pass:[/oper]`,
+  `pass:[/quote pass]`,
+  `pass:[/set *password*]`,
+  `pass:[/secure passphrase\|decrypt\|set]`.
+
+| cmd_pass_register | modifier |
+  Hide password in command `pass:[/msg nickserv register]`.
+
+| msg_auth | modifier |
+  Hide password in IRC auth message displayed (message received from server
+  after the user issued the command).
+
+| server_pass | modifier |
+  Hide server password in commands `/server` and `/connect`.
+|===
+
 [[trigger_anatomy]]
 ==== Aufbau eines Triggers
 
