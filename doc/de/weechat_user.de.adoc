@@ -12,7 +12,7 @@
 
 Übersetzer:
 
-* Nils Görs <weechatter@arcor.de>, 2010-2016
+* Nils Görs <weechatter@arcor.de>, 2010-2018
 
 
 Diese Anleitung beschreibt den WeeChat Chat Client und ist Teil von WeeChat.
@@ -79,7 +79,7 @@ Binärpakete sind für folgende Distributionen erhältlich:
 
 zusätzliche Pakete können bzw. sollten installiert werden. Zum Beispiel: weechat-plugins.
 
-Für andere Distributionen schauen Sie bitte in die jeweilige Anleitung,
+Für nicht aufgeführte Distributionen schauen Sie bitte in die jeweilige Anleitung,
 wie man Pakete installiert.
 
 [[source_package]]
@@ -435,7 +435,7 @@ Falls WeeChat abstürzen sollte, dann wird auf Ihrem System eine _core_ bzw. _co
 Diese Datei wird in dem Verzeichnis erzeugt aus welchem Sie WeeChat gestartet haben (dies
 ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
-Beispiel: _weechat_ ist installiert in _/usr/bin/_ und die _core_ Datei befindet sich
+Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
 in _/home/xxx/_. Nun wird gdb mit folgendem Befehl aufgerufen:
 
 ----
@@ -474,7 +474,7 @@ Copying output to /tmp/crash.txt.
         max_fd = <value optimized out>
 ----
 
-Diese Fehlermeldung senden Sie bitte an den Entwickler und beschreiben was den Fehler ausgelöst hat.
+Diese Fehlermeldung senden Sie bitte an den Entwickler mit einer Beschreibung was den Fehler ausgelöst hat.
 
 Danke für Ihre Mithilfe!
 
@@ -511,7 +511,7 @@ Befehlszeile:
 
 include::cmdline_options.de.adoc[]
 
-Wenn WeeChat das erste mal ausgeführt wird, wird die Standardkonfiguration und
+Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
 die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
@@ -1510,9 +1510,9 @@ und für jeden einzelen Nick kann ein maximler Hotlist-Level eingestellt wertden
 * 0: niedrige Priorität (zum Beispiel join/part Nachrichten)
 * 1: Nachricht
 * 2: private Nachricht
-* 3: Highlight (eigentlich unnötigt, da es standardmäßig die höchste Stufe für alle Nachrichten ist)
+* 3: Highlight (eigentlich unnötig, da es standardmäßig die höchste Stufe für alle Nachrichten ist)
 
-Um zum Bespiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivieren:
+Um zum Beispiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivieren:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
@@ -3568,27 +3568,26 @@ Um Trigger nutzen zu können ist es von Vorteil zu wissen wie signals,
 modifiers, ... in WeeChat überhaupt funktionieren. Deshalb sollte man überlegen,
 ob man nicht folgende Anleitung lesen sollte link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
-// TRANSLATION MISSING
 [[trigger_default]]
-==== Default triggers
+==== standardmäßige Trigger
 
-WeeChat creates 5 triggers by default, which can be disabled, updated or
-deleted:
+WeeChat erstellt standardmäßig fünf Trigger, welche deaktiviert, angepasst oder
+gelöscht werden können:
 
-* a _beep_ trigger for notifications
-* four other triggers to hide passwords on screen
+* ein _beep_ Trigger für Benachrichtigungen
+* vier Trigger um Passwörter auf dem Bildschirm zu unterdrücken
 
-List of default triggers:
+Liste der standardmäßigen Trigger:
 
 [width="100%",cols="5m,3,22",options="header"]
 |===
-| Name | Hook | Description
+| Name | Hook | Beschreibung
 
 | beep | print |
-  Beep on highlight/private message.
+  Beep bei Highlight/privaten Nachrichten.
 
 | cmd_pass | modifier |
-  Hide password in commands:
+  unterdrückt Passwörter in den Befehlen:
   `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
@@ -3596,14 +3595,14 @@ List of default triggers:
   `pass:[/secure passphrase\|decrypt\|set]`.
 
 | cmd_pass_register | modifier |
-  Hide password in command `pass:[/msg nickserv register]`.
+  unterdrückt Passwort im Befehl `pass:[/msg nickserv register]`.
 
 | msg_auth | modifier |
-  Hide password in IRC auth message displayed (message received from server
-  after the user issued the command).
+  unterdrückt Passwort einer IRC auth Nachricht (Nachricht welche vom Server empfangen wird,
+  nachdem der User den Befehl verschickt hat).
 
 | server_pass | modifier |
-  Hide server password in commands `/server` and `/connect`.
+  unterdrückt Passwort bei den Befehlen `/server` und `/connect`.
 |===
 
 [[trigger_anatomy]]
