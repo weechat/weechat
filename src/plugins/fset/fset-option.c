@@ -1165,8 +1165,9 @@ fset_option_set (struct t_fset_option *fset_option,
                  struct t_gui_buffer *buffer,
                  int set_mode)
 {
-    int use_mute, add_quotes, input_pos;
-    char str_input[4096], str_pos[32];
+    int use_mute, add_quotes, length_input, input_pos;
+    char *ptr_value, *str_input, str_pos[32];
+    char empty_value[1] = { '\0' };
 
     /* make C compiler happy */
     (void) option;
@@ -1174,14 +1175,24 @@ fset_option_set (struct t_fset_option *fset_option,
     if (!fset_option)
         return;
 
+    if (set_mode == -1)
+        ptr_value = empty_value;
+    else
+        ptr_value = (fset_option->value) ? fset_option->value : empty_value;
+
+    length_input = 64 + strlen (fset_option->name) + strlen (ptr_value) + 1;
+    str_input = malloc (length_input);
+    if (!str_input)
+        return;
+
     use_mute = weechat_config_boolean (fset_config_look_use_mute);
     add_quotes = (fset_option->type == FSET_OPTION_TYPE_STRING) ? 1 : 0;
-    snprintf (str_input, sizeof (str_input),
+    snprintf (str_input, length_input,
               "%s/set %s %s%s%s",
               (use_mute) ? "/mute " : "",
               fset_option->name,
               (add_quotes) ? "\"" : "",
-              (set_mode != -1) ? ((fset_option->value) ? fset_option->value : "") : "",
+              ptr_value,
               (add_quotes) ? "\"" : "");
     weechat_buffer_set (buffer, "input", str_input);
     input_pos = ((use_mute) ? 6 : 0) +  /* "/mute " */
@@ -1192,6 +1203,8 @@ fset_option_set (struct t_fset_option *fset_option,
                             weechat_utf8_strlen (fset_option->value) : 0) : 0);
     snprintf (str_pos, sizeof (str_pos), "%d", input_pos);
     weechat_buffer_set (buffer, "input_pos", str_pos);
+
+    free (str_input);
 }
 
 /*
