@@ -1,6 +1,12 @@
+---
+name: Bug report
+about: Create a bug report (please do not report security issues here)
+
+---
+
 <!-- Please do not report any security issue here, see file Contributing.adoc -->
 
-## Bug, feature, or question?
+## Bug summary
 
 
 
