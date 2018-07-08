@@ -3516,27 +3516,26 @@ Używanie triggerów wymaga znajomości jak działają sygnały, modyfikatory, .
 Warto rozważyć przeczytanie
 link:weechat_plugin_api.en.html#hooks[Opisu Api wtyczek WeeChat / Hooks] (Angielski).
 
-// TRANSLATION MISSING
 [[trigger_default]]
-==== Default triggers
+==== Domyślne triggery
 
-WeeChat creates 5 triggers by default, which can be disabled, updated or
-deleted:
+WeeChat tworzy domyślnie 5 triggerów, które mogą zostać wyłączone, zaktualizowane
+lub usunięte:
 
-* a _beep_ trigger for notifications
-* four other triggers to hide passwords on screen
+* trigger _beep_ dla powiadomień
+* cztery pozostałe triggery służą ukrywaniu haseł na ekranie
 
-List of default triggers:
+Lista domyśłnych triggerów:
 
 [width="100%",cols="5m,3,22",options="header"]
 |===
-| Name | Hook | Description
+| Nazwa | Hook | Opis
 
 | beep | print |
-  Beep on highlight/private message.
+  Powiadamiaj o podświetleniach/prywatnej wiadomości.
 
 | cmd_pass | modifier |
-  Hide password in commands:
+  Ukrywa hasło w komendach:
   `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
@@ -3544,14 +3543,14 @@ List of default triggers:
   `pass:[/secure passphrase\|decrypt\|set]`.
 
 | cmd_pass_register | modifier |
-  Hide password in command `pass:[/msg nickserv register]`.
+  Ukrywa hasło w komendzie `pass:[/msg nickserv register]`.
 
 | msg_auth | modifier |
-  Hide password in IRC auth message displayed (message received from server
-  after the user issued the command).
+  Ukrywa hasło w wiadomości IRC auth (wiadomość otrzymana od serwera po
+  wykonaniu komendy przez użytkownika).
 
 | server_pass | modifier |
-  Hide server password in commands `/server` and `/connect`.
+  Ukrywa hasło serwera w komendach `/server` i `/connect`.
 |===
 
 [[trigger_anatomy]]

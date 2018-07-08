@@ -155,10 +155,8 @@ Na przykład, _xterm-color_ może wyświetlać takie dziwne znaki, możesz uży�
 który działa dobrze (jak wiele innych wartości). +
 W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 
-// TRANSLATION MISSING
-If you are using gnome-terminal, check that the option
-"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
-is set to `narrow`.
+Jeśli używasz gnome-terminal, sprawdź czy opcja "Ambigous-width chracters"
+w menu Preferencje/Profile/Kompatybilność jest ustawiona na `narrow`.
 
 [[osx_display_broken]]
 === Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?

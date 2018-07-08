@@ -37,8 +37,7 @@ include::man_plugin_options.pl.adoc[]
 
 include::man_files.pl.adoc[]
 
-// TRANSLATION MISSING
-== SEE ALSO
+== Zobacz również 
 
 *weechat-headless*(1)
 

@@ -10,7 +10,7 @@
 
 Tłumaczenie:
 
-* Krzysztof Korościk <soltys1@gmail.com>, 2009-2016
+* Krzysztof Korościk <soltys1@gmail.com>, 2009-2018
 
 
 [[start]]
@@ -64,37 +64,31 @@ oraz po każdej zmianie musisz wykonać komendę `/reload`
 Możesz użyć komendy `/set`, która sprawdza wartość i nanosi od razu wymagane
 zmiany.
 
-// TRANSLATION MISSING
-Help is available for options:
+Pomoc jest dostępna dla opcji:
 
 ----
 /help config.section.option
 ----
 
-// TRANSLATION MISSING
-The plugin _fset_ allows you to easily browse options and change them.
+Wtyczka _fset_ pozwala na łatwe przeglądanie i zmianę opcji.
 
-// TRANSLATION MISSING
-For example to display WeeChat options:
+Na przykład w celu wyświetlenia opci WeeChat:
 
 ----
 /fset weechat.*
 ----
 
-// TRANSLATION MISSING
-IRC options:
+Opcji IRC:
 
 ----
 /fset irc.*
 ----
 
-// TRANSLATION MISSING
-The `/fset` command has completion on part of option names, so for example if
-you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
-If you press kbd:[Enter], options about the hotlist are displayed.
+Komenda `/fset` posiada uzupełanianie części nazw opcji, na przykład jeśli
+napiszesz `/fset hot` i naciśniesz kbd:[Tab] zostanie to uzupełnione do `/fset hotlist`.
+Jeśli wciśniesz kbd:[Enter], zostaną wyświetlone opcje dotyczące hotlist.
 
-// TRANSLATION MISSING
-For more information about `/fset` command and keys, see `/help fset`.
+Więcej informacji o komendzie `/fset`, można uzyskać wpisując `/help fset`.
 
 [[core_vs_plugins]]
 == Rdzeń vs wtyczki
@@ -117,10 +111,9 @@ Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 /server add freenode chat.freenode.net
 ----
 
-// TRANSLATION MISSING
-In this command, `freenode` is the internal server name used by WeeChat:
-you'll be able to connect with `/connect freenode` and the server options
-are _irc.server.freenode.xxx_.
+W tej komendzie `freenode` to nazwa wewnętrzna używana przez Weechat:
+będziesz mógł połączyć się za pomocą `/connect freenode`. Opcje serwera
+będą miały postać _irc.server.freenode.xxx_.
 
 Jak zawsze w razie wątpliwości dostępna jest pomoc:
 
@@ -237,10 +230,9 @@ nazwa opcji):
 /connect freenode
 ----
 
-// TRANSLATION MISSING
 [NOTE]
 Ta komenda może być użyta do utworzenia i połączenia się z nowym serwerem bez
-użycia komendy `/server` (see `/help connect`).
+użycia komendy `/server` (zobacz `/help connect`).
 
 Domyślnie bufory serwerów są połączone z buforem WeeChat _core_. Aby przełączać
 się pomiędzy buforem _core_ a buforami serwerów możesz użyć kbd:[Ctrl+x].
@@ -335,8 +327,7 @@ ale powinieneś znać przynajmniej kilka najprzydatniejszych:
 
 - kbd:[Alt+←] / kbd:[Alt+→] lub kbd:[F5] / kbd:[F6]: przełącza na
   poprzedni/następny bufor
-// TRANSLATION MISSING
-- kbd:[F1] / kbd:[F2]: scroll bar with list of buffers ("buflist")
+- kbd:[F1] / kbd:[F2]: przewija pasek z listą buforów ("buflist")
 - kbd:[F7] / kbd:[F8]: przełącza na poprzednie/następne okno (jeśli ekran jest
   podzielony)
 - kbd:[F9] / kbd:[F10]: przewija pasek z tematem kanału
