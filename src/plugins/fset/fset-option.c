@@ -1430,6 +1430,7 @@ fset_option_config_changed (const char *option_name)
             /* option added: get options and refresh the whole buffer */
             full_refresh = 1;
         }
+        fset_option_free (new_fset_option);
     }
 
     if (full_refresh)

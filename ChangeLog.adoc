@@ -44,6 +44,7 @@ Bug fixes::
   * core: fix delete of previous/next word (keys kbd:[Ctrl+w] and kbd:[Alt+d]) (issue #1195)
   * core: fix infinite loop in evaluation of strings (issue #1183)
   * core: change default value of option weechat.look.window_title from "WeeChat ${info:version}" to empty string (issue #1182)
+  * fset: fix memory leak when switching the format with kbd:[Ctrl+x]
   * fset: fix truncation of option values when the length is greater than 4096 (issue #1218)
   * fset: fix crash when applying filters after closing the fset buffer (issue #1204)
   * irc: display message 354 (WHOX) received with missing parameters (issue #1212)
