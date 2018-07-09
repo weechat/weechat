@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 * [[option_buflist.format.buffer]] *buflist.format.buffer*
-** opis: pass:none[format of each line with a buffer (note: content is evaluated, see /help buflist); example: standard format for bar item "buflist" and only the buffer number between square brackets for other bar items ("buflist2" and "buflist3"): "${if:${bar_item.name}==buflist?${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:[${number}\]}"]
+** opis: pass:none[format każdej linii w buforze (uwaga: zawartość jest przetwarzana, zobacz /help buflist); przykład: standardowy format dla elementu paska „buflist” i tylko numer bufora w nawiasach kwadratowych dla pozostałych elementów („buflist2” i „buflist3”): "${if:${bar_item.name}==buflist?${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}:[${number}\]}"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${format_number}${indent}${format_nick_prefix}${color_hotlist}${format_name}"+`

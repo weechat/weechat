@@ -103,19 +103,19 @@ Bez podania argumentu komenda wyświetla listę banów na obecnym kanale.
       req|ack [<opcja> [<opcja>...]]
       end
 
-   ls: list the capabilities supported by the server
- list: list the capabilities currently enabled
-  req: request a capability
-  ack: acknowledge capabilities which require client-side acknowledgement
-  end: end the capability negotiation
+   ls: wyświetla opcje wspierane przez serwer
+ list: wyświetla obecnie włączone opcje
+  req: żądanie opcji
+  ack: potwierdzenie opcji wymagających potwierdzenia po stronie klienta
+  end: kończy negocjacje opcji
 
-Without argument, "ls" and "list" are sent.
+Bez argumentu, wysyłane są "ls" i "list".
 
-Capabilities supported by WeeChat are: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time, userhost-in-names.
+Opcje wspierane przez WeeChat to: account-notify, away-notify, cap-notify, chghost, extended-join, invite-notify, multi-prefix, server-time,  userhost-in-names.
 
-The capabilities to automatically enable on servers can be set in option irc.server_default.capabilities (or by server in option irc.server.xxx.capabilities).
+Opcje automatycznie włączane na serwerach można ustawić za pomocą opcji irc.server_default.capabilities (albo dla konkretnego serwera, opcja irc.server.xxx.capabilities).
 
-Examples:
+Przykłady:
    /cap
    /cap req multi-prefix away-notify
 ----
@@ -376,29 +376,29 @@ powód: powód
 * `+links+`: wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my
 
 ----
-/links  [[<target>] <server_mask>]
+/links  [[<cel>] <maska>]
 
-     target: this remote server should answer the query
-server_mask: list of servers must match this mask
+     cel: ten serwer powinien odpowiedzieć na zapytanie
+maska: lista serwerów musi pasować do maski
 ----
 
 [[command_irc_list]]
 * `+list+`: wyświetla kanały i ich tematy
 
 ----
-/list  [-server <server>] [-re <regex>] [<channel>[,<channel>...]] [<target>]
+/list  [-server <serwer>] [-re <wyrażenie>] [<kanał>[,<kanał>...]] [<cel>]
 
- server: send to this server (internal name)
-  regex: POSIX extended regular expression used to filter results (case insensitive, can start by "(?-i)" to become case sensitive)
-channel: channel to list
- target: server name
+ serwer: wyślij do tego serwera (nazwa wewnętrzna)
+  regexp: rozszerzone wyrażenie regularne POSIX użyte do filtrowania wyników (wielkość znaków nie ma znaczenia, jeśli poprzedzone "(?-i)" to wielkość znaków ma znaczenie)
+channel: kanał do wylistowania
+ cel: nazwa serwera
 
-Examples:
-  list all channels on server (can be very slow on large networks):
+Przykłady:
+  wyświetla wszystkie kanały na serwerze (może być bardzo wolny w dużych sieciach):
     /list
-  list channel #weechat:
+  wyświetla kanał #weechat:
     /list #weechat
-  list all channels beginning with "#weechat" (can be very slow on large networks):
+  wyświetla wszystkie kanały zaczynające się od "#weechat" (może być bardzo wolny w dużych sieciach):
     /list -re #weechat.*
 ----
 
@@ -574,10 +574,10 @@ wiadomość: wiadomość pożegnalna (pokazywana innym użytkownikom)
 * `+ping+`: wyślij ping do serwera
 
 ----
-/ping  <target1> [<target2>]
+/ping  <cel1> [<cel2>]
 
-target1: server
-target2: forward ping to this server
+cel1: serwer
+cel2: przekieruj ping do tego serwera
 ----
 
 [[command_irc_pong]]
@@ -720,33 +720,32 @@ powód: powód
 * `+server+`: wyświetla, dodaje lub usuwa serwery IRC
 
 ----
-/server  list|listfull [<name>]
-         add <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
-         copy|rename <name> <new_name>
-         reorder <name> [<name>...]
-         open <name>|-all [<name>...]
-         del|keep <name>
+/server  list|listfull [<nazwa>]
+         add <nazwa> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <nazwa> <nowa_nazwa>
+         reorder <nazwa> [<nazwa>...]
+         open <nazwa>|-all [<nazwa>...]
+         del|keep <nazwa>
          deloutq|jump|raw
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: add a new server
-    name: server name, for internal and display use; this name is used to connect to the server (/connect name) and to set server options: irc.server.name.xxx
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-   -temp: add a temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
- reorder: reorder list of servers
-    open: open the server buffer without connecting
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
+    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
+listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
+     add: tworzy nowy serwer
+  nazwa: nazwa serwera, do użytku wewnętrznego i  wyświetlania; ta nazwa jest używana do połączenia z serwerem (/connect nazwa) i do ustawiania opcji serwera: irc.server.nazwa.xxx
+host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
+   -temp: tworzy serwer tymczasowy (nie zapisany)
+  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
+noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
+    copy: duplikuje serwer
+  rename: zmienia nazwę serwera
+ reorder: zmienia kolejność na liście serwerów
+    open: otwiera bufor serwera nie łącząc się z nim
+    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
+     del: usuwa serwer
+ deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
+    jump: przechodzi do bufora serwera
+     raw: otwiera bufor z nieprzetworzonymi danymi IRC
 
-Examples:
+Przykłady:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
@@ -792,20 +791,20 @@ usługa: nazwa usługi
 * `+squit+`: rozłącza od podłączonych serwerów
 
 ----
-/squit  <target> <comment>
+/squit  <cel> <komentarz>
 
- target: server name
-comment: comment
+ cel: nazwa serwera
+komentarz: komentarz
 ----
 
 [[command_irc_stats]]
 * `+stats+`: zapytanie o statystyki serwera
 
 ----
-/stats  [<query> [<target>]]
+/stats  [<zapytanie> [<cel>]]
 
- query: c/h/i/k/l/m/o/y/u (see RFC1459)
-target: server name
+ zapytanie: c/h/i/k/l/m/o/y/u (zobacz RFC1459)
+cel: nazwa serwera
 ----
 
 [[command_irc_summon]]
@@ -852,22 +851,22 @@ cel: nazwa serwera
 * `+unban+`: odbanowuje nicki lub hosty
 
 ----
-/unban  [<channel>] <nick>|<number> [<nick>|<number>...]
+/unban  [<kanał>] <nick>|<numer> [<nick>|<numer>...]
 
-channel: channel name
-   nick: nick or host
- number: ban number (as displayed by command /ban)
+kanał: nazwa kanału
+   nick: nick lub host
+ numer: numer bana (wyświetlany na liście za pomocą komendy /ban)
 ----
 
 [[command_irc_unquiet]]
 * `+unquiet+`: nicki albo hosty przestają być uciszone
 
 ----
-/unquiet  [<channel>] <nick>|<number> [<nick>|<number>...]
+/unquiet  [<kanał>] <nick>|<numer> [<nick>|<numer>...]
 
-channel: channel name
-   nick: nick or host
- number: quiet number (as displayed by command /quiet)
+kanał: nazwa kanału
+   nick: nick lub host
+ numer: numer uciszenia (wyświetlany na liście za pomocą komendy /quiet)
 ----
 
 [[command_irc_userhost]]
@@ -892,10 +891,10 @@ cel: nazwa serwera
 * `+version+`: podaje informację o wersji nicka lub serwera (obecnego lub określonego)
 
 ----
-/version  [<target>|<nick>]
+/version  [<cel>|<nick>]
 
-target: server name
-  nick: nick
+cel: nazwa serwera
+  nick: nazwa użytkownika
 ----
 
 [[command_irc_voice]]
@@ -941,16 +940,16 @@ maska: tylko informacje pasujące do maski
 * `+whois+`: zapytanie o informacje o użytkowniku(ach)
 
 ----
-/whois  [<target>] [<nick>[,<nick>...]]
+/whois  [<cel>] [<nick>[,<nick>...]]
 
-target: server name
-  nick: nick (may be a mask)
+cel: nazwa serwera
+  nick: nick (może być maska)
 
-Without argument, this command will do a whois on:
-- your own nick if buffer is a server/channel
-- remote nick if buffer is a private.
+Bez argumentu, komenda ta wykona whois na:
+- twoim własnym nicku, jeśli bufor to serwer/kanał
+- zdalnym nicku, jeśli bufor to rozmowa prywatna.
 
-If option irc.network.whois_double_nick is enabled, two nicks are sent (if only one nick is given), to get idle time in answer.
+Jeśli opcja irc.network.whois_double_nick jest włączona, wysyłane są dwa nicki (jeśli został podany tylko jeden), aby uzyskać czas bezczynności w odpowiedzi.
 ----
 
 [[command_irc_whowas]]

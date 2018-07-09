@@ -435,7 +435,7 @@
 ** domyślna wartość: `+"[]`_-^"+`
 
 * [[option_weechat.completion.partial_completion_alert]] *weechat.completion.partial_completion_alert*
-** opis: pass:none[send alert (BEL) when a partial completion occurs]
+** opis: pass:none[wyślij alarm (BEL), kiedy nastąpi częściowe dopełnienie]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -729,7 +729,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** opis: pass:none[conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window), or if at least one relay client is connected via the weechat protocol]
+** opis: pass:none[warunki dla dodania buforu na hotlistę (jeśli poziom powiadomień jest OK dla bufora); możesz użyć następujących warunków:  "window" (wskaźnik obecnego okna), "buffer" (wskaźnik bufora do dodania na hotlistę), "priority" (0 = niski, 1 = wiadomość, 2 = rozmowa prywatna, 3 = highlight); domyślnie bufor jest dodawany do hotlisty jeśli jesteś niedostępny lub jeśli bufor nie jest widoczny na ekranie (nie jest wyświetlany w żadnym oknie), lub jeśli przynajmniej jeden klient relay jest podłączony za pomocą protokołu weechat]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
@@ -741,7 +741,7 @@
 ** domyślna wartość: `+", "+`
 
 * [[option_weechat.look.hotlist_count_max]] *weechat.look.hotlist_count_max*
-** opis: pass:none[max number of messages count to display in hotlist for a buffer: 0 = never display messages count, other number = display max N messages count (from the highest to lowest priority)]
+** opis: pass:none[maksymalna ilość wiadomości do wyświetlenia w hotliście dla bufora: 0 = nigdy nie wyświetlaj, inna liczba = wyświetlaj maksymalnie N ilości wiadomości (od najwyższego do najniższego priorytetu)]
 ** typ: liczba
 ** wartości: 0 .. 4
 ** domyślna wartość: `+2+`
@@ -1179,7 +1179,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.look.window_title]] *weechat.look.window_title*
-** opis: pass:none[title for window (terminal for Curses GUI), set on startup; an empty string will keep title unchanged (note: content is evaluated, see /help eval); example: "WeeChat ${info:version}"]
+** opis: pass:none[tytuł dla okna (terminal dla GUI Curses), ustawiany na starcie; pusty ciąg pozostawi tytuł bez zmian (zawartość jest przetwarzana, zobacz /help eval); przykład: "WeeChat ${info:version}"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

@@ -159,7 +159,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_xfer.network.send_ack]] *xfer.network.send_ack*
-** opis: pass:none[send acks when receiving files; if disabled, the transfer may freeze if the sender is waiting for acks (for example a WeeChat sending a file with option xfer.network.fast_send set to off); on the other hand, disabling send of acks may prevent a freeze if the acks are not sent immediately to the sender]
+** opis: pass:none[wysyła ack podczas odbierania plików; jeśli wyłączone przesyłanie może się zawiesić jeśli nadawca czeka na ack (na przykład WeeChat wysyłający plik z opcją xfer.network.fast_send ustawioną na off); z drugiej strony, wyłączenie tej opcji może zapobiec zawieszeniu jeśli ack nie zostaną wysłane od razu do nadawcy]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`

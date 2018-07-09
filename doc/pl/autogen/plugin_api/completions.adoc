@@ -30,9 +30,9 @@
 
 | irc | irc_ignores_numbers | numery zdefiniowanych ignorów
 
-| irc | irc_modelist_masks | modelist masks of current IRC channel; required argument: modelist mode
+| irc | irc_modelist_masks | maski modlisty obecnego kanału IRC; wymagany argument: modelist mode
 
-| irc | irc_modelist_numbers | modelist numbers of current IRC channel; required argument: modelist mode
+| irc | irc_modelist_numbers | numery modlisty obecnego kanału IRC; wymagany argument: modelist mode
 
 | irc | irc_msg_kick | domyślna wiadomość wykopania
 

@@ -110,7 +110,7 @@ _next_ignore_   (pointer, hdata: "irc_ignore") +
 
 | irc
 | [[hdata_irc_modelist]]<<hdata_irc_modelist,irc_modelist>>
-| irc modelist
+| modlista irc
 | -
 | _type_   (char) +
 _state_   (integer) +
@@ -122,7 +122,7 @@ _next_modelist_   (pointer, hdata: "irc_modelist") +
 
 | irc
 | [[hdata_irc_modelist_item]]<<hdata_irc_modelist_item,irc_modelist_item>>
-| irc modelist item
+| element modlisty irc
 | -
 | _number_   (integer) +
 _mask_   (string) +
