@@ -142,7 +142,7 @@ buflist_config_hook_signals_refresh ()
     char **all_signals, **signals;
     const char *ptr_signals_refresh;
     struct t_arraylist *signals_list;
-    int count, i;
+    int count, list_size, i;
 
     all_signals = weechat_string_dyn_alloc (256);
     if (!all_signals)
@@ -155,9 +155,7 @@ buflist_config_hook_signals_refresh ()
     if (ptr_signals_refresh && ptr_signals_refresh[0])
     {
         weechat_string_dyn_concat (all_signals, ",");
-        weechat_string_dyn_concat (
-            all_signals,
-            weechat_config_string (buflist_config_look_signals_refresh));
+        weechat_string_dyn_concat (all_signals, ptr_signals_refresh);
     }
     if (weechat_config_boolean (buflist_config_look_nick_prefix))
     {
@@ -180,13 +178,13 @@ buflist_config_hook_signals_refresh ()
             {
                 weechat_arraylist_add (signals_list, signals[i]);
             }
+            list_size = weechat_arraylist_size (signals_list);
             buflist_config_signals_refresh = malloc (
-                weechat_arraylist_size (signals_list) *
-                sizeof (*buflist_config_signals_refresh));
+                list_size * sizeof (*buflist_config_signals_refresh));
             if (buflist_config_signals_refresh)
             {
-                buflist_config_num_signals_refresh = count;
-                for (i = 0; i < weechat_arraylist_size (signals_list); i++)
+                buflist_config_num_signals_refresh = list_size;
+                for (i = 0; i < list_size; i++)
                 {
                     buflist_config_signals_refresh[i] = weechat_hook_signal (
                         weechat_arraylist_get (signals_list, i),
@@ -194,10 +192,8 @@ buflist_config_hook_signals_refresh ()
                 }
                 if (weechat_buflist_plugin->debug >= 1)
                 {
-                    weechat_printf (NULL,
-                                    _("%s: %d signals hooked"),
-                                    BUFLIST_PLUGIN_NAME,
-                                    weechat_arraylist_size (signals_list));
+                    weechat_printf (NULL, _("%s: %d signals hooked"),
+                                    BUFLIST_PLUGIN_NAME, list_size);
                 }
             }
             weechat_arraylist_free (signals_list);
