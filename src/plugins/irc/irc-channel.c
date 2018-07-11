@@ -35,6 +35,7 @@
 #include "irc-config.h"
 #include "irc-modelist.h"
 #include "irc-nick.h"
+#include "irc-protocol.h"
 #include "irc-server.h"
 #include "irc-input.h"
 
@@ -1355,7 +1356,11 @@ irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
                 weechat_printf_date_tags (
                     ptr_channel->buffer,
                     0,
-                    "irc_nick_back",
+                    irc_protocol_tags (
+                        "nick_back",
+                        NULL,
+                        (nick) ? nick->name : NULL,
+                        (nick) ? nick->host : NULL),
                     _("%s%s%s %s(%s%s%s)%s is back on server"),
                     weechat_prefix ("join"),
                     irc_nick_color_for_msg (server, 1, nick, nickname),

@@ -27,6 +27,7 @@ New features::
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
   * api: add function hashtable_add_from_infolist()
   * api: add function string_format_size in scripting API
+  * irc: add nick, host and log tags in message displayed in private buffer when the nick comes back on the server (issue #1221)
   * irc: add support for IRCv3.2 chghost, add options irc.look.smart_filter_chghost and irc.color.message_chghost (issue #640)
   * irc: add support for IRCv3.2 invite-notify (issue #639)
   * irc: add support for IRCv3.2 Client Capability Negotiation (issue #586, issue #623)
