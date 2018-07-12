@@ -513,6 +513,13 @@ You can bind a key, for example:
 List of default keys is in
 link:weechat_user.en.html#key_bindings[User's guide / Key bindings].
 
+To jump to buffers with number ≥ 100, you could define a trigger and then use
+commands like `/123` to jump to buffer #123:
+
+----
+/trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
+----
+
 [[global_history]]
 === How to use global history (instead of buffer history) with up and down keys?
 

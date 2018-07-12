@@ -534,6 +534,13 @@ Vous pouvez définir une touche, par exemple :
 La liste des touches par défaut est dans le
 link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut].
 
+Pour sauter vers les tampons ayant un numéro ≥ 100, vous pouvez définir un trigger
+et utiliser les commandes comme `/123` pour sauter au tampon n°123 :
+
+----
+/trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
+----
+
 [[global_history]]
 === Comment utiliser l'historique global (au lieu de l'historique du tampon) avec les touches haut et bas ?
 
