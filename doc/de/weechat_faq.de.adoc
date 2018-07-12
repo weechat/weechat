@@ -543,9 +543,8 @@ Es kann auch eine neue Taste eingebunden werden um zu einem Buffer zu wechseln:
 Eine Auflistung der Standardtastenbelegung findet man in
 link:weechat_user.de.html#key_bindings[Benutzeranleitung / Tastenbelegungen].
 
-// TRANSLATION MISSING
-To jump to buffers with number ≥ 100, you could define a trigger and then use
-commands like `/123` to jump to buffer #123:
+Um zu Buffern zu wechseln die an Position ≥ 100 sind kann ein Trigger definiert
+werden um dann z.B. mit einem Kurzbefehl `/123` zum Buffer #123 zu springen:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
