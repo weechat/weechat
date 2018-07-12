@@ -79,6 +79,7 @@ Build::
   * core: fix build with CMake and Ninja
   * debian: add package weechat-headless with the headless binary and its man page
   * javascript: fix compilation of javascript plugin with autotools on some Linux distributions (issue #1208)
+  * python: add detection of Python 3.7
 
 [[v2.1]]
 == Version 2.1 (2018-03-18)

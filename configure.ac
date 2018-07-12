@@ -547,7 +547,7 @@ PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
     if test "x$enable_python3" = "xyes" ; then
-        AC_PATH_PROGS(PYTHON, python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python2 python)
+        AC_PATH_PROGS(PYTHON, python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python2 python)
     else
         AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python)
     fi
