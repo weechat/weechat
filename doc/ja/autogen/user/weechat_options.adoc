@@ -729,7 +729,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_weechat.look.hotlist_add_conditions]] *weechat.look.hotlist_add_conditions*
-** 説明: pass:none[conditions to add a buffer in hotlist (if notify level is OK for the buffer); you can use in these conditions: "window" (current window pointer), "buffer" (buffer pointer to add in hotlist), "priority" (0 = low, 1 = message, 2 = private, 3 = highlight); by default a buffer is added to hotlist if you are away, or if the buffer is not visible on screen (not displayed in any window), or if at least one relay client is connected via the weechat protocol]
+** 説明: pass:none[ホットリストでバッファを追加する条件 (追加するバッファの通知レベルが OK の場合); 以下の条件を使うことができます: "window" (現在のウィンドウポインタ)、"buffer" (ホットリストに追加するバッファポインタ)、"priority" (0 = 低い、1 = メッセージ、2 = プライベートメッセージ、3 = ハイライト); デフォルトでは離席状態、バッファが画面に表示されていない状態、少なくとも1つのリレークライアントが weechat プロトコルで接続している状態の場合にホットリストへバッファを追加します]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"${away} || ${buffer.num_displayed} == 0 || ${info:relay_client_count,weechat,connected} > 0"+`
