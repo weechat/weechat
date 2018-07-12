@@ -153,10 +153,9 @@ WeeChat を起動した場所に依存しますが、以下の値を持つはず
 と設定すればこのようなことは起こらないので (その他多くの値でも問題は起きません)、これを使ってください。 +
 もし必要であれば、TERM 変数を修正してください: `export TERM="xxx"`
 
-// TRANSLATION MISSING
-If you are using gnome-terminal, check that the option
-"Ambiguous-width characters" in menu Preferences/Profile/Compatibility
-is set to `narrow`.
+gnome-terminal
+を使っている場合、設定/プロファイル/互換性メニュー内にある「曖昧幅の文字」を
+`半角` にしてください。
 
 [[osx_display_broken]]
 === OS X 上で WeeChat をコンパイルした場合、"(null)" という文字列が至る所に表示されます。
