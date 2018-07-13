@@ -240,7 +240,7 @@ const char *
 gui_color_get_custom (const char *color_name)
 {
     int fg, bg, fg_term, bg_term, term_color;
-    static char color[32][32];
+    static char color[32][96];
     static int index_color = 0;
     char color_fg[32], color_bg[32];
     char *pos_delim, *str_fg, *pos_bg, *error, *color_attr;

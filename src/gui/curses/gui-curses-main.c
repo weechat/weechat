@@ -281,7 +281,7 @@ gui_main_signal_sigwinch ()
 void
 gui_main_handle_quit_signals ()
 {
-    char str_signal[64], str_weechat_signal[64];
+    char str_signal[32], str_weechat_signal[64];
     int rc;
 
     switch (weechat_quit_signal)
