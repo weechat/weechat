@@ -120,7 +120,7 @@ TEST_GROUP(Scripts)
 TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
-    char *path_testapi_output_dir, str_command[4096];
+    char *path_testapi_output_dir, str_command[(PATH_MAX * 2) + 128];
     char *test_scripts_dir;
     struct timeval time_start, time_end;
     long long diff;
