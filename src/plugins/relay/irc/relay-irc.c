@@ -599,7 +599,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
                          char **tags, char **message)
 {
     int i, num_tags, command, action, all_tags, length;
-    char str_tag[256], *pos, *message_no_color, str_time[256];
+    char str_tag[512], *pos, *message_no_color, str_time[256];
     const char *ptr_tag, *ptr_message, *ptr_nick, *ptr_nick1, *ptr_nick2;
     const char *ptr_host, *localvar_nick, *time_format;
     time_t msg_date;
