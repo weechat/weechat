@@ -56,6 +56,7 @@ Bug fixes::
   * irc: send whole IRC message including IRCv3 tags in the signals irc_in, irc_in2, irc_raw_in and irc_raw_in2 (issue #787)
   * irc: fix memory leak when receiving a message with IRCv3 tags
   * guile: fix memory leak in 7 functions returning allocated strings
+  * lua: fix macros used to return values
   * php: fix return code of functions config_write_option and config_write_line
   * php: fix memory leak in 72 functions returning allocated strings
   * python: fix crash when loading a script with Python >= 3.7 (issue #1219)

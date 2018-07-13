@@ -70,38 +70,56 @@
 #define API_STATIC_STRING(__string)                                     \
     plugin_script_get_static_string(&lua_data, __string);
 #define API_RETURN_OK                                                   \
-    lua_pushinteger (L, 1);                                             \
-    return 1
+    {                                                                   \
+        lua_pushinteger (L, 1);                                         \
+        return 1;                                                       \
+    }
 #define API_RETURN_ERROR                                                \
-    lua_pushinteger (L, 0);                                             \
-    return 1
+    {                                                                   \
+        lua_pushinteger (L, 0);                                         \
+        return 1;                                                       \
+    }
 #define API_RETURN_EMPTY                                                \
-    lua_pushstring (L, "");                                             \
-    return 0
+    {                                                                   \
+        lua_pushstring (L, "");                                         \
+        return 0;                                                       \
+    }
 #define API_RETURN_STRING(__string)                                     \
-    lua_pushstring (L,                                                  \
-                    (__string) ? __string : "");                        \
-    return 1
+    {                                                                   \
+        lua_pushstring (L,                                              \
+                        (__string) ? __string : "");                    \
+        return 1;                                                       \
+    }
 #define API_RETURN_STRING_FREE(__string)                                \
-    lua_pushstring (L,                                                  \
-                    (__string) ? __string : "");                        \
-    if (__string)                                                       \
-        free (__string);                                                \
-    return 1
+    {                                                                   \
+        lua_pushstring (L,                                              \
+                        (__string) ? __string : "");                    \
+        if (__string)                                                   \
+            free (__string);                                            \
+        return 1;                                                       \
+    }
 #if LUA_VERSION_NUM >= 503
 #define API_RETURN_INT(__int)                                           \
-    lua_pushinteger (L, __int);                                          \
-    return 1
+    {                                                                   \
+        lua_pushinteger (L, __int);                                     \
+        return 1;                                                       \
+    }
 #define API_RETURN_LONG(__long)                                         \
-    lua_pushinteger (L, __long);                                         \
-    return 1
+    {                                                                   \
+        lua_pushinteger (L, __long);                                    \
+        return 1;                                                       \
+    }
 #else
 #define API_RETURN_INT(__int)                                           \
-    lua_pushnumber (L, __int);                                          \
-    return 1
+    {                                                                   \
+        lua_pushnumber (L, __int);                                      \
+        return 1;                                                       \
+    }
 #define API_RETURN_LONG(__long)                                         \
-    lua_pushnumber (L, __long);                                         \
-    return 1
+    {                                                                   \
+        lua_pushnumber (L, __long);                                     \
+        return 1;                                                       \
+    }
 #endif /* LUA_VERSION_NUM >= 503 */
 
 
