@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.2]]
-== Version 2.2 (under dev)
+== Version 2.2 (2018-07-14)
 
 [[v2.2_default_hotlist_conditions]]
 === Default conditions for hotlist
