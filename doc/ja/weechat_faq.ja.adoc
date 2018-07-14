@@ -509,9 +509,8 @@ Mac OS X のターミナル.app を使っている場合、設定メニューの
 
 デフォルトキー割り当てのリストはlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
 
-// TRANSLATION MISSING
-To jump to buffers with number ≥ 100, you could define a trigger and then use
-commands like `/123` to jump to buffer #123:
+番号 100 以上のバッファにジャンプするには、以下のトリガを定義してください。こうすることでコマンド
+`/123` でバッファ #123 にジャンプできるようになります:
 
 ----
 /trigger add numberjump modifier "2000|input_text_for_buffer" "${tg_string} =~ ^/[0-9]+$" "=\/([0-9]+)=/buffer *${re:1}=" "" "" "none"
