@@ -42,7 +42,7 @@ WeeChat (Wee Enhanced Environment for Chat)
   http://tools.ietf.org/html/rfc2811[2811]、
   http://tools.ietf.org/html/rfc2812[2812]、
   http://tools.ietf.org/html/rfc2813[2813]。
-* リモートインターフェイス用の IRC プロキシとリレー
+* リモートインターフェース用の IRC プロキシとリレー
 * マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
 * 完全な GPL、フリーソフトウェア
 
@@ -105,7 +105,7 @@ OS X では http://brew.sh/[Homebrew] を使ってください:
 | C++ コンパイラ         |                  |        | ビルドとテストの実行、JavaScript プラグイン
 | cmake                  |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
 | pkg-config             |                  | *必須* | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェイス
+| libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | *必須* | URL 転送
 | zlib1g-dev             |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
 | libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
@@ -247,7 +247,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
   <<scripts_plugins,Lua プラグイン>>のコンパイル。
 
 | ENABLE_NCURSES | `ON`, `OFF` | ON |
-  Ncurses インターフェイスのコンパイル。
+  Ncurses インターフェースのコンパイル。
 
 | ENABLE_NLS | `ON`, `OFF` | ON |
   NLS の有効化 (多言語サポート)。
@@ -297,7 +297,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
 $ cmake -LA
 ----
 
-Curses インターフェイスを使う場合は以下のコマンドを使ってください:
+Curses インターフェースを使う場合は以下のコマンドを使ってください:
 
 ----
 $ ccmake ..
@@ -3136,8 +3136,8 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 
 * _irc_: IRC プロキシ: IRC サーバに対する接続を、単一または複数の IRC
   クライアントで共有するために用います。
-* _weechat_: リモートインターフェイスを通じて WeeChat
-  を表示および操作する際に利用されるプロトコル。リモートインターフェイスの一例:
+* _weechat_: リモートインターフェースを通じて WeeChat
+  を表示および操作する際に利用されるプロトコル。リモートインターフェースの一例:
 ** Glowing Bear (HTML5): https://www.glowing-bear.org/
 ** QWeeChat (Qt): https://weechat.org/download
 ** WeeChat-Android (Android): https://github.com/ubergeek42/weechat-android
@@ -3212,9 +3212,9 @@ IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポ�
 [[relay_weechat_protocol]]
 ==== WeeChat プロトコル
 
-Relay プラグインは WeeChat プロトコルを使ってリモートインターフェイスに対してデータを送信できます。
+Relay プラグインは WeeChat プロトコルを使ってリモートインターフェースに対してデータを送信できます。
 
-リモートインターフェイスを使って接続できます、<<relay_plugin>> のリストを参照してください。
+リモートインターフェースを使って接続できます、<<relay_plugin>> のリストを参照してください。
 
 [IMPORTANT]
 このプロトコルを使った場合 WeeChat から他の WeeChat に接続することはできません。
@@ -3225,7 +3225,7 @@ Relay プラグインは WeeChat プロトコルを使ってリモートイン�
 /relay add weechat 9000
 ----
 
-この後、リモートインターフェイスを使って 9000
+この後、リモートインターフェースを使って 9000
 番ポートに対して、パスワード "mypass" で接続することができます。
 
 [[relay_websocket]]
@@ -3482,42 +3482,42 @@ include::autogen/user/php_options.adoc[]
 がどのように動いているかを知らなければいけません。これを知るには
 link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を読むことをお勧めします。
 
-// TRANSLATION MISSING
 [[trigger_default]]
-==== Default triggers
+==== デフォルトトリガ
 
-WeeChat creates 5 triggers by default, which can be disabled, updated or
-deleted:
+WeeChat はデフォルトで 5
+つのトリガを作成しますが、これらを無効化、更新、削除することも可能です:
 
-* a _beep_ trigger for notifications
-* four other triggers to hide passwords on screen
+* 通知用の _beep_ トリガ
+* それ以外の 4 つは画面上でパスワードを隠すためのトリガ
 
-List of default triggers:
+デフォルトトリガのリスト:
 
 [width="100%",cols="5m,3,22",options="header"]
 |===
-| Name | Hook | Description
+| 名前 | フック | 説明
 
 | beep | print |
-  Beep on highlight/private message.
+  ハイライト/プライベートメッセージを受信した際にビープを鳴らす。
 
 | cmd_pass | modifier |
-  Hide password in commands:
-  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
-  `pass:[/oper]`,
-  `pass:[/quote pass]`,
-  `pass:[/set *password*]`,
-  `pass:[/secure passphrase\|decrypt\|set]`.
+  コマンド内のパスワードを隠す:
+  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`、
+  `pass:[/oper]`、
+  `pass:[/quote pass]`、
+  `pass:[/set *password*]`、
+  `pass:[/secure passphrase\|decrypt\|set]`。
 
 | cmd_pass_register | modifier |
-  Hide password in command `pass:[/msg nickserv register]`.
+  コマンド内のパスワードを隠す `pass:[/msg nickserv register]`。
 
 | msg_auth | modifier |
-  Hide password in IRC auth message displayed (message received from server
-  after the user issued the command).
+  IRC auth メッセージ
+  (ユーザがコマンドを実行した後にサーバから受信するメッセージ)
+  の表示時にパスワードを隠す。
 
 | server_pass | modifier |
-  Hide server password in commands `/server` and `/connect`.
+  `/server` と `/connect` コマンド内のパスワードを隠す。
 |===
 
 [[trigger_anatomy]]
