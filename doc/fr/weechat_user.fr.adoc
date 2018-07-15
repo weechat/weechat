@@ -433,7 +433,8 @@ ulimit -c 200000
 ==== Obtenir la trace avec gdb
 
 Lorsque WeeChat se plante, votre système génère un fichier _core_ ou
-_core.12345_ (_12345_ est l'identifiant du processus).
+_core.12345_ (_12345_ est l'identifiant du processus)
+si <<core_files,l'option est activée>>.
 Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
 *pas* le répertoire où WeeChat est installé !).
 

@@ -430,8 +430,9 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Pozyskiwanie logów za pomocą gdb
 
-Kiedy WeeChat ulegnie awarii, system stworzy plik _core_ lub _core.12345_
-(_12345_ to id procesu).
+// TRANSLATION MISSING
+When WeeChat crashes, your system will create a file _core_ or _core.12345_
+(_12345_ is process id) if the <<core_files,option is enabled>>.
 Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
 jest to katalog, gdzie zainstalowano WeeChat!).
 

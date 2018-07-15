@@ -465,8 +465,9 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Ottenere un backtrace con gdb
 
-In caso di errore di WeeChat, il sistema creerà un file _core_ oppure _core.12345_
-(_12345_ è l'id del processo).
+// TRANSLATION MISSING
+When WeeChat crashes, your system will create a file _core_ or _core.12345_
+(_12345_ is process id) if the <<core_files,option is enabled>>.
 Questo file viene creato nella directory in cui è in esecuzione WeeChat (e
 *non* la directory dove WeeChat è installato!).
 

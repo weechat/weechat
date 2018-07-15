@@ -423,7 +423,7 @@ ulimit -c 200000
 ==== Get backtrace with gdb
 
 When WeeChat crashes, your system will create a file _core_ or _core.12345_
-(_12345_ is process id).
+(_12345_ is process id) if the <<core_files,option is enabled>>.
 This file is created in directory where you have run WeeChat (this is *not*
 directory where WeeChat is installed!).
 

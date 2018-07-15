@@ -426,8 +426,9 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== gdb でバックトレースを得る
 
-WeeChat がクラッシュすると、_core_ または _core.12345_ ファイルが作られます
-(_12345_ はプロセス番号です)。
+// TRANSLATION MISSING
+When WeeChat crashes, your system will create a file _core_ or _core.12345_
+(_12345_ is process id) if the <<core_files,option is enabled>>.
 このファイルは WeeChat を起動したディレクトリに作られます (これは
 WeeChat がインストールされているディレクトリでは *ありません*!)。
 
