@@ -167,10 +167,14 @@ debug_sigsegv ()
         stderr,
         "***\n"
         "*** Please help WeeChat developers to fix this bug:\n"
-        "***   1. If you have a core file, please run:  gdb /path/to/weechat core\n"
-        "***      then issue command: \"bt full\" and send result to developers\n"
-        "***      (see user's guide for more info about report of crashes).\n"
-        "***   2. Otherwise send backtrace (below), only if it is a complete trace.\n"
+        "***\n"
+        "***   1. If you have a core file, please run: gdb /path/to/weechat core\n"
+        "***      then issue command: \"bt full\" and send result to developers.\n"
+        "***      See the user's guide for more info about enabling the core files\n"
+        "***      and reporting crashes:\n"
+        "***      https://weechat.org/doc/stable/user#report_crashes\n"
+        "***\n"
+        "***   2. Otherwise send the backtrace (below), only if it is a complete trace.\n"
         "***      Keep the crash log file, just in case developers ask you some info\n"
         "***      (be careful, private info like passwords may be in this file).\n\n");
 
