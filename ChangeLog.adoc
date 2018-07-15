@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v2.3]]
+== Version 2.3 (under dev)
+
+Bug fixes::
+
+  * core: send signal "key_pressed" for mouse code only if the string is UTF-8 valid (issue #1220)
+
 [[v2.2]]
 == Version 2.2 (2018-07-14)
 
