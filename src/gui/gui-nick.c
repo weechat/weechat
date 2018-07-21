@@ -59,15 +59,23 @@ gui_nick_hash_color (const char *nickname)
     if (config_num_nick_colors == 0)
         return 0;
 
-    length = strlen (CONFIG_STRING(config_look_nick_color_hash_seed)) +
-             strlen (nickname) + 1;
-    str = malloc (length);
-    if (str)
+    /* avoid unnecessary allocation and string operations with empty seed */
+    if (CONFIG_STRING(config_look_nick_color_hash_seed))
     {
-        snprintf (str, length, "%s%s",
-                  CONFIG_STRING(config_look_nick_color_hash_seed),
-                  nickname);
-        ptr_nick = str;
+        length = strlen (CONFIG_STRING(config_look_nick_color_hash_seed)) +
+                 strlen (nickname) + 1;
+        str = malloc (length);
+        if (str)
+        {
+            snprintf (str, length, "%s%s",
+                      CONFIG_STRING(config_look_nick_color_hash_seed),
+                      nickname);
+            ptr_nick = str;
+        }
+        else
+        {
+            ptr_nick = nickname;
+        }
     }
     else
     {
