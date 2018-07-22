@@ -22,7 +22,7 @@ if(NCURSES_FOUND)
 endif()
 
 find_path(NCURSES_INCLUDE_PATH
-  NAMES ncurses.h curses.h
+  NAMES curses.h
   PATHS /usr/include/ncursesw /usr/include/ncurses /usr/include
   /usr/local/include/ncursesw /usr/local/include/ncurses /usr/local/include
   /usr/pkg/include/ncursesw /usr/pkg/include/ncurses /usr/pkg/include
@@ -33,6 +33,16 @@ find_library(NCURSESW_LIBRARY
   PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
 
+find_library(NCURSES_LIBRARY
+  NAMES ncurses
+  PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+)
+
+find_library(CURSES_LIBRARY
+  NAMES curses
+  PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+)
+
 if(NCURSESW_LIBRARY)
   find_package(PkgConfig QUIET)
   if(PKG_CONFIG_FOUND)
@@ -40,21 +50,21 @@ if(NCURSESW_LIBRARY)
     set(NCURSESW_LIBRARY ${NCURSES_LIBRARIES} ${NCURSES_CFLAGS_OTHER})
   endif()
   set(NCURSES_LIBRARY ${NCURSESW_LIBRARY})
+
+
+elseif(CURSES_LIBRARY)
+  set(NCURSES_LIBRARY ${CURSES_LIBRARY})
+
+
 else()
-  find_library(NCURSES_LIBRARY
-    NAMES ncurses
-    PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
-  )
   find_package(PkgConfig QUIET)
   if(PKG_CONFIG_FOUND)
     pkg_search_module(NCURSES ncurses)
     set(NCURSES_LIBRARY ${NCURSES_LIBRARIES} ${NCURSES_CFLAGS_OTHER})
   endif()
-  if(NCURSES_LIBRARY)
-    message("*** WARNING:\n"
-      "*** ncursesw library not found! Falling back to \"ncurses\"\n"
-      "*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.")
-  endif()
+  message("*** WARNING:\n"
+    "*** ncursesw library not found! Falling back to \"ncurses\"\n"
+    "*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.")
 endif()
 
 if(NCURSES_INCLUDE_PATH AND NCURSES_LIBRARY)
