@@ -118,36 +118,42 @@ void
 weechat_guile_output_flush ()
 {
     const char *ptr_command;
-    char *command;
+    char *temp_buffer, *command;
     int length;
 
     if (!*guile_buffer_output[0])
         return;
 
+    /* if there's no buffer, we catch the output, so there's no flush */
+    if (guile_eval_mode && !guile_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*guile_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (guile_buffer_output, NULL);
+
     if (guile_eval_mode)
     {
-        /* if there's no buffer, we catch the output, so there's no flush */
-        if (!guile_eval_buffer)
-            return;
-
         if (guile_eval_send_input)
         {
             if (guile_eval_exec_commands)
-                ptr_command = *guile_buffer_output;
+                ptr_command = temp_buffer;
             else
-                ptr_command = weechat_string_input_for_buffer (*guile_buffer_output);
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
             if (ptr_command)
             {
-                weechat_command (guile_eval_buffer, *guile_buffer_output);
+                weechat_command (guile_eval_buffer, temp_buffer);
             }
             else
             {
-                length = 1 + strlen (*guile_buffer_output) + 1;
+                length = 1 + strlen (temp_buffer) + 1;
                 command = malloc (length);
                 if (command)
                 {
                     snprintf (command, length, "%c%s",
-                              *guile_buffer_output[0], *guile_buffer_output);
+                              temp_buffer[0], temp_buffer);
                     weechat_command (guile_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -156,7 +162,7 @@ weechat_guile_output_flush ()
         }
         else
         {
-            weechat_printf (guile_eval_buffer, "%s", *guile_buffer_output);
+            weechat_printf (guile_eval_buffer, "%s", temp_buffer);
         }
     }
     else
@@ -167,10 +173,10 @@ weechat_guile_output_flush ()
             weechat_gettext ("%s: stdout/stderr (%s): %s"),
             GUILE_PLUGIN_NAME,
             (guile_current_script) ? guile_current_script->name : "?",
-            *guile_buffer_output);
+            temp_buffer);
     }
 
-    weechat_string_dyn_copy (guile_buffer_output, NULL);
+    free (temp_buffer);
 }
 
 /*

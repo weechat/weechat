@@ -362,36 +362,42 @@ void
 weechat_ruby_output_flush ()
 {
     const char *ptr_command;
-    char *command;
+    char *temp_buffer, *command;
     int length;
 
     if (!*ruby_buffer_output[0])
         return;
 
+    /* if there's no buffer, we catch the output, so there's no flush */
+    if (ruby_eval_mode && !ruby_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*ruby_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (ruby_buffer_output, NULL);
+
     if (ruby_eval_mode)
     {
-        /* if there's no buffer, we catch the output, so there's no flush */
-        if (!ruby_eval_buffer)
-            return;
-
         if (ruby_eval_send_input)
         {
             if (ruby_eval_exec_commands)
-                ptr_command = *ruby_buffer_output;
+                ptr_command = temp_buffer;
             else
-                ptr_command = weechat_string_input_for_buffer (*ruby_buffer_output);
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
             if (ptr_command)
             {
-                weechat_command (ruby_eval_buffer, *ruby_buffer_output);
+                weechat_command (ruby_eval_buffer, temp_buffer);
             }
             else
             {
-                length = 1 + strlen (*ruby_buffer_output) + 1;
+                length = 1 + strlen (temp_buffer) + 1;
                 command = malloc (length);
                 if (command)
                 {
                     snprintf (command, length, "%c%s",
-                              *ruby_buffer_output[0], *ruby_buffer_output);
+                              temp_buffer[0], temp_buffer);
                     weechat_command (ruby_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -400,7 +406,7 @@ weechat_ruby_output_flush ()
         }
         else
         {
-            weechat_printf (ruby_eval_buffer, "%s", *ruby_buffer_output);
+            weechat_printf (ruby_eval_buffer, "%s", temp_buffer);
         }
     }
     else
@@ -411,10 +417,10 @@ weechat_ruby_output_flush ()
             weechat_gettext ("%s: stdout/stderr (%s): %s"),
             RUBY_PLUGIN_NAME,
             (ruby_current_script) ? ruby_current_script->name : "?",
-            *ruby_buffer_output);
+            temp_buffer);
     }
 
-    weechat_string_dyn_copy (ruby_buffer_output, NULL);
+    free (temp_buffer);
 }
 
 /*

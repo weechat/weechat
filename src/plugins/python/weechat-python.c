@@ -337,36 +337,42 @@ void
 weechat_python_output_flush ()
 {
     const char *ptr_command;
-    char *command;
+    char *temp_buffer, *command;
     int length;
 
     if (!*python_buffer_output[0])
         return;
 
+    /* if there's no buffer, we catch the output, so there's no flush */
+    if (python_eval_mode && !python_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*python_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (python_buffer_output, NULL);
+
     if (python_eval_mode)
     {
-        /* if there's no buffer, we catch the output, so there's no flush */
-        if (!python_eval_buffer)
-            return;
-
         if (python_eval_send_input)
         {
             if (python_eval_exec_commands)
-                ptr_command = *python_buffer_output;
+                ptr_command = temp_buffer;
             else
-                ptr_command = weechat_string_input_for_buffer (*python_buffer_output);
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
             if (ptr_command)
             {
-                weechat_command (python_eval_buffer, *python_buffer_output);
+                weechat_command (python_eval_buffer, temp_buffer);
             }
             else
             {
-                length = 1 + strlen (*python_buffer_output) + 1;
+                length = 1 + strlen (temp_buffer) + 1;
                 command = malloc (length);
                 if (command)
                 {
                     snprintf (command, length, "%c%s",
-                              *python_buffer_output[0], *python_buffer_output);
+                              temp_buffer[0], temp_buffer);
                     weechat_command (python_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -375,7 +381,7 @@ weechat_python_output_flush ()
         }
         else
         {
-            weechat_printf (python_eval_buffer, "%s", *python_buffer_output);
+            weechat_printf (python_eval_buffer, "%s", temp_buffer);
         }
     }
     else
@@ -386,10 +392,10 @@ weechat_python_output_flush ()
             weechat_gettext ("%s: stdout/stderr (%s): %s"),
             PYTHON_PLUGIN_NAME,
             (python_current_script) ? python_current_script->name : "?",
-            *python_buffer_output);
+            temp_buffer);
     }
 
-    weechat_string_dyn_copy (python_buffer_output, NULL);
+    free (temp_buffer);
 }
 
 /*

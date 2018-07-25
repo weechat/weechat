@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Bug fixes::
 
   * core: send signal "key_pressed" for mouse code only if the string is UTF-8 valid (issue #1220)
+  * scripts: fix duplicated lines in output of script eval (python, perl, ruby, lua and guile)
 
 [[v2.2]]
 == Version 2.2 (2018-07-14)

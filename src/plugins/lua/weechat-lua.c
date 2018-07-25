@@ -190,36 +190,42 @@ void
 weechat_lua_output_flush ()
 {
     const char *ptr_command;
-    char *command;
+    char *temp_buffer, *command;
     int length;
 
     if (!*lua_buffer_output[0])
         return;
 
+    /* if there's no buffer, we catch the output, so there's no flush */
+    if (lua_eval_mode && !lua_eval_buffer)
+        return;
+
+    temp_buffer = strdup (*lua_buffer_output);
+    if (!temp_buffer)
+        return;
+
+    weechat_string_dyn_copy (lua_buffer_output, NULL);
+
     if (lua_eval_mode)
     {
-        /* if there's no buffer, we catch the output, so there's no flush */
-        if (!lua_eval_buffer)
-            return;
-
         if (lua_eval_send_input)
         {
             if (lua_eval_exec_commands)
-                ptr_command = *lua_buffer_output;
+                ptr_command = temp_buffer;
             else
-                ptr_command = weechat_string_input_for_buffer (*lua_buffer_output);
+                ptr_command = weechat_string_input_for_buffer (temp_buffer);
             if (ptr_command)
             {
-                weechat_command (lua_eval_buffer, *lua_buffer_output);
+                weechat_command (lua_eval_buffer, temp_buffer);
             }
             else
             {
-                length = 1 + strlen (*lua_buffer_output) + 1;
+                length = 1 + strlen (temp_buffer) + 1;
                 command = malloc (length);
                 if (command)
                 {
                     snprintf (command, length, "%c%s",
-                              *lua_buffer_output[0], *lua_buffer_output);
+                              temp_buffer[0], temp_buffer);
                     weechat_command (lua_eval_buffer,
                                      (command[0]) ? command : " ");
                     free (command);
@@ -228,7 +234,7 @@ weechat_lua_output_flush ()
         }
         else
         {
-            weechat_printf (lua_eval_buffer, "%s", *lua_buffer_output);
+            weechat_printf (lua_eval_buffer, "%s", temp_buffer);
         }
     }
     else
@@ -239,10 +245,10 @@ weechat_lua_output_flush ()
             weechat_gettext ("%s: stdout/stderr (%s): %s"),
             LUA_PLUGIN_NAME,
             (lua_current_script) ? lua_current_script->name : "?",
-            *lua_buffer_output);
+            temp_buffer);
     }
 
-    weechat_string_dyn_copy (lua_buffer_output, NULL);
+    free (temp_buffer);
 }
 
 /*
