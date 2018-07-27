@@ -64,7 +64,7 @@ run "rm -f ABOUT-NLS"
 run "rm -rf intl"
 
 # execute autoreconf cmds
-run "autoreconf -fvi"
+run "autoreconf -vi"
 
 # ending
 rm -f $AUTOGEN_LOG
