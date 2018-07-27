@@ -1063,6 +1063,11 @@ COMMAND_CALLBACK(buffer)
             else
             {
                 ptr_buffer = gui_buffer_search_by_full_name (argv_eol[2]);
+                if (!ptr_buffer)
+                {
+                    ptr_buffer = gui_buffer_search_by_partial_name (
+                        NULL, argv_eol[2]);
+                }
                 if (ptr_buffer)
                 {
                     if (ptr_buffer == weechat_buffer)

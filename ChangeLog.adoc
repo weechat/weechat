@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.3]]
 == Version 2.3 (under dev)
 
+New features::
+
+  * core: allow partial buffer name in command /buffer close (issue #1226)
+
 Bug fixes::
 
   * core: send signal "key_pressed" for mouse code only if the string is UTF-8 valid (issue #1220)
