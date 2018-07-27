@@ -1199,6 +1199,8 @@ gui_completion_complete (struct t_gui_completion *completion)
                 }
 
                 arraylist_clear (completion->partial_list);
+                (void) hook_signal_send ("partial_completion",
+                                        WEECHAT_HOOK_SIGNAL_STRING, NULL);
 
                 return;
             }
