@@ -430,11 +430,11 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Rückverfolgung mit gdb
 
-// TRANSLATION MISSING
-When WeeChat crashes, your system will create a file _core_ or _core.12345_
-(_12345_ is process id) if the <<core_files,option is enabled>>.
-Diese Datei wird in dem Verzeichnis erzeugt aus welchem Sie WeeChat gestartet haben (dies
-ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
+Sollte WeeChat abstürzen wird durch das System eine _core_ oder _core.12345_
+Datei erstellt (_12345_ ist dabei die Prozess-ID). Dazu muss aber die
+entprechende <<core_files,Option aktiviert sein>>.
+Diese Core-Datei wird in dem Verzeichnis erzeugt aus welchem WeeChat gestartet wurde
+(dies ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
 in _/home/xxx/_. Nun wird gdb mit folgendem Befehl aufgerufen:

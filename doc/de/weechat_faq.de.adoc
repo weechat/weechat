@@ -47,8 +47,7 @@ https://weechat.org/about/features
 [[gui]]
 === Ich habe gehört es gibt verschiedene GUIs für WeeChat. Wie kann ich diese kompilieren bzw. nutzen?
 
-// TRANSLATION MISSING
-Some remote GUIs are available, see the remote interfaces page:
+Es sind einige Remote-Oberflächen verfügbar. Diese findet man auf der Homepage:
 https://weechat.org/about/interfaces
 
 [[compile_git]]
