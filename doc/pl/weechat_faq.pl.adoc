@@ -999,7 +999,7 @@ gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.
 [[bug_task_patch]]
 === Jak zgłaszać błędy, prosić o nowe możliwości lub wysyłać patche?
 
-Zobacz: https://weechat.org/dev/support
+Zobacz: https://weechat.org/about/support
 
 [[gdb_error_threads]]
 === Kiedy uruchamiam WeeChat pod gdb dostaję komunikat o wątkach, co mogę z tym zrobić?
@@ -1035,10 +1035,10 @@ możliwe. Mile widziana jest pomoc w testowaniu dla systemów, których nie mamy
 Jest wiele zadań do zrobienia (testowanie, kod, dokumentacja, ...)
 
 Skontaktuj się z nami na IRC lub mailowo, szczegóły:
-https://weechat.org/dev/support
+https://weechat.org/about/support
 
 [[donate]]
 === Czy mogę dać pieniądze albo inne rzeczy deweloperom WeeChat?
 
 Tak możesz dać nam pieniądze, aby wspomóc rozwój.
-Szczegóły na https://weechat.org/about/donate
+Szczegóły na https://weechat.org/donate

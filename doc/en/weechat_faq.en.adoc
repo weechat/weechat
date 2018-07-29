@@ -994,7 +994,7 @@ for more information about configuration files.
 [[bug_task_patch]]
 === How should I report bugs, ask for new features or send patches?
 
-See: https://weechat.org/dev/support
+See: https://weechat.org/about/support
 
 [[gdb_error_threads]]
 === When I run WeeChat under gdb, there is error about threads, what can I do?
@@ -1030,10 +1030,10 @@ some OS' we don't have, to test WeeChat.
 There's many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
-https://weechat.org/dev/support
+https://weechat.org/about/support
 
 [[donate]]
 === Can I give money or other things to WeeChat developers?
 
 You can give us money to help development.
-Details on https://weechat.org/about/donate
+Details on https://weechat.org/donate

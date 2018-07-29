@@ -4196,4 +4196,4 @@ Unterstützung im IRC findet man auf dem Server _chat.freenode.net_:
 ** _#weechat-de_ (deutsch)
 ** _#weechat-fi_ (finnisch)
 
-Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: https://weechat.org/dev/support
+Weitere Möglichkeiten, um mit den Entwicklern in Kontakt zu treten, siehe: https://weechat.org/about/support

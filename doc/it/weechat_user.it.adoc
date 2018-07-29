@@ -4375,4 +4375,4 @@ For support with IRC, on server _chat.freenode.net_:
 ** _#weechat-fi_ (Finlandese)
 
 // TRANSLATION MISSING
-For other ways of support, see: https://weechat.org/dev/support
+For other ways of support, see: https://weechat.org/about/support

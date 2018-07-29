@@ -57,4 +57,4 @@ include::man_copyright.de.adoc[]
 
 == SUPPORT / FEHLER MELDEN
 
-für Hilfe oder um einen Fehler zu melden: https://weechat.org/dev/support
+für Hilfe oder um einen Fehler zu melden: https://weechat.org/about/support

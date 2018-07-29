@@ -60,4 +60,4 @@ include::man_copyright.cs.adoc[]
 
 == PODPORA / HLÁŠENÍ CHYB
 
-Pro pomoc nebo hlášení chyb https://weechat.org/dev/support
+Pro pomoc nebo hlášení chyb https://weechat.org/about/support

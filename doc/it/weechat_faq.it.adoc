@@ -1071,7 +1071,7 @@ for more information about configuration files.
 === Come posso segnalare bug, richiedere nuove funzionalità o inviare patch?
 
 // TRANSLATION MISSING
-See: https://weechat.org/dev/support
+See: https://weechat.org/about/support
 
 [[gdb_error_threads]]
 === Quando eseguo WeeChat in gdb, c'è un errore riguardo ai thread, cosa posso fare?
@@ -1108,10 +1108,10 @@ per gli OS che non abbiamo, e su cui testare WeeChat, è ben accetto.
 Ci sono molti compiti da fare (testing, scrittura del codice, documentazione, ...)
 
 Per favore contattateci su IRC o via mail e consultate la pagina di supporto:
-https://weechat.org/dev/support
+https://weechat.org/about/support
 
 [[donate]]
 === Posso donare denaro o altre cose agli sviluppatori di WeeChat?
 
 È possibile donare denaro per aiutare lo sviluppo.
-Maggiori dettagli su https://weechat.org/about/donate
+Maggiori dettagli su https://weechat.org/donate

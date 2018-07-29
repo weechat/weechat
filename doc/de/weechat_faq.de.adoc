@@ -1048,7 +1048,7 @@ für weitere Informationen über Konfigurationsdateien.
 [[bug_task_patch]]
 === Was kann ich machen falls ich einen Fehler gefunden habe, mich nach neuen Funktionen erkundigen, oder Patches einsenden möchte?
 
-siehe: https://weechat.org/dev/support
+siehe: https://weechat.org/about/support
 
 [[gdb_error_threads]]
 === Wenn man WeeChat in gdb startet, kann ein Thread-Fehler auftreten. Was beudeutet das?
@@ -1085,10 +1085,10 @@ ist Hilfe gerne gesehen.
 Es gibt einiges zu tun z.B. testen, programmieren, Dokumentation, ...
 
 Bitte kontaktiere uns via IRC oder email, wirf einen Blick auf die Support-Seite:
-https://weechat.org/dev/support
+https://weechat.org/about/support
 
 [[donate]]
 === Kann ich Geld oder anderes an die WeeChat Entwickler spenden?
 
 Du kannst uns Geld zur Unterstützung der weiteren Entwicklung spenden.
-Details hierzu gibt es auf: https://weechat.org/about/donate
+Details hierzu gibt es auf: https://weechat.org/donate

@@ -4134,4 +4134,4 @@ Wsparcie w sieci IRC na serwerze _chat.freenode.net_:
 ** _#weechat-fi_ (Fiński)
 
 Inne sposoby na uzyskanie pomocy można znaleźć pod adresem:
-https://weechat.org/dev/support
+https://weechat.org/about/support

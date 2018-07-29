@@ -129,4 +129,4 @@ Alphabetically:
 == Contact
 
 See https://weechat.org/files/doc/devel/weechat_user.en.html#support[user's guide]
-or https://weechat.org/dev/support
+or https://weechat.org/about/support

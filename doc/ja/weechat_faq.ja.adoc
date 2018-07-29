@@ -987,7 +987,7 @@ _sec.conf_ に保存していない場合、これらの情報は _irc.conf_
 [[bug_task_patch]]
 === どのようにバグ報告、新機能のリクエスト、パッチ送信すればよいですか。
 
-以下のページを参照してください: https://weechat.org/dev/support
+以下のページを参照してください: https://weechat.org/about/support
 
 [[gdb_error_threads]]
 === gdb で WeeChat を実行する場合、スレッドに関するエラーが発生します。
@@ -1023,10 +1023,10 @@ OS で WeeChat をテストすることを歓迎します。
 多くの課題があります (テスト、コード、ドキュメント作成、...)。
 
 IRC かメールで連絡を取り、サポートページを確認してください:
-https://weechat.org/dev/support
+https://weechat.org/about/support
 
 [[donate]]
 === WeeChat 開発者にお金か何かを贈りたいのですが。
 
 開発補助のためお金を贈ることができます。詳しいことは
-https://weechat.org/about/donate に載っています。
+https://weechat.org/donate に載っています。

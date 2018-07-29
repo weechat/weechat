@@ -51,4 +51,4 @@ include::man_copyright.en.adoc[]
 
 == SUPPORT / REPORTING BUGS
 
-For help or a bug report: https://weechat.org/dev/support
+For help or a bug report: https://weechat.org/about/support

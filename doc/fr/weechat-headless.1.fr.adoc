@@ -55,4 +55,4 @@ include::man_copyright.fr.adoc[]
 
 == SUPPORT / SIGNALER DES BUGS
 
-Pour de l'aide ou signaler un bug : https://weechat.org/dev/support
+Pour de l'aide ou signaler un bug : https://weechat.org/about/support

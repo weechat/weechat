@@ -4097,4 +4097,4 @@ IRC を使ったサポート窓口は _chat.freenode.net_ サーバにありま�
 ** _#weechat-de_ (ドイツ語)
 ** _#weechat-fi_ (フィンランド語)
 
-他の方法でサポートを受けるには、以下のページを参照してください: https://weechat.org/dev/support
+他の方法でサポートを受けるには、以下のページを参照してください: https://weechat.org/about/support

@@ -55,4 +55,4 @@ include::man_copyright.ru.adoc[]
 
 == ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
 
-Получить помощь или сообщить об ошибке: https://weechat.org/dev/support
+Получить помощь или сообщить об ошибке: https://weechat.org/about/support

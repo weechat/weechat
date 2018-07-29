@@ -61,4 +61,4 @@ include::man_copyright.it.adoc[]
 == SUPPORT / REPORTING BUGS
 
 // TRANSLATION MISSING
-For help or a bug report: https://weechat.org/dev/support
+For help or a bug report: https://weechat.org/about/support
