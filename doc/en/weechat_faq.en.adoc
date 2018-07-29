@@ -40,8 +40,8 @@ More info on this page: https://weechat.org/about/features
 [[gui]]
 === I heard about many GUIs for WeeChat. How can I compile/use them?
 
-Some remote GUIs are available, see the links on features page:
-https://weechat.org/about/features
+Some remote GUIs are available, see the remote interfaces page:
+https://weechat.org/about/interfaces
 
 [[compile_git]]
 === I can't compile WeeChat after cloning git repository, why?

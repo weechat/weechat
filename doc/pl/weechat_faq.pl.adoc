@@ -45,8 +45,9 @@ Więcej informacji na stronie: https://weechat.org/about/features
 [[gui]]
 === Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
-Dostępne są zdalne interfejsy, linki można znaleźć na stronie z cechami:
-https://weechat.org/about/features
+// TRANSLATION MISSING
+Dostępne są zdalne interfejsy, see the remote interfaces page:
+https://weechat.org/about/interfaces
 
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?

@@ -40,8 +40,8 @@ Plus d'infos sur cette page : https://weechat.org/about/features
 [[gui]]
 === J'ai entendu parler de plusieurs interfaces pour WeeChat. Comment puis-je les compiler/utiliser ?
 
-Des interfaces distantes sont disponibles, voir les liens sur la page des
-fonctionnalités : https://weechat.org/about/features
+Des interfaces distantes sont disponibles, voir la page avec les interfaces
+distantes : https://weechat.org/about/interfaces
 
 [[compile_git]]
 === Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
