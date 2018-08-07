@@ -70,6 +70,9 @@ struct t_gui_lines
 
 extern struct t_gui_lines *gui_lines_alloc ();
 extern void gui_lines_free (struct t_gui_lines *lines);
+extern void gui_line_tags_alloc (struct t_gui_line_data *line_data,
+                                 const char *tags);
+extern void gui_line_tags_free (struct t_gui_line_data *line_data);
 extern void gui_line_get_prefix_for_display (struct t_gui_line *line,
                                              char **prefix, int *length,
                                              char **color, int *prefix_is_nick);

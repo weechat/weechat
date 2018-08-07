@@ -107,7 +107,7 @@ extern "C"
 
 extern struct t_hashtable *string_hashtable_shared;
 
-TEST_GROUP(String)
+TEST_GROUP(CoreString)
 {
 };
 
@@ -116,7 +116,7 @@ TEST_GROUP(String)
  *   string_strndup
  */
 
-TEST(String, Duplicate)
+TEST(CoreString, Duplicate)
 {
     const char *str_test = "test";
     char *str;
@@ -150,7 +150,7 @@ TEST(String, Duplicate)
  *   string_toupper
  */
 
-TEST(String, Case)
+TEST(CoreString, Case)
 {
     char *str;
 
@@ -169,7 +169,7 @@ TEST(String, Case)
  *   string_cut
  */
 
-TEST(String, Cut)
+TEST(CoreString, Cut)
 {
     POINTERS_EQUAL(NULL, string_cut (NULL, 0, 0, 0, NULL));
     STRCMP_EQUAL("", string_cut ("", 0, 0, 0, NULL));
@@ -273,7 +273,7 @@ TEST(String, Cut)
  *   string_reverse
  */
 
-TEST(String, Reverse)
+TEST(CoreString, Reverse)
 {
     POINTERS_EQUAL(NULL, string_reverse (NULL));
     STRCMP_EQUAL("", string_reverse (""));
@@ -301,7 +301,7 @@ TEST(String, Reverse)
  *   string_strcmp_ignore_chars
  */
 
-TEST(String, Comparison)
+TEST(CoreString, Comparison)
 {
     /* case-insensitive comparison */
     LONGS_EQUAL(0, string_strcasecmp (NULL, NULL));
@@ -406,7 +406,7 @@ TEST(String, Comparison)
  *   string_strcasestr
  */
 
-TEST(String, Search)
+TEST(CoreString, Search)
 {
     const char *str = "test";
 
@@ -425,7 +425,7 @@ TEST(String, Search)
  *   string_match
  */
 
-TEST(String, Match)
+TEST(CoreString, Match)
 {
     LONGS_EQUAL(0, string_match (NULL, NULL, 0));
     LONGS_EQUAL(0, string_match (NULL, "test", 0));
@@ -478,7 +478,7 @@ TEST(String, Match)
  *   string_expand_home
  */
 
-TEST(String, ExpandHome)
+TEST(CoreString, ExpandHome)
 {
     char *home, *result;
     int length_home;
@@ -500,7 +500,7 @@ TEST(String, ExpandHome)
  *   string_eval_path_home
  */
 
-TEST(String, EvalPathHome)
+TEST(CoreString, EvalPathHome)
 {
     char *home, *result;
     int length_home, length_weechat_home;
@@ -560,7 +560,7 @@ TEST(String, EvalPathHome)
  *   string_remove_quotes
  */
 
-TEST(String, RemoveQuotes)
+TEST(CoreString, RemoveQuotes)
 {
     char *str;
 
@@ -584,7 +584,7 @@ TEST(String, RemoveQuotes)
  *   string_strip
  */
 
-TEST(String, Strip)
+TEST(CoreString, Strip)
 {
     char *str;
 
@@ -603,7 +603,7 @@ TEST(String, Strip)
  *   string_convert_escaped_chars
  */
 
-TEST(String, ConvertEscapedChars)
+TEST(CoreString, ConvertEscapedChars)
 {
     char *str;
 
@@ -640,7 +640,7 @@ TEST(String, ConvertEscapedChars)
  *   string_is_word_char_input
  */
 
-TEST(String, IsWordChar)
+TEST(CoreString, IsWordChar)
 {
     WEE_IS_WORD_CHAR(0, NULL);
     WEE_IS_WORD_CHAR(0, "");
@@ -665,7 +665,7 @@ TEST(String, IsWordChar)
  *   string_mask_to_regex
  */
 
-TEST(String, MaskToRegex)
+TEST(CoreString, MaskToRegex)
 {
     char *str;
 
@@ -685,7 +685,7 @@ TEST(String, MaskToRegex)
  *   string_regcomp
  */
 
-TEST(String, Regex)
+TEST(CoreString, Regex)
 {
     int flags;
     const char *ptr;
@@ -746,7 +746,7 @@ TEST(String, Regex)
  *   string_has_highlight_regex
  */
 
-TEST(String, Highlight)
+TEST(CoreString, Highlight)
 {
     regex_t regex;
 
@@ -818,7 +818,7 @@ test_replace_cb (void *data, const char *text)
  *   string_replace
  */
 
-TEST(String, Replace)
+TEST(CoreString, Replace)
 {
     char *str;
 
@@ -841,7 +841,7 @@ TEST(String, Replace)
  *   string_replace_regex
  */
 
-TEST(String, ReplaceRegex)
+TEST(CoreString, ReplaceRegex)
 {
     regex_t regex;
     char *result;
@@ -865,7 +865,7 @@ TEST(String, ReplaceRegex)
  *   string_replace_with_callback
  */
 
-TEST(String, ReplaceWithCallback)
+TEST(CoreString, ReplaceWithCallback)
 {
     char *result;
     const char *list_prefix_no_replace[] = { "no_replace:", NULL };
@@ -926,7 +926,7 @@ TEST(String, ReplaceWithCallback)
  *    string_free_split
  */
 
-TEST(String, Split)
+TEST(CoreString, Split)
 {
     char **argv;
     int argc;
@@ -1016,7 +1016,7 @@ TEST(String, Split)
  *    string_free_split_shared
  */
 
-TEST(String, SplitShared)
+TEST(CoreString, SplitShared)
 {
     char **argv;
     int argc;
@@ -1049,7 +1049,7 @@ TEST(String, SplitShared)
  *    string_free_split
  */
 
-TEST(String, SplitShell)
+TEST(CoreString, SplitShell)
 {
     char **argv;
     int argc;
@@ -1086,7 +1086,7 @@ TEST(String, SplitShell)
  *    string_free_split_command
  */
 
-TEST(String, SplitCommand)
+TEST(CoreString, SplitCommand)
 {
     char **argv;
 
@@ -1134,10 +1134,71 @@ TEST(String, SplitCommand)
 
 /*
  * Tests functions:
+ *    string_split_tags
+ *    string_free_split_tags
+ */
+
+TEST(CoreString, SplitTags)
+{
+    char ***tags;
+    int num_tags;
+
+    /* test with a NULL/empty string */
+    POINTERS_EQUAL(NULL, string_split_tags (NULL, NULL));
+    POINTERS_EQUAL(NULL, string_split_tags ("", NULL));
+    num_tags = -1;
+    POINTERS_EQUAL(NULL, string_split_tags (NULL, &num_tags));
+    LONGS_EQUAL(0, num_tags);
+    num_tags = -1;
+    POINTERS_EQUAL(NULL, string_split_tags ("", &num_tags));
+    LONGS_EQUAL(0, num_tags);
+
+    /* string with one tag */
+    num_tags = -1;
+    tags = string_split_tags ("irc_join", &num_tags);
+    CHECK(tags);
+    LONGS_EQUAL(1, num_tags);
+    STRCMP_EQUAL("irc_join", tags[0][0]);
+    POINTERS_EQUAL(NULL, tags[0][1]);
+    string_free_split_tags (tags);
+
+    /* string with OR on 2 tags */
+    num_tags = -1;
+    tags = string_split_tags ("irc_join,irc_quit", &num_tags);
+    CHECK(tags);
+    LONGS_EQUAL(2, num_tags);
+    STRCMP_EQUAL("irc_join", tags[0][0]);
+    POINTERS_EQUAL(NULL, tags[0][1]);
+    STRCMP_EQUAL("irc_quit", tags[1][0]);
+    POINTERS_EQUAL(NULL, tags[1][1]);
+    string_free_split_tags (tags);
+
+    /*
+     * string with OR on:
+     * - 1 tag
+     * - AND on 2 tags
+     */
+    num_tags = -1;
+    tags = string_split_tags ("irc_join,irc_quit+nick_test", &num_tags);
+    CHECK(tags);
+    LONGS_EQUAL(2, num_tags);
+    STRCMP_EQUAL("irc_join", tags[0][0]);
+    POINTERS_EQUAL(NULL, tags[0][1]);
+    STRCMP_EQUAL("irc_quit", tags[1][0]);
+    STRCMP_EQUAL("nick_test", tags[1][1]);
+    POINTERS_EQUAL(NULL, tags[1][2]);
+    string_free_split_tags (tags);
+
+    /* free split with NULL */
+    string_free_split_tags (NULL);
+}
+
+/*
+ * Tests functions:
  *    string_build_with_split_string
  */
 
-TEST(String, SplitBuildWithSplitString)
+TEST(CoreString, SplitBuildWithSplitString)
 {
     char **argv, *str;
     int argc;
@@ -1170,7 +1231,7 @@ TEST(String, SplitBuildWithSplitString)
  *    string_fprintf
  */
 
-TEST(String, Iconv)
+TEST(CoreString, Iconv)
 {
     const char *noel_utf8 = "no\xc3\xabl";  /* noël */
     const char *noel_iso = "no\xebl";
@@ -1211,7 +1272,7 @@ TEST(String, Iconv)
  *    string_format_size
  */
 
-TEST(String, FormatSize)
+TEST(CoreString, FormatSize)
 {
     char *str;
 
@@ -1251,7 +1312,7 @@ TEST(String, FormatSize)
  *    string_decode_base64
  */
 
-TEST(String, BaseN)
+TEST(CoreString, BaseN)
 {
     char str[1024];
     const char *str_base64[][2] =
@@ -1334,7 +1395,7 @@ TEST(String, BaseN)
  *    string_hex_dump
  */
 
-TEST(String, Hex_dump)
+TEST(CoreString, Hex_dump)
 {
     const char *noel_utf8 = "no\xc3\xabl";  /* noël */
     const char *noel_iso = "no\xebl";
@@ -1405,7 +1466,7 @@ TEST(String, Hex_dump)
  *    string_input_for_buffer
  */
 
-TEST(String, Input)
+TEST(CoreString, Input)
 {
     char *str;
 
@@ -1452,7 +1513,7 @@ TEST(String, Input)
  *    string_shared_free
  */
 
-TEST(String, Shared)
+TEST(CoreString, Shared)
 {
     const char *str1, *str2, *str3;
     int count;
@@ -1495,7 +1556,7 @@ TEST(String, Shared)
  *    string_dyn_free
  */
 
-TEST(String, Dyn)
+TEST(CoreString, Dyn)
 {
     char **str, *str_ptr;
     struct t_string_dyn *ptr_string_dyn;

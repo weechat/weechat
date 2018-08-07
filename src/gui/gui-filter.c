@@ -281,9 +281,9 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *regex_prefix, **tags_array, buf[512], str_error[512];
+    char *pos_tab, *regex_prefix, buf[512], str_error[512];
     const char *ptr_start_regex, *pos_regex_message;
-    int i, rc;
+    int rc;
 
     if (!name || !buffer_name || !tags || !regex)
     {
@@ -389,28 +389,8 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
                                             ",", 0, 0,
                                             &new_filter->num_buffers);
         new_filter->tags = (tags) ? strdup (tags) : NULL;
-        new_filter->tags_count = 0;
-        new_filter->tags_array = NULL;
-        if (new_filter->tags)
-        {
-            tags_array = string_split (new_filter->tags, ",", 0, 0,
-                                       &new_filter->tags_count);
-            if (tags_array)
-            {
-                new_filter->tags_array = malloc (new_filter->tags_count *
-                                                 sizeof (*new_filter->tags_array));
-                if (new_filter->tags_array)
-                {
-                    for (i = 0; i < new_filter->tags_count; i++)
-                    {
-                        new_filter->tags_array[i] = string_split (tags_array[i],
-                                                                  "+", 0, 0,
-                                                                  NULL);
-                    }
-                }
-                string_free_split (tags_array);
-            }
-        }
+        new_filter->tags_array = string_split_tags (new_filter->tags,
+                                                    &new_filter->tags_count);
         new_filter->regex = strdup (regex);
         new_filter->regex_prefix = regex1;
         new_filter->regex_message = regex2;
@@ -465,8 +445,6 @@ gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
 void
 gui_filter_free (struct t_gui_filter *filter)
 {
-    int i;
-
     if (!filter)
         return;
 
@@ -483,13 +461,7 @@ gui_filter_free (struct t_gui_filter *filter)
     if (filter->tags)
         free (filter->tags);
     if (filter->tags_array)
-    {
-        for (i = 0; i < filter->tags_count; i++)
-        {
-            string_free_split (filter->tags_array[i]);
-        }
-        free (filter->tags_array);
-    }
+        string_free_split_tags (filter->tags_array);
     if (filter->regex)
         free (filter->regex);
     if (filter->regex_prefix)

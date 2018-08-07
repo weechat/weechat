@@ -53,17 +53,21 @@ extern "C"
 #define WEECHAT_TESTS_HOME "./tmp_weechat_test"
 
 /* import tests from libs */
+/* core */
 IMPORT_TEST_GROUP(Plugins);
-IMPORT_TEST_GROUP(Arraylist);
-IMPORT_TEST_GROUP(Eval);
-IMPORT_TEST_GROUP(Hashtable);
-IMPORT_TEST_GROUP(Hdata);
-IMPORT_TEST_GROUP(Infolist);
-IMPORT_TEST_GROUP(List);
-IMPORT_TEST_GROUP(String);
-IMPORT_TEST_GROUP(Url);
-IMPORT_TEST_GROUP(Utf8);
-IMPORT_TEST_GROUP(Util);
+IMPORT_TEST_GROUP(CoreArraylist);
+IMPORT_TEST_GROUP(CoreEval);
+IMPORT_TEST_GROUP(CoreHashtable);
+IMPORT_TEST_GROUP(CoreHdata);
+IMPORT_TEST_GROUP(CoreInfolist);
+IMPORT_TEST_GROUP(CoreList);
+IMPORT_TEST_GROUP(CoreString);
+IMPORT_TEST_GROUP(CoreUrl);
+IMPORT_TEST_GROUP(CoreUtf8);
+IMPORT_TEST_GROUP(CoreUtil);
+/* GUI */
+IMPORT_TEST_GROUP(GuiLine);
+/* scripts */
 IMPORT_TEST_GROUP(Scripts);
 
 struct t_gui_buffer *ptr_core_buffer = NULL;

@@ -26,7 +26,7 @@ extern "C"
 #include "src/core/wee-url.h"
 }
 
-TEST_GROUP(Url)
+TEST_GROUP(CoreUrl)
 {
 };
 
@@ -35,7 +35,7 @@ TEST_GROUP(Url)
  *   weeurl_download
  */
 
-TEST(Url, Download)
+TEST(CoreUrl, Download)
 {
     /* TODO: write tests */
 }
@@ -45,7 +45,7 @@ TEST(Url, Download)
  *   weeurl_option_add_to_infolist
  */
 
-TEST(Url, AddToInfolist)
+TEST(CoreUrl, AddToInfolist)
 {
     /* TODO: write tests */
 }

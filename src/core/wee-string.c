@@ -2307,6 +2307,73 @@ string_free_split_command (char **split_command)
 }
 
 /*
+ * Splits tags in an array of tags.
+ *
+ * The format of tags is a list of tags separated by commas (logical OR),
+ * and for each item, multiple tags can be separated by "+" (logical AND).
+ *
+ * For example:
+ *   irc_join
+ *   irc_join,irc_quit
+ *   irc_join+nick_toto,irc_quit
+ */
+
+char ***
+string_split_tags (const char *tags, int *num_tags)
+{
+    char ***tags_array, **tags_array_temp;
+    int i, tags_count;
+
+    tags_array = NULL;
+    tags_count = 0;
+
+    if (tags)
+    {
+        tags_array_temp = string_split (tags, ",", 0, 0, &tags_count);
+        if (tags_array_temp && (tags_count > 0))
+        {
+            tags_array = malloc ((tags_count + 1) * sizeof (*tags_array));
+            if (tags_array)
+            {
+                for (i = 0; i < tags_count; i++)
+                {
+                    tags_array[i] = string_split_shared (tags_array_temp[i],
+                                                         "+", 0, 0,
+                                                         NULL);
+                }
+                tags_array[tags_count] = NULL;
+            }
+        }
+        if (tags_array_temp)
+            string_free_split (tags_array_temp);
+    }
+
+    if (num_tags)
+        *num_tags = tags_count;
+
+    return tags_array;
+}
+
+/*
+ * Frees tags split.
+ */
+
+void
+string_free_split_tags (char ***split_tags)
+{
+    int i;
+
+    if (split_tags)
+    {
+        for (i = 0; split_tags[i]; i++)
+        {
+            string_free_split_shared (split_tags[i]);
+        }
+        free (split_tags);
+    }
+}
+
+/*
  * Converts a string to another charset.
  *
  * Note: result must be freed after use.

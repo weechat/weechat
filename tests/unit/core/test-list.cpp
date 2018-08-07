@@ -31,7 +31,7 @@ extern "C"
 #define LIST_VALUE_XYZ  "xyz"
 #define LIST_VALUE_ZZZ  "zzz"
 
-TEST_GROUP(List)
+TEST_GROUP(CoreList)
 {
 };
 
@@ -58,7 +58,7 @@ test_list_new ()
  *   weelist_new
  */
 
-TEST(List, New)
+TEST(CoreList, New)
 {
     struct t_weelist *list;
 
@@ -80,7 +80,7 @@ TEST(List, New)
  *   weelist_free
  */
 
-TEST(List, Add)
+TEST(CoreList, Add)
 {
     struct t_weelist *list;
     struct t_weelist_item *item1, *item2, *item3;
@@ -145,7 +145,7 @@ TEST(List, Add)
  *   weelist_casesearch_pos
  */
 
-TEST(List, Search)
+TEST(CoreList, Search)
 {
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
@@ -233,7 +233,7 @@ TEST(List, Search)
  *   weelist_string
  */
 
-TEST(List, Get)
+TEST(CoreList, Get)
 {
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
@@ -282,7 +282,7 @@ TEST(List, Get)
  *   weelist_set
  */
 
-TEST(List, Set)
+TEST(CoreList, Set)
 {
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
@@ -310,7 +310,7 @@ TEST(List, Set)
  *   weelist_prev
  */
 
-TEST(List, Move)
+TEST(CoreList, Move)
 {
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
@@ -347,7 +347,7 @@ TEST(List, Move)
  *   weelist_remove_all
  */
 
-TEST(List, Free)
+TEST(CoreList, Free)
 {
     struct t_weelist *list;
     struct t_weelist_item *ptr_item;
@@ -386,7 +386,7 @@ TEST(List, Free)
  *   weelist_print_log
  */
 
-TEST(List, PrintLog)
+TEST(CoreList, PrintLog)
 {
     /* TODO: write tests */
 }

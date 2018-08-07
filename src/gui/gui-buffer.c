@@ -1629,9 +1629,6 @@ void
 gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
                                         const char *new_tags)
 {
-    int i;
-    char **tags_array;
-
     if (!buffer)
         return;
 
@@ -1642,11 +1639,7 @@ gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
     }
     if (buffer->highlight_tags_restrict_array)
     {
-        for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
-        {
-            string_free_split (buffer->highlight_tags_restrict_array[i]);
-        }
-        free (buffer->highlight_tags_restrict_array);
+        string_free_split_tags (buffer->highlight_tags_restrict_array);
         buffer->highlight_tags_restrict_array = NULL;
     }
     buffer->highlight_tags_restrict_count = 0;
@@ -1658,24 +1651,9 @@ gui_buffer_set_highlight_tags_restrict (struct t_gui_buffer *buffer,
     if (!buffer->highlight_tags_restrict)
         return;
 
-    tags_array = string_split (buffer->highlight_tags_restrict, ",", 0, 0,
-                               &buffer->highlight_tags_restrict_count);
-    if (tags_array)
-    {
-        buffer->highlight_tags_restrict_array =
-            malloc (buffer->highlight_tags_restrict_count *
-                    sizeof (*buffer->highlight_tags_restrict_array));
-        if (buffer->highlight_tags_restrict_array)
-        {
-            for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
-            {
-                buffer->highlight_tags_restrict_array[i] = string_split (tags_array[i],
-                                                                         "+", 0, 0,
-                                                                         NULL);
-            }
-        }
-        string_free_split (tags_array);
-    }
+    buffer->highlight_tags_restrict_array = string_split_tags (
+        buffer->highlight_tags_restrict,
+        &buffer->highlight_tags_restrict_count);
 }
 
 /*
@@ -1686,9 +1664,6 @@ void
 gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                const char *new_tags)
 {
-    int i;
-    char **tags_array;
-
     if (!buffer)
         return;
 
@@ -1699,11 +1674,7 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     }
     if (buffer->highlight_tags_array)
     {
-        for (i = 0; i < buffer->highlight_tags_count; i++)
-        {
-            string_free_split (buffer->highlight_tags_array[i]);
-        }
-        free (buffer->highlight_tags_array);
+        string_free_split_tags (buffer->highlight_tags_array);
         buffer->highlight_tags_array = NULL;
     }
     buffer->highlight_tags_count = 0;
@@ -1715,24 +1686,9 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
     if (!buffer->highlight_tags)
         return;
 
-    tags_array = string_split (buffer->highlight_tags, ",", 0, 0,
-                               &buffer->highlight_tags_count);
-    if (tags_array)
-    {
-        buffer->highlight_tags_array =
-            malloc (buffer->highlight_tags_count *
-                    sizeof (*buffer->highlight_tags_array));
-        if (buffer->highlight_tags_array)
-        {
-            for (i = 0; i < buffer->highlight_tags_count; i++)
-            {
-                buffer->highlight_tags_array[i] = string_split (tags_array[i],
-                                                                "+", 0, 0,
-                                                                NULL);
-            }
-        }
-        string_free_split (tags_array);
-    }
+    buffer->highlight_tags_array = string_split_tags (
+        buffer->highlight_tags,
+        &buffer->highlight_tags_count);
 }
 
 /*
@@ -2717,7 +2673,7 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer, *ptr_back_to_buffer;
     struct t_gui_buffer *ptr_buffer_visited_buffer;
-    int index, i;
+    int index;
     struct t_gui_buffer_visited *ptr_buffer_visited;
 
     if (!buffer)
@@ -2877,23 +2833,11 @@ gui_buffer_close (struct t_gui_buffer *buffer)
     if (buffer->highlight_tags_restrict)
         free (buffer->highlight_tags_restrict);
     if (buffer->highlight_tags_restrict_array)
-    {
-        for (i = 0; i < buffer->highlight_tags_restrict_count; i++)
-        {
-            string_free_split (buffer->highlight_tags_restrict_array[i]);
-        }
-        free (buffer->highlight_tags_restrict_array);
-    }
+        string_free_split_tags (buffer->highlight_tags_restrict_array);
     if (buffer->highlight_tags)
         free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
-    {
-        for (i = 0; i < buffer->highlight_tags_count; i++)
-        {
-            string_free_split (buffer->highlight_tags_array[i]);
-        }
-        free (buffer->highlight_tags_array);
-    }
+        string_free_split_tags (buffer->highlight_tags_array);
     if (buffer->input_callback_data)
         free (buffer->input_callback_data);
     if (buffer->close_callback_data)

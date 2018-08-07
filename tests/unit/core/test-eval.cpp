@@ -41,7 +41,7 @@ extern "C"
     STRCMP_EQUAL(__result, value);                                      \
     free (value);
 
-TEST_GROUP(Eval)
+TEST_GROUP(CoreEval)
 {
 };
 
@@ -50,7 +50,7 @@ TEST_GROUP(Eval)
  *   eval_is_true
  */
 
-TEST(Eval, Boolean)
+TEST(CoreEval, Boolean)
 {
     /* false */
     LONGS_EQUAL(0, eval_is_true (NULL));
@@ -69,7 +69,7 @@ TEST(Eval, Boolean)
  *   eval_expression (condition)
  */
 
-TEST(Eval, EvalCondition)
+TEST(CoreEval, EvalCondition)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     char *value;
@@ -218,7 +218,7 @@ TEST(Eval, EvalCondition)
  *   eval_expression (expression)
  */
 
-TEST(Eval, EvalExpression)
+TEST(CoreEval, EvalExpression)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
@@ -427,7 +427,7 @@ TEST(Eval, EvalExpression)
  *   eval_expression (replace with regex)
  */
 
-TEST(Eval, EvalReplaceRegex)
+TEST(CoreEval, EvalReplaceRegex)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
     char *value;

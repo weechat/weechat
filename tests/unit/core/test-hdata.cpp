@@ -26,7 +26,7 @@ extern "C"
 #include "src/core/wee-hdata.h"
 }
 
-TEST_GROUP(Hdata)
+TEST_GROUP(CoreHdata)
 {
 };
 
@@ -37,7 +37,7 @@ TEST_GROUP(Hdata)
  *   hdata_new_list
  */
 
-TEST(Hdata, New)
+TEST(CoreHdata, New)
 {
     /* TODO: write tests */
 }
@@ -55,7 +55,7 @@ TEST(Hdata, New)
  *   hdata_get_list
  */
 
-TEST(Hdata, Get)
+TEST(CoreHdata, Get)
 {
     /* TODO: write tests */
 }
@@ -65,7 +65,7 @@ TEST(Hdata, Get)
  *   hdata_check_pointer
  */
 
-TEST(Hdata, Check)
+TEST(CoreHdata, Check)
 {
     /* TODO: write tests */
 }
@@ -76,7 +76,7 @@ TEST(Hdata, Check)
  *   hdata_search
  */
 
-TEST(Hdata, Move)
+TEST(CoreHdata, Move)
 {
     /* TODO: write tests */
 }
@@ -91,7 +91,7 @@ TEST(Hdata, Move)
  *   hdata_time
  */
 
-TEST(Hdata, Read)
+TEST(CoreHdata, Read)
 {
     /* TODO: write tests */
 }
@@ -102,7 +102,7 @@ TEST(Hdata, Read)
  *   hdata_free_all
  */
 
-TEST(Hdata, Free)
+TEST(CoreHdata, Free)
 {
     /* TODO: write tests */
 }
@@ -112,7 +112,7 @@ TEST(Hdata, Free)
  *   hdata_print_log
  */
 
-TEST(Hdata, PrintLog)
+TEST(CoreHdata, PrintLog)
 {
     /* TODO: write tests */
 }

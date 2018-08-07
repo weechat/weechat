@@ -32,6 +32,7 @@ lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
                                    unit/core/test-url.cpp \
                                    unit/core/test-utf8.cpp \
                                    unit/core/test-util.cpp \
+                                   unit/gui/test-line.cpp \
                                    scripts/test-scripts.cpp
 
 noinst_PROGRAMS = tests

@@ -885,9 +885,6 @@ void
 config_change_highlight_tags (const void *pointer, void *data,
                               struct t_config_option *option)
 {
-    int i;
-    char **tags_array;
-
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -895,11 +892,7 @@ config_change_highlight_tags (const void *pointer, void *data,
 
     if (config_highlight_tags)
     {
-        for (i = 0; i < config_num_highlight_tags; i++)
-        {
-            string_free_split (config_highlight_tags[i]);
-        }
-        free (config_highlight_tags);
+        string_free_split_tags (config_highlight_tags);
         config_highlight_tags = NULL;
     }
     config_num_highlight_tags = 0;
@@ -907,22 +900,9 @@ config_change_highlight_tags (const void *pointer, void *data,
     if (CONFIG_STRING(config_look_highlight_tags)
         && CONFIG_STRING(config_look_highlight_tags)[0])
     {
-        tags_array = string_split (CONFIG_STRING(config_look_highlight_tags),
-                                   ",", 0, 0, &config_num_highlight_tags);
-        if (tags_array)
-        {
-            config_highlight_tags = malloc (config_num_highlight_tags *
-                                            sizeof (*config_highlight_tags));
-            if (config_highlight_tags)
-            {
-                for (i = 0; i < config_num_highlight_tags; i++)
-                {
-                    config_highlight_tags[i] = string_split (tags_array[i],
-                                                             "+", 0, 0, NULL);
-                }
-            }
-            string_free_split (tags_array);
-        }
+        config_highlight_tags = string_split_tags (
+            CONFIG_STRING(config_look_highlight_tags),
+            &config_num_highlight_tags);
     }
 }
 
@@ -4618,8 +4598,6 @@ config_weechat_write ()
 void
 config_weechat_free ()
 {
-    int i;
-
     config_file_free (weechat_config_file);
 
     if (config_highlight_regex)
@@ -4631,11 +4609,7 @@ config_weechat_free ()
 
     if (config_highlight_tags)
     {
-        for (i = 0; i < config_num_highlight_tags; i++)
-        {
-            string_free_split (config_highlight_tags[i]);
-        }
-        free (config_highlight_tags);
+        string_free_split_tags (config_highlight_tags);
         config_highlight_tags = NULL;
     }
     config_num_highlight_tags = 0;

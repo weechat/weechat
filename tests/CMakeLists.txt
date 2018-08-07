@@ -35,6 +35,7 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
   unit/core/test-url.cpp
   unit/core/test-utf8.cpp
   unit/core/test-util.cpp
+  unit/gui/test-line.cpp
   scripts/test-scripts.cpp
 )
 add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})

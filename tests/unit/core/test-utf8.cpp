@@ -38,7 +38,7 @@ const char *noel_invalid2_norm = "no??l";
 const char *han_char = "\xf0\xa4\xad\xa2";     /* U+24B62 */
 const char *han_char_z = "\xf0\xa4\xad\xa2Z";
 
-TEST_GROUP(Utf8)
+TEST_GROUP(CoreUtf8)
 {
 };
 
@@ -48,7 +48,7 @@ TEST_GROUP(Utf8)
  *   utf8_is_valid
  */
 
-TEST(Utf8, Validity)
+TEST(CoreUtf8, Validity)
 {
     char *error;
 
@@ -206,7 +206,7 @@ TEST(Utf8, Validity)
  *   utf8_normalize
  */
 
-TEST(Utf8, Normalize)
+TEST(CoreUtf8, Normalize)
 {
     char *str;
 
@@ -231,7 +231,7 @@ TEST(Utf8, Normalize)
  *   utf8_pos
  */
 
-TEST(Utf8, Move)
+TEST(CoreUtf8, Move)
 {
     const char *ptr;
 
@@ -278,7 +278,7 @@ TEST(Utf8, Move)
  *   utf8_wide_char
  */
 
-TEST(Utf8, Convert)
+TEST(CoreUtf8, Convert)
 {
     char result[5];
 
@@ -338,7 +338,7 @@ TEST(Utf8, Convert)
  *   utf8_strlen_screen
  */
 
-TEST(Utf8, Size)
+TEST(CoreUtf8, Size)
 {
     /* char size */
     LONGS_EQUAL(0, utf8_char_size (NULL));
@@ -389,7 +389,7 @@ TEST(Utf8, Size)
  *   utf8_charcasecmp_range
  */
 
-TEST(Utf8, Comparison)
+TEST(CoreUtf8, Comparison)
 {
     /* case-sensitive comparison */
     LONGS_EQUAL(0, utf8_charcmp (NULL, NULL));
@@ -435,7 +435,7 @@ TEST(Utf8, Comparison)
  *   utf8_strndup
  */
 
-TEST(Utf8, Duplicate)
+TEST(CoreUtf8, Duplicate)
 {
     char *str;
 

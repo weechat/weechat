@@ -47,7 +47,7 @@ extern "C"
     LONGS_EQUAL(__result_index, index);                                 \
     LONGS_EQUAL(__result_index_insert, index_insert);
 
-TEST_GROUP(Arraylist)
+TEST_GROUP(CoreArraylist)
 {
 };
 
@@ -477,7 +477,7 @@ test_arraylist (int initial_size, int sorted, int allow_duplicates)
  *   arraylist_free
  */
 
-TEST(Arraylist, New)
+TEST(CoreArraylist, New)
 {
     int initial_size, sorted, allow_duplicates;
 

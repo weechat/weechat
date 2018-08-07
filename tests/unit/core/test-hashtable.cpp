@@ -32,7 +32,7 @@ extern "C"
 #define HASHTABLE_TEST_KEY_HASH 5849825121ULL
 #define HASHTABLE_TEST_VALUE    "this is a value"
 
-TEST_GROUP(Hashtable)
+TEST_GROUP(CoreHashtable)
 {
 };
 
@@ -41,7 +41,7 @@ TEST_GROUP(Hashtable)
  *   hashtable_hash_key_djb2
  */
 
-TEST(Hashtable, HashDbj2)
+TEST(CoreHashtable, HashDbj2)
 {
     unsigned long long hash;
 
@@ -85,7 +85,7 @@ test_hashtable_keycmp_cb (struct t_hashtable *hashtable,
  *   hashtable_new
  */
 
-TEST(Hashtable, New)
+TEST(CoreHashtable, New)
 {
     struct t_hashtable *hashtable;
 
@@ -138,7 +138,7 @@ TEST(Hashtable, New)
  *   hashtable_free
  */
 
-TEST(Hashtable, SetGetRemove)
+TEST(CoreHashtable, SetGetRemove)
 {
     struct t_hashtable *hashtable, *hashtable2;
     struct t_hashtable_item *item, *ptr_item, *ptr_item2;
@@ -338,7 +338,7 @@ TEST(Hashtable, SetGetRemove)
  *   hashtable_map_string
  */
 
-TEST(Hashtable, Map)
+TEST(CoreHashtable, Map)
 {
     /* TODO: write tests */
 }
@@ -351,7 +351,7 @@ TEST(Hashtable, Map)
  *   hashtable_set_pointer
  */
 
-TEST(Hashtable, Properties)
+TEST(CoreHashtable, Properties)
 {
     /* TODO: write tests */
 }
@@ -362,7 +362,7 @@ TEST(Hashtable, Properties)
  *   hashtable_add_from_infolist
  */
 
-TEST(Hashtable, Infolist)
+TEST(CoreHashtable, Infolist)
 {
     /* TODO: write tests */
 }
@@ -372,7 +372,7 @@ TEST(Hashtable, Infolist)
  *   hashtable_print_log
  */
 
-TEST(Hashtable, PrintLog)
+TEST(CoreHashtable, PrintLog)
 {
     /* TODO: write tests */
 }

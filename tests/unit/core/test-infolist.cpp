@@ -31,7 +31,7 @@ extern "C"
 struct t_hook *hook_test_infolist = NULL;
 
 
-TEST_GROUP(Infolist)
+TEST_GROUP(CoreInfolist)
 {
     /*
      * Callback for the infolist used in tests.
@@ -113,7 +113,7 @@ TEST_GROUP(Infolist)
  *   infolist_new_var_time
  */
 
-TEST(Infolist, New)
+TEST(CoreInfolist, New)
 {
     struct t_infolist *infolist;
     struct t_infolist_item *item;
@@ -240,7 +240,7 @@ TEST(Infolist, New)
  *   infolist_free
  */
 
-TEST(Infolist, Valid)
+TEST(CoreInfolist, Valid)
 {
     struct t_infolist *infolist;
 
@@ -260,7 +260,7 @@ TEST(Infolist, Valid)
  *   infolist_search_var
  */
 
-TEST(Infolist, Search)
+TEST(CoreInfolist, Search)
 {
     struct t_infolist *infolist;
     struct t_infolist_item *ptr_item;
@@ -306,7 +306,7 @@ TEST(Infolist, Search)
  *   infolist_reset_item_cursor
  */
 
-TEST(Infolist, Move)
+TEST(CoreInfolist, Move)
 {
     struct t_infolist *infolist;
 
@@ -350,7 +350,7 @@ TEST(Infolist, Move)
  *   infolist_get
  */
 
-TEST(Infolist, Get)
+TEST(CoreInfolist, Get)
 {
     struct t_infolist *infolist;
     struct t_infolist_var *ptr_var;
@@ -404,7 +404,7 @@ TEST(Infolist, Get)
  *   infolist_time
  */
 
-TEST(Infolist, GetValues)
+TEST(CoreInfolist, GetValues)
 {
     struct t_infolist *infolist;
     void *ptr_buffer;
@@ -434,7 +434,7 @@ TEST(Infolist, GetValues)
  *   infolist_fields
  */
 
-TEST(Infolist, Fields)
+TEST(CoreInfolist, Fields)
 {
     struct t_infolist *infolist;
     const char *fields1 = "i:integer,s:string,p:pointer,b:buffer,t:time";
@@ -463,7 +463,7 @@ TEST(Infolist, Fields)
  *   infolist_print_log
  */
 
-TEST(Infolist, PrintLog)
+TEST(CoreInfolist, PrintLog)
 {
     /* TODO: write tests */
 }

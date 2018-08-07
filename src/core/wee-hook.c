@@ -2419,8 +2419,6 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
 {
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
-    char **tags_array;
-    int i;
 
     if (!callback)
         return NULL;
@@ -2441,28 +2439,8 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     new_hook->hook_data = new_hook_print;
     new_hook_print->callback = callback;
     new_hook_print->buffer = buffer;
-    new_hook_print->tags_count = 0;
-    new_hook_print->tags_array = NULL;
-    if (tags)
-    {
-        tags_array = string_split (tags, ",", 0, 0,
-                                   &new_hook_print->tags_count);
-        if (tags_array)
-        {
-            new_hook_print->tags_array = malloc (new_hook_print->tags_count *
-                                                 sizeof (*new_hook_print->tags_array));
-            if (new_hook_print->tags_array)
-            {
-                for (i = 0; i < new_hook_print->tags_count; i++)
-                {
-                    new_hook_print->tags_array[i] = string_split (tags_array[i],
-                                                                  "+", 0, 0,
-                                                                  NULL);
-                }
-            }
-            string_free_split (tags_array);
-        }
-    }
+    new_hook_print->tags_array = string_split_tags (tags,
+                                                    &new_hook_print->tags_count);
     new_hook_print->message = (message) ? strdup (message) : NULL;
     new_hook_print->strip_colors = strip_colors;
 
@@ -4016,11 +3994,7 @@ unhook (struct t_hook *hook)
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, tags_array))
                 {
-                    for (i = 0; i < HOOK_PRINT(hook, tags_count); i++)
-                    {
-                        string_free_split (HOOK_PRINT(hook, tags_array)[i]);
-                    }
-                    free (HOOK_PRINT(hook, tags_array));
+                    string_free_split_tags (HOOK_PRINT(hook, tags_array));
                     HOOK_PRINT(hook, tags_array) = NULL;
                 }
                 if (HOOK_PRINT(hook, message))
@@ -4897,6 +4871,19 @@ hook_print_log ()
                     log_printf ("    buffer. . . . . . . . : 0x%lx", HOOK_PRINT(ptr_hook, buffer));
                     log_printf ("    tags_count. . . . . . : %d",    HOOK_PRINT(ptr_hook, tags_count));
                     log_printf ("    tags_array. . . . . . : 0x%lx", HOOK_PRINT(ptr_hook, tags_array));
+                    if (HOOK_PRINT(ptr_hook, tags_array))
+                    {
+                        for (i = 0; i < HOOK_PRINT(ptr_hook, tags_count); i++)
+                        {
+                            for (j = 0; HOOK_PRINT(ptr_hook, tags_array)[i][j]; j++)
+                            {
+                                log_printf ("      tags_array[%03d][%03d]: '%s'",
+                                            i,
+                                            j,
+                                            HOOK_PRINT(ptr_hook, tags_array)[i][j]);
+                            }
+                        }
+                    }
                     log_printf ("    message . . . . . . . : '%s'",  HOOK_PRINT(ptr_hook, message));
                     log_printf ("    strip_colors. . . . . : %d",    HOOK_PRINT(ptr_hook, strip_colors));
                     break;

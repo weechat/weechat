@@ -604,11 +604,9 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
                      int tags_count, char ***tags_array)
 {
     int i, j, k, match, tag_found, tag_negated;
+    const char *ptr_tag;
 
     if (!line_data)
-        return 0;
-
-    if (line_data->tags_count == 0)
         return 0;
 
     for (i = 0; i < tags_count; i++)
@@ -616,23 +614,34 @@ gui_line_match_tags (struct t_gui_line_data *line_data,
         match = 1;
         for (j = 0; tags_array[i][j]; j++)
         {
+            ptr_tag = tags_array[i][j];
             tag_found = 0;
             tag_negated = 0;
 
             /* check if tag is negated (prefixed with a '!') */
-            if ((tags_array[i][j][0] == '!') && tags_array[i][j][1])
-                tag_negated = 1;
-
-            for (k = 0; k < line_data->tags_count; k++)
+            if ((ptr_tag[0] == '!') && ptr_tag[1])
             {
-                if (string_match (line_data->tags_array[k],
-                                  (tag_negated) ? tags_array[i][j] + 1 : tags_array[i][j],
-                                  0))
+                ptr_tag++;
+                tag_negated = 1;
+            }
+
+            if (strcmp (ptr_tag, "*") == 0)
+            {
+                tag_found = 1;
+            }
+            else
+            {
+                for (k = 0; k < line_data->tags_count; k++)
                 {
-                    tag_found = 1;
-                    break;
+                    if (string_match (line_data->tags_array[k], ptr_tag, 0))
+                    {
+                        tag_found = 1;
+                        break;
+                    }
                 }
             }
+            if (tag_found && tag_negated)
+                return 0;
             if ((!tag_found && !tag_negated) || (tag_found && tag_negated))
             {
                 match = 0;

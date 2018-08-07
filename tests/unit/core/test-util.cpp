@@ -30,7 +30,7 @@ extern "C"
 #include "src/core/wee-util.h"
 }
 
-TEST_GROUP(Util)
+TEST_GROUP(CoreUtil)
 {
 };
 
@@ -41,7 +41,7 @@ TEST_GROUP(Util)
  *   util_timeval_add
  */
 
-TEST(Util, Timeval)
+TEST(CoreUtil, Timeval)
 {
     struct timeval tv_zero = { 0, 0 };
     struct timeval tv1 = { 123456, 12000 };
@@ -83,7 +83,7 @@ TEST(Util, Timeval)
  *   util_get_time_string
  */
 
-TEST(Util, GetTimeString)
+TEST(CoreUtil, GetTimeString)
 {
     time_t date;
     const char *str_date;
@@ -99,7 +99,7 @@ TEST(Util, GetTimeString)
  *   util_catch_signal
  */
 
-TEST(Util, Signal)
+TEST(CoreUtil, Signal)
 {
     /* TODO: write tests */
 }
@@ -111,7 +111,7 @@ TEST(Util, Signal)
  *   util_mkdir_parents
  */
 
-TEST(Util, Mkdir)
+TEST(CoreUtil, Mkdir)
 {
     /* TODO: write tests */
 }
@@ -121,7 +121,7 @@ TEST(Util, Mkdir)
  *   util_exec_on_files
  */
 
-TEST(Util, ExecOnFiles)
+TEST(CoreUtil, ExecOnFiles)
 {
     /* TODO: write tests */
 }
@@ -131,7 +131,7 @@ TEST(Util, ExecOnFiles)
  *   util_search_full_lib_name
  */
 
-TEST(Util, LibName)
+TEST(CoreUtil, LibName)
 {
     /* TODO: write tests */
 }
@@ -141,7 +141,7 @@ TEST(Util, LibName)
  *   util_file_get_content
  */
 
-TEST(Util, FileGetContent)
+TEST(CoreUtil, FileGetContent)
 {
     /* TODO: write tests */
 }
@@ -151,7 +151,7 @@ TEST(Util, FileGetContent)
  *   util_version_number
  */
 
-TEST(Util, VersionNumber)
+TEST(CoreUtil, VersionNumber)
 {
     BYTES_EQUAL(0x00030200, util_version_number ("0.3.2-dev"));
     BYTES_EQUAL(0x00030200, util_version_number ("0.3.2-rc1"));
