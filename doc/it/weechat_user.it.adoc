@@ -3769,7 +3769,7 @@ List of default triggers:
 
 | cmd_pass | modifier |
   Hide password in commands:
-  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
+  `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/set *password*]`,

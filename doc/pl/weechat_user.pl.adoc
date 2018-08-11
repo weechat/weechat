@@ -3537,7 +3537,7 @@ Lista domyśłnych triggerów:
 
 | cmd_pass | modifier |
   Ukrywa hasło w komendach:
-  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
+  `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/set *password*]`,

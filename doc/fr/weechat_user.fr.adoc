@@ -3619,7 +3619,7 @@ Liste des triggers par défaut :
 
 | cmd_pass | modifier |
   Cacher le mot de passe dans les commandes :
-  `pass:[/msg nickserv id\|identify\|ghost\|release\|regain\|recover]`,
+  `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`,
   `pass:[/oper]`,
   `pass:[/quote pass]`,
   `pass:[/set *password*]`,
