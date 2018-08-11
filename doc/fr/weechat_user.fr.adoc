@@ -3689,7 +3689,7 @@ Par exemple, le trigger _beep_ par défaut a les options suivantes :
 trigger.trigger.beep.enabled = on
 trigger.trigger.beep.hook = print
 trigger.trigger.beep.arguments = ""
-trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
+trigger.trigger.beep.conditions = "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
@@ -3809,7 +3809,7 @@ Exemple : le trigger _beep_ par défaut utilise cette condition pour faire un
 beep seulement sur un highlight ou un message privé :
 
 ----
-${tg_highlight} || ${tg_msg_pv}
+${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]

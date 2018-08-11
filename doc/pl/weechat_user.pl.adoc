@@ -3603,7 +3603,7 @@ Na przykład, domyślny trigger _beep_ ma następujące opcje:
 trigger.trigger.beep.enabled = on
 trigger.trigger.beep.hook = print
 trigger.trigger.beep.arguments = ""
-trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
+trigger.trigger.beep.conditions = "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
@@ -3720,7 +3720,7 @@ Przykład: domyślny trigger _beep_ używa tego warunku do wywołania dźwięku 
 w przypadku podświetlenia lub otrzymania prywatnej wiadomości:
 
 ----
-${tg_highlight} || ${tg_msg_pv}
+${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]

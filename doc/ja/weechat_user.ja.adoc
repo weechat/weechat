@@ -3570,7 +3570,7 @@ WeeChat はデフォルトで 5
 trigger.trigger.beep.enabled = on
 trigger.trigger.beep.hook = print
 trigger.trigger.beep.arguments = ""
-trigger.trigger.beep.conditions = "${tg_highlight} || ${tg_msg_pv}"
+trigger.trigger.beep.conditions = "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})"
 trigger.trigger.beep.regex = ""
 trigger.trigger.beep.command = "/print -beep"
 trigger.trigger.beep.return_code = ok
@@ -3685,7 +3685,7 @@ trigger.trigger.beep.post_action = none
 トリガは以下の条件を使い、ハイライトまたはプライベートメッセージの場合だけビープを鳴らすようにしています:
 
 ----
-${tg_highlight} || ${tg_msg_pv}
+${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 ----
 
 [[trigger_regex]]
