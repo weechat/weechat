@@ -497,7 +497,7 @@ Messages are sent as binary data, using following format (with size in bytes):
  └────────────────────┘ └───────────────────────────────────────────────────────┘
        header (5)                          compressed data (??)
  └──────────────────────────────────────────────────────────────────────────────┘
-                               _length_ bytes
+                               'length' bytes
 ....
 
 * _length_ (unsigned integer, 4 bytes): number of bytes of whole message
