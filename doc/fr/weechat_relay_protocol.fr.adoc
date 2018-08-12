@@ -506,25 +506,25 @@ Les messages sont envoyés sous forme de données binaires, en utilisant le form
 suivant (avec la taille en octets) :
 
 ....
-┌────────╥─────────────╥────╥────────┬─────────╥───────╥────────┬─────────┐
-│ taille ║ compression ║ id ║ type 1 │ objet 1 ║  ...  ║ type N │ objet N │
-└────────╨─────────────╨────╨────────┴─────────╨───────╨────────┴─────────┘
- └──────┘ └───────────┘ └──┘ └──────┘ └───────┘         └──────┘ └───────┘
-     4          1        ??      3       ??                 3       ??
- └────────────────────┘ └────────────────────────────────────────────────┘
-      en-tête (5)                    données compressées (??)
- └───────────────────────────────────────────────────────────────────────┘
+┌────────╥─────────────╥─────────╥────────┬─────────╥───────╥────────┬─────────┐
+│ taille ║ compression ║   id    ║ type 1 │ objet 1 ║  ...  ║ type N │ objet N │
+└────────╨─────────────╨─────────╨────────┴─────────╨───────╨────────┴─────────┘
+ └──────┘ └───────────┘ └───────┘ └──────┘ └───────┘         └──────┘ └───────┘
+     4          1        4 + str      3       ??                 3       ??
+ └────────────────────┘ └─────────────────────────────────────────────────────┘
+      en-tête (5)                      données compressées (??)
+ └────────────────────────────────────────────────────────────────────────────┘
                               'taille' octets
 ....
 
-* _taille_ (entier non signé) : nombre d'octets du message entier (en incluant
-  ce champ)
+* _taille_ (entier non signé, 4 octets) : nombre d'octets du message entier
+  (en incluant ce champ)
 * _compression_ (octet) : drapeau :
 ** _0x00_ : les données qui suivent ne sont pas compressées
 ** _0x01_ : les données qui suivent sont compressées avec _zlib_
-* _id_ (chaîne) : l'identifiant envoyé par le client (avant le nom de la
-  commande); il peut être vide (chaîne avec une longueur de zéro sans contenu)
-  si l'identifiant n'était pas donné dans la commande
+* _id_ (chaîne, 4 octets + contenu) : l'identifiant envoyé par le client
+  (avant le nom de la commande); il peut être vide (chaîne avec une longueur
+  de zéro sans contenu) si l'identifiant n'était pas donné dans la commande
 * _type_ (3 caractères) : un type : 3 lettres (voir le tableau ci-dessous)
 * _objet_ : un objet (voir tableau ci-dessous)
 
