@@ -49,10 +49,11 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 { "on", "signal", "", "", "", "", "ok", "none" };
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
-{ "signal", "hsignal", "modifier", "print", "command", "command_run", "timer",
-  "config", "focus" };
+{ "signal", "hsignal", "modifier", "line", "print", "command", "command_run",
+  "timer", "config", "focus" };
 char *trigger_hook_option_values =
-    "signal|hsignal|modifier|print|command|command_run|timer|config|focus";
+    "signal|hsignal|modifier|line|print|command|command_run|timer|config|"
+    "focus";
 char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
 { "xxx", "xxx", "xxx", "", "cmd;desc;args;args_desc;%(buffers_names)", "/cmd",
   "60000;0;0", "xxx", "chat" };
@@ -262,7 +263,8 @@ trigger_unhook (struct t_trigger *trigger)
 void
 trigger_hook (struct t_trigger *trigger)
 {
-    char **argv, **argv_eol, *tags, *message, *error1, *error2, *error3;
+    char **argv, **argv_eol, *buffer_type, *buffer_name, *tags, *message;
+    char *error1, *error2, *error3;
     int i, argc, strip_colors;
     long interval, align_second, max_calls;
 
@@ -327,6 +329,30 @@ trigger_hook (struct t_trigger *trigger)
                             trigger, NULL);
                     }
                 }
+            }
+            break;
+        case TRIGGER_HOOK_LINE:
+            buffer_type = NULL;
+            buffer_name = NULL;
+            tags = NULL;
+            if (argv && (argc >= 1))
+            {
+                buffer_type = argv[0];
+                if ((argc >= 2) && (strcmp (argv[1], "*") != 0))
+                    buffer_name = argv[1];
+                if ((argc >= 3) && (strcmp (argv[2], "*") != 0))
+                    tags = argv[2];
+            }
+            trigger->hooks = malloc (sizeof (trigger->hooks[0]));
+            if (trigger->hooks)
+            {
+                trigger->hooks_count = 1;
+                trigger->hooks[0] = weechat_hook_line (
+                    buffer_type,
+                    buffer_name,
+                    tags,
+                    &trigger_callback_line_cb,
+                    trigger, NULL);
             }
             break;
         case TRIGGER_HOOK_PRINT:

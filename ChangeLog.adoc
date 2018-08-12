@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: allow partial buffer name in command /buffer close (issue #1226)
+  * api: add function hook_line
 
 Bug fixes::
 

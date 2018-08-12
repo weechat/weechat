@@ -3539,8 +3539,8 @@ A trigger has the following options (names are
   When option is `off`, the trigger is disabled and actions are not executed
   any more.
 
-| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
-  `timer`, `config`, `focus` |
+| hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
+  `command_run`, `timer`, `config`, `focus` |
   The hook used in trigger. For more information, see
   link:weechat_plugin_api.en.html#hooks[WeeChat plugin API reference / Hooks].
 
@@ -3627,6 +3627,17 @@ The arguments depend on the hook used. They are separated by semicolons.
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier]
 
+| line |
+  1. buffer type +
+  2. buffer name +
+  3. tags |
+  `+formatted+` +
+  `+free+` +
+  `+*;irc.freenode.*+` +
+  `+*;irc.freenode.#weechat+` +
+  `+formatted;irc.freenode.#weechat;irc_notice+` |
+  link:weechat_plugin_api.en.html#_hook_line[hook_line]
+
 | print |
   1. buffer name +
   2. tags +
@@ -3710,6 +3721,7 @@ type:
 | signal      | tg_signal_data
 | hsignal     |
 | modifier    | tg_string
+| line        | message
 | print       | tg_message
 | command     | tg_argv_eol1
 | command_run | tg_command
@@ -3872,6 +3884,44 @@ For the _weechat_print_ modifier, variables using message tags are added (see
 If the modifier contains an IRC message, the message is parsed and extra data is
 added in hashtable (see <<trigger_data_signal,hook signal>>).
 
+[[trigger_data_line]]
+===== Line
+
+The "line" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type    | Description
+| buffer       | pointer | Buffer.
+| buffer_name  | string  | Buffer name.
+| buffer_type  | string  | Buffer type ("formatted" or "free").
+| y            | string  | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
+| date         | string  | Line date (timestamp).
+| date_printed | string  | Date when line was displayed (timestamp).
+| str_time     | string  | Date for display. It may contain color codes.
+| displayed    | string  | "1" if displayed, "0" if line filtered.
+| notify_level | string  | "0" = low level, "1" = message, "2" = private message, "3" = highlight
+| highlight    | string  | "1" if highlight, otherwise "0".
+| prefix       | string  | Prefix.
+| message      | string  | Message.
+|===
+
+Variables set using tags in message (they are also set in _print_ callback and
+modifier _weechat_print_):
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_tags            | string | Tags of message (with comma added at beginning/end of string).
+| tg_tags_count      | string | Number of tags in message.
+| tg_tag_nick        | string | Nick (from tag "nick_xxx").
+| tg_tag_prefix_nick | string | Color of nick in prefix (from tag "prefix_nick_ccc").
+| tg_tag_host        | string | User name and host, format: username@host (from tag "host_xxx").
+| tg_tag_notify      | string | Notify level (_none_, _message_, _private_, _highlight_).
+| tg_notify          | string | Notify level, if different from _none_.
+| tg_msg_pv          | string | "1" for a private message, otherwise "0".
+|===
+
 [[trigger_data_print]]
 ===== Print
 
@@ -3890,8 +3940,8 @@ The "print" callback sets following variables in hashtable:
 | tg_message_nocolor | string  | Message without color codes.
 |===
 
-Variables set using tags in message (they are set in modifier _weechat_print_
-too):
+Variables set using tags in message (they are also set in _line_ callback and
+modifier _weechat_print_):
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

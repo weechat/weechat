@@ -977,6 +977,25 @@ gui_line_add_to_list (struct t_gui_lines *lines,
 }
 
 /*
+ * Frees data in a line.
+ */
+
+void
+gui_line_free_data (struct t_gui_line *line)
+{
+    if (line->data->str_time)
+        free (line->data->str_time);
+    gui_line_tags_free (line->data);
+    if (line->data->prefix)
+        string_shared_free (line->data->prefix);
+    if (line->data->message)
+        free (line->data->message);
+    free (line->data);
+
+    line->data = NULL;
+}
+
+/*
  * Removes a line from a "t_gui_lines" structure.
  */
 
@@ -1041,16 +1060,7 @@ gui_line_remove_from_list (struct t_gui_buffer *buffer,
 
     /* free data */
     if (free_data)
-    {
-        if (line->data->str_time)
-            free (line->data->str_time);
-        gui_line_tags_free (line->data);
-        if (line->data->prefix)
-            string_shared_free (line->data->prefix);
-        if (line->data->message)
-            free (line->data->message);
-        free (line->data);
-    }
+        gui_line_free_data (line);
 
     /* remove line from list */
     if (line->prev_line)
@@ -1189,37 +1199,323 @@ gui_line_free_all (struct t_gui_buffer *buffer)
 int
 gui_line_get_notify_level (struct t_gui_line *line)
 {
-    int i;
+    int i, notify_level, *max_notify_level;
+    const char *nick;
+
+    notify_level = GUI_HOTLIST_LOW;
 
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
-            return -1;
+            notify_level = -1;
         if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
-            return GUI_HOTLIST_HIGHLIGHT;
+            notify_level = GUI_HOTLIST_HIGHLIGHT;
         if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
-            return GUI_HOTLIST_PRIVATE;
+            notify_level = GUI_HOTLIST_PRIVATE;
         if (string_strcasecmp (line->data->tags_array[i], "notify_message") == 0)
-            return GUI_HOTLIST_MESSAGE;
+            notify_level = GUI_HOTLIST_MESSAGE;
     }
-    return GUI_HOTLIST_LOW;
+
+    max_notify_level = NULL;
+    nick = gui_line_get_nick_tag (line);
+    if (nick)
+    {
+        max_notify_level = hashtable_get (line->data->buffer->hotlist_max_level_nicks,
+                                          nick);
+    }
+    if (max_notify_level && (*max_notify_level < notify_level))
+        notify_level = *max_notify_level;
+
+    return notify_level;
 }
 
 /*
- * Adds a new line for a buffer.
+ * Gets highlight flag for a line, using the notify level in the line.
+ *
+ * Returns 1 for highlight otherwise 0.
+ */
+
+int
+gui_line_get_highlight (struct t_gui_line *line)
+{
+    int highlight, *max_notify_level;
+    const char *nick;
+
+    highlight = 0;
+
+    if (line->data->notify_level == GUI_HOTLIST_HIGHLIGHT)
+    {
+        highlight = 1;
+    }
+    else
+    {
+        max_notify_level = NULL;
+        nick = gui_line_get_nick_tag (line);
+        if (nick)
+        {
+            max_notify_level = hashtable_get (line->data->buffer->hotlist_max_level_nicks,
+                                              nick);
+        }
+        if (max_notify_level && (*max_notify_level < GUI_HOTLIST_HIGHLIGHT))
+            highlight = 0;
+        else
+            highlight = gui_line_has_highlight (line);
+    }
+
+    return highlight;
+}
+
+/*
+ * Creates a new line for a buffer.
  */
 
 struct t_gui_line *
-gui_line_add (struct t_gui_buffer *buffer, time_t date,
+gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
               time_t date_printed, const char *tags,
               const char *prefix, const char *message)
 {
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
+
+    /* create new line */
+    new_line = malloc (sizeof (*new_line));
+    if (!new_line)
+        return NULL;
+
+    /* create data for line */
+    new_line_data = malloc (sizeof (*new_line_data));
+    if (!new_line_data)
+    {
+        free (new_line);
+        return NULL;
+    }
+    new_line->data = new_line_data;
+
+    /* fill data in new line */
+    new_line->data->buffer = buffer;
+    new_line->data->message = (message) ? strdup (message) : strdup ("");
+
+    if (buffer->type == GUI_BUFFER_TYPE_FORMATTED)
+    {
+        new_line->data->y = -1;
+        new_line->data->date = date;
+        new_line->data->date_printed = date_printed;
+        new_line->data->str_time = gui_chat_get_time_string (date);
+        gui_line_tags_alloc (new_line->data, tags);
+        new_line->data->refresh_needed = 0;
+        new_line->data->prefix = (prefix) ?
+            (char *)string_shared_get (prefix) : ((date != 0) ? (char *)string_shared_get ("") : NULL);
+        new_line->data->prefix_length = (prefix) ?
+            gui_chat_strlen_screen (prefix) : 0;
+        new_line->data->notify_level = gui_line_get_notify_level (new_line);
+        new_line->data->highlight = gui_line_get_highlight (new_line);
+    }
+    else
+    {
+        new_line->data->y = y;
+        new_line->data->date = 0;
+        new_line->data->date_printed = 0;
+        new_line->data->str_time = NULL;
+        new_line->data->tags_count = 0;
+        new_line->data->tags_array = NULL;
+        new_line->data->refresh_needed = 1;
+        new_line->data->prefix = NULL;
+        new_line->data->prefix_length = 0;
+        new_line->data->notify_level = 0;
+        new_line->data->highlight = 0;
+    }
+
+    /* set display flag (check if line is filtered or not) */
+    new_line->data->displayed = gui_filter_check_line (new_line->data);
+
+    new_line->prev_line = NULL;
+    new_line->next_line = NULL;
+
+    return new_line;
+}
+
+/*
+ * Updates data in a line via the hook_line.
+ */
+
+void
+gui_line_hook_update (struct t_gui_line *line,
+                      struct t_hashtable *hashtable,
+                      struct t_hashtable *hashtable2)
+{
+    const char *ptr_value, *ptr_value2;
+    struct t_gui_buffer *ptr_buffer;
+    long unsigned int value_pointer;
+    long value;
+    char *error;
+    int rc, tags_updated, notify_level_updated, highlight_updated;
+
+    tags_updated = 0;
+    notify_level_updated = 0;
+    highlight_updated = 0;
+
+    ptr_value2 = hashtable_get (hashtable2, "buffer_name");
+    if (ptr_value2)
+    {
+        if (ptr_value2[0])
+        {
+            ptr_buffer = gui_buffer_search_by_full_name (ptr_value2);
+            if (gui_chat_buffer_valid (ptr_buffer, line->data->buffer->type))
+                line->data->buffer = ptr_buffer;
+        }
+        else
+        {
+            line->data->buffer = NULL;
+            return;
+        }
+    }
+    else
+    {
+        ptr_value2 = hashtable_get (hashtable2, "buffer");
+        if (ptr_value2)
+        {
+            if (ptr_value2[0])
+            {
+                if ((ptr_value2[0] == '0') && (ptr_value2[1] == 'x'))
+                {
+                    rc = sscanf (ptr_value2 + 2, "%lx", &value_pointer);
+                    ptr_buffer = (struct t_gui_buffer *)value_pointer;
+                    if ((rc != EOF) && (rc >= 1)
+                        && gui_chat_buffer_valid (ptr_buffer, line->data->buffer->type))
+                    {
+                        line->data->buffer = ptr_buffer;
+                    }
+                }
+            }
+            else
+            {
+                line->data->buffer = NULL;
+                return;
+            }
+        }
+    }
+
+    if (line->data->buffer->type == GUI_BUFFER_TYPE_FREE)
+    {
+        /* the field "y" can be changed on buffer with free content */
+        ptr_value = hashtable_get (hashtable2, "y");
+        if (ptr_value)
+        {
+            error = NULL;
+            value = strtol (ptr_value, &error, 10);
+            if (error && !error[0] && (value >= 0))
+                line->data->y = value;
+        }
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "date");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= 0))
+        {
+            line->data->date = (time_t)value;
+            if (line->data->str_time)
+                free (line->data->str_time);
+            line->data->str_time = gui_chat_get_time_string (line->data->date);
+        }
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "date_printed");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= 0))
+            line->data->date_printed = (time_t)value;
+    }
+
+    ptr_value = hashtable_get (hashtable, "str_time");
+    ptr_value2 = hashtable_get (hashtable2, "str_time");
+    if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
+    {
+        if (line->data->str_time)
+            free (line->data->str_time);
+        line->data->str_time = (ptr_value2) ? strdup (ptr_value2) : NULL;
+    }
+
+    ptr_value = hashtable_get (hashtable, "tags");
+    ptr_value2 = hashtable_get (hashtable2, "tags");
+    if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
+    {
+        tags_updated = 1;
+        gui_line_tags_free (line->data);
+        gui_line_tags_alloc (line->data, ptr_value2);
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "notify_level");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0] && (value >= -1) && (value <= GUI_HOTLIST_MAX))
+        {
+            notify_level_updated = 1;
+            line->data->notify_level = value;
+        }
+    }
+
+    ptr_value2 = hashtable_get (hashtable2, "highlight");
+    if (ptr_value2)
+    {
+        error = NULL;
+        value = strtol (ptr_value2, &error, 10);
+        if (error && !error[0])
+        {
+            highlight_updated = 1;
+            line->data->highlight = (value) ? 1 : 0;
+        }
+    }
+
+    ptr_value = hashtable_get (hashtable, "prefix");
+    ptr_value2 = hashtable_get (hashtable2, "prefix");
+    if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
+    {
+        if (line->data->prefix)
+            string_shared_free (line->data->prefix);
+        line->data->prefix = (char *)string_shared_get (
+            (ptr_value2) ? ptr_value2 : "");
+        line->data->prefix_length = (line->data->prefix) ?
+            gui_chat_strlen_screen (line->data->prefix) : 0;
+    }
+
+    ptr_value = hashtable_get (hashtable, "message");
+    ptr_value2 = hashtable_get (hashtable2, "message");
+    if (ptr_value2 && (!ptr_value || (strcmp (ptr_value, ptr_value2) != 0)))
+    {
+        if (line->data->message)
+            free (line->data->message);
+        line->data->message = (ptr_value2) ? strdup (ptr_value2) : NULL;
+    }
+
+    /* if tags were updated but not notify_level, adjust notify level */
+    if (tags_updated && !notify_level_updated)
+        line->data->notify_level = gui_line_get_notify_level (line);
+
+    /* adjust flag "displayed" if tags were updated */
+    if (tags_updated)
+        line->data->displayed = gui_filter_check_line (line->data);
+
+    if ((tags_updated || notify_level_updated) && !highlight_updated)
+        line->data->highlight = gui_line_get_highlight (line);
+}
+
+/*
+ * Adds a new line in a buffer with formatted content.
+ */
+
+void
+gui_line_add (struct t_gui_line *line)
+{
     struct t_gui_window *ptr_win;
     char *message_for_signal;
-    const char *nick;
-    int notify_level, *max_notify_level, lines_removed;
+    int lines_removed;
     time_t current_time;
 
     /*
@@ -1229,82 +1525,32 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
      */
     lines_removed = 0;
     current_time = time (NULL);
-    while (buffer->own_lines->first_line
+    while (line->data->buffer->own_lines->first_line
            && (((CONFIG_INTEGER(config_history_max_buffer_lines_number) > 0)
-                && (buffer->own_lines->lines_count + 1 >
+                && (line->data->buffer->own_lines->lines_count + 1 >
                     CONFIG_INTEGER(config_history_max_buffer_lines_number)))
                || ((CONFIG_INTEGER(config_history_max_buffer_lines_minutes) > 0)
-                   && (current_time - buffer->own_lines->first_line->data->date_printed >
+                   && (current_time - line->data->buffer->own_lines->first_line->data->date_printed >
                        CONFIG_INTEGER(config_history_max_buffer_lines_minutes) * 60))))
     {
-        gui_line_free (buffer, buffer->own_lines->first_line);
+        gui_line_free (line->data->buffer,
+                       line->data->buffer->own_lines->first_line);
         lines_removed++;
     }
 
-    /* create new line */
-    new_line = malloc (sizeof (*new_line));
-    if (!new_line)
-    {
-        log_printf (_("Not enough memory for new line"));
-        return NULL;
-    }
-
-    /* create data for line */
-    new_line_data = malloc (sizeof (*new_line_data));
-    if (!new_line_data)
-    {
-        free (new_line);
-        log_printf (_("Not enough memory for new line"));
-        return NULL;
-    }
-    new_line->data = new_line_data;
-
-    /* fill data in new line */
-    new_line->data->buffer = buffer;
-    new_line->data->y = -1;
-    new_line->data->date = date;
-    new_line->data->date_printed = date_printed;
-    new_line->data->str_time = gui_chat_get_time_string (date);
-    gui_line_tags_alloc (new_line->data, tags);
-    new_line->data->refresh_needed = 0;
-    new_line->data->prefix = (prefix) ?
-        (char *)string_shared_get (prefix) : ((date != 0) ? (char *)string_shared_get ("") : NULL);
-    new_line->data->prefix_length = (prefix) ?
-        gui_chat_strlen_screen (prefix) : 0;
-    new_line->data->message = (message) ? strdup (message) : strdup ("");
-
-    /* get notify level and max notify level for nick in buffer */
-    notify_level = gui_line_get_notify_level (new_line);
-    max_notify_level = NULL;
-    nick = gui_line_get_nick_tag (new_line);
-    if (nick)
-        max_notify_level = hashtable_get (buffer->hotlist_max_level_nicks, nick);
-    if (max_notify_level
-        && (*max_notify_level < notify_level))
-        notify_level = *max_notify_level;
-
-    if (notify_level == GUI_HOTLIST_HIGHLIGHT)
-        new_line->data->highlight = 1;
-    else if (max_notify_level && (*max_notify_level < GUI_HOTLIST_HIGHLIGHT))
-        new_line->data->highlight = 0;
-    else
-        new_line->data->highlight = gui_line_has_highlight (new_line);
-
-    /* check if line is filtered or not */
-    new_line->data->displayed = gui_filter_check_line (new_line->data);
-
     /* add line to lines list */
-    gui_line_add_to_list (buffer->own_lines, new_line);
+    gui_line_add_to_list (line->data->buffer->own_lines, line);
 
     /* update hotlist and/or send signals for line */
-    if (new_line->data->displayed)
+    if (line->data->displayed)
     {
-        if (new_line->data->highlight)
+        if (line->data->highlight)
         {
-            (void) gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL);
+            (void) gui_hotlist_add (line->data->buffer,
+                                    GUI_HOTLIST_HIGHLIGHT, NULL);
             if (!weechat_upgrading)
             {
-                message_for_signal = gui_chat_build_string_prefix_message (new_line);
+                message_for_signal = gui_chat_build_string_prefix_message (line);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_highlight",
@@ -1316,9 +1562,10 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
         }
         else
         {
-            if (!weechat_upgrading && (notify_level == GUI_HOTLIST_PRIVATE))
+            if (!weechat_upgrading
+                && (line->data->notify_level == GUI_HOTLIST_PRIVATE))
             {
-                message_for_signal = gui_chat_build_string_prefix_message (new_line);
+                message_for_signal = gui_chat_build_string_prefix_message (line);
                 if (message_for_signal)
                 {
                     (void) hook_signal_send ("weechat_pv",
@@ -1327,20 +1574,24 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
                     free (message_for_signal);
                 }
             }
-            if (notify_level >= GUI_HOTLIST_MIN)
-                (void) gui_hotlist_add (buffer, notify_level, NULL);
+            if (line->data->notify_level >= GUI_HOTLIST_MIN)
+            {
+                (void) gui_hotlist_add (line->data->buffer,
+                                        line->data->notify_level, NULL);
+            }
         }
     }
     else
     {
         (void) hook_signal_send ("buffer_lines_hidden",
-                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                 line->data->buffer);
     }
 
     /* add mixed line, if buffer is attached to at least one other buffer */
-    if (buffer->mixed_lines)
+    if (line->data->buffer->mixed_lines)
     {
-        gui_line_mixed_add (buffer->mixed_lines, new_line->data);
+        gui_line_mixed_add (line->data->buffer->mixed_lines, line->data);
     }
 
     /*
@@ -1352,125 +1603,108 @@ gui_line_add (struct t_gui_buffer *buffer, time_t date,
     {
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
-            if ((ptr_win->buffer == buffer)
-                && (buffer->own_lines->lines_count < ptr_win->win_chat_height))
+            if ((ptr_win->buffer == line->data->buffer)
+                && (line->data->buffer->own_lines->lines_count < ptr_win->win_chat_height))
             {
-                gui_buffer_ask_chat_refresh (buffer, 2);
+                gui_buffer_ask_chat_refresh (line->data->buffer, 2);
                 break;
             }
         }
     }
 
     (void) hook_signal_send ("buffer_line_added",
-                             WEECHAT_HOOK_SIGNAL_POINTER, new_line);
-
-    return new_line;
+                             WEECHAT_HOOK_SIGNAL_POINTER, line);
 }
 
 /*
- * Adds or updates a line for a buffer with free content.
+ * Adds or updates a line in a buffer with free content.
+ *
+ * Ba careful: when replacing an existing line in the buffer, the "line"
+ * pointer received as parameter is freed and then becomes invalid.
+ * So this pointer must not be used after the call to this function.
  */
 
 void
-gui_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
+gui_line_add_y (struct t_gui_line *line)
 {
-    struct t_gui_line *ptr_line, *new_line;
-    struct t_gui_line_data *new_line_data;
+    struct t_gui_line *ptr_line;
     struct t_gui_window *ptr_win;
+    int old_line_displayed;
 
     /* search if line exists for "y" */
-    for (ptr_line = buffer->own_lines->first_line; ptr_line;
+    for (ptr_line = line->data->buffer->own_lines->first_line; ptr_line;
          ptr_line = ptr_line->next_line)
     {
-        if (ptr_line->data->y >= y)
+        if (ptr_line->data->y >= line->data->y)
             break;
     }
 
-    if (!ptr_line || (ptr_line->data->y > y))
+    if (ptr_line && (ptr_line->data->y == line->data->y))
     {
-        new_line = malloc (sizeof (*new_line));
-        if (!new_line)
+        /* replace line data with the new data */
+        old_line_displayed = ptr_line->data->displayed;
+        if (ptr_line->data->message)
         {
-            log_printf (_("Not enough memory for new line"));
-            return;
+            /* remove line from coords if the content is changing */
+            for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+            {
+                gui_window_coords_remove_line (ptr_win, ptr_line);
+            }
         }
 
-        new_line_data = malloc (sizeof (*new_line_data));
-        if (!new_line_data)
-        {
-            free (new_line);
-            log_printf (_("Not enough memory for new line"));
-            return;
-        }
-        new_line->data = new_line_data;
-
-        buffer->own_lines->lines_count++;
-
-        /* fill data in new line */
-        new_line->data->buffer = buffer;
-        new_line->data->y = y;
-        new_line->data->date = 0;
-        new_line->data->date_printed = 0;
-        new_line->data->str_time = NULL;
-        new_line->data->tags_count = 0;
-        new_line->data->tags_array = NULL;
-        new_line->data->refresh_needed = 1;
-        new_line->data->prefix = NULL;
-        new_line->data->prefix_length = 0;
-        new_line->data->message = NULL;
-        new_line->data->highlight = 0;
-
+        /* replace ptr_line by line in list */
+        gui_line_free_data (ptr_line);
+        ptr_line->data = line->data;
+        free (line);
+    }
+    else
+    {
         /* add line to lines list */
+        old_line_displayed = 1;
         if (ptr_line)
         {
             /* add before line found */
-            new_line->prev_line = ptr_line->prev_line;
-            new_line->next_line = ptr_line;
+            line->prev_line = ptr_line->prev_line;
+            line->next_line = ptr_line;
             if (ptr_line->prev_line)
-                (ptr_line->prev_line)->next_line = new_line;
+                (ptr_line->prev_line)->next_line = line;
             else
-                buffer->own_lines->first_line = new_line;
-            ptr_line->prev_line = new_line;
+                line->data->buffer->own_lines->first_line = line;
+            ptr_line->prev_line = line;
         }
         else
         {
             /* add at end of list */
-            new_line->prev_line = buffer->own_lines->last_line;
-            if (buffer->own_lines->first_line)
-                buffer->own_lines->last_line->next_line = new_line;
+            line->prev_line = line->data->buffer->own_lines->last_line;
+            if (line->data->buffer->own_lines->first_line)
+                line->data->buffer->own_lines->last_line->next_line = line;
             else
-                buffer->own_lines->first_line = new_line;
-            buffer->own_lines->last_line = new_line;
-            new_line->next_line = NULL;
+                line->data->buffer->own_lines->first_line = line;
+            line->data->buffer->own_lines->last_line = line;
+            line->next_line = NULL;
         }
+        ptr_line = line;
 
-        ptr_line = new_line;
+        line->data->buffer->own_lines->lines_count++;
     }
-
-    /* set message for line */
-    if (ptr_line->data->message)
-    {
-        /* remove line from coords if the content is changing */
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            gui_window_coords_remove_line (ptr_win, ptr_line);
-        }
-
-        /* free message in line */
-        free (ptr_line->data->message);
-    }
-    ptr_line->data->message = (message) ? strdup (message) : strdup ("");
 
     /* check if line is filtered or not */
-    ptr_line->data->displayed = gui_filter_check_line (ptr_line->data);
-    if (!ptr_line->data->displayed)
+    if (old_line_displayed && !ptr_line->data->displayed)
     {
-        buffer->own_lines->lines_hidden++;
+        (ptr_line->data->buffer->own_lines->lines_hidden)++;
         (void) hook_signal_send ("buffer_lines_hidden",
-                                 WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+                                 WEECHAT_HOOK_SIGNAL_POINTER,
+                                 ptr_line->data->buffer);
+    }
+    else if (!old_line_displayed && ptr_line->data->displayed)
+    {
+        if (ptr_line->data->buffer->own_lines->lines_hidden > 0)
+            (ptr_line->data->buffer->own_lines->lines_hidden)--;
     }
 
     ptr_line->data->refresh_needed = 1;
+
+    gui_buffer_ask_chat_refresh (ptr_line->data->buffer, 1);
 }
 
 /*
@@ -1754,6 +1988,7 @@ gui_line_hdata_line_data_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_line_data, tags_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, tags_array, SHARED_STRING, 1, "tags_count", NULL);
         HDATA_VAR(struct t_gui_line_data, displayed, CHAR, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_line_data, notify_level, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, highlight, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, refresh_needed, CHAR, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_line_data, prefix, SHARED_STRING, 1, NULL, NULL);
@@ -1826,6 +2061,8 @@ gui_line_add_to_infolist (struct t_infolist *infolist,
     free (tags);
 
     if (!infolist_new_var_integer (ptr_item, "displayed", line->data->displayed))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "notify_level", line->data->notify_level))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "highlight", line->data->highlight))
         return 0;

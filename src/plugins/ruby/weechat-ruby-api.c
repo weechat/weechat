@@ -3033,6 +3033,69 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_ruby_api_hook_line_cb (const void *pointer, void *data,
+                               struct t_hashtable *line)
+{
+    struct t_plugin_script *script;
+    void *func_argv[2];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = line;
+
+        return (struct t_hashtable *)weechat_ruby_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "sh", func_argv);
+    }
+
+    return NULL;
+}
+
+static VALUE
+weechat_ruby_api_hook_line (VALUE class, VALUE buffer_type, VALUE buffer_name,
+                            VALUE tags, VALUE function, VALUE data)
+{
+    char *c_buffer_type, *c_buffer_name, *c_tags, *c_function, *c_data;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    if (NIL_P (buffer_type) || NIL_P (buffer_name) || NIL_P (tags)
+        || NIL_P (function) || NIL_P (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (buffer_type, T_STRING);
+    Check_Type (buffer_name, T_STRING);
+    Check_Type (tags, T_STRING);
+    Check_Type (function, T_STRING);
+    Check_Type (data, T_STRING);
+
+    c_buffer_type = StringValuePtr (buffer_type);
+    c_buffer_name = StringValuePtr (buffer_name);
+    c_tags = StringValuePtr (tags);
+    c_function = StringValuePtr (function);
+    c_data = StringValuePtr (data);
+
+    result = API_PTR2STR(plugin_script_api_hook_line (weechat_ruby_plugin,
+                                                      ruby_current_script,
+                                                      c_buffer_type,
+                                                      c_buffer_name,
+                                                      c_tags,
+                                                      &weechat_ruby_api_hook_line_cb,
+                                                      c_function,
+                                                      c_data));
+
+    API_RETURN_STRING(result);
+}
+
 int
 weechat_ruby_api_hook_print_cb (const void *pointer, void *data,
                                 struct t_gui_buffer *buffer,
@@ -6236,6 +6299,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(hook_process, 4);
     API_DEF_FUNC(hook_process_hashtable, 5);
     API_DEF_FUNC(hook_connect, 8);
+    API_DEF_FUNC(hook_line, 5);
     API_DEF_FUNC(hook_print, 6);
     API_DEF_FUNC(hook_signal, 3);
     API_DEF_FUNC(hook_signal_send, 3);

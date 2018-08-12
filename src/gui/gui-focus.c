@@ -39,29 +39,6 @@
 #include "gui-window.h"
 
 
-#define FOCUS_STR(__name, __string)                                      \
-    hashtable_set (hashtable, __name, __string);
-#define FOCUS_STR_VAR(__name, __var)                                     \
-    hashtable_set (hashtable, __name, (__var) ? __var : "");
-#define FOCUS_INT(__name, __int)                                         \
-    snprintf (str_value, sizeof (str_value), "%d", __int);               \
-    hashtable_set (hashtable, __name, str_value);
-#define FOCUS_TIME(__name, __time)                                       \
-    snprintf (str_value, sizeof (str_value), "%lld", (long long)__time); \
-    hashtable_set (hashtable, __name, str_value);
-#define FOCUS_PTR(__name, __pointer)                                     \
-    if (__pointer)                                                       \
-    {                                                                    \
-        snprintf (str_value, sizeof (str_value),                         \
-                  "0x%lx", (long unsigned int)__pointer);                \
-        hashtable_set (hashtable, __name, str_value);                    \
-    }                                                                    \
-    else                                                                 \
-    {                                                                    \
-        hashtable_set (hashtable, __name, "");                           \
-    }
-
-
 /*
  * Gets info about what is pointed by cursor at (x,y).
  *
@@ -177,45 +154,45 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         return NULL;
 
     /* key (key from keyboard or mouse event) */
-    FOCUS_STR("_key", key);
+    HASHTABLE_SET_STR("_key", key);
 
     /* x,y */
-    FOCUS_INT("_x", focus_info->x);
-    FOCUS_INT("_y", focus_info->y);
+    HASHTABLE_SET_INT("_x", focus_info->x);
+    HASHTABLE_SET_INT("_y", focus_info->y);
 
     /* window */
-    FOCUS_PTR("_window", focus_info->window);
+    HASHTABLE_SET_PTR("_window", focus_info->window);
     if (focus_info->window)
     {
-        FOCUS_INT("_window_number", (focus_info->window)->number);
+        HASHTABLE_SET_INT("_window_number", (focus_info->window)->number);
     }
     else
     {
-        FOCUS_STR("_window_number", "*");
+        HASHTABLE_SET_STR("_window_number", "*");
     }
 
     /* buffer */
-    FOCUS_PTR("_buffer", focus_info->buffer);
+    HASHTABLE_SET_PTR("_buffer", focus_info->buffer);
     if (focus_info->buffer)
     {
-        FOCUS_INT("_buffer_number", (focus_info->buffer)->number);
-        FOCUS_STR("_buffer_plugin", plugin_get_name ((focus_info->buffer)->plugin));
-        FOCUS_STR("_buffer_name", (focus_info->buffer)->name);
-        FOCUS_STR("_buffer_full_name", (focus_info->buffer)->full_name);
+        HASHTABLE_SET_INT("_buffer_number", (focus_info->buffer)->number);
+        HASHTABLE_SET_STR("_buffer_plugin", plugin_get_name ((focus_info->buffer)->plugin));
+        HASHTABLE_SET_STR("_buffer_name", (focus_info->buffer)->name);
+        HASHTABLE_SET_STR("_buffer_full_name", (focus_info->buffer)->full_name);
         hashtable_map ((focus_info->buffer)->local_variables,
                        &gui_focus_buffer_localvar_map_cb, hashtable);
     }
     else
     {
-        FOCUS_PTR("_buffer", NULL);
-        FOCUS_STR("_buffer_number", "-1");
-        FOCUS_STR("_buffer_plugin", "");
-        FOCUS_STR("_buffer_name", "");
-        FOCUS_STR("_buffer_full_name", "");
+        HASHTABLE_SET_PTR("_buffer", NULL);
+        HASHTABLE_SET_STR("_buffer_number", "-1");
+        HASHTABLE_SET_STR("_buffer_plugin", "");
+        HASHTABLE_SET_STR("_buffer_name", "");
+        HASHTABLE_SET_STR("_buffer_full_name", "");
     }
 
     /* chat area */
-    FOCUS_INT("_chat", focus_info->chat);
+    HASHTABLE_SET_INT("_chat", focus_info->chat);
     str_time = NULL;
     str_prefix = NULL;
     if (focus_info->chat_line)
@@ -225,16 +202,16 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         str_tags = string_build_with_split_string ((const char **)((focus_info->chat_line)->data)->tags_array, ",");
         str_message = gui_color_decode (((focus_info->chat_line)->data)->message, NULL);
         nick = gui_line_get_nick_tag (focus_info->chat_line);
-        FOCUS_PTR("_chat_line", focus_info->chat_line);
-        FOCUS_INT("_chat_line_x", focus_info->chat_line_x);
-        FOCUS_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
-        FOCUS_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
-        FOCUS_TIME("_chat_line_date_printed", ((focus_info->chat_line)->data)->date_printed);
-        FOCUS_STR_VAR("_chat_line_time", str_time);
-        FOCUS_STR_VAR("_chat_line_tags", str_tags);
-        FOCUS_STR_VAR("_chat_line_nick", nick);
-        FOCUS_STR_VAR("_chat_line_prefix", str_prefix);
-        FOCUS_STR_VAR("_chat_line_message", str_message);
+        HASHTABLE_SET_PTR("_chat_line", focus_info->chat_line);
+        HASHTABLE_SET_INT("_chat_line_x", focus_info->chat_line_x);
+        HASHTABLE_SET_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
+        HASHTABLE_SET_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
+        HASHTABLE_SET_TIME("_chat_line_date_printed", ((focus_info->chat_line)->data)->date_printed);
+        HASHTABLE_SET_STR_NOT_NULL("_chat_line_time", str_time);
+        HASHTABLE_SET_STR_NOT_NULL("_chat_line_tags", str_tags);
+        HASHTABLE_SET_STR_NOT_NULL("_chat_line_nick", nick);
+        HASHTABLE_SET_STR_NOT_NULL("_chat_line_prefix", str_prefix);
+        HASHTABLE_SET_STR_NOT_NULL("_chat_line_message", str_message);
         if (str_time)
             free (str_time);
         if (str_prefix)
@@ -246,35 +223,35 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     }
     else
     {
-        FOCUS_PTR("_chat_line", NULL);
-        FOCUS_STR("_chat_line_x", "-1");
-        FOCUS_STR("_chat_line_y", "-1");
-        FOCUS_STR("_chat_line_date", "-1");
-        FOCUS_STR("_chat_line_date_printed", "-1");
-        FOCUS_STR("_chat_line_time", "");
-        FOCUS_STR("_chat_line_tags", "");
-        FOCUS_STR("_chat_line_nick", "");
-        FOCUS_STR("_chat_line_prefix", "");
-        FOCUS_STR("_chat_line_message", "");
+        HASHTABLE_SET_PTR("_chat_line", NULL);
+        HASHTABLE_SET_STR("_chat_line_x", "-1");
+        HASHTABLE_SET_STR("_chat_line_y", "-1");
+        HASHTABLE_SET_STR("_chat_line_date", "-1");
+        HASHTABLE_SET_STR("_chat_line_date_printed", "-1");
+        HASHTABLE_SET_STR("_chat_line_time", "");
+        HASHTABLE_SET_STR("_chat_line_tags", "");
+        HASHTABLE_SET_STR("_chat_line_nick", "");
+        HASHTABLE_SET_STR("_chat_line_prefix", "");
+        HASHTABLE_SET_STR("_chat_line_message", "");
     }
-    FOCUS_STR_VAR("_chat_word", focus_info->chat_word);
-    FOCUS_STR_VAR("_chat_bol", focus_info->chat_bol);
-    FOCUS_STR_VAR("_chat_eol", focus_info->chat_eol);
+    HASHTABLE_SET_STR_NOT_NULL("_chat_word", focus_info->chat_word);
+    HASHTABLE_SET_STR_NOT_NULL("_chat_bol", focus_info->chat_bol);
+    HASHTABLE_SET_STR_NOT_NULL("_chat_eol", focus_info->chat_eol);
 
     /* bar/item */
     if (focus_info->bar_window)
     {
-        FOCUS_STR("_bar_name", ((focus_info->bar_window)->bar)->name);
-        FOCUS_STR("_bar_filling", gui_bar_filling_string[gui_bar_get_filling ((focus_info->bar_window)->bar)]);
+        HASHTABLE_SET_STR("_bar_name", ((focus_info->bar_window)->bar)->name);
+        HASHTABLE_SET_STR("_bar_filling", gui_bar_filling_string[gui_bar_get_filling ((focus_info->bar_window)->bar)]);
     }
     else
     {
-        FOCUS_STR("_bar_name", "");
-        FOCUS_STR("_bar_filling", "");
+        HASHTABLE_SET_STR("_bar_name", "");
+        HASHTABLE_SET_STR("_bar_filling", "");
     }
-    FOCUS_STR_VAR("_bar_item_name", focus_info->bar_item);
-    FOCUS_INT("_bar_item_line", focus_info->bar_item_line);
-    FOCUS_INT("_bar_item_col", focus_info->bar_item_col);
+    HASHTABLE_SET_STR_NOT_NULL("_bar_item_name", focus_info->bar_item);
+    HASHTABLE_SET_INT("_bar_item_line", focus_info->bar_item_line);
+    HASHTABLE_SET_INT("_bar_item_col", focus_info->bar_item_col);
 
     return hashtable;
 }

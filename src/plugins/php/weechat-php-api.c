@@ -288,8 +288,8 @@ API_FUNC(iconv_to_internal)
     char *charset, *string, *result;
 
     API_INIT_FUNC(1, "iconv_to_internal", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_charset, &z_string) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS",
+                               &z_charset, &z_string) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     charset = ZSTR_VAL(z_charset);
@@ -306,8 +306,8 @@ API_FUNC(iconv_from_internal)
     char *charset, *string, *result;
 
     API_INIT_FUNC(1, "iconv_from_internal", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_charset, &z_string) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS",
+                               &z_charset, &z_string) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     charset = ZSTR_VAL(z_charset);
@@ -343,9 +343,8 @@ API_FUNC(ngettext)
     const char *result;
 
     API_INIT_FUNC(1, "ngettext", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_single, &z_plural,
-                               &z_count) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl",
+                               &z_single, &z_plural, &z_count) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     single = ZSTR_VAL(z_single);
@@ -383,8 +382,7 @@ API_FUNC(string_match)
     char *string, *mask;
 
     API_INIT_FUNC(1, "string_match", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_string, &z_mask,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_string, &z_mask,
                                &z_case_sensitive) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -406,8 +404,8 @@ API_FUNC(string_has_highlight)
 
     API_INIT_FUNC(1, "string_has_highlight", API_RETURN_INT(0));
 
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_string, &z_highlight_words) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_string,
+                               &z_highlight_words) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     string = ZSTR_VAL(z_string);
@@ -425,8 +423,8 @@ API_FUNC(string_has_highlight_regex)
     int result;
 
     API_INIT_FUNC(1, "string_has_highlight_regex", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_string, &z_regex) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_string,
+                               &z_regex) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     string = ZSTR_VAL(z_string);
@@ -459,8 +457,7 @@ API_FUNC(string_format_size)
     char *result;
 
     API_INIT_FUNC(1, "string_format_size", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "l", &z_size) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "l", &z_size) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = weechat_string_format_size ((unsigned long long)z_size);
@@ -474,8 +471,8 @@ API_FUNC(string_remove_color)
     char *string, *replacement, *result;
 
     API_INIT_FUNC(1, "string_remove_color", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_string, &z_replacement) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_string,
+                               &z_replacement) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     string = ZSTR_VAL(z_string);
@@ -526,9 +523,8 @@ API_FUNC(string_eval_expression)
     struct t_hashtable *pointers, *extra_vars, *options;
 
     API_INIT_FUNC(1, "string_eval_expression", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Saaa", &z_expr, &z_pointers, &z_extra_vars,
-                               &z_options) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Saaa", &z_expr, &z_pointers,
+                               &z_extra_vars, &z_options) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     expr = ZSTR_VAL(z_expr);
@@ -563,8 +559,8 @@ API_FUNC(string_eval_path_home)
     struct t_hashtable *pointers, *extra_vars, *options;
 
     API_INIT_FUNC(1, "string_eval_path_home", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Saaa", &z_path, &z_pointers, &z_extra_vars,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Saaa",
+                               &z_path, &z_pointers, &z_extra_vars,
                                &z_options) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -600,8 +596,8 @@ API_FUNC(mkdir_home)
     int mode;
 
     API_INIT_FUNC(1, "mkdir_home", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_directory, &z_mode) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_directory,
+                               &z_mode) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     directory = ZSTR_VAL(z_directory);
@@ -620,8 +616,8 @@ API_FUNC(mkdir)
     int mode;
 
     API_INIT_FUNC(1, "mkdir", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_directory, &z_mode) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_directory,
+                               &z_mode) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     directory = ZSTR_VAL(z_directory);
@@ -640,8 +636,8 @@ API_FUNC(mkdir_parents)
     int mode;
 
     API_INIT_FUNC(1, "mkdir_parents", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_directory, &z_mode) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_directory,
+                               &z_mode) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     directory = ZSTR_VAL(z_directory);
@@ -674,9 +670,8 @@ API_FUNC(list_add)
     const char *result;
 
     API_INIT_FUNC(1, "list_add", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSS", &z_weelist, &z_data, &z_where,
-                               &z_user_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSS", &z_weelist, &z_data,
+                               &z_where, &z_user_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -700,8 +695,8 @@ API_FUNC(list_search)
     const char *result;
 
     API_INIT_FUNC(1, "list_search", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_weelist, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_weelist,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -720,8 +715,8 @@ API_FUNC(list_search_pos)
     int result;
 
     API_INIT_FUNC(1, "list_search_pos", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_weelist, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_weelist,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -739,8 +734,8 @@ API_FUNC(list_casesearch)
     const char *result;
 
     API_INIT_FUNC(1, "list_casesearch", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_weelist, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_weelist,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -760,8 +755,8 @@ API_FUNC(list_casesearch_pos)
     int result;
 
     API_INIT_FUNC(1, "list_casesearch_pos", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_weelist, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_weelist,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -780,8 +775,8 @@ API_FUNC(list_get)
     const char *result;
 
     API_INIT_FUNC(1, "list_get", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_weelist, &z_position) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_weelist,
+                               &z_position) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -799,8 +794,8 @@ API_FUNC(list_set)
     char *value;
 
     API_INIT_FUNC(1, "list_set", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_item, &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_item,
+                               &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     item = (struct t_weelist_item *)API_STR2PTR(ZSTR_VAL(z_item));
@@ -884,8 +879,8 @@ API_FUNC(list_remove)
     struct t_weelist_item *item;
 
     API_INIT_FUNC(1, "list_remove", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_weelist, &z_item) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_weelist,
+                               &z_item) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
@@ -950,9 +945,8 @@ API_FUNC(config_new)
     const char *result;
 
     API_INIT_FUNC(1, "config_new", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_name, &z_callback_reload,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_name,
+                               &z_callback_reload, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = ZSTR_VAL(z_name);
@@ -1147,8 +1141,7 @@ API_FUNC(config_search_section)
     const char *result;
 
     API_INIT_FUNC(1, "config_search_section", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_config_file,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_config_file,
                                &z_section_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1287,8 +1280,8 @@ API_FUNC(config_search_option)
     const char *result;
 
     API_INIT_FUNC(1, "config_search_option", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_config_file, &z_section,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS",
+                               &z_config_file, &z_section,
                                &z_option_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -1327,8 +1320,8 @@ API_FUNC(config_option_reset)
     int run_callback, result;
 
     API_INIT_FUNC(1, "config_option_reset", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_option, &z_run_callback) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl",
+                               &z_option, &z_run_callback) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
@@ -1347,8 +1340,8 @@ API_FUNC(config_option_set)
     int run_callback, result;
 
     API_INIT_FUNC(1, "config_option_set",  API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_option, &z_value,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl",
+                               &z_option, &z_value,
                                &z_run_callback) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
@@ -1369,8 +1362,8 @@ API_FUNC(config_option_set_null)
     int run_callback, result;
 
     API_INIT_FUNC(1, "config_option_set_null", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_option, &z_run_callback) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl",
+                               &z_option, &z_run_callback) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
@@ -1403,8 +1396,8 @@ API_FUNC(config_option_rename)
     char *new_name;
 
     API_INIT_FUNC(1, "config_option_rename", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_option, &z_new_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS",
+                               &z_option, &z_new_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
@@ -1581,8 +1574,8 @@ API_FUNC(config_write_option)
     struct t_config_option *option;
 
     API_INIT_FUNC(1, "config_write_option", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_config_file, &z_option) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_config_file,
+                               &z_option) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1600,9 +1593,8 @@ API_FUNC(config_write_line)
     char *option_name, *value;
 
     API_INIT_FUNC(1, "config_write_line", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_config_file, &z_option_name,
-                               &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_config_file,
+                               &z_option_name, &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1623,8 +1615,8 @@ API_FUNC(config_write)
     int result;
 
     API_INIT_FUNC(1, "config_write", API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_config_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_config_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1640,8 +1632,8 @@ API_FUNC(config_read)
     int result;
 
     API_INIT_FUNC(1, "config_read", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_config_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_config_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1657,8 +1649,8 @@ API_FUNC(config_reload)
     int result;
 
     API_INIT_FUNC(1, "config_reload", API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_config_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_config_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1720,8 +1712,8 @@ API_FUNC(config_free)
     struct t_config_file *config_file;
 
     API_INIT_FUNC(1, "config_free", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_config_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_config_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
@@ -1737,8 +1729,8 @@ API_FUNC(config_get)
     const char *result;
 
     API_INIT_FUNC(1, "config_get", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_option_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_option_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option_name = ZSTR_VAL(z_option_name);
@@ -1791,8 +1783,8 @@ API_FUNC(config_set_plugin)
     int result;
 
     API_INIT_FUNC(1, "config_set_plugin", API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_option, &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_option,
+                               &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     option = ZSTR_VAL(z_option);
@@ -1811,8 +1803,8 @@ API_FUNC(config_set_desc_plugin)
     char *option, *description;
 
     API_INIT_FUNC(1, "config_set_desc_plugin", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_option, &z_description) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_option,
+                               &z_description) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     option = ZSTR_VAL(z_option);
@@ -1852,8 +1844,8 @@ API_FUNC(key_bind)
     int result;
 
     API_INIT_FUNC(1, "key_bind", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sa", &z_context, &z_keys) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sa", &z_context,
+                               &z_keys) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     context = ZSTR_VAL(z_context);
@@ -1873,8 +1865,8 @@ API_FUNC(key_unbind)
     char *context, *key;
 
     API_INIT_FUNC(1, "key_unbind", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_context, &z_key) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_context,
+                               &z_key) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     context = ZSTR_VAL(z_context);
@@ -1923,8 +1915,8 @@ API_FUNC(print)
     char *message;
 
     API_INIT_FUNC(0, "print", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_message) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -1944,9 +1936,8 @@ API_FUNC(print_date_tags)
     char *tags, *message;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SlSS", &z_buffer, &z_date, &z_tags,
-                               &z_message) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlSS", &z_buffer, &z_date,
+                               &z_tags, &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -1973,8 +1964,8 @@ API_FUNC(print_y)
     char *message;
 
     API_INIT_FUNC(1, "print_y", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SlS", &z_buffer, &z_y, &z_message) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlS", &z_buffer, &z_y,
+                               &z_message) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -2035,10 +2026,9 @@ API_FUNC(hook_command)
     const char *result;
 
     API_INIT_FUNC(1, "hook_command", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSSzS", &z_command, &z_description, &z_args,
-                               &z_args_description, &z_completion, &z_callback,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSSzS", &z_command,
+                               &z_description, &z_args, &z_args_description,
+                               &z_completion, &z_callback, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     command = ZSTR_VAL(z_command);
@@ -2092,9 +2082,9 @@ API_FUNC(hook_completion)
     const char *result;
 
     API_INIT_FUNC(1, "hook_completion", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSzS", &z_completion, &z_description,
-                               &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSzS",
+                               &z_completion, &z_description, &z_callback,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     completion = ZSTR_VAL(z_completion);
@@ -2123,8 +2113,8 @@ API_FUNC(hook_completion_get_string)
     const char *result;
 
     API_INIT_FUNC(1, "hook_completion_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_completion, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_completion,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
@@ -2144,9 +2134,8 @@ API_FUNC(hook_completion_list_add)
     int nick_completion;
 
     API_INIT_FUNC(1, "hook_completion_list_add", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSlS", &z_completion, &z_word,
-                               &z_nick_completion, &z_where) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSlS", &z_completion,
+                               &z_word, &z_nick_completion, &z_where) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
@@ -2186,8 +2175,7 @@ API_FUNC(hook_command_run)
     const char *result;
 
     API_INIT_FUNC(1, "hook_command_run", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_command, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_command, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2232,9 +2220,9 @@ API_FUNC(hook_timer)
     const char *result;
 
     API_INIT_FUNC(1, "hook_timer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "lllzS", &z_interval, &z_align_second,
-                               &z_max_calls, &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "lllzS", &z_interval,
+                               &z_align_second, &z_max_calls, &z_callback,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     interval = (int)z_interval;
@@ -2282,9 +2270,8 @@ API_FUNC(hook_fd)
     const char *result;
 
     API_INIT_FUNC(1, "hook_fd", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "llllzS", &z_fd, &z_flag_read, &z_flag_write,
-                               &z_flag_exception, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "llllzS", &z_fd, &z_flag_read,
+                               &z_flag_write, &z_flag_exception, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2338,9 +2325,8 @@ API_FUNC(hook_process)
     const char *result;
 
     API_INIT_FUNC(1, "hook_process", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SlzS", &z_command, &z_timeout, &z_callback,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlzS", &z_command, &z_timeout,
+                               &z_callback, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     command = ZSTR_VAL(z_command);
@@ -2392,9 +2378,9 @@ API_FUNC(hook_process_hashtable)
     const char *result;
 
     API_INIT_FUNC(1, "hook_process_hashtable", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SalzS", &z_command, &z_options, &z_timeout,
-                               &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SalzS", &z_command,
+                               &z_options, &z_timeout, &z_callback,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     command = ZSTR_VAL(z_command);
@@ -2495,6 +2481,54 @@ API_FUNC(hook_connect)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_php_api_hook_line_cb (const void *pointer, void *data,
+                              struct t_hashtable *line)
+{
+    struct t_hashtable *rc;
+    void *func_argv[2];
+
+    func_argv[1] = line;
+
+    weechat_php_cb (pointer, data, func_argv, "sh",
+                    WEECHAT_SCRIPT_EXEC_HASHTABLE, &rc);
+
+    return rc;
+}
+
+API_FUNC(hook_line)
+{
+    zend_string *z_buffer_type, *z_buffer_name, *z_tags, *z_data;
+    zval *z_callback;
+    char *buffer_type, *buffer_name, *tags, *data;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSzS",
+                               &z_buffer_type, &z_buffer_name, &z_tags,
+                               &z_callback, &z_data) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    weechat_php_get_function_name (z_callback, callback_name);
+    buffer_type = ZSTR_VAL(z_buffer_type);
+    buffer_name = ZSTR_VAL(z_buffer_name);
+    tags = ZSTR_VAL(z_tags);
+    data = ZSTR_VAL(z_data);
+
+    result = API_PTR2STR(
+        plugin_script_api_hook_line (
+            weechat_php_plugin,
+            php_current_script,
+            (const char *)buffer_type,
+            (const char *)buffer_name,
+            (const char *)tags,
+            &weechat_php_api_hook_line_cb,
+            (const char *)callback_name,
+            (const char *)data));
+
+    API_RETURN_STRING(result);
+}
+
 static int
 weechat_php_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer, time_t date,
@@ -2531,9 +2565,8 @@ API_FUNC(hook_print)
     const char *result;
 
     API_INIT_FUNC(1, "hook_print", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSlzS", &z_buffer, &z_tags, &z_message,
-                               &z_strip_colors, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSlzS", &z_buffer, &z_tags,
+                               &z_message, &z_strip_colors, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2547,7 +2580,8 @@ API_FUNC(hook_print)
     result = API_PTR2STR(
         plugin_script_api_hook_print (
             weechat_php_plugin,
-            php_current_script, buffer,
+            php_current_script,
+            buffer,
             (const char *)tags,
             (const char *)message,
             strip_colors,
@@ -2584,8 +2618,7 @@ API_FUNC(hook_signal)
     const char *result;
 
     API_INIT_FUNC(1, "hook_signal", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_signal, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_signal, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2613,8 +2646,7 @@ API_FUNC(hook_signal_send)
     int result;
 
     API_INIT_FUNC(1, "hook_signal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_signal, &z_type_data,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_signal, &z_type_data,
                                &z_signal_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
@@ -2652,8 +2684,7 @@ API_FUNC(hook_hsignal)
     const char *result;
 
     API_INIT_FUNC(1, "hook_hsignal", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_signal, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_signal, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2682,8 +2713,8 @@ API_FUNC(hook_hsignal_send)
     int result;
 
     API_INIT_FUNC(1, "hook_hsignal_send", API_RETURN_INT(WEECHAT_RC_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sa", &z_signal, &z_hashtable) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sa", &z_signal,
+                               &z_hashtable) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     signal = ZSTR_VAL(z_signal);
@@ -2721,8 +2752,7 @@ API_FUNC(hook_config)
     const char *result;
 
     API_INIT_FUNC(1, "hook_config", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_option, &z_callback,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_option, &z_callback,
                                &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -2769,9 +2799,8 @@ API_FUNC(hook_modifier)
     const char *result;
 
     API_INIT_FUNC(1, "hook_modifier", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_modifier, &z_callback,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_modifier,
+                               &z_callback, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     modifier = ZSTR_VAL(z_modifier);
@@ -2796,9 +2825,8 @@ API_FUNC(hook_modifier_exec)
     char *modifier, *modifier_data, *string, *result;
 
     API_INIT_FUNC(1, "hook_modifier_exec", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_modifier, &z_modifier_data,
-                               &z_string) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_modifier,
+                               &z_modifier_data, &z_string) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     modifier = ZSTR_VAL(z_modifier);
@@ -2837,10 +2865,9 @@ API_FUNC(hook_info)
     const char *result;
 
     API_INIT_FUNC(1, "hook_info", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSzS", &z_info_name, &z_description,
-                               &z_args_description, &z_callback,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSzS", &z_info_name,
+                               &z_description, &z_args_description,
+                               &z_callback, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     info_name = ZSTR_VAL(z_info_name);
@@ -2890,10 +2917,10 @@ API_FUNC(hook_info_hashtable)
     const char *result;
 
     API_INIT_FUNC(1, "hook_info_hashtable", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSSzS", &z_info_name, &z_description,
-                               &z_args_description, &z_output_description,
-                               &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSSzS", &z_info_name,
+                               &z_description, &z_args_description,
+                               &z_output_description, &z_callback,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     info_name = ZSTR_VAL(z_info_name);
@@ -2947,10 +2974,10 @@ API_FUNC(hook_infolist)
     const char *result;
 
     API_INIT_FUNC(1, "hook_infolist", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSzS", &z_infolist_name, &z_description,
-                               &z_pointer_description, &z_args_description,
-                               &z_callback, &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSzS", &z_infolist_name,
+                               &z_description, &z_pointer_description,
+                               &z_args_description, &z_callback,
+                               &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist_name = ZSTR_VAL(z_infolist_name);
@@ -3107,10 +3134,9 @@ API_FUNC(buffer_new)
     const char *result;
 
     API_INIT_FUNC(1, "buffer_new", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzSzS", &z_name, &z_input_callback,
-                               &z_data_input, &z_close_callback,
-                               &z_data_close) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzSzS", &z_name,
+                               &z_input_callback, &z_data_input,
+                               &z_close_callback, &z_data_close) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = ZSTR_VAL(z_name);
@@ -3141,8 +3167,8 @@ API_FUNC(buffer_search)
     const char *result;
 
     API_INIT_FUNC(1, "buffer_search", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_plugin, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_plugin,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     plugin = ZSTR_VAL(z_plugin);
@@ -3218,8 +3244,8 @@ API_FUNC(buffer_merge)
     struct t_gui_buffer *target_buffer;
 
     API_INIT_FUNC(1, "buffer_merge", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_target_buffer) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_target_buffer) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3237,8 +3263,8 @@ API_FUNC(buffer_unmerge)
     int number;
 
     API_INIT_FUNC(1, "buffer_unmerge", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sl", &z_buffer, &z_number) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sl", &z_buffer,
+                               &z_number) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3256,8 +3282,8 @@ API_FUNC(buffer_get_integer)
     int result;
 
     API_INIT_FUNC(1, "buffer_get_integer", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3275,8 +3301,8 @@ API_FUNC(buffer_get_string)
     char *property;
 
     API_INIT_FUNC(1, "buffer_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3294,8 +3320,8 @@ API_FUNC(buffer_get_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "buffer_get_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3314,8 +3340,7 @@ API_FUNC(buffer_set)
     char *property, *value;
 
     API_INIT_FUNC(1, "buffer_set", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_property,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_property,
                                &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
@@ -3334,8 +3359,8 @@ API_FUNC(buffer_string_replace_local_var)
     char *string, *result;
 
     API_INIT_FUNC(1, "buffer_string_replace_local_var", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_string) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_string) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3354,8 +3379,8 @@ API_FUNC(buffer_match_list)
     int result;
 
     API_INIT_FUNC(1, "buffer_match_list", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_string) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_string) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3403,8 +3428,8 @@ API_FUNC(window_get_integer)
     int result;
 
     API_INIT_FUNC(1, "window_get_integer", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_window, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_window,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
     window = (struct t_gui_window *)API_STR2PTR(ZSTR_VAL(z_window));
@@ -3422,8 +3447,8 @@ API_FUNC(window_get_string)
     const char *result;
 
     API_INIT_FUNC(1, "window_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_window, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_window,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     window = (struct t_gui_window *)API_STR2PTR(ZSTR_VAL(z_window));
@@ -3441,8 +3466,8 @@ API_FUNC(window_get_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "window_get_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_window, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_window,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     window = (struct t_gui_window *)API_STR2PTR(ZSTR_VAL(z_window));
@@ -3480,9 +3505,9 @@ API_FUNC(nicklist_add_group)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_add_group", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSl", &z_buffer, &z_parent_group, &z_name,
-                               &z_color, &z_visible) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSl", &z_buffer,
+                               &z_parent_group, &z_name, &z_color,
+                               &z_visible) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3509,9 +3534,8 @@ API_FUNC(nicklist_search_group)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_group", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_from_group,
-                               &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer,
+                               &z_from_group, &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3537,10 +3561,9 @@ API_FUNC(nicklist_add_nick)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_add_nick", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSSSl", &z_buffer, &z_group, &z_name,
-                               &z_color, &z_prefix, &z_prefix_color,
-                               &z_visible) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSSSl", &z_buffer,
+                               &z_group, &z_name, &z_color, &z_prefix,
+                               &z_prefix_color, &z_visible) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3573,9 +3596,8 @@ API_FUNC(nicklist_search_nick)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_search_nick", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_from_group,
-                               &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer,
+                               &z_from_group, &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3596,8 +3618,8 @@ API_FUNC(nicklist_remove_group)
     struct t_gui_nick_group *group;
 
     API_INIT_FUNC(1, "nicklist_remove_group", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_group) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_group) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3614,8 +3636,8 @@ API_FUNC(nicklist_remove_nick)
     struct t_gui_nick *nick;
 
     API_INIT_FUNC(1, "nicklist_remove_nick", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_nick) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_nick) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3649,8 +3671,7 @@ API_FUNC(nicklist_group_get_integer)
     int result;
 
     API_INIT_FUNC(1, "nicklist_group_get_integer", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_group,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3673,8 +3694,7 @@ API_FUNC(nicklist_group_get_string)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_group_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_group,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3697,8 +3717,7 @@ API_FUNC(nicklist_group_get_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_group_get_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_group,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_group,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3722,9 +3741,8 @@ API_FUNC(nicklist_group_set)
     char *property, *value;
 
     API_INIT_FUNC(1, "nicklist_group_set", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSS", &z_buffer, &z_group, &z_property,
-                               &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSS", &z_buffer, &z_group,
+                               &z_property, &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3748,8 +3766,7 @@ API_FUNC(nicklist_nick_get_integer)
     int result;
 
     API_INIT_FUNC(1, "nicklist_nick_get_integer", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_nick,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
@@ -3772,8 +3789,7 @@ API_FUNC(nicklist_nick_get_string)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_nick_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_nick,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3796,8 +3812,7 @@ API_FUNC(nicklist_nick_get_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "nicklist_nick_get_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_buffer, &z_nick,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_buffer, &z_nick,
                                &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
@@ -3821,9 +3836,8 @@ API_FUNC(nicklist_nick_set)
     char *property, *value;
 
     API_INIT_FUNC(1, "nicklist_nick_set", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSS", &z_buffer, &z_nick, &z_property,
-                               &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSS", &z_buffer, &z_nick,
+                               &z_property, &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -3884,9 +3898,8 @@ API_FUNC(bar_item_new)
     const char *result;
 
     API_INIT_FUNC(1, "bar_item_new", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SzS", &z_name, &z_build_callback,
-                               &z_data) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SzS", &z_name,
+                               &z_build_callback, &z_data) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = ZSTR_VAL(z_name);
@@ -4017,8 +4030,8 @@ API_FUNC(bar_set)
     int result;
 
     API_INIT_FUNC(1, "bar_set", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_bar, &z_property, &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_bar, &z_property,
+                               &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     bar = (struct t_gui_bar *)API_STR2PTR(ZSTR_VAL(z_bar));
@@ -4067,8 +4080,8 @@ API_FUNC(command)
     int result;
 
     API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_buffer, &z_command) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_buffer,
+                               &z_command) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
@@ -4088,8 +4101,8 @@ API_FUNC(info_get)
     const char *result;
 
     API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_info_name, &z_arguments) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_info_name,
+                               &z_arguments) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     info_name = ZSTR_VAL(z_info_name);
@@ -4108,8 +4121,8 @@ API_FUNC(info_get_hashtable)
     struct t_hashtable *hashtable, *result;
 
     API_INIT_FUNC(1, "info_get_hashtable", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "Sa", &z_info_name, &z_hashtable) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "Sa", &z_info_name,
+                               &z_hashtable) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     info_name = ZSTR_VAL(z_info_name);
@@ -4163,8 +4176,8 @@ API_FUNC(infolist_new_var_integer)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_integer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_item, &z_name, &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_item, &z_name,
+                               &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
@@ -4186,8 +4199,8 @@ API_FUNC(infolist_new_var_string)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_item, &z_name, &z_value) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_item, &z_name,
+                               &z_value) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
@@ -4211,8 +4224,8 @@ API_FUNC(infolist_new_var_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_item, &z_name, &z_pointer) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_item, &z_name,
+                               &z_pointer) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
@@ -4237,8 +4250,8 @@ API_FUNC(infolist_new_var_time)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_item, &z_name, &z_time) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_item, &z_name,
+                               &z_time) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     item = (struct t_infolist_item *)API_STR2PTR(ZSTR_VAL(z_item));
@@ -4259,8 +4272,8 @@ API_FUNC(infolist_search_var)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_search_var", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_infolist, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
@@ -4280,9 +4293,8 @@ API_FUNC(infolist_get)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_get", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_infolist_name, &z_pointer,
-                               &z_arguments) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_infolist_name,
+                               &z_pointer, &z_arguments) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist_name = ZSTR_VAL(z_infolist_name);
@@ -4368,8 +4380,8 @@ API_FUNC(infolist_integer)
     int result;
 
     API_INIT_FUNC(1, "infolist_integer", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_infolist, &z_var) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
@@ -4387,8 +4399,8 @@ API_FUNC(infolist_string)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_infolist, &z_var) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
@@ -4406,8 +4418,8 @@ API_FUNC(infolist_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "infolist_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_infolist, &z_var) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
@@ -4427,8 +4439,8 @@ API_FUNC(infolist_time)
     time_t time;
 
     API_INIT_FUNC(1, "infolist_time", API_RETURN_LONG(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_infolist, &z_var) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_infolist,
+                               &z_var) == FAILURE)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
@@ -4479,8 +4491,8 @@ API_FUNC(hdata_get_var_offset)
     int result;
 
     API_INIT_FUNC(1, "hdata_get_var_offset", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_hdata, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_hdata,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4498,8 +4510,8 @@ API_FUNC(hdata_get_var_type_string)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_get_var_type_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_hdata, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_hdata,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4518,8 +4530,8 @@ API_FUNC(hdata_get_var_array_size)
     int result;
 
     API_INIT_FUNC(1, "hdata_get_var_array_size", API_RETURN_INT(-1));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(-1));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4541,8 +4553,8 @@ API_FUNC(hdata_get_var_array_size_string)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_get_var_array_size_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4563,8 +4575,8 @@ API_FUNC(hdata_get_var_hdata)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_get_var_hdata", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_hdata, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_hdata,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4582,8 +4594,8 @@ API_FUNC(hdata_get_list)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_get_list", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_hdata, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_hdata,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4603,8 +4615,8 @@ API_FUNC(hdata_check_pointer)
     int result;
 
     API_INIT_FUNC(1, "hdata_check_pointer", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_list, &z_pointer) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_list,
+                               &z_pointer) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4625,8 +4637,8 @@ API_FUNC(hdata_move)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_move", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSl", &z_hdata, &z_pointer, &z_count) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_hdata, &z_pointer,
+                               &z_count) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4649,9 +4661,8 @@ API_FUNC(hdata_search)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_search", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSl", &z_hdata, &z_pointer, &z_search,
-                               &z_move) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSl", &z_hdata, &z_pointer,
+                               &z_search, &z_move) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4673,8 +4684,8 @@ API_FUNC(hdata_char)
     char *name, result;
 
     API_INIT_FUNC(1, "hdata_char", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4694,8 +4705,8 @@ API_FUNC(hdata_integer)
     int result;
 
     API_INIT_FUNC(1, "hdata_integer", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4715,8 +4726,8 @@ API_FUNC(hdata_long)
     long result;
 
     API_INIT_FUNC(1, "hdata_long", API_RETURN_LONG(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4736,8 +4747,8 @@ API_FUNC(hdata_string)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4757,8 +4768,8 @@ API_FUNC(hdata_pointer)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_pointer", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4780,8 +4791,8 @@ API_FUNC(hdata_time)
     time_t result;
 
     API_INIT_FUNC(1, "hdata_time", API_RETURN_LONG(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_LONG(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4801,8 +4812,8 @@ API_FUNC(hdata_hashtable)
     struct t_hashtable *result;
 
     API_INIT_FUNC(1, "hdata_hashtable", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSS", &z_hdata, &z_pointer, &z_name) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSS", &z_hdata, &z_pointer,
+                               &z_name) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4823,9 +4834,9 @@ API_FUNC(hdata_compare)
     int case_sensitive, result;
 
     API_INIT_FUNC(1, "hdata_compare", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSSSl", &z_hdata, &z_pointer1, &z_pointer2,
-                               &z_name, &z_case_sensitive) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSSSl", &z_hdata, &z_pointer1,
+                               &z_pointer2, &z_name,
+                               &z_case_sensitive) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4849,8 +4860,7 @@ API_FUNC(hdata_update)
     struct t_hashtable *hashtable;
 
     API_INIT_FUNC(1, "hdata_update", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SSa", &z_hdata, &z_pointer,
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSa", &z_hdata, &z_pointer,
                                &z_hashtable) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
@@ -4874,8 +4884,8 @@ API_FUNC(hdata_get_string)
     const char *result;
 
     API_INIT_FUNC(1, "hdata_get_string", API_RETURN_EMPTY);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SS", &z_hdata, &z_property) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_hdata,
+                               &z_property) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
@@ -4943,9 +4953,8 @@ API_FUNC(upgrade_write_object)
     int result;
 
     API_INIT_FUNC(1, "upgrade_write_object", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "SlS", &z_upgrade_file, &z_object_id,
-                               &z_infolist) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SlS", &z_upgrade_file,
+                               &z_object_id, &z_infolist) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));
@@ -4963,8 +4972,8 @@ API_FUNC(upgrade_read)
     int result;
 
     API_INIT_FUNC(1, "upgrade_read", API_RETURN_INT(0));
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_upgrade_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_upgrade_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));
@@ -4979,8 +4988,8 @@ API_FUNC(upgrade_close)
     struct t_upgrade_file *upgrade_file;
 
     API_INIT_FUNC(1, "upgrade_close", API_RETURN_ERROR);
-    if (zend_parse_parameters (ZEND_NUM_ARGS(),
-                               "S", &z_upgrade_file) == FAILURE)
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S",
+                               &z_upgrade_file) == FAILURE)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));

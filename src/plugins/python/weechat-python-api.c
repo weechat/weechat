@@ -2510,6 +2510,67 @@ API_FUNC(hook_connect)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_python_api_hook_line_cb (const void *pointer, void *data,
+                                 struct t_hashtable *line)
+{
+    struct t_plugin_script *script;
+    void *func_argv[2];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+    struct t_hashtable *ret_hashtable;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = weechat_python_hashtable_to_dict (line);
+
+        ret_hashtable = weechat_python_exec (script,
+                                             WEECHAT_SCRIPT_EXEC_HASHTABLE,
+                                             ptr_function,
+                                             "sO", func_argv);
+
+        if (func_argv[1])
+        {
+            Py_XDECREF((PyObject *)func_argv[1]);
+        }
+
+        return ret_hashtable;
+    }
+
+    return NULL;
+}
+
+API_FUNC(hook_line)
+{
+    char *buffer_type, *buffer_name, *tags, *function, *data;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    buffer_type = NULL;
+    buffer_name = NULL;
+    tags = NULL;
+    function = NULL;
+    data = NULL;
+    if (!PyArg_ParseTuple (args, "sssss", &buffer_type, &buffer_name, &tags,
+                           &function, &data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(plugin_script_api_hook_line (weechat_python_plugin,
+                                                      python_current_script,
+                                                      buffer_type,
+                                                      buffer_name,
+                                                      tags,
+                                                      &weechat_python_api_hook_line_cb,
+                                                      function,
+                                                      data));
+
+    API_RETURN_STRING(result);
+}
+
 int
 weechat_python_api_hook_print_cb (const void *pointer, void *data,
                                   struct t_gui_buffer *buffer,
@@ -5084,6 +5145,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(hook_process),
     API_DEF_FUNC(hook_process_hashtable),
     API_DEF_FUNC(hook_connect),
+    API_DEF_FUNC(hook_line),
     API_DEF_FUNC(hook_print),
     API_DEF_FUNC(hook_signal),
     API_DEF_FUNC(hook_signal_send),

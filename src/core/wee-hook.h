@@ -50,6 +50,7 @@ enum t_hook_type
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_PROCESS,                 /* sub-process (fork)                */
     HOOK_TYPE_CONNECT,                 /* connect to peer with fork         */
+    HOOK_TYPE_LINE,                    /* new line in a buffer              */
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_HSIGNAL,                 /* signal (using hashtable)          */
@@ -100,6 +101,7 @@ enum t_hook_type
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 #define HOOK_PROCESS(hook, var) (((struct t_hook_process *)hook->hook_data)->var)
 #define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
+#define HOOK_LINE(hook, var) (((struct t_hook_line *)hook->hook_data)->var)
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
 #define HOOK_HSIGNAL(hook, var) (((struct t_hook_hsignal *)hook->hook_data)->var)
@@ -280,6 +282,24 @@ struct t_hook_connect
     /* sockets used if socketpair() is NOT available */
     int sock_v4[HOOK_CONNECT_MAX_SOCKETS];  /* IPv4 sockets for connecting  */
     int sock_v6[HOOK_CONNECT_MAX_SOCKETS];  /* IPv6 sockets for connecting  */
+};
+
+/* hook line */
+
+typedef struct t_hashtable *(t_hook_callback_line)(const void *pointer,
+                                                   void *data,
+                                                   struct t_hashtable *line);
+
+struct t_hook_line
+{
+    t_hook_callback_line *callback;    /* line callback                     */
+    int buffer_type;                   /* -1 = any type, ≥ 0: only this type*/
+    char **buffers;                    /* list of buffer masks where the    */
+                                       /* hook is executed (see the         */
+                                       /* function "buffer_match_list")     */
+    int num_buffers;                   /* number of buffers in list         */
+    int tags_count;                    /* number of tags selected           */
+    char ***tags_array;                /* tags selected (NULL = any)        */
 };
 
 /* hook print */
@@ -520,6 +540,14 @@ extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                                  gnutls_retr_st *answer);
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
 #endif /* HAVE_GNUTLS */
+extern struct t_hook *hook_line (struct t_weechat_plugin *plugin,
+                                 const char *buffer_type,
+                                 const char *buffer_name,
+                                 const char *tags,
+                                 t_hook_callback_line *callback,
+                                 const void *callback_pointer,
+                                 void *callback_data);
+extern void hook_line_exec (struct t_gui_line *line);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags, const char *message,

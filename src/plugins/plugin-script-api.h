@@ -203,6 +203,16 @@ extern struct t_hook *plugin_script_api_hook_connect (struct t_weechat_plugin *w
                                                                       const char *ip_address),
                                                       const char *function,
                                                       const char *data);
+extern struct t_hook *plugin_script_api_hook_line (struct t_weechat_plugin *weechat_plugin,
+                                                   struct t_plugin_script *script,
+                                                   const char *buffer_type,
+                                                   const char *buffer_name,
+                                                   const char *tags,
+                                                   struct t_hashtable *(*callback)(const void *pointer,
+                                                                                   void *data,
+                                                                                   struct t_hashtable *line),
+                                                   const char *function,
+                                                   const char *data);
 extern struct t_hook *plugin_script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                                                     struct t_plugin_script *script,
                                                     struct t_gui_buffer *buffer,

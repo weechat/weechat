@@ -79,6 +79,9 @@ char *gui_buffer_reserved_names[] =
   NULL
 };
 
+char *gui_buffer_type_string[GUI_BUFFER_NUM_TYPES] =
+{ "formatted", "free" };
+
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
@@ -117,6 +120,26 @@ char *gui_buffer_properties_set[] =
   NULL
 };
 
+
+/*
+ * Searches for buffer type.
+ *
+ * Returns pointer to hotlist found, NULL if not found.
+ */
+
+int
+gui_buffer_search_type (const char *type)
+{
+    int i;
+
+    for (i = 0; i < GUI_BUFFER_NUM_TYPES; i++)
+    {
+        if (string_strcasecmp (gui_buffer_type_string[i], type) == 0)
+            return i;
+    }
+
+    return -1;
+}
 
 /*
  * Gets plugin name of buffer.

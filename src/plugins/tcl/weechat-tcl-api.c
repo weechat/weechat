@@ -2763,6 +2763,62 @@ API_FUNC(hook_connect)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_tcl_api_hook_line_cb (const void *pointer, void *data,
+                              struct t_hashtable *line)
+{
+    struct t_plugin_script *script;
+    void *func_argv[2];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = line;
+
+        return (struct t_hashtable *)weechat_tcl_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "sh", func_argv);
+    }
+
+    return NULL;
+}
+
+API_FUNC(hook_line)
+{
+    Tcl_Obj *objp;
+    char *buffer_type, *buffer_name, *tags, *function, *data;
+    const char *result;
+    int i;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    if (objc < 6)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer_type = Tcl_GetStringFromObj (objv[1], &i);
+    buffer_name = Tcl_GetStringFromObj (objv[2], &i);
+    tags = Tcl_GetStringFromObj (objv[3], &i);
+    function = Tcl_GetStringFromObj (objv[4], &i);
+    data = Tcl_GetStringFromObj (objv[5], &i);
+
+    result = API_PTR2STR(plugin_script_api_hook_line (weechat_tcl_plugin,
+                                                      tcl_current_script,
+                                                      buffer_type,
+                                                      buffer_name,
+                                                      tags,
+                                                      &weechat_tcl_api_hook_line_cb,
+                                                      function,
+                                                      data));
+
+    API_RETURN_STRING(result);
+}
+
 int
 weechat_tcl_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
@@ -5611,6 +5667,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(hook_process);
     API_DEF_FUNC(hook_process_hashtable);
     API_DEF_FUNC(hook_connect);
+    API_DEF_FUNC(hook_line);
     API_DEF_FUNC(hook_print);
     API_DEF_FUNC(hook_signal);
     API_DEF_FUNC(hook_signal_send);

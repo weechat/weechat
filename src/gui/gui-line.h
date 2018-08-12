@@ -37,6 +37,7 @@ struct t_gui_line_data
     int tags_count;                    /* number of tags for line           */
     char **tags_array;                 /* tags for line                     */
     char displayed;                    /* 1 if line is displayed            */
+    char notify_level;                 /* notify level for the line         */
     char highlight;                    /* 1 if line has highlight           */
     char refresh_needed;               /* 1 if refresh asked (free buffer)  */
     char *prefix;                      /* prefix for line (may be NULL)     */
@@ -102,18 +103,23 @@ extern void gui_line_compute_buffer_max_length (struct t_gui_buffer *buffer,
 extern void gui_line_compute_prefix_max_length (struct t_gui_lines *lines);
 extern void gui_line_mixed_free_buffer (struct t_gui_buffer *buffer);
 extern void gui_line_mixed_free_all (struct t_gui_buffer *buffer);
+extern void gui_line_free_data (struct t_gui_line *line);
 extern void gui_line_free (struct t_gui_buffer *buffer,
                            struct t_gui_line *line);
 extern void gui_line_free_all (struct t_gui_buffer *buffer);
 extern int gui_line_get_notify_level (struct t_gui_line *line);
-extern struct t_gui_line *gui_line_add (struct t_gui_buffer *buffer,
+extern struct t_gui_line *gui_line_new (struct t_gui_buffer *buffer,
+                                        int y,
                                         time_t date,
                                         time_t date_printed,
                                         const char *tags,
                                         const char *prefix,
                                         const char *message);
-extern void gui_line_add_y (struct t_gui_buffer *buffer, int y,
-                            const char *message);
+extern void gui_line_hook_update (struct t_gui_line *line,
+                                  struct t_hashtable *hashtable,
+                                  struct t_hashtable *hashtable2);
+extern void gui_line_add (struct t_gui_line *line);
+extern void gui_line_add_y (struct t_gui_line *line);
 extern void gui_line_clear (struct t_gui_line *line);
 extern void gui_line_mix_buffers (struct t_gui_buffer *buffer);
 extern struct t_hdata *gui_line_hdata_lines_cb (const void *pointer,

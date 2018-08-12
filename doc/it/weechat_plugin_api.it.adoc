@@ -9402,6 +9402,271 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
                             "my_connect_cb", "")
 ----
 
+==== hook_line
+
+_WeeChat ≥ 2.3._
+
+Hook a line printed in a buffer.
+
+When a line is printed in a buffer, hooks are called in this order:
+
+* <<_hook_line,hook line>> (this hook)
+* <<_hook_modifier,hook modifier>>: <<hook_modifier_weechat_print,weechat_print>>
+* <<_hook_print,hook print>>
+
+Prototipo:
+
+[source,C]
+----
+struct t_hook *weechat_hook_line (const char *buffer_type,
+                                  const char *buffer_name,
+                                  const char *tags,
+                                  struct t_hashtable *(*callback)(const void *pointer,
+                                                                  void *data,
+                                                                  struct t_hashtable *line),
+                                  const void *callback_pointer,
+                                  void *callback_data);
+----
+
+Argomenti:
+
+* _buffer_type_: catch lines on the given buffer type (if NULL or empty string,
+  _formatted_ is the default):
+** _formatted_: catch lines on formatted buffers only (default)
+** _free_: catch lines on buffers with free content only
+** _*_: catch lines on all buffer types
+* _buffer_name_: comma-separated list of buffer masks
+  (see <<_buffer_match_list,buffer_match_list>>); NULL, empty string or "*"
+  matches any buffer
+* _tags_: catch only messages with these tags (optional): comma-separated list
+   of tags that must be in message (logical "or"); it is possible to combine
+   many tags as a logical "and" with separator `+++`; wildcard `+*+` is allowed
+   in tags
+* _callback_: function called when a line is added in a buffer, arguments and
+  return value:
+** _const void *pointer_: pointer
+** _void *data_: pointer
+** _struct t_hashtable *line_: hashtable with the line info, keys and values are
+   strings (see table below)
+** return value: hashtable with new values (see table below)
+* _callback_pointer_: pointer given to callback when it is called by WeeChat
+* _callback_data_: pointer given to callback when it is called by WeeChat;
+  if not NULL, it must have been allocated with malloc (or similar function)
+  and it is automatically freed when the hook is deleted
+
+Valore restituito:
+
+* puntatore al nuovo hook, NULL in caso di errore
+
+Line data sent to the callback is a hashtable, with following values
+(keys and values are strings):
+
+[width="100%",cols="^1,3,3,2",options="header"]
+|===
+| Key | Value (formatted buffer) | Value (free buffer) | Examples
+
+| buffer |
+  Buffer pointer. |
+  Buffer pointer. |
+  `+0x12345678+`
+
+| buffer_name |
+  Buffer name. |
+  Buffer name. |
+  `+core.weechat+` +
+  `+irc.server.freenode+` +
+  `+irc.freenode.#weechat+`
+
+| buffer_type |
+  "formatted" |
+  "free" |
+  `+formatted+` +
+  `+free+`
+
+| y |
+  N/A ("-1"). |
+  Line number (≥ "0"). |
+  `+-1+` +
+  `+8+`
+
+| date |
+  Line date (timestamp). |
+  N/A ("0"). |
+  `+1533792000+`
+
+| date_printed |
+  Date when line was displayed (timestamp). |
+  N/A ("0"). |
+  `+1533792012+`
+
+| str_time |
+  Date for display (possible color codes inside). |
+  N/A (empty string). |
+  `+09:07:20+`
+
+| tags_count |
+  Number of tags in the line (≥ "0"). |
+  N/A ("0"). |
+  `+2+`
+
+| tags |
+  Comma-separated list of tags. |
+  N/A (empty string). |
+  `+irc_join,nick_test+`
+
+| displayed |
+  "0" = line is filtered (hidden) +
+  "1" = line is not filtered (displayed). |
+  "0" = line is filtered (hidden) +
+  "1" = line is not filtered (displayed). |
+  `+0+` +
+  `+1+`
+
+| notify_level |
+  "0" = low level +
+  "1" = message +
+  "2" = private message +
+  "3" = highlight |
+  N/A ("0"). |
+  `+2+`
+
+| highlight |
+  "0" = no highlight +
+  "1" = line has highlight. |
+  N/A ("0"). |
+  `+0+` +
+  `+1+`
+
+| prefix |
+  Prefix of the line. |
+  N/A (empty string). |
+  `+-->+`
+
+| message |
+  Message of the line. |
+  Message of the line. |
+  `+test (~test@example.com) has joined #channel+`
+|===
+
+The callback can return a hashtable with some fields to update the line.
+Any invalid value in a field is silently ignored by WeeChat.
+
+The following keys can be set in the hashtable (keys and values are strings
+in this hashtable):
+
+[width="100%",cols="^1,2,2,5",options="header"]
+|===
+| Key | Allowed value (formatted buffer) | Allowed value (free buffer) | Result
+
+| buffer |
+  Pointer of a buffer with formatted content. |
+  Pointer of a buffer with free content. |
+  The line is displayed on this buffer. +
+  If the value is empty, the line is deleted (anything else in the hashtable
+  is then ignored); the next hooks of type "line" are not called.
+
+| buffer_name |
+  Name of a buffer with formatted content. |
+  Name of a buffer with free content. |
+  The line is displayed on this buffer. +
+  If `buffer` is also set, the value of `buffer_name` has higher priority and is used. +
+  If the value is empty, the line is deleted (anything else in the hashtable
+  is then ignored); the next hooks of type "line" are not called.
+
+| y |
+  N/A. |
+  Integer (≥ "0"). |
+  The line number is set to this value.
+
+| date |
+  Timestamp. |
+  N/A. |
+  The date is set to this value. +
+  The value of `str_time` is updated accordingly.
+
+| date_printed |
+  Timestamp. |
+  N/A. |
+  The printed date is set to this timestamp (not displayed).
+
+| str_time |
+  String. |
+  N/A. |
+  This string is used to display the date line. +
+  If `date` is also set, the value of `str_time` has higher priority and is used.
+
+| tags |
+  String. |
+  N/A. |
+  The line tags are replaced with this comma-separated list of tags. +
+  The values of `notify_level` and `highlight` are updated accordingly.
+
+| notify_level |
+  Integer ("0" to "3"). |
+  N/A. |
+  The notify level is set to this value. The hotlist will be updated
+  accordingly once the line is added in the buffer. +
+  The value of `highlight` is updated accordingly. +
+  If `tags` is also set, the value of `notify_level` has higher priority and is used.
+
+| highlight |
+  Integer ("0" or "1"). |
+  N/A. |
+  "0" disables highlight on the line, "1" forces a highlight on the line. +
+  If `tags` or `notify_level` are set, the value of `highlight` has higher
+  priority and is used.
+
+| prefix |
+  String. |
+  N/A. |
+  The line prefix is set to this value.
+
+| message |
+  String. |
+  String. |
+  The line message is set to this value.
+|===
+
+Esempio in C:
+
+[source,C]
+----
+int
+my_line_cb (const void *pointer, void *data, struct t_hasbtable *line)
+{
+    struct t_hashtable *hashtable;
+
+    hashtable = weechat_hashtable_new (8,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    /* force a highlight on the line */
+    weechat_hashtable_set (hashtable, "highlight", "1");
+    return hashtable;
+}
+
+/* catch lines with tag "irc_join" */
+struct t_hook *my_line_hook =
+    weechat_hook_line ("", "", "irc_join", &my_line_cb, NULL, NULL);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototipo
+hook = weechat.hook_line(buffer_type, buffer_name, tags, callback, callback_data)
+
+# esempio
+def my_line_cb(data, line):
+    # force a highlight on the line
+    return {"highlight": "1"}
+
+# catch lines with tag "irc_join"
+hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
+----
+
 ==== hook_print
 
 // TRANSLATION MISSING
@@ -11099,62 +11364,62 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modificatore | Dati modificatore | Stringa | Output
 
-| charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode |
   plugin.buffer_name |
   Qualsiasi stringa. |
   Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8.
 
-| charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode |
   plugin.buffer_name |
   Qualsiasi stringa. |
   Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer.
 
 // TRANSLATION MISSING
-| irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with IRC colors converted to WeeChat colors (or IRC colors removed).
 
 // TRANSLATION MISSING
-| irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with IRC colors (or IRC colors removed).
 
 // TRANSLATION MISSING
-| irc_color_decode_ansi +
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with ANSI colors converted to IRC colors (or ANSI colors removed).
 
 // TRANSLATION MISSING
-| irc_command_auth +
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nome server |
   Authentication command (for example: `+/msg nickserv identify password+`). |
   Command with hidden password (for example: `+/msg nickserv identify ********+`).
 
 // TRANSLATION MISSING
-| irc_message_auth +
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nome server |
   Message displayed after `/msg` sent to nickserv. |
   Message with hidden password.
 
-| irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). |
   Nuovo contenuto del messaggio.
 
-| irc_in2_xxx ^(1)^ +
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.5)_ |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (dopo la codifica del set caratteri). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| irc_out1_xxx ^(1)^ +
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nome server |
   Content of message about to be sent to IRC server before automatic split
@@ -11162,52 +11427,52 @@ List of modifiers used by WeeChat and plugins:
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
   Nome server |
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
 // TRANSLATION MISSING
-| color_decode_ansi +
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" per mantenere i colori, "0" per rimuovere i colori |
   Qualsiasi stringa. |
   String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
-| bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |
   Stringa vuota. |
   "1" per visualizzare la barra, "0" per nasconderla.
 
-| history_add +
+| [[hook_modifier_history_add]] history_add +
   _(WeeChat ≥ 0.3.2)_ |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale). |
   Stringa aggiunta alla cronologia comandi.
 
-| input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando. |
   Nuovo contenuto della riga di comando.
 
-| input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando, senza tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
-| input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando, con tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
-| input_text_for_buffer +
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
   Stringa con puntatore al buffer ("0x123..") |
   Contenuto della riga di comando inviata al buffer (testo o comando). |
   Nuovo contenuto della riga di comando inviata al buffer.
 
-| weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print |
   plugin + ";" + buffer_name + ";" + tags |
   Messaggio stampato. |
   Nuovo messaggio stampato.

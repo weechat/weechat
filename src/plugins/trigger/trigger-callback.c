@@ -227,6 +227,7 @@ void
 trigger_callback_replace_regex (struct t_trigger *trigger,
                                 struct t_hashtable *pointers,
                                 struct t_hashtable *extra_vars,
+                                struct t_weelist *vars_updated,
                                 int display_monitor)
 {
     char *value;
@@ -312,6 +313,11 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
                                           weechat_color ("chat_delimiters"));
             }
             weechat_hashtable_set (extra_vars, ptr_key, value);
+            if (vars_updated)
+            {
+                weechat_list_add (vars_updated, ptr_key, WEECHAT_LIST_POS_END,
+                                  NULL);
+            }
             free (value);
         }
     }
@@ -392,7 +398,8 @@ void
 trigger_callback_execute (struct t_trigger *trigger,
                           struct t_gui_buffer *buffer,
                           struct t_hashtable *pointers,
-                          struct t_hashtable *extra_vars)
+                          struct t_hashtable *extra_vars,
+                          struct t_weelist *vars_updated)
 {
     int display_monitor;
 
@@ -409,7 +416,7 @@ trigger_callback_execute (struct t_trigger *trigger,
     {
         /* replace text with regex */
         trigger_callback_replace_regex (trigger, pointers, extra_vars,
-                                        display_monitor);
+                                        vars_updated, display_monitor);
 
         /* execute command(s) */
         trigger_callback_run_command (trigger, buffer, pointers, extra_vars,
@@ -521,7 +528,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_signal_data", ptr_signal_data);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -569,7 +576,7 @@ trigger_callback_hsignal_cb (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_signal", signal);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -753,7 +760,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars, NULL);
 
 end:
     ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
@@ -766,6 +773,126 @@ end:
         free (string_no_color);
 
     TRIGGER_CALLBACK_CB_END(string_modified);
+}
+
+/*
+ * Callback for a line hooked.
+ */
+
+struct t_hashtable *
+trigger_callback_line_cb (const void *pointer, void *data,
+                          struct t_hashtable *line)
+{
+    struct t_hashtable *hashtable;
+    struct t_gui_buffer *buffer;
+    struct t_weelist_item *ptr_item;
+    long unsigned int value;
+    const char *ptr_key, *ptr_value;
+    char **tags, *str_tags;
+    int rc, num_tags, length;
+
+    TRIGGER_CALLBACK_CB_INIT(NULL);
+
+    hashtable = NULL;
+
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_VARS_UPDATED;
+
+    extra_vars = weechat_hashtable_dup (line);
+
+    weechat_hashtable_remove (extra_vars, "buffer");
+    weechat_hashtable_remove (extra_vars, "tags_count");
+    weechat_hashtable_remove (extra_vars, "tags");
+
+    /* add data in hashtables used for conditions/replace/command */
+    ptr_value = weechat_hashtable_get (line, "buffer");
+    if (!ptr_value || (ptr_value[0] != '0') || (ptr_value[1] != 'x'))
+        goto end;
+    rc = sscanf (ptr_value + 2, "%lx", &value);
+    if ((rc == EOF) || (rc < 1))
+        goto end;
+    buffer = (void *)value;
+
+    weechat_hashtable_set (pointers, "buffer", buffer);
+    ptr_value = weechat_hashtable_get (line, "tags");
+    tags = weechat_string_split ((ptr_value) ? ptr_value : "", ",", 0, 0,
+                                 &num_tags);
+
+    /* build string with tags and commas around: ",tag1,tag2,tag3," */
+    length = 1 + strlen ((ptr_value) ? ptr_value : "") + 1 + 1;
+    str_tags = malloc (length);
+    if (str_tags)
+    {
+        snprintf (str_tags, length, ",%s,",
+                  (ptr_value) ? ptr_value : "");
+        weechat_hashtable_set (extra_vars, "tg_tags", str_tags);
+        free (str_tags);
+    }
+
+    if (!trigger_callback_set_tags (buffer, (const char **)tags, num_tags,
+                                    extra_vars))
+    {
+        goto end;
+    }
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars,
+                              vars_updated);
+
+    hashtable = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    if (hashtable)
+    {
+        /* copy updated variables into the result "hashtable" */
+        for (ptr_item = weechat_list_get (vars_updated, 0); ptr_item;
+             ptr_item = weechat_list_next (ptr_item))
+        {
+            ptr_key = weechat_list_string (ptr_item);
+            if (weechat_hashtable_has_key (extra_vars, ptr_key))
+            {
+                if (strcmp (ptr_key, "tg_tags") == 0)
+                {
+                    /*
+                     * remove commas at the beginning/end of tg_tags and
+                     * rename the key to "tags"
+                     */
+                    ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
+                    if (ptr_value && ptr_value[0])
+                    {
+                        str_tags = strdup (
+                            (ptr_value[0] == ',') ? ptr_value + 1 : ptr_value);
+                        if (str_tags)
+                        {
+                            if (str_tags[0]
+                                && (str_tags[strlen (str_tags) - 1] == ','))
+                            {
+                                str_tags[strlen (str_tags) - 1] = '\0';
+                            }
+                            weechat_hashtable_set (hashtable,
+                                                   "tags", str_tags);
+                            free (str_tags);
+                        }
+                    }
+                    else
+                    {
+                        weechat_hashtable_set (hashtable, "tags", ptr_value);
+                    }
+                }
+                else
+                {
+                    weechat_hashtable_set (
+                        hashtable,
+                        ptr_key,
+                        weechat_hashtable_get (extra_vars, ptr_key));
+                }
+            }
+        }
+    }
+
+end:
+    TRIGGER_CALLBACK_CB_END(hashtable);
 }
 
 /*
@@ -840,7 +967,7 @@ trigger_callback_print_cb  (const void *pointer, void *data,
         goto end;
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -874,7 +1001,7 @@ trigger_callback_command_cb  (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -899,7 +1026,7 @@ trigger_callback_command_run_cb  (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_command", command);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars);
+    trigger_callback_execute (trigger, buffer, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -949,7 +1076,7 @@ trigger_callback_timer_cb  (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -972,7 +1099,7 @@ trigger_callback_config_cb  (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_value", value);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars);
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(trigger_rc);
@@ -1011,7 +1138,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, info);
+    trigger_callback_execute (trigger, NULL, pointers, info, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(info);

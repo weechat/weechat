@@ -236,6 +236,7 @@ extern int gui_buffers_visited_count;
 extern int gui_buffers_visited_frozen;
 extern struct t_gui_buffer *gui_buffer_last_displayed;
 extern char *gui_buffer_reserved_names[];
+extern char *gui_buffer_type_string[];
 extern char *gui_buffer_notify_string[];
 extern char *gui_buffer_properties_get_integer[];
 extern char *gui_buffer_properties_get_string[];
@@ -244,6 +245,7 @@ extern char *gui_buffer_properties_set[];
 
 /* buffer functions */
 
+extern int gui_buffer_search_type (const char *type);
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);

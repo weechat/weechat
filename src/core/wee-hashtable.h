@@ -24,6 +24,34 @@ struct t_hashtable;
 struct t_infolist;
 struct t_infolist_item;
 
+/*
+ * Macros to set various values as string value in the hashtable;
+ * variable hashtable must be defined and str_value must be a static
+ * area where the value as string will be put (the size must be large enough
+ * for any value stored with these macros).
+ */
+#define HASHTABLE_SET_STR(__name, __string)                              \
+    hashtable_set (hashtable, __name, __string);
+#define HASHTABLE_SET_STR_NOT_NULL(__name, __string)                     \
+    hashtable_set (hashtable, __name, (__string) ? __string : "");
+#define HASHTABLE_SET_INT(__name, __int)                                 \
+    snprintf (str_value, sizeof (str_value), "%d", __int);               \
+    hashtable_set (hashtable, __name, str_value);
+#define HASHTABLE_SET_TIME(__name, __time)                               \
+    snprintf (str_value, sizeof (str_value), "%lld", (long long)__time); \
+    hashtable_set (hashtable, __name, str_value);
+#define HASHTABLE_SET_PTR(__name, __pointer)                             \
+    if (__pointer)                                                       \
+    {                                                                    \
+        snprintf (str_value, sizeof (str_value),                         \
+                  "0x%lx", (long unsigned int)__pointer);                \
+        hashtable_set (hashtable, __name, str_value);                    \
+    }                                                                    \
+    else                                                                 \
+    {                                                                    \
+        hashtable_set (hashtable, __name, "");                           \
+    }
+
 typedef unsigned long long (t_hashtable_hash_key)(struct t_hashtable *hashtable,
                                                   const void *key);
 typedef int (t_hashtable_keycmp)(struct t_hashtable *hashtable,

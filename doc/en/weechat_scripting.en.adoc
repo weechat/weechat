@@ -517,6 +517,7 @@ List of functions in script API:
   hook_process +
   hook_process_hashtable +
   hook_connect +
+  hook_line +
   hook_print +
   hook_signal +
   hook_signal_send +

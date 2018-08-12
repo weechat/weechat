@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20180520-01"
+#define WEECHAT_PLUGIN_API_VERSION "20180812-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -709,6 +709,15 @@ struct t_weechat_plugin
                                                     const char *ip_address),
                                     const void *callback_pointer,
                                     void *callback_data);
+    struct t_hook *(*hook_line) (struct t_weechat_plugin *plugin,
+                                 const char *buffer_type,
+                                 const char *buffer_name,
+                                 const char *tags,
+                                 struct t_hashtable *(*callback)(const void *pointer,
+                                                                 void *data,
+                                                                 struct t_hashtable *line),
+                                 const void *callback_pointer,
+                                 void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   const char *tags,
@@ -1645,6 +1654,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                    __gnutls_priorities,                 \
                                    __local_hostname,                    \
                                    __callback, __pointer, __data)
+#define weechat_hook_line(_buffer_type, __buffer_name, __tags,          \
+                          __callback, __pointer, __data)                \
+    (weechat_plugin->hook_line)(weechat_plugin, _buffer_type,           \
+                                __buffer_name, __tags, __callback,      \
+                                __pointer, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \
                            __callback, __pointer, __data)               \
     (weechat_plugin->hook_print)(weechat_plugin, __buffer, __tags,      \

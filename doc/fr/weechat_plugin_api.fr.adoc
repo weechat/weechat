@@ -1419,7 +1419,7 @@ Paramètres :
 * _reference_char_ : le caractère utilisé pour les références aux
   correspondances (en général `+$+`)
 * _callback_ : une fonction de rappel optionnelle appelé pour chaque référence
-  dans _replace_ (sauf pour les correspondances remplacées par un caractère);
+  dans _replace_ (sauf pour les correspondances remplacées par un caractère) ;
   la fonction de rappel doit retourner :
 ** une chaîne nouvellement allouée : elle est utilisée en texte de remplacement
    (elle est libérée après utilisation)
@@ -2035,7 +2035,7 @@ Paramètres :
 * _expr_ : l'expression à évaluer (voir les <<eval_conditions,conditions>> et
   <<eval_variables,variables>>)
 * _pointers_ : table de hachage avec les pointeurs (les clés doivent être des
-  chaînes, les valeurs doivent être des pointeurs); les pointeurs "window" et
+  chaînes, les valeurs doivent être des pointeurs) ; les pointeurs "window" et
   "buffer" sont automatiquement ajoutés s'ils ne sont pas dans la table de
   hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL) :
 ** _regex_ : pointeur vers une expression régulière (structure _regex_t_)
@@ -9286,6 +9286,282 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
                             "my_connect_cb", "")
 ----
 
+==== hook_line
+
+_WeeChat ≥ 2.3._
+
+Intercepter une ligne affichée dans un tampon.
+
+Lorsqu'une ligne est affichée dans un tampon, les "hooks" suivants sont
+appelés dans cet ordre :
+
+* <<_hook_line,hook line>> (ce "hook")
+* <<_hook_modifier,hook modifier>>: <<hook_modifier_weechat_print,weechat_print>>
+* <<_hook_print,hook print>>
+
+Prototype :
+
+[source,C]
+----
+struct t_hook *weechat_hook_line (const char *buffer_type,
+                                  const char *buffer_name,
+                                  const char *tags,
+                                  struct t_hashtable *(*callback)(const void *pointer,
+                                                                  void *data,
+                                                                  struct t_hashtable *line),
+                                  const void *callback_pointer,
+                                  void *callback_data);
+----
+
+Paramètres :
+
+* _buffer_type_ : intercepter les lignes affichées sur ce type de tampon
+  (si NULL ou chaîne vide, _formatted_ est utilisé par défaut) :
+** _formatted_ : intercepter les lignes sur un tampon avec contenu formaté
+   seulement (par défaut)
+** _free_ : intercepter les lignes sur un tampon avec contenu libre seulement
+** _*_ : intercepter les lignes sur tous les types de tampons
+* _buffer_name_ : liste de masques de tampons séparés par des virgules
+  (voir <<_buffer_match_list,buffer_match_list>>); NULL, chaîne vide ou "*"
+  correspondent à n'importe quel tampon
+* _tags_ : intercepter seulement les messages avec ces étiquettes (optionnel) :
+  liste d'étiquettes (séparées par des virgules) qui doivent être dans le message
+  ("ou" logique); il est possible de combiner plusieurs étiquettes sous forme
+  d'un "et" logique avec le séparateur `+++`; le caractère joker `+*+` est
+  autorisé dans les étiquettes
+* _callback_ : fonction appelée lorsqu'une ligne est ajoutée dans un tampon,
+  paramètres et valeur de retour :
+** _const void *pointer_ : pointeur
+** _void *data_ : pointeur
+** _struct t_hashtable *line_ : table de hachage avec les informations sur la ligne,
+   les clés et valeurs sont des chaînes (voir le tableau ci-dessous)
+** valeur de retour : table de hachage avec les nouvelles valeurs
+   (voir le tableau ci-dessous)
+* _callback_pointer_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat
+* _callback_data_ : pointeur donné à la fonction de rappel lorsqu'elle est
+  appelée par WeeChat; si non NULL, doit avoir été alloué par malloc (ou une
+  fonction similaire) et est automatiquement libéré (par free) lorsque le
+  "hook" est supprimé
+
+Valeur de retour :
+
+* pointeur vers le nouveau "hook", NULL en cas d'erreur
+
+Les données de la ligne envoyées à la fonction de rappel sont dans une table
+de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes) :
+
+[width="100%",cols="^1,3,3,2",options="header"]
+|===
+| Clé | Valeur (tampon formaté) | Valeur (tampon libre) | Exemples
+
+| buffer |
+  Pointeur vers le tampon. |
+  Pointeur vers le tampon. |
+  `+0x12345678+`
+
+| buffer_name |
+  Nom du tampon. |
+  Nom du tampon. |
+  `+core.weechat+` +
+  `+irc.server.freenode+` +
+  `+irc.freenode.#weechat+`
+
+| buffer_type |
+  "formatted" |
+  "free" |
+  `+formatted+` +
+  `+free+`
+
+| y |
+  N/A ("-1"). |
+  Numéro de ligne (≥ "0"). |
+  `+-1+` +
+  `+8+`
+
+| date |
+  Date de la ligne (horodatage). |
+  N/A ("0"). |
+  `+1533792000+`
+
+| date_printed |
+  Date d'affichage de la ligne (horodatage). |
+  N/A ("0"). |
+  `+1533792012+`
+
+| str_time |
+  Date pour l'affichage (elle peut contenir des codes couleur). |
+  N/A (chaîne vide). |
+  `+09:07:20+`
+
+| tags_count |
+  Nombre d'étiquettes dans la ligne (≥ "0"). |
+  N/A ("0"). |
+  `+2+`
+
+| tags |
+  Liste des étiquettes séparées par des virgules. |
+  N/A (chaîne vide). |
+  `+irc_join,nick_test+`
+
+| displayed |
+  "0" = la ligne est filtrée (cachée) +
+  "1" = la ligne n'est pas filtrée (affichée). |
+  "0" = la ligne est filtrée (cachée) +
+  "1" = la ligne n'est pas filtrée (affichée). |
+  `+0+` +
+  `+1+`
+
+| notify_level |
+  "0" = niveau bas +
+  "1" = message +
+  "2" = message privé +
+  "3" = highlight |
+  N/A ("0"). |
+  `+2+`
+
+| highlight |
+  "0" = pas de highlight +
+  "1" = la ligne a un highlight. |
+  N/A ("0"). |
+  `+0+` +
+  `+1+`
+
+| prefix |
+  Préfixe de la ligne. |
+  N/A (chaîne vide). |
+  `+-->+`
+
+| message |
+  Message de la ligne. |
+  Message de la ligne. |
+  `+test (~test@example.com) a rejoint #canal+`
+|===
+
+La fonction de retour peut retourner une table de hachage avec quelques champs
+pour mettre à jour la ligne.
+Toute valeur invalide dans un champ est silencieusement ignorée par WeeChat.
+
+Les clés suivantes peuvent être définies dans la table de hachage (les clés et
+valeurs sont des chaînes dans cette table de hachage) :
+
+[width="100%",cols="^1,2,2,5",options="header"]
+|===
+| Clé | Valeur autorisée (tampon formaté) | Valeur autorisée (tampon libre) | Résultat
+
+| buffer |
+  Pointeur vers un tampon avec contenu formaté. |
+  Pointeur vers un tampon avec contenu libre. |
+  La ligne est affichée sur ce tampon. +
+  Si la valeur est vide, la ligne est supprimée (le reste de la table de hachage
+  est alors ignoré) ; les "hooks" suivants de type "line" ne sont pas appelés.
+
+| buffer_name |
+  Nom d'un tampon avec contenu formaté. |
+  Nom d'un tampon avec contenu libre. |
+  La ligne est affichée sur ce tampon. +
+  Si `buffer` est également défini, la valeur de `buffer_name` a une priorité
+  plus haute est est utilisée. +
+  Si la valeur est vide, la ligne est supprimée (le reste de la table de hachage
+  est alors ignoré) ; les "hooks" suivants de type "line" ne sont pas appelés.
+
+| y |
+  N/A. |
+  Entier (≥ "0"). |
+  Le numéro de ligne est positionné à cette valeur.
+
+| date |
+  Horodatage. |
+  N/A. |
+  La date est positionnée à cet horodatage. +
+  La valeur de `str_time` est mise à jour en conséquence.
+
+| date_printed |
+  Horodatage. |
+  N/A. |
+  La date d'affichage est positionnée à cet horodatage (non affichée).
+
+| str_time |
+  Chaîne. |
+  N/A. |
+  Cette chaîne est utilisée pour afficher la date de la ligne. +
+  Si `date` est également défini, la valeur de `str_time` a une priorité plus
+  haute et est utilisée.
+
+| tags |
+  Chaîne. |
+  N/A. |
+  Les étiquettes de la ligne sont remplacées avec cette liste d'étiquettes
+  (séparées par des virgules). +
+  Les valeurs de `notify_level` et `highlight` sont mises à jour en conséquence.
+
+| notify_level |
+  Entier ("0" à "3"). |
+  N/A. |
+  Le niveau de notification est positionné à cette valeur. La hotlist sera mise
+  à jour en conséquence une fois que la ligne sera ajoutée dans la tampon. +
+  La valeur de `highlight` est mise à jours en conséquence. +
+  Si `tags` est également défini, la valeur de `notify_level` a une priorité
+  plus haute et est utilisée.
+
+| highlight |
+  Entier ("0" ou "1"). |
+  N/A. |
+  "0" désactive le highlight sur la ligne, "1" force un highlight sur la ligne. +
+  Si `tags` ou `notify_level` sont définis, la valeur de `highlight` a une
+  priorité plus haute et est utilisée.
+
+| prefix |
+  Chaîne. |
+  N/A. |
+  Le préfixe de la ligne est positionné à cette valeur.
+
+| message |
+  Chaîne. |
+  Chaîne. |
+  Le message de la ligne est positionné à cette valeur.
+|===
+
+Exemple en C :
+
+[source,C]
+----
+int
+my_line_cb (const void *pointer, void *data, struct t_hasbtable *line)
+{
+    struct t_hashtable *hashtable;
+
+    hashtable = weechat_hashtable_new (8,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL,
+                                       NULL);
+    /* forcer un highlight sur la ligne */
+    weechat_hashtable_set (hashtable, "highlight", "1");
+    return hashtable;
+}
+
+/* intercepter les lignes avec l'étiquette "irc_join" */
+struct t_hook *my_line_hook =
+    weechat_hook_line ("", "", "irc_join", &my_line_cb, NULL, NULL);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+hook = weechat.hook_line(buffer_type, buffer_name, tags, callback, callback_data)
+
+# exemple
+def my_line_cb(data, line):
+    # forcer un highlight sur la ligne
+    return {"highlight": "1"}
+
+# intercepter les lignes avec l'étiquette "irc_join"
+hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
+----
+
 ==== hook_print
 
 _Mis à jour dans la 0.4.3, 1.0, 1.5._
@@ -10885,115 +11161,115 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 |===
 | Modificateur | Données du modificateur | Chaîne | Sortie
 
-| charset_decode |
+| [[hook_modifier_charset_decode]] charset_decode |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne décodée depuis le jeu de caractères trouvé pour l'extension/tampon
   vers UTF-8.
 
-| charset_encode |
+| [[hook_modifier_charset_encode]] charset_encode |
   extension.nom_tampon |
   Toute chaîne. |
   Chaîne encodée depuis UTF-8 vers le jeu de caractères trouvé pour
   l'extension/tampon.
 
-| irc_color_decode |
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
   couleurs IRC supprimées).
 
-| irc_color_encode |
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
 
-| irc_color_decode_ansi +
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
   ANSI supprimées).
 
-| irc_command_auth +
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nom du serveur |
   Commande d'authentification (par exemple : `+/msg nickserv identify password+`). |
   Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`).
 
-| irc_message_auth +
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
   _(WeeChat ≥ 0.4.1)_ |
   Nom du serveur |
   Message affiché après `msg` envoyé à nickserv. |
   Message avec le mot de passe caché.
 
-| irc_in_xxx ^(1)^ |
+| [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). |
   Nouveau contenu du message.
 
-| irc_in2_xxx ^(1)^ +
+| [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.5)_ |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (après décodage du jeu de caractères). |
   Nouveau contenu du message.
 
-| irc_out1_xxx ^(1)^ +
+| [[hook_modifier_irc_out1_xxx]] irc_out1_xxx ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC avant découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| irc_out_xxx ^(1)^ |
+| [[hook_modifier_irc_out_xxx]] irc_out_xxx ^(1)^ |
   Nom de serveur |
   Contenu du message qui va être envoyé au serveur IRC après découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
 
-| color_decode_ansi +
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
   _(WeeChat ≥ 1.0)_ |
   "1" pour garder les couleurs, "0" pour les supprimer |
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
   couleurs ANSI supprimées).
 
-| bar_condition_yyy ^(2)^ |
+| [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   Chaîne avec un pointeur vers la fenêtre ("0x123..") |
   Chaîne vide. |
   "1" pour afficher la barre, "0" pour la cacher.
 
-| history_add +
+| [[hook_modifier_history_add]] history_add +
   _(WeeChat ≥ 0.3.2)_ |
   Chaîne avec un pointeur vers le tampon ("0x123..") |
   Contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global). |
   Chaîne ajoutée à l'historique des commandes.
 
-| input_text_content |
+| [[hook_modifier_input_text_content]] input_text_content |
   Chaîne avec un pointeur vers le tampon ("0x123..") |
   Contenu de la ligne de commande. |
   Nouvelle chaîne pour la ligne de commande.
 
-| input_text_display |
+| [[hook_modifier_input_text_display]] input_text_display |
   Chaîne avec un pointeur vers le tampon ("0x123..") |
   Contenu de la ligne de commande, sans le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| input_text_display_with_cursor |
+| [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
   Chaîne avec un pointeur vers le tampon ("0x123..") |
   Contenu de la ligne de commande, avec le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
-| input_text_for_buffer +
+| [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
   Chaîne avec un pointeur vers le tampon ("0x123..") |
   Contenu de la ligne de commande envoyée au tampon (texte ou commande). |
   Nouveau contenu de la ligne de commande envoyée au tampon.
 
-| weechat_print |
+| [[hook_modifier_weechat_print]] weechat_print |
   extension + ";" + nom_tampon + ";" + étiquettes |
   Message affiché. |
   Nouveau message affiché.

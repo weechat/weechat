@@ -658,6 +658,48 @@ plugin_script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Hooks a line.
+ *
+ * Returns pointer to new hook, NULL if error.
+ */
+
+struct t_hook *
+plugin_script_api_hook_line (struct t_weechat_plugin *weechat_plugin,
+                             struct t_plugin_script *script,
+                             const char *buffer_type,
+                             const char *buffer_name,
+                             const char *tags,
+                             struct t_hashtable *(*callback)(const void *pointer,
+                                                             void *data,
+                                                             struct t_hashtable *line),
+                             const char *function,
+                             const char *data)
+{
+    char *function_and_data;
+    struct t_hook *new_hook;
+
+    if (!script)
+        return NULL;
+
+    function_and_data = plugin_script_build_function_and_data (function, data);
+
+    new_hook = weechat_hook_line (buffer_type, buffer_name, tags, callback,
+                                  script, function_and_data);
+
+    if (new_hook)
+    {
+        weechat_hook_set (new_hook, "subplugin", script->name);
+    }
+    else
+    {
+        if (function_and_data)
+            free (function_and_data);
+    }
+
+    return new_hook;
+}
+
+/*
  * Hooks a message printed by WeeChat.
  *
  * Returns pointer to new hook, NULL if error.

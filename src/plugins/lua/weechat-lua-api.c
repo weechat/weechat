@@ -2583,6 +2583,60 @@ API_FUNC(hook_connect)
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_lua_api_hook_line_cb (const void *pointer, void *data,
+                              struct t_hashtable *line)
+{
+    struct t_plugin_script *script;
+    void *func_argv[2];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = line;
+
+        return (struct t_hashtable *)weechat_lua_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "sh", func_argv);
+    }
+
+    return NULL;
+}
+
+API_FUNC(hook_line)
+{
+    const char *buffer_type, *buffer_name, *tags, *function, *data;
+    const char *result;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 5)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer_type = lua_tostring (L, -5);
+    buffer_name = lua_tostring (L, -4);
+    tags = lua_tostring (L, -3);
+    function = lua_tostring (L, -2);
+    data = lua_tostring (L, -1);
+
+    result = API_PTR2STR(plugin_script_api_hook_line (weechat_lua_plugin,
+                                                      lua_current_script,
+                                                      buffer_type,
+                                                      buffer_name,
+                                                      tags,
+                                                      &weechat_lua_api_hook_line_cb,
+                                                      function,
+                                                      data));
+
+    API_RETURN_STRING(result);
+}
+
 int
 weechat_lua_api_hook_print_cb (const void *pointer, void *data,
                                struct t_gui_buffer *buffer,
@@ -5181,6 +5235,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(hook_process),
     API_DEF_FUNC(hook_process_hashtable),
     API_DEF_FUNC(hook_connect),
+    API_DEF_FUNC(hook_line),
     API_DEF_FUNC(hook_print),
     API_DEF_FUNC(hook_signal),
     API_DEF_FUNC(hook_signal_send),

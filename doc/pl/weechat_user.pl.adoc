@@ -3567,8 +3567,8 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
   Kiedy wartość ustawiona jest na `off`, trigger jest wyłączony i akcje nie będą
   więcej wykonywane.
 
-| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
-  `timer`, `config`, `focus` |
+| hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
+  `command_run`, `timer`, `config`, `focus` |
   Zdarzenia używane przez trigger. Więcej informacji można znaleźć w
   link:weechat_plugin_api.en.html#hooks[WeeChat Plugin API Reference / Hooks] (Angielski).
 
@@ -3655,6 +3655,18 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Angielski)
 
+// TRANSLATION MISSING
+| line |
+  1. buffer type +
+  2. buffer name +
+  3. tags |
+  `+formatted+` +
+  `+free+` +
+  `+*;irc.freenode.*+` +
+  `+*;irc.freenode.#weechat+` +
+  `+formatted;irc.freenode.#weechat;irc_notice+` |
+  link:weechat_plugin_api.en.html#_hook_line[hook_line]
+
 | print |
   1. nazwa buforu +
   2. tagi +
@@ -3739,6 +3751,7 @@ od typu uchwytu:
 | signal      | tg_signal_data
 | hsignal     |
 | modifier    | tg_string
+| line        | message
 | print       | tg_message
 | command     | tg_argv_eol1
 | command_run | tg_command
@@ -3899,6 +3912,46 @@ zobacz <<trigger_data_print,hook print>> poniżej), oraz następujące zmienne:
 Jeśli modyfikator zawiera wiadomość IRC, wiadomość jest parsowana i dodawane są
 dodatkowe dane do tablicy hashy (zobacz <<trigger_data_signal,hook signal>>).
 
+[[trigger_data_line]]
+===== Line
+
+Callback "line" ustawia następujące zmienne w tablicy hashy:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Zmienna      | Typ      | Opis
+| buffer       | wskaźnik | Buffer.
+| buffer_name  | ciąg     | Buffer name.
+| buffer_type  | ciąg     | Buffer type ("formatted" or "free").
+| y            | ciąg     | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
+| date         | ciąg     | Line date (timestamp).
+| date_printed | ciąg     | Date when line was displayed (timestamp).
+| str_time     | ciąg     | Date for display. It may contain color codes.
+| displayed    | ciąg     | "1" if displayed, "0" if line filtered.
+| notify_level | ciąg     | "0" = low level, "1" = message, "2" = private message, "3" = highlight
+| highlight    | ciąg     | "1" if highlight, otherwise "0".
+| prefix       | ciąg     | Prefix.
+| message      | ciąg     | Message.
+|===
+
+// TRANSLATION MISSING
+Variables set using tags in message (they are also set in _print_ callback and
+modifier _weechat_print_):
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Zmienna            | Typ  | Opis
+| tg_tags            | ciąg | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
+| tg_tags_count      | ciąg | Liczba tagów w wiadomości.
+| tg_tag_nick        | ciąg | Nick (z tagu "nick_xxx").
+| tg_tag_prefix_nick | ciąg | Kolor nicka w prefiksie (z tagu "prefix_nick_ccc").
+| tg_tag_host        | ciąg | Nazwa użytkownika i host, format: username@host (z tagu "host_xxx").
+| tg_tag_notify      | ciąg | Poziom powiadomień (_none_, _message_, _private_, _highlight_).
+| tg_notify          | ciąg | Poziom powiadomień, jeśli różny od _none_.
+| tg_msg_pv          | ciąg | "1" dla prywatnej wiadomości, inaczej "0".
+|===
+
 [[trigger_data_print]]
 ===== Print
 
@@ -3917,8 +3970,9 @@ Callback "print" ustawia następujące zmienne w tablicy hashy:
 | tg_message_nocolor | ciąg     | Wiadomość bez kodów kolorów.
 |===
 
-Zmienne ustawiane przez tagi w wiadomości (są ustawiane też przez modyfikator
-_weechat_print_):
+// TRANSLATION MISSING
+Variables set using tags in message (they are also set in _line_ callback and
+modifier _weechat_print_):
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

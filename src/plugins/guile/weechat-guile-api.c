@@ -2454,6 +2454,58 @@ weechat_guile_api_hook_connect (SCM proxy, SCM address, SCM port, SCM ipv6,
     API_RETURN_STRING(result);
 }
 
+struct t_hashtable *
+weechat_guile_api_hook_line_cb (const void *pointer, void *data,
+                                struct t_hashtable *line)
+{
+    struct t_plugin_script *script;
+    void *func_argv[2];
+    char empty_arg[1] = { '\0' };
+    const char *ptr_function, *ptr_data;
+
+    script = (struct t_plugin_script *)pointer;
+    plugin_script_get_function_and_data (data, &ptr_function, &ptr_data);
+
+    if (ptr_function && ptr_function[0])
+    {
+        func_argv[0] = (ptr_data) ? (char *)ptr_data : empty_arg;
+        func_argv[1] = line;
+
+        return (struct t_hashtable *)weechat_guile_exec (
+            script,
+            WEECHAT_SCRIPT_EXEC_HASHTABLE,
+            ptr_function,
+            "sh", func_argv);
+    }
+
+    return NULL;
+}
+
+SCM
+weechat_guile_api_hook_line (SCM buffer_type, SCM buffer_name, SCM tags,
+                             SCM function, SCM data)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "hook_line", API_RETURN_EMPTY);
+    if (!scm_is_string (buffer_type) || !scm_is_string (buffer_name)
+        || !scm_is_string (tags) || !scm_is_string (function)
+        || !scm_is_string (data))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(plugin_script_api_hook_line (weechat_guile_plugin,
+                                                      guile_current_script,
+                                                      API_SCM_TO_STRING(buffer_type),
+                                                      API_SCM_TO_STRING(buffer_name),
+                                                      API_SCM_TO_STRING(tags),
+                                                      &weechat_guile_api_hook_line_cb,
+                                                      API_SCM_TO_STRING(function),
+                                                      API_SCM_TO_STRING(data)));
+
+    API_RETURN_STRING(result);
+}
+
 int
 weechat_guile_api_hook_print_cb (const void *pointer, void *data,
                                  struct t_gui_buffer *buffer,
@@ -4884,6 +4936,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(hook_process, 4);
     API_DEF_FUNC(hook_process_hashtable, 5);
     API_DEF_FUNC(hook_connect, 8);
+    API_DEF_FUNC(hook_line, 5);
     API_DEF_FUNC(hook_print, 6);
     API_DEF_FUNC(hook_signal, 3);
     API_DEF_FUNC(hook_signal_send, 3);

@@ -631,7 +631,8 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
     switch (upgrade_current_buffer->type)
     {
         case GUI_BUFFER_TYPE_FORMATTED:
-            new_line = gui_line_add (upgrade_current_buffer,
+            new_line = gui_line_new (upgrade_current_buffer,
+                                     -1,
                                      infolist_time (infolist, "date"),
                                      infolist_time (infolist, "date_printed"),
                                      infolist_string (infolist, "tags"),
@@ -639,6 +640,7 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
                                      infolist_string (infolist, "message"));
             if (new_line)
             {
+                gui_line_add (new_line);
                 new_line->data->highlight = infolist_integer (infolist,
                                                               "highlight");
                 if (infolist_integer (infolist, "last_read_line"))
@@ -646,9 +648,12 @@ upgrade_weechat_read_buffer_line (struct t_infolist *infolist)
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
-            gui_line_add_y (upgrade_current_buffer,
-                            infolist_integer (infolist, "y"),
-                            infolist_string (infolist, "message"));
+            new_line = gui_line_new (upgrade_current_buffer,
+                                     infolist_integer (infolist, "y"),
+                                     0, 0, NULL, NULL,
+                                     infolist_string (infolist, "message"));
+            if (new_line)
+                gui_line_add_y (new_line);
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;

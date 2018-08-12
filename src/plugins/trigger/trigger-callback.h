@@ -25,10 +25,13 @@
 #define TRIGGER_CALLBACK_CB_INIT(__rc)                          \
     struct t_trigger *trigger;                                  \
     struct t_hashtable *pointers, *extra_vars;                  \
+    struct t_weelist *vars_updated;                             \
     int trigger_rc;                                             \
     pointers = NULL;                                            \
     extra_vars = NULL;                                          \
+    vars_updated = NULL;                                        \
     (void) data;                                                \
+    (void) vars_updated;                                        \
     (void) trigger_rc;                                          \
     if (!trigger_enabled)                                       \
         return __rc;                                            \
@@ -59,11 +62,18 @@
     if (!extra_vars)                                            \
         goto end;
 
+#define TRIGGER_CALLBACK_CB_NEW_VARS_UPDATED                    \
+    vars_updated = weechat_list_new ();                         \
+    if (!vars_updated)                                          \
+        goto end;
+
 #define TRIGGER_CALLBACK_CB_END(__rc)                           \
     if (pointers)                                               \
         weechat_hashtable_free (pointers);                      \
     if (extra_vars)                                             \
         weechat_hashtable_free (extra_vars);                    \
+    if (vars_updated)                                           \
+        weechat_list_free (vars_updated);                       \
     trigger->hook_running = 0;                                  \
     switch (weechat_config_integer (                            \
                 trigger->options[TRIGGER_OPTION_POST_ACTION]))  \
@@ -93,6 +103,8 @@ extern char *trigger_callback_modifier_cb (const void *pointer, void *data,
                                            const char *modifier,
                                            const char *modifier_data,
                                            const char *string);
+extern struct t_hashtable *trigger_callback_line_cb  (const void *pointer, void *data,
+                                                      struct t_hashtable *line);
 extern int trigger_callback_print_cb  (const void *pointer, void *data,
                                        struct t_gui_buffer *buffer,
                                        time_t date, int tags_count,

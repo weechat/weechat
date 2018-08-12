@@ -135,6 +135,7 @@ PHP_FUNCTION(weechat_hook_fd);
 PHP_FUNCTION(weechat_hook_process);
 PHP_FUNCTION(weechat_hook_process_hashtable);
 PHP_FUNCTION(weechat_hook_connect);
+PHP_FUNCTION(weechat_hook_line);
 PHP_FUNCTION(weechat_hook_print);
 PHP_FUNCTION(weechat_hook_signal);
 PHP_FUNCTION(weechat_hook_signal_send);

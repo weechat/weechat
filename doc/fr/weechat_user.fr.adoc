@@ -3650,8 +3650,8 @@ Un trigger a les options suivantes (les noms sont
   Lorsque l'option est `off`, le trigger est désactivé et les actions ne sont
   plus exécutées.
 
-| hook | `signal`, `hsignal`, `modifier`, `print`, `command`, `command_run`,
-  `timer`, `config`, `focus` |
+| hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
+  `command_run`, `timer`, `config`, `focus` |
   Le "hook" utilisé dans le trigger. Pour plus d'information, voir la
   link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
@@ -3743,6 +3743,17 @@ points-virgules.
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.fr.html#_hook_modifier[hook_modifier]
 
+| line |
+  1. type de tampon +
+  2. nom de tampon +
+  3. étiquettes |
+  `+formatted+` +
+  `+free+` +
+  `+*;irc.freenode.*+` +
+  `+*;irc.freenode.#weechat+` +
+  `+formatted;irc.freenode.#weechat;irc_notice+` |
+  link:weechat_plugin_api.en.html#_hook_line[hook_line]
+
 | print |
   1. nom de tampon +
   2. étiquettes +
@@ -3829,6 +3840,7 @@ du type de hook :
 | signal      | tg_signal_data
 | hsignal     |
 | modifier    | tg_string
+| line        | message
 | print       | tg_message
 | command     | tg_argv_eol1
 | command_run | tg_command
@@ -4001,6 +4013,45 @@ Si le modificateur contient un message IRC, le message est analysé et des
 données supplémentaires sont ajoutées dans la table de hachage (voir le
 <<trigger_data_signal,"hook" signal>>).
 
+[[trigger_data_line]]
+===== Line
+
+La fonction de rappel "line" définit les variables suivantes dans la table
+de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type     | Description
+| buffer       | pointeur | Tampon.
+| buffer_name  | chaîne   | Nom du tampon.
+| buffer_type  | chaîne   | Type de tampon ("formatted" ou "free").
+| y            | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
+| date         | chaîne   | Date de la ligne (horodatage).
+| date_printed | chaîne   | Date d'affichage de la ligne (horodatage).
+| str_time     | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
+| displayed    | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
+| notify_level | chaîne   | "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
+| highlight    | chaîne   | "1" si highlight, sinon "0".
+| prefix       | chaîne   | Préfixe.
+| message      | chaîne   | Message.
+|===
+
+Variables définies avec les étiquettes du message (elles sont définies aussi
+pour fonction de rappel "print" et pour le modificateur _weechat_print_) :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable           | Type   | Description
+| tg_tags            | chaîne | Étiquettes du message (avec une virgule en début/fin de chaîne).
+| tg_tags_count      | chaîne | Nombre d'étiquettes dans le message.
+| tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx").
+| tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
+| tg_tag_host        | chaîne | Nom d'utilisateur et hôte, format : utilisateur@hôte (depuis l'étiquette "host_xxx").
+| tg_tag_notify      | chaîne | Niveau de notification (_none_, _message_, _private_, _highlight_).
+| tg_notify          | chaîne | Niveau de notification, si différent de _none_.
+| tg_msg_pv          | chaîne | "1" pour un message privé, sinon "0".
+|===
+
 [[trigger_data_print]]
 ===== Print
 
@@ -4021,7 +4072,7 @@ hachage :
 |===
 
 Variables définies avec les étiquettes du message (elles sont définies aussi
-pour le modificateur _weechat_print_) :
+pour la fonction de rappel "line" et pour le modificateur _weechat_print_) :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
