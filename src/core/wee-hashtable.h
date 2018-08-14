@@ -40,7 +40,7 @@ struct t_infolist_item;
 #define HASHTABLE_SET_TIME(__name, __time)                               \
     snprintf (str_value, sizeof (str_value), "%lld", (long long)__time); \
     hashtable_set (hashtable, __name, str_value);
-#define HASHTABLE_SET_PTR(__name, __pointer)                             \
+#define HASHTABLE_SET_POINTER(__name, __pointer)                         \
     if (__pointer)                                                       \
     {                                                                    \
         snprintf (str_value, sizeof (str_value),                         \

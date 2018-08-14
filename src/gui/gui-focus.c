@@ -161,7 +161,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     HASHTABLE_SET_INT("_y", focus_info->y);
 
     /* window */
-    HASHTABLE_SET_PTR("_window", focus_info->window);
+    HASHTABLE_SET_POINTER("_window", focus_info->window);
     if (focus_info->window)
     {
         HASHTABLE_SET_INT("_window_number", (focus_info->window)->number);
@@ -172,7 +172,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     }
 
     /* buffer */
-    HASHTABLE_SET_PTR("_buffer", focus_info->buffer);
+    HASHTABLE_SET_POINTER("_buffer", focus_info->buffer);
     if (focus_info->buffer)
     {
         HASHTABLE_SET_INT("_buffer_number", (focus_info->buffer)->number);
@@ -184,7 +184,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     }
     else
     {
-        HASHTABLE_SET_PTR("_buffer", NULL);
+        HASHTABLE_SET_POINTER("_buffer", NULL);
         HASHTABLE_SET_STR("_buffer_number", "-1");
         HASHTABLE_SET_STR("_buffer_plugin", "");
         HASHTABLE_SET_STR("_buffer_name", "");
@@ -202,7 +202,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         str_tags = string_build_with_split_string ((const char **)((focus_info->chat_line)->data)->tags_array, ",");
         str_message = gui_color_decode (((focus_info->chat_line)->data)->message, NULL);
         nick = gui_line_get_nick_tag (focus_info->chat_line);
-        HASHTABLE_SET_PTR("_chat_line", focus_info->chat_line);
+        HASHTABLE_SET_POINTER("_chat_line", focus_info->chat_line);
         HASHTABLE_SET_INT("_chat_line_x", focus_info->chat_line_x);
         HASHTABLE_SET_INT("_chat_line_y", ((focus_info->chat_line)->data)->y);
         HASHTABLE_SET_TIME("_chat_line_date", ((focus_info->chat_line)->data)->date);
@@ -223,7 +223,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     }
     else
     {
-        HASHTABLE_SET_PTR("_chat_line", NULL);
+        HASHTABLE_SET_POINTER("_chat_line", NULL);
         HASHTABLE_SET_STR("_chat_line_x", "-1");
         HASHTABLE_SET_STR("_chat_line_y", "-1");
         HASHTABLE_SET_STR("_chat_line_date", "-1");

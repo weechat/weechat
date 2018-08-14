@@ -131,9 +131,9 @@ hook_line_exec (struct t_gui_line *line)
                 if (!hashtable)
                     break;
             }
-            HASHTABLE_SET_PTR("buffer", line->data->buffer);
-            HASHTABLE_SET_PTR("buffer_name", line->data->buffer->full_name);
-            HASHTABLE_SET_PTR("buffer_type",
+            HASHTABLE_SET_POINTER("buffer", line->data->buffer);
+            HASHTABLE_SET_STR("buffer_name", line->data->buffer->full_name);
+            HASHTABLE_SET_STR("buffer_type",
                               gui_buffer_type_string[line->data->buffer->type]);
             HASHTABLE_SET_INT("y", line->data->y);
             HASHTABLE_SET_TIME("date", line->data->date);
