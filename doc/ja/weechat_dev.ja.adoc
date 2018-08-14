@@ -69,6 +69,8 @@ qweechat::
 | ディレクトリ       | 説明
 | src/               | ソースコードのルートディレクトリ
 |    core/           | コア関数: エントリポイント、内部構造体
+// TRANSLATION MISSING
+|       hook/        | Hook functions.
 |    gui/            | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
 |       curses/      | curses インターフェイス
 |          headless/ | ヘッドレスモード (インターフェイスなし)
@@ -118,69 +120,89 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| パス/ファイル名               | 説明
-| core/                         | コア関数: エントリポイント、内部構造体
-|    wee-arraylist.c            | 配列リスト
-|    wee-backtrace.c            | クラッシュした際にバックトレースを表示
-|    wee-command.c              | WeeChat コアコマンド
-|    wee-completion.c           | デフォルト補完
-|    wee-config-file.c          | 設定ファイル管理
-|    wee-config.c               | WeeChat コアの設定オプション (weechat.conf ファイル)
-|    wee-debug.c                | デバッグ用関数
-|    wee-eval.c                 | 内部変数へのリファレンスを含む式を評価
-|    wee-hashtable.c            | ハッシュテーブル
-|    wee-hdata.c                | hdata (ハッシュテーブルを用いて直接データを読む)
-|    wee-hook.c                 | フック
-|    wee-infolist.c             | インフォリスト (オブジェクトに関するデータを含むリスト)
-|    wee-input.c                | コマンドおよびテキストの入力
-|    wee-list.c                 | ソート済みリスト
-|    wee-log.c                  | WeeChat ログファイル (weechat.log) に書き込む
-|    wee-network.c              | ネットワーク関数 (サーバやプロキシへの接続)
-|    wee-proxy.c                | プロキシ管理
-|    wee-secure.c               | 安全なデータオプション (sec.conf ファイル)
-|    wee-string.c               | 文字列関数
-|    wee-upgrade-file.c         | 内部アップグレードシステム
-|    wee-upgrade.c              | WeeChat コアのアップグレード (バッファ、行、履歴、...)
-|    wee-url.c                  | URL 転送 (libcurl を使う)
-|    wee-utf8.c                 | UTF-8 関数
-|    wee-util.c                 | その他の関数
-|    wee-version.c              | WeeChat バージョンについての関数
-|    weechat.c                  | 主要関数: コマンドラインオプション、起動
-| gui/                          | バッファ、ウィンドウなどの関数 (全てのインターフェイスで利用)
-|    gui-bar-item.c             | バー要素
-|    gui-bar-window.c           | バーウィンドウ
-|    gui-bar.c                  | バー
-|    gui-buffer.c               | バッファ
-|    gui-chat.c                 | チャット関数 (メッセージの表示、...)
-|    gui-color.c                | 色関数
-|    gui-completion.c           | コマンドラインの補完
-|    gui-cursor.c               | カーソルモード (カーソルを自由に移動)
-|    gui-filter.c               | フィルタ
-|    gui-focus.c                | フォーカスについての関数 (カーソルモードとマウス用)
-|    gui-history.c              | コマンドおよびバッファに保存されたテキスト
-|    gui-hotlist.c              | ホットリスト管理 (活発なバッファのリスト)
-|    gui-input.c                | 入力関数 (入力バー)
-|    gui-key.c                  | キーボード関数
-|    gui-layout.c               | レイアウト
-|    gui-line.c                 | バッファ中の行
-|    gui-mouse.c                | マウス
-|    gui-nick.c                 | ニックネーム関数
-|    gui-nicklist.c             | バッファのニックネームリスト
-|    gui-window.c               | ウィンドウ
-|    curses/                    | curses インターフェイス
-|       gui-curses-bar-window.c | バーウィンドウへの表示
-|       gui-curses-chat.c       | チャットエリアへの表示 (メッセージ)
-|       gui-curses-color.c      | 色関数
-|       gui-curses-key.c        | キーボード関数 (デフォルトキー、入力の読み取り)
-|       gui-curses-main.c       | WeeChat メインループ (キーボードやネットワークイベントの待ち受け)
-|       gui-curses-mouse.c      | マウス
-|       gui-curses-term.c       | 端末についての関数
-|       gui-curses-window.c     | ウィンドウ
-|       headless/               | ヘッドレスモード (インターフェイスなし)
-|          main.c               | ヘッドレスモード用のエントリポイント
-|          ncurses-fake.c       | ダミーの ncurses ライブラリ
-|       normal/                 | curses インターフェイス
-|          main.c               | curses インターフェイス用のエントリポイント
+| パス/ファイル名                 | 説明
+| core/                           | コア関数: エントリポイント、内部構造体
+|    wee-arraylist.c              | 配列リスト
+|    wee-backtrace.c              | クラッシュした際にバックトレースを表示
+|    wee-command.c                | WeeChat コアコマンド
+|    wee-completion.c             | デフォルト補完
+|    wee-config-file.c            | 設定ファイル管理
+|    wee-config.c                 | WeeChat コアの設定オプション (weechat.conf ファイル)
+|    wee-debug.c                  | デバッグ用関数
+|    wee-eval.c                   | 内部変数へのリファレンスを含む式を評価
+|    wee-hashtable.c              | ハッシュテーブル
+|    wee-hdata.c                  | hdata (ハッシュテーブルを用いて直接データを読む)
+|    wee-hook.c                   | フック
+|    wee-infolist.c               | インフォリスト (オブジェクトに関するデータを含むリスト)
+|    wee-input.c                  | コマンドおよびテキストの入力
+|    wee-list.c                   | ソート済みリスト
+|    wee-log.c                    | WeeChat ログファイル (weechat.log) に書き込む
+|    wee-network.c                | ネットワーク関数 (サーバやプロキシへの接続)
+|    wee-proxy.c                  | プロキシ管理
+|    wee-secure.c                 | 安全なデータオプション (sec.conf ファイル)
+|    wee-string.c                 | 文字列関数
+|    wee-upgrade-file.c           | 内部アップグレードシステム
+|    wee-upgrade.c                | WeeChat コアのアップグレード (バッファ、行、履歴、...)
+|    wee-url.c                    | URL 転送 (libcurl を使う)
+|    wee-utf8.c                   | UTF-8 関数
+|    wee-util.c                   | その他の関数
+|    wee-version.c                | WeeChat バージョンについての関数
+|    weechat.c                    | 主要関数: コマンドラインオプション、起動
+// TRANSLATION MISSING
+|    hook/                        | Hook functions.
+|       wee-hook-command-run.c    | Hook "command_run".
+|       wee-hook-command.c        | Hook "command".
+|       wee-hook-completion.c     | Hook "completion".
+|       wee-hook-config.c         | Hook "config".
+|       wee-hook-connect.c        | Hook "connect".
+|       wee-hook-fd.c             | Hook "fd".
+|       wee-hook-focus.c          | Hook "focus".
+|       wee-hook-hdata.c          | Hook "hdata".
+|       wee-hook-hsignal.c        | Hook "hsignal".
+|       wee-hook-info-hashtable.c | Hook "info_hashtable".
+|       wee-hook-info.c           | Hook "info".
+|       wee-hook-infolist.c       | Hook "infolist".
+|       wee-hook-line.c           | Hook "line".
+|       wee-hook-modifier.c       | Hook "modifier".
+|       wee-hook-print.c          | Hook "print".
+|       wee-hook-process.c        | Hook "process".
+|       wee-hook-signal.c         | Hook "signal".
+|       wee-hook-timer.c          | Hook "timer".
+| gui/                            | バッファ、ウィンドウなどの関数 (全てのインターフェイスで利用)
+|    gui-bar-item.c               | バー要素
+|    gui-bar-window.c             | バーウィンドウ
+|    gui-bar.c                    | バー
+|    gui-buffer.c                 | バッファ
+|    gui-chat.c                   | チャット関数 (メッセージの表示、...)
+|    gui-color.c                  | 色関数
+|    gui-completion.c             | コマンドラインの補完
+|    gui-cursor.c                 | カーソルモード (カーソルを自由に移動)
+|    gui-filter.c                 | フィルタ
+|    gui-focus.c                  | フォーカスについての関数 (カーソルモードとマウス用)
+|    gui-history.c                | コマンドおよびバッファに保存されたテキスト
+|    gui-hotlist.c                | ホットリスト管理 (活発なバッファのリスト)
+|    gui-input.c                  | 入力関数 (入力バー)
+|    gui-key.c                    | キーボード関数
+|    gui-layout.c                 | レイアウト
+|    gui-line.c                   | バッファ中の行
+|    gui-mouse.c                  | マウス
+|    gui-nick.c                   | ニックネーム関数
+|    gui-nicklist.c               | バッファのニックネームリスト
+|    gui-window.c                 | ウィンドウ
+|    curses/                      | curses インターフェイス
+|       gui-curses-bar-window.c   | バーウィンドウへの表示
+|       gui-curses-chat.c         | チャットエリアへの表示 (メッセージ)
+|       gui-curses-color.c        | 色関数
+|       gui-curses-key.c          | キーボード関数 (デフォルトキー、入力の読み取り)
+|       gui-curses-main.c         | WeeChat メインループ (キーボードやネットワークイベントの待ち受け)
+|       gui-curses-mouse.c        | マウス
+|       gui-curses-term.c         | 端末についての関数
+|       gui-curses-window.c       | ウィンドウ
+|       headless/                 | ヘッドレスモード (インターフェイスなし)
+|          main.c                 | ヘッドレスモード用のエントリポイント
+|          ncurses-fake.c         | ダミーの ncurses ライブラリ
+|       normal/                   | curses インターフェイス
+|          main.c                 | curses インターフェイス用のエントリポイント
 |===
 
 [[sources_plugins]]

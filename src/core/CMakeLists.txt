@@ -46,6 +46,24 @@ set(LIB_CORE_SRC
   wee-utf8.c wee-utf8.h
   wee-util.c wee-util.h
   wee-version.c wee-version.h
+  hook/wee-hook-command-run.c hook/wee-hook-command-run.h
+  hook/wee-hook-command.c hook/wee-hook-command.h
+  hook/wee-hook-completion.c hook/wee-hook-completion.h
+  hook/wee-hook-config.c hook/wee-hook-config.h
+  hook/wee-hook-connect.c hook/wee-hook-connect.h
+  hook/wee-hook-fd.c hook/wee-hook-fd.h
+  hook/wee-hook-focus.c hook/wee-hook-focus.h
+  hook/wee-hook-hdata.c hook/wee-hook-hdata.h
+  hook/wee-hook-hsignal.c hook/wee-hook-hsignal.h
+  hook/wee-hook-info-hashtable.c hook/wee-hook-info-hashtable.h
+  hook/wee-hook-info.c hook/wee-hook-info.h
+  hook/wee-hook-infolist.c hook/wee-hook-infolist.h
+  hook/wee-hook-line.c hook/wee-hook-line.h
+  hook/wee-hook-modifier.c hook/wee-hook-modifier.h
+  hook/wee-hook-print.c hook/wee-hook-print.h
+  hook/wee-hook-process.c hook/wee-hook-process.h
+  hook/wee-hook-signal.c hook/wee-hook-signal.h
+  hook/wee-hook-timer.c hook/wee-hook-timer.h
 )
 
 # Check for flock support

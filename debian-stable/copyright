@@ -19,11 +19,11 @@ Files: src/core/wee-config-file.c
 Copyright: 2005-2006, Emmanuel Bouthenot <kolter@openics.org>
 License: GPL-3+
 
-Files: src/core/wee-hook.c
+Files: src/core/hook/wee-hook-connect.c
 Copyright: 2012, Simon Arlott
 License: GPL-3+
 
-Files: src/core/wee-hook.h
+Files: src/core/hook/wee-hook-connect.h
 Copyright: 2012, Simon Arlott
 License: GPL-3+
 
