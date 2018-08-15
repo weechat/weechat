@@ -948,6 +948,9 @@ TEST(CoreString, Split)
     argc = -1;
     POINTERS_EQUAL(NULL, string_split ("", "", 0, 0, &argc));
     LONGS_EQUAL(0, argc);
+    argc = -1;
+    POINTERS_EQUAL(NULL, string_split ("   ", " ", 0, 0, &argc));
+    LONGS_EQUAL(0, argc);
 
     /* free split with NULL */
     string_free_split (NULL);
