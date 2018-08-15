@@ -187,6 +187,11 @@ hook_line_free_data (struct t_hook *hook)
     if (!hook || !hook->hook_data)
         return;
 
+    if (HOOK_LINE(hook, buffers))
+    {
+        string_free_split (HOOK_LINE(hook, buffers));
+        HOOK_LINE(hook, buffers) = NULL;
+    }
     if (HOOK_LINE(hook, tags_array))
     {
         string_free_split_tags (HOOK_LINE(hook, tags_array));
