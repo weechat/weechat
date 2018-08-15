@@ -9290,14 +9290,22 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 _WeeChat ≥ 2.3._
 
-Intercepter une ligne affichée dans un tampon.
+Intercepter une ligne sur le point d'être affichée dans un tampon.
 
 Lorsqu'une ligne est affichée dans un tampon, les "hooks" suivants sont
 appelés dans cet ordre :
 
-* <<_hook_line,hook line>> (ce "hook")
-* <<_hook_modifier,hook modifier>>: <<hook_modifier_weechat_print,weechat_print>>
-* <<_hook_print,hook print>>
+* <<_hook_line,hook line>> (ce "hook") : il peut changer le tampon, préfixe,
+  message, étiquettes, niveau de notification, … (voir ci-dessous)
+* <<_hook_modifier,hook modifier>> "<<hook_modifier_weechat_print,weechat_print>>" :
+  il peut changer le préfixe et le message sur un tampon avec contenu formaté
+* <<_hook_print,hook print>> : appelé quand une ligne a été ajoutée dans un
+  tampon avec contenu formaté (rien ne peut être changé directement avec ce
+  "hook").
+
+[NOTE]
+The "line" hook is the only one among these three hooks that can work on
+buffers with free content.
 
 Prototype :
 
@@ -9566,7 +9574,11 @@ hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
 
 _Mis à jour dans la 0.4.3, 1.0, 1.5._
 
-Intercepter un message affiché.
+Intercepter un message affiché. Il est appelée quand une ligne a été ajoutée
+dans un tampon avec contenu formaté.
+
+Pour plus d'informations sur les "hooks" appelés lorsqu'une ligne est affichée,
+voir <<_hook_line,hook_line>>.
 
 Prototype :
 
@@ -11272,7 +11284,9 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 | [[hook_modifier_weechat_print]] weechat_print |
   extension + ";" + nom_tampon + ";" + étiquettes |
   Message affiché. |
-  Nouveau message affiché.
+  Nouveau message affiché. +
+  Pour plus d'informations sur les "hooks" appelés lorsqu'une ligne est affichée,
+  voir <<_hook_line,hook_line>>.
 |===
 
 [NOTE]

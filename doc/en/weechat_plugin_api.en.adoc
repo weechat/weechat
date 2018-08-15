@@ -9114,13 +9114,20 @@ hook = weechat.hook_connect("", "my.server.org", 1234, 1, 0, "",
 
 _WeeChat ≥ 2.3._
 
-Hook a line printed in a buffer.
+Hook a line to be printed in a buffer.
 
 When a line is printed in a buffer, hooks are called in this order:
 
-* <<_hook_line,hook line>> (this hook)
-* <<_hook_modifier,hook modifier>>: <<hook_modifier_weechat_print,weechat_print>>
-* <<_hook_print,hook print>>
+* <<_hook_line,hook line>> (this hook): it can change the buffer, prefix,
+  message, tags, notify level, … (see below)
+* <<_hook_modifier,hook modifier>> "<<hook_modifier_weechat_print,weechat_print>>":
+  it can change the prefix and message on a buffer with formatted content
+* <<_hook_print,hook print>>: called when the line has been added in a buffer
+  with formatted content (nothing can be changed directly with this hook).
+
+[NOTE]
+The "line" hook is the only one among these three hooks that can work on
+buffers with free content.
 
 Prototype:
 
@@ -9379,7 +9386,11 @@ hook = weechat.hook_line("", "", "irc_join", "my_line_cb", "")
 
 _Updated in 0.4.3, 1.0, 1.5._
 
-Hook a message printed.
+Hook a message printed. It is called when a line has been added in a buffer
+with formatted content.
+
+Fore more information on the hooks called when a line is printed, see
+<<_hook_line,hook_line>>.
 
 Prototype:
 
@@ -11036,7 +11047,9 @@ List of modifiers used by WeeChat and plugins:
 | [[hook_modifier_weechat_print]] weechat_print |
   plugin + ";" + buffer_name + ";" + tags |
   Message printed. |
-  New message printed.
+  New message printed. +
+  Fore more information on the hooks called when a line is printed, see
+  <<_hook_line,hook_line>>.
 |===
 
 [NOTE]
