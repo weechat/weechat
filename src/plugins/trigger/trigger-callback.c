@@ -892,6 +892,9 @@ trigger_callback_line_cb (const void *pointer, void *data,
     }
 
 end:
+    if (tags)
+        weechat_string_free_split (tags);
+
     TRIGGER_CALLBACK_CB_END(hashtable);
 }
 
