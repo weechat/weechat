@@ -812,7 +812,10 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
         }
     }
 
+    /* add line in the buffer */
     gui_line_add (new_line);
+
+    /* run hook_print for the new line */
     if (new_line->data->buffer && buffer->print_hooks_enabled)
         hook_print_exec (new_line->data->buffer, new_line);
 
