@@ -1241,8 +1241,6 @@ gui_line_get_highlight (struct t_gui_line *line)
     int highlight, *max_notify_level;
     const char *nick;
 
-    highlight = 0;
-
     if (line->data->notify_level == GUI_HOTLIST_HIGHLIGHT)
     {
         highlight = 1;
