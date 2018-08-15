@@ -956,6 +956,7 @@ TEST(CoreString, Split)
     string_free_split (NULL);
 
     /* standard split */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
@@ -966,6 +967,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* max 2 items */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 0, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
@@ -975,6 +977,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* keep eol == 1 */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 1, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
@@ -985,6 +988,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* keep eol == 1 and max 2 items */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 1, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
@@ -994,6 +998,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* keep eol == 2 */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 2, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
@@ -1004,6 +1009,7 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* keep eol == 2 and max 2 items */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 2, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
