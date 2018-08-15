@@ -1172,6 +1172,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             length_tags = 0;
             nick_found = 0;
             join = 0;
+            chghost = 0;
             nick_changed = 0;
             irc_nick1 = NULL;
             irc_nick2 = NULL;
