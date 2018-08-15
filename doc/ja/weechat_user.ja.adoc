@@ -3718,7 +3718,7 @@ _var_
 | signal      | tg_signal_data     |
 | hsignal     |                    |
 | modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tg_tags, notify_level, highlight, prefix, message
 | print       | tg_message         |
 | command     | tg_argv_eol1       |
 | command_run | tg_command         |
