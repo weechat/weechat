@@ -9361,7 +9361,7 @@ _WeeChat バージョン 0.4.3、1.0、1.5 で更新。_
 a buffer with formatted content.
 
 // TRANSLATION MISSING
-Fore more information on the hooks called when a line is printed, see
+For more information on the hooks called when a line is printed, see
 <<_hook_line,hook_line>>.
 
 プロトタイプ:
@@ -11021,7 +11021,7 @@ WeeChat とプラグインが使う修飾子のリスト:
   plugin + ";" + buffer_name + ";" + tags |
   表示されたメッセージ |
   表示される新しいメッセージ +
-  Fore more information on the hooks called when a line is printed, see
+  For more information on the hooks called when a line is printed, see
   <<_hook_line,hook_line>>.
 |===
 

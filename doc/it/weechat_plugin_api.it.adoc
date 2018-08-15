@@ -9684,7 +9684,7 @@ Hook su un messaggio stampato. It is called when a line has been added in
 a buffer with formatted content.
 
 // TRANSLATION MISSING
-Fore more information on the hooks called when a line is printed, see
+For more information on the hooks called when a line is printed, see
 <<_hook_line,hook_line>>.
 
 Prototipo:
@@ -11490,7 +11490,7 @@ List of modifiers used by WeeChat and plugins:
   plugin + ";" + buffer_name + ";" + tags |
   Messaggio stampato. |
   Nuovo messaggio stampato. +
-  Fore more information on the hooks called when a line is printed, see
+  For more information on the hooks called when a line is printed, see
   <<_hook_line,hook_line>>.
 |===
 

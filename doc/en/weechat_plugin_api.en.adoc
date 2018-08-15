@@ -9389,7 +9389,7 @@ _Updated in 0.4.3, 1.0, 1.5._
 Hook a message printed. It is called when a line has been added in a buffer
 with formatted content.
 
-Fore more information on the hooks called when a line is printed, see
+For more information on the hooks called when a line is printed, see
 <<_hook_line,hook_line>>.
 
 Prototype:
@@ -11048,7 +11048,7 @@ List of modifiers used by WeeChat and plugins:
   plugin + ";" + buffer_name + ";" + tags |
   Message printed. |
   New message printed. +
-  Fore more information on the hooks called when a line is printed, see
+  For more information on the hooks called when a line is printed, see
   <<_hook_line,hook_line>>.
 |===
 
