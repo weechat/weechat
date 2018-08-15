@@ -794,6 +794,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
     hashtable = NULL;
+    tags = NULL;
 
     TRIGGER_CALLBACK_CB_NEW_POINTERS;
     TRIGGER_CALLBACK_CB_NEW_VARS_UPDATED;
