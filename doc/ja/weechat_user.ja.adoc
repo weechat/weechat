@@ -3711,20 +3711,26 @@ _var_ はハッシュテーブルの変数)。 +
 _var_
 が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
 
-[width="50%",cols="4,5m",options="header"]
+// TRANSLATION MISSING
+[width="100%",cols="2,3,7",options="header"]
 |===
-| フック      | デフォルト変数
-| signal      | tg_signal_data
-| hsignal     |
-| modifier    | tg_string
-| line        | message
-| print       | tg_message
-| command     | tg_argv_eol1
-| command_run | tg_command
-| timer       | tg_remaining_calls
-| config      | tg_value
-| focus       |
+| フック      | デフォルト変数     | Update allowed ^(1)^
+| signal      | tg_signal_data     |
+| hsignal     |                    |
+| modifier    | tg_string          | tg_string
+| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print       | tg_message         |
+| command     | tg_argv_eol1       |
+| command_run | tg_command         |
+| timer       | tg_remaining_calls |
+| config      | tg_value           |
+| focus       |                    |
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ All variables can be updated in the trigger, but only these variables
+have an effect on the value returned by the trigger and used by WeeChat.
 
 複数の正規表現を使う場合は空白で区切ってください、例:
 "/regex1/replace1/var1 /regex2/replace2/var2"。

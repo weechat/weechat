@@ -3975,20 +3975,24 @@ variable of the hashtable). +
 If _var_ is not specified, the default variable is used, it depends on hook
 type:
 
-[width="50%",cols="4,5m",options="header"]
+[width="100%",cols="2,3,7",options="header"]
 |===
-| Hook        | Default variable
-| signal      | tg_signal_data
-| hsignal     |
-| modifier    | tg_string
-| line        | message
-| print       | tg_message
-| command     | tg_argv_eol1
-| command_run | tg_command
-| timer       | tg_remaining_calls
-| config      | tg_value
-| focus       |
+| Hook        | Default variable   | Update allowed ^(1)^
+| signal      | tg_signal_data     |
+| hsignal     |                    |
+| modifier    | tg_string          | tg_string
+| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print       | tg_message         |
+| command     | tg_argv_eol1       |
+| command_run | tg_command         |
+| timer       | tg_remaining_calls |
+| config      | tg_value           |
+| focus       |                    |
 |===
+
+[NOTE]
+^(1)^ All variables can be updated in the trigger, but only these variables
+have an effect on the value returned by the trigger and used by WeeChat.
 
 Many regular expressions can be separated by a space, for example:
 "/regex1/replace1/var1 /regex2/replace2/var2".

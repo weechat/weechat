@@ -3745,20 +3745,26 @@ zmienna tablicy hashy). +
 Jeśli _zmienna_ nie zostanie podana, użyta zostanie domyślna zmienna, zależy ona
 od typu uchwytu:
 
-[width="50%",cols="4,5m",options="header"]
+// TRANSLATION MISSING
+[width="100%",cols="2,3,7",options="header"]
 |===
-| Uchwyt      | Domyślna zmienna
-| signal      | tg_signal_data
-| hsignal     |
-| modifier    | tg_string
-| line        | message
-| print       | tg_message
-| command     | tg_argv_eol1
-| command_run | tg_command
-| timer       | tg_remaining_calls
-| config      | tg_value
-| focus       |
+| Uchwyt      | Domyślna zmienna   | Update allowed ^(1)^
+| signal      | tg_signal_data     |
+| hsignal     |                    |
+| modifier    | tg_string          | tg_string
+| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print       | tg_message         |
+| command     | tg_argv_eol1       |
+| command_run | tg_command         |
+| timer       | tg_remaining_calls |
+| config      | tg_value           |
+| focus       |                    |
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ All variables can be updated in the trigger, but only these variables
+have an effect on the value returned by the trigger and used by WeeChat.
 
 Wiele wyrażeń może być oddzielonych spacją, na przykład:
 "/regex1/zamień1/zmienna1 /regex2/zamień2/zmienna2".

@@ -3834,20 +3834,25 @@ une variable de la table de hachage). +
 Si _var_ n'est pas spécifiée, la variable par défaut est utilisée, elle dépend
 du type de hook :
 
-[width="50%",cols="4,5m",options="header"]
+[width="100%",cols="2,3,7",options="header"]
 |===
-| Hook        | Variable par défaut
-| signal      | tg_signal_data
-| hsignal     |
-| modifier    | tg_string
-| line        | message
-| print       | tg_message
-| command     | tg_argv_eol1
-| command_run | tg_command
-| timer       | tg_remaining_calls
-| config      | tg_value
-| focus       |
+| Hook        | Variable par défaut | Mise à jour autorisée ^(1)^
+| signal      | tg_signal_data      |
+| hsignal     |                     |
+| modifier    | tg_string           | tg_string
+| line        | message             | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print       | tg_message          |
+| command     | tg_argv_eol1        |
+| command_run | tg_command          |
+| timer       | tg_remaining_calls  |
+| config      | tg_value            |
+| focus       |                     |
 |===
+
+[NOTE]
+^(1)^ Toutes les variables peuvent être mises à jour dans le trigger, mais
+seulement ces variables ont un effet sur la valeur retournée par le trigger
+et utilisée par WeeChat.
 
 Plusieurs expressions régulières peuvent être séparées par un espace, par
 exemple : "/regex1/remplacement1/var1 /regex2/remplacement2/var2".
