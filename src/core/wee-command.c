@@ -1192,9 +1192,10 @@ COMMAND_CALLBACK(buffer)
                 if (!ptr_buffer->hidden)
                     break;
             }
-            gui_buffer_switch_by_number (gui_current_window,
-                                         (ptr_buffer) ?
-                                         ptr_buffer->number : gui_buffers->number);
+            number = (ptr_buffer) ?
+                ptr_buffer->number : ((gui_buffers) ? gui_buffers->number : -1);
+            if (number > 0)
+                gui_buffer_switch_by_number (gui_current_window, number);
         }
         else
         {
@@ -1261,9 +1262,10 @@ COMMAND_CALLBACK(buffer)
                 if (!ptr_buffer->hidden)
                     break;
             }
-            gui_buffer_switch_by_number (gui_current_window,
-                                         (ptr_buffer) ?
-                                         ptr_buffer->number : last_gui_buffer->number);
+            number = (ptr_buffer) ?
+                ptr_buffer->number : ((last_gui_buffer) ? last_gui_buffer->number : -1);
+            if (number > 0)
+                gui_buffer_switch_by_number (gui_current_window, number);
         }
         else
         {
