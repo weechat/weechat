@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-06-14 22:01+0200\n"
-"PO-Revision-Date: 2018-06-14 22:03+0200\n"
+"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"PO-Revision-Date: 2018-08-15 12:34+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -123,6 +123,25 @@ msgstr "Type"
 
 msgid "Constants"
 msgstr "Constantes"
+
+#, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr ""
+"%sErreur : une autre commande \"%s\" existe déjà pour l'extension \"%s\""
+
+#, c-format
+msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgstr "%sErreur : mauvais descripteur de fichier (%d) utilisé dans hook_fd"
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
+msgstr "Fin de la commande '%s', temps maximum atteint (%.1fs)"
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
+msgstr ""
+"Décalage de l'horloge système détecté (%+ld secondes), réinitialisation de "
+"tous les minuteurs"
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
 #, c-format
@@ -4785,25 +4804,6 @@ msgid "default"
 msgstr "défaut"
 
 #, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
-msgstr ""
-"%sErreur : une autre commande \"%s\" existe déjà pour l'extension \"%s\""
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-"Décalage de l'horloge système détecté (%+ld secondes), réinitialisation de "
-"tous les minuteurs"
-
-#, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
-msgstr "%sErreur : mauvais descripteur de fichier (%d) utilisé dans hook_fd"
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
-msgstr "Fin de la commande '%s', temps maximum atteint (%.1fs)"
-
-#, c-format
 msgid "%sError sending signal %d to pid %d: %s"
 msgstr "%sErreur d'envoi du signal %d au pid %d : %s"
 
@@ -5381,9 +5381,6 @@ msgstr "Envoi du hsignal : \"%s\""
 #, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Lancement de la commande : \"%s\" sur le tampon \"%s\""
-
-msgid "Not enough memory for new line"
-msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -13567,13 +13564,15 @@ msgid ""
 "     addoff: add a trigger (disabled)\n"
 " addreplace: add or replace an existing trigger\n"
 "       name: name of trigger\n"
-"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
-"config, focus\n"
+"       hook: signal, hsignal, modifier, line, print, command, command_run, "
+"timer, config, focus\n"
 "  arguments: arguments for the hook, depending on hook (separated by "
 "semicolons):\n"
 "             signal: name(s) of signal (required)\n"
 "             hsignal: name(s) of hsignal (required)\n"
 "             modifier: name(s) of modifier (required)\n"
+"             line: buffer type (\"formatted\", \"free\" or \"*\"), list of "
+"buffer masks, tags\n"
 "             print: buffer, tags, message, strip colors\n"
 "             command: command (required), description, arguments, "
 "description of arguments, completion\n"
@@ -13625,7 +13624,7 @@ msgid ""
 "  2. replace text using POSIX extended regular expression(s) (if defined in "
 "trigger)\n"
 "  3. execute command(s) (if defined in trigger)\n"
-"  4. exit with a return code (except for modifiers and focus)\n"
+"  4. exit with a return code (except for modifier, line and focus)\n"
 "  5. perform post action\n"
 "\n"
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
@@ -13655,13 +13654,15 @@ msgstr ""
 "     addoff : ajouter un trigger (désactivé)\n"
 " addreplace : ajouter ou remplacer un trigger existant\n"
 "        nom : nom du trigger\n"
-"       hook : signal, hsignal, modifier, print, command, command_run, timer, "
-"config, focus\n"
+"       hook : signal, hsignal, modifier, line, print, command, command_run, "
+"timer, config, focus\n"
 " paramètres : paramètres pour le hook, dépendant du hook (séparés par des "
 "points-virgules) :\n"
 "              signal : nom(s) de signal (obligatoire)\n"
 "              hsignal : nom(s) de signal (obligatoire)\n"
 "              modifier : nom(s) de modificateur (obligatoire)\n"
+"              line : type de tampon (\"formatted\", \"free\" ou \"*\"), "
+"liste de masques de tampons, étiquettes\n"
 "              print : tampon, étiquettes, message, suppression des couleurs "
 "(0/1)\n"
 "              command : commande (obligatoire), description, paramètres, "
@@ -13720,7 +13721,8 @@ msgstr ""
 "  2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s "
 "POSIX étendue(s)s (si définie(s) dans le trigger)\n"
 "  3. exécuter le(s) commande(s) (si définie(s) dans le trigger)\n"
-"  4. sortir avec le code retour (sauf pour les modificateurs et focus)\n"
+"  4. sortir avec le code retour (sauf pour les modificateurs, line et "
+"focus)\n"
 "  5. effectuer l'action \"post\"\n"
 "\n"
 "Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger "
@@ -14355,6 +14357,9 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid "Not enough memory for new line"
+#~ msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 #~ msgid ""
 #~ "format of each line with a buffer (note: content is evaluated, see /help "

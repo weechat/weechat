@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-06-14 22:01+0200\n"
+"POT-Creation-Date: 2018-08-15 12:31+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -139,6 +139,22 @@ msgid "Type"
 msgstr ""
 
 msgid "Constants"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgstr "%s игнорирование уже существует\n"
+
+#, c-format
+msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgstr ""
+
+#, c-format
+msgid "End of command '%s', timeout reached (%.1fs)"
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
 msgstr ""
 
 #. TRANSLATORS: "%s %s" after "compiled on" is date and time
@@ -3679,22 +3695,6 @@ msgstr ""
 msgid "default"
 msgstr "  . значение по умолчанию: %d\n"
 
-#, fuzzy, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
-msgstr "%s игнорирование уже существует\n"
-
-#, c-format
-msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
-msgstr ""
-
-#, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
-msgstr ""
-
-#, c-format
-msgid "End of command '%s', timeout reached (%.1fs)"
-msgstr ""
-
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
 msgstr ""
@@ -4225,10 +4225,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
 msgstr "Внутренние команды %s:\n"
-
-#, fuzzy
-msgid "Not enough memory for new line"
-msgstr "Недостаточно памяти для новой строчки\n"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -11233,13 +11229,15 @@ msgid ""
 "     addoff: add a trigger (disabled)\n"
 " addreplace: add or replace an existing trigger\n"
 "       name: name of trigger\n"
-"       hook: signal, hsignal, modifier, print, command, command_run, timer, "
-"config, focus\n"
+"       hook: signal, hsignal, modifier, line, print, command, command_run, "
+"timer, config, focus\n"
 "  arguments: arguments for the hook, depending on hook (separated by "
 "semicolons):\n"
 "             signal: name(s) of signal (required)\n"
 "             hsignal: name(s) of hsignal (required)\n"
 "             modifier: name(s) of modifier (required)\n"
+"             line: buffer type (\"formatted\", \"free\" or \"*\"), list of "
+"buffer masks, tags\n"
 "             print: buffer, tags, message, strip colors\n"
 "             command: command (required), description, arguments, "
 "description of arguments, completion\n"
@@ -11291,7 +11289,7 @@ msgid ""
 "  2. replace text using POSIX extended regular expression(s) (if defined in "
 "trigger)\n"
 "  3. execute command(s) (if defined in trigger)\n"
-"  4. exit with a return code (except for modifiers and focus)\n"
+"  4. exit with a return code (except for modifier, line and focus)\n"
 "  5. perform post action\n"
 "\n"
 "Examples (you can also look at default triggers with /trigger listdefault):\n"
@@ -11895,6 +11893,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "Not enough memory for new line"
+#~ msgstr "Недостаточно памяти для новой строчки\n"
 
 #, fuzzy
 #~ msgid ""
