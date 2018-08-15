@@ -768,7 +768,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
                                           string);
             if (new_string)
             {
-                if (!new_string[0] && message[0])
+                if (!new_string[0] && string[0])
                 {
                     /*
                      * modifier returned empty message, then we'll not
@@ -776,7 +776,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
                      */
                     goto no_print;
                 }
-                else if (strcmp (message, new_string) != 0)
+                else if (strcmp (string, new_string) != 0)
                 {
                     /* use new message if there are changes */
                     pos_prefix = NULL;
