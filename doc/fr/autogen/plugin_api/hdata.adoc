@@ -891,6 +891,7 @@ _str_time_   (string) +
 _tags_count_   (integer) +
 _tags_array_   (shared_string, array_size: "tags_count") +
 _displayed_   (char) +
+_notify_level_   (char) +
 _highlight_   (char) +
 _refresh_needed_   (char) +
 _prefix_   (shared_string) +
