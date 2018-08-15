@@ -799,7 +799,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
                     {
                         if (new_line->data->prefix)
                         {
-                            free (new_line->data->prefix);
+                            string_shared_free (new_line->data->prefix);
                             new_line->data->prefix = NULL;
                         }
                         new_line->data->prefix_length = 0;
