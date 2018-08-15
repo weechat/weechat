@@ -737,77 +737,74 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
         goto no_print;
 
     /* call modifier for message printed ("weechat_print") */
-    if (buffer)
+    length_data = strlen (gui_buffer_get_plugin_name (new_line->data->buffer)) +
+        1 +
+        strlen (new_line->data->buffer->name) +
+        1 +
+        ((tags) ? strlen (tags) : 0) +
+        1;
+    modifier_data = malloc (length_data);
+    length_str = ((new_line->data->prefix) ? strlen (new_line->data->prefix) + 1 : 0) +
+        (new_line->data->message ? strlen (new_line->data->message) : 0) +
+        1;
+    string = malloc (length_str);
+    if (modifier_data && string)
     {
-        length_data = strlen (gui_buffer_get_plugin_name (new_line->data->buffer)) +
-            1 +
-            strlen (new_line->data->buffer->name) +
-            1 +
-            ((tags) ? strlen (tags) : 0) +
-            1;
-        modifier_data = malloc (length_data);
-        length_str = ((new_line->data->prefix) ? strlen (new_line->data->prefix) + 1 : 0) +
-            (new_line->data->message ? strlen (new_line->data->message) : 0) +
-            1;
-        string = malloc (length_str);
-        if (modifier_data && string)
+        snprintf (modifier_data, length_data,
+                  "%s;%s;%s",
+                  gui_buffer_get_plugin_name (new_line->data->buffer),
+                  new_line->data->buffer->name,
+                  (tags) ? tags : "");
+        snprintf (string, length_str,
+                  "%s%s%s",
+                  (new_line->data->prefix) ? new_line->data->prefix : "",
+                  (new_line->data->prefix) ? "\t" : "",
+                  (new_line->data->message) ? new_line->data->message : "");
+        new_string = hook_modifier_exec (NULL,
+                                         "weechat_print",
+                                         modifier_data,
+                                         string);
+        if (new_string)
         {
-            snprintf (modifier_data, length_data,
-                      "%s;%s;%s",
-                      gui_buffer_get_plugin_name (new_line->data->buffer),
-                      new_line->data->buffer->name,
-                      (tags) ? tags : "");
-            snprintf (string, length_str,
-                      "%s%s%s",
-                      (new_line->data->prefix) ? new_line->data->prefix : "",
-                      (new_line->data->prefix) ? "\t" : "",
-                      (new_line->data->message) ? new_line->data->message : "");
-            new_string = hook_modifier_exec (NULL,
-                                          "weechat_print",
-                                          modifier_data,
-                                          string);
-            if (new_string)
+            if (!new_string[0] && string[0])
             {
-                if (!new_string[0] && string[0])
+                /*
+                 * modifier returned empty message, then we'll not
+                 * print anything
+                 */
+                goto no_print;
+            }
+            else if (strcmp (string, new_string) != 0)
+            {
+                /* use new message if there are changes */
+                pos_prefix = NULL;
+                ptr_msg = new_string;
+                pos_tab = strchr (new_string, '\t');
+                if (pos_tab)
                 {
-                    /*
-                     * modifier returned empty message, then we'll not
-                     * print anything
-                     */
-                    goto no_print;
+                    pos_tab[0] = '\0';
+                    pos_prefix = ptr_msg;
+                    ptr_msg = pos_tab + 1;
                 }
-                else if (strcmp (string, new_string) != 0)
+                if (pos_prefix)
                 {
-                    /* use new message if there are changes */
-                    pos_prefix = NULL;
-                    ptr_msg = new_string;
-                    pos_tab = strchr (new_string, '\t');
-                    if (pos_tab)
-                    {
-                        pos_tab[0] = '\0';
-                        pos_prefix = ptr_msg;
-                        ptr_msg = pos_tab + 1;
-                    }
-                    if (pos_prefix)
-                    {
-                        if (new_line->data->prefix)
-                            string_shared_free (new_line->data->prefix);
-                        new_line->data->prefix = (char *)string_shared_get (pos_prefix);
-                        new_line->data->prefix_length = gui_chat_strlen_screen (pos_prefix);
-                    }
-                    else
-                    {
-                        if (new_line->data->prefix)
-                        {
-                            string_shared_free (new_line->data->prefix);
-                            new_line->data->prefix = NULL;
-                        }
-                        new_line->data->prefix_length = 0;
-                    }
-                    if (new_line->data->message)
-                        free (new_line->data->message);
-                    new_line->data->message = strdup (ptr_msg);
+                    if (new_line->data->prefix)
+                        string_shared_free (new_line->data->prefix);
+                    new_line->data->prefix = (char *)string_shared_get (pos_prefix);
+                    new_line->data->prefix_length = gui_chat_strlen_screen (pos_prefix);
                 }
+                else
+                {
+                    if (new_line->data->prefix)
+                    {
+                        string_shared_free (new_line->data->prefix);
+                        new_line->data->prefix = NULL;
+                    }
+                    new_line->data->prefix_length = 0;
+                }
+                if (new_line->data->message)
+                    free (new_line->data->message);
+                new_line->data->message = strdup (ptr_msg);
             }
         }
     }
@@ -816,7 +813,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
     gui_line_add (new_line);
 
     /* run hook_print for the new line */
-    if (new_line->data->buffer && buffer->print_hooks_enabled)
+    if (new_line->data->buffer && new_line->data->buffer->print_hooks_enabled)
         hook_print_exec (new_line->data->buffer, new_line);
 
     gui_buffer_ask_chat_refresh (new_line->data->buffer, 1);
