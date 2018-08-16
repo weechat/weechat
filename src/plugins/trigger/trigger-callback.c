@@ -277,9 +277,10 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             {
                 weechat_printf_date_tags (trigger_buffer, 0, "no_trigger",
                                           "\t  regex %d (%s): %s",
-                                          i + 1, ptr_key, _("empty variable"));
+                                          i + 1, ptr_key, _("creating variable"));
             }
-            continue;
+            weechat_hashtable_set (extra_vars, ptr_key, "");
+            ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
         }
 
         weechat_hashtable_set (pointers, "regex", trigger->regex[i].regex);

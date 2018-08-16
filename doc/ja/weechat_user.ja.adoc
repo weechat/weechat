@@ -3707,7 +3707,12 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 正規表現はコールバックハッシュテーブル内の変数を変更するために使われます。
 
 書式: "/regex/replace" または "/regex/replace/var" (ここで
-_var_ はハッシュテーブルの変数)。 +
+_var_ はハッシュテーブルの変数)。
+
+// TRANSLATION MISSING
+If _var_ does not exist in the hashtable, it is created automatically with an
+empty value. This allows to create custom temporary variables.
+
 _var_
 が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
 

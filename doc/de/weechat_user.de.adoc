@@ -3797,7 +3797,12 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 Reguläre Ausdrücke werden verwendet um Variablen in einem Callback Hashtable zu ändern.
 
 Das Format ist: "/regex/replace" oder "/regex/replace/var" (wobei _var_ eine
-Variable eines Hashtable darstellt). +
+Variable eines Hashtable darstellt).
+
+// TRANSLATION MISSING
+If _var_ does not exist in the hashtable, it is created automatically with an
+empty value. This allows to create custom temporary variables.
+
 Sollte _var_ nicht näher spezifiziert sein, wird die Standard-Variable genutzt,
 welche abhängig von dem genutzten Hook ist:
 

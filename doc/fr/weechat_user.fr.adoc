@@ -3830,7 +3830,11 @@ L'expression régulière est utilisée pour modifier des variables dans la table
 de hachage de la fonction de rappel.
 
 Le format est : "/regex/remplacement" ou "/regex/remplacement/var" (où _var_ est
-une variable de la table de hachage). +
+une variable de la table de hachage).
+
+Si _var_ n'existe pas dans la table de hachage, elle est automatiquement créée
+avec une valeur vide. Cela permet de créer des variables temporaires.
+
 Si _var_ n'est pas spécifiée, la variable par défaut est utilisée, elle dépend
 du type de hook :
 

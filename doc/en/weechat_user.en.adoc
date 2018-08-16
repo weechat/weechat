@@ -3711,7 +3711,11 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 The regular expression is used to change variables in callback hashtable.
 
 The format is: "/regex/replace" or "/regex/replace/var" (where _var_ is a
-variable of the hashtable). +
+variable of the hashtable).
+
+If _var_ does not exist in the hashtable, it is created automatically with an
+empty value. This allows to create custom temporary variables.
+
 If _var_ is not specified, the default variable is used, it depends on hook
 type:
 
