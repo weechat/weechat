@@ -452,6 +452,18 @@ TEST(CoreEval, EvalReplaceRegex)
                              NULL, NULL);
     CHECK(options);
 
+    /* replace regex by empty string (on empty string) */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", ".*");
+    hashtable_set (options, "regex_replace", "");
+    WEE_CHECK_EVAL("", "");
+
+    /* replace regex (on empty string) */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", ".*");
+    hashtable_set (options, "regex_replace", "test");
+    WEE_CHECK_EVAL("test", "");
+
     /* replace regex by empty string */
     hashtable_remove (pointers, "regex");
     hashtable_set (options, "regex", ".*");

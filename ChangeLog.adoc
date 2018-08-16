@@ -25,6 +25,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix string evaluation with regex replacement when the string is empty
   * core: fix check of tags in lines (command /filter and hook_print)
   * core: fix clear of completion item in case of partial completion (issue #1162)
   * core: send signal "key_pressed" for mouse code only if the string is UTF-8 valid (issue #1220)

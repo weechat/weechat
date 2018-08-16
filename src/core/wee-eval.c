@@ -1100,6 +1100,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 {
     char *result, *result2, *str_replace;
     int length, length_replace, start_offset, i, rc, end;
+    int empty_replace_allowed;
     struct t_eval_regex eval_regex;
 
     if (!string || !regex || !replace)
@@ -1114,7 +1115,11 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     eval_context->regex = &eval_regex;
 
     start_offset = 0;
-    while (result && result[start_offset])
+
+    /* we allow one empty replace if input string is empty */
+    empty_replace_allowed = (result[0]) ? 0 : 1;
+
+    while (result)
     {
         for (i = 0; i < 100; i++)
         {
@@ -1122,16 +1127,20 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         }
 
         rc = regexec (regex, result + start_offset, 100, eval_regex.match, 0);
-        /*
-         * no match found: exit the loop (if rm_eo == 0, it is an empty match
-         * at beginning of string: we consider there is no match, to prevent an
-         * infinite loop)
-         */
-        if ((rc != 0)
-            || (eval_regex.match[0].rm_so < 0)
-            || (eval_regex.match[0].rm_eo <= 0))
-        {
+
+        /* no match found: exit the loop */
+        if ((rc != 0) || (eval_regex.match[0].rm_so < 0))
             break;
+
+        /*
+         * if empty string is matching, continue only if empty replace is
+         * still allowed (to prevent infinite loop)
+         */
+        if (eval_regex.match[0].rm_eo <= 0)
+        {
+            if (!empty_replace_allowed)
+                break;
+            empty_replace_allowed = 0;
         }
 
         /* adjust the start/end offsets */
@@ -1183,6 +1192,9 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
             break;
 
         start_offset = eval_regex.match[0].rm_so + length_replace;
+
+        if (!result[start_offset])
+            break;
     }
 
     return result;
