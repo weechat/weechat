@@ -59,6 +59,7 @@ IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreEval);
 IMPORT_TEST_GROUP(CoreHashtable);
 IMPORT_TEST_GROUP(CoreHdata);
+IMPORT_TEST_GROUP(CoreHook);
 IMPORT_TEST_GROUP(CoreInfolist);
 IMPORT_TEST_GROUP(CoreList);
 IMPORT_TEST_GROUP(CoreString);
@@ -104,6 +105,10 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     (void) tags;
     (void) displayed;
     (void) highlight;
+
+    /* keep only messages displayed on core buffer */
+    if (strcmp (gui_buffer_get_string (buffer, "full_name"), "core.weechat") != 0)
+        return WEECHAT_RC_OK;
 
     printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
             (prefix && prefix[0]) ? prefix : "",

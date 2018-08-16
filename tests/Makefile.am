@@ -26,6 +26,7 @@ lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
                                    unit/core/test-eval.cpp \
                                    unit/core/test-hashtable.cpp \
                                    unit/core/test-hdata.cpp \
+                                   unit/core/test-hook.cpp \
                                    unit/core/test-infolist.cpp \
                                    unit/core/test-list.cpp \
                                    unit/core/test-string.cpp \

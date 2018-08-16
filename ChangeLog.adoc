@@ -31,6 +31,10 @@ Bug fixes::
   * api: fix memory leak in function string_split
   * scripts: fix duplicated lines in output of script eval (python, perl, ruby, lua and guile)
 
+Tests::
+
+  * unit: add tests on line and hook functions
+
 [[v2.2]]
 == Version 2.2 (2018-07-14)
 
