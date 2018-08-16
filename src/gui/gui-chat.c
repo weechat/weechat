@@ -744,7 +744,8 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
         ((tags) ? strlen (tags) : 0) +
         1;
     modifier_data = malloc (length_data);
-    length_str = ((new_line->data->prefix) ? strlen (new_line->data->prefix) + 1 : 0) +
+    length_str = ((new_line->data->prefix && new_line->data->prefix[0]) ? strlen (new_line->data->prefix) : 1) +
+        1 +
         (new_line->data->message ? strlen (new_line->data->message) : 0) +
         1;
     string = malloc (length_str);
@@ -755,11 +756,20 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
                   gui_buffer_get_plugin_name (new_line->data->buffer),
                   new_line->data->buffer->name,
                   (tags) ? tags : "");
-        snprintf (string, length_str,
-                  "%s%s%s",
-                  (new_line->data->prefix) ? new_line->data->prefix : "",
-                  (new_line->data->prefix) ? "\t" : "",
-                  (new_line->data->message) ? new_line->data->message : "");
+        if (display_time)
+        {
+            snprintf (string, length_str,
+                      "%s\t%s",
+                      (new_line->data->prefix && new_line->data->prefix[0]) ?
+                      new_line->data->prefix : " ",
+                      (new_line->data->message) ? new_line->data->message : "");
+        }
+        else
+        {
+            snprintf (string, length_str,
+                      "\t\t%s",
+                      (new_line->data->message) ? new_line->data->message : "");
+        }
         new_string = hook_modifier_exec (NULL,
                                          "weechat_print",
                                          modifier_data,
@@ -777,31 +787,50 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
             else if (strcmp (string, new_string) != 0)
             {
                 /* use new message if there are changes */
+                display_time = 1;
                 pos_prefix = NULL;
                 ptr_msg = new_string;
-                pos_tab = strchr (new_string, '\t');
-                if (pos_tab)
+                /* space followed by tab => prefix ignored */
+                if ((ptr_msg[0] == ' ') && (ptr_msg[1] == '\t'))
                 {
-                    pos_tab[0] = '\0';
-                    pos_prefix = ptr_msg;
-                    ptr_msg = pos_tab + 1;
-                }
-                if (pos_prefix)
-                {
-                    if (new_line->data->prefix)
-                        string_shared_free (new_line->data->prefix);
-                    new_line->data->prefix = (char *)string_shared_get (pos_prefix);
-                    new_line->data->prefix_length = gui_chat_strlen_screen (pos_prefix);
+                    ptr_msg += 2;
                 }
                 else
                 {
-                    if (new_line->data->prefix)
+                    /* if two first chars are tab, then do not display time */
+                    if ((ptr_msg[0] == '\t') && (ptr_msg[1] == '\t'))
                     {
-                        string_shared_free (new_line->data->prefix);
-                        new_line->data->prefix = NULL;
+                        display_time = 0;
+                        new_line->data->date = 0;
+                        ptr_msg += 2;
                     }
-                    new_line->data->prefix_length = 0;
+                    else
+                    {
+                        /* if tab found, use prefix (before tab) */
+                        pos_tab = strchr (ptr_msg, '\t');
+                        if (pos_tab)
+                        {
+                            pos_tab[0] = '\0';
+                            pos_prefix = ptr_msg;
+                            ptr_msg = pos_tab + 1;
+                        }
+                    }
                 }
+                if ((new_line->data->date == 0) && display_time)
+                    new_line->data->date = new_line->data->date_printed;
+                if (new_line->data->prefix)
+                    string_shared_free (new_line->data->prefix);
+                if (pos_prefix)
+                {
+                    new_line->data->prefix = (char *)string_shared_get (pos_prefix);
+                }
+                else
+                {
+                    new_line->data->prefix = (new_line->data->date != 0) ?
+                        (char *)string_shared_get ("") : NULL;
+                }
+                new_line->data->prefix_length = gui_chat_strlen_screen (
+                    new_line->data->prefix);
                 if (new_line->data->message)
                     free (new_line->data->message);
                 new_line->data->message = strdup (ptr_msg);
