@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -12790,8 +12790,9 @@ msgstr "Monitor de acionador (filtro: %s) | Entrada: q=fechar, palavras=filtro"
 msgid "no variable"
 msgstr "nenhum variável"
 
-msgid "empty variable"
-msgstr "variável vazia"
+#, fuzzy
+msgid "creating variable"
+msgstr "leitura - variável"
 
 #, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -13732,6 +13733,9 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
+
+#~ msgid "empty variable"
+#~ msgstr "variável vazia"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "Memória insuficiente para nova linha"

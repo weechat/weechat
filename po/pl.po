@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-07-09 00:51+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <soltys1@gmail.com>\n"
@@ -13092,8 +13092,9 @@ msgstr "Monitor triggerów (filtr: %s) | Wejście q=zamknij, słowa=filtr"
 msgid "no variable"
 msgstr "brak zmiennej"
 
-msgid "empty variable"
-msgstr "pusta zmienna"
+#, fuzzy
+msgid "creating variable"
+msgstr "odczyt - zmienna"
 
 #, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -14030,6 +14031,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "empty variable"
+#~ msgstr "pusta zmienna"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "Za mało pamięci na nowy wiersz"

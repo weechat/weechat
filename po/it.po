@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12233,8 +12233,8 @@ msgid "no variable"
 msgstr "Variabili"
 
 #, fuzzy
-msgid "empty variable"
-msgstr "Variabili"
+msgid "creating variable"
+msgstr "lettura - variabile"
 
 #, fuzzy, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -13070,6 +13070,10 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#, fuzzy
+#~ msgid "empty variable"
+#~ msgstr "Variabili"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "Memoria non sufficiente per una nuova riga"

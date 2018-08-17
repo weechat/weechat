@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11740,8 +11740,9 @@ msgstr ""
 msgid "no variable"
 msgstr "není proměnná"
 
-msgid "empty variable"
-msgstr "prázdná proměnná"
+#, fuzzy
+msgid "creating variable"
+msgstr "čtení - proměnná"
 
 #, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -12578,6 +12579,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "empty variable"
+#~ msgstr "prázdná proměnná"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "Nedostatek paměti pro nový řádek"

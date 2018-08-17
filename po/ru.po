@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11055,7 +11055,7 @@ msgid "no variable"
 msgstr "  . тип: целочисленный\n"
 
 #, fuzzy
-msgid "empty variable"
+msgid "creating variable"
 msgstr "  . тип: целочисленный\n"
 
 #, fuzzy, c-format
@@ -11893,6 +11893,10 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "empty variable"
+#~ msgstr "  . тип: целочисленный\n"
 
 #, fuzzy
 #~ msgid "Not enough memory for new line"

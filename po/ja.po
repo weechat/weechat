@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
 "PO-Revision-Date: 2018-07-12 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12891,8 +12891,9 @@ msgstr "トリガモニタ (フィルタ: %s) | 入力: q=閉じる、words=フ�
 msgid "no variable"
 msgstr "変数がありません"
 
-msgid "empty variable"
-msgstr "変数が空です"
+#, fuzzy
+msgid "creating variable"
+msgstr "読み込み - 変数"
 
 #, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -13812,6 +13813,9 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "empty variable"
+#~ msgstr "変数が空です"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "新しい行に使うメモリが足りません"

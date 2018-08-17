@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-08-15 12:31+0200\n"
-"PO-Revision-Date: 2018-08-15 12:34+0200\n"
+"POT-Creation-Date: 2018-08-17 19:36+0200\n"
+"PO-Revision-Date: 2018-08-17 19:37+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -13384,8 +13384,8 @@ msgstr "Moniteur de trigger (filtre : %s) | Entrée : q=fermer, mots=filtrer"
 msgid "no variable"
 msgstr "pas de variable"
 
-msgid "empty variable"
-msgstr "variable vide"
+msgid "creating variable"
+msgstr "création de la variable"
 
 #, c-format
 msgid "%s  running command %s\"%s%s%s\"%s on buffer %s%s%s"
@@ -14357,6 +14357,9 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
+
+#~ msgid "empty variable"
+#~ msgstr "variable vide"
 
 #~ msgid "Not enough memory for new line"
 #~ msgstr "Pas assez de mémoire pour une nouvelle ligne"
