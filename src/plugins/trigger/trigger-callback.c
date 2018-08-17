@@ -827,7 +827,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     {
         snprintf (str_tags, length, ",%s,",
                   (ptr_value) ? ptr_value : "");
-        weechat_hashtable_set (extra_vars, "tg_tags", str_tags);
+        weechat_hashtable_set (extra_vars, "tags", str_tags);
         free (str_tags);
     }
 
@@ -854,12 +854,9 @@ trigger_callback_line_cb (const void *pointer, void *data,
             ptr_key = weechat_list_string (ptr_item);
             if (weechat_hashtable_has_key (extra_vars, ptr_key))
             {
-                if (strcmp (ptr_key, "tg_tags") == 0)
+                if (strcmp (ptr_key, "tags") == 0)
                 {
-                    /*
-                     * remove commas at the beginning/end of tg_tags and
-                     * rename the key to "tags"
-                     */
+                    /* remove commas at the beginning/end of tags */
                     ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
                     if (ptr_value && ptr_value[0])
                     {
@@ -873,13 +870,13 @@ trigger_callback_line_cb (const void *pointer, void *data,
                                 str_tags[strlen (str_tags) - 1] = '\0';
                             }
                             weechat_hashtable_set (hashtable,
-                                                   "tags", str_tags);
+                                                   ptr_key, str_tags);
                             free (str_tags);
                         }
                     }
                     else
                     {
-                        weechat_hashtable_set (hashtable, "tags", ptr_value);
+                        weechat_hashtable_set (hashtable, ptr_key, ptr_value);
                     }
                 }
                 else
