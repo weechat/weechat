@@ -10916,44 +10916,6 @@ WeeChat とプラグインが使う修飾子のリスト:
 |===
 | 修飾子 | 修飾子データ | 文字列 | 出力
 
-| [[hook_modifier_charset_decode]] charset_decode |
-  plugin.buffer_name |
-  任意の文字列 |
-  プラグインおよびバッファの文字セットから UTF-8 にデコードされた文字列
-
-| [[hook_modifier_charset_encode]] charset_encode |
-  plugin.buffer_name |
-  任意の文字列 |
-  UTF-8 からプラグインおよびバッファの文字セットにエンコードされた文字列
-
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
-  色を保持する場合は "1"、削除する場合は "0" |
-  任意の文字列 |
-  WeeChat 色コードに変換された IRC 色コードを含む (または IRC 色コードを削除された) 文字列
-
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
-  色を保持する場合は "1"、削除する場合は "0" |
-  任意の文字列 |
-  IRC 色コードを含む (または IRC 色コードを削除された) 文字列
-
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
-  色を保持する場合は "1"、削除する場合は "0" |
-  任意の文字列 |
-  IRC 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
-
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  サーバ名 |
-  認証コマンド (例: `+/msg nickserv identify password+`) |
-  パスワードを隠したコマンド (例: `+/msg nickserv identify ********+`)
-
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
-  サーバ名 |
-  `/msg` をサーバに送信した後に表示されるメッセージ |
-  パスワードを隠したメッセージ
-
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   サーバ名 |
   IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) |
@@ -10977,12 +10939,6 @@ WeeChat とプラグインが使う修飾子のリスト:
   IRC サーバに送信するメッセージの内容
   (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
-
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat バージョン 1.0 以上で利用可)_ |
-  色を保持する場合は "1"、削除する場合は "0" |
-  任意の文字列 |
-  WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   ウィンドウへのポインタの文字列 ("0x123..") |
@@ -11095,6 +11051,58 @@ char *weechat_hook_modifier_exec (const char *modifier,
 戻り値:
 
 * 修正された文字列、エラーが起きた場合は NULL
+
+// TRANSLATION MISSING
+List of modifiers defined by WeeChat and plugins that can be used:
+
+[width="100%",cols="^2,3,4,4",options="header"]
+|===
+| 修飾子 | 修飾子データ | 文字列 | 出力
+
+| [[hook_modifier_charset_decode]] charset_decode |
+  plugin.buffer_name |
+  任意の文字列 |
+  プラグインおよびバッファの文字セットから UTF-8 にデコードされた文字列
+
+| [[hook_modifier_charset_encode]] charset_encode |
+  plugin.buffer_name |
+  任意の文字列 |
+  UTF-8 からプラグインおよびバッファの文字セットにエンコードされた文字列
+
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  WeeChat 色コードに変換された IRC 色コードを含む (または IRC 色コードを削除された) 文字列
+
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  IRC 色コードを含む (または IRC 色コードを削除された) 文字列
+
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  IRC 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
+
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
+  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+  サーバ名 |
+  認証コマンド (例: `+/msg nickserv identify password+`) |
+  パスワードを隠したコマンド (例: `+/msg nickserv identify ********+`)
+
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
+  _(WeeChat バージョン 0.4.1 以上で利用可)_ |
+  サーバ名 |
+  `/msg` をサーバに送信した後に表示されるメッセージ |
+  パスワードを隠したメッセージ
+
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
+  _(WeeChat バージョン 1.0 以上で利用可)_ |
+  色を保持する場合は "1"、削除する場合は "0" |
+  任意の文字列 |
+  WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
+|===
 
 C 言語での使用例:
 

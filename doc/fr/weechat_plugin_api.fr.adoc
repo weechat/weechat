@@ -11173,48 +11173,6 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 |===
 | Modificateur | Données du modificateur | Chaîne | Sortie
 
-| [[hook_modifier_charset_decode]] charset_decode |
-  extension.nom_tampon |
-  Toute chaîne. |
-  Chaîne décodée depuis le jeu de caractères trouvé pour l'extension/tampon
-  vers UTF-8.
-
-| [[hook_modifier_charset_encode]] charset_encode |
-  extension.nom_tampon |
-  Toute chaîne. |
-  Chaîne encodée depuis UTF-8 vers le jeu de caractères trouvé pour
-  l'extension/tampon.
-
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
-  "1" pour garder les couleurs, "0" pour les supprimer |
-  Toute chaîne. |
-  Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
-  couleurs IRC supprimées).
-
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
-  "1" pour garder les couleurs, "0" pour les supprimer |
-  Toute chaîne. |
-  Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
-
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" pour garder les couleurs, "0" pour les supprimer |
-  Toute chaîne. |
-  Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
-  ANSI supprimées).
-
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Nom du serveur |
-  Commande d'authentification (par exemple : `+/msg nickserv identify password+`). |
-  Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`).
-
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Nom du serveur |
-  Message affiché après `msg` envoyé à nickserv. |
-  Message avec le mot de passe caché.
-
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nom de serveur |
   Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). |
@@ -11238,13 +11196,6 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Contenu du message qui va être envoyé au serveur IRC après découpage automatique
   (pour tenir dans les 512 octets par défaut). |
   Nouveau contenu du message.
-
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" pour garder les couleurs, "0" pour les supprimer |
-  Toute chaîne. |
-  Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
-  couleurs ANSI supprimées).
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   Chaîne avec un pointeur vers la fenêtre ("0x123..") |
@@ -11359,6 +11310,63 @@ Paramètres :
 Valeur de retour :
 
 * chaîne modifiée, NULL en cas d'erreur
+
+Liste des modificateurs définis par WeeChat et les extensions qui peuvent être
+utilisés :
+
+[width="100%",cols="^2,3,4,4",options="header"]
+|===
+| Modificateur | Données du modificateur | Chaîne | Sortie
+
+| [[hook_modifier_charset_decode]] charset_decode |
+  extension.nom_tampon |
+  Toute chaîne. |
+  Chaîne décodée depuis le jeu de caractères trouvé pour l'extension/tampon
+  vers UTF-8.
+
+| [[hook_modifier_charset_encode]] charset_encode |
+  extension.nom_tampon |
+  Toute chaîne. |
+  Chaîne encodée depuis UTF-8 vers le jeu de caractères trouvé pour
+  l'extension/tampon.
+
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne. |
+  Chaîne avec les couleurs IRC converties en couleurs WeeChat (ou avec les
+  couleurs IRC supprimées).
+
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne. |
+  Chaîne avec les couleurs IRC (ou avec les couleurs IRC supprimées).
+
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne. |
+  Chaîne avec les couleurs ANSI converties en couleurs IRC (ou avec les couleurs
+  ANSI supprimées).
+
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Nom du serveur |
+  Commande d'authentification (par exemple : `+/msg nickserv identify password+`). |
+  Commande avec le mot de passe caché (par exemple : `+/msg nickserv identify ********+`).
+
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Nom du serveur |
+  Message affiché après `msg` envoyé à nickserv. |
+  Message avec le mot de passe caché.
+
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" pour garder les couleurs, "0" pour les supprimer |
+  Toute chaîne. |
+  Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
+  couleurs ANSI supprimées).
+|===
 
 Exemple en C :
 

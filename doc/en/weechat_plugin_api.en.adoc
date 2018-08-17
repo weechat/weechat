@@ -10944,44 +10944,6 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modifier | Modifier data | String | Output
 
-| [[hook_modifier_charset_decode]] charset_decode |
-  plugin.buffer_name |
-  Any string. |
-  String decoded from charset found for plugin/buffer to UTF-8.
-
-| [[hook_modifier_charset_encode]] charset_encode |
-  plugin.buffer_name |
-  Any string. |
-  String encoded from UTF-8 to charset found for plugin/buffer.
-
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with IRC colors converted to WeeChat colors (or IRC colors removed).
-
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with IRC colors (or IRC colors removed).
-
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with ANSI colors converted to IRC colors (or ANSI colors removed).
-
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Server name |
-  Authentication command (for example: `+/msg nickserv identify password+`). |
-  command with hidden password (for example: `+/msg nickserv identify ********+`).
-
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Server name |
-  Message displayed after `/msg` sent to nickserv. |
-  Message with hidden password.
-
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Server name |
   Content of message received from IRC server (before charset decoding). |
@@ -11005,12 +10967,6 @@ List of modifiers used by WeeChat and plugins:
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   New content of message.
-
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" to keep colors, "0" to remove colors |
-  Any string. |
-  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   String with window pointer ("0x123..") |
@@ -11122,6 +11078,57 @@ Arguments:
 Return value:
 
 * string modified, NULL if error occurred
+
+List of modifiers defined by WeeChat and plugins that can be used:
+
+[width="100%",cols="^2,3,4,4",options="header"]
+|===
+| Modifier | Modifier data | String | Output
+
+| [[hook_modifier_charset_decode]] charset_decode |
+  plugin.buffer_name |
+  Any string. |
+  String decoded from charset found for plugin/buffer to UTF-8.
+
+| [[hook_modifier_charset_encode]] charset_encode |
+  plugin.buffer_name |
+  Any string. |
+  String encoded from UTF-8 to charset found for plugin/buffer.
+
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
+  "1" to keep colors, "0" to remove colors |
+  Any string. |
+  String with IRC colors converted to WeeChat colors (or IRC colors removed).
+
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
+  "1" to keep colors, "0" to remove colors |
+  Any string. |
+  String with IRC colors (or IRC colors removed).
+
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string. |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed).
+
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Server name |
+  Authentication command (for example: `+/msg nickserv identify password+`). |
+  command with hidden password (for example: `+/msg nickserv identify ********+`).
+
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Server name |
+  Message displayed after `/msg` sent to nickserv. |
+  Message with hidden password.
+
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" to keep colors, "0" to remove colors |
+  Any string. |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
+|===
 
 C example:
 

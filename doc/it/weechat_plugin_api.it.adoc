@@ -11377,49 +11377,6 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modificatore | Dati modificatore | Stringa | Output
 
-| [[hook_modifier_charset_decode]] charset_decode |
-  plugin.buffer_name |
-  Qualsiasi stringa. |
-  Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8.
-
-| [[hook_modifier_charset_encode]] charset_encode |
-  plugin.buffer_name |
-  Qualsiasi stringa. |
-  Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer.
-
-// TRANSLATION MISSING
-| [[hook_modifier_irc_color_decode]] irc_color_decode |
-  "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa. |
-  String with IRC colors converted to WeeChat colors (or IRC colors removed).
-
-// TRANSLATION MISSING
-| [[hook_modifier_irc_color_encode]] irc_color_encode |
-  "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa. |
-  String with IRC colors (or IRC colors removed).
-
-// TRANSLATION MISSING
-| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa. |
-  String with ANSI colors converted to IRC colors (or ANSI colors removed).
-
-// TRANSLATION MISSING
-| [[hook_modifier_irc_command_auth]] irc_command_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Nome server |
-  Authentication command (for example: `+/msg nickserv identify password+`). |
-  Command with hidden password (for example: `+/msg nickserv identify ********+`).
-
-// TRANSLATION MISSING
-| [[hook_modifier_irc_message_auth]] irc_message_auth +
-  _(WeeChat ≥ 0.4.1)_ |
-  Nome server |
-  Message displayed after `/msg` sent to nickserv. |
-  Message with hidden password.
-
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nome server |
   Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). |
@@ -11445,13 +11402,6 @@ List of modifiers used by WeeChat and plugins:
   Content of message about to be sent to IRC server after automatic split
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
-
-// TRANSLATION MISSING
-| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
-  _(WeeChat ≥ 1.0)_ |
-  "1" per mantenere i colori, "0" per rimuovere i colori |
-  Qualsiasi stringa. |
-  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
   Stringa con puntatore alla finestra ("0x123..") |
@@ -11564,6 +11514,64 @@ Argomenti:
 Valore restituito:
 
 * stringa modificata, NULL in caso di errore
+
+// TRANSLATION MISSING
+List of modifiers defined by WeeChat and plugins that can be used:
+
+[width="100%",cols="^2,3,4,4",options="header"]
+|===
+| Modificatore | Dati modificatore | Stringa | Output
+
+| [[hook_modifier_charset_decode]] charset_decode |
+  plugin.buffer_name |
+  Qualsiasi stringa. |
+  Stringa codificata dal set caratteri trovato per plugin/buffer in UTF-8.
+
+| [[hook_modifier_charset_encode]] charset_encode |
+  plugin.buffer_name |
+  Qualsiasi stringa. |
+  Stringa codificata da UTF-8 al set caratteri trovato per il plugin/buffer.
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_color_decode]] irc_color_decode |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa. |
+  String with IRC colors converted to WeeChat colors (or IRC colors removed).
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_color_encode]] irc_color_encode |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa. |
+  String with IRC colors (or IRC colors removed).
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_color_decode_ansi]] irc_color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa. |
+  String with ANSI colors converted to IRC colors (or ANSI colors removed).
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_command_auth]] irc_command_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Nome server |
+  Authentication command (for example: `+/msg nickserv identify password+`). |
+  Command with hidden password (for example: `+/msg nickserv identify ********+`).
+
+// TRANSLATION MISSING
+| [[hook_modifier_irc_message_auth]] irc_message_auth +
+  _(WeeChat ≥ 0.4.1)_ |
+  Nome server |
+  Message displayed after `/msg` sent to nickserv. |
+  Message with hidden password.
+
+// TRANSLATION MISSING
+| [[hook_modifier_color_decode_ansi]] color_decode_ansi +
+  _(WeeChat ≥ 1.0)_ |
+  "1" per mantenere i colori, "0" per rimuovere i colori |
+  Qualsiasi stringa. |
+  String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
+|===
 
 Esempio in C:
 
