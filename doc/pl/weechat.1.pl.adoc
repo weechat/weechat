@@ -12,8 +12,9 @@ weechat - rozszerzalny klient rozmów
 
 == SKŁADNIA
 
+// TRANSLATION MISSING
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
+*weechat* [-a|--no-connect] [-d|--dir <ścieżka>] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]

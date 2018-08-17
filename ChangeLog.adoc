@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option "-P" (or "--plugins") to customize the plugins to load at startup
   * core: allow partial buffer name in command /buffer close (issue #1226)
   * api: add function hook_line
   * trigger: allow creation of temporary variables with the regex

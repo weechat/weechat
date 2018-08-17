@@ -13,7 +13,7 @@ weechat-headless - le client de discussion extensible (version sans interface)
 == SYNOPSIS
 
 [verse]
-*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-P|--plugins <extensions>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
 *weechat-headless* [-c|--colors]
 *weechat-headless* [-h|--help]
 *weechat-headless* [-l|--license]

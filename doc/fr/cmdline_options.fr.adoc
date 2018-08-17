@@ -25,6 +25,10 @@
 *-p*, *--no-plugin*::
     Supprimer le chargement automatique des extensions au démarrage.
 
+*-P*, *--plugins* _<extensions>_::
+    Charger uniquement ces extensions au démarrage (voir /help weechat.plugin.autoload).
+    Si cette option est donnée, l'option weechat.plugin.autoload n'est pas utilisée.
+
 *-r*, *--run-command* _<commande>_::
     Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
     être séparées par des points-virgules).

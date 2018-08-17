@@ -221,7 +221,7 @@ main (int argc, char *argv[])
                          "Auto-loading plugins from path in "
                          "environment variable WEECHAT_EXTRA_LIBDIR (\"%s\")",
                          getenv ("WEECHAT_EXTRA_LIBDIR"));
-        plugin_auto_load (0, NULL, 0, 1, 0);
+        plugin_auto_load (NULL, 0, 1, 0, 0, NULL);
     }
 
     /* display WeeChat version and directories */

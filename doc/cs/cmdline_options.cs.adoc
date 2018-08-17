@@ -26,6 +26,11 @@
 *-p*, *--no-plugin*::
     Vypne automatické nahrání pluginů.
 
+// TRANSLATION MISSING
+*-P*, *--plugins* _<plugins>_::
+    Load only these plugins at startup (see /help weechat.plugin.autoload).
+    If this option is given, the option weechat.plugin.autoload is not used.
+
 *-r*, *--run-command* _<command>_::
     Spustí příkaz(y) po startu (více přůkazů může být odděleno středníky).
 

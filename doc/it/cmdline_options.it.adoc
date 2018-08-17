@@ -27,6 +27,11 @@
     Disabilita il caricamento automatico dei plugin.
 
 // TRANSLATION MISSING
+*-P*, *--plugins* _<plugins>_::
+    Load only these plugins at startup (see /help weechat.plugin.autoload).
+    If this option is given, the option weechat.plugin.autoload is not used.
+
+// TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
     Esegue un comando(i) dopo l'avvio (più comandi possono essere separati da
     punto e virgola).

@@ -39,15 +39,17 @@ extern const char *plugin_get_name (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_load (const char *filename,
                                              int init_plugin,
                                              int argc, char **argv);
-extern void plugin_auto_load (int argc, char **argv,
+extern void plugin_auto_load (char *force_plugin_autoload,
                               int load_from_plugin_path,
                               int load_from_extra_lib_dir,
-                              int load_from_lib_dir);
+                              int load_from_lib_dir,
+                              int argc,
+                              char **argv);
 extern void plugin_unload (struct t_weechat_plugin *plugin);
 extern void plugin_unload_name (const char *name);
 extern void plugin_unload_all ();
 extern void plugin_reload_name (const char *name, int argc, char **argv);
-extern void plugin_init (int auto_load, int argc, char *argv[]);
+extern void plugin_init (char *force_plugin_autoload, int argc, char *argv[]);
 extern void plugin_end ();
 extern struct t_hdata *plugin_hdata_plugin_cb (const void *pointer,
                                                void *data,

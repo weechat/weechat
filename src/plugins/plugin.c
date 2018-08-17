@@ -998,12 +998,14 @@ plugin_arraylist_cmp_cb (void *data,
  */
 
 void
-plugin_auto_load (int argc, char **argv,
+plugin_auto_load (char *force_plugin_autoload,
                   int load_from_plugin_path,
                   int load_from_extra_lib_dir,
-                  int load_from_lib_dir)
+                  int load_from_lib_dir,
+                  int argc, char **argv)
 {
     char *dir_name, *plugin_path, *plugin_path2, *extra_libdir;
+    const char *ptr_plugin_autoload;
     struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
     struct t_arraylist *arraylist;
@@ -1015,10 +1017,12 @@ plugin_auto_load (int argc, char **argv,
     plugin_autoload_array = NULL;
     plugin_autoload_count = 0;
 
-    if (CONFIG_STRING(config_plugin_autoload)
-        && CONFIG_STRING(config_plugin_autoload)[0])
+    ptr_plugin_autoload = (force_plugin_autoload) ?
+        force_plugin_autoload : CONFIG_STRING(config_plugin_autoload);
+
+    if (ptr_plugin_autoload && ptr_plugin_autoload[0])
     {
-        plugin_autoload_array = string_split (CONFIG_STRING(config_plugin_autoload),
+        plugin_autoload_array = string_split (ptr_plugin_autoload,
                                               ",", 0, 0,
                                               &plugin_autoload_count);
     }
@@ -1351,20 +1355,17 @@ plugin_display_short_list ()
  */
 
 void
-plugin_init (int auto_load, int argc, char *argv[])
+plugin_init (char *force_plugin_autoload, int argc, char *argv[])
 {
     /* read plugins options on disk */
     plugin_config_init ();
     plugin_config_read ();
 
-    /* auto-load plugins if asked */
-    if (auto_load)
-    {
-        plugin_quiet = 1;
-        plugin_auto_load (argc, argv, 1, 1, 1);
-        plugin_display_short_list ();
-        plugin_quiet = 0;
-    }
+    /* auto-load plugins */
+    plugin_quiet = 1;
+    plugin_auto_load (force_plugin_autoload, 1, 1, 1, argc, argv);
+    plugin_display_short_list ();
+    plugin_quiet = 0;
 }
 
 /*

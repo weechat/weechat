@@ -95,7 +95,7 @@ char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
-int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
+char *weechat_force_plugin_autoload = NULL; /* force load of plugins        */
 int weechat_plugin_no_dlclose = 0;     /* remove calls to dlclose for libs  */
                                        /* (useful with valgrind)            */
 int weechat_no_gnutls = 0;             /* remove init/deinit of gnutls      */
@@ -152,6 +152,8 @@ weechat_display_usage ()
           "  -h, --help               display this help\n"
           "  -l, --license            display WeeChat license\n"
           "  -p, --no-plugin          don't load any plugin at startup\n"
+          "  -P, --plugins <plugins>  load only these plugins at startup\n"
+          "                           (see /help weechat.plugin.autoload)\n"
           "  -r, --run-command <cmd>  run command(s) after startup\n"
           "                           (many commands can be separated by "
           "semicolons)\n"
@@ -193,7 +195,7 @@ weechat_parse_args (int argc, char *argv[])
     weechat_upgrading = 0;
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
-    weechat_auto_load_plugins = 1;
+    weechat_force_plugin_autoload = NULL;
     weechat_plugin_no_dlclose = 0;
 
     for (i = 1; i < argc; i++)
@@ -269,7 +271,26 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))
         {
-            weechat_auto_load_plugins = 0;
+            if (weechat_force_plugin_autoload)
+                free (weechat_force_plugin_autoload);
+            weechat_force_plugin_autoload = strdup ("!*");
+        }
+        else if ((strcmp (argv[i], "-P") == 0)
+                 || (strcmp (argv[i], "--plugins") == 0))
+        {
+            if (i + 1 < argc)
+            {
+                if (weechat_force_plugin_autoload)
+                    free (weechat_force_plugin_autoload);
+                weechat_force_plugin_autoload = strdup (argv[++i]);
+            }
+            else
+            {
+                string_fprintf (stderr,
+                                _("Error: missing argument for \"%s\" option\n"),
+                                argv[i]);
+                weechat_shutdown (EXIT_FAILURE, 0);
+            }
         }
         else if ((strcmp (argv[i], "-r") == 0)
                  || (strcmp (argv[i], "--run-command") == 0))
@@ -616,6 +637,8 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_home);
     if (weechat_local_charset)
         free (weechat_local_charset);
+    if (weechat_force_plugin_autoload)
+        free (weechat_force_plugin_autoload);
 
     if (crash)
         abort ();
@@ -697,7 +720,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_term_check ();              /* warning about wrong $TERM        */
     weechat_locale_check ();            /* warning about wrong locale       */
     command_startup (0);                /* command executed before plugins  */
-    plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
+    plugin_init (weechat_force_plugin_autoload, /* init plugin interface(s) */
                  argc, argv);
     command_startup (1);                /* commands executed after plugins  */
     if (!weechat_upgrading)
