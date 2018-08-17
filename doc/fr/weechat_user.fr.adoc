@@ -4038,6 +4038,7 @@ de hachage :
 | date               | chaîne   | Date de la ligne (horodatage).
 | date_printed       | chaîne   | Date d'affichage de la ligne (horodatage).
 | str_time           | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
+| tags               | chaîne   | Étiquettes du message (avec une virgule en début/fin de chaîne).
 | displayed          | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
 | notify_level       | chaîne   | "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
 | highlight          | chaîne   | "1" si highlight, sinon "0".
@@ -4047,13 +4048,11 @@ de hachage :
 | tg_message_nocolor | chaîne   | Message sans les codes couleur.
 |===
 
-Variables définies avec les étiquettes du message (elles sont définies aussi
-pour fonction de rappel "print" et pour le modificateur _weechat_print_) :
+Variables définies avec les étiquettes du message :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Type   | Description
-| tg_tags            | chaîne | Étiquettes du message (avec une virgule en début/fin de chaîne).
 | tg_tags_count      | chaîne | Nombre d'étiquettes dans le message.
 | tg_tag_nick        | chaîne | Pseudo (depuis l'étiquette "nick_xxx").
 | tg_tag_prefix_nick | chaîne | Couleur du pseudo dans le préfixe (depuis l'étiquette "prefix_nick_ccc").
@@ -4082,8 +4081,7 @@ hachage :
 | tg_message_nocolor | chaîne   | Message sans les codes couleur.
 |===
 
-Variables définies avec les étiquettes du message (elles sont définies aussi
-pour la fonction de rappel "line" et pour le modificateur _weechat_print_) :
+Variables définies avec les étiquettes du message :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

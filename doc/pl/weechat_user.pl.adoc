@@ -3939,6 +3939,7 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | date               | ciąg     | Line date (timestamp).
 | date_printed       | ciąg     | Date when line was displayed (timestamp).
 | str_time           | ciąg     | Date for display. It may contain color codes.
+| tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | displayed          | ciąg     | "1" if displayed, "0" if line filtered.
 | notify_level       | ciąg     | "0" = low level, "1" = message, "2" = private message, "3" = highlight
 | highlight          | ciąg     | "1" if highlight, otherwise "0".
@@ -3949,13 +3950,11 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 |===
 
 // TRANSLATION MISSING
-Variables set using tags in message (they are also set in _print_ callback and
-modifier _weechat_print_):
+Variables set using tags in message:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Zmienna            | Typ  | Opis
-| tg_tags            | ciąg | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | tg_tags_count      | ciąg | Liczba tagów w wiadomości.
 | tg_tag_nick        | ciąg | Nick (z tagu "nick_xxx").
 | tg_tag_prefix_nick | ciąg | Kolor nicka w prefiksie (z tagu "prefix_nick_ccc").
@@ -3984,8 +3983,7 @@ Callback "print" ustawia następujące zmienne w tablicy hashy:
 |===
 
 // TRANSLATION MISSING
-Variables set using tags in message (they are also set in _line_ callback and
-modifier _weechat_print_):
+Variables set using tags in message:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

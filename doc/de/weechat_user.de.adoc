@@ -4002,6 +4002,7 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 | date               | string  | Line date (timestamp).
 | date_printed       | string  | Date when line was displayed (timestamp).
 | str_time           | string  | Date for display. It may contain color codes.
+| tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | displayed          | string  | "1" if displayed, "0" if line filtered.
 | notify_level       | string  | "0" = low level, "1" = message, "2" = private message, "3" = highlight
 | highlight          | string  | "1" if highlight, otherwise "0".
@@ -4012,13 +4013,11 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 |===
 
 // TRANSLATION MISSING
-Variables set using tags in message (they are also set in _print_ callback and
-modifier _weechat_print_):
+Variables set using tags in message:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Typ    | Beschreibung
-| tg_tags            | string | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | tg_tags_count      | string | Anzahl an Tags der Nachricht.
 | tg_tag_nick        | string | Nick (extrahiert aus Tag "nick_xxx").
 | tg_tag_prefix_nick | string | Nickfarbe für Präfix (extrahier aus Tag "prefix_nick_ccc").
@@ -4047,8 +4046,7 @@ Der Callback von "print" legt folgende Variablen in der Hashtable an:
 |===
 
 // TRANSLATION MISSING
-Variables set using tags in message (they are also set in _line_ callback and
-modifier _weechat_print_):
+Variables set using tags in message:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
