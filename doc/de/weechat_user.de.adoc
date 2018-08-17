@@ -3710,11 +3710,10 @@ ein Semikolon getrennt.
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Englisch)
 
-// TRANSLATION MISSING
 | line |
-  1. buffer type +
-  2. buffer name +
-  3. tags |
+  1. Buffertyp +
+  2. Buffername +
+  3. Tags |
   `+formatted+` +
   `+free+` +
   `+*;irc.freenode.*+` +
@@ -3799,21 +3798,19 @@ Reguläre Ausdrücke werden verwendet um Variablen in einem Callback Hashtable z
 Das Format ist: "/regex/replace" oder "/regex/replace/var" (wobei _var_ eine
 Variable eines Hashtable darstellt).
 
-// TRANSLATION MISSING
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+Falls _var_ in der Hashtabelle nicht existieren sollte, wird diese automatisch mit einem
+leeren Wert angelegt. Damit kann man temporär benutzerspezifische Variablen erstellen.
 
 Sollte _var_ nicht näher spezifiziert sein, wird die Standard-Variable genutzt,
 welche abhängig von dem genutzten Hook ist:
 
-// TRANSLATION MISSING
 [width="100%",cols="2,3,7",options="header"]
 |===
 | Hook        | Standard-Variable  | Update allowed ^(1)^
 | signal      | tg_signal_data     |
 | hsignal     |                    |
 | modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line        | message            | Buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
 | print       | tg_message         |
 | command     | tg_argv_eol1       |
 | command_run | tg_command         |
@@ -3822,10 +3819,10 @@ welche abhängig von dem genutzten Hook ist:
 | focus       |                    |
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ All variables can be updated in the trigger, but only these variables
-have an effect on the value returned by the trigger and used by WeeChat.
+^(1)^ Alle Variablen können im Trigger upgedated werden, aber nur diese Variablen
+haben einen Einfluss auf den Wert der vom Trigger zurückgegeben wird und dann von
+WeeChat genutzt wird.
 
 Mehrere reguläre Ausdrücke können durch ein Leerzeichen voneinander
 getrennt werden, zum Beispiel:
@@ -3991,29 +3988,27 @@ und die Daten in einer Hashtable gesichert (siehe <<trigger_data_signal,hook sig
 
 Der Callback von "line" legt folgende Variablen in der Hashtable an:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable           | Typ     | Beschreibung
 | buffer             | pointer | Buffer.
-| buffer_name        | string  | Buffer name.
-| buffer_type        | string  | Buffer type ("formatted" or "free").
-| y                  | string  | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
-| date               | string  | Line date (timestamp).
-| date_printed       | string  | Date when line was displayed (timestamp).
-| str_time           | string  | Date for display. It may contain color codes.
+| buffer_name        | string  | Buffername.
+| buffer_type        | string  | Buffertyp ("formatted" oder "free").
+| y                  | string  | Zeilennummer bei einem Buffer mit freier Einteilung (≥ 0), -1 für einen Buffer mit formatiertem Inhalt.
+| date               | string  | Datum der Zeile (Zeitstempel).
+| date_printed       | string  | Datum wann die Zeile dargestellt wurde (Zeitstempel).
+| str_time           | string  | Datum für Darstellung. Kann Farbkodierungen erhalten.
 | tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
-| displayed          | string  | "1" if displayed, "0" if line filtered.
-| notify_level       | string  | "0" = low level, "1" = message, "2" = private message, "3" = highlight
-| highlight          | string  | "1" if highlight, otherwise "0".
+| displayed          | string  | "1" wenn Zeile dargestellt wird, "0" wenn Zeile gefiltert wird.
+| notify_level       | string  | "0" = low level, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
+| highlight          | string  | "1" wenn Highlight, andernfalls "0".
 | prefix             | string  | Prefix.
-| tg_prefix_nocolor  | string  | Prefix without color codes.
-| message            | string  | Message.
-| tg_message_nocolor | string  | Message without color codes.
+| tg_prefix_nocolor  | string  | Prefix, ohne Farbkodierung.
+| message            | string  | Nachricht.
+| tg_message_nocolor | string  | Nachricht, ohne Farbkodierung.
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+Variablen die mittels Tags in der Nachricht gesetzt werden:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -4045,8 +4040,7 @@ Der Callback von "print" legt folgende Variablen in der Hashtable an:
 | tg_message_nocolor | string  | Nachricht ohne Farbcodes.
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+Variablen die mittels Tags in der Nachricht gesetzt werden:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

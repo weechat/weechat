@@ -24,10 +24,9 @@
 *-p*, *--no-plugin*::
     unterbindet das Laden der Erweiterungen beim Programmstart.
 
-// TRANSLATION MISSING
 *-P*, *--plugins* _<plugins>_::
-    Load only these plugins at startup (see /help weechat.plugin.autoload).
-    If this option is given, the option weechat.plugin.autoload is not used.
+    lädt nur die angegebenen Erweiterungen, beim Start (siehe /help weechat.plugin.autoload).
+    Wenn diese Option genutzt wird, dann wird die Option weechat.plugin.autoload ignoriert.
 
 *-r*, *--run-command* _<command>_::
     führt einen oder mehrere Befehle aus, nachdem WeeChat gestartet wurde
