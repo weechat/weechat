@@ -4030,19 +4030,21 @@ de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable     | Type     | Description
-| buffer       | pointeur | Tampon.
-| buffer_name  | chaîne   | Nom du tampon.
-| buffer_type  | chaîne   | Type de tampon ("formatted" ou "free").
-| y            | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
-| date         | chaîne   | Date de la ligne (horodatage).
-| date_printed | chaîne   | Date d'affichage de la ligne (horodatage).
-| str_time     | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
-| displayed    | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
-| notify_level | chaîne   | "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
-| highlight    | chaîne   | "1" si highlight, sinon "0".
-| prefix       | chaîne   | Préfixe.
-| message      | chaîne   | Message.
+| Variable           | Type     | Description
+| buffer             | pointeur | Tampon.
+| buffer_name        | chaîne   | Nom du tampon.
+| buffer_type        | chaîne   | Type de tampon ("formatted" ou "free").
+| y                  | chaîne   | Numéro de ligne pour un tampon avec contenu libre (≥ 0), -1 pour un tampon avec contenu formaté.
+| date               | chaîne   | Date de la ligne (horodatage).
+| date_printed       | chaîne   | Date d'affichage de la ligne (horodatage).
+| str_time           | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
+| displayed          | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
+| notify_level       | chaîne   | "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
+| highlight          | chaîne   | "1" si highlight, sinon "0".
+| prefix             | chaîne   | Préfixe.
+| tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur.
+| message            | chaîne   | Message.
+| tg_message_nocolor | chaîne   | Message sans les codes couleur.
 |===
 
 Variables définies avec les étiquettes du message (elles sont définies aussi

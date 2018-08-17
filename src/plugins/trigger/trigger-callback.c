@@ -789,7 +789,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     struct t_weelist_item *ptr_item;
     long unsigned int value;
     const char *ptr_key, *ptr_value;
-    char **tags, *str_tags;
+    char **tags, *str_tags, *string_no_color;
     int rc, num_tags, length;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
@@ -830,6 +830,20 @@ trigger_callback_line_cb (const void *pointer, void *data,
         weechat_hashtable_set (extra_vars, "tags", str_tags);
         free (str_tags);
     }
+
+    /* build prefix without colors */
+    ptr_value = weechat_hashtable_get (line, "prefix");
+    string_no_color = weechat_string_remove_color (ptr_value, NULL);
+    weechat_hashtable_set (extra_vars, "tg_prefix_nocolor", string_no_color);
+    if (string_no_color)
+        free (string_no_color);
+
+    /* build message without colors */
+    ptr_value = weechat_hashtable_get (line, "message");
+    string_no_color = weechat_string_remove_color (ptr_value, NULL);
+    weechat_hashtable_set (extra_vars, "tg_message_nocolor", string_no_color);
+    if (string_no_color)
+        free (string_no_color);
 
     if (!trigger_callback_set_tags (buffer, (const char **)tags, num_tags,
                                     extra_vars))

@@ -3931,19 +3931,21 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 // TRANSLATION MISSING
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Zmienna      | Typ      | Opis
-| buffer       | wskaźnik | Buffer.
-| buffer_name  | ciąg     | Buffer name.
-| buffer_type  | ciąg     | Buffer type ("formatted" or "free").
-| y            | ciąg     | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
-| date         | ciąg     | Line date (timestamp).
-| date_printed | ciąg     | Date when line was displayed (timestamp).
-| str_time     | ciąg     | Date for display. It may contain color codes.
-| displayed    | ciąg     | "1" if displayed, "0" if line filtered.
-| notify_level | ciąg     | "0" = low level, "1" = message, "2" = private message, "3" = highlight
-| highlight    | ciąg     | "1" if highlight, otherwise "0".
-| prefix       | ciąg     | Prefix.
-| message      | ciąg     | Message.
+| Zmienna            | Typ      | Opis
+| buffer             | wskaźnik | Buffer.
+| buffer_name        | ciąg     | Buffer name.
+| buffer_type        | ciąg     | Buffer type ("formatted" or "free").
+| y                  | ciąg     | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
+| date               | ciąg     | Line date (timestamp).
+| date_printed       | ciąg     | Date when line was displayed (timestamp).
+| str_time           | ciąg     | Date for display. It may contain color codes.
+| displayed          | ciąg     | "1" if displayed, "0" if line filtered.
+| notify_level       | ciąg     | "0" = low level, "1" = message, "2" = private message, "3" = highlight
+| highlight          | ciąg     | "1" if highlight, otherwise "0".
+| prefix             | ciąg     | Prefiks.
+| tg_prefix_nocolor  | ciag     | Prefiks bez kodów kolorów.
+| message            | ciąg     | Wiadomość.
+| tg_message_nocolor | ciag     | Wiadomość bez kodów kolorów.
 |===
 
 // TRANSLATION MISSING
