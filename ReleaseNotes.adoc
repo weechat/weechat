@@ -34,8 +34,8 @@ is added to the hotlist:
 * `${away}`: true if you are away on the server matching the buffer,
 * `${buffer.num_displayed} == 0`: true if the buffer is not displayed in any
   window
-* `${info:relay_client_count,weechat,connected} > 0` (new): true if at least
-  one client is connected on a weechat relay.
+* `${info:relay_client_count,weechat,connected} > 0`: true if at least
+  one client is connected on a weechat relay (new condition).
 
 To use the new default value, you can reset the option with this command:
 
