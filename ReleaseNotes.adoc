@@ -101,7 +101,7 @@ In older releases, this message was received:
 A new Debian package has been added: _weechat-headless_ which contains the
 binary _weechat-headless_ and its man page.
 
-In version 2.0, this binary was in the package _weechat-curses_.
+In version 2.1, this binary was in the package _weechat-curses_.
 
 [[v2.1]]
 == Version 2.1 (2018-03-18)
