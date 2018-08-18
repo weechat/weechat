@@ -96,6 +96,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "");
     WEE_CHECK_EVAL("0", "0");
     WEE_CHECK_EVAL("0", "1 == 2");
+    WEE_CHECK_EVAL("0", "==1");
     WEE_CHECK_EVAL("0", "1 >= 2");
     WEE_CHECK_EVAL("0", "2 <= 1");
     WEE_CHECK_EVAL("0", "2 != 2");
@@ -115,6 +116,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "0xA3 < 2");
     WEE_CHECK_EVAL("0", "-0xA3 > 2");
     WEE_CHECK_EVAL("0", "1 == 5 > 18");
+    WEE_CHECK_EVAL("0", ">1");
     WEE_CHECK_EVAL("0", "abc == def");
     WEE_CHECK_EVAL("0", "()");
     WEE_CHECK_EVAL("0", "(5 > 26)");
@@ -133,6 +135,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "((0 || 1) && 1) && 0");
     WEE_CHECK_EVAL("0", "abcd =~ (?-i)^ABC");
     WEE_CHECK_EVAL("0", "abcd =~ \\(abcd\\)");
+    WEE_CHECK_EVAL("0", "=~abcd");
     WEE_CHECK_EVAL("0", "(abcd) =~ \\(\\(abcd\\)\\)");
     WEE_CHECK_EVAL("0", "abcd =* abce");
     WEE_CHECK_EVAL("0", "abcd =* a*e");
@@ -148,6 +151,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "123");
     WEE_CHECK_EVAL("1", "abc");
     WEE_CHECK_EVAL("1", "2 == 2");
+    WEE_CHECK_EVAL("1", "==0");
     WEE_CHECK_EVAL("1", "2 >= 1");
     WEE_CHECK_EVAL("1", "1 <= 2");
     WEE_CHECK_EVAL("1", "1 != 2");
@@ -171,6 +175,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "(26 > 5)");
     WEE_CHECK_EVAL("1", "((26 > 5))");
     WEE_CHECK_EVAL("1", "(5 < 26)");
+    WEE_CHECK_EVAL("1", "<1");
     WEE_CHECK_EVAL("1", "def > abc");
     WEE_CHECK_EVAL("1", "1 && 1");
     WEE_CHECK_EVAL("1", "abc && 1");
@@ -184,6 +189,9 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "((0 || 1) && 1) && 1");
     WEE_CHECK_EVAL("1", "abcd =~ ^ABC");
     WEE_CHECK_EVAL("1", "abcd =~ (?-i)^abc");
+    WEE_CHECK_EVAL("1", "abcd=~abc");
+    WEE_CHECK_EVAL("1", "=~");
+    WEE_CHECK_EVAL("1", "abc=~");
     WEE_CHECK_EVAL("1", "(abcd) =~ (abcd)");
     WEE_CHECK_EVAL("1", "(abcd) =~ \\(abcd\\)");
     WEE_CHECK_EVAL("1", "((abcd)) =~ \\(\\(abcd\\)\\)");

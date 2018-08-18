@@ -962,14 +962,21 @@ eval_expression_condition (const char *expr,
     for (comp = 0; comp < EVAL_NUM_COMPARISONS; comp++)
     {
         pos = eval_strstr_level (expr2, comparisons[comp], "(", ")", 0);
-        if (pos > expr2)
+        if (pos >= expr2)
         {
-            pos_end = pos - 1;
-            while ((pos_end > expr2) && (pos_end[0] == ' '))
+            if (pos > expr2)
             {
-                pos_end--;
+                pos_end = pos - 1;
+                while ((pos_end > expr2) && (pos_end[0] == ' '))
+                {
+                    pos_end--;
+                }
+                sub_expr = string_strndup (expr2, pos_end + 1 - expr2);
             }
-            sub_expr = string_strndup (expr2, pos_end + 1 - expr2);
+            else
+            {
+                sub_expr = strdup ("");
+            }
             if (!sub_expr)
                 goto end;
             pos += strlen (comparisons[comp]);
