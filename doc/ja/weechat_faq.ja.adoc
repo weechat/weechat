@@ -45,8 +45,7 @@ WeeChat は非常に軽く、革新的な機能を備えているからです。
 [[gui]]
 === WeeChat には多くの GUI があると聞きました。コンパイル/利用方法を教えてください。
 
-// TRANSLATION MISSING
-いくつかのリモート GUI が利用可能です、see the remote interfaces page:
+いくつかのリモート GUI が利用可能です、以下のリモートインターフェースに関するページを参照してください:
 https://weechat.org/about/interfaces
 
 [[compile_git]]

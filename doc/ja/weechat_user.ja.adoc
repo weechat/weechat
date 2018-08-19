@@ -426,10 +426,9 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== gdb でバックトレースを得る
 
-// TRANSLATION MISSING
-When WeeChat crashes, your system will create a file _core_ or _core.12345_
-(_12345_ is process id) if the <<core_files,option is enabled>>.
-このファイルは WeeChat を起動したディレクトリに作られます (これは
+<<core_files,オプションが有効の場合>>、WeeChat がクラッシュするとシステムは
+_core_ または _core.12345_ ファイルを作ります (_12345_
+はプロセス番号です)。このファイルは WeeChat を起動したディレクトリに作られます (これは
 WeeChat がインストールされているディレクトリでは *ありません*!)。
 
 例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
@@ -3622,11 +3621,10 @@ trigger.trigger.beep.post_action = none
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.ja.html#_hook_modifier[hook_modifier]
 
-// TRANSLATION MISSING
 | line |
-  1. buffer type +
-  2. buffer name +
-  3. tags |
+  1. バッファ型 +
+  2. バッファ名 +
+  3. タグ |
   `+formatted+` +
   `+free+` +
   `+*;irc.freenode.*+` +
@@ -3709,21 +3707,19 @@ ${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})
 書式: "/regex/replace" または "/regex/replace/var" (ここで
 _var_ はハッシュテーブルの変数)。
 
-// TRANSLATION MISSING
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+ハッシュテーブル内に _var_ が存在しない場合、空の値を持つ _var_
+が自動的に作られます。これを使うことで一時的な任意の変数を作れます。
 
 _var_
 が指定されなかった場合、デフォルト変数を使います、これはフックの種類に依存します:
 
-// TRANSLATION MISSING
 [width="100%",cols="2,3,7",options="header"]
 |===
-| フック      | デフォルト変数     | Update allowed ^(1)^
+| フック      | デフォルト変数     | 更新が許可Update allowed ^(1)^
 | signal      | tg_signal_data     |
 | hsignal     |                    |
 | modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| line        | message            | buffer、buffer_name、y、date、date_printed、str_time、tags、notify_level、highlight、prefix、message
 | print       | tg_message         |
 | command     | tg_argv_eol1       |
 | command_run | tg_command         |
@@ -3732,10 +3728,9 @@ _var_
 | focus       |                    |
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ All variables can be updated in the trigger, but only these variables
-have an effect on the value returned by the trigger and used by WeeChat.
+^(1)^ トリガはすべての値を更新できますが、ここで挙げた変数だけがトリガによって返されて
+WeeChat によって使われる値に影響を及ぼします
 
 複数の正規表現を使う場合は空白で区切ってください、例:
 "/regex1/replace1/var1 /regex2/replace2/var2"。
@@ -3894,30 +3889,27 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 
 "line" コールバックは以下の変数をハッシュテーブルに格納します:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | 変数               | 型      | 説明
-| Variable           | Type    | Description
-| buffer             | pointer | Buffer.
-| buffer_name        | string  | Buffer name.
-| buffer_type        | string  | Buffer type ("formatted" or "free").
-| y                  | string  | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
-| date               | string  | Line date (timestamp).
-| date_printed       | string  | Date when line was displayed (timestamp).
-| str_time           | string  | Date for display. It may contain color codes.
+| buffer             | pointer | バッファ
+| buffer_name        | string  | バッファ名
+| buffer_type        | string  | バッファ型 ("formatted" または "free")
+| y                  | string  | 自由内容バッファの行番号 (≥ 0)、-1 はフォーマット済みバッファ用
+| date               | string  | 行の日付 (タイムスタンプ)
+| date_printed       | string  | 行が表示される日付 (タイムスタンプ).
+| str_time           | string  | 表示に使う日付、色コードを含めることも可能
 | tags               | string  | メッセージのタグ (文字列の最初と最後にコンマが追加されます)
-| displayed          | string  | "1" if displayed, "0" if line filtered.
-| notify_level       | string  | "0" = low level, "1" = message, "2" = private message, "3" = highlight
-| highlight          | string  | "1" if highlight, otherwise "0".
-| prefix             | string  | Prefix.
-| tg_prefix_nocolor  | string  | Prefix without color codes.
-| message            | string  | Message.
-| tg_message_nocolor | string  | Message without color codes.
+| displayed          | string  | "1" の場合は表示、"0" の場合は非表示
+| notify_level       | string  | "0" = 低レベル、"1" = メッセージ、"2" = プライベートメッセージ、"3" = ハイライト
+| highlight          | string  | "1" の場合はハイライトあり、"0" の場合はハイライトなし
+| prefix             | string  | プレフィックス
+| tg_prefix_nocolor  | string  | 色コードを含まないプレフィックス
+| message            | string  | メッセージ
+| tg_message_nocolor | string  | 色コードを含まないメッセージ
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+メッセージにつけられたタグに関する変数:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3949,8 +3941,7 @@ Variables set using tags in message:
 | tg_message_nocolor | string  | 色コードを削除したメッセージ
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+メッセージにつけられたタグに関する変数:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===

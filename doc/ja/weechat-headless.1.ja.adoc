@@ -12,7 +12,6 @@ weechat-headless - 拡張可能なチャットクライアント (ヘッドレ�
 
 == 書式
 
-// TRANSLATION MISSING
 [verse]
 *weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
 *weechat-headless* [-c|--colors]
@@ -26,7 +25,7 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 高速で軽量、多くのオペレーティングシステムで動くように設計されています。
 スクリプトを使って高度にカスタマイズと拡張可能です。
 
-*weechat-headless* コマンドを使うことで、WeeChat をヘッドレスモード (インターフェイスなし) で実行できます。
+*weechat-headless* コマンドを使うことで、WeeChat をヘッドレスモード (インターフェースなし) で実行できます。
 ヘッドレスモードはテストや WeeChat をデーモン化する (オプション "--daemon" を使います) ために使われます。
 
 == オプション
