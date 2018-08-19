@@ -69,12 +69,11 @@ qweechat::
 | ディレクトリ       | 説明
 | src/               | ソースコードのルートディレクトリ
 |    core/           | コア関数: エントリポイント、内部構造体
-// TRANSLATION MISSING
-|       hook/        | Hook functions.
-|    gui/            | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェイスで使う)
-|       curses/      | curses インターフェイス
-|          headless/ | ヘッドレスモード (インターフェイスなし)
-|          normal/   | curses インターフェイス
+|       hook/        | フック関数
+|    gui/            | バッファ、ウィンドウ、... を操作する関数 (全てのインターフェースで使う)
+|       curses/      | curses インターフェース
+|          headless/ | ヘッドレスモード (インターフェースなし)
+|          normal/   | curses インターフェース
 |    plugins/        | プラグインとスクリプト向け API
 |       alias/       | alias プラグイン
 |       aspell/      | aspell プラグイン
@@ -91,7 +90,7 @@ qweechat::
 |       perl/        | perl スクリプト用 API
 |       php/         | php スクリプト用 API
 |       python/      | python スクリプト用 API
-|       relay/       | relay プラグイン (irc プロキシ + リモートインターフェイス用の中継)
+|       relay/       | relay プラグイン (irc プロキシ + リモートインターフェース用の中継)
 |       ruby/        | ruby スクリプト用 API
 |       script/      | スクリプトマネージャ
 |       tcl/         | tcl スクリプト用 API
@@ -116,7 +115,7 @@ qweechat::
 WeeChat "core" は以下のディレクトリに配置されています:
 
 * _src/core/_: コア関数 (データ操作用)
-* _src/gui/_: インターフェイスの関数 (バッファ、ウィンドウ、...)
+* _src/gui/_: インターフェースの関数 (バッファ、ウィンドウ、...)
 
 [width="100%",cols="1m,3",options="header"]
 |===
@@ -148,27 +147,26 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-util.c                   | その他の関数
 |    wee-version.c                | WeeChat バージョンについての関数
 |    weechat.c                    | 主要関数: コマンドラインオプション、起動
-// TRANSLATION MISSING
-|    hook/                        | Hook functions.
-|       wee-hook-command-run.c    | Hook "command_run".
-|       wee-hook-command.c        | Hook "command".
-|       wee-hook-completion.c     | Hook "completion".
-|       wee-hook-config.c         | Hook "config".
-|       wee-hook-connect.c        | Hook "connect".
-|       wee-hook-fd.c             | Hook "fd".
-|       wee-hook-focus.c          | Hook "focus".
-|       wee-hook-hdata.c          | Hook "hdata".
-|       wee-hook-hsignal.c        | Hook "hsignal".
-|       wee-hook-info-hashtable.c | Hook "info_hashtable".
-|       wee-hook-info.c           | Hook "info".
-|       wee-hook-infolist.c       | Hook "infolist".
-|       wee-hook-line.c           | Hook "line".
-|       wee-hook-modifier.c       | Hook "modifier".
-|       wee-hook-print.c          | Hook "print".
-|       wee-hook-process.c        | Hook "process".
-|       wee-hook-signal.c         | Hook "signal".
-|       wee-hook-timer.c          | Hook "timer".
-| gui/                            | バッファ、ウィンドウなどの関数 (全てのインターフェイスで利用)
+|    hook/                        | フック関数
+|       wee-hook-command-run.c    | "command_run" フック
+|       wee-hook-command.c        | "command" フック
+|       wee-hook-completion.c     | "completion" フック
+|       wee-hook-config.c         | "config" フック
+|       wee-hook-connect.c        | "connect" フック
+|       wee-hook-fd.c             | "fd" フック
+|       wee-hook-focus.c          | "focus" フック
+|       wee-hook-hdata.c          | "hdata" フック
+|       wee-hook-hsignal.c        | "hsignal" フック
+|       wee-hook-info-hashtable.c | "info_hashtable" フック
+|       wee-hook-info.c           | "info" フック
+|       wee-hook-infolist.c       | "infolist" フック
+|       wee-hook-line.c           | "line" フック
+|       wee-hook-modifier.c       | "modifier" フック
+|       wee-hook-print.c          | "print" フック
+|       wee-hook-process.c        | "process" フック
+|       wee-hook-signal.c         | "signal" フック
+|       wee-hook-timer.c          | "timer" フック
+| gui/                            | バッファ、ウィンドウなどの関数 (全てのインターフェースで利用)
 |    gui-bar-item.c               | バー要素
 |    gui-bar-window.c             | バーウィンドウ
 |    gui-bar.c                    | バー
@@ -189,7 +187,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    gui-nick.c                   | ニックネーム関数
 |    gui-nicklist.c               | バッファのニックネームリスト
 |    gui-window.c                 | ウィンドウ
-|    curses/                      | curses インターフェイス
+|    curses/                      | curses インターフェース
 |       gui-curses-bar-window.c   | バーウィンドウへの表示
 |       gui-curses-chat.c         | チャットエリアへの表示 (メッセージ)
 |       gui-curses-color.c        | 色関数
@@ -198,11 +196,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       gui-curses-mouse.c        | マウス
 |       gui-curses-term.c         | 端末についての関数
 |       gui-curses-window.c       | ウィンドウ
-|       headless/                 | ヘッドレスモード (インターフェイスなし)
+|       headless/                 | ヘッドレスモード (インターフェースなし)
 |          main.c                 | ヘッドレスモード用のエントリポイント
 |          ncurses-fake.c         | ダミーの ncurses ライブラリ
-|       normal/                   | curses インターフェイス
-|          main.c                 | curses インターフェイス用のエントリポイント
+|       normal/                   | curses インターフェース
+|          main.c                 | curses インターフェース用のエントリポイント
 |===
 
 [[sources_plugins]]
@@ -313,7 +311,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    python/                        | python プラグイン
 |       weechat-python.c            | python の主要関数 (スクリプトのロード/アンロード、python コードの実行)
 |       weechat-python-api.c        | python スクリプト作成 API 関数
-|    relay/                         | relay プラグイン (IRC プロキシとリモートインターフェイスへの中継)
+|    relay/                         | relay プラグイン (IRC プロキシとリモートインターフェースへの中継)
 |       relay.c                     | relay の主要関数
 |       relay-buffer.c              | relay バッファ
 |       relay-client.c              | relay クライアント
@@ -328,8 +326,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       relay-websocket.c           | リレー用の websocket サーバ関数 (RFC 6455)
 |       irc/                        | IRC プロキシ
 |          relay-irc.c              | IRC プロキシの主要関数
-|       weechat/                    | リモートインターフェイスへの中継
-|          relay-weechat.c          | リモートインターフェイスへの中継 (主要関数)
+|       weechat/                    | リモートインターフェースへの中継
+|          relay-weechat.c          | リモートインターフェースへの中継 (主要関数)
 |          relay-weechat-msg.c      | クライアントにバイナリメッセージを送信
 |          relay-weechat-nicklist.c | ニックネームリスト関数
 |          relay-weechat-protocol.c | クライアントからのコマンドを読み取る
@@ -416,7 +414,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat_faq.XX.adoc            | link:weechat_faq.ja.html[FAQ]
 |       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.ja.html[プラグイン API リファレンス]
 |       weechat_quickstart.XX.adoc     | link:weechat_quickstart.ja.html[クイックスタートガイド]
-|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.ja.html[リレープロトコル] (リモートインターフェイス用)
+|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.ja.html[リレープロトコル] (リモートインターフェース用)
 |       weechat_scripting.XX.adoc      | link:weechat_scripting.ja.html[スクリプト作成ガイド]
 |       weechat_tester.XX.adoc         | link:weechat_tester.ja.html[テスターガイド]
 |       weechat_user.XX.adoc           | link:weechat_user.ja.html[ユーザーズガイド]

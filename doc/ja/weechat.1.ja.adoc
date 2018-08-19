@@ -12,7 +12,6 @@ weechat - 拡張可能なチャットクライアント
 
 == 書式
 
-// TRANSLATION MISSING
 [verse]
 *weechat* [-a|--no-connect] [-d|--dir <path>] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
 *weechat* [-c|--colors]
