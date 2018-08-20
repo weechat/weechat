@@ -71,6 +71,7 @@ struct t_config_section *weechat_config_section_color = NULL;
 struct t_config_section *weechat_config_section_proxy = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 struct t_config_section *weechat_config_section_notify = NULL;
+struct t_config_section *weechat_config_section_priority = NULL;
 
 /* config, startup section */
 
@@ -92,6 +93,7 @@ struct t_config_option *config_look_bare_display_exit_on_input;
 struct t_config_option *config_look_bare_display_time_format;
 struct t_config_option *config_look_buffer_auto_renumber;
 struct t_config_option *config_look_buffer_notify_default;
+struct t_config_option *config_look_buffer_priority_default;
 struct t_config_option *config_look_buffer_position;
 struct t_config_option *config_look_buffer_search_case_sensitive;
 struct t_config_option *config_look_buffer_search_force_default;
@@ -632,6 +634,22 @@ config_change_buffer_notify_default (const void *pointer, void *data,
     (void) option;
 
     gui_buffer_notify_set_all ();
+}
+
+/*
+ * Callback for changes on option "weechat.look.buffer_priority_default".
+ */
+
+void
+config_change_buffer_priority_default (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    gui_buffer_priority_set_all ();
 }
 
 /*
@@ -1334,6 +1352,8 @@ config_weechat_init_after_read ()
 
     gui_buffer_notify_set_all ();
 
+    gui_buffer_priority_set_all ();
+
     proxy_use_temp_proxies ();
 
     gui_bar_use_temp_bars ();
@@ -1401,8 +1421,9 @@ config_weechat_reload_cb (const void *pointer, void *data,
     gui_layout_buffer_reset ();
     gui_layout_window_reset ();
 
-    /* remove all notify levels */
+    /* remove all notify levels and buffer priorities */
     config_file_section_free_options (weechat_config_section_notify);
+    config_file_section_free_options (weechat_config_section_priority);
 
     /* remove all filters */
     gui_filter_free_all ();
@@ -2213,6 +2234,136 @@ config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
 }
 
 /*
+ * Callback for changes on a priority option.
+ */
+
+void
+config_weechat_priority_change_cb (const void *pointer, void *data,
+                                   struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    gui_buffer_priority_set_all ();
+}
+
+/*
+ * Callback called when an option is created in section "priority".
+ */
+
+int
+config_weechat_priority_create_option_cb (const void *pointer, void *data,
+                                          struct t_config_file *config_file,
+                                          struct t_config_section *section,
+                                          const char *option_name,
+                                          const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+
+
+    if (option_name)
+    {
+        ptr_option = config_file_search_option (config_file, section,
+                                                option_name);
+        if (ptr_option)
+        {
+            if (value && value[0])
+                rc = config_file_option_set (ptr_option, value, 1);
+            else
+            {
+                config_file_option_free (ptr_option, 1);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value && value[0])
+            {
+                ptr_option = config_file_new_option (
+                    config_file, section,
+                    option_name, "integer", _("Priority for buffer"),
+                    NULL,
+                    GUI_BUFFER_PRIORITY_MIN, GUI_BUFFER_PRIORITY_MAX, "", value, 0,
+                    NULL, NULL, NULL,
+                    &config_weechat_notify_change_cb, NULL, NULL,
+                    NULL, NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
+        gui_buffer_priority_set_all ();
+
+    return rc;
+}
+
+/*
+ * Callback called when an option is deleted in section "priority".
+ */
+
+int
+config_weechat_priority_delete_option_cb (const void *pointer, void *data,
+                                          struct t_config_file *config_file,
+                                          struct t_config_section *section,
+                                          struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    config_file_option_free (option, 1);
+
+    gui_buffer_priority_set_all ();
+
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+int
+config_weechat_priority_set (struct t_gui_buffer *buffer, const char *priority)
+{
+    int value = 0;
+    char* error = NULL;
+
+    if (!buffer || !priority)
+        return 0;
+
+    value = strtol (priority, &error, 10);
+
+    if (strcmp (priority, "reset") == 0) {
+    }
+    else if (!error || error[0]) {
+        /* invalid number */
+        gui_chat_printf (NULL,
+                         _("%sError: incorrect priority number"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        return WEECHAT_RC_OK;
+    }
+
+    /* create/update option */
+    return (config_weechat_priority_create_option_cb (
+                NULL, NULL,
+                weechat_config_file,
+                weechat_config_section_priority,
+                buffer->full_name,
+                priority) != WEECHAT_CONFIG_OPTION_SET_ERROR) ? 1 : 0;
+}
+
+/*
  * Reads a filter option in WeeChat configuration file.
  */
 
@@ -2574,6 +2725,15 @@ config_weechat_init_options ()
         "none|highlight|message|all", 0, 0, "all", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_notify_default, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_buffer_priority_default = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_priority_default", "integer",
+        N_("default priority for buffers (used to tell WeeChat where buffer "
+           "should be put in hotlist "),
+        NULL, GUI_BUFFER_PRIORITY_MIN, GUI_BUFFER_PRIORITY_MAX, "0", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_buffer_priority_default, NULL, NULL,
         NULL, NULL, NULL);
     config_look_buffer_position = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -2954,7 +3114,7 @@ config_weechat_init_options ()
            "(highlights first) then sort by number, number_*: sort by number; "
            "asc = ascending sort, desc = descending sort"),
         "group_time_asc|group_time_desc|group_number_asc|"
-        "group_number_desc|number_asc|number_desc",
+        "group_number_desc|number_asc|number_desc|group_priority",
         0, 0, "group_time_asc", NULL, 0,
         NULL, NULL, NULL,
         &config_change_hotlist_sort, NULL, NULL,
@@ -4456,6 +4616,24 @@ config_weechat_init_options ()
     }
 
     weechat_config_section_notify = ptr_section;
+
+    /* priority */
+    ptr_section = config_file_new_section (
+        weechat_config_file, "priority",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &config_weechat_priority_create_option_cb, NULL, NULL,
+        &config_weechat_priority_delete_option_cb, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
+        return 0;
+    }
+
+    weechat_config_section_priority = ptr_section;
 
     /* filters */
     ptr_section = config_file_new_section (

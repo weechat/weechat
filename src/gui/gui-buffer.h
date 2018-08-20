@@ -60,6 +60,9 @@ enum t_gui_buffer_notify
 
 #define GUI_BUFFER_INPUT_BLOCK_SIZE 256
 
+#define GUI_BUFFER_PRIORITY_MIN -128
+#define GUI_BUFFER_PRIORITY_MAX 127
+
 /* buffer structures */
 
 struct t_gui_input_undo
@@ -203,6 +206,7 @@ struct t_gui_buffer
     struct t_gui_hotlist *hotlist;     /* hotlist entry for buffer          */
     struct t_hashtable *hotlist_max_level_nicks; /* max hotlist level for   */
                                                  /* some nicks              */
+    int priority;                      /* a hotlist sort criteria for buffer*/
 
     /* keys associated to buffer */
     struct t_gui_key *keys;            /* keys specific to buffer           */
@@ -238,6 +242,7 @@ extern struct t_gui_buffer *gui_buffer_last_displayed;
 extern char *gui_buffer_reserved_names[];
 extern char *gui_buffer_type_string[];
 extern char *gui_buffer_notify_string[];
+
 extern char *gui_buffer_properties_get_integer[];
 extern char *gui_buffer_properties_get_string[];
 extern char *gui_buffer_properties_get_pointer[];
@@ -250,6 +255,7 @@ extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_notify_set_all ();
+extern void gui_buffer_priority_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_reserved_name (const char *name);
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,

@@ -564,7 +564,7 @@ COMMAND_CALLBACK(buffer)
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)%s%s"),
+                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s, priority: %s)%s%s"),
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
@@ -576,6 +576,7 @@ COMMAND_CALLBACK(buffer)
                              ptr_buffer->name,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              gui_buffer_notify_string[ptr_buffer->notify],
+                             gui_buffer_notify_string[ptr_buffer->priority],
                              (ptr_buffer->hidden) ? " " : "",
                              /* TRANSLATORS: "hidden" is displayed in list of buffers */
                              (ptr_buffer->hidden) ? _("(hidden)") : "");
@@ -1094,6 +1095,20 @@ COMMAND_CALLBACK(buffer)
         {
             gui_chat_printf (NULL,
                              _("%sError: unable to set notify level \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv_eol[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* set buffer priority */
+    if (string_strcasecmp (argv[1], "priority") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "priority");
+        if (!config_weechat_priority_set (buffer, argv_eol[2]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to set buffer priority \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv_eol[2]);
         }
@@ -7111,6 +7126,7 @@ command_init ()
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>]"
            " || notify <level>"
+           " || priority <priority>"
            " || localvar"
            " || set <property> [<value>]"
            " || get <property>"
@@ -7142,6 +7158,9 @@ command_init ()
            "            message: for messages from users + highlights\n"
            "                all: all messages\n"
            "              reset: reset to default value (all)\n"
+           " prioriy: set priority of current buffer: the buffer priority "
+           "can be used as a sort criteria to determine the position of the buffer "
+           "in the hotlist."
            "localvar: display local variables for current buffer\n"
            "     set: set a property for current buffer\n"
            "     get: display a property of current buffer\n"
@@ -7198,6 +7217,7 @@ command_init ()
         " || close %(buffers_plugins_names)"
         " || list"
         " || notify reset|none|highlight|message|all"
+        " || priority"
         " || localvar"
         " || set %(buffer_properties_set)"
         " || get %(buffer_properties_get)"
