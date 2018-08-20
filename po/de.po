@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-08-17 19:39+0200\n"
-"PO-Revision-Date: 2018-08-17 21:48+0200\n"
+"PO-Revision-Date: 2018-08-20 20:39+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -4910,7 +4910,7 @@ msgstr "%sWarnung: %s, Zeile %d: Einstellung ist außerhalb der Sektion: %s"
 
 #, c-format
 msgid "%sWarning: %s, line %d: invalid value for option: %s"
-msgstr "%sWarnung: %s, Zeile %d: ungültige Wert für Einstellung %s"
+msgstr "%sWarnung: %s, Zeile %d: ungültiger Wert für Einstellung %s"
 
 #, c-format
 msgid "Reloading configuration file %s"
