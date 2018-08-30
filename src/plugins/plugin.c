@@ -196,7 +196,7 @@ plugin_check_extension_allowed (const char *filename)
 int
 plugin_check_autoload (const char *filename)
 {
-    int i, plugin_authorized, plugin_blacklisted, length, length_ext;
+    int i, plugin_authorized, plugin_forbidden, length, length_ext;
     char *full_name, *ptr_base_name, *base_name, *plugin_name;
 
     /* by default we can auto load all plugins */
@@ -252,19 +252,19 @@ plugin_check_autoload (const char *filename)
     if (!plugin_name)
         return 1;
 
-    /* browse array and check if plugin is "authorized" or "blacklisted" */
+    /* browse array and check if plugin is authorized or forbidden */
     plugin_authorized = 0;
-    plugin_blacklisted = 0;
+    plugin_forbidden = 0;
     for (i = 0; i < plugin_autoload_count; i++)
     {
         if (plugin_autoload_array[i][0] == '!')
         {
             /*
-             * negative value: it is used to "blacklist" a plugin
+             * negative value: it is used to prevent a plugin from loading
              * for example with "*,!perl", all plugins are loaded, but not perl
              */
             if (string_match (plugin_name, plugin_autoload_array[i] + 1, 0))
-                plugin_blacklisted = 1;
+                plugin_forbidden = 1;
         }
         else
         {
@@ -275,7 +275,7 @@ plugin_check_autoload (const char *filename)
 
     free (plugin_name);
 
-    if (plugin_blacklisted)
+    if (plugin_forbidden)
         return 0;
 
     return plugin_authorized;
