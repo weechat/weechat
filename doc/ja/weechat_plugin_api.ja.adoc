@@ -5618,7 +5618,7 @@ option3 = weechat.config_new_option(config_file, section, "option3", "integer",
 option4 = weechat.config_new_option(config_file, section, "option4", "string",
     "My option, type string",
     "", 0, 0, "test", "test", 1,
-    "option4_check_value_cb", ""
+    "option4_check_value_cb", "",
     "option4_change_cb", "",
     "option4_delete_cb", "")
 
