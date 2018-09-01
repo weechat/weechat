@@ -28,6 +28,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-hashtable.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-string.h"
 #include "../plugins/plugin.h"
 #include "gui-bar.h"
@@ -254,4 +255,80 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     HASHTABLE_SET_INT("_bar_item_col", focus_info->bar_item_col);
 
     return hashtable;
+}
+
+/*
+ * Returns GUI focus info with hashtable "gui_focus_info".
+ */
+
+struct t_hashtable *
+gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
+                                            const char *info_name,
+                                            struct t_hashtable *hashtable)
+{
+    char *error;
+    const char *ptr_value;
+    int x, y;
+    struct t_gui_focus_info *focus_info;
+    struct t_hashtable *focus_hashtable, *ret_hashtable;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!hashtable)
+        return NULL;
+
+    /* parse coordinates */
+    ptr_value = hashtable_get (hashtable, "x");
+    if (!ptr_value)
+        return NULL;
+    error = NULL;
+    x = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return NULL;
+
+    ptr_value = hashtable_get (hashtable, "y");
+    if (!ptr_value)
+        return NULL;
+    error = NULL;
+    y = (int)strtol (ptr_value, &error, 10);
+    if (!error || error[0])
+        return NULL;
+
+    /* get focus info */
+    focus_info = gui_focus_get_info (x, y);
+    if (!focus_info)
+        return NULL;
+
+    /* convert to hashtable */
+    focus_hashtable = gui_focus_to_hashtable (focus_info, NULL); /* no key */
+    gui_focus_free_info (focus_info);
+    if (!focus_hashtable)
+        return NULL;
+
+    hashtable_remove (focus_hashtable, "_key"); /* remove useless key */
+
+    /* run hook_focus callbacks that add extra data */
+    ret_hashtable = hook_focus_get_data (focus_hashtable, NULL); /* no gesture */
+    free (focus_hashtable);
+
+    return ret_hashtable;
+}
+
+/*
+ * Initializes focus hooks.
+ */
+
+void
+gui_focus_init ()
+{
+    hook_info_hashtable (NULL,
+        "gui_focus_info",
+        N_("get focus info"),
+        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+        N_("\"x\": x coordinate, \"y\": y coordinate"),
+        N_("see hook_focus"),
+        &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
 }

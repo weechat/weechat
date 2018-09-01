@@ -45,5 +45,6 @@ extern struct t_gui_focus_info *gui_focus_get_info (int x, int y);
 extern void gui_focus_free_info (struct t_gui_focus_info *focus_info);
 extern struct t_hashtable *gui_focus_to_hashtable (struct t_gui_focus_info *focus_info,
                                                    const char *key);
+extern void gui_focus_init ();
 
 #endif /* WEECHAT_GUI_FOCUS_H */
