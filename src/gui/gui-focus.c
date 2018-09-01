@@ -133,7 +133,7 @@ gui_focus_buffer_localvar_map_cb (void *data,
 }
 
 /*
- * Adds two focus info into hashtable.
+ * Adds focus info into hashtable.
  *
  * Returns pointer to new hashtable.
  *
@@ -155,7 +155,8 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
         return NULL;
 
     /* key (key from keyboard or mouse event) */
-    HASHTABLE_SET_STR("_key", key);
+    if (key)
+        HASHTABLE_SET_STR("_key", key);
 
     /* x,y */
     HASHTABLE_SET_INT("_x", focus_info->x);
@@ -307,8 +308,6 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
     gui_focus_free_info (focus_info);
     if (!focus_hashtable)
         return NULL;
-
-    hashtable_remove (focus_hashtable, "_key"); /* remove useless key */
 
     /* run hook_focus callbacks that add extra data */
     ret_hashtable = hook_focus_get_data (focus_hashtable, NULL); /* no gesture */
