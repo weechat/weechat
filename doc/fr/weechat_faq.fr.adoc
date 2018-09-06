@@ -917,6 +917,15 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
+[[aspell_dictionaries]]
+=== J'ai installé des dictionnaires aspell sur mon système, comment les utiliser sans redémarrer WeeChat ?
+
+Vous devez recharger l'extension aspell :
+
+----
+/plugin reload aspell
+----
+
 [[settings]]
 == Réglages
 
