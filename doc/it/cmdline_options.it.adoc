@@ -33,8 +33,8 @@
 
 // TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
-    Esegue un comando(i) dopo l'avvio (più comandi possono essere separati da
-    punto e virgola).
+    Run command(s) after startup; many commands can be separated by semicolons,
+    this option can be given multiple times.
 
 *-s*, *--no-script*::
     Disabilita il caricamento automatico dei script.

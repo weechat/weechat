@@ -28,9 +28,10 @@
     lädt nur die angegebenen Erweiterungen, beim Start (siehe /help weechat.plugin.autoload).
     Wenn diese Option genutzt wird, dann wird die Option weechat.plugin.autoload ignoriert.
 
+// TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
-    führt einen oder mehrere Befehle aus, nachdem WeeChat gestartet wurde
-    (mehrere Befehle müssen durch Kommata voneinander getrennt werden).
+    Run command(s) after startup; many commands can be separated by semicolons,
+    this option can be given multiple times.
 
 *-s*, *--no-script*::
     Skripten werden beim Programmstart nicht geladen.

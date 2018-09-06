@@ -96,6 +96,8 @@
 /* name of environment variable with an extra lib dir */
 #define WEECHAT_EXTRA_LIBDIR "WEECHAT_EXTRA_LIBDIR"
 
+struct t_weelist;
+
 /* global variables and functions */
 extern int weechat_headless;
 extern int weechat_debug_core;
@@ -112,7 +114,7 @@ extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;
 extern int weechat_no_gcrypt;
-extern char *weechat_startup_commands;
+extern struct t_weelist *weechat_startup_commands;
 
 extern void weechat_term_check ();
 extern void weechat_shutdown (int return_code, int crash);

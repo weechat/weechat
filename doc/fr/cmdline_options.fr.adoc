@@ -30,8 +30,9 @@
     Si cette option est donnée, l'option weechat.plugin.autoload n'est pas utilisée.
 
 *-r*, *--run-command* _<commande>_::
-    Lancer la/les commande(s) après le démarrage (plusieurs commandes peuvent
-    être séparées par des points-virgules).
+    Lancer la/les commande(s) après le démarrage ; plusieurs commandes peuvent
+    être séparées par des points-virgules, cette option peut être donnée
+    plusieurs fois.
 
 *-s*, *--no-script*::
     Supprimer le chargement automatique des scripts au démarrage.

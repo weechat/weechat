@@ -8352,10 +8352,20 @@ command_exec_list (const char *command_list)
 void
 command_startup (int plugins_loaded)
 {
+    int i;
+
     if (plugins_loaded)
     {
         command_exec_list (CONFIG_STRING(config_startup_command_after_plugins));
-        command_exec_list (weechat_startup_commands);
+        if (weechat_startup_commands)
+        {
+            for (i = 0; i < weelist_size (weechat_startup_commands); i++)
+            {
+                command_exec_list (
+                    weelist_string (
+                        weelist_get (weechat_startup_commands, i)));
+            }
+        }
     }
     else
         command_exec_list (CONFIG_STRING(config_startup_command_before_plugins));

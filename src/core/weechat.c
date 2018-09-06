@@ -60,6 +60,7 @@
 #include "wee-eval.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
+#include "wee-list.h"
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-proxy.h"
@@ -102,7 +103,8 @@ int weechat_no_gnutls = 0;             /* remove init/deinit of gnutls      */
                                        /* (useful with valgrind/electric-f.)*/
 int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
                                        /* (useful with valgrind)            */
-char *weechat_startup_commands = NULL; /* startup commands (-r flag)        */
+struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
+                                                   /* (option -r)           */
 
 
 /*
@@ -154,9 +156,11 @@ weechat_display_usage ()
           "  -p, --no-plugin          don't load any plugin at startup\n"
           "  -P, --plugins <plugins>  load only these plugins at startup\n"
           "                           (see /help weechat.plugin.autoload)\n"
-          "  -r, --run-command <cmd>  run command(s) after startup\n"
-          "                           (many commands can be separated by "
-          "semicolons)\n"
+          "  -r, --run-command <cmd>  run command(s) after startup;\n"
+          "                           many commands can be separated by "
+          "semicolons,\n"
+          "                           this option can be given multiple "
+          "times\n"
           "  -s, --no-script          don't load any script at startup\n"
           "      --upgrade            upgrade WeeChat using session files "
           "(see /help upgrade in WeeChat)\n"
@@ -297,9 +301,10 @@ weechat_parse_args (int argc, char *argv[])
         {
             if (i + 1 < argc)
             {
-                if (weechat_startup_commands)
-                    free (weechat_startup_commands);
-                weechat_startup_commands = strdup (argv[++i]);
+                if (!weechat_startup_commands)
+                    weechat_startup_commands = weelist_new ();
+                weelist_add (weechat_startup_commands, argv[++i],
+                             WEECHAT_LIST_POS_END, NULL);
             }
             else
             {
@@ -639,6 +644,8 @@ weechat_shutdown (int return_code, int crash)
         free (weechat_local_charset);
     if (weechat_force_plugin_autoload)
         free (weechat_force_plugin_autoload);
+    if (weechat_startup_commands)
+        weelist_free (weechat_startup_commands);
 
     if (crash)
         abort ();

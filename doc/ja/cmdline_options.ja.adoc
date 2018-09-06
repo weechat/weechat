@@ -28,8 +28,10 @@
     起動時にロードするプラグインを指定 (/help weechat.plugin.autoload を参照してください)。
     このオプションを使う場合、weechat.plugin.autoload オプションは無視されます。
 
+// TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
-    起動後にコマンドを実行 (複数のコマンドを指定するにはセミコロンで各コマンドを区切る)
+    Run command(s) after startup; many commands can be separated by semicolons,
+    this option can be given multiple times.
 
 *-s*, *--no-script*::
     スクリプトの自動ロードを止める
