@@ -30,8 +30,8 @@
 
 // TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
-    Run command(s) after startup; many commands can be separated by semicolons,
-    this option can be given multiple times.
+    führt einen oder mehrere Befehle nach dem Start aus; mehrere Befehle können durch ein
+    Semikolon getrennt werden, diese Option kann mehrfach genutzt werden.
 
 *-s*, *--no-script*::
     Skripten werden beim Programmstart nicht geladen.
