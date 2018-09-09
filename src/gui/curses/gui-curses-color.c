@@ -407,6 +407,12 @@ gui_color_get_pair (int fg, int bg)
                             &gui_color_timer_warning_pairs_full, NULL, NULL);
                 gui_color_warning_pairs_full = 1;
             }
+            else if (!gui_color_pairs_auto_reset_pending // TODO: need (gui_color_num_pairs > 1) ?
+                && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0))
+            {
+                gui_color_pairs_auto_reset = 1;
+            }
+
             return 1;
         }
 
