@@ -261,7 +261,7 @@ No release note.
 The option _script.scripts.url_force_https_ has been removed because now the
 site weechat.org can only be used with HTTPS. +
 Both HTTP and HTTPS protocols are allowed in the option _script.scripts.url_.
-For http://weechat.org an automatic redirection to https://weechat.org will
+For http://weechat.org/ an automatic redirection to https://weechat.org/ will
 occur, so you should check that the CA certificates are properly installed
 on your machine.
 
