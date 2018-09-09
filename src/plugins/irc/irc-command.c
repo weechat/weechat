@@ -2673,8 +2673,7 @@ IRC_COMMAND_CALLBACK(join)
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             && !ptr_channel->nicks)
         {
-            irc_command_join_server (ptr_server, ptr_channel->name,
-                                     1, noswitch);
+            irc_channel_rejoin (ptr_server, ptr_channel, 1, noswitch);
         }
         else
         {

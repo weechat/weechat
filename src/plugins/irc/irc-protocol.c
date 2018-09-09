@@ -1262,7 +1262,7 @@ IRC_PROTOCOL_CALLBACK(kick)
                                           IRC_SERVER_OPTION_AUTOREJOIN_DELAY) == 0)
             {
                 /* immediately rejoin if delay is 0 */
-                irc_channel_rejoin (server, ptr_channel);
+                irc_channel_rejoin (server, ptr_channel, 0, 1);
             }
             else
             {

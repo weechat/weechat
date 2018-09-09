@@ -154,8 +154,9 @@ extern void irc_channel_join_smart_filtered_remove (struct t_irc_channel *channe
                                                     const char *nick);
 extern void irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                                                     const char *nick);
-extern void irc_channel_rejoin (struct t_irc_server *server,
-                                struct t_irc_channel *channel);
+extern void
+irc_channel_rejoin (struct t_irc_server *server, struct t_irc_channel *channel,
+                    int manual_join, int noswitch);
 extern int irc_channel_autorejoin_cb (const void *pointer, void *data,
                                       int remaining_calls);
 extern void irc_channel_display_nick_back_in_pv (struct t_irc_server *server,
