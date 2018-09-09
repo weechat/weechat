@@ -416,7 +416,7 @@ relay_command_init ()
            "The \"irc\" protocol allows any IRC client (including WeeChat "
            "itself) to connect on the port.\n"
            "The \"weechat\" protocol allows a remote interface to connect on "
-           "the port, see the list here: https://weechat.org/download/\n"
+           "the port, see the list here: https://weechat.org/about/interfaces\n"
            "\n"
            "Without argument, this command opens buffer with list of relay "
            "clients.\n"

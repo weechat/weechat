@@ -34,7 +34,7 @@ protocol.name: protocol and name to relay:
                  - protocol "weechat" (name is not used)
 
 The "irc" protocol allows any IRC client (including WeeChat itself) to connect on the port.
-The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/download/
+The "weechat" protocol allows a remote interface to connect on the port, see the list here: https://weechat.org/about/interfaces
 
 Without argument, this command opens buffer with list of relay clients.
 

@@ -34,7 +34,7 @@ protokół.nazwa: protokół i nazwa do przekazywania:
                  - protokół "weechat" (nazwa nie jest używana)
 
 Protokół "irc" pozwala dowolnemu klientowi IRC (włączajac w to WeeChat) połączyć się na ustawionym porcie.
-Protokół "weechat" pozwala na połączenie się zdalnym interfejsem, lista dostępna pod adresem: https://weechat.org/download/
+Protokół "weechat" pozwala na połączenie się zdalnym interfejsem, lista dostępna pod adresem: https://weechat.org/about/interfaces
 
 Bez argumentu komenda otwiera bufor z listą klientów.
 
