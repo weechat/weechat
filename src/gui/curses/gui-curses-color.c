@@ -359,10 +359,20 @@ gui_color_timer_warning_pairs_full (const void *pointer, void *data,
     (void) data;
     (void) remaining_calls;
 
-    gui_chat_printf (NULL,
-                     _("Warning: the %d color pairs are used, do "
-                       "\"/color reset\" to remove unused pairs"),
-                     gui_color_num_pairs);
+    if (CONFIG_INTEGER(config_look_color_pairs_auto_reset) < 0)
+    {
+        gui_chat_printf (NULL,
+                         _ ("Warning: the %d color pairs are used, do "
+                            "\"/color reset\" to remove unused pairs"),
+                         gui_color_num_pairs);
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _ ("Warning: the %d color pairs are used and "
+                            "automatic reset failed"),
+                         gui_color_num_pairs);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -399,15 +409,14 @@ gui_color_get_pair (int fg, int bg)
         if (gui_color_pairs_used >= gui_color_num_pairs)
         {
             /* oh no, no more pair available! */
-            if (!gui_color_warning_pairs_full
-                && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) < 0))
+            if (!gui_color_warning_pairs_full)
             {
-                /* display warning if auto reset of pairs is disabled */
                 hook_timer (NULL, 1, 0, 1,
                             &gui_color_timer_warning_pairs_full, NULL, NULL);
                 gui_color_warning_pairs_full = 1;
             }
-            else if (!gui_color_pairs_auto_reset_pending // TODO: need (gui_color_num_pairs > 1) ?
+
+            if (!gui_color_pairs_auto_reset_pending // TODO: need (gui_color_num_pairs > 1) ?
                 && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0))
             {
                 gui_color_pairs_auto_reset = 1;
