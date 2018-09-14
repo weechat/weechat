@@ -181,6 +181,7 @@ struct timeval;
 /* action for gnutls callback: verify or set certificate */
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT  0
 #define WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT     1
+#define WEECHAT_HOOK_CONNECT_GNUTLS_CB_INIT_XCRED   2
 
 /* type of data for signal hooked */
 #define WEECHAT_HOOK_SIGNAL_STRING                  "string"

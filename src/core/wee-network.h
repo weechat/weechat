@@ -46,7 +46,6 @@ struct t_network_socks5
 extern int network_init_gnutls_ok;
 
 extern void network_init_gcrypt ();
-extern void network_set_gnutls_ca_file ();
 extern void network_init_gnutls ();
 extern void network_end ();
 extern int network_pass_proxy (const char *proxy, int sock,

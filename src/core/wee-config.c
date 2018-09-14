@@ -1279,8 +1279,9 @@ config_change_network_gnutls_ca_file (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (network_init_gnutls_ok)
-        network_set_gnutls_ca_file ();
+    /*if (network_init_gnutls_ok)
+        network_set_gnutls_ca_file ();*/
+    // TODO: anything?
 }
 
 /*

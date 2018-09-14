@@ -66,6 +66,7 @@ struct t_hook_connect
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
     char *gnutls_priorities;           /* GnuTLS priorities                 */
+    gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 #endif /* HAVE_GNUTLS */
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
