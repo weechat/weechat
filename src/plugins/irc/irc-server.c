@@ -4431,6 +4431,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
     gnutls_certificate_credentials_t xcred;
+    gnutls_x509_trust_list_t trust_list;
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
@@ -4812,6 +4813,11 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                         (void **) &xcred);
                 if (xcred)
                 {
+                    /* create new (empty) trust list */
+                    gnutls_x509_trust_list_init (&trust_list, 0);
+                    /* set deinits existing trust list */
+                    gnutls_certificate_set_trust_list (xcred, trust_list, 0);
+
                     gnutls_certificate_set_x509_trust_file (xcred, cert_path2,
                                                             GNUTLS_X509_FMT_PEM);
                 }
