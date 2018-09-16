@@ -208,12 +208,25 @@ IRC_PROTOCOL_CALLBACK(account)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     char *pos_account;
-    int cap_account_notify;
+    char str_account[512];
+    int cap_account_notify, local_account, smart_filter;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
+    local_account = (irc_server_strcasecmp (server, nick, server->nick) == 0);
+
     pos_account = (strcmp (argv[2], "*") != 0) ? argv[2] : NULL;
+
+    str_account[0] = '\0';
+    if (pos_account)
+    {
+        snprintf (str_account, sizeof (str_account),
+                  "%s%s",
+                  irc_nick_color_for_msg (server, 1, NULL, pos_account),
+                  pos_account);
+    }
 
     cap_account_notify = weechat_hashtable_has_key (server->cap_list,
                                                     "account-notify");
@@ -224,6 +237,32 @@ IRC_PROTOCOL_CALLBACK(account)
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
         if (ptr_nick)
         {
+            if (!ignored)
+            {
+                ptr_nick_speaking = ((weechat_config_boolean (irc_config_look_smart_filter))
+                                     && (weechat_config_boolean (irc_config_look_smart_filter_account))) ?
+                    irc_channel_nick_speaking_time_search (server, ptr_channel, nick, 1) : NULL;
+                smart_filter = (!local_account
+                                && weechat_config_boolean (irc_config_look_smart_filter)
+                                && weechat_config_boolean (irc_config_look_smart_filter_account)
+                                && !ptr_nick_speaking);
+
+                weechat_printf_date_tags (
+                    irc_msgbuffer_get_target_buffer (
+                        server, NULL, command, NULL, ptr_channel->buffer),
+                    date,
+                    irc_protocol_tags (
+                        command,
+                        smart_filter ? "irc_smart_filter" : NULL,
+                        nick, address),
+                    (pos_account) ? _("%s%s%s%s has identified as %s") : _("%s%s%s%s has unidentified"),
+                    weechat_prefix ("network"),
+                    irc_nick_color_for_msg (server, 1, ptr_nick, nick),
+                    nick,
+                    IRC_COLOR_MESSAGE_ACCOUNT,
+                    (pos_account) ? str_account : NULL);
+            }
+
             if (ptr_nick->account)
                 free (ptr_nick->account);
             ptr_nick->account = (cap_account_notify && pos_account) ?
