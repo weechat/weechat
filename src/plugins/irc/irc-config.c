@@ -98,6 +98,7 @@ struct t_config_option *irc_config_look_pv_tags;
 struct t_config_option *irc_config_look_raw_messages;
 struct t_config_option *irc_config_look_server_buffer;
 struct t_config_option *irc_config_look_smart_filter;
+struct t_config_option *irc_config_look_smart_filter_account;
 struct t_config_option *irc_config_look_smart_filter_chghost;
 struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_smart_filter_join;
@@ -115,6 +116,8 @@ struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
+struct t_config_option *irc_config_color_message_account;
+struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_chghost;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_kick;
@@ -3071,6 +3074,13 @@ irc_config_init ()
            "\"irc_smart_filter\", see /help filter)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter_account = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_account", "boolean",
+        /* TRANSLATORS: please do not translate "account" */
+        N_("enable smart filter for \"account\" messages"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_chghost = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_chghost", "boolean",
@@ -3200,6 +3210,12 @@ irc_config_init ()
         NULL, NULL, NULL,
         &irc_config_change_color_item_nick_modes, NULL, NULL,
         NULL, NULL, NULL);
+    irc_config_color_message_account = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "message_account", "color",
+        N_("color for text in account messages"),
+        NULL, -1, 0, "cyan", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_color_message_chghost = weechat_config_new_option (
         irc_config_file, ptr_section,
         "message_chghost", "color",

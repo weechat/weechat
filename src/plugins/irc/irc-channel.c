@@ -1158,8 +1158,8 @@ void
 irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                                         const char *nick)
 {
-    int i, unmask_delay, length_tags, nick_found, join, chghost;
-    int nick_changed, smart_filtered, remove_smart_filter;
+    int i, unmask_delay, length_tags, nick_found, join, account;
+    int chghost, nick_changed, smart_filtered, remove_smart_filter;
     time_t *ptr_time, date_min;
     struct t_hdata *hdata_line, *hdata_line_data;
     struct t_gui_line *own_lines;
@@ -1235,6 +1235,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
             length_tags = 0;
             nick_found = 0;
             join = 0;
+            account = 0;
             chghost = 0;
             nick_changed = 0;
             irc_nick1 = NULL;
@@ -1249,6 +1250,8 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                 }
                 else if (strcmp (tags[i], "irc_join") == 0)
                     join = 1;
+                else if (strcmp (tags[i], "irc_account") == 0)
+                    account = 1;
                 else if (strcmp (tags[i], "irc_chghost") == 0)
                     chghost = 1;
                 else if (strcmp (tags[i], "irc_nick") == 0)
@@ -1274,7 +1277,7 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
                     break;
                 remove_smart_filter = 1;
             }
-            else if (nick_found && (join || chghost) && smart_filtered)
+            else if (nick_found && (join || account || chghost) && smart_filtered)
             {
                 remove_smart_filter = 1;
             }
