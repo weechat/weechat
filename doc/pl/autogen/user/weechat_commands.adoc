@@ -69,22 +69,22 @@ Przykłady:
 
 ----
 /buffer  list
-         add [-free] [-switch] <nazwa>
-         clear [<numer>|<nazwa>|-merged|-all [<numer>|<nazwa>...]]
-         move <numer>|-|+
-         swap <numer1>|<nazwa1> [<numer2>|<nazwa2>]
-         cycle <numer>|<nazwa> [<numer>|<nazwa>...]
-         merge <numer>|<nazwa>
-         unmerge [<numer>|-all]
-         hide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
-         unhide [<numer>|<nazwa>|-all [<numer>|<nazwa>...]]
-         renumber [<numer1> [<numer2> [<start>]]]
-         close [<n1>[-<n2>]|<nazwa>]
-         notify <poziom>
+         add [-free] [-switch] <name>
+         clear [<number>|<name>|-merged|-all [<number>|<name>...]]
+         move <number>|-|+
+         swap <number1>|<name1> [<number2>|<name2>]
+         cycle <number>|<name> [<number>|<name>...]
+         merge <number>|<name>
+         unmerge [<number>|-all]
+         hide [<number>|<name>|-all [<number>|<name>...]]
+         unhide [<number>|<name>|-all [<number>|<name>...]]
+         renumber [<number1> [<number2> [<start>]]]
+         close [<n1>[-<n2>]|<name>...]
+         notify <level>
          localvar
-         set <opcja> [<value>]
-         get <opcja>
-         <numer>|-|+|<nazwa>
+         set <property> [<value>]
+         get <property>
+         <number>|-|+|<name>
 
     list: wyświetla listę buforów (bez podania argumenty wyświetlana jest ta lista)
      add: dodaje nowy bufor (może zostać zamknięty komendą "/buffer close" albo "q")

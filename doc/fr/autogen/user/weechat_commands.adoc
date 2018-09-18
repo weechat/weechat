@@ -79,7 +79,7 @@ Exemples :
          hide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          unhide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          renumber <nombre1> [<nombre2> [<départ>]]
-         close [<n1>[-<n2>]|<nom>]
+         close [<n1>[-<n2>]|<nom>...]
          notify <niveau>
          localvar
          set <propriété> [<valeur>]

@@ -41,6 +41,7 @@
 
 #include "weechat.h"
 #include "wee-command.h"
+#include "wee-arraylist.h"
 #include "wee-config.h"
 #include "wee-config-file.h"
 #include "wee-debug.h"
@@ -543,10 +544,11 @@ command_buffer_display_localvar (void *data,
 COMMAND_CALLBACK(buffer)
 {
     struct t_gui_buffer *ptr_buffer, *ptr_buffer1, *ptr_buffer2;
-    struct t_gui_buffer *ptr_prev_buffer, *weechat_buffer;
+    struct t_gui_buffer *weechat_buffer;
+    struct t_arraylist *buffers_to_close;
     long number, number1, number2, numbers[3];
     char *error, *value, *pos, *str_number1, *pos_number2;
-    int i, error_main_buffer, num_buffers, count, prev_number, clear_number;
+    int i, count, prev_number, clear_number;
     int buffer_found, arg_name, type_free, switch_to_buffer;
 
     /* make C compiler happy */
@@ -963,125 +965,115 @@ COMMAND_CALLBACK(buffer)
     /* close buffer */
     if (string_strcasecmp (argv[1], "close") == 0)
     {
-        weechat_buffer = gui_buffer_search_main ();
+        buffers_to_close = arraylist_new (32, 0, 0, NULL, NULL, NULL, NULL);
 
         if (argc < 3)
         {
-            if (buffer == weechat_buffer)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: WeeChat main buffer can't be "
-                                   "closed"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            }
-            else
-            {
-                gui_buffer_close (buffer);
-            }
+            arraylist_add (buffers_to_close, buffer);
         }
         else
         {
-            if (isdigit ((unsigned char)argv_eol[2][0]))
+            for (i = 2; i < argc; i++)
             {
-                number1 = -1;
-                number2 = -1;
-                pos = strchr (argv_eol[2], '-');
-                if (pos)
+                if (isdigit ((unsigned char)argv[i][0]))
                 {
-                    str_number1 = string_strndup (argv_eol[2],
-                                                  pos - argv_eol[2]);
-                    pos_number2 = pos + 1;
-                }
-                else
-                {
-                    str_number1 = strdup (argv_eol[2]);
-                    pos_number2 = NULL;
-                }
-                if (str_number1)
-                {
-                    error = NULL;
-                    number1 = strtol (str_number1, &error, 10);
-                    if (error && !error[0])
+                    number1 = -1;
+                    number2 = -1;
+                    pos = strchr (argv[i], '-');
+                    if (pos)
                     {
-                        if (pos_number2)
-                        {
-                            error = NULL;
-                            number2 = strtol (pos_number2, &error, 10);
-                            if (!error || error[0])
-                            {
-                                free (str_number1);
-                                COMMAND_ERROR;
-                            }
-                        }
-                        else
-                            number2 = number1;
+                        str_number1 = string_strndup (argv[i],
+                                                      pos - argv[i]);
+                        pos_number2 = pos + 1;
                     }
                     else
                     {
-                        number1 = -1;
-                        number2 = -1;
+                        str_number1 = strdup (argv[i]);
+                        pos_number2 = NULL;
                     }
-                    free (str_number1);
-                }
-                if ((number1 >= 1) && (number2 >= 1) && (number2 >= number1))
-                {
-                    error_main_buffer = 0;
-                    num_buffers = 0;
-                    ptr_buffer = last_gui_buffer;
-                    while (ptr_buffer)
+                    if (str_number1)
                     {
-                        ptr_prev_buffer = ptr_buffer->prev_buffer;
-                        if (ptr_buffer->number < number1)
-                            break;
-                        if (ptr_buffer->number <= number2)
+                        error = NULL;
+                        number1 = strtol (str_number1, &error, 10);
+                        if (error && !error[0])
                         {
-                            num_buffers++;
-                            if (ptr_buffer == weechat_buffer)
+                            if (pos_number2)
                             {
-                                error_main_buffer = 1;
+                                error = NULL;
+                                number2 = strtol (pos_number2, &error, 10);
+                                if (!error || error[0])
+                                {
+                                    free (str_number1);
+                                    COMMAND_ERROR;
+                                }
                             }
                             else
-                            {
-                                gui_buffer_close (ptr_buffer);
-                            }
+                                number2 = number1;
                         }
-                        ptr_buffer = ptr_prev_buffer;
+                        else
+                        {
+                            free (str_number1);
+                            COMMAND_ERROR;
+                        }
+                        free (str_number1);
                     }
+                    if ((number1 >= 1) && (number2 >= 1) && (number2 >= number1))
+                    {
+                        ptr_buffer = gui_buffers;
+                        while (ptr_buffer && (ptr_buffer->number <= number2))
+                        {
+                            if (ptr_buffer->number >= number1)
+                            {
+                                arraylist_add (buffers_to_close,
+                                               ptr_buffer);
+                            }
+                            ptr_buffer = ptr_buffer->next_buffer;
+                        }
+                    }
+                }
+                else
+                {
+                    ptr_buffer = gui_buffer_search_by_full_name (argv[i]);
+                    if (!ptr_buffer)
+                    {
+                        ptr_buffer = gui_buffer_search_by_partial_name (
+                            NULL, argv[i]);
+                    }
+                    if (ptr_buffer)
+                        arraylist_add (buffers_to_close, ptr_buffer);
+                }
+            }
+        }
+
+        weechat_buffer = gui_buffer_search_main ();
+
+        for (i = 0; i < arraylist_size (buffers_to_close); i++)
+        {
+            ptr_buffer = (struct t_gui_buffer *)arraylist_get (buffers_to_close,
+                                                               i);
+            if (!gui_buffer_valid (ptr_buffer))
+                continue;
+            if (ptr_buffer == weechat_buffer)
+            {
+                if (arraylist_size (buffers_to_close) == 1)
+                {
                     /*
                      * display error for main buffer if it was the only
                      * buffer to close with matching number
                      */
-                    if (error_main_buffer && (num_buffers <= 1))
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sError: WeeChat main "
-                                           "buffer can't be closed"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    }
+                    gui_chat_printf (NULL,
+                                     _("%sError: WeeChat main buffer can't be "
+                                       "closed"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 }
             }
             else
             {
-                ptr_buffer = gui_buffer_search_by_full_name (argv_eol[2]);
-                if (!ptr_buffer)
-                {
-                    ptr_buffer = gui_buffer_search_by_partial_name (
-                        NULL, argv_eol[2]);
-                }
-                if (ptr_buffer)
-                {
-                    if (ptr_buffer == weechat_buffer)
-                    {
-                        gui_chat_printf (NULL,
-                                         _("%sError: WeeChat main buffer can't "
-                                           "be closed"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    }
-                    else
-                        gui_buffer_close (ptr_buffer);
-                }
+                gui_buffer_close (ptr_buffer);
             }
         }
+
+        arraylist_free (buffers_to_close);
 
         return WEECHAT_RC_OK;
     }
@@ -7109,7 +7101,7 @@ command_init ()
            " || hide [<number>|<name>|-all [<number>|<name>...]]"
            " || unhide [<number>|<name>|-all [<number>|<name>...]]"
            " || renumber [<number1> [<number2> [<start>]]]"
-           " || close [<n1>[-<n2>]|<name>]"
+           " || close [<n1>[-<n2>]|<name>...]"
            " || notify <level>"
            " || localvar"
            " || set <property> [<value>]"
@@ -7195,7 +7187,7 @@ command_init ()
         " || unhide %(buffers_numbers)|%(buffers_plugins_names)|-all "
         "%(buffers_numbers)|%(buffers_plugins_names)|%*"
         " || renumber %(buffers_numbers) %(buffers_numbers) %(buffers_numbers)"
-        " || close %(buffers_plugins_names)"
+        " || close %(buffers_plugins_names)|%*"
         " || list"
         " || notify reset|none|highlight|message|all"
         " || localvar"
