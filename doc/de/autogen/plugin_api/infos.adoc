@@ -100,7 +100,7 @@
 
 | weechat | inactivity | Inaktivität der Tastatur (Sekunden) | -
 
-| weechat | locale | Lokalisation welche für die übersetzten Nachrichten verwendet werden soll | -
+| weechat | locale | Spracheinstellung die für die übersetzten Nachrichten verwendet werden soll | -
 
 | weechat | nick_color | zeigt Farbecode des Nick | Nickname
 
