@@ -28,7 +28,6 @@
     lädt nur die angegebenen Erweiterungen, beim Start (siehe /help weechat.plugin.autoload).
     Wenn diese Option genutzt wird, dann wird die Option weechat.plugin.autoload ignoriert.
 
-// TRANSLATION MISSING
 *-r*, *--run-command* _<command>_::
     führt einen oder mehrere Befehle nach dem Start aus; mehrere Befehle können durch ein
     Semikolon getrennt werden, diese Option kann mehrfach genutzt werden.
