@@ -986,6 +986,72 @@ irc_config_check_gnutls_priorities (const char *priorities)
 }
 
 /*
+ * Checks autojoin value, which must respect the IRC JOIN syntax:
+ *   #chan1,#chan2
+ *   #chan1,#chan2,#chan3 key1,key2
+ *
+ * Returns:
+ *   1: value OK
+ *   0: invalid value
+ */
+
+int
+irc_config_check_autojoin (const char *autojoin)
+{
+    char *string, **items, **channels, **keys;
+    int rc, num_items, num_channels, num_keys;
+
+    rc = 0;
+    string = NULL;
+    items = NULL;
+    channels = NULL;
+    keys = NULL;
+    num_items = 0;
+    num_channels = 0;
+    num_keys = 0;
+
+    /* NULL or empty value is considered as OK */
+    if (!autojoin || !autojoin[0])
+        return 1;
+
+    /* ignore spaces at beginning/end of string */
+    string = weechat_string_strip (autojoin, 1, 1, " ");
+    if (!string)
+        goto end;
+
+    /* no space allowed before or after a comma */
+    if (strstr (string, ", ") || strstr (string, " ,"))
+        goto end;
+
+    items = weechat_string_split (string, " ", 0, 0, &num_items);
+    if (!items || (num_items < 1) || (num_items > 2))
+        goto end;
+
+    channels = weechat_string_split (items[0], ",", 0, 0, &num_channels);
+
+    if (num_items == 2)
+        keys = weechat_string_split (items[1], ",", 0, 0, &num_keys);
+
+    /* error if there are more keys than channels to join */
+    if (num_keys > num_channels)
+        goto end;
+
+    rc = 1;
+
+end:
+    if (string)
+        free (string);
+    if (items)
+        weechat_string_free_split (items);
+    if (channels)
+        weechat_string_free_split (channels);
+    if (keys)
+        weechat_string_free_split (keys);
+
+    return rc;
+}
+
+/*
  * Callback called to check a server option when it is modified.
  */
 
@@ -1048,6 +1114,23 @@ irc_config_server_check_value_cb (const void *pointer, void *data,
                           "position in string: \"%s\""),
                         weechat_prefix ("error"), IRC_PLUGIN_NAME, pos_error);
                     return 0;
+                }
+                break;
+            case IRC_SERVER_OPTION_AUTOJOIN:
+                if (!value || !value[0])
+                    break;
+                if (!irc_config_check_autojoin (value))
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: warning: invalid autojoin value \"%s\", see "
+                          "/help %s.%s.%s"),
+                        weechat_prefix ("error"),
+                        IRC_PLUGIN_NAME,
+                        value,
+                        weechat_config_option_get_string (option, "config_name"),
+                        weechat_config_option_get_string (option, "section_name"),
+                        weechat_config_option_get_string (option, "name"));
                 }
                 break;
             case IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH:
