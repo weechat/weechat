@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-18 21:23+0200\n"
+"POT-Creation-Date: 2018-09-20 20:58+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8171,6 +8171,11 @@ msgid ""
 msgstr ""
 "%s%s: cadena de prioridades inválida, error a esta posición de la cadena: "
 "\"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: warning: invalid autojoin value \"%s\", see /help %s.%s.%s"
+msgstr ""
+"%s%s: atención, puntero inválido (\"%s\") para la función \"%s\" (script: %s)"
 
 #, c-format
 msgid ""

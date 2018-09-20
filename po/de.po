@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-18 21:23+0200\n"
+"POT-Creation-Date: 2018-09-20 20:58+0200\n"
 "PO-Revision-Date: 2018-09-09 10:03+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -9442,6 +9442,11 @@ msgid ""
 msgstr ""
 "%s%s: ungültige Zeichenkette für Prioritäten. Fehler befindet sich an "
 "folgender Position der Zeichenkette: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: warning: invalid autojoin value \"%s\", see /help %s.%s.%s"
+msgstr ""
+"%s%s: Warnung, Pointer (\"%s\") ungültig für Funktion \"%s\" (Skript: %s)"
 
 #, c-format
 msgid ""

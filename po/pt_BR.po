@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-18 21:23+0200\n"
+"POT-Creation-Date: 2018-09-20 20:58+0200\n"
 "PO-Revision-Date: 2018-03-31 15:37+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7791,6 +7791,11 @@ msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr ""
 "%s%s: string de prioridades inválida, erro nesta posição da string: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: warning: invalid autojoin value \"%s\", see /help %s.%s.%s"
+msgstr ""
+"%s%s: aviso, ponteiro inválido (\"%s\") para a função \"%s\" (script: %s)"
 
 #, c-format
 msgid ""

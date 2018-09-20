@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-18 21:23+0200\n"
+"POT-Creation-Date: 2018-09-20 20:58+0200\n"
 "PO-Revision-Date: 2018-09-09 10:05+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -8889,6 +8889,12 @@ msgstr ""
 msgid ""
 "%s%s: invalid priorities string, error at this position in string: \"%s\""
 msgstr "%s%s: 不正なプロパティ文字列、文字列のエラーの位置: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s: warning: invalid autojoin value \"%s\", see /help %s.%s.%s"
+msgstr ""
+"%1$s%2$s: 警告、関数 \"%4$s\" の不正な引ポインタ (\"%3$s\") (スクリプト: "
+"%5$s)"
 
 #, c-format
 msgid ""
