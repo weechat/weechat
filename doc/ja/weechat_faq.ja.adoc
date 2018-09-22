@@ -874,12 +874,10 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [[aspell_dictionaries]]
-=== I installed aspell dictionaries on my system, how can I use them without restarting WeeChat?
+=== システムに aspell 辞書をインストールした後、WeeChat を再起動せずにそれを使う方法を教えてください。
 
-// TRANSLATION MISSING
-You have to reload the aspell plugin:
+aspell プラグインをリロードしてください:
 
 ----
 /plugin reload aspell
