@@ -20,7 +20,7 @@ disable : désactiver l'enregistrement pour le tampon courant (définir le nive
 Les options "logger.level.*" et "logger.mask.*" peuvent être utilisées pour définir le niveau ou le masque de nom de fichier pour un tampon, ou plusieurs tampons commençant par un nom.
 
 Niveaux de log utilisés par l'extension IRC :
-  1 : message d'utilisateur, notice, privé
+  1 : message d'utilisateur (canal et privé), notice (serveur et canal)
   2 : changement de pseudo
   3 : message du serveur
   4 : join/part/quit

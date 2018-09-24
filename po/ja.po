@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-20 20:58+0200\n"
+"POT-Creation-Date: 2018-09-24 19:02+0200\n"
 "PO-Revision-Date: 2018-09-22 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10909,6 +10909,10 @@ msgstr "%s\t****  ログの最初  ****"
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  ログの最後  ****"
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr "%s===\t%s========== バックログの最後 (%d 行) =========="
+
 msgid "Logging on buffers:"
 msgstr "バッファのログ保存:"
 
@@ -10926,16 +10930,13 @@ msgstr "ログ保存が開始されていません"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => レベル %d"
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== バックログの最後 (%d 行) =========="
-
 msgid "logger plugin configuration"
 msgstr "logger プラグイン設定"
 
 msgid "list || set <level> || flush || disable"
 msgstr "list || set <level> || flush || disable"
 
+#, fuzzy
 msgid ""
 "   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
@@ -10948,7 +10949,7 @@ msgid ""
 "mask for a buffer, or buffers beginning with name.\n"
 "\n"
 "Log levels used by IRC plugin:\n"
-"  1: user message, notice, private\n"
+"  1: user message (channel and private), notice (server and channel)\n"
 "  2: nick change\n"
 "  3: server message\n"
 "  4: join/part/quit\n"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-20 20:58+0200\n"
+"POT-Creation-Date: 2018-09-24 19:02+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9182,6 +9182,10 @@ msgstr "****  Naplófájl kezdete  "
 msgid "%s\t****  End of log  ****"
 msgstr "****  Naplófájl vége  "
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr ""
+
 #, fuzzy
 msgid "Logging on buffers:"
 msgstr "Aliaszok listája:\n"
@@ -9199,10 +9203,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: \"%s\" => level %d"
 msgstr "A \"%s\" aliasz eltávolítva\n"
-
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr ""
 
 #, fuzzy
 msgid "logger plugin configuration"
@@ -9223,7 +9223,7 @@ msgid ""
 "mask for a buffer, or buffers beginning with name.\n"
 "\n"
 "Log levels used by IRC plugin:\n"
-"  1: user message, notice, private\n"
+"  1: user message (channel and private), notice (server and channel)\n"
 "  2: nick change\n"
 "  3: server message\n"
 "  4: join/part/quit\n"

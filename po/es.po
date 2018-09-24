@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-20 20:58+0200\n"
+"POT-Creation-Date: 2018-09-24 19:02+0200\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10128,6 +10128,10 @@ msgstr "%s\t****  Comienzo del registro  ****"
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Fin del registro  ****"
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr "%s===\t%s========== Fin del último registro (%d líneas) =========="
+
 msgid "Logging on buffers:"
 msgstr "Guardando registro en los buffers:"
 
@@ -10144,10 +10148,6 @@ msgstr "registro no iniciado"
 #, c-format
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => nivel %d"
-
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Fin del último registro (%d líneas) =========="
 
 msgid "logger plugin configuration"
 msgstr "configuración del plugin de registro"
@@ -10169,7 +10169,7 @@ msgid ""
 "mask for a buffer, or buffers beginning with name.\n"
 "\n"
 "Log levels used by IRC plugin:\n"
-"  1: user message, notice, private\n"
+"  1: user message (channel and private), notice (server and channel)\n"
 "  2: nick change\n"
 "  3: server message\n"
 "  4: join/part/quit\n"

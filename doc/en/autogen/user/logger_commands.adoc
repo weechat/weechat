@@ -20,7 +20,7 @@ disable: disable logging on current buffer (set level to 0)
 Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
 
 Log levels used by IRC plugin:
-  1: user message, notice, private
+  1: user message (channel and private), notice (server and channel)
   2: nick change
   3: server message
   4: join/part/quit

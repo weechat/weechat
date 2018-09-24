@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-09-20 20:58+0200\n"
+"POT-Creation-Date: 2018-09-24 19:02+0200\n"
 "PO-Revision-Date: 2018-09-20 21:18+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11597,6 +11597,10 @@ msgstr "%s\t****  Beginn der Protokoll-Datei  ****"
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Ende der Protokoll-Datei  ****"
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
+
 msgid "Logging on buffers:"
 msgstr "Protokollieren der Buffer:"
 
@@ -11614,10 +11618,6 @@ msgstr "Protokollierung wurde nicht gestartet"
 msgid "%s: \"%s\" => level %d"
 msgstr "%s: \"%s\" => Level %d"
 
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
-
 msgid "logger plugin configuration"
 msgstr ""
 "Konfiguration für \"logger\" Erweiterung (dient zum protokollieren der "
@@ -11626,6 +11626,7 @@ msgstr ""
 msgid "list || set <level> || flush || disable"
 msgstr "list || set <level> || flush || disable"
 
+#, fuzzy
 msgid ""
 "   list: show logging status for opened buffers\n"
 "    set: set logging level on current buffer\n"
@@ -11638,7 +11639,7 @@ msgid ""
 "mask for a buffer, or buffers beginning with name.\n"
 "\n"
 "Log levels used by IRC plugin:\n"
-"  1: user message, notice, private\n"
+"  1: user message (channel and private), notice (server and channel)\n"
 "  2: nick change\n"
 "  3: server message\n"
 "  4: join/part/quit\n"

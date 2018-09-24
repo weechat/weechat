@@ -11,30 +11,30 @@
          flush
          disable
 
-   list: pokazuje status logów dla otwartych buforów
-    set: ustawia poziom logowania dla obecnego bufora
-  poziom: poziom logowanych wiadomości (0 = wyłączone, 1 = kilka wiadomości (najważniejsze) .. 9 = wszystkie wiadomości)
-  flush: zapisuje natychmiast wszystkie pliki z logami
-disable: wyłącza logowanie dla obecnego bufora (ustawia poziom na 0)
+   list: show logging status for opened buffers
+    set: set logging level on current buffer
+  level: level for messages to be logged (0 = logging disabled, 1 = a few messages (most important) .. 9 = all messages)
+  flush: write all log files now
+disable: disable logging on current buffer (set level to 0)
 
-Opcje "logger.level.*" oraz "logger.mask.*" mogą być użyte do ustawienia poziomu lub maski dla bufora lub buforów zaczynających się od nazwy.
+Options "logger.level.*" and "logger.mask.*" can be used to set level or mask for a buffer, or buffers beginning with name.
 
-Poziomy logowania używane przez wtyczkę IRC:
-  1: wiadomości użytkowników, powiadomienia, wiadomości prywatne
-  2: zmiany nicków
-  3: wiadomości serwera
-  4: wejścia/opuszczenia/wyjścia
-  9: wszystkie pozostałe wiadomości
+Log levels used by IRC plugin:
+  1: user message (channel and private), notice (server and channel)
+  2: nick change
+  3: server message
+  4: join/part/quit
+  9: all other messages
 
-Przykłady:
-  ustawia poziom na 5 dla obecnego bufora:
+Examples:
+  set level to 5 for current buffer:
     /logger set 5
-  wyłącza logowanie w obecnym buforze:
+  disable logging for current buffer:
     /logger disable
-  ustawia poziom na 3 dla wszystkich buforów IRC:
+  set level to 3 for all IRC buffers:
     /set logger.level.irc 3
-  wyłącza logowanie głównego bufora WeeChat:
+  disable logging for main WeeChat buffer:
     /set logger.level.core.weechat 0
-  użyj oddzielnych katalogów dla serwerów IRC, oraz oddzielnych plików dla kanałów:
+  use a directory per IRC server and a file per channel inside:
     /set logger.mask.irc "$server/$channel.weechatlog"
 ----
