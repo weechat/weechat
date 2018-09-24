@@ -267,6 +267,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/logger/logger-buffer.c
 ./src/plugins/logger/logger-buffer.h
 ./src/plugins/logger/logger.c
+./src/plugins/logger/logger-command.c
+./src/plugins/logger/logger-command.h
 ./src/plugins/logger/logger-config.c
 ./src/plugins/logger/logger-config.h
 ./src/plugins/logger/logger.h

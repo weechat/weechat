@@ -27,6 +27,8 @@ logger_la_SOURCES = logger.c \
                     logger.h \
                     logger-buffer.c \
                     logger-buffer.h \
+                    logger-command.c \
+                    logger-command.h \
                     logger-config.c \
                     logger-config.h \
                     logger-info.c \

@@ -292,6 +292,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    logger/                        | Extension Logger.
 |       logger.c                    | Fonctions principales pour Logger.
 |       logger-buffer.c             | Gestion des listes de tampons pour Logger.
+|       logger-command.c            | Commandes de Logger.
 |       logger-config.c             | Options de configuration pour Logger (fichier logger.conf).
 |       logger-info.c               | Info/infolists/hdata pour Logger.
 |       logger-tail.c               | Fonctions pour obtenir les dernières lignes d'un fichier.

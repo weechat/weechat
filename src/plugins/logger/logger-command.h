@@ -17,26 +17,9 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_LOGGER_H
-#define WEECHAT_PLUGIN_LOGGER_H
+#ifndef WEECHAT_PLUGIN_LOGGER_COMMAND_H
+#define WEECHAT_PLUGIN_LOGGER_COMMAND_H
 
-#define weechat_plugin weechat_logger_plugin
-#define LOGGER_PLUGIN_NAME "logger"
+extern void logger_command_init ();
 
-#define LOGGER_LEVEL_DEFAULT 9
-
-struct t_gui_buffer;
-
-extern struct t_weechat_plugin *weechat_logger_plugin;
-
-extern struct t_hook *logger_timer;
-
-extern char *logger_build_option_name (struct t_gui_buffer *buffer);
-extern void logger_start_buffer_all (int write_info_line);
-extern void logger_flush ();
-extern void logger_stop_all (int write_info_line);
-extern void logger_adjust_log_filenames ();
-extern int logger_timer_cb (const void *pointer, void *data,
-                            int remaining_calls);
-
-#endif /* WEECHAT_PLUGIN_LOGGER_H */
+#endif /* WEECHAT_PLUGIN_LOGGER_COMMAND_H */

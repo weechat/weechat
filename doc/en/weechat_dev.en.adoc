@@ -290,6 +290,7 @@ WeeChat "core" is located in following directories:
 |    logger/                        | Logger plugin.
 |       logger.c                    | Main logger functions.
 |       logger-buffer.c             | Logger buffer list management.
+|       logger-command.c            | Logger commands.
 |       logger-config.c             | Logger config options (file logger.conf).
 |       logger-info.c               | Logger info/infolists/hdata.
 |       logger-tail.c               | Functions to get last lines of a file.
