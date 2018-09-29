@@ -88,6 +88,7 @@ enum t_config_look_hotlist_sort
     CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC,
     CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC,
     CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC,
+    CONFIG_LOOK_HOTLIST_SORT_GROUP_PRIORITY,
 };
 
 enum t_config_look_input_share
@@ -126,6 +127,7 @@ extern struct t_config_section *weechat_config_section_color;
 extern struct t_config_section *weechat_config_section_proxy;
 extern struct t_config_section *weechat_config_section_bar;
 extern struct t_config_section *weechat_config_section_notify;
+extern struct t_config_section *weechat_config_section_priority;
 
 extern struct t_config_option *config_startup_command_after_plugins;
 extern struct t_config_option *config_startup_command_before_plugins;
@@ -143,6 +145,7 @@ extern struct t_config_option *config_look_bare_display_exit_on_input;
 extern struct t_config_option *config_look_bare_display_time_format;
 extern struct t_config_option *config_look_buffer_auto_renumber;
 extern struct t_config_option *config_look_buffer_notify_default;
+extern struct t_config_option *config_look_buffer_priority_default;
 extern struct t_config_option *config_look_buffer_position;
 extern struct t_config_option *config_look_buffer_search_case_sensitive;
 extern struct t_config_option *config_look_buffer_search_force_default;
@@ -364,6 +367,8 @@ extern int config_weechat_debug_set (const char *plugin_name,
 extern void config_weechat_debug_set_all ();
 extern int config_weechat_notify_set (struct t_gui_buffer *buffer,
                                       const char *notify);
+extern int config_weechat_priority_set (struct t_gui_buffer *buffer,
+                                        const char *priority);
 extern void config_get_item_time (char *text_time, int max_length);
 extern int config_weechat_init ();
 extern int config_weechat_read ();

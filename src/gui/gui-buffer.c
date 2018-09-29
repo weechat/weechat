@@ -95,7 +95,7 @@ char *gui_buffer_properties_get_integer[] =
   "nicklist_visible_count", "input", "input_get_unknown_commands",
   "input_get_empty", "input_size", "input_length", "input_pos",
   "input_1st_display", "num_history", "text_search", "text_search_exact",
-  "text_search_regex", "text_search_where", "text_search_found",
+  "text_search_regex", "text_search_where", "text_search_found", "priority",
   NULL
 };
 char *gui_buffer_properties_get_string[] =
@@ -116,7 +116,7 @@ char *gui_buffer_properties_set[] =
   "highlight_words_del", "highlight_regex", "highlight_tags_restrict",
   "highlight_tags", "hotlist_max_level_nicks", "hotlist_max_level_nicks_add",
   "hotlist_max_level_nicks_del", "input", "input_pos",
-  "input_get_unknown_commands", "input_get_empty",
+  "input_get_unknown_commands", "input_get_empty", "priority",
   NULL
 };
 
@@ -357,6 +357,113 @@ gui_buffer_notify_set_all ()
          ptr_buffer = ptr_buffer->next_buffer)
     {
         gui_buffer_notify_set (ptr_buffer);
+    }
+}
+
+
+
+/*
+ * Reads a buffer priority in configuration file.
+ *
+ * First tries with all arguments, then removes one by one to find buffer priority
+ * (from specific to general notify).
+ */
+
+int
+gui_buffer_priority_get (struct t_gui_buffer *buffer)
+{
+    char *option_name, *ptr_end;
+    int length;
+    struct t_config_option *ptr_option;
+
+    if (!buffer)
+        return CONFIG_INTEGER(config_look_buffer_priority_default);
+
+    length = strlen (buffer->full_name) + 1;
+    option_name = malloc (length);
+    if (option_name)
+    {
+        snprintf (option_name, length, "%s", buffer->full_name);
+
+        ptr_end = option_name + strlen (option_name);
+        while (ptr_end >= option_name)
+        {
+            ptr_option = config_file_search_option (weechat_config_file,
+                                                    weechat_config_section_priority,
+                                                    option_name);
+            if (ptr_option)
+            {
+                free (option_name);
+                return CONFIG_INTEGER(ptr_option);
+            }
+            ptr_end--;
+            while ((ptr_end >= option_name) && (ptr_end[0] != '.'))
+            {
+                ptr_end--;
+            }
+            if ((ptr_end >= option_name) && (ptr_end[0] == '.'))
+                ptr_end[0] = '\0';
+        }
+        ptr_option = config_file_search_option (weechat_config_file,
+                                                weechat_config_section_priority,
+                                                option_name);
+
+        free (option_name);
+
+        if (ptr_option)
+            return CONFIG_INTEGER(ptr_option);
+    }
+
+    /* buffer priority not found */
+    return CONFIG_INTEGER(config_look_buffer_priority_default);
+}
+
+
+/*
+ * Sets buffer priority values on a buffer.
+ */
+
+void
+gui_buffer_priority_set (struct t_gui_buffer *buffer)
+{
+    int old_priority, new_priority;
+
+    if (!buffer)
+        return;
+
+    old_priority = buffer->priority;
+    new_priority = gui_buffer_priority_get (buffer);
+
+    if (new_priority != old_priority)
+    {
+        buffer->priority = new_priority;
+        gui_chat_printf (NULL,
+                         _("Priority changed for \"%s%s%s\": \"%s%d%s\" to \"%s%d%s\""),
+                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                         buffer->full_name,
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                         old_priority,
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                         buffer->priority,
+                         GUI_COLOR(GUI_COLOR_CHAT));
+    }
+}
+
+/*
+ * Sets buffer priority values on all opened buffers.
+ */
+
+void
+gui_buffer_priority_set_all ()
+{
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_buffer_priority_set (ptr_buffer);
     }
 }
 
@@ -793,6 +900,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 
     /* set notify level */
     new_buffer->notify = gui_buffer_notify_get (new_buffer);
+    new_buffer->priority = gui_buffer_priority_get (new_buffer);
 
     /* assign this buffer to windows of layout */
     gui_layout_window_assign_buffer (new_buffer);
@@ -1139,6 +1247,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->type;
     else if (string_strcasecmp (property, "notify") == 0)
         return buffer->notify;
+    else if (string_strcasecmp (property, "priority") == 0)
+        return buffer->priority;
     else if (string_strcasecmp (property, "num_displayed") == 0)
         return buffer->num_displayed;
     else if (string_strcasecmp (property, "active") == 0)
@@ -2011,6 +2121,16 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
             else
                 buffer->notify = number;
+        }
+    }
+    else if (string_strcasecmp (property, "priority") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0]
+            && ((number > GUI_BUFFER_PRIORITY_MIN) && (number < GUI_BUFFER_PRIORITY_MAX)))
+        {
+            buffer->priority = number;
         }
     }
     else if (string_strcasecmp (property, "title") == 0)

@@ -235,6 +235,17 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist,
                     return ptr_hotlist;
             }
             break;
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_PRIORITY:
+            for (ptr_hotlist = hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if ((new_hotlist->priority > ptr_hotlist->priority)
+                    || ((new_hotlist->priority == ptr_hotlist->priority)
+                        && (new_hotlist->buffer->priority > ptr_hotlist->buffer->priority)))
+                    return ptr_hotlist;
+            }
+            break;
+
     }
     return NULL;
 }

@@ -40,6 +40,7 @@ struct t_gui_hotlist
 {
     enum t_gui_hotlist_priority priority;  /* 0=crappy msg (join/part),     */
                                            /* 1=msg, 2=pv, 3=nick highlight */
+    int buffer_priority;                   /* buffer priority               */
     struct timeval creation_time;          /* time when entry was added     */
     struct t_gui_buffer *buffer;           /* associated buffer             */
     int count[GUI_HOTLIST_NUM_PRIORITIES]; /* number of msgs by priority    */
