@@ -214,13 +214,16 @@ relay_client_set_desc (struct t_relay_client *client)
         free (client->desc);
 
     snprintf (desc, sizeof (desc),
-              "%d/%s%s%s%s/%s",
+              "%d/%s%s%s%s/%s%s%s%s",
               client->id,
               (client->ssl) ? "ssl." : "",
               relay_protocol_string[client->protocol],
               (client->protocol_args) ? "." : "",
               (client->protocol_args) ? client->protocol_args : "",
-              client->address);
+              client->address,
+              (client->real_ip) ? "(" : "",
+              (client->real_ip) ? client->real_ip : "",
+              (client->real_ip) ? ")" : "");
 
     client->desc = strdup (desc);
 }
@@ -422,6 +425,10 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
                             client->http_headers, "x-real-ip");
                         if (ptr_real_ip)
                         {
+                            if (client->real_ip)
+                                free (client->real_ip);
+                            client->real_ip = strdup (ptr_real_ip);
+                            relay_client_set_desc (client);
                             weechat_printf_date_tags (
                                 NULL, 0, "relay_client",
                                 _("%s: websocket client %s%s%s has real IP "
@@ -1214,6 +1221,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->websocket = 0;
         new_client->http_headers = NULL;
         new_client->address = strdup ((address) ? address : "?");
+        new_client->real_ip = NULL;
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
@@ -1384,6 +1392,7 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
         new_client->http_headers = NULL;
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
+        new_client->real_ip = strdup (weechat_infolist_string (infolist, "real_ip"));
         new_client->status = weechat_infolist_integer (infolist, "status");
         new_client->protocol = weechat_infolist_integer (infolist, "protocol");
         str = weechat_infolist_string (infolist, "protocol_string");
@@ -1571,6 +1580,8 @@ relay_client_free (struct t_relay_client *client)
         free (client->desc);
     if (client->address)
         free (client->address);
+    if (client->real_ip)
+        free (client->real_ip);
     if (client->protocol_string)
         free (client->protocol_string);
     if (client->protocol_args)
@@ -1697,6 +1708,8 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "address", client->address))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "real_ip", client->real_ip))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "status", client->status))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "status_string", relay_client_status_string[client->status]))
@@ -1776,6 +1789,7 @@ relay_client_print_log ()
                             ptr_client->http_headers,
                             weechat_hashtable_get_string (ptr_client->http_headers, "keys_values"));
         weechat_log_printf ("  address . . . . . . . : '%s'", ptr_client->address);
+        weechat_log_printf ("  real_ip . . . . . . . : '%s'", ptr_client->real_ip);
         weechat_log_printf ("  status. . . . . . . . : %d (%s)",
                             ptr_client->status,
                             relay_client_status_string[ptr_client->status]);

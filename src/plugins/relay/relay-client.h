@@ -99,6 +99,7 @@ struct t_relay_client
     int websocket;                     /* 0=not a ws, 1=init ws, 2=ws ready */
     struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
     char *address;                     /* string with IP address            */
+    char *real_ip;                     /* real IP (X-Real-IP HTTP header)   */
     enum t_relay_status status;        /* status (connecting, active,..)    */
     enum t_relay_protocol protocol;    /* protocol (irc,..)                 */
     char *protocol_string;             /* example: "ipv6.ssl.irc.freenode"  */
