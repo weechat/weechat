@@ -4776,7 +4776,7 @@ IRC_PROTOCOL_CALLBACK(354)
      */
     if (argc < 11)
     {
-        if ((argc > 3) && (!ptr_channel || (ptr_channel->checking_whox <= 0)))
+        if (!ptr_channel || (ptr_channel->checking_whox <= 0))
         {
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
