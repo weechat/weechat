@@ -413,8 +413,8 @@ hook_connect_print_log (struct t_hook *hook)
     {
         for (i = 0; i < HOOK_CONNECT_MAX_SOCKETS; i++)
         {
-            log_printf ("    sock_v4[%d]. . . . . . : '%d'", HOOK_CONNECT(hook, sock_v4[i]));
-            log_printf ("    sock_v6[%d]. . . . . . : '%d'", HOOK_CONNECT(hook, sock_v6[i]));
+            log_printf ("    sock_v4[%03d]. . . . . : '%d'", i, HOOK_CONNECT(hook, sock_v4[i]));
+            log_printf ("    sock_v6[%03d]. . . . . : '%d'", i, HOOK_CONNECT(hook, sock_v6[i]));
         }
     }
 }
