@@ -615,13 +615,13 @@ debug_display_time_elapsed (struct timeval *time1, struct timeval *time2,
     if (display)
     {
         gui_chat_printf (NULL,
-                         "debug: time[%s] -> %lld:%02lld:%02lld.%06d",
+                         "debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
                          (message) ? message : "?",
                          diff_hour, diff_min, diff_sec, diff_usec);
     }
     else
     {
-        log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06d",
+        log_printf ("debug: time[%s] -> %lld:%02lld:%02lld.%06lld",
                     (message) ? message : "?",
                     diff_hour, diff_min, diff_sec, diff_usec);
     }

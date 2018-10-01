@@ -1341,7 +1341,7 @@ hashtable_print_log (struct t_hashtable *hashtable, const char *name)
                     log_printf ("      value (buffer) . . : 0x%lx", ptr_item->value);
                     break;
                 case HASHTABLE_TIME:
-                    log_printf ("      value (time) . . . : %d", *((time_t *)ptr_item->value));
+                    log_printf ("      value (time) . . . : %lld", (long long)(*((time_t *)ptr_item->value)));
                     break;
                 case HASHTABLE_NUM_TYPES:
                     break;

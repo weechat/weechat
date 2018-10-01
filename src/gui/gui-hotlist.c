@@ -685,7 +685,7 @@ gui_hotlist_print_log ()
     {
         log_printf ("[hotlist (addr:0x%lx)]", ptr_hotlist);
         log_printf ("  priority . . . . . . . : %d",    ptr_hotlist->priority);
-        log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d",
+        log_printf ("  creation_time. . . . . : tv_sec:%ld, tv_usec:%ld",
                     ptr_hotlist->creation_time.tv_sec,
                     ptr_hotlist->creation_time.tv_usec);
         log_printf ("  buffer . . . . . . . . : 0x%lx", ptr_hotlist->buffer);
