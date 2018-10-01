@@ -368,7 +368,7 @@ relay_websocket_encode_frame (int opcode,
         frame[1] = length;
         index = 2;
     }
-    else if ((length >= 126) && (length <= 65535))
+    else if (length <= 65535)
     {
         /* length on 2 bytes */
         frame[1] = 126;
