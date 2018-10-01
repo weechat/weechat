@@ -553,7 +553,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
                             strcat (suggestions, (num_suggestions == 0) ? "/" : ",");
                         strcat (suggestions, ptr_word);
                         num_suggestions++;
-                        if ((max_suggestions >= 0) && (num_suggestions == max_suggestions))
+                        if (num_suggestions == max_suggestions)
                             break;
                     }
                 }
@@ -580,7 +580,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
                         strcat (suggestions, (num_suggestions == 0) ? "/" : ",");
                     strcat (suggestions, ptr_word);
                     num_suggestions++;
-                    if ((max_suggestions >= 0) && (num_suggestions == max_suggestions))
+                    if (num_suggestions == max_suggestions)
                         break;
                 }
                 delete_aspell_string_enumeration (elements);
