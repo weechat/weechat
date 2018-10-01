@@ -608,7 +608,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
                             const char *modifier,
                             const char *modifier_data, const char *string)
 {
-    long unsigned int value;
+    unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_aspell_speller_buffer *ptr_speller_buffer;
     char *result, *ptr_string, *ptr_string_orig, *pos_space;

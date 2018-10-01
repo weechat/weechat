@@ -44,7 +44,7 @@ struct t_infolist_item;
     if (__pointer)                                                       \
     {                                                                    \
         snprintf (str_value, sizeof (str_value),                         \
-                  "0x%lx", (long unsigned int)__pointer);                \
+                  "0x%lx", (unsigned long)__pointer);                    \
         hashtable_set (hashtable, __name, str_value);                    \
     }                                                                    \
     else                                                                 \

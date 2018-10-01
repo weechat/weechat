@@ -1042,7 +1042,7 @@ gui_key_focus_command (const char *key, int context,
 {
     struct t_gui_key *ptr_key;
     int i, matching, debug, rc;
-    long unsigned int value;
+    unsigned long value;
     char *command, **commands;
     const char *str_buffer;
     struct t_hashtable *hashtable;

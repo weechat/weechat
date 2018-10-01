@@ -37,7 +37,7 @@ weechat_aspell_info_info_aspell_dict_cb (const void *pointer, void *data,
                                          const char *arguments)
 {
     int rc;
-    long unsigned int value;
+    unsigned long value;
     struct t_gui_buffer *buffer;
     const char *buffer_full_name;
 

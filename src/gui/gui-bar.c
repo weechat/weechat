@@ -387,7 +387,7 @@ gui_bar_check_conditions (struct t_gui_bar *bar,
     snprintf (str_modifier, sizeof (str_modifier),
               "bar_condition_%s", bar->name);
     snprintf (str_window, sizeof (str_window),
-              "0x%lx", (long unsigned int)(window));
+              "0x%lx", (unsigned long)(window));
     str_displayed = hook_modifier_exec (NULL,
                                         str_modifier,
                                         str_window,

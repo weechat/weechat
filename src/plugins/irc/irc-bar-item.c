@@ -552,7 +552,7 @@ struct t_hashtable *
 irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
                                     struct t_hashtable *info)
 {
-    long unsigned int value;
+    unsigned long value;
     int rc;
     struct t_gui_buffer *buffer;
     struct t_irc_nick *ptr_nick;

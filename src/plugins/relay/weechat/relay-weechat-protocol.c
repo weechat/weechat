@@ -63,7 +63,7 @@ struct t_gui_buffer *
 relay_weechat_protocol_get_buffer (const char *arg)
 {
     struct t_gui_buffer *ptr_buffer;
-    long unsigned int value;
+    unsigned long value;
     int rc;
     struct t_hdata *ptr_hdata;
 
@@ -288,7 +288,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(infolist)
 {
     struct t_relay_weechat_msg *msg;
-    long unsigned int value;
+    unsigned long value;
     char *args;
     int rc;
 
@@ -498,7 +498,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,short_name,"
                                              "nicklist,title,local_variables,"
@@ -523,7 +523,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,type");
                 relay_weechat_msg_send (ptr_client, msg);
@@ -546,7 +546,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,"
                                              "prev_buffer,next_buffer");
@@ -571,7 +571,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,"
                                              "prev_buffer,next_buffer");
@@ -596,7 +596,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,"
                                              "prev_buffer,next_buffer");
@@ -620,7 +620,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,short_name,"
                                              "local_variables");
@@ -644,7 +644,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,title");
                 relay_weechat_msg_send (ptr_client, msg);
@@ -667,7 +667,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name,local_variables");
                 relay_weechat_msg_send (ptr_client, msg);
@@ -689,7 +689,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name");
                 relay_weechat_msg_send (ptr_client, msg);
@@ -729,7 +729,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
                           "line_data:0x%lx",
-                          (long unsigned int)ptr_line_data);
+                          (unsigned long)ptr_line_data);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "buffer,date,date_printed,"
                                              "displayed,highlight,tags_array,"
@@ -754,7 +754,7 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
             if (msg)
             {
                 snprintf (cmd_hdata, sizeof (cmd_hdata),
-                          "buffer:0x%lx", (long unsigned int)ptr_buffer);
+                          "buffer:0x%lx", (unsigned long)ptr_buffer);
                 relay_weechat_msg_add_hdata (msg, cmd_hdata,
                                              "number,full_name");
                 relay_weechat_msg_send (ptr_client, msg);

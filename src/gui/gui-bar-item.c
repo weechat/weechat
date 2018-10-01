@@ -876,7 +876,7 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
 
     /* for modifiers */
     snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (long unsigned int)buffer);
+              "0x%lx", (unsigned long)buffer);
 
     /* execute modifier with basic string (without cursor tag) */
     ptr_input = NULL;
@@ -1922,7 +1922,7 @@ gui_bar_item_focus_buffer_nicklist_cb (const void *pointer,
     struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     int i, rc, bar_item_line;
-    unsigned long int value;
+    unsigned long value;
     const char *str_window, *str_buffer, *str_bar_item_line;
     struct t_gui_window *window;
     struct t_gui_buffer *buffer;

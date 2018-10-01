@@ -151,7 +151,7 @@ gui_history_add (struct t_gui_buffer *buffer, const char *string)
     char *string2, str_buffer[128];
 
     snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (long unsigned int)(buffer));
+              "0x%lx", (unsigned long)(buffer));
     string2 = hook_modifier_exec (NULL, "history_add", str_buffer, string);
 
     /*
@@ -231,7 +231,7 @@ gui_history_hdata_history_update_cb (void *data,
     struct t_gui_history *ptr_history;
     struct t_gui_buffer *ptr_buffer;
     const char *text, *buffer;
-    long unsigned int value;
+    unsigned long value;
     int rc;
 
     /* make C compiler happy */

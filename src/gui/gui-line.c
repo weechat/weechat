@@ -1343,7 +1343,7 @@ gui_line_hook_update (struct t_gui_line *line,
 {
     const char *ptr_value, *ptr_value2;
     struct t_gui_buffer *ptr_buffer;
-    long unsigned int value_pointer;
+    unsigned long value_pointer;
     long value;
     char *error;
     int rc, tags_updated, notify_level_updated, highlight_updated;

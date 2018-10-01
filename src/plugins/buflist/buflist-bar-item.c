@@ -679,7 +679,7 @@ buflist_bar_item_init ()
         buflist_bar_item_buflist[i] = weechat_bar_item_new (
             buflist_bar_item_get_name (i),
             &buflist_bar_item_buflist_cb,
-            (const void *)((long unsigned)i), NULL);
+            (const void *)((unsigned long)i), NULL);
     }
 
     return 1;

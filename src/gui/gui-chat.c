@@ -1112,7 +1112,7 @@ gui_chat_hsignal_quote_line_cb (const void *pointer, void *data,
                                 struct t_hashtable *hashtable)
 {
     const char *date, *line, *prefix, *ptr_prefix, *message;
-    long unsigned int value;
+    unsigned long value;
     long number;
     struct tm *local_time;
     struct t_gui_line *ptr_line;

@@ -226,7 +226,7 @@ relay_weechat_msg_add_pointer (struct t_relay_weechat_msg *msg, void *pointer)
     unsigned char length;
 
     snprintf (str_pointer, sizeof (str_pointer),
-              "%lx", (long unsigned int)pointer);
+              "%lx", (unsigned long)pointer);
     length = strlen (str_pointer);
     relay_weechat_msg_add_bytes (msg, &length, 1);
     relay_weechat_msg_add_bytes (msg, str_pointer, length);
@@ -557,7 +557,7 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     char *path_returned;
     const char *hdata_name, *array_size;
     void *pointer, **path_pointers;
-    long unsigned int value;
+    unsigned long value;
     int rc, num_keys, num_path, i, type, pos_count, count, rc_sscanf;
     uint32_t count32;
 

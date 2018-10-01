@@ -522,7 +522,7 @@ trigger_callback_signal_cb (const void *pointer, void *data,
         if (signal_data)
         {
             snprintf (str_data, sizeof (str_data),
-                      "0x%lx", (long unsigned int)signal_data);
+                      "0x%lx", (unsigned long)signal_data);
         }
         ptr_signal_data = str_data;
     }
@@ -787,7 +787,7 @@ trigger_callback_line_cb (const void *pointer, void *data,
     struct t_hashtable *hashtable;
     struct t_gui_buffer *buffer;
     struct t_weelist_item *ptr_item;
-    long unsigned int value;
+    unsigned long value;
     const char *ptr_key, *ptr_value;
     char **tags, *str_tags, *string_no_color;
     int rc, num_tags, length;
@@ -1130,7 +1130,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
                            struct t_hashtable *info)
 {
     const char *ptr_value;
-    long unsigned int value;
+    unsigned long value;
     int rc;
 
     TRIGGER_CALLBACK_CB_INIT(info);

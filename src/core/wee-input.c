@@ -205,7 +205,7 @@ input_data (struct t_gui_buffer *buffer, const char *data)
 
     /* execute modifier "input_text_for_buffer" */
     snprintf (str_buffer, sizeof (str_buffer),
-              "0x%lx", (long unsigned int)buffer);
+              "0x%lx", (unsigned long)buffer);
     new_data = hook_modifier_exec (NULL,
                                    "input_text_for_buffer",
                                    str_buffer,

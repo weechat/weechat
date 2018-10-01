@@ -346,7 +346,7 @@ plugin_script_ptr2str (void *pointer)
         return str_pointer[index_pointer];
 
     snprintf (str_pointer[index_pointer], sizeof (str_pointer[index_pointer]),
-              "0x%lx", (long unsigned int)pointer);
+              "0x%lx", (unsigned long)pointer);
 
     return str_pointer[index_pointer];
 }
@@ -362,7 +362,7 @@ plugin_script_str2ptr (struct t_weechat_plugin *weechat_plugin,
                        const char *script_name, const char *function_name,
                        const char *str_pointer)
 {
-    long unsigned int value;
+    unsigned long value;
     int rc;
     struct t_gui_buffer *ptr_buffer;
 

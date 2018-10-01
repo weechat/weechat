@@ -39,7 +39,7 @@ script_mouse_focus_chat_cb (const void *pointer, void *data,
 {
     const char *buffer;
     int rc;
-    long unsigned int value;
+    unsigned long value;
     struct t_gui_buffer *ptr_buffer;
     long x;
     char *error, str_date[64];

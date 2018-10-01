@@ -41,7 +41,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 {
     const char *buffer;
     int rc;
-    long unsigned int value;
+    unsigned long value;
     struct t_gui_buffer *ptr_buffer;
     long y;
     char *error, str_value[128];
@@ -80,7 +80,7 @@ fset_mouse_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
         return info;
 
     snprintf (str_value, sizeof (str_value),
-              "0x%lx", (long unsigned int)ptr_fset_option);
+              "0x%lx", (unsigned long)ptr_fset_option);
     weechat_hashtable_set (info, "fset_option", str_value);
     weechat_hashtable_set (info, "fset_option_name", ptr_fset_option->name);
     weechat_hashtable_set (info, "fset_option_parent_name", ptr_fset_option->parent_name);
@@ -189,7 +189,7 @@ fset_mouse_hsignal_cb (const void *pointer, void *data, const char *signal,
     const char *ptr_key, *ptr_chat_line_y, *ptr_fset_option_pointer;
     char str_command[1024];
     struct t_fset_option *ptr_fset_option;
-    long unsigned int value;
+    unsigned long value;
     int rc, distance, num_options, y, y2, chat_line_y, chat_line_y2;
     int min_y, max_y, i;
 

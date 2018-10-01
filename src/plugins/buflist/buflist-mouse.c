@@ -143,7 +143,7 @@ end:
 
     /* add pointer and plugin name */
     snprintf (str_value, sizeof (str_value),
-              "0x%lx", (long unsigned int)ptr_buffer);
+              "0x%lx", (unsigned long)ptr_buffer);
     weechat_hashtable_set (info, "pointer", str_value);
     weechat_hashtable_set (info, "plugin",
                            weechat_buffer_get_string (ptr_buffer, "plugin"));
@@ -221,7 +221,7 @@ buflist_hsignal_cb (const void *pointer, void *data, const char *signal,
     struct t_gui_buffer *ptr_buffer;
     char *error, str_command[1024];
     long number, number2;
-    long unsigned int value;
+    unsigned long value;
     int rc, current_buffer_number;
 
     /* make C compiler happy */

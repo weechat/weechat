@@ -496,7 +496,7 @@ hdata_check_pointer_map_cb (void *data, struct t_hashtable *hashtable,
     if (!ptr_list || !(ptr_list->flags & WEECHAT_HDATA_LIST_CHECK_POINTERS))
         return;
 
-    *found = (void *)((unsigned long int)hdata_check_pointer_in_list (
+    *found = (void *)((unsigned long)hdata_check_pointer_in_list (
                           ptr_hdata,
                           *((void **)(ptr_list->pointer)),
                           pointer));
@@ -994,7 +994,7 @@ hdata_set (struct t_hdata *hdata, void *pointer, const char *name,
     struct t_hdata_var *var;
     char **ptr_string, *error;
     long number;
-    long unsigned int ptr;
+    unsigned long ptr;
     int rc;
 
     if (!hdata->update_pending)
