@@ -45,24 +45,24 @@ void
 hook_timer_init (struct t_hook *hook)
 {
     time_t time_now;
-    struct tm *local_time, *gm_time;
+    struct tm *local_time, gm_time;
     int local_hour, gm_hour, diff_hour;
 
     gettimeofday (&HOOK_TIMER(hook, last_exec), NULL);
     time_now = time (NULL);
     local_time = localtime (&time_now);
     local_hour = local_time->tm_hour;
-    gm_time = gmtime (&time_now);
-    gm_hour = gm_time->tm_hour;
-    if ((local_time->tm_year > gm_time->tm_year)
-        || (local_time->tm_mon > gm_time->tm_mon)
-        || (local_time->tm_mday > gm_time->tm_mday))
+    gmtime_r (&time_now, &gm_time);
+    gm_hour = gm_time.tm_hour;
+    if ((local_time->tm_year > gm_time.tm_year)
+        || (local_time->tm_mon > gm_time.tm_mon)
+        || (local_time->tm_mday > gm_time.tm_mday))
     {
         diff_hour = (24 - gm_hour) + local_hour;
     }
-    else if ((gm_time->tm_year > local_time->tm_year)
-             || (gm_time->tm_mon > local_time->tm_mon)
-             || (gm_time->tm_mday > local_time->tm_mday))
+    else if ((gm_time.tm_year > local_time->tm_year)
+             || (gm_time.tm_mon > local_time->tm_mon)
+             || (gm_time.tm_mday > local_time->tm_mday))
     {
         diff_hour = (-1) * ((24 - local_hour) + gm_hour);
     }
