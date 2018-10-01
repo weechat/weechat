@@ -603,7 +603,7 @@ relay_irc_get_line_info (struct t_relay_client *client,
     const char *ptr_tag, *ptr_message, *ptr_nick, *ptr_nick1, *ptr_nick2;
     const char *ptr_host, *localvar_nick, *time_format;
     time_t msg_date;
-    struct tm *tm;
+    struct tm *tm, gm_time;
 
     if (irc_command)
         *irc_command = -1;
@@ -741,9 +741,12 @@ relay_irc_get_line_info (struct t_relay_client *client,
     if (tags
         && (RELAY_IRC_DATA(client, server_capabilities) & (1 << RELAY_IRC_CAPAB_SERVER_TIME)))
     {
-        tm = gmtime (&msg_date);
-        if (strftime (str_time, sizeof (str_time), "%Y-%m-%dT%H:%M:%S", tm) == 0)
+        gmtime_r (&msg_date, &gm_time);
+        if (strftime (str_time, sizeof (str_time), "%Y-%m-%dT%H:%M:%S",
+                      &gm_time) == 0)
+        {
             str_time[0] = '\0';
+        }
         snprintf (str_tag, sizeof (str_tag), "@time=%s.000Z ", str_time);
         *tags = strdup (str_tag);
     }
