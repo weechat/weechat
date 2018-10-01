@@ -956,7 +956,7 @@ relay_client_send (struct t_relay_client *client,
                                            NULL, NULL, NULL, NULL);
             }
         }
-        else if (num_sent < 0)
+        else
         {
 #ifdef HAVE_GNUTLS
             if (client->ssl)
@@ -1128,7 +1128,7 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
                         break;
                     }
                 }
-                else if (num_sent < 0)
+                else
                 {
 #ifdef HAVE_GNUTLS
                     if (ptr_client->ssl)
