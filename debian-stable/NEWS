@@ -16,7 +16,7 @@ weechat (1.1.1-1) unstable; urgency=medium
   Since version 1.1, there is a new format for regexp replacement in
   triggers. This format is incompatible with version 1.0. The existing
   triggers will not be automatically updated.
-  See http://www.weechat.org/files/releasenotes/ReleaseNotes-1.1.html
+  See https://weechat.org/files/releasenotes/ReleaseNotes-1.1.html
 
  -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 25 Jan 2015 20:41:50 +0100
 
