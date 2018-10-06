@@ -81,7 +81,7 @@ Examples:
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>...]
          notify <level>
-         localvar
+         localvar [<number>|<name>]
          set <property> [<value>]
          get <property>
          <number>|-|+|<name>
@@ -105,7 +105,7 @@ renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumb
             message: for messages from users + highlights
                 all: all messages
               reset: reset to default value (all)
-localvar: display local variables for current buffer
+localvar: display local variables for the buffer
      set: set a property for current buffer
      get: display a property of current buffer
   number: jump to buffer by number, possible prefix:

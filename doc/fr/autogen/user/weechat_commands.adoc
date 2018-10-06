@@ -81,7 +81,7 @@ Exemples :
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>...]
          notify <niveau>
-         localvar
+         localvar [<nombre>|<nom>]
          set <propriété> [<valeur>]
          get <propriété>
          <nombre>|<nom>
@@ -105,7 +105,7 @@ renumber : renuméroter des tampons (fonctionne seulement si l'option weechat.l
              message : pour les messages d'utilisateurs + highlights
                  all : pour tous les messages
                reset : réinitialise à valeur par défaut (all)
-localvar : afficher la liste des variables locales pour le tampon courant
+localvar : afficher la liste des variables locales pour le tampon
      set : modifier une propriété du tampon courant
      get : afficher une propriété du tampon courant
   nombre : sauter au tampon qui a ce numéro, préfixe possible :
