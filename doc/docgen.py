@@ -51,6 +51,7 @@ try:
     import hashlib
     import os
     import re
+    import sys
     from collections import defaultdict
     from operator import itemgetter
 except ImportError as message:
@@ -158,22 +159,27 @@ class AutogenDoc(object):
         """Write a line in auto-generated doc file."""
         self._file.write(string)
 
+    @staticmethod
+    def sha256_file(filename, default):
+        """
+        Return SHA256 checksum of a file, "default" if file is not found.
+        """
+        try:
+            with open(filename, 'r') as _file:
+                content = _file.read()
+                if sys.version_info >= (3, ):
+                    content = content.encode('utf-8')
+                checksum = hashlib.sha256(content).hexdigest()
+        except IOError:
+            checksum = default
+        return checksum
+
     def update(self, obj_name, num_files, num_files_updated):
         """Update doc file if needed (if content has changed)."""
         # close temp file
         self._file.close()
-        # compute checksum on old file
-        try:
-            with open(self.filename, 'r') as _file:
-                shaold = hashlib.sha256(_file.read()).hexdigest()
-        except IOError:
-            shaold = ''
-        # compute checksum on new (temp) file
-        try:
-            with open(self.filename_tmp, 'r') as _file:
-                shanew = hashlib.sha256(_file.read()).hexdigest()
-        except IOError:
-            shanew = ''
+        shaold = AutogenDoc.sha256_file(self.filename, 'old')
+        shanew = AutogenDoc.sha256_file(self.filename_tmp, 'new')
         # compare checksums
         if shaold != shanew:
             # update doc file
