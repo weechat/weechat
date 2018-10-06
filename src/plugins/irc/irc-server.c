@@ -4431,7 +4431,9 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
     gnutls_certificate_credentials_t xcred;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
     gnutls_x509_trust_list_t trust_list;
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
@@ -4808,6 +4810,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
             if (cert_path2)
             {
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
                 xcred = NULL;
                 gnutls_credentials_get (tls_session, GNUTLS_CRD_CERTIFICATE,
                                         (void **) &xcred);
@@ -4821,6 +4824,12 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     gnutls_certificate_set_x509_trust_file (xcred, cert_path2,
                                                             GNUTLS_X509_FMT_PEM);
                 }
+#else
+                weechat_printf (server->buffer,
+                    _("%sgnutls: version >= 3.3.3 is required for "
+                      "\"ssl_ca_file\""),
+                    weechat_prefix ("error"));
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
             }
 
             if (cert_path1)
