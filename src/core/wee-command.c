@@ -1095,20 +1095,29 @@ COMMAND_CALLBACK(buffer)
     /* display local variables on buffer */
     if (string_strcasecmp (argv[1], "localvar") == 0)
     {
-        if (buffer->local_variables
-            && (buffer->local_variables->items_count > 0))
-        {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Local variables for buffer \"%s\":"),
-                             buffer->name);
-            hashtable_map (buffer->local_variables,
-                           &command_buffer_display_localvar, NULL);
-        }
+        if (argc > 2)
+            ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
         else
+            ptr_buffer = buffer;
+
+        if (ptr_buffer)
         {
-            gui_chat_printf (NULL, _("No local variable defined for buffer \"%s\""),
-                             buffer->name);
+            if (ptr_buffer->local_variables
+                && (ptr_buffer->local_variables->items_count > 0))
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, _ ("Local variables for buffer \"%s\":"),
+                                 ptr_buffer->name);
+                hashtable_map (ptr_buffer->local_variables,
+                               &command_buffer_display_localvar, NULL);
+            }
+            else
+            {
+                gui_chat_printf (NULL, _ ("No local variable defined for buffer \"%s\""),
+                                 ptr_buffer->name);
+            }
         }
+
         return WEECHAT_RC_OK;
     }
 
@@ -7103,7 +7112,7 @@ command_init ()
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>...]"
            " || notify <level>"
-           " || localvar"
+           " || localvar [<number>|<name>]"
            " || set <property> [<value>]"
            " || get <property>"
            " || <number>|-|+|<name>"),
@@ -7134,7 +7143,7 @@ command_init ()
            "            message: for messages from users + highlights\n"
            "                all: all messages\n"
            "              reset: reset to default value (all)\n"
-           "localvar: display local variables for current buffer\n"
+           "localvar: display local variables for the buffer\n"
            "     set: set a property for current buffer\n"
            "     get: display a property of current buffer\n"
            "  number: jump to buffer by number, possible prefix:\n"
@@ -7190,7 +7199,7 @@ command_init ()
         " || close %(buffers_plugins_names)|%*"
         " || list"
         " || notify reset|none|highlight|message|all"
-        " || localvar"
+        " || localvar %(buffers_numbers)|%(buffers_plugins_names)"
         " || set %(buffer_properties_set)"
         " || get %(buffer_properties_get)"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"
