@@ -1106,14 +1106,17 @@ COMMAND_CALLBACK(buffer)
                 && (ptr_buffer->local_variables->items_count > 0))
             {
                 gui_chat_printf (NULL, "");
-                gui_chat_printf (NULL, _ ("Local variables for buffer \"%s\":"),
+                gui_chat_printf (NULL,
+                                 _("Local variables for buffer \"%s\":"),
                                  ptr_buffer->name);
                 hashtable_map (ptr_buffer->local_variables,
                                &command_buffer_display_localvar, NULL);
             }
             else
             {
-                gui_chat_printf (NULL, _ ("No local variable defined for buffer \"%s\""),
+                gui_chat_printf (NULL,
+                                 _("No local variable defined for buffer "
+                                   "\"%s\""),
                                  ptr_buffer->name);
             }
         }
