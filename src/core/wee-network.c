@@ -85,6 +85,7 @@ network_init_gcrypt ()
     gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
+#ifdef HAVE_GNUTLS
 /*
  * Sets trust file with option "gnutls_ca_file".
  */
@@ -92,7 +93,6 @@ network_init_gcrypt ()
 void
 network_set_gnutls_ca_file (gnutls_certificate_credentials_t gnutls_xcred)
 {
-#ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
 
     if (weechat_no_gnutls)
@@ -110,8 +110,8 @@ network_set_gnutls_ca_file (gnutls_certificate_credentials_t gnutls_xcred)
         }
         free (ca_path);
     }
-#endif /* HAVE_GNUTLS */
 }
+#endif /* HAVE_GNUTLS */
 
 /*
  * Initializes GnuTLS.
