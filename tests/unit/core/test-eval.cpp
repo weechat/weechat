@@ -391,6 +391,13 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("yes-no", "${if:5>2?${if:1>7?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("no-yes", "${if:1>7?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("no-no", "${if:1>7?${if:1>7?yes-yes:yes-no}:${if:1>7?no-yes:no-no}}");
+    WEE_CHECK_EVAL("0", "${if:0}");
+    WEE_CHECK_EVAL("1", "${if:1}");
+    WEE_CHECK_EVAL("0", "${if:abc!=abc}");
+    WEE_CHECK_EVAL("1", "${if:abc==abc}");
+    WEE_CHECK_EVAL("1", "${if:${if:abc==abc}}");
+    WEE_CHECK_EVAL("0", "${if:${rev:${if:42==42?hello:bye}}==eyb}");
+    WEE_CHECK_EVAL("1", "${if:${rev:${if:42==42?hello:bye}}==olleh}");
 
     /* test option */
     snprintf (str_value, sizeof (str_value),

@@ -33,6 +33,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix evaluation of nested ternary operators (issue #1263)
   * core: fix evaluation of condition when the left operand is an empty string
   * core: fix string evaluation with regex replacement when the string is empty
   * core: fix check of tags in lines (command /filter and hook_print)

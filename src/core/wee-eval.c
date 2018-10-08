@@ -317,7 +317,8 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
     char str_value[512], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
-    char *tmp, *info_name, *hide_char, *hidden_string, *error, *condition;
+    char *tmp, *tmp2, *info_name, *hide_char, *hidden_string, *error;
+    char *condition;
     const char *ptr_value, *ptr_arguments, *ptr_string;
     struct t_hdata *hdata;
     void *pointer;
@@ -556,10 +557,13 @@ eval_replace_vars_cb (void *data, const char *text)
             strndup (text + 3, pos - (text + 3)) : strdup (text + 3);
         if (!condition)
             return strdup ("");
-        tmp = eval_expression_condition (condition, eval_context);
-        rc = eval_is_true (tmp);
+        tmp = eval_replace_vars (condition, eval_context);
+        tmp2 = eval_expression_condition ((tmp) ? tmp : "", eval_context);
+        rc = eval_is_true (tmp2);
         if (tmp)
             free (tmp);
+        if (tmp2)
+            free (tmp2);
         if (rc)
         {
             /*
