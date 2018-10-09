@@ -203,6 +203,45 @@ string_reverse (const char *string)
 }
 
 /*
+ * Repeats a string a given number of times.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_repeat (const char *string, int count)
+{
+    int length_string, length_result, i;
+    char *result;
+
+    if (!string)
+        return NULL;
+
+    if (!string[0] || (count <= 0))
+        return strdup ("");
+
+    if (count == 1)
+        return strdup (string);
+
+    length_string = strlen (string);
+    length_result = (length_string * count) + 1;
+    result = malloc (length_result);
+    if (!result)
+        return NULL;
+
+    i = 0;
+    while (count > 0)
+    {
+        memcpy (result + i, string, length_string);
+        count--;
+        i += length_string;
+    }
+    result[length_result - 1] = '\0';
+
+    return result;
+}
+
+/*
  * Converts string to lower case (locale independent).
  */
 

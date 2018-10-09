@@ -294,6 +294,24 @@ TEST(CoreString, Reverse)
 
 /*
  * Tests functions:
+ *   string_repeat
+ */
+
+TEST(CoreString, Repeat)
+{
+    POINTERS_EQUAL(NULL, string_repeat (NULL, 1));
+    STRCMP_EQUAL("", string_repeat ("", 1));
+
+    STRCMP_EQUAL("", string_repeat ("x", -1));
+    STRCMP_EQUAL("", string_repeat ("x", 0));
+    STRCMP_EQUAL("x", string_repeat ("x", 1));
+    STRCMP_EQUAL("xxx", string_repeat ("x", 3));
+    STRCMP_EQUAL("abcabc", string_repeat ("abc", 2));
+    STRCMP_EQUAL("noëlnoël", string_repeat ("noël", 2));
+}
+
+/*
+ * Tests functions:
  *   string_strcasecmp
  *   string_strncasecmp
  *   string_strcasecmp_range

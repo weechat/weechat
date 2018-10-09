@@ -2337,6 +2337,12 @@ première étendue à la dernière) :
   `+${rev:Bonjour !}+` |
   `+! ruojnoB+`
 
+| `+${repeat:nombre,chaîne}+` +
+  (_WeeChat ≥ 2.3_) |
+  Chaîne répétée. |
+  `+${repeat:5,-}+` |
+  `+-----+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Groupe regex capturé : `0` = toute la chaîne correspondante,

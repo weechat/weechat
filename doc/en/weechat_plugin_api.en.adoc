@@ -2294,6 +2294,12 @@ expanded to last):
   `+${rev:Hello, world!}+` |
   `+!dlrow ,olleH+`
 
+| `+${repeat:count,string}+` +
+  (_WeeChat ≥ 2.3_) |
+  Repeated string. |
+  `+${repeat:5,-}+` |
+  `+-----+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Regex captured group: `0` = whole string matching, `1` to `99` = group

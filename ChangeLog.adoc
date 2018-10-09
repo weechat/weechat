@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add repeat of string in evaluation of expressions with "repeat:count,string" (issue #958)
   * core: allow specifying buffer number/name for /buffer localvar (issue #1259)
   * core: allow multiple arguments in command /buffer close
   * core: allow multiple options "-r" ("--run-command") in command line arguments (issue #1248)

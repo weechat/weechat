@@ -351,6 +351,14 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("!dlrow ,olleH", "${rev:Hello, world!}");
     WEE_CHECK_EVAL("界世はちにんこ", "${rev:こんにちは世界}");
 
+    /* test repeat of string */
+    WEE_CHECK_EVAL("", "${repeat:-1,x}");
+    WEE_CHECK_EVAL("", "${repeat:0,x}");
+    WEE_CHECK_EVAL("x", "${repeat:1,x}");
+    WEE_CHECK_EVAL("xxxxx", "${repeat:5,x}");
+    WEE_CHECK_EVAL("cbacbacba", "${repeat:3,${rev:abc}}");
+    WEE_CHECK_EVAL("cbacba", "${repeat:${rev:20},${rev:abc}}");
+
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");
