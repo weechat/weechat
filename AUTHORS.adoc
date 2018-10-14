@@ -38,6 +38,7 @@ Alphabetically:
 * Elizabeth Myers (Elizacat)
 * Elián Hanisch (m4v)
 * Emanuele Giaquinta
+* emk
 * Esteban I. Ruiz Moreno (Exio)
 * Evgeny Shmarnev
 * Felix Eckhofer
