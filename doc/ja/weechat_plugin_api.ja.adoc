@@ -2298,10 +2298,9 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${rev:Hello, world!}+` |
   `+!dlrow ,olleH+`
 
-// TRANSLATION MISSING
 | `+${repeat:count,string}+` +
-  (_WeeChat ≥ 2.3_) |
-  Repeated string. |
+  (_WeeChat バージョン 2.3 以上で利用可_) |
+  繰り返し文字列。|
   `+${repeat:5,-}+` |
   `+-----+`
 
