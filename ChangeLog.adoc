@@ -41,6 +41,7 @@ Bug fixes::
   * core: fix clear of completion item in case of partial completion (issue #1162)
   * core: send signal "key_pressed" for mouse code only if the string is UTF-8 valid (issue #1220)
   * api: fix memory leak in function string_split
+  * lua: fix return code of mkdir functions in case of error (issue #1267)
   * scripts: fix duplicated lines in output of script eval (python, perl, ruby, lua and guile)
 
 Tests::
