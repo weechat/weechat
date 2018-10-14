@@ -3128,8 +3128,8 @@ irc_config_init ()
            "\"darkgray\" and black on blue to \"white,blue\"; default "
            "WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, 3=green, "
            "4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, "
-           "10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=gray, "
-           "15=white"),
+           "10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, "
+           "14=darkgray, 15=gray"),
         NULL, 0, 0, "1,-1:darkgray", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_mirc_remap, NULL, NULL,
