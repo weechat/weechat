@@ -541,7 +541,7 @@ API_FUNC(mkdir_home)
     if (weechat_mkdir_home (directory, mode))
         API_RETURN_OK;
 
-    API_RETURN_OK;
+    API_RETURN_ERROR;
 }
 
 API_FUNC(mkdir)
@@ -559,7 +559,7 @@ API_FUNC(mkdir)
     if (weechat_mkdir (directory, mode))
         API_RETURN_OK;
 
-    API_RETURN_OK;
+    API_RETURN_ERROR;
 }
 
 API_FUNC(mkdir_parents)
@@ -577,7 +577,7 @@ API_FUNC(mkdir_parents)
     if (weechat_mkdir_parents (directory, mode))
         API_RETURN_OK;
 
-    API_RETURN_OK;
+    API_RETURN_ERROR;
 }
 
 API_FUNC(list_new)
