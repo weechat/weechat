@@ -48,6 +48,10 @@ Tests::
 
   * unit: add tests on line and hook functions
 
+Build::
+
+  * php: add detection of PHP 7.3
+
 [[v2.2]]
 == Version 2.2 (2018-07-14)
 

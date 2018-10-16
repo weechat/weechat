@@ -28,6 +28,7 @@ endif()
 
 if(NOT PHP_FOUND)
   find_program(PHP_CONFIG_EXECUTABLE NAMES
+    php-config7.3 php-config73
     php-config7.2 php-config72
     php-config7.1 php-config71
     php-config7.0 php-config70
@@ -39,7 +40,7 @@ if(NOT PHP_FOUND)
     execute_process(COMMAND ${PHP_CONFIG_EXECUTABLE} --version OUTPUT_VARIABLE PHP_VERSION OUTPUT_STRIP_TRAILING_WHITESPACE)
     if(${PHP_VERSION} MATCHES "^7")
       find_library(PHP_LIB
-        NAMES php7.2 php7.1 php7.0 php7
+        NAMES php7.3 php7.2 php7.1 php7.0 php7
         HINTS ${PHP_LIB_PREFIX} ${PHP_LIB_PREFIX}/lib ${PHP_LIB_PREFIX}/lib64)
       if(PHP_LIB)
         get_filename_component(PHP_LIB_DIR ${PHP_LIB} DIRECTORY)
