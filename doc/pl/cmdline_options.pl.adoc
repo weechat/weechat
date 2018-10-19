@@ -23,15 +23,13 @@
 *-p*, *--no-plugin*::
     Wyłącza automatyczne ładowanie wtyczek.
 
-// TRANSLATION MISSING
-*-P*, *--plugins* _<plugins>_::
-    Load only these plugins at startup (see /help weechat.plugin.autoload).
-    If this option is given, the option weechat.plugin.autoload is not used.
+*-P*, *--plugins* _<wtyczki>_::
+    Załaduje przy starcie tylko podane wtyczki (zobacz /help weechat.plugin.autoload).
+    Jeśli ta opcja zotanie użyta, opcja weechat.plugin.autoload zostanie zignorowana.
 
-// TRANSLATION MISSING
 *-r*, *--run-command* _<komenda>_::
-    Run command(s) after startup; many commands can be separated by semicolons,
-    this option can be given multiple times.
+    Uruchamia komende(-y) po uruchomieniu; kilka komend należy oddzielić średnikiem,
+    ta opcja może zotać podana kilka razy.
 
 *-s*, *--no-script*::
     Wyłącza automatyczne ładowanie skryptów.

@@ -45,8 +45,7 @@ Więcej informacji na stronie: https://weechat.org/about/features
 [[gui]]
 === Słyszałem o wielu GUI dla WeeChat. Jak mogę je skompilować/użyć?
 
-// TRANSLATION MISSING
-Dostępne są zdalne interfejsy, see the remote interfaces page:
+Dostępne są zdalne interfejsy, możesz o nich poczytać na tej stronie:
 https://weechat.org/about/interfaces
 
 [[compile_git]]
@@ -887,12 +886,10 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-// TRANSLATION MISSING
 [[aspell_dictionaries]]
-=== I installed aspell dictionaries on my system, how can I use them without restarting WeeChat?
+=== Zainstalowałem słowniki aspell w systemie, jak mogę ich użyć bez restartowania WeeChat?
 
-// TRANSLATION MISSING
-You have to reload the aspell plugin:
+Musisz przeładować wtyczkę aspell:
 
 ----
 /plugin reload aspell

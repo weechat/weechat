@@ -430,9 +430,8 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Pozyskiwanie logów za pomocą gdb
 
-// TRANSLATION MISSING
-When WeeChat crashes, your system will create a file _core_ or _core.12345_
-(_12345_ is process id) if the <<core_files,option is enabled>>.
+Kiedy WeeChat ulegnie awarii, Twój system stworzy plik _core_ lub _core.12345_
+(_12345_ to id procesu) jeśli <<core_files,zostało to włączone>>.
 Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
 jest to katalog, gdzie zainstalowano WeeChat!).
 
@@ -3655,11 +3654,10 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+5000\|input_text_display;5000\|history_add+` |
   link:weechat_plugin_api.en.html#_hook_modifier[hook_modifier] (Angielski)
 
-// TRANSLATION MISSING
 | line |
-  1. buffer type +
-  2. buffer name +
-  3. tags |
+  1. typ bufora +
+  2. nazwa bufora +
+  3. tagi |
   `+formatted+` +
   `+free+` +
   `+*;irc.freenode.*+` +
@@ -3743,17 +3741,15 @@ Wyrażenia regularne są używane do zmiany zmiennych w tablicy hashy callbacka.
 Format: "/wyrażenie/zamień" lub "/wyrażenie/zamień/zmienna" (gdzie _zmienna_ to
 zmienna tablicy hashy).
 
-// TRANSLATION MISSING
-If _var_ does not exist in the hashtable, it is created automatically with an
-empty value. This allows to create custom temporary variables.
+Jeśli _zmienna_ nie istnieje w tablicy haszy zostanie automarycznie utworzona bez
+wartości. Pozwala to tworzyć dowolne zmienne tymczasowe.
 
 Jeśli _zmienna_ nie zostanie podana, użyta zostanie domyślna zmienna, zależy ona
 od typu uchwytu:
 
-// TRANSLATION MISSING
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Uchwyt      | Domyślna zmienna   | Update allowed ^(1)^
+| Uchwyt      | Domyślna zmienna   | Dozwolona aktualizacja ^(1)^
 | signal      | tg_signal_data     |
 | hsignal     |                    |
 | modifier    | tg_string          | tg_string
@@ -3766,10 +3762,9 @@ od typu uchwytu:
 | focus       |                    |
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ All variables can be updated in the trigger, but only these variables
-have an effect on the value returned by the trigger and used by WeeChat.
+^(1)^ Wszystkie zmienne mogą zostać zaktualizowane, jednak tylko te zmienne
+mają wpływ na zmienne zwrócone i użyte przez WeeChat.
 
 Wiele wyrażeń może być oddzielonych spacją, na przykład:
 "/regex1/zamień1/zmienna1 /regex2/zamień2/zmienna2".
@@ -3928,29 +3923,27 @@ dodatkowe dane do tablicy hashy (zobacz <<trigger_data_signal,hook signal>>).
 
 Callback "line" ustawia następujące zmienne w tablicy hashy:
 
-// TRANSLATION MISSING
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Zmienna            | Typ      | Opis
-| buffer             | wskaźnik | Buffer.
-| buffer_name        | ciąg     | Buffer name.
-| buffer_type        | ciąg     | Buffer type ("formatted" or "free").
-| y                  | ciąg     | Line number for a buffer with free content (≥ 0), -1 for a buffer with formatted content.
-| date               | ciąg     | Line date (timestamp).
-| date_printed       | ciąg     | Date when line was displayed (timestamp).
-| str_time           | ciąg     | Date for display. It may contain color codes.
+| buffer             | wskaźnik | Bufor.
+| buffer_name        | ciąg     | Nazwa bufora.
+| buffer_type        | ciąg     | Typ bufora ("formatted" lub "free").
+| y                  | ciąg     | Numer linii bufora z wolną zawartością (≥ 0), -1 dla bufora ze sformatowaną zawartością.
+| date               | ciąg     | Linia z datą (timestamp).
+| date_printed       | ciąg     | Data, kiedy linia została wyświetlona (timestamp).
+| str_time           | ciąg     | Date do wyświetlenia. Może zawierać kody kolorów.
 | tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
-| displayed          | ciąg     | "1" if displayed, "0" if line filtered.
-| notify_level       | ciąg     | "0" = low level, "1" = message, "2" = private message, "3" = highlight
-| highlight          | ciąg     | "1" if highlight, otherwise "0".
+| displayed          | ciąg     | "1" jeśli wyświetlono, "0" jeśli nie wyświetlono.
+| notify_level       | ciąg     | "0" = poziom niski, "1" = wiadomość, "2" = wiadomość prywatna, "3" = podświetlenie
+| highlight          | ciąg     | "1" jeśli podświetlenie, inaczej "0".
 | prefix             | ciąg     | Prefiks.
 | tg_prefix_nocolor  | ciag     | Prefiks bez kodów kolorów.
 | message            | ciąg     | Wiadomość.
 | tg_message_nocolor | ciag     | Wiadomość bez kodów kolorów.
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+Zmienne ustawiane za pomocą tagów w wiadomościach:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
@@ -3982,8 +3975,7 @@ Callback "print" ustawia następujące zmienne w tablicy hashy:
 | tg_message_nocolor | ciąg     | Wiadomość bez kodów kolorów.
 |===
 
-// TRANSLATION MISSING
-Variables set using tags in message:
+Zmienne ustawiane za pomocą tagów w wiadomościach:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
