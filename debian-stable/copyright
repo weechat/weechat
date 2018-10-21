@@ -1,4 +1,4 @@
-Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=174
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: weechat
 Upstream-Contact: Sébastien Helleu <flashcode@flashtux.org>
 Source: https://weechat.org/
