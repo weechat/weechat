@@ -274,7 +274,7 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
 
             /* insert new string */
             ptr_start = (char *)utf8_add_offset (buffer->input_buffer, pos);
-            strncpy (ptr_start, string_utf8, size);
+            memcpy (ptr_start, string_utf8, size);
 
             buffer->input_buffer_pos += length;
         }
