@@ -373,11 +373,9 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
     int sasl_requested, sasl_to_do, sasl_fail;
     int i, length, num_caps_requested;
 
-    if (sasl)
-    {
-        sasl_requested = irc_server_sasl_enabled (server);
-        sasl_to_do = 0;
-    }
+    sasl_requested = (sasl) ? irc_server_sasl_enabled (server) : 0;
+    sasl_to_do = 0;
+
     ptr_cap_option = IRC_SERVER_OPTION_STRING(
         server,
         IRC_SERVER_OPTION_CAPABILITIES);
