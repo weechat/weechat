@@ -1,3 +1,20 @@
+weechat (2.2-1) unstable; urgency=medium
+
+  * New upstream release
+  * Remove upstream patch about localized manpages for weechat-headless
+  * Bump Standards-Version to 4.1.5
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 19 Sep 2018 09:41:45 +0000
+
+weechat (2.1-2) unstable; urgency=medium
+
+  * Disable build of javascript plugin to fix weechat autoremoval from
+    testing (RC bugs in libv8) (Closes: #894680)
+  * Add missing localized manpages for weechat-headless
+  * Fix debian/copyright Format URI
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 03 Apr 2018 10:48:35 +0200
+
 weechat (2.1-1) unstable; urgency=medium
 
   * New upstream release (Closes: #887114)
