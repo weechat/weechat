@@ -111,7 +111,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** opis: pass:none[rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123.45.67.89|192.160.*)$"]
+** opis: pass:none[rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123\.45\.67\.89|192\.160\..*)$"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

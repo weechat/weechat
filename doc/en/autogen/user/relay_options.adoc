@@ -111,7 +111,7 @@
 ** default value: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** description: pass:none[POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123.45.67.89|192.160.*)$"]
+** description: pass:none[POSIX extended regular expression with IPs allowed to use relay (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^(123\.45\.67\.89|192\.160\..*)$"]
 ** type: string
 ** values: any string
 ** default value: `+""+`
