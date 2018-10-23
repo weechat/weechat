@@ -32,13 +32,13 @@ apply to WeeChat!).
 
 Because WeeChat is very light and brings innovating features.
 
-More info on this page: https://weechat.org/about/features
+More info on the WeeChat features page: https://weechat.org/about/features
 
 [[compilation_install]]
 == Compilation / install
 
 [[gui]]
-=== I heard about many GUIs for WeeChat. How can I compile/use them?
+=== I've heard about many GUIs for WeeChat. How can I compile/use them?
 
 Some remote GUIs are available, see the remote interfaces page:
 https://weechat.org/about/interfaces
@@ -46,9 +46,9 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === I can't compile WeeChat after cloning git repository, why?
 
-The recommended way to compile WeeChat is with cmake.
+The recommended way to compile WeeChat is with link:weechat_user.en.html#compile_with_cmake[cmake].
 
-If you're compiling with autotools (and not cmake), check that you have latest
+If you're compiling with link:weechat_user.en.html#compile_with_autotools[autotools] (and not cmake), check that you have latest
 version of autoconf and automake.
 
 The other way is to install the "devel package", which needs less dependencies.
@@ -75,7 +75,7 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 === I've launched WeeChat, but I'm lost, what can I do?
 
 For help you can type `/help`. For help about a command, type `/help command`.
-Keys and commands are listed in documentation.
+link:weechat_user.en.html#key_bindings[Keys] and link:weechat_user.en.html#commands_and_options[commands] are listed in documentation.
 
 It's recommended for new users to read the
 link:weechat_quickstart.en.html[Quickstart guide].
@@ -86,7 +86,7 @@ link:weechat_quickstart.en.html[Quickstart guide].
 [[charset]]
 === I don't see some chars with accents, what can I do?
 
-It's common issue, please read carefully and check *ALL* solutions below:
+It's a common issue with a variety of causes, please read carefully and check *ALL* solutions below:
 
 * Check that weechat is linked to libncursesw (warning: needed on most
   distributions but not all): `ldd /path/to/weechat`.
@@ -104,7 +104,7 @@ It's common issue, please read carefully and check *ALL* solutions below:
    rxvt-unicode).
 ** If you are using screen, check that it is run with UTF-8 mode
    ("`defutf8 on`" in ~/.screenrc or `screen -U` to run screen).
-* Check that option _weechat.look.eat_newline_glitch_ is off (this option may
+* Check that option link:weechat_user.en.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_] is off (this option may
   cause display bugs).
 
 [NOTE]
@@ -128,7 +128,7 @@ https://github.com/weechat/weechat/issues/79
 === Bars like title and status are not filled, background color stops after text, why?
 
 This may be caused by a bad value of the TERM variable in your shell (look at
-output of `echo $TERM` in your terminal).
+the output of `echo $TERM` in your terminal).
 
 Depending on where you launch WeeChat, you should have:
 
@@ -160,11 +160,11 @@ is set to `narrow`.
 If you compiled ncursesw yourself, try to use standard ncurses (that comes with
 system).
 
-Moreover, under OS X, it is recommended to install WeeChat with Homebrew package
+Moreover, under macOS, it is recommended to install WeeChat with Homebrew package
 manager.
 
 [[buffer_vs_window]]
-=== I heard about "buffers" and "windows", what's the difference?
+=== I've heard about "buffers" and "windows", what's the difference?
 
 A _buffer_ is composed by a number, a name, lines displayed (and some other
 data).
@@ -172,13 +172,13 @@ data).
 A _window_ is a screen area which displays a buffer. It is possible to split
 your screen into many windows.
 
-Each window displays one buffer. A buffer can be hidden (not displayed by a
-window) or displayed by one or more windows.
+Each window displays one buffer, or a set of merged buffers. 
+A buffer can be hidden (not displayed by a window) or displayed by one or more windows.
 
 [[buffers_list]]
 === How to display the buffers list on the left side?
 
-With WeeChat ≥ 1.8, the plugin "buflist" is loaded and enabled by default.
+With WeeChat ≥ 1.8, the plugin link:weechat_user.en.html#buflist_plugin["buflist"] is loaded and enabled by default.
 
 With an older version, you can install script _buffers.pl_:
 
@@ -246,7 +246,7 @@ since you visited the buffer.
 
 In the example `[H: 3(1,8), 2(4)]`, there are:
 
-* one highlight and 8 unread messages on buffer #3,
+* 1 highlight and 8 unread messages on buffer #3,
 * 4 unread messages on buffer #2.
 
 The color of the buffer/counter depends on the type of message, default colors
@@ -307,7 +307,9 @@ any bar:
 [[terminal_copy_paste]]
 === How can I copy/paste text without pasting nicklist?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]),
+which will show just the contents of the currently selected window, 
+without any formatting.
 
 You can use a terminal with rectangular selection (like rxvt-unicode,
 konsole, gnome-terminal, ...). Key is usually kbd:[Ctrl] + kbd:[Alt] + mouse
@@ -402,7 +404,7 @@ If you are using screen, you can add this line to your _~/.screenrc_:
 term screen-256color
 ----
 
-If your _TERM_ variable has wrong value and that WeeChat is already running,
+If your _TERM_ variable has a wrong value and that WeeChat is already running,
 you can change it with these two commands (with WeeChat ≥ 1.0):
 
 ----
@@ -473,7 +475,7 @@ You can just disable bracketed paste mode:
 [[meta_keys]]
 === Some meta keys (alt + key) are not working, why?
 
-If you're using some terminals like xterm or uxterm, some meta keys does not
+If you're using some terminals like xterm or uxterm, some meta keys do not
 work by default. You can add a line in file _~/.Xresources_:
 
 * For xterm:
@@ -487,8 +489,8 @@ UXTerm*metaSendsEscape: true
 
 And then reload resources (`xrdb -override ~/.Xresources`) or restart X.
 
-If you are using the Mac OS X Terminal app, enable the option
-"Use option as meta key" in menu Settings/Keyboard. And then you can use the
+If you are using the macOS Terminal app, enable the option
+"Use option as meta key" in menu Settings/Keyboard after which you can use the
 kbd:[Option] key as meta key.
 
 [[customize_key_bindings]]
@@ -591,7 +593,7 @@ you have to use kbd:[Alt] instead of kbd:[Shift]).
 [[irc_ssl_connection]]
 === I have some problems when connecting to a server using SSL, what can I do?
 
-If you are using Mac OS X, you must install `openssl` from Homebrew.
+If you are using macOS, you must install `openssl` from Homebrew.
 A CA file will be bootstrapped using certificates from the system keychain.
 You can then set the path to certificates in WeeChat:
 
@@ -621,7 +623,7 @@ should be, you can specify the fingerprint (SHA-512, SHA-256 or SHA-1):
 ----
 
 [[irc_ssl_handshake_error]]
-=== When connecting to server with SSL, I see only error "TLS handshake failed", what can I do?
+=== When connecting to server with SSL, I only see the error "TLS handshake failed", what can I do?
 
 You can try a different priority string (WeeChat ≥ 0.3.5 only), replace "xxx"
 by your server name:
@@ -639,7 +641,7 @@ Set option _weechat.network.gnutls_ca_file_ to file with certificates:
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
-Note: if you are running OS X with homebrew openssl installed, you can do:
+Note: if you are running macOS with homebrew openssl installed, you can do:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -675,16 +677,16 @@ and address by appropriate values):
 [[irc_sasl]]
 === How can I be identified before joining channels?
 
-If server supports SASL, you should use that instead of sending command for
-nickserv authentication, for example:
+If the server supports SASL, you should use that instead of sending the
+command for nickserv authentication, for example:
 
 ----
 /set irc.server.freenode.sasl_username "mynick"
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
-If server does not support SASL, you can add a delay (between command and join
-of channels):
+If the server does not support SASL, you can add a delay (between command and
+join of channels):
 
 ----
 /set irc.server.freenode.command_delay 5
@@ -698,7 +700,7 @@ The `/ignore` command is an IRC command, so it applies only for IRC buffers
 It lets you ignore some nicks or hostnames of users for a server or channel
 (command will not apply on content of messages).
 Matching messages are deleted by IRC plugin before display (so you'll
-never see them).
+never see them, and can't be recovered by removing the ignore).
 
 The `/filter` command is a core command, so it applies to any buffer.
 It lets you filter some lines in buffers with tags or regular expression for
@@ -724,6 +726,7 @@ With a global filter (hide *all* join/part/quit):
 
 [NOTE]
 For help: `/help filter` and `/help irc.look.smart_filter`
+and see link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart filter for join/part/quit messages]
 
 [[filter_irc_join_channel_messages]]
 === How can I filter some messages displayed when I join an IRC channel?
@@ -746,13 +749,13 @@ If you want to do that, it's probably because Bitlbee is using voice to show
 away users, and you are flooded with voice messages. Therefore, you can change
 that and let WeeChat use a special color for away nicks in nicklist.
 
-For Bitlbee ≥ 3, do that on channel _&bitlbee_:
+For Bitlbee ≥ 3, issue this on control channel _&bitlbee_:
 
 ----
 channel set show_users online,away
 ----
 
-For older version of Bitlbee, do that on channel _&bitlbee_:
+For older version of Bitlbee, issue this on control channel _&bitlbee_:
 
 ----
 set away_devoice false
@@ -805,7 +808,7 @@ Or you can add a command in "beep" trigger:
 
 With an older WeeChat, you can use a script like _beep.pl_ or _launcher.pl_.
 
-For _launcher.pl_, you have to setup command:
+For _launcher.pl_, you have to setup a command:
 
 ----
 /set plugins.var.perl.launcher.signal.weechat_highlight "/path/to/command arguments"
@@ -840,8 +843,8 @@ You must set that up:
 [[install_scripts]]
 === How can I install scripts? Are scripts compatible with other IRC clients?
 
-You can use the command `/script` to install and manage scripts
-(see `/help script` for help).
+With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
+(see `/help script` for help). For older versions there is weeget.py and script.pl.
 
 Scripts are not compatible with other IRC clients.
 
@@ -863,7 +866,7 @@ And update scripts again in WeeChat:
 /script update
 ----
 
-If you still have an error, then you must remove the automatic update of file
+If you still have an error, then you must disable the automatic update of file
 in WeeChat and download the file manually outside WeeChat (that means you'll
 have to update manually the file yourself to get updates):
 
@@ -920,7 +923,7 @@ You can try following tips to consume less memory:
   older versions).
 * Do not load some plugins if you don't use them, for example: aspell, buflist,
   fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php,
-  xfer (used for DCC).
+  xfer (used for DCC). (See `/help weechat.plugin.autoload`)
 * Load only scripts that you really need.
 * Do not load certificates if SSL is *NOT* used: set empty string in option
   _weechat.network.gnutls_ca_file_.
@@ -973,6 +976,7 @@ Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
 Define a passphrase and use secured data wherever you can for sensitive data
 like passwords: see `/help secure` and `/help` on options
 (if you can use secured data, it is written in the help).
+See also link:weechat_user.en.html#secured_data[User's guide / Secured data]
 
 For example:
 
@@ -1006,7 +1010,7 @@ for more information about configuration files.
 See: https://weechat.org/about/support
 
 [[gdb_error_threads]]
-=== When I run WeeChat under gdb, there is error about threads, what can I do?
+=== When I run WeeChat under gdb, there is an error about threads, what can I do?
 
 When you run WeeChat under gdb, you may have this error:
 
@@ -1036,7 +1040,7 @@ some OS' we don't have, to test WeeChat.
 [[help_developers]]
 === I want to help WeeChat developers. What can I do?
 
-There's many tasks to do (testing, code, documentation, ...)
+There are many tasks to do (testing, code, documentation, ...)
 
 Please contact us via IRC or mail, look at support page:
 https://weechat.org/about/support
