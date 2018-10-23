@@ -20,15 +20,15 @@ Homepage: https://weechat.org/
 
 == Features
 
-* *Modular chat client*: WeeChat has a lightweight core and optional plugins. All plugins (including IRC) are independent and can be unloaded.
+* *Modular chat client*: WeeChat has a lightweight core and optional https://weechat.org/files/doc/stable/weechat_user.en.html#plugins[plugins]. All plugins (including https://weechat.org/files/doc/stable/weechat_user.en.html#irc_plugin[IRC]) are independent and can be unloaded.
 * *Multi-platform*: WeeChat runs on GNU/Linux, *BSD, GNU/Hurd, Mac OS X and Windows (Bash/Ubuntu and Cygwin).
 * *Multi-protocols*: WeeChat is designed to support multiple protocols by plugins, like IRC.
-* *Standards-compliant*: the IRC plugin is compliant with RFCs 1459, 2810, 2811, 2812 and 2813.
+* *Standards-compliant*: the IRC plugin is compliant with RFCs https://tools.ietf.org/html/rfc1459[1459], https://tools.ietf.org/html/rfc2810[2810], https://tools.ietf.org/html/rfc2811[2811], https://tools.ietf.org/html/rfc2812[2812] and https://tools.ietf.org/html/rfc2813[2813].
 * *Small, fast and very light*: the core is and should stay as light and fast as possible.
-* *Customizable and extensible*: there are a lot of options to customize WeeChat, and it is extensible with C plugins and scripts (Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP).
-* *Fully documented*: there is comprehensive documentation, which is translated into several languages.
+* *Customizable and extensible*: there are a lot of options to customize WeeChat, and it is extensible with C plugins and https://weechat.org/scripts/[scripts] (https://weechat.org/scripts/stable/language/perl/[Perl], https://weechat.org/scripts/stable/language/python/[Python], https://weechat.org/scripts/stable/language/ruby[Ruby], https://weechat.org/scripts/stable/language/lua/[Lua], https://weechat.org/scripts/stable/language/tcl/[Tcl], https://weechat.org/scripts/stable/language/guile/[Scheme], https://weechat.org/scripts/stable/language/javascript/[JavaScript] and PHP).
+* *Fully documented*: there is comprehensive https://weechat.org/doc/[documentation], which is https://weechat.org/files/doc/stable/weechat_dev.en.html#translations[translated] into several languages.
 * *Developed from scratch*: WeeChat was built from scratch and is not based on any other client.
-* *Free software*: WeeChat is released under GPLv3.
+* *Free software*: WeeChat is released under http://www.gnu.org/licenses/gpl-3.0.html[GPLv3].
 
 image::https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
 
