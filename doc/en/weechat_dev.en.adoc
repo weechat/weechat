@@ -1093,12 +1093,23 @@ $ msginit -i weechat.pot -l nl_NL -o nl.po
 Base language for WeeChat is English, so you must of course perfectly understand
 English in order to translate to your language.
 
+After changes in sources, you can regenerate all translations files: run this
+command in the CMake "build" directory:
+
+----
+$ make translations && make update-po
+----
+
+Then you can edit .po files (if you can translate in a language).
+
 When done, you *have* to check your file with script _msgcheck.py_
 (https://github.com/flashcode/msgcheck):
 
 ----
 $ msgcheck.py xx.po
 ----
+
+And then you can recompile WeeChat to use the new translations.
 
 [[build_autogen_files]]
 ===== Build auto-generated files

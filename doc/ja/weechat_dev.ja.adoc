@@ -1092,12 +1092,26 @@ $ msginit -i weechat.pot -l nl_NL -o nl.po
 WeeChat
 の翻訳元言語は英語です、翻訳する場合は必ず英語から翻訳してください
 
+// TRANSLATION MISSING
+After changes in sources, you can regenerate all translations files: run this
+command in the CMake "build" directory:
+
+----
+$ make translations && make update-po
+----
+
+// TRANSLATION MISSING
+Then you can edit .po files (if you can translate in a language).
+
 翻訳が完了したら、*必ず* _msgcheck.py_ (https://github.com/flashcode/msgcheck)
 スクリプトを使ってファイルの内容を確認してください:
 
 ----
 $ msgcheck.py xx.po
 ----
+
+// TRANSLATION MISSING
+And then you can recompile WeeChat to use the new translations.
 
 [[build_autogen_files]]
 ===== 自動生成ファイルを作成する
