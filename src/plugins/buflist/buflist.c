@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <libgen.h>
 
 #include "../weechat-plugin.h"
 #include "buflist.h"
@@ -363,7 +364,7 @@ int
 buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
                           const char *type_data, void *signal_data)
 {
-    int length;
+    char *base_name, *base_name2;
 
     /* make C compiler happy */
     (void) pointer;
@@ -378,9 +379,14 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
     if (!signal_data)
         return WEECHAT_RC_OK;
 
-    length = strlen (signal_data);
-    if ((length >= 10)
-        && (strncmp (signal_data + length - 10, "buffers.pl", 10) == 0))
+    base_name = basename (signal_data);
+    if (!base_name)
+        return WEECHAT_RC_OK;
+    base_name2 = strdup (base_name);
+    if (!base_name2)
+        return WEECHAT_RC_OK;
+
+    if (strcmp (base_name2, "buffers.pl") == 0)
     {
         weechat_printf (NULL,
                         _("%sbuflist: warning: the script buffers.pl is "
@@ -392,6 +398,8 @@ buflist_script_loaded_cb (const void *pointer, void *data, const char *signal,
                           "information"),
                         weechat_prefix ("error"));
     }
+
+    free (base_name2);
 
     return WEECHAT_RC_OK;
 }
