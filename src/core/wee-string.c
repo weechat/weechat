@@ -2776,6 +2776,163 @@ string_decode_base16 (const char *from, char *to)
 }
 
 /*
+ * Encodes a string in base32.
+ *
+ * Argument "length" is number of bytes in "from" to convert (commonly
+ * strlen(from)).
+ *
+ * This function is inspired by:
+ *   https://github.com/google/google-authenticator-libpam/blob/master/src/base32.c
+ *
+ * Original copyright:
+ *
+ *   Copyright 2010 Google Inc.
+ *   Author: Markus Gutschke
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ * Returns length of string in "*to" (it does not count final \0).
+ */
+
+int
+string_encode_base32 (const char *from, int length, char *to)
+{
+    unsigned char base32_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    int count, value, next, bits_left, pad, index;
+    int length_padding[8] = { 0, 0, 6, 0, 4, 3, 0, 2 };
+
+    if (!from || !to)
+        return -1;
+
+    count = 0;
+
+    if (length > 0)
+    {
+        value = from[0];
+        next = 1;
+        bits_left = 8;
+        while ((bits_left > 0) || (next < length))
+        {
+            if (bits_left < 5)
+            {
+                if (next < length)
+                {
+                    value <<= 8;
+                    value |= from[next++] & 0xFF;
+                    bits_left += 8;
+                }
+                else
+                {
+                    pad = 5 - bits_left;
+                    value <<= pad;
+                    bits_left += pad;
+                }
+            }
+            index = 0x1F & (value >> (bits_left - 5));
+            bits_left -= 5;
+            to[count++] = base32_table[index];
+        }
+    }
+    pad = length_padding[count % 8];
+    while (pad > 0)
+    {
+        to[count++] = '=';
+        pad--;
+    }
+    to[count] = '\0';
+
+    return count;
+}
+
+/*
+ * Decodes a base32 string.
+ *
+ * This function is inspired by:
+ *   https://github.com/google/google-authenticator-libpam/blob/master/src/base32.c
+ *
+ * Original copyright:
+ *
+ *   Copyright 2010 Google Inc.
+ *   Author: Markus Gutschke
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ *
+ * Returns length of string in "*to" (it does not count final \0).
+ */
+
+int
+string_decode_base32 (const char *from, char *to)
+{
+    const char *ptr_from;
+    int value, bits_left, count;
+    unsigned char c;
+
+    if (!from || !to)
+        return -1;
+
+    ptr_from = from;
+    value = 0;
+    bits_left = 0;
+    count = 0;
+
+    while (ptr_from[0])
+    {
+        c = (unsigned char)ptr_from[0];
+        value <<= 5;
+        if (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') && (c <= 'z')))
+        {
+            c = (c & 0x1F) - 1;
+        }
+        else if ((c >= '2') && (c <= '7'))
+        {
+            c -= '2' - 26;
+        }
+        else if (c == '=')
+        {
+            /* padding */
+            break;
+        }
+        else
+        {
+            /* invalid base32 char */
+            return -1;
+        }
+        value |= c;
+        bits_left += 5;
+        if (bits_left >= 8)
+        {
+            to[count++] = value >> (bits_left - 8);
+            bits_left -= 8;
+        }
+        ptr_from++;
+    }
+    to[count] = '\0';
+
+    return count;
+}
+
+/*
  * Converts 3 bytes of 8 bits in 4 bytes of 6 bits.
  */
 

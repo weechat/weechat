@@ -399,6 +399,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-hook.cpp      | Tests: hooks.
 |          test-infolist.cpp  | テスト: インフォリスト
 |          test-list.cpp      | テスト: リスト
+// TRANSLATION MISSING
+|          test-secure.cpp    | Tests: secured data.
 |          test-string.cpp    | テスト: 文字列
 |          test-url.cpp       | テスト: URL
 |          test-utf8.cpp      | テスト: UTF-8

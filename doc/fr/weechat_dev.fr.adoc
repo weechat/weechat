@@ -391,6 +391,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-hook.cpp      | Tests : hooks.
 |          test-infolist.cpp  | Tests : infolists.
 |          test-list.cpp      | Tests : listes.
+|          test-secure.cpp    | Tests : données sécurisées.
 |          test-string.cpp    | Tests : chaînes.
 |          test-url.cpp       | Tests : URLs.
 |          test-utf8.cpp      | Tests : UTF-8.

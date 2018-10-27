@@ -1335,6 +1335,94 @@ TEST(CoreString, FormatSize)
  * Tests functions:
  *    string_encode_base16
  *    string_decode_base16
+ */
+
+TEST(CoreString, Base16)
+{
+    char str[1024];
+
+    /* string_encode_base16 */
+    string_encode_base16 (NULL, 0, NULL);
+    string_encode_base16 (NULL, 0, str);
+    string_encode_base16 ("", 0, NULL);
+    str[0] = 0xAA;
+    string_encode_base16 ("", -1, str);
+    BYTES_EQUAL(0x0, str[0]);
+    str[0] = 0xAA;
+    string_encode_base16 ("", 0, str);
+    BYTES_EQUAL(0x0, str[0]);
+    string_encode_base16 ("abc", 3, str);
+    STRCMP_EQUAL("616263", str);
+
+    /* string_decode_base16 */
+    LONGS_EQUAL(0, string_decode_base16 (NULL, NULL));
+    LONGS_EQUAL(0, string_decode_base16 (NULL, str));
+    LONGS_EQUAL(0, string_decode_base16 ("", NULL));
+    LONGS_EQUAL(0, string_decode_base16 ("", str));
+    LONGS_EQUAL(3, string_decode_base16 ("616263", str));
+    STRCMP_EQUAL("abc", str);
+}
+
+/*
+ * Tests functions:
+ *    string_encode_base32
+ *    string_decode_base32
+ */
+
+TEST(CoreString, Base32)
+{
+    int i, length;
+    char str[1024];
+    const char *str_base32[][2] =
+        { { "", "" },
+          { "A", "IE======" },
+          { "B", "II======" },
+          { "C", "IM======" },
+          { "D", "IQ======" },
+          { "abc", "MFRGG===" },
+          { "This is a test.", "KRUGS4ZANFZSAYJAORSXG5BO" },
+          { "This is a test..", "KRUGS4ZANFZSAYJAORSXG5BOFY======" },
+          { "This is a test...", "KRUGS4ZANFZSAYJAORSXG5BOFYXA====" },
+          { "This is a test....", "KRUGS4ZANFZSAYJAORSXG5BOFYXC4===" },
+          { "This is a long long long sentence here...",
+            "KRUGS4ZANFZSAYJANRXW4ZZANRXW4ZZANRXW4ZZAONSW45DFNZRWKIDIMVZGKLRO"
+            "FY======" },
+          { NULL, NULL } };
+
+    /* string_encode_base32 */
+    LONGS_EQUAL(-1, string_encode_base32 (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_encode_base32 (NULL, 0, str));
+    LONGS_EQUAL(-1, string_encode_base32 ("", 0, NULL));
+    str[0] = 0xAA;
+    LONGS_EQUAL(0, string_encode_base32 ("", -1, str));
+    BYTES_EQUAL(0x0, str[0]);
+    str[0] = 0xAA;
+    LONGS_EQUAL(0, string_encode_base32 ("", 0, str));
+    BYTES_EQUAL(0x0, str[0]);
+    for (i = 0; str_base32[i][0]; i++)
+    {
+        length = strlen (str_base32[i][1]);
+        LONGS_EQUAL(length, string_encode_base32 (str_base32[i][0],
+                                                  strlen (str_base32[i][0]),
+                                                  str));
+        STRCMP_EQUAL(str_base32[i][1], str);
+    }
+
+    /* string_decode_base32 */
+    LONGS_EQUAL(-1, string_decode_base32 (NULL, NULL));
+    LONGS_EQUAL(-1, string_decode_base32 (NULL, str));
+    LONGS_EQUAL(-1, string_decode_base32 ("", NULL));
+    LONGS_EQUAL(0, string_decode_base32 ("", str));
+    for (i = 0; str_base32[i][0]; i++)
+    {
+        length = strlen (str_base32[i][0]);
+        LONGS_EQUAL(length, string_decode_base32 (str_base32[i][1], str));
+        STRCMP_EQUAL(str_base32[i][0], str);
+    }
+}
+
+/*
+ * Tests functions:
  *    string_encode_base64
  *    string_decode_base64
  */

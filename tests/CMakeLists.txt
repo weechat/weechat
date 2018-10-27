@@ -32,6 +32,7 @@ set(LIB_WEECHAT_UNIT_TESTS_SRC
   unit/core/test-hook.cpp
   unit/core/test-infolist.cpp
   unit/core/test-list.cpp
+  unit/core/test-secure.cpp
   unit/core/test-string.cpp
   unit/core/test-url.cpp
   unit/core/test-utf8.cpp

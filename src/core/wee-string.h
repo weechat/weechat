@@ -107,6 +107,8 @@ extern int string_fprintf (FILE *file, const char *data, ...);
 extern char *string_format_size (unsigned long long size);
 extern void string_encode_base16 (const char *from, int length, char *to);
 extern int string_decode_base16 (const char *from, char *to);
+extern int string_encode_base32 (const char *from, int length, char *to);
+extern int string_decode_base32 (const char *from, char *to);
 extern void string_encode_base64 (const char *from, int length, char *to);
 extern int string_decode_base64 (const char *from, char *to);
 extern char *string_hex_dump (const char *data, int data_size,

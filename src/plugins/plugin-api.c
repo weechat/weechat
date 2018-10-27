@@ -41,6 +41,7 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-proxy.h"
+#include "../core/wee-secure.h"
 #include "../core/wee-string.h"
 #include "../core/wee-url.h"
 #include "../core/wee-util.h"
@@ -894,6 +895,149 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
         return value;
     }
 
+    return NULL;
+}
+
+/*
+ * Returns WeeChat info "totp_generate": generates a Time-based One-Time
+ * Password (TOTP).
+ *
+ * Arguments: "secret,timestamp,digits" (timestamp and digits are optional).
+ */
+
+const char *
+plugin_api_info_totp_generate_cb (const void *pointer, void *data,
+                                  const char *info_name,
+                                  const char *arguments)
+{
+    static char value[32];
+    char **argv, *ptr_secret, *error, *totp;
+    int argc, digits, length;
+    long number;
+    time_t totp_time;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    argv = NULL;
+    totp = NULL;
+
+    if (!arguments || !arguments[0])
+        goto error;
+
+    argv = string_split (arguments, ",", 0, 0, &argc);
+    if (!argv || (argc < 1))
+        goto error;
+
+    ptr_secret = argv[0];
+    totp_time = 0;
+    digits = 6;
+
+    if (argc > 1)
+    {
+        error = NULL;
+        number = (int)strtol (argv[1], &error, 10);
+        if (!error || error[0] || (number < 0))
+            goto error;
+        totp_time = (time_t)number;
+    }
+    if (argc > 2)
+    {
+        error = NULL;
+        number = (int)strtol (argv[2], &error, 10);
+        if (!error || error[0] || (number < 0))
+            goto error;
+        digits = number;
+    }
+
+    totp = secure_totp_generate (ptr_secret, totp_time, digits);
+    if (!totp)
+        goto error;
+
+    length = snprintf (value, sizeof (value), "%s", totp);
+    if (length != digits)
+        goto error;
+
+    string_free_split (argv);
+    free (totp);
+
+    return value;
+
+error:
+    if (argv)
+        string_free_split (argv);
+    if (totp)
+        free (totp);
+    return NULL;
+}
+
+/*
+ * Returns WeeChat info "totp_validate": validates a Time-based One-Time
+ * Password (TOTP).
+ *
+ * Arguments: "secret,otp,timestamp,window" (timestamp and window are optional).
+ */
+
+const char *
+plugin_api_info_totp_validate_cb (const void *pointer, void *data,
+                                  const char *info_name,
+                                  const char *arguments)
+{
+    static char value[16];
+    char **argv, *ptr_secret, *ptr_otp, *error;
+    int argc, window, rc;
+    long number;
+    time_t totp_time;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    argv = NULL;
+
+    if (!arguments || !arguments[0])
+        goto error;
+
+    argv = string_split (arguments, ",", 0, 0, &argc);
+    if (!argv || (argc < 2))
+        goto error;
+
+    ptr_secret = argv[0];
+    ptr_otp = argv[1];
+    totp_time = 0;
+    window = 0;
+
+    if (argc > 2)
+    {
+        error = NULL;
+        number = (int)strtol (argv[2], &error, 10);
+        if (!error || error[0] || (number < 0))
+            goto error;
+        totp_time = (time_t)number;
+    }
+    if (argc > 3)
+    {
+        error = NULL;
+        number = (int)strtol (argv[3], &error, 10);
+        if (!error || error[0] || (number < 0))
+            goto error;
+        window = number;
+    }
+
+    rc = secure_totp_validate (ptr_secret, totp_time, window, ptr_otp);
+
+    snprintf (value, sizeof (value), "%d", rc);
+
+    string_free_split (argv);
+
+    return value;
+
+error:
+    if (argv)
+        string_free_split (argv);
     return NULL;
 }
 
@@ -1983,6 +2127,19 @@ plugin_api_init ()
                N_("\"days\" (number of days) or \"seconds\" (number of "
                   "seconds) (optional)"),
                &plugin_api_info_uptime_cb, NULL, NULL);
+    hook_info (NULL, "totp_generate",
+               N_("generate a Time-based One-Time Password (TOTP)"),
+               N_("secret (in base32), timestamp (optional, current time by "
+                  "default), number of digits (optional, between 4 and 10, "
+                  "6 is default and recommended value)"),
+               &plugin_api_info_totp_generate_cb, NULL, NULL);
+    hook_info (NULL, "totp_validate",
+               N_("validate a Time-based One-Time Password (TOTP): 1 if TOTP "
+                  "is correct, otherwise 0"),
+               N_("secret (in base32), one-time password, "
+                  "timestamp (optional), number of OTP after/before to test "
+                  "(optional, 0 by default)"),
+               &plugin_api_info_totp_validate_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",

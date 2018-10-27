@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.4]]
 == Version 2.4 (under dev)
 
+New features::
+
+  * api: add support of Time-based One-Time Password (TOTP), add infos "totp_generate" and "totp_validate"
+
 Bug fixes::
 
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)

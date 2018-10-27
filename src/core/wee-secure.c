@@ -25,6 +25,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <time.h>
+#include <math.h>
 #include <gcrypt.h>
 
 #include "weechat.h"
@@ -492,6 +495,195 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
     }
 
     return num_ok;
+}
+
+/*
+ * Generates a Time-based One-Time Password (TOTP), as described
+ * in the RFC 6238.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+secure_totp_generate_internal (const char *secret, int length_secret,
+                               uint64_t moving_factor, int digits,
+                               char *result)
+{
+    gcry_md_hd_t hd_md;
+    uint64_t moving_factor_swapped;
+    unsigned char *ptr_hash;
+    char hash[20];
+    int offset, length;
+    unsigned long bin_code;
+
+    if (gcry_md_open (&hd_md, GCRY_MD_SHA1, GCRY_MD_FLAG_HMAC) != 0)
+        return 0;
+
+    if (gcry_md_setkey (hd_md, secret, length_secret) != 0)
+    {
+        gcry_md_close (hd_md);
+        return 0;
+    }
+
+    moving_factor_swapped = (moving_factor >> 56)
+        | ((moving_factor << 40) & 0x00FF000000000000)
+        | ((moving_factor << 24) & 0x0000FF0000000000)
+        | ((moving_factor << 8) & 0x000000FF00000000)
+        | ((moving_factor >> 8) & 0x00000000FF000000)
+        | ((moving_factor >> 24) & 0x0000000000FF0000)
+        | ((moving_factor >> 40) & 0x000000000000FF00)
+        | (moving_factor << 56);
+
+    gcry_md_write (hd_md,
+                   &moving_factor_swapped, sizeof (moving_factor_swapped));
+
+    ptr_hash = gcry_md_read (hd_md, GCRY_MD_SHA1);
+    if (!ptr_hash)
+    {
+        gcry_md_close (hd_md);
+        return 0;
+    }
+
+    memcpy (hash, ptr_hash, sizeof (hash));
+
+    gcry_md_close (hd_md);
+
+    offset = hash[19] & 0xf;
+    bin_code = (hash[offset] & 0x7f) << 24
+        | (hash[offset+1] & 0xff) << 16
+        | (hash[offset+2] & 0xff) <<  8
+        | (hash[offset+3] & 0xff);
+
+    bin_code %= (unsigned long)(pow (10, digits));
+
+    length = snprintf (result, digits + 1, "%.*lu", digits, bin_code);
+    if (length != digits)
+        return 0;
+
+    return 1;
+}
+
+/*
+ * Generates a Time-based One-Time Password (TOTP), as described
+ * in the RFC 6238.
+ *
+ * Returns the password as string, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+secure_totp_generate (const char *secret_base32, time_t totp_time, int digits)
+{
+    char *result, *secret;
+    int length_secret, rc;
+    uint64_t moving_factor;
+
+    secret = NULL;
+    result = NULL;
+
+    if (!secret_base32 || !secret_base32[0]
+        || (digits < SECURE_TOTP_MIN_DIGITS)
+        || (digits > SECURE_TOTP_MAX_DIGITS))
+    {
+        goto error;
+    }
+
+    secret = malloc ((strlen (secret_base32) * 4) + 16 + 1);
+    if (!secret)
+        goto error;
+
+    length_secret = string_decode_base32 (secret_base32, secret);
+    if (length_secret < 0)
+        goto error;
+
+    result = malloc (digits + 1);
+    if (!result)
+        goto error;
+
+    if (totp_time == 0)
+        totp_time = time (NULL);
+
+    moving_factor = totp_time / 30;
+
+    rc = secure_totp_generate_internal (secret, length_secret,
+                                        moving_factor, digits, result);
+    if (!rc)
+        goto error;
+
+    free (secret);
+
+    return result;
+
+error:
+    if (secret)
+        free (secret);
+    if (result)
+        free (result);
+    return NULL;
+}
+
+/*
+ * Validates a Time-based One-Time Password (TOTP).
+ *
+ * Returns:
+ *   1: OTP is OK
+ *   0: OTP is invalid
+ */
+
+int
+secure_totp_validate (const char *secret_base32, time_t totp_time, int window,
+                      const char *otp)
+{
+    char *secret, str_otp[16];
+    int length_secret, digits, rc, otp_ok;
+    uint64_t i, moving_factor;
+
+    secret = NULL;
+
+    if (!secret_base32 || !secret_base32[0] || (window < 0) || !otp || !otp[0])
+        goto error;
+
+    digits = strlen (otp);
+    if ((digits < SECURE_TOTP_MIN_DIGITS) || (digits > SECURE_TOTP_MAX_DIGITS))
+        goto error;
+
+    secret = malloc (strlen (secret_base32) + 1);
+    if (!secret)
+        goto error;
+
+    length_secret = string_decode_base32 (secret_base32, secret);
+    if (length_secret < 0)
+        goto error;
+
+    if (totp_time == 0)
+        totp_time = time (NULL);
+
+    moving_factor = totp_time / 30;
+
+    otp_ok = 0;
+
+    for (i = moving_factor - window; i <= moving_factor + window; i++)
+    {
+        rc = secure_totp_generate_internal (secret, length_secret,
+                                            i, digits, str_otp);
+        if (rc && (strcmp (str_otp, otp) == 0))
+        {
+            otp_ok = 1;
+            break;
+        }
+    }
+
+    free (secret);
+
+    return otp_ok;
+
+error:
+    if (secret)
+        free (secret);
+    return 0;
 }
 
 /*
