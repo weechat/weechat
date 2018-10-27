@@ -23,9 +23,12 @@
 
 extern "C"
 {
+#include <string.h>
 #include "src/core/wee-secure.h"
 }
 
+#define SECURE_PASSPHRASE "this_is_a_secret_passphrase"
+#define SECURE_PASSWORD "this_is_a_secret_password"
 #define TOTP_SECRET "secretpasswordbase32"
 
 #define WEE_CHECK_TOTP_GENERATE(__result, __secret, __time, __digits)   \
@@ -47,6 +50,66 @@ extern "C"
 TEST_GROUP(CoreSecure)
 {
 };
+
+/*
+ * Tests functions:
+ *   secure_encrypt_data
+ *   secure_decrypt_data
+ */
+
+TEST(CoreSecure, EncryptDecryptData)
+{
+    const char *password = SECURE_PASSWORD;
+    int hash_algo, cipher, rc;
+    int length_password, length_encrypted_data, length_decrypted_data;
+    char *encrypted_data, *decrypted_data;
+
+    /* compute length of password, including the final \0 */
+    length_password = strlen (password) + 1;
+
+    for (hash_algo = 0; secure_hash_algo_string[hash_algo]; hash_algo++)
+    {
+        for (cipher = 0; secure_cipher_string[cipher]; cipher++)
+        {
+            /* initialize data */
+            encrypted_data = NULL;
+            decrypted_data = NULL;
+            length_encrypted_data = 0;
+            length_decrypted_data = 0;
+
+            /*
+             * encrypt the password with a hash algo, cipher and arbitrary
+             * passphrase
+             */
+            rc = secure_encrypt_data (password,
+                                      length_password,
+                                      secure_hash_algo[hash_algo],
+                                      secure_cipher[cipher],
+                                      SECURE_PASSPHRASE,
+                                      &encrypted_data,
+                                      &length_encrypted_data);
+            LONGS_EQUAL(0, rc);
+
+            /* decrypt the encrypted password */
+            rc = secure_decrypt_data (encrypted_data,
+                                      length_encrypted_data,
+                                      secure_hash_algo[hash_algo],
+                                      secure_cipher[cipher],
+                                      SECURE_PASSPHRASE,
+                                      &decrypted_data,
+                                      &length_decrypted_data);
+            LONGS_EQUAL(0, rc);
+
+            /* check decrypted data */
+            LONGS_EQUAL(length_password, length_decrypted_data);
+            STRCMP_EQUAL(password, decrypted_data);
+
+            /* free encrypted/decrypted data */
+            free (encrypted_data);
+            free (decrypted_data);
+        }
+    }
+}
 
 /*
  * Tests functions:
