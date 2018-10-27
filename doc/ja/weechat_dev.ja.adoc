@@ -388,17 +388,25 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          testapi.py         | スクリプト API テスト時に使われる Python スクリプト (スクリプト testapigen.py から使われます)
 |          unparse.py         | Python コードを別の言語に変換 (スクリプト testapigen.py から使われます)
 |    unit/                    | 単体テスト用のルートディレクトリ
+// TRANSLATION MISSING
+|       test-plugins.cpp      | Tests: plugins.
 |       core/                 | core 向け単体テスト用のルートディレクトリ
 |          test-arraylist.cpp | テスト: 配列リスト
 |          test-eval.cpp      | テスト: 式の評価
 |          test-hashtble.cpp  | テスト: ハッシュテーブル
 |          test-hdata.cpp     | テスト: hdata
+// TRANSLATION MISSING
+|          test-hook.cpp      | Tests: hooks.
 |          test-infolist.cpp  | テスト: インフォリスト
 |          test-list.cpp      | テスト: リスト
 |          test-string.cpp    | テスト: 文字列
 |          test-url.cpp       | テスト: URL
 |          test-utf8.cpp      | テスト: UTF-8
 |          test-util.cpp      | テスト: ユーティリティ関数
+// TRANSLATION MISSING
+|       gui/                  | Root of unit tests for GUI.
+// TRANSLATION MISSING
+|          test-line.cpp      | Tests: lines.
 |===
 
 [[documentation_translations]]

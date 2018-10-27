@@ -380,17 +380,21 @@ WeeChat "core" is located in following directories:
 |          testapi.py         | Python script with scripting API tests, used by script testapigen.py.
 |          unparse.py         | Convert Python code to other languages, used by script testapigen.py.
 |    unit/                    | Root of unit tests.
+|       test-plugins.cpp      | Tests: plugins.
 |       core/                 | Root of unit tests for core.
 |          test-arraylist.cpp | Tests: arraylists.
 |          test-eval.cpp      | Tests: evaluation of expressions.
 |          test-hashtble.cpp  | Tests: hashtables.
 |          test-hdata.cpp     | Tests: hdata.
+|          test-hook.cpp      | Tests: hooks.
 |          test-infolist.cpp  | Tests: infolists.
 |          test-list.cpp      | Tests: lists.
 |          test-string.cpp    | Tests: strings.
 |          test-url.cpp       | Tests: URLs.
 |          test-utf8.cpp      | Tests: UTF-8.
 |          test-util.cpp      | Tests: utility functions.
+|       gui/                  | Root of unit tests for GUI.
+|          test-line.cpp      | Tests: lines.
 |===
 
 [[documentation_translations]]

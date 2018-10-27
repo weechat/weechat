@@ -382,17 +382,21 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          testapi.py         | Script Python avec les tests API, utilisé par le script testapigen.py.
 |          unparse.py         | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
 |    unit/                    | Racine des tests unitaires.
+|       test-plugins.cpp      | Tests : extensions.
 |       core/                 | Racine des tests unitaires pour le cœur.
 |          test-arraylist.cpp | Tests : listes avec tableau (« arraylists »).
 |          test-eval.cpp      | Tests : évaluation d'expressions.
 |          test-hashtble.cpp  | Tests : tables de hachage.
 |          test-hdata.cpp     | Tests : hdata.
+|          test-hook.cpp      | Tests : hooks.
 |          test-infolist.cpp  | Tests : infolists.
 |          test-list.cpp      | Tests : listes.
 |          test-string.cpp    | Tests : chaînes.
 |          test-url.cpp       | Tests : URLs.
 |          test-utf8.cpp      | Tests : UTF-8.
 |          test-util.cpp      | Tests : fonctions utiles.
+|       gui/                  | Racine des tests unitaires pour la GUI.
+|          test-line.cpp      | Tests : lignes.
 |===
 
 [[documentation_translations]]
