@@ -32,7 +32,7 @@
 #include "wee-upgrade.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
-#include "wee-secure.h"
+#include "wee-secure-buffer.h"
 #include "wee-string.h"
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"

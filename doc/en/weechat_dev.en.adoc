@@ -132,7 +132,9 @@ WeeChat "core" is located in following directories:
 |    wee-log.c                    | Write to WeeChat log file (weechat.log).
 |    wee-network.c                | Network functions (connection to servers/proxies).
 |    wee-proxy.c                  | Proxy management.
-|    wee-secure.c                 | Secured data options (file sec.conf).
+|    wee-secure.c                 | Secured data functions.
+|    wee-secure-buffer.c          | Secured data buffer.
+|    wee-secure-config.c          | Secured data options (file sec.conf).
 |    wee-string.c                 | Functions on strings.
 |    wee-upgrade-file.c           | Internal upgrade system.
 |    wee-upgrade.c                | Upgrade for WeeChat core (buffers, lines, history, ...).

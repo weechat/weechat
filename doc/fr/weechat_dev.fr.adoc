@@ -134,7 +134,9 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-log.c                    | Écriture dans le fichier de log WeeChat (weechat.log).
 |    wee-network.c                | Fonctions réseau (connexion aux serveurs/proxies).
 |    wee-proxy.c                  | Gestion des proxies.
-|    wee-secure.c                 | Options des données sécurisées (fichier sec.conf).
+|    wee-secure.c                 | Fonctions pour les données sécurisées.
+|    wee-secure-buffer.c          | Tampon pour les données sécurisées.
+|    wee-secure-config.c          | Options des données sécurisées (fichier sec.conf).
 |    wee-string.c                 | Fonctions sur les chaînes de caractères.
 |    wee-upgrade-file.c           | Système de mise à jour interne.
 |    wee-upgrade.c                | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).

@@ -39,6 +39,8 @@ set(LIB_CORE_SRC
   wee-network.c wee-network.h
   wee-proxy.c wee-proxy.h
   wee-secure.c wee-secure.h
+  wee-secure-buffer.c wee-secure-buffer.h
+  wee-secure-config.c wee-secure-config.h
   wee-string.c wee-string.h
   wee-upgrade.c wee-upgrade.h
   wee-upgrade-file.c wee-upgrade-file.h

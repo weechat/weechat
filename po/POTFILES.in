@@ -69,6 +69,10 @@
 ./src/core/wee-proxy.h
 ./src/core/wee-secure.c
 ./src/core/wee-secure.h
+./src/core/wee-secure-buffer.c
+./src/core/wee-secure-buffer.h
+./src/core/wee-secure-config.c
+./src/core/wee-secure-config.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
 ./src/core/wee-upgrade.c

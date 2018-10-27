@@ -42,7 +42,7 @@
 #include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
 #include "../core/wee-log.h"
-#include "../core/wee-secure.h"
+#include "../core/wee-secure-buffer.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"

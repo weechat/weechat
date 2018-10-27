@@ -138,7 +138,11 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-log.c                    | WeeChat ログファイル (weechat.log) に書き込む
 |    wee-network.c                | ネットワーク関数 (サーバやプロキシへの接続)
 |    wee-proxy.c                  | プロキシ管理
-|    wee-secure.c                 | 安全なデータオプション (sec.conf ファイル)
+// TRANSLATION MISSING
+|    wee-secure.c                 | Secured data functions.
+// TRANSLATION MISSING
+|    wee-secure-buffer.c          | Secured data buffer.
+|    wee-secure-config.c          | 安全なデータオプション (sec.conf ファイル)
 |    wee-string.c                 | 文字列関数
 |    wee-upgrade-file.c           | 内部アップグレードシステム
 |    wee-upgrade.c                | WeeChat コアのアップグレード (バッファ、行、履歴、...)

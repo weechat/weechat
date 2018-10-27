@@ -20,13 +20,10 @@
 #ifndef WEECHAT_SECURE_H
 #define WEECHAT_SECURE_H
 
-#define SECURE_CONFIG_NAME "sec"
-
 #define SECURE_ENV_PASSPHRASE       "WEECHAT_PASSPHRASE"
 #define SECURE_SALT_DEFAULT         "WeeChat!"
 #define SECURE_DATA_PASSPHRASE_FLAG "__passphrase__"
-
-#define SECURE_BUFFER_NAME          "secured_data"
+#define SECURE_SALT_SIZE            8
 
 enum t_secure_config_hash_algo
 {
@@ -43,29 +40,26 @@ enum t_secure_config_cipher
     SECURE_CONFIG_CIPHER_AES256,
 };
 
-extern struct t_config_file *secure_config_file;
-extern struct t_config_section *secure_config_section_pwd;
-
-extern struct t_config_option *secure_config_crypt_cipher;
-extern struct t_config_option *secure_config_crypt_hash_algo;
-extern struct t_config_option *secure_config_crypt_passphrase_file;
-extern struct t_config_option *secure_config_crypt_salt;
-
 extern char *secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
 extern struct t_hashtable *secure_hashtable_data_encrypted;
+extern char *secure_hash_algo_string[];
+extern int secure_hash_algo[];
+extern char *secure_cipher_string[];
+extern int secure_cipher[];
+extern int secure_data_encrypted;
+extern char *secure_decrypt_error[];
 
-extern struct t_gui_buffer *secure_buffer;
-extern int secure_buffer_display_values;
-
+extern int secure_encrypt_data (const char *data, int length_data,
+                                int hash_algo, int cipher,
+                                const char *passphrase, char **encrypted,
+                                int *length_encrypted);
+extern int secure_decrypt_data (const char *buffer, int length_buffer,
+                                int hash_algo, int cipher,
+                                const char *passphrase, char **decrypted,
+                                int *length_decrypted);
 extern int secure_decrypt_data_not_decrypted (const char *passphrase);
 extern int secure_init ();
-extern int secure_read ();
-extern int secure_write ();
-extern void secure_free ();
-extern void secure_buffer_display ();
-extern void secure_buffer_assign ();
-extern void secure_buffer_open ();
 extern void secure_end ();
 
 #endif /* WEECHAT_SECURE_H */

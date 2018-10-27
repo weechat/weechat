@@ -54,6 +54,8 @@
 #include "wee-log.h"
 #include "wee-proxy.h"
 #include "wee-secure.h"
+#include "wee-secure-buffer.h"
+#include "wee-secure-config.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
