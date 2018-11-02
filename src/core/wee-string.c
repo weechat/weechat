@@ -2702,27 +2702,29 @@ string_format_size (unsigned long long size)
  *
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
+ *
+ * Returns length of string in "*to" (it does not count final \0).
  */
 
-void
+int
 string_encode_base16 (const char *from, int length, char *to)
 {
-    int i;
+    int i, count;
     const char *hexa = "0123456789ABCDEF";
-    char *ptr_to;
 
     if (!from || !to)
-        return;
+        return -1;
 
-    ptr_to = to;
-    ptr_to[0] = '\0';
+    count = 0;
+
     for (i = 0; i < length; i++)
     {
-        ptr_to[0] = hexa[((unsigned char)from[i]) / 16];
-        ptr_to[1] = hexa[((unsigned char)from[i]) % 16];
-        ptr_to += 2;
+        to[count++] = hexa[((unsigned char)from[i]) / 16];
+        to[count++] = hexa[((unsigned char)from[i]) % 16];
     }
-    ptr_to[0] = '\0';
+    to[count] = '\0';
+
+    return count;
 }
 
 /*
@@ -2734,17 +2736,15 @@ string_encode_base16 (const char *from, int length, char *to)
 int
 string_decode_base16 (const char *from, char *to)
 {
-    int length, to_length, i, pos;
-    unsigned char *ptr_to, value;
+    int length, i, pos, count;
+    unsigned char value;
 
     if (!from || !to)
         return 0;
 
-    length = strlen (from) / 2;
+    count = 0;
 
-    ptr_to = (unsigned char *)to;
-    ptr_to[0] = '\0';
-    to_length = 0;
+    length = strlen (from) / 2;
 
     for (i = 0; i < length; i++)
     {
@@ -2766,13 +2766,11 @@ string_decode_base16 (const char *from, char *to)
         else if ((from[pos] >= 'A') && (from[pos] <= 'F'))
             value |= from[pos] - 'A' + 10;
 
-        ptr_to[0] = value;
-        ptr_to++;
-        to_length++;
+        to[count++] = value;
     }
-    ptr_to[0] = '\0';
+    to[count] = '\0';
 
-    return to_length;
+    return count;
 }
 
 /*

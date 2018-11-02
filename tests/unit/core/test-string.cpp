@@ -1342,17 +1342,19 @@ TEST(CoreString, Base16)
     char str[1024];
 
     /* string_encode_base16 */
-    string_encode_base16 (NULL, 0, NULL);
-    string_encode_base16 (NULL, 0, str);
-    string_encode_base16 ("", 0, NULL);
+    LONGS_EQUAL(-1, string_encode_base16 (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_encode_base16 (NULL, 0, str));
+    LONGS_EQUAL(-1, string_encode_base16 ("", 0, NULL));
     str[0] = 0xAA;
-    string_encode_base16 ("", -1, str);
+    LONGS_EQUAL(0, string_encode_base16 ("", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    string_encode_base16 ("", 0, str);
+    LONGS_EQUAL(0, string_encode_base16 ("", 0, str));
     BYTES_EQUAL(0x0, str[0]);
-    string_encode_base16 ("abc", 3, str);
+    LONGS_EQUAL(6, string_encode_base16 ("abc", 3, str));
     STRCMP_EQUAL("616263", str);
+    LONGS_EQUAL(32, string_encode_base16 ("this is a *test*", 16, str));
+    STRCMP_EQUAL("746869732069732061202A746573742A", str);
 
     /* string_decode_base16 */
     LONGS_EQUAL(0, string_decode_base16 (NULL, NULL));
@@ -1361,6 +1363,9 @@ TEST(CoreString, Base16)
     LONGS_EQUAL(0, string_decode_base16 ("", str));
     LONGS_EQUAL(3, string_decode_base16 ("616263", str));
     STRCMP_EQUAL("abc", str);
+    LONGS_EQUAL(16, string_decode_base16 ("746869732069732061202A746573742A",
+                                          str));
+    STRCMP_EQUAL("this is a *test*", str);
 }
 
 /*

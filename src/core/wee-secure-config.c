@@ -370,9 +370,12 @@ secure_config_data_write_map_cb (void *data,
                 buffer_base16 = malloc ((length_buffer * 2) + 1);
                 if (buffer_base16)
                 {
-                    string_encode_base16 (buffer, length_buffer, buffer_base16);
-                    config_file_write_line (config_file, key,
-                                            "\"%s\"", buffer_base16);
+                    if (string_encode_base16 (buffer, length_buffer,
+                                              buffer_base16) >= 0)
+                    {
+                        config_file_write_line (config_file, key,
+                                                "\"%s\"", buffer_base16);
+                    }
                     free (buffer_base16);
                 }
                 free (buffer);
