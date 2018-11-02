@@ -1786,7 +1786,8 @@ str = weechat.string_remove_color(my_string, "?")
 
 ==== string_encode_base64
 
-_WeeChat バージョン 0.3.2 以上で利用可。_
+// TRANSLATION MISSING
+_WeeChat ≥ 0.3.2, updated in 2.4._
 
 文字列を base64 でエンコード。
 
@@ -1794,7 +1795,7 @@ _WeeChat バージョン 0.3.2 以上で利用可。_
 
 [source,C]
 ----
-void weechat_string_encode_base64 (const char *from, int length, char *to);
+int weechat_string_encode_base64 (const char *from, int length, char *to);
 ----
 
 引数:
@@ -1804,13 +1805,18 @@ void weechat_string_encode_base64 (const char *from, int length, char *to);
 * _to_: エンコード結果を保存する文字列へのポインタ
   (十分な領域を確保してください、結果はエンコード元文字列よりも長くなります)
 
+戻り値:
+
+* _*to_ に保存された文字列の長さ (最後の _\0_ は数えません)
+
 C 言語での使用例:
 
 [source,C]
 ----
 char *string = "abcdefgh", result[128];
-weechat_string_encode_base64 (string, strlen (string), result);
-/* result == "YWJjZGVmZ2g=" */
+int length;
+length = weechat_string_encode_base64 (string, strlen (string), result);
+/* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
 [NOTE]

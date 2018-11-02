@@ -267,7 +267,8 @@ network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
         snprintf (authbuf, sizeof (authbuf), "%s:%s", username, password);
         free (username);
         free (password);
-        string_encode_base64 (authbuf, strlen (authbuf), authbuf_base64);
+        if (string_encode_base64 (authbuf, strlen (authbuf), authbuf_base64) < 0)
+            return 0;
         length = snprintf (buffer, sizeof (buffer),
                            "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: "
                            "Basic %s\r\n\r\n",

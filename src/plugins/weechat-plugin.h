@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20180812-01"
+#define WEECHAT_PLUGIN_API_VERSION "20181102-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -323,7 +323,7 @@ struct t_weechat_plugin
     void (*string_free_split_command) (char **split_command);
     char *(*string_format_size) (unsigned long long size);
     char *(*string_remove_color) (const char *string, const char *replacement);
-    void (*string_encode_base64) (const char *from, int length, char *to);
+    int (*string_encode_base64) (const char *from, int length, char *to);
     int (*string_decode_base64) (const char *from, char *to);
     char *(*string_hex_dump) (const char *data, int data_size,
                               int bytes_per_line, const char *prefix,

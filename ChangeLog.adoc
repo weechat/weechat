@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * api: return integer in function string_encode_base64
   * api: add support of Time-based One-Time Password (TOTP), add infos "totp_generate" and "totp_validate"
 
 Bug fixes::

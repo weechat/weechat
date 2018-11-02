@@ -2509,11 +2509,13 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
     text_base64 = malloc ((length * 4) + 1);
     if (text_base64)
     {
-        string_encode_base64 (text, length, text_base64);
-        fprintf (stderr, "\033]52;%s;%s\a",
-                 (storage_unit) ? storage_unit : "",
-                 text_base64);
-        fflush (stderr);
+        if (string_encode_base64 (text, length, text_base64) >= 0)
+        {
+            fprintf (stderr, "\033]52;%s;%s\a",
+                     (storage_unit) ? storage_unit : "",
+                     text_base64);
+            fflush (stderr);
+        }
         free (text_base64);
     }
 }

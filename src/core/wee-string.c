@@ -2953,49 +2953,61 @@ string_convbase64_8x3_to_6x4 (const char *from, char *to)
  *
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
+ *
+ * Returns length of string in "*to" (it does not count final \0).
  */
 
-void
+int
 string_encode_base64 (const char *from, int length, char *to)
 {
     const char *ptr_from;
-    char *ptr_to;
+    char rest[3];
+    int count;
 
     if (!from || !to)
-        return;
+        return -1;
 
     ptr_from = from;
-    ptr_to = to;
+    count = 0;
 
     while (length >= 3)
     {
-        string_convbase64_8x3_to_6x4 (ptr_from, ptr_to);
-        ptr_from += 3 * sizeof (*ptr_from);
-        ptr_to += 4 * sizeof (*ptr_to);
+        string_convbase64_8x3_to_6x4 (ptr_from, to + count);
+        ptr_from += 3;
+        count += 4;
         length -= 3;
     }
 
     if (length > 0)
     {
-        char rest[3] = { 0, 0, 0 };
+        rest[0] = 0;
+        rest[1] = 0;
+        rest[2] = 0;
         switch (length)
         {
             case 1 :
                 rest[0] = ptr_from[0];
-                string_convbase64_8x3_to_6x4 (rest, ptr_to);
-                ptr_to[2] = ptr_to[3] = '=';
+                string_convbase64_8x3_to_6x4 (rest, to + count);
+                count += 2;
+                to[count] = '=';
+                count++;
+                to[count] = '=';
                 break;
             case 2 :
                 rest[0] = ptr_from[0];
                 rest[1] = ptr_from[1];
-                string_convbase64_8x3_to_6x4 (rest, ptr_to);
-                ptr_to[3] = '=';
+                string_convbase64_8x3_to_6x4 (rest, to + count);
+                count += 3;
+                to[count] = '=';
                 break;
         }
-        ptr_to[4] = 0;
+        count++;
+        to[count] = '\0';
     }
     else
-        ptr_to[0] = '\0';
+        to[count] = '\0';
+
+    return count;
 }
 
 /*

@@ -1427,8 +1427,9 @@ TEST(CoreString, Base32)
  *    string_decode_base64
  */
 
-TEST(CoreString, BaseN)
+TEST(CoreString, Base64)
 {
+    int i, length;
     char str[1024];
     const char *str_base64[][2] =
         { { "", "" },
@@ -1452,43 +1453,23 @@ TEST(CoreString, BaseN)
           { "Another example for base64...",
             "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4=" },
           { NULL, NULL } };
-    int i, length;
-
-    /* string_encode_base16 */
-    string_encode_base16 (NULL, 0, NULL);
-    string_encode_base16 (NULL, 0, str);
-    string_encode_base16 ("", 0, NULL);
-    str[0] = 0xAA;
-    string_encode_base16 ("", -1, str);
-    BYTES_EQUAL(0x0, str[0]);
-    str[0] = 0xAA;
-    string_encode_base16 ("", 0, str);
-    BYTES_EQUAL(0x0, str[0]);
-    string_encode_base16 ("abc", 3, str);
-    STRCMP_EQUAL("616263", str);
-
-    /* string_decode_base16 */
-    LONGS_EQUAL(0, string_decode_base16 (NULL, NULL));
-    LONGS_EQUAL(0, string_decode_base16 (NULL, str));
-    LONGS_EQUAL(0, string_decode_base16 ("", NULL));
-    LONGS_EQUAL(0, string_decode_base16 ("", str));
-    LONGS_EQUAL(3, string_decode_base16 ("616263", str));
-    STRCMP_EQUAL("abc", str);
 
     /* string_encode_base64 */
-    string_encode_base64 (NULL, 0, NULL);
-    string_encode_base64 (NULL, 0, str);
-    string_encode_base64 ("", 0, NULL);
+    LONGS_EQUAL(-1, string_encode_base64 (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_encode_base64 (NULL, 0, str));
+    LONGS_EQUAL(-1, string_encode_base64 ("", 0, NULL));
     str[0] = 0xAA;
-    string_encode_base64 ("", -1, str);
+    LONGS_EQUAL(0, string_encode_base64 ("", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    string_encode_base64 ("", 0, str);
+    LONGS_EQUAL(0, string_encode_base64 ("", 0, str));
     BYTES_EQUAL(0x0, str[0]);
     for (i = 0; str_base64[i][0]; i++)
     {
-        string_encode_base64 (str_base64[i][0], strlen (str_base64[i][0]),
-                              str);
+        length = strlen (str_base64[i][1]);
+        LONGS_EQUAL(length, string_encode_base64 (str_base64[i][0],
+                                                  strlen (str_base64[i][0]),
+                                                  str));
         STRCMP_EQUAL(str_base64[i][1], str);
     }
 
@@ -1499,9 +1480,9 @@ TEST(CoreString, BaseN)
     LONGS_EQUAL(0, string_decode_base64 ("", str));
     for (i = 0; str_base64[i][0]; i++)
     {
-        length = string_decode_base64 (str_base64[i][1], str);
+        length = strlen (str_base64[i][0]);
+        LONGS_EQUAL(length, string_decode_base64 (str_base64[i][1], str));
         STRCMP_EQUAL(str_base64[i][0], str);
-        LONGS_EQUAL(strlen (str_base64[i][0]), length);
     }
 }
 
