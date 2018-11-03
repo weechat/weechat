@@ -22,6 +22,7 @@ set(LIB_PLUGINS_SRC
   weechat-plugin.h
   plugin.c plugin.h
   plugin-api.c plugin-api.h
+  plugin-api-info.c plugin-api-info.h
   plugin-config.h plugin-config.c
 )
 

@@ -27,6 +27,8 @@ lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
                                 plugin.h \
                                 plugin-api.c \
                                 plugin-api.h \
+                                plugin-api-info.c \
+                                plugin-api-info.h \
                                 plugin-config.c \
                                 plugin-config.h
 

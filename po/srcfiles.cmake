@@ -294,6 +294,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/php/weechat-php.h
 ./src/plugins/plugin-api.c
 ./src/plugins/plugin-api.h
+./src/plugins/plugin-api-info.c
+./src/plugins/plugin-api-info.h
 ./src/plugins/plugin.c
 ./src/plugins/plugin-config.c
 ./src/plugins/plugin-config.h
