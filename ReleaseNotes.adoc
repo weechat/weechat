@@ -17,6 +17,25 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.4]]
+== Version 2.4 (under dev)
+
+[[v2.4_api_base64_functions]]
+=== Base64 API functions
+
+The functions to encode/decode base64 strings have been renamed and now support
+base 16, 32, and 64.
+
+New functions in C API, supporting base 16, 32, and 64:
+
+* string_base_encode
+* string_base_decode
+
+Functions removed from C API:
+
+* string_encode_base64
+* string_decode_base64
+
 [[v2.3]]
 == Version 2.3 (2018-10-21)
 

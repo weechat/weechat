@@ -1812,21 +1812,22 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(ma_chaine, "?")
 ----
 
-==== string_encode_base64
+==== string_base_encode
 
-_WeeChat ≥ 0.3.2, mis à jour dans la 2.4._
+_WeeChat ≥ 2.4._
 
-Encoder une chaîne en base64.
+Encoder une chaîne en base 16, 32 ou 64.
 
 Prototype :
 
 [source,C]
 ----
-int weechat_string_encode_base64 (const char *from, int length, char *to);
+int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
 
 Paramètres :
 
+* _base_ : 16, 32 ou 64
 * _from_ : chaîne à encoder
 * _length_ : longueur de chaîne à encoder (par exemple `strlen(from)`)
 * _to_ : pointeur vers la chaîne pour stocker le résultat (doit être
@@ -1834,7 +1835,8 @@ Paramètres :
 
 Valeur de retour :
 
-* longueur de la chaîne stockée dans _*to_ (ne compte pas le _\0_ final)
+* longueur de la chaîne stockée dans _*to_ (ne compte pas le `\0` final),
+  -1 en cas d'erreur
 
 Exemple en C :
 
@@ -1842,43 +1844,53 @@ Exemple en C :
 ----
 char *string = "abcdefgh", result[128];
 int length;
-length = weechat_string_encode_base64 (string, strlen (string), result);
+length = weechat_string_base_encode (16, string, strlen (string), result);
+/* length == 16, result == "6162636465666768" */
+length = weechat_string_base_encode (32, string, strlen (string), result);
+/* length == 16, result == "MFRGGZDFMZTWQ===" */
+length = weechat_string_base_encode (64, string, strlen (string), result);
 /* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
-==== string_decode_base64
+==== string_base_decode
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 2.4._
 
-Décoder une chaîne base64.
+Décoder une chaîne encodée en base 16, 32 ou 64.
 
 Prototype :
 
 [source,C]
 ----
-int weechat_string_decode_base64 (const char *from, char *to);
+int weechat_string_base_decode (int base, const char *from, char *to);
 ----
 
 Paramètres :
 
+* _base_ : 16, 32 ou 64
 * _from_ : chaîne à décoder
 * _to_ : pointeur vers la chaîne pour stocker le résultat (doit être
   suffisamment long, le résultat est plus court que la chaîne initiale)
 
 Valeur de retour :
 
-* longueur de la chaîne stockée dans _*to_ (ne compte pas le _\0_ final)
+* longueur de la chaîne stockée dans _*to_ (ne compte pas le `\0` final),
+  -1 en cas d'erreur
 
 Exemple en C :
 
 [source,C]
 ----
-char *string = "YWJjZGVmZ2g=", result[128];
+char result[128];
 int length;
-length = weechat_string_decode_base64 (string, result);
+length = weechat_string_base_decode (16, "6162636465666768", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (32, "MFRGGZDFMZTWQ===", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (64, "YWJjZGVmZ2g=", result);
 /* length == 8, result == "abcdefgh" */
 ----
 

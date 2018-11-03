@@ -1333,45 +1333,57 @@ TEST(CoreString, FormatSize)
 
 /*
  * Tests functions:
- *    string_encode_base16
- *    string_decode_base16
+ *    string_base16_encode
+ *    string_base16_decode
  */
 
 TEST(CoreString, Base16)
 {
+    int i, length;
     char str[1024];
+    const char *str_base16[][2] =
+        { { "", "" },
+          { "abcdefgh", "6162636465666768" },
+          { "this is a *test*", "746869732069732061202A746573742A" },
+          { NULL, NULL } };
 
-    /* string_encode_base16 */
-    LONGS_EQUAL(-1, string_encode_base16 (NULL, 0, NULL));
-    LONGS_EQUAL(-1, string_encode_base16 (NULL, 0, str));
-    LONGS_EQUAL(-1, string_encode_base16 ("", 0, NULL));
+
+    /* string_base16_encode */
+    LONGS_EQUAL(-1, string_base16_encode (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base16_encode (NULL, 0, str));
+    LONGS_EQUAL(-1, string_base16_encode ("", 0, NULL));
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base16 ("", -1, str));
+    LONGS_EQUAL(0, string_base16_encode ("", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base16 ("", 0, str));
+    LONGS_EQUAL(0, string_base16_encode ("", 0, str));
     BYTES_EQUAL(0x0, str[0]);
-    LONGS_EQUAL(6, string_encode_base16 ("abc", 3, str));
-    STRCMP_EQUAL("616263", str);
-    LONGS_EQUAL(32, string_encode_base16 ("this is a *test*", 16, str));
-    STRCMP_EQUAL("746869732069732061202A746573742A", str);
+    for (i = 0; str_base16[i][0]; i++)
+    {
+        length = strlen (str_base16[i][1]);
+        LONGS_EQUAL(length, string_base16_encode (str_base16[i][0],
+                                                  strlen (str_base16[i][0]),
+                                                  str));
+        STRCMP_EQUAL(str_base16[i][1], str);
+    }
 
-    /* string_decode_base16 */
-    LONGS_EQUAL(0, string_decode_base16 (NULL, NULL));
-    LONGS_EQUAL(0, string_decode_base16 (NULL, str));
-    LONGS_EQUAL(0, string_decode_base16 ("", NULL));
-    LONGS_EQUAL(0, string_decode_base16 ("", str));
-    LONGS_EQUAL(3, string_decode_base16 ("616263", str));
-    STRCMP_EQUAL("abc", str);
-    LONGS_EQUAL(16, string_decode_base16 ("746869732069732061202A746573742A",
-                                          str));
-    STRCMP_EQUAL("this is a *test*", str);
+    /* string_base16_decode */
+    LONGS_EQUAL(0, string_base16_decode (NULL, NULL));
+    LONGS_EQUAL(0, string_base16_decode (NULL, str));
+    LONGS_EQUAL(0, string_base16_decode ("", NULL));
+    LONGS_EQUAL(0, string_base16_decode ("", str));
+    for (i = 0; str_base16[i][0]; i++)
+    {
+        length = strlen (str_base16[i][0]);
+        LONGS_EQUAL(length, string_base16_decode (str_base16[i][1], str));
+        STRCMP_EQUAL(str_base16[i][0], str);
+    }
 }
 
 /*
  * Tests functions:
- *    string_encode_base32
- *    string_decode_base32
+ *    string_base32_encode
+ *    string_base32_decode
  */
 
 TEST(CoreString, Base32)
@@ -1384,7 +1396,7 @@ TEST(CoreString, Base32)
           { "B", "II======" },
           { "C", "IM======" },
           { "D", "IQ======" },
-          { "abc", "MFRGG===" },
+          { "abcdefgh", "MFRGGZDFMZTWQ===" },
           { "This is a test.", "KRUGS4ZANFZSAYJAORSXG5BO" },
           { "This is a test..", "KRUGS4ZANFZSAYJAORSXG5BOFY======" },
           { "This is a test...", "KRUGS4ZANFZSAYJAORSXG5BOFYXA====" },
@@ -1394,42 +1406,42 @@ TEST(CoreString, Base32)
             "FY======" },
           { NULL, NULL } };
 
-    /* string_encode_base32 */
-    LONGS_EQUAL(-1, string_encode_base32 (NULL, 0, NULL));
-    LONGS_EQUAL(-1, string_encode_base32 (NULL, 0, str));
-    LONGS_EQUAL(-1, string_encode_base32 ("", 0, NULL));
+    /* string_base32_encode */
+    LONGS_EQUAL(-1, string_base32_encode (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base32_encode (NULL, 0, str));
+    LONGS_EQUAL(-1, string_base32_encode ("", 0, NULL));
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base32 ("", -1, str));
+    LONGS_EQUAL(0, string_base32_encode ("", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base32 ("", 0, str));
+    LONGS_EQUAL(0, string_base32_encode ("", 0, str));
     BYTES_EQUAL(0x0, str[0]);
     for (i = 0; str_base32[i][0]; i++)
     {
         length = strlen (str_base32[i][1]);
-        LONGS_EQUAL(length, string_encode_base32 (str_base32[i][0],
+        LONGS_EQUAL(length, string_base32_encode (str_base32[i][0],
                                                   strlen (str_base32[i][0]),
                                                   str));
         STRCMP_EQUAL(str_base32[i][1], str);
     }
 
-    /* string_decode_base32 */
-    LONGS_EQUAL(-1, string_decode_base32 (NULL, NULL));
-    LONGS_EQUAL(-1, string_decode_base32 (NULL, str));
-    LONGS_EQUAL(-1, string_decode_base32 ("", NULL));
-    LONGS_EQUAL(0, string_decode_base32 ("", str));
+    /* string_base32_decode */
+    LONGS_EQUAL(-1, string_base32_decode (NULL, NULL));
+    LONGS_EQUAL(-1, string_base32_decode (NULL, str));
+    LONGS_EQUAL(-1, string_base32_decode ("", NULL));
+    LONGS_EQUAL(0, string_base32_decode ("", str));
     for (i = 0; str_base32[i][0]; i++)
     {
         length = strlen (str_base32[i][0]);
-        LONGS_EQUAL(length, string_decode_base32 (str_base32[i][1], str));
+        LONGS_EQUAL(length, string_base32_decode (str_base32[i][1], str));
         STRCMP_EQUAL(str_base32[i][0], str);
     }
 }
 
 /*
  * Tests functions:
- *    string_encode_base64
- *    string_decode_base64
+ *    string_base64_encode
+ *    string_base64_decode
  */
 
 TEST(CoreString, Base64)
@@ -1459,34 +1471,34 @@ TEST(CoreString, Base64)
             "QW5vdGhlciBleGFtcGxlIGZvciBiYXNlNjQuLi4=" },
           { NULL, NULL } };
 
-    /* string_encode_base64 */
-    LONGS_EQUAL(-1, string_encode_base64 (NULL, 0, NULL));
-    LONGS_EQUAL(-1, string_encode_base64 (NULL, 0, str));
-    LONGS_EQUAL(-1, string_encode_base64 ("", 0, NULL));
+    /* string_base64_encode */
+    LONGS_EQUAL(-1, string_base64_encode (NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base64_encode (NULL, 0, str));
+    LONGS_EQUAL(-1, string_base64_encode ("", 0, NULL));
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base64 ("", -1, str));
+    LONGS_EQUAL(0, string_base64_encode ("", -1, str));
     BYTES_EQUAL(0x0, str[0]);
     str[0] = 0xAA;
-    LONGS_EQUAL(0, string_encode_base64 ("", 0, str));
+    LONGS_EQUAL(0, string_base64_encode ("", 0, str));
     BYTES_EQUAL(0x0, str[0]);
     for (i = 0; str_base64[i][0]; i++)
     {
         length = strlen (str_base64[i][1]);
-        LONGS_EQUAL(length, string_encode_base64 (str_base64[i][0],
+        LONGS_EQUAL(length, string_base64_encode (str_base64[i][0],
                                                   strlen (str_base64[i][0]),
                                                   str));
         STRCMP_EQUAL(str_base64[i][1], str);
     }
 
-    /* string_decode_base64 */
-    LONGS_EQUAL(0, string_decode_base64 (NULL, NULL));
-    LONGS_EQUAL(0, string_decode_base64 (NULL, str));
-    LONGS_EQUAL(0, string_decode_base64 ("", NULL));
-    LONGS_EQUAL(0, string_decode_base64 ("", str));
+    /* string_base64_decode */
+    LONGS_EQUAL(0, string_base64_decode (NULL, NULL));
+    LONGS_EQUAL(0, string_base64_decode (NULL, str));
+    LONGS_EQUAL(0, string_base64_decode ("", NULL));
+    LONGS_EQUAL(0, string_base64_decode ("", str));
     for (i = 0; str_base64[i][0]; i++)
     {
         length = strlen (str_base64[i][0]);
-        LONGS_EQUAL(length, string_decode_base64 (str_base64[i][1], str));
+        LONGS_EQUAL(length, string_base64_decode (str_base64[i][1], str));
         STRCMP_EQUAL(str_base64[i][0], str);
     }
 }

@@ -2707,7 +2707,7 @@ string_format_size (unsigned long long size)
  */
 
 int
-string_encode_base16 (const char *from, int length, char *to)
+string_base16_encode (const char *from, int length, char *to)
 {
     int i, count;
     const char *hexa = "0123456789ABCDEF";
@@ -2734,7 +2734,7 @@ string_encode_base16 (const char *from, int length, char *to)
  */
 
 int
-string_decode_base16 (const char *from, char *to)
+string_base16_decode (const char *from, char *to)
 {
     int length, i, pos, count;
     unsigned char value;
@@ -2803,7 +2803,7 @@ string_decode_base16 (const char *from, char *to)
  */
 
 int
-string_encode_base32 (const char *from, int length, char *to)
+string_base32_encode (const char *from, int length, char *to)
 {
     unsigned char base32_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
     int count, value, next, bits_left, pad, index;
@@ -2880,7 +2880,7 @@ string_encode_base32 (const char *from, int length, char *to)
  */
 
 int
-string_decode_base32 (const char *from, char *to)
+string_base32_decode (const char *from, char *to)
 {
     const char *ptr_from;
     int value, bits_left, count;
@@ -2956,7 +2956,7 @@ string_convbase64_8x3_to_6x4 (const char *from, char *to)
  */
 
 int
-string_encode_base64 (const char *from, int length, char *to)
+string_base64_encode (const char *from, int length, char *to)
 {
     const char *ptr_from;
     char rest[3];
@@ -3027,7 +3027,7 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
  */
 
 int
-string_decode_base64 (const char *from, char *to)
+string_base64_decode (const char *from, char *to)
 {
     const char *ptr_from;
     int length, to_length, i;

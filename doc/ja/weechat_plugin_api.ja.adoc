@@ -1784,22 +1784,24 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(my_string, "?")
 ----
 
-==== string_encode_base64
+==== string_base_encode
+
+_WeeChat バージョン 2.4 以上で利用可。_
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.2, updated in 2.4._
-
-文字列を base64 でエンコード。
+Encode a string in base 16, 32, or 64.
 
 プロトタイプ:
 
 [source,C]
 ----
-int weechat_string_encode_base64 (const char *from, int length, char *to);
+int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
 
 引数:
 
+// TRANSLATION MISSING
+* _base_: 16, 32, or 64
 * _from_: エンコード元文字列
 * _length_: エンコードする文字列の長さ (例えば `strlen(from)`)
 * _to_: エンコード結果を保存する文字列へのポインタ
@@ -1807,7 +1809,8 @@ int weechat_string_encode_base64 (const char *from, int length, char *to);
 
 戻り値:
 
-* _*to_ に保存された文字列の長さ (最後の _\0_ は数えません)
+// TRANSLATION MISSING
+* _*to_ に保存された文字列の長さ (最後の `\0` は数えません), -1 if error
 
 C 言語での使用例:
 
@@ -1815,43 +1818,55 @@ C 言語での使用例:
 ----
 char *string = "abcdefgh", result[128];
 int length;
-length = weechat_string_encode_base64 (string, strlen (string), result);
+length = weechat_string_base_encode (16, string, strlen (string), result);
+/* length == 16, result == "6162636465666768" */
+length = weechat_string_base_encode (32, string, strlen (string), result);
+/* length == 16, result == "MFRGGZDFMZTWQ===" */
+length = weechat_string_base_encode (64, string, strlen (string), result);
 /* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
 [NOTE]
 スクリプト API ではこの関数を利用できません。
 
-==== string_decode_base64
+==== string_base_decode
 
-_WeeChat バージョン 0.3.2 以上で利用可。_
+_WeeChat バージョン 2.4 以上で利用可。_
 
-base64 文字列をデコード。
+// TRANSLATION MISSING
+Decode a string encoded in base 16, 32, or 64.
 
 プロトタイプ:
 
 [source,C]
 ----
-int weechat_string_decode_base64 (const char *from, char *to);
+int weechat_string_base_decode (int base, const char *from, char *to);
 ----
 
 引数:
 
+// TRANSLATION MISSING
+* _base_: 16, 32, or 64
 * _from_: デコード元文字列
 * _to_: デコード結果を保存する文字列へのポインタ
   (十分な領域を確保してください、結果はデコード元文字列よりも短くなります)
 
 戻り値:
 
-* _*to_ に保存された文字列の長さ (最後の _\0_ は数えません)
+// TRANSLATION MISSING
+* _*to_ に保存された文字列の長さ (最後の `\0` は数えません), -1 if error
 
 C 言語での使用例:
 
 [source,C]
 ----
-char *string = "YWJjZGVmZ2g=", result[128];
+char result[128];
 int length;
-length = weechat_string_decode_base64 (string, result);
+length = weechat_string_base_decode (16, "6162636465666768", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (32, "MFRGGZDFMZTWQ===", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (64, "YWJjZGVmZ2g=", result);
 /* length == 8, result == "abcdefgh" */
 ----
 

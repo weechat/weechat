@@ -73,8 +73,8 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
         answer_base64 = malloc (length * 4);
         if (answer_base64)
         {
-            if (weechat_string_encode_base64 (string, length - 1,
-                                              answer_base64) < 0)
+            if (weechat_string_base_encode (64, string, length - 1,
+                                            answer_base64) < 0)
             {
                 free (answer_base64);
                 answer_base64 = NULL;
@@ -180,7 +180,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         data = malloc (strlen (data_base64) + 1);
         if (!data)
             return NULL;
-        length_data = weechat_string_decode_base64 (data_base64, data);
+        length_data = weechat_string_base_decode (64, data_base64, data);
 
         /* read file with private key */
         str_privkey = irc_sasl_get_key_content (server, sasl_key);
@@ -226,8 +226,8 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                 pubkey_base64 = malloc ((x.size + 1 + 1) * 4);
                 if (pubkey_base64)
                 {
-                    if (weechat_string_encode_base64 (pubkey, x.size + 1,
-                                                      pubkey_base64) >= 0)
+                    if (weechat_string_base_encode (64, pubkey, x.size + 1,
+                                                    pubkey_base64) >= 0)
                     {
                         weechat_printf (
                             server->buffer,
@@ -299,7 +299,8 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
         answer_base64 = malloc ((length + 1) * 4);
         if (answer_base64)
         {
-            if (weechat_string_encode_base64 (string, length, answer_base64) < 0)
+            if (weechat_string_base_encode (64, string, length,
+                                            answer_base64) < 0)
             {
                 free (answer_base64);
                 answer_base64 = NULL;
@@ -364,7 +365,7 @@ irc_sasl_dh (const char *data_base64,
     data = malloc (strlen (data_base64) + 1);
     if (!data)
 	goto dhend;
-    length_data = weechat_string_decode_base64 (data_base64, data);
+    length_data = weechat_string_base_decode (64, data_base64, data);
     ptr_data = (unsigned char *)data;
 
     /* extract prime number */
@@ -520,8 +521,8 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     answer_base64 = malloc ((length_answer + 1) * 4);
     if (answer_base64)
     {
-        if (weechat_string_encode_base64 (answer, length_answer,
-                                          answer_base64) < 0)
+        if (weechat_string_base_encode (64, answer, length_answer,
+                                        answer_base64) < 0)
         {
             free (answer_base64);
             answer_base64 = NULL;
@@ -649,8 +650,8 @@ irc_sasl_mechanism_dh_aes (const char *data_base64,
     answer_base64 = malloc ((length_answer + 1) * 4);
     if (answer_base64)
     {
-        if (weechat_string_encode_base64 (answer, length_answer,
-                                          answer_base64) < 0)
+        if (weechat_string_base_encode (64, answer, length_answer,
+                                        answer_base64) < 0)
         {
             free (answer_base64);
             answer_base64 = NULL;

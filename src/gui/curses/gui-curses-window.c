@@ -2509,7 +2509,7 @@ gui_window_send_clipboard (const char *storage_unit, const char *text)
     text_base64 = malloc ((length * 4) + 1);
     if (text_base64)
     {
-        if (string_encode_base64 (text, length, text_base64) >= 0)
+        if (string_base64_encode (text, length, text_base64) >= 0)
         {
             fprintf (stderr, "\033]52;%s;%s\a",
                      (storage_unit) ? storage_unit : "",

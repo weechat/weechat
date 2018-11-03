@@ -214,8 +214,8 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     length = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
     gcry_md_write (hd, key, strlen (key));
     result = gcry_md_read (hd, GCRY_MD_SHA1);
-    if (weechat_string_encode_base64 ((char *)result, length,
-                                      sec_websocket_accept) < 0)
+    if (weechat_string_base_encode (64, (char *)result, length,
+                                    sec_websocket_accept) < 0)
     {
         sec_websocket_accept[0] = '\0';
     }

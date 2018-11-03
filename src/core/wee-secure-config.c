@@ -274,7 +274,7 @@ secure_config_data_read_cb (const void *pointer, void *data,
     if (!buffer)
         return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 
-    length_buffer = string_decode_base16 (value, buffer);
+    length_buffer = string_base16_decode (value, buffer);
     while (1)
     {
         decrypted = NULL;
@@ -370,7 +370,7 @@ secure_config_data_write_map_cb (void *data,
                 buffer_base16 = malloc ((length_buffer * 2) + 1);
                 if (buffer_base16)
                 {
-                    if (string_encode_base16 (buffer, length_buffer,
+                    if (string_base16_encode (buffer, length_buffer,
                                               buffer_base16) >= 0)
                     {
                         config_file_write_line (config_file, key,

@@ -1851,22 +1851,24 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(my_string, "?")
 ----
 
-==== string_encode_base64
+==== string_base_encode
+
+_WeeChat ≥ 2.4._
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.3.2, updated in 2.4._
-
-Codifica una stringa in base64.
+Encode a string in base 16, 32, or 64.
 
 Prototipo:
 
 [source,C]
 ----
-int weechat_string_encode_base64 (const char *from, int length, char *to);
+int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
 
 Argomenti:
 
+// TRANSLATION MISSING
+* _base_: 16, 32, or 64
 * _from_: stringa da codificare
 * _length_: lunghezza della stringa da codificare (ad esempio `strlen(from)`)
 * _to_: puntatore alla stringa per memorizzare il risultato (deve essere
@@ -1874,7 +1876,9 @@ Argomenti:
 
 Valore restituito:
 
-* lunghezza della stringa memorizzata in _*to_ (lo _\0_ finale non conta)
+// TRANSLATION MISSING
+* lunghezza della stringa memorizzata in _*to_ (lo `\0` finale non conta),
+  -1 if error
 
 Esempio in C:
 
@@ -1882,43 +1886,56 @@ Esempio in C:
 ----
 char *string = "abcdefgh", result[128];
 int length;
-length = weechat_string_encode_base64 (string, strlen (string), result);
+length = weechat_string_base_encode (16, string, strlen (string), result);
+/* length == 16, result == "6162636465666768" */
+length = weechat_string_base_encode (32, string, strlen (string), result);
+/* length == 16, result == "MFRGGZDFMZTWQ===" */
+length = weechat_string_base_encode (64, string, strlen (string), result);
 /* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
-==== string_decode_base64
+==== string_base_decode
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 2.4._
 
-Decodifica una stringa in base64.
+// TRANSLATION MISSING
+Decode a string encoded in base 16, 32, or 64.
 
 Prototipo:
 
 [source,C]
 ----
-int weechat_string_decode_base64 (const char *from, char *to);
+int weechat_string_base_decode (int base, const char *from, char *to);
 ----
 
 Argomenti:
 
+// TRANSLATION MISSING
+* _base_: 16, 32, or 64
 * _from_: stringa da decodificare
 * _to_: puntatore alla stringa per memorizzare il risultato (deve essere
   sufficientemente lunga, il risultato è più lungo della stringa iniziale)
 
 Valore restituito:
 
-* lunghezza della stringa memorizzata in _*to_ (lo _\0_ finale non conta)
+// TRANSLATION MISSING
+* lunghezza della stringa memorizzata in _*to_ (lo `\0` finale non conta),
+  -1 if error
 
 Esempio in C:
 
 [source,C]
 ----
-char *string = "YWJjZGVmZ2g=", result[128];
+char result[128];
 int length;
-length = weechat_string_decode_base64 (string, result);
+length = weechat_string_base_decode (16, "6162636465666768", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (32, "MFRGGZDFMZTWQ===", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (64, "YWJjZGVmZ2g=", result);
 /* length == 8, result == "abcdefgh" */
 ----
 

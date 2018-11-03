@@ -28,6 +28,10 @@ extern void plugin_api_charset_set (struct t_weechat_plugin *plugin,
 extern const char *plugin_api_gettext (const char *string);
 extern const char *plugin_api_ngettext (const char *single, const char *plural,
                                         int count);
+extern int plugin_api_string_base_encode (int base, const char *from,
+                                          int length, char *to);
+extern int plugin_api_string_base_decode (int base, const char *from,
+                                          char *to);
 
 /* config */
 extern void plugin_api_config_file_option_free (struct t_config_option *option);

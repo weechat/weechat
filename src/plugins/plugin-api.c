@@ -95,6 +95,45 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
 }
 
 /*
+ * Encodes a string in base 16, 32, or 64.
+ */
+
+int
+plugin_api_string_base_encode (int base, const char *from, int length,
+                               char *to)
+{
+    switch (base)
+    {
+        case 16:
+            return string_base16_encode (from, length, to);
+        case 32:
+            return string_base32_encode (from, length, to);
+        case 64:
+            return string_base64_encode (from, length, to);
+    }
+    return -1;
+}
+
+/*
+ * Decodes a string encoded in base 16, 32, or 64.
+ */
+
+int
+plugin_api_string_base_decode (int base, const char *from, char *to)
+{
+    switch (base)
+    {
+        case 16:
+            return string_base16_decode (from, to);
+        case 32:
+            return string_base32_decode (from, to);
+        case 64:
+            return string_base64_decode (from, to);
+    }
+    return -1;
+}
+
+/*
  * Frees an option.
  */
 

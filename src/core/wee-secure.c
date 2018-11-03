@@ -466,7 +466,7 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
                 buffer = malloc (strlen (value) + 1);
                 if (buffer)
                 {
-                    length_buffer = string_decode_base16 (value, buffer);
+                    length_buffer = string_base16_decode (value, buffer);
                     decrypted = NULL;
                     length_decrypted = 0;
                     rc = secure_decrypt_data (
@@ -595,7 +595,7 @@ secure_totp_generate (const char *secret_base32, time_t totp_time, int digits)
     if (!secret)
         goto error;
 
-    length_secret = string_decode_base32 (secret_base32, secret);
+    length_secret = string_base32_decode (secret_base32, secret);
     if (length_secret < 0)
         goto error;
 
@@ -654,7 +654,7 @@ secure_totp_validate (const char *secret_base32, time_t totp_time, int window,
     if (!secret)
         goto error;
 
-    length_secret = string_decode_base32 (secret_base32, secret);
+    length_secret = string_base32_decode (secret_base32, secret);
     if (length_secret < 0)
         goto error;
 

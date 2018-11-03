@@ -1778,21 +1778,22 @@ str = weechat.string_remove_color(string, replacement)
 str = weechat.string_remove_color(my_string, "?")
 ----
 
-==== string_encode_base64
+==== string_base_encode
 
-_WeeChat ≥ 0.3.2, updated in 2.4._
+_WeeChat ≥ 2.4._
 
-Encode a string in base64.
+Encode a string in base 16, 32, or 64.
 
 Prototype:
 
 [source,C]
 ----
-int weechat_string_encode_base64 (const char *from, int length, char *to);
+int weechat_string_base_encode (int base, const char *from, int length, char *to);
 ----
 
 Arguments:
 
+* _base_: 16, 32, or 64
 * _from_: string to encode
 * _length_: length of string to encode (for example `strlen(from)`)
 * _to_: pointer to string to store result (must be long enough, result is
@@ -1800,7 +1801,7 @@ Arguments:
 
 Return value:
 
-* length of string stored in _*to_ (does not count final _\0_)
+* length of string stored in _*to_ (does not count final `\0`), -1 if error
 
 C example:
 
@@ -1808,43 +1809,52 @@ C example:
 ----
 char *string = "abcdefgh", result[128];
 int length;
-length = weechat_string_encode_base64 (string, strlen (string), result);
+length = weechat_string_base_encode (16, string, strlen (string), result);
+/* length == 16, result == "6162636465666768" */
+length = weechat_string_base_encode (32, string, strlen (string), result);
+/* length == 16, result == "MFRGGZDFMZTWQ===" */
+length = weechat_string_base_encode (64, string, strlen (string), result);
 /* length == 12, result == "YWJjZGVmZ2g=" */
 ----
 
 [NOTE]
 This function is not available in scripting API.
 
-==== string_decode_base64
+==== string_base_decode
 
-_WeeChat ≥ 0.3.2._
+_WeeChat ≥ 2.4._
 
-Decode a base64 string.
+Decode a string encoded in base 16, 32, or 64.
 
 Prototype:
 
 [source,C]
 ----
-int weechat_string_decode_base64 (const char *from, char *to);
+int weechat_string_base_decode (int base, const char *from, char *to);
 ----
 
 Arguments:
 
+* _base_: 16, 32, or 64
 * _from_: string to decode
 * _to_: pointer to string to store result (must be long enough, result is
   shorter than initial string)
 
 Return value:
 
-* length of string stored in _*to_ (does not count final _\0_)
+* length of string stored in _*to_ (does not count final `\0`), -1 if error
 
 C example:
 
 [source,C]
 ----
-char *string = "YWJjZGVmZ2g=", result[128];
+char result[128];
 int length;
-length = weechat_string_decode_base64 (string, result);
+length = weechat_string_base_decode (16, "6162636465666768", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (32, "MFRGGZDFMZTWQ===", result);
+/* length == 8, result == "abcdefgh" */
+length = weechat_string_base_decode (64, "YWJjZGVmZ2g=", result);
 /* length == 8, result == "abcdefgh" */
 ----
 
