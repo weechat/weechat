@@ -1365,7 +1365,7 @@ sont utilisés :
 | chr  | Caractère signé       | 1 octet
 | int  | Entier signé          | 4 octets
 | lon  | Entier long signé     | 1 octet + longueur de l'entier sous forme de chaîne
-| str  | Chaîne                | 4 octets + longueur de la chaîne (sans le _\0_ final)
+| str  | Chaîne                | 4 octets + longueur de la chaîne (sans le `\0` final)
 | buf  | Tampon d'octets       | 4 octets + longueur des données
 | ptr  | Pointeur              | 1 octet + longueur du pointeur sous forme de chaîne
 | tim  | Date/heure            | 1 octet + longueur de la date/heure sous forme de chaîne
@@ -1437,7 +1437,7 @@ long.  '-'  '1'  '2'  '3'  '4'  '5'  '6'  '7'  '8'  '9'  '0'
 ==== Chaîne de caractères
 
 Une chaîne de caractère est une longueur (un entier sur 4 octets) + le contenu
-de la chaîne (sans le _\0_ final).
+de la chaîne (sans le `\0` final).
 
 Exemple :
 
