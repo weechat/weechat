@@ -32,7 +32,7 @@ Homepage: https://weechat.org/
 
 image::https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
 
-Other screenshots are on https://weechat.org/about/screenshots/[this page].
+On WeeChat's website you can find https://weechat.org/about/screenshots/[more screenshots].
 
 == Install
 
