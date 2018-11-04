@@ -3161,6 +3161,34 @@ It is highly recommended to set a password for relay, with command:
 
 This password is used for _irc_ and _weechat_ protocols.
 
+[[relay_totp]]
+==== TOTP
+
+TOTP (Time-based One-Time Password) can be used as secondary authentication
+factor for _weechat_ protocol, in addition to the password.
+
+This is optional and increases the security level.
+
+One-time passwords can be generated with applications, for example:
+
+* FreeOTP:
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
+  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
+  (https://freeotp.github.io/[web site])
+* Google Authenticator:
+  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
+  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+
+The TOTP secret must be set in WeeChat and the application used to generate
+one-time passwords.
+
+It must be a string encoded in base32, with only letters and digits from 2 to 7,
+for example:
+
+----
+/set relay.network.totp_secret "secretpasswordbase32"
+----
+
 [[relay_ssl]]
 ==== SSL
 

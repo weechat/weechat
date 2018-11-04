@@ -3261,6 +3261,36 @@ commande :
 
 Ce mot de passe sera utilisé pour les protocoles _irc_ et _weechat_.
 
+[[relay_totp]]
+==== TOTP
+
+TOTP (« Time-based One-Time Password » : mot de passe à usage unique basé sur le
+temps) peut être utilisé comme second facteur d'authentification pour le protocole
+_weechat_, en plus du mot de passe.
+
+Il est optionnel et augmente le niveau de sécurité.
+
+Les mots de passe à usage unique peuvent être générés avec des applications,
+par exemple :
+
+* FreeOTP :
+  https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
+  https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
+  (https://freeotp.github.io/[site web])
+* Google Authenticator :
+  https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
+  https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
+
+Le « secret » TOTP doit être défini dans WeeChat et dans l'application utilisée
+pour générer les mots de passe à usage unique.
+
+Il doit être une chaîne encodée en base32, avec seulement des lettres et des
+chiffres de 2 à 7, par exemple :
+
+----
+/set relay.network.totp_secret "secretpasswordbase32"
+----
+
 [[relay_ssl]]
 ==== SSL
 

@@ -169,8 +169,9 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
-    char **options, *pos, *password;
-    int i, compression;
+    char **options, *pos, *password, *totp_secret, *info_totp_args;
+    const char *info_totp;
+    int i, compression, length;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
@@ -186,18 +187,39 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 pos++;
                 if (strcmp (options[i], "password") == 0)
                 {
-                    password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
-                                                               NULL, NULL, NULL);
+                    password = weechat_string_eval_expression (
+                        weechat_config_string (relay_config_network_password),
+                        NULL, NULL, NULL);
                     if (password)
                     {
                         if (strcmp (password, pos) == 0)
-                        {
                             RELAY_WEECHAT_DATA(client, password_ok) = 1;
-                            weechat_hook_signal_send ("relay_client_auth_ok",
-                                                      WEECHAT_HOOK_SIGNAL_POINTER,
-                                                      client);
-                        }
                         free (password);
+                    }
+                }
+                else if (strcmp (options[i], "totp") == 0)
+                {
+                    totp_secret = weechat_string_eval_expression (
+                        weechat_config_string (relay_config_network_totp_secret),
+                        NULL, NULL, NULL);
+                    if (totp_secret)
+                    {
+                        length = strlen (totp_secret) + strlen (pos) + 16 + 1;
+                        info_totp_args = malloc (length);
+                        if (info_totp_args)
+                        {
+                            /* validate the OTP received from the client */
+                            snprintf (info_totp_args, length,
+                                      "%s,%s,0,%d",
+                                      totp_secret,  /* the shared secret */
+                                      pos,          /* the OTP from client */
+                                      weechat_config_integer (relay_config_network_totp_window));
+                            info_totp = weechat_info_get ("totp_validate", info_totp_args);
+                            if (info_totp && (strcmp (info_totp, "1") == 0))
+                                RELAY_WEECHAT_DATA(client, totp_ok) = 1;
+                            free (info_totp_args);
+                        }
+                        free (totp_secret);
                     }
                 }
                 else if (strcmp (options[i], "compression") == 0)
@@ -211,8 +233,17 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         weechat_string_free_split_command (options);
     }
 
-    if (!RELAY_WEECHAT_DATA(client, password_ok))
+    if (RELAY_WEECHAT_DATA(client, password_ok)
+        && RELAY_WEECHAT_DATA(client, totp_ok))
+    {
+        weechat_hook_signal_send ("relay_client_auth_ok",
+                                  WEECHAT_HOOK_SIGNAL_POINTER,
+                                  client);
+    }
+    else
+    {
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -1383,10 +1414,11 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
         if (strcmp (protocol_cb[i].name, command) == 0)
         {
             if ((strcmp (protocol_cb[i].name, "init") != 0)
-                && (!RELAY_WEECHAT_DATA(client, password_ok)))
+                && (!RELAY_WEECHAT_DATA(client, password_ok)
+                    || !RELAY_WEECHAT_DATA(client, totp_ok)))
             {
                 /*
-                 * command is not "init" and password is not set?
+                 * command is not "init" and password or totp are not set?
                  * then close connection!
                  */
                 relay_client_set_status (client,

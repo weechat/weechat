@@ -166,15 +166,20 @@ relay_weechat_free_buffers_nicklist (struct t_hashtable *hashtable,
 void
 relay_weechat_alloc (struct t_relay_client *client)
 {
-    char *password;
+    char *password, *totp_secret;
 
-    password = weechat_string_eval_expression (weechat_config_string (relay_config_network_password),
-                                               NULL, NULL, NULL);
+    password = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_password),
+        NULL, NULL, NULL);
+    totp_secret = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_totp_secret),
+        NULL, NULL, NULL);
 
     client->protocol_data = malloc (sizeof (struct t_relay_weechat_data));
     if (client->protocol_data)
     {
         RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
+        RELAY_WEECHAT_DATA(client, totp_ok) = (totp_secret && totp_secret[0]) ? 0 : 1;
         RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
         RELAY_WEECHAT_DATA(client, buffers_sync) =
             weechat_hashtable_new (32,
@@ -199,6 +204,8 @@ relay_weechat_alloc (struct t_relay_client *client)
 
     if (password)
         free (password);
+    if (totp_secret)
+        free (totp_secret);
 }
 
 /*
@@ -221,6 +228,11 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
         /* general stuff */
         RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
             infolist, "password_ok");
+        /* "totp_ok" is new in WeeChat 2.4 */
+        if (weechat_infolist_search_var (infolist, "totp_ok"))
+            RELAY_WEECHAT_DATA(client, totp_ok) = weechat_infolist_integer (infolist, "totp_ok");
+        else
+            RELAY_WEECHAT_DATA(client, totp_ok) = 1;
         RELAY_WEECHAT_DATA(client, compression) = weechat_infolist_integer (
             infolist, "compression");
 
@@ -314,6 +326,8 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
 
     if (!weechat_infolist_new_var_integer (item, "password_ok", RELAY_WEECHAT_DATA(client, password_ok)))
         return 0;
+    if (!weechat_infolist_new_var_integer (item, "totp_ok", RELAY_WEECHAT_DATA(client, totp_ok)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "compression", RELAY_WEECHAT_DATA(client, compression)))
         return 0;
     if (!weechat_hashtable_add_to_infolist (RELAY_WEECHAT_DATA(client, buffers_sync), item, "buffers_sync"))
@@ -332,6 +346,7 @@ relay_weechat_print_log (struct t_relay_client *client)
     if (client->protocol_data)
     {
         weechat_log_printf ("    password_ok. . . . . . : %d",   RELAY_WEECHAT_DATA(client, password_ok));
+        weechat_log_printf ("    totp_ok. . . . . . . . : %d",   RELAY_WEECHAT_DATA(client, totp_ok));
         weechat_log_printf ("    compression. . . . . . : %d",   RELAY_WEECHAT_DATA(client, compression));
         weechat_log_printf ("    buffers_sync . . . . . : 0x%lx (hashtable: '%s')",
                             RELAY_WEECHAT_DATA(client, buffers_sync),

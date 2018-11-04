@@ -46,6 +46,8 @@ extern struct t_config_option *relay_config_network_max_clients;
 extern struct t_config_option *relay_config_network_password;
 extern struct t_config_option *relay_config_network_ssl_cert_key;
 extern struct t_config_option *relay_config_network_ssl_priorities;
+extern struct t_config_option *relay_config_network_totp_secret;
+extern struct t_config_option *relay_config_network_totp_window;
 extern struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 extern struct t_config_option *relay_config_irc_backlog_max_minutes;
@@ -59,6 +61,10 @@ extern regex_t *relay_config_regex_allowed_ips;
 extern regex_t *relay_config_regex_websocket_allowed_origins;
 extern struct t_hashtable *relay_config_hashtable_irc_backlog_tags;
 
+extern int relay_config_check_network_totp_secret (const void *pointer,
+                                                   void *data,
+                                                   struct t_config_option *option,
+                                                   const char *value);
 extern int relay_config_create_option_port (const void *pointer, void *data,
                                             struct t_config_file *config_file,
                                             struct t_config_section *section,

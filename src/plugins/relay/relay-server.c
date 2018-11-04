@@ -228,12 +228,15 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     void *ptr_addr;
     int client_fd, flags, set, max_clients, num_clients_on_port;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
-    char *ptr_ip_address;
-    const char *relay_password;
+    char *ptr_ip_address, *relay_password, *relay_totp_secret;
 
     /* make C compiler happy */
     (void) data;
     (void) fd;
+
+    client_fd = -1;
+    relay_password = NULL;
+    relay_totp_secret = NULL;
 
     server = (struct t_relay_server *)pointer;
 
@@ -259,7 +262,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         server->port, server->protocol_string,
                         errno, strerror (errno));
-        return WEECHAT_RC_OK;
+        goto error;
     }
 
     /* check if relay password is empty and if it is not allowed */
@@ -274,8 +277,34 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                           "is empty, and option "
                           "relay.network.allow_empty_password is off"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
-        close (client_fd);
-        return WEECHAT_RC_OK;
+        goto error;
+    }
+
+    if (server->protocol == RELAY_PROTOCOL_WEECHAT)
+    {
+        /*
+         * TOTP can be enabled only as second factor, in addition to the
+         * password (only for weechat protocol)
+         */
+        relay_totp_secret = weechat_string_eval_expression (
+            weechat_config_string (relay_config_network_totp_secret),
+            NULL, NULL, NULL);
+        if ((!relay_password || !relay_password[0])
+            && relay_totp_secret && relay_totp_secret[0])
+        {
+            weechat_printf (NULL,
+                            _("%s%s: Time-based One-Time Password (TOTP) "
+                              "can be enabled only as second factor, if the "
+                              "password is not empty"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+            goto error;
+        }
+        if (!relay_config_check_network_totp_secret (
+                NULL, NULL, NULL,
+                weechat_config_string (relay_config_network_totp_secret)))
+        {
+            goto error;
+        }
     }
 
     /* check if we have reached the max number of clients on this port */
@@ -294,8 +323,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                     max_clients),
                 weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                 max_clients);
-            close (client_fd);
-            return WEECHAT_RC_OK;
+            goto error;
         }
     }
 
@@ -340,8 +368,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                             RELAY_PLUGIN_NAME,
                             ptr_ip_address);
         }
-        close (client_fd);
-        return WEECHAT_RC_OK;
+        goto error;
     }
 
     /* set non-blocking mode for socket */
@@ -360,12 +387,23 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
                           "error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
                         "SO_REUSEADDR", set, errno, strerror (errno));
-        close (client_fd);
-        return WEECHAT_RC_OK;
+        goto error;
     }
 
     /* add the client */
     relay_client_new (client_fd, ptr_ip_address, server);
+
+    goto end;
+
+error:
+    if (client_fd >= 0)
+        close (client_fd);
+
+end:
+    if (relay_password)
+        free (relay_password);
+    if (relay_totp_secret)
+        free (relay_totp_secret);
 
     return WEECHAT_RC_OK;
 }

@@ -119,8 +119,12 @@ init [<option>=<valeur>,[<option>=<valeur>,...]]
 Paramètres :
 
 * _option_ : une des options suivantes :
-** _password_ : mot de passe utilisé pour s'authentifier avec _relay_ (option
-   _relay.network.password_ dans WeeChat)
+** _password_ : mot de passe utilisé pour s'authentifier avec _relay_
+   (option _relay.network.password_ dans WeeChat)
+** _totp_ : mot de passe à usage unique basé sur le temps (TOTP : Time-based
+   One-Time Password) utilisé comme second facteur d'authentification, en plus
+   du mot de passe (option _relay.network.totp_secret_ dans WeeChat)
+   _(WeeChat ≥ 2.4)_
 ** _compression_ : type de compression :
 *** _zlib_ : activer la compression _zlib_ pour les messages envoyés par _relay_
     (activée par défaut si _relay_ supporte la compression _zlib_)
@@ -138,6 +142,9 @@ init password=mypass
 
 # initialiser avec des virgules dans le mot de passe (WeeChat ≥ 1.6)
 init password=mypass\,avec\,virgules
+
+# initialiser avec le mot de passe et TOTP (WeeChat ≥ 2.4)
+init password=mypass,totp=123456
 
 # initialiser et désactiver la compression
 init password=mypass,compression=off

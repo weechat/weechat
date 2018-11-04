@@ -62,6 +62,8 @@ struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_password;
 struct t_config_option *relay_config_network_ssl_cert_key;
 struct t_config_option *relay_config_network_ssl_priorities;
+struct t_config_option *relay_config_network_totp_secret;
+struct t_config_option *relay_config_network_totp_window;
 struct t_config_option *relay_config_network_websocket_allowed_origins;
 
 /* relay config, irc section */
@@ -203,7 +205,66 @@ relay_config_change_network_ssl_cert_key (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "relay.network.ssl_priorities".
+ * Checks if option "relay.network.totp_secret" is valid.
+ *
+ * Returns:
+ *   1: value is valid
+ *   0: value is not valid
+ */
+
+int
+relay_config_check_network_totp_secret (const void *pointer, void *data,
+                                        struct t_config_option *option,
+                                        const char *value)
+{
+    char *totp_secret, *secret;
+    int rc, length;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    totp_secret = NULL;
+    secret = NULL;
+
+    totp_secret = weechat_string_eval_expression (value, NULL, NULL, NULL);
+    if (totp_secret && totp_secret[0])
+    {
+        secret = malloc (strlen (totp_secret) + 1);
+        if (!secret)
+            goto error;
+        length = weechat_string_base_decode (32, totp_secret, secret);
+        if (length < 0)
+            goto error;
+    }
+
+    rc = 1;
+    goto end;
+
+error:
+    rc = 0;
+    weechat_printf (NULL,
+                    _("%s%s: invalid value for option "
+                      "\"relay.network.totp_secret\"; it must be a valid "
+                      "string encoded in base32 "
+                      "(only letters and digits from 2 to 7)"),
+                    weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+
+end:
+    if (totp_secret)
+        free (totp_secret);
+    if (secret)
+        free (secret);
+    return rc;
+}
+
+/*
+ * Checks if option "relay.network.ssl_priorities" is valid.
+ *
+ * Returns:
+ *   1: value is valid
+ *   0: value is not valid
  */
 
 int
@@ -842,6 +903,31 @@ relay_config_init ()
         &relay_config_check_network_ssl_priorities, NULL, NULL,
         &relay_config_change_network_ssl_priorities, NULL, NULL,
         NULL, NULL, NULL);
+    relay_config_network_totp_secret = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "totp_secret", "string",
+        N_("secret for the generation of the Time-based One-Time Password "
+           "(TOTP), encoded in base32 (only letters and digits from 2 to 7); "
+           "it is used as second factor in weechat protocol, in addition to "
+           "the password, which must not be empty "
+           "(empty value means no TOTP is required) "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "", NULL, 0,
+        &relay_config_check_network_totp_secret, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    relay_config_network_totp_window = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "totp_window", "integer",
+        N_("number of Time-based One-Time Passwords to accept before and "
+           "after the current one: "
+           "0 = accept only the current password, "
+           "1 = accept one password before, the current, and one after, "
+           "2 = accept two passwords before, the current, and two after, "
+           "...; a high number reduces the security level "
+           "(0 or 1 are recommended values)"),
+        NULL, 0, 256, "0", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_websocket_allowed_origins = weechat_config_new_option (
         relay_config_file, ptr_section,
         "websocket_allowed_origins", "string",
