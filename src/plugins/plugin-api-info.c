@@ -1731,14 +1731,14 @@ plugin_api_info_init ()
                N_("generate a Time-based One-Time Password (TOTP)"),
                N_("secret (in base32), timestamp (optional, current time by "
                   "default), number of digits (optional, between 4 and 10, "
-                  "6 is default and recommended value)"),
+                  "6 by default)"),
                &plugin_api_info_totp_generate_cb, NULL, NULL);
     hook_info (NULL, "totp_validate",
                N_("validate a Time-based One-Time Password (TOTP): 1 if TOTP "
                   "is correct, otherwise 0"),
                N_("secret (in base32), one-time password, "
-                  "timestamp (optional), number of OTP after/before to test "
-                  "(optional, 0 by default)"),
+                  "timestamp (optional, current time by default), number of "
+                  "passwords before/after to test (optional, 0 by default)"),
                &plugin_api_info_totp_validate_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
