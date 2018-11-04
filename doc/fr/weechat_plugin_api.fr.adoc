@@ -8730,7 +8730,7 @@ d'une commande externe).
 
 [TIP]
 Si vous souhaitez récupérer des infos à propos de WeeChat (comme la version
-stable actuelle, le dernier commit git, etc...), vous pouvez utiliser les URLs
+stable actuelle, le dernier commit git, etc.), vous pouvez utiliser les URLs
 sur la page https://weechat.org/dev/info
 
 [NOTE]

@@ -429,7 +429,7 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** Beschreibung: pass:none[Multiplikator für die Verzögerung bei der automatischen Wiederverbindung zum Server (1 = immer die selbe Verzögerung nutzen, 2 = Verzögerung*2 für jeden weiteren Versuch, ..)]
+** Beschreibung: pass:none[growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, etc.)]
 ** Typ: integer
 ** Werte: 1 .. 100
 ** Standardwert: `+2+`

@@ -142,7 +142,7 @@ Selon la façon de lancer WeeChat, vous devriez avoir :
 
 * Si WeeChat tourne en local ou sur une machine distante sans screen ni tmux :
   cela dépend du terminal utilisé : _xterm_, _xterm-256color_, _rxvt-unicode_,
-  _rxvt-256color_, etc...
+  _rxvt-256color_, etc.
 * Si WeeChat tourne sous screen, vous devriez avoir _screen_ ou _screen-256color_.
 * Si WeeChat tourne sous tmux, vous devriez avoir _tmux_, _tmux-256color_,
   _screen_ ou _screen-256color_.
@@ -322,7 +322,7 @@ Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
 défaut : kbd:[Alt+l]).
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
-rxvt-unicode, konsole, gnome-terminal, etc...). La touche est habituellement
+rxvt-unicode, konsole, gnome-terminal, etc.). La touche est habituellement
 kbd:[Ctrl] + kbd:[Alt] + sélection à la souris.
 
 Une autre solution est de déplacer la liste des pseudos en haut ou en bas, par
@@ -1081,7 +1081,7 @@ tester WeeChat.
 [[help_developers]]
 === Je souhaiterais aider les développeurs WeeChat. Que puis-je faire ?
 
-Il y a plusieurs choses à faire (test, code, documentation, etc...)
+Il y a plusieurs choses à faire (test, code, documentation, etc.)
 
 Merci de prendre contact avec nous par IRC ou mail, consultez la page
 support : https://weechat.org/about/support

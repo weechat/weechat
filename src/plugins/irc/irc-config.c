@@ -3198,7 +3198,7 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "autoreconnect_delay_growing", "integer",
         N_("growing factor for autoreconnect delay to server (1 = always same "
-           "delay, 2 = delay*2 for each retry, ..)"),
+           "delay, 2 = delay*2 for each retry, etc.)"),
         NULL, 1, 100, "2", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_autoreconnect_delay_max = weechat_config_new_option (

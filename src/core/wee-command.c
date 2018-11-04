@@ -7861,7 +7861,7 @@ command_init ()
            "only)\n"
            "      line: line number for buffer with free content (first line "
            "is 0, a negative number displays after last line: -1 = after last "
-           "line, -2 = two lines after last line, ...)\n"
+           "line, -2 = two lines after last line, etc.)\n"
            "   -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
            "     -date: message date, format can be:\n"
            "              -n: 'n' seconds before now\n"

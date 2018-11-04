@@ -160,7 +160,7 @@ Examples:
 
    server: send to this server (internal name)
    target: nick or channel ('*' = current channel)
-     type: CTCP type (examples: "version", "ping", ..)
+     type: CTCP type (examples: "version", "ping", etc.)
 arguments: arguments for CTCP
 
 Examples:

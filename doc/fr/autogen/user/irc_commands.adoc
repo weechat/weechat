@@ -160,7 +160,7 @@ Exemples :
 
    server : envoyer à ce serveur (nom interne)
     cible : pseudo ou nom de canal ('*' = canal courant)
-     type : type de CTCP (exemples : "version", "ping", etc...)
+     type : type de CTCP (exemples : "version", "ping", etc.)
 arguments : paramètres pour le CTCP
 
 Exemples :

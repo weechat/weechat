@@ -527,7 +527,7 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nom                  | Description
-| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc...).
+| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.).
 | WEECHAT_PASSPHRASE   | La phrase de chiffrement utilisée pour déchiffrer les données sécurisées.
 | WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
 |===
@@ -3626,7 +3626,7 @@ une ou plusieurs commandes. Une condition peut être utilisée pour empêcher le
 trigger de s'exécuter dans certaines circonstances.
 
 Utiliser les triggers nécessite de connaître le fonctionnement des signaux,
-modificateurs, etc... Il peut être utile de lire la
+modificateurs, etc. Il peut être utile de lire la
 link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
 [[trigger_default]]

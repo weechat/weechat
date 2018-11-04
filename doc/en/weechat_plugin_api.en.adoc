@@ -8566,7 +8566,7 @@ In scripting API, the function _name_ is called directly and its result
 
 [TIP]
 If you want to retrieve infos about WeeChat (like current stable version,
-latest git commit, ...), you can use URLs on page https://weechat.org/dev/info
+latest git commit, etc.), you can use URLs on page https://weechat.org/dev/info
 
 [NOTE]
 Buffer size for sending data to callback is 64KB (there are 2 buffers: one for

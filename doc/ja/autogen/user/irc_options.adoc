@@ -429,7 +429,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** 説明: pass:none[サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、..)]
+** 説明: pass:none[growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, etc.)]
 ** タイプ: 整数
 ** 値: 1 .. 100
 ** デフォルト値: `+2+`

@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-04 14:46+0100\n"
-"PO-Revision-Date: 2018-03-31 15:37+0200\n"
+"POT-Creation-Date: 2018-11-04 21:47+0100\n"
+"PO-Revision-Date: 2018-11-04 21:44+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -1927,7 +1927,7 @@ msgid ""
 "        -y: display on a custom line (for buffer with free content only)\n"
 "      line: line number for buffer with free content (first line is 0, a "
 "negative number displays after last line: -1 = after last line, -2 = two "
-"lines after last line, ...)\n"
+"lines after last line, etc.)\n"
 "   -escape: interpret escaped chars (for example \\a, \\07, \\x07)\n"
 "     -date: message date, format can be:\n"
 "              -n: 'n' seconds before now\n"
@@ -6300,7 +6300,7 @@ msgstr "адресат[,адресат] текст"
 msgid ""
 "   server: send to this server (internal name)\n"
 "   target: nick or channel ('*' = current channel)\n"
-"     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+"     type: CTCP type (examples: \"version\", \"ping\", etc.)\n"
 "arguments: arguments for CTCP\n"
 "\n"
 "Examples:\n"
@@ -8084,7 +8084,7 @@ msgstr ""
 
 msgid ""
 "growing factor for autoreconnect delay to server (1 = always same delay, 2 = "
-"delay*2 for each retry, ..)"
+"delay*2 for each retry, etc.)"
 msgstr ""
 
 msgid "maximum autoreconnect delay to server (in seconds, 0 = no maximum)"
@@ -11949,25 +11949,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid "empty variable"
-#~ msgstr "  . тип: целочисленный\n"
-
-#, fuzzy
-#~ msgid "Not enough memory for new line"
-#~ msgstr "Недостаточно памяти для новой строчки\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "format of each line with a buffer (note: content is evaluated, see /help "
-#~ "buflist)"
-#~ msgstr "ник, используемый на IRC сервере"
-
-#, fuzzy
-#~ msgid "[<channel>[,<channel>...]] [<target>] [-re <regex>]"
-#~ msgstr "[канал[,канал] [сервер]]"
-
-#, fuzzy
-#~ msgid "<server1> [<server2>]"
-#~ msgstr "сервер1 [сервер2]"

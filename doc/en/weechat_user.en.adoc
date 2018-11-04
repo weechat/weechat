@@ -515,7 +515,7 @@ Some environment variables are used by WeeChat if they are defined:
 [width="100%",cols="1m,6",options="header"]
 |===
 | Name                 | Description
-| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, ...).
+| WEECHAT_HOME         | The WeeChat home (with configuration files, logs, scripts, etc.).
 | WEECHAT_PASSPHRASE   | The passphrase used to decrypt secured data.
 | WEECHAT_EXTRA_LIBDIR | An extra directory to load plugins (from the "plugins" directory in this path).
 |===
@@ -3508,7 +3508,7 @@ include::autogen/user/php_options.adoc[]
 === Trigger
 
 Trigger is the Swiss Army knife for WeeChat: it can hook many things (signal,
-modifier, print, ...), change the content of data, and execute one or more
+modifier, print, etc.), change the content of data, and execute one or more
 commands. A condition can be used to prevent the trigger to run in some
 circumstances.
 

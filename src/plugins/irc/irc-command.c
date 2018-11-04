@@ -6416,7 +6416,7 @@ irc_command_init ()
         N_("[-server <server>] <target>[,<target>...] <type> [<arguments>]"),
         N_("   server: send to this server (internal name)\n"
            "   target: nick or channel ('*' = current channel)\n"
-           "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
+           "     type: CTCP type (examples: \"version\", \"ping\", etc.)\n"
            "arguments: arguments for CTCP\n"
            "\n"
            "Examples:\n"

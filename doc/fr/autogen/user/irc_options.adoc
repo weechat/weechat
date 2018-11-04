@@ -429,7 +429,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** description: pass:none[facteur de croissance du délai d'auto-reconnexion au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc...)]
+** description: pass:none[facteur de croissance du délai d'auto-reconnexion au serveur (1 = toujours le même délai, 2 = délai*2 pour chaque tentative, etc.)]
 ** type: entier
 ** valeurs: 1 .. 100
 ** valeur par défaut: `+2+`

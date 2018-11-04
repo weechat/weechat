@@ -158,12 +158,12 @@ Przykłady:
 ----
 /ctcp  [-server <serwer>] <cel>[,<cel>...] <typ> [<argumenty>]
 
-   serwer: wyślij do tego serwera (nazwa wewnętrzna)
-      cel: nick albo kanał ('*' = obecny kanał)
-      typ: rodzaj CTCP (przykłady: "version", "ping", ..)
-argumenty: argumenty dla CTCP
+   server: send to this server (internal name)
+   target: nick or channel ('*' = current channel)
+     type: CTCP type (examples: "version", "ping", etc.)
+arguments: arguments for CTCP
 
-Przykłady:
+Examples:
   /ctcp toto time
   /ctcp toto version
   /ctcp * version
