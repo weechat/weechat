@@ -65,7 +65,7 @@ instead.
 == Translations
 
 Pull requests on GitHub for fixes or new translations are welcome at any
-time, for https://github.com/weechat/weechat[WeeChat] and the web site
+time, for https://github.com/weechat/weechat[WeeChat] and the website
 https://github.com/weechat/weechat.org[weechat.org].
 
 To start a translation in a new language (not yet supported), please look at

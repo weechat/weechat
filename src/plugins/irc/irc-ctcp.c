@@ -424,7 +424,7 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     }
 
     /*
-     * $site: WeeChat web site, example:
+     * $site: WeeChat website, example:
      *   https://weechat.org/
      */
     info = weechat_info_get ("weechat_site", "");

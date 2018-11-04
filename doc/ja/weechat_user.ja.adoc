@@ -3169,7 +3169,7 @@ One-time passwords can be generated with applications, for example:
 * FreeOTP:
   https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
   https://itunes.apple.com/fr/app/freeotp-authenticator/id872559395[iOS]
-  (https://freeotp.github.io/[web site])
+  (https://freeotp.github.io/[website])
 * Google Authenticator:
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
   https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]

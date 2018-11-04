@@ -43,7 +43,7 @@ scripts::
     the _official_ scripts submitted on weechat.org
 
 weechat.org::
-    source of WeeChat web site: https://weechat.org/
+    source of WeeChat website: https://weechat.org/
 
 weercd::
     IRC testing server
