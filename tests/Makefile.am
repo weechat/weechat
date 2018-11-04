@@ -29,6 +29,7 @@ lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
                                    unit/core/test-hook.cpp \
                                    unit/core/test-infolist.cpp \
                                    unit/core/test-list.cpp \
+                                   unit/core/test-secure.cpp \
                                    unit/core/test-string.cpp \
                                    unit/core/test-url.cpp \
                                    unit/core/test-utf8.cpp \
