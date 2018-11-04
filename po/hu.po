@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-10-14 20:36+0200\n"
+"POT-Creation-Date: 2018-11-04 14:46+0100\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3734,6 +3734,27 @@ msgstr ""
 msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 
+msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
+msgstr ""
+
+msgid "on"
+msgstr "be"
+
+msgid "off"
+msgstr "ki"
+
+msgid "Passphrase is set"
+msgstr ""
+
+msgid "Secured data:"
+msgstr ""
+
+msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
+msgstr ""
+
+msgid "No secured data set"
+msgstr ""
+
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
 
@@ -3799,27 +3820,6 @@ msgid ""
 "be different on each write of the file; if you put the file sec.conf in a "
 "version control system, then you can turn off this option to have always "
 "same content in file"
-msgstr ""
-
-msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
-msgstr ""
-
-msgid "on"
-msgstr "be"
-
-msgid "off"
-msgstr "ki"
-
-msgid "Passphrase is set"
-msgstr ""
-
-msgid "Secured data:"
-msgstr ""
-
-msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
-msgstr ""
-
-msgid "No secured data set"
 msgstr ""
 
 #. TRANSLATORS: file size unit "kilobyte"
@@ -9379,6 +9379,105 @@ msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 msgid "Support of PHP scripts"
 msgstr "Aliaszok listája:\n"
 
+msgid "bar"
+msgstr ""
+
+#, fuzzy
+msgid "bar item"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "bar window"
+msgstr "ablakok kezelése"
+
+#, fuzzy
+msgid "buffer"
+msgstr "pufferek kezelése"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "structure with completion"
+msgstr "szöveg beillesztése a parancssorba"
+
+#, fuzzy
+msgid "config file"
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "config section"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "config option"
+msgstr "konfigurációs paraméterek beállítása"
+
+msgid "filter"
+msgstr ""
+
+#, fuzzy
+msgid "history of commands in buffer"
+msgstr "%s belső parancsok:\n"
+
+msgid "hotlist"
+msgstr ""
+
+#, fuzzy
+msgid "structure with undo for input line"
+msgstr "szöveg beillesztése a parancssorba"
+
+msgid "a key (keyboard shortcut)"
+msgstr ""
+
+#, fuzzy
+msgid "layout"
+msgstr "a pufferek időbélyege"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "szöveg keresése a puffertörténetben"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ablakok kezelése"
+
+msgid "structure with lines"
+msgstr ""
+
+msgid "structure with one line"
+msgstr ""
+
+msgid "structure with one line data"
+msgstr ""
+
+#, fuzzy
+msgid "group in nicklist"
+msgstr "név színe"
+
+#, fuzzy
+msgid "nick in nicklist"
+msgstr "%s nem található ilyen mellőzés\n"
+
+#, fuzzy
+msgid "plugin"
+msgstr "  (nem található bővítőmodul)\n"
+
+msgid "proxy"
+msgstr ""
+
+#, fuzzy
+msgid "window"
+msgstr "ablakok kezelése"
+
+msgid "scroll info in window"
+msgstr ""
+
+#, fuzzy
+msgid "tree of windows"
+msgstr "Mellőzések listája:\n"
+
 #, fuzzy
 msgid "WeeChat version"
 msgstr "WeeChat szlogen"
@@ -9483,6 +9582,24 @@ msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
 msgstr ""
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
+msgstr ""
+
+msgid "generate a Time-based One-Time Password (TOTP)"
+msgstr ""
+
+msgid ""
+"secret (in base32), timestamp (optional, current time by default), number of "
+"digits (optional, between 4 and 10, 6 by default)"
+msgstr ""
+
+msgid ""
+"validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, "
+"otherwise 0"
+msgstr ""
+
+msgid ""
+"secret (in base32), one-time password, timestamp (optional, current time by "
+"default), number of passwords before/after to test (optional, 0 by default)"
 msgstr ""
 
 #, fuzzy
@@ -9617,105 +9734,6 @@ msgstr ""
 
 msgid "\"current\" for current window or a window number (optional)"
 msgstr ""
-
-msgid "bar"
-msgstr ""
-
-#, fuzzy
-msgid "bar item"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "bar window"
-msgstr "ablakok kezelése"
-
-#, fuzzy
-msgid "buffer"
-msgstr "pufferek kezelése"
-
-#, fuzzy
-msgid "visited buffer"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "structure with completion"
-msgstr "szöveg beillesztése a parancssorba"
-
-#, fuzzy
-msgid "config file"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
-
-#, fuzzy
-msgid "config section"
-msgstr "konfigurációs paraméterek beállítása"
-
-#, fuzzy
-msgid "config option"
-msgstr "konfigurációs paraméterek beállítása"
-
-msgid "filter"
-msgstr ""
-
-#, fuzzy
-msgid "history of commands in buffer"
-msgstr "%s belső parancsok:\n"
-
-msgid "hotlist"
-msgstr ""
-
-#, fuzzy
-msgid "structure with undo for input line"
-msgstr "szöveg beillesztése a parancssorba"
-
-msgid "a key (keyboard shortcut)"
-msgstr ""
-
-#, fuzzy
-msgid "layout"
-msgstr "a pufferek időbélyege"
-
-#, fuzzy
-msgid "buffer layout"
-msgstr "szöveg keresése a puffertörténetben"
-
-#, fuzzy
-msgid "window layout"
-msgstr "ablakok kezelése"
-
-msgid "structure with lines"
-msgstr ""
-
-msgid "structure with one line"
-msgstr ""
-
-msgid "structure with one line data"
-msgstr ""
-
-#, fuzzy
-msgid "group in nicklist"
-msgstr "név színe"
-
-#, fuzzy
-msgid "nick in nicklist"
-msgstr "%s nem található ilyen mellőzés\n"
-
-#, fuzzy
-msgid "plugin"
-msgstr "  (nem található bővítőmodul)\n"
-
-msgid "proxy"
-msgstr ""
-
-#, fuzzy
-msgid "window"
-msgstr "ablakok kezelése"
-
-msgid "scroll info in window"
-msgstr ""
-
-#, fuzzy
-msgid "tree of windows"
-msgstr "Mellőzések listája:\n"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
@@ -10200,6 +10218,12 @@ msgstr ""
 msgid "first free port for relay plugin"
 msgstr "Aliaszok listája:\n"
 
+#, c-format
+msgid ""
+"%s%s: invalid value for option \"relay.network.totp_secret\"; it must be a "
+"valid string encoded in base32 (only letters and digits from 2 to 7)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s az ignore már létezik\n"
@@ -10309,6 +10333,22 @@ msgid ""
 msgstr ""
 
 msgid ""
+"secret for the generation of the Time-based One-Time Password (TOTP), "
+"encoded in base32 (only letters and digits from 2 to 7); it is used as "
+"second factor in weechat protocol, in addition to the password, which must "
+"not be empty (empty value means no TOTP is required) (note: content is "
+"evaluated, see /help eval)"
+msgstr ""
+
+msgid ""
+"number of Time-based One-Time Passwords to accept before and after the "
+"current one: 0 = accept only the current password, 1 = accept one password "
+"before, the current, and one after, 2 = accept two passwords before, the "
+"current, and two after, ...; a high number reduces the security level (0 or "
+"1 are recommended values)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
@@ -10388,6 +10428,12 @@ msgstr "%s nem sikerült a csatornát létrehozni\n"
 msgid ""
 "%s%s: cannot accept client because relay password is empty, and option relay."
 "network.allow_empty_password is off"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: Time-based One-Time Password (TOTP) can be enabled only as second "
+"factor, if the password is not empty"
 msgstr ""
 
 #, c-format

@@ -164,6 +164,18 @@
 ** values: any string
 ** default value: `+"NORMAL:-VERS-SSL3.0"+`
 
+* [[option_relay.network.totp_secret]] *relay.network.totp_secret*
+** description: pass:none[secret for the generation of the Time-based One-Time Password (TOTP), encoded in base32 (only letters and digits from 2 to 7); it is used as second factor in weechat protocol, in addition to the password, which must not be empty (empty value means no TOTP is required) (note: content is evaluated, see /help eval)]
+** type: string
+** values: any string
+** default value: `+""+`
+
+* [[option_relay.network.totp_window]] *relay.network.totp_window*
+** description: pass:none[number of Time-based One-Time Passwords to accept before and after the current one: 0 = accept only the current password, 1 = accept one password before, the current, and one after, 2 = accept two passwords before, the current, and two after, ...; a high number reduces the security level (0 or 1 are recommended values)]
+** type: integer
+** values: 0 .. 256
+** default value: `+0+`
+
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** description: pass:none[POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"]
 ** type: string

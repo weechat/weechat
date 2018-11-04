@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-10-14 20:36+0200\n"
+"POT-Creation-Date: 2018-11-04 14:46+0100\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -4730,6 +4730,30 @@ msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 "palavra-passe do servidor proxy (nota:o conteúdo é avaliado, ver /help eval)"
 
+msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
+msgstr ""
+"Dados protegidos do WeeChat (sec.conf) | Teclas: [alt-v] Mostrar/ocultar os "
+"valores"
+
+msgid "on"
+msgstr "ativado"
+
+msgid "off"
+msgstr "desativado"
+
+msgid "Passphrase is set"
+msgstr "A frase de acesso está definida"
+
+msgid "Secured data:"
+msgstr "Dados protegidos:"
+
+msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
+msgstr ""
+"Dados protegidos AINDA ENCRIPTADOS: (use /secure decrypt, ver /help secure)"
+
+msgid "No secured data set"
+msgstr "Nenhum dado protegido definido"
+
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
 "Introduza a palavra de acesso para desencriptar os dados protegidos pelo "
@@ -4822,30 +4846,6 @@ msgstr ""
 "conf será diferente a cada escrita do ficheiro; se colocou este ficheiro num "
 "sistema de controlo de versões, pode desativar esta opção para ter sempre o "
 "mesmo conteúdo no ficheiro"
-
-msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
-msgstr ""
-"Dados protegidos do WeeChat (sec.conf) | Teclas: [alt-v] Mostrar/ocultar os "
-"valores"
-
-msgid "on"
-msgstr "ativado"
-
-msgid "off"
-msgstr "desativado"
-
-msgid "Passphrase is set"
-msgstr "A frase de acesso está definida"
-
-msgid "Secured data:"
-msgstr "Dados protegidos:"
-
-msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
-msgstr ""
-"Dados protegidos AINDA ENCRIPTADOS: (use /secure decrypt, ver /help secure)"
-
-msgid "No secured data set"
-msgstr "Nenhum dado protegido definido"
 
 #. TRANSLATORS: file size unit "kilobyte"
 msgid "KB"
@@ -11024,6 +11024,87 @@ msgstr "%s%s: não foi possível inicializar %s"
 msgid "Support of PHP scripts"
 msgstr "Suporte de scripts lua"
 
+msgid "bar"
+msgstr "barra"
+
+msgid "bar item"
+msgstr "item de barra"
+
+msgid "bar window"
+msgstr "janela de barra"
+
+msgid "buffer"
+msgstr "buffer"
+
+msgid "visited buffer"
+msgstr "buffer visitado"
+
+msgid "structure with completion"
+msgstr "estrutura com completação"
+
+msgid "config file"
+msgstr "ficheiro de configuração"
+
+msgid "config section"
+msgstr "secção de configuração"
+
+msgid "config option"
+msgstr "opção de configuração"
+
+msgid "filter"
+msgstr "filtro"
+
+msgid "history of commands in buffer"
+msgstr "histórico de comandos do buffer"
+
+msgid "hotlist"
+msgstr "hotlist"
+
+msgid "structure with undo for input line"
+msgstr "estrutura com \"undo\" (anular) da linha de entrada"
+
+msgid "a key (keyboard shortcut)"
+msgstr "um tecla (atalho de teclado)"
+
+msgid "layout"
+msgstr "disposição"
+
+msgid "buffer layout"
+msgstr "disposição de buffer"
+
+msgid "window layout"
+msgstr "disposição de janela"
+
+msgid "structure with lines"
+msgstr "estrutura com linhas"
+
+msgid "structure with one line"
+msgstr "estrutura com uma linha"
+
+msgid "structure with one line data"
+msgstr "estrutura com uma linha de dados"
+
+msgid "group in nicklist"
+msgstr "grupo na lista de nicks"
+
+msgid "nick in nicklist"
+msgstr "nick na lista de nicks"
+
+msgid "plugin"
+msgstr "plugin"
+
+msgid "proxy"
+msgstr "proxy"
+
+msgid "window"
+msgstr "janela"
+
+msgid "scroll info in window"
+msgstr "info de deslocamento da janela"
+
+msgid "tree of windows"
+msgstr "árvore de janelas"
+
 msgid "WeeChat version"
 msgstr "versão do WeeChat"
 
@@ -11119,6 +11200,24 @@ msgstr "WeeChat uptime (formato: \"dias:hh:mm:ss\")"
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
 msgstr ""
 "\"dias\" (número de dias) ou \"segundos\" (número de segundos) (opcional)"
+
+msgid "generate a Time-based One-Time Password (TOTP)"
+msgstr ""
+
+msgid ""
+"secret (in base32), timestamp (optional, current time by default), number of "
+"digits (optional, between 4 and 10, 6 by default)"
+msgstr ""
+
+msgid ""
+"validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, "
+"otherwise 0"
+msgstr ""
+
+msgid ""
+"secret (in base32), one-time password, timestamp (optional, current time by "
+"default), number of passwords before/after to test (optional, 0 by default)"
+msgstr ""
 
 msgid "list of bars"
 msgstr "lista de barras"
@@ -11236,87 +11335,6 @@ msgstr "ponteiro para janela (opções)"
 
 msgid "\"current\" for current window or a window number (optional)"
 msgstr "\"current\" para a janela atual ou um número de janela (opcional)"
-
-msgid "bar"
-msgstr "barra"
-
-msgid "bar item"
-msgstr "item de barra"
-
-msgid "bar window"
-msgstr "janela de barra"
-
-msgid "buffer"
-msgstr "buffer"
-
-msgid "visited buffer"
-msgstr "buffer visitado"
-
-msgid "structure with completion"
-msgstr "estrutura com completação"
-
-msgid "config file"
-msgstr "ficheiro de configuração"
-
-msgid "config section"
-msgstr "secção de configuração"
-
-msgid "config option"
-msgstr "opção de configuração"
-
-msgid "filter"
-msgstr "filtro"
-
-msgid "history of commands in buffer"
-msgstr "histórico de comandos do buffer"
-
-msgid "hotlist"
-msgstr "hotlist"
-
-msgid "structure with undo for input line"
-msgstr "estrutura com \"undo\" (anular) da linha de entrada"
-
-msgid "a key (keyboard shortcut)"
-msgstr "um tecla (atalho de teclado)"
-
-msgid "layout"
-msgstr "disposição"
-
-msgid "buffer layout"
-msgstr "disposição de buffer"
-
-msgid "window layout"
-msgstr "disposição de janela"
-
-msgid "structure with lines"
-msgstr "estrutura com linhas"
-
-msgid "structure with one line"
-msgstr "estrutura com uma linha"
-
-msgid "structure with one line data"
-msgstr "estrutura com uma linha de dados"
-
-msgid "group in nicklist"
-msgstr "grupo na lista de nicks"
-
-msgid "nick in nicklist"
-msgstr "nick na lista de nicks"
-
-msgid "plugin"
-msgstr "plugin"
-
-msgid "proxy"
-msgstr "proxy"
-
-msgid "window"
-msgstr "janela"
-
-msgid "scroll info in window"
-msgstr "info de deslocamento da janela"
-
-msgid "tree of windows"
-msgstr "árvore de janelas"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
@@ -11863,6 +11881,12 @@ msgid "first free port for relay plugin"
 msgstr "primeira porta livre para o plugin relay"
 
 #, c-format
+msgid ""
+"%s%s: invalid value for option \"relay.network.totp_secret\"; it must be a "
+"valid string encoded in base32 (only letters and digits from 2 to 7)"
+msgstr ""
+
+#, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: erro: a porta \"%d\" já está a ser usada"
 
@@ -11982,6 +12006,22 @@ msgstr ""
 "SSL)"
 
 msgid ""
+"secret for the generation of the Time-based One-Time Password (TOTP), "
+"encoded in base32 (only letters and digits from 2 to 7); it is used as "
+"second factor in weechat protocol, in addition to the password, which must "
+"not be empty (empty value means no TOTP is required) (note: content is "
+"evaluated, see /help eval)"
+msgstr ""
+
+msgid ""
+"number of Time-based One-Time Passwords to accept before and after the "
+"current one: 0 = accept only the current password, 1 = accept one password "
+"before, the current, and one after, 2 = accept two passwords before, the "
+"current, and two after, ...; a high number reduces the security level (0 or "
+"1 are recommended values)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
@@ -12074,6 +12114,12 @@ msgstr ""
 "%s%s: não é possível aceitar o cliente porque a palavra-passe do "
 "reencaminhador está vazia e a opção relay.network.allow_empty_password está "
 "desligada"
+
+#, c-format
+msgid ""
+"%s%s: Time-based One-Time Password (TOTP) can be enabled only as second "
+"factor, if the password is not empty"
+msgstr ""
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"

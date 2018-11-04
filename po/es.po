@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-10-14 20:36+0200\n"
+"POT-Creation-Date: 2018-11-04 14:46+0100\n"
 "PO-Revision-Date: 2018-03-31 15:36+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4362,6 +4362,27 @@ msgstr ""
 msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 
+msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
+msgstr ""
+
+msgid "on"
+msgstr "activo"
+
+msgid "off"
+msgstr "inactivo"
+
+msgid "Passphrase is set"
+msgstr ""
+
+msgid "Secured data:"
+msgstr ""
+
+msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
+msgstr ""
+
+msgid "No secured data set"
+msgstr ""
+
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
 
@@ -4427,27 +4448,6 @@ msgid ""
 "be different on each write of the file; if you put the file sec.conf in a "
 "version control system, then you can turn off this option to have always "
 "same content in file"
-msgstr ""
-
-msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
-msgstr ""
-
-msgid "on"
-msgstr "activo"
-
-msgid "off"
-msgstr "inactivo"
-
-msgid "Passphrase is set"
-msgstr ""
-
-msgid "Secured data:"
-msgstr ""
-
-msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
-msgstr ""
-
-msgid "No secured data set"
 msgstr ""
 
 #. TRANSLATORS: file size unit "kilobyte"
@@ -10370,6 +10370,91 @@ msgstr "%s%s: no ha sido posible inicializar %s"
 msgid "Support of PHP scripts"
 msgstr "Soporte para scripts en lua"
 
+msgid "bar"
+msgstr "barra"
+
+msgid "bar item"
+msgstr "elemento de barra"
+
+msgid "bar window"
+msgstr "barra de ventana"
+
+msgid "buffer"
+msgstr "buffer"
+
+#, fuzzy
+msgid "visited buffer"
+msgstr "lista de buffers"
+
+msgid "structure with completion"
+msgstr "estructura con auto-completador"
+
+msgid "config file"
+msgstr "archivo de configuración"
+
+msgid "config section"
+msgstr "sección de configuración"
+
+msgid "config option"
+msgstr "opción de configuración"
+
+msgid "filter"
+msgstr "filtro"
+
+msgid "history of commands in buffer"
+msgstr "historial de comandos en el buffer"
+
+msgid "hotlist"
+msgstr "lista de actividad"
+
+msgid "structure with undo for input line"
+msgstr "estructura con deshacer para la línea de entrada"
+
+msgid "a key (keyboard shortcut)"
+msgstr "una tecla (atajo de teclado)"
+
+#, fuzzy
+msgid "layout"
+msgstr "Esquema de buffers guardado:"
+
+#, fuzzy
+msgid "buffer layout"
+msgstr "puntero del buffer"
+
+#, fuzzy
+msgid "window layout"
+msgstr "ventana"
+
+msgid "structure with lines"
+msgstr "estructura con líneas"
+
+msgid "structure with one line"
+msgstr "estructura con una línea"
+
+msgid "structure with one line data"
+msgstr "estructura con datos de una línea"
+
+msgid "group in nicklist"
+msgstr "grupo en la lista de apodos"
+
+msgid "nick in nicklist"
+msgstr "apodos en la lista de apodos"
+
+msgid "plugin"
+msgstr "plugin"
+
+msgid "proxy"
+msgstr ""
+
+msgid "window"
+msgstr "ventana"
+
+msgid "scroll info in window"
+msgstr "información de desplazamiento en ventada"
+
+msgid "tree of windows"
+msgstr "árbol de ventanas"
+
 msgid "WeeChat version"
 msgstr "versión de WeeChat"
 
@@ -10462,6 +10547,24 @@ msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
 msgstr ""
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
+msgstr ""
+
+msgid "generate a Time-based One-Time Password (TOTP)"
+msgstr ""
+
+msgid ""
+"secret (in base32), timestamp (optional, current time by default), number of "
+"digits (optional, between 4 and 10, 6 by default)"
+msgstr ""
+
+msgid ""
+"validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, "
+"otherwise 0"
+msgstr ""
+
+msgid ""
+"secret (in base32), one-time password, timestamp (optional, current time by "
+"default), number of passwords before/after to test (optional, 0 by default)"
 msgstr ""
 
 msgid "list of bars"
@@ -10602,91 +10705,6 @@ msgstr "puntero de la ventana (opcional)"
 
 msgid "\"current\" for current window or a window number (optional)"
 msgstr "\"current\" para ventana actual o un número de ventana (opcional)"
-
-msgid "bar"
-msgstr "barra"
-
-msgid "bar item"
-msgstr "elemento de barra"
-
-msgid "bar window"
-msgstr "barra de ventana"
-
-msgid "buffer"
-msgstr "buffer"
-
-#, fuzzy
-msgid "visited buffer"
-msgstr "lista de buffers"
-
-msgid "structure with completion"
-msgstr "estructura con auto-completador"
-
-msgid "config file"
-msgstr "archivo de configuración"
-
-msgid "config section"
-msgstr "sección de configuración"
-
-msgid "config option"
-msgstr "opción de configuración"
-
-msgid "filter"
-msgstr "filtro"
-
-msgid "history of commands in buffer"
-msgstr "historial de comandos en el buffer"
-
-msgid "hotlist"
-msgstr "lista de actividad"
-
-msgid "structure with undo for input line"
-msgstr "estructura con deshacer para la línea de entrada"
-
-msgid "a key (keyboard shortcut)"
-msgstr "una tecla (atajo de teclado)"
-
-#, fuzzy
-msgid "layout"
-msgstr "Esquema de buffers guardado:"
-
-#, fuzzy
-msgid "buffer layout"
-msgstr "puntero del buffer"
-
-#, fuzzy
-msgid "window layout"
-msgstr "ventana"
-
-msgid "structure with lines"
-msgstr "estructura con líneas"
-
-msgid "structure with one line"
-msgstr "estructura con una línea"
-
-msgid "structure with one line data"
-msgstr "estructura con datos de una línea"
-
-msgid "group in nicklist"
-msgstr "grupo en la lista de apodos"
-
-msgid "nick in nicklist"
-msgstr "apodos en la lista de apodos"
-
-msgid "plugin"
-msgstr "plugin"
-
-msgid "proxy"
-msgstr ""
-
-msgid "window"
-msgstr "ventana"
-
-msgid "scroll info in window"
-msgstr "información de desplazamiento en ventada"
-
-msgid "tree of windows"
-msgstr "árbol de ventanas"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
@@ -11208,6 +11226,12 @@ msgid "first free port for relay plugin"
 msgstr "primer puerto libre para el plugin relay"
 
 #, c-format
+msgid ""
+"%s%s: invalid value for option \"relay.network.totp_secret\"; it must be a "
+"valid string encoded in base32 (only letters and digits from 2 to 7)"
+msgstr ""
+
+#, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: error: puerto \"%d\" ya está en uso"
 
@@ -11323,6 +11347,22 @@ msgid ""
 msgstr ""
 
 msgid ""
+"secret for the generation of the Time-based One-Time Password (TOTP), "
+"encoded in base32 (only letters and digits from 2 to 7); it is used as "
+"second factor in weechat protocol, in addition to the password, which must "
+"not be empty (empty value means no TOTP is required) (note: content is "
+"evaluated, see /help eval)"
+msgstr ""
+
+msgid ""
+"number of Time-based One-Time Passwords to accept before and after the "
+"current one: 0 = accept only the current password, 1 = accept one password "
+"before, the current, and one after, 2 = accept two passwords before, the "
+"current, and two after, ...; a high number reduces the security level (0 or "
+"1 are recommended values)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
@@ -11399,6 +11439,12 @@ msgstr "%s%s: no se puede aceptar el cliente en el puerto %d (%s)"
 msgid ""
 "%s%s: cannot accept client because relay password is empty, and option relay."
 "network.allow_empty_password is off"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: Time-based One-Time Password (TOTP) can be enabled only as second "
+"factor, if the password is not empty"
 msgstr ""
 
 #, c-format

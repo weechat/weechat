@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-10-14 20:36+0200\n"
+"POT-Creation-Date: 2018-11-04 14:46+0100\n"
 "PO-Revision-Date: 2018-10-14 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4673,6 +4673,29 @@ msgstr ""
 "プロキシサーバのパスワード (注意: 値は評価されます、/help eval を参照してくだ"
 "さい)"
 
+msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
+msgstr "WeeChat の保護データ (sec.conf) | キー: [alt-v] 値のトグル"
+
+msgid "on"
+msgstr "オン"
+
+msgid "off"
+msgstr "オフ"
+
+msgid "Passphrase is set"
+msgstr "パスフレーズが設定されています"
+
+msgid "Secured data:"
+msgstr "保護データ:"
+
+msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
+msgstr ""
+"保護データはまだ暗号化されています: (/help secure を参照し、/secure decrypt "
+"を利用してください)"
+
+msgid "No secured data set"
+msgstr "保護データが設定されていません"
+
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
 "WeeChat が暗号化したデータの復号化を行うにはパスフレーズを入力してください:"
@@ -4759,29 +4782,6 @@ msgstr ""
 "容はファイル書き込みの度に違うものになります; sec.conf ファイルをバージョン管"
 "理システムで管理している場合、常に同じ内容が書き込まれるようにこのオプション"
 "を無効化してください"
-
-msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
-msgstr "WeeChat の保護データ (sec.conf) | キー: [alt-v] 値のトグル"
-
-msgid "on"
-msgstr "オン"
-
-msgid "off"
-msgstr "オフ"
-
-msgid "Passphrase is set"
-msgstr "パスフレーズが設定されています"
-
-msgid "Secured data:"
-msgstr "保護データ:"
-
-msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
-msgstr ""
-"保護データはまだ暗号化されています: (/help secure を参照し、/secure decrypt "
-"を利用してください)"
-
-msgid "No secured data set"
-msgstr "保護データが設定されていません"
 
 #. TRANSLATORS: file size unit "kilobyte"
 msgid "KB"
@@ -11150,6 +11150,87 @@ msgstr "%s%s: %s の初期化に失敗"
 msgid "Support of PHP scripts"
 msgstr "PHP スクリプトサポート"
 
+msgid "bar"
+msgstr "バー"
+
+msgid "bar item"
+msgstr "バー要素"
+
+msgid "bar window"
+msgstr "バーウィンドウ"
+
+msgid "buffer"
+msgstr "バッファ"
+
+msgid "visited buffer"
+msgstr "訪問済みバッファ"
+
+msgid "structure with completion"
+msgstr "補完する構造"
+
+msgid "config file"
+msgstr "設定ファイル"
+
+msgid "config section"
+msgstr "設定セクション"
+
+msgid "config option"
+msgstr "設定オプション"
+
+msgid "filter"
+msgstr "フィルタ"
+
+msgid "history of commands in buffer"
+msgstr "バッファのコマンド履歴"
+
+msgid "hotlist"
+msgstr "ホットリスト"
+
+msgid "structure with undo for input line"
+msgstr "入力行をアンドゥする構造"
+
+msgid "a key (keyboard shortcut)"
+msgstr "キー (キーボードショートカット)"
+
+msgid "layout"
+msgstr "レイアウト"
+
+msgid "buffer layout"
+msgstr "バッファレイアウト"
+
+msgid "window layout"
+msgstr "ウィンドウレイアウト"
+
+msgid "structure with lines"
+msgstr "行を持つ構造"
+
+msgid "structure with one line"
+msgstr "1 行の構造"
+
+msgid "structure with one line data"
+msgstr "1 行データ構造"
+
+msgid "group in nicklist"
+msgstr "ニックネームリストにあるグループ"
+
+msgid "nick in nicklist"
+msgstr "ニックネームリストにあるニックネーム"
+
+msgid "plugin"
+msgstr "プラグイン"
+
+msgid "proxy"
+msgstr "プロキシ"
+
+msgid "window"
+msgstr "ウィンドウ"
+
+msgid "scroll info in window"
+msgstr "ウィンドウ内のスクロール情報"
+
+msgid "tree of windows"
+msgstr "ウィンドウツリー"
+
 msgid "WeeChat version"
 msgstr "WeeChat のバージョン"
 
@@ -11243,6 +11324,24 @@ msgstr "WeeChat 連続稼働時間 (書式: \"days:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
 msgstr "\"days\" (日数) または \"seconds\" (秒数) (任意)"
+
+msgid "generate a Time-based One-Time Password (TOTP)"
+msgstr ""
+
+msgid ""
+"secret (in base32), timestamp (optional, current time by default), number of "
+"digits (optional, between 4 and 10, 6 by default)"
+msgstr ""
+
+msgid ""
+"validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, "
+"otherwise 0"
+msgstr ""
+
+msgid ""
+"secret (in base32), one-time password, timestamp (optional, current time by "
+"default), number of passwords before/after to test (optional, 0 by default)"
+msgstr ""
 
 msgid "list of bars"
 msgstr "バーのリスト"
@@ -11360,87 +11459,6 @@ msgstr "ウィンドウポインタ (任意)"
 
 msgid "\"current\" for current window or a window number (optional)"
 msgstr "\"current\" は現在のウィンドウまたはウィンドウ番号 (任意)"
-
-msgid "bar"
-msgstr "バー"
-
-msgid "bar item"
-msgstr "バー要素"
-
-msgid "bar window"
-msgstr "バーウィンドウ"
-
-msgid "buffer"
-msgstr "バッファ"
-
-msgid "visited buffer"
-msgstr "訪問済みバッファ"
-
-msgid "structure with completion"
-msgstr "補完する構造"
-
-msgid "config file"
-msgstr "設定ファイル"
-
-msgid "config section"
-msgstr "設定セクション"
-
-msgid "config option"
-msgstr "設定オプション"
-
-msgid "filter"
-msgstr "フィルタ"
-
-msgid "history of commands in buffer"
-msgstr "バッファのコマンド履歴"
-
-msgid "hotlist"
-msgstr "ホットリスト"
-
-msgid "structure with undo for input line"
-msgstr "入力行をアンドゥする構造"
-
-msgid "a key (keyboard shortcut)"
-msgstr "キー (キーボードショートカット)"
-
-msgid "layout"
-msgstr "レイアウト"
-
-msgid "buffer layout"
-msgstr "バッファレイアウト"
-
-msgid "window layout"
-msgstr "ウィンドウレイアウト"
-
-msgid "structure with lines"
-msgstr "行を持つ構造"
-
-msgid "structure with one line"
-msgstr "1 行の構造"
-
-msgid "structure with one line data"
-msgstr "1 行データ構造"
-
-msgid "group in nicklist"
-msgstr "ニックネームリストにあるグループ"
-
-msgid "nick in nicklist"
-msgstr "ニックネームリストにあるニックネーム"
-
-msgid "plugin"
-msgstr "プラグイン"
-
-msgid "proxy"
-msgstr "プロキシ"
-
-msgid "window"
-msgstr "ウィンドウ"
-
-msgid "scroll info in window"
-msgstr "ウィンドウ内のスクロール情報"
-
-msgid "tree of windows"
-msgstr "ウィンドウツリー"
 
 #, c-format
 msgid "Initializing plugin \"%s\" (priority: %d)"
@@ -11993,6 +12011,12 @@ msgid "first free port for relay plugin"
 msgstr "リレープラグイン用の最初の空きポート番号"
 
 #, c-format
+msgid ""
+"%s%s: invalid value for option \"relay.network.totp_secret\"; it must be a "
+"valid string encoded in base32 (only letters and digits from 2 to 7)"
+msgstr ""
+
+#, c-format
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: エラー: ポート \"%d\" は既に使われています"
 
@@ -12106,6 +12130,22 @@ msgid ""
 msgstr "SSL 証明書と秘密鍵のファイル (SSL 接続を利用するクライアント用)"
 
 msgid ""
+"secret for the generation of the Time-based One-Time Password (TOTP), "
+"encoded in base32 (only letters and digits from 2 to 7); it is used as "
+"second factor in weechat protocol, in addition to the password, which must "
+"not be empty (empty value means no TOTP is required) (note: content is "
+"evaluated, see /help eval)"
+msgstr ""
+
+msgid ""
+"number of Time-based One-Time Passwords to accept before and after the "
+"current one: 0 = accept only the current password, 1 = accept one password "
+"before, the current, and one after, 2 = accept two passwords before, the "
+"current, and two after, ...; a high number reduces the security level (0 or "
+"1 are recommended values)"
+msgstr ""
+
+msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^http://(www\\.)?example\\.(com|org)\""
@@ -12197,6 +12237,12 @@ msgid ""
 msgstr ""
 "%s%s: リレーパスワードが空で relay.network.allow_empty_password がオフになっ"
 "ているため、クライアントの接続を拒否します"
+
+#, c-format
+msgid ""
+"%s%s: Time-based One-Time Password (TOTP) can be enabled only as second "
+"factor, if the password is not empty"
+msgstr ""
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"

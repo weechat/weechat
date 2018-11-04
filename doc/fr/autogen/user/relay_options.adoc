@@ -164,6 +164,18 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"NORMAL:-VERS-SSL3.0"+`
 
+* [[option_relay.network.totp_secret]] *relay.network.totp_secret*
+** description: pass:none[secret pour la génération du mot de passe à usage unique basé sur le temps (TOTP), encodé en base32 (seulement des lettres et chiffres de 2 à 7) ; il est utilisé comme second facteur d'authentification dans le protocole weechat, en plus du mot de passe, qui ne doit pas être vide (une valeur vide signifie que le TOTP n'est pas requis) (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
+
+* [[option_relay.network.totp_window]] *relay.network.totp_window*
+** description: pass:none[nombre de mots de passe à usage unique basés sur le temps à accepter avant et après le mot de passe courant ; 0 = accepter seulement le mot de passe courant, 1 = accepter un mot de passe avant, le courant et un après; 2 = accepter deux mots de passe avant, le courant et deux après, ... ; un nombre élevé réduit le niveau de sécurité (0 ou 1 sont les valeurs recommandées)]
+** type: entier
+** valeurs: 0 .. 256
+** valeur par défaut: `+0+`
+
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
 ** description: pass:none[expression régulière POSIX étendue avec les origines autorisées dans les websockets (insensible à la casse, utilisez "(?-i)" en début de chaîne pour la rendre sensible à la casse), exemple : "^http://(www\.)?example\.(com|org)"]
 ** type: chaîne
