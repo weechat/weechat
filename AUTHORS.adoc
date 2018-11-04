@@ -119,6 +119,7 @@ Alphabetically:
 * Tom Alsberg
 * Tomoe Mami
 * Tor Hveem (xt)
+* Trevor Bergeron
 * Valentin Lorentz (progval)
 * Vasco Almeida
 * Voroskoi
