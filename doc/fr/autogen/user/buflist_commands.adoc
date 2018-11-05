@@ -33,7 +33,8 @@ Les variables suivantes peuvent être utilisées dans ces options :
     - ${current_buffer} : un booléen ("0" ou "1"), "1" s'il s'agit du tampon courant ; cela peut être utilisé dans une condition : ${if:${current_buffer}?...:...}
     - ${merged} : un booléen ("0" ou "1"), "1" si le tampon est mélangé avec au moins un autre tampon ; cela peut être utilisé dans une condition : ${if:${merged}?...:...}
     - ${format_number} : numéro indenté avec un séparateur (évaluation de l'option buflist.format.number)
-    - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
+    - ${number} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons ; pour les tampons mélangés, cette variable est définie avec le numéro pour le premier tampon et des espaces pour les tampons suivants avec le même numéro
+    - ${number2} : numéro indenté, par exemple " 1" s'il y a entre 10 et 99 tampons
     - ${number_displayed} : "1" si le numéro est affiché, sinon "0"
     - ${indent} : indentation pour le nom (les tampons de canaux ou privés sont indentés) (évaluation de l'option buflist.format.indent)
     - ${format_nick_prefix} : le préfixe du pseudo en couleur pour un canal (évaluation de l'option buflist.format.nick_prefix)

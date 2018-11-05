@@ -276,7 +276,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
     char str_nick_prefix[32], str_color_nick_prefix[32];
-    char str_number[32], *line, **hotlist, *str_hotlist;
+    char str_number[32], str_number2[32], *line, **hotlist, *str_hotlist;
     char str_hotlist_count[32];
     const char *ptr_format, *ptr_format_current, *ptr_format_indent;
     const char *ptr_name, *ptr_type, *ptr_nick, *ptr_nick_prefix;
@@ -408,6 +408,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             weechat_hashtable_set (buflist_hashtable_extra_vars,
                                    "number_displayed", "0");
         }
+        snprintf (str_number2, sizeof (str_number2),
+                  str_format_number, number);
         prev_number = number;
 
         /* buffer merged */
@@ -490,6 +492,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                buflist_config_format_buffer_eval);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "number", str_number);
+        weechat_hashtable_set (buflist_hashtable_extra_vars,
+                               "number2", str_number2);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "format_number",
                                weechat_config_string (
