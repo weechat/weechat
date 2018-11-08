@@ -28,6 +28,7 @@ New features::
 Bug fixes::
 
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
+  * relay: fix memory leak in connection of client
 
 [[v2.3]]
 == Version 2.3 (2018-10-21)
