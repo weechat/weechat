@@ -285,7 +285,8 @@ relay_raw_message_add (struct t_relay_client *client,
 
     if (!(flags & RELAY_RAW_FLAG_BINARY)
         || (msg_type == RELAY_CLIENT_MSG_PING)
-        || (msg_type == RELAY_CLIENT_MSG_PONG))
+        || (msg_type == RELAY_CLIENT_MSG_PONG)
+        || (msg_type == RELAY_CLIENT_MSG_CLOSE))
     {
         /* build prefix with arrow */
         prefix_arrow[0] = '\0';

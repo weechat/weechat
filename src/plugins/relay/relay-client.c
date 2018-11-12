@@ -59,7 +59,7 @@ char *relay_client_data_type_string[] = /* strings for data types           */
 { "text", "binary" };
 
 char *relay_client_msg_type_string[] = /* prefix in raw buffer for message  */
-{ "", "[PING]\n", "[PONG]\n" };
+{ "", "[PING]\n", "[PONG]\n", "[CLOSE]\n" };
 
 struct t_relay_client *relay_clients = NULL;
 struct t_relay_client *last_relay_client = NULL;
@@ -527,6 +527,24 @@ relay_client_recv_text_buffer (struct t_relay_client *client,
                                    strlen (buffer + index + 1),
                                    NULL);
             }
+            else if (msg_type == RELAY_CLIENT_MSG_CLOSE)
+            {
+                /* print message in raw buffer */
+                relay_raw_print (client, RELAY_CLIENT_MSG_CLOSE,
+                                 RELAY_RAW_FLAG_RECV | RELAY_RAW_FLAG_BINARY,
+                                 buffer + index + 1,
+                                 strlen (buffer + index + 1));
+                /* answer with a CLOSE */
+                relay_client_send (client,
+                                   RELAY_CLIENT_MSG_CLOSE,
+                                   buffer + index + 1,
+                                   strlen (buffer + index + 1),
+                                   NULL);
+                /* close the connection */
+                relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                /* ignore any other message after the close */
+                return;
+            }
             index++;
         }
 
@@ -869,6 +887,7 @@ relay_client_send (struct t_relay_client *client,
         raw_size[0] = data_size;
         if ((msg_type == RELAY_CLIENT_MSG_PING)
             || (msg_type == RELAY_CLIENT_MSG_PONG)
+            || (msg_type == RELAY_CLIENT_MSG_CLOSE)
             || ((client->websocket != 1)
                 && (client->send_data_type == RELAY_CLIENT_DATA_BINARY)))
         {
@@ -896,6 +915,9 @@ relay_client_send (struct t_relay_client *client,
                 break;
             case RELAY_CLIENT_MSG_PONG:
                 opcode = WEBSOCKET_FRAME_OPCODE_PONG;
+                break;
+            case RELAY_CLIENT_MSG_CLOSE:
+                opcode = WEBSOCKET_FRAME_OPCODE_CLOSE;
                 break;
             default:
                 opcode = (client->send_data_type == RELAY_CLIENT_DATA_TEXT) ?

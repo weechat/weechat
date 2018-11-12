@@ -58,6 +58,7 @@ enum t_relay_client_msg_type
     RELAY_CLIENT_MSG_STANDARD,
     RELAY_CLIENT_MSG_PING,
     RELAY_CLIENT_MSG_PONG,
+    RELAY_CLIENT_MSG_CLOSE,
     /* number of message types */
     RELAY_NUM_CLIENT_MSG_TYPES,
 };

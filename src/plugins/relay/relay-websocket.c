@@ -322,8 +322,18 @@ relay_websocket_decode_frame (const unsigned char *buffer,
         index_buffer += 4;
 
         /* copy opcode in decoded data */
-        decoded[*decoded_length] = (opcode == WEBSOCKET_FRAME_OPCODE_PING) ?
-            RELAY_CLIENT_MSG_PING : RELAY_CLIENT_MSG_STANDARD;
+        switch (opcode)
+        {
+            case WEBSOCKET_FRAME_OPCODE_PING:
+                decoded[*decoded_length] = RELAY_CLIENT_MSG_PING;
+                break;
+            case WEBSOCKET_FRAME_OPCODE_CLOSE:
+                decoded[*decoded_length] = RELAY_CLIENT_MSG_CLOSE;
+                break;
+            default:
+                decoded[*decoded_length] = RELAY_CLIENT_MSG_STANDARD;
+                break;
+        }
         *decoded_length += 1;
 
         /* decode data using masks */
