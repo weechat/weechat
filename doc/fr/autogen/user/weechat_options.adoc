@@ -921,7 +921,7 @@
 ** valeur par défaut: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
-** description: pass:none[caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple : le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick")]
+** description: pass:none[caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple : le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick") ; cette option a un impact sur l'option weechat.look.nick_color_force, donc le pseudo pour la couleur forcée ne doit pas contenir les caractères ignorés par cette option]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"_|["+`

@@ -3127,7 +3127,9 @@ config_weechat_init_options ()
         N_("chars used to stop in nick when computing color with letters of "
            "nick (at least one char outside this list must be in string before "
            "stopping) (example: nick \"|nick|away\" with \"|\" in chars will "
-           "return color of nick \"|nick\")"),
+           "return color of nick \"|nick\"); this option has an impact on "
+           "option weechat.look.nick_color_force, so the nick for the forced "
+           "color must not contain the chars ignored by this option"),
         NULL, 0, 0, "_|[", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,

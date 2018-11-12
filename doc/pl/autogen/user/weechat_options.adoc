@@ -921,7 +921,7 @@
 ** domyślna wartość: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
-** opis: pass:none[znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick")]
+** opis: pass:none[chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick"); this option has an impact on option weechat.look.nick_color_force, so the nick for the forced color must not contain the chars ignored by this option]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"_|["+`
