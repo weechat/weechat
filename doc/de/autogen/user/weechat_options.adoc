@@ -921,7 +921,7 @@
 ** Standardwert: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
-** Beschreibung: pass:none[chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick"); this option has an impact on option weechat.look.nick_color_force, so the nick for the forced color must not contain the chars ignored by this option]
+** Beschreibung: pass:none[Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt); diese Option hat einen Einfluss auf die Option weechat.look.nick_color_force, dort aufgeführte Nicks sollten keine Zeichen haben, die von dieser Option ignoriert werden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"_|["+`

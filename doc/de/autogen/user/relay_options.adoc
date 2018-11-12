@@ -165,13 +165,13 @@
 ** Standardwert: `+"NORMAL:-VERS-SSL3.0"+`
 
 * [[option_relay.network.totp_secret]] *relay.network.totp_secret*
-** Beschreibung: pass:none[secret for the generation of the Time-based One-Time Password (TOTP), encoded in base32 (only letters and digits from 2 to 7); it is used as second factor in weechat protocol, in addition to the password, which must not be empty (empty value means no TOTP is required) (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[geheime Zeichenkette für die Erstellung des Time-based One-Time Passwort (TOTP), base32 enkodiert (ausschließlich Buchstaben und Zahlen zwischen 2 und 7); dient im WeeChat-Protokoll zur Zwei-Faktor-Authentifizierung, ergänzend zum eigentlichen Passwort (eine nicht gesetzte Option bedeutet, das TOTP nicht benötigt wird) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_relay.network.totp_window]] *relay.network.totp_window*
-** Beschreibung: pass:none[number of Time-based One-Time Passwords to accept before and after the current one: 0 = accept only the current password, 1 = accept one password before, the current, and one after, 2 = accept two passwords before, the current, and two after, ...; a high number reduces the security level (0 or 1 are recommended values)]
+** Beschreibung: pass:none[Anzahl der Time-based One-Time Passwörter die vor und nach dem aktuellen Passwort akzeptiert  werden: 0 = nur das aktuelle Passwort wird akzeptiert, 1 = akzeptiert ein Passwort vorher, das aktuelle und ein Passwort danach, 2 = akzeptiert zwei Passwörter vorher, das aktuelle und zwei Passwörter danach, ...; umso höher die genutzte Zahl umso unsicherer das Verfahren (0 oder 1 sind empfohlene Werte)]
 ** Typ: integer
 ** Werte: 0 .. 256
 ** Standardwert: `+0+`

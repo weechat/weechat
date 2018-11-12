@@ -363,7 +363,7 @@
 ** Standardwert: `+256+`
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** Beschreibung: pass:none[merge server buffers; this option has no effect if a layout is saved and is conflicting with this value (see /help layout)]
+** Beschreibung: pass:none[fügt Serverbuffer zusammen; diese Option hat keine Auswirkung wenn ein Layout genutzt wird und mit dieser Option im Widerspruch steht (siehe /help layout)]
 ** Typ: integer
 ** Werte: merge_with_core, merge_without_core, independent
 ** Standardwert: `+merge_with_core+`
@@ -429,7 +429,7 @@
 ** Standardwert: `+off+`
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** Beschreibung: pass:none[growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, etc.)]
+** Beschreibung: pass:none[Multiplikator für die Verzögerung bei der automatischen Wiederverbindung zum Server (1 = immer die selbe Verzögerung nutzen, 2 = Verzögerung*2 für jeden weiteren Versuch, usw.)]
 ** Typ: integer
 ** Werte: 1 .. 100
 ** Standardwert: `+2+`
