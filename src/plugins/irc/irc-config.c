@@ -2956,7 +2956,8 @@ irc_config_init ()
     irc_config_look_server_buffer = weechat_config_new_option (
         irc_config_file, ptr_section,
         "server_buffer", "integer",
-        N_("merge server buffers"),
+        N_("merge server buffers; this option has no effect if a layout "
+           "is saved and is conflicting with this value (see /help layout)"),
         "merge_with_core|merge_without_core|independent", 0, 0, "merge_with_core",
         NULL, 0,
         NULL, NULL, NULL,

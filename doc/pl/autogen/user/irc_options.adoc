@@ -363,7 +363,7 @@
 ** domyślna wartość: `+256+`
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** opis: pass:none[połącz bufory serwerów]
+** opis: pass:none[merge server buffers; this option has no effect if a layout is saved and is conflicting with this value (see /help layout)]
 ** typ: liczba
 ** wartości: merge_with_core, merge_without_core, independent
 ** domyślna wartość: `+merge_with_core+`

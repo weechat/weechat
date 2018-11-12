@@ -363,7 +363,7 @@
 ** valeur par défaut: `+256+`
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** description: pass:none[mélanger les tampons de serveur]
+** description: pass:none[mélanger les tampons de serveur ; cette option n'a pas d'effet si une disposition est sauvée et qu'elle est en conflit avec cette valeur (voir /help layout)]
 ** type: entier
 ** valeurs: merge_with_core, merge_without_core, independent
 ** valeur par défaut: `+merge_with_core+`

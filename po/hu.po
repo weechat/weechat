@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-12 20:54+0100\n"
+"POT-Creation-Date: 2018-11-12 21:00+0100\n"
 "PO-Revision-Date: 2018-11-04 21:44+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7930,9 +7930,10 @@ msgid ""
 "(messages will be displayed when opening raw data buffer)"
 msgstr ""
 
-#, fuzzy
-msgid "merge server buffers"
-msgstr "pufferek kezelése"
+msgid ""
+"merge server buffers; this option has no effect if a layout is saved and is "
+"conflicting with this value (see /help layout)"
+msgstr ""
 
 msgid ""
 "filter join/part/quit/nick messages for a nick if not speaking for some "
@@ -11922,3 +11923,7 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "merge server buffers"
+#~ msgstr "pufferek kezelése"

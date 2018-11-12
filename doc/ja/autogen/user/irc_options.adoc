@@ -363,7 +363,7 @@
 ** デフォルト値: `+256+`
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** 説明: pass:none[サーババッファをマージ]
+** 説明: pass:none[merge server buffers; this option has no effect if a layout is saved and is conflicting with this value (see /help layout)]
 ** タイプ: 整数
 ** 値: merge_with_core, merge_without_core, independent
 ** デフォルト値: `+merge_with_core+`
