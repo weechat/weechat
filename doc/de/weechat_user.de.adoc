@@ -3233,16 +3233,15 @@ Es wird nachdrücklich Empfohlen ein Passwort für die Relay-Verbindung zu nutze
 Dieses Passwort wird sowohl für das _irc_ als auch für das _weechat_ Protokoll
 verwendet.
 
-// TRANSLATION MISSING
 [[relay_totp]]
 ==== TOTP
 
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _weechat_ protocol, in addition to the password.
+TOTP (Time-based One-Time Passwort) ist eine Zwei-Faktor-Authentifizierung
+für das _weechat_ Protokoll, als Ergänzung zum eigentlichen Passwort.
 
-This is optional and increases the security level.
+Diese Funktion is optional und erhöht den Sicherheitsgrad.
 
-One-time passwords can be generated with applications, for example:
+Ein Einmal-Passwort kann mit folgenden Anwendungen erstellt werden, zum Beispiel:
 
 * FreeOTP:
   https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
@@ -3252,11 +3251,11 @@ One-time passwords can be generated with applications, for example:
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
   https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
 
-The TOTP secret must be set in WeeChat and the application used to generate
-one-time passwords.
+Die geheime TOTP Zeichenkette muss in WeeChat und der Anwendung gesetzt werden, welches
+für die Erstellung des Einmal-Passwort zuständig ist.
 
-It must be a string encoded in base32, with only letters and digits from 2 to 7,
-for example:
+Die Zeichenkette muss base32 enkodiert sein, ausschließlich Buchstaben und Zahlen zwischen 2 und 7
+sind erlaubt, zum Beispiel:
 
 ----
 /set relay.network.totp_secret "secretpasswordbase32"
