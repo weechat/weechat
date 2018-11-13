@@ -197,6 +197,7 @@ commande_double_cb (const void *pointer, void *data,
                     int argc, char **argv, char **argv_eol)
 {
     /* pour que le compilateur C soit content */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv;

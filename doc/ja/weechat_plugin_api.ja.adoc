@@ -198,6 +198,7 @@ command_double_cb (const void *pointer, void *data,
                    int argc, char **argv, char **argv_eol)
 {
     /* C 言語コンパイラ向けに必要 */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv;

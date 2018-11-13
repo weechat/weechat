@@ -192,6 +192,7 @@ command_double_cb (const void *pointer, void *data,
                    int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) buffer;
     (void) argv;
