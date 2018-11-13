@@ -146,13 +146,13 @@ To compile a plugin which has one file "toto.c" (under GNU/Linux):
 
 ----
 $ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o libtoto.so toto.o
+$ gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]
 === Load plugin
 
-Copy file _libtoto.so_ into system plugins directory (for example
+Copy file _toto.so_ into system plugins directory (for example
 _/usr/local/lib/weechat/plugins_) or into user's plugins directory (for example
 _/home/xxx/.weechat/plugins_).
 

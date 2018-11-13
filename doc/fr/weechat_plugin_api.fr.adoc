@@ -151,13 +151,13 @@ Pour compiler l'extension qui n'a qu'un fichier "toto.c" (sous GNU/Linux) :
 
 ----
 $ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o libtoto.so toto.o
+$ gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]
 === Chargement de l'extension
 
-Copiez le fichier _libtoto.so_ dans le répertoire système des extensions (par
+Copiez le fichier _toto.so_ dans le répertoire système des extensions (par
 exemple _/usr/local/lib/weechat/plugins_) ou dans le répertoire utilisateur des
 extensions (par exemple _/home/xxx/.weechat/plugins_).
 

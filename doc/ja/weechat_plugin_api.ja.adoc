@@ -152,13 +152,13 @@ int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 ----
 $ gcc -fPIC -Wall -c toto.c
-$ gcc -shared -fPIC -o libtoto.so toto.o
+$ gcc -shared -fPIC -o toto.so toto.o
 ----
 
 [[load_plugin]]
 === プラグインを読み込む
 
-_libtoto.so_ ファイルをシステムのプラグインディレクトリ (例えば
+_toto.so_ ファイルをシステムのプラグインディレクトリ (例えば
 _/usr/local/lib/weechat/plugins_) またはユーザのプラグインディレクトリ (例えば
 _/home/xxx/.weechat/plugins_) にコピーしてください。
 

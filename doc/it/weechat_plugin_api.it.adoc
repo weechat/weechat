@@ -164,13 +164,13 @@ Per compilare un plugin che ha un file "tizio.c" (in GNU/Linux):
 
 ----
 $ gcc -fPIC -Wall -c tizio.c
-$ gcc -shared -fPIC -o libtizio.so tizio.o
+$ gcc -shared -fPIC -o tizio.so tizio.o
 ----
 
 [[load_plugin]]
 === Caricamento del plugin
 
-Copiare il file _libtizio.so_ nella cartella plugin di sistema (ad
+Copiare il file _tizio.so_ nella cartella plugin di sistema (ad
 esempio _/usr/local/lib/weechat/plugins_) oppure nella cartella
 plugin dell'utente (ad esempio _/home/xxx/.weechat/plugins_).
 
