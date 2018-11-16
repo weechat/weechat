@@ -20,6 +20,8 @@
 #ifndef WEECHAT_SECURE_H
 #define WEECHAT_SECURE_H
 
+#include <time.h>
+
 #define SECURE_ENV_PASSPHRASE       "WEECHAT_PASSPHRASE"
 #define SECURE_SALT_DEFAULT         "WeeChat!"
 #define SECURE_DATA_PASSPHRASE_FLAG "__passphrase__"
