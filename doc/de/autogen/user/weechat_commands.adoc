@@ -659,7 +659,7 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
   -current: Text wird im aktuell genutzten Buffer ausgegeben
         -y: schreibt den Text in die angegebene Zeile (nur bei Buffern mit freiem Inhalt)
       line: Zeilennummer bei einem Buffer mit freiem Inhalt (erste Zeile ist 0, bei einer negative Zahl wird der Text nach der letzten Zeile eingefügt: -1 = nach der letzten Zeile, -2 = zwei Zeilen, nach der letzten Zeile, usw.)
-   -escape: Escapesequenzen werden umgewandelt (zum Beispiel , \07, \x07)
+   -escape: Escapesequenzen werden umgewandelt (zum Beispiel \a, \07, \x07)
      -date: Datum der Nachricht, mögliche Formatierung:
               -n: 'n' vor dem jetzigen Zeipunkt, in Sekunden
              +n: 'n' in Zukunft, in Sekunden
@@ -670,12 +670,12 @@ Ohne Angabe eines Arguments werden alle installierten Erweiterungen angezeigt.
       text: Text der ausgegeben werden soll (Präfix und Nachricht muss durch \t getrennt werden, sollte der Text mit "-" beginnen, muss ein "\" vorangestellt werden)
    -stdout: Text wird an stdout geschickt (Escapesequenzen werden umgewandelt)
    -stderr: Text wird an stderr geschickt (Escapesequenzen werden umgewandelt)
-     -beep: Alias für "-stderr "
+     -beep: Alias für "-stderr \a"
 
 Das Argument -action ... -quit nutzt den Präfix der in der Einstellung "weechat.look.prefix_*" definiert ist.
 
 Folgende Escapesequenzen werden unterstützt:
-  \" \\  \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
+  \" \\ \a \b \e \f \n \r \t \v \0ooo \xhh \uhhhh \Uhhhhhhhh
 
 Beispiele:
   zeigt eine Erinnerung, mit Highlight, im Core-Buffer dar:
