@@ -576,9 +576,9 @@ exec_command_run (struct t_gui_buffer *buffer,
     {
         weechat_printf (NULL, "%s: executing command: \"%s%s%s\"",
                         EXEC_PLUGIN_NAME,
-                        (cmd_options.use_shell) ? "" : "sh -c '",
+                        (cmd_options.use_shell) ? "sh -c '" : "",
                         argv_eol[cmd_options.command_index],
-                        (cmd_options.use_shell) ? "" : "'");
+                        (cmd_options.use_shell) ? "'" : "");
     }
     new_exec_cmd->hook = weechat_hook_process_hashtable (
         (cmd_options.use_shell) ? "sh" : argv_eol[cmd_options.command_index],
