@@ -39,6 +39,10 @@ script:
 after_success:
     - weechat --help
     - weechat-curses --help
+    - weechat --colors
+    - weechat --license
+    - weechat --version
+    - weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
 
 matrix:
     fast_finish: true
