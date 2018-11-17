@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-12 21:00+0100\n"
-"PO-Revision-Date: 2018-11-04 21:44+0100\n"
+"POT-Creation-Date: 2018-11-17 08:09+0100\n"
+"PO-Revision-Date: 2018-11-17 10:36+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -155,12 +155,16 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "使い方: %s [オプション...] [プラグイン:オプション...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat homedirectory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -224,6 +228,11 @@ msgstr "エラー: HOME ディレクトリが不明です\n"
 
 msgid "Error: not enough memory for home directory\n"
 msgstr "エラー: ホームディレクトリ用のメモリが不足しています\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error: unable to create a temporary home directory (using template: \"%s\")\n"
+msgstr "%s%s: ログ用のディレクトリを作成できません (\"%s\")"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -4606,8 +4615,12 @@ msgstr "メモリ使用量は利用できません (\"mallinfo\" 関数が見つ
 msgid "Directories:"
 msgstr "ディレクトリ:"
 
-msgid "default"
-msgstr "デフォルト"
+msgid "(TEMPORARY, deleted on exit)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "        (default: %s)"
+msgstr "      シグナル: %s"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -13891,6 +13904,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "merge server buffers"
-#~ msgstr "サーババッファをマージ"

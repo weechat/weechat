@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-12 21:00+0100\n"
-"PO-Revision-Date: 2018-11-04 21:44+0100\n"
+"POT-Creation-Date: 2018-11-17 08:09+0100\n"
+"PO-Revision-Date: 2018-11-17 10:36+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -170,6 +170,9 @@ msgid ""
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat homedirectory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -227,6 +230,11 @@ msgstr "Error: no ha sido posible obtener el directorio HOME\n"
 
 msgid "Error: not enough memory for home directory\n"
 msgstr "Error: no hay suficiente memoria para el directorio home\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error: unable to create a temporary home directory (using template: \"%s\")\n"
+msgstr "%s%s: imposible crear directorio para registros (\"%s\")"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -4296,9 +4304,12 @@ msgstr "Uso de memoria no disponible (función \"mallinfo\" no encontrada)"
 msgid "Directories:"
 msgstr ""
 
-#, fuzzy
-msgid "default"
-msgstr "predeterminado: "
+msgid "(TEMPORARY, deleted on exit)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "        (default: %s)"
+msgstr "      señal: %s"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -12923,6 +12934,3 @@ msgstr "%s%s: tiempo de espera máximo para \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: no es posible conectarse al transmisor"
-
-#~ msgid "merge server buffers"
-#~ msgstr "unir buffers de los servidores"

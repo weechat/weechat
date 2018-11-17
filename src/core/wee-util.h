@@ -36,16 +36,27 @@ struct t_util_signal
     int signal;                        /* signal number                     */
 };
 
+/* limits */
 extern void util_setrlimit ();
+
+/* timeval */
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long long interval);
+
+/* time */
 extern const char *util_get_time_string (const time_t *date);
+
+/* signal */
 extern int util_signal_search (const char *name);
 extern void util_catch_signal (int signum, void (*handler)(int));
+
+/* files/directories */
+extern char *util_get_temp_dir();
 extern int util_mkdir_home (const char *directory, int mode);
 extern int util_mkdir (const char *directory, int mode);
 extern int util_mkdir_parents (const char *directory, int mode);
+extern int util_rmtree (const char *directory);
 extern void util_exec_on_files (const char *directory, int recurse_subdirs,
                                 int hidden_files,
                                 void (*callback)(void *data,
@@ -54,7 +65,11 @@ extern void util_exec_on_files (const char *directory, int recurse_subdirs,
 extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
 extern char *util_file_get_content (const char *filename);
+
+/* version */
 extern int util_version_number (const char *version);
+
+/* uptime */
 extern void util_get_uptime (time_t *total_seconds, int *days,
                              int *hours, int *minutes, int *seconds);
 

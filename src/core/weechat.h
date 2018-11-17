@@ -110,6 +110,7 @@ extern int weechat_upgrade_count;
 extern volatile sig_atomic_t weechat_quit;
 extern volatile sig_atomic_t weechat_quit_signal;
 extern char *weechat_home;
+extern int weechat_home_temp;
 extern char *weechat_local_charset;
 extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;

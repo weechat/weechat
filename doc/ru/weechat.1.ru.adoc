@@ -15,7 +15,7 @@ weechat - расширяемый чат-клиент
 
 // TRANSLATION MISSING
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <путь>] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
+*weechat* [-a|--no-connect] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]

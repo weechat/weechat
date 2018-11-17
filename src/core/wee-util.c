@@ -19,6 +19,14 @@
  * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* for P_tmpdir in stdio.h */
+#ifndef __USE_XOPEN
+#define __USE_XOPEN
+#endif
+
+/* for nftw() */
+#define _XOPEN_SOURCE 700
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -39,6 +47,7 @@
 #include <signal.h>
 #include <ctype.h>
 #include <time.h>
+#include <ftw.h>
 
 #include "weechat.h"
 #include "wee-util.h"
@@ -363,6 +372,49 @@ util_catch_signal (int signum, void (*handler)(int))
 }
 
 /*
+ * Returns the path to a temporary directory, the first valid directory in
+ * this list:
+ *   - content of environment variable "TMPDIR"
+ *   - P_tmpdir (from stdio.h)
+ *   - content of environment variable "HOME" (user home directory)
+ *   - "." (current directory)
+ */
+
+char *
+util_get_temp_dir()
+{
+    char *tmpdir;
+    struct stat buf;
+    int rc;
+
+    /* get directory from $TMPDIR */
+    tmpdir = getenv ("TMPDIR");
+    if (tmpdir && tmpdir[0])
+    {
+        rc = stat (tmpdir, &buf);
+        if ((rc == 0) && S_ISDIR(buf.st_mode))
+            return strdup (tmpdir);
+    }
+
+    /* get directory from P_tmpdir */
+    rc = stat (P_tmpdir, &buf);
+    if ((rc == 0) && S_ISDIR(buf.st_mode))
+        return strdup (P_tmpdir);
+
+    /* get directory from $HOME */
+    tmpdir = getenv ("HOME");
+    if (tmpdir && tmpdir[0])
+    {
+        rc = stat (tmpdir, &buf);
+        if ((rc == 0) && S_ISDIR(buf.st_mode))
+            return strdup (tmpdir);
+    }
+
+    /* fallback on current directory */
+    return strdup (".");
+}
+
+/*
  * Creates a directory in WeeChat home.
  *
  * Returns:
@@ -480,6 +532,47 @@ util_mkdir_parents (const char *directory, int mode)
     free (string);
 
     return 1;
+}
+
+/*
+ * Unlinks a file or directory; callback called by function util_rmtree().
+ *
+ * Returns the return code of remove():
+ *   0: OK
+ *   -1: error
+ */
+
+int
+util_unlink_cb (const char *fpath, const struct stat *sb, int typeflag,
+                struct FTW *ftwbuf)
+{
+    /* make C compiler happy */
+    (void) sb;
+    (void) typeflag;
+    (void) ftwbuf;
+
+    return remove (fpath);
+}
+
+/*
+ * Removes a directory and all files inside recursively.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+util_rmtree (const char *directory)
+{
+    int rc;
+
+    if (!directory)
+        return 0;
+
+    rc = nftw (directory, util_unlink_cb, 64, FTW_DEPTH | FTW_PHYS);
+
+    return (rc == 0) ? 1 : 0;
 }
 
 /*

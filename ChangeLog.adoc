@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add command line option "-t" (or "--temp-dir") to create a temporary WeeChat home (deleted on exit)
   * api: add functions string_base_encode and string_base_decode, remove functions string_encode_base64 and string_decode_base64
   * api: add support of Time-based One-Time Password (TOTP), add infos "totp_generate" and "totp_validate"
   * buflist: add variable ${number2}, always set with the indented buffer number
@@ -44,8 +45,8 @@ New features::
   * core: add repeat of string in evaluation of expressions with "repeat:count,string" (issue #958)
   * core: allow specifying buffer number/name for /buffer localvar (issue #1259)
   * core: allow multiple arguments in command /buffer close
-  * core: allow multiple options "-r" ("--run-command") in command line arguments (issue #1248)
-  * core: add option "-P" (or "--plugins") to customize the plugins to load at startup
+  * core: allow multiple options "-r" (or "--run-command") in command line arguments (issue #1248)
+  * core: add command line option "-P" (or "--plugins") to customize the plugins to load at startup
   * core: allow partial buffer name in command /buffer close (issue #1226)
   * api: add function hook_line
   * irc: display a warning when the value of option irc.server.xxx.autojoin is set to an invalid value

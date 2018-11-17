@@ -17,6 +17,18 @@
     If this option is not given, the environment variable WEECHAT_HOME is used
     (if not empty).
 
+// TRANSLATION MISSING
+*-t*, *--temp-dir*::
+    Create a temporary WeeChat home directory and delete it on exit
+    (incompatible with option "-d"). +
+    The name of the directory is automatically built by WeeChat, with this
+    template: "weechat_temp_XXXXXX" (where "XXXXXX" is random). It it created
+    in the first available directory in this list: environment variable "TMPDIR",
+    "/tmp" (may be different according to the operating system), environment
+    variable "HOME", current directory. +
+    The temporary home directory has permissions 0700 (only owner can read,
+    write and execute).
+
 *-h*, *--help*::
     Mostra l'aiuto.
 

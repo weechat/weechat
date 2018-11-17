@@ -13,7 +13,7 @@ weechat - le client de discussion extensible
 == SYNOPSIS
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <répertoire>] [-p|--no-plugin] [-P|--plugins <extensions>] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
+*weechat* [-a|--no-connect] [-d|--dir <répertoire>] [-t|--temp-dir]  [-p|--no-plugin] [-P|--plugins <extensions>] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]

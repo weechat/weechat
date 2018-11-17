@@ -581,8 +581,12 @@ debug_directories ()
 
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Directories:"));
-    gui_chat_printf (NULL, "  home: %s (%s: %s)",
-                     weechat_home, _("default"), WEECHAT_HOME);
+    gui_chat_printf (NULL, "  home: %s%s%s",
+                     weechat_home,
+                     (weechat_home_temp) ? " " : "",
+                     (weechat_home_temp) ? _("(TEMPORARY, deleted on exit)") : "");
+    gui_chat_printf (NULL, _("        (default: %s)"),
+                     WEECHAT_HOME);
     gui_chat_printf (NULL, "  lib: %s", WEECHAT_LIBDIR);
     gui_chat_printf (NULL, "  lib (extra): %s",
                      (extra_libdir && extra_libdir[0]) ? extra_libdir : "-");

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-12 21:00+0100\n"
-"PO-Revision-Date: 2018-11-04 21:44+0100\n"
+"POT-Creation-Date: 2018-11-17 08:09+0100\n"
+"PO-Revision-Date: 2018-11-17 10:36+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -163,6 +163,9 @@ msgid ""
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat homedirectory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -218,6 +221,11 @@ msgstr "Erro: não foi possível obter o diretório HOME\n"
 
 msgid "Error: not enough memory for home directory\n"
 msgstr "Error: memória insuficiente para o diretório pessoal\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error: unable to create a temporary home directory (using template: \"%s\")\n"
+msgstr "%s%s: não foi possível criar diretório para registos (\"%s\")"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -4661,8 +4669,12 @@ msgstr ""
 msgid "Directories:"
 msgstr "Diretórios:"
 
-msgid "default"
-msgstr "predefinição"
+msgid "(TEMPORARY, deleted on exit)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "        (default: %s)"
+msgstr "      sinal: %s"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -13802,6 +13814,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#~ msgid "merge server buffers"
-#~ msgstr "unir buffers de servidores"

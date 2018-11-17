@@ -94,6 +94,8 @@ volatile sig_atomic_t weechat_quit = 0;   /* = 1 if quit request from user  */
 volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
+int weechat_home_temp = 0;             /* 1 if using a temporary home       */
+int weechat_home_delete_on_exit = 0;   /* 1 if home is deleted on exit      */
 int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
@@ -152,6 +154,9 @@ weechat_display_usage ()
           "(default: ~/.weechat)\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
+          "  -t, --temp-dir           create a temporary WeeChat home"
+          "directory and delete it on exit\n"
+          "                           (incompatible with option \"-d\")\n"
           "  -h, --help               display this help\n"
           "  -l, --license            display WeeChat license\n"
           "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -199,6 +204,8 @@ weechat_parse_args (int argc, char *argv[])
     weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
     weechat_upgrading = 0;
     weechat_home = NULL;
+    weechat_home_temp = 0;
+    weechat_home_delete_on_exit = 0;
     weechat_server_cmd_line = 0;
     weechat_force_plugin_autoload = NULL;
     weechat_plugin_no_dlclose = 0;
@@ -212,8 +219,10 @@ weechat_parse_args (int argc, char *argv[])
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-d") == 0)
-            || (strcmp (argv[i], "--dir") == 0))
+                 || (strcmp (argv[i], "--dir") == 0))
         {
+            if (weechat_home_temp)
+                weechat_home_temp = 0;
             if (i + 1 < argc)
             {
                 if (weechat_home)
@@ -227,6 +236,16 @@ weechat_parse_args (int argc, char *argv[])
                                 argv[i]);
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
+        }
+        else if ((strcmp (argv[i], "-t") == 0)
+                 || (strcmp (argv[i], "--temp-dir") == 0))
+        {
+            if (weechat_home)
+            {
+                free (weechat_home);
+                weechat_home = NULL;
+            }
+            weechat_home_temp = 1;
         }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))
@@ -383,8 +402,59 @@ weechat_set_home_path (char *home_path)
 void
 weechat_create_home_dir ()
 {
-    char *ptr_weechat_home, *config_weechat_home;
+    char *temp_dir, *temp_home_template, *ptr_weechat_home;
+    char *config_weechat_home;
+    int length, add_separator;
     struct stat statinfo;
+
+    /* temporary WeeChat home */
+    if (weechat_home_temp)
+    {
+        temp_dir = util_get_temp_dir ();
+        if (!temp_dir || !temp_dir[0])
+        {
+            string_fprintf (stderr,
+                            _("Error: not enough memory for home "
+                              "directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        length = strlen (temp_dir) + 32 + 1;
+        temp_home_template = malloc (length);
+        if (!temp_home_template)
+        {
+            free (temp_dir);
+            string_fprintf (stderr,
+                            _("Error: not enough memory for home "
+                              "directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        add_separator = (temp_dir[strlen (temp_dir) - 1] != DIR_SEPARATOR_CHAR);
+        snprintf (temp_home_template, length,
+                  "%s%sweechat_temp_XXXXXX",
+                  temp_dir,
+                  add_separator ? DIR_SEPARATOR : "");
+        free (temp_dir);
+        ptr_weechat_home = mkdtemp (temp_home_template);
+        if (!ptr_weechat_home)
+        {
+            string_fprintf (stderr,
+                            _("Error: unable to create a temporary "
+                              "home directory (using template: \"%s\")\n"),
+                            temp_home_template);
+            free (temp_home_template);
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        weechat_home = strdup (ptr_weechat_home);
+        free (temp_home_template);
+        weechat_home_delete_on_exit = 1;
+        return;
+    }
 
     /*
      * weechat_home is not set yet: look for environment variable
@@ -636,6 +706,12 @@ weechat_shutdown (int return_code, int crash)
     log_close ();
     network_end ();
     debug_end ();
+
+    if (!crash && weechat_home_delete_on_exit)
+    {
+        /* remove temporary home (only if not crashing) */
+        util_rmtree (weechat_home);
+    }
 
     if (weechat_argv0)
         free (weechat_argv0);

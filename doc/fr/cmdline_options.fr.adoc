@@ -16,6 +16,17 @@
     Si cette option n'est pas donnée, la variable d'environnement WEECHAT_HOME
     est utilisée (si non vide).
 
+*-t*, *--temp-dir*::
+    Créer un répertoire de base WeeChat temporaire et le supprimer en quittant
+    (incompatible avec l'option "-d"). +
+    Le nom du répertoire est automatiquement construit par WeeChat, avec ce
+    modèle : "weechat_temp_XXXXXX" (où "XXXXXX" est aléatoire). Il est créé dans
+    le premier répertoire disponible de cette liste : variable d'environnement
+    "TMPDIR", "/tmp" (cela peut être différent selon le système d'exploitation),
+    variable d'environnement "HOME", répertoire courant. +
+    Le répertoire de base temporaire a les permissions 0700 (seul le propriétaire
+    peut lire, écrire et exécuter).
+
 *-h*, *--help*::
     Afficher l'aide.
 

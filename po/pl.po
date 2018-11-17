@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2018-11-12 21:00+0100\n"
-"PO-Revision-Date: 2018-11-04 21:44+0100\n"
+"POT-Creation-Date: 2018-11-17 08:09+0100\n"
+"PO-Revision-Date: 2018-11-17 10:36+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -157,12 +157,16 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Użycie: %s [argumenty...] [wtyczka:opcje...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
 "  -d, --dir <path>         set WeeChat home directory (default: ~/.weechat)\n"
 "                           (environment variable WEECHAT_HOME is read if "
 "this option is not given)\n"
+"  -t, --temp-dir           create a temporary WeeChat homedirectory and "
+"delete it on exit\n"
+"                           (incompatible with option \"-d\")\n"
 "  -h, --help               display this help\n"
 "  -l, --license            display WeeChat license\n"
 "  -p, --no-plugin          don't load any plugin at startup\n"
@@ -224,6 +228,11 @@ msgstr "Błąd: nie można pozyskać katalogu domowego\n"
 
 msgid "Error: not enough memory for home directory\n"
 msgstr "Błąd: za mało miejsca dla katalogu domowego\n"
+
+#, fuzzy, c-format
+msgid ""
+"Error: unable to create a temporary home directory (using template: \"%s\")\n"
+msgstr "%s%s: nie można utworzyć katalogu dla logów (\"%s\")"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -4716,8 +4725,12 @@ msgstr "Zużycie pamięci niedostępne (nie znaleziono funkcji \"mallinfo\")"
 msgid "Directories:"
 msgstr "Katalogi:"
 
-msgid "default"
-msgstr "domyślny"
+msgid "(TEMPORARY, deleted on exit)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "        (default: %s)"
+msgstr "      sygnał: %s"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
@@ -14108,6 +14121,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "merge server buffers"
-#~ msgstr "połącz bufory serwerów"
