@@ -26,6 +26,7 @@ extern struct t_config_file *exec_config_file;
 
 extern struct t_config_option *exec_config_command_default_options;
 extern struct t_config_option *exec_config_command_purge_delay;
+extern struct t_config_option *exec_config_command_shell;
 
 extern struct t_config_option *exec_config_color_flag_running;
 extern struct t_config_option *exec_config_color_flag_finished;

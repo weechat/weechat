@@ -25,3 +25,9 @@
 ** タイプ: 整数
 ** 値: -1 .. 25920000
 ** デフォルト値: `+0+`
+
+* [[option_exec.command.shell]] *exec.command.shell*
+** 説明: pass:none[shell to use with command "/exec -sh"; it can be just the name of shell if it is in PATH (for example "bash") or the absolute path to the shell (for example "/bin/bash")]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"sh"+`

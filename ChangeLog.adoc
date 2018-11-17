@@ -24,6 +24,7 @@ New features::
   * api: add functions string_base_encode and string_base_decode, remove functions string_encode_base64 and string_decode_base64
   * api: add support of Time-based One-Time Password (TOTP), add infos "totp_generate" and "totp_validate"
   * buflist: add variable ${number2}, always set with the indented buffer number
+  * exec: add option exec.command.shell to customize the shell used with /exec -sh
   * relay: add support of close frame in websocket connection (issue #1281)
   * relay: add support of Time-based One-Time Password (TOTP) as second authentication factor in weechat protocol
 

@@ -34,6 +34,7 @@ struct t_config_file *exec_config_file = NULL;
 
 struct t_config_option *exec_config_command_default_options;
 struct t_config_option *exec_config_command_purge_delay;
+struct t_config_option *exec_config_command_shell;
 
 /* exec config, color section */
 
@@ -130,6 +131,16 @@ exec_config_init ()
            "commands immediately, -1 = never purge)"),
         NULL, -1, 36000 * 24 * 30, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    exec_config_command_shell = weechat_config_new_option (
+        exec_config_file, ptr_section,
+        "shell", "string",
+        N_("shell to use with command \"/exec -sh\"; it can be just the name "
+           "of shell if it is in PATH (for example \"bash\") or the absolute "
+           "path to the shell (for example \"/bin/bash\")"),
+        NULL, 0, 0, "sh", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* color */
     ptr_section = weechat_config_new_section (exec_config_file, "color",

@@ -405,7 +405,8 @@ int
 exec_command_run (struct t_gui_buffer *buffer,
                   int argc, char **argv, char **argv_eol, int start_arg)
 {
-    char str_buffer[512];
+    char str_buffer[512], *default_shell = "sh";
+    const char *ptr_shell;
     struct t_exec_cmd *new_exec_cmd;
     struct t_exec_cmd_options cmd_options;
     struct t_hashtable *process_options;
@@ -480,6 +481,19 @@ exec_command_run (struct t_gui_buffer *buffer,
     /* automatically disable shell if we are downloading an URL */
     if (strncmp (argv_eol[cmd_options.command_index], "url:", 4) == 0)
         cmd_options.use_shell = 0;
+
+    /* get default shell */
+    if (cmd_options.use_shell)
+    {
+        ptr_shell = weechat_config_string (exec_config_command_shell);
+        if (!ptr_shell || !ptr_shell[0])
+            ptr_shell = default_shell;
+    }
+    else
+    {
+        ptr_shell = NULL;
+    }
+
     if (cmd_options.use_shell)
     {
         /* command will be: sh -c "command arguments..." */
@@ -574,14 +588,15 @@ exec_command_run (struct t_gui_buffer *buffer,
     /* execute the command */
     if (weechat_exec_plugin->debug >= 1)
     {
-        weechat_printf (NULL, "%s: executing command: \"%s%s%s\"",
+        weechat_printf (NULL, "%s: executing command: \"%s%s%s%s\"",
                         EXEC_PLUGIN_NAME,
-                        (cmd_options.use_shell) ? "sh -c '" : "",
+                        (cmd_options.use_shell) ? ptr_shell : "",
+                        (cmd_options.use_shell) ? " -c '" : "",
                         argv_eol[cmd_options.command_index],
                         (cmd_options.use_shell) ? "'" : "");
     }
     new_exec_cmd->hook = weechat_hook_process_hashtable (
-        (cmd_options.use_shell) ? "sh" : argv_eol[cmd_options.command_index],
+        (cmd_options.use_shell) ? ptr_shell : argv_eol[cmd_options.command_index],
         process_options,
         cmd_options.timeout * 1000,
         &exec_process_cb,
