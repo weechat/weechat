@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2018-11-17 08:09+0100\n"
-"PO-Revision-Date: 2018-11-17 10:36+0100\n"
+"PO-Revision-Date: 2018-11-17 11:04+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -163,7 +163,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Aufruf: %s [Option...] [Erweiterung:Option...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -194,6 +193,9 @@ msgstr ""
 "(Voreinstellung: ~/.weechat)\n"
 "                           (Umgebungsvariable WEECHAT_HOME wird überprüft "
 "falls diese Option nicht übergeben wird)\n"
+"  -t, --temp-dir           erstellt ein temporäres WeeChat Heimatverzeichnis "
+"welches beim Beenden gelöscht wird\n"
+"                           (nicht nutzbar mit Option \"-d\")\n"
 "  -h, --help               zeigt diese Hilfe an\n"
 "  -l, --license            zeigt die Lizenz von WeeChat an\n"
 "  -p, --no-plugin          unterbindet beim Programmstart das Laden von "
@@ -240,11 +242,12 @@ msgstr "Fehler: Das HOME-Verzeichnis kann nicht ermittelt werden\n"
 msgid "Error: not enough memory for home directory\n"
 msgstr "Fehler: nicht genug Speicher für das HOME-Verzeichnis\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr ""
-"%s%s: Verzeichnis für Protokoll-Dateien kann nicht erstellt werden (\"%s\")"
+"Fehler: es kann kein temporäres Heimatverzeichnis angelegt werden (mit "
+"Befehl: \"%s\")\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -4955,11 +4958,11 @@ msgid "Directories:"
 msgstr "Verzeichnisse:"
 
 msgid "(TEMPORARY, deleted on exit)"
-msgstr ""
+msgstr "(TEMPORÄR, wird beim beenden gelöscht)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "        (default: %s)"
-msgstr "      Signal: %s"
+msgstr "        (Standardeinstellung: %s)"
 
 #, c-format
 msgid "%sError sending signal %d to pid %d: %s"
