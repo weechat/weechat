@@ -37,7 +37,8 @@ WeeChat とは関係ありませんよ!)。
 
 WeeChat は非常に軽く、革新的な機能を備えているからです。
 
-こののページに関するより詳しい情報: https://weechat.org/about/features
+// TRANSLATION MISSING
+More info on the WeeChat features page: https://weechat.org/about/features
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -51,10 +52,11 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
 
-WeeChat をコンパイルするには cmake を使うことが推奨されています。
+WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[cmake]
+を使うことが推奨されています。
 
-autotools を使って (cmake を使わずに) コンパイルする場合、最新の
-autoconf と automake を使ってください。
+link:weechat_user.ja.html#compile_with_autotools[autotools] を使って (cmake を使わずに)
+コンパイルする場合、最新の autoconf と automake を使ってください。
 
 他には「開発パッケージ」をインストール方法があります。この場合、インストールするのに必要なパッケージの数が減ります。このパッケージは
 git リポジトリからほぼ毎日ビルドされます。このパッケージは厳密には
@@ -79,8 +81,11 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
+// TRANSLATION MISSING
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
-と入力してください。キーとコマンドはドキュメント内にリストアップされています。
+link:weechat_user.ja.html#key_bindings[Keys] and
+link:weechat_user.ja.html#commands_and_options[commands] are listed
+in documentation.
 
 新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド]を読むことをお勧めします
 
@@ -90,7 +95,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[charset]]
 === いくつかの文字が見えません。どうすれば良いですか。
 
-これは良くある問題です。以下の内容をよく読んで、*全ての* 解決策をチェックしてください:
+// TRANSLATION MISSING
+It's a common issue with a variety of causes, please read carefully and check
+*ALL* solutions below:
 
 * weechat が libncursesw にリンクされていることの確認 (警告:
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
@@ -107,8 +114,8 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
    rxvt-unicode を推奨)
 ** screen を使っている場合は、UTF-8 モードで起動されていることを確認
    (~/.screenrc に "`defutf8 on`" の記述があるかまたは `screen -U` のようにして起動)。
-* _weechat.look.eat_newline_glitch_ オプションが off であることを確認してください
-  (このオプションは表示上のバグを引き起こす可能性があります)
+* link:weechat_user.ja.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  オプションが off であることを確認してください (このオプションは表示上のバグを引き起こす可能性があります)
 
 [NOTE]
 WeeChat は UTF-8 ロケールを推奨します。ISO
@@ -163,7 +170,7 @@ gnome-terminal
 ncursesw を自分でコンパイルした場合は、標準の (システムに元から存在する)
 ncurses を使ってみてください。
 
-さらに OS X では、Homebrew パッケージマネージャを使って
+さらに macOS では、Homebrew パッケージマネージャを使って
 WeeChat をインストールすることをお勧めします。
 
 [[buffer_vs_window]]
@@ -175,13 +182,16 @@ _バッファ_ とは番号、名前、表示行 (とその他のデータ)
 _ウィンドウ_
 とはバッファを表示する画面エリアです。画面を複数のウィンドウに分割出来ます。
 
-それぞれのウィンドウは 1 つのバッファの内容を表示します。バッファを隠す
-(ウィンドウで表示させない) ことや 1 つ以上のウィンドウに表示させることも出来ます。
+// TRANSLATION MISSING
+Each window displays one buffer, or a set of merged buffers.
+A buffer can be hidden (not displayed by a window) or displayed by one or more
+windows.
 
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
 
-WeeChat バージョン 1.8 以上の場合、"buflist" プラグインがロードされ、デフォルトで有効化されます。
+WeeChat バージョン 1.8 以上の場合、link:weechat_user.ja.html#buflist_plugin[buflist]
+プラグインがロードされ、デフォルトで有効化されます。
 
 バージョン 1.8 よりも古い WeeChat をお使いなら、以下の方法で _buffers.pl_ スクリプトをインストールしてください:
 
@@ -307,7 +317,10 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。
 
-WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます (デフォルトキー: kbd:[Alt+l])。
+// TRANSLATION MISSING
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]),
+which will show just the contents of the currently selected window,
+without any formatting.
 
 矩形選択のできる端末を使ってください
 (rxvt-unicode、konsole、gnome-terminal、...)。通常、キーは
@@ -484,7 +497,7 @@ UXTerm*metaSendsEscape: true
 
 このファイルをリロードするか (`xrdb -override ~/.Xresources`) または X を再起動してください。
 
-Mac OS X のターミナル.app を使っている場合、設定メニューのキーボードから「メタキーとして option
+macOS のターミナル.app を使っている場合、設定メニューのキーボードから「メタキーとして option
 キーを使用」を有効化してください。こうすることで、kbd:[Option]
 キーをメタキーとして使うことが可能です。
 
@@ -587,7 +600,7 @@ WeeChat でマウスが利用可能な場合、kbd:[Shift]
 [[irc_ssl_connection]]
 === SSL を使うサーバへの接続中に問題が発生しました。どうすればいいですか。
 
-Mac OS X をお使いの場合、必ず Homebrew から `openssl`
+macOS をお使いの場合、必ず Homebrew から `openssl`
 をインストールしてください。こうすることでシステムの鍵束に含まれる証明書を使いつつ、CA
 ファイルを起動時に読み込ませることが可能になります。その後、WeeChat で証明書へのパスを設定してください:
 
@@ -635,7 +648,7 @@ gnutls ハンドシェイクに関するエラーの場合、Diffie-Hellman キ�
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
-注意: OS X 上で homebrew を使って openssl をインストールした場合には、以下のコマンドを実行してください:
+注意: macOS 上で homebrew を使って openssl をインストールした場合には、以下のコマンドを実行してください:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -689,12 +702,13 @@ of channels):
 [[ignore_vs_filter]]
 === /ignore と /filter コマンドの違いは何ですか。
 
+// TRANSLATION MISSING
 `/ignore` コマンドは IRC コマンドです、このため
 IRC バッファ (サーバとチャンネル)
 にのみ有効です。これを使うことでニックネームやホスト名を基準にして、あるサーバやチャンネルにいる一部のユーザを無視できます
 (表示済みメッセージに対しては適用されません)。マッチするメッセージは
 IRC プラグインによって表示される前に削除されます
-(削除されたメッセージは見えません)。
+(so you'll never see them, and can't be recovered by removing the ignore)。
 
 `/filter`
 コマンドは core
@@ -718,8 +732,10 @@ IRC プラグインによって表示される前に削除されます
 /filter add joinquit * irc_join,irc_part,irc_quit *
 ----
 
+// TRANSLATION MISSING
 [NOTE]
-ヘルプを見るには: `/help filter` か `/help irc.look.smart_filter`
+For help: `/help filter`, `/help irc.look.smart_filter` and see
+link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド / 参加/退出/終了メッセージに対するスマートフィルタ].
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
@@ -836,8 +852,9 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[install_scripts]]
 === どうすればスクリプトをインストールできますか。スクリプトは他の IRC クライアントと互換性がありますか。
 
-スクリプトをインストールしたり管理するにはコマンド `/script` を使ってください
-(ヘルプは `/help script` で見ることができます)。
+// TRANSLATION MISSING
+With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
+(see `/help script` for help). For older versions there is weeget.py and script.pl.
 
 スクリプトは他の IRC クライアントのものと互換性がありません。
 
@@ -859,7 +876,10 @@ $ rm ~/.weechat/script/plugins.xml.gz
 /script update
 ----
 
-それでもまだエラーが出るなら、更新を受け取るにはスクリプトリストファイルを必ず手作業で更新しなければいけないということです。これを行うには以下の手順に従ってください:
+// TRANSLATION MISSING
+If you still have an error, then you must disable the automatic update of file
+in WeeChat and download the file manually outside WeeChat (that means you'll
+have to update manually the file yourself to get updates):
 
 * WeeChat から WeeChat のファイル自動更新機能を無効化してください:
 
@@ -912,8 +932,10 @@ aspell プラグインをリロードしてください:
 
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
+// TRANSLATION MISSING
 * 使わないプラグインのロードを禁止する、例えば:
-  aspell、buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、xfer (DCC で使用)
+  aspell、buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、xfer (DCC で使用)。
+  See `/help weechat.plugin.autoload`.
 * 本当に必要なスクリプトだけをロード
 * SSL を *使わない* なら、証明書を読み込まないでください: オプション
   _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
@@ -963,9 +985,11 @@ IRC の退出および終了メッセージを無効化します:
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
+// TRANSLATION MISSING
 パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
 `/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
 (セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
+See also link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ].
 
 例:
 
