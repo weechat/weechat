@@ -36,10 +36,9 @@ Aber diese Bedeutung trifft nicht auf WeeChat zu!)
 [[why_choose_weechat]]
 === Weshalb sollte man WeeChat nutzen? - X-Chat und Irssi sind doch auch sehr gut...
 
-WeeChat ist sehr Speicher schonend und besticht durch innovative Funktionen.
+WeeChat ist sehr speicherschonend und besticht durch innovative Funktionen.
 
-// TRANSLATION MISSING
-More info on the WeeChat features page: https://weechat.org/about/features
+Weitere Informationen findet man auf der WeeChat Seite: https://weechat.org/about/features
 
 [[compilation_install]]
 == Kompilierung / Installation
@@ -86,12 +85,11 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === Ich habe WeeChat gestartet, komme aber nicht mehr weiter - was kann ich tun?
 
-Um Hilfe zu erhalten, nutze den `/help` Befehl. Eine Hilfe zu einem Befehl erhältst
-Du durch die Eingabe von: `/help Befehlsname`.
-// TRANSLATION MISSING
-link:weechat_user.de.html#key_bindings[Keys] and
-link:weechat_user.de.html#commands_and_options[commands] are listed
-in documentation.
+Um Hilfe zu erhalten, nutze den `/help` Befehl, denn jeder Befehl besitzt einen
+Hilfstext den man sich durch folgende Eingabe anzeigen lassen kann: `/help Befehlsname`.
+link:weechat_user.de.html#key_bindings[Benutzeranleitung / Tastenbelegungen] und
+link:weechat_user.de.html#commands_and_options[Befehle und Optionen] sind in der
+Dokumentation aufgeführt.
 
 Neuen Anwendern wird empfohlen die link:weechat_quickstart.de.html[Quickstart Anleitung] zu lesen.
 
@@ -101,9 +99,8 @@ Neuen Anwendern wird empfohlen die link:weechat_quickstart.de.html[Quickstart An
 [[charset]]
 === Bei einigen Zeichen fehlen die Akzente. Wie kann ich das beheben?
 
-// TRANSLATION MISSING
-It's a common issue with a variety of causes, please read carefully and check
-*ALL* solutions below:
+Dies ist ein bekanntes Problem und kann viele Ursachen haben, deshalb ist wichtig
+das man *ALLE* Lösungsmöglichkeiten prüft:
 
 * überprüfe, ob WeeChat mit libncursesw verlinkt ist (Warnung: Dies ist bei den
   meisten Distributionen nötig - jedoch nicht bei allen): `ldd /path/to/weechat`
@@ -125,7 +122,7 @@ It's a common issue with a variety of causes, please read carefully and check
    screen)
 * überprüfe die Option
   link:weechat_user.de.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
-  (diese Option kann zu Darstellungsfehlern führen, wenn sie aktiviert ist)
+  (diese Option kann schwerwiegenden Darstellungsfehler verursachen, wenn man die Option aktiviert hat)
 
 [NOTE]
 Für Weechat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO
@@ -191,10 +188,9 @@ In einem _Buffer_ werden Textzeilen angezeigt (und noch anderen Daten).
 Ein _Fenster_ ist ein Bildschirmbereich der Buffer darstellt. Es ist möglich
 den Bildschirm in mehrere Fenster aufzuteilen.
 
-// TRANSLATION MISSING
-Each window displays one buffer, or a set of merged buffers.
-A buffer can be hidden (not displayed by a window) or displayed by one or more
-windows.
+In jedem Fenster wird entweder ein Buffer oder ein zusammengefügter Buffer dargestellt.
+Ein Buffer kann entweder versteckt sein (wird nicht durch ein Fenster angezeigt) oder
+von einem oder mehreren Fenstern gleichzeitig angezeigt werden.
 
 [[buffers_list]]
 === Wie kann ich eine Liste mit den Buffern z.B. auf der linken Seite anzeigen lassen?
@@ -334,10 +330,8 @@ werden sollte:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste (Benutzerliste) mit kopiert wird?
 
-// TRANSLATION MISSING
-Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: kbd:[Alt+l]),
-which will show just the contents of the currently selected window,
-without any formatting.
+Seit WeeChat ≥ 1.0 gibt es einen neuen Anzeigemodus (Standardtastenbelegung: kbd:[Alt+l]), der dazu genutzt
+werden kann um den Inhalt des aktuellen Fensters ohne eine Formatierung anzeigen zu lassen.
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
 konsole, gnome-terminal, ...). Im Normalfall erfolgt die Markierung mittels der Tasten
@@ -740,9 +734,9 @@ Der Befehl `/ignore` ist ein IRC-Befehl und beeinflusst somit nur die IRC-Buffer
 (Server und Channel).
 Durch den Befehl kann man bestimmte Nicks oder Hostnamen von Usern eines Servers oder
 von Channels ignorieren (Der Befehl wird nicht auf den Inhalt der Meldung angewandt).
-// TRANSLATION MISSING
 Zutreffende Meldungen werden, bevor sie angezeigt werden, von der IRC-Erweiterung gelöscht
-(so you'll never see them, and can't be recovered by removing the ignore).
+(diese Nachrichten werden nicht angezeigt und können auch nicht rückwirkend angezeigt werden,
+auch wenn man die Ignorierung entfernt).
 
 Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
 nicht an den Server gesendet) und beeinflusst somit jeden Buffer.
@@ -753,7 +747,7 @@ Die gefilterten Zeilen können zu jeder Zeit dargestellt werden indem man den Fi
 (Voreinstellung zum aktivieren/deaktivieren der Filter: kbd:[Alt+=]).
 
 [[filter_irc_join_part_quit]]
-=== Wie kann ich join/part/quit Meldungen in den IRC Channels filtern (A.d.ü.: unterdrücken)?
+=== Wie kann ich join/part/quit Meldungen in den IRC Channels filtern/unterdrücken?
 
 Zum einen mit dem Smart-Filer (join/part/quit Meldungen werden von Usern angezeigt die kürzlich
 noch etwas geschrieben haben):
@@ -769,9 +763,8 @@ zum anderen mit einer globalen Filterung (*alle* join/part/quit Nachrichten werd
 /filter add joinquit * irc_join,irc_part,irc_quit *
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-Für weitere Hilfe: `/help filter`, `/help irc.look.smart_filter` and see
+Für weitere Hilfe: `/help filter`, `/help irc.look.smart_filter` und
 link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzeranleitung / einfacher Filter für join/part/quit Nachrichten].
 
 [[filter_irc_join_channel_messages]]
@@ -899,9 +892,9 @@ Um dies zu beheben muss folgendes konfiguriert werden:
 [[install_scripts]]
 === Wie kann ich Skripten installieren? Sind Skripten kompatibel mit anderen IRC Clients?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
-(see `/help script` for help). For older versions there is weeget.py and script.pl.
+Seit WeeChat ≥ 0.3.9 gibt es den Befehl `/script` um Skripten zu installieren und zu verwalten
+(siehe `/help script` um eine Hilfe zu erhalten). Nutzt man eine ältere Version von WeeChat
+kann man die Skripten weeget.py und script.pl nutzen.
 
 Die Skripten für WeeChat sind mit anderer IRC-Clients nicht kompatibel und vice versa.
 
@@ -912,7 +905,6 @@ Als erstes sollte das Kapitel über SSL Verbindungen in dieser FAQ gelesen werde
 (besonders über die Option _weechat.network.gnutls_ca_file_).
 
 Sollte das nicht helfen, sollte man manuell die Skriptliste löschen (in der shell):
-If still not working, try to manually delete the scripts file (in your shell):
 
 ----
 $ rm ~/.weechat/script/plugins.xml.gz
@@ -924,10 +916,9 @@ danach sollte man noch mal versuchen die Datei herunter zu laden:
 /script update
 ----
 
-// TRANSLATION MISSING
-If you still have an error, then you must disable the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
-have to update manually the file yourself to get updates):
+Sollte der Fehler noch immer auftreten, dann sollte man die automatische Updatefunktion
+in WeeChat deaktivieren und die Daten manuell runter laden (das bedeutet das man
+selber seine Skripten aktuell halten muss):
 
 * in WeeChat:
 
@@ -982,10 +973,9 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 
 * nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
   weniger Speicherlecks besitzt, als eine vorherige Version)
-// TRANSLATION MISSING
 * lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Buflist,
   Fifo, Logger, Perl, Python, Ruby, Lua, Tcl, Guile, JavaScript, PHP, Xfer (wird für
-  DCC benötigst). See `/help weechat.plugin.autoload`.
+  DCC benötigst), siehe `/help weechat.plugin.autoload`.
 * installiere ausschließlich Skripten die Du auch nutzt
 * falls man SSL *NICHT* nutzt, sollte kein Zertifikat geladen werden. In diesem
   Fall, einfach den Eintrag in folgender Option leer lassen:
@@ -1042,8 +1032,7 @@ Definiere eine Passphrase und nutze ausschließlich geschützte Daten wann immer
 es möglich ist, wie z.B. bei Passwörtern: siehe `/help secure` und nutze `/help`
 bei der entsprechenden Option (falls man geschützte Daten nutzen kann, wird es
 im Hilfstext erwähnt).
-// TRANSLATION MISSING
-See also link:weechat_user.de.html#secured_data[Benutzeranleitung / sensible Daten].
+Siehe auch link:weechat_user.de.html#secured_data[Benutzeranleitung / sensible Daten].
 
 Beispiel:
 
