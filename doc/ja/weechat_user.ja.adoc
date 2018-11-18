@@ -43,7 +43,7 @@ WeeChat (Wee Enhanced Environment for Chat)
   http://tools.ietf.org/html/rfc2812[2812]、
   http://tools.ietf.org/html/rfc2813[2813]。
 * リモートインターフェース用の IRC プロキシとリレー
-* マルチプラットフォーム (GNU/Linux、*BSD、MacOS X、Windows 等)
+* マルチプラットフォーム (GNU/Linux、*BSD、macOS、Windows 等)
 * 完全な GPL、フリーソフトウェア
 
 WeeChat のホームページ: https://weechat.org/
@@ -87,7 +87,7 @@ WeeChat をインストールするには、以下のものが必要です:
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
 [NOTE]
-OS X では http://brew.sh/[Homebrew] を使ってください:
+macOS では http://brew.sh/[Homebrew] を使ってください:
 `brew install weechat --with-python --with-perl`
 (ヘルプを見るには: `brew info weechat`)。
 

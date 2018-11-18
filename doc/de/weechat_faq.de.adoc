@@ -67,8 +67,8 @@ Beachte, dass dieses Paket nicht immer exakt mit dem git Repository übereinstim
 und daher auch weniger brauchbar sein kann. Im Gegensatz zu der Möglichkeit, dass man selbst
 das Repository klont und daraus Updates installiert.
 
-[[compile_osx]]
-=== Wie installiere ich WeeChat auf OS X?
+[[compile_macos]]
+=== Wie installiere ich WeeChat auf macOS?
 
 Wir empfehlen, dass zur Installation http://brew.sh/[Homebrew] genutzt wird.
 Hilfe erhält man mittels:
@@ -174,8 +174,8 @@ Falls notwendig korrigiere den Wert Deiner TERM-Variable: `export TERM="xxx"`.
 Wird das gnome-terminal genutzt sollte unter Bearbeiten/Profileinstellungen/Kompatibilität
 die Option "Zeichen mit unbekannter Breite" auf `schmal` stehen.
 
-[[osx_display_broken]]
-=== Ich habe WeeChat unter OS X kompiliert und erhalte nur "(null)" als Textausgabe. Was läuft da schief?
+[[macos_display_broken]]
+=== Ich habe WeeChat unter macOS kompiliert und erhalte nur "(null)" als Textausgabe. Was läuft da schief?
 
 Wenn Du ncursesw selber kompiliert haben solltest dann probiere einmal die Standard ncurses aus, welche
 mit dem System ausgeliefert wird.

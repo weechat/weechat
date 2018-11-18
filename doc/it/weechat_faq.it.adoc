@@ -69,8 +69,8 @@ esattamente alla base git ed è meno conveniente rispetto al clone di git
 per l'installazione degli aggiornamenti.
 
 // TRANSLATION MISSING
-[[compile_osx]]
-=== How can I install WeeChat on OS X?
+[[compile_macos]]
+=== How can I install WeeChat on macOS?
 
 // TRANSLATION MISSING
 It is recommended to use http://brew.sh/[Homebrew], you can get help with:
@@ -186,8 +186,8 @@ If you are using gnome-terminal, check that the option
 "Ambiguous-width characters" in menu Preferences/Profile/Compatibility
 is set to `narrow`.
 
-[[osx_display_broken]]
-=== Ho compilato WeeChat su OS X, e vedo "(null)" dovunque sullo schermo, cosa non va?
+[[macos_display_broken]]
+=== Ho compilato WeeChat su macOS, e vedo "(null)" dovunque sullo schermo, cosa non va?
 
 Se ncursesw è stato compilato manualmente, utilizzare ncurses standard (incluse
 col sistema).
@@ -705,7 +705,7 @@ Impostare l'opzione _weechat.network.gnutls_ca_file_ con il file dei certificati
 ----
 
 // TRANSLATION MISSING
-Note: if you are running OS X with homebrew openssl installed, you can do:
+Note: if you are running macOS with homebrew openssl installed, you can do:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"

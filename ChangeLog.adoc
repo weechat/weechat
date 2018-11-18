@@ -359,7 +359,7 @@ Bug fixes::
 
 Build::
 
-  * core, irc, xfer: fix compilation on Mac OS X (add link with resolv) (issue #276)
+  * core, irc, xfer: fix compilation on macOS (add link with resolv) (issue #276)
   * core: add build of xz package with make dist (cmake)
   * tests: fix compilation of tests on FreeBSD 11.0
 
@@ -812,7 +812,7 @@ Bug fixes::
   * core: fix reset of attributes in bars when "resetcolor" is used (issue #41)
   * core: fix alignment of lines in merged buffers when options weechat.look.prefix_align and weechat.look.prefix_buffer_align are set to "none" (issue #43)
   * core: quit WeeChat on signal SIGHUP, remove signal "signal_sighup"
-  * core: fix add of filter on OS X when regex for message is empty (filter regex ending with "\t")
+  * core: fix add of filter on macOS when regex for message is empty (filter regex ending with "\t")
   * core: check validity of buffer pointer when data is sent to a buffer (command/text from user and API function command())
   * core: fix crash when buffer is closed during execution of multiple commands (issue #27)
   * core: fix compilation on SmartOS (bug #40981, issue #23)
@@ -872,13 +872,13 @@ Bug fixes::
   * scripts: fix crash when a signal is received with type "int" and NULL pointer in signal_data
   * xfer: fix problem with option xfer.file.auto_accept_nicks when the server name contains dots
   * xfer: fix freeze/problems when sending empty files with DCC (issue #53)
-  * xfer: fix connection to remote host in DCC receive on Mac OS X (issue #25)
+  * xfer: fix connection to remote host in DCC receive on macOS (issue #25)
   * xfer: remove bind on xfer.network.own_ip (issue #5)
 
 Build::
 
   * core: fix cmake warning CMP0007 on "make uninstall" (bug #41528)
-  * core: use glibtoolize on Mac OS X (autotools) (issue #22)
+  * core: use glibtoolize on macOS (autotools) (issue #22)
   * ruby: add detection of Ruby 2.1
 
 Tests::
@@ -1113,7 +1113,7 @@ Bug fixes::
   * core: fix hidden lines for messages without date when option weechat.history.max_buffer_lines_minutes is set (bug #38197)
   * core: use default hash/comparison callback for keys of type integer/pointer/time in hashtable
   * api: do not display a warning by default when loading a script with a license different from GPL
-  * api: fix connection to servers with hook_connect() on OS X (bug #38496)
+  * api: fix connection to servers with hook_connect() on macOS (bug #38496)
   * api: fix bug in function string_match() when mask begins and ends with "*"
   * api: allow hashtable with keys that are not strings in function hashtable_add_to_infolist()
   * api: fix function string_mask_to_regex(): escape all special chars used in regex (bug #38398)
@@ -1149,7 +1149,7 @@ Bug fixes::
 Build::
 
   * core: install icon file (patch #7972)
-  * core: fix detection of iconv with cmake on OS X (bug #38321)
+  * core: fix detection of iconv with cmake on macOS (bug #38321)
   * guile: fix compilation with Guile 2.0
   * python: fix detection of Python on Ubuntu Raring
   * script: fix compilation on GNU/Hurd (patch #7977)
@@ -1239,7 +1239,7 @@ Build::
   * core: add git version in build, display it in "weechat-curses --help" and /version
   * core: stop cmake if gcrypt lib is not found (bug #37671)
   * guile: fix detection of Guile in configure
-  * script: fix compilation on OS X
+  * script: fix compilation on macOS
 
 [[v0.3.9.2]]
 == Version 0.3.9.2 (2012-11-18)
@@ -1395,7 +1395,7 @@ Bug fixes::
   * irc: close server buffer when server is deleted
   * irc: add search for lower case nicks in option irc.look.nick_color_force
   * logger: fix charset of lines displayed in backlog when terminal charset is different from UTF-8 (bug #36379)
-  * perl: fix crash on quit on OS X
+  * perl: fix crash on quit on macOS
   * relay: keep spaces in beginning of "input" received from client (WeeChat protocol)
   * relay: fix crash on /upgrade when client is connected using WeeChat protocol
   * relay: redirect some irc messages from clients to hide output (messages: mode, ison, list, names, topic, who, whois, whowas, time, userhost) (bug #33516)
@@ -1408,7 +1408,7 @@ Documentation::
 
 Build::
 
-  * perl: fix compilation on OS X (bug #30701)
+  * perl: fix compilation on macOS (bug #30701)
 
 [[v0.3.7]]
 == Version 0.3.7 (2012-02-26)
@@ -1492,7 +1492,7 @@ Build::
   * core: add library "pthread" in cmake file for link on OpenBSD
   * core: add WEECHAT_HOME option in cmake and configure to setup default WeeChat home (default is "~/.weechat") (task #11266)
   * core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more) (bug #34727)
-  * core: fix compilation error with "pid_t" on Mac OS X (bug #34639)
+  * core: fix compilation error with "pid_t" on macOS (bug #34639)
 
 [[v0.3.6]]
 == Version 0.3.6 (2011-10-22)
@@ -1584,7 +1584,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix compilation error (INSTALLPREFIX undeclared) on OS X and when compiling with included gettext (bug #26690)
+  * core: fix compilation error (INSTALLPREFIX undeclared) on macOS and when compiling with included gettext (bug #26690)
 
 [[v0.3.5]]
 == Version 0.3.5 (2011-05-15)
@@ -1884,7 +1884,7 @@ New features::
 
 Bug fixes::
 
-  * core: fix bug with script installation on BSD/OSX (patch #6980)
+  * core: fix bug with script installation on BSD/macOS (patch #6980)
   * core: fix compilation under Cygwin (patch #6916)
   * core: fix plural form in translation files (bug #27430)
   * core: fix terminal title bug: do not reset it when option weechat.look.set_title is off (bug #27399)
@@ -2531,7 +2531,7 @@ Bug fixes::
 
 Build::
 
-  * WeeChat now OK under *BSD and Mac OS X
+  * WeeChat now OK under *BSD and macOS
 
 [[v0.1.1]]
 == Version 0.1.1 (2005-03-20)

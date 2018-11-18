@@ -36,7 +36,7 @@ set(LINK_LIBS)
 list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on Mac OS X
+  # link with resolv lib on macOS
   list(APPEND LINK_LIBS "resolv")
 endif()
 

@@ -57,8 +57,8 @@ This package is built almost every day using git repository. Note that this
 package may not correspond exactly to git base and that it's less convenient
 than git cloning for installing updates.
 
-[[compile_osx]]
-=== How can I install WeeChat on OS X?
+[[compile_macos]]
+=== How can I install WeeChat on macOS?
 
 It is recommended to use http://brew.sh/[Homebrew], you can get help with:
 
@@ -159,8 +159,8 @@ If you are using gnome-terminal, check that the option
 "Ambiguous-width characters" in menu Preferences/Profile/Compatibility
 is set to `narrow`.
 
-[[osx_display_broken]]
-=== I compiled WeeChat under OS X, and I see "(null)" everywhere on screen, what's wrong?
+[[macos_display_broken]]
+=== I compiled WeeChat under macOS, and I see "(null)" everywhere on screen, what's wrong?
 
 If you compiled ncursesw yourself, try to use standard ncurses (that comes with
 system).

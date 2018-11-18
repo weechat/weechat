@@ -42,7 +42,7 @@ list(APPEND EXTRA_LIBS "m")
 list(APPEND EXTRA_LIBS ${CURL_LIBRARIES})
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  # link with resolv lib on Mac OS X
+  # link with resolv lib on macOS
   list(APPEND EXTRA_LIBS "resolv")
 endif()
 
