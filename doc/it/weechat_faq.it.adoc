@@ -39,7 +39,8 @@ non c'entra con WeeChat!).
 // TRANSLATION MISSING
 Because WeeChat is very light and brings innovating features.
 
-Maggiori informazioni su https://weechat.org/about/features
+// TRANSLATION MISSING
+More info on the WeeChat features page: https://weechat.org/about/features
 
 [[compilation_install]]
 == Compilazione / installazione
@@ -54,10 +55,12 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
 
-Il metodo raccomandato per compilare WeeChat è utilizzando cmake.
+Il metodo raccomandato per compilare WeeChat è utilizzando
+link:weechat_user.it.html#compile_with_cmake[cmake].
 
-Se si sta compilando con autotools (e non cmake), verificare che siano installate
-le ultime versioni di autoconf e automake.
+Se si sta compilando con link:weechat_user.it.html#compile_with_autotools[autotools]
+(e non cmake), verificare che siano installate le ultime versioni di autoconf e
+automake.
 
 L'altro metodo è installare il "pacchetto di sviluppo", che richiede meno
 dipendenze. Questo pacchetto viene generato  quasi tutti i giorni utilizzando
@@ -66,8 +69,8 @@ esattamente alla base git ed è meno conveniente rispetto al clone di git
 per l'installazione degli aggiornamenti.
 
 // TRANSLATION MISSING
-[[compile_osx]]
-=== How can I install WeeChat on OS X?
+[[compile_macos]]
+=== How can I install WeeChat on macOS?
 
 // TRANSLATION MISSING
 It is recommended to use http://brew.sh/[Homebrew], you can get help with:
@@ -86,8 +89,11 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === Ho avviato WeeChat, ma mi sono perso, cosa posso fare?
 
+// TRANSLATION MISSING
 Per l'aiuto digitare `/help`. Per l'aiuto su un comando, digitare `/help comando`.
-Tasti e comandi sono elencati nella documentazione.
+link:weechat_user.it.html#key_bindings[Keys] and
+link:weechat_user.it.html#commands_and_options[commands] are listed
+in documentation.
 
 // TRANSLATION MISSING
 It's recommended for new users to read the
@@ -99,8 +105,9 @@ link:weechat_quickstart.it.html[Quickstart guide].
 [[charset]]
 === Non riesco a vedere alcuni caratteri con gli accenti, cosa posso fare?
 
-È un problema noto, per favore leggere con attenzione e verificare *OGNI*
-soluzione tra quelle elencate:
+// TRANSLATION MISSING
+It's a common issue with a variety of causes, please read carefully and check
+*ALL* solutions below:
 
 * verificare che weechat abbia un link con libncursesw (attenzione:
   necessario su molte distribuzioni ma non tutte): `ldd /path/di/weechat`
@@ -122,8 +129,9 @@ soluzione tra quelle elencate:
     UTF-8 ("`defutf8 on` nel file ~/.screenrc` oppure `screen -U` per avviare
     screen)
 // TRANSLATION MISSING
-* check that option _weechat.look.eat_newline_glitch_ is off (this option may
-  cause display bugs)
+* check that option
+  link:weechat_user.it.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  is off (this option may cause display bugs)
 
 [NOTE]
 Si raccomanda il locale UTF-8 per WeeChat. Se si utilizza ISO o un altro
@@ -178,13 +186,13 @@ If you are using gnome-terminal, check that the option
 "Ambiguous-width characters" in menu Preferences/Profile/Compatibility
 is set to `narrow`.
 
-[[osx_display_broken]]
-=== Ho compilato WeeChat su OS X, e vedo "(null)" dovunque sullo schermo, cosa non va?
+[[macos_display_broken]]
+=== Ho compilato WeeChat su macOS, e vedo "(null)" dovunque sullo schermo, cosa non va?
 
 Se ncursesw è stato compilato manualmente, utilizzare ncurses standard (incluse
 col sistema).
 
-Inoltre, su OS X, si raccomanda di installare WeeChat con il gestore pacchetti
+Inoltre, su macOS, si raccomanda di installare WeeChat con il gestore pacchetti
 Homebrew.
 
 [[buffer_vs_window]]
@@ -196,14 +204,17 @@ qualche altro dato).
 Una _finestra_ (o window) è un'aread dello schermo in cui viene visualizzato
 un buffer. È possibile dividere lo schermo in più finestre.
 
-Ogni finestra visualizza un buffer. Un buffer può essere nascosto (non visualizzato
-da una finestra) o visualizzato da una o più finestre.
+// TRANSLATION MISSING
+Each window displays one buffer, or a set of merged buffers.
+A buffer can be hidden (not displayed by a window) or displayed by one or more
+windows.
 
 // TRANSLATION MISSING
 [[buffers_list]]
 === Come si può visualizzare la lista dei buffer sulla sinistra?
 
-With WeeChat ≥ 1.8, the plugin "buflist" is loaded and enabled by default.
+With WeeChat ≥ 1.8, the plugin link:weechat_user.it.html#buflist_plugin[buflist]
+is loaded and enabled by default.
 
 With an older version, you can install script _buffers.pl_:
 
@@ -273,7 +284,7 @@ since you visited the buffer.
 
 In the example `[H: 3(1,8), 2(4)]`, there are:
 
-* one highlight and 8 unread messages on buffer #3,
+* 1 highlight and 8 unread messages on buffer #3,
 * 4 unread messages on buffer #2.
 
 The color of the buffer/counter depends on the type of message, default colors
@@ -336,7 +347,9 @@ non viene usato da un'altra barra:
 === Come posso copiare/incollare testo senza incollare la lista nick?
 
 // TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]),
+which will show just the contents of the currently selected window,
+without any formatting.
 
 È possibile usare un terminale con la selezione rettangolare (come
 rxvt-unicode, konsole, gnome-terminal, ...). La combinazione tasti in
@@ -532,7 +545,7 @@ UXTerm*metaSendsEscape: true
 Al termine, ricaricare la configurazione (`xrdb -override ~/.Xresources`) o riavviare X.
 
 // TRANSLATION MISSING
-If you are using the Mac OS X Terminal app, enable the option
+If you are using the macOS Terminal app, enable the option
 "Use option as meta key" in menu Settings/Keyboard. And then you can use the
 kbd:[Option] key as meta key.
 
@@ -642,7 +655,7 @@ kbd:[Shift]).
 === Ho dei problemi nella connessione al server con SSL, cosa posso fare?
 
 // TRANSLATION MISSING
-If you are using Mac OS X, you must install `openssl` from Homebrew.
+If you are using macOS, you must install `openssl` from Homebrew.
 A CA file will be bootstrapped using certificates from the system keychain.
 You can then set the path to certificates in WeeChat:
 
@@ -692,7 +705,7 @@ Impostare l'opzione _weechat.network.gnutls_ca_file_ con il file dei certificati
 ----
 
 // TRANSLATION MISSING
-Note: if you are running OS X with homebrew openssl installed, you can do:
+Note: if you are running macOS with homebrew openssl installed, you can do:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -747,12 +760,14 @@ comando e l'ingresso nei canali):
 [[ignore_vs_filter]]
 === Qual è la differenza tra i comandi /ignore e /filter?
 
+// TRANSLATION MISSING
 Il comando `/ignore` è un comando IRC, per cui è utile solo per i buffer
 IRC (server e canali).
 Consente di ignorare alcuni nick o nomi host di utenti per un server o per
 un canale (il comando non viene applicato sul contenuto dei messaggi).
 I messaggi corrispondenti vengono eliminati dal plugin IRC prima di
-essere visualizzati (perciò non verranno mai mostrati).
+essere visualizzati (so you'll never see them, and can't be recovered by removing
+the ignore).
 
 Il comando `/filter` è un comando core, perciò funziona per qualsiasi
 buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
@@ -779,7 +794,8 @@ Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
 ----
 
 [NOTE]
-Per aiuto: `/help filter` e `/help irc.look.smart_filter`
+Per aiuto: `/help filter`, `/help irc.look.smart_filter` e
+link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente / Filtro smart per i messaggi di entrata/uscita/disconnessione].
 
 [[filter_irc_join_channel_messages]]
 === Come posso filtrare i messaggi visualizzati all'ingresso su un canale IRC?
@@ -905,8 +921,8 @@ Si deve impostare in questo modo:
 === How can I install scripts? Are scripts compatible with other IRC clients?
 
 // TRANSLATION MISSING
-You can use the command `/script` to install and manage scripts
-(see `/help script` for help).
+With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
+(see `/help script` for help). For older versions there is weeget.py and script.pl.
 
 Gli script non sono compatibili con altri client IRC.
 
@@ -929,7 +945,7 @@ And update scripts again in WeeChat:
 /script update
 ----
 
-If you still have an error, then you must remove the automatic update of file
+If you still have an error, then you must disable the automatic update of file
 in WeeChat and download the file manually outside WeeChat (that means you'll
 have to update manually the file yourself to get updates):
 
@@ -988,8 +1004,10 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 
 * utilizzare l'ultima versione stabile (si suppone che abbia meno falle di memoria
   rispetto le versioni precedenti)
+// TRANSLATION MISSING
 * non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, buflist,
-  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, xfer (usato per DCC)
+  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, xfer (usato per DCC).
+  See `/help weechat.plugin.autoload`.
 * caricare solo gli script veramente necessari
 * non caricare i certificati se SSL *NON* viene usato: usare una stringa vuota nell'opzione
   _weechat.network.gnutls_ca_file_
@@ -1050,6 +1068,7 @@ Unload and disable auto-loading of "xfer" plugin (used for IRC DCC):
 Define a passphrase and use secured data wherever you can for sensitive data
 like passwords: see `/help secure` and `/help` on options
 (if you can use secured data, it is written in the help).
+See also link:weechat_user.it.html#secured_data[Guida per l’Utente / Secured data].
 
 For example:
 

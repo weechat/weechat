@@ -37,7 +37,8 @@ pasuje ono do WeeChat!).
 
 Ponieważ Weechat jest bardzo lekki i posiada innowacyjne funkcje.
 
-Więcej informacji na stronie: https://weechat.org/about/features
+// TRANSLATION MISSING
+More info on the WeeChat features page: https://weechat.org/about/features
 
 [[compilation_install]]
 == Kompilacja / instalacja
@@ -51,18 +52,19 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 
-Zalecaną metodą kompilacji WeeChat jest użycie cmake.
+Zalecaną metodą kompilacji WeeChat jest użycie
+link:weechat_user.pl.html#compile_with_cmake[cmake].
 
-Jeśli kompilujesz używając autotools (nie cmake), upewnij się, że posiadasz
-najnowszą wersję autoconf i automake.
+Jeśli kompilujesz używając link:weechat_user.pl.html#compile_with_autotools[autotools]
+(nie cmake), upewnij się, że posiadasz najnowszą wersję autoconf i automake.
 
 Innym sposobem jest zainstalowanie "paczki deweloperskiej", która wymaga mniej
 zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium
 git. Ten pakiet może odpowiadać dokładnie wersji z gita i jest mniej wygodny
 przy aktualizowaniu jak klonowanie z gita.
 
-[[compile_osx]]
-=== Jak zainstalować WeeChat na OS X?
+[[compile_macos]]
+=== Jak zainstalować WeeChat na macOS?
 
 Zaleca się użycie http://brew.sh/[Homebrew], pomoc uzyskasz za pomocą komendy:
 
@@ -79,8 +81,11 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
 
+// TRANSLATION MISSING
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
-Klawisze i komendy są wypisane w dokumentacji.
+link:weechat_user.pl.html#key_bindings[Keys] and
+link:weechat_user.pl.html#commands_and_options[commands] are listed
+in documentation.
 
 Nowym użytkowniką zaleca się przeczytanie dokumentu
 link:weechat_quickstart.pl.html[Szybki start].
@@ -91,7 +96,9 @@ link:weechat_quickstart.pl.html[Szybki start].
 [[charset]]
 === Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
 
-Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązania:
+// TRANSLATION MISSING
+It's a common issue with a variety of causes, please read carefully and check
+*ALL* solutions below:
 
 * sprawdź czy weechat jest zlinkowany z libncursesw (uwaga: wymagane na
   większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat`
@@ -109,8 +116,9 @@ Jest to częsty problem, przeczytaj i sprawdź *WSZYSTKIE* poniższe rozwiązani
    dla UTF-8 jest rxvt-unicode)
 ** jeśli korzystasz ze screena, sprawdź czy jest uruchomiony z trybem UTF-8
    ("`defutf8 on`" w ~/.screenrc lub `screen -U` uruchamiając screena)
-* sprawdź czy opcja _weechat.look.eat_newline_glitch_ jest wyłączona (ta opcja
-  może powodować błędy wyświetlania)
+* sprawdź czy opcja
+  link:weechat_user.pl.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  jest wyłączona (ta opcja może powodować błędy wyświetlania)
 
 [NOTE]
 UTF-8 jest zalecany dla WeeChat. Jeśli korzystasz z lokalizacji ISO lub innych,
@@ -158,13 +166,13 @@ W razie potrzeby, popraw zmienna TERM: `export TERM="xxx"`.
 Jeśli używasz gnome-terminal, sprawdź czy opcja "Ambigous-width chracters"
 w menu Preferencje/Profile/Kompatybilność jest ustawiona na `narrow`.
 
-[[osx_display_broken]]
-=== Skompilowałem WeeChat pod OS X i wszędzie na ekranie widzę "(null)", co jest nie tak?
+[[macos_display_broken]]
+=== Skompilowałem WeeChat pod macOS i wszędzie na ekranie widzę "(null)", co jest nie tak?
 
 Jeśli samodzielnie skompilowałeś ncursesw, spróbuj użyć domyślnej wersji (dostarczanej
 z systemem).
 
-Ponadto, pod OS X, zaleca się instalowanie WeeChat za pomocą managera pakietów
+Ponadto, pod macOS, zaleca się instalowanie WeeChat za pomocą managera pakietów
 Homebrew.
 
 [[buffer_vs_window]]
@@ -176,13 +184,16 @@ danych).
 _okno_ jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
 ekranu na wiele okien.
 
-Każde okno wyświetla jeden bufor. Bufor może być ukryty (nie wyświetlany przez
-okno) lub wyświetlany w jednym lub więcej oknach.
+// TRANSLATION MISSING
+Each window displays one buffer, or a set of merged buffers.
+A buffer can be hidden (not displayed by a window) or displayed by one or more
+windows.
 
 [[buffers_list]]
 === Jak wyświetlić listę z buforami po lewej stronie?
 
-W wersji WeeChat ≥ 1.8, wtyczka "buflist" jest domyślnie włączona i załadowana.
+W wersji WeeChat ≥ 1.8, wtyczka link:weechat_user.pl.html#buflist_plugin[buflist]
+jest domyślnie włączona i załadowana.
 
 W starszych wersjach możesz zainstalować skrypt _buffers.pl_:
 
@@ -250,7 +261,8 @@ wiadomości od ostatniej wizyty w buforze.
 
 w przykładzie `[H: 3(1,8), 2(4)]`, oznacza:
 
-* jedno podświetlenie i 8 nieprzeczytanych wiadomości w buforze #3,
+// TRANSLATION MISSING
+* 1 highlight and 8 unread messages on buffer #3,
 * 4 nieprzeczytane wiadomości w buforze #2.
 
 Kolor bufora/licznika zależy od typu wiadomoci, domyślne kolory:
@@ -310,7 +322,10 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]).
+// TRANSLATION MISSING
+W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]),
+which will show just the contents of the currently selected window,
+without any formatting.
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj kbd:[Ctrl] + kbd:[Alt] + zaznaczenie myszką.
@@ -489,7 +504,7 @@ UXTerm*metaSendsEscape: true
 
 Następnie przeładować zasoby (`xrdb -override ~/.Xresources`) lub zrestartować X.
 
-Jeśli używasz aplikacji Terminal na Mac OS X włącz opcję
+Jeśli używasz aplikacji Terminal na macOS włącz opcję
 "Use option as meta key" w menu Settings/Keyboard. Następnie możesz używać klawisza
 kbd:[Option] jako klawisza meta.
 
@@ -595,7 +610,7 @@ kbd:[Shift]).
 [[irc_ssl_connection]]
 === Mam problemy podczas połączenia z serwerem używającym SSL, co mogę zrobić?
 
-Jeśli używasz Mac OS X, musisz zainstalować `openssl` z Homebrew.
+Jeśli używasz Mac macOS, musisz zainstalować `openssl` z Homebrew.
 Plik CA zostanie wygenerowany korzystając z systemowego keychaina.
 Możez natępnie ustawić ścierzkę do certyfikatów w WeeChat:
 
@@ -643,7 +658,7 @@ Ustaw opcję _weechat.network.gnutls_ca_file_ do pliku z certyfikatami:
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
-Uwaga: jeśli używasz OS X z openssl zainstalowanym przez homebrew, możesz wykonać:
+Uwaga: jeśli używasz macOS z openssl zainstalowanym przez homebrew, możesz wykonać:
 
 ----
 /set weechat.network.gnutls_ca_file "/usr/local/etc/openssl/cert.pem"
@@ -697,12 +712,13 @@ na kanały):
 [[ignore_vs_filter]]
 === Jaka jest różnica między komendami/ignore i /filter ?
 
+// TRANSLATION MISSING
 Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
 (serwery i kanały).
 Pozwala ignorować niektóre nicki lub hosty użytkowników serwera lub kanału
 (komendy nie stosuje się do treści wiadomości).
-Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (nigdy
-ich nie zobaczysz).
+Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (so you'll
+never see them, and can't be recovered by removing the ignore).
 
 Komenda `/filter` jest komenda rdzenia, zatem odnosi się do dowolnego bufora.
 Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
@@ -728,7 +744,8 @@ Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 ----
 
 [NOTE]
-Więcej informacji: `/help filter` i `/help irc.look.smart_filter`
++For help: `/help filter`, `/help irc.look.smart_filter` and see
++link:weechat_user.pl.html#irc_smart_filter_join_part_quit[Poradniku użytkownika / Inteligentne filtry dla wiadomości].
 
 [[filter_irc_join_channel_messages]]
 === Jak mogę filtrować wyświetlane wiadomości podczas wejścia na kanał IRC?
@@ -846,8 +863,9 @@ Musisz ustawić:
 [[install_scripts]]
 === Jak mogę instalować skrypty? Czy są one kompatybilne z innymi klientami IRC?
 
-Możesz użyć komendy `/script` do instalowania i zarządzania skryptami
-(zobacz `/help script` po więcej informacji).
+// TRANSLATION MISSING
+With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
+(see `/help script` for help). For older versions there is weeget.py and script.pl.
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
@@ -869,9 +887,10 @@ Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
 /script update
 ----
 
-Jeśli w dalszym ciągu otrzymujesz błąd, wtedy musisz wyłączyć automatyczną aktualizacje
-pliku z listą skryptów przez WeeChat i ręcznie pobrać ten plik (oznacza to, że musisz
-ręcznie aktualizować plik do najnowszej wersji):
+// TRANSLATION MISSING
+If you still have an error, then you must disable the automatic update of file
+in WeeChat and download the file manually outside WeeChat (that means you'll
+have to update manually the file yourself to get updates):
 
 * w WeeChat:
 
@@ -925,8 +944,10 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
+// TRANSLATION MISSING
 * nie ładuj nieużywanych pluginów, np: aspell, buflist, fifo, logger, perl,
-  python, ruby, lua, tcl, guile, javascript, php, xfer (używana do DCC)
+  python, ruby, lua, tcl, guile, javascript, php, xfer (używana do DCC).
+  See `/help weechat.plugin.autoload`.
 * ładować tylko naprawdę używane skrypty
 * nie ładuj certyfikatów jeśli SSL *NIE* jest używany: ustaw pusty ciąg w opcji
   _weechat.network.gnutls_ca_file_
@@ -975,9 +996,11 @@ Wyładuj i wyłącz automatyczne ładowanie wtyczki "xfer" (używanej przez IRC 
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
+// TRANSLATION MISSING
 Zdefiniuj hasło i używaj bezpiecznych danych wszędzie gdzie możesz dla danych wrażliwych
 jak hasła: zobacz `/help secure` oraz `/help` na opcjach
 (czy możesz użyć bezpiecznych danych, jest to zaznaczone w pomocy).
+See also link:weechat_user.pl.html#secured_data[Poradniku użytkownika / Zabezpieczone dane].
 
 Na przykład:
 

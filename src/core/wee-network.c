@@ -1198,7 +1198,10 @@ network_connect_child (struct t_hook *hook_connect)
             msg.msg_control = msg_buf;
             msg.msg_controllen = sizeof (msg_buf);
 
-            /* send 1 byte of data (not required on Linux, required by BSD/OSX) */
+            /*
+             * send 1 byte of data
+             * (not required on Linux, required by BSD/macOS)
+             */
             memset (iov, 0, sizeof (iov));
             iov[0].iov_base = iov_data;
             iov[0].iov_len = 1;
@@ -1459,7 +1462,10 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                 msg.msg_control = msg_buf;
                 msg.msg_controllen = sizeof (msg_buf);
 
-                /* recv 1 byte of data (not required on Linux, required by BSD/OSX) */
+                /*
+                 * recv 1 byte of data
+                 * (not required on Linux, required by BSD/macOS)
+                 */
                 memset (iov, 0, sizeof (iov));
                 iov[0].iov_base = iov_data;
                 iov[0].iov_len = 1;

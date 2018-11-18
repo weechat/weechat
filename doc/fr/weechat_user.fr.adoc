@@ -39,7 +39,7 @@ Ses principales fonctionnalités sont les suivantes :
   http://tools.ietf.org/html/rfc2812[2812] et
   http://tools.ietf.org/html/rfc2813[2813]
 * proxy IRC et relai pour interfaces distantes
-* multi plates-formes (GNU/Linux, *BSD, MacOS X, Windows et d'autres systèmes)
+* multi plates-formes (GNU/Linux, *BSD, macOS, Windows et d'autres systèmes)
 * 100% GPL, logiciel libre
 
 La page d'accueil de WeeChat est ici : https://weechat.org/
@@ -85,7 +85,7 @@ WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
 recommandée).
 
 [NOTE]
-Sous OS X, vous pouvez utiliser http://brew.sh/[Homebrew] :
+Sous macOS, vous pouvez utiliser http://brew.sh/[Homebrew] :
 `brew install weechat --with-python --with-perl`
 (pour l'aide : `brew info weechat`).
 

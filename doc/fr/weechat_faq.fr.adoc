@@ -32,7 +32,8 @@ mais elle ne s'applique pas à WeeChat !).
 
 Parce que WeeChat est très léger et apporte des fonctionnalités innovantes.
 
-Plus d'infos sur cette page : https://weechat.org/about/features
+Plus d'infos sur la page des fonctionnalités WeeChat :
+https://weechat.org/about/features
 
 [[compilation_install]]
 == Compilation / installation
@@ -46,10 +47,12 @@ distantes : https://weechat.org/about/interfaces
 [[compile_git]]
 === Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 
-La méthode recommandée pour compiler WeeChat est d'utiliser cmake.
+La méthode recommandée pour compiler WeeChat est d'utiliser
+link:weechat_user.fr.html#compile_with_cmake[cmake].
 
-Si vous compilez avec les autotools (et non cmake), vérifiez que vous avez bien
-la dernière version d'autoconf et automake.
+Si vous compilez avec les link:weechat_user.fr.html#compile_with_autotools[autotools]
+(et non cmake), vérifiez que vous avez bien la dernière version d'autoconf et
+automake.
 
 Une autre façon de faire est de compiler le "paquet devel", qui nécessite moins
 de dépendances. Ce paquet est construit quasiment tous les jours à partir de la
@@ -57,8 +60,8 @@ base git. Notez que ce paquet peut ne pas correspondre exactement à la base
 git et qu'il est moins pratique que de cloner la base git pour installer des
 mises à jour.
 
-[[compile_osx]]
-=== Comment puis-je installer WeeChat sous OS X ?
+[[compile_macos]]
+=== Comment puis-je installer WeeChat sous macOS ?
 
 Il est recommandé d'utiliser http://brew.sh/[Homebrew], vous pouvez avoir de
 l'aide avec :
@@ -77,7 +80,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 === J'ai lancé WeeChat, mais je suis perdu, que puis-je faire ?
 
 Pour obtenir de l'aide tapez `/help`. Pour de l'aide sur une commande, tapez
-`/help commande`. Les touches et commandes sont listées dans la documentation.
+`/help commande`. Les link:weechat_user.fr.html#key_bindings[touches] et
+link:weechat_user.fr.html#commands_and_options[commandes] sont listées dans la
+documentation.
 
 Il est recommandé pour les nouveaux utilisateurs de lire le
 link:weechat_quickstart.fr.html[Guide de démarrage rapide].
@@ -88,8 +93,8 @@ link:weechat_quickstart.fr.html[Guide de démarrage rapide].
 [[charset]]
 === Je ne vois pas bien certains accents dans WeeChat, que faire ?
 
-C'est un problème courant, merci de lire attentivement et vérifier *TOUS* les
-points ci-dessous :
+C'est un problème courant avec beaucoup de causes possibles, merci de lire
+attentivement et vérifier *TOUS* les points ci-dessous :
 
 * Vérifiez que weechat est lié avec libncursesw (attention : nécessaire
   sur beaucoup de distributions, mais pas toutes) :
@@ -111,8 +116,9 @@ points ci-dessous :
    (un terminal conseillé pour l'UTF-8 est rxvt-unicode).
 ** Si vous utilisez screen, vérifiez qu'il est lancé en mode UTF-8
    ("`defutf8 on`" dans ~/.screenrc ou `screen -U` pour lancer screen).
-* Vérifiez que l'option _weechat.look.eat_newline_glitch_ est désactivée (cette
-  option peut causer des problèmes d'affichage).
+* Vérifiez que l'option
+  link:weechat_user.fr.html#option_weechat.look.eat_newline_glitch[_weechat.look.eat_newline_glitch_]
+  est désactivée (cette option peut causer des problèmes d'affichage).
 
 [NOTE]
 La locale UTF-8 est recommandée pour WeeChat. Si vous utilisez ISO ou une autre
@@ -162,13 +168,13 @@ Si vous utilisez gnome-terminal, vérifiez que l'option
 "Ambiguous-width characters" dans le menu Preferences/Profile/Compatibility
 est positionnée à `narrow`.
 
-[[osx_display_broken]]
-=== J'ai compilé WeeChat sous OS X, et je vois des "(null)" partout sur l'écran, pourquoi ?
+[[macos_display_broken]]
+=== J'ai compilé WeeChat sous macOS, et je vois des "(null)" partout sur l'écran, pourquoi ?
 
 Si vous avez compilé ncursesw vous-même, essayez avec le ncurses standard (celui
 fourni avec le système).
 
-De plus, sous OS X, il est recommandé d'installer WeeChat avec le gestionnaire
+De plus, sous macOS, il est recommandé d'installer WeeChat avec le gestionnaire
 de paquets Homebrew.
 
 [[buffer_vs_window]]
@@ -181,13 +187,15 @@ Une fenêtre (_window_) est une zone de l'écran affichant un tampon. Il est
 possible de découper l'écran horizontalement ou verticalement en plusieurs
 fenêtres.
 
-Chaque fenêtre affiche un tampon. Un tampon peut être caché (affiché par
-aucune fenêtre) ou affiché par une ou plusieurs fenêtres.
+Chaque fenêtre affiche un tampon ou un ensemble de tampons mélangés. Un tampon
+peut être caché (affiché par aucune fenêtre) ou affiché par une ou plusieurs
+fenêtres.
 
 [[buffers_list]]
 === Comment afficher la liste des tampons sur la gauche ?
 
-Avec WeeChat ≥ 1.8, l'extension "buflist" est chargée et activée par défaut.
+Avec WeeChat ≥ 1.8, l'extension link:weechat_user.fr.html#buflist_plugin[buflist]
+est chargée et activée par défaut.
 
 Avec une version plus ancienne, vous pouvez installer le script _buffers.pl_ :
 
@@ -255,7 +263,7 @@ depuis que vous avez visité le tampon.
 
 Dans l'exemple `[H: 3(1,8), 2(4)]`, il y a :
 
-* un highlight et 8 messages non lus sur le tampon n°3,
+* 1 highlight et 8 messages non lus sur le tampon n°3,
 * 4 messages non lus sur le tampon n°2.
 
 La couleur du tampon/compter dépend du type de message, les couleurs par défaut
@@ -319,7 +327,8 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 === Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : kbd:[Alt+l]).
+défaut : kbd:[Alt+l]), qui affiche juste le contenu de la fenêtre actuellement
+sélectionnée sans aucun formatage.
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc.). La touche est habituellement
@@ -507,7 +516,7 @@ UXTerm*metaSendsEscape: true
 
 Puis recharger les ressources (`xrdb -override ~/.Xresources`) ou redémarrez X.
 
-Si vous utilisez l'application Terminal sous Mac OS X, activez l'option
+Si vous utilisez l'application Terminal sous macOS, activez l'option
 "Use option as meta key" dans le menu Réglages/Clavier. Vous pouvez alors
 utiliser la touche kbd:[Option] comme touche meta.
 
@@ -614,7 +623,7 @@ kbd:[Alt] au lieu de kbd:[Shift]).
 [[irc_ssl_connection]]
 === J'ai des problèmes pour me connecter au serveur avec SSL, que puis-je faire ?
 
-Si vous utilisez Mac OS X, vous devez installer `openssl` depuis Homebrew.
+Si vous utilisez macOS, vous devez installer `openssl` depuis Homebrew.
 Un fichier CA sera installé avec le le trousseau système. Vous pouvez alors
 définie le chemin vers les certificats sous WeeChat :
 
@@ -664,7 +673,7 @@ certificats :
 /set weechat.network.gnutls_ca_file "/etc/ssl/certs/ca-certificates.crt"
 ----
 
-Note : si vous êtes sous OS X avec le paquet homebrew openssl installé, vous
+Note : si vous êtes sous macOS avec le paquet homebrew openssl installé, vous
 pouvez lancer :
 
 ----
@@ -724,7 +733,8 @@ tampons IRC (serveurs et canaux).
 Elle permet d'ignorer des pseudos ou nom d'hôtes pour un serveur ou un canal
 (la commande ne s'applique pas au contenu des messages).
 Les messages correspondants sont supprimés par l'extension IRC avant affichage
-(donc vous ne les verrez jamais).
+(donc vous ne les verrez jamais et ils ne peuvent pas être récupérés en
+supprimant l'ignore).
 
 La commande `/filter` est une commande "core", donc elle s'applique à n"importe
 quel tampon.
@@ -752,7 +762,8 @@ Avec un filtre global (pour cacher *tous* les join/part/quit) :
 ----
 
 [NOTE]
-Pour l'aide : `/help filter` et `/help irc.look.smart_filter`
+Pour l'aide : `/help filter`, `/help irc.look.smart_filter` et voir
+link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Filtre intelligent pour les messages join/part/quit].
 
 [[filter_irc_join_channel_messages]]
 === Comment puis-je filtrer certains messages affichés quand je rejoins un canal IRC ?
@@ -875,8 +886,9 @@ Vous devez configurer ça :
 [[install_scripts]]
 === Comment puis-je installer des scripts ? Les scripts sont-ils compatibles avec d'autres clients IRC ?
 
-Vous pouvez utiliser la commande `/script` pour installer et gérer les scripts
-(voir `/help script` pour de l'aide).
+Avec WeeChat ≥ 0.3.9, vous pouvez utiliser la commande `/script` pour installer
+et gérer les scripts (voir `/help script` pour de l'aide). Pour les versions
+plus anciennes il y a weeget.py et script.pl.
 
 Les scripts ne sont pas compatibles avec d'autres clients IRC.
 
@@ -899,7 +911,7 @@ Et mettez à jour les scripts à nouveau dans WeeChat :
 /script update
 ----
 
-Si vous avez toujours une erreur, alors vous devez supprimer la mise à jour
+Si vous avez toujours une erreur, alors vous devez désactiver la mise à jour
 automatique du fichier dans WeeChat et télécharger le fichier manuellement
 en dehors de WeeChat (cela signifie que vous devrez mettre à jour le fichier
 vous-même pour obtenir les mises à jour) :
@@ -961,6 +973,7 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 * Ne pas charger les extensions si vous ne les utilisez pas, par exemple :
   aspell, buflist, fifo, logger, perl, python, ruby, lua, tcl, guile,
   javascript, php, xfer (utilisé pour les DCC).
+  Voir `/help weechat.plugin.autoload`.
 * Charger uniquement les scripts dont vous avez vraiment besoin.
 * Ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
   chaîne vide pour l'option _weechat.network.gnutls_ca_file_.
@@ -1016,6 +1029,7 @@ Définissez une phrase de chiffrement et utilisez les données sécurisées part
 où vous le pouvez pour les données sensibles comme les mots de passe : voir
 `/help secure` et `/help` sur les options (si vous pouvez utiliser les données
 sécurisées, cela est mentionné dans l'aide).
+Voir aussi link:weechat_user.fr.html#secured_data[Guide utilisateur / Données sécurisées].
 
 Par exemple :
 

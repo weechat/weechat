@@ -24,7 +24,7 @@ set_target_properties(perl PROPERTIES PREFIX "")
 
 if(PERL_FOUND)
   if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-    # remove "-arch xxx" on Mac OS X
+    # remove "-arch xxx" on macOS
     STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_CFLAGS "${PERL_CFLAGS}")
     STRING(REGEX REPLACE "-arch ppc|-arch i386|-arch x86_64" "" PERL_LFLAGS "${PERL_LFLAGS}")
   endif()
