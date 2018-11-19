@@ -869,6 +869,44 @@ andere Skripten die auch zu diesem Thema passen:
 /script search notify
 ----
 
+// TRANSLATION MISSING
+[[disable_highlights_for_specific_nicks]]
+=== How can I disable highlights for specific nicks?
+
+With WeeChat ≥ 0.3.4 you can use the
+link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+buffer property to set the max hotlist level for some nicks, per buffer,
+or per group of buffers (like IRC servers).
+
+To only disable highlights, you'd have to set it to 2:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+This buffer property isn't stored in the configuration though.
+To automatically reapply these buffer properties, you would need the
+_buffer_autoset.py_ script:
+
+----
+/script install buffer_autoset.py
+----
+
+For example, to permanently disable highlights from "mike" on #weechat
+on the IRC server freenode:
+
+----
+/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+----
+
+To apply it to the entire freenode server instead:
+
+----
+/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+----
+
+For more examples, see `/help buffer_autoset`.
+
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
 

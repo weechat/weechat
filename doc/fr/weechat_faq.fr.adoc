@@ -861,6 +861,43 @@ Autres scripts sur ce sujet :
 /script search notify
 ----
 
+[[disable_highlights_for_specific_nicks]]
+=== Comment puis-je désactiver le highlight pour des pseudos spécifiques ?
+
+Avec WeeChat ≥ 0.3.4 vous pouvez utiliser la propriété de tampon
+link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+pour définir le niveau maximum de hotlist pour certains pseudos, par tampon,
+ou groupe de tampons (comme des serveurs IRC).
+
+Pour désactiver seulement les highlights, vous pouvez positionner la valeur à 2:
+
+----
+/buffer set hotlist_max_level_nicks_add joe:2,mike:2
+----
+
+Cependant, cette propriété de tampon n'est pas sauvegardée dans la configuration.
+Pour automatiquement réappliquer ces propriétés de tampons, vous aurez besoin
+du script _buffer_autoset.py_ :
+
+----
+/script install buffer_autoset.py
+----
+
+Par exemple, pour désactiver de manière permanente les highlights de "mike" sur
+#weechat sur le serveur IRC freenode :
+
+----
+/buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
+----
+
+Pour l'appliquer à l'ensemble du serveur freenode :
+
+----
+/buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
+----
+
+Pour plus d'exemples, voir `/help buffer_autoset`.
+
 [[irc_target_buffer]]
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
