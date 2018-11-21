@@ -727,7 +727,7 @@ if test "x$enable_guile" = "xyes" ; then
     guile_found="no"
     AC_MSG_CHECKING(for Guile headers and libraries)
     echo
-    for v in "2.0" ; do
+    for v in "2.2" "2.0" ; do
         pkgconfig_guile_found=`$PKGCONFIG --exists guile-$v 2>/dev/null`
         if test "x$?" = "x0" ; then
             GUILE_VERSION=`$PKGCONFIG --modversion guile-$v`

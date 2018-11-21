@@ -33,7 +33,7 @@ endif()
 
 find_package(PkgConfig)
 if(PKG_CONFIG_FOUND)
-  pkg_search_module(GUILE guile-2.0)
+  pkg_search_module(GUILE guile-2.2 guile-2.0)
   if(GUILE_FOUND)
     # check if variable "scm_install_gmp_memory_functions" exists
     set(CMAKE_REQUIRED_INCLUDES ${GUILE_INCLUDE_DIRS})

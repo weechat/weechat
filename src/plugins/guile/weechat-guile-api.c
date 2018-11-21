@@ -4874,10 +4874,17 @@ weechat_guile_api_upgrade_close (SCM upgrade_file)
 void
 weechat_guile_api_module_init (void *data)
 {
-    scm_t_bits port_type;
+#if SCM_MAJOR_VERSION >= 3 || (SCM_MAJOR_VERSION == 2 && SCM_MINOR_VERSION >= 2)
+    /* Guile >= 2.2 */
+    scm_t_port_type *port_type;
 
-    /* make C compiler happy */
-    (void) data;
+    port_type = scm_make_port_type ("weechat_stdout",
+                                    &weechat_guile_port_fill_input,
+                                    &weechat_guile_port_write);
+    guile_port = scm_c_make_port (port_type, 0, 0);
+#else
+    /* Guile < 2.2 */
+    scm_t_bits port_type;
 
     port_type = scm_make_port_type ("weechat_stdout",
                                     &weechat_guile_port_fill_input,
@@ -4886,6 +4893,10 @@ weechat_guile_api_module_init (void *data)
     SCM_SET_CELL_TYPE (guile_port, port_type | SCM_OPN | SCM_WRTNG);
     scm_set_current_output_port (guile_port);
     scm_set_current_error_port (guile_port);
+#endif
+
+    /* make C compiler happy */
+    (void) data;
 
     /* interface functions */
     API_DEF_FUNC(register, 7);

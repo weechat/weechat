@@ -20,6 +20,8 @@
 #ifndef WEECHAT_PLUGIN_GUILE_H
 #define WEECHAT_PLUGIN_GUILE_H
 
+#include <libguile.h>
+
 #define weechat_plugin weechat_guile_plugin
 #define GUILE_PLUGIN_NAME "guile"
 
@@ -45,7 +47,16 @@ extern struct t_hashtable *weechat_guile_alist_to_hashtable (SCM dict,
 extern void *weechat_guile_exec (struct t_plugin_script *script,
                                   int ret_type, const char *function,
                                   char *format, void **argv);
+#if SCM_MAJOR_VERSION >= 3 || (SCM_MAJOR_VERSION == 2 && SCM_MINOR_VERSION >= 2)
+/* Guile >= 2.2 */
+extern size_t weechat_guile_port_fill_input (SCM port, SCM dst,
+                                             size_t start, size_t count);
+extern size_t weechat_guile_port_write (SCM port, SCM src,
+                                        size_t start, size_t count);
+#else
+/* Guile < 2.2 */
 extern int weechat_guile_port_fill_input (SCM port);
 extern void weechat_guile_port_write (SCM port, const void *data, size_t size);
+#endif
 
 #endif /* WEECHAT_PLUGIN_GUILE_H */
