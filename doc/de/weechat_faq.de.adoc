@@ -258,21 +258,21 @@ um die Ausrichtung für Nicks zu entfernen:
 
 Dabei handelt es sich um die sogenannte "hotlist", eine Auflistung der
 Buffer mit der Anzahl der ungelesenen Nachrichten. Die Reihenfolge ist:
-highlights, private Nachrichten, Nachrichten, Nachrichten mit niedriger
-Priorität (z.B. join/part). +
+highlights (hervorgehobene Nachrichten), private Nachrichten, Nachrichten,
+Nachrichten mit niedriger Priorität (z.B. join/part). +
 Die Anzahl der "ungelesen Nachrichten" ist die Anzahl der neuen Nachrichten
 die man empfangen hat bzw. angezeigt werden seitdem man den Buffer
 das letzte mal betreten hat.
 
 Im Beispiel `[H: 3(1,8), 2(4)]`, handelt es sich um:
 
-* 1 highlight Nachricht und 8 ungelesene Nachrichten im Buffer #3
+* 1 highlight (hervorgehobene) Nachricht und 8 ungelesene Nachrichten im Buffer #3
 * 4 ungelesene Nachrichten im Buffer #2.
 
 Die Farbe des Buffers/Zählers hängt ab um welche Art von Nachrichten es
 sich handelt. Standardfarben:
 
-* highlight: `lightmagenta` / `magenta`
+* highlight (hervorgehobene Nachricht): `lightmagenta` / `magenta`
 * private Nachrichten: `lightgreen` / `green`
 * Nachrichten: `yellow` / `brown`
 * Nachrichten mit niedriger Priorität: `default` / `default` (Textfarbe des Terminal)
@@ -840,13 +840,13 @@ Für Weechat ≤ 0.3.3, lauten die Optionen _irc.network.away_check_ und
 _irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]
-=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Channel highlighted
+=== Wie kann ich mich benachrichtigen lassen, falls mich jemand in einem Channel direkt anspricht (highlight)?
 
 Seit WeeChat ≥ 1.0 gibt es standardmäßig einen Trigger, "beep", der an das Terminal
-ein _BEL_ Signal schickt, sobald man eine highlight oder private Nachricht erhält.
-Nun muss man lediglich im Terminalprogramm (oder einem Multiplexer wie screen/tmux)
-einstellen welcher Befehl ausgeführt werden soll, sobald das Terminal das _BEL_
-Signal erhält.
+ein _BEL_ Signal schickt, sobald man eine highlight (hervorgehobene) oder private
+Nachricht erhält. Nun muss man lediglich im Terminalprogramm (oder einem Multiplexer
+wie screen/tmux) einstellen welcher Befehl ausgeführt werden soll, sobald das Terminal
+das _BEL_ Signal erhält.
 
 Oder man führt im Trigger "beep" direkt einen Befehl aus:
 
@@ -869,43 +869,43 @@ andere Skripten die auch zu diesem Thema passen:
 /script search notify
 ----
 
-// TRANSLATION MISSING
 [[disable_highlights_for_specific_nicks]]
-=== How can I disable highlights for specific nicks?
+=== Wie kann ich Highlights (Hervorhebungen) von bestimmten Nicks deaktivieren?
 
-With WeeChat ≥ 0.3.4 you can use the
+Ab WeeChat ≥ 0.3.4 kann man eine Eigenschaft
 link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+für den entsprechenden Buffer setzen. Dies kann für einzelne Nicks, nach Buffer
+oder Gruppen von Buffer (z.B. IRC Server) gelten.
 
-To only disable highlights, you'd have to set it to 2:
+Um nun Highlights (Hervorhebungen) für bestimmte Nicks zu deaktivieren, muss
+man die entsprechende Eigenschaft auf 2 setzen:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-This buffer property isn't stored in the configuration though.
-To automatically reapply these buffer properties, you would need the
-_buffer_autoset.py_ script:
+Diese Buffereigenschaft wird aber nicht permanent in der Konfiguration
+gespeichert. Um diese Eigenschaften permanent zu verwenden, muss man
+das Skript _buffer_autoset.py_ nutzen:
 
 ----
 /script install buffer_autoset.py
 ----
 
-For example, to permanently disable highlights from "mike" on #weechat
-on the IRC server freenode:
+Um zum Beispiel Highlights (Hervorhebungen) von Nick "mike" im Channel
+#weechat auf dem IRC Server freenode zu deaktivieren:
 
 ----
 /buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-To apply it to the entire freenode server instead:
+Um dies auf den kompletten freenode Server anzuwenden:
 
 ----
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-For more examples, see `/help buffer_autoset`.
+für weitere Beispiele, siehe `/help buffer_autoset`.
 
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
