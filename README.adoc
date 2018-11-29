@@ -28,7 +28,7 @@ Homepage: https://weechat.org/
 * *Customizable and extensible*: there are a lot of options to customize WeeChat, and it is extensible with C plugins and https://weechat.org/scripts/[scripts] (https://weechat.org/scripts/stable/language/perl/[Perl], https://weechat.org/scripts/stable/language/python/[Python], https://weechat.org/scripts/stable/language/ruby[Ruby], https://weechat.org/scripts/stable/language/lua/[Lua], https://weechat.org/scripts/stable/language/tcl/[Tcl], https://weechat.org/scripts/stable/language/guile/[Scheme], https://weechat.org/scripts/stable/language/javascript/[JavaScript] and https://weechat.org/scripts/stable/language/php/[PHP]).
 * *Fully documented*: there is comprehensive https://weechat.org/doc/[documentation], which is https://weechat.org/files/doc/stable/weechat_dev.en.html#translations[translated] into several languages.
 * *Developed from scratch*: WeeChat was built from scratch and is not based on any other client.
-* *Free software*: WeeChat is released under http://www.gnu.org/licenses/gpl-3.0.html[GPLv3].
+* *Free software*: WeeChat is released under https://www.gnu.org/licenses/gpl-3.0.html[GPLv3].
 
 image::https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
 
@@ -126,4 +126,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.

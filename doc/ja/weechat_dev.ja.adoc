@@ -485,7 +485,7 @@ WeeChat とプラグインの翻訳は gettext で行います、ファイルは
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 ----
 

@@ -15,7 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifndef WEECHAT_H
@@ -74,7 +74,7 @@
     "GNU General Public License for more details.\n" \
     "\n" \
     "You should have received a copy of the GNU General Public License\n" \
-    "along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.\n\n"
+    "along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.\n\n"
 
 /* directory separator, depending on OS */
 #ifdef _WIN32
