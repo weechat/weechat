@@ -116,7 +116,7 @@ W zależności od dystrybucji Linuksa:
 
 * Debian: https://weechat.org/download/debian
 * Gentoo: https://weechat.org/download
-* ArchLinux: PKGBUILD z http://aur.archlinux.org/
+* ArchLinux: PKGBUILD z https://aur.archlinux.org/
 * inne: nie mamy pojęcia! Eheh.
 
 

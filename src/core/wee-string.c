@@ -1974,7 +1974,7 @@ string_split_shared (const char *string, const char *separators, int keep_eol,
  *
  * This function is a C conversion of Python class "shlex"
  * (file: Lib/shlex.py in Python repository)
- * Doc: http://docs.python.org/3/library/shlex.html
+ * Doc: https://docs.python.org/3/library/shlex.html
  *
  * Copyrights in shlex.py:
  *   Module and documentation by Eric S. Raymond, 21 Dec 1998
@@ -2791,7 +2791,7 @@ string_base16_decode (const char *from, char *to)
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ *        https://www.apache.org/licenses/LICENSE-2.0
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,
@@ -2867,7 +2867,7 @@ string_base32_encode (const char *from, int length, char *to)
  *   you may not use this file except in compliance with the License.
  *   You may obtain a copy of the License at
  *
- *        http://www.apache.org/licenses/LICENSE-2.0
+ *        https://www.apache.org/licenses/LICENSE-2.0
  *
  *   Unless required by applicable law or agreed to in writing, software
  *   distributed under the License is distributed on an "AS IS" BASIS,

@@ -1534,7 +1534,7 @@ paramètres.
 
 Cette fonction est une conversion en C de la classe Python "shlex" (fichier :
 Lib/shlex.py dans le dépôt Python), voir :
-http://docs.python.org/3/library/shlex.html.
+https://docs.python.org/3/library/shlex.html.
 
 Prototype :
 
@@ -8713,7 +8713,7 @@ Lorsque la commande est terminée, ou si le timeout est atteint, WeeChat
 supprimera automatiquement le "hook" (et tuera le processus s'il tourne
 toujours).
 
-La commande peut être une URL avec le format : "url:http://www.example.com",
+La commande peut être une URL avec le format : "url:https://www.example.com",
 pour télécharger le contenu de l'URL _(WeeChat ≥ 0.3.7)_.
 Des options pour l'URL sont possibles avec la fonction
 <<_hook_process_hashtable,hook_process_hashtable>>.

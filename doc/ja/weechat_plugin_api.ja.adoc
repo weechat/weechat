@@ -1508,7 +1508,7 @@ _WeeChat バージョン 1.0 以上で利用可。_
 コマンドを引数を分割する際にシェルがやるように文字列を分割。
 
 この関数は Python クラス "shlex" の C 言語実装です (ファイル: Python リポジトリの
-Lib/shlex.py)、参照: http://docs.python.org/3/library/shlex.html 。
+Lib/shlex.py)、参照: https://docs.python.org/3/library/shlex.html 。
 
 プロトタイプ:
 
@@ -8517,7 +8517,7 @@ struct t_hook *weechat_hook_process (const char *command,
 コマンドが終了するか、タイムアウトを過ぎた場合、WeeChat は自動的にフックを解除します
 (プロセスが実行中であればプロセスを kill します)。
 
-コマンドを "url:http://www.example.com" の書式に従う URL にすることで、URL
+コマンドを "url:https://www.example.com" の書式に従う URL にすることで、URL
 の内容がダウンロードされます _(WeeChat バージョン 0.3.7 以上で利用可)_。<<_hook_process_hashtable,hook_process_hashtable>>
 関数を使えば URL に対してオプションを与えることもできます。
 

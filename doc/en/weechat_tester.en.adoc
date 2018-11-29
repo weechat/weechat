@@ -109,7 +109,7 @@ According to your Linux distribution:
 
 * Debian: https://weechat.org/download/debian
 * Gentoo: https://weechat.org/download
-* ArchLinux: PKGBUILD from http://aur.archlinux.org/
+* ArchLinux: PKGBUILD from https://aur.archlinux.org/
 * other: we don't know! Eheh.
 
 

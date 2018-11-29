@@ -177,7 +177,7 @@
 ** default value: `+0+`
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** description: pass:none[POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^http://(www\.)?example\.(com|org)"]
+** description: pass:none[POSIX extended regular expression with origins allowed in websockets (case insensitive, use "(?-i)" at beginning to make it case sensitive), example: "^https?://(www\.)?example\.(com|org)"]
 ** type: string
 ** values: any string
 ** default value: `+""+`

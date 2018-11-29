@@ -685,7 +685,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Style Python
 
-Voir http://www.python.org/dev/peps/pep-0008/
+Voir https://www.python.org/dev/peps/pep-0008/
 
 [[core_internals]]
 == Intérieur du cœur

@@ -934,7 +934,7 @@ relay_config_init ()
         N_("POSIX extended regular expression with origins allowed in "
            "websockets (case insensitive, use \"(?-i)\" at beginning to make "
            "it case sensitive), example: "
-           "\"^http://(www\\.)?example\\.(com|org)\""),
+           "\"^https?://(www\\.)?example\\.(com|org)\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_change_network_websocket_allowed_origins, NULL, NULL,

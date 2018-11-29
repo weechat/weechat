@@ -113,7 +113,7 @@ Linux ディストリビューション別に:
 
 * Debian: https://weechat.org/download/debian
 * Gentoo: https://weechat.org/download
-* ArchLinux: http://aur.archlinux.org/ から PKGBUILD
+* ArchLinux: https://aur.archlinux.org/ から PKGBUILD
 * その他: 知らないよ! てへぺろ(・ω<)
 
 

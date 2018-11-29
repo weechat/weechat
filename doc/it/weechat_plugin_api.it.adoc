@@ -1575,7 +1575,7 @@ Split a string like the shell does for a command with arguments.
 
 // TRANSLATION MISSING
 This function is a C conversion of Python class "shlex" (file: Lib/shlex.py in
-Python repository), see: http://docs.python.org/3/library/shlex.html.
+Python repository), see: https://docs.python.org/3/library/shlex.html.
 
 Prototipo:
 
@@ -8830,7 +8830,7 @@ Valore restituito:
 Quando il comando ha terminato, o se viene raggiunto il timeout, WeeChat
 effettua automaticamente l'unhook (e termina il processo se ancora in esecuzione).
 
-Il comando può essere un URL con il formato: "url:http://www.esempio.com", per
+Il comando può essere un URL con il formato: "url:https://www.example.com", per
 scaricare il contenuto dell'URL _(WeeChat ≥ 0.3.7)_. Le opzioni per
 un URL sono disponibili con la funzione
 <<_hook_process_hashtable,hook_process_hashtable>>.

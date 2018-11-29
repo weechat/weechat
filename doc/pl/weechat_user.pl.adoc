@@ -37,11 +37,11 @@ Główne cechy to:
 * mały, szybki i lekki
 * konfigurowalny i rozszerzalny dzięki wtyczką i skryptom
 * zgodny z RFC dla IRC
-  http://tools.ietf.org/html/rfc1459[1459],
-  http://tools.ietf.org/html/rfc2810[2810],
-  http://tools.ietf.org/html/rfc2811[2811],
-  http://tools.ietf.org/html/rfc2812[2812] i
-  http://tools.ietf.org/html/rfc2813[2813]
+  https://tools.ietf.org/html/rfc1459[1459],
+  https://tools.ietf.org/html/rfc2810[2810],
+  https://tools.ietf.org/html/rfc2811[2811],
+  https://tools.ietf.org/html/rfc2812[2812] i
+  https://tools.ietf.org/html/rfc2813[2813]
 * proxy IRC i pośrednik dla zdalnych interfejsów
 * wielo-platformowy (GNU/Linux, *BSD, macOS, Windows i inne)
 * 100% GPL, darmowe oprogramowanie
@@ -88,7 +88,7 @@ pakietów.
 WeeChat może być kompilowany za pomocą cmake lub autotools (cmake jest zalecany).
 
 [NOTE]
-Na macOS możesz użyć http://brew.sh/[Homebrew]:
+Na macOS możesz użyć https://brew.sh/[Homebrew]:
 `brew install weechat --with-python --with-perl`
 (pomoc można uzyskać za pomocą komendy: `brew info weechat`).
 
@@ -2579,7 +2579,7 @@ się nie powieść, nawet jeśli wszystko było OK w wersjach przed 0.3.1.
 
 ----
 $ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -2730,7 +2730,7 @@ Na koniec połącz się z serwerem:
 ----
 
 Więcej informacji o Freenode i TOR:
-http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 
 [[irc_smart_filter_join_part_quit]]
@@ -3293,7 +3293,7 @@ Teraz możesz się połączyć zdalnym interfejsem na porcie 9000 za pomocą has
 [[relay_websocket]]
 ==== WebSocket
 
-Protokół WebSocket (http://tools.ietf.org/html/rfc6455[RFC 6455]) jest wspierany
+Protokół WebSocket (https://tools.ietf.org/html/rfc6455[RFC 6455]) jest wspierany
 dla wszystkich protokołów.
 
 Żądanie WebSocket jest automatycznie wykrywane i socket staje się gotowy do

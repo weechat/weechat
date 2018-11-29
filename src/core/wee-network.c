@@ -345,7 +345,7 @@ network_resolve (const char *hostname, char *ip, int *version)
 /*
  * Establishes a connection and authenticates with a socks4 proxy.
  *
- * The socks4 protocol is explained here: http://en.wikipedia.org/wiki/SOCKS
+ * The socks4 protocol is explained here: https://en.wikipedia.org/wiki/SOCKS
  *
  * WARNING: this function is blocking, it must be called only in a forked
  * process.

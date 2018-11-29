@@ -40,11 +40,11 @@ Le principali caratteristiche:
 * piccolo, veloce e leggero
 * personalizzabile ed estensibile con plugin e script
 * conforme alle RFC di IRC
-  http://tools.ietf.org/html/rfc1459[1459],
-  http://tools.ietf.org/html/rfc2810[2810],
-  http://tools.ietf.org/html/rfc2811[2811],
-  http://tools.ietf.org/html/rfc2812[2812] e
-  http://tools.ietf.org/html/rfc2813[2813]
+  https://tools.ietf.org/html/rfc1459[1459],
+  https://tools.ietf.org/html/rfc2810[2810],
+  https://tools.ietf.org/html/rfc2811[2811],
+  https://tools.ietf.org/html/rfc2812[2812] e
+  https://tools.ietf.org/html/rfc2813[2813]
 // TRANSLATION MISSING
 * IRC proxy and relay for remote interfaces
 * multi-piattaforma (GNU/Linux, *BSD, macOS, Windows ed altre)
@@ -98,7 +98,7 @@ WeeChat può essere compilato con cmake oppure autotools
 
 // TRANSLATION MISSING
 [NOTE]
-On macOS, you can use http://brew.sh/[Homebrew]:
+On macOS, you can use https://brew.sh/[Homebrew]:
 `brew install weechat --with-python --with-perl`
 (for help: `brew info weechat`).
 
@@ -2733,7 +2733,7 @@ la 0.3.1.
 
 ----
 $ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 // TRANSLATION MISSING
@@ -2896,7 +2896,7 @@ E alla fine, connettersi al server:
 ----
 
 Per maggiori informazioni su Freenode e TOR:
-http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== Filtro smart per i messaggi di entrata/uscita/disconnessione
@@ -3483,7 +3483,7 @@ password "miapass".
 [[relay_websocket]]
 ==== WebSocket
 
-WebSocket protocol (http://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
+WebSocket protocol (https://tools.ietf.org/html/rfc6455[RFC 6455]) is supported
 in Relay plugin for all protocols.
 
 The WebSocket handshake is automatically detected and socket becomes ready for

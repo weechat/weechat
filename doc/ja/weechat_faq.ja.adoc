@@ -66,7 +66,7 @@ git をクローンする方法よりも不便であることに注意してく�
 [[compile_macos]]
 === どうすれば macOS に WeeChat をインストールできますか?
 
-http://brew.sh/[Homebrew] を使うことをお勧めします、ヘルプを見るには:
+https://brew.sh/[Homebrew] を使うことをお勧めします、ヘルプを見るには:
 
 ----
 brew info weechat

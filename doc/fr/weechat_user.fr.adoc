@@ -33,11 +33,11 @@ Ses principales fonctionnalités sont les suivantes :
 * petit, rapide et léger
 * paramétrable et extensible avec des extensions et des scripts
 * conforme aux RFCs IRC
-  http://tools.ietf.org/html/rfc1459[1459],
-  http://tools.ietf.org/html/rfc2810[2810],
-  http://tools.ietf.org/html/rfc2811[2811],
-  http://tools.ietf.org/html/rfc2812[2812] et
-  http://tools.ietf.org/html/rfc2813[2813]
+  https://tools.ietf.org/html/rfc1459[1459],
+  https://tools.ietf.org/html/rfc2810[2810],
+  https://tools.ietf.org/html/rfc2811[2811],
+  https://tools.ietf.org/html/rfc2812[2812] et
+  https://tools.ietf.org/html/rfc2813[2813]
 * proxy IRC et relai pour interfaces distantes
 * multi plates-formes (GNU/Linux, *BSD, macOS, Windows et d'autres systèmes)
 * 100% GPL, logiciel libre
@@ -85,7 +85,7 @@ WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
 recommandée).
 
 [NOTE]
-Sous macOS, vous pouvez utiliser http://brew.sh/[Homebrew] :
+Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew] :
 `brew install weechat --with-python --with-perl`
 (pour l'aide : `brew info weechat`).
 
@@ -2653,7 +2653,7 @@ et peut échouer, même si cela pouvait être OK dans les versions inférieures 
 
 ----
 $ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -2804,7 +2804,7 @@ Et enfin, la connexion au serveur :
 ----
 
 Pour plus d'informations à propos de Freenode et TOR :
-http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== Filtre intelligent pour les messages join/part/quit
@@ -3373,7 +3373,7 @@ distante en utilisant le mot de passe "motdepasse".
 [[relay_websocket]]
 ==== WebSocket
 
-Le protocole WebSocket (http://tools.ietf.org/html/rfc6455[RFC 6455]) est
+Le protocole WebSocket (https://tools.ietf.org/html/rfc6455[RFC 6455]) est
 supporté dans l'extension Relay pour tous les protocoles.
 
 La poignée de main ("handshake") WebSocket est automatiquement détectée et le

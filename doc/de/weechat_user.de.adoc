@@ -37,11 +37,11 @@ wesentliche Merkmale:
 * klein, schnell und schlank
 * den eigenen persönlichen Bedürfnissen anpassbar und durch Erweiterungen und Skripten in der Funktionalität erweiterbar
 * IRC RFCs konform
-  http://tools.ietf.org/html/rfc1459[1459],
-  http://tools.ietf.org/html/rfc2810[2810],
-  http://tools.ietf.org/html/rfc2811[2811],
-  http://tools.ietf.org/html/rfc2812[2812] und
-  http://tools.ietf.org/html/rfc2813[2813]
+  https://tools.ietf.org/html/rfc1459[1459],
+  https://tools.ietf.org/html/rfc2810[2810],
+  https://tools.ietf.org/html/rfc2811[2811],
+  https://tools.ietf.org/html/rfc2812[2812] und
+  https://tools.ietf.org/html/rfc2813[2813]
 * IRC proxy und relay für remote Schnittstellen
 * Betriebssystemunabhängig (GNU/Linux, *BSD, macOS, Windows und weitere)
 * 100% GPL, freie Software
@@ -88,7 +88,7 @@ wie man Pakete installiert.
 WeeChat kann mittels cmake oder autotools kompiliert werden (cmake sollte dabei die bevorzugte Methode sein).
 
 [NOTE]
-Unter macOS kann http://brew.sh/[Homebrew] verwendet werden:
+Unter macOS kann https://brew.sh/[Homebrew] verwendet werden:
 `brew install weechat --with-python --with-perl`
 (für Hilfe: `brew info weechat`).
 
@@ -2618,7 +2618,7 @@ die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 
 ----
 $ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -2771,7 +2771,7 @@ Zum Abschluss stellt man eine Verbindung zum Server her:
 ----
 
 Um mehr über Freenode und TOR zu erfahren:
-http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== einfacher Filter für join/part/quit Nachrichten
@@ -3345,7 +3345,7 @@ Nun kann man über den Port 9000 mittels einer Oberfläche und dem Passwort
 [[relay_websocket]]
 ==== WebSocket
 
-Das WebSocket Protokoll (http://tools.ietf.org/html/rfc6455[RFC 6455]) wird nun
+Das WebSocket Protokoll (https://tools.ietf.org/html/rfc6455[RFC 6455]) wird nun
 in der Relay Erweiterung unterstützt.
 
 Der WebSocket Handshake wird automatisch erkannt und der Socket ist sofort

@@ -674,7 +674,7 @@ new_hook_fd = malloc (sizeof (*new_hook_fd));
 [[coding_python_style]]
 === Python style
 
-See http://www.python.org/dev/peps/pep-0008/
+See https://www.python.org/dev/peps/pep-0008/
 
 [[core_internals]]
 == Core internals

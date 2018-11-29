@@ -66,7 +66,7 @@ przy aktualizowaniu jak klonowanie z gita.
 [[compile_macos]]
 === Jak zainstalować WeeChat na macOS?
 
-Zaleca się użycie http://brew.sh/[Homebrew], pomoc uzyskasz za pomocą komendy:
+Zaleca się użycie https://brew.sh/[Homebrew], pomoc uzyskasz za pomocą komendy:
 
 ----
 brew info weechat

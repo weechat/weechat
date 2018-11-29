@@ -120,7 +120,7 @@ A seconda della distribuzione Linux:
 
 * Debian: https://weechat.org/download/debian
 * Gentoo: https://weechat.org/download
-* ArchLinux: PKGBUILD da http://aur.archlinux.org/
+* ArchLinux: PKGBUILD da https://aur.archlinux.org/
 * altro: non lo sappiamo! Eheh.
 
 

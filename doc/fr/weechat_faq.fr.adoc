@@ -63,7 +63,7 @@ mises à jour.
 [[compile_macos]]
 === Comment puis-je installer WeeChat sous macOS ?
 
-Il est recommandé d'utiliser http://brew.sh/[Homebrew], vous pouvez avoir de
+Il est recommandé d'utiliser https://brew.sh/[Homebrew], vous pouvez avoir de
 l'aide avec :
 
 ----

@@ -37,11 +37,11 @@ WeeChat (Wee Enhanced Environment for Chat)
 * コンパクト、高速、軽量
 * プラグインとスクリプトでカスタマイズや拡張が可能
 * IRC の RFC に準拠
-  http://tools.ietf.org/html/rfc1459[1459]、
-  http://tools.ietf.org/html/rfc2810[2810]、
-  http://tools.ietf.org/html/rfc2811[2811]、
-  http://tools.ietf.org/html/rfc2812[2812]、
-  http://tools.ietf.org/html/rfc2813[2813]。
+  https://tools.ietf.org/html/rfc1459[1459]、
+  https://tools.ietf.org/html/rfc2810[2810]、
+  https://tools.ietf.org/html/rfc2811[2811]、
+  https://tools.ietf.org/html/rfc2812[2812]、
+  https://tools.ietf.org/html/rfc2813[2813]。
 * リモートインターフェース用の IRC プロキシとリレー
 * マルチプラットフォーム (GNU/Linux、*BSD、macOS、Windows 等)
 * 完全な GPL、フリーソフトウェア
@@ -87,7 +87,7 @@ WeeChat をインストールするには、以下のものが必要です:
 WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
 
 [NOTE]
-macOS では http://brew.sh/[Homebrew] を使ってください:
+macOS では https://brew.sh/[Homebrew] を使ってください:
 `brew install weechat --with-python --with-perl`
 (ヘルプを見るには: `brew info weechat`)。
 
@@ -2559,7 +2559,7 @@ irc.server.xxx.ssl_verify::
 
 ----
 $ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem http://www.spi-inc.org/ca/spi-cacert.crt
+$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
 
 [NOTE]
@@ -2707,7 +2707,7 @@ ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を�
 ----
 
 Freenode と TOR に関するより詳しい情報:
-http://freenode.net/kb/answer/chat#accessing-freenode-via-tor
+https://freenode.net/kb/answer/chat#accessing-freenode-via-tor
 
 [[irc_smart_filter_join_part_quit]]
 ==== 参加/退出/終了メッセージに対するスマートフィルタ
@@ -3261,7 +3261,7 @@ Relay プラグインは WeeChat プロトコルを使ってリモートイン�
 ==== WebSocket
 
 Relay プラグインはすべてのプロトコルに対して WebSocket プロトコル
-(http://tools.ietf.org/html/rfc6455[RFC 6455]) をサポートします。
+(https://tools.ietf.org/html/rfc6455[RFC 6455]) をサポートします。
 
 WebSocket ハンドシェイクは自動的に検知され、ハンドシェイク中に必要なヘッダが見つかり
 origin が許可されていれば WebSocket 用のソケットが準備されます (オプション
