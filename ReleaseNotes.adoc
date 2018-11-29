@@ -1508,10 +1508,6 @@ Major differences:
   accordingly, scripts and plugins must have been designed for version 0.3.x to
   be loaded into WeeChat.
 
-More information about new API is available on wiki:
-http://wiki.flashtux.org/wiki/WeeChat_0.3.0
-and http://wiki.flashtux.org/wiki/WeeChat_0.3.0_API
-
 [[v0.2.6.3]]
 == Version 0.2.6.3 (2009-06-13)
 
