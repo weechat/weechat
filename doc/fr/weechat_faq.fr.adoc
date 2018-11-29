@@ -736,8 +736,8 @@ Les messages correspondants sont supprimés par l'extension IRC avant affichage
 (donc vous ne les verrez jamais et ils ne peuvent pas être récupérés en
 supprimant l'ignore).
 
-La commande `/filter` est une commande "core", donc elle s'applique à n"importe
-quel tampon.
+La commande `/filter` est une commande "core" WeeChat, donc elle s'applique à
+n'importe quel tampon.
 Elle permet de filtrer des lignes dans les tampons à l'aide d'étiquettes ou
 d'expression régulière pour le préfixe et contenu de la ligne.
 Les lignes filtrées sont simplement cachées, pas supprimées, et il est possible

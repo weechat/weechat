@@ -769,8 +769,9 @@ I messaggi corrispondenti vengono eliminati dal plugin IRC prima di
 essere visualizzati (so you'll never see them, and can't be recovered by removing
 the ignore).
 
-Il comando `/filter` è un comando core, perciò funziona per qualsiasi
-buffer. Esso consente di filtrare alcune righe nei buffer mediante tag
+// TRANSLATION MISSING
+The `/filter` command is a WeeChat core command, so it applies to any buffer.
+Esso consente di filtrare alcune righe nei buffer mediante tag
 o espressioni regolari per il prefisso ed il contenuto delle righe.
 Le righe filtrate vengono solo nascoste, non eliminate, ed è possibile
 visualizzarle se i filtri vengono disabilitati (il comando predefinito

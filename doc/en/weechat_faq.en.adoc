@@ -709,7 +709,7 @@ It lets you ignore some nicks or hostnames of users for a server or channel
 Matching messages are deleted by IRC plugin before display (so you'll
 never see them, and can't be recovered by removing the ignore).
 
-The `/filter` command is a core command, so it applies to any buffer.
+The `/filter` command is a WeeChat core command, so it applies to any buffer.
 It lets you filter some lines in buffers with tags or regular expression for
 prefix and content of line.
 Filtered lines are only hidden, not deleted, and you can see them if you

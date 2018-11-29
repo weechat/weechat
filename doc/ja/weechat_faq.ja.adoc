@@ -710,11 +710,12 @@ IRC バッファ (サーバとチャンネル)
 IRC プラグインによって表示される前に削除されます
 (so you'll never see them, and can't be recovered by removing the ignore)。
 
-`/filter`
-コマンドは core
-コマンドです、このため任意のバッファに対してこれを有効化できます。バッファ内の行のプレフィックスと内容に対して付けられたタグや正規表現にマッチする行をフィルタできます。フィルタされた行は隠されているだけで、削除はされていません、フィルタを無効化すれば見えるようになります
-(デフォルトでは kbd:[Alt+=]
-でフィルタの有効無効の切り替えが出来ます)。
+// TRANSLATION MISSING
+The `/filter` command is a WeeChat core command, so it applies to any buffer.
+It lets you filter some lines in buffers with tags or regular expression for
+prefix and content of line.
+Filtered lines are only hidden, not deleted, and you can see them if you
+disable filters (by default, the key kbd:[Alt+=] toggles filters).
 
 [[filter_irc_join_part_quit]]
 === どうすれば IRC チャンネルへの参加/退出/終了メッセージをフィルタできますか。

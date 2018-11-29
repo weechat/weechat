@@ -738,8 +738,8 @@ Zutreffende Meldungen werden, bevor sie angezeigt werden, von der IRC-Erweiterun
 (diese Nachrichten werden nicht angezeigt und können auch nicht rückwirkend angezeigt werden,
 auch wenn man die Ignorierung entfernt).
 
-Der Befehl `/filter` ist ein Kern-Befehl (A.d.Ü.: wird in WeeChat ausgeführt und
-nicht an den Server gesendet) und beeinflusst somit jeden Buffer.
+// TRANSLATION MISSING
+The `/filter` command is a WeeChat core command, so it applies to any buffer.
 Dieser Befehl eröffnet die Möglichkeit bestimmte Zeilen in Buffern, mittels Tags und
 regulären Ausdrücken nach Präfix und Zeileninhalt zu filtern.
 Die Zeilen werden dabei nicht gelöscht, lediglich die Darstellung im Buffer wird unterdrückt.
