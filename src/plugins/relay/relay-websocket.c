@@ -113,7 +113,7 @@ relay_websocket_save_header (struct t_relay_client *client,
  *   Upgrade: websocket
  *   Connection: Upgrade
  *   Host: myhost:5000
- *   Origin: http://example.org
+ *   Origin: https://example.org
  *   Pragma: no-cache
  *   Cache-Control: no-cache
  *   Sec-WebSocket-Key: fo1J9uHSsrfDP3BkwUylzQ==

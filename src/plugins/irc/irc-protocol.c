@@ -3226,7 +3226,7 @@ IRC_PROTOCOL_CALLBACK(311)
  * Callback for the IRC message "312": whois, server.
  *
  * Message looks like:
- *   :server 312 mynick nick chat.freenode.net :http://freenode.net/
+ *   :server 312 mynick nick chat.freenode.net :https://freenode.net/
  */
 
 IRC_PROTOCOL_CALLBACK(312)
@@ -3630,7 +3630,7 @@ IRC_PROTOCOL_CALLBACK(327)
  * Callback for the IRC message "328": channel URL.
  *
  * Message looks like:
- *   :server 328 mynick #channel :http://sample.url.com/
+ *   :server 328 mynick #channel :https://example.com/
  */
 
 IRC_PROTOCOL_CALLBACK(328)
@@ -3722,7 +3722,7 @@ IRC_PROTOCOL_CALLBACK(329)
  *
  * Messages look like:
  *   :server 330 mynick nick1 nick2 :is logged in as
- *   :server 330 mynick #channel http://sample.url.com/
+ *   :server 330 mynick #channel https://example.com/
  *   :server 343 mynick nick1 nick2 :is opered as
  */
 
