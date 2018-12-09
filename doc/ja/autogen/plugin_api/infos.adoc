@@ -112,9 +112,9 @@
 
 | weechat | term_width | 端末の幅 | -
 
-| weechat | totp_generate | generate a Time-based One-Time Password (TOTP) | secret (in base32), timestamp (optional, current time by default), number of digits (optional, between 4 and 10, 6 by default)
+| weechat | totp_generate | 時間ベースのワンタイムパスワード (TOTP) を生成 | secret (base32)、タイムスタンプ (任意、デフォルトで現在時刻)、桁数 (任意、4 から 10 までの整数、デフォルトで 6)
 
-| weechat | totp_validate | validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, otherwise 0 | secret (in base32), one-time password, timestamp (optional, current time by default), number of passwords before/after to test (optional, 0 by default)
+| weechat | totp_validate | 時間ベースのワンタイムパスワード (TOTP) を確認: 正しい TOTP の場合 1、それ以外の場合 0 | secret (base32)、ワンタイムパスワード、タイムスタンプ (任意、デフォルトで現在時刻)、テスト前後のパスワードの数 (任意、デフォルトで 0)
 
 | weechat | uptime | WeeChat 連続稼働時間 (書式: "days:hh:mm:ss") | "days" (日数) または "seconds" (秒数) (任意)
 

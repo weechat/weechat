@@ -51,7 +51,7 @@
 ** デフォルト値: `+red+`
 
 * [[option_irc.color.mirc_remap]] *irc.color.mirc_remap*
-** 説明: pass:none[remap mirc colors in messages using a hashtable: keys are "fg,bg" as integers between -1 (not specified) and 15, values are WeeChat color names or numbers (format is: "1,-1:color1;2,7:color2"), example: "1,-1:darkgray;1,2:white,blue" to remap black to "darkgray" and black on blue to "white,blue"; default WeeChat colors for IRC codes: 0=white, 1=black, 2=blue, 3=green, 4=lightred, 5=red, 6=magenta, 7=brown, 8=yellow, 9=lightgreen, 10=cyan, 11=lightcyan, 12=lightblue, 13=lightmagenta, 14=darkgray, 15=gray]
+** 説明: pass:none[メッセージに含まれる mirc の定義する色に対するマッピングをハッシュテーブルで変更: キーは "fg,bg" で -1 (指定無し) から 15 までの整数、値は WeeChat 色名か色番号 (書式: "1,-1:color1;2,7:color2")、例: "1,-1:darkgray;1,2:white,blue" はテキスト色が黒のものを "darkgray" に、背景色が青でテキスト色が黒のものを "white,blue" に変更; IRC コードに対するデフォルトの WeeChat 色は、0=白、1=黒、2=青、3=緑、4=ライトレッド、5=赤、6=赤紫、7=茶色、8=黄色、9=ライトグリーン、10=シアン、11=ライトシアン、12=ライトブルー、13=ライトマゼンタ、14=暗い灰色、15=灰色]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"1,-1:darkgray"+`
@@ -363,7 +363,7 @@
 ** デフォルト値: `+256+`
 
 * [[option_irc.look.server_buffer]] *irc.look.server_buffer*
-** 説明: pass:none[merge server buffers; this option has no effect if a layout is saved and is conflicting with this value (see /help layout)]
+** 説明: pass:none[サーババッファをマージ; レイアウトが保存され、それがこのオプションと矛盾する場合 (/help layout を参照してください)、このオプションは何もしません]
 ** タイプ: 整数
 ** 値: merge_with_core, merge_without_core, independent
 ** デフォルト値: `+merge_with_core+`
@@ -429,7 +429,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_irc.network.autoreconnect_delay_growing]] *irc.network.autoreconnect_delay_growing*
-** 説明: pass:none[growing factor for autoreconnect delay to server (1 = always same delay, 2 = delay*2 for each retry, etc.)]
+** 説明: pass:none[サーバに自動再接続する際の遅延間隔に関する増加係数 (1 = 遅延間隔は常に同じ, 2 = リトライごとに遅延間隔を 2 倍、など)]
 ** タイプ: 整数
 ** 値: 1 .. 100
 ** デフォルト値: `+2+`

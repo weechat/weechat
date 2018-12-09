@@ -921,7 +921,7 @@
 ** デフォルト値: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
-** 説明: pass:none[chars used to stop in nick when computing color with letters of nick (at least one char outside this list must be in string before stopping) (example: nick "|nick|away" with "|" in chars will return color of nick "|nick"); this option has an impact on option weechat.look.nick_color_force, so the nick for the forced color must not contain the chars ignored by this option]
+** 説明: pass:none[ニックネームの色計算で以降の文字を無視する目印の文字 (このリストに含まれる文字の前に、少なくとも一つ以上のこのリストに含まれない文字がなければいけません) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になります); このオプションの設定値はオプション weechat.look.nick_color_force の結果に影響を与えます。すなわち、ニックネーム色を強制したニックネームに、このオプションによって無視される文字を含めてはいけません]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"_|["+`
