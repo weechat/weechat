@@ -1789,8 +1789,8 @@ str = weechat.string_remove_color(my_string, "?")
 
 _WeeChat バージョン 2.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Encode a string in base 16, 32, or 64.
+base 16、32、64 で文字列をエンコード。
+
 
 プロトタイプ:
 
@@ -1801,8 +1801,7 @@ int weechat_string_base_encode (int base, const char *from, int length, char *to
 
 引数:
 
-// TRANSLATION MISSING
-* _base_: 16, 32, or 64
+* _base_: 16、32、64
 * _from_: エンコード元文字列
 * _length_: エンコードする文字列の長さ (例えば `strlen(from)`)
 * _to_: エンコード結果を保存する文字列へのポインタ
@@ -1810,8 +1809,7 @@ int weechat_string_base_encode (int base, const char *from, int length, char *to
 
 戻り値:
 
-// TRANSLATION MISSING
-* _*to_ に保存された文字列の長さ (最後の `\0` は数えません), -1 if error
+* _*to_ に保存された文字列の長さ (最後の `\0` は数えません)、エラー発生時は -1
 
 C 言語での使用例:
 
@@ -1834,8 +1832,7 @@ length = weechat_string_base_encode (64, string, strlen (string), result);
 
 _WeeChat バージョン 2.4 以上で利用可。_
 
-// TRANSLATION MISSING
-Decode a string encoded in base 16, 32, or 64.
+base 16、32、64 でエンコードされた文字列をデコード。
 
 プロトタイプ:
 
@@ -1846,16 +1843,14 @@ int weechat_string_base_decode (int base, const char *from, char *to);
 
 引数:
 
-// TRANSLATION MISSING
-* _base_: 16, 32, or 64
+* _base_: 16、32、64
 * _from_: デコード元文字列
 * _to_: デコード結果を保存する文字列へのポインタ
   (十分な領域を確保してください、結果はデコード元文字列よりも短くなります)
 
 戻り値:
 
-// TRANSLATION MISSING
-* _*to_ に保存された文字列の長さ (最後の `\0` は数えません), -1 if error
+* _*to_ に保存された文字列の長さ (最後の `\0` は数えません)、エラー発生時は -1
 
 C 言語での使用例:
 

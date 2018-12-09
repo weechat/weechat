@@ -123,11 +123,9 @@ init [<option>=<value>,[<option>=<value>,...]]
 * _option_: 以下のうちの 1 つ:
 ** _password_: _リレー_ の認証用パスワード
    (WeeChat の _relay.network.password_ オプション)
-// TRANSLATION MISSING
-** _totp_: Time-based One-Time Password (TOTP) used as secondary authentication
-   factor, in addition to the password
+** _totp_: パスワードに加えた二要素認証で利用する時間ベースのワンタイムパスワード (TOTP)
    (WeeChat の _relay.network.totp_secret_ オプション)
-   _(WeeChat ≥ 2.4)_
+   _(WeeChat バージョン 2.4 で利用可能)_
 ** _compression_: 圧縮タイプ:
 *** _zlib_: _リレー_ から受信するメッセージに対して _zlib_ 圧縮を使う
     (_リレー_ が _zlib_ 圧縮をサポートしている場合、デフォルトで有効化されます)
@@ -137,7 +135,6 @@ init [<option>=<value>,[<option>=<value>,...]]
 WeeChat バージョン 1.6 以上の場合、コンマをエスケープすることで value にコンマを設定可能です。例えば
 "foo,bar" というパスワードを送信するには `init password=foo\,bar` のように設定してください。
 
-// TRANSLATION MISSING
 例:
 
 ----
@@ -147,7 +144,7 @@ init password=mypass
 # パスワードにコンマを含む値を設定する例 (WeeChat バージョン 1.6 以上の場合)
 init password=mypass\,with\,commas
 
-# initialize with password and TOTP (WeeChat ≥ 2.4)
+# パスワードと TOTP を初期化する例 (WeeChat バージョン 2.4 以上の場合)
 init password=mypass,totp=123456
 
 # 圧縮を使わない例
