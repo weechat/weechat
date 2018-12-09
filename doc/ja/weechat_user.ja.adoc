@@ -3155,16 +3155,15 @@ Relay プラグインはネットワークを介して異なるプロトコル�
 
 このパスワードは _irc_ と _weechat_ プロトコルで利用されます。
 
-// TRANSLATION MISSING
 [[relay_totp]]
 ==== TOTP
 
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _weechat_ protocol, in addition to the password.
+_weechat_ プロトコルでは、パスワードに加えて、二要素認証の
+TOTP (時間ベースのワンタイムパスワード) を使うことが可能です。
 
-This is optional and increases the security level.
+これは任意設定項目であり、セキュリティレベルを向上させます。
 
-One-time passwords can be generated with applications, for example:
+ワンタイムパスワードは以下のようなアプリケーションを使って生成します:
 
 * FreeOTP:
   https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
@@ -3174,11 +3173,11 @@ One-time passwords can be generated with applications, for example:
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
   https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
 
-The TOTP secret must be set in WeeChat and the application used to generate
-one-time passwords.
+TOTP の secret を WeeChat
+とワンタイムパスワードを生成するアプリケーション内部に設定しなければいけません。
 
-It must be a string encoded in base32, with only letters and digits from 2 to 7,
-for example:
+TOTP の secret は base32 でエンコードされた文字列
+(文字および 2 から 7 までの数字) でなければいけません。以下はその例です:
 
 ----
 /set relay.network.totp_secret "secretpasswordbase32"

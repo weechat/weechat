@@ -37,8 +37,7 @@ WeeChat とは関係ありませんよ!)。
 
 WeeChat は非常に軽く、革新的な機能を備えているからです。
 
-// TRANSLATION MISSING
-More info on the WeeChat features page: https://weechat.org/about/features
+WeeChat の機能に関するより詳しい情報: https://weechat.org/about/features
 
 [[compilation_install]]
 == コンパイル / インストール
@@ -81,11 +80,8 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === WeeChat を起動しました。でも何をすればいいかわかりません。
 
-// TRANSLATION MISSING
 ヘルプを見るには、`/help` と入力してください。コマンドに関するヘルプを見るには、`/help command`
-link:weechat_user.ja.html#key_bindings[Keys] and
-link:weechat_user.ja.html#commands_and_options[commands] are listed
-in documentation.
+と入力してください。link:weechat_user.ja.html#key_bindings[キー]とlink:weechat_user.ja.html#commands_and_options[コマンド]は文書中で説明されています。
 
 新しいユーザはlink:weechat_quickstart.ja.html[クイックスタートガイド]を読むことをお勧めします
 
@@ -95,9 +91,8 @@ in documentation.
 [[charset]]
 === いくつかの文字が見えません。どうすれば良いですか。
 
-// TRANSLATION MISSING
-It's a common issue with a variety of causes, please read carefully and check
-*ALL* solutions below:
+これは良くある問題であり、様々な原因に起因しています。以下の内容をよく読んで、*全ての*
+解決策をチェックしてください:
 
 * weechat が libncursesw にリンクされていることの確認 (警告:
   全てではありませんが、ほとんどのディストリビューションで必要です): `ldd /path/to/weechat`
@@ -182,10 +177,9 @@ _バッファ_ とは番号、名前、表示行 (とその他のデータ)
 _ウィンドウ_
 とはバッファを表示する画面エリアです。画面を複数のウィンドウに分割出来ます。
 
-// TRANSLATION MISSING
-Each window displays one buffer, or a set of merged buffers.
-A buffer can be hidden (not displayed by a window) or displayed by one or more
-windows.
+それぞれのウィンドウは 1
+つのバッファの内容もしくは複数のバッファの内容をマージして表示します。バッファを隠す
+(ウィンドウで表示させない) ことや 1 つ以上のウィンドウに表示させることも出来ます。
 
 [[buffers_list]]
 === どうすれば左側にバッファリストを表示できますか。
@@ -317,10 +311,9 @@ WeeChat は自動的にデフォルトバー "input" を作成します:
 [[terminal_copy_paste]]
 === どうすればニックネームリストを選択せずにテキストだけをコピー/ペーストできますか。
 
-// TRANSLATION MISSING
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]),
-which will show just the contents of the currently selected window,
-without any formatting.
+WeeChat バージョン 1.0 以上の場合、最小限表示を使うことができます
+(デフォルトキー: kbd:[Alt+l])。
+最小限表示では現在選択中のウィンドウの内容のみが表示され、フォーマットもされません。
 
 矩形選択のできる端末を使ってください
 (rxvt-unicode、konsole、gnome-terminal、...)。通常、キーは
@@ -702,20 +695,18 @@ of channels):
 [[ignore_vs_filter]]
 === /ignore と /filter コマンドの違いは何ですか。
 
-// TRANSLATION MISSING
 `/ignore` コマンドは IRC コマンドです、このため
 IRC バッファ (サーバとチャンネル)
 にのみ有効です。これを使うことでニックネームやホスト名を基準にして、あるサーバやチャンネルにいる一部のユーザを無視できます
 (表示済みメッセージに対しては適用されません)。マッチするメッセージは
 IRC プラグインによって表示される前に削除されます
-(so you'll never see them, and can't be recovered by removing the ignore)。
+(無視設定されたものは完全に見えなくなります。無視設定を元に戻すには、無視エントリを削除してください)。
 
-// TRANSLATION MISSING
-The `/filter` command is a WeeChat core command, so it applies to any buffer.
-It lets you filter some lines in buffers with tags or regular expression for
-prefix and content of line.
-Filtered lines are only hidden, not deleted, and you can see them if you
-disable filters (by default, the key kbd:[Alt+=] toggles filters).
+`/filter` コマンドは
+WeeChat
+のコアコマンドです。このため、このコマンドの結果は任意のバッファに適用されます。バッファ内の行のプレフィックスと内容に基づいて付けられたタグや正規表現にマッチする行をフィルタすることが可能です。
+フィルタされた行は隠されているだけで削除されているわけではありません。このため、フィルタを無効化
+(デフォルトでは kbd:[Alt+=] でフィルタの有効無効を切り替えられます) すれば見ることが可能です。
 
 [[filter_irc_join_part_quit]]
 === どうすれば IRC チャンネルへの参加/退出/終了メッセージをフィルタできますか。
@@ -733,10 +724,9 @@ disable filters (by default, the key kbd:[Alt+=] toggles filters).
 /filter add joinquit * irc_join,irc_part,irc_quit *
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-For help: `/help filter`, `/help irc.look.smart_filter` and see
-link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド / 参加/退出/終了メッセージに対するスマートフィルタ].
+ヘルプを見るには `/help filter`、`/help irc.look.smart_filter`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
+/ 参加/退出/終了メッセージに対するスマートフィルタ] を使ってください。
 
 [[filter_irc_join_channel_messages]]
 === どうすれば IRC チャンネルに参加した際に表示される一部のメッセージをフィルタできますか。
@@ -830,43 +820,40 @@ _launcher.pl_ の場合、コマンドの設定が必要です:
 /script search notify
 ----
 
-// TRANSLATION MISSING
 [[disable_highlights_for_specific_nicks]]
-=== How can I disable highlights for specific nicks?
+=== 特定のニックネームのみハイライトを無効化する方法を教えてください。
 
-With WeeChat ≥ 0.3.4 you can use the
-link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
+バッファプロパティを使うことで、ニックネーム単位、バッファ単位、バッファグループ単位
+(IRC サーバ単位) でホットリストレベルの最大値を設定できます。
 
-To only disable highlights, you'd have to set it to 2:
+ハイライトを無効化するだけなら、このプロパティを 2 に設定してください:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-This buffer property isn't stored in the configuration though.
-To automatically reapply these buffer properties, you would need the
-_buffer_autoset.py_ script:
+このバッファプロパティは設定に保存されません。このバッファプロパティを自動的に適用するには、_buffer_autoset.py_
+スクリプトが必要です:
 
 ----
 /script install buffer_autoset.py
 ----
 
-For example, to permanently disable highlights from "mike" on #weechat
-on the IRC server freenode:
+例えば、IRC サーバ freenode のチャンネル #weechat に参加している "mike"
+の発言に対してハイライトを永久的に無効化するには以下のように設定します:
 
 ----
 /buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-To apply it to the entire freenode server instead:
+この設定をすべての freenode サーバのバッファに対して適用するには以下のように設定します:
 
 ----
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-For more examples, see `/help buffer_autoset`.
+これ以外の例は `/help buffer_autoset` を参照してください。
 
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
@@ -891,9 +878,10 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 [[install_scripts]]
 === どうすればスクリプトをインストールできますか。スクリプトは他の IRC クライアントと互換性がありますか。
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
-(see `/help script` for help). For older versions there is weeget.py and script.pl.
+WeeChat バージョン 0.3.9 以上の場合、コマンド `/script`
+を使うことで、スクリプトをインストールしたり管理することができます 
+(ヘルプは `/help script` で見ることができます)。それよりも古いバージョンでは
+weeget.py と script.pl を使ってください。
 
 スクリプトは他の IRC クライアントのものと互換性がありません。
 
@@ -915,18 +903,17 @@ $ rm ~/.weechat/script/plugins.xml.gz
 /script update
 ----
 
-// TRANSLATION MISSING
-If you still have an error, then you must disable the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
-have to update manually the file yourself to get updates):
+それでもまだエラーが出るなら、WeeChat に含まれるファイルの自動更新を無効化して、WeeChat
+を使わずに手作業でファイルをダウンロードしなければいけません
+(つまり、更新を入手するには自分自身でそのファイルを更新しなければいけないということです):
 
-* WeeChat から WeeChat のファイル自動更新機能を無効化してください:
+* WeeChat から WeeChat のファイル自動更新機能を無効化します:
 
 ----
 /set script.scripts.cache_expire -1
 ----
 
-* シェルからスクリプトリストファイルをダウンロードしてください (必要なら curl をインストールしてください):
+* シェルからスクリプトリストファイルをダウンロードします (必要なら curl をインストールしてください):
 
 ----
 $ cd ~/.weechat/script
@@ -971,10 +958,9 @@ aspell プラグインをリロードしてください:
 
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
-// TRANSLATION MISSING
 * 使わないプラグインのロードを禁止する、例えば:
   aspell、buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、xfer (DCC で使用)。
-  See `/help weechat.plugin.autoload`.
+  `/help weechat.plugin.autoload` を参照してください。
 * 本当に必要なスクリプトだけをロード
 * SSL を *使わない* なら、証明書を読み込まないでください: オプション
   _weechat.network.gnutls_ca_file_ に空文字列を設定してください。
@@ -1024,11 +1010,10 @@ IRC の退出および終了メッセージを無効化します:
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
-// TRANSLATION MISSING
 パスフレーズを定義してパスワードなどの保護したいデータの使用時は常にセキュアデータを使います:
 `/help secure` およびセキュアデータを使用したいオプションの `/help` を参照してください
 (セキュアデータを使うことが可能なオプションのヘルプにはこの点が明記されています)。
-See also link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ].
+link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化データ] を参照してください。
 
 例:
 
