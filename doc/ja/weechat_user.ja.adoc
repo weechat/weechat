@@ -2171,6 +2171,14 @@ WeeChat はすべての辞書を使って単語をチェックします。
 /aspell setdict de
 ----
 
+// TRANSLATION MISSING
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on freenode IRC server:
+
+----
+/set aspell.dict.irc.freenode en
+----
+
 詳しい情報はコマンド <<command_aspell_aspell,/aspell>> を参照してください。
 
 [[aspell_speller_options]]

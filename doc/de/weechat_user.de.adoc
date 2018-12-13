@@ -2220,6 +2220,14 @@ Beispiel in einem französischen Channel:
 /aspell setdict fr
 ----
 
+// TRANSLATION MISSING
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on freenode IRC server:
+
+----
+/set aspell.dict.irc.freenode en
+----
+
 Für weitere Informationen, siehe den Befehl <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]

@@ -2186,6 +2186,14 @@ niemieckojęzycnzym:
 /aspell setdict de
 ----
 
+// TRANSLATION MISSING
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on freenode IRC server:
+
+----
+/set aspell.dict.irc.freenode en
+----
+
 Więcej informacji można znaleźć w opisie komendy <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]

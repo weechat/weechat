@@ -2246,6 +2246,13 @@ par exemple sur un canal allemand :
 /aspell setdict de
 ----
 
+Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
+exemple l'anglais pour tous les canaux du serveur IRC freenode :
+
+----
+/set aspell.dict.irc.freenode en
+----
+
 Pour plus d'informations, voir la commande <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]

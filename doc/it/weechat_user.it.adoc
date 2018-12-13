@@ -2312,6 +2312,14 @@ on a German channel:
 /aspell setdict de
 ----
 
+// TRANSLATION MISSING
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on freenode IRC server:
+
+----
+/set aspell.dict.irc.freenode en
+----
+
 For more information, see the command <<command_aspell_aspell,/aspell>>.
 
 [[aspell_speller_options]]
