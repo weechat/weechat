@@ -2220,12 +2220,11 @@ Beispiel in einem französischen Channel:
 /aspell setdict fr
 ----
 
-// TRANSLATION MISSING
-You can also specify a dictionary for a group of buffers, for example English
-for all channels on freenode IRC server:
+Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
+deutsche Wörterbuch für alle Channels auf dem freenode IRC Server:
 
 ----
-/set aspell.dict.irc.freenode en
+/set aspell.dict.irc.freenode de
 ----
 
 Für weitere Informationen, siehe den Befehl <<command_aspell_aspell,/aspell>>.
