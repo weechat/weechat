@@ -802,7 +802,7 @@ Keys on secure buffer:
   alt+v  toggle values
 
 When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade).
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade), or to set option sec.crypt.passphrase_file to read the passphrase from a file (see /help sec.crypt.passphrase_file).
 
 Secured data with format ${sec.data.xxx} can be used in:
   - command /eval
