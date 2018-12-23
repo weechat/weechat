@@ -18,7 +18,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+ * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -553,7 +553,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
                             strcat (suggestions, (num_suggestions == 0) ? "/" : ",");
                         strcat (suggestions, ptr_word);
                         num_suggestions++;
-                        if ((max_suggestions >= 0) && (num_suggestions == max_suggestions))
+                        if (num_suggestions == max_suggestions)
                             break;
                     }
                 }
@@ -580,7 +580,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
                         strcat (suggestions, (num_suggestions == 0) ? "/" : ",");
                     strcat (suggestions, ptr_word);
                     num_suggestions++;
-                    if ((max_suggestions >= 0) && (num_suggestions == max_suggestions))
+                    if (num_suggestions == max_suggestions)
                         break;
                 }
                 delete_aspell_string_enumeration (elements);
@@ -608,7 +608,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
                             const char *modifier,
                             const char *modifier_data, const char *string)
 {
-    long unsigned int value;
+    unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_aspell_speller_buffer *ptr_speller_buffer;
     char *result, *ptr_string, *ptr_string_orig, *pos_space;
@@ -891,6 +891,15 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
                 weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
             }
             free (suggestions);
+        }
+        /* set a misspelled word in buffer, also without suggestions */
+        else if (word_for_suggestions)
+        {
+            weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                                word_for_suggestions);
+            weechat_bar_item_update ("aspell_suggest");
+            (void) weechat_hook_signal_send ("aspell_suggest",
+                                            WEECHAT_HOOK_SIGNAL_POINTER, buffer);
         }
         else
         {
