@@ -1,7 +1,7 @@
 /*
  * wee-config.c - WeeChat configuration options (file weechat.conf)
  *
- * Copyright (C) 2003-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2019 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.

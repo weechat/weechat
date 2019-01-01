@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2006-2017 Adam Saponara <as@php.net>
- * Copyright (C) 2017-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2017-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

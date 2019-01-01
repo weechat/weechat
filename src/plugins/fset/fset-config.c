@@ -1,7 +1,7 @@
 /*
  * fset-config.c - Fast Set configuration options (file fset.conf)
  *
- * Copyright (C) 2003-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

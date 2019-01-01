@@ -461,7 +461,7 @@ Exemple en C :
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2018 Your Name <your@email.com>
+ * Copyright (C) 2019 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

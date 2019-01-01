@@ -4,7 +4,7 @@ Upstream-Contact: Sébastien Helleu <flashcode@flashtux.org>
 Source: https://weechat.org/
 
 Files: *
-Copyright: 2003-2018, Sébastien Helleu <flashcode@flashtux.org>
+Copyright: 2003-2019, Sébastien Helleu <flashcode@flashtux.org>
 License: GPL-3+
 
 Files: src/core/wee-command.c

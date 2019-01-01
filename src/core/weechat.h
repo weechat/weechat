@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2019 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -53,7 +53,7 @@
 #endif /* !defined(_) */
 
 
-#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2018"
+#define WEECHAT_COPYRIGHT_DATE   "(C) 2003-2019"
 #define WEECHAT_WEBSITE          "https://weechat.org/"
 #define WEECHAT_WEBSITE_DOWNLOAD "https://weechat.org/download"
 

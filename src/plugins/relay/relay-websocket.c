@@ -1,7 +1,7 @@
 /*
  * relay-websocket.c - websocket server functions for relay plugin (RFC 6455)
  *
- * Copyright (C) 2013-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

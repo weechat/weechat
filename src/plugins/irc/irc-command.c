@@ -1,7 +1,7 @@
 /*
  * irc-command.c - IRC commands
  *
- * Copyright (C) 2003-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2019 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.

@@ -2,7 +2,7 @@
  * weechat-aspell-speller.c - speller management for aspell plugin
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
- * Copyright (C) 2006-2018 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2006-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
