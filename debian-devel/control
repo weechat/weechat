@@ -21,7 +21,7 @@ Build-Depends:
     libgcrypt20-dev,
     libgnutls28-dev,
     zlib1g-dev
-Standards-Version: 4.1.5
+Standards-Version: 4.3.0
 Homepage: https://weechat.org/
 Vcs-Git: https://salsa.debian.org/kolter/weechat.git
 Vcs-Browser: https://salsa.debian.org/kolter/weechat
