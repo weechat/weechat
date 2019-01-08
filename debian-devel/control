@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Sébastien Helleu <flashcode@flashtux.org>
 Build-Depends:
     asciidoctor (>= 1.5.4),
-    debhelper (>= 11),
+    debhelper (>= 12),
     cmake, pkg-config,
     libncursesw5-dev,
     gem2deb,
