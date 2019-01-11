@@ -19,23 +19,23 @@
 
 AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(CPPUTEST_CFLAGS) -I$(abs_top_srcdir)
 
-noinst_LIBRARIES = lib_weechat_unit_tests.a
+noinst_LIBRARIES = lib_weechat_unit_tests_core.a
 
-lib_weechat_unit_tests_a_SOURCES = unit/test-plugins.cpp \
-                                   unit/core/test-arraylist.cpp \
-                                   unit/core/test-eval.cpp \
-                                   unit/core/test-hashtable.cpp \
-                                   unit/core/test-hdata.cpp \
-                                   unit/core/test-hook.cpp \
-                                   unit/core/test-infolist.cpp \
-                                   unit/core/test-list.cpp \
-                                   unit/core/test-secure.cpp \
-                                   unit/core/test-string.cpp \
-                                   unit/core/test-url.cpp \
-                                   unit/core/test-utf8.cpp \
-                                   unit/core/test-util.cpp \
-                                   unit/gui/test-line.cpp \
-                                   scripts/test-scripts.cpp
+lib_weechat_unit_tests_core_a_SOURCES = unit/test-plugins.cpp \
+                                        unit/core/test-core-arraylist.cpp \
+                                        unit/core/test-core-eval.cpp \
+                                        unit/core/test-core-hashtable.cpp \
+                                        unit/core/test-core-hdata.cpp \
+                                        unit/core/test-core-hook.cpp \
+                                        unit/core/test-core-infolist.cpp \
+                                        unit/core/test-core-list.cpp \
+                                        unit/core/test-core-secure.cpp \
+                                        unit/core/test-core-string.cpp \
+                                        unit/core/test-core-url.cpp \
+                                        unit/core/test-core-utf8.cpp \
+                                        unit/core/test-core-util.cpp \
+                                        unit/gui/test-gui-line.cpp \
+                                        scripts/test-scripts.cpp
 
 noinst_PROGRAMS = tests
 
@@ -46,7 +46,7 @@ tests_LDADD = ./../src/core/lib_weechat_core.a \
               ../src/gui/lib_weechat_gui_common.a \
               ../src/gui/curses/headless/lib_weechat_gui_headless.a \
               ../src/gui/curses/headless/lib_weechat_ncurses_fake.a \
-              lib_weechat_unit_tests.a \
+              lib_weechat_unit_tests_core.a \
               ../src/core/lib_weechat_core.a \
               $(PLUGINS_LFLAGS) \
               $(GCRYPT_LFLAGS) \
@@ -54,8 +54,15 @@ tests_LDADD = ./../src/core/lib_weechat_core.a \
               $(CURL_LFLAGS) \
               $(CPPUTEST_LFLAGS) \
               -lm
+tests_LDFLAGS = -rdynamic
 
 tests_SOURCES = tests.cpp \
                 tests.h
+
+lib_LTLIBRARIES = lib_weechat_unit_tests_plugins.la
+
+lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/irc/test-irc-config.cpp
+
+lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 
 EXTRA_DIST = CMakeLists.txt

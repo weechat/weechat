@@ -22,25 +22,31 @@ enable_language(CXX)
 remove_definitions(-DHAVE_CONFIG_H)
 include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR})
 
-# unit tests
-set(LIB_WEECHAT_UNIT_TESTS_SRC
+# unit tests (core)
+set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/test-plugins.cpp
-  unit/core/test-arraylist.cpp
-  unit/core/test-eval.cpp
-  unit/core/test-hashtable.cpp
-  unit/core/test-hdata.cpp
-  unit/core/test-hook.cpp
-  unit/core/test-infolist.cpp
-  unit/core/test-list.cpp
-  unit/core/test-secure.cpp
-  unit/core/test-string.cpp
-  unit/core/test-url.cpp
-  unit/core/test-utf8.cpp
-  unit/core/test-util.cpp
-  unit/gui/test-line.cpp
+  unit/core/test-core-arraylist.cpp
+  unit/core/test-core-eval.cpp
+  unit/core/test-core-hashtable.cpp
+  unit/core/test-core-hdata.cpp
+  unit/core/test-core-hook.cpp
+  unit/core/test-core-infolist.cpp
+  unit/core/test-core-list.cpp
+  unit/core/test-core-secure.cpp
+  unit/core/test-core-string.cpp
+  unit/core/test-core-url.cpp
+  unit/core/test-core-utf8.cpp
+  unit/core/test-core-util.cpp
+  unit/gui/test-gui-line.cpp
   scripts/test-scripts.cpp
 )
-add_library(weechat_unit_tests STATIC ${LIB_WEECHAT_UNIT_TESTS_SRC})
+add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
+
+# unit tests (plugins)
+set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+  unit/plugins/irc/test-irc-config.cpp
+)
+add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "FreeBSD")
   list(APPEND EXTRA_LIBS "intl")
@@ -59,7 +65,7 @@ set(LIBS
   ${PROJECT_BINARY_DIR}/src/gui/libweechat_gui_common.a
   ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_gui_headless.a
   ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_ncurses_fake.a
-  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests.a
+  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_core.a
   # due to circular references, we must link two times with libweechat_core.a
   ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${EXTRA_LIBS}
@@ -69,7 +75,7 @@ target_link_libraries(tests ${LIBS})
 add_dependencies(tests
   weechat_core weechat_plugins weechat_gui_common weechat_gui_headless
   weechat_ncurses_fake
-  weechat_unit_tests)
+  weechat_unit_tests_core)
 
 # test for cmake (ctest)
 add_test(NAME unit
@@ -78,4 +84,5 @@ add_test(NAME unit
 set_property(TEST unit PROPERTY
   ENVIRONMENT "WEECHAT_TESTS_ARGS=-p;"
   "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src;"
-  "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python")
+  "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python"
+  "WEECHAT_TESTS_PLUGINS_LIB=${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_plugins.so")

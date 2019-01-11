@@ -1,5 +1,5 @@
 /*
- * test-eval.cpp - test evaluation functions
+ * test-gui-line.cpp - test line functions
  *
  * Copyright (C) 2018-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

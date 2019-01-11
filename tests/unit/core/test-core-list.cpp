@@ -1,5 +1,5 @@
 /*
- * test-list.cpp - test list functions
+ * test-core-list.cpp - test list functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

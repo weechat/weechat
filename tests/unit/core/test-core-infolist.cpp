@@ -1,5 +1,5 @@
 /*
- * test-infolist.cpp - test infolist functions
+ * test-core-infolist.cpp - test infolist functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

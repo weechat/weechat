@@ -1,5 +1,5 @@
 /*
- * test-arraylist.cpp - test arraylist functions
+ * test-core-arraylist.cpp - test arraylist functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

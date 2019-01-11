@@ -189,6 +189,7 @@ extern char **irc_config_nicks_hide_password;
 extern int irc_config_num_nicks_hide_password;
 
 extern int irc_config_display_channel_modes_arguments (const char *modes);
+extern int irc_config_check_autojoin (const char *autojoin);
 extern int irc_config_server_check_value_cb (const void *pointer, void *data,
                                              struct t_config_option *option,
                                              const char *value);

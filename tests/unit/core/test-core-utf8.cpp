@@ -1,5 +1,5 @@
 /*
- * test-utf8.cpp - test UTF-8 string functions
+ * test-core-utf8.cpp - test UTF-8 string functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

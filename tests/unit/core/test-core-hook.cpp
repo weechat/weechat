@@ -1,5 +1,5 @@
 /*
- * test-hook.cpp - test hook functions
+ * test-core-hook.cpp - test hook functions
  *
  * Copyright (C) 2018-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

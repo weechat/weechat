@@ -23,6 +23,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <dlfcn.h>
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -51,6 +52,10 @@ extern "C"
 #define LOCALE_TESTS "en_US.UTF-8"
 
 #define WEECHAT_TESTS_HOME "./tmp_weechat_test"
+
+/* lib with tests on plugins when autotools is used to compile */
+#define WEECHAT_TESTS_PLUGINS_LIB_DEFAULT                       \
+    "./tests/.libs/lib_weechat_unit_tests_plugins.so.0.0.0"
 
 /* import tests from libs */
 /* core */
@@ -108,8 +113,11 @@ test_print_cb (const void *pointer, void *data, struct t_gui_buffer *buffer,
     (void) highlight;
 
     /* keep only messages displayed on core buffer */
-    if (strcmp (gui_buffer_get_string (buffer, "full_name"), "core.weechat") != 0)
+    if (strcmp (gui_buffer_get_string (buffer, "full_name"),
+                "core.weechat") != 0)
+    {
         return WEECHAT_RC_OK;
+    }
 
     printf ("%s%s%s\n",  /* with color: "\33[34m%s%s%s\33[0m\n" */
             (prefix && prefix[0]) ? prefix : "",
@@ -165,7 +173,10 @@ int
 main (int argc, char *argv[])
 {
     int rc, length, weechat_argc;
-    char *weechat_tests_args, *args, **weechat_argv;
+    char *weechat_tests_args, *args, **weechat_argv, *tests_plugins_lib;
+    const char *tests_plugins_lib_default = WEECHAT_TESTS_PLUGINS_LIB_DEFAULT;
+    const char *ptr_path;
+    void *handle;
 
     /* setup environment: English language, no specific timezone */
     setenv ("LC_ALL", LOCALE_TESTS, 1);
@@ -225,6 +236,19 @@ main (int argc, char *argv[])
         plugin_auto_load (NULL, 0, 1, 0, 0, NULL);
     }
 
+    /* load plugins tests */
+    tests_plugins_lib = getenv ("WEECHAT_TESTS_PLUGINS_LIB");
+    ptr_path = (tests_plugins_lib && tests_plugins_lib[0]) ?
+        tests_plugins_lib : tests_plugins_lib_default;
+    printf ("Loading tests on plugins: \"%s\"\n", ptr_path);
+    handle = dlopen (ptr_path, RTLD_GLOBAL | RTLD_NOW);
+    if (!handle)
+    {
+        fprintf (stderr, "ERROR: unable to load tests on plugins: %s\n",
+                 dlerror ());
+        return 1;
+    }
+
     /* display WeeChat version and directories */
     run_cmd ("/command core version");
     run_cmd ("/debug dirs");
@@ -246,6 +270,8 @@ main (int argc, char *argv[])
     printf ("\33[%d;1m*** %s ***\33[0m\n",
             (rc == 0) ? 32 : 31,  /* 32 = green (OK), 31 = red (error) */
             (rc == 0) ? "OK" : "ERROR");
+
+    dlclose (handle);
 
     return rc;
 }

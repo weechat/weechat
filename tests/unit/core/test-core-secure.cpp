@@ -1,5 +1,5 @@
 /*
- * test-secure.cpp - test secured data functions
+ * test-core-secure.cpp - test secured data functions
  *
  * Copyright (C) 2018-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

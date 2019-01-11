@@ -1,5 +1,5 @@
 /*
- * test-hdata.cpp - test hdata functions
+ * test-core-hdata.cpp - test hdata functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

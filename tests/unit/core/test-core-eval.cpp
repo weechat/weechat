@@ -1,5 +1,5 @@
 /*
- * test-eval.cpp - test evaluation functions
+ * test-core-eval.cpp - test evaluation functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

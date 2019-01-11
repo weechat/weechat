@@ -1,5 +1,5 @@
 /*
- * test-string.cpp - test string functions
+ * test-core-string.cpp - test string functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *

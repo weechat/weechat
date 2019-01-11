@@ -34,6 +34,10 @@ Bug fixes::
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
   * relay: fix memory leak in connection of client
 
+Tests::
+
+  * unit: add tests on IRC configuration functions
+
 Build::
 
   * core: add C compiler flag "-fsigned--char" to force "char" data type to be always signed (issue #1277)

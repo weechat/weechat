@@ -1,5 +1,5 @@
 /*
- * test-url.cpp - test URL functions
+ * test-core-url.cpp - test URL functions
  *
  * Copyright (C) 2014-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
