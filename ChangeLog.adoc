@@ -32,6 +32,7 @@ Bug fixes::
 
   * core: fix forced highlight on messages sent to other buffers (issue #1277)
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
+  * irc: fix parsing of "time" message tag on FreeBSD (issue #1289)
   * relay: fix memory leak in connection of client
 
 Tests::
