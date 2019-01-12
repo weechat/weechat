@@ -727,33 +727,30 @@ werden um sich, vor dem Betreten von Channels, bei "nickserv" zu identifizieren:
 /set irc.server.freenode.command_delay 5
 ----
 
-// TRANSLATION MISSING
 [[edit_autojoin]]
-=== How can I add/remove channels from autojoin option?
+=== Wie kann ich Channels zur autojoin Option entfernen/hinzufügen?
 
-// TRANSLATION MISSING
-You can use the `/set` command to edit the list of autojoin channels,
-for example for the "freenode" server:
+Dazu kann der `/set` Befehl genutzt werden um die Liste der autojoin Channels
+zu editieren, zum Beispiel für den "freenode" Server:
 
 ----
 /set irc.server.freenode.autojoin [TAB]
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
+Man kann den Namen oder den Wert einer Option mit kbd:[Tab] vervollständigen
+(oder mittels kbd:[Shift+Tab] eine teilweise Vervollständigung durchführen,
+was bei Namen sinnvoll ist). + Damit braucht man nicht die komplette Liste
+der Channels schreiben.
 
-// TRANSLATION MISSING
-You can also use the `/fset` command to edit the list of channels:
+Es kann auch der `/fset` Befehl verwendet werden um die Liste der Channels
+zu editieren:
 
 ----
 /fset autojoin
 ----
 
-// TRANSLATION MISSING
-Another solution is to use a script:
+oder man nutzt ein Skript:
 
 ----
 /script search autojoin
