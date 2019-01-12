@@ -725,6 +725,34 @@ commande et le join des canaux) :
 /set irc.server.freenode.command_delay 5
 ----
 
+[[edit_autojoin]]
+=== Comment puis-je ajouter/supprimer des canaux de l'option autojoin ?
+
+Vous pouvez utiliser la commande `/set` pour éditer la liste des canaux de
+l'autojoin, par exemple pour le serveur freenode :
+
+----
+/set irc.server.freenode.autojoin [TAB]
+----
+
+[NOTE]
+Vous pouvez compléter le nom et les valeurs de l'option avec la touche kbd:[Tab]
+(ou kbd:[Shift+Tab] pour une complétion partielle, pratique pour le nom). +
+De cette façon, vous n'avez pas à taper la liste complète des canaux.
+
+Vous pouvez également utiliser la commande `/fset` pour éditer la liste
+des canaux :
+
+----
+/fset autojoin
+----
+
+Une autre solution est d'utiliser un script :
+
+----
+/script search autojoin
+----
+
 [[ignore_vs_filter]]
 === Quelle est la différence entre les commandes /ignore et /filter ?
 
