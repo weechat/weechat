@@ -376,35 +376,36 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 
 [width="100%",cols="1m,3",options="header"]
 |===
-| Chemin/fichier                   | Description
-| tests/                           | Racine des tests.
-|    tests.cpp                     | Programme utilisé pour lancer tous les tests.
-|    scripts/                      | Racine des tests de l'API script.
-|       test-scripts.cpp           | Programme utilisé pour lancer les tests de l'API script.
-|       python/                    | Scripts Python pour générer et lancer les tests de l'API script.
-|          testapigen.py           | Script Python générant des scripts dans tous les languages pour tester l'API script.
-|          testapi.py              | Script Python avec les tests API, utilisé par le script testapigen.py.
-|          unparse.py              | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
-|    unit/                         | Racine des tests unitaires.
-|       test-plugins.cpp           | Tests : extensions.
-|       core/                      | Racine des tests unitaires pour le cœur.
-|          test-core-arraylist.cpp | Tests : listes avec tableau (« arraylists »).
-|          test-core-eval.cpp      | Tests : évaluation d'expressions.
-|          test-core-hashtble.cpp  | Tests : tables de hachage.
-|          test-core-hdata.cpp     | Tests : hdata.
-|          test-core-hook.cpp      | Tests : hooks.
-|          test-core-infolist.cpp  | Tests : infolists.
-|          test-core-list.cpp      | Tests : listes.
-|          test-core-secure.cpp    | Tests : données sécurisées.
-|          test-core-string.cpp    | Tests : chaînes.
-|          test-core-url.cpp       | Tests : URLs.
-|          test-core-utf8.cpp      | Tests : UTF-8.
-|          test-core-util.cpp      | Tests : fonctions utiles.
-|       gui/                       | Racine des tests unitaires pour les interfaces.
-|          test-gui-line.cpp       | Tests : lignes.
-|       plugins/                   | Racine des tests unitaires pour les extensions.
-|          irc/                    | Racine des tests unitaires pour l'extension IRC.
-|             test-irc-config.cpp  | Tests : configuration IRC.
+| Chemin/fichier                    | Description
+| tests/                            | Racine des tests.
+|    tests.cpp                      | Programme utilisé pour lancer tous les tests.
+|    scripts/                       | Racine des tests de l'API script.
+|       test-scripts.cpp            | Programme utilisé pour lancer les tests de l'API script.
+|       python/                     | Scripts Python pour générer et lancer les tests de l'API script.
+|          testapigen.py            | Script Python générant des scripts dans tous les languages pour tester l'API script.
+|          testapi.py               | Script Python avec les tests API, utilisé par le script testapigen.py.
+|          unparse.py               | Conversion de code Python vers d'autres langages, utilisé par le script testapigen.py.
+|    unit/                          | Racine des tests unitaires.
+|       test-plugins.cpp            | Tests : extensions.
+|       core/                       | Racine des tests unitaires pour le cœur.
+|          test-core-arraylist.cpp  | Tests : listes avec tableau (« arraylists »).
+|          test-core-eval.cpp       | Tests : évaluation d'expressions.
+|          test-core-hashtble.cpp   | Tests : tables de hachage.
+|          test-core-hdata.cpp      | Tests : hdata.
+|          test-core-hook.cpp       | Tests : hooks.
+|          test-core-infolist.cpp   | Tests : infolists.
+|          test-core-list.cpp       | Tests : listes.
+|          test-core-secure.cpp     | Tests : données sécurisées.
+|          test-core-string.cpp     | Tests : chaînes.
+|          test-core-url.cpp        | Tests : URLs.
+|          test-core-utf8.cpp       | Tests : UTF-8.
+|          test-core-util.cpp       | Tests : fonctions utiles.
+|       gui/                        | Racine des tests unitaires pour les interfaces.
+|          test-gui-line.cpp        | Tests : lignes.
+|       plugins/                    | Racine des tests unitaires pour les extensions.
+|          irc/                     | Racine des tests unitaires pour l'extension IRC.
+|             test-irc-config.cpp   | Tests : configuration IRC.
+|             test-irc-protocol.cpp | Tests : protocole IRC.
 |===
 
 [[documentation_translations]]
