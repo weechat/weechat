@@ -37,7 +37,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on IRC configuration functions
+  * unit: add tests on IRC configuration and protocol functions
 
 Build::
 
