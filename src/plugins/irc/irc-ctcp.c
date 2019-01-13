@@ -332,7 +332,7 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     const char *info;
     time_t now;
     struct tm *local_time;
-    char buf[1024];
+    char buf[4096];
     struct utsname *buf_uname;
 
     /*
