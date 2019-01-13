@@ -6080,50 +6080,49 @@ irc_protocol_get_message_tags (const char *tags)
 }
 
 /*
- * Gets value of time in tags.
+ * Parses date/time received in a "time" tag.
  *
- * Returns value of tag "time", 0 if not found.
+ * Returns value of time (timestamp), 0 if error.
  */
 
 time_t
-irc_protocol_get_message_tag_time (struct t_hashtable *tags)
+irc_protocol_parse_time (const char *time)
 {
-    const char *tag_time;
     time_t time_value, time_msg, time_gm, time_local;
     struct tm tm_date, tm_date_gm, tm_date_local;
 
-    if (!tags)
+    if (!time || !time[0])
         return 0;
 
     time_value = 0;
 
-    tag_time = weechat_hashtable_get (tags, "time");
-    if (!tag_time)
-        return time_value;
-
     /* initialize structure, because strptime does not do it */
     memset (&tm_date, 0, sizeof (struct tm));
 
-    if (strchr (tag_time, '-'))
+    if (strchr (time, '-'))
     {
         /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
-        strptime (tag_time, "%Y-%m-%dT%H:%M:%S", &tm_date);
-        if (tm_date.tm_year > 0)
+        if (strptime (time, "%Y-%m-%dT%H:%M:%S", &tm_date))
         {
-            time_msg = mktime (&tm_date);
-            gmtime_r (&time_msg, &tm_date_gm);
-            localtime_r (&time_msg, &tm_date_local);
-            time_gm = mktime (&tm_date_gm);
-            time_local = mktime (&tm_date_local);
-            time_value = mktime (&tm_date_local) + (time_local - time_gm);
+            if (tm_date.tm_year > 0)
+            {
+                time_msg = mktime (&tm_date);
+                gmtime_r (&time_msg, &tm_date_gm);
+                localtime_r (&time_msg, &tm_date_local);
+                time_gm = mktime (&tm_date_gm);
+                time_local = mktime (&tm_date_local);
+                time_value = mktime (&tm_date_local) + (time_local - time_gm);
+            }
         }
     }
     else
     {
         /* date is with timestamp format: "1353403519.478" */
-        strptime (tag_time, "%s", &tm_date);
-        if (tm_date.tm_year > 0)
-            time_value = mktime (&tm_date);
+        if (strptime (time, "%s", &tm_date))
+        {
+            if (tm_date.tm_year > 0)
+                time_value = mktime (&tm_date);
+        }
     }
 
     return time_value;
@@ -6329,7 +6328,10 @@ irc_protocol_recv_command (struct t_irc_server *server,
             {
                 hash_tags = irc_protocol_get_message_tags (tags);
                 if (hash_tags)
-                    date = irc_protocol_get_message_tag_time (hash_tags);
+                {
+                    date = irc_protocol_parse_time (
+                        weechat_hashtable_get (hash_tags, "time"));
+                }
                 free (tags);
             }
             ptr_msg_after_tags = pos_space;
