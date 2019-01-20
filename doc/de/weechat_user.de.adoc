@@ -1688,8 +1688,10 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 | kbd:[F8]        | zum nächsten Fenster wechseln. | `/window +1`
 | kbd:[F9]        | Titel des Buffers nach links verschieben. | `+/bar scroll title * -30%+`
 | kbd:[F10]       | Titel des Buffers nach rechts verschieben. | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | springt zum Ende der Benutzerliste. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `/input jump_smart`

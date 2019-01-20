@@ -1664,8 +1664,10 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[F8]        | Przełącz na następne okno. | `/window +1`
 | kbd:[F9]        | Przewiń tytuł bufora w lewo. | `+/bar scroll title * -30%+`
 | kbd:[F10]       | Przewiń tytuł bufora w prawo. | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | Idź na początek listy nicków. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | Idź na koniec listy nicków. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `/input jump_smart`

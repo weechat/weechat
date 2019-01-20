@@ -1752,8 +1752,10 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[F8]        | Passa alla finestra successiva. | `/window +1`
 | kbd:[F9]        | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
 | kbd:[F10]       | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`

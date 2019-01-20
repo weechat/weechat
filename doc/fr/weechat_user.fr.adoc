@@ -1706,8 +1706,10 @@ avec `/help buffer_autoset`.
 | kbd:[F8]        | Aller à la fenêtre suivante. | `/window +1`
 | kbd:[F9]        | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
 | kbd:[F10]       | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | Aller au début de la liste des pseudos. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `/input jump_smart`

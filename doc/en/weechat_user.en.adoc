@@ -1653,8 +1653,10 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[F8]        | Switch to next window. | `/window +1`
 | kbd:[F9]        | Scroll buffer's title on the left. | `+/bar scroll title * -30%+`
 | kbd:[F10]       | Scroll buffer's title on the right. | `+/bar scroll title * +30%+`
-| kbd:[F11]       | Scroll up one page in nicklist. | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | Scroll down one page in nicklist. | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | Scroll up one page in nicklist. | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | Scroll down one page in nicklist. | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | Go to the beginning of nicklist. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | Go to the end of nicklist. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | Switch to next buffer with activity (with priority: highlight, message, other). | `/input jump_smart`

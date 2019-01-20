@@ -180,6 +180,10 @@ gui_key_default_bindings (int context)
         BIND(/* <f10>         */ "meta2-21~",          "/bar scroll title * +30%");
         BIND(/* <f11>         */ "meta2-23~",          "/bar scroll nicklist * -100%");
         BIND(/* <f12>         */ "meta2-24~",          "/bar scroll nicklist * +100%");
+        BIND(/* c-<f11>       */ "meta2-23^",          "/bar scroll nicklist * -100%");
+        BIND(/* c-<f11>       */ "meta2-23;5~",        "/bar scroll nicklist * -100%");
+        BIND(/* c-<f12>       */ "meta2-24^",          "/bar scroll nicklist * +100%");
+        BIND(/* c-<f12>       */ "meta2-24;5~",        "/bar scroll nicklist * +100%");
         BIND(/* m-<f11>       */ "meta2-23;3~",        "/bar scroll nicklist * b");
         BIND(/* m-<f11>       */ "meta-meta2-23~",     "/bar scroll nicklist * b");
         BIND(/* m-<f12>       */ "meta2-24;3~",        "/bar scroll nicklist * e");

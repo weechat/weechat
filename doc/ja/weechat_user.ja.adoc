@@ -1655,8 +1655,10 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[F8]        | ウィンドウを後に移動 | `/window +1`
 | kbd:[F9]        | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
 | kbd:[F10]       | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
-| kbd:[F11]       | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
-| kbd:[F12]       | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
+| kbd:[F11] +
+  kbd:[Ctrl+F11]  | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
+| kbd:[F12] +
+  kbd:[Ctrl+F12]  | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
 | kbd:[Alt+F11]   | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]   | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
 | kbd:[Alt+a]     | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
