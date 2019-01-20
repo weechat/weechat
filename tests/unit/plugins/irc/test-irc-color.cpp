@@ -1,0 +1,494 @@
+/*
+ * test-irc-color.cpp - test IRC color functions
+ *
+ * Copyright (C) 2019 Sébastien Helleu <flashcode@flashtux.org>
+ *
+ * This file is part of WeeChat, the extensible chat client.
+ *
+ * WeeChat is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * WeeChat is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with WeeChat.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "CppUTest/TestHarness.h"
+
+extern "C"
+{
+#include "src/gui/gui-color.h"
+#include "src/plugins/irc/irc-color.h"
+}
+
+/* tests on irc_color_decode(): IRC color -> WeeChat color */
+#define STRING_IRC_BOLD                                                 \
+    "test_" IRC_COLOR_BOLD_STR "bold" IRC_COLOR_BOLD_STR "_end"
+#define STRING_IRC_RESET                                                \
+    "test_" IRC_COLOR_RESET_STR "reset" IRC_COLOR_RESET_STR "_end"
+#define STRING_IRC_FIXED                                                \
+    "test_" IRC_COLOR_FIXED_STR "fixed" IRC_COLOR_FIXED_STR "_end"
+#define STRING_IRC_REVERSE                                              \
+    "test_" IRC_COLOR_REVERSE_STR "reverse" IRC_COLOR_REVERSE_STR "_end"
+#define STRING_IRC_ITALIC                                               \
+    "test_" IRC_COLOR_ITALIC_STR "italic" IRC_COLOR_ITALIC_STR "_end"
+#define STRING_IRC_UNDERLINE                                            \
+    "test_" IRC_COLOR_UNDERLINE_STR "underline" IRC_COLOR_UNDERLINE_STR "_end"
+#define STRING_IRC_COLOR_RESET                                          \
+    "test_" IRC_COLOR_COLOR_STR "resetcolor"
+#define STRING_IRC_COLOR_FG_LIGHTCYAN                                   \
+    "test_" IRC_COLOR_COLOR_STR "11" "lightcyan" IRC_COLOR_COLOR_STR "_end"
+#define STRING_IRC_COLOR_FG_LIGHTCYAN_BG_RED                            \
+    "test_" IRC_COLOR_COLOR_STR "11,05" "lightcyan/red"                 \
+    IRC_COLOR_COLOR_STR "_end"
+#define STRING_IRC_ONLY_ATTRS_AND_COLORS                                \
+    IRC_COLOR_COLOR_STR IRC_COLOR_RESET_STR                             \
+    IRC_COLOR_BOLD_STR IRC_COLOR_FIXED_STR IRC_COLOR_REVERSE_STR        \
+    IRC_COLOR_ITALIC_STR IRC_COLOR_UNDERLINE_STR                        \
+    IRC_COLOR_UNDERLINE_STR IRC_COLOR_ITALIC_STR                        \
+    IRC_COLOR_REVERSE_STR IRC_COLOR_FIXED_STR IRC_COLOR_BOLD_STR
+#define STRING_IRC_ATTRS_AND_COLORS                                     \
+    "test_"                                                             \
+    IRC_COLOR_BOLD_STR IRC_COLOR_UNDERLINE_STR                          \
+    IRC_COLOR_COLOR_STR "08,02" "bold_underline_yellow/blue"            \
+    IRC_COLOR_BOLD_STR IRC_COLOR_UNDERLINE_STR                          \
+    "_normal_yellow/blue"
+
+/* tests on irc_color_encode(): command line -> IRC color */
+#define STRING_USER_BOLD                                                \
+    "test_" "\x02" "bold" "\x02" "_end"
+#define STRING_USER_RESET                                               \
+    "test_" "\x0F" "reset" "\x0F" "_end"
+#define STRING_USER_REVERSE                                             \
+    "test_" "\x16" "reverse" "\x16" "_end"
+#define STRING_USER_ITALIC                                              \
+    "test_" "\x1D" "italic" "\x1D" "_end"
+#define STRING_USER_UNDERLINE                                           \
+    "test_" "\x1F" "underline" "\x1F" "_end"
+#define STRING_USER_FG_LIGHTCYAN                                        \
+    "test_" "\x03" "11" "lightcyan" "\x03" "_end"
+#define STRING_USER_FG_LIGHTCYAN_BG_RED                                 \
+    "test_" "\x03" "11,05" "lightcyan/red" "\x03" "_end"
+#define STRING_USER_ONLY_ATTRS_AND_COLORS                               \
+    "\x03" "\x0F" "\x02" "\x16" "\x1D" "\x1F"                           \
+    "\x1F" "\x1D" "\x16" "\x02"
+#define STRING_USER_ATTRS_AND_COLORS                                    \
+    "test_" "\x02" "\x1F" "\x03" "08,02" "bold_underline_yellow/blue"   \
+    "\x02" "\x1F" "_normal_yellow/blue"
+
+/* tests on irc_color_decode_ansi(): ANSI color -> IRC color */
+#define STRING_ANSI_RESET "test_\x1B[mreset"
+#define STRING_ANSI_RESET_0 "test_\x1B[0mreset"
+#define STRING_ANSI_BOLD                                                \
+    "test_\x1B[1mbold1\x1B[2m_normal_"                                  \
+    "\x1B[1mbold2\x1B[21m_normal_"                                      \
+    "\x1B[1mbold3\x1B[22m_normal"
+#define STRING_ANSI_ITALIC                                              \
+    "test_\x1B[3mitalic\x1B[23m_normal"
+#define STRING_ANSI_UNDERLINE                                           \
+    "test_\x1B[4munderline\x1B[24m_normal"
+#define STRING_ANSI_FG_BLUE                                             \
+    "test_\x1B[34mblue"
+#define STRING_ANSI_FG_LIGHTCYAN                                        \
+    "test_\x1B[96mlightcyan"
+#define STRING_ANSI_FG_BLUE_BG_RED                                      \
+    "test_\x1B[34m\x1B[41mblue/red"
+#define STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE                           \
+    "test_\x1B[96m\x1B[104mlightcyan/lightblue"
+#define STRING_ANSI_FG_RGB_IRC_13                                       \
+    "test_\x1B[38;2;255;0;255mcolor13"
+#define STRING_ANSI_FG_TERM_IRC_13                                      \
+    "test_\x1B[38;5;13mcolor13"
+#define STRING_ANSI_FG_RGB_IRC_13_BG_RGB_IRC_02                         \
+    "test_\x1B[38;2;255;0;255m\x1B[48;2;0;0;128mcolor13/02"
+#define STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02                       \
+    "test_\x1B[38;5;13m\x1B[48;5;4mcolor13/02"
+
+#define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
+    decoded = irc_color_decode (__string, __keep_colors);               \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+#define WEE_CHECK_ENCODE(__result, __string, __keep_colors)             \
+    encoded = irc_color_encode (__string, __keep_colors);               \
+    STRCMP_EQUAL(__result, encoded);                                    \
+    free (encoded);
+
+#define WEE_CHECK_DECODE_ANSI(__result, __string, __keep_colors)        \
+    decoded = irc_color_decode_ansi (__string, __keep_colors);          \
+    STRCMP_EQUAL(__result, decoded);                                    \
+    free (decoded);
+
+TEST_GROUP(IrcColor)
+{
+};
+
+/*
+ * Tests functions:
+ *   irc_color_decode
+ */
+
+TEST(IrcColor, Decode)
+{
+    char string[1024], *decoded;
+
+    /* NULL/empty string */
+    POINTERS_EQUAL(NULL, irc_color_decode (NULL, 0));
+    POINTERS_EQUAL(NULL, irc_color_decode (NULL, 1));
+    WEE_CHECK_DECODE("", "", 0);
+    WEE_CHECK_DECODE("", "", 1);
+
+    /* no color codes */
+    WEE_CHECK_DECODE("test string", "test string", 0);
+    WEE_CHECK_DECODE("test string", "test string", 1);
+
+    /* bold */
+    WEE_CHECK_DECODE("test_bold_end", STRING_IRC_BOLD, 0);
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_DECODE(string, STRING_IRC_BOLD, 1);
+
+    /* reset */
+    WEE_CHECK_DECODE("test_reset_end", STRING_IRC_RESET, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreset%s_end",
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("reset"));
+    WEE_CHECK_DECODE(string, STRING_IRC_RESET, 1);
+
+    /* fixed */
+    WEE_CHECK_DECODE("test_fixed_end", STRING_IRC_FIXED, 0);
+    WEE_CHECK_DECODE("test_fixed_end", STRING_IRC_FIXED, 1);
+
+    /* reverse */
+    WEE_CHECK_DECODE("test_reverse_end", STRING_IRC_REVERSE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreverse%s_end",
+              gui_color_get_custom ("reverse"),
+              gui_color_get_custom ("-reverse"));
+    WEE_CHECK_DECODE(string, STRING_IRC_REVERSE, 1);
+
+    /* italic */
+    WEE_CHECK_DECODE("test_italic_end", STRING_IRC_ITALIC, 0);
+    snprintf (string, sizeof (string),
+              "test_%sitalic%s_end",
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("-italic"));
+    WEE_CHECK_DECODE(string, STRING_IRC_ITALIC, 1);
+
+    /* underline */
+    WEE_CHECK_DECODE("test_underline_end", STRING_IRC_UNDERLINE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sunderline%s_end",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("-underline"));
+    WEE_CHECK_DECODE(string, STRING_IRC_UNDERLINE, 1);
+
+    /* color: no color code (reset) */
+    WEE_CHECK_DECODE("test_resetcolor", STRING_IRC_COLOR_RESET, 0);
+    snprintf (string, sizeof (string),
+              "test_%sresetcolor",
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_RESET, 1);
+
+    /* color: lightcyan */
+    WEE_CHECK_DECODE("test_lightcyan_end", STRING_IRC_COLOR_FG_LIGHTCYAN, 0);
+    snprintf (string, sizeof (string),
+              "test_%slightcyan%s_end",
+              gui_color_get_custom ("|lightcyan"),
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_LIGHTCYAN, 1);
+
+    /* color: lightcyan on red */
+    WEE_CHECK_DECODE("test_lightcyan/red_end",
+                     STRING_IRC_COLOR_FG_LIGHTCYAN_BG_RED, 0);
+    snprintf (string, sizeof (string),
+              "test_%slightcyan/red%s_end",
+              gui_color_get_custom ("|lightcyan,red"),
+              gui_color_get_custom ("resetcolor"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_FG_LIGHTCYAN_BG_RED, 1);
+
+    /* color: only attributes and colors */
+    WEE_CHECK_DECODE("", STRING_IRC_ONLY_ATTRS_AND_COLORS, 0);
+    snprintf (string, sizeof (string),
+              "%s%s%s%s%s%s%s%s%s%s%s%s",
+              gui_color_get_custom ("resetcolor"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("bold"),
+              "",  /* fixed */
+              gui_color_get_custom ("reverse"),
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("-underline"),
+              gui_color_get_custom ("-italic"),
+              gui_color_get_custom ("-reverse"),
+              "",  /* fixed */
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_DECODE(string, STRING_IRC_ONLY_ATTRS_AND_COLORS, 1);
+
+    /* color: attributes and colors */
+    WEE_CHECK_DECODE("test_bold_underline_yellow/blue_normal_yellow/blue",
+                     STRING_IRC_ATTRS_AND_COLORS, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s%sbold_underline_yellow/blue%s%s_normal_yellow/blue",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("|yellow,blue"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("-underline"));
+    WEE_CHECK_DECODE(string, STRING_IRC_ATTRS_AND_COLORS, 1);
+}
+
+/*
+ * Tests functions:
+ *   irc_color_encode
+ */
+
+TEST(IrcColor, Encode)
+{
+    char string[1024], *encoded;
+
+    /* NULL/empty string */
+    POINTERS_EQUAL(NULL, irc_color_encode (NULL, 0));
+    POINTERS_EQUAL(NULL, irc_color_encode (NULL, 1));
+    WEE_CHECK_ENCODE("", "", 0);
+    WEE_CHECK_ENCODE("", "", 1);
+
+    /* no color codes */
+    WEE_CHECK_ENCODE("test string", "test string", 0);
+    WEE_CHECK_ENCODE("test string", "test string", 1);
+
+    /* bold */
+    WEE_CHECK_ENCODE("test_bold_end", STRING_USER_BOLD, 0);
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_end",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_BOLD, 1);
+
+    /* reset */
+    WEE_CHECK_ENCODE("test_reset_end", STRING_USER_RESET, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreset%s_end",
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_RESET, 1);
+
+    /* reverse */
+    WEE_CHECK_ENCODE("test_reverse_end", STRING_USER_REVERSE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreverse%s_end",
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_REVERSE_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_REVERSE, 1);
+
+    /* italic */
+    WEE_CHECK_ENCODE("test_italic_end", STRING_USER_ITALIC, 0);
+    snprintf (string, sizeof (string),
+              "test_%sitalic%s_end",
+              IRC_COLOR_ITALIC_STR,
+              IRC_COLOR_ITALIC_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_ITALIC, 1);
+
+    /* underline */
+    WEE_CHECK_ENCODE("test_underline_end", STRING_USER_UNDERLINE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sunderline%s_end",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_UNDERLINE_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_UNDERLINE, 1);
+
+    /* color: lightcyan */
+    WEE_CHECK_ENCODE("test_lightcyan_end", STRING_USER_FG_LIGHTCYAN, 0);
+    snprintf (string, sizeof (string),
+              "test_%s11lightcyan%s_end",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_LIGHTCYAN, 1);
+
+    /* color: lightcyan on red */
+    WEE_CHECK_ENCODE("test_lightcyan/red_end",
+                     STRING_USER_FG_LIGHTCYAN_BG_RED, 0);
+    snprintf (string, sizeof (string),
+              "test_%s11,05lightcyan/red%s_end",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_FG_LIGHTCYAN_BG_RED, 1);
+
+    /* color: only attributes and colors */
+    WEE_CHECK_ENCODE("", STRING_USER_ONLY_ATTRS_AND_COLORS, 0);
+    snprintf (string, sizeof (string),
+              "%s%s%s%s%s%s%s%s%s%s",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_RESET_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_ITALIC_STR,
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_ITALIC_STR,
+              IRC_COLOR_REVERSE_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_ONLY_ATTRS_AND_COLORS, 1);
+
+    /* color: attributes and colors */
+    WEE_CHECK_ENCODE("test_bold_underline_yellow/blue_normal_yellow/blue",
+                     STRING_USER_ATTRS_AND_COLORS, 0);
+    snprintf (string, sizeof (string),
+              "test_%s%s%s08,02bold_underline_yellow/blue"
+              "%s%s_normal_yellow/blue",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_UNDERLINE_STR);
+    WEE_CHECK_ENCODE(string, STRING_USER_ATTRS_AND_COLORS, 1);
+}
+
+/*
+ * Tests functions:
+ *   irc_color_decode_ansi
+ */
+
+TEST(IrcColor, DecodeAnsi)
+{
+    char string[1024], *decoded;
+
+    /* NULL/empty string */
+    POINTERS_EQUAL(NULL, irc_color_decode_ansi (NULL, 0));
+    POINTERS_EQUAL(NULL, irc_color_decode_ansi (NULL, 1));
+    WEE_CHECK_DECODE_ANSI ("", "", 0);
+    WEE_CHECK_DECODE_ANSI ("", "", 1);
+
+    /* no color codes */
+    WEE_CHECK_DECODE_ANSI("test string", "test string", 0);
+    WEE_CHECK_DECODE_ANSI("test string", "test string", 1);
+
+    /* sequences not supported (not ending with "m") */
+    WEE_CHECK_DECODE_ANSI("", "\x1B[z", 0);
+    WEE_CHECK_DECODE_ANSI("", "\x1B[z", 1);
+    WEE_CHECK_DECODE_ANSI("test", "\x1B[ztest", 0);
+    WEE_CHECK_DECODE_ANSI("test", "\x1B[ztest", 1);
+
+    /* color: reset (implicit) */
+    WEE_CHECK_DECODE_ANSI("test_reset", STRING_ANSI_RESET, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreset",
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_RESET, 1);
+
+    /* color: reset (with "0") */
+    WEE_CHECK_DECODE_ANSI("test_reset", STRING_ANSI_RESET_0, 0);
+    snprintf (string, sizeof (string),
+              "test_%sreset",
+              IRC_COLOR_RESET_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_RESET_0, 1);
+
+    /* bold */
+    WEE_CHECK_DECODE_ANSI("test_bold1_normal_bold2_normal_bold3_normal",
+                          STRING_ANSI_BOLD, 0);
+    snprintf (string, sizeof (string),
+              "test_%sbold1%s_normal_%sbold2%s_normal_%sbold3%s_normal",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_BOLD, 1);
+
+    /* italic */
+    WEE_CHECK_DECODE_ANSI("test_italic_normal", STRING_ANSI_ITALIC, 0);
+    snprintf (string, sizeof (string),
+              "test_%sitalic%s_normal",
+              IRC_COLOR_ITALIC_STR,
+              IRC_COLOR_ITALIC_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_ITALIC, 1);
+
+    /* underline */
+    WEE_CHECK_DECODE_ANSI("test_underline_normal", STRING_ANSI_UNDERLINE, 0);
+    snprintf (string, sizeof (string),
+              "test_%sunderline%s_normal",
+              IRC_COLOR_UNDERLINE_STR,
+              IRC_COLOR_UNDERLINE_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_UNDERLINE, 1);
+
+    /* color: blue */
+    WEE_CHECK_DECODE_ANSI("test_blue", STRING_ANSI_FG_BLUE, 0);
+    snprintf (string, sizeof (string),
+              "test_%s02blue",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_BLUE, 1);
+
+    /* color: lightcyan */
+    WEE_CHECK_DECODE_ANSI("test_lightcyan", STRING_ANSI_FG_LIGHTCYAN, 0);
+    snprintf (string, sizeof (string),
+              "test_%s11lightcyan",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_LIGHTCYAN, 1);
+
+    /* color: blue on red */
+    WEE_CHECK_DECODE_ANSI("test_blue/red", STRING_ANSI_FG_BLUE_BG_RED, 0);
+    snprintf (string, sizeof (string),
+              "test_%s02%s,05blue/red",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_BLUE_BG_RED, 1);
+
+    /* color: lightcyan on lightblue */
+    WEE_CHECK_DECODE_ANSI("test_lightcyan/lightblue",
+                          STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 0);
+    snprintf (string, sizeof (string),
+              "test_%s11%s,12lightcyan/lightblue",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_LIGHTCYAN_BG_LIGHTBLUE, 1);
+
+    /* color: RGB "FF00FF" (term 13 -> IRC 13 -> lightmagenta) */
+    WEE_CHECK_DECODE_ANSI("test_color13", STRING_ANSI_FG_RGB_IRC_13, 0);
+    snprintf (string, sizeof (string),
+              "test_%s13color13",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_RGB_IRC_13, 1);
+
+    /* color: term 13 -> IRC 13 -> lightmagenta */
+    WEE_CHECK_DECODE_ANSI("test_color13", STRING_ANSI_FG_TERM_IRC_13, 0);
+    snprintf (string, sizeof (string),
+              "test_%s13color13",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_FG_TERM_IRC_13, 1);
+
+    /*
+     * color: RGB "FF00FF" (term 13 -> IRC 13 -> lightmagenta)
+     *        on RGB "000080" (term 04 -> IRC 02 -> blue)
+     */
+    WEE_CHECK_DECODE_ANSI("test_color13/02",
+                          STRING_ANSI_FG_RGB_IRC_13_BG_RGB_IRC_02, 0);
+    snprintf (string, sizeof (string),
+              "test_%s13%s,02color13/02",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          STRING_ANSI_FG_RGB_IRC_13_BG_RGB_IRC_02, 1);
+
+    /*
+     * color: term 13 -> IRC 13 -> lightmagenta
+     *        on term 04 -> IRC 02 -> blue
+     */
+    WEE_CHECK_DECODE_ANSI("test_color13/02",
+                          STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02, 0);
+    snprintf (string, sizeof (string),
+              "test_%s13%s,02color13/02",
+              IRC_COLOR_COLOR_STR,
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string,
+                          STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02, 1);
+}
