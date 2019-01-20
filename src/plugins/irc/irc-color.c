@@ -486,7 +486,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
 
     /* sequence "\33[m" resets color */
     if (length < 4)
-        return strdup (weechat_color ("reset"));
+        return strdup (IRC_COLOR_RESET_STR);
 
     text2 = NULL;
     items = NULL;
