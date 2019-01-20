@@ -23,6 +23,7 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 }
