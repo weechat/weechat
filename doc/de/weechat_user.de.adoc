@@ -1672,8 +1672,10 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 | kbd:[Alt+PgDn]  | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
 | kbd:[Alt+Home]  | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
 | kbd:[Alt+End]   | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
-| kbd:[F1]        | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
-| kbd:[F2]        | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
+| kbd:[F1] +
+  kbd:[Ctrl+F1]   | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]   | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
 | kbd:[Alt+F1]    | springt zum Anfang der buflist. | `/bar scroll buflist * b`
 | kbd:[Alt+F2]    | springt zum Ende der buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +

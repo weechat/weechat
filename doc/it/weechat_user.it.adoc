@@ -1733,9 +1733,11 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+Home]  | Scorre in cima al buffer. | `/window scroll_top`
 | kbd:[Alt+End]   | Scorre alla fine del del buffer. | `/window scroll_bottom`
 // TRANSLATION MISSING
-| kbd:[F1]        | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+| kbd:[F1] +
+  kbd:[Ctrl+F1]   | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
 // TRANSLATION MISSING
-| kbd:[F2]        | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]   | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
 // TRANSLATION MISSING
 | kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
 // TRANSLATION MISSING

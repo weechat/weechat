@@ -1648,8 +1648,10 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
 | kbd:[Alt+Home]  | Przewiń na górę bufora. | `/window scroll_top`
 | kbd:[Alt+End]   | Przewiń na dół bufora. | `/window scroll_bottom`
-| kbd:[F1]        | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
-| kbd:[F2]        | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
+| kbd:[F1] +
+  kbd:[Ctrl+F1]   | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]   | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
 | kbd:[Alt+F1]    | Idź na początek listy buforów. | `/bar scroll buflist * b`
 | kbd:[Alt+F2]    | Idź na koniec listy buforów. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +

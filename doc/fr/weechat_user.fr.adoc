@@ -1690,8 +1690,10 @@ avec `/help buffer_autoset`.
 | kbd:[Alt+PgDn]  | Descendre de quelques lignes dans l'historique du tampon. | `/window scroll_down`
 | kbd:[Alt+Home]  | Aller au début du tampon. | `/window scroll_top`
 | kbd:[Alt+End]   | Aller à la fin du tampon. | `/window scroll_bottom`
-| kbd:[F1]        | Monter d'une page dans la liste des tampons. | `/bar scroll buflist * -100%`
-| kbd:[F2]        | Descendre d'une page dans la liste des tampons. | `/bar scroll buflist * +100%`
+| kbd:[F1] +
+  kbd:[Ctrl+F1]   | Monter d'une page dans la liste des tampons. | `/bar scroll buflist * -100%`
+| kbd:[F2] +
+  kbd:[Ctrl+F2]   | Descendre d'une page dans la liste des tampons. | `/bar scroll buflist * +100%`
 | kbd:[Alt+F1]    | Aller au début de la liste des tampons. | `/bar scroll buflist * b`
 | kbd:[Alt+F2]    | Aller à la fin de la liste des tampons. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
