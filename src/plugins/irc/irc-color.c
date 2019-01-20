@@ -374,6 +374,11 @@ irc_color_encode (const char *string, int keep_colors)
                     out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
                 ptr_string++;
                 break;
+            case 0x1D: /* ^] */
+                if (keep_colors)
+                    out[out_pos++] = IRC_COLOR_ITALIC_CHAR;
+                ptr_string++;
+                break;
             case 0x1F: /* ^_ */
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;

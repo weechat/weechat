@@ -35,6 +35,7 @@ Bug fixes::
   * core: fix forced highlight on messages sent to other buffers (issue #1277)
   * buflist: add alternate key codes for kbd:[F1]/kbd:[F2] and kbd:[Alt+F1]/kbd:[Alt+F2] (compatibility with terminals)
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
+  * irc: fix encoding of italic attribute when colors are removed
   * irc: fix parsing of "time" message tag on FreeBSD (issue #1289)
   * relay: fix memory leak in connection of client
 
