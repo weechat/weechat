@@ -412,8 +412,19 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     struct t_hashtable *keys;
-    char str_key[256];
     int i;
+    char str_key[256];
+    char *default_keys[][2] = {
+        { /* <f1>   */ "meta-OP",        "/bar scroll buflist * -100%" },
+        { /* <f1>   */ "meta2-11~",      "/bar scroll buflist * -100%" },
+        { /* <f2>   */ "meta-OQ",        "/bar scroll buflist * +100%" },
+        { /* <f2>   */ "meta2-12~",      "/bar scroll buflist * +100%" },
+        { /* m-<f1> */ "meta-meta-OP",   "/bar scroll buflist * b"     },
+        { /* m-<f1> */ "meta-meta2-11~", "/bar scroll buflist * b"     },
+        { /* m-<f2> */ "meta-meta-OQ",   "/bar scroll buflist * e"     },
+        { /* m-<f2> */ "meta-meta2-12~", "/bar scroll buflist * e"     },
+        { NULL, NULL },
+    };
 
     /* make C compiler happy */
     (void) argc;
@@ -453,14 +464,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     if (keys)
     {
         /* default keys */
-        weechat_hashtable_set (keys,
-                               "meta-OP", "/bar scroll buflist * -100%");
-        weechat_hashtable_set (keys,
-                               "meta-OQ", "/bar scroll buflist * +100%");
-        weechat_hashtable_set (keys,
-                               "meta-meta-OP", "/bar scroll buflist * b");
-        weechat_hashtable_set (keys,
-                               "meta-meta-OQ", "/bar scroll buflist * e");
+        for (i = 0; default_keys[i][0]; i++)
+        {
+            weechat_hashtable_set (keys,
+                                   default_keys[i][0], default_keys[i][1]);
+        }
         weechat_key_bind ("default", keys);
 
         /* default mouse actions */
