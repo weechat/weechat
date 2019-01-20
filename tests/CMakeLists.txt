@@ -72,7 +72,8 @@ set(LIBS
   ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
-  ${CPPUTEST_LIBRARIES})
+  ${CPPUTEST_LIBRARIES}
+  -rdynamic)
 target_link_libraries(tests ${LIBS})
 add_dependencies(tests
   weechat_core weechat_plugins weechat_gui_common weechat_gui_headless
