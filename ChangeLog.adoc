@@ -42,7 +42,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: fix UTF-8 tests on FreeBSD
+  * unit: fix UTF-8 and evaluation tests on FreeBSD
   * unit: add tests on IRC configuration and protocol functions
 
 Build::
