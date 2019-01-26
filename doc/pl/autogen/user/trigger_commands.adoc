@@ -75,7 +75,7 @@ Kiedy callback triggera jest wywoływany, wykonywane są następujące akcje, w 
 
 Przykłady (możesz też spojrzeć na domyślne triggery za pomocą /trigger listdefault):
   dodaje atrybuty tekstu *bold*, _underline_ i /italic/ (tylko w wiadomościach użytkowników):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
   ukrywa pasek z nickami na małych terminalach:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

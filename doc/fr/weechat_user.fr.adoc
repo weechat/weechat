@@ -3917,7 +3917,7 @@ Les groupes de correspondance peuvent être utilisés dans le "remplacement" :
 Exemple : utiliser du gras pour les mots entre "*" :
 
 ----
-/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
+/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Exemple : le trigger par défaut _server_pass_ utilise cette expression régulière
@@ -3925,7 +3925,7 @@ pour cacher le mot de passe dans les commandes `/server` et `/connect` (les
 caractères des mots de passe sont remplacés par `+*+`) :
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -4215,7 +4215,7 @@ reçue (type : chaîne/chaîne).
 Afficher les URLs en vert :
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==[a-zA-Z0-9_]+://[^ ]+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]

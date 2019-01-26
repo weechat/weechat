@@ -3794,7 +3794,7 @@ Matching groups can be used in "replace":
 Example: use bold for words between "*":
 
 ----
-/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
+/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Example: default trigger _server_pass_ uses this regular expression to hide
@@ -3802,7 +3802,7 @@ password in commands `/server` and `/connect` (chars in passwords are replaced
 by `+*+`):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -4076,7 +4076,7 @@ string/string).
 Display URLs in green:
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==[a-zA-Z0-9_]+://[^ ]+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]

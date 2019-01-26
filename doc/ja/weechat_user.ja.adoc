@@ -3789,7 +3789,7 @@ WeeChat によって使われる値に影響を及ぼします
 例: "*" で囲まれた文字を太字にする:
 
 ----
-/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
+/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 例: デフォルトトリガ _server_pass_ はこの正規表現を使って、`/server`
@@ -3797,7 +3797,7 @@ WeeChat によって使われる値に影響を及ぼします
 `*` で置換しています):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -4069,7 +4069,7 @@ string/string) が含まれています。
 URL を緑色にする:
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==[a-zA-Z0-9_]+://[^ ]+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]

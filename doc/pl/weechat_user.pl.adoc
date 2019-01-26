@@ -3824,14 +3824,14 @@ Dopasowane grupy, które mogą zostać użyte w "zamień":
 Przykład: użyj pogrubienia dla słów pomiędzy "*":
 
 ----
-/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
+/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Przykład: domyślny trigger _server_pass_ używa tego wyrażenia do ukrycia hasła
 w komendach `/server` i `/connect` (znaki haseł są zastępowane przez `+*+`):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -4104,7 +4104,7 @@ ciąg/ciąg).
 Wyświetlanie URLi na zielono:
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==[a-zA-Z0-9_]+://[^ ]+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]

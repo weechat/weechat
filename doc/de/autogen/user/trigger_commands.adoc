@@ -75,7 +75,7 @@ Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausge
 
 Beispiele (die standardmäßig, eingebauten Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
   fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu:
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
   verbirgt die Nicklist auf kleineren Terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

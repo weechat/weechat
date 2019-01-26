@@ -2112,12 +2112,12 @@ struct t_hashtable *options2 = weechat_hashtable_new (8,
                                                       NULL,
                                                       NULL);
 /* ajout de crochets autour des URLs */
-weechat_hashtable_set (options2, "regex", "\\w+://\\S+");
+weechat_hashtable_set (options2, "regex", "[a-zA-Z0-9_]+://[^ ]+");
 weechat_hashtable_set (options2, "regex_replace", "[ ${re:0} ]");
 char *str4 = weechat_string_eval_expression ("test : https://weechat.org", NULL, NULL, NULL);  /* "test : [ https://weechat.org ]" */
 
 /* masquage des mots de passe */
-weechat_hashtable_set (options2, "regex", "(password=)(\\S+)");
+weechat_hashtable_set (options2, "regex", "(password=)([^ ]+)");
 weechat_hashtable_set (options2, "regex_replace", "${re:1}${hide:*,${re:2}}");
 char *str5 = weechat_string_eval_expression ("password=abc password=def", NULL, NULL, NULL);  /* "password=*** password=***" */
 ----
@@ -2140,14 +2140,14 @@ str3 = weechat.string_eval_expression("${buffer.full_name}", {}, {}, {}) # "core
 
 # remplacement avec regex : ajout de crochets autour des URLs
 options = {
-    "regex": "\\w+://\\S+",
+    "regex": "[a-zA-Z0-9_]+://[^ ]+",
     "regex_replace": "[ ${re:0} ]",
 }
 str4 = weechat.string_eval_expression("test : https://weechat.org", {}, {}, options)  # "test : [ https://weechat.org ]"
 
 # replace with regex : masquage des mots de passe
 options = {
-    "regex": "(password=)(\\S+)",
+    "regex": "(password=)([^ ]+)",
     "regex_replace": "${re:1}${hide:*,${re:2}}",
 }
 str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, options)  # "password=*** password=***"

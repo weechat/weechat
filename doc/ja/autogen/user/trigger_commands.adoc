@@ -75,7 +75,7 @@ post_action: トリガ実行後の処遇 (none (デフォルト、何もしな�
 
 例 (/trigger listdefault でデフォルトトリガを見ることができます):
   テキスト属性 *太字*、_下線_、/イタリック/ を追加 (ユーザメッセージのみ):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
   狭い端末ではニックネームリストバーを隠す:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

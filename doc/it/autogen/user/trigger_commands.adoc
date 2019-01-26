@@ -75,7 +75,7 @@ When a trigger callback is called, following actions are performed, in this orde
 
 Examples (you can also look at default triggers with /trigger listdefault):
   add text attributes *bold*, _underline_ and /italic/ (only in user messages):
-    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*(\S+)\*==*${color:bold}${re:1}${color:-bold}*== ==_(\S+)_==_${color:underline}${re:1}${color:-underline}_== ==/(\S+)/==/${color:italic}${re:1}${color:-italic}/"
+    /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
   hide nicklist bar on small terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"

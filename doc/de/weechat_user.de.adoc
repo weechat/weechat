@@ -3882,7 +3882,7 @@ Matching groups können in "replace" genutzt werden:
 Beispiel: nutzte Fettschrift zwischen dem Zeichen "*":
 
 ----
-/\*(\S+)\*/*${color:bold}${re:1}${color:-bold}*/
+/\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
 ----
 
 Beispiel: der Standard-Trigger _server_pass_ nutzt folgenden regulären Ausdruck
@@ -3890,7 +3890,7 @@ um ein Passwort in den Befehlen `/server` und `/connect` zu verbergen (die
 einzelnen Zeichen des Passwortes werden durch `+*+` ersetzt):
 
 ----
-==^(/(server|connect) .*-(sasl_)?password=)(\S+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
+==^(/(server|connect) .*-(sasl_)?password=)([^ ]+)(.*)==${re:1}${hide:*,${re:4}}${re:5}
 ----
 
 [NOTE]
@@ -4166,7 +4166,7 @@ Das Hashtable enthält alle Schlüssel/Werte (Typ: string/string).
 Zeigt URLs in grün an:
 
 ----
-/trigger add url_color modifier weechat_print "${tg_notify}" "==\S+://\S+==${color:green}${re:0}${color:reset}=="
+/trigger add url_color modifier weechat_print "${tg_notify}" "==[a-zA-Z0-9_]+://[^ ]+==${color:green}${re:0}${color:reset}=="
 ----
 
 [NOTE]
