@@ -420,7 +420,7 @@
 ** description: pass:none[chaîne insérée après la complétion du pseudo (quand le pseudo est le premier mot sur la ligne de commande)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+":"+`
+** valeur par défaut: `+": "+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** description: pass:none[compléter seulement avec le premier pseudo trouvé]

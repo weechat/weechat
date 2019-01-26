@@ -420,7 +420,7 @@
 ** 説明: pass:none[ニックネーム補完の後に追加する文字列 (ニックネームがコマンドラインの最初にある場合)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+":"+`
+** デフォルト値: `+": "+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** 説明: pass:none[最初に見つかったニックネームだけを補完]

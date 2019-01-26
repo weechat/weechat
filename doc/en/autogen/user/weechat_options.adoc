@@ -420,7 +420,7 @@
 ** description: pass:none[string inserted after nick completion (when nick is first word on command line)]
 ** type: string
 ** values: any string
-** default value: `+":"+`
+** default value: `+": "+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** description: pass:none[complete only with first nick found]

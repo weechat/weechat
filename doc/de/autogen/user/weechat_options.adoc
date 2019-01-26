@@ -420,7 +420,7 @@
 ** Beschreibung: pass:none[fügt eine Zeichenkette hinter die Nick-Vervollständigung ein (sofern ein Nickname das erste Wort in der Kommandozeile ist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+":"+`
+** Standardwert: `+": "+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** Beschreibung: pass:none[es wird ausschließlich mit dem ersten, passendem Nick-Namen vervollständigt]

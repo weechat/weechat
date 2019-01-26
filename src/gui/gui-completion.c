@@ -431,6 +431,7 @@ gui_completion_list_add (struct t_gui_completion *completion, const char *word,
                           CONFIG_STRING(config_completion_nick_completer));
                 completion_word->word = strdup (buffer);
                 arraylist_insert (completion->list, index, completion_word);
+                completion->add_space = 0;
             }
             else
             {

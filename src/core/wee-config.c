@@ -4175,7 +4175,7 @@ config_weechat_init_options ()
         "nick_completer", "string",
         N_("string inserted after nick completion (when nick is first word on "
            "command line)"),
-        NULL, 0, 0, ":", NULL, 0,
+        NULL, 0, 0, ": ", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_completion_nick_first_only = config_file_new_option (
         weechat_config_file, ptr_section,

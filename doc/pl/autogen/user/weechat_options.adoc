@@ -420,7 +420,7 @@
 ** opis: pass:none[ciąg wstawiany  po dopełnionym nicku (kiedy nick jest pierwszym słowem w linii poleceń)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+":"+`
+** domyślna wartość: `+": "+`
 
 * [[option_weechat.completion.nick_first_only]] *weechat.completion.nick_first_only*
 ** opis: pass:none[dopełniaj tylko pierwszym znalezionym nickiem]
