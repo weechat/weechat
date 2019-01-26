@@ -894,7 +894,9 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
         }
         else
         {
-            weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
+            /* set a misspelled word in buffer, also without suggestions */
+            weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                                word_for_suggestions);
         }
         free (word_for_suggestions);
     }
