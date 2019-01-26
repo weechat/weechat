@@ -1204,7 +1204,10 @@ string_regcomp (void *preg, const char *regex, int default_flags)
         return -1;
 
     ptr_regex = string_regex_flags (regex, default_flags, &flags);
-    return regcomp ((regex_t *)preg, ptr_regex, flags);
+
+    return regcomp ((regex_t *)preg,
+                    (ptr_regex && ptr_regex[0]) ? ptr_regex : "^",
+                    flags);
 }
 
 /*
