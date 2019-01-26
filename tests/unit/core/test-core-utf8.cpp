@@ -30,11 +30,12 @@ extern "C"
 #include "src/core/wee-utf8.h"
 }
 
-const char *noel_valid = "no\xc3\xabl";  /* noël */
+const char *noel_valid = "no\xc3\xabl";        /* noël */
 const char *noel_invalid = "no\xc3l";
 const char *noel_invalid2 = "no\xff\xffl";
 const char *noel_invalid_norm = "no?l";
 const char *noel_invalid2_norm = "no??l";
+const char *cjk_yellow = "\xe2\xbb\xa9";       /* U+2EE9 */
 const char *han_char = "\xf0\xa4\xad\xa2";     /* U+24B62 */
 const char *han_char_z = "\xf0\xa4\xad\xa2Z";
 
@@ -288,6 +289,7 @@ TEST(CoreUtf8, Convert)
     BYTES_EQUAL(65, utf8_char_int ("ABC"));
     BYTES_EQUAL(235, utf8_char_int ("ë"));
     BYTES_EQUAL(0x20ac, utf8_char_int ("€"));
+    BYTES_EQUAL(0x2ee9, utf8_char_int (cjk_yellow));
     BYTES_EQUAL(0x24b62, utf8_char_int (han_char));
 
     BYTES_EQUAL(0x0, utf8_char_int ("\xc0\x80"));   /* invalid */
@@ -317,6 +319,8 @@ TEST(CoreUtf8, Convert)
     STRCMP_EQUAL("ë", result);
     utf8_int_string (0x20ac, result);
     STRCMP_EQUAL("€", result);
+    utf8_int_string (0x2ee9, result);
+    STRCMP_EQUAL(cjk_yellow, result);
     utf8_int_string (0x24b62, result);
     STRCMP_EQUAL(han_char, result);
 
@@ -326,6 +330,7 @@ TEST(CoreUtf8, Convert)
     BYTES_EQUAL(65, utf8_wide_char ("A"));
     BYTES_EQUAL(0xc3ab, utf8_wide_char ("ë"));
     BYTES_EQUAL(0xe282ac, utf8_wide_char ("€"));
+    BYTES_EQUAL(0xe2bba9, utf8_wide_char (cjk_yellow));
     BYTES_EQUAL(0xf0a4ada2, utf8_wide_char (han_char));
 }
 
@@ -346,6 +351,7 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_char_size ("A"));
     LONGS_EQUAL(2, utf8_char_size ("ë"));
     LONGS_EQUAL(3, utf8_char_size ("€"));
+    LONGS_EQUAL(3, utf8_char_size (cjk_yellow));
     LONGS_EQUAL(4, utf8_char_size (han_char));
 
     /* char size on screen */
@@ -354,7 +360,7 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_char_size_screen ("A"));
     LONGS_EQUAL(1, utf8_char_size_screen ("ë"));
     LONGS_EQUAL(1, utf8_char_size_screen ("€"));
-    LONGS_EQUAL(2, utf8_char_size_screen (han_char));
+    LONGS_EQUAL(2, utf8_char_size_screen (cjk_yellow));
 
     /* length of string (in chars) */
     LONGS_EQUAL(0, utf8_strlen (NULL));
@@ -362,6 +368,7 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen ("A"));
     LONGS_EQUAL(1, utf8_strlen ("ë"));
     LONGS_EQUAL(1, utf8_strlen ("€"));
+    LONGS_EQUAL(1, utf8_strlen (cjk_yellow));
     LONGS_EQUAL(1, utf8_strlen (han_char));
 
     /* length of string (in chars, for max N bytes) */
@@ -378,8 +385,8 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_strlen_screen ("A"));
     LONGS_EQUAL(1, utf8_strlen_screen ("ë"));
     LONGS_EQUAL(1, utf8_strlen_screen ("€"));
-    LONGS_EQUAL(2, utf8_strlen_screen (han_char));
     LONGS_EQUAL(1, utf8_strlen_screen ("\x7f"));
+    LONGS_EQUAL(2, utf8_strlen_screen (cjk_yellow));
 }
 
 /*
