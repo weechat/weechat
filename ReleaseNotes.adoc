@@ -24,11 +24,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 === Nick completer
 
 A space is not added automatically any more when you complete a nick at the
-beginning of command line (expected result is: "nick: ").
+beginning of command line.
 
-The default value of option weechat.completion.nick_completer has been changed
-to add the space by default, so you may have to run this command if you want
-the space to be added automatically:
+The default value of option `weechat.completion.nick_completer` has been changed
+to add the space by default, so you may have to run this command if you upgraded
+from an old version and want the space to be added automatically:
 
 ----
 /set weechat.completion.nick_completer ": "
