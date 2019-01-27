@@ -953,14 +953,19 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 === システムに aspell 辞書をインストールした後、WeeChat を再起動せずにそれを使う方法を教えてください。
 
-aspell プラグインをリロードしてください:
+spell プラグインをリロードしてください:
 
 ----
-/plugin reload aspell
+/plugin reload spell
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 2.3, the "spell" plugin was named "aspell", so the command is:
+`/plugin reload aspell`.
 
 [[settings]]
 == 設定
@@ -992,7 +997,7 @@ aspell プラグインをリロードしてください:
 * 最新の安定版を使う
   (古いバージョンよりもメモリリークの可能性が減ると思われます)
 * 使わないプラグインのロードを禁止する、例えば:
-  aspell、buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、xfer (DCC で使用)。
+  buflist、fifo、logger、perl、python、ruby、lua、tcl、guile、javascript、php、spell、xfer (DCC で使用)。
   `/help weechat.plugin.autoload` を参照してください。
 * 本当に必要なスクリプトだけをロード
 * SSL を *使わない* なら、証明書を読み込まないでください: オプション
@@ -1010,7 +1015,7 @@ aspell プラグインをリロードしてください:
 * ステータスバー時間に秒の表示を止める:
   `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
 * コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):
-  `/set aspell.check.real_time off`
+  `/set spell.check.real_time off`
 * _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
 

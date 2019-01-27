@@ -9530,11 +9530,6 @@ WeeChat とプラグインが送信するシグナルのリスト:
 |===
 | プラグイン | シグナル | 引数 | 説明
 
-| aspell | aspell_suggest +
-  _(WeeChat バージョン 0.4.0 以上で利用可)_ |
-  Pointer: バッファ |
-  スペルの間違っている単語に対する新しい修正候補
-
 | guile | guile_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: スクリプトへのパス |
@@ -9833,6 +9828,11 @@ WeeChat とプラグインが送信するシグナルのリスト:
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |
   String: 削除されたスクリプトへのパスのコンマ区切りリスト |
   Ruby スクリプトを削除
+
+| spell | spell_suggest +
+  _(WeeChat バージョン 2.4 以上で利用可)_ |
+  Pointer: バッファ |
+  スペルの間違っている単語に対する新しい修正候補
 
 | tcl | tcl_script_loaded +
   _(WeeChat バージョン 0.3.9 以上で利用可)_ |

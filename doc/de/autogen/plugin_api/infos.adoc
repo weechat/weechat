@@ -6,8 +6,6 @@
 |===
 | Erweiterung | Name | Beschreibung | Argumente
 
-| aspell | aspell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
-
 | fifo | fifo_filename | Name der FIFO-Pipe | -
 
 | guile | guile_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
@@ -73,6 +71,8 @@
 | ruby | ruby_interpreter | Name des verwendeten Interpreters | -
 
 | ruby | ruby_version | Version des verwendeten Interpreters | -
+
+| spell | spell_dict | durch Kommata getrennte Liste von Wörterbüchern, die in diesem Buffer genutzt werden sollen | Buffer-Pointer ("0x12345678") oder der vollständige Buffername ("irc.freenode.#weechat")
 
 | tcl | tcl_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 

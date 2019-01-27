@@ -1000,14 +1000,18 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 === J'ai installé des dictionnaires aspell sur mon système, comment les utiliser sans redémarrer WeeChat ?
 
-Vous devez recharger l'extension aspell :
+Vous devez recharger l'extension spell :
 
 ----
-/plugin reload aspell
+/plugin reload spell
 ----
+
+[NOTE]
+Avec WeeChat ≤ 2.3, l'extension "spell" s'appelait "aspell", donc la commande est :
+`/plugin reload aspell`.
 
 [[settings]]
 == Réglages
@@ -1042,8 +1046,8 @@ Vous pouvez essayer les astuces suivantes pour consommer moins de mémoire :
 * Utiliser la dernière version stable (elle est supposée avoir moins de fuites
   de mémoire que les versions plus anciennes).
 * Ne pas charger les extensions si vous ne les utilisez pas, par exemple :
-  aspell, buflist, fifo, logger, perl, python, ruby, lua, tcl, guile,
-  javascript, php, xfer (utilisé pour les DCC).
+  buflist, fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php,
+  spell, xfer (utilisé pour les DCC).
   Voir `/help weechat.plugin.autoload`.
 * Charger uniquement les scripts dont vous avez vraiment besoin.
 * Ne pas charger les certificats si SSL n'est *PAS* utilisé : affecter une
@@ -1062,7 +1066,7 @@ celles-ci :
 * Supprimer l'affichage des secondes dans l'heure de la barre de statut :
   `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut).
 * Désactiver la vérification en temps réel des mots mal orthographiés dans la
-  ligne de commande (si vous l'avez activée) : `/set aspell.check.real_time off`.
+  ligne de commande (si vous l'avez activée) : `/set spell.check.real_time off`.
 * Définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
   éviter un accès fréquent au fichier _/etc/localtime_.
 

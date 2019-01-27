@@ -45,10 +45,6 @@ if PLUGIN_ALIAS
 alias_dir = alias
 endif
 
-if PLUGIN_ASPELL
-aspell_dir = aspell
-endif
-
 if PLUGIN_BUFLIST
 buflist_dir = buflist
 endif
@@ -117,6 +113,10 @@ if PLUGIN_PHP
 php_dir = php
 endif
 
+if PLUGIN_SPELL
+spell_dir = spell
+endif
+
 if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
@@ -127,7 +127,6 @@ endif
 
 SUBDIRS = . \
           $(alias_dir) \
-          $(aspell_dir) \
           $(buflist_dir) \
           $(charset_dir) \
           $(exec_dir) \
@@ -145,6 +144,7 @@ SUBDIRS = . \
           $(guile_dir) \
           $(javascript_dir) \
           $(php_dir) \
+          $(spell_dir) \
           $(trigger_dir) \
           $(xfer_dir)
 

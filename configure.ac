@@ -108,7 +108,6 @@ AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
 AH_VERBATIM([HAVE_ENCHANT_GET_VERSION], [#undef HAVE_ENCHANT_GET_VERSION])
 AH_VERBATIM([HAVE_GUILE_GMP_MEMORY_FUNCTIONS], [#undef HAVE_GUILE_GMP_MEMORY_FUNCTIONS])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
-AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_BUFLIST], [#undef PLUGIN_BUFLIST])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
 AH_VERBATIM([PLUGIN_EXEC], [#undef PLUGIN_EXEC])
@@ -126,6 +125,7 @@ AH_VERBATIM([PLUGIN_PHP], [#undef PLUGIN_PHP])
 AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_GUILE], [#undef PLUGIN_GUILE])
 AH_VERBATIM([PLUGIN_JAVASCRIPT], [#undef PLUGIN_JAVASCRIPT])
+AH_VERBATIM([PLUGIN_SPELL], [#undef PLUGIN_SPELL])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([TESTS], [#undef TESTS])
@@ -141,8 +141,6 @@ AC_ARG_ENABLE(headless,     [  --disable-headless      turn off headless binary 
 AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
-AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled)],enable_aspell=$enableval,enable_aspell=yes)
-AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Aspell plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(buflist,      [  --disable-buflist       turn off Buflist plugin (default=compiled)],enable_buflist=$enableval,enable_buflist=yes)
 AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled)],enable_charset=$enableval,enable_charset=yes)
 AC_ARG_ENABLE(exec,         [  --disable-exec          turn off Exec plugin (default=compiled)],enable_exec=$enableval,enable_exec=yes)
@@ -162,6 +160,8 @@ AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugi
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
 AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off JavaScript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
 AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugin (default=compiled if found)],enable_php=$enableval,enable_php=yes)
+AC_ARG_ENABLE(spell,        [  --disable-spell         turn off Spell checker plugin (default=compiled)],enable_spell=$enableval,enable_spell=yes)
+AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Spell checker plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
@@ -320,79 +320,6 @@ if test "x$enable_alias" = "xyes" ; then
     AC_DEFINE(PLUGIN_ALIAS)
 else
     not_asked="$not_asked alias"
-fi
-
-# ---------------------------------- aspell ------------------------------------
-
-if test "x$enable_aspell" = "xyes" ; then
-    ac_found_enchant_lib="no"
-    if test "x$enable_enchant" = "xyes" ; then
-        PKG_CHECK_MODULES(ENCHANT, [enchant], ac_found_enchant_lib="yes", ac_found_enchant_lib="no")
-    fi
-    if test "x$ac_found_enchant_lib" = "xyes" ; then
-        CFLAGS="$CFLAGS -DUSE_ENCHANT"
-        ASPELL_LIB_USED="enchant"
-
-        # check if function enchant_get_version() exists
-        ac_save_CFLAGS="$CFLAGS"
-        ac_save_LDFLAGS="$LDFLAGS"
-        CFLAGS="$CFLAGS $ENCHANT_CFLAGS"
-        LDFLAGS="$LDFLAGS $ENCHANT_LIBS"
-        AC_CACHE_CHECK([for enchant_get_version() support], ac_cv_have_enchant_get_version, [
-        AC_LINK_IFELSE([AC_LANG_PROGRAM(
-            [[ #include <enchant.h>]],
-            [[ const char *version = enchant_get_version(); ]])],
-            [ ac_have_enchant_get_version="yes" ],
-            [ ac_have_enchant_get_version="no" ])])
-        CFLAGS="$ac_save_CFLAGS"
-        LDFLAGS="$ac_save_LDFLAGS"
-        if test "x$ac_have_enchant_get_version" = "xyes"; then
-            AC_DEFINE(HAVE_ENCHANT_GET_VERSION)
-        fi
-    else
-        ASPELL_CFLAGS=""
-        ASPELL_LFLAGS=""
-
-        AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
-        AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
-
-        AC_MSG_CHECKING(for aspell headers and libraries)
-        if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
-            AC_MSG_RESULT(no)
-            AC_MSG_WARN([
-*** Aspell headers and/or libraries couldn't be found on your system.
-*** Try to install them with your software package manager.
-*** WeeChat will be built without Aspell support.])
-            enable_aspell="no"
-            not_found="$not_found aspell"
-        else
-            AC_MSG_RESULT(yes)
-            ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
-            ASPELL_LIB_USED="aspell"
-
-            # check if function aspell_version_string() exists
-            ac_save_LDFLAGS="$LDFLAGS"
-            LDFLAGS="$LDFLAGS $ASPELL_LFLAGS"
-            AC_CACHE_CHECK([for aspell_version_string() support], ac_cv_have_aspell_version_string, [
-            AC_LINK_IFELSE([AC_LANG_PROGRAM(
-                [[ #include <aspell.h>]],
-                [[ const char *version = aspell_version_string(); ]])],
-                [ ac_have_aspell_version_string="yes" ],
-                [ ac_have_aspell_version_string="no" ])])
-            LDFLAGS="$ac_save_LDFLAGS"
-            if test "x$ac_have_aspell_version_string" = "xyes"; then
-                AC_DEFINE(HAVE_ASPELL_VERSION_STRING)
-            fi
-        fi
-    fi
-else
-    not_asked="$not_asked aspell"
-fi
-
-if test "x$enable_aspell" = "xyes" ; then
-    AC_SUBST(ASPELL_CFLAGS)
-    AC_SUBST(ASPELL_LFLAGS)
-    AC_DEFINE(PLUGIN_ASPELL)
 fi
 
 # --------------------------------- buflist ------------------------------------
@@ -1053,6 +980,79 @@ if test "x$enable_php" = "xyes" ; then
     AC_DEFINE(PLUGIN_PHP)
 fi
 
+# ----------------------------------- spell ------------------------------------
+
+if test "x$enable_spell" = "xyes" ; then
+    ac_found_enchant_lib="no"
+    if test "x$enable_enchant" = "xyes" ; then
+        PKG_CHECK_MODULES(ENCHANT, [enchant], ac_found_enchant_lib="yes", ac_found_enchant_lib="no")
+    fi
+    if test "x$ac_found_enchant_lib" = "xyes" ; then
+        CFLAGS="$CFLAGS -DUSE_ENCHANT"
+        SPELL_LIB_USED="enchant"
+
+        # check if function enchant_get_version() exists
+        ac_save_CFLAGS="$CFLAGS"
+        ac_save_LDFLAGS="$LDFLAGS"
+        CFLAGS="$CFLAGS $ENCHANT_CFLAGS"
+        LDFLAGS="$LDFLAGS $ENCHANT_LIBS"
+        AC_CACHE_CHECK([for enchant_get_version() support], ac_cv_have_enchant_get_version, [
+        AC_LINK_IFELSE([AC_LANG_PROGRAM(
+            [[ #include <enchant.h>]],
+            [[ const char *version = enchant_get_version(); ]])],
+            [ ac_have_enchant_get_version="yes" ],
+            [ ac_have_enchant_get_version="no" ])])
+        CFLAGS="$ac_save_CFLAGS"
+        LDFLAGS="$ac_save_LDFLAGS"
+        if test "x$ac_have_enchant_get_version" = "xyes"; then
+            AC_DEFINE(HAVE_ENCHANT_GET_VERSION)
+        fi
+    else
+        ASPELL_CFLAGS=""
+        ASPELL_LFLAGS=""
+
+        AC_CHECK_HEADER(aspell.h,ac_found_aspell_header="yes",ac_found_aspell_header="no")
+        AC_CHECK_LIB(aspell,new_aspell_speller,ac_found_aspell_lib="yes",ac_found_aspell_lib="no")
+
+        AC_MSG_CHECKING(for aspell headers and libraries)
+        if test "x$ac_found_aspell_header" = "xno" -o "x$ac_found_aspell_lib" = "xno" ; then
+            AC_MSG_RESULT(no)
+            AC_MSG_WARN([
+*** Aspell headers and/or libraries couldn't be found on your system.
+*** Try to install them with your software package manager.
+*** WeeChat will be built without Aspell support.])
+            enable_spell="no"
+            not_found="$not_found spell"
+        else
+            AC_MSG_RESULT(yes)
+            ASPELL_LFLAGS="$ASPELL_LFLAGS -laspell"
+            SPELL_LIB_USED="aspell"
+
+            # check if function aspell_version_string() exists
+            ac_save_LDFLAGS="$LDFLAGS"
+            LDFLAGS="$LDFLAGS $ASPELL_LFLAGS"
+            AC_CACHE_CHECK([for aspell_version_string() support], ac_cv_have_aspell_version_string, [
+            AC_LINK_IFELSE([AC_LANG_PROGRAM(
+                [[ #include <aspell.h>]],
+                [[ const char *version = aspell_version_string(); ]])],
+                [ ac_have_aspell_version_string="yes" ],
+                [ ac_have_aspell_version_string="no" ])])
+            LDFLAGS="$ac_save_LDFLAGS"
+            if test "x$ac_have_aspell_version_string" = "xyes"; then
+                AC_DEFINE(HAVE_ASPELL_VERSION_STRING)
+            fi
+        fi
+    fi
+else
+    not_asked="$not_asked spell"
+fi
+
+if test "x$enable_spell" = "xyes" ; then
+    AC_SUBST(ASPELL_CFLAGS)
+    AC_SUBST(ASPELL_LFLAGS)
+    AC_DEFINE(PLUGIN_SPELL)
+fi
+
 # --------------------------------- trigger ------------------------------------
 
 if test "x$enable_trigger" = "xyes" ; then
@@ -1390,7 +1390,6 @@ AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(HEADLESS,                test "$enable_headless" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,            test "$enable_alias" = "yes")
-AM_CONDITIONAL(PLUGIN_ASPELL,           test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_BUFLIST,          test "$enable_buflist" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET,          test "$enable_charset" = "yes")
 AM_CONDITIONAL(PLUGIN_EXEC,             test "$enable_exec" = "yes")
@@ -1408,6 +1407,7 @@ AM_CONDITIONAL(PLUGIN_TCL,              test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_GUILE,            test "$enable_guile" = "yes")
 AM_CONDITIONAL(PLUGIN_JAVASCRIPT,       test "$enable_javascript" = "yes")
 AM_CONDITIONAL(PLUGIN_PHP,              test "$enable_php" = "yes")
+AM_CONDITIONAL(PLUGIN_SPELL,            test "$enable_spell" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER,          test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,             test "$enable_xfer" = "yes")
 AM_CONDITIONAL(TESTS,                   test "$enable_tests" = "yes")
@@ -1429,7 +1429,6 @@ AC_OUTPUT([Makefile
            src/core/Makefile
            src/plugins/Makefile
            src/plugins/alias/Makefile
-           src/plugins/aspell/Makefile
            src/plugins/buflist/Makefile
            src/plugins/charset/Makefile
            src/plugins/exec/Makefile
@@ -1447,6 +1446,7 @@ AC_OUTPUT([Makefile
            src/plugins/guile/Makefile
            src/plugins/javascript/Makefile
            src/plugins/php/Makefile
+           src/plugins/spell/Makefile
            src/plugins/trigger/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
@@ -1478,9 +1478,6 @@ fi
 listplugins=""
 if test "x$enable_alias" = "xyes"; then
     listplugins="$listplugins alias"
-fi
-if test "x$enable_aspell" = "xyes"; then
-    listplugins="$listplugins aspell($ASPELL_LIB_USED)"
 fi
 if test "x$enable_buflist" = "xyes"; then
     listplugins="$listplugins buflist"
@@ -1532,6 +1529,9 @@ if test "x$enable_javascript" = "xyes"; then
 fi
 if test "x$enable_php" = "xyes"; then
     listplugins="$listplugins php($PHP_VERSION)"
+fi
+if test "x$enable_spell" = "xyes"; then
+    listplugins="$listplugins spell($SPELL_LIB_USED)"
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"

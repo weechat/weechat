@@ -1,5 +1,5 @@
 /*
- * weechat-aspell.c - aspell plugin for WeeChat: color for misspelled words
+ * spell.c - spell checker plugin for WeeChat
  *
  * Copyright (C) 2006 Emmanuel Bouthenot <kolter@openics.org>
  * Copyright (C) 2006-2019 Sébastien Helleu <flashcode@flashtux.org>
@@ -32,28 +32,28 @@
 #include <wctype.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
-#include "weechat-aspell-bar-item.h"
-#include "weechat-aspell-command.h"
-#include "weechat-aspell-completion.h"
-#include "weechat-aspell-config.h"
-#include "weechat-aspell-info.h"
-#include "weechat-aspell-speller.h"
+#include "spell.h"
+#include "spell-bar-item.h"
+#include "spell-command.h"
+#include "spell-completion.h"
+#include "spell-config.h"
+#include "spell-info.h"
+#include "spell-speller.h"
 
 
-WEECHAT_PLUGIN_NAME(ASPELL_PLUGIN_NAME);
-WEECHAT_PLUGIN_DESCRIPTION(N_("Spell checker for input (with Aspell)"));
+WEECHAT_PLUGIN_NAME(SPELL_PLUGIN_NAME);
+WEECHAT_PLUGIN_DESCRIPTION(N_("Spell checker for input"));
 WEECHAT_PLUGIN_AUTHOR("Sébastien Helleu <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE(WEECHAT_LICENSE);
 WEECHAT_PLUGIN_PRIORITY(11000);
 
-struct t_weechat_plugin *weechat_aspell_plugin = NULL;
+struct t_weechat_plugin *weechat_spell_plugin = NULL;
 
-int aspell_enabled = 0;
+int spell_enabled = 0;
 
-char *aspell_nick_completer = NULL;
-int aspell_len_nick_completer = 0;
+char *spell_nick_completer = NULL;
+int spell_len_nick_completer = 0;
 
 #ifdef USE_ENCHANT
 EnchantBroker *broker = NULL;
@@ -64,7 +64,7 @@ EnchantBroker *broker = NULL;
  * URL: ftp://ftp.gnu.org/gnu/aspell/dict/0index.html
  */
 
-struct t_aspell_code aspell_langs[] =
+struct t_spell_code spell_langs[] =
 {
     { "af",     "Afrikaans" },
     { "am",     "Amharic" },
@@ -160,7 +160,7 @@ struct t_aspell_code aspell_langs[] =
     { NULL,     NULL}
 };
 
-struct t_aspell_code aspell_countries[] =
+struct t_spell_code spell_countries[] =
 {
     { "AT", "Austria" },
     { "BR", "Brazil" },
@@ -175,7 +175,7 @@ struct t_aspell_code aspell_countries[] =
     { NULL, NULL}
 };
 
-char *aspell_url_prefix[] =
+char *spell_url_prefix[] =
 { "http:", "https:", "ftp:", "tftp:", "ftps:", "ssh:", "fish:", "dict:",
   "ldap:", "file:", "telnet:", "gopher:", "irc:", "ircs:", "irc6:", "irc6s:",
   "cvs:", "svn:", "svn+ssh:", "git:", NULL };
@@ -188,7 +188,7 @@ char *aspell_url_prefix[] =
  */
 
 char *
-weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
+spell_build_option_name (struct t_gui_buffer *buffer)
 {
     const char *plugin_name, *name;
     char *option_name;
@@ -218,7 +218,7 @@ weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
  */
 
 const char *
-weechat_aspell_get_dict_with_buffer_name (const char *name)
+spell_get_dict_with_buffer_name (const char *name)
 {
     char *option_name, *ptr_end;
     struct t_config_option *ptr_option;
@@ -232,7 +232,7 @@ weechat_aspell_get_dict_with_buffer_name (const char *name)
         ptr_end = option_name + strlen (option_name);
         while (ptr_end >= option_name)
         {
-            ptr_option = weechat_aspell_config_get_dict (option_name);
+            ptr_option = spell_config_get_dict (option_name);
             if (ptr_option)
             {
                 free (option_name);
@@ -246,7 +246,7 @@ weechat_aspell_get_dict_with_buffer_name (const char *name)
             if ((ptr_end >= option_name) && (ptr_end[0] == '.'))
                 ptr_end[0] = '\0';
         }
-        ptr_option = weechat_aspell_config_get_dict (option_name);
+        ptr_option = spell_config_get_dict (option_name);
 
         free (option_name);
 
@@ -255,10 +255,10 @@ weechat_aspell_get_dict_with_buffer_name (const char *name)
     }
 
     /* nothing found => return default dictionary (if set) */
-    if (weechat_config_string (weechat_aspell_config_check_default_dict)
-        && weechat_config_string (weechat_aspell_config_check_default_dict)[0])
+    if (weechat_config_string (spell_config_check_default_dict)
+        && weechat_config_string (spell_config_check_default_dict)[0])
     {
-        return weechat_config_string (weechat_aspell_config_check_default_dict);
+        return weechat_config_string (spell_config_check_default_dict);
     }
 
     /* no default dictionary set */
@@ -273,16 +273,16 @@ weechat_aspell_get_dict_with_buffer_name (const char *name)
  */
 
 const char *
-weechat_aspell_get_dict (struct t_gui_buffer *buffer)
+spell_get_dict (struct t_gui_buffer *buffer)
 {
     char *name;
     const char *dict;
 
-    name = weechat_aspell_build_option_name (buffer);
+    name = spell_build_option_name (buffer);
     if (!name)
         return NULL;
 
-    dict = weechat_aspell_get_dict_with_buffer_name (name);
+    dict = spell_get_dict_with_buffer_name (name);
 
     free (name);
 
@@ -298,7 +298,7 @@ weechat_aspell_get_dict (struct t_gui_buffer *buffer)
  */
 
 int
-weechat_aspell_command_authorized (const char *command)
+spell_command_authorized (const char *command)
 {
     int length_command, i;
 
@@ -307,11 +307,11 @@ weechat_aspell_command_authorized (const char *command)
 
     length_command = strlen (command);
 
-    for (i = 0; i < weechat_aspell_count_commands_to_check; i++)
+    for (i = 0; i < spell_count_commands_to_check; i++)
     {
-        if ((weechat_aspell_length_commands_to_check[i] == length_command)
+        if ((spell_length_commands_to_check[i] == length_command)
             && (weechat_strcasecmp (command,
-                                    weechat_aspell_commands_to_check[i]) == 0))
+                                    spell_commands_to_check[i]) == 0))
         {
             /* command is authorized */
             return 1;
@@ -331,14 +331,14 @@ weechat_aspell_command_authorized (const char *command)
  */
 
 int
-weechat_aspell_string_is_url (const char *word)
+spell_string_is_url (const char *word)
 {
     int i;
 
-    for (i = 0; aspell_url_prefix[i]; i++)
+    for (i = 0; spell_url_prefix[i]; i++)
     {
-        if (weechat_strncasecmp (word, aspell_url_prefix[i],
-                                 strlen (aspell_url_prefix[i])) == 0)
+        if (weechat_strncasecmp (word, spell_url_prefix[i],
+                                 strlen (spell_url_prefix[i])) == 0)
             return 1;
     }
 
@@ -355,21 +355,21 @@ weechat_aspell_string_is_url (const char *word)
  */
 
 int
-weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
+spell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 {
     char *pos, *pos_nick_completer, *pos_space, saved_char;
     const char *buffer_type, *buffer_nick, *buffer_channel;
     int rc;
 
-    pos_nick_completer = (aspell_nick_completer) ?
-        strstr (word, aspell_nick_completer) : NULL;
+    pos_nick_completer = (spell_nick_completer) ?
+        strstr (word, spell_nick_completer) : NULL;
     pos_space = strchr (word, ' ');
 
     pos = NULL;
     if (pos_nick_completer && pos_space)
     {
         if ((pos_nick_completer < pos_space)
-            && (pos_nick_completer + aspell_len_nick_completer == pos_space))
+            && (pos_nick_completer + spell_len_nick_completer == pos_space))
         {
             pos = pos_nick_completer;
         }
@@ -378,7 +378,8 @@ weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
     }
     else
     {
-        pos = (pos_nick_completer && !pos_nick_completer[aspell_len_nick_completer]) ?
+        pos = (pos_nick_completer
+               && !pos_nick_completer[spell_len_nick_completer]) ?
             pos_nick_completer : pos_space;
     }
 
@@ -431,7 +432,7 @@ weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
  */
 
 int
-weechat_aspell_string_is_simili_number (const char *word)
+spell_string_is_simili_number (const char *word)
 {
     int code_point;
 
@@ -459,18 +460,18 @@ weechat_aspell_string_is_simili_number (const char *word)
  */
 
 int
-weechat_aspell_check_word (struct t_aspell_speller_buffer *speller_buffer,
-                           const char *word)
+spell_check_word (struct t_spell_speller_buffer *speller_buffer,
+                  const char *word)
 {
     int i;
 
     /* word too small? then do not check word */
-    if ((weechat_config_integer (weechat_aspell_config_check_word_min_length) > 0)
-        && ((int)strlen (word) < weechat_config_integer (weechat_aspell_config_check_word_min_length)))
+    if ((weechat_config_integer (spell_config_check_word_min_length) > 0)
+        && ((int)strlen (word) < weechat_config_integer (spell_config_check_word_min_length)))
         return 1;
 
     /* word is a number? then do not check word */
-    if (weechat_aspell_string_is_simili_number (word))
+    if (spell_string_is_simili_number (word))
         return 1;
 
     /* check word with all spellers (order is important) */
@@ -500,8 +501,8 @@ weechat_aspell_check_word (struct t_aspell_speller_buffer *speller_buffer,
  */
 
 char *
-weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
-                                const char *word)
+spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
+                       const char *word)
 {
     int i, size, max_suggestions, num_suggestions;
     char *suggestions, *suggestions2;
@@ -514,7 +515,7 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
     AspellStringEnumeration *elements;
 #endif /* USE_ENCHANT */
 
-    max_suggestions = weechat_config_integer (weechat_aspell_config_check_suggestions);
+    max_suggestions = weechat_config_integer (spell_config_check_suggestions);
     if (max_suggestions < 0)
         return NULL;
 
@@ -603,13 +604,13 @@ weechat_aspell_get_suggestions (struct t_aspell_speller_buffer *speller_buffer,
  */
 
 char *
-weechat_aspell_modifier_cb (const void *pointer, void *data,
-                            const char *modifier,
-                            const char *modifier_data, const char *string)
+spell_modifier_cb (const void *pointer, void *data,
+                           const char *modifier,
+                           const char *modifier_data, const char *string)
 {
     unsigned long value;
     struct t_gui_buffer *buffer;
-    struct t_aspell_speller_buffer *ptr_speller_buffer;
+    struct t_spell_speller_buffer *ptr_speller_buffer;
     char *result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
@@ -625,7 +626,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     (void) data;
     (void) modifier;
 
-    if (!aspell_enabled)
+    if (!spell_enabled)
         return NULL;
 
     if (!string)
@@ -639,15 +640,15 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
 
     /* check text during search only if option is enabled */
     if (weechat_buffer_get_integer (buffer, "text_search")
-        && !weechat_config_boolean (weechat_aspell_config_check_during_search))
+        && !weechat_config_boolean (spell_config_check_during_search))
         return NULL;
 
     /* get structure with speller info for buffer */
-    ptr_speller_buffer = weechat_hashtable_get (weechat_aspell_speller_buffer,
+    ptr_speller_buffer = weechat_hashtable_get (spell_speller_buffer,
                                                 buffer);
     if (!ptr_speller_buffer)
     {
-        ptr_speller_buffer = weechat_aspell_speller_buffer_new (buffer);
+        ptr_speller_buffer = spell_speller_buffer_new (buffer);
         if (!ptr_speller_buffer)
             return NULL;
     }
@@ -661,7 +662,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     input_pos = weechat_buffer_get_integer (buffer, "input_pos");
     if (ptr_speller_buffer->modifier_string
         && (strcmp (string, ptr_speller_buffer->modifier_string) == 0)
-        && ((weechat_config_integer (weechat_aspell_config_check_suggestions) < 0)
+        && ((weechat_config_integer (spell_config_check_suggestions) < 0)
             || (input_pos == ptr_speller_buffer->input_pos)))
     {
         return (ptr_speller_buffer->modifier_result) ?
@@ -688,7 +689,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
 
     color_normal = weechat_color ("bar_fg");
     length_color_normal = strlen (color_normal);
-    color_error = weechat_color (weechat_config_string (weechat_aspell_config_color_misspelled));
+    color_error = weechat_color (weechat_config_string (spell_config_color_misspelled));
     length_color_error = strlen (color_error);
 
     length = strlen (string);
@@ -720,7 +721,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
             pos_space[0] = '\0';
 
             /* exit if command is not authorized for spell checking */
-            if (!weechat_aspell_command_authorized (ptr_string))
+            if (!spell_command_authorized (ptr_string))
             {
                 free (result);
                 return NULL;
@@ -787,8 +788,8 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
             ptr_end = (char *)weechat_utf8_next_char (ptr_end_valid);
             word_end_pos = word_end_pos_valid;
             word_ok = 0;
-            if (weechat_aspell_string_is_url (ptr_string)
-                || weechat_aspell_string_is_nick (buffer, ptr_string_orig))
+            if (spell_string_is_url (ptr_string)
+                || spell_string_is_nick (buffer, ptr_string_orig))
             {
                 /*
                  * word is an URL or a nick, then it is OK: search for next
@@ -814,10 +815,10 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
             if (!word_ok)
             {
                 if ((save_end != '\0')
-                    || (weechat_config_integer (weechat_aspell_config_check_real_time)))
+                    || (weechat_config_integer (spell_config_check_real_time)))
                 {
-                    word_ok = weechat_aspell_check_word (ptr_speller_buffer,
-                                                         ptr_string);
+                    word_ok = spell_check_word (ptr_speller_buffer,
+                                                        ptr_string);
                     if (!word_ok && (input_pos >= word_start_pos))
                     {
                         /*
@@ -864,7 +865,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
 
     /* save old suggestions in buffer */
     ptr_suggestions = weechat_buffer_get_string (buffer,
-                                                 "localvar_aspell_suggest");
+                                                 "localvar_spell_suggest");
     old_suggestions = (ptr_suggestions) ? strdup (ptr_suggestions) : NULL;
 
     /* if there is a misspelled word, get suggestions and set them in buffer */
@@ -872,7 +873,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     {
         /*
          * get the old misspelled word; we'll get suggestions or clear
-         * local variable "aspell_suggest" only if the current misspelled
+         * local variable "spell_suggest" only if the current misspelled
          * word is different
          */
         old_misspelled_word = NULL;
@@ -887,8 +888,8 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
         if (!old_misspelled_word
             || (strcmp (old_misspelled_word, misspelled_word) != 0))
         {
-            suggestions = weechat_aspell_get_suggestions (ptr_speller_buffer,
-                                                          misspelled_word);
+            suggestions = spell_get_suggestions (ptr_speller_buffer,
+                                                 misspelled_word);
             if (suggestions)
             {
                 length = strlen (misspelled_word) + 1 /* ":" */
@@ -898,21 +899,21 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
                 {
                     snprintf (word_and_suggestions, length, "%s:%s",
                               misspelled_word, suggestions);
-                    weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                    weechat_buffer_set (buffer, "localvar_set_spell_suggest",
                                         word_and_suggestions);
                     free (word_and_suggestions);
                 }
                 else
                 {
                     weechat_buffer_set (buffer,
-                                        "localvar_del_aspell_suggest", "");
+                                        "localvar_del_spell_suggest", "");
                 }
                 free (suggestions);
             }
             else
             {
                 /* set a misspelled word in buffer, also without suggestions */
-                weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                weechat_buffer_set (buffer, "localvar_set_spell_suggest",
                                     misspelled_word);
             }
         }
@@ -924,22 +925,22 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     }
     else
     {
-        weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
+        weechat_buffer_set (buffer, "localvar_del_spell_suggest", "");
     }
 
     /*
      * if suggestions have changed, update the bar item
-     * and send signal "aspell_suggest"
+     * and send signal "spell_suggest"
      */
     ptr_suggestions = weechat_buffer_get_string (buffer,
-                                                 "localvar_aspell_suggest");
+                                                 "localvar_spell_suggest");
     if ((old_suggestions && !ptr_suggestions)
         || (!old_suggestions && ptr_suggestions)
         || (old_suggestions && ptr_suggestions
             && (strcmp (old_suggestions, ptr_suggestions) != 0)))
     {
-        weechat_bar_item_update ("aspell_suggest");
-        (void) weechat_hook_signal_send ("aspell_suggest",
+        weechat_bar_item_update ("spell_suggest");
+        (void) weechat_hook_signal_send ("spell_suggest",
                                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
     if (old_suggestions)
@@ -958,9 +959,8 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
  */
 
 int
-weechat_aspell_buffer_switch_cb (const void *pointer, void *data,
-                                 const char *signal, const char *type_data,
-                                 void *signal_data)
+spell_buffer_switch_cb (const void *pointer, void *data, const char *signal,
+                        const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -970,8 +970,8 @@ weechat_aspell_buffer_switch_cb (const void *pointer, void *data,
     (void) signal_data;
 
     /* refresh bar items (for root bars) */
-    weechat_bar_item_update ("aspell_dict");
-    weechat_bar_item_update ("aspell_suggest");
+    weechat_bar_item_update ("spell_dict");
+    weechat_bar_item_update ("spell_suggest");
 
     return WEECHAT_RC_OK;
 }
@@ -981,9 +981,8 @@ weechat_aspell_buffer_switch_cb (const void *pointer, void *data,
  */
 
 int
-weechat_aspell_window_switch_cb (const void *pointer, void *data,
-                                 const char *signal,
-                                 const char *type_data, void *signal_data)
+spell_window_switch_cb (const void *pointer, void *data, const char *signal,
+                        const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -993,21 +992,20 @@ weechat_aspell_window_switch_cb (const void *pointer, void *data,
     (void) signal_data;
 
     /* refresh bar items (for root bars) */
-    weechat_bar_item_update ("aspell_dict");
-    weechat_bar_item_update ("aspell_suggest");
+    weechat_bar_item_update ("spell_dict");
+    weechat_bar_item_update ("spell_suggest");
 
     return WEECHAT_RC_OK;
 }
 
 /*
- * Removes struct for buffer in hashtable "weechat_aspell_speller_buffer" on
+ * Removes struct for buffer in hashtable "spell_speller_buffer" on
  * signal "buffer_closed".
  */
 
 int
-weechat_aspell_buffer_closed_cb (const void *pointer, void *data,
-                                 const char *signal,
-                                 const char *type_data, void *signal_data)
+spell_buffer_closed_cb (const void *pointer, void *data, const char *signal,
+                        const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -1015,7 +1013,7 @@ weechat_aspell_buffer_closed_cb (const void *pointer, void *data,
     (void) signal;
     (void) type_data;
 
-    weechat_hashtable_remove (weechat_aspell_speller_buffer, signal_data);
+    weechat_hashtable_remove (spell_speller_buffer, signal_data);
 
     return WEECHAT_RC_OK;
 }
@@ -1025,9 +1023,8 @@ weechat_aspell_buffer_closed_cb (const void *pointer, void *data,
  */
 
 int
-weechat_aspell_debug_libs_cb (const void *pointer, void *data,
-                              const char *signal,
-                              const char *type_data, void *signal_data)
+spell_debug_libs_cb (const void *pointer, void *data, const char *signal,
+                     const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) pointer;
@@ -1039,16 +1036,16 @@ weechat_aspell_debug_libs_cb (const void *pointer, void *data,
 #ifdef USE_ENCHANT
 #ifdef HAVE_ENCHANT_GET_VERSION
     weechat_printf (NULL, "  %s: enchant %s",
-                    ASPELL_PLUGIN_NAME, enchant_get_version ());
+                    SPELL_PLUGIN_NAME, enchant_get_version ());
 #else
-    weechat_printf (NULL, "  %s: enchant (?)", ASPELL_PLUGIN_NAME);
+    weechat_printf (NULL, "  %s: enchant (?)", SPELL_PLUGIN_NAME);
 #endif /* HAVE_ENCHANT_GET_VERSION */
 #else
 #ifdef HAVE_ASPELL_VERSION_STRING
     weechat_printf (NULL, "  %s: aspell %s",
-                    ASPELL_PLUGIN_NAME, aspell_version_string ());
+                    SPELL_PLUGIN_NAME, aspell_version_string ());
 #else
-    weechat_printf (NULL, "  %s: aspell (?)", ASPELL_PLUGIN_NAME);
+    weechat_printf (NULL, "  %s: aspell (?)", SPELL_PLUGIN_NAME);
 #endif /* HAVE_ASPELL_VERSION_STRING */
 #endif /* USE_ENCHANT */
 
@@ -1060,27 +1057,26 @@ weechat_aspell_debug_libs_cb (const void *pointer, void *data,
  */
 
 int
-weechat_aspell_config_change_nick_completer_cb (const void *pointer, void *data,
-                                                const char *option,
-                                                const char *value)
+spell_config_change_nick_completer_cb (const void *pointer, void *data,
+                                       const char *option, const char *value)
 {
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) option;
 
-    if (aspell_nick_completer)
-        free (aspell_nick_completer);
+    if (spell_nick_completer)
+        free (spell_nick_completer);
 
-    aspell_nick_completer = weechat_string_strip (value, 0, 1, " ");
-    aspell_len_nick_completer =
-        (aspell_nick_completer) ? strlen (aspell_nick_completer) : 0;
+    spell_nick_completer = weechat_string_strip (value, 0, 1, " ");
+    spell_len_nick_completer =
+        (spell_nick_completer) ? strlen (spell_nick_completer) : 0;
 
     return WEECHAT_RC_OK;
 }
 
 /*
- * Initializes aspell plugin.
+ * Initializes spell plugin.
  */
 
 int
@@ -1099,17 +1095,17 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
 #endif /* USE_ENCHANT */
 
-    if (!weechat_aspell_speller_init ())
+    if (!spell_speller_init ())
         return WEECHAT_RC_ERROR;
 
-    if (!weechat_aspell_config_init ())
+    if (!spell_config_init ())
         return WEECHAT_RC_ERROR;
 
-    weechat_aspell_config_read ();
+    spell_config_read ();
 
-    weechat_aspell_command_init ();
+    spell_command_init ();
 
-    weechat_aspell_completion_init ();
+    spell_completion_init ();
 
     /*
      * callback for spell checking input text
@@ -1117,26 +1113,26 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      * (from other plugins) will be called before this one
      */
     weechat_hook_modifier ("500|input_text_display",
-                           &weechat_aspell_modifier_cb, NULL, NULL);
+                           &spell_modifier_cb, NULL, NULL);
 
-    weechat_aspell_bar_item_init ();
+    spell_bar_item_init ();
 
-    weechat_aspell_info_init ();
+    spell_info_init ();
 
     weechat_hook_signal ("buffer_switch",
-                         &weechat_aspell_buffer_switch_cb, NULL, NULL);
+                         &spell_buffer_switch_cb, NULL, NULL);
     weechat_hook_signal ("window_switch",
-                         &weechat_aspell_window_switch_cb, NULL, NULL);
+                         &spell_window_switch_cb, NULL, NULL);
     weechat_hook_signal ("buffer_closed",
-                         &weechat_aspell_buffer_closed_cb, NULL, NULL);
+                         &spell_buffer_closed_cb, NULL, NULL);
     weechat_hook_signal ("debug_libs",
-                         &weechat_aspell_debug_libs_cb, NULL, NULL);
+                         &spell_debug_libs_cb, NULL, NULL);
 
     weechat_hook_config ("weechat.completion.nick_completer",
-                         &weechat_aspell_config_change_nick_completer_cb,
+                         &spell_config_change_nick_completer_cb,
                          NULL, NULL);
     /* manually call callback to initialize */
-    weechat_aspell_config_change_nick_completer_cb (
+    spell_config_change_nick_completer_cb (
         NULL, NULL, "weechat.completion.nick_completer",
         weechat_config_string (
             weechat_config_get ("weechat.completion.nick_completer")));
@@ -1145,7 +1141,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 }
 
 /*
- * Ends aspell plugin.
+ * Ends spell plugin.
  */
 
 int
@@ -1154,18 +1150,18 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
 
-    weechat_aspell_config_write ();
-    weechat_aspell_config_free ();
+    spell_config_write ();
+    spell_config_free ();
 
-    weechat_aspell_speller_end ();
+    spell_speller_end ();
 
 #ifdef USE_ENCHANT
     /* release enchant broker */
     enchant_broker_free (broker);
 #endif /* USE_ENCHANT */
 
-    if (aspell_nick_completer)
-        free (aspell_nick_completer);
+    if (spell_nick_completer)
+        free (spell_nick_completer);
 
     return WEECHAT_RC_OK;
 }

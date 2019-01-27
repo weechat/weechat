@@ -114,7 +114,7 @@ WeeChat.
 | gettext                |               |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
 | ca-certificates        |               |          | Certyfikaty dla połączeń SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |          | Wtyczka aspell.
+  ∥ libenchant-dev       |               |          | Wtyczka spell.
 | python-dev             | ≥ 2.6 ^(4)^   |          | Wtyczka python.
 | libperl-dev            |               |          | Wtyczka perl.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Wtyczka ruby.
@@ -198,9 +198,6 @@ Lista popularnych opcji:
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Kompilacja <<alias_plugin,wtyczki alias>>.
 
-| ENABLE_ASPELL | `ON`, `OFF` | ON |
-  Kompilacja <<aspell_plugin,wtyczki aspell>>.
-
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Kompilacja <<buflist_plugin,wtyczki buflist>>.
 
@@ -216,7 +213,7 @@ Lista popularnych opcji:
   dokumentacji online).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Kompilacja <<aspell_plugin,wtyczki aspell>> z Enchant.
+  Kompilacja <<spell_plugin,wtyczki spell>> z Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   Kompilacja <<exec_plugin,wtyczki exec>>.
@@ -279,6 +276,9 @@ Lista popularnych opcji:
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczek skryptowych>> (Python, Perl, Ruby, Lua,
   Tcl, Guile, JavaScript, PHP).
+
+| ENABLE_SPELL | `ON`, `OFF` | ON |
+  Kompilacja <<spell_plugin,wtyczki spell>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki tcl>>.
@@ -570,7 +570,6 @@ Pliki tworzone w katalogu domowym WeeChat:
 | sec.conf        | Plik konfiguracyjny z zabezpieczonymi danymi | *Tak, bardzo prażliwe*: Tym plikiem nie powinno się z nikim dzielić.
 | plugins.conf    | Plik konfiguracyjny wtyczek                  | Możliwe, zależy od wtyczki/skryptu.
 | alias.conf      | Plik konfiguracyjny wtyczki _alias_          | Możliwe, zależy od aliasu.
-| aspell.conf     | Plik konfiguracyjny wtyczki _aspell_         | Nie.
 | buflist.conf    | Plik konfiguracyjny wtyczki _buflist_        | Nie.
 | charset.conf    | Plik konfiguracyjny wtyczki _charset_        | Nie.
 | exec.conf       | Plik konfiguracyjny wtyczki _exec_           | Nie.
@@ -587,6 +586,7 @@ Pliki tworzone w katalogu domowym WeeChat:
 | relay.conf      | Plik konfiguracyjny wtyczki _relay_          | Nie.
 | ruby.conf       | Plik konfiguracyjny wtyczki _ruby_           | Nie.
 | script.conf     | Plik konfiguracyjny wtyczki _script_         | Nie.
+| spell.conf      | Plik konfiguracyjny wtyczki _spell_          | Nie.
 | tcl.conf        | Plik konfiguracyjny wtyczki _tcl_            | Nie.
 | trigger.conf    | Plik konfiguracyjny wtyczki _trigger_        | Możliwe, zależy od triggerów.
 | xfer.conf       | Plik konfiguracyjny wtyczki _xfer_           | Nie.
@@ -710,8 +710,8 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Element           | Przykład            | Opis
-| aspell_dict       | `fr,en`             | Słowniki używane w obecnym buforze.
-| aspell_suggest    | `print,prone,prune` | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
+| spell_dict        | `fr,en`             | Słowniki używane w obecnym buforze.
+| spell_suggest     | `print,prone,prune` | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
 | buffer_count      | `10`                | Liczba otwartych buforów.
 | buffer_short_name | `#test`             | Skrócona nazwa obecnego buforu.
 | irc_channel       | `#test`             | Nazwa bieżącego kanału IRC.
@@ -1628,7 +1628,8 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `/input delete_next_word`
 | kbd:[Alt+k]     | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `/input grab_key_command`
 | kbd:[Alt+r]     | Usuń całą zawartość linii poleceń. | `/input delete_line`
-| kbd:[Alt+s]     | Przełącz aspell. | `/mute aspell toggle`
+// TRANSLATION MISSING
+| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -2102,7 +2103,6 @@ Domyślne wtyczki:
 |===
 | Wtyczka    | Opis
 | alias      | Definiuje aliasy dla komend.
-| aspell     | Sprawdzanie pisowni w linii poleceń.
 | buflist    | Element paska z listą buforów.
 | charset    | Ustawianie kodowania dla buforów.
 | exec       | Wykonuje zewnętrzną komendę z poziomu WeeChat.
@@ -2120,6 +2120,7 @@ Domyślne wtyczki:
 | guile      | Wsparcie dla skryptów napisanych w Guile (scheme).
 | javascript | Wsparcie dla skryptów napisanych w JavaScript.
 | php        | Wsparcie dla skryptów napisanych w PHP.
+| spell      | Sprawdzanie pisowni w linii poleceń.
 | trigger    | Zamiana tekstu i wykonywanie komend dla zdarzeń wywołanych przez WeeChat/wtyczki.
 | xfer       | Przesyłanie plików i bezpośredni chat.
 |===
@@ -2160,15 +2161,15 @@ Ssekcje w pliku _alias.conf_:
                /set alias.completion.*        | Completions for aliases.
 |===
 
-[[aspell_plugin]]
-=== Aspell
+[[spell_plugin]]
+=== Spell
 
-Wtyczka aspell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
+Wtyczka spell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
 ustawienie wielu języków dla bufora.
 
 Sprawdzenie pisowni jest domyślnie wyłączone i możę być przełączone za pomocą kbd:[Alt+s].
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 ==== Słowniki
 
 Przed użyciem sprawdzania pisowni należy zdefiniować słowniki można to zrobić
@@ -2180,26 +2181,26 @@ słownikach.
 Na przykład dla angielskiego i francuskiego:
 
 ----
-/set aspell.check.default_dict "en,fr"
+/set spell.check.default_dict "en,fr"
 ----
 
 Możliwe jest użycie innego słownika dla konkretnego buforu, na przykład na kanale
 niemieckojęzycnzym:
 
 ----
-/aspell setdict de
+/spell setdict de
 ----
 
 Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
 wsystkich kanałów na serwerze IRC freenode:
 
 ----
-/set aspell.dict.irc.freenode en
+/set spell.dict.irc.freenode en
 ----
 
-Więcej informacji można znaleźć w opisie komendy <<command_aspell_aspell,/aspell>>.
+Więcej informacji można znaleźć w opisie komendy <<command_spell_spell,/spell>>.
 
-[[aspell_speller_options]]
+[[spell_speller_options]]
 ==== Opcje słowników
 
 Opcje słowników mogą zostać zdefiniowane poprzez dodanie opcji w sekcji "option"
@@ -2215,17 +2216,17 @@ $ aspell config
 Na przykład, aby włączyć opcję "ignore-case":
 
 ----
-/set aspell.option.ignore-case "true"
+/set spell.option.ignore-case "true"
 ----
 
-[[aspell_suggestions]]
+[[spell_suggestions]]
 ==== Sugestie
 
-Sugestie są wyświetlane w elemencie paska "aspell_suggest". Ilość wyświetlanych
-sugestii można ustawić za pomocą opcji _aspell.check.suggestions_.
+Sugestie są wyświetlane w elemencie paska "spell_suggest". Ilość wyświetlanych
+sugestii można ustawić za pomocą opcji _spell.check.suggestions_.
 
-Aby włączyć sugestie trzeba ustawić opcję _aspell.check.suggestions_ na liczbę
-≥ 0 i dodać element "aspell_suggest" do jakiegoś paska, jak _status_.
+Aby włączyć sugestie trzeba ustawić opcję _spell.check.suggestions_ na liczbę
+≥ 0 i dodać element "spell_suggest" do jakiegoś paska, jak _status_.
 
 Przykład sugestii z angielskim słownikiem (`en`):
 
@@ -2243,30 +2244,30 @@ Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[aspell_commands]]
+[[spell_commands]]
 ==== Komendy
 
-include::autogen/user/aspell_commands.adoc[]
+include::autogen/user/spell_commands.adoc[]
 
-[[aspell_options]]
+[[spell_options]]
 ==== Opcje
 
-Sekcje w pliku _aspell.conf_:
+Sekcje w pliku _spell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Sekcja     | Komenda                                   | Opis
-| color      | /set aspell.color.*                       | Kolory.
-| check      | /set aspell.check.*                       | Opcje do kontrolowania sprawdzania pisowni.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane).
-| look       | /set aspell.look.*                        | Wygląd.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane).
+| Sekcja     | Komenda                                | Opis
+| color      | /set spell.color.*                     | Kolory.
+| check      | /set spell.check.*                     | Opcje do kontrolowania sprawdzania pisowni.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane).
+| look       | /set spell.look.*                      | Wygląd.
+| option     | /set spell.option.*                    | <<spell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane).
 |===
 
 Opcje:
 
-include::autogen/user/aspell_options.adoc[]
+include::autogen/user/spell_options.adoc[]
 
 [[buflist_plugin]]
 === Buflist

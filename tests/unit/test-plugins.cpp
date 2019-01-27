@@ -52,7 +52,6 @@ TEST(Plugins, Loaded)
 
     /* check that all plugins are properly loaded */
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == alias", 1));
-    CHECK(hdata_search (hdata, plugins, "${plugin.name} == aspell", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == buflist", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == charset", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == exec", 1));
@@ -69,6 +68,7 @@ TEST(Plugins, Loaded)
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == relay", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == ruby", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == script", 1));
+    CHECK(hdata_search (hdata, plugins, "${plugin.name} == spell", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == tcl", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == trigger", 1));
     CHECK(hdata_search (hdata, plugins, "${plugin.name} == xfer", 1));

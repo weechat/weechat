@@ -6,8 +6,6 @@
 |===
 | Plugin | Nome | Descrizione | Argomenti
 
-| aspell | aspell_dict | elenco separato da virgole di dizionari usati nel buffer | puntatore al buffer ("0x12345678") o buffer con il nome completo ("irc.freenode.weechat")
-
 | fifo | fifo_filename | nome della pipe FIFO | -
 
 | guile | guile_eval | evaluation of source code | source code to execute
@@ -73,6 +71,8 @@
 | ruby | ruby_interpreter | name of the interpreter used | -
 
 | ruby | ruby_version | version of the interpreter used | -
+
+| spell | spell_dict | elenco separato da virgole di dizionari usati nel buffer | puntatore al buffer ("0x12345678") o buffer con il nome completo ("irc.freenode.weechat")
 
 | tcl | tcl_eval | evaluation of source code | source code to execute
 

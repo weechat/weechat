@@ -6,8 +6,6 @@
 |===
 | プラグイン | 名前 | 説明 | 引数
 
-| aspell | aspell_dict | バッファで使用中の辞書のコンマ区切りリスト | バッファポインタ ("0x12345678") またはバッファのフルネーム ("irc.freenode.#weechat")
-
 | fifo | fifo_filename | FIFO パイプの名前 | -
 
 | guile | guile_eval | ソースコードの評価 | 実行するソースコード
@@ -73,6 +71,8 @@
 | ruby | ruby_interpreter | 使用中のインタプリタの名前 | -
 
 | ruby | ruby_version | 使用中のインタプリタのバージョン | -
+
+| spell | spell_dict | バッファで使用中の辞書のコンマ区切りリスト | バッファポインタ ("0x12345678") またはバッファのフルネーム ("irc.freenode.#weechat")
 
 | tcl | tcl_eval | ソースコードの評価 | 実行するソースコード
 

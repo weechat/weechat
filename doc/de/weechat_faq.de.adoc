@@ -1005,14 +1005,19 @@ $ cd ~/.weechat/script
 $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 === Ich habe aspell Wörterbücher auf mein System installiert. Wie kann ich diese nutzen, ohne WeeChat neu starten zu müssen?
 
-Du braucht lediglich die aspell Erweiterung neu zu laden:
+Du braucht lediglich die spell Erweiterung neu zu laden:
 
 ----
-/plugin reload aspell
+/plugin reload spell
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 2.3, the "spell" plugin was named "aspell", so the command is:
+`/plugin reload aspell`.
 
 [[settings]]
 == Einstellungen
@@ -1045,9 +1050,9 @@ Damit WeeChat weniger Speicher benötigt, solltest Du folgende Tipps umsetzen:
 
 * nutze die aktuelle Version (man kann davon ausgehen das eine aktuelle Version
   weniger Speicherlecks besitzt, als eine vorherige Version)
-* lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: ASpell, Buflist,
-  Fifo, Logger, Perl, Python, Ruby, Lua, Tcl, Guile, JavaScript, PHP, Xfer (wird für
-  DCC benötigst), siehe `/help weechat.plugin.autoload`.
+* lade keine Erweiterungen die Du nicht benötigst. Zum Beispiel: Buflist,
+  Fifo, Logger, Perl, Python, Ruby, Lua, Tcl, Guile, JavaScript, PHP, Spell, Xfer
+  (wird für DCC benötigst), siehe `/help weechat.plugin.autoload`.
 * installiere ausschließlich Skripten die Du auch nutzt
 * falls man SSL *NICHT* nutzt, sollte kein Zertifikat geladen werden. In diesem
   Fall, einfach den Eintrag in folgender Option leer lassen:
@@ -1067,7 +1072,7 @@ und zusätzlich diese Tipps beherzigen:
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
   `/set weechat.look.item_time_format "%H:%M"` (dies ist die Standardeinstellung)
 * die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
-  `/set aspell.check.real_time off`
+  `/set spell.check.real_time off`
 * die Umgebungsvariable _TZ_ sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 

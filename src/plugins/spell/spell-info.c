@@ -1,5 +1,5 @@
 /*
- * weechat-aspell-info.c - info for aspell plugin
+ * spell-info.c - info for spell checker plugin
  *
  * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -24,17 +24,17 @@
 #include <string.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
+#include "spell.h"
 
 
 /*
- * Returns aspell info "aspell_dict".
+ * Returns spell info "spell_dict".
  */
 
 const char *
-weechat_aspell_info_info_aspell_dict_cb (const void *pointer, void *data,
-                                         const char *info_name,
-                                         const char *arguments)
+spell_info_info_spell_dict_cb (const void *pointer, void *data,
+                               const char *info_name,
+                               const char *arguments)
 {
     int rc;
     unsigned long value;
@@ -67,23 +67,23 @@ weechat_aspell_info_info_aspell_dict_cb (const void *pointer, void *data,
         buffer_full_name = arguments;
 
     if (buffer_full_name)
-        return weechat_aspell_get_dict_with_buffer_name (buffer_full_name);
+        return spell_get_dict_with_buffer_name (buffer_full_name);
 
     return NULL;
 }
 
 /*
- * Hooks info for aspell plugin.
+ * Hooks info for spell plugin.
  */
 
 void
-weechat_aspell_info_init ()
+spell_info_init ()
 {
     /* info hooks */
     weechat_hook_info (
-        "aspell_dict",
+        "spell_dict",
         N_("comma-separated list of dictionaries used in buffer"),
         N_("buffer pointer (\"0x12345678\") or buffer full name "
            "(\"irc.freenode.#weechat\")"),
-        &weechat_aspell_info_info_aspell_dict_cb, NULL, NULL);
+        &spell_info_info_spell_dict_cb, NULL, NULL);
 }

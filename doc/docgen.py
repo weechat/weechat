@@ -90,7 +90,6 @@ PLUGIN_LIST = {
     'sec': 'o',
     'weechat': 'co',
     'alias': '',
-    'aspell': 'o',
     'buflist': 'co',
     'charset': 'o',
     'exec': 'o',
@@ -108,14 +107,13 @@ PLUGIN_LIST = {
     'guile': 'o',
     'javascript': 'o',
     'php': 'o',
+    'spell': 'o',
     'trigger': 'o',
     'xfer': 'co',
 }
 
 # options to ignore
 IGNORE_OPTIONS = (
-    r'aspell\.dict\..*',
-    r'aspell\.option\..*',
     r'charset\.decode\..*',
     r'charset\.encode\..*',
     r'irc\.msgbuffer\..*',
@@ -126,6 +124,8 @@ IGNORE_OPTIONS = (
     r'logger\.level\..*',
     r'logger\.mask\..*',
     r'relay\.port\..*',
+    r'spell\.dict\..*',
+    r'spell\.option\..*',
     r'trigger\.trigger\..*',
     r'weechat\.palette\..*',
     r'weechat\.proxy\..*',

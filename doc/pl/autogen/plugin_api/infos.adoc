@@ -6,8 +6,6 @@
 |===
 | Wtyczka | Nazwa | Opis | Argumenty
 
-| aspell | aspell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.freenode.#weechat")
-
 | fifo | fifo_filename | nazwa strumienia FIFO | -
 
 | guile | guile_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
@@ -73,6 +71,8 @@
 | ruby | ruby_interpreter | nazwa użytego interpretera | -
 
 | ruby | ruby_version | wersja użytego interpretera | -
+
+| spell | spell_dict | oddzielona przecinkami lista słowników używanych w buforze | wskaźnik na bufor ("0x12345678") lub jego pełna nazwa ("irc.freenode.#weechat")
 
 | tcl | tcl_eval | wykonywanie kodu źródłowego | kod źródłowy do wykonania
 

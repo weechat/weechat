@@ -10,9 +10,6 @@ $HOME/.weechat/sec.conf::
 $HOME/.weechat/alias.conf::
     Konfigurationsdatei für _alias_ Erweiterung
 
-$HOME/.weechat/aspell.conf::
-    Konfigurationsdatei für _aspell_ Erweiterung
-
 $HOME/.weechat/buflist.conf::
     Konfigurationsdatei für _buflist_ Erweiterung
 
@@ -60,6 +57,9 @@ $HOME/.weechat/ruby.conf::
 
 $HOME/.weechat/script.conf::
     Konfigurationsdatei für _script_ Erweiterung
+
+$HOME/.weechat/spell.conf::
+    Konfigurationsdatei für _spell_ Erweiterung
 
 $HOME/.weechat/tcl.conf::
     Konfigurationsdatei für _tcl_ Erweiterung

@@ -10,9 +10,6 @@ $HOME/.weechat/sec.conf::
 $HOME/.weechat/alias.conf::
     _alias_ プラグイン用の設定ファイル
 
-$HOME/.weechat/aspell.conf::
-    _aspell_ プラグイン用の設定ファイル
-
 $HOME/.weechat/buflist.conf::
     _buflist_ プラグイン用の設定ファイル
 
@@ -60,6 +57,9 @@ $HOME/.weechat/ruby.conf::
 
 $HOME/.weechat/script.conf::
     _script_ プラグイン用の設定ファイル
+
+$HOME/.weechat/spell.conf::
+    _spell_ プラグイン用の設定ファイル
 
 $HOME/.weechat/tcl.conf::
     _tcl_ プラグイン用の設定ファイル

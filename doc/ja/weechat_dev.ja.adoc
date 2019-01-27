@@ -76,7 +76,6 @@ qweechat::
 |          normal/   | curses インターフェース
 |    plugins/        | プラグインとスクリプト向け API
 |       alias/       | alias プラグイン
-|       aspell/      | aspell プラグイン
 |       buflist/     | buflist プラグイン
 |       charset/     | charset プラグイン
 |       exec/        | exec プラグイン
@@ -93,6 +92,7 @@ qweechat::
 |       relay/       | relay プラグイン (irc プロキシ + リモートインターフェース用の中継)
 |       ruby/        | ruby スクリプト用 API
 |       script/      | スクリプトマネージャ
+|       spell/       | spell プラグイン
 |       tcl/         | tcl スクリプト用 API
 |       trigger/     | trigger プラグイン
 |       xfer/        | xfer (IRC DCC ファイル/チャット)
@@ -229,14 +229,22 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       alias-completion.c          | alias 補完
 |       alias-config.c              | alias 設定オプション (alias.conf ファイル)
 |       alias-info.c                | alias の情報/インフォリスト/hdata
-|    aspell/                        | aspell プラグイン
-|       weechat-aspell.c            | aspell の主要関数
-|       weechat-aspell-bar-item.c   | aspell バー要素
-|       weechat-aspell-command.c    | aspell コマンド
-|       weechat-aspell-completion.c | aspell 補完
-|       weechat-aspell-config.c     | aspell 設定オプション (aspell.conf ファイル)
-|       weechat-aspell-info.c       | aspell の情報/インフォリスト/hdata
-|       weechat-aspell-speller.c    | スペルチェッカ管理
+// TRANSLATION MISSING
+|    spell/                         | Spell checker plugin.
+// TRANSLATION MISSING
+|       spell.c                     | Main spell checker functions.
+// TRANSLATION MISSING
+|       spell-bar-item.c            | Spell checker bar items.
+// TRANSLATION MISSING
+|       spell-command.c             | Spell checker commands.
+// TRANSLATION MISSING
+|       spell-completion.c          | Spell checker completions.
+// TRANSLATION MISSING
+|       spell-config.c              | Spell checker config options (file spell.conf).
+// TRANSLATION MISSING
+|       spell-info.c                | Spell checker info/infolists/hdata.
+// TRANSLATION MISSING
+|       spell-speller.c             | Spellers management.
 |    buflist/                       | buflist プラグイン
 |       buflist.c                   | buflist の主要関数
 |       buflist-bar-item.c          | buflist バー要素

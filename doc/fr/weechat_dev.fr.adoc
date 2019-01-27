@@ -72,7 +72,6 @@ Les répertoires principaux de WeeChat sont :
 |          normal/   | Interface Curses.
 |    plugins/        | API extension/script.
 |       alias/       | Extension Alias.
-|       aspell/      | Extension Aspell.
 |       buflist/     | Extension Buflist.
 |       charset/     | Extension Charset.
 |       exec/        | Extension Exec.
@@ -89,6 +88,7 @@ Les répertoires principaux de WeeChat sont :
 |       relay/       | Extension Relay (proxy IRC + relai pour interfaces distantes).
 |       ruby/        | API script Ruby.
 |       script/      | Gestionnaire de scripts.
+|       spell/       | Extension Spell.
 |       tcl/         | API script Tcl.
 |       trigger/     | Extension Trigger.
 |       xfer/        | Extension Xfer (IRC DCC fichier/discussion).
@@ -225,14 +225,14 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       alias-completion.c          | Complétions pour Alias.
 |       alias-config.c              | Options de configuration des alias (fichier alias.conf).
 |       alias-info.c                | Info/infolists/hdata pour les alias.
-|    aspell/                        | Extension Aspell.
-|       weechat-aspell.c            | Fonctions principales pour Aspell.
-|       weechat-aspell-bar-item.c   | Objets de barre Aspell.
-|       weechat-aspell-command.c    | Commandes Aspell.
-|       weechat-aspell-completion.c | Complétions pour Aspell.
-|       weechat-aspell-config.c     | Options de configuration pour Aspell (fichier aspell.conf).
-|       weechat-aspell-info.c       | Info/infolists/hdata pour Aspell.
-|       weechat-aspell-speller.c    | Gestion des correcteurs orthographiques.
+|    spell/                         | Extension Spell.
+|       spell.c                     | Fonctions principales pour Spell.
+|       spell-bar-item.c            | Objets de barre Spell.
+|       spell-command.c             | Commandes Spell.
+|       spell-completion.c          | Complétions pour Spell.
+|       spell-config.c              | Options de configuration pour Spell (fichier spell.conf).
+|       spell-info.c                | Info/infolists/hdata pour Spell.
+|       spell-speller.c             | Gestion des correcteurs orthographiques.
 |    buflist/                       | Extension Buflist.
 |       buflist.c                   | Fonctions principales de Buflist.
 |       buflist-bar-item.c          | Objets de barre Buflist.

@@ -9570,11 +9570,6 @@ List of signals sent by WeeChat and plugins:
 |===
 | Plugin | Signal | Arguments | Description
 
-| aspell | aspell_suggest +
-  _(WeeChat ≥ 0.4.0)_ |
-  Pointer: buffer. |
-  New suggestions for a misspelled word.
-
 | guile | guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
@@ -9873,6 +9868,11 @@ List of signals sent by WeeChat and plugins:
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Ruby script(s) removed.
+
+| spell | spell_suggest +
+  _(WeeChat ≥ 2.4)_ |
+  Pointer: buffer. |
+  New suggestions for a misspelled word.
 
 | tcl | tcl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |

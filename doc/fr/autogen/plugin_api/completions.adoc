@@ -10,10 +10,6 @@
 
 | alias | alias_value | valeur de l'alias
 
-| aspell | aspell_dicts | liste des dictionnaires aspell installés
-
-| aspell | aspell_langs | liste de toutes les langues supportées par aspell
-
 | exec | exec_commands_ids | ids (nombres et noms) des commandes exécutées
 
 | fset | fset_options | fichiers de configuration, section, options et mots des options
@@ -85,6 +81,10 @@
 | script | script_scripts_installed | liste des scripts installés (du dépôt)
 
 | script | script_tags | étiquettes des scripts dans le dépôt
+
+| spell | spell_dicts | list of installed dictionaries
+
+| spell | spell_langs | list of all languages supported
 
 | tcl | tcl_script | liste des scripts
 

@@ -18,10 +18,10 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_ASPELL_SPELLER_H
-#define WEECHAT_PLUGIN_ASPELL_SPELLER_H
+#ifndef WEECHAT_PLUGIN_SPELL_SPELLER_H
+#define WEECHAT_PLUGIN_SPELL_SPELLER_H
 
-struct t_aspell_speller_buffer
+struct t_spell_speller_buffer
 {
 #ifdef USE_ENCHANT
     EnchantDict **spellers;                /* enchant spellers for buffer   */
@@ -33,19 +33,19 @@ struct t_aspell_speller_buffer
     char *modifier_result;                 /* last modifier result          */
 };
 
-extern struct t_hashtable *weechat_aspell_spellers;
-extern struct t_hashtable *weechat_aspell_speller_buffer;
+extern struct t_hashtable *spell_spellers;
+extern struct t_hashtable *spell_speller_buffer;
 
-extern int weechat_aspell_speller_dict_supported (const char *lang);
-extern void weechat_aspell_speller_check_dictionaries (const char *dict_list);
+extern int spell_speller_dict_supported (const char *lang);
+extern void spell_speller_check_dictionaries (const char *dict_list);
 #ifdef USE_ENCHANT
-extern EnchantDict *weechat_aspell_speller_new (const char *lang);
+extern EnchantDict *spell_speller_new (const char *lang);
 #else
-extern AspellSpeller *weechat_aspell_speller_new (const char *lang);
+extern AspellSpeller *spell_speller_new (const char *lang);
 #endif /* USE_ENCHANT */
-extern void weechat_aspell_speller_remove_unused ();
-extern struct t_aspell_speller_buffer *weechat_aspell_speller_buffer_new (struct t_gui_buffer *buffer);
-extern int weechat_aspell_speller_init ();
-extern void weechat_aspell_speller_end ();
+extern void spell_speller_remove_unused ();
+extern struct t_spell_speller_buffer *spell_speller_buffer_new (struct t_gui_buffer *buffer);
+extern int spell_speller_init ();
+extern void spell_speller_end ();
 
-#endif /* WEECHAT_PLUGIN_ASPELL_SPELLER_H */
+#endif /* WEECHAT_PLUGIN_SPELL_SPELLER_H */

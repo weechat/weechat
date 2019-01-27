@@ -1,5 +1,5 @@
 /*
- * weechat-aspell-completion.c - completion for aspell commands
+ * spell-completion.c - completion for spell checker commands
  *
  * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -24,19 +24,19 @@
 #include <string.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
+#include "spell.h"
 
 
 /*
- * Adds aspell langs (all langs, even for dictionaries not installed) to
+ * Adds spell langs (all langs, even for dictionaries not installed) to
  * completion list.
  */
 
 int
-weechat_aspell_completion_langs_cb (const void *pointer, void *data,
-                                    const char *completion_item,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_gui_completion *completion)
+spell_completion_langs_cb (const void *pointer, void *data,
+                           const char *completion_item,
+                           struct t_gui_buffer *buffer,
+                           struct t_gui_completion *completion)
 {
     int i;
 
@@ -46,10 +46,10 @@ weechat_aspell_completion_langs_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    for (i = 0; aspell_langs[i].code; i++)
+    for (i = 0; spell_langs[i].code; i++)
     {
         weechat_hook_completion_list_add (completion,
-                                          aspell_langs[i].code,
+                                          spell_langs[i].code,
                                           0, WEECHAT_LIST_POS_SORT);
     }
 
@@ -62,11 +62,11 @@ weechat_aspell_completion_langs_cb (const void *pointer, void *data,
 
 #ifdef USE_ENCHANT
 void
-weechat_aspell_completion_enchant_add_dict_cb (const char *lang_tag,
-                                               const char *provider_name,
-                                               const char *provider_desc,
-                                               const char *provider_file,
-                                               void *user_data)
+spell_completion_enchant_add_dict_cb (const char *lang_tag,
+                                      const char *provider_name,
+                                      const char *provider_desc,
+                                      const char *provider_file,
+                                      void *user_data)
 {
     /* make C compiler happy */
     (void) provider_name;
@@ -79,14 +79,14 @@ weechat_aspell_completion_enchant_add_dict_cb (const char *lang_tag,
 #endif /* USE_ENCHANT */
 
 /*
- * Adds aspell dictionaries (only installed dictionaries) to completion list.
+ * Adds spell dictionaries (only installed dictionaries) to completion list.
  */
 
 int
-weechat_aspell_completion_dicts_cb (const void *pointer, void *data,
-                                    const char *completion_item,
-                                    struct t_gui_buffer *buffer,
-                                    struct t_gui_completion *completion)
+spell_completion_dicts_cb (const void *pointer, void *data,
+                           const char *completion_item,
+                           struct t_gui_buffer *buffer,
+                           struct t_gui_completion *completion)
 {
 #ifndef USE_ENCHANT
     struct AspellConfig *config;
@@ -103,7 +103,7 @@ weechat_aspell_completion_dicts_cb (const void *pointer, void *data,
 
 #ifdef USE_ENCHANT
     enchant_broker_list_dicts (broker,
-                               weechat_aspell_completion_enchant_add_dict_cb,
+                               spell_completion_enchant_add_dict_cb,
                                completion);
 #else
     config = new_aspell_config ();
@@ -128,12 +128,12 @@ weechat_aspell_completion_dicts_cb (const void *pointer, void *data,
  */
 
 void
-weechat_aspell_completion_init ()
+spell_completion_init ()
 {
-    weechat_hook_completion ("aspell_langs",
-                             N_("list of all languages supported by aspell"),
-                             &weechat_aspell_completion_langs_cb, NULL, NULL);
-    weechat_hook_completion ("aspell_dicts",
-                             N_("list of aspell installed dictionaries"),
-                             &weechat_aspell_completion_dicts_cb, NULL, NULL);
+    weechat_hook_completion ("spell_langs",
+                             N_("list of all languages supported"),
+                             &spell_completion_langs_cb, NULL, NULL);
+    weechat_hook_completion ("spell_dicts",
+                             N_("list of installed dictionaries"),
+                             &spell_completion_dicts_cb, NULL, NULL);
 }

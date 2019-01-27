@@ -35,11 +35,11 @@ Files: src/core/wee-completion.c
        src/core/wee-log.c
        src/core/wee-utf8.c
        src/core/weechat.h
-       src/plugins/aspell/weechat-aspell-config.c
-       src/plugins/aspell/weechat-aspell-config.h
-       src/plugins/aspell/weechat-aspell-speller.c
-       src/plugins/aspell/weechat-aspell-speller.h
-       src/plugins/aspell/weechat-aspell.h
+       src/plugins/spell/spell-config.c
+       src/plugins/spell/spell-config.h
+       src/plugins/spell/spell-speller.c
+       src/plugins/spell/spell-speller.h
+       src/plugins/spell/spell.h
        src/plugins/irc/irc-command.c
        src/plugins/irc/irc.h
 Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
@@ -51,12 +51,12 @@ Copyright: 2005-2010, Emmanuel Bouthenot <kolter@openics.org>
            2012, Simon Arlott
 License: GPL-3+
 
-Files: src/plugins/aspell/weechat-aspell-bar-item.c
-       src/plugins/aspell/weechat-aspell-bar-item.h
+Files: src/plugins/spell/spell-bar-item.c
+       src/plugins/spell/spell-bar-item.h
 Copyright: 2012, Nils Görs <weechatter@arcor.de>
 License: GPL-3+
 
-Files: src/plugins/aspell/weechat-aspell.c
+Files: src/plugins/spell/spell.c
 Copyright: 2006, Emmanuel Bouthenot <kolter@openics.org>
            2012, Nils Görs <weechatter@arcor.de>
 License: GPL-3+

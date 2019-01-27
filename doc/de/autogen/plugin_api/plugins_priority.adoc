@@ -6,7 +6,7 @@
 . logger (14000)
 . exec (13000)
 . trigger (12000)
-. aspell (11000)
+. spell (11000)
 . alias (10000)
 . buflist (9000)
 . fifo (8000)

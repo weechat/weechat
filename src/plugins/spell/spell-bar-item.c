@@ -1,5 +1,5 @@
 /*
- * weechat-aspell-bar-item.c - bar items for aspell plugin
+ * spell-bar-item.c - bar items for spell checker plugin
  *
  * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  * Copyright (C) 2012-2019 Sébastien Helleu <flashcode@flashtux.org>
@@ -25,21 +25,21 @@
 #include <string.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
-#include "weechat-aspell-config.h"
+#include "spell.h"
+#include "spell-config.h"
 
 
 /*
- * Returns content of bar item "aspell_dict": aspell dictionary used on current
+ * Returns content of bar item "spell_dict": spell dictionary used on current
  * buffer.
  */
 
 char *
-weechat_aspell_bar_item_dict (const void *pointer, void *data,
-                              struct t_gui_bar_item *item,
-                              struct t_gui_window *window,
-                              struct t_gui_buffer *buffer,
-                              struct t_hashtable *extra_info)
+spell_bar_item_dict (const void *pointer, void *data,
+                     struct t_gui_bar_item *item,
+                     struct t_gui_window *window,
+                     struct t_gui_buffer *buffer,
+                     struct t_hashtable *extra_info)
 {
     const char *dict_list;
 
@@ -53,21 +53,21 @@ weechat_aspell_bar_item_dict (const void *pointer, void *data,
     if (!buffer)
         return NULL;
 
-    dict_list = weechat_aspell_get_dict (buffer);
+    dict_list = spell_get_dict (buffer);
 
     return (dict_list) ? strdup (dict_list) : NULL;
 }
 
 /*
- * Returns content of bar item "aspell_suggest": aspell suggestions.
+ * Returns content of bar item "spell_suggest": spell checker suggestions.
  */
 
 char *
-weechat_aspell_bar_item_suggest (const void *pointer, void *data,
-                                 struct t_gui_bar_item *item,
-                                 struct t_gui_window *window,
-                                 struct t_gui_buffer *buffer,
-                                 struct t_hashtable *extra_info)
+spell_bar_item_suggest (const void *pointer, void *data,
+                        struct t_gui_bar_item *item,
+                        struct t_gui_window *window,
+                        struct t_gui_buffer *buffer,
+                        struct t_hashtable *extra_info)
 {
     const char *ptr_suggestions, *pos;
     char **suggestions, **suggestions2, **str_suggest;
@@ -80,14 +80,14 @@ weechat_aspell_bar_item_suggest (const void *pointer, void *data,
     (void) window;
     (void) extra_info;
 
-    if (!aspell_enabled)
+    if (!spell_enabled)
         return NULL;
 
     if (!buffer)
         return NULL;
 
     ptr_suggestions = weechat_buffer_get_string (buffer,
-                                                 "localvar_aspell_suggest");
+                                                 "localvar_spell_suggest");
     if (!ptr_suggestions)
         return NULL;
 
@@ -113,11 +113,11 @@ weechat_aspell_bar_item_suggest (const void *pointer, void *data,
                 str_suggest,
                 weechat_color (
                     weechat_config_string (
-                        weechat_aspell_config_color_suggestion_delimiter_dict)));
+                        spell_config_color_suggestion_delimiter_dict)));
             weechat_string_dyn_concat (
                 str_suggest,
                 weechat_config_string (
-                    weechat_aspell_config_look_suggestion_delimiter_dict));
+                    spell_config_look_suggestion_delimiter_dict));
         }
         suggestions2 = weechat_string_split (suggestions[i], ",", 0, 0,
                                              &num_suggestions2);
@@ -131,17 +131,17 @@ weechat_aspell_bar_item_suggest (const void *pointer, void *data,
                         str_suggest,
                         weechat_color (
                             weechat_config_string (
-                                weechat_aspell_config_color_suggestion_delimiter_word)));
+                                spell_config_color_suggestion_delimiter_word)));
                     weechat_string_dyn_concat (
                         str_suggest,
                         weechat_config_string (
-                            weechat_aspell_config_look_suggestion_delimiter_word));
+                            spell_config_look_suggestion_delimiter_word));
                 }
                 weechat_string_dyn_concat (
                     str_suggest,
                     weechat_color (
                         weechat_config_string (
-                            weechat_aspell_config_color_suggestion)));
+                            spell_config_color_suggestion)));
                 weechat_string_dyn_concat (str_suggest, suggestions2[j]);
             }
             weechat_string_free_split (suggestions2);
@@ -154,14 +154,14 @@ end:
 }
 
 /*
- * Initializes aspell bar items.
+ * Initializes spell bar items.
  */
 
 void
-weechat_aspell_bar_item_init ()
+spell_bar_item_init ()
 {
-    weechat_bar_item_new ("aspell_dict",
-                          &weechat_aspell_bar_item_dict, NULL, NULL);
-    weechat_bar_item_new ("aspell_suggest",
-                          &weechat_aspell_bar_item_suggest, NULL, NULL);
+    weechat_bar_item_new ("spell_dict",
+                          &spell_bar_item_dict, NULL, NULL);
+    weechat_bar_item_new ("spell_suggest",
+                          &spell_bar_item_suggest, NULL, NULL);
 }

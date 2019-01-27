@@ -18,9 +18,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.5]]
 == Version 2.5 (under dev)
 
+New features::
+
+  * spell: rename aspell plugin to spell (issue #1299)
+
 Bug fixes::
 
-  * aspell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
+  * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
 
 Build::
 

@@ -70,7 +70,6 @@ The main WeeChat directories are:
 |          normal/   | Curses interface.
 |    plugins/        | Plugin and scripting API.
 |       alias/       | Alias plugin.
-|       aspell/      | Aspell plugin.
 |       buflist/     | Buflist plugin.
 |       charset/     | Charset plugin.
 |       exec/        | Exec plugin.
@@ -87,6 +86,7 @@ The main WeeChat directories are:
 |       relay/       | Relay plugin (irc proxy + relay for remote interfaces).
 |       ruby/        | Ruby scripting API.
 |       script/      | Script manager.
+|       spell/       | Spell plugin.
 |       tcl/         | Tcl scripting API.
 |       trigger/     | Trigger plugin.
 |       xfer/        | Xfer plugin (IRC DCC file/chat).
@@ -223,14 +223,14 @@ WeeChat "core" is located in following directories:
 |       alias-completion.c          | Alias completions.
 |       alias-config.c              | Alias config options (file alias.conf).
 |       alias-info.c                | Alias info/infolists/hdata.
-|    aspell/                        | Aspell plugin.
-|       weechat-aspell.c            | Main aspell functions.
-|       weechat-aspell-bar-item.c   | Aspell bar items.
-|       weechat-aspell-command.c    | Aspell commands.
-|       weechat-aspell-completion.c | Aspell completions.
-|       weechat-aspell-config.c     | Aspell config options (file aspell.conf).
-|       weechat-aspell-info.c       | Aspell info/infolists/hdata.
-|       weechat-aspell-speller.c    | Spellers management.
+|    spell/                         | Spell checker plugin.
+|       spell.c                     | Main spell checker functions.
+|       spell-bar-item.c            | Spell checker bar items.
+|       spell-command.c             | Spell checker commands.
+|       spell-completion.c          | Spell checker completions.
+|       spell-config.c              | Spell checker config options (file spell.conf).
+|       spell-info.c                | Spell checker info/infolists/hdata.
+|       spell-speller.c             | Spellers management.
 |    buflist/                       | Buflist plugin.
 |       buflist.c                   | Main buflist functions.
 |       buflist-bar-item.c          | Buflist bar items.

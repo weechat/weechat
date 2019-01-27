@@ -9885,12 +9885,6 @@ List of signals sent by WeeChat and plugins:
 | Plugin | Segnale | Argomenti | Descrizione
 
 // TRANSLATION MISSING
-| aspell | aspell_suggest +
-  _(WeeChat ≥ 0.4.0)_ |
-  Pointer: buffer. |
-  New suggestions for a misspelled word.
-
-// TRANSLATION MISSING
 | guile | guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
@@ -10233,6 +10227,12 @@ List of signals sent by WeeChat and plugins:
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Ruby script(s) removed.
+
+// TRANSLATION MISSING
+| spell | spell_suggest +
+  _(WeeChat ≥ 2.4)_ |
+  Pointer: buffer. |
+  New suggestions for a misspelled word.
 
 // TRANSLATION MISSING
 | tcl | tcl_script_loaded +

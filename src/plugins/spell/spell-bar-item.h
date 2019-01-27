@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012 Nils Görs <weechatter@arcor.de>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -17,9 +17,9 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_ASPELL_COMMAND_H
-#define WEECHAT_PLUGIN_ASPELL_COMMAND_H
+#ifndef WEECHAT_PLUGIN_SPELL_BAR_ITEM_H
+#define WEECHAT_PLUGIN_SPELL_BAR_ITEM_H
 
-extern void weechat_aspell_command_init ();
+extern void spell_bar_item_init ();
 
-#endif /* WEECHAT_PLUGIN_ASPELL_COMMAND_H */
+#endif /* WEECHAT_PLUGIN_SPELL_BAR_ITEM_H */

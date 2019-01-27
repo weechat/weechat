@@ -6,8 +6,6 @@
 |===
 | Extension | Nom | Description | Paramètres
 
-| aspell | aspell_dict | liste de dictionnaires (séparés par des virgules) utilisés sur le tampon | pointeur vers un tampon ("0x12345678") ou nom complet de tampon ("irc.freenode.#weechat")
-
 | fifo | fifo_filename | nom du tube FIFO | -
 
 | guile | guile_eval | évaluation de code source | code source à exécuter
@@ -73,6 +71,8 @@
 | ruby | ruby_interpreter | nom de l'interpréteur utilisé | -
 
 | ruby | ruby_version | version de l'interpréteur utilisé | -
+
+| spell | spell_dict | liste de dictionnaires (séparés par des virgules) utilisés sur le tampon | pointeur vers un tampon ("0x12345678") ou nom complet de tampon ("irc.freenode.#weechat")
 
 | tcl | tcl_eval | évaluation de code source | code source à exécuter
 

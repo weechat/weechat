@@ -113,7 +113,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 | gettext                |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev
-  ∥ libenchant-dev       |                  |        | aspell プラグイン
+  ∥ libenchant-dev       |                  |        | spell プラグイン
 | python-dev             | 2.6 以上 ^(4)^   |        | python プラグイン
 | libperl-dev            |                  |        | perl プラグイン
 | ruby2.5, ruby2.5-dev   | 1.8 以上         |        | ruby プラグイン
@@ -197,9 +197,6 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   <<alias_plugin,Alias プラグイン>>のコンパイル。
 
-| ENABLE_ASPELL | `ON`, `OFF` | ON |
-  <<aspell_plugin,Aspell プラグイン>>のコンパイル。
-
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   <<buflist_plugin,Buflist プラグイン>>のコンパイル。
 
@@ -214,7 +211,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
   (コンパイルには時間がかかります。文書を含めたバイナリパッケージをビルドする場合、オンラインで文書を見ることができない場合だけに推奨します)。
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Enchant と含めた <<aspell_plugin,Aspell プラグイン>>のコンパイル。
+  Enchant と含めた <<spell_plugin,Spell プラグイン>>のコンパイル。
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   <<exec_plugin,Exec プラグイン>>のコンパイル。
@@ -277,6 +274,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   すべての<<scripts_plugins,スクリプトプラグイン>>
   (Python、Perl、Ruby、Lua、Tcl、Guile、JavaScript、PHP) のコンパイル。
+
+| ENABLE_SPELL | `ON`, `OFF` | ON |
+  <<spell_plugin,Spell プラグイン>>のコンパイル。
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   <<scripts_plugins,Tcl プラグイン>>のコンパイル。
@@ -566,7 +566,6 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | sec.conf        | 機密データを含む設定ファイル            | *保護されます、機密性の高いデータ*: このファイルを誰かと共有してはいけません
 | plugins.conf    | プラグイン設定ファイル                  | 保護される場合もあります、プラグインおよびスクリプトに依存します
 | alias.conf      | _alias_ プラグイン用の設定ファイル      | 保護される場合もあります、エイリアスに依存します
-| aspell.conf     | _aspell_ プラグイン用の設定ファイル     | 保護されません
 | buflist.conf    | _buflist_ プラグイン用の設定ファイル    | 保護されません
 | charset.conf    | _charset_ プラグイン用の設定ファイル    | 保護されません
 | exec.conf       | _exec_ プラグイン用の設定ファイル       | 保護されません
@@ -583,6 +582,7 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | relay.conf      | _relay_ プラグイン用の設定ファイル      | 保護されません
 | ruby.conf       | _ruby_ プラグイン用の設定ファイル       | 保護されません
 | script.conf     | _script_ プラグイン用の設定ファイル     | 保護されません
+| spell.conf      | _spell_ プラグイン用の設定ファイル      | 保護されません
 | tcl.conf        | _tcl_ プラグイン用の設定ファイル        | 保護されません
 | trigger.conf    | _trigger_ プラグイン用の設定ファイル    | 保護される場合もあります、トリガに依存します
 | xfer.conf       | _xfer_ プラグイン用の設定ファイル       | 保護されません
@@ -707,8 +707,8 @@ WeeChat を起動した端末の例:
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | 要素              | 例                  | 説明
-| aspell_dict       | `fr,en`             | 現在のバッファにおけるスペリング辞書
-| aspell_suggest    | `print,prone,prune` | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
+| spell_dict        | `fr,en`             | 現在のバッファにおけるスペリング辞書
+| spell_suggest     | `print,prone,prune` | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
 | buffer_count      | `10`                | 開いているバッファの総数
 | buffer_short_name | `#test`             | 現在のバッファの短い名前
 | irc_channel       | `#test`             | 現在の IRC チャンネル名
@@ -1619,7 +1619,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+d]     | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `/input delete_next_word`
 | kbd:[Alt+k]     | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `/input grab_key_command`
 | kbd:[Alt+r]     | コマンドラインへの入力をすべて削除 | `/input delete_line`
-| kbd:[Alt+s]     | aspell の有効無効を切り替え | `/mute aspell toggle`
+// TRANSLATION MISSING
+| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -2087,7 +2088,6 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 |===
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
-| aspell     | コマンドラインのスペルチェック
 | buflist    | バッファリストを表示するためのバー要素
 | charset    | バッファの文字コードに従ってデコード/エンコード
 | exec       | WeeChat 内部から外部コマンドを実行
@@ -2105,6 +2105,7 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 | guile      | Guile (scheme) スクリプト API
 | javascript | JavaScript スクリプト API
 | php        | PHP スクリプト API
+| spell      | コマンドラインのスペルチェック
 | trigger    | WeeChat およびプラグインが発生させたイベントに対するテキスト置換とコマンド実行
 | xfer       | ファイル転送とダイレクトチャット
 |===
@@ -2147,15 +2148,15 @@ _alias.conf_ ファイル内のセクション:
                /set alias.completion.*        | 別名に割り当てた補完
 |===
 
-[[aspell_plugin]]
-=== Aspell
+[[spell_plugin]]
+=== Spell
 
-Aspell
+Spell
 プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
 
 スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 ==== 辞書
 
 スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
@@ -2166,25 +2167,25 @@ WeeChat はすべての辞書を使って単語をチェックします。
 英語とフランス語の辞書を使う例:
 
 ----
-/set aspell.check.default_dict "en,fr"
+/set spell.check.default_dict "en,fr"
 ----
 
 特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
 
 ----
-/aspell setdict de
+/spell setdict de
 ----
 
 バッファグループに対して特定の辞書を指定することも可能です。freenode
 IRC サーバに対して英語の辞書を使う例:
 
 ----
-/set aspell.dict.irc.freenode en
+/set spell.dict.irc.freenode en
 ----
 
-詳しい情報はコマンド <<command_aspell_aspell,/aspell>> を参照してください。
+詳しい情報はコマンド <<command_spell_spell,/spell>> を参照してください。
 
-[[aspell_speller_options]]
+[[spell_speller_options]]
 ==== Speller オプション
 
 Speller オプションは aspell 設定の "option"
@@ -2200,17 +2201,17 @@ $ aspell config
 例えば、"ignore-case" オプションを有効化するには:
 
 ----
-/set aspell.option.ignore-case "true"
+/set spell.option.ignore-case "true"
 ----
 
-[[aspell_suggestions]]
+[[spell_suggestions]]
 ==== 修正候補
 
-"aspell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
-_aspell.check.suggestions_ オプションで設定します。
+"spell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
+_spell.check.suggestions_ オプションで設定します。
 
-修正候補を利用するには、_aspell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
-バーなどに "aspell_suggest" バー要素を追加してください。
+修正候補を利用するには、_spell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
+バーなどに "spell_suggest" バー要素を追加してください。
 
 英語辞書 (`en`) を用いた修正候補の例:
 
@@ -2228,30 +2229,30 @@ _aspell.check.suggestions_ オプションで設定します。
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[aspell_commands]]
+[[spell_commands]]
 ==== コマンド
 
-include::autogen/user/aspell_commands.adoc[]
+include::autogen/user/spell_commands.adoc[]
 
-[[aspell_options]]
+[[spell_options]]
 ==== オプション
 
-_aspell.conf_ ファイル内のセクション:
+_spell.conf_ ファイル内のセクション:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| セクション | 操作コマンド                              | 説明
-| color      | /set aspell.color.*                       | 色
-| check      | /set aspell.check.*                       | スペルチェックの操作コマンド
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
-| look       | /set aspell.look.*                        | 外観
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
+| セクション | 操作コマンド                           | 説明
+| color      | /set spell.color.*                     | 色
+| check      | /set spell.check.*                     | スペルチェックの操作コマンド
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| look       | /set spell.look.*                      | 外観
+| option     | /set spell.option.*                    | <<spell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
 |===
 
 オプション:
 
-include::autogen/user/aspell_options.adoc[]
+include::autogen/user/spell_options.adoc[]
 
 [[buflist_plugin]]
 === Buflist

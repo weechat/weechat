@@ -114,7 +114,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | gettext                |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates        |               |          | Zertifikate für SSL Verbindungen.
 | libaspell-dev
-  ∥ libenchant-dev       |               |          | Aspell Erweiterung.
+  ∥ libenchant-dev       |               |          | Spell Erweiterung.
 | python-dev             | ≥ 2.6 ^(4)^   |          | Python Erweiterung.
 | libperl-dev            |               |          | Perl Erweiterung.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Ruby Erweiterung.
@@ -200,9 +200,6 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   kompiliert <<alias_plugin,Alias Erweiterung>>.
 
-| ENABLE_ASPELL | `ON`, `OFF` | ON |
-  kompiliert <<aspell_plugin,Aspell Erweiterung>>.
-
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   kompiliert <<buflist_plugin,Buflist Erweiterung>>.
 
@@ -218,7 +215,7 @@ Liste von häufig verwendeten Optionen:
   Dokumentation nicht auf der Homepage abrufen kann).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  kompiliert <<aspell_plugin,Aspell plugin>> mittels Enchant.
+  kompiliert <<spell_plugin,Spell plugin>> mittels Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   kompiliert <<exec_plugin,Exec Erweiterung>>.
@@ -281,6 +278,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Skripten-Erweiterungen>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, JavaScript, PHP).
+
+| ENABLE_SPELL | `ON`, `OFF` | ON |
+  kompiliert <<spell_plugin,Spell Erweiterung>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Tcl Erweiterung>>.
@@ -572,7 +572,6 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | sec.conf        | Konfigurationsdatei mit sensiblen Daten    | *Ja, hoch sensibel*: diese Datei sollte niemals weitergegeben werden.
 | plugins.conf    | Konfigurationsdatei für Erweiterungen      | möglich, hängt von der Erweiterung/Skript ab.
 | alias.conf      | Konfigurationsdatei: Alias-Erweiterung     | möglich, hängt von den Aliases ab.
-| aspell.conf     | Konfiguration für _aspell_-Erweiterung     | Nein.
 | buflist.conf    | Konfiguration für _buflist_-Erweiterung    | Nein.
 | charset.conf    | Konfiguration für _charset_-Erweiterung    | Nein.
 | exec.conf       | Konfiguration für _exec_-Erweiterung       | Nein.
@@ -589,6 +588,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | relay.conf      | Konfiguration für _relay_-Erweiterung      | Nein.
 | ruby.conf       | Konfiguration für _ruby_-Erweiterung       | Nein.
 | script.conf     | Konfiguration für _script_-Erweiterung     | Nein.
+| spell.conf      | Konfiguration für _spell_-Erweiterung      | Nein.
 | tcl.conf        | Konfiguration für _tcl_-Erweiterung        | Nein.
 | trigger.conf    | Konfiguration für _trigger_-Erweiterung    | möglich, hängt von den Triggern ab.
 | xfer.conf       | Konfiguration für _xfer_-Erweiterung       | Nein.
@@ -710,8 +710,8 @@ andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar ak
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item              | Beispiel            | Beschreibung
-| aspell_dict       | `de,en`             | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
-| aspell_suggest    | `Glück,Glocke,Block`| Vorschläge für ein falsch geschriebenes Wort.
+| spell_dict        | `de,en`             | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
+| spell_suggest     | `Glück,Glocke,Block`| Vorschläge für ein falsch geschriebenes Wort.
 | buffer_count      | `10`                | absolute Anzahl an geöffneten Buffern.
 | buffer_short_name | `#test`             | Kurzname des aktuellen Buffers.
 | irc_channel       | `#test`             | aktueller IRC Channelname.
@@ -1652,7 +1652,8 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 | kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_next_word`
 | kbd:[Alt+k]     | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `/input grab_key_command`
 | kbd:[Alt+r]     | komplette Eingabezeile lösche.n| `/input delete_line`
-| kbd:[Alt+s]     | schaltet die Aspell Funktion an/aus. | `/mute aspell toggle`
+// TRANSLATION MISSING
+| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -2135,7 +2136,6 @@ Standarderweiterungen:
 |===
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
-| aspell      | Rechtschreibprüfung für Befehlszeile.
 | buflist     | Bar-Item mit der Liste aller Buffern.
 | charset     | Zeichensatz (de)-kodierung in Buffern.
 | exec        | ausführen von externen Befehlen aus WeeChat heraus.
@@ -2153,6 +2153,7 @@ Standarderweiterungen:
 | guile       | Guile(scheme)-Skript API.
 | javascript  | JavaScript-Skript API.
 | php         | PHP-Skript API.
+| spell       | Rechtschreibprüfung für Befehlszeile.
 | trigger     | Veränderung von Text und Ausführen von Befehlen bei einem Ereignis, welche durch WeeChat oder eine Erweiterung ausgelöst werden.
 | xfer        | Datentransfer und Direktchat.
 |===
@@ -2193,16 +2194,16 @@ Sektionen in Datei _alias.conf_:
                /set alias.completion.*        | Vervollständigung für Alias.
 |===
 
-[[aspell_plugin]]
-=== Aspell
+[[spell_plugin]]
+=== Spell
 
-Mit der ASpell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
+Mit der Spell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
 Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
 
 Die Rechtschreibprüfung ist standardmäßig deaktiviert und kann mittels dem
 Tastenbefehl [Alt+s] umgeschaltet werden.
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 ==== Wörterbücher
 
 Um die Rechtschreibprüfung nutzen zu können muss vorab ein Wörterbuch definiert werden,
@@ -2214,26 +2215,26 @@ die Wörter mit allen Wörterbüchern ab,
 Um zum Beispiel Englisch und Deutsch zu nutzen:
 
 ----
-/set aspell.check.default_dict "en,de"
+/set spell.check.default_dict "en,de"
 ----
 
 Es ist möglich ein anderes Wörterbuch für einen speziellen Buffer zu verwenden, zum
 Beispiel in einem französischen Channel:
 
 ----
-/aspell setdict fr
+/spell setdict fr
 ----
 
 Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
 deutsche Wörterbuch für alle Channels auf dem freenode IRC Server:
 
 ----
-/set aspell.dict.irc.freenode de
+/set spell.dict.irc.freenode de
 ----
 
-Für weitere Informationen, siehe den Befehl <<command_aspell_aspell,/aspell>>.
+Für weitere Informationen, siehe den Befehl <<command_spell_spell,/spell>>.
 
-[[aspell_speller_options]]
+[[spell_speller_options]]
 ==== Optionen für Rechtschreibprüfung
 
 Optionen für die Rechtschreibprüfung können definiert werden indem man die entsprechende
@@ -2249,18 +2250,18 @@ $ aspell config
 Um zum Beispiel die Option "ignore-case" einzuschalten:
 
 ----
-/set aspell.option.ignore-case "true"
+/set spell.option.ignore-case "true"
 ----
 
-[[aspell_suggestions]]
+[[spell_suggestions]]
 ==== Rechtschreibkorrektur
 
-Eine Rechtschreibkorrektur wird in der Bar-Item "aspell_suggest" angezeigt.
+Eine Rechtschreibkorrektur wird in der Bar-Item "spell_suggest" angezeigt.
 Die Anzahl an Vorschlägen, für die Rechtschreibkorrektur, kann mit der Option
-_aspell.check.suggestions_ bestimmt werden.
+_spell.check.suggestions_ bestimmt werden.
 
-Um die Rechtschreibkorrektur zu aktivieren, muss für die Option _aspell.check.suggestions_
-ein Wert ≥ 0 eingestellt werden und das Bar-Item "aspell_suggest" zu einer Bar, zum
+Um die Rechtschreibkorrektur zu aktivieren, muss für die Option _spell.check.suggestions_
+ein Wert ≥ 0 eingestellt werden und das Bar-Item "spell_suggest" zu einer Bar, zum
 Beispiel _status_, hinzufügt werden.
 
 Beispiel der Rechtschreibkorrektur, mit einem deutschen Wörterbuch (`de`):
@@ -2279,30 +2280,30 @@ Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[aspell_commands]]
+[[spell_commands]]
 ==== Befehle
 
-include::autogen/user/aspell_commands.adoc[]
+include::autogen/user/spell_commands.adoc[]
 
-[[aspell_options]]
+[[spell_options]]
 ==== Optionen
 
-Sektionen in Datei _aspell.conf_:
+Sektionen in Datei _spell.conf_:
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Sektion    | Steuerbefehl                              | Beschreibung
-| color      | /set aspell.color.*                       | Farben.
-| check      | /set aspell.check.*                       | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-| look       | /set aspell.look.*                        | Erscheinungsbild.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden).
+| Sektion    | Steuerbefehl                           | Beschreibung
+| color      | /set spell.color.*                     | Farben.
+| check      | /set spell.check.*                     | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| look       | /set spell.look.*                      | Erscheinungsbild.
+| option     | /set spell.option.*                    | <<spell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden).
 |===
 
 Optionen:
 
-include::autogen/user/aspell_options.adoc[]
+include::autogen/user/spell_options.adoc[]
 
 [[buflist_plugin]]
 === Buflist

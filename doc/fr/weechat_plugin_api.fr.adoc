@@ -9768,11 +9768,6 @@ Liste des signaux envoyés par WeeChat et les extensions :
 |===
 | Extension | Signal | Paramètres | Description
 
-| aspell | aspell_suggest +
-  _(WeeChat ≥ 0.4.0)_ |
-  Pointeur : tampon. |
-  Nouvelles suggestions pour un mot mal orthographié.
-
 | guile | guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   Chaîne : chemin vers le script. |
@@ -10077,6 +10072,11 @@ Liste des signaux envoyés par WeeChat et les extensions :
   _(WeeChat ≥ 0.3.9)_ |
   Chaîne : liste de scripts supprimés (séparés par des virgules). |
   Script(s) ruby supprimé(s).
+
+| spell | spell_suggest +
+  _(WeeChat ≥ 2.4)_ |
+  Pointeur : tampon. |
+  Nouvelles suggestions pour un mot mal orthographié.
 
 | tcl | tcl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |

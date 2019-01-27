@@ -10,9 +10,6 @@ $HOME/.weechat/sec.conf::
 $HOME/.weechat/alias.conf::
     configurační soubor pro _alias_ plugin
 
-$HOME/.weechat/aspell.conf::
-    konfigurační soubor pro _aspell_ plugin
-
 $HOME/.weechat/buflist.conf::
     konfigurační soubor pro _buflist_ plugin
 
@@ -60,6 +57,9 @@ $HOME/.weechat/ruby.conf::
 
 $HOME/.weechat/script.conf::
     konfigurační soubor pro _script_ plugin
+
+$HOME/.weechat/spell.conf::
+    konfigurační soubor pro _spell_ plugin
 
 $HOME/.weechat/tcl.conf::
     konfigurační soubor pro _tcl_ plugin

@@ -22,23 +22,23 @@ AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(ASPELL_CFLAGS) $(ENCHANT_CFLAG
 
 libdir = ${weechat_libdir}/plugins
 
-lib_LTLIBRARIES = aspell.la
+lib_LTLIBRARIES = spell.la
 
-aspell_la_SOURCES = weechat-aspell.c \
-                    weechat-aspell.h \
-                    weechat-aspell-bar-item.c \
-                    weechat-aspell-bar-item.h \
-                    weechat-aspell-command.c \
-                    weechat-aspell-command.h \
-                    weechat-aspell-completion.c \
-                    weechat-aspell-completion.h \
-                    weechat-aspell-config.c \
-                    weechat-aspell-config.h \
-                    weechat-aspell-info.c \
-                    weechat-aspell-info.h \
-                    weechat-aspell-speller.c \
-                    weechat-aspell-speller.h
-aspell_la_LDFLAGS = -module -no-undefined
-aspell_la_LIBADD  = $(ASPELL_LFLAGS) $(ENCHANT_LIBS)
+spell_la_SOURCES = spell.c \
+                   spell.h \
+                   spell-bar-item.c \
+                   spell-bar-item.h \
+                   spell-command.c \
+                   spell-command.h \
+                   spell-completion.c \
+                   spell-completion.h \
+                   spell-config.c \
+                   spell-config.h \
+                   spell-info.c \
+                   spell-info.h \
+                   spell-speller.c \
+                   spell-speller.h
+spell_la_LDFLAGS = -module -no-undefined
+spell_la_LIBADD  = $(ASPELL_LFLAGS) $(ENCHANT_LIBS)
 
 EXTRA_DIST = CMakeLists.txt

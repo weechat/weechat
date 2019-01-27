@@ -111,7 +111,7 @@ compiler WeeChat.
 | gettext                |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
 | ca-certificates        |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |        | Extension aspell.
+  ∥ libenchant-dev       |               |        | Extension spell.
 | python-dev             | ≥ 2.6 ^(4)^   |        | Extension python.
 | libperl-dev            |               |        | Extension perl.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |        | Extension ruby.
@@ -196,9 +196,6 @@ Liste des options couramment utilisées :
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Compiler <<alias_plugin,l'extension Alias>>.
 
-| ENABLE_ASPELL | `ON`, `OFF` | ON |
-  Compiler <<aspell_plugin,l'extension Aspell>>.
-
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Compiler <<buflist_plugin,l'extension Buflist>>.
 
@@ -214,7 +211,7 @@ Liste des options couramment utilisées :
   si vous ne pouvez pas consulter la documentation en ligne).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compiler <<aspell_plugin,l'extension Aspell>> avec Enchant.
+  Compiler <<spell_plugin,l'extension Spell>> avec Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   Compiler <<exec_plugin,l'extension Exec>>.
@@ -277,6 +274,9 @@ Liste des options couramment utilisées :
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,les extensions de script>> (Python, Perl, Ruby,
   Lua, Tcl, Guile, JavaScript, PHP).
+
+| ENABLE_SPELL | `ON`, `OFF` | ON |
+  Compiler <<spell_plugin,l'extension Spell>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Tcl>>.
@@ -576,7 +576,6 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | sec.conf        | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque.
 | plugins.conf    | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
 | alias.conf      | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
-| aspell.conf     | Fichier de configuration de l'extension _aspell_     | Non.
 | buflist.conf    | Fichier de configuration de l'extension _buflist_    | Non.
 | charset.conf    | Fichier de configuration de l'extension _charset_    | Non.
 | exec.conf       | Fichier de configuration de l'extension _exec_       | Non.
@@ -594,6 +593,7 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | ruby.conf       | Fichier de configuration de l'extension _ruby_       | Non.
 | script.conf     | Fichier de configuration de l'extension _script_     | Non.
 | tcl.conf        | Fichier de configuration de l'extension _tcl_        | Non.
+| spell.conf      | Fichier de configuration de l'extension _spell_      | Non.
 | trigger.conf    | Fichier de configuration de l'extension _trigger_    | Possible, cela dépend des triggers.
 | xfer.conf       | Fichier de configuration de l'extension _xfer_       | Non.
 | weechat.log     | Fichier de log WeeChat                               | Non.
@@ -718,8 +718,8 @@ Autres objets (non utilisés dans des barres par défaut) :
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Objet (item)      | Exemple             | Description
-| aspell_dict       | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
-| aspell_suggest    | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié).
+| spell_dict        | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
+| spell_suggest     | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié).
 | buffer_count      | `10`                | Nombre total de tampons ouverts.
 | buffer_short_name | `#test`             | Nom court du tampon courant.
 | irc_channel       | `#test`             | Nom de canal IRC courant.
@@ -1670,7 +1670,7 @@ avec `/help buffer_autoset`.
 | kbd:[Alt+d]     | Effacer le mot suivant (la chaîne supprimée est copiée dans le presse-papiers interne). | `/input delete_next_word`
 | kbd:[Alt+k]     | Capturer une touche et insérer son code (et la commande associée si la commande existe) sur la ligne de commande. | `/input grab_key_command`
 | kbd:[Alt+r]     | Effacer entièrement la ligne de commande. | `/input delete_line`
-| kbd:[Alt+s]     | Activer/désactiver aspell. | `/mute aspell toggle`
+| kbd:[Alt+s]     | Activer/désactiver la vérification de l'orthographe. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -2159,7 +2159,6 @@ Les extensions par défaut sont :
 |===
 | Extension  | Description
 | alias      | Définition d'alias pour les commandes.
-| aspell     | Vérification orthographique de la ligne de commande.
 | buflist    | Objet de barre avec la liste des tampons.
 | charset    | Encodage/encodage avec jeu de caractère sur les tampons.
 | exec       | Exécution de commandes externes dans WeeChat.
@@ -2177,6 +2176,7 @@ Les extensions par défaut sont :
 | guile      | Interface (API) pour scripts Guile (scheme).
 | javascript | Interface (API) pour scripts JavaScript.
 | php        | Interface (API) pour scripts PHP.
+| spell      | Vérification orthographique de la ligne de commande.
 | trigger    | Remplacement de texte et exécution de commande sur des évènements de WeeChat ou des extensions.
 | xfer       | Transfert de fichier et discussion directe.
 |===
@@ -2219,16 +2219,16 @@ Sections dans le fichier _alias.conf_ :
                /set alias.completion.*        | Complétions pour les alias.
 |===
 
-[[aspell_plugin]]
-=== Aspell
+[[spell_plugin]]
+=== Spell
 
-L'extension Aspell permet de vérifier l'orthographe de la ligne de commande.
+L'extension Spell permet de vérifier l'orthographe de la ligne de commande.
 Il est possible d'utiliser plusieurs langages par tampon.
 
 La vérification de l'orthographe est désactivée par défaut et peut être
 activée/désactivée avec la touche kbd:[Alt+s].
 
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 ==== Dictionnaires
 
 Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
@@ -2240,26 +2240,26 @@ les mots dans tous les dictionnaires.
 Par exemple pour utiliser l'anglais et le français :
 
 ----
-/set aspell.check.default_dict "en,fr"
+/set spell.check.default_dict "en,fr"
 ----
 
 Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
 par exemple sur un canal allemand :
 
 ----
-/aspell setdict de
+/spell setdict de
 ----
 
 Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
 exemple l'anglais pour tous les canaux du serveur IRC freenode :
 
 ----
-/set aspell.dict.irc.freenode en
+/set spell.dict.irc.freenode en
 ----
 
-Pour plus d'informations, voir la commande <<command_aspell_aspell,/aspell>>.
+Pour plus d'informations, voir la commande <<command_spell_spell,/spell>>.
 
-[[aspell_speller_options]]
+[[spell_speller_options]]
 ==== Options du vérificateur d'orthographe
 
 Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
@@ -2275,18 +2275,18 @@ $ aspell config
 Par exemple, pour activer l'option "ignore-case" :
 
 ----
-/set aspell.option.ignore-case "true"
+/set spell.option.ignore-case "true"
 ----
 
-[[aspell_suggestions]]
+[[spell_suggestions]]
 ==== Suggestions
 
-Les suggestions sont affichées dans un objet de barre appelé "aspell_suggest".
-Le nombre de suggestions est défini dans l'option _aspell.check.suggestions_.
+Les suggestions sont affichées dans un objet de barre appelé "spell_suggest".
+Le nombre de suggestions est défini dans l'option _spell.check.suggestions_.
 
 Pour activer les suggestions, vous devez modifier l'option
-_aspell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
-"aspell_suggest" à une barre, par exemple _status_.
+_spell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
+"spell_suggest" à une barre, par exemple _status_.
 
 Exemple de suggestions avec un dictionnaire anglais (`en`) :
 
@@ -2304,30 +2304,30 @@ Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[aspell_commands]]
+[[spell_commands]]
 ==== Commandes
 
-include::autogen/user/aspell_commands.adoc[]
+include::autogen/user/spell_commands.adoc[]
 
-[[aspell_options]]
+[[spell_options]]
 ==== Options
 
-Sections dans le fichier _aspell.conf_ :
+Sections dans le fichier _spell.conf_ :
 
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section    | Commande de contrôle                      | Description
-| color      | /set aspell.color.*                       | Couleurs.
-| check      | /set aspell.check.*                       | Options pour contrôler la vérification orthographique.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| look       | /set aspell.look.*                        | Aspect/présentation.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
+| Section    | Commande de contrôle                   | Description
+| color      | /set spell.color.*                     | Couleurs.
+| check      | /set spell.check.*                     | Options pour contrôler la vérification orthographique.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look       | /set spell.look.*                      | Aspect/présentation.
+| option     | /set spell.option.*                    | <<spell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
 |===
 
 Options :
 
-include::autogen/user/aspell_options.adoc[]
+include::autogen/user/spell_options.adoc[]
 
 [[buflist_plugin]]
 === Buflist

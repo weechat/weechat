@@ -50,7 +50,7 @@ Following packages are optional:
 
 * for i18n: gettext
 * for SSL: gnutls, ca-certificates
-* for spell checking: aspell
+* for spell checking: aspell or enchant
 * for scripting: python, perl, ruby, lua, tcl, guile, libv8 (javascript), php
 * for building doc and man page: asciidoctor
 * for building tests: C++ compiler, CppUTest

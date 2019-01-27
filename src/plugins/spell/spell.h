@@ -18,8 +18,8 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_PLUGIN_ASPELL_H
-#define WEECHAT_PLUGIN_ASPELL_H
+#ifndef WEECHAT_PLUGIN_SPELL_H
+#define WEECHAT_PLUGIN_SPELL_H
 
 #ifdef USE_ENCHANT
 #include <enchant.h>
@@ -27,10 +27,10 @@
 #include <aspell.h>
 #endif /* USE_ENCHANT */
 
-#define weechat_plugin weechat_aspell_plugin
-#define ASPELL_PLUGIN_NAME "aspell"
+#define weechat_plugin weechat_spell_plugin
+#define SPELL_PLUGIN_NAME "spell"
 
-struct t_aspell_code
+struct t_spell_code
 {
     char *code;
     char *name;
@@ -40,13 +40,13 @@ struct t_aspell_code
 extern EnchantBroker *broker;
 #endif /* USE_ENCHANT */
 
-extern struct t_weechat_plugin *weechat_aspell_plugin;
-extern int aspell_enabled;
-extern struct t_aspell_code aspell_langs[];
-extern struct t_aspell_code aspell_countries[];
+extern struct t_weechat_plugin *weechat_spell_plugin;
+extern int spell_enabled;
+extern struct t_spell_code spell_langs[];
+extern struct t_spell_code spell_countries[];
 
-extern char *weechat_aspell_build_option_name (struct t_gui_buffer *buffer);
-extern const char *weechat_aspell_get_dict_with_buffer_name (const char *name);
-extern const char *weechat_aspell_get_dict (struct t_gui_buffer *buffer);
+extern char *spell_build_option_name (struct t_gui_buffer *buffer);
+extern const char *spell_get_dict_with_buffer_name (const char *name);
+extern const char *spell_get_dict (struct t_gui_buffer *buffer);
 
-#endif /* WEECHAT_PLUGIN_ASPELL_H */
+#endif /* WEECHAT_PLUGIN_SPELL_H */

@@ -17,6 +17,23 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.5]]
+== Version 2.5 (under dev)
+
+[[v2.5_aspell_plugin_renamed]]
+=== Aspell plugin renamed to Spell
+
+The "aspell" plugin has been renamed to "spell".
+
+Consequently, the following things have been renamed as well:
+
+* file _aspell.conf_ renamed to _spell.conf_; the content of the
+  file has not changed, so you can just rename the file to keep your changes
+* options _aspell.*_ have been renamed to _spell.*_
+* bar item _aspell_dict_ renamed to _spell_dict_
+* bar item _aspell_suggest_ renamed to _spell_suggest_
+* info _aspell_dict_ renamed to _spell_dict_
+
 [[v2.4]]
 == Version 2.4 (2019-02-17)
 

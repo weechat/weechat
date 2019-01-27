@@ -1041,15 +1041,20 @@ $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 // TRANSLATION MISSING
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 === I installed aspell dictionaries on my system, how can I use them without restarting WeeChat?
 
 // TRANSLATION MISSING
-You have to reload the aspell plugin:
+You have to reload the spell plugin:
 
 ----
-/plugin reload aspell
+/plugin reload spell
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 2.3, the "spell" plugin was named "aspell", so the command is:
+`/plugin reload aspell`.
 
 [[settings]]
 == Impostazioni
@@ -1083,8 +1088,8 @@ Esistono diversi trucchi per ottimizzare l'uso della memoria:
 * utilizzare l'ultima versione stabile (si suppone che abbia meno falle di memoria
   rispetto le versioni precedenti)
 // TRANSLATION MISSING
-* non caricare alcuni plugin se non vengono utilizzati, ad esempio: aspell, buflist,
-  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, xfer (usato per DCC).
+* non caricare alcuni plugin se non vengono utilizzati, ad esempio: buflist,
+  fifo, logger, perl, python, ruby, lua, tcl, guile, javascript, php, spell, xfer (usato per DCC).
   See `/help weechat.plugin.autoload`.
 * caricare solo gli script veramente necessari
 * non caricare i certificati se SSL *NON* viene usato: usare una stringa vuota nell'opzione
@@ -1105,7 +1110,7 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
   `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
 // TRANSLATION MISSING
 * disable real time check of misspelled words in command line (if you enabled it):
-  `/set aspell.check.real_time off`
+  `/set spell.check.real_time off`
 * set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file _/etc/localtime_
 

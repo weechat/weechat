@@ -94,7 +94,6 @@ keyboard, it is customizable and extensible with scripts."
 weechat_CONTENTS="
     usr/bin/
     usr/lib/weechat/plugins/alias.dll
-    usr/lib/weechat/plugins/aspell.dll
     usr/lib/weechat/plugins/buflist.dll
     usr/lib/weechat/plugins/charset.dll
     usr/lib/weechat/plugins/exec.dll
@@ -104,6 +103,7 @@ weechat_CONTENTS="
     usr/lib/weechat/plugins/logger.dll
     usr/lib/weechat/plugins/relay.dll
     usr/lib/weechat/plugins/script.dll
+    usr/lib/weechat/plugins/spell.dll
     usr/lib/weechat/plugins/trigger.dll
     usr/lib/weechat/plugins/xfer.dll
     usr/share/locale/

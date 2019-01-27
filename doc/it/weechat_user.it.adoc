@@ -130,7 +130,7 @@ compilare WeeChat.
 | gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
 | ca-certificates        |               |           | Certificati per le connessioni SSL.
 | libaspell-dev
-  ∥ libenchant-dev       |               |           | Plugin aspell.
+  ∥ libenchant-dev       |               |           | Plugin spell.
 | python-dev             | ≥ 2.6 ^(4)^   |           | Plugin python.
 | libperl-dev            |               |           | Plugin perl.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |           | Plugin ruby.
@@ -226,9 +226,6 @@ List of commonly used options:
 | ENABLE_ALIAS | `ON`, `OFF` | ON |
   Compile <<alias_plugin,Alias plugin>>.
 
-| ENABLE_ASPELL | `ON`, `OFF` | ON |
-  Compile <<aspell_plugin,Aspell plugin>>.
-
 | ENABLE_BUFLIST | `ON`, `OFF` | ON |
   Compile <<buflist_plugin,Buflist plugin>>.
 
@@ -244,7 +241,7 @@ List of commonly used options:
   online).
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  Compile <<aspell_plugin,Aspell plugin>> with Enchant.
+  Compile <<spell_plugin,Spell plugin>> with Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   Compile <<exec_plugin,Exec plugin>>.
@@ -307,6 +304,9 @@ List of commonly used options:
 | ENABLE_SCRIPTS | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,script plugins>> (Python, Perl, Ruby, Lua, Tcl,
   Guile, JavaScript, PHP).
+
+| ENABLE_SPELL | `ON`, `OFF` | ON |
+  Compile <<spell_plugin,Spell plugin>>.
 
 | ENABLE_TCL | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Tcl plugin>>.
@@ -611,7 +611,6 @@ The files in the WeeChat home directory are:
 | sec.conf        | Configuration file with secured data       | *Yes, highly sensitive*: this file must never be shared with anyone.
 | plugins.conf    | Plugins configuration file                 | Possible, depends on plugins/scripts.
 | alias.conf      | Configuration file for _alias_ plugin      | Possible, depends on aliases.
-| aspell.conf     | Configuration file for _aspell_ plugin     | No.
 | buflist.conf    | Configuration file for _buflist_ plugin    | No.
 | charset.conf    | Configuration file for _charset_ plugin    | No.
 | exec.conf       | Configuration file for _exec_ plugin       | No.
@@ -628,6 +627,7 @@ The files in the WeeChat home directory are:
 | relay.conf      | Configuration file for _relay_ plugin      | No.
 | ruby.conf       | Configuration file for _ruby_ plugin       | No.
 | script.conf     | Configuration file for _script_ plugin     | No.
+| spell.conf      | Configuration file for _spell_ plugin      | No.
 | tcl.conf        | Configuration file for _tcl_ plugin        | No.
 | trigger.conf    | Configuration file for _trigger_ plugin    | Possible, depends on triggers.
 | xfer.conf       | Configuration file for _xfer_ plugin       | No.
@@ -763,8 +763,8 @@ Other items available (not used in bars by default):
 [width="100%",cols="^3,^4,10",options="header"]
 |===
 | Item              | Example             | Description
-| aspell_dict       | `fr,en`             | Spelling dictionaries used on current buffer.
-| aspell_suggest    | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled).
+| spell_dict        | `fr,en`             | Spelling dictionaries used on current buffer.
+| spell_suggest     | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled).
 | buffer_count      | `10`                | Total number of buffers opened.
 | buffer_short_name | `#test`             | Current buffer short name.
 | irc_channel       | `#test`             | Current IRC channel name.
@@ -1711,7 +1711,8 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `/input delete_next_word`
 | kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `/input grab_key_command`
 | kbd:[Alt+r]     | Elimina l'intera riga di comando. | `/input delete_line`
-| kbd:[Alt+s]     | Abilita/disabilita aspell. | `/mute aspell toggle`
+// TRANSLATION MISSING
+| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -2217,7 +2218,6 @@ I plugin predefiniti sono:
 |===
 | Plugin     | Descrizione
 | alias      | Definisce gli alias per i comandi.
-| aspell     | Controllo ortografico per la riga di comando.
 // TRANSLATION MISSING
 | buflist    | Bar item with list of buffers.
 | charset    | Set di caratteri per la codifica/decodifica nei buffer.
@@ -2238,6 +2238,7 @@ I plugin predefiniti sono:
 | guile      | API per lo scripting in Guile (scheme).
 | javascript | API per lo scripting in JavaScript.
 | php        | API per lo scripting in PHP.
+| spell      | Controllo ortografico per la riga di comando.
 // TRANSLATION MISSING
 | trigger    | Text replacement and command execution on events triggered by WeeChat/plugins.
 | xfer       | Trasferimento file e chat diretta.
@@ -2284,17 +2285,17 @@ Sections in file _alias.conf_:
                /set alias.completion.*        | Completions for aliases.
 |===
 
-[[aspell_plugin]]
-=== Aspell
+[[spell_plugin]]
+=== Spell
 
-Il plugin Aspell consente di verificare l'ortografia nella riga di comando.
+Il plugin Spell consente di verificare l'ortografia nella riga di comando.
 È possibile utilizzare più lingue per buffer.
 
 // TRANSLATION MISSING
 Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
 
 // TRANSLATION MISSING
-[[aspell_dictionaries]]
+[[spell_dictionaries]]
 ==== Dictionaries
 
 Before using spell checking, dictionaries must be defined, either globally or
@@ -2306,14 +2307,14 @@ dictionaries.
 For example to use English and French:
 
 ----
-/set aspell.check.default_dict "en,fr"
+/set spell.check.default_dict "en,fr"
 ----
 
 It is possible to use a different dictionary on a specific buffer, for example
 on a German channel:
 
 ----
-/aspell setdict de
+/spell setdict de
 ----
 
 // TRANSLATION MISSING
@@ -2321,12 +2322,12 @@ You can also specify a dictionary for a group of buffers, for example English
 for all channels on freenode IRC server:
 
 ----
-/set aspell.dict.irc.freenode en
+/set spell.dict.irc.freenode en
 ----
 
-For more information, see the command <<command_aspell_aspell,/aspell>>.
+For more information, see the command <<command_spell_spell,/spell>>.
 
-[[aspell_speller_options]]
+[[spell_speller_options]]
 ==== Opzioni ortografiche
 
 Le opzioni ortografiche possono essere definite aggiungendo opzioni nella
@@ -2342,18 +2343,18 @@ $ aspell config
 Ad esempio, per abilitare l'opzione "ignore-case":
 
 ----
-/set aspell.option.ignore-case "true"
+/set spell.option.ignore-case "true"
 ----
 
 // TRANSLATION MISSING
-[[aspell_suggestions]]
+[[spell_suggestions]]
 ==== Suggestions
 
-Suggestions are displayed in a bar item called "aspell_suggest". The number of
-suggestions is set in option _aspell.check.suggestions_.
+Suggestions are displayed in a bar item called "spell_suggest". The number of
+suggestions is set in option _spell.check.suggestions_.
 
-To enable suggestions you must set option _aspell.check.suggestions_ to an
-integer ≥ 0 and add the bar item "aspell_suggest" to a bar, like _status_.
+To enable suggestions you must set option _spell.check.suggestions_ to an
+integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
 
 Example of suggestions with English dictionary (`en`):
 
@@ -2371,33 +2372,33 @@ Example of suggestions with English and French dictionaries (`en,fr`):
 └─────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-[[aspell_commands]]
+[[spell_commands]]
 ==== Comandi
 
-include::autogen/user/aspell_commands.adoc[]
+include::autogen/user/spell_commands.adoc[]
 
-[[aspell_options]]
+[[spell_options]]
 ==== Opzioni
 
 // TRANSLATION MISSING
-Sections in file _aspell.conf_:
+Sections in file _spell.conf_:
 
 // TRANSLATION MISSING
 [width="100%",cols="3m,6m,16",options="header"]
 |===
-| Section    | Control command                           | Description
-| color      | /set aspell.color.*                       | Colors.
-| check      | /set aspell.check.*                       | Options to control spell checking.
-| dict       | <<command_aspell_aspell,/aspell setdict>> +
-               /set aspell.dict.*                        | Dictionaries used by buffer (options can be added/removed in section).
-| look       | /set aspell.look.*                        | Look and feel.
-| option     | /set aspell.option.*                      | <<aspell_speller_options,Opzioni ortografiche>> (options can be added/removed in section).
+| Section    | Control command                        | Description
+| color      | /set spell.color.*                     | Colors.
+| check      | /set spell.check.*                     | Options to control spell checking.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionaries used by buffer (options can be added/removed in section).
+| look       | /set spell.look.*                      | Look and feel.
+| option     | /set spell.option.*                    | <<spell_speller_options,Opzioni ortografiche>> (options can be added/removed in section).
 |===
 
 // TRANSLATION MISSING
 Options:
 
-include::autogen/user/aspell_options.adoc[]
+include::autogen/user/spell_options.adoc[]
 
 [[buflist_plugin]]
 === Buflist

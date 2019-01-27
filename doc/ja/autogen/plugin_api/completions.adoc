@@ -10,10 +10,6 @@
 
 | alias | alias_value | 別名の値
 
-| aspell | aspell_dicts | aspell のインストール済み辞書のリスト
-
-| aspell | aspell_langs | aspell でサポートされる全ての言語のリスト
-
 | exec | exec_commands_ids | 実行されたコマンドの識別子 (番号と名前)
 
 | fset | fset_options | 設定ファイル、セクション、オプションの名前、オプションの値
@@ -85,6 +81,10 @@
 | script | script_scripts_installed | インストール済みスクリプトのリスト (リポジトリから)
 
 | script | script_tags | リポジトリに存在するスクリプトに対するタグのリスト
+
+| spell | spell_dicts | list of installed dictionaries
+
+| spell | spell_langs | list of all languages supported
 
 | tcl | tcl_script | スクリプトのリスト
 

@@ -1,5 +1,5 @@
 /*
- * weechat-aspell-command.c - aspell commands
+ * spell-command.c - spell checker commands
  *
  * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
  *
@@ -24,26 +24,26 @@
 #include <string.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
-#include "weechat-aspell-config.h"
-#include "weechat-aspell-speller.h"
+#include "spell.h"
+#include "spell-config.h"
+#include "spell-speller.h"
 
 
 /*
- * Converts an aspell ISO lang code in its English full name.
+ * Converts an ISO lang code in its English full name.
  *
  * Note: result must be freed after use.
  */
 
 char *
-weechat_aspell_command_iso_to_lang (const char *code)
+spell_command_iso_to_lang (const char *code)
 {
     int i;
 
-    for (i = 0; aspell_langs[i].code; i++)
+    for (i = 0; spell_langs[i].code; i++)
     {
-        if (strcmp (aspell_langs[i].code, code) == 0)
-            return strdup (aspell_langs[i].name);
+        if (strcmp (spell_langs[i].code, code) == 0)
+            return strdup (spell_langs[i].name);
     }
 
     /* lang code not found */
@@ -51,20 +51,20 @@ weechat_aspell_command_iso_to_lang (const char *code)
 }
 
 /*
- * Converts an aspell ISO country code in its English full name.
+ * Converts an ISO country code in its English full name.
  *
  * Note: result must be freed after use.
  */
 
 char *
-weechat_aspell_command_iso_to_country (const char *code)
+spell_command_iso_to_country (const char *code)
 {
     int i;
 
-    for (i = 0; aspell_countries[i].code; i++)
+    for (i = 0; spell_countries[i].code; i++)
     {
-        if (strcmp (aspell_countries[i].code, code) == 0)
-            return strdup (aspell_countries[i].name);
+        if (strcmp (spell_countries[i].code, code) == 0)
+            return strdup (spell_countries[i].name);
     }
 
     /* country code not found */
@@ -77,11 +77,11 @@ weechat_aspell_command_iso_to_country (const char *code)
 
 #ifdef USE_ENCHANT
 void
-weechat_aspell_enchant_dict_describe_cb (const char *lang_tag,
-                                         const char *provider_name,
-                                         const char *provider_desc,
-                                         const char *provider_file,
-                                         void *user_data)
+spell_enchant_dict_describe_cb (const char *lang_tag,
+                                const char *provider_name,
+                                const char *provider_desc,
+                                const char *provider_file,
+                                void *user_data)
 {
     char *country, *lang, *pos, *iso;
     char str_dict[256];
@@ -102,13 +102,13 @@ weechat_aspell_enchant_dict_describe_cb (const char *lang_tag,
         iso = weechat_strndup (lang_tag, pos - lang_tag);
         if (iso)
         {
-            lang = weechat_aspell_command_iso_to_lang (iso);
-            country = weechat_aspell_command_iso_to_country (pos + 1);
+            lang = spell_command_iso_to_lang (iso);
+            country = spell_command_iso_to_country (pos + 1);
             free (iso);
         }
     }
     else
-        lang = weechat_aspell_command_iso_to_lang ((char *)lang_tag);
+        lang = spell_command_iso_to_lang ((char *)lang_tag);
 
     if (lang)
     {
@@ -133,11 +133,11 @@ weechat_aspell_enchant_dict_describe_cb (const char *lang_tag,
 #endif /* USE_ENCHANT */
 
 /*
- * Displays list of aspell dictionaries installed on system.
+ * Displays list of dictionaries installed on system.
  */
 
 void
-weechat_aspell_command_speller_list_dicts ()
+spell_command_speller_list_dicts ()
 {
 #ifndef USE_ENCHANT
     char *country, *lang, *pos, *iso;
@@ -150,12 +150,12 @@ weechat_aspell_command_speller_list_dicts ()
 
     weechat_printf (NULL, "");
     weechat_printf (NULL,
-                    /* TRANSLATORS: "%s" is "aspell" */
+                    /* TRANSLATORS: "%s" is "spell" (name of plugin) */
                     _( "%s dictionaries list:"),
-                    ASPELL_PLUGIN_NAME);
+                    SPELL_PLUGIN_NAME);
 
 #ifdef USE_ENCHANT
-    enchant_broker_list_dicts (broker, weechat_aspell_enchant_dict_describe_cb,
+    enchant_broker_list_dicts (broker, spell_enchant_dict_describe_cb,
                                NULL);
 #else
     config = new_aspell_config ();
@@ -173,13 +173,13 @@ weechat_aspell_command_speller_list_dicts ()
             iso = weechat_strndup (dict->code, pos - dict->code);
             if (iso)
             {
-                lang = weechat_aspell_command_iso_to_lang (iso);
-                country = weechat_aspell_command_iso_to_country (pos + 1);
+                lang = spell_command_iso_to_lang (iso);
+                country = spell_command_iso_to_country (pos + 1);
                 free (iso);
             }
         }
         else
-            lang = weechat_aspell_command_iso_to_lang ((char*)dict->code);
+            lang = spell_command_iso_to_lang ((char*)dict->code);
 
         str_country[0] = '\0';
         if (country || dict->jargon[0])
@@ -213,22 +213,22 @@ weechat_aspell_command_speller_list_dicts ()
  */
 
 void
-weechat_aspell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
+spell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
 {
     char *name;
 
-    name = weechat_aspell_build_option_name (buffer);
+    name = spell_build_option_name (buffer);
     if (!name)
         return;
 
-    if (weechat_aspell_config_set_dict (name, value) > 0)
+    if (spell_config_set_dict (name, value) > 0)
     {
         if (value && value[0])
             weechat_printf (NULL, "%s: \"%s\" => %s",
-                            ASPELL_PLUGIN_NAME, name, value);
+                            SPELL_PLUGIN_NAME, name, value);
         else
             weechat_printf (NULL, _("%s: \"%s\" removed"),
-                            ASPELL_PLUGIN_NAME, name);
+                            SPELL_PLUGIN_NAME, name);
     }
 
     free (name);
@@ -239,10 +239,10 @@ weechat_aspell_command_set_dict (struct t_gui_buffer *buffer, const char *value)
  */
 
 void
-weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
+spell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                                  const char *word)
 {
-    struct t_aspell_speller_buffer *ptr_speller_buffer;
+    struct t_spell_speller_buffer *ptr_speller_buffer;
 #ifdef USE_ENCHANT
     EnchantDict *new_speller, *ptr_speller;
 #else
@@ -253,18 +253,18 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
 
     if (dict)
     {
-        ptr_speller = weechat_hashtable_get (weechat_aspell_spellers, dict);
+        ptr_speller = weechat_hashtable_get (spell_spellers, dict);
         if (!ptr_speller)
         {
-            if (!weechat_aspell_speller_dict_supported (dict))
+            if (!spell_speller_dict_supported (dict))
             {
                 weechat_printf (NULL,
                                 _("%s: error: dictionary \"%s\" is not "
                                   "available on your system"),
-                                ASPELL_PLUGIN_NAME, dict);
+                                SPELL_PLUGIN_NAME, dict);
                 return;
             }
-            new_speller = weechat_aspell_speller_new (dict);
+            new_speller = spell_speller_new (dict);
             if (!new_speller)
                 return;
             ptr_speller = new_speller;
@@ -272,10 +272,10 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
     }
     else
     {
-        ptr_speller_buffer = weechat_hashtable_get (weechat_aspell_speller_buffer,
+        ptr_speller_buffer = weechat_hashtable_get (spell_speller_buffer,
                                                     buffer);
         if (!ptr_speller_buffer)
-            ptr_speller_buffer = weechat_aspell_speller_buffer_new (buffer);
+            ptr_speller_buffer = spell_speller_buffer_new (buffer);
         if (!ptr_speller_buffer)
             goto error;
         if (!ptr_speller_buffer->spellers || !ptr_speller_buffer->spellers[0])
@@ -284,7 +284,7 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                             _("%s%s: no dictionary on this buffer for "
                               "adding word"),
                             weechat_prefix ("error"),
-                            ASPELL_PLUGIN_NAME);
+                            SPELL_PLUGIN_NAME);
             return;
         }
         else if (ptr_speller_buffer->spellers[1])
@@ -293,7 +293,7 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
                             _("%s%s: many dictionaries are defined for "
                               "this buffer, please specify dictionary"),
                             weechat_prefix ("error"),
-                            ASPELL_PLUGIN_NAME);
+                            SPELL_PLUGIN_NAME);
             return;
         }
         ptr_speller = ptr_speller_buffer->spellers[0];
@@ -308,7 +308,7 @@ weechat_aspell_command_add_word (struct t_gui_buffer *buffer, const char *dict,
     {
         weechat_printf (NULL,
                         _("%s: word \"%s\" added to personal dictionary"),
-                        ASPELL_PLUGIN_NAME, word);
+                        SPELL_PLUGIN_NAME, word);
     }
     else
         goto error;
@@ -320,21 +320,21 @@ error:
     weechat_printf (NULL,
                     _("%s%s: failed to add word to personal "
                       "dictionary"),
-                    weechat_prefix ("error"), ASPELL_PLUGIN_NAME);
+                    weechat_prefix ("error"), SPELL_PLUGIN_NAME);
 
 end:
     if (new_speller)
-        weechat_hashtable_remove (weechat_aspell_spellers, dict);
+        weechat_hashtable_remove (spell_spellers, dict);
 }
 
 /*
- * Callback for command "/aspell".
+ * Callback for command "/spell".
  */
 
 int
-weechat_aspell_command_cb (const void *pointer, void *data,
-                           struct t_gui_buffer *buffer,
-                           int argc, char **argv, char **argv_eol)
+spell_command_cb (const void *pointer, void *data,
+                  struct t_gui_buffer *buffer,
+                  int argc, char **argv, char **argv_eol)
 {
     char *dicts;
     const char *default_dict;
@@ -347,25 +347,25 @@ weechat_aspell_command_cb (const void *pointer, void *data,
 
     if (argc == 1)
     {
-        /* display aspell status */
+        /* display spell status */
         weechat_printf (NULL, "");
         weechat_printf (NULL,
                         /* TRANSLATORS: second "%s" is "aspell" or "enchant" */
                         _("%s (using %s)"),
-                        (aspell_enabled) ? _("Spell checking is enabled") : _("Spell checking is disabled"),
+                        (spell_enabled) ? _("Spell checking is enabled") : _("Spell checking is disabled"),
 #ifdef USE_ENCHANT
                         "enchant"
 #else
                         "aspell"
 #endif /* USE_ENCHANT */
             );
-        default_dict = weechat_config_string (weechat_aspell_config_check_default_dict);
+        default_dict = weechat_config_string (spell_config_check_default_dict);
         weechat_printf (NULL,
                         _("Default dictionary: %s"),
                         (default_dict && default_dict[0]) ?
                         default_dict : _("(not set)"));
         number = 0;
-        infolist = weechat_infolist_get ("option", NULL, "aspell.dict.*");
+        infolist = weechat_infolist_get ("option", NULL, "spell.dict.*");
         if (infolist)
         {
             while (weechat_infolist_next (infolist))
@@ -382,34 +382,34 @@ weechat_aspell_command_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    /* enable aspell */
+    /* enable spell */
     if (weechat_strcasecmp (argv[1], "enable") == 0)
     {
-        weechat_config_option_set (weechat_aspell_config_check_enabled, "1", 1);
-        weechat_printf (NULL, _("Aspell enabled"));
+        weechat_config_option_set (spell_config_check_enabled, "1", 1);
+        weechat_printf (NULL, _("Spell checker enabled"));
         return WEECHAT_RC_OK;
     }
 
-    /* disable aspell */
+    /* disable spell */
     if (weechat_strcasecmp (argv[1], "disable") == 0)
     {
-        weechat_config_option_set (weechat_aspell_config_check_enabled, "0", 1);
-        weechat_printf (NULL, _("Aspell disabled"));
+        weechat_config_option_set (spell_config_check_enabled, "0", 1);
+        weechat_printf (NULL, _("Spell checker disabled"));
         return WEECHAT_RC_OK;
     }
 
-    /* toggle aspell */
+    /* toggle spell */
     if (weechat_strcasecmp (argv[1], "toggle") == 0)
     {
-        if (aspell_enabled)
+        if (spell_enabled)
         {
-            weechat_config_option_set (weechat_aspell_config_check_enabled, "0", 1);
-            weechat_printf (NULL, _("Aspell disabled"));
+            weechat_config_option_set (spell_config_check_enabled, "0", 1);
+            weechat_printf (NULL, _("Spell checker disabled"));
         }
         else
         {
-            weechat_config_option_set (weechat_aspell_config_check_enabled, "1", 1);
-            weechat_printf (NULL, _("Aspell enabled"));
+            weechat_config_option_set (spell_config_check_enabled, "1", 1);
+            weechat_printf (NULL, _("Spell checker enabled"));
         }
         return WEECHAT_RC_OK;
     }
@@ -417,7 +417,7 @@ weechat_aspell_command_cb (const void *pointer, void *data,
     /* list of dictionaries */
     if (weechat_strcasecmp (argv[1], "listdict") == 0)
     {
-        weechat_aspell_command_speller_list_dicts ();
+        spell_command_speller_list_dicts ();
         return WEECHAT_RC_OK;
     }
 
@@ -426,8 +426,8 @@ weechat_aspell_command_cb (const void *pointer, void *data,
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "setdict");
         dicts = weechat_string_replace (argv_eol[2], " ", "");
-        weechat_aspell_command_set_dict (buffer,
-                                         (dicts) ? dicts : argv[2]);
+        spell_command_set_dict (buffer,
+                                (dicts) ? dicts : argv[2]);
         if (dicts)
             free (dicts);
         return WEECHAT_RC_OK;
@@ -436,7 +436,7 @@ weechat_aspell_command_cb (const void *pointer, void *data,
     /* delete dictionary used on current buffer */
     if (weechat_strcasecmp (argv[1], "deldict") == 0)
     {
-        weechat_aspell_command_set_dict (buffer, NULL);
+        spell_command_set_dict (buffer, NULL);
         return WEECHAT_RC_OK;
     }
 
@@ -447,12 +447,12 @@ weechat_aspell_command_cb (const void *pointer, void *data,
         if (argc > 3)
         {
             /* use a given dict */
-            weechat_aspell_command_add_word (buffer, argv[2], argv_eol[3]);
+            spell_command_add_word (buffer, argv[2], argv_eol[3]);
         }
         else
         {
             /* use default dict */
-            weechat_aspell_command_add_word (buffer, NULL, argv_eol[2]);
+            spell_command_add_word (buffer, NULL, argv_eol[2]);
         }
         return WEECHAT_RC_OK;
     }
@@ -461,47 +461,47 @@ weechat_aspell_command_cb (const void *pointer, void *data,
 }
 
 /*
- * Hooks aspell command.
+ * Hooks spell command.
  */
 
 void
-weechat_aspell_command_init ()
+spell_command_init ()
 {
     weechat_hook_command (
-        "aspell",
-        N_("aspell plugin configuration"),
+        "spell",
+        N_("spell plugin configuration"),
         N_("enable|disable|toggle"
            " || listdict"
            " || setdict <dict>[,<dict>...]"
            " || deldict"
            " || addword [<dict>] <word>"),
-        N_("  enable: enable aspell\n"
-           " disable: disable aspell\n"
-           "  toggle: toggle aspell\n"
+        N_("  enable: enable spell checker\n"
+           " disable: disable spell checker\n"
+           "  toggle: toggle spell checker\n"
            "listdict: show installed dictionaries\n"
            " setdict: set dictionary for current buffer (multiple dictionaries "
            "can be separated by a comma)\n"
            " deldict: delete dictionary used on current buffer\n"
-           " addword: add a word in personal aspell dictionary\n"
+           " addword: add a word in personal dictionary\n"
            "\n"
            "Input line beginning with a '/' is not checked, except for some "
-           "commands (see /set aspell.check.commands).\n"
+           "commands (see /set spell.check.commands).\n"
            "\n"
-           "To enable aspell on all buffers, use option \"default_dict\", then "
-           "enable aspell, for example:\n"
-           "  /set aspell.check.default_dict \"en\"\n"
-           "  /aspell enable\n"
+           "To enable spell checker on all buffers, use option \"default_dict\", "
+           "then enable spell checker, for example:\n"
+           "  /set spell.check.default_dict \"en\"\n"
+           "  /spell enable\n"
            "\n"
            "To display a list of suggestions in a bar, use item "
-           "\"aspell_suggest\".\n"
+           "\"spell_suggest\".\n"
            "\n"
-           "Default key to toggle aspell is alt-s."),
+           "Default key to toggle spell checker is alt-s."),
         "enable"
         " || disable"
         " || toggle"
         " || listdict"
-        " || setdict %(aspell_dicts)"
+        " || setdict %(spell_dicts)"
         " || deldict"
         " || addword",
-        &weechat_aspell_command_cb, NULL, NULL);
+        &spell_command_cb, NULL, NULL);
 }
