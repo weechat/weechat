@@ -484,8 +484,7 @@ Zusätzlich sollten noch zwei Tastenbefehle eingebunden werden (der Befehl
 /key bind meta2-O /print -core unfocus
 ----
 
-// TRANSLATION MISSING
-For example to mark buffers as read when the terminal loses the focus:
+Um zum Beispiel Buffer als gelesen zu markieren wenn das Terminal den Fokus verlieren sollte:
 
 ----
 /key bind meta2-O /input set_unread
