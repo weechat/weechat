@@ -512,6 +512,13 @@ commands of your choice):
 ----
 
 // TRANSLATION MISSING
+For example to mark buffers as read when the terminal loses the focus:
+
+----
+/key bind meta2-O /input set_unread
+----
+
+// TRANSLATION MISSING
 [[screen_paste]]
 === When WeeChat is running in screen, pasting text in another screen window adds ~0 and ~1 around text, why?
 

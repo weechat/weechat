@@ -484,6 +484,13 @@ Zusätzlich sollten noch zwei Tastenbefehle eingebunden werden (der Befehl
 /key bind meta2-O /print -core unfocus
 ----
 
+// TRANSLATION MISSING
+For example to mark buffers as read when the terminal loses the focus:
+
+----
+/key bind meta2-O /input set_unread
+----
+
 [[screen_paste]]
 === Wird WeeChat in screen ausgeführt, kommt es vor das dem eingefügten Text in einem anderen screen Fenster ~0 und ~1 hinzugefügt wird, weshalb?
 

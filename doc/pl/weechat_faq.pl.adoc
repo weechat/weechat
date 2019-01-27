@@ -472,6 +472,13 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 /key bind meta2-O /print -core unfocus
 ----
 
+// TRANSLATION MISSING
+For example to mark buffers as read when the terminal loses the focus:
+
+----
+/key bind meta2-O /input set_unread
+----
+
 [[screen_paste]]
 === Kiedy WeeChat działa pod screenem, tekst wklejany do innego okna screena ma dodane ~0 i ~1 dookoła, dlaczego?
 

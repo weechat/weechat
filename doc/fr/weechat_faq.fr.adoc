@@ -483,6 +483,12 @@ les commandes de votre choix) :
 /key bind meta2-O /print -core unfocus
 ----
 
+Par exemple pour marquer les tampons comme lus lorsque le terminal perd le focus :
+
+----
+/key bind meta2-O /input set_unread
+----
+
 [[screen_paste]]
 === Lorsque WeeChat tourne sous screen, le collage de texte dans une autre fenêtre screen ajoute ~0 et ~1 autour du texte, pourquoi ?
 

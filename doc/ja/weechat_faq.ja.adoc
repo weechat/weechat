@@ -458,6 +458,13 @@ WeeChat の開始時にコードを送信するには:
 /key bind meta2-O /print -core unfocus
 ----
 
+// TRANSLATION MISSING
+For example to mark buffers as read when the terminal loses the focus:
+
+----
+/key bind meta2-O /input set_unread
+----
+
 [[screen_paste]]
 === WeeChat を screen の内部で実行している場合、別の screen ウィンドウ内にペーストされるテキストの周りに ~0 と ~1 が追加されます。なぜでしょうか。
 
