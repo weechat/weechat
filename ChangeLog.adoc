@@ -35,6 +35,7 @@ Bug fixes::
 
   * core: fix compilation of empty regular expression (not allowed on FreeBSD)
   * core: fix forced highlight on messages sent to other buffers (issue #1277)
+  * aspell: look for suggestions only if the misspelled word has changed (issue #1175)
   * buflist: add alternate key codes for kbd:[F1]/kbd:[F2] and kbd:[Alt+F1]/kbd:[Alt+F2] (compatibility with terminals)
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
   * irc: return IRC color code instead of WeeChat color code when decoding a too short ANSI color sequence

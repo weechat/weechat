@@ -613,9 +613,9 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     struct t_aspell_speller_buffer *ptr_speller_buffer;
     char *result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
-    char *word_for_suggestions, *old_suggestions, *suggestions;
+    char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
-    const char *color_normal, *color_error, *ptr_suggestions;
+    const char *color_normal, *color_error, *ptr_suggestions, *pos_colon;
     int code_point, char_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error, rc;
@@ -681,7 +681,7 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
         ptr_speller_buffer->modifier_result = NULL;
     }
 
-    word_for_suggestions = NULL;
+    misspelled_word = NULL;
 
     /* save last modifier string received */
     ptr_speller_buffer->modifier_string = strdup (string);
@@ -826,9 +826,9 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
                          * the beginning of this word, save the word (we will
                          * look for suggestions after this loop)
                          */
-                        if (word_for_suggestions)
-                            free (word_for_suggestions);
-                        word_for_suggestions = strdup (ptr_string);
+                        if (misspelled_word)
+                            free (misspelled_word);
+                        misspelled_word = strdup (ptr_string);
                     }
                 }
                 else
@@ -869,36 +869,59 @@ weechat_aspell_modifier_cb (const void *pointer, void *data,
     old_suggestions = (ptr_suggestions) ? strdup (ptr_suggestions) : NULL;
 
     /* if there is a misspelled word, get suggestions and set them in buffer */
-    if (word_for_suggestions)
+    if (misspelled_word)
     {
-        suggestions = weechat_aspell_get_suggestions (ptr_speller_buffer,
-                                                      word_for_suggestions);
-        if (suggestions)
+        /*
+         * get the old misspelled word; we'll get suggestions or clear
+         * local variable "aspell_suggest" only if the current misspelled
+         * word is different
+         */
+        old_misspelled_word = NULL;
+        if (old_suggestions)
         {
-            length = strlen (word_for_suggestions) + 1 /* ":" */
-                + strlen (suggestions) + 1;
-            word_and_suggestions = malloc (length);
-            if (word_and_suggestions)
+            pos_colon = strchr (old_suggestions, ':');
+            old_misspelled_word = (pos_colon) ?
+                weechat_strndup (old_suggestions, pos_colon - old_suggestions) :
+                strdup (old_suggestions);
+        }
+
+        if (!old_misspelled_word
+            || (strcmp (old_misspelled_word, misspelled_word) != 0))
+        {
+            suggestions = weechat_aspell_get_suggestions (ptr_speller_buffer,
+                                                          misspelled_word);
+            if (suggestions)
             {
-                snprintf (word_and_suggestions, length, "%s:%s",
-                          word_for_suggestions, suggestions);
-                weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
-                                    word_and_suggestions);
-                free (word_and_suggestions);
+                length = strlen (misspelled_word) + 1 /* ":" */
+                    + strlen (suggestions) + 1;
+                word_and_suggestions = malloc (length);
+                if (word_and_suggestions)
+                {
+                    snprintf (word_and_suggestions, length, "%s:%s",
+                              misspelled_word, suggestions);
+                    weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                                        word_and_suggestions);
+                    free (word_and_suggestions);
+                }
+                else
+                {
+                    weechat_buffer_set (buffer,
+                                        "localvar_del_aspell_suggest", "");
+                }
+                free (suggestions);
             }
             else
             {
-                weechat_buffer_set (buffer, "localvar_del_aspell_suggest", "");
+                /* set a misspelled word in buffer, also without suggestions */
+                weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
+                                    misspelled_word);
             }
-            free (suggestions);
         }
-        else
-        {
-            /* set a misspelled word in buffer, also without suggestions */
-            weechat_buffer_set (buffer, "localvar_set_aspell_suggest",
-                                word_for_suggestions);
-        }
-        free (word_for_suggestions);
+
+        if (old_misspelled_word)
+            free (old_misspelled_word);
+
+        free (misspelled_word);
     }
     else
     {

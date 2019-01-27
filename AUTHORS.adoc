@@ -95,6 +95,7 @@ Alphabetically:
 * Quentin Glidic (SardemFF7)
 * Quentin Pradet
 * Quico Noizeux
+* rafasc
 * Raghavendra Prabhu
 * raspbeguy
 * Rettub
