@@ -1414,7 +1414,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->websocket = weechat_infolist_integer (infolist, "websocket");
         new_client->http_headers = NULL;
         new_client->address = strdup (weechat_infolist_string (infolist, "address"));
-        new_client->real_ip = strdup (weechat_infolist_string (infolist, "real_ip"));
+        str = weechat_infolist_string (infolist, "real_ip");
+        new_client->real_ip = (str) ? strdup (str) : NULL;
         new_client->status = weechat_infolist_integer (infolist, "status");
         new_client->protocol = weechat_infolist_integer (infolist, "protocol");
         str = weechat_infolist_string (infolist, "protocol_string");

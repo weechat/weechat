@@ -41,6 +41,7 @@ Bug fixes::
   * irc: return IRC color code instead of WeeChat color code when decoding a too short ANSI color sequence
   * irc: fix encoding of italic attribute when colors are removed
   * irc: fix parsing of "time" message tag on FreeBSD (issue #1289)
+  * relay: fix crash on /upgrade when the real IP is not set (issue #1294)
   * relay: fix memory leak in connection of client
 
 Tests::
