@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-01-26 09:58+0100\n"
+"POT-Creation-Date: 2019-01-29 17:06+0100\n"
 "PO-Revision-Date: 2019-01-26 10:06+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10252,8 +10252,8 @@ msgstr "%s%s%s%s%s に kill されました %s(%s%s%s)"
 msgid "%s%sYou were killed by %s%s%s"
 msgstr "%s%s%s%s%s に kill されました"
 
-#, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+#, fuzzy, c-format
+msgid "%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"
 msgstr "%1$s%9$s%10$s%8$s がモードを変更 %2$s%3$s %4$s[%5$s%6$s%7$s]%8$s"
 
 #, c-format

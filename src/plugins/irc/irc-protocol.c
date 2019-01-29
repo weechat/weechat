@@ -767,12 +767,13 @@ IRC_PROTOCOL_CALLBACK(cap)
  *   :nick!user@host CHGHOST user new.host.goes.here
  *   :nick!user@host CHGHOST newuser host
  *   :nick!user@host CHGHOST newuser new.host.goes.here
+ *   :nick!user@host CHGHOST newuser :new.host.goes.here
  */
 
 IRC_PROTOCOL_CALLBACK(chghost)
 {
     int length, local_chghost, smart_filter;
-    char *str_host;
+    char *str_host, *pos_new_host;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     struct t_irc_channel_speaking *ptr_nick_speaking;
@@ -782,7 +783,9 @@ IRC_PROTOCOL_CALLBACK(chghost)
 
     local_chghost = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    length = strlen (argv[2]) + 1 + strlen (argv[3]) + 1;
+    pos_new_host = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
+
+    length = strlen (argv[2]) + 1 + strlen (pos_new_host) + 1;
     str_host = malloc (length);
     if (!str_host)
     {
@@ -793,7 +796,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
         return WEECHAT_RC_OK;
     }
 
-    snprintf (str_host, length, "%s@%s", argv[2], argv[3]);
+    snprintf (str_host, length, "%s@%s", argv[2], pos_new_host);
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -1380,11 +1383,12 @@ IRC_PROTOCOL_CALLBACK(kill)
  *
  * Message looks like:
  *   :nick!user@host MODE #test +o nick
+ *   :nick!user@host MODE #test :+o :nick
  */
 
 IRC_PROTOCOL_CALLBACK(mode)
 {
-    char *pos_modes;
+    char *pos_modes, *pos_modes_args;
     int smart_filter, local_mode;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -1393,7 +1397,10 @@ IRC_PROTOCOL_CALLBACK(mode)
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
 
-    pos_modes = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
+    pos_modes = (argv[3][0] == ':') ? argv[3] + 1 : argv[3];
+    pos_modes_args = NULL;
+    if (argc > 4)
+        pos_modes_args = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
 
     if (irc_channel_is_channel (server, argv[2]))
     {
@@ -1415,13 +1422,15 @@ IRC_PROTOCOL_CALLBACK(mode)
                                (smart_filter && !local_mode) ?
                                "irc_smart_filter" : NULL,
                                NULL, address),
-            _("%sMode %s%s %s[%s%s%s]%s by %s%s"),
+            _("%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"),
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_CHANNEL,
             (ptr_channel) ? ptr_channel->name : argv[2],
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             pos_modes,
+            (pos_modes_args) ? " " : "",
+            (pos_modes_args) ? pos_modes_args : "",
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_RESET,
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
@@ -4032,11 +4041,16 @@ IRC_PROTOCOL_CALLBACK(338)
  *
  * Message looks like:
  *   :server 341 mynick nick #channel
+ *   :server 341 mynick nick :#channel
  */
 
 IRC_PROTOCOL_CALLBACK(341)
 {
+    char *pos_channel;
+
     IRC_PROTOCOL_MIN_ARGS(5);
+
+    pos_channel = (argv[4][0] == ':') ? argv[4] + 1 : argv[4];
 
     weechat_printf_date_tags (
         irc_msgbuffer_get_target_buffer (server, argv[2], command, NULL, NULL),
@@ -4051,7 +4065,7 @@ IRC_PROTOCOL_CALLBACK(341)
         argv[3],
         IRC_COLOR_RESET,
         IRC_COLOR_CHAT_CHANNEL,
-        argv[4],
+        pos_channel,
         IRC_COLOR_RESET);
 
     return WEECHAT_RC_OK;

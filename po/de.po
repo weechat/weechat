@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-01-26 09:58+0100\n"
-"PO-Revision-Date: 2019-01-26 10:05+0100\n"
+"POT-Creation-Date: 2019-01-29 17:06+0100\n"
+"PO-Revision-Date: 2019-01-29 21:02+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -10932,8 +10932,8 @@ msgid "%s%sYou were killed by %s%s%s"
 msgstr "%s%sDu wurdest durch %s%s%s gekillt"
 
 #, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
-msgstr "%sModus %s%s %s[%s%s%s]%s durch %s%s"
+msgid "%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"
+msgstr "%sModus %s%s %s[%s%s%s%s%s]%s durch %s%s"
 
 #, c-format
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"

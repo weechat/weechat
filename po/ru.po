@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-01-26 09:58+0100\n"
+"POT-Creation-Date: 2019-01-29 17:06+0100\n"
 "PO-Revision-Date: 2018-11-17 10:36+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8574,7 +8574,7 @@ msgid "%s%sYou were killed by %s%s%s"
 msgstr "Теперь вы известны как %s%s\n"
 
 #, fuzzy, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+msgid "%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"
 msgstr "Режим %s%s %s[%s%s%s]%s установлен пользователем %s%s\n"
 
 #, fuzzy, c-format
