@@ -2675,10 +2675,6 @@ WeeChat unterstützt eine SASL Authentifikation, mittels verschiedener Mechanism
 * _dh-aes_: Passwort wird mittels AES verschlüsselt
   (*unsicher*, wird nicht empfohlen)
 
-[NOTE]
-Die "gcrypt" Bibliothek wird beim kompilieren von WeeChat benötigt um
-"dh-blowfish"nutzen zu können (siehe <<dependencies,Abhängigkeiten>>).
-
 Optionen für Server sind:
 
 * _sasl_mechanism_: Mechanismus welcher genutzt werden soll (siehe oben)

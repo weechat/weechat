@@ -2615,10 +2615,6 @@ WeeChat は SASL 認証をサポートします、以下の認証メカニズム
 * _dh-blowfish_: blowfish 暗号パスワード (*危険*、非推奨)
 * _dh-aes_: AES 暗号パスワード (*危険*、非推奨)
 
-[NOTE]
-"dh-blowfish" メカニズムを利用する場合、"gcrypt" ライブラリが
-WeeChat のコンパイル時に必要です (<<dependencies,依存関係>>を参照)。
-
 サーバオプション:
 
 * _sasl_mechanism_: 利用する認証メカニズム (上記参照)

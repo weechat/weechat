@@ -2709,10 +2709,6 @@ mécanismes :
 * _dh-blowfish_ : mot de passe chiffré avec blowfish (*non sûr*, non recommandé)
 * _dh-aes_ : mot de passe chiffré avec AES (*non sûr*, non recommandé)
 
-[NOTE]
-La bibliothèque "gcrypt" est requise lors de la compilation de WeeChat pour
-utiliser le mécanisme "dh-blowfish" (voir <<dependencies,les dépendances>>).
-
 Les options dans le serveur sont :
 
 * _sasl_mechanism_ : mécanisme à utiliser (voir ci-dessus)

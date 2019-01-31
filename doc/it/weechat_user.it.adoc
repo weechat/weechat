@@ -2797,10 +2797,6 @@ WeeChat supports SASL authentication, using different mechanisms:
 // TRANSLATION MISSING
 * _dh-aes_: AES encrypted password (*insecure*, not recommended)
 
-[NOTE]
-La libreria "gcrypt" è richiesta per compilare WeeChat al fine di usare il
-meccanismo "dh-blowfish" (consultare <<dependencies,dipendenze>>).
-
 Le opzioni nel server sono:
 
 // TRANSLATION MISSING
