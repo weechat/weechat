@@ -257,6 +257,9 @@ irc_modelist_item_new (struct t_irc_modelist *modelist,
 {
     struct t_irc_modelist_item *new_item;
 
+    if (!mask)
+        return NULL;
+
     /* alloc memory for new item */
     if ((new_item = malloc (sizeof (*new_item))) == NULL)
     {

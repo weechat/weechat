@@ -1398,9 +1398,8 @@ IRC_PROTOCOL_CALLBACK(mode)
     IRC_PROTOCOL_CHECK_HOST;
 
     pos_modes = (argv[3][0] == ':') ? argv[3] + 1 : argv[3];
-    pos_modes_args = NULL;
-    if (argc > 4)
-        pos_modes_args = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
+    pos_modes_args = (argc > 4) ?
+        ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
 
     if (irc_channel_is_channel (server, argv[2]))
     {
@@ -1409,7 +1408,7 @@ IRC_PROTOCOL_CALLBACK(mode)
         if (ptr_channel)
         {
             smart_filter = irc_mode_channel_set (server, ptr_channel, host,
-                                                 pos_modes);
+                                                 pos_modes, pos_modes_args);
         }
         local_mode = (irc_server_strcasecmp (server, nick, server->nick) == 0);
         ptr_nick = irc_nick_search (server, ptr_channel, nick);
@@ -3546,7 +3545,7 @@ IRC_PROTOCOL_CALLBACK(324)
         if (argc > 4)
         {
             (void) irc_mode_channel_set (server, ptr_channel, host,
-                                         ptr_channel->modes);
+                                         ptr_modes, NULL);
         }
     }
     if (!ptr_channel
