@@ -11,7 +11,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2018
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2019
 
 
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
@@ -101,12 +101,9 @@ qweechat::
 |       python/      | スクリプト API テストを生成、実行する Python スクリプト
 |    unit/           | 単体テスト
 |       core/        | コア関数の単体テスト
-// TRANSLATION MISSING
-|       gui/         | Unit tests for interfaces functions.
-// TRANSLATION MISSING
-|       plugins/     | Unit tests for plugins.
-// TRANSLATION MISSING
-|          irc/      | Unit tests for IRC plugin.
+|       gui/         | インターフェース関数の単体テスト
+|       plugins/     | プラグインの単体テスト
+|          irc/      | IRC プラグインの単体テスト
 | doc/               | 文書
 | po/                | 翻訳ファイル (gettext)
 | debian/            | Debian パッケージ用
@@ -407,16 +404,12 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-url.cpp        | テスト: URL
 |          test-core-utf8.cpp       | テスト: UTF-8
 |          test-core-util.cpp       | テスト: ユーティリティ関数
-// TRANSLATION MISSING
-|       gui/                        | Root of unit tests for interfaces.
+|       gui/                        | インターフェースの単体テストを収める最上位ディレクトリ
 |          test-gui-line.cpp        | テスト: 行
-// TRANSLATION MISSING
-|       plugins/                    | Root of unit tests for plugins.
-// TRANSLATION MISSING
-|          irc/                     | Root of unit tests for IRC plugin.
-// TRANSLATION MISSING
-|             test-irc-config.cpp   | Tests: IRC configuration.
-|             test-irc-protocol.cpp | Tests: IRC protocol.
+|       plugins/                    | プラグインの単体テストを収める最上位ディレクトリ
+|          irc/                     | IRC プラグインの単体テストを収める最上位ディレクトリ
+|             test-irc-config.cpp   | テスト: IRC 設定
+|             test-irc-protocol.cpp | テスト: IRC プロトコル
 |===
 
 [[documentation_translations]]

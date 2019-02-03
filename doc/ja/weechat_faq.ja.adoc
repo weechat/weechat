@@ -15,7 +15,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2018
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2019
 
 toc::[]
 
@@ -458,8 +458,7 @@ WeeChat の開始時にコードを送信するには:
 /key bind meta2-O /print -core unfocus
 ----
 
-// TRANSLATION MISSING
-For example to mark buffers as read when the terminal loses the focus:
+端末のフォーカスが外れた時点でバッファに未読マークをつける例:
 
 ----
 /key bind meta2-O /input set_unread
@@ -692,40 +691,35 @@ SASL を利用する方が良いです。例えば:
 /set irc.server.freenode.sasl_password "xxxxxxx"
 ----
 
-If server does not support SASL, you can add a delay (between command and join
-of channels):
+対象のサーバが SASL
+をサポートしない場合、コマンドとチャンネル参加の間に遅延時間を入れることもできます:
 
 ----
 /set irc.server.freenode.command_delay 5
 ----
 
-// TRANSLATION MISSING
 [[edit_autojoin]]
-=== How can I add/remove channels from autojoin option?
+=== どうすれば自動参加オプションにチャンネルを追加/削除できますか。
 
-// TRANSLATION MISSING
-You can use the `/set` command to edit the list of autojoin channels,
-for example for the "freenode" server:
+`/set` コマンドを使って、自動参加チャンネルのリストを編集してください。"freenode"
+サーバに対してこれを実行するには以下のようにします:
 
 ----
 /set irc.server.freenode.autojoin [TAB]
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
+kbd:[Tab] キーを使うことで、オプションの名前と値を補完できます
+(もしくは kbd:[Shift+Tab] キーで部分補完、オプション名を補完する際に便利です)。 +
+チャンネルをすべて入力する必要はありません。
 
-// TRANSLATION MISSING
-You can also use the `/fset` command to edit the list of channels:
+もしくは `/fset` コマンドを使うことで、チャンネルのリストを編集できます:
 
 ----
 /fset autojoin
 ----
 
-// TRANSLATION MISSING
-Another solution is to use a script:
+専用のスクリプトを使うこともできます:
 
 ----
 /script search autojoin
@@ -918,7 +912,7 @@ OpenBSD では、プラグインファイル名の末尾が ".so.0.0" です (Li
 === どうすればスクリプトをインストールできますか。スクリプトは他の IRC クライアントと互換性がありますか。
 
 WeeChat バージョン 0.3.9 以上の場合、コマンド `/script`
-を使うことで、スクリプトをインストールしたり管理することができます 
+を使うことで、スクリプトをインストールしたり管理することができます
 (ヘルプは `/help script` で見ることができます)。それよりも古いバージョンでは
 weeget.py と script.pl を使ってください。
 

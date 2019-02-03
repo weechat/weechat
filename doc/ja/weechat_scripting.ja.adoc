@@ -11,7 +11,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2018
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2019
 
 
 このマニュアルは WeeChat チャットクライアントについて説明しており、WeeChat の一部です。
