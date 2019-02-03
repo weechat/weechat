@@ -12,7 +12,7 @@
 
 翻訳者:
 
-* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2018
+* Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2012-2019
 
 
 このマニュアルは WeeChat チャットクライアントについての文書で、これは WeeChat の一部です。
@@ -2175,9 +2175,8 @@ WeeChat はすべての辞書を使って単語をチェックします。
 /aspell setdict de
 ----
 
-// TRANSLATION MISSING
-You can also specify a dictionary for a group of buffers, for example English
-for all channels on freenode IRC server:
+バッファグループに対して特定の辞書を指定することも可能です。freenode
+IRC サーバに対して英語の辞書を使う例:
 
 ----
 /set aspell.dict.irc.freenode en

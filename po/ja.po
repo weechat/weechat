@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2012-2018 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
+# Copyright (C) 2012-2019 Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>
 #
 # This file is part of WeeChat, the extensible chat client.
 #
@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-01-29 17:06+0100\n"
-"PO-Revision-Date: 2019-01-26 10:06+0100\n"
+"PO-Revision-Date: 2019-02-03 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -2625,7 +2625,6 @@ msgstr ""
 "passphrase <passphrase>|-delete || decrypt <passphrase>|-discard || set "
 "<name> <value> || del <name>"
 
-#, fuzzy
 msgid ""
 "passphrase: change the passphrase (without passphrase, data is stored as "
 "plain text in file sec.conf)\n"
@@ -2686,8 +2685,10 @@ msgstr ""
 "\n"
 "パスフレーズを利用する場合 (データが暗号化されている場合)、WeeChat は起動時に"
 "パスフレーズを尋ねます。\n"
-"環境変数 \"WEECHAT_PASSPHRASE\" を利用すれば入力を回避できます (WeeChat は /"
-"upgrade の時に同じ変数を利用します)。\n"
+"入力を回避するには、環境変数 \"WEECHAT_PASSPHRASE\" を利用するか (WeeChat "
+"は /upgrade の時に同じ変数を利用します)、sec.crypt.passphrase_file オプション"
+"を設定してファイルからパスフレーズを読み込みます (/help sec.crypt."
+"passphrase_file を参照してください)。\n"
 "\n"
 "${sec.data.xxx} の形で書かれた保護データは以下の様に利用できます:\n"
 "  - /eval コマンド\n"
@@ -10252,9 +10253,9 @@ msgstr "%s%s%s%s%s に kill されました %s(%s%s%s)"
 msgid "%s%sYou were killed by %s%s%s"
 msgstr "%s%s%s%s%s に kill されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sMode %s%s %s[%s%s%s%s%s]%s by %s%s"
-msgstr "%1$s%9$s%10$s%8$s がモードを変更 %2$s%3$s %4$s[%5$s%6$s%7$s]%8$s"
+msgstr "%1$s%11$s%12$s がモードを変更 %2$s%3$s %4$s[%5$s%6$s%7$s%8$s%9$s]%10$s"
 
 #, c-format
 msgid "%sUser mode %s[%s%s%s]%s by %s%s"
