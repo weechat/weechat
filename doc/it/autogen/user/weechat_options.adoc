@@ -1185,13 +1185,13 @@
 ** valore predefinito: `+""+`
 
 * [[option_weechat.look.word_chars_highlight]] *weechat.look.word_chars_highlight*
-** descrizione: pass:none[comma-separated list of chars (or range of chars) that are considered part or words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)]
+** descrizione: pass:none[comma-separated list of chars (or range of chars) that are considered part of words for highlights; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"!\u00A0,-,_,|,alnum"+`
 
 * [[option_weechat.look.word_chars_input]] *weechat.look.word_chars_input*
-** descrizione: pass:none[comma-separated list of chars (or range of chars) that are considered part or words for command line; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)]
+** descrizione: pass:none[comma-separated list of chars (or range of chars) that are considered part of words for command line; each item can be a single char, a range of chars (format: a-z), a class of wide character (for example "alnum", see man wctype); a "!" before the item makes it negative (ie the char is NOT considered part of words); the value "*" matches any char; unicode chars are allowed with the format \u1234, for example \u00A0 for unbreakable space (see /help print for supported formats)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"!\u00A0,-,_,|,alnum"+`
