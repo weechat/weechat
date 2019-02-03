@@ -3511,7 +3511,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "word_chars_highlight", "string",
         N_("comma-separated list of chars (or range of chars) that are "
-           "considered part or words for highlights; "
+           "considered part of words for highlights; "
            "each item can be a single char, a range of chars (format: a-z), "
            "a class of wide character (for example \"alnum\", "
            "see man wctype); a \"!\" before the item makes it negative "
@@ -3527,7 +3527,7 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "word_chars_input", "string",
         N_("comma-separated list of chars (or range of chars) that are "
-           "considered part or words for command line; "
+           "considered part of words for command line; "
            "each item can be a single char, a range of chars (format: a-z), "
            "a class of wide character (for example \"alnum\", "
            "see man wctype); a \"!\" before the item makes it negative "
