@@ -38,6 +38,7 @@ Bug fixes::
   * aspell: look for suggestions only if the misspelled word has changed (issue #1175)
   * buflist: add alternate key codes for kbd:[F1]/kbd:[F2] and kbd:[Alt+F1]/kbd:[Alt+F2] (compatibility with terminals)
   * buflist: fix warning displayed when script buffers.pl is loaded (issue #1274)
+  * irc: fix parsing of whois messages in notify
   * irc: fix parsing of MODE, 341 (invite) and CHGHOST commands when there are colons (issue #1296)
   * irc: return IRC color code instead of WeeChat color code when decoding a too short ANSI color sequence
   * irc: fix encoding of italic attribute when colors are removed
