@@ -5321,6 +5321,89 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
 }
 
 /*
+ * Callback for hsignal on redirected command "whois" from numeric 306.
+ */
+
+int
+irc_server_away_whois_cb (const void *pointer, void *data, const char *signal,
+                          struct t_hashtable *hashtable)
+{
+    /* copied from irc_notify_hsignal_cb */
+    const char *error, *server, *pattern, *command, *output;
+    char **messages, *irc_cmd, *arguments;
+    char *ptr_args, *pos;
+    int num_messages;
+    struct t_irc_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) signal;
+
+    error = weechat_hashtable_get (hashtable, "error");
+    server = weechat_hashtable_get (hashtable, "server");
+    pattern = weechat_hashtable_get (hashtable, "pattern");
+    command = weechat_hashtable_get (hashtable, "command");
+    output = weechat_hashtable_get (hashtable, "output");
+
+    /* if there is an error on redirection, just ignore result */
+    if (error && error[0])
+        return WEECHAT_RC_OK;
+
+    /* missing things in redirection */
+    if (!server || !pattern || !command || !output)
+        return WEECHAT_RC_OK;
+
+    /* search server */
+    ptr_server = irc_server_search (server);
+    if (!ptr_server)
+        return WEECHAT_RC_OK;
+
+    /* search for start of arguments in command sent to server */
+    ptr_args = strchr (command, ' ');
+    if (!ptr_args)
+        return WEECHAT_RC_OK;
+    ptr_args++;
+    while ((ptr_args[0] == ' ') || (ptr_args[0] == ':'))
+    {
+        ptr_args++;
+    }
+    if (!ptr_args[0])
+        return WEECHAT_RC_OK;
+
+    /* read output of command */
+    messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
+    if (messages && (num_messages > 0))
+    {
+        irc_message_parse (ptr_server, messages[0], NULL, NULL,
+                           NULL, NULL, &irc_cmd, NULL, &arguments,
+                           NULL, NULL, NULL, NULL, NULL);
+        if (irc_cmd && arguments)
+        {
+            /* away message */
+            pos = strchr (arguments, ':');
+            if (pos)
+            {
+                pos++;
+                /* nick is away */
+                ptr_server->away_message = strdup (pos);
+
+                /* refresh localvars and bar item */
+                irc_server_set_away (ptr_server, ptr_server->nick, 1);
+                weechat_bar_item_update ("away");
+            }
+        }
+        if (irc_cmd)
+            free (irc_cmd);
+        if (arguments)
+            free (arguments);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+
+/*
  * Callback called when user sends (file or chat) to someone and that xfer
  * plugin successfully initialized xfer and is ready for sending.
  *

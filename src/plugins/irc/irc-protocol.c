@@ -56,6 +56,7 @@
 #include "irc-sasl.h"
 #include "irc-server.h"
 #include "irc-notify.h"
+#include "irc-redirect.h"
 
 
 /*
@@ -3137,6 +3138,12 @@ IRC_PROTOCOL_CALLBACK(306)
     server->is_away = 1;
     server->away_time = time (NULL);
 
+    /* whois own nick to get away message */
+    irc_redirect_new (server, "whois", "away", 1, server->nick, 0, "301");
+    irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_LOW, NULL,
+                      "WHOIS :%s", server->nick);
+
+    /* refresh bar item */
     weechat_bar_item_update ("away");
 
     return WEECHAT_RC_OK;
