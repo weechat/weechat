@@ -3107,6 +3107,8 @@ IRC_PROTOCOL_CALLBACK(305)
     server->is_away = 0;
     server->away_time = 0;
 
+    /* refresh localvars and bar item */
+    irc_server_set_away (server, server->nick, 0);
     weechat_bar_item_update ("away");
 
     return WEECHAT_RC_OK;
