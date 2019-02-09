@@ -37,8 +37,7 @@ pasuje ono do WeeChat!).
 
 Ponieważ Weechat jest bardzo lekki i posiada innowacyjne funkcje.
 
-// TRANSLATION MISSING
-More info on the WeeChat features page: https://weechat.org/about/features
+Więcej informacji o moliwościach WeeChat można znaleźć tutaj: https://weechat.org/about/features
 
 [[compilation_install]]
 == Kompilacja / instalacja
@@ -81,11 +80,9 @@ brew install weechat --with-aspell --with-curl --with-python --with-perl --with-
 [[lost]]
 === Uruchomiłem WeeChat, ale czuję się zagubiony, co robić?
 
-// TRANSLATION MISSING
 Dla pomocy wpisz `/help`. Aby uzyskać pomoc dla komendy wpisz `/help komenda`.
-link:weechat_user.pl.html#key_bindings[Keys] and
-link:weechat_user.pl.html#commands_and_options[commands] are listed
-in documentation.
+link:weechat_user.pl.html#key_bindings[Keys] i
+link:weechat_user.pl.html#commands_and_options[commands] są opisane w dokumentacji.
 
 Nowym użytkowniką zaleca się przeczytanie dokumentu
 link:weechat_quickstart.pl.html[Szybki start].
@@ -96,9 +93,8 @@ link:weechat_quickstart.pl.html[Szybki start].
 [[charset]]
 === Nie widzę niektórych znaków diakrytycznych, co mogę zrobić?
 
-// TRANSLATION MISSING
-It's a common issue with a variety of causes, please read carefully and check
-*ALL* solutions below:
+Jest to częsty problem powodowany przez wiele rzeczy, przeczytaj uważnie i sprawdź
+*WSZYSTKIE* rozwiązania opisane poniżej:
 
 * sprawdź czy weechat jest zlinkowany z libncursesw (uwaga: wymagane na
   większości dystrybucji ale nie wszystkich): `ldd /ścieżka/do/weechat`
@@ -184,10 +180,9 @@ danych).
 _okno_ jest to obszar ekranu wyświetlający bufor. Możliwe jest podzielenie
 ekranu na wiele okien.
 
-// TRANSLATION MISSING
-Each window displays one buffer, or a set of merged buffers.
-A buffer can be hidden (not displayed by a window) or displayed by one or more
-windows.
+Każde okno wyświetla jeden bufor lub grupę połączonych buforów.
+Buform może być ukryty (nie wyświetlany w żadnym oknie) lub wyświetlany w jednym lub
+kilku oknach.
 
 [[buffers_list]]
 === Jak wyświetlić listę z buforami po lewej stronie?
@@ -261,8 +256,7 @@ wiadomości od ostatniej wizyty w buforze.
 
 w przykładzie `[H: 3(1,8), 2(4)]`, oznacza:
 
-// TRANSLATION MISSING
-* 1 highlight and 8 unread messages on buffer #3,
+* 1 wywołanie i 8 nieprzeczytanych wiadomości w buforze #3,
 * 4 nieprzeczytane wiadomości w buforze #2.
 
 Kolor bufora/licznika zależy od typu wiadomoci, domyślne kolory:
@@ -322,10 +316,8 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-// TRANSLATION MISSING
 W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]),
-which will show just the contents of the currently selected window,
-without any formatting.
+który wyświetli zawartość obecnie wybranego okna bez żadnego formatowania.
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj kbd:[Ctrl] + kbd:[Alt] + zaznaczenie myszką.
@@ -472,8 +464,7 @@ Następnie przypisz dwie kombinacje klawiszy dla stanu aktywności (zamień kome
 /key bind meta2-O /print -core unfocus
 ----
 
-// TRANSLATION MISSING
-For example to mark buffers as read when the terminal loses the focus:
+Na przykład w celu oznaczenia boforów jako nie przeczytane w momencie jak terminal straci focus:
 
 ----
 /key bind meta2-O /input set_unread
@@ -716,51 +707,44 @@ na kanały):
 /set irc.server.freenode.command_delay 5
 ----
 
-// TRANSLATION MISSING
 [[edit_autojoin]]
-=== How can I add/remove channels from autojoin option?
+=== Jak mogę dodać/usunąć kanaly z opcji automatycznego wejścia?
 
-// TRANSLATION MISSING
-You can use the `/set` command to edit the list of autojoin channels,
-for example for the "freenode" server:
+Możesz użyć komendy `/set` do edytowania tej listy, na przykład dla serwera
+"freenode":
 
 ----
 /set irc.server.freenode.autojoin [TAB]
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-You can complete the name and value of option with the kbd:[Tab] key
-(or kbd:[Shift+Tab] for partial completion, useful for the name). +
-This way you don't have to type the whole list of channels.
+Możesz dopełniać nazwy i wartości opcji za pomocą przycisku kbd:[Tab]
+(lub kbd:[Shift+Tab] dla częściowych dopełnień, przydatne dla nazw). +
+Dzięki temu nie trzeba wpisywać pełnej listy kanałów.
 
-// TRANSLATION MISSING
-You can also use the `/fset` command to edit the list of channels:
+Możesz w tym celu u żyć także komendy `/fset`:
 
 ----
 /fset autojoin
 ----
 
-// TRANSLATION MISSING
-Another solution is to use a script:
+Innym rozwiązaniem jest użycie skryptu:
 
 ----
 /script search autojoin
 ----
 
 [[ignore_vs_filter]]
-=== Jaka jest różnica między komendami/ignore i /filter ?
+=== Jaka jest różnica między komendami /ignore i /filter ?
 
-// TRANSLATION MISSING
 Komenda `/ignore` jest komendą IRC, zatem odnosi się tylko do buforów IRC
 (serwery i kanały).
 Pozwala ignorować niektóre nicki lub hosty użytkowników serwera lub kanału
 (komendy nie stosuje się do treści wiadomości).
-Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (so you'll
-never see them, and can't be recovered by removing the ignore).
+Pasujące wiadomości są usuwane przez wtyczkę IRC przed wyświetleniem (nigdy
+ich nie zobaczysz i nie zostaną przywrócone po zaprzestaniu ignorowania).
 
-// TRANSLATION MISSING
-The `/filter` command is a WeeChat core command, so it applies to any buffer.
+Komenda `/filter` jest komendą WeeChat, można jej użyć do dowolnego bufora.
 Pozwala filtrować niektóre linie w buforach za pomocą tagów lub wyrażeń
 regularnych dla przedrostków i zawartości linii.
 Filtrowane linie są tylko ukrywane, nie usuwane, można je zobaczyć wyłączając
@@ -880,43 +864,41 @@ Inne podobne skrypty:
 /script search notify
 ----
 
-// TRANSLATION MISSING
 [[disable_highlights_for_specific_nicks]]
-=== How can I disable highlights for specific nicks?
+=== Jak mogę wyłączyć podświetlenia dla konkretnych nicków?
 
-With WeeChat ≥ 0.3.4 you can use the
+Od wersji WeeChat ≥ 0.3.4 możesz użyć właściwości bufora
 link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
-buffer property to set the max hotlist level for some nicks, per buffer,
-or per group of buffers (like IRC servers).
+maksymalnego poziomu hotlisty dla niektórych nicków dla pojedynzego lub grupy
+buforów (jak serwery IRC).
 
-To only disable highlights, you'd have to set it to 2:
+W celu wyłączenia tylko podświetleń wystarczy ustawić ja na 2:
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
 ----
 
-This buffer property isn't stored in the configuration though.
-To automatically reapply these buffer properties, you would need the
-_buffer_autoset.py_ script:
+To utawienie nie jest zapisywane jednak w konfiguracji.
+W celu automatycznego ustawiania tej właściwości należy użyć skryptu _buffer_autoset.py_:
 
 ----
 /script install buffer_autoset.py
 ----
 
-For example, to permanently disable highlights from "mike" on #weechat
+Na przykład w celu wyłączenia powiadomień od "mike" na #weechat w sieci freenode:
 on the IRC server freenode:
 
 ----
 /buffer_autoset add irc.freenode.#weechat hotlist_max_level_nicks_add mike:2
 ----
 
-To apply it to the entire freenode server instead:
+Dla całego serwera freenode:
 
 ----
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-For more examples, see `/help buffer_autoset`.
+Więcej przykładów można znaleźć wykonując komende `/help buffer_autoset`.
 
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
@@ -941,9 +923,8 @@ Musisz ustawić:
 [[install_scripts]]
 === Jak mogę instalować skrypty? Czy są one kompatybilne z innymi klientami IRC?
 
-// TRANSLATION MISSING
-With WeeChat ≥ 0.3.9 you can use the command `/script` to install and manage scripts
-(see `/help script` for help). For older versions there is weeget.py and script.pl.
+W wersjach WeeChat ≥ 0.3.9 możesz użyć komendy `/script` do instalowania i zarzadzania
+skryptami (zobacz `/help script`). W starszych wersjach można użyc skryptu weeget.py lub script.pl.
 
 Skrypty nie są kompatybilne z innymi klientami IRC.
 
@@ -965,9 +946,8 @@ Następnie ponownie zaktualizuj listę sktyptów w WeeChat:
 /script update
 ----
 
-// TRANSLATION MISSING
-If you still have an error, then you must disable the automatic update of file
-in WeeChat and download the file manually outside WeeChat (that means you'll
+Jeśli w dalszym ciągu widzisz błąd musisz wyłączyć automatyczną aktualizację tego pliku
+w WeeChat i ściągnąć go ręcznie w celu zaktualizowania listy dostępnych skryptów.
 have to update manually the file yourself to get updates):
 
 * w WeeChat:
@@ -1022,10 +1002,9 @@ W celu zmniejszenia używanej pamięci możesz zastosować się do poniższych r
 
 * używać najnowsze stabilnej wersji (powinna mieć mniej wycieków pamięci
   niż starsze wersje)
-// TRANSLATION MISSING
 * nie ładuj nieużywanych pluginów, np: aspell, buflist, fifo, logger, perl,
   python, ruby, lua, tcl, guile, javascript, php, xfer (używana do DCC).
-  See `/help weechat.plugin.autoload`.
+  Zobacz `/help weechat.plugin.autoload`.
 * ładować tylko naprawdę używane skrypty
 * nie ładuj certyfikatów jeśli SSL *NIE* jest używany: ustaw pusty ciąg w opcji
   _weechat.network.gnutls_ca_file_
@@ -1074,11 +1053,10 @@ Wyładuj i wyłącz automatyczne ładowanie wtyczki "xfer" (używanej przez IRC 
 /set weechat.plugin.autoload "*,!xfer"
 ----
 
-// TRANSLATION MISSING
 Zdefiniuj hasło i używaj bezpiecznych danych wszędzie gdzie możesz dla danych wrażliwych
 jak hasła: zobacz `/help secure` oraz `/help` na opcjach
 (czy możesz użyć bezpiecznych danych, jest to zaznaczone w pomocy).
-See also link:weechat_user.pl.html#secured_data[Poradniku użytkownika / Zabezpieczone dane].
+Zobacz również link:weechat_user.pl.html#secured_data[Poradniku użytkownika / Zabezpieczone dane].
 
 Na przykład:
 

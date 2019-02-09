@@ -2190,9 +2190,8 @@ niemieckojęzycnzym:
 /aspell setdict de
 ----
 
-// TRANSLATION MISSING
-You can also specify a dictionary for a group of buffers, for example English
-for all channels on freenode IRC server:
+Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
+wsystkich kanałów na serwerze IRC freenode:
 
 ----
 /set aspell.dict.irc.freenode en
@@ -3194,16 +3193,16 @@ Zalecane jest ustawienie hasła dla pośrednika, za pomocą komendy:
 
 Hasło to używane jest przez protokoły _irc_ i _weechat_.
 
-// TRANSLATION MISSING
 [[relay_totp]]
 ==== TOTP
 
-TOTP (Time-based One-Time Password) can be used as secondary authentication
-factor for _weechat_ protocol, in addition to the password.
+TOTP (Time-based One-Time Password) może zostać użyte jako drugi stopień uwierzytelnienia
+dla protokołu _weechat_, poza normalnym hasłem.
 
+Jest to opcjomalne ale podnosi to poziom bezpieczeństwa.
 This is optional and increases the security level.
 
-One-time passwords can be generated with applications, for example:
+Hasła jednorazowe mogą być generowane między innymi za pomocą:
 
 * FreeOTP:
   https://play.google.com/store/apps/details?id=org.fedorahosted.freeotp[Android],
@@ -3213,11 +3212,10 @@ One-time passwords can be generated with applications, for example:
   https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2[Android],
   https://itunes.apple.com/fr/app/google-authenticator/id388497605[iOS]
 
-The TOTP secret must be set in WeeChat and the application used to generate
-one-time passwords.
+Ten sam sekret TOTP musi być utawiony w WeeChat i aplikacji używanej do generowania haseł.
 
-It must be a string encoded in base32, with only letters and digits from 2 to 7,
-for example:
+Musi to być ciąg zakodowany za pomocą base32, zawierajcy tylko litery i liczby od 2 do 7,
+na przykład:
 
 ----
 /set relay.network.totp_secret "secretpasswordbase32"
