@@ -107,6 +107,9 @@ weechat_aspell_completion_dicts_cb (const void *pointer, void *data,
                                completion);
 #else
     config = new_aspell_config ();
+#ifdef ASPELL_DICT_DIR
+    aspell_config_replace (config, "dict-dir", ASPELL_DICT_DIR);
+#endif
     list = get_aspell_dict_info_list (config);
     elements = aspell_dict_info_list_elements (list);
 

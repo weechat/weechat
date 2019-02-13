@@ -65,6 +65,9 @@ weechat_aspell_speller_dict_supported (const char *lang)
     rc = 0;
 
     config = new_aspell_config ();
+#ifdef ASPELL_DICT_DIR
+    aspell_config_replace (config, "dict-dir", ASPELL_DICT_DIR);
+#endif
     list = get_aspell_dict_info_list (config);
     elements = aspell_dict_info_list_elements (list);
 
@@ -163,6 +166,9 @@ weechat_aspell_speller_new (const char *lang)
     /* create a speller instance for the newly created cell */
     config = new_aspell_config ();
     aspell_config_replace (config, "lang", lang);
+#ifdef ASPELL_DICT_DIR
+    aspell_config_replace (config, "dict-dir", ASPELL_DICT_DIR);
+#endif
 #endif /* USE_ENCHANT */
 
     /* apply all options */
