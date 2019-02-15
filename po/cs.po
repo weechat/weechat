@@ -9124,11 +9124,11 @@ msgstr "%s%s%s%s%s%s%s%s%s%s opustil %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s byl vykopnut %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s vykopnul %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s"
-msgstr "%s%s%s%s byl vykopnut %s%s%s"
+msgstr "%s%s%s%s vykopnul %s%s%s"
 
 #, c-format
 msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
