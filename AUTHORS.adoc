@@ -127,6 +127,7 @@ Alphabetically:
 * Wojciech Kwolek
 * W. Trevor King
 * Yannick Palanque
+* ZethJack
 * Ørjan Malde
 
 == Contact
