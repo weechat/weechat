@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.4]]
-== Version 2.4 (under dev)
+== Version 2.4 (2019-02-17)
 
 [[v2.4_nick_completer]]
 === Nick completer
