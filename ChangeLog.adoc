@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.5]]
 == Version 2.5 (under dev)
 
+Bug fixes::
+
+  * aspell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
+
 Build::
 
   * core: fix compilation on Mac OS (issue #1308)
