@@ -61,6 +61,12 @@ Then you can search if you are using "aspell" in values of options:
 
 If there are options displayed, replace "aspell" by "spell" in values.
 
+The default key kbd:[Alt+s] can be changed to the new `/spell` command:
+
+----
+/key bind meta-s /mute spell toggle
+----
+
 [[v2.4]]
 == Version 2.4 (2019-02-17)
 
