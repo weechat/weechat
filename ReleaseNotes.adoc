@@ -34,6 +34,30 @@ Consequently, the following things have been renamed as well:
 * bar item _aspell_suggest_ renamed to _spell_suggest_
 * info _aspell_dict_ renamed to _spell_dict_
 
+If you are upgrading from a previous release, you can copy the config file
+before doing `/upgrade`, in WeeChat:
+
+----
+/save aspell
+/exec -sh cp ~/.weechat/aspell.conf ~/.weechat/spell.conf
+/upgrade
+----
+
+If you already upgraded WeeChat:
+
+----
+/exec -sh cp ~/.weechat/aspell.conf ~/.weechat/spell.conf
+/reload spell
+----
+
+Then you can search if you are using "aspell" in values of options:
+
+----
+/fset =aspell
+----
+
+If there are options displayed, replace "aspell" by "spell" in values.
+
 [[v2.4]]
 == Version 2.4 (2019-02-17)
 
