@@ -30,7 +30,9 @@ Consequently, the following things have been renamed as well:
 
 * file _aspell.conf_ renamed to _spell.conf_; the content of the
   file has not changed, so you can just rename the file to keep your changes
-* options _aspell.*_ have been renamed to _spell.*_
+* options _aspell.*_ renamed to _spell.*_
+* command `/aspell` renamed to `/spell`
+* default key kbd:[Alt+s] changed to `/mute spell toggle`
 * bar item _aspell_dict_ renamed to _spell_dict_
 * bar item _aspell_suggest_ renamed to _spell_suggest_
 * info _aspell_dict_ renamed to _spell_dict_
