@@ -23,7 +23,8 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.5_aspell_plugin_renamed]]
 === Aspell plugin renamed to Spell
 
-The "aspell" plugin has been renamed to "spell".
+The "aspell" plugin has been renamed to "spell", a more generic term, because
+it supports aspell and also enchant.
 
 Consequently, the following things have been renamed as well:
 
