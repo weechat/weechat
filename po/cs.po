@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-03 19:00+0100\n"
+"POT-Creation-Date: 2019-02-19 21:29+0100\n"
 "PO-Revision-Date: 2019-01-29 21:01+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4793,217 +4793,6 @@ msgstr "jméno serveru (zástupný znak \"*\" je povolen) (volitelný)"
 #, fuzzy
 msgid "list of default aliases"
 msgstr "seznam aliasů"
-
-msgid "Spell checker for input (with Aspell)"
-msgstr "Kontrola pravopisu pro vstup (s Aspellem)"
-
-#. TRANSLATORS: "%s" is "aspell"
-#, c-format
-msgid "%s dictionaries list:"
-msgstr "seznam slovníků %s:"
-
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" odebrán"
-
-#, c-format
-msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgstr "%s: chyba: slovník \"%s\" není ve vašem systému dostupný"
-
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: není žádný slovník pro přidání slova pro tento buffer"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: pro tento buffer je definováno mnoho slovníků, prosím uveďte slovník"
-
-#, c-format
-msgid "%s: word \"%s\" added to personal dictionary"
-msgstr "%s: slovo \"%s\" přidáno do soukromého slovníku"
-
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr "%s%s: selhalo přidání slova do vlastního slovníku"
-
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, c-format
-msgid "%s (using %s)"
-msgstr "%s (používám %s)"
-
-msgid "Spell checking is enabled"
-msgstr "Kontrola pravopisu je zapnuta"
-
-msgid "Spell checking is disabled"
-msgstr "Kontrola  pravopisu je vypnuta"
-
-#, c-format
-msgid "Default dictionary: %s"
-msgstr "Výchozí slovník: %s"
-
-msgid "(not set)"
-msgstr "(nenastaveno)"
-
-#, fuzzy
-msgid "Specific dictionaries on buffers:"
-msgstr "najít cestu k určenému serveru"
-
-msgid "Aspell enabled"
-msgstr "Aspell povolen"
-
-msgid "Aspell disabled"
-msgstr "Aspell zakázán"
-
-msgid "aspell plugin configuration"
-msgstr "konfigurace pluginu aspell"
-
-#, fuzzy
-msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
-"|| addword [<dict>] <word>"
-msgstr "dictlist || enable <jazyk> || disable || addword [<jazyk>] <slovo>"
-
-#, fuzzy
-msgid ""
-"  enable: enable aspell\n"
-" disable: disable aspell\n"
-"  toggle: toggle aspell\n"
-"listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
-" deldict: delete dictionary used on current buffer\n"
-" addword: add a word in personal aspell dictionary\n"
-"\n"
-"Input line beginning with a '/' is not checked, except for some commands "
-"(see /set aspell.check.commands).\n"
-"\n"
-"To enable aspell on all buffers, use option \"default_dict\", then enable "
-"aspell, for example:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
-"\n"
-"To display a list of suggestions in a bar, use item \"aspell_suggest\".\n"
-"\n"
-"Default key to toggle aspell is alt-s."
-msgstr ""
-"dictlist: zobrazí nainstalované slovníky\n"
-"  enable: zapnout aspell pro aktuální buffer\n"
-" disable: vypnout aspell pro aktuální buffer\n"
-" addword: přidá slovo do vašeho soukromého slovníku aspell\n"
-"\n"
-"Vstupní řádka začínající '/' není kontrolována, vyjma některých příkaů."
-
-msgid "list of all languages supported by aspell"
-msgstr "seznam všech podporovaných jazyků aspellem"
-
-msgid "list of aspell installed dictionaries"
-msgstr "seznam instalovaných slovníků aspellu"
-
-msgid "comma separated list of dictionaries to use on this buffer"
-msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
-
-#, c-format
-msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: chyba vytvoření aspell slovníku \"%s\" => \"%s\""
-
-msgid ""
-"option for aspell (for list of available options and format, run command "
-"\"aspell config\" in a shell)"
-msgstr ""
-"volba pro aspell (pro seznam dostupných voleb a formát, spusťte příkaz "
-"\"aspell config\" v příkazové řádce (shell))"
-
-#, c-format
-msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr "%s%s: chyba vytváření aspell volby \"%s\" => \"%s\""
-
-#, fuzzy
-msgid "text color for misspelled words (input bar)"
-msgstr "barva použitá pro slova s chybou"
-
-#, fuzzy
-msgid ""
-"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
-msgstr "barva textu pro čas (stavový řádek)"
-
-msgid ""
-"text color for delimiters displayed between two dictionaries in bar item "
-"\"aspell_suggest\""
-msgstr ""
-
-#, fuzzy
-msgid ""
-"text color for delimiters displayed between two words in bar item "
-"\"aspell_suggest\""
-msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
-
-msgid ""
-"comma separated list of commands for which spell checking is enabled (spell "
-"checking is disabled for all other commands)"
-msgstr ""
-"čárkou oddělený seznam příkazů, které kontrolovat aspellem (pro ostatní "
-"příkazy je kontrola vypnutá)"
-
-msgid ""
-"default dictionary (or comma separated list of dictionaries) to use when "
-"buffer has no dictionary defined (leave blank to disable aspell on buffers "
-"for which you didn't explicitly enabled it)"
-msgstr ""
-"výchozí slovník (nebo čárkou oddělený seznam slovníků), které použít pokud "
-"buffer nemá nastavený slovník (pro zakázání aspell na bufferech, kde není "
-"explicitně povolen, nechte prázdné)"
-
-msgid "check words during text search in buffer"
-msgstr "kontrolovat slova během hledání textu v bufferu"
-
-msgid "enable aspell check for command line"
-msgstr "zapni aspell k kontrole příkazového řádku"
-
-msgid ""
-"real-time spell checking of words (slower, disabled by default: words are "
-"checked only if there's delimiter after)"
-msgstr ""
-"kontrola slov v reálném čase (pomalejší, defaultně vypnuto: slova jsou "
-"kontrolovány až, když je za nimi dělič)"
-
-msgid ""
-"number of suggestions to display in bar item \"aspell_suggest\" for each "
-"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
-"suggestions in all languages)"
-msgstr ""
-
-msgid ""
-"minimum length for a word to be spell checked (use 0 to check all words)"
-msgstr ""
-"mimimální délka slova pro kontrolu pravopisu (použijte 0 pro kontrolu všech "
-"slov)"
-
-msgid ""
-"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
-msgstr ""
-
-msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
-msgstr ""
-
-#, fuzzy
-msgid "comma-separated list of dictionaries used in buffer"
-msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
-"\")"
-msgstr ""
-
-#, c-format
-msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
-
-#, fuzzy, c-format
-msgid "%s%s: error: unable to create speller for lang \"%s\""
-msgstr "%s%s: nemohu vytvořit server \"%s\""
 
 msgid "Buffers list"
 msgstr "Seznam bufferů"
@@ -11793,6 +11582,228 @@ msgstr "%s%s: chyba při zasílání dat na klienta: %s"
 msgid "%s: downloading list of scripts..."
 msgstr "%s: stahuji seznam skriptů..."
 
+#, fuzzy
+msgid "Spell checker for input"
+msgstr "Kontrola pravopisu pro vstup (s Aspellem)"
+
+#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#, c-format
+msgid "%s dictionaries list:"
+msgstr "seznam slovníků %s:"
+
+#, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" odebrán"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr "%s: chyba: slovník \"%s\" není ve vašem systému dostupný"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: není žádný slovník pro přidání slova pro tento buffer"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: pro tento buffer je definováno mnoho slovníků, prosím uveďte slovník"
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr "%s: slovo \"%s\" přidáno do soukromého slovníku"
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr "%s%s: selhalo přidání slova do vlastního slovníku"
+
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, c-format
+msgid "%s (using %s)"
+msgstr "%s (používám %s)"
+
+msgid "Spell checking is enabled"
+msgstr "Kontrola pravopisu je zapnuta"
+
+msgid "Spell checking is disabled"
+msgstr "Kontrola  pravopisu je vypnuta"
+
+#, c-format
+msgid "Default dictionary: %s"
+msgstr "Výchozí slovník: %s"
+
+msgid "(not set)"
+msgstr "(nenastaveno)"
+
+#, fuzzy
+msgid "Specific dictionaries on buffers:"
+msgstr "najít cestu k určenému serveru"
+
+#, fuzzy
+msgid "Spell checker enabled"
+msgstr "Kontrola pravopisu je zapnuta"
+
+#, fuzzy
+msgid "Spell checker disabled"
+msgstr "Kontrola  pravopisu je vypnuta"
+
+#, fuzzy
+msgid "spell plugin configuration"
+msgstr "konfigurace pluginu aspell"
+
+#, fuzzy
+msgid ""
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
+msgstr "dictlist || enable <jazyk> || disable || addword [<jazyk>] <slovo>"
+
+#, fuzzy
+msgid ""
+"  enable: enable spell checker\n"
+" disable: disable spell checker\n"
+"  toggle: toggle spell checker\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands "
+"(see /set spell.check.commands).\n"
+"\n"
+"To enable spell checker on all buffers, use option \"default_dict\", then "
+"enable spell checker, for example:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
+"\n"
+"To display a list of suggestions in a bar, use item \"spell_suggest\".\n"
+"\n"
+"Default key to toggle spell checker is alt-s."
+msgstr ""
+"dictlist: zobrazí nainstalované slovníky\n"
+"  enable: zapnout aspell pro aktuální buffer\n"
+" disable: vypnout aspell pro aktuální buffer\n"
+" addword: přidá slovo do vašeho soukromého slovníku aspell\n"
+"\n"
+"Vstupní řádka začínající '/' není kontrolována, vyjma některých příkaů."
+
+#, fuzzy
+msgid "list of all languages supported"
+msgstr "seznam všech podporovaných jazyků aspellem"
+
+#, fuzzy
+msgid "list of installed dictionaries"
+msgstr "seznam instalovaných slovníků aspellu"
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytvoření aspell slovníku \"%s\" => \"%s\""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+"volba pro aspell (pro seznam dostupných voleb a formát, spusťte příkaz "
+"\"aspell config\" v příkazové řádce (shell))"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell option \"%s\" => \"%s\""
+msgstr "%s%s: chyba vytváření aspell volby \"%s\" => \"%s\""
+
+#, fuzzy
+msgid "text color for misspelled words (input bar)"
+msgstr "barva použitá pro slova s chybou"
+
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"spell_suggest\""
+msgstr "barva textu pro čas (stavový řádek)"
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"spell_suggest\""
+msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"spell_suggest\""
+msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+"čárkou oddělený seznam příkazů, které kontrolovat aspellem (pro ostatní "
+"příkazy je kontrola vypnutá)"
+
+#, fuzzy
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable spell checker on "
+"buffers for which you didn't explicitly enabled it)"
+msgstr ""
+"výchozí slovník (nebo čárkou oddělený seznam slovníků), které použít pokud "
+"buffer nemá nastavený slovník (pro zakázání aspell na bufferech, kde není "
+"explicitně povolen, nechte prázdné)"
+
+msgid "check words during text search in buffer"
+msgstr "kontrolovat slova během hledání textu v bufferu"
+
+#, fuzzy
+msgid "enable spell checker for command line"
+msgstr "zapni aspell k kontrole příkazového řádku"
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+"kontrola slov v reálném čase (pomalejší, defaultně vypnuto: slova jsou "
+"kontrolovány až, když je za nimi dělič)"
+
+msgid ""
+"number of suggestions to display in bar item \"spell_suggest\" for each "
+"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
+"suggestions in all languages)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+"mimimální délka slova pro kontrolu pravopisu (použijte 0 pro kontrolu všech "
+"slov)"
+
+#, fuzzy
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"spell_suggest\""
+msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
+
+#, fuzzy
+msgid "delimiter displayed between two words in bar item \"spell_suggest\""
+msgstr "barva textu pro počet ostatních zpráv v hostlistu (stavový řádek)"
+
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "čárkami oddělený seznam slovníků, které použít pro tento buffer"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr "%s: upozornění: slovník \"%s\" není dostupný ve vašem systému"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s%s: nemohu vytvořit server \"%s\""
+
 msgid "Support of tcl scripts"
 msgstr "Podpora skriptů v TCL"
 
@@ -12666,3 +12677,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "Aspell enabled"
+#~ msgstr "Aspell povolen"
+
+#~ msgid "Aspell disabled"
+#~ msgstr "Aspell zakázán"

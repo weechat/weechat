@@ -9,7 +9,7 @@
 ** valeur par défaut: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
-** description: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]
+** description: pass:none[dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver le vérificateur d'orthographe sur les tampons pour lesquels vous ne l'avez pas explicitement activé)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
@@ -21,7 +21,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_spell.check.enabled]] *spell.check.enabled*
-** description: pass:none[enable spell checker for command line]
+** description: pass:none[activer le vérificateur d'orthographe pour la ligne de commande]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+off+`
@@ -33,7 +33,7 @@
 ** valeur par défaut: `+off+`
 
 * [[option_spell.check.suggestions]] *spell.check.suggestions*
-** description: pass:none[number of suggestions to display in bar item "spell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)]
+** description: pass:none[nombre de suggestions à afficher dans l'objet de barre "spell_suggest" pour chaque dictionnaire du tampon (-1 = désactiver les suggestions, 0 = afficher toutes les suggestions possibles dans toutes les langues)]
 ** type: entier
 ** valeurs: -1 .. 2147483647
 ** valeur par défaut: `+-1+`
@@ -51,31 +51,31 @@
 ** valeur par défaut: `+lightred+`
 
 * [[option_spell.color.suggestion]] *spell.color.suggestion*
-** description: pass:none[text color for suggestion on a misspelled word in bar item "spell_suggest"]
+** description: pass:none[couleur du texte pour la suggestion sur un mot mal orthographié dans l'objet de barre "spell_suggest"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+default+`
 
 * [[option_spell.color.suggestion_delimiter_dict]] *spell.color.suggestion_delimiter_dict*
-** description: pass:none[text color for delimiters displayed between two dictionaries in bar item "spell_suggest"]
+** description: pass:none[couleur du texte pour les séparateurs affichés entre deux dictionnaires dans l'objet de barre "spell_suggest"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+cyan+`
 
 * [[option_spell.color.suggestion_delimiter_word]] *spell.color.suggestion_delimiter_word*
-** description: pass:none[text color for delimiters displayed between two words in bar item "spell_suggest"]
+** description: pass:none[couleur du texte pour les séparateurs affichés entre deux mots dans l'objet de barre "spell_suggest"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+cyan+`
 
 * [[option_spell.look.suggestion_delimiter_dict]] *spell.look.suggestion_delimiter_dict*
-** description: pass:none[delimiter displayed between two dictionaries in bar item "spell_suggest"]
+** description: pass:none[séparateur affiché entre deux dictionnaires dans l'objet de barre "spell_suggest"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+" / "+`
 
 * [[option_spell.look.suggestion_delimiter_word]] *spell.look.suggestion_delimiter_word*
-** description: pass:none[delimiter displayed between two words in bar item "spell_suggest"]
+** description: pass:none[séparateur affiché entre deux mots dans l'objet de barre "spell_suggest"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+","+`

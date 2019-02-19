@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-03 19:00+0100\n"
+"POT-Creation-Date: 2019-02-19 21:29+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3938,192 +3938,6 @@ msgid "alias name (wildcard \"*\" is allowed) (optional)"
 msgstr ""
 
 msgid "list of default aliases"
-msgstr ""
-
-msgid "Spell checker for input (with Aspell)"
-msgstr ""
-
-#. TRANSLATORS: "%s" is "aspell"
-#, c-format
-msgid "%s dictionaries list:"
-msgstr ""
-
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr ""
-
-#, c-format
-msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgstr ""
-
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-
-#, c-format
-msgid "%s: word \"%s\" added to personal dictionary"
-msgstr ""
-
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr ""
-
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, c-format
-msgid "%s (using %s)"
-msgstr ""
-
-msgid "Spell checking is enabled"
-msgstr ""
-
-msgid "Spell checking is disabled"
-msgstr ""
-
-#, c-format
-msgid "Default dictionary: %s"
-msgstr ""
-
-msgid "(not set)"
-msgstr ""
-
-msgid "Specific dictionaries on buffers:"
-msgstr ""
-
-msgid "Aspell enabled"
-msgstr ""
-
-msgid "Aspell disabled"
-msgstr ""
-
-msgid "aspell plugin configuration"
-msgstr ""
-
-msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
-"|| addword [<dict>] <word>"
-msgstr ""
-
-msgid ""
-"  enable: enable aspell\n"
-" disable: disable aspell\n"
-"  toggle: toggle aspell\n"
-"listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
-" deldict: delete dictionary used on current buffer\n"
-" addword: add a word in personal aspell dictionary\n"
-"\n"
-"Input line beginning with a '/' is not checked, except for some commands "
-"(see /set aspell.check.commands).\n"
-"\n"
-"To enable aspell on all buffers, use option \"default_dict\", then enable "
-"aspell, for example:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
-"\n"
-"To display a list of suggestions in a bar, use item \"aspell_suggest\".\n"
-"\n"
-"Default key to toggle aspell is alt-s."
-msgstr ""
-
-msgid "list of all languages supported by aspell"
-msgstr ""
-
-msgid "list of aspell installed dictionaries"
-msgstr ""
-
-msgid "comma separated list of dictionaries to use on this buffer"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
-msgstr ""
-
-msgid ""
-"option for aspell (for list of available options and format, run command "
-"\"aspell config\" in a shell)"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr ""
-
-msgid "text color for misspelled words (input bar)"
-msgstr ""
-
-msgid ""
-"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
-msgstr ""
-
-msgid ""
-"text color for delimiters displayed between two dictionaries in bar item "
-"\"aspell_suggest\""
-msgstr ""
-
-msgid ""
-"text color for delimiters displayed between two words in bar item "
-"\"aspell_suggest\""
-msgstr ""
-
-msgid ""
-"comma separated list of commands for which spell checking is enabled (spell "
-"checking is disabled for all other commands)"
-msgstr ""
-
-msgid ""
-"default dictionary (or comma separated list of dictionaries) to use when "
-"buffer has no dictionary defined (leave blank to disable aspell on buffers "
-"for which you didn't explicitly enabled it)"
-msgstr ""
-
-msgid "check words during text search in buffer"
-msgstr ""
-
-msgid "enable aspell check for command line"
-msgstr ""
-
-msgid ""
-"real-time spell checking of words (slower, disabled by default: words are "
-"checked only if there's delimiter after)"
-msgstr ""
-
-msgid ""
-"number of suggestions to display in bar item \"aspell_suggest\" for each "
-"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
-"suggestions in all languages)"
-msgstr ""
-
-msgid ""
-"minimum length for a word to be spell checked (use 0 to check all words)"
-msgstr ""
-
-msgid ""
-"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
-msgstr ""
-
-msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
-msgstr ""
-
-msgid "comma-separated list of dictionaries used in buffer"
-msgstr ""
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
-"\")"
-msgstr ""
-
-#, c-format
-msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr ""
-
-#, c-format
-msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr ""
 
 msgid "Buffers list"
@@ -9964,6 +9778,192 @@ msgstr ""
 
 #, c-format
 msgid "%s: downloading list of scripts..."
+msgstr ""
+
+msgid "Spell checker for input"
+msgstr ""
+
+#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#, c-format
+msgid "%s dictionaries list:"
+msgstr ""
+
+#, c-format
+msgid "%s: \"%s\" removed"
+msgstr ""
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr ""
+
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, c-format
+msgid "%s (using %s)"
+msgstr ""
+
+msgid "Spell checking is enabled"
+msgstr ""
+
+msgid "Spell checking is disabled"
+msgstr ""
+
+#, c-format
+msgid "Default dictionary: %s"
+msgstr ""
+
+msgid "(not set)"
+msgstr ""
+
+msgid "Specific dictionaries on buffers:"
+msgstr ""
+
+msgid "Spell checker enabled"
+msgstr ""
+
+msgid "Spell checker disabled"
+msgstr ""
+
+msgid "spell plugin configuration"
+msgstr ""
+
+msgid ""
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
+msgstr ""
+
+msgid ""
+"  enable: enable spell checker\n"
+" disable: disable spell checker\n"
+"  toggle: toggle spell checker\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands "
+"(see /set spell.check.commands).\n"
+"\n"
+"To enable spell checker on all buffers, use option \"default_dict\", then "
+"enable spell checker, for example:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
+"\n"
+"To display a list of suggestions in a bar, use item \"spell_suggest\".\n"
+"\n"
+"Default key to toggle spell checker is alt-s."
+msgstr ""
+
+msgid "list of all languages supported"
+msgstr ""
+
+msgid "list of installed dictionaries"
+msgstr ""
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
+msgstr ""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating spell option \"%s\" => \"%s\""
+msgstr ""
+
+msgid "text color for misspelled words (input bar)"
+msgstr ""
+
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"spell_suggest\""
+msgstr ""
+
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"spell_suggest\""
+msgstr ""
+
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"spell_suggest\""
+msgstr ""
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable spell checker on "
+"buffers for which you didn't explicitly enabled it)"
+msgstr ""
+
+msgid "check words during text search in buffer"
+msgstr ""
+
+msgid "enable spell checker for command line"
+msgstr ""
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+
+msgid ""
+"number of suggestions to display in bar item \"spell_suggest\" for each "
+"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
+"suggestions in all languages)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"spell_suggest\""
+msgstr ""
+
+msgid "delimiter displayed between two words in bar item \"spell_suggest\""
+msgstr ""
+
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr ""
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
 msgstr ""
 
 msgid "Support of tcl scripts"

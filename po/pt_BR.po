@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-03 19:00+0100\n"
+"POT-Creation-Date: 2019-02-19 21:29+0100\n"
 "PO-Revision-Date: 2019-01-29 21:05+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4944,218 +4944,6 @@ msgstr ""
 #, fuzzy
 msgid "list of default aliases"
 msgstr "lista de atalhos"
-
-msgid "Spell checker for input (with Aspell)"
-msgstr ""
-
-#. TRANSLATORS: "%s" is "aspell"
-#, c-format
-msgid "%s dictionaries list:"
-msgstr "lista de dicionários do %s:"
-
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" removido"
-
-#, c-format
-msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgstr "%s: erro: dicionário \"%s\" não está disponível em seu sistema"
-
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: nenhum dicionário para adicionar palavra neste buffer"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: muitos dicionários estão definidor para este buffer, por favor "
-"especifique o dicionário"
-
-#, c-format
-msgid "%s: word \"%s\" added to personal dictionary"
-msgstr "%s: palavra \"%s\" adicionada ao dicionário pessoal"
-
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
-
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, fuzzy, c-format
-msgid "%s (using %s)"
-msgstr "%s (usando %s)"
-
-#, fuzzy
-msgid "Spell checking is enabled"
-msgstr "Corretor ortográfico está habilitado"
-
-#, fuzzy
-msgid "Spell checking is disabled"
-msgstr "Corretor ortográfico está desabilitado"
-
-#, fuzzy, c-format
-msgid "Default dictionary: %s"
-msgstr "Dicionário padrão: %s"
-
-msgid "(not set)"
-msgstr ""
-
-msgid "Specific dictionaries on buffers:"
-msgstr ""
-
-#, fuzzy
-msgid "Aspell enabled"
-msgstr "Mouse habilitado"
-
-#, fuzzy
-msgid "Aspell disabled"
-msgstr "Mouse desabilitado"
-
-msgid "aspell plugin configuration"
-msgstr "configuração do plugin aspell"
-
-#, fuzzy
-msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
-"|| addword [<dict>] <word>"
-msgstr "dictlist || enable <idioma> || disable || addword [<idioma>] <palavra>"
-
-msgid ""
-"  enable: enable aspell\n"
-" disable: disable aspell\n"
-"  toggle: toggle aspell\n"
-"listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
-" deldict: delete dictionary used on current buffer\n"
-" addword: add a word in personal aspell dictionary\n"
-"\n"
-"Input line beginning with a '/' is not checked, except for some commands "
-"(see /set aspell.check.commands).\n"
-"\n"
-"To enable aspell on all buffers, use option \"default_dict\", then enable "
-"aspell, for example:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
-"\n"
-"To display a list of suggestions in a bar, use item \"aspell_suggest\".\n"
-"\n"
-"Default key to toggle aspell is alt-s."
-msgstr ""
-
-#, fuzzy
-msgid "list of all languages supported by aspell"
-msgstr "lista de idiomas suportados para aspell"
-
-msgid "list of aspell installed dictionaries"
-msgstr ""
-
-msgid "comma separated list of dictionaries to use on this buffer"
-msgstr "lista de dicionários (separados por vírgula) para uso neste buffer"
-
-#, c-format
-msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: erro ao criar dicionário aspell \"%s\" => \"%s\""
-
-msgid ""
-"option for aspell (for list of available options and format, run command "
-"\"aspell config\" in a shell)"
-msgstr ""
-"opção para aspell (para uma lista de opções e formatos disponíveis, execute "
-"o comando \"aspell config\" em um shell)"
-
-#, c-format
-msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr "%s%s: erro ao criar opção para aspell \"%s\" => \"%s\""
-
-#, fuzzy
-msgid "text color for misspelled words (input bar)"
-msgstr "cor usada em palavras erradas"
-
-#, fuzzy
-msgid ""
-"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
-msgstr "cor de texto para o tempo (barra de status)"
-
-msgid ""
-"text color for delimiters displayed between two dictionaries in bar item "
-"\"aspell_suggest\""
-msgstr ""
-
-#, fuzzy
-msgid ""
-"text color for delimiters displayed between two words in bar item "
-"\"aspell_suggest\""
-msgstr "cor de texto para mensagem exibida quando o dia muda"
-
-msgid ""
-"comma separated list of commands for which spell checking is enabled (spell "
-"checking is disabled for all other commands)"
-msgstr ""
-"lista de comandos (separados por vírgula) para os quais a verificação do "
-"aspell está habilitada (verificação ortográfica é desabilitada para todos os "
-"outros comandos)"
-
-msgid ""
-"default dictionary (or comma separated list of dictionaries) to use when "
-"buffer has no dictionary defined (leave blank to disable aspell on buffers "
-"for which you didn't explicitly enabled it)"
-msgstr ""
-"dicionário padrão (ou lista de dicionários separados por vírgula) para usar "
-"quando o buffer não tiver dicionário definido (deixe em branco para "
-"desabilitar o aspell em buffer para os quais você não o habilitou "
-"explicitamente)"
-
-msgid "check words during text search in buffer"
-msgstr "verificar palavras durante busca de texto no buffer"
-
-#, fuzzy
-msgid "enable aspell check for command line"
-msgstr "funções para linha de comando"
-
-msgid ""
-"real-time spell checking of words (slower, disabled by default: words are "
-"checked only if there's delimiter after)"
-msgstr ""
-"verificação ortográfica de palavras em tempo real (mais lento, desabilitado "
-"por padrão: palavras são verificadas somente se houver um demilitador depois)"
-
-msgid ""
-"number of suggestions to display in bar item \"aspell_suggest\" for each "
-"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
-"suggestions in all languages)"
-msgstr ""
-
-msgid ""
-"minimum length for a word to be spell checked (use 0 to check all words)"
-msgstr ""
-"tamanho mínimo de uma palavra para ser verificada ortograficamente (use 0 "
-"para verificar todas as palavras)"
-
-msgid ""
-"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
-msgstr ""
-
-msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
-msgstr ""
-
-#, fuzzy
-msgid "comma-separated list of dictionaries used in buffer"
-msgstr "lista de dicionários (separados por vírgula) para uso neste buffer"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
-"\")"
-msgstr ""
-
-#, c-format
-msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr "%s: aviso: dicionário \"%s\" não está disponível em seu sistema"
-
-#, fuzzy, c-format
-msgid "%s%s: error: unable to create speller for lang \"%s\""
-msgstr "%s%s: não foi possível criar diretório para registros (\"%s\")"
 
 #, fuzzy
 msgid "Buffers list"
@@ -11535,6 +11323,224 @@ msgstr "%s%s: erro ao baixar a lista de scripts: %s"
 msgid "%s: downloading list of scripts..."
 msgstr "%s: descarregando script..."
 
+msgid "Spell checker for input"
+msgstr ""
+
+#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#, c-format
+msgid "%s dictionaries list:"
+msgstr "lista de dicionários do %s:"
+
+#, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" removido"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr "%s: erro: dicionário \"%s\" não está disponível em seu sistema"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: nenhum dicionário para adicionar palavra neste buffer"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: muitos dicionários estão definidor para este buffer, por favor "
+"especifique o dicionário"
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr "%s: palavra \"%s\" adicionada ao dicionário pessoal"
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr "%s%s: falha ao adicionar palavra no dicionário pessoal"
+
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, fuzzy, c-format
+msgid "%s (using %s)"
+msgstr "%s (usando %s)"
+
+#, fuzzy
+msgid "Spell checking is enabled"
+msgstr "Corretor ortográfico está habilitado"
+
+#, fuzzy
+msgid "Spell checking is disabled"
+msgstr "Corretor ortográfico está desabilitado"
+
+#, fuzzy, c-format
+msgid "Default dictionary: %s"
+msgstr "Dicionário padrão: %s"
+
+msgid "(not set)"
+msgstr ""
+
+msgid "Specific dictionaries on buffers:"
+msgstr ""
+
+#, fuzzy
+msgid "Spell checker enabled"
+msgstr "Corretor ortográfico está habilitado"
+
+#, fuzzy
+msgid "Spell checker disabled"
+msgstr "Corretor ortográfico está desabilitado"
+
+#, fuzzy
+msgid "spell plugin configuration"
+msgstr "configuração do plugin aspell"
+
+#, fuzzy
+msgid ""
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
+msgstr "dictlist || enable <idioma> || disable || addword [<idioma>] <palavra>"
+
+msgid ""
+"  enable: enable spell checker\n"
+" disable: disable spell checker\n"
+"  toggle: toggle spell checker\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands "
+"(see /set spell.check.commands).\n"
+"\n"
+"To enable spell checker on all buffers, use option \"default_dict\", then "
+"enable spell checker, for example:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
+"\n"
+"To display a list of suggestions in a bar, use item \"spell_suggest\".\n"
+"\n"
+"Default key to toggle spell checker is alt-s."
+msgstr ""
+
+#, fuzzy
+msgid "list of all languages supported"
+msgstr "lista de idiomas suportados para aspell"
+
+#, fuzzy
+msgid "list of installed dictionaries"
+msgstr "lista de opções"
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr "lista de dicionários (separados por vírgula) para uso neste buffer"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
+msgstr "%s%s: erro ao criar dicionário aspell \"%s\" => \"%s\""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+"opção para aspell (para uma lista de opções e formatos disponíveis, execute "
+"o comando \"aspell config\" em um shell)"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell option \"%s\" => \"%s\""
+msgstr "%s%s: erro ao criar opção para aspell \"%s\" => \"%s\""
+
+#, fuzzy
+msgid "text color for misspelled words (input bar)"
+msgstr "cor usada em palavras erradas"
+
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"spell_suggest\""
+msgstr "cor de texto para o tempo (barra de status)"
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"spell_suggest\""
+msgstr "cor de texto para mensagem exibida quando o dia muda"
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"spell_suggest\""
+msgstr "cor de texto para mensagem exibida quando o dia muda"
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+"lista de comandos (separados por vírgula) para os quais a verificação do "
+"aspell está habilitada (verificação ortográfica é desabilitada para todos os "
+"outros comandos)"
+
+#, fuzzy
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable spell checker on "
+"buffers for which you didn't explicitly enabled it)"
+msgstr ""
+"dicionário padrão (ou lista de dicionários separados por vírgula) para usar "
+"quando o buffer não tiver dicionário definido (deixe em branco para "
+"desabilitar o aspell em buffer para os quais você não o habilitou "
+"explicitamente)"
+
+msgid "check words during text search in buffer"
+msgstr "verificar palavras durante busca de texto no buffer"
+
+#, fuzzy
+msgid "enable spell checker for command line"
+msgstr "funções para linha de comando"
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+"verificação ortográfica de palavras em tempo real (mais lento, desabilitado "
+"por padrão: palavras são verificadas somente se houver um demilitador depois)"
+
+msgid ""
+"number of suggestions to display in bar item \"spell_suggest\" for each "
+"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
+"suggestions in all languages)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+"tamanho mínimo de uma palavra para ser verificada ortograficamente (use 0 "
+"para verificar todas as palavras)"
+
+#, fuzzy
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"spell_suggest\""
+msgstr "cor de texto para mensagem exibida quando o dia muda"
+
+#, fuzzy
+msgid "delimiter displayed between two words in bar item \"spell_suggest\""
+msgstr "cor de texto para mensagem exibida quando o dia muda"
+
+#, fuzzy
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "lista de dicionários (separados por vírgula) para uso neste buffer"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr "%s: aviso: dicionário \"%s\" não está disponível em seu sistema"
+
+#, fuzzy, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s%s: não foi possível criar diretório para registros (\"%s\")"
+
 #, fuzzy
 msgid "Support of tcl scripts"
 msgstr "Suporte a scripts tcl"
@@ -12409,3 +12415,11 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy
+#~ msgid "Aspell enabled"
+#~ msgstr "Mouse habilitado"
+
+#, fuzzy
+#~ msgid "Aspell disabled"
+#~ msgstr "Mouse desabilitado"

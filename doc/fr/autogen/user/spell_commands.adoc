@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_spell_spell]]
-* `+spell+`: spell plugin configuration
+* `+spell+`: configuration de l'extension spell
 
 ----
 /spell  enable|disable|toggle
@@ -12,21 +12,21 @@
         deldict
         addword [<dict>] <mot>
 
-  enable: enable spell checker
- disable: disable spell checker
-  toggle: toggle spell checker
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
- deldict: delete dictionary used on current buffer
- addword: add a word in personal dictionary
+  enable : activer le vérificateur d'orthographe
+ disable : désactiver le vérificateur d'orthographe
+  toggle : activer/désactiver le vérificateur d'orthographe
+listdict : afficher les dictionnaires installés
+ setdict : définir le dictionnaire pour le tampon courant (plusieurs dictionnaires peuvent être séparés par une virgule)
+ deldict : supprimer le dictionnaire utilisé sur le tampon courant
+ addword : ajouter un mot dans le dictionnaire personnel
 
-Input line beginning with a '/' is not checked, except for some commands (see /set spell.check.commands).
+Les lignes d'entrée commençant par '/' ne sont pas vérifiées, sauf pour certaines commandes (voir /set spell.check.commands).
 
-To enable spell checker on all buffers, use option "default_dict", then enable spell checker, for example:
+Pour activer le vérificateur d'orthographe sur tous les tampons, utilisez l'option "default_dict", par exemple :
   /set spell.check.default_dict "en"
   /spell enable
 
-To display a list of suggestions in a bar, use item "spell_suggest".
+Pour afficher une liste des suggestions dans une barre, utilisez l'objet "spell_suggest".
 
-Default key to toggle spell checker is alt-s.
+La touche par défaut pour activer/désactiver le vérificateur d'orthographe est alt-s.
 ----

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-03 19:00+0100\n"
+"POT-Creation-Date: 2019-02-19 21:29+0100\n"
 "PO-Revision-Date: 2019-02-09 21:00+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -30,8 +30,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
-" || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 18.12.1\n"
 
 msgid "any string"
@@ -180,8 +180,8 @@ msgid ""
 "  -v, --version            display WeeChat version\n"
 "  plugin:option            option for plugin (see man weechat)\n"
 msgstr ""
-"   -a, --no-connect         wyłącza automatyczne łączenie się z serwerem przy "
-"uruchomieniu\n"
+"   -a, --no-connect         wyłącza automatyczne łączenie się z serwerem "
+"przy uruchomieniu\n"
 "  -c, --colors             wyświetla domyślne kolory w terminalu\n"
 "  -d, --dir <ścieżka>         ustawia katalog domowy  WeeChat (domyślnie: ~/."
 "weechat)\n"
@@ -235,8 +235,8 @@ msgstr "Błąd: za mało miejsca dla katalogu domowego\n"
 msgid ""
 "Error: unable to create a temporary home directory (using template: \"%s\")\n"
 msgstr ""
-"Błąd: nie można utworzyć tymczasowego katalogu domowego (używając szablonu:"
-" \"%s\")\n"
+"Błąd: nie można utworzyć tymczasowego katalogu domowego (używając szablonu: "
+"\"%s\")\n"
 
 msgid "Error: WEECHAT_HOME is undefined, check build options\n"
 msgstr ""
@@ -3926,10 +3926,9 @@ msgid ""
 msgstr ""
 "znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden "
 "znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick \"|"
-"nick|away\" ze znakami \"|\" zwróci kolor nicka \"|nick\"); ta opcja ma wpływ"
-" na opcję "
-"weechat.look.nick_color_force, nick z wymuszonym kolorem nie może zawierać "
-"znaków ignorowanych przez tą opcję"
+"nick|away\" ze znakami \"|\" zwróci kolor nicka \"|nick\"); ta opcja ma "
+"wpływ na opcję weechat.look.nick_color_force, nick z wymuszonym kolorem nie "
+"może zawierać znaków ignorowanych przez tą opcję"
 
 msgid "text to display before nick in prefix of message, example: \"<\""
 msgstr "teks wyświetlany przed nickiem w prefiksie wiadomości, przykład: \"<\""
@@ -5446,241 +5445,6 @@ msgstr "nazwa aliasu (wildcard \"*\" jest dozwolony) (opcjonalne)"
 msgid "list of default aliases"
 msgstr "lista domyślnych aliasów"
 
-msgid "Spell checker for input (with Aspell)"
-msgstr "Sprawdzanie pisowni dla wejścia (poprzez Aspell)"
-
-#. TRANSLATORS: "%s" is "aspell"
-#, c-format
-msgid "%s dictionaries list:"
-msgstr "%s lista słowników:"
-
-#, c-format
-msgid "%s: \"%s\" removed"
-msgstr "%s: \"%s\" usunięty"
-
-#, c-format
-msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgstr "%s: błąd: słownik \"%s\" jest niedostępny w Twoim systemie"
-
-#, c-format
-msgid "%s%s: no dictionary on this buffer for adding word"
-msgstr "%s%s: brak słownika w tym buforze do dodania słowa"
-
-#, c-format
-msgid ""
-"%s%s: many dictionaries are defined for this buffer, please specify "
-"dictionary"
-msgstr ""
-"%s%s: wiele słowników zdefiniowanych dla tego bufora, podaj konkretny słownik"
-
-#, c-format
-msgid "%s: word \"%s\" added to personal dictionary"
-msgstr "%s: słowo \"%s\" dodane do osobistego słownika"
-
-#, c-format
-msgid "%s%s: failed to add word to personal dictionary"
-msgstr "%s%s: nie udało się dodać słowa do osobistego słownika"
-
-#. TRANSLATORS: second "%s" is "aspell" or "enchant"
-#, c-format
-msgid "%s (using %s)"
-msgstr "%s (używając %s)"
-
-msgid "Spell checking is enabled"
-msgstr "Sprawdzanie pisowni jest włączone"
-
-msgid "Spell checking is disabled"
-msgstr "Sprawdzanie pisowni jest wyłączone"
-
-#, c-format
-msgid "Default dictionary: %s"
-msgstr "Domyślny słownik: %s"
-
-msgid "(not set)"
-msgstr "(nie ustawione)"
-
-msgid "Specific dictionaries on buffers:"
-msgstr "Specyficzne słowniki dla buforów:"
-
-msgid "Aspell enabled"
-msgstr "Aspell włączony"
-
-msgid "Aspell disabled"
-msgstr "Aspell wyłączony"
-
-msgid "aspell plugin configuration"
-msgstr "konfiguracja wtyczki aspell"
-
-msgid ""
-"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
-"|| addword [<dict>] <word>"
-msgstr ""
-"enable|disable|toggle || listdict || setdict <język>[,<język>...] || deldict "
-"|| addword [<język>] <słowo>"
-
-msgid ""
-"  enable: enable aspell\n"
-" disable: disable aspell\n"
-"  toggle: toggle aspell\n"
-"listdict: show installed dictionaries\n"
-" setdict: set dictionary for current buffer (multiple dictionaries can be "
-"separated by a comma)\n"
-" deldict: delete dictionary used on current buffer\n"
-" addword: add a word in personal aspell dictionary\n"
-"\n"
-"Input line beginning with a '/' is not checked, except for some commands "
-"(see /set aspell.check.commands).\n"
-"\n"
-"To enable aspell on all buffers, use option \"default_dict\", then enable "
-"aspell, for example:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
-"\n"
-"To display a list of suggestions in a bar, use item \"aspell_suggest\".\n"
-"\n"
-"Default key to toggle aspell is alt-s."
-msgstr ""
-"  enable: włącza aspell\n"
-" disable: wyłącza aspell\n"
-"  toggle: przełącza aspell\n"
-"listdict: pokazuje zainstalowane słowniki\n"
-" setdict: ustawia słownik dla obecnego buforu (kilka słowników może być "
-"podanych po przecinku)\n"
-" deldict: usuwa słownik używany w obecnym buforze\n"
-" addword: dodaje słowo do osobistego słownika aspell\n"
-"\n"
-"Jeśli wprowadzany tekst zaczyna się od '/' nie będzie on sprawdzany, za "
-"wyjątkiem kilku komend (zobacz /set aspell.check.commands).\n"
-"\n"
-"W celu włączenia aspell dla wszystkich buforów, należy użyć opcji "
-"\"default_dict\", następnie włączyć aspell, na przykład:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
-"\n"
-"W celu wyświetlenia listy sugestii na pasku, użyj elementu \"aspell_suggest"
-"\".\n"
-"\n"
-"Domyślny skrót klawiszowy przełączający aspell to alt-s."
-
-msgid "list of all languages supported by aspell"
-msgstr "lista wszystkich języków wspieranych przez aspell"
-
-msgid "list of aspell installed dictionaries"
-msgstr "lista zainstalowanych słowników aspell"
-
-msgid "comma separated list of dictionaries to use on this buffer"
-msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
-
-#, c-format
-msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: błąd podczas tworzenia słownika aspell \"%s\" => \"%s\""
-
-msgid ""
-"option for aspell (for list of available options and format, run command "
-"\"aspell config\" in a shell)"
-msgstr ""
-"opcja dla aspell (listę dostępnych opcji i format można uzyskać wykonując "
-"polecenie \"aspell config\" w powłoce)"
-
-#, c-format
-msgid "%s%s: error creating aspell option \"%s\" => \"%s\""
-msgstr "%s%s: błąd podczas tworzenia opcji aspell \"%s\" => \"%s\""
-
-msgid "text color for misspelled words (input bar)"
-msgstr "kolor używany dla błędnie zapisanych słów (pasek wprowadzania)"
-
-msgid ""
-"text color for suggestion on a misspelled word in bar item \"aspell_suggest\""
-msgstr ""
-"kolor tekstu sugestii dla błędnie wprowadzonego słowa w elemencie paska "
-"\"aspell_suggest\""
-
-msgid ""
-"text color for delimiters displayed between two dictionaries in bar item "
-"\"aspell_suggest\""
-msgstr ""
-"kolor tekstu separatorów wyświetlanych pomiędzy dwoma słownikami w elemenci "
-"paska \"aspell_suggest\""
-
-msgid ""
-"text color for delimiters displayed between two words in bar item "
-"\"aspell_suggest\""
-msgstr ""
-"kolor tekstu dla separatorów wyświetlanych pomiędzy dwoma słowami w "
-"elemencie paska \"aspell_suggest\""
-
-msgid ""
-"comma separated list of commands for which spell checking is enabled (spell "
-"checking is disabled for all other commands)"
-msgstr ""
-"oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna "
-"pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)"
-
-msgid ""
-"default dictionary (or comma separated list of dictionaries) to use when "
-"buffer has no dictionary defined (leave blank to disable aspell on buffers "
-"for which you didn't explicitly enabled it)"
-msgstr ""
-"domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy "
-"bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć słownik w "
-"buforach, które nie posiadają konkretnie przypisanego słownika aspell)"
-
-msgid "check words during text search in buffer"
-msgstr "sprawdzaj słowa podczas wyszukiwania tekstu w buforze"
-
-msgid "enable aspell check for command line"
-msgstr "włącza sprawdzanie aspell dla linii komend"
-
-msgid ""
-"real-time spell checking of words (slower, disabled by default: words are "
-"checked only if there's delimiter after)"
-msgstr ""
-"sprawdzanie pisowni w czasie rzeczywistym (wolniejsze, wyłączone domyślnie: "
-"słowa są sprawdzane tylko jeśli za nimi znajduje się separator)"
-
-msgid ""
-"number of suggestions to display in bar item \"aspell_suggest\" for each "
-"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
-"suggestions in all languages)"
-msgstr ""
-"numer podpowiedzi wyświetlanych w elemencie paska \"aspell_suggest\" dla "
-"każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = "
-"wyświetla wszystkie możliwe podpowiedzi dla każdego języka)"
-
-msgid ""
-"minimum length for a word to be spell checked (use 0 to check all words)"
-msgstr ""
-"minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)"
-
-msgid ""
-"delimiter displayed between two dictionaries in bar item \"aspell_suggest\""
-msgstr ""
-"separator wyświetlany pomiędzy dwoma słownikami w elemencie paska "
-"\"aspell_suggest\""
-
-msgid "delimiter displayed between two words in bar item \"aspell_suggest\""
-msgstr ""
-"separator wyświetlany pomiędzy dwoma słowami w elemencie paska "
-"\"aspell_suggest\""
-
-msgid "comma-separated list of dictionaries used in buffer"
-msgstr "oddzielona przecinkami lista słowników używanych w buforze"
-
-msgid ""
-"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
-"\")"
-msgstr ""
-"wskaźnik na bufor (\"0x12345678\") lub jego pełna nazwa (\"irc.freenode."
-"#weechat\")"
-
-#, c-format
-msgid "%s: warning: dictionary \"%s\" is not available on your system"
-msgstr "%s: ostrzeżenie: słownik \"%s\" nie jest dostępny w Twoim systemie"
-
-#, c-format
-msgid "%s%s: error: unable to create speller for lang \"%s\""
-msgstr "%s%s: błąd: nie można utworzyć słownika dla języka \"%s\""
-
 msgid "Buffers list"
 msgstr "Lista buforów"
 
@@ -5822,7 +5586,8 @@ msgstr ""
 "name)\n"
 "    - ${name}: skrócona nazwa (jeśli ustawiona inaczej zwraca pełną nazwę)\n"
 "    - ${color_hotlist}: kolor zależący od najwyższego poziomu hotlisty dla "
-"bufora (przetworzona opcja buflist.format.hotlist_xxx,  gdzie xxx to poziom)\n"
+"bufora (przetworzona opcja buflist.format.hotlist_xxx,  gdzie xxx to "
+"poziom)\n"
 "    - ${format_hotlist}: sformatowana hotlista (przetworzenie opcji buflist."
 "format.hotlist)\n"
 "    - ${hotlist}: niesformatowana hotlista\n"
@@ -6371,9 +6136,9 @@ msgid ""
 "it is in PATH (for example \"bash\") or the absolute path to the shell (for "
 "example \"/bin/bash\")"
 msgstr ""
-"powłoka używana przez komendę \"/exec -sh\"; może to być nazwa powłoki "
-"jeśli znajduje się ona w PATH (na przykład \"bash\") lub ścieżka absolutna "
-"(na przykład \"/bin/bash\")"
+"powłoka używana przez komendę \"/exec -sh\"; może to być nazwa powłoki jeśli "
+"znajduje się ona w PATH (na przykład \"bash\") lub ścieżka absolutna (na "
+"przykład \"/bin/bash\")"
 
 msgid "text color for a running command flag in list of commands"
 msgstr "kolor dla flagi wykonywanej komendy na liście komend"
@@ -9811,8 +9576,8 @@ msgid ""
 "merge server buffers; this option has no effect if a layout is saved and is "
 "conflicting with this value (see /help layout)"
 msgstr ""
-"łączy bufory serwerów; ta opcja nie ma wpływu jeśli układ jest zapisany "
-"i nie pasuje do tej opcji (zobacz /help layout)"
+"łączy bufory serwerów; ta opcja nie ma wpływu jeśli układ jest zapisany i "
+"nie pasuje do tej opcji (zobacz /help layout)"
 
 msgid ""
 "filter join/part/quit/nick messages for a nick if not speaking for some "
@@ -11560,15 +11325,16 @@ msgid ""
 "validate a Time-based One-Time Password (TOTP): 1 if TOTP is correct, "
 "otherwise 0"
 msgstr ""
-"walidacja haseł jednorazowych (TOTP): 1 jeśli poprawne, w przeciwnym wypadku 0"
+"walidacja haseł jednorazowych (TOTP): 1 jeśli poprawne, w przeciwnym wypadku "
+"0"
 
 msgid ""
 "secret (in base32), one-time password, timestamp (optional, current time by "
 "default), number of passwords before/after to test (optional, 0 by default)"
 msgstr ""
-"sekret (w base32), jednorazowe hasło, czas (opcjonalne, domyślnie używany"
-" jest obecny czas), "
-"ilość starszych/nowszych haseł do sprawdzenia (opcjonalne, domyślnie 0)"
+"sekret (w base32), jednorazowe hasło, czas (opcjonalne, domyślnie używany "
+"jest obecny czas), ilość starszych/nowszych haseł do sprawdzenia "
+"(opcjonalne, domyślnie 0)"
 
 msgid "list of bars"
 msgstr "lista pasków"
@@ -12246,9 +12012,9 @@ msgid ""
 "%s%s: invalid value for option \"relay.network.totp_secret\"; it must be a "
 "valid string encoded in base32 (only letters and digits from 2 to 7)"
 msgstr ""
-"%s%s: nieprawidłowa wartość dla opcji \"relay.network.totp_secret\"; "
-"musi to być ciąg poprawnie zakodowany za pomocą base32 (tylko "
-"litery i cyfry od 2 do 7)"
+"%s%s: nieprawidłowa wartość dla opcji \"relay.network.totp_secret\"; musi to "
+"być ciąg poprawnie zakodowany za pomocą base32 (tylko litery i cyfry od 2 do "
+"7)"
 
 #, c-format
 msgid "%s%s: error: port \"%d\" is already used"
@@ -12375,11 +12141,11 @@ msgid ""
 "not be empty (empty value means no TOTP is required) (note: content is "
 "evaluated, see /help eval)"
 msgstr ""
-"sekret do generowania Time-based One-Time Password (TOTP), "
-"zakodowany w base32 (tylko litery i cyfry od 2 do 7); używany jako "
-"drugi składnik uwierzytelniania przez protokół weechat, dodatkowo do hasła, "
-"które nie może być puste (pusta wartość oznacza brak TOTP) (uwaga: zawartość "
-"jest przetwarzana, zobacz /help eval)"
+"sekret do generowania Time-based One-Time Password (TOTP), zakodowany w "
+"base32 (tylko litery i cyfry od 2 do 7); używany jako drugi składnik "
+"uwierzytelniania przez protokół weechat, dodatkowo do hasła, które nie może "
+"być puste (pusta wartość oznacza brak TOTP) (uwaga: zawartość jest "
+"przetwarzana, zobacz /help eval)"
 
 msgid ""
 "number of Time-based One-Time Passwords to accept before and after the "
@@ -12388,12 +12154,11 @@ msgid ""
 "current, and two after, ...; a high number reduces the security level (0 or "
 "1 are recommended values)"
 msgstr ""
-"liczba Time-based One-Time Passwords do zaakceptowania przez i po obecnym: "
-"0 = akceptuj tylko obecne hasło, 1 = akceptuj jedno wcześniejsze obecne i"
-" następne hasło, "
-"2 = akceptuj dwa wcześniejsze obecne i dwa następne hasła, ...; wysoka liczba"
-" obniża poziom "
-"bezpieczeństwa (0 lub 1 to zalecane wartości)"
+"liczba Time-based One-Time Passwords do zaakceptowania przez i po obecnym: 0 "
+"= akceptuj tylko obecne hasło, 1 = akceptuj jedno wcześniejsze obecne i "
+"następne hasło, 2 = akceptuj dwa wcześniejsze obecne i dwa następne "
+"hasła, ...; wysoka liczba obniża poziom bezpieczeństwa (0 lub 1 to zalecane "
+"wartości)"
 
 msgid ""
 "POSIX extended regular expression with origins allowed in websockets (case "
@@ -12496,8 +12261,8 @@ msgid ""
 "%s%s: Time-based One-Time Password (TOTP) can be enabled only as second "
 "factor, if the password is not empty"
 msgstr ""
-"%s%s: Time-based One-Time Password (TOTP) mogą zostać włączone tylko "
-"jako drugi składnik, jeśli hasło nie jest puste"
+"%s%s: Time-based One-Time Password (TOTP) mogą zostać włączone tylko jako "
+"drugi składnik, jeśli hasło nie jest puste"
 
 #, c-format
 msgid "%s%s: client not allowed (max %d client is allowed at same time)"
@@ -13187,6 +12952,256 @@ msgstr "%s%s: błąd podczas pobierania listy skryptów: %s"
 #, c-format
 msgid "%s: downloading list of scripts..."
 msgstr "%s: pobieram listę skryptów..."
+
+#, fuzzy
+msgid "Spell checker for input"
+msgstr "Sprawdzanie pisowni dla wejścia (poprzez Aspell)"
+
+#. TRANSLATORS: "%s" is "spell" (name of plugin)
+#, c-format
+msgid "%s dictionaries list:"
+msgstr "%s lista słowników:"
+
+#, c-format
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" usunięty"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr "%s: błąd: słownik \"%s\" jest niedostępny w Twoim systemie"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: brak słownika w tym buforze do dodania słowa"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: wiele słowników zdefiniowanych dla tego bufora, podaj konkretny słownik"
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr "%s: słowo \"%s\" dodane do osobistego słownika"
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr "%s%s: nie udało się dodać słowa do osobistego słownika"
+
+#. TRANSLATORS: second "%s" is "aspell" or "enchant"
+#, c-format
+msgid "%s (using %s)"
+msgstr "%s (używając %s)"
+
+msgid "Spell checking is enabled"
+msgstr "Sprawdzanie pisowni jest włączone"
+
+msgid "Spell checking is disabled"
+msgstr "Sprawdzanie pisowni jest wyłączone"
+
+#, c-format
+msgid "Default dictionary: %s"
+msgstr "Domyślny słownik: %s"
+
+msgid "(not set)"
+msgstr "(nie ustawione)"
+
+msgid "Specific dictionaries on buffers:"
+msgstr "Specyficzne słowniki dla buforów:"
+
+#, fuzzy
+msgid "Spell checker enabled"
+msgstr "Sprawdzanie pisowni jest włączone"
+
+#, fuzzy
+msgid "Spell checker disabled"
+msgstr "Sprawdzanie pisowni jest wyłączone"
+
+#, fuzzy
+msgid "spell plugin configuration"
+msgstr "konfiguracja wtyczki aspell"
+
+msgid ""
+"enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
+"|| addword [<dict>] <word>"
+msgstr ""
+"enable|disable|toggle || listdict || setdict <język>[,<język>...] || deldict "
+"|| addword [<język>] <słowo>"
+
+#, fuzzy
+msgid ""
+"  enable: enable spell checker\n"
+" disable: disable spell checker\n"
+"  toggle: toggle spell checker\n"
+"listdict: show installed dictionaries\n"
+" setdict: set dictionary for current buffer (multiple dictionaries can be "
+"separated by a comma)\n"
+" deldict: delete dictionary used on current buffer\n"
+" addword: add a word in personal dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands "
+"(see /set spell.check.commands).\n"
+"\n"
+"To enable spell checker on all buffers, use option \"default_dict\", then "
+"enable spell checker, for example:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
+"\n"
+"To display a list of suggestions in a bar, use item \"spell_suggest\".\n"
+"\n"
+"Default key to toggle spell checker is alt-s."
+msgstr ""
+"  enable: włącza aspell\n"
+" disable: wyłącza aspell\n"
+"  toggle: przełącza aspell\n"
+"listdict: pokazuje zainstalowane słowniki\n"
+" setdict: ustawia słownik dla obecnego buforu (kilka słowników może być "
+"podanych po przecinku)\n"
+" deldict: usuwa słownik używany w obecnym buforze\n"
+" addword: dodaje słowo do osobistego słownika aspell\n"
+"\n"
+"Jeśli wprowadzany tekst zaczyna się od '/' nie będzie on sprawdzany, za "
+"wyjątkiem kilku komend (zobacz /set aspell.check.commands).\n"
+"\n"
+"W celu włączenia aspell dla wszystkich buforów, należy użyć opcji "
+"\"default_dict\", następnie włączyć aspell, na przykład:\n"
+"  /set aspell.check.default_dict \"en\"\n"
+"  /aspell enable\n"
+"\n"
+"W celu wyświetlenia listy sugestii na pasku, użyj elementu \"aspell_suggest"
+"\".\n"
+"\n"
+"Domyślny skrót klawiszowy przełączający aspell to alt-s."
+
+#, fuzzy
+msgid "list of all languages supported"
+msgstr "lista wszystkich języków wspieranych przez aspell"
+
+#, fuzzy
+msgid "list of installed dictionaries"
+msgstr "lista zainstalowanych słowników aspell"
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
+msgstr "%s%s: błąd podczas tworzenia słownika aspell \"%s\" => \"%s\""
+
+msgid ""
+"option for aspell (for list of available options and format, run command "
+"\"aspell config\" in a shell)"
+msgstr ""
+"opcja dla aspell (listę dostępnych opcji i format można uzyskać wykonując "
+"polecenie \"aspell config\" w powłoce)"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating spell option \"%s\" => \"%s\""
+msgstr "%s%s: błąd podczas tworzenia opcji aspell \"%s\" => \"%s\""
+
+msgid "text color for misspelled words (input bar)"
+msgstr "kolor używany dla błędnie zapisanych słów (pasek wprowadzania)"
+
+#, fuzzy
+msgid ""
+"text color for suggestion on a misspelled word in bar item \"spell_suggest\""
+msgstr ""
+"kolor tekstu sugestii dla błędnie wprowadzonego słowa w elemencie paska "
+"\"aspell_suggest\""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two dictionaries in bar item "
+"\"spell_suggest\""
+msgstr ""
+"kolor tekstu separatorów wyświetlanych pomiędzy dwoma słownikami w elemenci "
+"paska \"aspell_suggest\""
+
+#, fuzzy
+msgid ""
+"text color for delimiters displayed between two words in bar item "
+"\"spell_suggest\""
+msgstr ""
+"kolor tekstu dla separatorów wyświetlanych pomiędzy dwoma słowami w "
+"elemencie paska \"aspell_suggest\""
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+"oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna "
+"pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)"
+
+#, fuzzy
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable spell checker on "
+"buffers for which you didn't explicitly enabled it)"
+msgstr ""
+"domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy "
+"bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć słownik w "
+"buforach, które nie posiadają konkretnie przypisanego słownika aspell)"
+
+msgid "check words during text search in buffer"
+msgstr "sprawdzaj słowa podczas wyszukiwania tekstu w buforze"
+
+#, fuzzy
+msgid "enable spell checker for command line"
+msgstr "włącza sprawdzanie aspell dla linii komend"
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+"sprawdzanie pisowni w czasie rzeczywistym (wolniejsze, wyłączone domyślnie: "
+"słowa są sprawdzane tylko jeśli za nimi znajduje się separator)"
+
+#, fuzzy
+msgid ""
+"number of suggestions to display in bar item \"spell_suggest\" for each "
+"dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
+"suggestions in all languages)"
+msgstr ""
+"numer podpowiedzi wyświetlanych w elemencie paska \"aspell_suggest\" dla "
+"każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = "
+"wyświetla wszystkie możliwe podpowiedzi dla każdego języka)"
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+"minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)"
+
+#, fuzzy
+msgid ""
+"delimiter displayed between two dictionaries in bar item \"spell_suggest\""
+msgstr ""
+"separator wyświetlany pomiędzy dwoma słownikami w elemencie paska "
+"\"aspell_suggest\""
+
+#, fuzzy
+msgid "delimiter displayed between two words in bar item \"spell_suggest\""
+msgstr ""
+"separator wyświetlany pomiędzy dwoma słowami w elemencie paska "
+"\"aspell_suggest\""
+
+msgid "comma-separated list of dictionaries used in buffer"
+msgstr "oddzielona przecinkami lista słowników używanych w buforze"
+
+msgid ""
+"buffer pointer (\"0x12345678\") or buffer full name (\"irc.freenode.#weechat"
+"\")"
+msgstr ""
+"wskaźnik na bufor (\"0x12345678\") lub jego pełna nazwa (\"irc.freenode."
+"#weechat\")"
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr "%s: ostrzeżenie: słownik \"%s\" nie jest dostępny w Twoim systemie"
+
+#, c-format
+msgid "%s%s: error: unable to create speller for lang \"%s\""
+msgstr "%s%s: błąd: nie można utworzyć słownika dla języka \"%s\""
 
 msgid "Support of tcl scripts"
 msgstr "Wsparcie dla skryptów tcl"
@@ -14163,3 +14178,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "Aspell enabled"
+#~ msgstr "Aspell włączony"
+
+#~ msgid "Aspell disabled"
+#~ msgstr "Aspell wyłączony"
