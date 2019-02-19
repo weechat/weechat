@@ -52,6 +52,9 @@ struct t_weechat_plugin *weechat_aspell_plugin = NULL;
 
 int aspell_enabled = 0;
 
+char *aspell_nick_completer = NULL;
+int aspell_len_nick_completer = 0;
+
 #ifdef USE_ENCHANT
 EnchantBroker *broker = NULL;
 #endif /* USE_ENCHANT */
@@ -355,22 +358,18 @@ int
 weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
 {
     char *pos, *pos_nick_completer, *pos_space, saved_char;
-    const char *nick_completer, *buffer_type, *buffer_nick, *buffer_channel;
-    int rc, len_completer;
+    const char *buffer_type, *buffer_nick, *buffer_channel;
+    int rc;
 
-    nick_completer = weechat_config_string (
-        weechat_config_get ("weechat.completion.nick_completer"));
-    len_completer = (nick_completer) ? strlen (nick_completer) : 0;
-
-    pos_nick_completer = (nick_completer) ?
-        strstr (word, nick_completer) : NULL;
+    pos_nick_completer = (aspell_nick_completer) ?
+        strstr (word, aspell_nick_completer) : NULL;
     pos_space = strchr (word, ' ');
 
     pos = NULL;
     if (pos_nick_completer && pos_space)
     {
         if ((pos_nick_completer < pos_space)
-            && (pos_nick_completer + len_completer == pos_space))
+            && (pos_nick_completer + aspell_len_nick_completer == pos_space))
         {
             pos = pos_nick_completer;
         }
@@ -379,7 +378,7 @@ weechat_aspell_string_is_nick (struct t_gui_buffer *buffer, const char *word)
     }
     else
     {
-        pos = (pos_nick_completer && !pos_nick_completer[len_completer]) ?
+        pos = (pos_nick_completer && !pos_nick_completer[aspell_len_nick_completer]) ?
             pos_nick_completer : pos_space;
     }
 
@@ -1057,6 +1056,30 @@ weechat_aspell_debug_libs_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes to option "weechat.completion.nick_completer".
+ */
+
+int
+weechat_aspell_config_change_nick_completer_cb (const void *pointer, void *data,
+                                                const char *option,
+                                                const char *value)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (aspell_nick_completer)
+        free (aspell_nick_completer);
+
+    aspell_nick_completer = weechat_string_strip (value, 0, 1, " ");
+    aspell_len_nick_completer =
+        (aspell_nick_completer) ? strlen (aspell_nick_completer) : 0;
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Initializes aspell plugin.
  */
 
@@ -1109,6 +1132,15 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("debug_libs",
                          &weechat_aspell_debug_libs_cb, NULL, NULL);
 
+    weechat_hook_config ("weechat.completion.nick_completer",
+                         &weechat_aspell_config_change_nick_completer_cb,
+                         NULL, NULL);
+    /* manually call callback to initialize */
+    weechat_aspell_config_change_nick_completer_cb (
+        NULL, NULL, "weechat.completion.nick_completer",
+        weechat_config_string (
+            weechat_config_get ("weechat.completion.nick_completer")));
+
     return WEECHAT_RC_OK;
 }
 
@@ -1131,6 +1163,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* release enchant broker */
     enchant_broker_free (broker);
 #endif /* USE_ENCHANT */
+
+    if (aspell_nick_completer)
+        free (aspell_nick_completer);
 
     return WEECHAT_RC_OK;
 }
