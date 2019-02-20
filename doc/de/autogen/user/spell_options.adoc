@@ -9,7 +9,7 @@
 ** Standardwert: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
-** Beschreibung: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]
+** Beschreibung: pass:none[Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde (wird kein Wörterbuch angegeben dann ist die Rechtschreibprüfung in allen Buffer deaktiviert, außer es wird für einen Buffer explizit ein Wörterbuch angegeben)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -21,7 +21,7 @@
 ** Standardwert: `+off+`
 
 * [[option_spell.check.enabled]] *spell.check.enabled*
-** Beschreibung: pass:none[enable spell checker for command line]
+** Beschreibung: pass:none[Rechtschreibprüfung wird für die Eingabezeile aktiviert]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`
@@ -33,7 +33,7 @@
 ** Standardwert: `+off+`
 
 * [[option_spell.check.suggestions]] *spell.check.suggestions*
-** Beschreibung: pass:none[number of suggestions to display in bar item "spell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)]
+** Beschreibung: pass:none[legt die Anzahl an Vorschlägen, für ein falsch geschriebenes Wort, fest. Die Vorschläge werden mittels der Bar-Item "spell_suggest", für die jeweilige(n) Sprache(n), die für den Buffer augewählt wurden, angezeigt (-1 = deaktiviert die Funktion, 0 = zeigt alle verfügbaren Vorschläge, für alle ausgewählten Sprachen, an)]
 ** Typ: integer
 ** Werte: -1 .. 2147483647
 ** Standardwert: `+-1+`
@@ -51,31 +51,31 @@
 ** Standardwert: `+lightred+`
 
 * [[option_spell.color.suggestion]] *spell.color.suggestion*
-** Beschreibung: pass:none[text color for suggestion on a misspelled word in bar item "spell_suggest"]
+** Beschreibung: pass:none[Textfarbe für die Vorschläge der Rechtsschreibkorrektur in der Bar-Item "spell_suggest"]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
 
 * [[option_spell.color.suggestion_delimiter_dict]] *spell.color.suggestion_delimiter_dict*
-** Beschreibung: pass:none[text color for delimiters displayed between two dictionaries in bar item "spell_suggest"]
+** Beschreibung: pass:none[Textfarbe für das Trennzeichen welches zwischen zwei Wörterbüchern dargestellt wird, im Bar-Item "spell_suggest"]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+cyan+`
 
 * [[option_spell.color.suggestion_delimiter_word]] *spell.color.suggestion_delimiter_word*
-** Beschreibung: pass:none[text color for delimiters displayed between two words in bar item "spell_suggest"]
+** Beschreibung: pass:none[Textfarbe für das Trennzeichen zwischen zwei Wörtern in der Bar-Item "spell_suggest"]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+cyan+`
 
 * [[option_spell.look.suggestion_delimiter_dict]] *spell.look.suggestion_delimiter_dict*
-** Beschreibung: pass:none[delimiter displayed between two dictionaries in bar item "spell_suggest"]
+** Beschreibung: pass:none[Trennzeichen, im Bar-Item "spell_suggest", welches zwischen zwei Wörterbücher dargestellt wird]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+" / "+`
 
 * [[option_spell.look.suggestion_delimiter_word]] *spell.look.suggestion_delimiter_word*
-** Beschreibung: pass:none[delimiter displayed between two words in bar item "spell_suggest"]
+** Beschreibung: pass:none[Trennzeichen, im Bar-Item "spell_suggest", welches zwischen zwei Wörtern dargestellt wird]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+","+`

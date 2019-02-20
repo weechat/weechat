@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_spell_spell]]
-* `+spell+`: spell plugin configuration
+* `+spell+`: Konfiguration für spell-Erweiterung
 
 ----
 /spell  enable|disable|toggle
@@ -12,21 +12,21 @@
         deldict
         addword [<dict>] <word>
 
-  enable: enable spell checker
- disable: disable spell checker
-  toggle: toggle spell checker
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
- deldict: delete dictionary used on current buffer
- addword: add a word in personal dictionary
+  enable: Rechtschreibprüfung wird aktiviert
+ disable: Rechtschreibprüfung wird deaktiviert
+  toggle: Funktionalität der Rechtschreibprüfung umschalten
+listdict: die, auf dem System, installierten Wörterbücher werden aufgelistet
+ setdict: Wörterbuch für den aktuellen Buffer einstellen (mehrere Wörterbücher müssen durch Kommata getrennt werden)
+ deldict: Wörterbuch für den aktuellen Buffer entfernen
+ addword: fügt ein Wort in das persönliche Wörterbuch hinzu
 
-Input line beginning with a '/' is not checked, except for some commands (see /set spell.check.commands).
+Eingaben die mit '/' beginnen werden nicht überprüft, davon ausgenommen sind einige Befehle (siehe /set spell.check.commands).
 
-To enable spell checker on all buffers, use option "default_dict", then enable spell checker, for example:
-  /set spell.check.default_dict "en"
+Um die Rechtschreibprüfung auf allen Buffer anzuwenden sollte die Einstellung "default_dict" genutzt und die Rechtschreibprüfung aktiviert werden:
+  /set spell.check.default_dict "de_DE-neu"
   /spell enable
 
-To display a list of suggestions in a bar, use item "spell_suggest".
+Um sich eine Liste von Vorschlägen in einer Bar anzeigen zu lassen nutzt man das Item "spell_suggest".
 
-Default key to toggle spell checker is alt-s.
+Die Standardtastaturbelegung zum Umschalten der Rechtschreibprüfung lautet alt-s.
 ----
