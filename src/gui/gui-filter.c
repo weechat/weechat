@@ -294,7 +294,9 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
     if (gui_filter_search_by_name (name))
     {
         gui_filter_new_error (name,
-                              _("a filter with same name already exists"));
+                              _("a filter with same name already exists "
+                                "(choose another name or use option "
+                                "\"addreplace\" to overwrite it)"));
         return NULL;
     }
 

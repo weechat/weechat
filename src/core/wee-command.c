@@ -2314,9 +2314,18 @@ COMMAND_CALLBACK(filter)
     }
 
     /* add filter */
-    if (string_strcasecmp (argv[1], "add") == 0)
+    if ((string_strcasecmp (argv[1], "add") == 0)
+        || (string_strcasecmp (argv[1], "addreplace") == 0))
     {
-        COMMAND_MIN_ARGS(6, "add");
+        if ((string_strcasecmp (argv[1], "addreplace") == 0))
+        {
+            COMMAND_MIN_ARGS(6, "addreplace");
+        }
+        else
+        {
+            COMMAND_MIN_ARGS(6, "add");
+        }
+
         if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
@@ -2324,6 +2333,17 @@ COMMAND_CALLBACK(filter)
                                          "tags or regex for filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
+        }
+
+        ptr_filter = gui_filter_search_by_name (argv[2]);
+        if (ptr_filter)
+        {
+            if (string_strcasecmp (argv[1], "addreplace") == 0)
+            {
+                /* TODO: issue #1309 /filter del optimization */
+                gui_filter_free (ptr_filter);
+                gui_filter_all_buffers (); /* needed if filter buffers change */
+            }
         }
 
         ptr_filter = gui_filter_new (1, argv[2], argv[3], argv[4],
@@ -7472,40 +7492,41 @@ command_init ()
            "regex"),
         N_("list"
            " || enable|disable|toggle [<name>|@]"
-           " || add <name> <buffer>[,<buffer>...] <tags> <regex>"
+           " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
            " || del <name>|-all"),
-        N_("   list: list all filters\n"
-           " enable: enable filters (filters are enabled by default)\n"
-           "disable: disable filters\n"
-           " toggle: toggle filters\n"
-           "   name: filter name (\"@\" = enable/disable all filters in current "
+        N_("      list: list all filters\n"
+           "    enable: enable filters (filters are enabled by default)\n"
+           "   disable: disable filters\n"
+           "    toggle: toggle filters\n"
+           "      name: filter name (\"@\" = enable/disable all filters in current "
            "buffer)\n"
-           "    add: add a filter\n"
-           " rename: rename a filter\n"
-           "    del: delete a filter\n"
-           "   -all: delete all filters\n"
-           " buffer: comma separated list of buffers where filter is active:\n"
-           "         - this is full name including plugin (example: \"irc."
+           "       add: add a filter\n"
+           "addreplace: add or replace an existing filter\n"
+           "    rename: rename a filter\n"
+           "       del: delete a filter\n"
+           "      -all: delete all filters\n"
+           "    buffer: comma separated list of buffers where filter is active:\n"
+           "            - this is full name including plugin (example: \"irc."
            "freenode.#weechat\" or \"irc.server.freenode\")\n"
-           "         - \"*\" means all buffers\n"
-           "         - a name starting with '!' is excluded\n"
-           "         - wildcard \"*\" is allowed\n"
+           "            - \"*\" means all buffers\n"
+           "            - a name starting with '!' is excluded\n"
+           "            - wildcard \"*\" is allowed\n"
            "   tags: comma separated list of tags, for example \"irc_join,"
            "irc_part,irc_quit\"\n"
-           "         - logical \"and\": use \"+\" between tags (for example: "
+           "            - logical \"and\": use \"+\" between tags (for example: "
            "\"nick_toto+irc_action\")\n"
-           "         - wildcard \"*\" is allowed\n"
-           "         - if tag starts with '!', then it is excluded and must "
+           "            - wildcard \"*\" is allowed\n"
+           "            - if tag starts with '!', then it is excluded and must "
            "NOT be in message\n"
            "  regex: POSIX extended regular expression to search in line\n"
-           "         - use '\\t' to separate prefix from message, special chars "
+           "            - use '\\t' to separate prefix from message, special chars "
            "like '|' must be escaped: '\\|'\n"
-           "         - if regex starts with '!', then matching result is "
+           "            - if regex starts with '!', then matching result is "
            "reversed (use '\\!' to start with '!')\n"
-           "         - two regular expressions are created: one for prefix and "
+           "            - two regular expressions are created: one for prefix and "
            "one for message\n"
-           "         - regex are case insensitive, they can start by \"(?-i)\" "
+           "            - regex are case insensitive, they can start by \"(?-i)\" "
            "to become case sensitive\n"
            "\n"
            "The default key alt+'=' toggles filtering on/off globally and "
@@ -7546,7 +7567,7 @@ command_init ()
         " || enable %(filters_names)|@"
         " || disable %(filters_names)|@"
         " || toggle %(filters_names)|@"
-        " || add %(filters_names) %(buffers_plugins_names)|*"
+        " || add|addreplace %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
         " || del %(filters_names)|-all",
         &command_filter, NULL, NULL);
