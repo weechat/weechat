@@ -20,7 +20,7 @@ about: Create a bug report (please do not report security issues here)
 
 
 
-## Desired behavior
+## Expected behavior
 
 
 
