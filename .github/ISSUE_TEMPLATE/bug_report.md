@@ -10,15 +10,15 @@ about: Create a bug report (please do not report security issues here)
 
 
 
-## Current behavior
-
-
-
 ## Steps to reproduce
 
 1. 
 2. 
 3. 
+
+## Current behavior
+
+
 
 ## Desired behavior
 
