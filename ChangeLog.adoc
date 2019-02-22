@@ -24,6 +24,7 @@ New features::
 
 Bug fixes::
 
+  * fset: fix slow refresh of fset buffer during /reload (issue #1313)
   * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
 
 Build::

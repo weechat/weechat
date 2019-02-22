@@ -1491,9 +1491,20 @@ fset_option_config_timer_cb (const void *pointer,
     (void) data;
     (void) remaining_calls;
 
-    weechat_hashtable_map (fset_option_timer_options_changed,
-                           &fset_option_timer_option_changed_cb,
-                           NULL);
+    if (weechat_hashtable_get_integer (
+            fset_option_timer_options_changed,
+            "items_count") >= FSET_OPTION_TIMER_MAX_OPTIONS_CHANGED)
+    {
+        fset_option_get_options ();
+        fset_buffer_refresh (1);
+    }
+    else
+    {
+        weechat_hashtable_map (fset_option_timer_options_changed,
+                               &fset_option_timer_option_changed_cb,
+                               NULL);
+    }
+
     weechat_hashtable_remove_all (fset_option_timer_options_changed);
 
     fset_option_timer_hook = NULL;
@@ -1527,8 +1538,18 @@ fset_option_config_cb (const void *pointer,
     if (ptr_info && (strcmp (ptr_info, "1") == 0))
         return WEECHAT_RC_OK;
 
-    weechat_hashtable_set (fset_option_timer_options_changed,
-                           option, NULL);
+    /*
+     * we limit the number of options to display with the timer; for example
+     * on /reload, many options are changed, so we'll get all options and
+     * display them, instead of change them one by one, which is very slow
+     */
+    if (weechat_hashtable_get_integer (
+            fset_option_timer_options_changed,
+            "items_count") < FSET_OPTION_TIMER_MAX_OPTIONS_CHANGED)
+    {
+        weechat_hashtable_set (fset_option_timer_options_changed,
+                               option, NULL);
+    }
 
     if (!fset_option_timer_hook)
     {

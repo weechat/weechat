@@ -22,6 +22,8 @@
 
 #define FSET_OPTION_VALUE_NULL "null"
 
+#define FSET_OPTION_TIMER_MAX_OPTIONS_CHANGED 32
+
 enum t_fset_option_type
 {
     FSET_OPTION_TYPE_BOOLEAN = 0,
