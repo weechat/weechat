@@ -351,33 +351,34 @@ Examples (conditions):
 ----
 /filter  list
          enable|disable|toggle [<name>|@]
-         add <name> <buffer>[,<buffer>...] <tags> <regex>
+         add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
          rename <name> <new_name>
          del <name>|-all
 
-   list: list all filters
- enable: enable filters (filters are enabled by default)
-disable: disable filters
- toggle: toggle filters
-   name: filter name ("@" = enable/disable all filters in current buffer)
-    add: add a filter
- rename: rename a filter
-    del: delete a filter
-   -all: delete all filters
- buffer: comma separated list of buffers where filter is active:
-         - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-         - "*" means all buffers
-         - a name starting with '!' is excluded
-         - wildcard "*" is allowed
+      list: list all filters
+    enable: enable filters (filters are enabled by default)
+   disable: disable filters
+    toggle: toggle filters
+      name: filter name ("@" = enable/disable all filters in current buffer)
+       add: add a filter
+addreplace: add or replace an existing filter
+    rename: rename a filter
+       del: delete a filter
+      -all: delete all filters
+    buffer: comma separated list of buffers where filter is active:
+            - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
+            - "*" means all buffers
+            - a name starting with '!' is excluded
+            - wildcard "*" is allowed
    tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-         - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-         - wildcard "*" is allowed
-         - if tag starts with '!', then it is excluded and must NOT be in message
+            - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
+            - wildcard "*" is allowed
+            - if tag starts with '!', then it is excluded and must NOT be in message
   regex: POSIX extended regular expression to search in line
-         - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-         - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-         - two regular expressions are created: one for prefix and one for message
-         - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+            - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
+            - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
+            - two regular expressions are created: one for prefix and one for message
+            - regex are case insensitive, they can start by "(?-i)" to become case sensitive
 
 The default key alt+'=' toggles filtering on/off globally and alt+'-' toggles filtering on/off in the current buffer.
 

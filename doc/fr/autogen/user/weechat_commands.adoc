@@ -351,7 +351,7 @@ Exemples (conditions) :
 ----
 /filter  list
          enable|disable|toggle [<nom>|@]
-         add <nom> <tampon>[,<tampon>...] <étiquettes> <regex>
+         add|addreplace <nom> <tampon>[,<tampon>...] <étiquettes> <regex>
          rename <nom> <nouveau_nom>
          del <nom>|-all
 
@@ -361,6 +361,7 @@ Exemples (conditions) :
     toggle : activer/désactiver les filtres
        nom : nom de filtre ("@" = activer/désactiver tous les filtres dans le tampon courant)
        add : ajouter un filtre
+addreplace : ajouter ou remplacer un filtre existant
     rename : renommer un filtre
        del : supprimer un filtre
       -all : supprimer tous les filtres
