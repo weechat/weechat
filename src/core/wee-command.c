@@ -2313,10 +2313,12 @@ COMMAND_CALLBACK(filter)
         return WEECHAT_RC_OK;
     }
 
-    /* add filter */
-    if (string_strcasecmp (argv[1], "add") == 0)
+    /* add (or add/replace) a filter */
+    if ((string_strcasecmp (argv[1], "add") == 0)
+        || (string_strcasecmp (argv[1], "addreplace") == 0))
     {
-        COMMAND_MIN_ARGS(6, "add");
+        COMMAND_MIN_ARGS(6, argv[1]);
+
         if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
@@ -2324,6 +2326,18 @@ COMMAND_CALLBACK(filter)
                                          "tags or regex for filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_OK;
+        }
+
+        if (string_strcasecmp (argv[1], "addreplace") == 0)
+        {
+            ptr_filter = gui_filter_search_by_name (argv[2]);
+            if (ptr_filter)
+            {
+                /* disable filter and apply before removing it */
+                ptr_filter->enabled = 0;
+                gui_filter_all_buffers (ptr_filter);
+                gui_filter_free (ptr_filter);
+            }
         }
 
         ptr_filter = gui_filter_new (1, argv[2], argv[3], argv[4],
@@ -7474,41 +7488,43 @@ command_init ()
            "regex"),
         N_("list"
            " || enable|disable|toggle [<name>|@]"
-           " || add <name> <buffer>[,<buffer>...] <tags> <regex>"
+           " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
            " || del <name>|-all"),
-        N_("   list: list all filters\n"
-           " enable: enable filters (filters are enabled by default)\n"
-           "disable: disable filters\n"
-           " toggle: toggle filters\n"
-           "   name: filter name (\"@\" = enable/disable all filters in current "
-           "buffer)\n"
-           "    add: add a filter\n"
-           " rename: rename a filter\n"
-           "    del: delete a filter\n"
-           "   -all: delete all filters\n"
-           " buffer: comma separated list of buffers where filter is active:\n"
-           "         - this is full name including plugin (example: \"irc."
+        N_("      list: list all filters\n"
+           "    enable: enable filters (filters are enabled by default)\n"
+           "   disable: disable filters\n"
+           "    toggle: toggle filters\n"
+           "      name: filter name (\"@\" = enable/disable all filters in "
+           "current buffer)\n"
+           "       add: add a filter\n"
+           "addreplace: add or replace an existing filter\n"
+           "    rename: rename a filter\n"
+           "       del: delete a filter\n"
+           "      -all: delete all filters\n"
+           "    buffer: comma separated list of buffers where filter "
+           "is active:\n"
+           "            - this is full name including plugin (example: \"irc."
            "freenode.#weechat\" or \"irc.server.freenode\")\n"
-           "         - \"*\" means all buffers\n"
-           "         - a name starting with '!' is excluded\n"
-           "         - wildcard \"*\" is allowed\n"
+           "            - \"*\" means all buffers\n"
+           "            - a name starting with '!' is excluded\n"
+           "            - wildcard \"*\" is allowed\n"
            "   tags: comma separated list of tags, for example \"irc_join,"
            "irc_part,irc_quit\"\n"
-           "         - logical \"and\": use \"+\" between tags (for example: "
-           "\"nick_toto+irc_action\")\n"
-           "         - wildcard \"*\" is allowed\n"
-           "         - if tag starts with '!', then it is excluded and must "
-           "NOT be in message\n"
+           "            - logical \"and\": use \"+\" between tags "
+           "(for example: \"nick_toto+irc_action\")\n"
+           "            - wildcard \"*\" is allowed\n"
+           "            - if tag starts with '!', then it is excluded and "
+           "must NOT be in message\n"
            "  regex: POSIX extended regular expression to search in line\n"
-           "         - use '\\t' to separate prefix from message, special chars "
-           "like '|' must be escaped: '\\|'\n"
-           "         - if regex starts with '!', then matching result is "
+           "            - use '\\t' to separate prefix from message, "
+           "special chars like '|' must be escaped: '\\|'\n"
+           "            - if regex starts with '!', then matching result is "
            "reversed (use '\\!' to start with '!')\n"
-           "         - two regular expressions are created: one for prefix and "
-           "one for message\n"
-           "         - regex are case insensitive, they can start by \"(?-i)\" "
-           "to become case sensitive\n"
+           "            - two regular expressions are created: "
+           "one for prefix and one for message\n"
+           "            - regex are case insensitive, they can start by "
+           "\"(?-i)\" to become case sensitive\n"
            "\n"
            "The default key alt+'=' toggles filtering on/off globally and "
            "alt+'-' toggles filtering on/off in the current buffer.\n"
@@ -7519,8 +7535,8 @@ command_init ()
            "  self_msg, nick_xxx (xxx is nick in message), "
            "prefix_nick_ccc (ccc is color of nick),\n"
            "  host_xxx (xxx is username + host in message),\n"
-           "  irc_xxx (xxx is command name or number, see /server raw or /debug "
-           "tags),\n"
+           "  irc_xxx (xxx is command name or number, see /server raw or "
+           "/debug tags),\n"
            "  irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, "
            "irc_smart_filter, away_info.\n"
            "To see tags for lines in buffers: /debug tags\n"
@@ -7528,8 +7544,8 @@ command_init ()
            "Examples:\n"
            "  use IRC smart filter on all buffers:\n"
            "    /filter add irc_smart * irc_smart_filter *\n"
-           "  use IRC smart filter on all buffers except those with \"#weechat\" "
-           "in name:\n"
+           "  use IRC smart filter on all buffers except those with "
+           "\"#weechat\" in name:\n"
            "    /filter add irc_smart *,!*#weechat* irc_smart_filter *\n"
            "  filter all IRC join/part/quit messages:\n"
            "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
@@ -7539,7 +7555,8 @@ command_init ()
            "    /filter add toto irc.freenode.#weechat nick_toto *\n"
            "  filter IRC join/action messages from nick \"toto\":\n"
            "    /filter add toto * nick_toto+irc_join,nick_toto+irc_action *\n"
-           "  filter lines containing \"weechat sucks\" on IRC channel #weechat:\n"
+           "  filter lines containing \"weechat sucks\" on IRC channel "
+           "#weechat:\n"
            "    /filter add sucks irc.freenode.#weechat * weechat sucks\n"
            "  filter lines that are strictly equal to \"WeeChat sucks\" on "
            "all buffers:\n"
@@ -7548,7 +7565,7 @@ command_init ()
         " || enable %(filters_names)|@"
         " || disable %(filters_names)|@"
         " || toggle %(filters_names)|@"
-        " || add %(filters_names) %(buffers_plugins_names)|*"
+        " || add|addreplace %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
         " || del %(filters_names)|-all",
         &command_filter, NULL, NULL);
