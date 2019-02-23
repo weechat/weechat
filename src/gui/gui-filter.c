@@ -186,17 +186,26 @@ gui_filter_buffer (struct t_gui_buffer *buffer,
 
 /*
  * Filters all buffers, using message filters.
+ *
+ * If filter is NULL, filters all buffers.
+ * If filter is not NULL, filters only buffers matched by this filter.
  */
 
 void
-gui_filter_all_buffers ()
+gui_filter_all_buffers (struct t_gui_filter *filter)
 {
     struct t_gui_buffer *ptr_buffer;
 
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_filter_buffer (ptr_buffer, NULL);
+        if (!filter
+            || gui_buffer_match_list_split (ptr_buffer,
+                                            filter->num_buffers,
+                                            filter->buffers))
+        {
+            gui_filter_buffer (ptr_buffer, NULL);
+        }
     }
 }
 
@@ -210,7 +219,7 @@ gui_filter_global_enable ()
     if (!gui_filters_enabled)
     {
         gui_filters_enabled = 1;
-        gui_filter_all_buffers ();
+        gui_filter_all_buffers (NULL);
         (void) hook_signal_send ("filters_enabled",
                                  WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
@@ -226,7 +235,7 @@ gui_filter_global_disable ()
     if (gui_filters_enabled)
     {
         gui_filters_enabled = 0;
-        gui_filter_all_buffers ();
+        gui_filter_all_buffers (NULL);
         (void) hook_signal_send ("filters_disabled",
                                  WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }

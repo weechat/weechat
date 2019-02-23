@@ -2177,7 +2177,7 @@ COMMAND_CALLBACK(filter)
                     if (!ptr_filter->enabled)
                     {
                         ptr_filter->enabled = 1;
-                        gui_filter_all_buffers ();
+                        gui_filter_all_buffers (ptr_filter);
                         gui_chat_printf_date_tags (NULL, 0,
                                                    GUI_FILTER_TAG_NO_FILTER,
                                                    _("Filter \"%s\" enabled"),
@@ -2235,7 +2235,7 @@ COMMAND_CALLBACK(filter)
                     if (ptr_filter->enabled)
                     {
                         ptr_filter->enabled = 0;
-                        gui_filter_all_buffers ();
+                        gui_filter_all_buffers (ptr_filter);
                         gui_chat_printf_date_tags (NULL, 0,
                                                    GUI_FILTER_TAG_NO_FILTER,
                                                    _("Filter \"%s\" disabled"),
@@ -2289,7 +2289,7 @@ COMMAND_CALLBACK(filter)
                 if (ptr_filter)
                 {
                     ptr_filter->enabled ^= 1;
-                    gui_filter_all_buffers ();
+                    gui_filter_all_buffers (ptr_filter);
                 }
                 else
                 {
@@ -2330,7 +2330,7 @@ COMMAND_CALLBACK(filter)
                                      argv_eol[5]);
         if (ptr_filter)
         {
-            gui_filter_all_buffers ();
+            gui_filter_all_buffers (ptr_filter);
             gui_chat_printf (NULL, "");
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("Filter \"%s\" added:"),
@@ -2384,7 +2384,7 @@ COMMAND_CALLBACK(filter)
             if (gui_filters)
             {
                 gui_filter_free_all ();
-                gui_filter_all_buffers ();
+                gui_filter_all_buffers (NULL);
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                            _("All filters have been deleted"));
             }
@@ -2399,8 +2399,9 @@ COMMAND_CALLBACK(filter)
             ptr_filter = gui_filter_search_by_name (argv[2]);
             if (ptr_filter)
             {
+                ptr_filter->enabled = 0; // disable before refilter
+                gui_filter_all_buffers (ptr_filter); // refilter before free
                 gui_filter_free (ptr_filter);
-                gui_filter_all_buffers ();
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                            _("Filter \"%s\" deleted"),
                                            argv[2]);

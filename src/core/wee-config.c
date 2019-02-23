@@ -1359,7 +1359,7 @@ config_weechat_init_after_read ()
     }
 
     /* apply filters on all buffers */
-    gui_filter_all_buffers ();
+    gui_filter_all_buffers (NULL);
 
     config_change_look_nick_color_force (NULL, NULL, NULL);
 }
