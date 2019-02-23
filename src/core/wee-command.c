@@ -2399,8 +2399,9 @@ COMMAND_CALLBACK(filter)
             ptr_filter = gui_filter_search_by_name (argv[2]);
             if (ptr_filter)
             {
-                ptr_filter->enabled = 0; // disable before refilter
-                gui_filter_all_buffers (ptr_filter); // refilter before free
+                /* disable filter and apply before removing it */
+                ptr_filter->enabled = 0;
+                gui_filter_all_buffers (ptr_filter);
                 gui_filter_free (ptr_filter);
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                            _("Filter \"%s\" deleted"),
