@@ -24,6 +24,7 @@ New features::
 
 Bug fixes::
 
+  * core: refilter only affected buffers on filter change (issue #1309, issue #1311)
   * fset: fix slow refresh of fset buffer during /reload (issue #1313)
   * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
 
