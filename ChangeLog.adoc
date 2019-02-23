@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option "addreplace" in command /filter (issue #1055, issue #1312)
   * spell: rename aspell plugin to spell (issue #1299)
 
 Bug fixes::
