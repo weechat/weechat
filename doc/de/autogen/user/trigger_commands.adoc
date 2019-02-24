@@ -25,7 +25,7 @@
 listdefault: zeigt die standardmäßig genutzten Trigger an
         add: fügt einen Trigger hinzu
      addoff: fügt einen Trigger hinzu (deaktiviert)
- addreplace: fügt oder ersetzt einen schon existierenden Trigger
+ addreplace: erzeugt neuen Trigger oder ersetzt einen schon existierenden Trigger
        name: Name des Trigger
        hook: signal, hsignal, modifier, print, command, command_run, timer, config, focus
   arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
