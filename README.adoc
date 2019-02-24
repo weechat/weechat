@@ -3,7 +3,7 @@
 :lang: en
 
 
-image::https://weechat.org/media/images/weechat_logo_large.png[align="center"]
+pass:[<p align="center">] image:https://weechat.org/media/images/weechat_logo_large.png[align="center"] pass:[</p>]
 
 image:https://img.shields.io/badge/diaspora*-follow-blue.svg["Diaspora*", link="https://diasp.eu/u/weechat"]
 image:https://img.shields.io/badge/google%2B-follow-blue.svg["Google+", link="https://plus.google.com/+WeeChat"]
@@ -31,7 +31,7 @@ Homepage: https://weechat.org/
 * *Developed from scratch*: WeeChat was built from scratch and is not based on any other client.
 * *Free software*: WeeChat is released under https://www.gnu.org/licenses/gpl-3.0.html[GPLv3].
 
-image::https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"]
+pass:[<p align="center">] image:https://weechat.org/media/images/screenshots/weechat/medium/weechat_2013-04-27_phlux_shadow.png[align="center"] pass:[</p>]
 
 On WeeChat's website you can find https://weechat.org/about/screenshots/[more screenshots].
 
