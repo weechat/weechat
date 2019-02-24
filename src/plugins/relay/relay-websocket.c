@@ -228,7 +228,6 @@ relay_websocket_build_handshake (struct t_relay_client *client)
               "HTTP/1.1 101 Switching Protocols\r\n"
               "Upgrade: websocket\r\n"
               "Connection: Upgrade\r\n"
-              //"Sec-WebSocket-Protocol: chat\r\n"
               "Sec-WebSocket-Accept: %s\r\n"
               "\r\n",
               sec_websocket_accept);
