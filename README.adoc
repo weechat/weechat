@@ -1,8 +1,9 @@
-= WeeChat
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
 :lang: en
 
+
+image::https://weechat.org/media/images/weechat_logo_large.png[align="center"]
 
 image:https://img.shields.io/badge/diaspora*-follow-blue.svg["Diaspora*", link="https://diasp.eu/u/weechat"]
 image:https://img.shields.io/badge/google%2B-follow-blue.svg["Google+", link="https://plus.google.com/+WeeChat"]
@@ -12,7 +13,7 @@ image:https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg["Donate", 
 
 image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
 
-WeeChat (Wee Enhanced Environment for Chat) is a free chat client, fast and
+*WeeChat* (Wee Enhanced Environment for Chat) is a free chat client, fast and
 light, designed for many operating systems.
 It is highly customizable and extensible with scripts.
 
