@@ -74,11 +74,16 @@ The default key kbd:[Alt+s] can be changed to the new `/spell` command:
 === Nick completer
 
 A space is not added automatically any more when you complete a nick at the
-beginning of command line.
+beginning of command line. +
+Purpose of this change is to be more flexible: you can choose whether the space
+is added or not (it was always added in previous releases).
 
 The default value of option `weechat.completion.nick_completer` has been changed
-to add the space by default, so you may have to run this command if you upgraded
-from an old version and want the space to be added automatically:
+to add the space by default, but the value of option is not changed automatically
+on upgrade.
+
+So you can run this command if you upgraded from an old version
+and want the space still added automatically:
 
 ----
 /set weechat.completion.nick_completer ": "
