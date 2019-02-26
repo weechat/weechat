@@ -2219,116 +2219,6 @@ Sections dans le fichier _alias.conf_ :
                /set alias.completion.*        | Complétions pour les alias.
 |===
 
-[[spell_plugin]]
-=== Spell
-
-L'extension Spell permet de vérifier l'orthographe de la ligne de commande.
-Il est possible d'utiliser plusieurs langages par tampon.
-
-La vérification de l'orthographe est désactivée par défaut et peut être
-activée/désactivée avec la touche kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Dictionnaires
-
-Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
-être définis soit globalement, soit spécifiquement sur un tampon.
-
-Plusieurs dictionnaires peuvent être utilisés en même temps : WeeChat vérifiera
-les mots dans tous les dictionnaires.
-
-Par exemple pour utiliser l'anglais et le français :
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
-par exemple sur un canal allemand :
-
-----
-/spell setdict de
-----
-
-Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
-exemple l'anglais pour tous les canaux du serveur IRC freenode :
-
-----
-/set spell.dict.irc.freenode en
-----
-
-Pour plus d'informations, voir la commande <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Options du vérificateur d'orthographe
-
-Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
-options dans la section "option" de la configuration aspell.
-
-Le nom de l'option est une option de configuration aspell. La liste des options
-peut être trouvée par la commande suivante sous le shell :
-
-----
-$ aspell config
-----
-
-Par exemple, pour activer l'option "ignore-case" :
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Suggestions
-
-Les suggestions sont affichées dans un objet de barre appelé "spell_suggest".
-Le nombre de suggestions est défini dans l'option _spell.check.suggestions_.
-
-Pour activer les suggestions, vous devez modifier l'option
-_spell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
-"spell_suggest" à une barre, par exemple _status_.
-
-Exemple de suggestions avec un dictionnaire anglais (`en`) :
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Commandes
-
-include::autogen/user/spell_commands.adoc[]
-
-[[spell_options]]
-==== Options
-
-Sections dans le fichier _spell.conf_ :
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Commande de contrôle                   | Description
-| color      | /set spell.color.*                     | Couleurs.
-| check      | /set spell.check.*                     | Options pour contrôler la vérification orthographique.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
-| look       | /set spell.look.*                      | Aspect/présentation.
-| option     | /set spell.option.*                    | <<spell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
-|===
-
-Options :
-
-include::autogen/user/spell_options.adoc[]
-
 [[buflist_plugin]]
 === Buflist
 
@@ -3623,6 +3513,116 @@ Sections dans le fichier _php.conf_ :
 Options :
 
 include::autogen/user/php_options.adoc[]
+
+[[spell_plugin]]
+=== Spell
+
+L'extension Spell permet de vérifier l'orthographe de la ligne de commande.
+Il est possible d'utiliser plusieurs langages par tampon.
+
+La vérification de l'orthographe est désactivée par défaut et peut être
+activée/désactivée avec la touche kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Dictionnaires
+
+Avant d'utiliser la vérification de l'orthographe, les dictionnaires doivent
+être définis soit globalement, soit spécifiquement sur un tampon.
+
+Plusieurs dictionnaires peuvent être utilisés en même temps : WeeChat vérifiera
+les mots dans tous les dictionnaires.
+
+Par exemple pour utiliser l'anglais et le français :
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+Il est possible d'utiliser un dictionnaire différent sur un tampon spécifique,
+par exemple sur un canal allemand :
+
+----
+/spell setdict de
+----
+
+Vous pouvez aussi spécifier un dictionnaire pour un groupe de tampons, par
+exemple l'anglais pour tous les canaux du serveur IRC freenode :
+
+----
+/set spell.dict.irc.freenode en
+----
+
+Pour plus d'informations, voir la commande <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Options du vérificateur d'orthographe
+
+Les options du vérificateur d'orthographe peuvent être définies en ajoutant des
+options dans la section "option" de la configuration aspell.
+
+Le nom de l'option est une option de configuration aspell. La liste des options
+peut être trouvée par la commande suivante sous le shell :
+
+----
+$ aspell config
+----
+
+Par exemple, pour activer l'option "ignore-case" :
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Suggestions
+
+Les suggestions sont affichées dans un objet de barre appelé "spell_suggest".
+Le nombre de suggestions est défini dans l'option _spell.check.suggestions_.
+
+Pour activer les suggestions, vous devez modifier l'option
+_spell.check.suggestions_ avec un entier ≥ 0 et ajouter l'objet de barre
+"spell_suggest" à une barre, par exemple _status_.
+
+Exemple de suggestions avec un dictionnaire anglais (`en`) :
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Exemple de suggestions avec des dictionnaires anglais et français (`en,fr`) :
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Commandes
+
+include::autogen/user/spell_commands.adoc[]
+
+[[spell_options]]
+==== Options
+
+Sections dans le fichier _spell.conf_ :
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Commande de contrôle                   | Description
+| color      | /set spell.color.*                     | Couleurs.
+| check      | /set spell.check.*                     | Options pour contrôler la vérification orthographique.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionnaires utilisés par tampon (les options peuvent être ajoutées/supprimées dans la section).
+| look       | /set spell.look.*                      | Aspect/présentation.
+| option     | /set spell.option.*                    | <<spell_speller_options,Options du vérificateur d'orthographe>> (les options peuvent être ajoutées/supprimées dans la section).
+|===
+
+Options :
+
+include::autogen/user/spell_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

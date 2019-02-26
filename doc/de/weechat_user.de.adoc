@@ -2194,117 +2194,6 @@ Sektionen in Datei _alias.conf_:
                /set alias.completion.*        | Vervollständigung für Alias.
 |===
 
-[[spell_plugin]]
-=== Spell
-
-Mit der Spell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
-Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
-
-Die Rechtschreibprüfung ist standardmäßig deaktiviert und kann mittels dem
-Tastenbefehl [Alt+s] umgeschaltet werden.
-
-[[spell_dictionaries]]
-==== Wörterbücher
-
-Um die Rechtschreibprüfung nutzen zu können muss vorab ein Wörterbuch definiert werden,
-welches genutzt werden soll. Dies kann entweder global oder per Buffer geschehen.
-
-Verschiedene Wörterbücher können parallel verwendet werden. WeeChat gleicht dann
-die Wörter mit allen Wörterbüchern ab,
-
-Um zum Beispiel Englisch und Deutsch zu nutzen:
-
-----
-/set spell.check.default_dict "en,de"
-----
-
-Es ist möglich ein anderes Wörterbuch für einen speziellen Buffer zu verwenden, zum
-Beispiel in einem französischen Channel:
-
-----
-/spell setdict fr
-----
-
-Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
-deutsche Wörterbuch für alle Channels auf dem freenode IRC Server:
-
-----
-/set spell.dict.irc.freenode de
-----
-
-Für weitere Informationen, siehe den Befehl <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Optionen für Rechtschreibprüfung
-
-Optionen für die Rechtschreibprüfung können definiert werden indem man die entsprechende
-Option in die Sektion "option" der Aspell-Konfiguration hinzufügt.
-
-Den Name der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
-möglichen Optionen erhält man durch:
-
-----
-$ aspell config
-----
-
-Um zum Beispiel die Option "ignore-case" einzuschalten:
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Rechtschreibkorrektur
-
-Eine Rechtschreibkorrektur wird in der Bar-Item "spell_suggest" angezeigt.
-Die Anzahl an Vorschlägen, für die Rechtschreibkorrektur, kann mit der Option
-_spell.check.suggestions_ bestimmt werden.
-
-Um die Rechtschreibkorrektur zu aktivieren, muss für die Option _spell.check.suggestions_
-ein Wert ≥ 0 eingestellt werden und das Bar-Item "spell_suggest" zu einer Bar, zum
-Beispiel _status_, hinzufügt werden.
-
-Beispiel der Rechtschreibkorrektur, mit einem deutschen Wörterbuch (`de`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [dies,Diebs,Viehs]                     │
-│[@Flashy] diehs █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/Prinz]              │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Befehle
-
-include::autogen/user/spell_commands.adoc[]
-
-[[spell_options]]
-==== Optionen
-
-Sektionen in Datei _spell.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sektion    | Steuerbefehl                           | Beschreibung
-| color      | /set spell.color.*                     | Farben.
-| check      | /set spell.check.*                     | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
-| look       | /set spell.look.*                      | Erscheinungsbild.
-| option     | /set spell.option.*                    | <<spell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden).
-|===
-
-Optionen:
-
-include::autogen/user/spell_options.adoc[]
-
 [[buflist_plugin]]
 === Buflist
 
@@ -3591,6 +3480,117 @@ Sektionen in Datei _php.conf_:
 Optionen:
 
 include::autogen/user/php_options.adoc[]
+
+[[spell_plugin]]
+=== Spell
+
+Mit der Spell Erweiterung findet eine Rechtschreibprüfung Einzug in WeeChat.
+Dabei ist es möglich mehrere Wörterbücher für einen Buffer zu nutzen.
+
+Die Rechtschreibprüfung ist standardmäßig deaktiviert und kann mittels dem
+Tastenbefehl [Alt+s] umgeschaltet werden.
+
+[[spell_dictionaries]]
+==== Wörterbücher
+
+Um die Rechtschreibprüfung nutzen zu können muss vorab ein Wörterbuch definiert werden,
+welches genutzt werden soll. Dies kann entweder global oder per Buffer geschehen.
+
+Verschiedene Wörterbücher können parallel verwendet werden. WeeChat gleicht dann
+die Wörter mit allen Wörterbüchern ab,
+
+Um zum Beispiel Englisch und Deutsch zu nutzen:
+
+----
+/set spell.check.default_dict "en,de"
+----
+
+Es ist möglich ein anderes Wörterbuch für einen speziellen Buffer zu verwenden, zum
+Beispiel in einem französischen Channel:
+
+----
+/spell setdict fr
+----
+
+Um einer Gruppe von Buffern das selbe Wörterbuch zuzuordnen, zum Beispiel das
+deutsche Wörterbuch für alle Channels auf dem freenode IRC Server:
+
+----
+/set spell.dict.irc.freenode de
+----
+
+Für weitere Informationen, siehe den Befehl <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Optionen für Rechtschreibprüfung
+
+Optionen für die Rechtschreibprüfung können definiert werden indem man die entsprechende
+Option in die Sektion "option" der Aspell-Konfiguration hinzufügt.
+
+Den Name der Option findet man in der ASpell-Konfigurationsdatei. Eine Auflistung aller
+möglichen Optionen erhält man durch:
+
+----
+$ aspell config
+----
+
+Um zum Beispiel die Option "ignore-case" einzuschalten:
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Rechtschreibkorrektur
+
+Eine Rechtschreibkorrektur wird in der Bar-Item "spell_suggest" angezeigt.
+Die Anzahl an Vorschlägen, für die Rechtschreibkorrektur, kann mit der Option
+_spell.check.suggestions_ bestimmt werden.
+
+Um die Rechtschreibkorrektur zu aktivieren, muss für die Option _spell.check.suggestions_
+ein Wert ≥ 0 eingestellt werden und das Bar-Item "spell_suggest" zu einer Bar, zum
+Beispiel _status_, hinzufügt werden.
+
+Beispiel der Rechtschreibkorrektur, mit einem deutschen Wörterbuch (`de`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [dies,Diebs,Viehs]                     │
+│[@Flashy] diehs █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Beispiel der Rechtschreibkorrektur, mit zwei Wörterbüchern (`en,de`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/Prinz]              │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Befehle
+
+include::autogen/user/spell_commands.adoc[]
+
+[[spell_options]]
+==== Optionen
+
+Sektionen in Datei _spell.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sektion    | Steuerbefehl                           | Beschreibung
+| color      | /set spell.color.*                     | Farben.
+| check      | /set spell.check.*                     | Optionen um Einstellungen an der Rechtschreibprüfung vorzunehmen.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Wörterbücher für Buffer (Optionen können in Sektion hinzugefügt/entfernt werden).
+| look       | /set spell.look.*                      | Erscheinungsbild.
+| option     | /set spell.option.*                    | <<spell_speller_options,Optionen für Rechtschreibprüfung>> (Optionen können in Sektion hinzugefügt/entfernt werden).
+|===
+
+Optionen:
+
+include::autogen/user/spell_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

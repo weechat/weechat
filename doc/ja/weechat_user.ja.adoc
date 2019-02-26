@@ -2148,112 +2148,6 @@ _alias.conf_ ファイル内のセクション:
                /set alias.completion.*        | 別名に割り当てた補完
 |===
 
-[[spell_plugin]]
-=== Spell
-
-Spell
-プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
-
-スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
-
-[[spell_dictionaries]]
-==== 辞書
-
-スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
-
-同時に複数の辞書を使用可能です:
-WeeChat はすべての辞書を使って単語をチェックします。
-
-英語とフランス語の辞書を使う例:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
-
-----
-/spell setdict de
-----
-
-バッファグループに対して特定の辞書を指定することも可能です。freenode
-IRC サーバに対して英語の辞書を使う例:
-
-----
-/set spell.dict.irc.freenode en
-----
-
-詳しい情報はコマンド <<command_spell_spell,/spell>> を参照してください。
-
-[[spell_speller_options]]
-==== Speller オプション
-
-Speller オプションは aspell 設定の "option"
-セクションにあるオプションを追加して定義します。
-
-ここで利用するオプション名は aspell
-設定オプションと同じものです。オプションのリストはシェルで以下のコマンドを実行することで確認できます:
-
-----
-$ aspell config
-----
-
-例えば、"ignore-case" オプションを有効化するには:
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== 修正候補
-
-"spell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
-_spell.check.suggestions_ オプションで設定します。
-
-修正候補を利用するには、_spell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
-バーなどに "spell_suggest" バー要素を追加してください。
-
-英語辞書 (`en`) を用いた修正候補の例:
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-英語とフランス語辞書 (`en,fr`) を用いた修正候補の例:
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== コマンド
-
-include::autogen/user/spell_commands.adoc[]
-
-[[spell_options]]
-==== オプション
-
-_spell.conf_ ファイル内のセクション:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| セクション | 操作コマンド                           | 説明
-| color      | /set spell.color.*                     | 色
-| check      | /set spell.check.*                     | スペルチェックの操作コマンド
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
-| look       | /set spell.look.*                      | 外観
-| option     | /set spell.option.*                    | <<spell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
-|===
-
-オプション:
-
-include::autogen/user/spell_options.adoc[]
-
 [[buflist_plugin]]
 === Buflist
 
@@ -3505,6 +3399,112 @@ _php.conf_ ファイル内のセクション:
 オプション:
 
 include::autogen/user/php_options.adoc[]
+
+[[spell_plugin]]
+=== Spell
+
+Spell
+プラグインを使うことで、コマンドラインに入力した文字列のスペルチェックができます。バッファごとに異なる言語に対するスペルチェックを実行できます。
+
+スペルチェック機能はデフォルトで無効化されています。kbd:[Alt+s] で有効無効を切り替える事が可能です。
+
+[[spell_dictionaries]]
+==== 辞書
+
+スペルチェック機能を使う前に、すべてのバッファまたは特定のバッファに対して辞書を定義しなければいけません。
+
+同時に複数の辞書を使用可能です:
+WeeChat はすべての辞書を使って単語をチェックします。
+
+英語とフランス語の辞書を使う例:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+特定のバッファで使用する辞書を定義することも可能です。ドイツ語のチャンネルでドイツ語の辞書を使う例:
+
+----
+/spell setdict de
+----
+
+バッファグループに対して特定の辞書を指定することも可能です。freenode
+IRC サーバに対して英語の辞書を使う例:
+
+----
+/set spell.dict.irc.freenode en
+----
+
+詳しい情報はコマンド <<command_spell_spell,/spell>> を参照してください。
+
+[[spell_speller_options]]
+==== Speller オプション
+
+Speller オプションは aspell 設定の "option"
+セクションにあるオプションを追加して定義します。
+
+ここで利用するオプション名は aspell
+設定オプションと同じものです。オプションのリストはシェルで以下のコマンドを実行することで確認できます:
+
+----
+$ aspell config
+----
+
+例えば、"ignore-case" オプションを有効化するには:
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== 修正候補
+
+"spell_suggest" バー要素内に修正候補が表示されます。修正候補の数は
+_spell.check.suggestions_ オプションで設定します。
+
+修正候補を利用するには、_spell.check.suggestions_ オプションをゼロ以上の整数に設定し、_status_
+バーなどに "spell_suggest" バー要素を追加してください。
+
+英語辞書 (`en`) を用いた修正候補の例:
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+英語とフランス語辞書 (`en,fr`) を用いた修正候補の例:
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== コマンド
+
+include::autogen/user/spell_commands.adoc[]
+
+[[spell_options]]
+==== オプション
+
+_spell.conf_ ファイル内のセクション:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| セクション | 操作コマンド                           | 説明
+| color      | /set spell.color.*                     | 色
+| check      | /set spell.check.*                     | スペルチェックの操作コマンド
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | バッファが利用するディレクトリ (オプションをセクションに追加/削除出来ます)
+| look       | /set spell.look.*                      | 外観
+| option     | /set spell.option.*                    | <<spell_speller_options,Speller オプション>> (オプションをセクションに追加/削除出来ます)
+|===
+
+オプション:
+
+include::autogen/user/spell_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

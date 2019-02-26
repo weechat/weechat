@@ -2147,114 +2147,6 @@ Sections in file _alias.conf_:
                /set alias.completion.*        | Completions for aliases.
 |===
 
-[[spell_plugin]]
-=== Spell
-
-Spell plugin lets you check spelling in command line. It is possible to use
-many languages by buffer.
-
-Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Dictionaries
-
-Before using spell checking, dictionaries must be defined, either globally or
-specific to buffers.
-
-Multiple dictionaries can be used at same time: WeeChat will check words in all
-dictionaries.
-
-For example to use English and French:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-It is possible to use a different dictionary on a specific buffer, for example
-on a German channel:
-
-----
-/spell setdict de
-----
-
-You can also specify a dictionary for a group of buffers, for example English
-for all channels on freenode IRC server:
-
-----
-/set spell.dict.irc.freenode en
-----
-
-For more information, see the command <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Speller options
-
-Speller options can be defined by adding options in section "option" of aspell
-configuration.
-
-The option name is an aspell configuration option. List of options can be found
-in a shell with following command:
-
-----
-$ aspell config
-----
-
-For example, to enable option "ignore-case":
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Suggestions
-
-Suggestions are displayed in a bar item called "spell_suggest". The number of
-suggestions is set in option _spell.check.suggestions_.
-
-To enable suggestions you must set option _spell.check.suggestions_ to an
-integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
-
-Example of suggestions with English dictionary (`en`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Example of suggestions with English and French dictionaries (`en,fr`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Commands
-
-include::autogen/user/spell_commands.adoc[]
-
-[[spell_options]]
-==== Options
-
-Sections in file _spell.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Section    | Control command                        | Description
-| color      | /set spell.color.*                     | Colors.
-| check      | /set spell.check.*                     | Options to control spell checking.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Dictionaries used by buffer (options can be added/removed in section).
-| look       | /set spell.look.*                      | Look and feel.
-| option     | /set spell.option.*                    | <<spell_speller_options,Speller options>> (options can be added/removed in section).
-|===
-
-Options:
-
-include::autogen/user/spell_options.adoc[]
-
 [[buflist_plugin]]
 === Buflist
 
@@ -3510,6 +3402,114 @@ Sections in file _php.conf_:
 Options:
 
 include::autogen/user/php_options.adoc[]
+
+[[spell_plugin]]
+=== Spell
+
+Spell plugin lets you check spelling in command line. It is possible to use
+many languages by buffer.
+
+Spell checking is disabled by default and can be toggled with key kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Dictionaries
+
+Before using spell checking, dictionaries must be defined, either globally or
+specific to buffers.
+
+Multiple dictionaries can be used at same time: WeeChat will check words in all
+dictionaries.
+
+For example to use English and French:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+It is possible to use a different dictionary on a specific buffer, for example
+on a German channel:
+
+----
+/spell setdict de
+----
+
+You can also specify a dictionary for a group of buffers, for example English
+for all channels on freenode IRC server:
+
+----
+/set spell.dict.irc.freenode en
+----
+
+For more information, see the command <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Speller options
+
+Speller options can be defined by adding options in section "option" of aspell
+configuration.
+
+The option name is an aspell configuration option. List of options can be found
+in a shell with following command:
+
+----
+$ aspell config
+----
+
+For example, to enable option "ignore-case":
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Suggestions
+
+Suggestions are displayed in a bar item called "spell_suggest". The number of
+suggestions is set in option _spell.check.suggestions_.
+
+To enable suggestions you must set option _spell.check.suggestions_ to an
+integer ≥ 0 and add the bar item "spell_suggest" to a bar, like _status_.
+
+Example of suggestions with English dictionary (`en`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Example of suggestions with English and French dictionaries (`en,fr`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Commands
+
+include::autogen/user/spell_commands.adoc[]
+
+[[spell_options]]
+==== Options
+
+Sections in file _spell.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Section    | Control command                        | Description
+| color      | /set spell.color.*                     | Colors.
+| check      | /set spell.check.*                     | Options to control spell checking.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Dictionaries used by buffer (options can be added/removed in section).
+| look       | /set spell.look.*                      | Look and feel.
+| option     | /set spell.option.*                    | <<spell_speller_options,Speller options>> (options can be added/removed in section).
+|===
+
+Options:
+
+include::autogen/user/spell_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger

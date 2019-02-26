@@ -2161,114 +2161,6 @@ Ssekcje w pliku _alias.conf_:
                /set alias.completion.*        | Completions for aliases.
 |===
 
-[[spell_plugin]]
-=== Spell
-
-Wtyczka spell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
-ustawienie wielu języków dla bufora.
-
-Sprawdzenie pisowni jest domyślnie wyłączone i możę być przełączone za pomocą kbd:[Alt+s].
-
-[[spell_dictionaries]]
-==== Słowniki
-
-Przed użyciem sprawdzania pisowni należy zdefiniować słowniki można to zrobić
-zarówno globalnie jak i dla poszczególnych buforów.
-
-Możliwe jest użycie kilku słowników równocześnie: WeeChat sprawdzi słowa we wszystkich
-słownikach.
-
-Na przykład dla angielskiego i francuskiego:
-
-----
-/set spell.check.default_dict "en,fr"
-----
-
-Możliwe jest użycie innego słownika dla konkretnego buforu, na przykład na kanale
-niemieckojęzycnzym:
-
-----
-/spell setdict de
-----
-
-Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
-wsystkich kanałów na serwerze IRC freenode:
-
-----
-/set spell.dict.irc.freenode en
-----
-
-Więcej informacji można znaleźć w opisie komendy <<command_spell_spell,/spell>>.
-
-[[spell_speller_options]]
-==== Opcje słowników
-
-Opcje słowników mogą zostać zdefiniowane poprzez dodanie opcji w sekcji "option"
-dla konfiguracji aspell.
-
-Nazwa opcji to nazwa opcji konfiguracyjnej aspell. Listę opcji można uzyskać
-wykonując w powłoce następującą komendę:
-
-----
-$ aspell config
-----
-
-Na przykład, aby włączyć opcję "ignore-case":
-
-----
-/set spell.option.ignore-case "true"
-----
-
-[[spell_suggestions]]
-==== Sugestie
-
-Sugestie są wyświetlane w elemencie paska "spell_suggest". Ilość wyświetlanych
-sugestii można ustawić za pomocą opcji _spell.check.suggestions_.
-
-Aby włączyć sugestie trzeba ustawić opcję _spell.check.suggestions_ na liczbę
-≥ 0 i dodać element "spell_suggest" do jakiegoś paska, jak _status_.
-
-Przykład sugestii z angielskim słownikiem (`en`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
-
-....
-│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
-│[@Flashy] prinr █                                                                │
-└─────────────────────────────────────────────────────────────────────────────────┘
-....
-
-[[spell_commands]]
-==== Komendy
-
-include::autogen/user/spell_commands.adoc[]
-
-[[spell_options]]
-==== Opcje
-
-Sekcje w pliku _spell.conf_:
-
-[width="100%",cols="3m,6m,16",options="header"]
-|===
-| Sekcja     | Komenda                                | Opis
-| color      | /set spell.color.*                     | Kolory.
-| check      | /set spell.check.*                     | Opcje do kontrolowania sprawdzania pisowni.
-| dict       | <<command_spell_spell,/spell setdict>> +
-               /set spell.dict.*                      | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane).
-| look       | /set spell.look.*                      | Wygląd.
-| option     | /set spell.option.*                    | <<spell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane).
-|===
-
-Opcje:
-
-include::autogen/user/spell_options.adoc[]
-
 [[buflist_plugin]]
 === Buflist
 
@@ -3539,6 +3431,114 @@ Sekcje w pliku _php.conf_:
 Opcje:
 
 include::autogen/user/php_options.adoc[]
+
+[[spell_plugin]]
+=== Spell
+
+Wtyczka spell pozwala na sprawdzanie pisowni w linii poleceń. Możliwe jest
+ustawienie wielu języków dla bufora.
+
+Sprawdzenie pisowni jest domyślnie wyłączone i możę być przełączone za pomocą kbd:[Alt+s].
+
+[[spell_dictionaries]]
+==== Słowniki
+
+Przed użyciem sprawdzania pisowni należy zdefiniować słowniki można to zrobić
+zarówno globalnie jak i dla poszczególnych buforów.
+
+Możliwe jest użycie kilku słowników równocześnie: WeeChat sprawdzi słowa we wszystkich
+słownikach.
+
+Na przykład dla angielskiego i francuskiego:
+
+----
+/set spell.check.default_dict "en,fr"
+----
+
+Możliwe jest użycie innego słownika dla konkretnego buforu, na przykład na kanale
+niemieckojęzycnzym:
+
+----
+/spell setdict de
+----
+
+Możesz również ustawić słownik dla grupy buforów, na przykład angielski dla
+wsystkich kanałów na serwerze IRC freenode:
+
+----
+/set spell.dict.irc.freenode en
+----
+
+Więcej informacji można znaleźć w opisie komendy <<command_spell_spell,/spell>>.
+
+[[spell_speller_options]]
+==== Opcje słowników
+
+Opcje słowników mogą zostać zdefiniowane poprzez dodanie opcji w sekcji "option"
+dla konfiguracji aspell.
+
+Nazwa opcji to nazwa opcji konfiguracyjnej aspell. Listę opcji można uzyskać
+wykonując w powłoce następującą komendę:
+
+----
+$ aspell config
+----
+
+Na przykład, aby włączyć opcję "ignore-case":
+
+----
+/set spell.option.ignore-case "true"
+----
+
+[[spell_suggestions]]
+==== Sugestie
+
+Sugestie są wyświetlane w elemencie paska "spell_suggest". Ilość wyświetlanych
+sugestii można ustawić za pomocą opcji _spell.check.suggestions_.
+
+Aby włączyć sugestie trzeba ustawić opcję _spell.check.suggestions_ na liczbę
+≥ 0 i dodać element "spell_suggest" do jakiegoś paska, jak _status_.
+
+Przykład sugestii z angielskim słownikiem (`en`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune]                    │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
+
+....
+│[12:55] [6] [irc/freenode] 3:#test(+n){4} [print,prone,prune/prime,primer,primé] │
+│[@Flashy] prinr █                                                                │
+└─────────────────────────────────────────────────────────────────────────────────┘
+....
+
+[[spell_commands]]
+==== Komendy
+
+include::autogen/user/spell_commands.adoc[]
+
+[[spell_options]]
+==== Opcje
+
+Sekcje w pliku _spell.conf_:
+
+[width="100%",cols="3m,6m,16",options="header"]
+|===
+| Sekcja     | Komenda                                | Opis
+| color      | /set spell.color.*                     | Kolory.
+| check      | /set spell.check.*                     | Opcje do kontrolowania sprawdzania pisowni.
+| dict       | <<command_spell_spell,/spell setdict>> +
+               /set spell.dict.*                      | Słowniki używane w buforze (opcje w tej sekcji mogą być dodawane/usuwane).
+| look       | /set spell.look.*                      | Wygląd.
+| option     | /set spell.option.*                    | <<spell_speller_options,Opcje słowników>> (opcje w tej sekcji mogą być dodawane/usuwane).
+|===
+
+Opcje:
+
+include::autogen/user/spell_options.adoc[]
 
 [[trigger_plugin]]
 === Trigger
