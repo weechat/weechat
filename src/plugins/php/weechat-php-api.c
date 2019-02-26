@@ -396,6 +396,29 @@ API_FUNC(string_match)
     API_RETURN_INT(result);
 }
 
+API_FUNC(string_match_list)
+{
+    zend_string *z_string, *z_masks;
+    zend_long z_case_sensitive;
+    int case_sensitive, result;
+    char *string, *masks;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSl", &z_string, &z_masks,
+                               &z_case_sensitive) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = ZSTR_VAL(z_string);
+    masks = ZSTR_VAL(z_masks);
+    case_sensitive = (int)z_case_sensitive;
+    result = plugin_script_api_string_match_list (weechat_php_plugin,
+                                                  (const char *)string,
+                                                  (const char *)masks,
+                                                  case_sensitive);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(string_has_highlight)
 {
     zend_string *z_string, *z_highlight_words;

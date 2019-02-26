@@ -108,6 +108,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_ngettext, NULL)
     PHP_FE(weechat_strlen_screen, NULL)
     PHP_FE(weechat_string_match, NULL)
+    PHP_FE(weechat_string_match_list, NULL)
     PHP_FE(weechat_string_has_highlight, NULL)
     PHP_FE(weechat_string_has_highlight_regex, NULL)
     PHP_FE(weechat_string_mask_to_regex, NULL)

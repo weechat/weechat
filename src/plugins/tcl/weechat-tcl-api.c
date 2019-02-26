@@ -437,6 +437,30 @@ API_FUNC(string_match)
     API_RETURN_INT(result);
 }
 
+API_FUNC(string_match_list)
+{
+    Tcl_Obj *objp;
+    char *string, *masks;
+    int case_sensitive, result, i;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = Tcl_GetStringFromObj (objv[1], &i);
+    masks = Tcl_GetStringFromObj (objv[2], &i);
+
+    if (Tcl_GetIntFromObj (interp, objv[3], &case_sensitive) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    result = plugin_script_api_string_match_list (weechat_tcl_plugin,
+                                                  string,
+                                                  masks,
+                                                  case_sensitive);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(string_has_highlight)
 {
     Tcl_Obj *objp;
@@ -5586,6 +5610,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(ngettext);
     API_DEF_FUNC(strlen_screen);
     API_DEF_FUNC(string_match);
+    API_DEF_FUNC(string_match_list);
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);

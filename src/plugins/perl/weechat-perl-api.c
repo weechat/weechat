@@ -309,6 +309,24 @@ API_FUNC(string_match)
     API_RETURN_INT(value);
 }
 
+API_FUNC(string_match_list)
+{
+    int value;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = plugin_script_api_string_match_list (
+        weechat_perl_plugin,
+        SvPV_nolen (ST (0)), /* string */
+        SvPV_nolen (ST (1)), /* masks */
+        SvIV (ST (2))); /* case_sensitive */
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(string_has_highlight)
 {
     int value;
@@ -5116,6 +5134,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(ngettext);
     API_DEF_FUNC(strlen_screen);
     API_DEF_FUNC(string_match);
+    API_DEF_FUNC(string_match_list);
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);

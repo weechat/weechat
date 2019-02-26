@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20190219-01"
+#define WEECHAT_PLUGIN_API_VERSION "20190226-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -289,6 +289,8 @@ struct t_weechat_plugin
     int (*strlen_screen) (const char *string);
     int (*string_match) (const char *string, const char *mask,
                          int case_sensitive);
+    int (*string_match_list) (const char *string, const char **masks,
+                              int case_sensitive);
     char *(*string_replace) (const char *string, const char *search,
                              const char *replace);
     char *(*string_expand_home) (const char *path);
@@ -1172,6 +1174,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->strlen_screen)(__string)
 #define weechat_string_match(__string, __mask, __case_sensitive)        \
     (weechat_plugin->string_match)(__string, __mask, __case_sensitive)
+#define weechat_string_match_list(__string, __masks, __case_sensitive)  \
+    (weechat_plugin->string_match_list)(__string, __masks,              \
+                                        __case_sensitive)
 #define weechat_string_replace(__string, __search, __replace)           \
     (weechat_plugin->string_replace)(__string, __search, __replace)
 #define weechat_string_expand_home(__path)                              \

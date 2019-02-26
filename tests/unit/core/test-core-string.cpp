@@ -493,6 +493,67 @@ TEST(CoreString, Match)
 
 /*
  * Tests functions:
+ *   string_match
+ */
+
+TEST(CoreString, MatchList)
+{
+    const char *masks_none[1] = { NULL };
+    const char *masks_one_empty[2] = { "", NULL };
+    const char *masks_one[2] = { "toto", NULL };
+    const char *masks_two[3] = { "toto", "abc", NULL };
+    const char *masks_negative[3] = { "*", "!abc", NULL };
+    const char *masks_negative_star[3] = { "*", "!abc*", NULL };
+
+    LONGS_EQUAL(0, string_match_list (NULL, NULL, 0));
+    LONGS_EQUAL(0, string_match_list (NULL, masks_one, 0));
+
+    LONGS_EQUAL(0, string_match_list ("", NULL, 0));
+    LONGS_EQUAL(0, string_match_list ("", masks_none, 0));
+    LONGS_EQUAL(0, string_match_list ("", masks_one_empty, 0));
+    LONGS_EQUAL(0, string_match_list ("", masks_none, 0));
+    LONGS_EQUAL(0, string_match_list ("", masks_one_empty, 0));
+
+    LONGS_EQUAL(0, string_match_list ("toto", NULL, 0));
+    LONGS_EQUAL(0, string_match_list ("toto", masks_none, 0));
+    LONGS_EQUAL(0, string_match_list ("toto", masks_one_empty, 0));
+    LONGS_EQUAL(0, string_match_list ("toto", masks_none, 0));
+    LONGS_EQUAL(0, string_match_list ("toto", masks_one_empty, 0));
+
+    LONGS_EQUAL(0, string_match_list ("test", masks_one, 0));
+    LONGS_EQUAL(0, string_match_list ("to", masks_one, 0));
+    LONGS_EQUAL(1, string_match_list ("toto", masks_one, 0));
+    LONGS_EQUAL(1, string_match_list ("TOTO", masks_one, 0));
+    LONGS_EQUAL(0, string_match_list ("TOTO", masks_one, 1));
+
+    LONGS_EQUAL(0, string_match_list ("test", masks_two, 0));
+    LONGS_EQUAL(1, string_match_list ("toto", masks_two, 0));
+    LONGS_EQUAL(1, string_match_list ("abc", masks_two, 0));
+    LONGS_EQUAL(0, string_match_list ("def", masks_two, 0));
+
+    LONGS_EQUAL(1, string_match_list ("test", masks_negative, 0));
+    LONGS_EQUAL(1, string_match_list ("toto", masks_negative, 0));
+    LONGS_EQUAL(0, string_match_list ("abc", masks_negative, 0));
+    LONGS_EQUAL(0, string_match_list ("ABC", masks_negative, 0));
+    LONGS_EQUAL(1, string_match_list ("ABC", masks_negative, 1));
+    LONGS_EQUAL(1, string_match_list ("abcdef", masks_negative, 0));
+    LONGS_EQUAL(1, string_match_list ("ABCDEF", masks_negative, 0));
+    LONGS_EQUAL(1, string_match_list ("ABCDEF", masks_negative, 1));
+    LONGS_EQUAL(1, string_match_list ("def", masks_negative, 0));
+
+    LONGS_EQUAL(1, string_match_list ("test", masks_negative_star, 0));
+    LONGS_EQUAL(1, string_match_list ("toto", masks_negative_star, 0));
+    LONGS_EQUAL(0, string_match_list ("abc", masks_negative_star, 0));
+    LONGS_EQUAL(0, string_match_list ("ABC", masks_negative_star, 0));
+    LONGS_EQUAL(1, string_match_list ("ABC", masks_negative_star, 1));
+    LONGS_EQUAL(0, string_match_list ("abcdef", masks_negative_star, 0));
+    LONGS_EQUAL(0, string_match_list ("ABCDEF", masks_negative_star, 0));
+    LONGS_EQUAL(1, string_match_list ("ABCDEF", masks_negative_star, 1));
+    LONGS_EQUAL(1, string_match_list ("def", masks_negative_star, 0));
+}
+
+/*
+ * Tests functions:
  *   string_expand_home
  */
 

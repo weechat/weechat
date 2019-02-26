@@ -439,6 +439,7 @@ Liste des fonctions de l'API script :
   ngettext +
   strlen_screen +
   string_match +
+  string_match_list +
   string_has_highlight +
   string_has_highlight_regex +
   string_mask_to_regex +

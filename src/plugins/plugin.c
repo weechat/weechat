@@ -616,6 +616,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->strcasestr = &string_strcasestr;
         new_plugin->strlen_screen = &gui_chat_strlen_screen;
         new_plugin->string_match = &string_match;
+        new_plugin->string_match_list = &string_match_list;
         new_plugin->string_replace = &string_replace;
         new_plugin->string_expand_home = &string_expand_home;
         new_plugin->string_eval_path_home = &string_eval_path_home;

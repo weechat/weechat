@@ -892,11 +892,62 @@ Script (Python):
 match = weechat.string_match(string, mask, case_sensitive)
 
 # examples
-match1 = weechat.string_match("abcdef", "abc*", 0)   # 1
-match2 = weechat.string_match("abcdef", "*dd*", 0)   # 0
-match3 = weechat.string_match("abcdef", "*def", 0)   # 1
-match4 = weechat.string_match("abcdef", "*de*", 0)   # 1
-match5 = weechat.string_match("abcdef", "*b*d*", 0)  # 1
+match1 = weechat.string_match("abcdef", "abc*", 0)   # == 1
+match2 = weechat.string_match("abcdef", "*dd*", 0)   # == 0
+match3 = weechat.string_match("abcdef", "*def", 0)   # == 1
+match4 = weechat.string_match("abcdef", "*de*", 0)   # == 1
+match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
+----
+
+==== string_match_list
+
+_WeeChat ≥ 2.5._
+
+Check if a string matches a list of masks where negative mask is allowed
+with the format "!word". A negative mask has higher priority than a standard
+mask.
+
+Prototype:
+
+[source,C]
+----
+int weechat_string_match_list (const char *string, const char **masks,
+                               int case_sensitive);
+----
+
+Arguments:
+
+* _string_: string
+* _masks_: list of masks, with a NULL after the last mask in list; each mask
+  is compared to the string with the function <<_string_match,string_match>>
+* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+
+Return value:
+
+* 1 if string matches list of masks (at least one mask matches and no negative
+  mask matches), otherwise 0
+
+C example:
+
+[source,C]
+----
+const char *masks[3] = { "*", "!abc*", NULL };
+int match1 = weechat_string_match_list ("abc", masks, 0);     /* == 0 */
+int match2 = weechat_string_match_list ("abcdef", masks, 0);  /* == 0 */
+int match3 = weechat_string_match_list ("def", masks, 0);     /* == 1 */
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+match = weechat.string_match_list(string, masks, case_sensitive)
+
+# examples
+match1 = weechat.string_match("abc", "*,!abc*", 0)     # == 0
+match2 = weechat.string_match("abcdef", "*,!abc*", 0)  # == 0
+match3 = weechat.string_match("def", "*,!abc*", 0)     # == 1
 ----
 
 ==== string_expand_home

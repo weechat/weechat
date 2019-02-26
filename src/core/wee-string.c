@@ -628,6 +628,48 @@ string_match (const char *string, const char *mask, int case_sensitive)
 }
 
 /*
+ * Checks if a string matches a list of masks. Negative masks are allowed
+ * with "!mask" to exclude this mask and have higher priority than standard
+ * masks.
+ *
+ * Each mask is compared with the function string_match.
+ *
+ * Example of masks to allow anything by default, but "toto" and "abc" are
+ * forbidden:
+ *   "*", "!toto", "!abc"
+ *
+ * Returns:
+ *   1: string matches list of masks
+ *   0: string does not match list of masks
+ */
+
+int
+string_match_list (const char *string, const char **masks, int case_sensitive)
+{
+    int match, i;
+    const char *ptr_mask;
+
+    if (!string || !masks)
+        return 0;
+
+    match = 0;
+
+    for (i = 0; masks[i]; i++)
+    {
+        ptr_mask = (masks[i][0] == '!') ? masks[i] + 1 : masks[i];
+        if (string_match (string, ptr_mask, case_sensitive))
+        {
+            if (masks[i][0] == '!')
+                return 0;
+            else
+                match = 1;
+        }
+    }
+
+    return match;
+}
+
+/*
  * Expands home in a path.
  *
  * Example: "~/file.txt" => "/home/xxx/file.txt"

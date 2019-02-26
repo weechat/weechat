@@ -351,6 +351,24 @@ weechat_guile_api_string_match (SCM string, SCM mask, SCM case_sensitive)
 }
 
 SCM
+weechat_guile_api_string_match_list (SCM string, SCM masks, SCM case_sensitive)
+{
+    int value;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (!scm_is_string (string) || !scm_is_string (masks)
+        || !scm_is_integer (case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = plugin_script_api_string_match_list (weechat_guile_plugin,
+                                                 API_SCM_TO_STRING(string),
+                                                 API_SCM_TO_STRING(masks),
+                                                 scm_to_int (case_sensitive));
+
+    API_RETURN_INT(value);
+}
+
+SCM
 weechat_guile_api_string_has_highlight (SCM string, SCM highlight_words)
 {
     int value;
@@ -4855,6 +4873,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(ngettext, 3);
     API_DEF_FUNC(strlen_screen, 1);
     API_DEF_FUNC(string_match, 3);
+    API_DEF_FUNC(string_match_list, 3);
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);

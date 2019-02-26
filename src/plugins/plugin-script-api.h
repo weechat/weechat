@@ -25,6 +25,10 @@
 
 extern void plugin_script_api_charset_set (struct t_plugin_script *script,
                                            const char *charset);
+extern int plugin_script_api_string_match_list (struct t_weechat_plugin *weechat_plugin,
+                                                const char *string,
+                                                const char *masks,
+                                                int case_sensitive);
 extern struct t_config_file *plugin_script_api_config_new (struct t_weechat_plugin *weechat_plugin,
                                                            struct t_plugin_script *script,
                                                            const char *name,

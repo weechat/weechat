@@ -338,6 +338,27 @@ API_FUNC(string_match)
     API_RETURN_INT(value);
 }
 
+API_FUNC(string_match_list)
+{
+    const char *string, *masks;
+    int case_sensitive, value;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (lua_gettop (L) < 3)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = lua_tostring (L, -3);
+    masks = lua_tostring (L, -2);
+    case_sensitive = lua_tonumber (L, -1);
+
+    value = plugin_script_api_string_match_list (weechat_lua_plugin,
+                                                 string,
+                                                 masks,
+                                                 case_sensitive);
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(string_has_highlight)
 {
     const char *string, *highlight_words;
@@ -5154,6 +5175,7 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(ngettext),
     API_DEF_FUNC(strlen_screen),
     API_DEF_FUNC(string_match),
+    API_DEF_FUNC(string_match_list),
     API_DEF_FUNC(string_has_highlight),
     API_DEF_FUNC(string_has_highlight_regex),
     API_DEF_FUNC(string_mask_to_regex),

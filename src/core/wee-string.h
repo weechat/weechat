@@ -57,6 +57,8 @@ extern int string_strcmp_ignore_chars (const char *string1,
 extern const char *string_strcasestr (const char *string, const char *search);
 extern int string_match (const char *string, const char *mask,
                          int case_sensitive);
+extern int string_match_list (const char *string, const char **masks,
+                              int case_sensitive);
 extern char *string_replace (const char *string, const char *search,
                              const char *replace);
 extern char *string_expand_home (const char *path);

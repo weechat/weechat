@@ -288,6 +288,26 @@ API_FUNC(string_match)
     API_RETURN_INT(value);
 }
 
+API_FUNC(string_match_list)
+{
+    char *string, *masks;
+    int case_sensitive, value;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    string = NULL;
+    masks = NULL;
+    case_sensitive = 0;
+    if (!PyArg_ParseTuple (args, "ssi", &string, &masks, &case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    value = plugin_script_api_string_match_list (weechat_python_plugin,
+                                                 string,
+                                                 masks,
+                                                 case_sensitive);
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(string_has_highlight)
 {
     char *string, *highlight_words;
@@ -5064,6 +5084,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(ngettext),
     API_DEF_FUNC(strlen_screen),
     API_DEF_FUNC(string_match),
+    API_DEF_FUNC(string_match_list),
     API_DEF_FUNC(string_has_highlight),
     API_DEF_FUNC(string_has_highlight_regex),
     API_DEF_FUNC(string_mask_to_regex),

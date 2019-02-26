@@ -48,6 +48,35 @@ plugin_script_api_charset_set (struct t_plugin_script *script,
 }
 
 /*
+ * Checks if a string matches a list of masks.
+ *
+ * Returns:
+ *   1: string matches list of masks
+ *   0: string does not match list of masks
+ */
+
+int
+plugin_script_api_string_match_list (struct t_weechat_plugin *weechat_plugin,
+                                     const char *string, const char *masks,
+                                     int case_sensitive)
+{
+    char **list_masks;
+    int match;
+
+    list_masks = (masks && masks[0]) ?
+        weechat_string_split (masks, ",", 0, 0, NULL) : NULL;
+
+    match = weechat_string_match_list (string,
+                                       (const char **)list_masks,
+                                       case_sensitive);
+
+    if (list_masks)
+        weechat_string_free_split (list_masks);
+
+    return match;
+}
+
+/*
  * Creates a new configuration file.
  *
  * Returns pointer to new configuration file, NULL if error.

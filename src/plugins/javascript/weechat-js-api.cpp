@@ -305,6 +305,24 @@ API_FUNC(string_match)
     API_RETURN_INT(value);
 }
 
+API_FUNC(string_match_list)
+{
+    int value;
+
+    API_INIT_FUNC(1, "string_match_list", "ssi", API_RETURN_INT(0));
+
+    v8::String::Utf8Value string(args[0]);
+    v8::String::Utf8Value masks(args[1]);
+    int case_sensitive = args[2]->IntegerValue();
+
+    value = plugin_script_api_string_match_list (weechat_js_plugin,
+                                                 *string,
+                                                 *masks,
+                                                 case_sensitive);
+
+    API_RETURN_INT(value);
+}
+
 API_FUNC(string_has_highlight)
 {
     int value;
@@ -4806,6 +4824,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(ngettext);
     API_DEF_FUNC(strlen_screen);
     API_DEF_FUNC(string_match);
+    API_DEF_FUNC(string_match_list);
     API_DEF_FUNC(string_has_highlight);
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);

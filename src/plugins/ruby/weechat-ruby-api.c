@@ -340,6 +340,33 @@ weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
 }
 
 static VALUE
+weechat_ruby_api_string_match_list (VALUE class, VALUE string, VALUE masks,
+                                    VALUE case_sensitive)
+{
+    char *c_string, *c_masks;
+    int c_case_sensitive, value;
+
+    API_INIT_FUNC(1, "string_match_list", API_RETURN_INT(0));
+    if (NIL_P (string) || NIL_P (masks) || NIL_P (case_sensitive))
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    Check_Type (string, T_STRING);
+    Check_Type (masks, T_STRING);
+    Check_Type (case_sensitive, T_FIXNUM);
+
+    c_string = StringValuePtr (string);
+    c_masks = StringValuePtr (masks);
+    c_case_sensitive = FIX2INT (case_sensitive);
+
+    value = plugin_script_api_string_match_list (weechat_ruby_plugin,
+                                                 c_string,
+                                                 c_masks,
+                                                 c_case_sensitive);
+
+    API_RETURN_INT(value);
+}
+
+static VALUE
 weechat_ruby_api_string_has_highlight (VALUE class, VALUE string,
                                        VALUE highlight_words)
 {
@@ -6218,6 +6245,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(ngettext, 3);
     API_DEF_FUNC(strlen_screen, 1);
     API_DEF_FUNC(string_match, 3);
+    API_DEF_FUNC(string_match_list, 3);
     API_DEF_FUNC(string_has_highlight, 2);
     API_DEF_FUNC(string_has_highlight_regex, 2);
     API_DEF_FUNC(string_mask_to_regex, 1);

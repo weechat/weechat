@@ -54,6 +54,7 @@ PHP_FUNCTION(weechat_gettext);
 PHP_FUNCTION(weechat_ngettext);
 PHP_FUNCTION(weechat_strlen_screen);
 PHP_FUNCTION(weechat_string_match);
+PHP_FUNCTION(weechat_string_match_list);
 PHP_FUNCTION(weechat_string_has_highlight);
 PHP_FUNCTION(weechat_string_has_highlight_regex);
 PHP_FUNCTION(weechat_string_mask_to_regex);
