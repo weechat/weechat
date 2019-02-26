@@ -120,7 +120,7 @@ New features::
   * core: send buffer pointer (when possible) in signal "hotlist_changed" (issue #1133)
   * core: add support of list options in curl (issue #826, issue #219)
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
-  * api: add function hashtable_add_from_infolist()
+  * api: add function hashtable_add_from_infolist
   * api: add function string_format_size in scripting API
   * irc: add nick, host and log tags in message displayed in private buffer when the nick comes back on the server (issue #1221)
   * irc: add support for IRCv3.2 chghost, add options irc.look.smart_filter_chghost and irc.color.message_chghost (issue #640)
@@ -214,8 +214,8 @@ Build::
 
 Bug fixes::
 
-  * python: fix arguments status/gnutls_rc/sock in hook_connect() callback
-  * python: fix argument fd in hook_fd() callback
+  * python: fix arguments status/gnutls_rc/sock in hook_connect callback
+  * python: fix argument fd in hook_fd callback
 
 [[v2.0]]
 == Version 2.0 (2017-12-03)
@@ -228,8 +228,8 @@ New features::
   * core: make value optional in command /buffer set (issue #746, issue #1088)
   * core: allow floating point and hexadecimal numbers in comparison of evaluated values
   * core: add option weechat.look.save_config_with_fsync (issue #1083)
-  * api: add support of prefix "quiet:" in function key_unbind() to quietly remove keys
-  * api: add argument "recurse_subdirs" in function exec_on_files()
+  * api: add support of prefix "quiet:" in function key_unbind to quietly remove keys
+  * api: add argument "recurse_subdirs" in function exec_on_files
   * alias: add infolist "alias_default" (list of default aliases)
   * buflist: add two new bar items ("buflist2" and "buflist3") using the same format configuration options (issue #990)
   * buflist: add option buflist.look.add_newline (issue #1027)
@@ -244,8 +244,8 @@ Bug fixes::
   * core, plugins: check return code of strftime function
   * core: fix cast of time_t (to "long long" instead of "long") (issue #1051)
   * core: call the config hook when options are renamed or removed
-  * api: change type of arguments status/gnutls_rc/sock in hook_connect() callback from string to integer (in scripts)
-  * api: change type of argument fd in hook_fd() callback from string to integer (in scripts)
+  * api: change type of arguments status/gnutls_rc/sock in hook_connect callback from string to integer (in scripts)
+  * api: change type of argument fd in hook_fd callback from string to integer (in scripts)
   * buflist: remove recursive evaluation of extra variables (issue #1060)
   * guile: return integer (0/1) instead of boolean in API functions
   * guile: fix return value of static strings in API functions
@@ -281,7 +281,7 @@ New features::
   * core: improve speed of nicklist bar item callback
   * core: allow index for hdata arrays in evaluation of expressions
   * api: allow update of variables "scroll_x" and "scroll_y" in bar_window with function hdata_update
-  * api: add functions config_option_get_string() and hdata_compare()
+  * api: add functions config_option_get_string and hdata_compare
   * buflist: add option buflist.look.auto_scroll (issue #332)
   * buflist: add keys kbd:[F1]/kbd:[F2], kbd:[Alt+F1]/kbd:[Alt+F2] to scroll the buflist bar
   * buflist: display a warning when the script "buffers.pl" is loaded
@@ -316,10 +316,10 @@ New features::
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
   * core: add hotlist pointer in buffer structure
   * core: add last start date in output of command /version after at least one /upgrade (issue #903)
-  * api: add arraylist functions: arraylist_new(), arraylist_size(), arraylist_get(), arraylist_search(), arraylist_insert(), arraylist_add(), arraylist_remove(), arraylist_clear(), arraylist_free()
-  * api: add dynamic string functions: string_dyn_alloc(), string_dyn_copy(), string_dyn_concat(), string_dyn_free()
-  * api: add special key "__quiet" in hashtable for function key_bind()
-  * api: add `${re:#}` to get the index of last group captured in function string_eval_expression()
+  * api: add arraylist functions: arraylist_new, arraylist_size, arraylist_get, arraylist_search, arraylist_insert, arraylist_add, arraylist_remove, arraylist_clear, arraylist_free
+  * api: add dynamic string functions: string_dyn_alloc, string_dyn_copy, string_dyn_concat, string_dyn_free
+  * api: add special key "__quiet" in hashtable for function key_bind
+  * api: add `${re:#}` to get the index of last group captured in function string_eval_expression
   * aspell: add options to control delimiters in suggestions: aspell.color.suggestion_delimiter_{dict|word} and aspell.look.suggestion_delimiter_{dict|word} (issue #940)
   * buflist: new plugin "buflist" (bar item with list of buffers)
   * irc: add option "open" in command /server (issue #966)
@@ -381,7 +381,7 @@ Bug fixes::
 
   * core: fix deadlock when quitting after a signal SIGHUP/SIGQUIT/SIGTERM is received (issue #32)
   * core: fix display of empty lines in search mode (issue #829)
-  * api: fix crash in function string_expand_home() when the HOME environment variable is not set (issue #827)
+  * api: fix crash in function string_expand_home when the HOME environment variable is not set (issue #827)
   * exec: fix memory leak in display of process output
   * irc: fix option "-temp" in command /server (issue #880)
   * irc: fix close of server channels which are waiting for the JOIN when the server buffer is closed (issue #873)
@@ -406,8 +406,8 @@ New features::
   * core: add optional argument "lowest", "highest" or level mask in command /input hotlist_clear
   * core: add option "cycle" in command /buffer
   * core, irc, xfer: display more information on memory allocation errors (issue #573)
-  * api: add "extra" argument to evaluate extra variables in function string_eval_expression() (issue #534)
-  * api: remove functions printf_date() and printf_tags()
+  * api: add "extra" argument to evaluate extra variables in function string_eval_expression (issue #534)
+  * api: remove functions printf_date and printf_tags
   * irc: rename server options "default_msg_{kick|part|quit}" to "msg_{kick|part|quit}", evaluate them
   * relay: add option relay.network.allow_empty_password (issue #735)
   * relay: allow escape of comma in command "init" (weechat protocol) (issue #730)
@@ -416,10 +416,10 @@ New features::
 Bug fixes::
 
   * core, irc, xfer: refresh domain name and name server addresses before connection to servers (fix connection to servers after suspend mode) (issue #771)
-  * api: fix return of function string_match() when there are multiple masks in the string (issue #812)
-  * api: fix crash in function network_connect_to() if address is NULL
-  * api: fix connection to servers with hook_connect() on Windows 10 with Windows subsystem for Linux (issue #770)
-  * api: fix crash in function string_split_command() when the separator is not a semicolon (issue #731)
+  * api: fix return of function string_match when there are multiple masks in the string (issue #812)
+  * api: fix crash in function network_connect_to if address is NULL
+  * api: fix connection to servers with hook_connect on Windows 10 with Windows subsystem for Linux (issue #770)
+  * api: fix crash in function string_split_command when the separator is not a semicolon (issue #731)
   * irc: fix socket leak in connection to server (issue #358, issue #801)
   * irc: fix display of service notice mask (message 008) (issue #429)
   * irc: fix NULL pointer dereference in 734 command callback (issue #738)
@@ -459,7 +459,7 @@ Bug fixes::
   * core: check that pointers received in arguments are not NULL in buffers and windows functions
   * core: fix truncation of buffer names in hotlist (issue #668)
   * core: fix update of window title under Tmux (issue #685)
-  * api: fix number of arguments returned by function string_split() when keep_eol is 2 and the string ends with separators
+  * api: fix number of arguments returned by function string_split when keep_eol is 2 and the string ends with separators
   * irc: fix first message displayed in raw buffer when the message is modified by a modifier (issue #719)
   * irc: add missing completion "*" for target in command /msg
   * irc: fix /msg command with multiple targets including "*"
@@ -485,8 +485,8 @@ New features::
   * core: add tag "term_warning" in warnings about wrong $TERM on startup
   * core: add option weechat.look.paste_auto_add_newline (issue #543)
   * core: display a more explicit error when a filter fails to be added (issue #522)
-  * api: add function string_hex_dump()
-  * api: add argument "length" in function utf8_is_valid()
+  * api: add function string_hex_dump
+  * api: add argument "length" in function utf8_is_valid
   * alias: display completion in /alias list (issue #518)
   * fifo: add /fifo command
   * irc: track real names using extended-join and WHO (issue #351)
@@ -508,7 +508,7 @@ Bug fixes::
   * core: fix memory leak when using multiple "-d" or "-r" in command line arguments
   * core: don't complain any more about "tmux" and "tmux-256color" $TERM values when WeeChat is running under Tmux (issue #519)
   * core: fix truncated messages after a word with a length of zero on screen (for example a zero width space: U+200B) (bug #40985, issue #502)
-  * api: fix handle of invalid escape in function string_convert_escaped_chars()
+  * api: fix handle of invalid escape in function string_convert_escaped_chars
   * alias: do not allow slashes and spaces in alias name (issue #646)
   * irc: fix channel forwarding when option irc.look.buffer_open_before_{autojoin|join} is on (issue #643)
   * irc: add a missing colon before the password in PASS message, if the password has spaces or begins with a colon (issue #602)
@@ -545,8 +545,8 @@ New features::
   * core: add signal "signal_sighup"
   * core: allow kbd:[Ctrl+c] to exit WeeChat when the passphrase is asked on startup (issue #452)
   * core: allow pointer as list name in evaluation of hdata (issue #450)
-  * api: add support of evaluated sub-strings and current date/time in function string_eval_expression() and command /eval
-  * api: add function string_eval_path_home()
+  * api: add support of evaluated sub-strings and current date/time in function string_eval_expression and command /eval
+  * api: add function string_eval_path_home
   * alias: add options "add", "addcompletion" and "del" in command /alias, remove command /unalias (issue #458)
   * irc: add option irc.network.channel_encode (issue #218, issue #482)
   * irc: add option irc.color.topic_current (issue #475)
@@ -558,15 +558,15 @@ New features::
 
 Bug fixes::
 
-  * core: flush stdout/stderr after sending text directly on them (fix corrupted data sent to hook_process() callback) (issue #442)
+  * core: flush stdout/stderr after sending text directly on them (fix corrupted data sent to hook_process callback) (issue #442)
   * core: allow execution of command "/input return" on a buffer which is not displayed in a window
   * core: allow jump from current to previous buffer with default keys kbd:[Alt+j], kbd:[01..99] (issue #466)
-  * core: fix crash if a file descriptor used in hook_fd() is too high (> 1024 on Linux/BSD) (issue #465)
+  * core: fix crash if a file descriptor used in hook_fd is too high (> 1024 on Linux/BSD) (issue #465)
   * core: fix display of invalid UTF-8 chars in bars
   * core: fix bar item "scroll" after /buffer clear (issue #448)
   * core: fix display of time in bare display when option weechat.look.buffer_time_format is set to empty string (issue #441)
-  * api: add missing function infolist_search_var() in script API (issue #484)
-  * api: add missing function hook_completion_get_string() in script API (issue #484)
+  * api: add missing function infolist_search_var in script API (issue #484)
+  * api: add missing function hook_completion_get_string in script API (issue #484)
   * api: fix type of value returned by functions strcasestr, utf8_prev_char, utf8_next_char, utf8_add_offset and util_get_time_string
   * api: fix type of value returned by function strcasestr
   * fifo: fix send error on Cygwin when something is received in the pipe (issue #436)
@@ -603,8 +603,8 @@ New features::
   * core: allow "*" as plugin name in command /plugin reload to reload all plugins with options
   * core: add option "-s" in command /eval to split expression before evaluating it (no more split by default) (issue #324)
   * core: add priority in plugins to initialize them in order
-  * api: add support of environment variables in function string_eval_expression() and command /eval
-  * api: add support of full color option name in functions color() and string_eval_expression() and in command /eval
+  * api: add support of environment variables in function string_eval_expression and command /eval
+  * api: add support of full color option name in functions color and string_eval_expression and in command /eval
   * api: add "_chat_line" (line pointer) in hashtable of hook_focus
   * irc: add support of "account-notify" capability (issue #11, issue #246)
   * irc: add support of "ecdsa-nist256p-challenge" SASL mechanism (issue #251)
@@ -676,9 +676,9 @@ New features::
   * core: check bar conditions in root bars and on each update of a bar item
   * core: fully evaluate commands bound to keys in cursor and mouse contexts
   * core: move bar item "scroll" between buffer name and lag in default bar items of status bar
-  * api: add regex replace feature in function string_eval_expression()
-  * api: send value returned by command callback in function command(), remove WeeChat error after command callback if return code is WEECHAT_RC_ERROR
-  * api: use microseconds instead of milliseconds in functions util_timeval_diff() and util_timeval_add()
+  * api: add regex replace feature in function string_eval_expression
+  * api: send value returned by command callback in function command, remove WeeChat error after command callback if return code is WEECHAT_RC_ERROR
+  * api: use microseconds instead of milliseconds in functions util_timeval_diff and util_timeval_add
   * irc: add option "reorder" in command /server (issue #229)
   * irc: open channel buffers before the JOIN is received from server (autojoin and manual joins), new options irc.look.buffer_open_before_{autojoin|join} (issue #216)
   * irc: add server option "sasl_fail" (continue/reconnect/disconnect if SASL fails) (issue #265, task #12204)
@@ -704,7 +704,7 @@ Bug fixes::
   * core: fix buffer property "lines_hidden" when merging buffers or when a line is removed from a buffer (issue #226)
   * core: display time in bare display only if option weechat.look.buffer_time_format is not an empty string
   * core: fix translation of message displayed after /upgrade
-  * api: fix truncated process output in hook_process() (issue #266)
+  * api: fix truncated process output in hook_process (issue #266)
   * api: fix crash when reading config options with NULL value (issue #238)
   * irc: defer the auto-connection to servers with a timer (issue #279, task #13038)
   * irc: add missing server options "sasl_timeout" and "notify" in output of /server listfull
@@ -739,7 +739,7 @@ Bug fixes::
   * core: fix compilation of plugin API functions (macros) when compiler optimizations are enabled (issue #200)
   * core: fix window/buffer pointers used in command /eval
   * core: fix modifier "weechat_print": discard only one line when several lines are displayed in same message (issue #171)
-  * api: fix bug in function hdata_move() when absolute value of count is greater than 1
+  * api: fix bug in function hdata_move when absolute value of count is greater than 1
   * aspell: fix crash with command "/aspell addword" if no word is given (issue #164, issue #165)
   * irc: fix display of channel exception list (348) with 6 arguments (date missing)
   * irc: fix type of value stored in hashtable when joining a channel (issue #211)
@@ -785,18 +785,18 @@ New features::
   * core: add option "-mask" in command /unset (issue #112)
   * core: set option weechat.look.buffer_search_where to prefix_message by default
   * core: mute all buffers by default in command /mute (replace option -all by -core)
-  * api: allow value "-1" for property "hotlist" in function buffer_set() (to remove a buffer from hotlist)
-  * api: add option "buffer_flush" in function hook_process_hashtable()
-  * api: add support of case insensitive search and search by buffer full name in function buffer_search() (bug #34318)
-  * api: add option "detached" in function hook_process_hashtable()
-  * api: add option "signal" in function hook_set() to send a signal to the child process
-  * api: add support of nested variables in function string_eval_expression() and command /eval (issue #35)
-  * api: add support of escaped strings with format `${esc:xxx}` or `${\xxx}` in function string_eval_expression() and command /eval
-  * api: add functions hashtable_dup(), string_replace_regex(), string_split_shell(), string_convert_escaped_chars()
-  * api: add integer return code for functions hook_{signal|hsignal}_send()
-  * api: add argument "flags" in function hdata_new_list()
-  * api: allow wildcard "*" inside the mask in function string_match()
-  * api: allow negative value for y in function printf_y()
+  * api: allow value "-1" for property "hotlist" in function buffer_set (to remove a buffer from hotlist)
+  * api: add option "buffer_flush" in function hook_process_hashtable
+  * api: add support of case insensitive search and search by buffer full name in function buffer_search (bug #34318)
+  * api: add option "detached" in function hook_process_hashtable
+  * api: add option "signal" in function hook_set to send a signal to the child process
+  * api: add support of nested variables in function string_eval_expression and command /eval (issue #35)
+  * api: add support of escaped strings with format `${esc:xxx}` or `${\xxx}` in function string_eval_expression and command /eval
+  * api: add functions hashtable_dup, string_replace_regex, string_split_shell, string_convert_escaped_chars
+  * api: add integer return code for functions hook_{signal|hsignal}_send
+  * api: add argument "flags" in function hdata_new_list
+  * api: allow wildcard "*" inside the mask in function string_match
+  * api: allow negative value for y in function printf_y
   * alias: add default alias "msgbuf" (send text to a buffer)
   * exec: add exec plugin: new command /exec and file exec.conf
   * irc: add bar item "irc_nick_modes" (issue #71)
@@ -848,28 +848,28 @@ Bug fixes::
   * core: fix alignment of lines in merged buffers when options weechat.look.prefix_align and weechat.look.prefix_buffer_align are set to "none" (issue #43)
   * core: quit WeeChat on signal SIGHUP, remove signal "signal_sighup"
   * core: fix add of filter on macOS when regex for message is empty (filter regex ending with "\t")
-  * core: check validity of buffer pointer when data is sent to a buffer (command/text from user and API function command())
+  * core: check validity of buffer pointer when data is sent to a buffer (command/text from user and API function command)
   * core: fix crash when buffer is closed during execution of multiple commands (issue #27)
   * core: fix compilation on SmartOS (bug #40981, issue #23)
-  * core: add missing \0 at the end of stderr buffer in function hook_process()
+  * core: add missing \0 at the end of stderr buffer in function hook_process
   * core: fix highlight problem with "(?-i)" and upper case letters in option weechat.look.highlight (issue #24)
-  * core: fix detection of terminated process in function hook_process()
+  * core: fix detection of terminated process in function hook_process
   * core: fix "/window scroll -N" on a buffer with free content
-  * core: fix recursive calls to function eval_expression()
+  * core: fix recursive calls to function eval_expression
   * core: save and restore mute state in command /mute (bug #41748)
   * core: fix memory leak when removing a hdata
   * core: fix memory leak in evaluation of sub-conditions
-  * core: fix memory leak in function gui_key_add_to_infolist() (in case of insufficient memory)
-  * core: fix use of invalid pointer in function gui_bar_window_content_alloc() (in case of insufficient memory)
-  * core: fix uninitialized value in function string_decode_base64()
+  * core: fix memory leak in function gui_key_add_to_infolist (in case of insufficient memory)
+  * core: fix use of invalid pointer in function gui_bar_window_content_alloc (in case of insufficient memory)
+  * core: fix uninitialized value in function string_decode_base64
   * core: fix memory leak and use of invalid pointer in split of string (in case of insufficient memory)
-  * core: fix potential NULL pointer in function gui_color_emphasize()
+  * core: fix potential NULL pointer in function gui_color_emphasize
   * core: use same return code and message in all commands when arguments are wrong/missing
   * core: allow empty arguments for command /print
   * core: fix freeze/crash in GnuTLS (bug #41576)
-  * api: fix function string_decode_base64()
-  * api: fix function string_format_size() on 32-bit systems
-  * api: change type of arguments displayed/highlight in hook_print() callback from string to integer (in scripts)
+  * api: fix function string_decode_base64
+  * api: fix function string_format_size on 32-bit systems
+  * api: change type of arguments displayed/highlight in hook_print callback from string to integer (in scripts)
   * alias: change default command for alias /beep to "/print -beep"
   * guile: fix module used after unload of a script
   * irc: fix memory leak in CTCP answer
@@ -941,7 +941,7 @@ New features::
   * core: add support of italic text (requires ncurses >= 5.9 patch 20130831)
   * core: add options to customize default text search in buffers: weechat.look.buffer_search_{case_sensitive|force_default|regex|where}
   * core: add support of UTF-8 chars in horizontal/vertical separators (options weechat.look.separator_{horizontal|vertical})
-  * core: add support of logical and/or for argument "tags" in function hook_print()
+  * core: add support of logical and/or for argument "tags" in function hook_print
   * core: rename buffer property "highlight_tags" to "highlight_tags_restrict", new behavior for buffer property "highlight_tags" (force highlight on tags), rename option irc.look.highlight_tags to irc.look.highlight_tags_restrict
   * core: rename options save/reset to store/del in command /layout
   * core: replace default key kbd:[Ctrl+c], kbd:[r] by kbd:[Ctrl+c], kbd:[v] for reverse video in messages
@@ -949,10 +949,10 @@ New features::
   * core: rename option weechat.look.set_title to weechat.look.window_title, value is now a string (evaluated)
   * core: set option weechat.look.paste_bracketed to "on" by default
   * core: use one date format when day changes from day to day+1
-  * api: add function infolist_search_var()
-  * api: add stdin options in functions hook_process_hashtable() and hook_set() to send data on stdin of child process, add function hook_set() in script API (task #10847, task #13031)
+  * api: add function infolist_search_var
+  * api: add stdin options in functions hook_process_hashtable and hook_set to send data on stdin of child process, add function hook_set in script API (task #10847, task #13031)
   * api: add hdata "buffer_visited"
-  * api: add support of infos with format `${info:name,arguments}` in function string_eval_expression() and command /eval
+  * api: add support of infos with format `${info:name,arguments}` in function string_eval_expression and command /eval
   * api: add support for C++ plugins
   * alias: add default alias /beep => /print -stderr \a
   * irc: add server option "ssl_fingerprint" (task #12724)
@@ -973,7 +973,7 @@ Bug fixes::
   * core: fix display of read marker when all buffer lines are unread and that option weechat.look.read_marker_always_show is on
   * core: fix memory leak in regex matching when evaluating expression
   * core: fix crash in /eval when config option has a NULL value
-  * core: fix crash with hdata_update() on shared strings, add hdata type "shared_string" (bug #41104)
+  * core: fix crash with hdata_update on shared strings, add hdata type "shared_string" (bug #41104)
   * core: fix text emphasis with wide chars on screen like Japanese (patch #8253)
   * core: remove option on /unset of plugin description option (plugins.desc.xxx) (bug #40768)
   * core: fix random crash when closing a buffer
@@ -984,7 +984,7 @@ Bug fixes::
   * core: fix highlight on action messages: skip the nick at beginning to prevent highlight on it (bug #40516)
   * core: fix bind of keys in cursor/mouse context when key starts with "@" (remove the warning about unsafe key)
   * core: fix truncated prefix when filters are toggled (bug #40204)
-  * api: fix read of arrays in hdata functions hdata_<type>() (bug #40354)
+  * api: fix read of arrays in hdata functions hdata_<type> (bug #40354)
   * aspell: fix detection of nicks with non-alphanumeric chars
   * guile: disable guile gmp allocator (fix crash on unload of relay plugin) (bug #40628)
   * irc: clear the GnuTLS session in all cases after SSL connection error
@@ -1045,11 +1045,11 @@ New features::
   * core: change color format for options weechat.look.buffer_time_format and weechat.look.prefix_{action|error|join|network|quit} from `${xxx}` to `${color:xxx}`
   * core: optimize the removal of lines in buffers (a lot faster to clear/close buffers with lot of lines)
   * core: set options weechat.look.color_inactive_{buffer|window} to "on" by default
-  * api: return hashtable item pointer in functions hashtable_set() and hashtable_set_with_size()
+  * api: return hashtable item pointer in functions hashtable_set and hashtable_set_with_size
   * api: add "callback_free_key" in hashtable
-  * api: add support of colors with format `${color:xxx}` in function string_eval_expression() and command /eval
-  * api: add argument "options" in function string_eval_expression(), add option "-c" in command /eval (to evaluate a condition)
-  * api: add new function strlen_screen()
+  * api: add support of colors with format `${color:xxx}` in function string_eval_expression and command /eval
+  * api: add argument "options" in function string_eval_expression, add option "-c" in command /eval (to evaluate a condition)
+  * api: add new function strlen_screen
   * aspell: rename option aspell.look.color to aspell.color.misspelled, add option aspell.color.suggestions
   * aspell: add support of enchant library (patch #6858)
   * irc: add option irc.look.notice_welcome_redirect to automatically redirect channel welcome notices to the channel buffer
@@ -1074,7 +1074,7 @@ Bug fixes::
   * core: fix random crash on "/buffer close" with a buffer number (or a range of buffers)
   * core: fix priority of logical operators in evaluation of expression (AND takes precedence over the OR) and first evaluate sub-expressions between parentheses
   * core: remove gap after read marker line when there is no bar on the right (bug #39548)
-  * core: use "/dev/null" for stdin in hook_process() instead of closing stdin (bug #39538)
+  * core: use "/dev/null" for stdin in hook_process instead of closing stdin (bug #39538)
   * core: fix char displayed at the intersection of three windows (bug #39331)
   * core: fix crash in evaluation of expression when reading a string in hdata with a NULL value (bug #39419)
   * core: fix display bugs with some UTF-8 chars that truncates messages displayed (for example U+26C4) (bug #39201)
@@ -1117,8 +1117,8 @@ New features::
   * core: add option "dirs" in command /debug
   * core: add signal "window_opened" (task #12464)
   * core: allow read of array in hdata without using index
-  * api: add new function hdata_search()
-  * api: add property "completion_freeze" for function buffer_set(): do not stop completion when command line is updated
+  * api: add new function hdata_search
+  * api: add property "completion_freeze" for function buffer_set: do not stop completion when command line is updated
   * aspell: add completion "aspell_dicts" (list of aspell installed dictionaries)
   * aspell: add info "aspell_dict" (dictionaries used on a buffer)
   * aspell: optimization on spellers to improve speed (save state by buffer)
@@ -1144,15 +1144,15 @@ Bug fixes::
   * core: reset scroll in window before zooming on a merged buffer (bug #38207)
   * core: fix refresh of item "completion": clear it after any action that is changing content of command line and after switch of buffer (bug #38214)
   * core: fix structures before buffer data when a buffer is closed
-  * core: fix refresh of line after changes with hdata_update() (update flag "displayed" according to filters)
+  * core: fix refresh of line after changes with hdata_update (update flag "displayed" according to filters)
   * core: fix hidden lines for messages without date when option weechat.history.max_buffer_lines_minutes is set (bug #38197)
   * core: use default hash/comparison callback for keys of type integer/pointer/time in hashtable
   * api: do not display a warning by default when loading a script with a license different from GPL
-  * api: fix connection to servers with hook_connect() on macOS (bug #38496)
-  * api: fix bug in function string_match() when mask begins and ends with "*"
-  * api: allow hashtable with keys that are not strings in function hashtable_add_to_infolist()
-  * api: fix function string_mask_to_regex(): escape all special chars used in regex (bug #38398)
-  * guile: fix crash in function hdata_move()
+  * api: fix connection to servers with hook_connect on macOS (bug #38496)
+  * api: fix bug in function string_match when mask begins and ends with "*"
+  * api: allow hashtable with keys that are not strings in function hashtable_add_to_infolist
+  * api: fix function string_mask_to_regex: escape all special chars used in regex (bug #38398)
+  * guile: fix crash in function hdata_move
   * guile: fix arguments given to callbacks (separate arguments instead of one list with arguments inside), Guile >= 2.0 is now required (bug #38350)
   * guile: fix crash on calls to callbacks during load of script (bug #38343)
   * irc: fix name of server buffer after /server rename (set name "server.name" instead of "name")
@@ -1168,17 +1168,17 @@ Bug fixes::
   * irc: fix memory leak in purge of hashtables with joins (it was done only for the first server in the list)
   * irc: add color in output of /names when result is on server buffer (channel not joined) (bug #38070)
   * lua: remove use of functions for API constants
-  * lua: fix crash on stack overflow: call lua_pop() for values returned by lua functions (bug #38510)
+  * lua: fix crash on stack overflow: call lua_pop for values returned by lua functions (bug #38510)
   * perl: simplify code to load scripts
   * python: fix crash when loading scripts with Python 3.x (patch #8044)
   * relay: fix uncontrolled format string in redirection of irc commands
   * relay: rename compression "gzip" to "zlib" (compression is zlib, not gzip)
   * relay: fix commands sync/desync in weechat protocol (bug #38215)
-  * ruby: fix crash in function hdata_move()
-  * ruby: fix crash with Ruby 2.0: use one array for the last 6 arguments of function config_new_option() (bug #31050)
+  * ruby: fix crash in function hdata_move
+  * ruby: fix crash with Ruby 2.0: use one array for the last 6 arguments of function config_new_option (bug #31050)
   * script: create "script" directory on each action, just in case it has been removed (bug #38472)
   * scripts: create directories (language and language/autoload) on each action (install/remove/autoload), just in case they have been removed (bug #38473)
-  * scripts: do not allow empty script name in function register()
+  * scripts: do not allow empty script name in function register
   * xfer: fix freeze of DCC file received: use non-blocking socket after connection to sender and ensure the ACK is properly sent (bug #38340)
 
 Build::
@@ -1201,11 +1201,11 @@ New features::
   * core: add command /eval, use expression in conditions for bars
   * core: add option "-quit" in command /upgrade (save session and quit without restarting WeeChat, for delayed restoration)
   * core: add incomplete mouse events "event-down" and "event-drag" (task #11840)
-  * api: allow return code WEECHAT_RC_OK_EAT in callbacks of hook_signal() and hook_hsignal() (stop sending the signal immediately)
-  * api: allow creation of structure with hdata_update() (allowed for hdata "history")
-  * api: use hashtable "options" for command arguments in function hook_process_hashtable() (optional, default is a split of string with command)
-  * api: add new function string_eval_expression()
-  * api: connect with IPv6 by default in hook_connect() (with fallback to IPv4), shuffle list of hosts for a same address, add argument "retry" for hook_connect(), move "sock" from hook_connect() arguments to callback of hook_connect() (task #11205)
+  * api: allow return code WEECHAT_RC_OK_EAT in callbacks of hook_signal and hook_hsignal (stop sending the signal immediately)
+  * api: allow creation of structure with hdata_update (allowed for hdata "history")
+  * api: use hashtable "options" for command arguments in function hook_process_hashtable (optional, default is a split of string with command)
+  * api: add new function string_eval_expression
+  * api: connect with IPv6 by default in hook_connect (with fallback to IPv4), shuffle list of hosts for a same address, add argument "retry" for hook_connect, move "sock" from hook_connect arguments to callback of hook_connect (task #11205)
   * aspell: add signal "aspell_suggest" (sent when new suggestions are displayed)
   * aspell: add bar items "aspell_dict" (dictionary used on current buffer) and "aspell_suggest" (suggestions for misspelled word at cursor), add option aspell.check.suggestions (task #12061)
   * irc: add tags "irc_nick1_xxx" and "irc_nick2_yyy" in message displayed for command "NICK"
@@ -1232,7 +1232,7 @@ Bug fixes::
   * core: fix scroll to bottom of window (default key: kbd:[Alt+End]) when line displayed is bigger than chat area
   * core: fix scroll in buffer after enabling/disabling some filters (if scroll is on a hidden line) (bug #37885)
   * core: fix memory leak in case of error when building content of bar item for display
-  * core: fix detection of command in input: a single command char is considered as a command (API function string_input_for_buffer())
+  * core: fix detection of command in input: a single command char is considered as a command (API function string_input_for_buffer)
   * core: search for a fallback template when a no template is matching command arguments
   * core: fix refresh of windows after split (fix bug with horizontal separator between windows) (bug #37874)
   * core: fix stuck mouse (bug #36533)
@@ -1245,11 +1245,11 @@ Bug fixes::
   * core: fix display of zoomed/merged buffer (with number >= 2) after switching to it (bug #37593)
   * core: fix display problem when option weechat.look.prefix_same_nick is set (problem with nick displayed in first line of screen) (bug #37556)
   * core: fix wrapping of words with wide chars (the break was made before the correct position)
-  * api: do not call shell to execute command in hook_process() (fix security problem when a plugin/script gives untrusted command) (bug #37764)
+  * api: do not call shell to execute command in hook_process (fix security problem when a plugin/script gives untrusted command) (bug #37764)
   * alias: give higher priority to aliases (2000) so that they take precedence over an existing command
   * aspell: ignore self and remote nicks in private buffers
   * aspell: fix creation of spellers when number of dictionaries is different between two buffers
-  * guile: fix bad conversion of shared strings (replace calls to scm_i_string_chars() by scm_to_locale_string()) (bug #38067)
+  * guile: fix bad conversion of shared strings (replace calls to scm_i_string_chars by scm_to_locale_string) (bug #38067)
   * irc: fix display of actions (/me) when they are received from a relay client (in channel and private buffers) (bug #38027)
   * irc: fix memory leak when updating modes of channel
   * irc: fix crash on /upgrade (free channels before server data when a server is destroyed) (bug #37736)
@@ -1281,7 +1281,7 @@ Build::
 
 Bug fixes::
 
-  * core: do not call shell to execute command in hook_process() (fix security problem when a plugin/script gives untrusted command) (bug #37764, CVE-2012-5534)
+  * core: do not call shell to execute command in hook_process (fix security problem when a plugin/script gives untrusted command) (bug #37764, CVE-2012-5534)
 
 [[v0.3.9.1]]
 == Version 0.3.9.1 (2012-11-09)
@@ -1303,15 +1303,15 @@ New features::
   * core: add hdata "hotlist"
   * core: add support of arrays in hdata variables
   * core: add command line option "-r" (or "--run-command") to run command(s) after startup of WeeChat
-  * core: add function hook_set() in plugin API, add "subplugin" in hooks (set by script plugins), display subplugin in /help on commands (task #12049)
+  * core: add function hook_set in plugin API, add "subplugin" in hooks (set by script plugins), display subplugin in /help on commands (task #12049)
   * core: add option weechat.look.jump_smart_back_to_buffer (jump back to initial buffer after reaching end of hotlist, on by default, which is old behavior)
   * core: add default key kbd:[Alt+s] (toggle aspell)
   * core: add callback "nickcmp" in buffers
   * core: add horizontal separator between windows, new options weechat.look.window_separator_{horizontal|vertical}
   * core: add options weechat.look.color_nick_offline and weechat.color.chat_nick_offline{_highlight|_highlight_bg} to use different color for offline nicks in prefix (task #11109)
-  * api: allow update for some variables of hdata, add new functions hdata_update() and hdata_set()
-  * api: add info "locale" for info_get() (locale used to translate messages)
-  * api: add new function util_version_number()
+  * api: allow update for some variables of hdata, add new functions hdata_update and hdata_set
+  * api: add info "locale" for info_get (locale used to translate messages)
+  * api: add new function util_version_number
   * aspell: add option aspell.check.enabled, add options enable/disable/toggle for command /aspell (rename options enable/disable/dictlist to setdict/deldict/listdict), display aspell status with /aspell (task #11988)
   * irc: generate alternate nicks dynamically when all nicks are already in use (task #12209)
   * irc: add bar item "buffer_modes", remove option irc.look.item_channel_modes (task #12022)
@@ -1329,12 +1329,12 @@ New features::
 Bug fixes::
 
   * core: fix display bug when end of a line is displayed on top of chat (last line truncated and MORE(0) in status bar) (bug #37203)
-  * core: fix IP address returned by hook_connect() (return IP really used, not first IP for hostname)
+  * core: fix IP address returned by hook_connect (return IP really used, not first IP for hostname)
   * core: display spaces at the end of messages in chat area (bug #37024)
   * core: fix infinite loop in display when chat area has width of 1 with a bar displayed on the right (nicklist by default) (bug #37089)
   * core: fix display of "bar more down" char when text is truncated by size_max in bars with vertical filling (bug #37054)
   * core: fix color of long lines (displayed on more than one line on screen) under FreeBSD (bug #36999)
-  * core: return error string to callback of hook_connect() if getaddrinfo fails in child process
+  * core: return error string to callback of hook_connect if getaddrinfo fails in child process
   * core: scroll to bottom of window after reaching first or last highlight with keys kbd:[Alt+p] / kbd:[Alt+n]
   * core: fix refresh of bar items when switching window
   * core: fix refresh of bar items "buffer_filter" and "scroll" in root bars (bug #36816)
@@ -1360,8 +1360,8 @@ Bug fixes::
   * python: fix crash when unloading a script without pointer to interpreter
   * relay: fix freeze when writing on relay socket (use non-blocking sockets in relay for irc and weechat protocols) (bug #36655)
   * scripts: fix deletion of configuration files when script is unloaded (bug #36977)
-  * scripts: fix function unhook_all(): delete only callbacks of hooks and add missing call to unhook()
-  * scripts: ignore call to register() (with a warning) if script is already registered
+  * scripts: fix function unhook_all: delete only callbacks of hooks and add missing call to unhook
+  * scripts: ignore call to register (with a warning) if script is already registered
   * xfer: fix DCC transfer error (bug #37432)
 
 Documentation::
@@ -1385,7 +1385,7 @@ New features::
 
   * core: add option weechat.look.prefix_same_nick (hide or change prefix on messages whose nick is the same as previous message) (task #11965)
   * core: convert tabs to spaces in text pasted (bug #25028)
-  * core: add a connection timeout for child process in hook_connect() (bug #35966)
+  * core: add a connection timeout for child process in hook_connect (bug #35966)
   * core: add support of terminal "bracketed paste mode", new options weechat.look.paste_bracketed and weechat.look.paste_bracketed_timer_delay (task #11316)
   * core: support lines of 16 Kb long in configuration files (instead of 1 Kb)
   * core: convert options weechat.look.prefix_align_more and weechat.look.prefix_buffer_align_more from boolean to string (task #11197)
@@ -1412,9 +1412,9 @@ Bug fixes::
   * core: fix lost scroll when switching to a buffer with a pending search
   * core: fix display of wide chars on last column of chat area (patch #7733)
   * api: display warning in scripts when invalid pointers (malformed strings) are given to plugin API functions (warning displayed if debug for plugin is >= 1)
-  * scripts: fix type of argument "rc" in callback of hook_process() (from string to integer)
+  * scripts: fix type of argument "rc" in callback of hook_process (from string to integer)
   * guile: fix crash on ARM when loading guile plugin (bug #36479)
-  * guile: add missing function hook_process_hashtable() in API
+  * guile: add missing function hook_process_hashtable in API
   * irc: update channel modes by using chanmodes from message 005 (do not send extra command "MODE" to server), fix parsing of modes (bug #36215)
   * irc: hide everything after "identify" or "register" in messages to nickserv when option irc.look.hide_nickserv_pwd is on (bug #36362)
   * irc: set user modes only if target nick is self nick in message 221 (patch #7754)
@@ -1434,8 +1434,8 @@ Bug fixes::
   * relay: keep spaces in beginning of "input" received from client (WeeChat protocol)
   * relay: fix crash on /upgrade when client is connected using WeeChat protocol
   * relay: redirect some irc messages from clients to hide output (messages: mode, ison, list, names, topic, who, whois, whowas, time, userhost) (bug #33516)
-  * tcl: add missing function hdata_char() in API
-  * tcl: fix pointer sent to function hook_signal_send() when type of data is a pointer
+  * tcl: add missing function hdata_char in API
+  * tcl: fix pointer sent to function hook_signal_send when type of data is a pointer
 
 Documentation::
 
@@ -1462,8 +1462,8 @@ New features::
   * core: add optional arguments for command /plugin load/reload/autoload
   * core: use extended regex in filters (task #9497, patch #7616)
   * api: add modifier "input_text_for_buffer" (bug #35317)
-  * api: add support of URL in hook_process() / hook_process_hashtable() (task #10247)
-  * api: add new functions strcasecmp_range(), strncasecmp_range(), string_regex_flags(), string_regcomp(), hashtable_map_string(), hook_process_hashtable(), hdata_check_pointer(), hdata_char(), hdata_hashtable() and nicklist_get_next_item()
+  * api: add support of URL in hook_process / hook_process_hashtable (task #10247)
+  * api: add new functions strcasecmp_range, strncasecmp_range, string_regex_flags, string_regcomp, hashtable_map_string, hook_process_hashtable, hdata_check_pointer, hdata_char, hdata_hashtable and nicklist_get_next_item
   * alias: add default alias /umode => /mode $nick
   * irc: add option "capabilities" in servers to enable client capabilities on connection
   * irc: add signal "irc_server_opened"
@@ -1487,9 +1487,9 @@ Internationalization::
 
 Bug fixes::
 
-  * core: fix expand of path `~` to home of user in function string_expand_home() (`~/xxx` was OK, but not `~`)
+  * core: fix expand of path `~` to home of user in function string_expand_home (`~/xxx` was OK, but not `~`)
   * core: fix memory leak when closing buffer
-  * core: fix memory leak in function util_search_full_lib_name()
+  * core: fix memory leak in function util_search_full_lib_name
   * core: automatically add newline char after last pasted line (when pasting many lines with confirmation) (task #10703)
   * core: fix bug with layout: assign layout number in buffers when doing /layout save
   * core: do not auto add space after nick completer if option weechat.completion.nick_add_space is off
@@ -1499,7 +1499,7 @@ Bug fixes::
   * core: apply filters after full reload of configuration files (with /reload) (bug #31182)
   * core: allow list for option weechat.plugin.extension (makes weechat.conf portable across Un*x and Windows) (task #11479)
   * core: display error in command /buffer if arguments are wrong (bug #34180)
-  * core: fix help on plugin option when config_set_desc_plugin() is called to set help on newly created option
+  * core: fix help on plugin option when config_set_desc_plugin is called to set help on newly created option
   * core: enable background process under Cygwin to connect to servers, fix reconnection problem (bug #34626)
   * aspell: fix URL detection (do not check spelling of URLs) (bug #34040)
   * irc: fix memory leak in SASL/blowfish authentication
@@ -1534,7 +1534,7 @@ Build::
 
 New features::
 
-  * core: add color attribute "|" (keep attributes) and value "resetcolor" for function color() in plugin API (used by irc plugin to keep bold/reverse/underlined in message when changing color) (bug #34550)
+  * core: add color attribute "|" (keep attributes) and value "resetcolor" for function color in plugin API (used by irc plugin to keep bold/reverse/underlined in message when changing color) (bug #34550)
   * core: add new option weechat.look.color_basic_force_bold, off by default: bold is used only if terminal has less than 16 colors (patch #7621)
   * core: add default key kbd:[F5] (`meta2-[E`) for Linux console
   * core: add "inactive" colors for inactive windows and lines in merged buffers, new options: weechat.look.color_inactive_window, weechat.look.color_inactive_buffer, weechat.look.color_inactive_message, weechat.look.color_inactive_prefix, weechat.look.color_inactive_prefix_buffer, weechat.look.color_inactive_time, weechat.color.chat_inactive_line, weechat.color.chat_inactive_window, weechat.color.chat_prefix_buffer_inactive_line
@@ -1561,7 +1561,7 @@ New features::
   * core: add horizontal scrolling for buffers with free content (command /window scroll_horiz) (task #11112)
   * core: change default value of option weechat.network.gnutls_ca_file to "/etc/ssl/certs/ca-certificates.crt"
   * api: add info "cursor_mode"
-  * api: add new functions key_bind(), key_unbind(), hook_focus(), hdata_new(), hdata_new_var(), hdata_new_list(), hdata_get(), hdata_get_var_offset(), hdata_get_var_type(), hdata_get_var_type_string(), hdata_get_var_hdata(), hdata_get_var(), hdata_get_var_at_offset(), hdata_get_list(), hdata_move(), hdata_integer(), hdata_string(), hdata_pointer(), hdata_time(), hdata_get_string()
+  * api: add new functions key_bind, key_unbind, hook_focus, hdata_new, hdata_new_var, hdata_new_list, hdata_get, hdata_get_var_offset, hdata_get_var_type, hdata_get_var_type_string, hdata_get_var_hdata, hdata_get_var, hdata_get_var_at_offset, hdata_get_list, hdata_move, hdata_integer, hdata_string, hdata_pointer, hdata_time, hdata_get_string
   * irc: allow reason for command /disconnect
   * irc: allow server name for commands /die and /restart
   * irc: add new info_hashtable "irc_message_split"
@@ -1571,15 +1571,15 @@ New features::
 
 Bug fixes::
 
-  * core: fix freeze when calling function util_file_get_content() with a directory instead of a filename
-  * core: display timeout for hook_process() command only if debug for core is enabled (task #11401)
+  * core: fix freeze when calling function util_file_get_content with a directory instead of a filename
+  * core: display timeout for hook_process command only if debug for core is enabled (task #11401)
   * core: bufferize lines displayed before core buffer is created, to display them in buffer when it is created
   * core: fix display of background color in chat area after line feed
   * core: fix paste detection (problem with end of lines)
   * core: fix display of paste multi-line prompt with a root input bar (bug #34305)
-  * core: replace deprecated GnuTLS function gnutls_certificate_client_set_retrieve_function() by new function gnutls_certificate_set_retrieve_function() (GnuTLS >= 2.11.0)
-  * core: use dynamic buffer size for calls to vsnprintf()
-  * core: fix memory leak in unhook of hook_connect()
+  * core: replace deprecated GnuTLS function gnutls_certificate_client_set_retrieve_function by new function gnutls_certificate_set_retrieve_function (GnuTLS >= 2.11.0)
+  * core: use dynamic buffer size for calls to vsnprintf
+  * core: fix memory leak in unhook of hook_connect
   * core: fix memory leak in display of empty bar items
   * core: fix input of wide UTF-8 chars under Cygwin (bug #34061)
   * core: fix bugs with automatic layout (bug #26110), add support of merged buffers in layout (task #10893)
@@ -1591,10 +1591,10 @@ Bug fixes::
   * core: fix bugs with bar windows: do not create bar windows for hidden bars
   * core: fix completion bug when two words for completion are equal but with different case
   * core: fix completion for command arguments when same command exists in many plugins (bug #33753)
-  * core: fix freeze when hook_fd() is called with a bad file/socket (bug #33619)
+  * core: fix freeze when hook_fd is called with a bad file/socket (bug #33619)
   * core: fix bug with option weechat.look.hotlist_count_max (value+1 was used)
   * api: use arguments for infolist "window" to return only one window by number
-  * api: fix bug with function config_set_desc_plugin() (use immediately description for option when function is called)
+  * api: fix bug with function config_set_desc_plugin (use immediately description for option when function is called)
   * scripts: fix crash with scripts not auto-loaded having a buffer opened after /upgrade (input/close callbacks for buffer not set properly)
   * irc: fix display of items "away" and "lag" in root bars, refresh all irc bar items on signal "buffer_switch" (bug #34466)
   * irc: fix crash on malformed irc notice received (without message after target)
@@ -1615,7 +1615,7 @@ Bug fixes::
   * relay: fix bug with self nick when someone changes its nick on channel (bug #33739)
   * relay: fix memory leak (free some parsed messages) (bug #33387)
   * relay: fix memory leak on plugin load (free raw messages)
-  * perl: replace calls to SvPV() by SvPV_nolen() (patch #7436)
+  * perl: replace calls to SvPV by SvPV_nolen (patch #7436)
 
 Build::
 
@@ -1647,8 +1647,8 @@ New features::
   * core: remember scroll position for all buffers in windows (bug #25555)
   * core: improve display of commands lists in /help (add arguments -list and -listfull) (task #10299)
   * core: improve arguments displayed in /help of commands
-  * api: add new function config_set_desc_plugin() (task #10925)
-  * api: add new functions buffer_match_list() and window_search_with_buffer()
+  * api: add new function config_set_desc_plugin (task #10925)
+  * api: add new functions buffer_match_list and window_search_with_buffer
   * aspell: add section "option" in aspell.conf for speller options (task #11083)
   * irc: add new options irc.color.topic_old and irc.color.topic_new
   * irc: add option "ssl_priorities" in servers (task #10106, debian #624055)
@@ -1706,7 +1706,7 @@ New features::
 
   * core: add 256 colors support, new command /color, new section "palette" in weechat.conf (task #6834)
   * core: add info "weechat_upgrading", signal "upgrade_ended", display duration of upgrade
-  * core: add new option weechat.look.highlight_regex and function string_has_highlight_regex() in plugin API (task #10321)
+  * core: add new option weechat.look.highlight_regex and function string_has_highlight_regex in plugin API (task #10321)
   * core: add new option weechat.look.hotlist_unique_numbers (task #10691)
   * core: add property "hotlist_max_level_nicks" in buffers to set max hotlist level for some nicks in buffer
   * core: add new options weechat.look.input_share and weechat.look.input_share_overwrite (task #9228)
@@ -1714,7 +1714,7 @@ New features::
   * core: replace the 10 nick color options and number of nick colors by a single option weechat.color.chat_nick_colors (comma separated list of colors)
   * core: add color support in option weechat.look.buffer_time_format
   * api: add priority for hooks (task #10550)
-  * api: add new functions: list_search_pos(), list_casesearch_pos(), hashtable_get_string(), hashtable_set_pointer(), hook_info_hashtable(), info_get_hashtable(), hook_hsignal(), hook_hsignal_send(), hook_completion_get_string(), nicklist_group_get_integer(), nicklist_group_get_string(), nicklist_group_get_pointer(), nicklist_group_set(), nicklist_nick_get_integer(), nicklist_nick_get_string(), nicklist_nick_get_pointer(), nicklist_nick_set()
+  * api: add new functions: list_search_pos, list_casesearch_pos, hashtable_get_string, hashtable_set_pointer, hook_info_hashtable, info_get_hashtable, hook_hsignal, hook_hsignal_send, hook_completion_get_string, nicklist_group_get_integer, nicklist_group_get_string, nicklist_group_get_pointer, nicklist_group_set, nicklist_nick_get_integer, nicklist_nick_get_string, nicklist_nick_get_pointer, nicklist_nick_set
   * irc: add option "-server" in command /join (task #10837)
   * irc: add option "-switch" in commands /connect and /reconnect
   * irc: add command /notify, new options irc.look.notify_tags_ison, irc.look.notify_tags_whois, irc.network.notify_check_ison, irc.network.notify_check_whois, new option "notify" in servers, new infolist "irc_notify" (task #5441)
@@ -1735,9 +1735,9 @@ New features::
 Bug fixes::
 
   * core: fix scroll problem on buffers with free content and non-allocated lines (bug #32039)
-  * core: call to function hook_config() when config option is created
+  * core: call to function hook_config when config option is created
   * core: fix infinite loop on GnuTLS handshake when connecting with SSL to server on wrong port or server with SSL problems (bug #27487)
-  * core: fix data sent to callback of hook_process() (some data was sometimes missing), use a 64KB buffer for child output and send data to callback only when buffer is full
+  * core: fix data sent to callback of hook_process (some data was sometimes missing), use a 64KB buffer for child output and send data to callback only when buffer is full
   * core: fix crash when displaying groups in buffer nicklist
   * core: fix bug with message "day changed to", sometimes displayed several times wrongly
   * core: fix default value of bar items options (bug #31422)
@@ -1756,7 +1756,7 @@ Bug fixes::
   * irc: switch to next server address when IRC error is received after TCP connection but before message 001 (bug #30884)
   * irc: fix bug with hostmasks in command /ignore (bug #30716)
   * relay: split of messages sent to clients of irc proxy
-  * scripts: add missing function infolist_reset_item_cursor() in API (bug #31057)
+  * scripts: add missing function infolist_reset_item_cursor in API (bug #31057)
   * lua: fix crash when unloading script
   * xfer: fix dcc chat buffer name (use irc server in name) (bug #29925)
   * xfer: fix dcc file transfer for large files (more than 4 GB) on 32-bit systems (bug #31531)
@@ -1778,7 +1778,7 @@ New features::
   * core: add new option weechat.look.confirm_quit
   * core: add new option weechat.color.status_name_ssl (task #10339)
   * core: add hashtables with new functions in plugin API
-  * api: add function string_expand_home(), fix bug with replacement of home in paths
+  * api: add function string_expand_home, fix bug with replacement of home in paths
   * irc: add new option irc.look.nick_color_stop_chars
   * irc: add new options irc.look.display_host_join/join_local/quit and irc.color.reason_quit
   * irc: add command /wallchops, fix bug with display of notice for ops (task #10021, bug #29932)
@@ -1793,10 +1793,10 @@ New features::
 Bug fixes::
 
   * core: fix bug with scroll_unread: do not scroll to a filtered line (bug #29991)
-  * core: fix crash with hook_process() (when timer is called on a deleted hook process)
+  * core: fix crash with hook_process (when timer is called on a deleted hook process)
   * core: fix display bug with special chars (ascii value below 32) (bug #30602)
   * core: fix display bug with attributes like underlined in bars (bug #29889)
-  * api: fix bug with replacement char in function string_remove_color() (bug #30296)
+  * api: fix bug with replacement char in function string_remove_color (bug #30296)
   * irc: fix bug in parser when no argument is received after command, no callback was called, and message was silently ignored (bug #30640)
   * irc: fix import of certificates created by OpenSSL >= 1.0.0 (bug #30316)
   * irc: fix display of local SSL certificate when it is sent to server (patch #7218)
@@ -1820,14 +1820,14 @@ New features::
   * core: add command line option "-s" (or "--no-script") to start WeeChat without loading any script
   * core: improve plugins autoload (option weechat.plugin.autoload): allow to use "*" as wildcard and "!" to prevent a plugin from being autoloaded (task #6361)
   * core: add option "switch_active_buffer_previous" in command /input (task #10141)
-  * core: add new option weechat.look.time_format to customize default format for date/time displayed (localized date by default), add function util_get_time_string() in plugin API (patch #6914)
-  * core: add new option weechat.look.command_chars, add functions string_is_command_char() and string_input_for_buffer() in plugin and script API
+  * core: add new option weechat.look.time_format to customize default format for date/time displayed (localized date by default), add function util_get_time_string in plugin API (patch #6914)
+  * core: add new option weechat.look.command_chars, add functions string_is_command_char and string_input_for_buffer in plugin and script API
   * core: add new option weechat.look.read_marker_always_show
-  * api: add "version_number" for function info_get() to get WeeChat version as number
-  * api: add "irc_is_nick" for function info_get() to check if a string is a valid IRC nick name (patch #7133)
-  * api: add functions string_encode_base64() and string_decode_base64(), fix bug with base64 encoding
-  * api: add functions string_match(), string_has_highlight() and string_mask_to_regex() in script plugin API
-  * api: add description of arguments for functions hook_info() and hook_infolist()
+  * api: add "version_number" for function info_get to get WeeChat version as number
+  * api: add "irc_is_nick" for function info_get to check if a string is a valid IRC nick name (patch #7133)
+  * api: add functions string_encode_base64 and string_decode_base64, fix bug with base64 encoding
+  * api: add functions string_match, string_has_highlight and string_mask_to_regex in script plugin API
+  * api: add description of arguments for functions hook_info and hook_infolist
   * api: add signals "day_changed", "nicklist_group_added/removed", "nicklist_nick_added/removed"
   * alias: add custom completion for aliases (task #9479)
   * scripts: allow script commands to reload only one script
@@ -1853,10 +1853,10 @@ Bug fixes::
   * gui: fix bug with global history, reset pointer to last entry after each user input (bug #28754)
   * gui: fix bug with bar background after text with background color (bug #28157)
   * gui: fix bug with cursor when position is last char of terminal
-  * api: add missing infos in functions buffer_get_{integer|string}() and in buffer infolist
-  * api: fix function color() in Lua script API
+  * api: add missing infos in functions buffer_get_{integer|string} and in buffer infolist
+  * api: fix function color in Lua script API
   * api: fix "inactivity" value when no key has been pressed since WeeChat started (bug #28930)
-  * api: return absolute path for info_get() of "weechat_dir" (bug #27936)
+  * api: return absolute path for info_get of "weechat_dir" (bug #27936)
   * scripts: fix bug with callbacks when loading a script already loaded
   * perl: fix crash when multiplicity is disabled
   * perl: fix crash when callbacks are called during script initialization (bug #29018)
@@ -1924,7 +1924,7 @@ Bug fixes::
   * core: fix plural form in translation files (bug #27430)
   * core: fix terminal title bug: do not reset it when option weechat.look.set_title is off (bug #27399)
   * core: fix buffer used by some input functions called via plugin API with buffer pointer (bug #28152)
-  * alias: fix bug with buffer for execution of alias, when called from plugin API with function command() (bug #27697)
+  * alias: fix bug with buffer for execution of alias, when called from plugin API with function command (bug #27697)
   * alias: fix bug with arguments (bug #27440)
   * irc: improve error management on socket error (recv/send)
   * irc: fix nick color for nicks with wide chars (bug #28547)
@@ -1939,7 +1939,7 @@ Bug fixes::
   * gui: fix alignment problem for buffer name when a merged buffer is closed (bug #27617)
   * gui: update hotlist when a buffer is closed (bug #27470), remove buffer from hotlist when buffer is cleared (bug #27530)
   * gui: fix /input history_global_next: reset input content when last command in history is reached
-  * api: fix function bar_set() for python/lua/ruby (patch #6912)
+  * api: fix function bar_set for python/lua/ruby (patch #6912)
 
 Build::
 
@@ -1961,7 +1961,7 @@ New features::
   * core: remove key functions, replaced by /input command
   * core: add argument with buffer number/range for command "/buffer close" (task #9390, task #7239)
   * core: add new command /wait (schedule a command execution in future)
-  * core: improve main loop: higher timeout in select(), less CPU usage
+  * core: improve main loop: higher timeout in select, less CPU usage
   * gui: new display engine, with prefix and message for each line
   * gui: add new type of buffer, with free content
   * gui: add tags for lines and custom filtering by tags or regex (task #7674)
@@ -2062,7 +2062,7 @@ Bug fixes::
   * fix display bug with some special chars in messages (some words were truncated on screen) (bug #20944)
   * fix UTF-8 bug with color encoding/decoding
   * fix crash when searching text in buffer with kbd:[Ctrl+r] (bug #20938)
-  * fix bug with flock() when home is on NFS filesystem (bug #20913)
+  * fix bug with flock when home is on NFS filesystem (bug #20913)
   * fix user modes in nicklist when ban and nick mode are received in the same MODE message (bug #20870)
   * fix IRC message 333: silently ignore message if error when parsing it
   * fix server option "command_delay": does not freeze WeeChat any more
@@ -2187,7 +2187,7 @@ New features::
   * add filename completion (task #5425)
   * add "modifier" in plugins API
   * improve /plugin command
-  * add date in plugin function get_buffer_data()
+  * add date in plugin function get_buffer_data
   * add more values for config boolean values: y/true/t/1 and n/false/f/0
 
 Bug fixes::
@@ -2197,7 +2197,7 @@ Bug fixes::
   * fix refresh bug with private buffer title
   * fix bug with nick completion in command arguments (now uses option look_nick_completion_ignore)
   * fix display bug with color for first line on screen (bug #17719)
-  * fix bug with set_config() function in plugins API (bug #18448)
+  * fix bug with set_config function in plugins API (bug #18448)
   * fix memory leak in keyboard input
   * fix refresh bug when changing config options if window is split
   * add space between chat and nicklist when position is "right" (bug #17852)
@@ -2241,7 +2241,7 @@ Bug fixes::
   * fix buffer search by server/channel: now if only channel is specified, a channel of another server can be found
   * fix highlight for DCC, invite and notice: when a window is displaying buffer, there's no highlight
   * fix bug with CTCP VERSION sent on channels (bug #17547)
-  * fix bugs in get_buffer_data() which breaks the retrieval of buffer content (perl, lua)
+  * fix bugs in get_buffer_data which breaks the retrieval of buffer content (perl, lua)
   * fix nicklist display bug when top/bottom (not enough lines) (bug #17537)
   * fix bug with auto-rejoin of keyed channels (bug #17534)
   * add default nick completion when line starts with "//" (bug #17535)
@@ -2292,7 +2292,7 @@ Bug fixes::
   * fix crashes with DCC chat remove/purge on DCC view (bug #16775)
   * fix bug with connection to bnc (bug #16760)
   * command /save now writes plugins options (~/.weechat/plugins.rc)
-  * fix crash with register() function in plugin scripts (bug #16701)
+  * fix crash with register function in plugin scripts (bug #16701)
   * fix random crash at exit (/quit or /upgrade) with split windows
 
 Documentation::
@@ -2371,13 +2371,13 @@ New features::
   * add keys kbd:[Alt+Home] / kbd:[Alt+End] to scroll top/bottom, kbd:[Alt+F11] / kbd:[Alt+F12] to scroll nicklist top/bottom
   * add special names for plugin message handlers: weechat_pv, weechat_highlight, weechat_ctcp, weechat_dcc
   * add IRC raw data buffer (new key: kbd:[Alt+j], kbd:[Alt+r])
-  * add new plugins functions: add_timer_handler(), remove_timer_handler(), remove_infobar()
+  * add new plugins functions: add_timer_handler, remove_timer_handler, remove_infobar
   * plugin messages handlers now called when message is ignored (by /ignore)
   * new behavior for messages ignored by a message handler: now WeeChat executes standard handler, treating message as "ignored"
   * many commands allowed for aliases
   * many commands allowed when connecting to server
   * add Lua script plugin
-  * add functions in plugins API: get_server_info(), free_server_info(), get_channel_info(), free_channel_info(), get_nick_info(), free_nick_info()
+  * add functions in plugins API: get_server_info, free_server_info, get_channel_info, free_channel_info, get_nick_info, free_nick_info
   * add option "look_nick_complete_first" (patch from Gwenn)
   * add option "look_open_near_server" (patch from Gwenn)
   * add new scroll keys for a few lines up/down (default: kbd:[Alt+PgUp] / kbd:[Alt+PgDn]) (patch from Pistos)
@@ -2402,7 +2402,7 @@ Bug fixes::
   * fix crash when using global history (when older entry is removed)
   * fix display bug with /kill command
   * fix bug with /upgrade and servers buffer
-  * fix bug with get_dcc_info() plugin interface function
+  * fix bug with get_dcc_info plugin interface function
   * fix bug with charset in infobar highlights
   * fix bug with buffer detection in plugins/scripts commands
   * fix bug with /history command
@@ -2537,7 +2537,7 @@ Bug fixes::
   * errors while loading perl scripts are now displayed in server buffer (instead of current buffer)
   * in python scripts, all messages written in stdin and stderr are redirected in server buffer
   * fix a filename error while loading a python script manually
-  * fix plugins print() and prnt() functions: now OK for writing on server buffers
+  * fix plugins print and prnt functions: now OK for writing on server buffers
   * fix color problem with new libcurses version
   * fix crash when using kbd:[Alt+s] or kbd:[Alt+x] on DCC buffer (kbd:[Alt+d])
   * fix startup crash when config file (~/.weechat/weechat.rc) is not found
