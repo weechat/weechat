@@ -476,7 +476,7 @@ fset_config_init ()
         fset_config_file, ptr_section,
         "option2", "string",
         N_("second format of each line with an option which is not marked "
-           "not the selected one "
+           "nor the selected one "
            "(note: content is evaluated, see /help fset); "
            "an empty string uses the default format "
            "(\"${marked} ${name}  ${type}  ${value2}\"), which is without "

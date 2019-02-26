@@ -6636,7 +6636,7 @@ msgstr ""
 "文字列を評価しないので高速です; 書式を切り替えるには ctrl+X を使います"
 
 msgid ""
-"second format of each line with an option which is not marked not the "
+"second format of each line with an option which is not marked nor the "
 "selected one (note: content is evaluated, see /help fset); an empty string "
 "uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
 "is without evaluation of string and then much faster; formats can be "

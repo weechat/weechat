@@ -7082,7 +7082,7 @@ msgstr ""
 "schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden"
 
 msgid ""
-"second format of each line with an option which is not marked not the "
+"second format of each line with an option which is not marked nor the "
 "selected one (note: content is evaluated, see /help fset); an empty string "
 "uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
 "is without evaluation of string and then much faster; formats can be "
