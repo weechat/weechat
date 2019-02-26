@@ -113,9 +113,9 @@ hook_line_exec (struct t_gui_line *line)
         if (!ptr_hook->deleted && !ptr_hook->running
             && ((HOOK_LINE(ptr_hook, buffer_type) == -1)
                 || ((int)(line->data->buffer->type) == (HOOK_LINE(ptr_hook, buffer_type))))
-            && gui_buffer_match_list_split (line->data->buffer,
-                                            HOOK_LINE(ptr_hook, num_buffers),
-                                            HOOK_LINE(ptr_hook, buffers))
+            && string_match_list (line->data->buffer->full_name,
+                                  (const char **)HOOK_LINE(ptr_hook, buffers),
+                                  0)
             && (!HOOK_LINE(ptr_hook, tags_array)
                 || gui_line_match_tags (line->data,
                                         HOOK_LINE(ptr_hook, tags_count),

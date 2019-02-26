@@ -75,9 +75,9 @@ gui_filter_check_line (struct t_gui_line_data *line_data)
         if (ptr_filter->enabled)
         {
             /* check buffer */
-            if (gui_buffer_match_list_split (line_data->buffer,
-                                             ptr_filter->num_buffers,
-                                             ptr_filter->buffers))
+            if (string_match_list (line_data->buffer->full_name,
+                                   (const char **)ptr_filter->buffers,
+                                   0))
             {
                 if ((strcmp (ptr_filter->tags, "*") == 0)
                     || (gui_line_match_tags (line_data,
@@ -200,9 +200,8 @@ gui_filter_all_buffers (struct t_gui_filter *filter)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         if (!filter
-            || gui_buffer_match_list_split (ptr_buffer,
-                                            filter->num_buffers,
-                                            filter->buffers))
+            || string_match_list (ptr_buffer->full_name,
+                                  (const char **)filter->buffers, 0))
         {
             gui_filter_buffer (ptr_buffer, NULL);
         }

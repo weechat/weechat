@@ -995,43 +995,6 @@ gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
 }
 
 /*
- * Checks if full name of buffer matches (split) list of buffers.
- *
- * Returns:
- *   1: full name matches list of buffers
- *   0: full name does not match list of buffers
- */
-
-int
-gui_buffer_match_list_split (struct t_gui_buffer *buffer,
-                             int num_buffers, char **buffers)
-{
-    int i, match;
-    char *ptr_name;
-
-    if (!buffer)
-        return 0;
-
-    match = 0;
-
-    for (i = 0; i < num_buffers; i++)
-    {
-        ptr_name = buffers[i];
-        if (ptr_name[0] == '!')
-            ptr_name++;
-        if (string_match (buffer->full_name, ptr_name, 0))
-        {
-            if (buffers[i][0] == '!')
-                return 0;
-            else
-                match = 1;
-        }
-    }
-
-    return match;
-}
-
-/*
  * Checks if full name of buffer marches list of buffers.
  *
  * List is a comma-separated list of buffers, where exclusion is possible with
@@ -1049,17 +1012,18 @@ int
 gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
 {
     char **buffers;
-    int num_buffers, match;
+    int match;
 
     if (!buffer || !string || !string[0])
         return 0;
 
     match = 0;
 
-    buffers = string_split (string, ",", 0, 0, &num_buffers);
+    buffers = string_split (string, ",", 0, 0, NULL);
     if (buffers)
     {
-        match = gui_buffer_match_list_split (buffer, num_buffers, buffers);
+        match = string_match_list (buffer->full_name,
+                                   (const char **)buffers, 0);
         string_free_split (buffers);
     }
 

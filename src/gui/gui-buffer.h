@@ -270,8 +270,6 @@ extern void gui_buffer_user_set_callbacks ();
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
                                                   const char *string);
-extern int gui_buffer_match_list_split (struct t_gui_buffer *buffer,
-                                        int num_buffers, char **buffers);
 extern int gui_buffer_match_list (struct t_gui_buffer *buffer,
                                   const char *string);
 extern void gui_buffer_set_plugin_for_upgrade (char *name,
