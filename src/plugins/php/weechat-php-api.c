@@ -566,10 +566,18 @@ API_FUNC(string_eval_expression)
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
+
     result = weechat_string_eval_expression ((const char *)expr,
                                              pointers,
                                              extra_vars,
                                              options);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -603,10 +611,18 @@ API_FUNC(string_eval_path_home)
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
+
     result = weechat_string_eval_path_home ((const char *)path,
                                             pointers,
                                             extra_vars,
                                             options);
+
+    if (pointers)
+        weechat_hashtable_free (pointers);
+    if (extra_vars)
+        weechat_hashtable_free (extra_vars);
+    if (options)
+        weechat_hashtable_free (options);
 
     API_RETURN_STRING_FREE(result);
 }
@@ -1876,7 +1892,11 @@ API_FUNC(key_bind)
                                            WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                            WEECHAT_HASHTABLE_STRING,
                                            WEECHAT_HASHTABLE_STRING);
+
     result = weechat_key_bind ((const char *)context, keys);
+
+    if (keys)
+        weechat_hashtable_free (keys);
 
     API_RETURN_INT(result);
 }
@@ -2427,6 +2447,9 @@ API_FUNC(hook_process_hashtable)
             (const char *)callback_name,
             (const char *)data));
 
+    if (options)
+        weechat_hashtable_free (options);
+
     API_RETURN_STRING(result);
 }
 
@@ -2746,7 +2769,11 @@ API_FUNC(hook_hsignal_send)
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
+
     result = weechat_hook_hsignal_send ((const char *)signal, hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
 
     API_RETURN_INT(result);
 }
@@ -4154,7 +4181,11 @@ API_FUNC(info_get_hashtable)
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
+
     result = weechat_info_get_hashtable ((const char *)info_name, hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
 
     weechat_php_hashtable_to_array (result, return_value);
 }
@@ -4894,7 +4925,11 @@ API_FUNC(hdata_update)
         WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
         WEECHAT_HASHTABLE_STRING,
         WEECHAT_HASHTABLE_STRING);
+
     result = weechat_hdata_update (hdata, pointer, hashtable);
+
+    if (hashtable)
+        weechat_hashtable_free (hashtable);
 
     API_RETURN_INT(result);
 }
