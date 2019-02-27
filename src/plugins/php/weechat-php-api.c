@@ -4144,6 +4144,40 @@ API_FUNC(command)
     API_RETURN_INT(result);
 }
 
+API_FUNC(command_options)
+{
+    zend_string *z_buffer, *z_command;
+    zval *z_options;
+    struct t_gui_buffer *buffer;
+    char *command;
+    struct t_hashtable *options;
+    int result;
+
+    API_INIT_FUNC(1, "command", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSa", &z_buffer,
+                               &z_command, &z_options) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+    command = ZSTR_VAL(z_command);
+    options = weechat_php_array_to_hashtable (
+        z_options,
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+
+    result = plugin_script_api_command_options (weechat_php_plugin,
+                                                php_current_script,
+                                                buffer,
+                                                (const char *)command,
+                                                options);
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(info_get)
 {
     zend_string *z_info_name, *z_arguments;

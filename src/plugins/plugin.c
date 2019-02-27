@@ -828,6 +828,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->bar_remove = &gui_bar_free;
 
         new_plugin->command = &plugin_api_command;
+        new_plugin->command_options = &plugin_api_command_options;
 
         new_plugin->network_pass_proxy = &network_pass_proxy;
         new_plugin->network_connect_to = &network_connect_to;

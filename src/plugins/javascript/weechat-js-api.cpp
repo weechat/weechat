@@ -3976,6 +3976,33 @@ API_FUNC(command)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(command_options)
+{
+    struct t_hashtable *options;
+    int rc;
+
+    API_INIT_FUNC(1, "command_options", "ssh", API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    v8::String::Utf8Value buffer(args[0]);
+    v8::String::Utf8Value command(args[1]);
+    options = weechat_js_object_to_hashtable (
+        args[2]->ToObject(),
+        WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING);
+
+    rc = plugin_script_api_command_options (weechat_js_plugin,
+                                            js_current_script,
+                                            (struct t_gui_buffer *)API_STR2PTR(*buffer),
+                                            *command,
+                                            options);
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(info_get)
 {
     const char *result;
@@ -4967,6 +4994,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(bar_update);
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
+    API_DEF_FUNC(command_options);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

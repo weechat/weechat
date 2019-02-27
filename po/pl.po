@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-02-09 21:00+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:19+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -4749,6 +4749,10 @@ msgstr "%sBłąd wysyłania sygnału %d do pid %d: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s nie możesz nic pisać w tym buforze"
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sKomenda \"/%s eval\" nie jest jeszcze zaimplementowana"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -14187,12 +14191,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "a filter with same name already exists"
-#~ msgstr "filtr o tej nazwie już istnieje"
-
-#~ msgid "Aspell enabled"
-#~ msgstr "Aspell włączony"
-
-#~ msgid "Aspell disabled"
-#~ msgstr "Aspell wyłączony"

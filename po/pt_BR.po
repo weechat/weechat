@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-01-29 21:05+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:19+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -4319,6 +4319,10 @@ msgstr ""
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sCor \"%s\" não está definida na palheta"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -12418,15 +12422,3 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
-
-#, fuzzy
-#~ msgid "a filter with same name already exists"
-#~ msgstr "%sErro: um buffer com o mesmo nome (%s) já existe"
-
-#, fuzzy
-#~ msgid "Aspell enabled"
-#~ msgstr "Mouse habilitado"
-
-#, fuzzy
-#~ msgid "Aspell disabled"
-#~ msgstr "Mouse desabilitado"

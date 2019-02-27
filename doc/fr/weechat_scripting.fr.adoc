@@ -603,9 +603,10 @@ Liste des fonctions de l'API script :
   bar_remove
 
 | commandes |
-  command
+  command +
+  command_options
 
-| infos                     |
+| infos |
   info_get +
   info_get_hashtable
 

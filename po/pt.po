@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-02-03 19:01+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:19+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -4689,6 +4689,10 @@ msgstr "%sErro ao enviar o sinal %d ao pid %d: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sNão pode escrever texto neste buffer"
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sA cor \"%s\" não está definida na paleta"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -13846,12 +13850,3 @@ msgstr "%s%s: tempo limite de \"%s\" com %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar: erro inesperado (%d)"
-
-#~ msgid "a filter with same name already exists"
-#~ msgstr "já existe um filtro com o mesmo nome"
-
-#~ msgid "Aspell enabled"
-#~ msgstr "Aspell ativado"
-
-#~ msgid "Aspell disabled"
-#~ msgstr "Aspell desativado"

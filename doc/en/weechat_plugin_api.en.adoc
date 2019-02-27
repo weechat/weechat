@@ -14375,6 +14375,63 @@ weechat.command(buffer, command)
 rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
+==== command_options
+
+_WeeChat ≥ 2.5._
+
+Execute a command or send text to buffer with options.
+
+Prototype:
+
+[source,C]
+----
+int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
+                             struct t_hashtable *options);
+----
+
+Arguments:
+
+* _buffer_: buffer pointer (command is executed on this buffer, use NULL for
+  current buffer)
+* _command_: command to execute (if beginning with a "/"), or text to send to
+  buffer
+* _options_: a hashtable with some options (keys and values must be string)
+  (can be NULL):
+** _commands_: a comma-separated list of commands allowed to be executed during
+   this call; see function <<_string_match_list,string_match_list>> for the
+   format
+
+Return value:
+
+* _WEECHAT_RC_OK_ if successful
+* _WEECHAT_RC_ERROR_ if error
+
+C example:
+
+[source,C]
+----
+/* allow any command except /exec */
+int rc;
+struct t_hashtable *options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+weechat_hashtable_set (options, "commands", "*,!exec");
+rc = weechat_command_options (NULL, "/some_command arguments", options);
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+weechat.command_options(buffer, command, options)
+
+# example: allow any command except /exec
+rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+----
+
 [[network]]
 === Network
 

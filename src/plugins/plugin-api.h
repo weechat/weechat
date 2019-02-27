@@ -54,6 +54,10 @@ extern const char *plugin_api_prefix (const char *prefix);
 extern const char *plugin_api_color (const char *color_name);
 
 /* command */
+extern int plugin_api_command_options (struct t_weechat_plugin *plugin,
+                                       struct t_gui_buffer *buffer,
+                                       const char *command,
+                                       struct t_hashtable *options);
 extern int plugin_api_command (struct t_weechat_plugin *plugin,
                                struct t_gui_buffer *buffer,
                                const char *command);

@@ -197,6 +197,7 @@ PHP_FUNCTION(weechat_bar_set);
 PHP_FUNCTION(weechat_bar_update);
 PHP_FUNCTION(weechat_bar_remove);
 PHP_FUNCTION(weechat_command);
+PHP_FUNCTION(weechat_command_options);
 PHP_FUNCTION(weechat_info_get);
 PHP_FUNCTION(weechat_info_get_hashtable);
 PHP_FUNCTION(weechat_infolist_new);

@@ -570,7 +570,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   window_get_pointer +
   window_set_title
 
-| ニックネームリスト  |
+| ニックネームリスト |
   nicklist_add_group +
   nicklist_search_group +
   nicklist_add_nick +
@@ -599,7 +599,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   bar_remove
 
 | コマンド |
-  command
+  command +
+  command_options
 
 | インフォ |
   info_get +

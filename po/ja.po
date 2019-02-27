@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-02-03 19:01+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:18+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -4641,6 +4641,10 @@ msgstr "%sシグナル %d を pid %d に送信中にエラー: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sこのバッファに書き込むことは出来ません"
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -13967,12 +13971,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "a filter with same name already exists"
-#~ msgstr "同名のフィルタが既に存在します"
-
-#~ msgid "Aspell enabled"
-#~ msgstr "Aspell が有効化されています"
-
-#~ msgid "Aspell disabled"
-#~ msgstr "Aspell が無効化されています"

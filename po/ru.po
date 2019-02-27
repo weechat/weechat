@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2018-11-17 10:36+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:19+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -3725,6 +3725,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s невозможно закрыть единственный буфер\n"
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sЦвет \"%s\" не определён в палитре"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -11982,16 +11986,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid "a filter with same name already exists"
-#~ msgstr ""
-#~ "%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
-
-#, fuzzy
-#~ msgid "Aspell enabled"
-#~ msgstr "команда users отключена"
-
-#, fuzzy
-#~ msgid "Aspell disabled"
-#~ msgstr "Сокращения не заданы.\n"

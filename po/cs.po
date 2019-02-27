@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-01-29 21:01+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:18+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -4129,6 +4129,10 @@ msgstr "%sChyba odesílání signálu %d na pid %d: %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sDo tohoto bufferu nemůžete zapisovat text"
+
+#, fuzzy, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "%sBarva \"%s\" není definovávána v paletě"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -12680,13 +12684,3 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
-
-#, fuzzy
-#~ msgid "a filter with same name already exists"
-#~ msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
-
-#~ msgid "Aspell enabled"
-#~ msgstr "Aspell povolen"
-
-#~ msgid "Aspell disabled"
-#~ msgstr "Aspell zakázán"

@@ -251,6 +251,7 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_bar_update, NULL)
     PHP_FE(weechat_bar_remove, NULL)
     PHP_FE(weechat_command, NULL)
+    PHP_FE(weechat_command_options, NULL)
     PHP_FE(weechat_info_get, NULL)
     PHP_FE(weechat_info_get_hashtable, NULL)
     PHP_FE(weechat_infolist_new, NULL)

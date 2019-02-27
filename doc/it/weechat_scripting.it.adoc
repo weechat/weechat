@@ -611,7 +611,8 @@ Elenco di funzioni nelle API per gli script:
   bar_remove
 
 | comandi |
-  comando
+  command +
+  command_options
 
 | info |
   info_get +

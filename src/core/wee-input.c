@@ -39,6 +39,9 @@
 #include "../plugins/plugin.h"
 
 
+char **input_commands_allowed = NULL;
+
+
 /*
  * Sends data to buffer input callback.
  */
@@ -103,8 +106,25 @@ input_exec_command (struct t_gui_buffer *buffer,
         return WEECHAT_RC_ERROR;
     }
 
-    /* execute command */
     rc = WEECHAT_RC_OK;
+
+    /* check if command is allowed */
+    if (input_commands_allowed
+        && !string_match_list (command_name + 1,
+                               (const char **)input_commands_allowed, 0))
+    {
+        if (weechat_debug_core >= 1)
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("debug: command \"%s\" is not "
+                                         "allowed in this context"),
+                                       command_name);
+        }
+        rc = WEECHAT_RC_ERROR;
+        goto end;
+    }
+
+    /* execute command */
     switch (hook_command_exec (buffer, any_plugin, plugin, command))
     {
         case HOOK_COMMAND_EXEC_OK:
@@ -171,6 +191,7 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
     }
 
+end:
     free (command);
     free (command_name);
 

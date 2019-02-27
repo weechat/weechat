@@ -28,6 +28,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
@@ -294,18 +295,34 @@ plugin_api_color (const char *color_name)
 }
 
 /*
- * Executes a command on a buffer (simulates user entry).
+ * Executes a command on a buffer (simulates user entry) with options.
  */
 
 int
-plugin_api_command (struct t_weechat_plugin *plugin,
-                    struct t_gui_buffer *buffer, const char *command)
+plugin_api_command_options (struct t_weechat_plugin *plugin,
+                            struct t_gui_buffer *buffer, const char *command,
+                            struct t_hashtable *options)
 {
-    char *command2;
+    char *command2, **old_commands_allowed, **new_commands_allowed;
+    const char *ptr_commands;
     int rc;
 
     if (!plugin || !command)
         return WEECHAT_RC_ERROR;
+
+    old_commands_allowed = input_commands_allowed;
+    new_commands_allowed = NULL;
+
+    if (options)
+    {
+        ptr_commands = hashtable_get (options, "commands");
+        if (ptr_commands)
+        {
+            new_commands_allowed = string_split (ptr_commands, ",", 0, 0,
+                                                 NULL);
+            input_commands_allowed = new_commands_allowed;
+        }
+    }
 
     command2 = string_iconv_to_internal (plugin->charset, command);
     if (!buffer)
@@ -314,7 +331,22 @@ plugin_api_command (struct t_weechat_plugin *plugin,
     if (command2)
         free (command2);
 
+    if (new_commands_allowed)
+        string_free_split (new_commands_allowed);
+    input_commands_allowed = old_commands_allowed;
+
     return rc;
+}
+
+/*
+ * Executes a command on a buffer (simulates user entry).
+ */
+
+int
+plugin_api_command (struct t_weechat_plugin *plugin,
+                    struct t_gui_buffer *buffer, const char *command)
+{
+    return plugin_api_command_options (plugin, buffer, command, NULL);
 }
 
 /*

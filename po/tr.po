@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
 "PO-Revision-Date: 2019-01-29 21:05+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3351,6 +3351,10 @@ msgstr ""
 
 #, c-format
 msgid "%sYou can not write text in this buffer"
+msgstr ""
+
+#, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
 msgstr ""
 
 #, c-format

@@ -1279,6 +1279,33 @@ plugin_script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * Executes a command on a buffer (simulates user entry) with options.
+ */
+
+int
+plugin_script_api_command_options (struct t_weechat_plugin *weechat_plugin,
+                                   struct t_plugin_script *script,
+                                   struct t_gui_buffer *buffer,
+                                   const char *command,
+                                   struct t_hashtable *options)
+{
+    char *command2;
+    int rc;
+
+    command2 = (script && script->charset && script->charset[0]) ?
+        weechat_iconv_to_internal (script->charset, command) : NULL;
+
+    rc = weechat_command_options (buffer,
+                                  (command2) ? command2 : command,
+                                  options);
+
+    if (command2)
+        free (command2);
+
+    return rc;
+}
+
+/*
  * Executes a command on a buffer (simulates user entry).
  */
 
@@ -1287,18 +1314,8 @@ plugin_script_api_command (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script *script,
                            struct t_gui_buffer *buffer, const char *command)
 {
-    char *command2;
-    int rc;
-
-    command2 = (script && script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, command) : NULL;
-
-    rc = weechat_command (buffer, (command2) ? command2 : command);
-
-    if (command2)
-        free (command2);
-
-    return rc;
+    return plugin_script_api_command_options (weechat_plugin, script, buffer,
+                                              command, NULL);
 }
 
 /*

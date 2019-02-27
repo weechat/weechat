@@ -4077,6 +4077,34 @@ weechat_guile_api_command (SCM buffer, SCM command)
 }
 
 SCM
+weechat_guile_api_command_options (SCM buffer, SCM command, SCM options)
+{
+    struct t_hashtable *c_options;
+    int rc;
+
+    API_INIT_FUNC(1, "command_options", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (!scm_is_string (buffer) || !scm_is_string (command)
+        || !scm_list_p (options))
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    c_options = weechat_guile_alist_to_hashtable (options,
+                                                  WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                  WEECHAT_HASHTABLE_STRING,
+                                                  WEECHAT_HASHTABLE_STRING);
+
+    rc = plugin_script_api_command_options (weechat_guile_plugin,
+                                            guile_current_script,
+                                            API_STR2PTR(API_SCM_TO_STRING(buffer)),
+                                            API_SCM_TO_STRING(command),
+                                            c_options);
+
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_INT(rc);
+}
+
+SCM
 weechat_guile_api_info_get (SCM info_name, SCM arguments)
 {
     const char *result;
@@ -5016,6 +5044,7 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(bar_update, 1);
     API_DEF_FUNC(bar_remove, 1);
     API_DEF_FUNC(command, 2);
+    API_DEF_FUNC(command_options, 3);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);
     API_DEF_FUNC(infolist_new, 0);

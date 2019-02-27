@@ -14953,6 +14953,67 @@ weechat.command(buffer, command)
 rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
+==== command_options
+
+_WeeChat ≥ 2.5._
+
+// TRANSLATION MISSING
+Execute a command or send text to buffer with options.
+
+Prototipo:
+
+[source,C]
+----
+int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
+                             struct t_hashtable *options);
+----
+
+Argomenti:
+
+* _buffer_: puntatore al buffer (il comando viene eseguito su questo buffer,
+  utilizzare NULL per il buffer corrente)
+* _command_: comando da eseguire (se preceduto da "/"), oppure il testo
+  viene inviato sul buffer
+// TRANSLATION MISSING
+* _options_: a hashtable with some options (keys and values must be string)
+  (can be NULL):
+** _commands_: a comma-separated list of commands allowed to be executed during
+   this call; see function <<_string_match_list,string_match_list>> for the
+   format
+
+Valori restituiti:
+
+* _WEECHAT_RC_OK_ se l'operazione ha successo
+* _WEECHAT_RC_ERROR_ se c'è un errore
+
+Esempio in C:
+
+// TRANSLATION MISSING
+[source,C]
+----
+/* allow any command except /exec */
+int rc;
+struct t_hashtable *options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+weechat_hashtable_set (options, "commands", "*,!exec");
+rc = weechat_command_options (NULL, "/some_command arguments", options);
+----
+
+Script (Python):
+
+// TRANSLATION MISSING
+[source,python]
+----
+# prototipo
+weechat.command_options(buffer, command, options)
+
+# example: allow any command except /exec
+rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+----
+
 [[network]]
 === Network
 

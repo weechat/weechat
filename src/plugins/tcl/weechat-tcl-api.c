@@ -4598,6 +4598,36 @@ API_FUNC(command)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(command_options)
+{
+    Tcl_Obj *objp;
+    char *buffer, *command;
+    struct t_hashtable *options;
+    int i, rc;
+
+    API_INIT_FUNC(1, "command_options", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (objc < 4)
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+    command = Tcl_GetStringFromObj (objv[2], &i);
+    options = weechat_tcl_dict_to_hashtable (interp, objv[3],
+                                             WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING);
+
+    rc = plugin_script_api_command_options (weechat_tcl_plugin,
+                                            tcl_current_script,
+                                            API_STR2PTR(buffer),
+                                            command,
+                                            options);
+
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(info_get)
 {
     Tcl_Obj *objp;
@@ -5753,6 +5783,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(bar_update);
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
+    API_DEF_FUNC(command_options);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

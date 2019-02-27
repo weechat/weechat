@@ -4233,6 +4233,35 @@ API_FUNC(command)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(command_options)
+{
+    char *buffer, *command;
+    struct t_hashtable *options;
+    int rc;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "command_options", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (items < 3)
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    buffer = SvPV_nolen (ST (0));
+    command = SvPV_nolen (ST (1));
+    options = weechat_perl_hash_to_hashtable (ST (2),
+                                              WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                              WEECHAT_HASHTABLE_STRING,
+                                              WEECHAT_HASHTABLE_STRING);
+
+    rc = plugin_script_api_command_options (weechat_perl_plugin,
+                                            perl_current_script,
+                                            API_STR2PTR(buffer),
+                                            command,
+                                            options);
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(info_get)
 {
     char *info_name, *arguments;
@@ -5277,6 +5306,7 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(bar_update);
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
+    API_DEF_FUNC(command_options);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

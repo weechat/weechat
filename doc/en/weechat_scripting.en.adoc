@@ -591,7 +591,8 @@ List of functions in script API:
   bar_remove
 
 | commands |
-  command
+  command +
+  command_options
 
 | infos |
   info_get +

@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20190226-01"
+#define WEECHAT_PLUGIN_API_VERSION "20190228-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -985,6 +985,9 @@ struct t_weechat_plugin
     /* command */
     int (*command) (struct t_weechat_plugin *plugin,
                     struct t_gui_buffer *buffer, const char *command);
+    int (*command_options) (struct t_weechat_plugin *plugin,
+                            struct t_gui_buffer *buffer, const char *command,
+                            struct t_hashtable *options);
 
     /* network */
     int (*network_pass_proxy) (const char *proxy, int sock,
@@ -1899,6 +1902,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 /* command */
 #define weechat_command(__buffer, __command)                            \
     (weechat_plugin->command)(weechat_plugin, __buffer, __command)
+#define weechat_command_options(__buffer, __command, __options)         \
+    (weechat_plugin->command_options)(weechat_plugin, __buffer,         \
+                                      __command, __options)
 
 /* network */
 #define weechat_network_pass_proxy(__proxy, __sock, __address, __port)  \

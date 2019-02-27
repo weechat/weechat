@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2019-02-23 13:40+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:18+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -4851,6 +4851,10 @@ msgstr "%sErreur d'envoi du signal %d au pid %d : %s"
 #, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%sVous ne pouvez pas écrire de texte dans ce tampon"
+
+#, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr "debug : la commande \"%s\" n'est pas autorisée dans ce contexte"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -14499,12 +14503,3 @@ msgstr "%s%s : délai d'attente dépassé pour \"%s\" avec %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s : impossible de se connecter : erreur inattendue (%d)"
-
-#~ msgid "a filter with same name already exists"
-#~ msgstr "un filtre avec le même nom existe déjà"
-
-#~ msgid "Aspell enabled"
-#~ msgstr "Aspell activé"
-
-#~ msgid "Aspell disabled"
-#~ msgstr "Aspell désactivé"

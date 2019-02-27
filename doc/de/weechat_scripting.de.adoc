@@ -604,7 +604,8 @@ Liste der Skript API Funktionen:
   bar_remove
 
 | Befehle |
-  command
+  command +
+  command_options
 
 | Informationen |
   info_get +

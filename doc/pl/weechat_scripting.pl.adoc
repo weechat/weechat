@@ -466,7 +466,7 @@ Lista funkcji w API skryptów:
   list_remove_all +
   list_free
 
-| pliki konfiguracyjne|
+| pliki konfiguracyjne |
   config_new +
   config_new_section +
   config_search_section +
@@ -504,7 +504,7 @@ Lista funkcji w API skryptów:
   config_set_desc_plugin +
   config_unset_plugin
 
-| przypisania klawiszy|
+| przypisania klawiszy |
   key_bind +
   key_unbind
 
@@ -597,7 +597,8 @@ Lista funkcji w API skryptów:
   bar_remove
 
 | komendy |
-  command
+  command +
+  command_options
 
 | informacje |
   info_get +

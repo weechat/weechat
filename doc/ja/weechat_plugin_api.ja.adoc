@@ -14335,6 +14335,67 @@ weechat.command(buffer, command)
 rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
+==== command_options
+
+_WeeChat ≥ 2.5._
+
+// TRANSLATION MISSING
+Execute a command or send text to buffer with options.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
+                             struct t_hashtable *options);
+----
+
+引数:
+
+* _buffer_: バッファへのポインタ
+  (コマンドは指定したバッファで実行されます、現在のバッファで実行するには NULL を指定してください)
+* _command_: 実行するコマンド ("/"
+  で始まっている場合)、またはバッファに送信するテキスト
+// TRANSLATION MISSING
+* _options_: a hashtable with some options (keys and values must be string)
+  (can be NULL):
+** _commands_: a comma-separated list of commands allowed to be executed during
+   this call; see function <<_string_match_list,string_match_list>> for the
+   format
+
+戻り値:
+
+* _WEECHAT_RC_OK_ 成功した場合
+* _WEECHAT_RC_ERROR_ エラーが起きた場合
+
+C 言語での使用例:
+
+// TRANSLATION MISSING
+[source,C]
+----
+/* allow any command except /exec */
+int rc;
+struct t_hashtable *options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+weechat_hashtable_set (options, "commands", "*,!exec");
+rc = weechat_command_options (NULL, "/some_command arguments", options);
+----
+
+スクリプト (Python) での使用例:
+
+// TRANSLATION MISSING
+[source,python]
+----
+# プロトタイプ
+weechat.command_options(buffer, command, options)
+
+# example: allow any command except /exec
+rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
+----
+
 [[network]]
 === ネットワーク
 

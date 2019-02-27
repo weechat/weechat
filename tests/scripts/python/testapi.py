@@ -200,6 +200,13 @@ def test_hooks():
     weechat.unhook(hook_cmplt)
 
 
+def test_command():
+    """Test command functions."""
+    check(weechat.command('', '/mute') == 0)
+    check(weechat.command_options('', '/mute', {'commands': '*,!print'}) == 0)
+    check(weechat.command_options('', '/mute', {'commands': '*,!mute'}) == -1)
+
+
 def infolist_cb(data, infolist_name, pointer, arguments):
     """Infolist callback."""
     infolist = weechat.infolist_new()
@@ -244,6 +251,7 @@ def cmd_test_cb(data, buf, args):
     test_key()
     test_display()
     test_hooks()
+    test_command()
     test_infolist()
     weechat.prnt('', '  > TESTS END')
     return weechat.WEECHAT_RC_OK

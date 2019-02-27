@@ -4247,6 +4247,35 @@ API_FUNC(command)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(command_options)
+{
+    char *buffer, *command;
+    struct t_hashtable *options;
+    int rc;
+    PyObject *dict;
+
+    API_INIT_FUNC(1, "command_options", API_RETURN_INT(WEECHAT_RC_ERROR));
+    buffer = NULL;
+    command = NULL;
+    options = NULL;
+    if (!PyArg_ParseTuple (args, "ssO", &buffer, &command, &dict))
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    options = weechat_python_dict_to_hashtable (dict,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+    rc = plugin_script_api_command_options (weechat_python_plugin,
+                                            python_current_script,
+                                            API_STR2PTR(buffer),
+                                            command,
+                                            options);
+    if (options)
+        weechat_hashtable_free (options);
+
+    API_RETURN_INT(rc);
+}
+
 API_FUNC(info_get)
 {
     char *info_name, *arguments;
@@ -5227,6 +5256,7 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(bar_update),
     API_DEF_FUNC(bar_remove),
     API_DEF_FUNC(command),
+    API_DEF_FUNC(command_options),
     API_DEF_FUNC(info_get),
     API_DEF_FUNC(info_get_hashtable),
     API_DEF_FUNC(infolist_new),

@@ -14691,6 +14691,63 @@ weechat.command(buffer, command)
 rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois FlashCode")
 ----
 
+==== command_options
+
+_WeeChat ≥ 2.5._
+
+Exécuter une commande ou envoyer du texte au tampon avec des options.
+
+Prototype :
+
+[source,C]
+----
+int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
+                             struct t_hashtable *options);
+----
+
+Paramètres :
+
+* _buffer_ : pointeur vers le tampon (la commande est exécutée sur ce tampon,
+  NULL pour le tampon courant)
+* _command_ : commande à exécuter (si elle commence par "/"), ou texte à
+  envoyer au tampon
+* _options_ : table de hachage avec des options (les clés et valeurs doivent
+  être des chaînes) (peut être NULL) :
+** _commands_ : une liste de commandes autorisées pendant l'appel, séparées par
+   des virgules ; voir la fonction <<_string_match_list,string_match_list>>
+   pour le format
+
+Valeur de retour :
+
+* _WEECHAT_RC_OK_ si ok
+* _WEECHAT_RC_ERROR_ si erreur
+
+Exemple en C :
+
+[source,C]
+----
+/* autoriser toute commande sauf /exec */
+int rc;
+struct t_hashtable *options = weechat_hashtable_new (8,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     WEECHAT_HASHTABLE_STRING,
+                                                     NULL,
+                                                     NULL);
+weechat_hashtable_set (options, "commands", "*,!exec");
+rc = weechat_command_options (NULL, "/une_commande paramètres", options);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.command_options(buffer, command, options)
+
+# exemple : autoriser toute commande sauf /exec
+rc = weechat.command("", "/une_commande paramètres", {"commands": "*,!exec"})
+----
+
 [[network]]
 === Réseau
 

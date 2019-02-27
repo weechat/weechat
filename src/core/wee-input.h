@@ -23,6 +23,8 @@
 struct t_gui_buffer;
 struct t_weechat_plugin;
 
+extern char **input_commands_allowed;
+
 extern int input_exec_command (struct t_gui_buffer *buffer,
                                int any_plugin,
                                struct t_weechat_plugin *plugin,

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-02-23 13:36+0100\n"
-"PO-Revision-Date: 2018-11-17 10:36+0100\n"
+"POT-Creation-Date: 2019-02-28 20:16+0100\n"
+"PO-Revision-Date: 2019-02-28 20:18+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: hu\n"
@@ -3696,6 +3696,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer"
 msgstr "%s az utolsó puffert nem lehet bezárni\n"
+
+#, c-format
+msgid "debug: command \"%s\" is not allowed in this context"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -11951,16 +11955,3 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, fuzzy
-#~ msgid "a filter with same name already exists"
-#~ msgstr ""
-#~ "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
-
-#, fuzzy
-#~ msgid "Aspell enabled"
-#~ msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy
-#~ msgid "Aspell disabled"
-#~ msgstr "Nincs aliasz definiálva.\n"

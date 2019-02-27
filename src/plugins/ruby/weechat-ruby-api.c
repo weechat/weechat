@@ -5119,6 +5119,41 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
 }
 
 static VALUE
+weechat_ruby_api_command_options (VALUE class, VALUE buffer, VALUE command,
+                                  VALUE options)
+{
+    char *c_buffer, *c_command;
+    struct t_hashtable *c_options;
+    int rc;
+
+    API_INIT_FUNC(1, "command_options", API_RETURN_INT(WEECHAT_RC_ERROR));
+    if (NIL_P (buffer) || NIL_P (command) || NIL_P (options))
+        API_WRONG_ARGS(API_RETURN_INT(WEECHAT_RC_ERROR));
+
+    Check_Type (buffer, T_STRING);
+    Check_Type (command, T_STRING);
+    Check_Type (options, T_HASH);
+
+    c_buffer = StringValuePtr (buffer);
+    c_command = StringValuePtr (command);
+    c_options = weechat_ruby_hash_to_hashtable (options,
+                                                WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
+                                                WEECHAT_HASHTABLE_STRING,
+                                                WEECHAT_HASHTABLE_STRING);
+
+    rc = plugin_script_api_command_options (weechat_ruby_plugin,
+                                            ruby_current_script,
+                                            API_STR2PTR(c_buffer),
+                                            c_command,
+                                            c_options);
+
+    if (c_options)
+        weechat_hashtable_free (c_options);
+
+    API_RETURN_INT(rc);
+}
+
+static VALUE
 weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
 {
     char *c_info_name, *c_arguments;
@@ -6388,6 +6423,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(bar_update, 1);
     API_DEF_FUNC(bar_remove, 1);
     API_DEF_FUNC(command, 2);
+    API_DEF_FUNC(command_options, 3);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);
     API_DEF_FUNC(infolist_new, 0);
