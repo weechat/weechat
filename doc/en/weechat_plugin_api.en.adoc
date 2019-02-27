@@ -14350,7 +14350,7 @@ Arguments:
 * _command_: command to execute (if beginning with a "/"), or text to send to
   buffer
 
-Return value: (_WeeChat ≥ 1.1_)
+Return value (_WeeChat ≥ 1.1_):
 
 * _WEECHAT_RC_OK_ if successful
 * _WEECHAT_RC_ERROR_ if error

@@ -14310,7 +14310,7 @@ int weechat_command (struct t_gui_buffer *buffer, const char *command);
 * _command_: 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
 
-戻り値: (_WeeChat バージョン 1.1 以上で利用可_)
+戻り値 (_WeeChat バージョン 1.1 以上で利用可_):
 
 * _WEECHAT_RC_OK_ 成功した場合
 * _WEECHAT_RC_ERROR_ エラーが起きた場合

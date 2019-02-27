@@ -14666,7 +14666,7 @@ Paramètres :
 * _command_ : commande à exécuter (si elle commence par "/"), ou texte à
   envoyer au tampon
 
-Valeur de retour : (_WeeChat ≥ 1.1_)
+Valeur de retour (_WeeChat ≥ 1.1_) :
 
 * _WEECHAT_RC_OK_ si ok
 * _WEECHAT_RC_ERROR_ si erreur

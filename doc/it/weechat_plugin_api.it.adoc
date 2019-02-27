@@ -14928,7 +14928,7 @@ Argomenti:
 * _command_: comando da eseguire (se preceduto da "/"), oppure il testo
   viene inviato sul buffer
 
-Valori restituiti: (_WeeChat ≥ 1.1_)
+Valori restituiti (_WeeChat ≥ 1.1_):
 
 * _WEECHAT_RC_OK_ se l'operazione ha successo
 * _WEECHAT_RC_ERROR_ se c'è un errore
