@@ -1014,9 +1014,8 @@ Du braucht lediglich die spell Erweiterung neu zu laden:
 /plugin reload spell
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 2.4, the "spell" plugin was named "aspell", so the command is:
+Bis WeeChat ≤ 2.4, hieß die "spell" Erweiterung, "aspell". Somit lautet der Befehl:
 `/plugin reload aspell`.
 
 [[settings]]

@@ -1,7 +1,7 @@
 #
 # Copyright (C) 2005 Rudolf Polzer <weechat-te@durchnull.de>
 # Copyright (C) 2006-2007 Thomas Schuetz <i18n@internet-villa.de>
-# Copyright (C) 2009-2018 Nils Görs <weechatter@arcor.de>
+# Copyright (C) 2009-2019 Nils Görs <weechatter@arcor.de>
 # Copyright (C) 2015 Sven Knurr <zeug@tuxproject.de>
 #
 # This file is part of WeeChat, the extensible chat client.
@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-02-28 20:53+0100\n"
-"PO-Revision-Date: 2019-02-28 20:53+0100\n"
+"PO-Revision-Date: 2019-02-28 21:25+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -4981,9 +4981,9 @@ msgstr "%sFehler beim Versenden des Signals %d an pid %d: %s"
 msgid "%sYou can not write text in this buffer"
 msgstr "%sIn diesen Buffer kann nicht geschrieben werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "debug: command \"%s\" is not allowed in this context"
-msgstr "%sBefehl \"/%s eval\" ist zur Zeit noch nicht implementiert"
+msgstr "debug: Befehl \"%s\" ist in diesem Kontext nicht erlaubt"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -12776,6 +12776,13 @@ msgid ""
 "allowed except /exec, /upgrade and /quit (which could lead to denial of "
 "service or remote code execution if the client is not trusted)"
 msgstr ""
+"durch Kommata getrennte Liste von Befehlen die erlaubt/verboten sind wenn "
+"Daten (Text oder Befehl) vom Client empfangen werden; \"*\" bedeutet alle "
+"Befehle sind erlaubt, beginnt ein Befehl hingegen mit \"!\" wird die Auswahl "
+"umgekehrt und der Befehl wird nicht ausgeführt, der Platzhalter \"*\" ist "
+"erlaubt. Standardmäßig sind alle Befehle erlaubt, ausgenommen /exec, /"
+"upgrade und /quit (was zu einem denial of service oder einer remote code "
+"execution führen kann, wenn der client nicht vertrauenswürdig ist)"
 
 msgid "number of clients for relay"
 msgstr "Anzahl an Clients für Relay"
@@ -13063,7 +13070,7 @@ msgid "URL"
 msgstr "URL"
 
 msgid "SHA-512"
-msgstr ""
+msgstr "SHA-512"
 
 msgid "Requires"
 msgstr "Benötigt"

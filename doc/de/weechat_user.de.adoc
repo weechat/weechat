@@ -1652,8 +1652,7 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 | kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_next_word`
 | kbd:[Alt+k]     | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `/input grab_key_command`
 | kbd:[Alt+r]     | komplette Eingabezeile lösche.n| `/input delete_line`
-// TRANSLATION MISSING
-| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
+| kbd:[Alt+s]     | Umschalten der Rechtschreibprüfung. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
