@@ -181,3 +181,9 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
+
+* [[option_relay.weechat.commands]] *relay.weechat.commands*
+** description: pass:none[liste des commandes autorisées/interdites lorsque qu'une entrée de données (texte ou commande) est reçue du client (séparées par des virgules) ; "*" signifie toutes les commandes, un nom commençant par "!" est une valeur négative pour empêcher une commande d'être exécutée, le caractère joker "*" est autorisé dans les noms ; par défaut toutes les commandes sont autorisées sauf /exec, /upgrade et /quit (ce qui pourrait conduire à un déni de service ou l'exécution de commandes à distance si le client n'est pas sûr)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"*,!exec,!upgrade,!quit"+`

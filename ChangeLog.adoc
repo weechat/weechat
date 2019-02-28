@@ -23,6 +23,7 @@ New features::
   * core: add option "addreplace" in command /filter (issue #1055, issue #1312)
   * api: add function command_options (issue #928)
   * api: add function string_match_list
+  * relay: add option relay.weechat.commands (issue #928)
   * spell: rename aspell plugin to spell (issue #1299)
 
 Bug fixes::

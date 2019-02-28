@@ -75,6 +75,10 @@ struct t_config_option *relay_config_irc_backlog_since_last_message;
 struct t_config_option *relay_config_irc_backlog_tags;
 struct t_config_option *relay_config_irc_backlog_time_format;
 
+/* relay config, weechat section */
+
+struct t_config_option *relay_config_weechat_commands;
+
 /* other */
 
 regex_t *relay_config_regex_allowed_ips = NULL;
@@ -1002,6 +1006,37 @@ relay_config_init ()
            "time in backlog messages"),
         NULL, 0, 0, "[%H:%M] ", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+    /* section weechat */
+    ptr_section = weechat_config_new_section (relay_config_file, "weechat",
+                                              0, 0,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL,
+                                              NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
+        return 0;
+    }
+
+    relay_config_weechat_commands = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "commands", "string",
+        N_("comma-separated list of commands allowed/denied when input "
+           "data (text or command) is received from a client; "
+           "\"*\" means any command, a name beginning with \"!\" is "
+           "a negative value to prevent a command from being executed, "
+           "wildcard \"*\" is allowed in names; by default all commands "
+           "are allowed except /exec, /upgrade and /quit (which could lead "
+           "to denial of service or remote code execution if the client is "
+           "not trusted)"),
+        NULL, 0, 0, "*,!exec,!upgrade,!quit", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
 
     /* section port */
     ptr_section = weechat_config_new_section (

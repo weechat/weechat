@@ -404,6 +404,7 @@ relay_weechat_protocol_input_timer_cb (const void *pointer,
     char **timer_args;
     int i;
     struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *options;
 
     /* make C compiler happy */
     (void) data;
@@ -418,7 +419,21 @@ relay_weechat_protocol_input_timer_cb (const void *pointer,
     {
         ptr_buffer = weechat_buffer_search ("==", timer_args[0]);
         if (ptr_buffer)
-            weechat_command (ptr_buffer, timer_args[1]);
+        {
+            options = weechat_hashtable_new (8,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             WEECHAT_HASHTABLE_STRING,
+                                             NULL, NULL);
+            if (options)
+            {
+                weechat_hashtable_set (
+                    options,
+                    "commands",
+                    weechat_config_string (relay_config_weechat_commands));
+                weechat_command_options (ptr_buffer, timer_args[1], options);
+                weechat_hashtable_free (options);
+            }
+        }
     }
 
     for (i = 0; i < 2; i++)
