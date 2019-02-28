@@ -385,7 +385,7 @@ script_repo_alloc ()
         new_script->requirements = NULL;
         new_script->min_weechat = NULL;
         new_script->max_weechat = NULL;
-        new_script->md5sum = NULL;
+        new_script->sha512sum = NULL;
         new_script->url = NULL;
         new_script->popularity = 0;
         new_script->date_added = 0;
@@ -636,8 +636,8 @@ script_repo_free (struct t_script_repo *script)
         free (script->min_weechat);
     if (script->max_weechat)
         free (script->max_weechat);
-    if (script->md5sum)
-        free (script->md5sum);
+    if (script->sha512sum)
+        free (script->sha512sum);
     if (script->url)
         free (script->url);
     if (script->version_loaded)
@@ -740,23 +740,23 @@ script_repo_script_is_held (struct t_script_repo *script)
 }
 
 /*
- * Computes MD5 checksum for the content of a file.
+ * Computes SHA-512 checksum for the content of a file.
  *
  * Note: result must be freed after use.
  */
 
 char *
-script_repo_md5sum_file (const char *filename)
+script_repo_sha512sum_file (const char *filename)
 {
     struct stat st;
     FILE *file;
-    char md5sum[512];
+    char sha512sum[512];
     const char *hexa = "0123456789abcdef";
     unsigned char *data, *result;
     gcry_md_hd_t hd;
     int mdlen, i;
 
-    md5sum[0] = '\0';
+    sha512sum[0] = '\0';
 
     if (stat (filename, &st) == -1)
         return NULL;
@@ -774,21 +774,21 @@ script_repo_md5sum_file (const char *filename)
     }
     fclose (file);
 
-    gcry_md_open (&hd, GCRY_MD_MD5, 0);
-    mdlen = gcry_md_get_algo_dlen (GCRY_MD_MD5);
+    gcry_md_open (&hd, GCRY_MD_SHA512, 0);
+    mdlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
     gcry_md_write (hd, data, st.st_size);
-    result = gcry_md_read (hd, GCRY_MD_MD5);
+    result = gcry_md_read (hd, GCRY_MD_SHA512);
     for (i = 0; i < mdlen; i++)
     {
-        md5sum[i * 2] = hexa[(result[i] & 0xFF) / 16];
-        md5sum[(i * 2) + 1] = hexa[(result[i] & 0xFF) % 16];
+        sha512sum[i * 2] = hexa[(result[i] & 0xFF) / 16];
+        sha512sum[(i * 2) + 1] = hexa[(result[i] & 0xFF) % 16];
     }
-    md5sum[((mdlen - 1) * 2) + 2] = '\0';
+    sha512sum[((mdlen - 1) * 2) + 2] = '\0';
     gcry_md_close (hd);
 
     free (data);
 
-    return strdup (md5sum);
+    return strdup (sha512sum);
 }
 
 /*
@@ -802,13 +802,13 @@ void
 script_repo_update_status (struct t_script_repo *script)
 {
     const char *weechat_home, *version;
-    char *filename, *md5sum;
+    char *filename, *sha512sum;
     struct stat st;
     int length;
     struct t_script_repo *ptr_script;
 
     script->status = 0;
-    md5sum = NULL;
+    sha512sum = NULL;
 
     /* check if script is installed (file found on disk) */
     weechat_home = weechat_info_get ("weechat_dir", NULL);
@@ -824,7 +824,7 @@ script_repo_update_status (struct t_script_repo *script)
         {
             script->status |= SCRIPT_STATUS_INSTALLED;
             script->status |= SCRIPT_STATUS_AUTOLOADED;
-            md5sum = script_repo_md5sum_file (filename);
+            sha512sum = script_repo_sha512sum_file (filename);
         }
         else
         {
@@ -835,7 +835,7 @@ script_repo_update_status (struct t_script_repo *script)
             if (stat (filename, &st) == 0)
             {
                 script->status |= SCRIPT_STATUS_INSTALLED;
-                md5sum = script_repo_md5sum_file (filename);
+                sha512sum = script_repo_sha512sum_file (filename);
             }
         }
         free (filename);
@@ -864,8 +864,11 @@ script_repo_update_status (struct t_script_repo *script)
     }
 
     /* check if script has new version (script is obsolete) */
-    if (md5sum && script->md5sum && (strcmp (script->md5sum, md5sum) != 0))
+    if (sha512sum && script->sha512sum
+        && (strcmp (script->sha512sum, sha512sum) != 0))
+    {
         script->status |= SCRIPT_STATUS_NEW_VERSION;
+    }
 
     /* recompute max length for version loaded (for display) */
     if (script_repo_max_length_field)
@@ -880,8 +883,8 @@ script_repo_update_status (struct t_script_repo *script)
         }
     }
 
-    if (md5sum)
-        free (md5sum);
+    if (sha512sum)
+        free (sha512sum);
 }
 
 /*
@@ -1335,8 +1338,8 @@ script_repo_file_read (int quiet)
                                     script->min_weechat = strdup (value);
                                 else if (strcmp (name, "max_weechat") == 0)
                                     script->max_weechat = strdup (value);
-                                else if (strcmp (name, "md5sum") == 0)
-                                    script->md5sum = strdup (value);
+                                else if (strcmp (name, "sha512sum") == 0)
+                                    script->sha512sum = strdup (value);
                                 else if (strcmp (name, "url") == 0)
                                     script->url = strdup (value);
                                 else if (strcmp (name, "popularity") == 0)
@@ -1546,7 +1549,7 @@ script_repo_hdata_script_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_script_repo, requirements, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, min_weechat, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, max_weechat, STRING, 0, NULL, NULL);
-        WEECHAT_HDATA_VAR(struct t_script_repo, md5sum, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_script_repo, sha512sum, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, url, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, popularity, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_script_repo, date_added, TIME, 0, NULL, NULL);
@@ -1608,7 +1611,7 @@ script_repo_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "max_weechat", script->max_weechat))
         return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "md5sum", script->md5sum))
+    if (!weechat_infolist_new_var_string (ptr_item, "sha512sum", script->sha512sum))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "url", script->url))
         return 0;
@@ -1656,7 +1659,7 @@ script_repo_print_log ()
         weechat_log_printf ("  requirements. . . . . : '%s'",  ptr_script->requirements);
         weechat_log_printf ("  min_weechat . . . . . : '%s'",  ptr_script->min_weechat);
         weechat_log_printf ("  max_weechat . . . . . : '%s'",  ptr_script->max_weechat);
-        weechat_log_printf ("  md5sum. . . . . . . . : '%s'",  ptr_script->md5sum);
+        weechat_log_printf ("  sha512sum . . . . . . : '%s'",  ptr_script->sha512sum);
         weechat_log_printf ("  url . . . . . . . . . : '%s'",  ptr_script->url);
         weechat_log_printf ("  popularity. . . . . . : %d",    ptr_script->popularity);
         weechat_log_printf ("  date_added. . . . . . : %lld",  (long long)ptr_script->date_added);

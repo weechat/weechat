@@ -429,7 +429,7 @@ _tags_   (string) +
 _requirements_   (string) +
 _min_weechat_   (string) +
 _max_weechat_   (string) +
-_md5sum_   (string) +
+_sha512sum_   (string) +
 _url_   (string) +
 _popularity_   (integer) +
 _date_added_   (time) +

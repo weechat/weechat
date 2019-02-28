@@ -601,8 +601,8 @@ script_buffer_display_detail_script (struct t_script_repo *script)
     char *labels[] = { N_("Script"), N_("Version"), N_("Version loaded"),
                        N_("Author"), N_("License"), N_("Description"),
                        N_("Tags"), N_("Status"),  N_("Date added"),
-                       N_("Date updated"), N_("URL"), N_("MD5"), N_("Requires"),
-                       N_("Min WeeChat"), N_("Max WeeChat"),
+                       N_("Date updated"), N_("URL"), N_("SHA-512"),
+                       N_("Requires"), N_("Min WeeChat"), N_("Max WeeChat"),
                        NULL };
     int i, length, max_length, line;
     struct t_weelist *list;
@@ -697,7 +697,7 @@ script_buffer_display_detail_script (struct t_script_repo *script)
     weechat_printf_y (script_buffer, line + 1,
                       "%s: %s",
                       script_buffer_detail_label (_(labels[line]), max_length),
-                      script->md5sum);
+                      (script->sha512sum) ? script->sha512sum : "-");
     line++;
     weechat_printf_y (script_buffer, line + 1,
                       "%s: %s",

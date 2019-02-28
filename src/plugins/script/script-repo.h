@@ -43,7 +43,7 @@ struct t_script_repo
     char *requirements;                  /* requirements                    */
     char *min_weechat;                   /* min WeeChat version             */
     char *max_weechat;                   /* max WeeChat version             */
-    char *md5sum;                        /* md5sum of script content        */
+    char *sha512sum;                     /* SHA-512 checksum of script      */
     char *url;                           /* URL to download script          */
     int popularity;                      /* >0 for popular scripts only     */
     time_t date_added;                   /* date added                      */
