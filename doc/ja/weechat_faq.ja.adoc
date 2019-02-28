@@ -964,7 +964,7 @@ spell プラグインをリロードしてください:
 
 // TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 2.3, the "spell" plugin was named "aspell", so the command is:
+With WeeChat ≤ 2.4, the "spell" plugin was named "aspell", so the command is:
 `/plugin reload aspell`.
 
 [[settings]]

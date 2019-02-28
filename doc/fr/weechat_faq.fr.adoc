@@ -1010,7 +1010,7 @@ Vous devez recharger l'extension spell :
 ----
 
 [NOTE]
-Avec WeeChat ≤ 2.3, l'extension "spell" s'appelait "aspell", donc la commande est :
+Avec WeeChat ≤ 2.4, l'extension "spell" s'appelait "aspell", donc la commande est :
 `/plugin reload aspell`.
 
 [[settings]]
