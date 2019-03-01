@@ -3489,7 +3489,7 @@ irc_send_nick_server (struct t_irc_server *server, const char *nickname)
     if (server->is_connected)
     {
         irc_server_sendf (server, IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                          "NICK %s", nickname);
+                          "NICK :%s", nickname);
     }
     else
         irc_server_set_nick (server, nickname);

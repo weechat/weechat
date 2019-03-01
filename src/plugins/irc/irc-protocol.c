@@ -5336,7 +5336,7 @@ IRC_PROTOCOL_CALLBACK(432)
 
         irc_server_set_nick (server, alternate_nick);
 
-        irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, NULL, "NICK :%s", server->nick);
     }
 
     return WEECHAT_RC_OK;
@@ -5380,7 +5380,7 @@ IRC_PROTOCOL_CALLBACK(433)
 
         irc_server_set_nick (server, alternate_nick);
 
-        irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
+        irc_server_sendf (server, 0, NULL, "NICK :%s", server->nick);
     }
     else
     {
@@ -5438,7 +5438,7 @@ IRC_PROTOCOL_CALLBACK(437)
 
             irc_server_set_nick (server, alternate_nick);
 
-            irc_server_sendf (server, 0, NULL, "NICK %s", server->nick);
+            irc_server_sendf (server, 0, NULL, "NICK :%s", server->nick);
         }
     }
 
