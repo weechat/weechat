@@ -3686,7 +3686,7 @@ irc_server_login (struct t_irc_server *server)
         weechat_string_replace (username, " ", "_") : strdup ("weechat");
     irc_server_sendf (
         server, 0, NULL,
-        "NICK %s\n"
+        "NICK :%s\n"
         "USER %s 0 * :%s",
         server->nick,
         (username2) ? username2 : "weechat",
