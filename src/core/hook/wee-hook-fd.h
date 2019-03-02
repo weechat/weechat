@@ -26,9 +26,9 @@ struct t_infolist_item;
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 
 /* flags for fd hooks */
-#define HOOK_FD_FLAG_READ       1
-#define HOOK_FD_FLAG_WRITE      2
-#define HOOK_FD_FLAG_EXCEPTION  4
+#define HOOK_FD_FLAG_READ      (1 << 0)
+#define HOOK_FD_FLAG_WRITE     (1 << 1)
+#define HOOK_FD_FLAG_EXCEPTION (1 << 2)
 
 typedef int (t_hook_callback_fd)(const void *pointer, void *data, int fd);
 

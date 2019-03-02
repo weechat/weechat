@@ -24,13 +24,13 @@
 
 #include "relay-client.h"
 
-#define RELAY_RAW_BUFFER_NAME     "relay_raw"
-#define RELAY_RAW_PREFIX_RECV     "-->"
-#define RELAY_RAW_PREFIX_SEND     "<--"
+#define RELAY_RAW_BUFFER_NAME "relay_raw"
+#define RELAY_RAW_PREFIX_RECV "-->"
+#define RELAY_RAW_PREFIX_SEND "<--"
 
-#define RELAY_RAW_FLAG_RECV     1
-#define RELAY_RAW_FLAG_SEND     2
-#define RELAY_RAW_FLAG_BINARY   4
+#define RELAY_RAW_FLAG_RECV   (1 << 0)
+#define RELAY_RAW_FLAG_SEND   (1 << 1)
+#define RELAY_RAW_FLAG_BINARY (1 << 2)
 
 struct t_relay_raw_message
 {

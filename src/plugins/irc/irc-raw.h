@@ -30,11 +30,11 @@
 #define IRC_RAW_PREFIX_SEND          "<--"
 #define IRC_RAW_PREFIX_SEND_MODIFIED "<=="
 
-#define IRC_RAW_FLAG_RECV     1
-#define IRC_RAW_FLAG_SEND     2
-#define IRC_RAW_FLAG_MODIFIED 4
-#define IRC_RAW_FLAG_REDIRECT 8
-#define IRC_RAW_FLAG_BINARY   16
+#define IRC_RAW_FLAG_RECV     (1 << 0)
+#define IRC_RAW_FLAG_SEND     (1 << 1)
+#define IRC_RAW_FLAG_MODIFIED (1 << 2)
+#define IRC_RAW_FLAG_REDIRECT (1 << 3)
+#define IRC_RAW_FLAG_BINARY   (1 << 4)
 
 struct t_irc_raw_message
 {

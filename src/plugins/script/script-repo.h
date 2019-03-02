@@ -23,11 +23,11 @@
 #include <time.h>
 
 /* status for script */
-#define SCRIPT_STATUS_INSTALLED   1
-#define SCRIPT_STATUS_AUTOLOADED  2
-#define SCRIPT_STATUS_HELD        4
-#define SCRIPT_STATUS_RUNNING     8
-#define SCRIPT_STATUS_NEW_VERSION 16
+#define SCRIPT_STATUS_INSTALLED   (1 << 0)
+#define SCRIPT_STATUS_AUTOLOADED  (1 << 1)
+#define SCRIPT_STATUS_HELD        (1 << 2)
+#define SCRIPT_STATUS_RUNNING     (1 << 3)
+#define SCRIPT_STATUS_NEW_VERSION (1 << 4)
 
 struct t_script_repo
 {

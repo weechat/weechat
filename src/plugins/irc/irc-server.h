@@ -118,9 +118,9 @@ enum t_irc_server_option
 #define IRC_SERVER_NUM_OUTQUEUES_PRIO 2
 
 /* flags for irc_server_sendf() */
-#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH   1
-#define IRC_SERVER_SEND_OUTQ_PRIO_LOW    2
-#define IRC_SERVER_SEND_RETURN_HASHTABLE 4
+#define IRC_SERVER_SEND_OUTQ_PRIO_HIGH   (1 << 0)
+#define IRC_SERVER_SEND_OUTQ_PRIO_LOW    (1 << 1)
+#define IRC_SERVER_SEND_RETURN_HASHTABLE (1 << 2)
 
 /* version strings */
 #define IRC_SERVER_VERSION_CAP "302"
