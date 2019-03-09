@@ -183,7 +183,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_relay.weechat.commands]] *relay.weechat.commands*
-** opis: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; by default all commands are allowed except /exec, /upgrade and /quit (which could lead to denial of service or remote code execution if the client is not trusted)]
+** opis: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; by default some commands are not allowed (they could lead to denial of service or remote code execution if the client is not trusted)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"*,!exec,!upgrade,!quit"+`
+** domyślna wartość: `+"*,!exec,!fset,!set,!unset,!plugin,!script,!python,!perl,!ruby,!lua,!tcl,!guile,!javascript,!php,!secure,!upgrade,!quit"+`

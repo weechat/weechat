@@ -1029,11 +1029,13 @@ relay_config_init ()
            "data (text or command) is received from a client; "
            "\"*\" means any command, a name beginning with \"!\" is "
            "a negative value to prevent a command from being executed, "
-           "wildcard \"*\" is allowed in names; by default all commands "
-           "are allowed except /exec, /upgrade and /quit (which could lead "
-           "to denial of service or remote code execution if the client is "
-           "not trusted)"),
-        NULL, 0, 0, "*,!exec,!upgrade,!quit", NULL, 0,
+           "wildcard \"*\" is allowed in names; by default some commands "
+           "are not allowed (they could lead to denial of service or remote "
+           "code execution if the client is not trusted)"),
+        NULL, 0, 0,
+        "*,!exec,!fset,!set,!unset,!plugin,!script,!python,!perl,!ruby,!lua,"
+        "!tcl,!guile,!javascript,!php,!secure,!upgrade,!quit",
+        NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);

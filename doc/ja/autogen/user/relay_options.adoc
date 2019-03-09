@@ -183,7 +183,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_relay.weechat.commands]] *relay.weechat.commands*
-** 説明: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; by default all commands are allowed except /exec, /upgrade and /quit (which could lead to denial of service or remote code execution if the client is not trusted)]
+** 説明: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; by default some commands are not allowed (they could lead to denial of service or remote code execution if the client is not trusted)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
-** デフォルト値: `+"*,!exec,!upgrade,!quit"+`
+** デフォルト値: `+"*,!exec,!fset,!set,!unset,!plugin,!script,!python,!perl,!ruby,!lua,!tcl,!guile,!javascript,!php,!secure,!upgrade,!quit"+`
