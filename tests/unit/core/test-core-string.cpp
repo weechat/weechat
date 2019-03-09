@@ -1036,6 +1036,17 @@ TEST(CoreString, Split)
 
     /* standard split */
     argc = -1;
+    argv = string_split ("abc de  fghi", " ", 0, 0, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    STRCMP_EQUAL("de", argv[1]);
+    STRCMP_EQUAL("fghi", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* standard split */
+    argc = -1;
     argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
@@ -1095,6 +1106,93 @@ TEST(CoreString, Split)
     STRCMP_EQUAL("abc de  fghi ", argv[0]);
     STRCMP_EQUAL("de  fghi ", argv[1]);
     POINTERS_EQUAL(NULL, argv[2]);
+    string_free_split (argv);
+
+    /* standard split with comma separator */
+    argc = -1;
+    argv = string_split ("abc,de,fghi", ",", 0, 0, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    STRCMP_EQUAL("de", argv[1]);
+    STRCMP_EQUAL("fghi", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* standard split with comma separator and empty item (ignore this item) */
+    argc = -1;
+    argv = string_split ("abc,,fghi", ",", 0, 0, &argc);
+    LONGS_EQUAL(2, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    STRCMP_EQUAL("fghi", argv[1]);
+    POINTERS_EQUAL(NULL, argv[2]);
+    string_free_split (argv);
+
+    /* standard split with comma separtor and empty item (keep this item) */
+    argc = -1;
+    argv = string_split ("abc,,fghi", ",", -1, 0, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("abc", argv[0]);
+    STRCMP_EQUAL("", argv[1]);
+    STRCMP_EQUAL("fghi", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /* standard split with comma separtor and empty items (keep them) */
+    argc = -1;
+    argv = string_split (",abc,,fghi,", ",", -1, 0, &argc);
+    LONGS_EQUAL(5, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("", argv[0]);
+    STRCMP_EQUAL("abc", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    STRCMP_EQUAL("fghi", argv[3]);
+    STRCMP_EQUAL("", argv[4]);
+    POINTERS_EQUAL(NULL, argv[5]);
+    string_free_split (argv);
+
+    /*
+     * standard split with comma separtor and empty items (keep them),
+     * max 2 items
+     */
+    argc = -1;
+    argv = string_split (",abc,,fghi,", ",", -1, 2, &argc);
+    LONGS_EQUAL(2, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("", argv[0]);
+    STRCMP_EQUAL("abc", argv[1]);
+    POINTERS_EQUAL(NULL, argv[2]);
+    string_free_split (argv);
+
+    /*
+     * standard split with comma separtor and empty items (keep them),
+     * max 3 items
+     */
+    argc = -1;
+    argv = string_split (",abc,,fghi,", ",", -1, 3, &argc);
+    LONGS_EQUAL(3, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("", argv[0]);
+    STRCMP_EQUAL("abc", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    POINTERS_EQUAL(NULL, argv[3]);
+    string_free_split (argv);
+
+    /*
+     * standard split with comma separtor and empty items (keep them),
+     * max 4 items
+     */
+    argc = -1;
+    argv = string_split (",abc,,fghi,", ",", -1, 4, &argc);
+    LONGS_EQUAL(4, argc);
+    CHECK(argv);
+    STRCMP_EQUAL("", argv[0]);
+    STRCMP_EQUAL("abc", argv[1]);
+    STRCMP_EQUAL("", argv[2]);
+    STRCMP_EQUAL("fghi", argv[3]);
+    POINTERS_EQUAL(NULL, argv[4]);
     string_free_split (argv);
 }
 

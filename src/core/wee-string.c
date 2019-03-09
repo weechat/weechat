@@ -1795,11 +1795,24 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  * string_split_shared instead).
  *
  * According to keep_eol value:
- *   0: standard split
- *   1: each argument contains the argument and all the following arguments
- *   2: same as 1, and separator is kept at the end of string.
+ *   -1: standard split, keep empty items: don't collapse several separators
+ *       and items at the beginning/end of string are returned if the string
+ *       starts and/or ends with a separator
+ *    0: standard split, ignore empty items: collapse several separators
+ *       and strip separators at the beginning/end of string before processing
+ *    1: same as 0 and each argument contains the argument and all the
+ *       following arguments
+ *    2: same as 1 and separator is kept at the end of string.
  *
  * Examples:
+ *   string_split ("abc de  fghi ", " ", -1, 0, &argc)
+ *     ==> array[0] == "abc"
+ *         array[1] == "de"
+ *         array[2] == ""
+ *         array[3] == "fghi"
+ *         array[4] == ""
+ *         array[5] == NULL
+ *         argc == 5
  *   string_split ("abc de  fghi ", " ", 0, 0, &argc)
  *     ==> array[0] == "abc"
  *         array[1] == "de"
@@ -1824,7 +1837,7 @@ char **
 string_split_internal (const char *string, const char *separators, int keep_eol,
                        int num_items_max, int *num_items, int shared)
 {
-    int i, j, n_items;
+    int i, j, count_items;
     char *string2, **array;
     char *ptr, *ptr1, *ptr2;
     const char *str_shared;
@@ -1835,7 +1848,10 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     if (!string || !string[0] || !separators || !separators[0])
         return NULL;
 
-    string2 = string_strip (string, 1, (keep_eol == 2) ? 0 : 1, separators);
+    string2 = string_strip (string,
+                            (keep_eol != -1) ? 1 : 0,
+                            ((keep_eol == 0) || (keep_eol == 1)) ? 1 : 0,
+                            separators);
     if (!string2)
         return NULL;
     if (!string2[0])
@@ -1849,38 +1865,51 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        while (ptr[0] && strchr (separators, ptr[0]))
+        if (keep_eol == -1)
         {
             ptr++;
-        }
-        if (ptr[0])
             i++;
+        }
+        else
+        {
+            while (ptr[0] && strchr (separators, ptr[0]))
+            {
+                ptr++;
+            }
+            if (ptr[0])
+                i++;
+        }
     }
-    n_items = i;
+    count_items = i;
 
-    if ((num_items_max != 0) && (n_items > num_items_max))
-        n_items = num_items_max;
+    if ((num_items_max != 0) && (count_items > num_items_max))
+        count_items = num_items_max;
 
-    array = malloc ((n_items + 1) * sizeof (array[0]));
+    array = malloc ((count_items + 1) * sizeof (array[0]));
     if (!array)
     {
         free (string2);
         return NULL;
     }
-    for (i = 0; i < n_items + 1; i++)
+    for (i = 0; i < count_items + 1; i++)
     {
         array[i] = NULL;
     }
 
     ptr1 = string2;
 
-    for (i = 0; i < n_items; i++)
+    for (i = 0; i < count_items; i++)
     {
-        while (ptr1[0] && strchr (separators, ptr1[0]))
+        if (keep_eol != -1)
         {
-            ptr1++;
+            /* skip separators to find the beginning of item */
+            while (ptr1[0] && strchr (separators, ptr1[0]))
+            {
+                ptr1++;
+            }
         }
-        if (i == (n_items - 1))
+        /* search the end of item */
+        if (i == (count_items - 1))
         {
             ptr2 = strpbrk (ptr1, separators);
             if (!ptr2)
@@ -1900,78 +1929,45 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
             }
         }
 
-        if ((ptr1 == NULL) || (ptr2 == NULL))
+        if (!ptr1 || !ptr2)
         {
             array[i] = NULL;
         }
         else
         {
-            if (ptr2 - ptr1 > 0)
+            if (ptr2 > ptr1)
             {
-                if (keep_eol)
+                if ((keep_eol == 1) || (keep_eol == 2))
                 {
                     array[i] = (shared) ? (char *)string_shared_get (ptr1) : strdup (ptr1);
                     if (!array[i])
-                    {
-                        for (j = 0; j < n_items; j++)
-                        {
-                            if (array[j])
-                            {
-                                if (shared)
-                                    string_shared_free (array[j]);
-                                else
-                                    free (array[j]);
-                            }
-                        }
-                        free (array);
-                        free (string2);
-                        return NULL;
-                    }
+                        goto error;
                 }
                 else
                 {
                     array[i] = malloc (ptr2 - ptr1 + 1);
                     if (!array[i])
-                    {
-                        for (j = 0; j < n_items; j++)
-                        {
-                            if (array[j])
-                            {
-                                if (shared)
-                                    string_shared_free (array[j]);
-                                else
-                                    free (array[j]);
-                            }
-                        }
-                        free (array);
-                        free (string2);
-                        return NULL;
-                    }
+                        goto error;
                     strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
                     if (shared)
                     {
                         str_shared = string_shared_get (array[i]);
                         if (!str_shared)
-                        {
-                            for (j = 0; j < n_items; j++)
-                            {
-                                if (array[j])
-                                    string_shared_free (array[j]);
-                            }
-                            free (array);
-                            free (string2);
-                            return NULL;
-                        }
+                            goto error;
                         free (array[i]);
                         array[i] = (char *)str_shared;
                     }
                 }
-                ptr1 = ++ptr2;
+                if ((keep_eol == -1) && strchr (separators, ptr2[0]))
+                    ptr2++;
+                ptr1 = ptr2;
             }
             else
             {
-                array[i] = NULL;
+                array[i] = (shared) ? (char *)string_shared_get ("") : strdup ("");
+                if (ptr1[0] != '\0')
+                    ptr1++;
             }
         }
     }
@@ -1983,6 +1979,21 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     free (string2);
 
     return array;
+
+error:
+    for (j = 0; j < count_items; j++)
+    {
+        if (array[j])
+        {
+            if (shared)
+                string_shared_free (array[j]);
+            else
+                free (array[j]);
+        }
+    }
+    free (array);
+    free (string2);
+    return NULL;
 }
 
 /*

@@ -274,7 +274,7 @@ trigger_hook (struct t_trigger *trigger)
     trigger_unhook (trigger);
 
     argv = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                                 ";", 0, 0, &argc);
+                                 ";", -1, 0, &argc);
     argv_eol = weechat_string_split (weechat_config_string (trigger->options[TRIGGER_OPTION_ARGUMENTS]),
                                      ";", 1, 0, NULL);
 
