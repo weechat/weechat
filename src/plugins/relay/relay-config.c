@@ -1043,8 +1043,26 @@ relay_config_init ()
            "are not allowed (they could lead to denial of service or remote "
            "code execution if the client is not trusted)"),
         NULL, 0, 0,
-        "*,!exec,!fset,!set,!unset,!plugin,!script,!python,!perl,!ruby,!lua,"
-        "!tcl,!guile,!javascript,!php,!secure,!upgrade,!quit",
+        "*,"
+        "!exec,"
+        "!fset,"
+        "!guile,"
+        "!javascript,"
+        "!lua,"
+        "!perl,"
+        "!php,"
+        "!plugin,"
+        "!python,"
+        "!quit,"
+        "!repeat,"
+        "!ruby,"
+        "!script,"
+        "!secure,"
+        "!set,"
+        "!tcl,"
+        "!unset,"
+        "!upgrade,"
+        "!wait",
         NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,

@@ -186,4 +186,4 @@
 ** Beschreibung: pass:none[durch Kommata getrennte Liste von Befehlen die erlaubt/verboten sind wenn Daten (Text oder Befehl) vom Client empfangen werden; "*" bedeutet alle Befehle sind erlaubt, beginnt ein Befehl hingegen mit "!" wird die Auswahl umgekehrt und der Befehl wird nicht ausgeführt, der Platzhalter "*" ist erlaubt; standardmäßig sind einige Befehle nicht erlaubt (die zu einem denial of service oder einer remote code execution führen können, wenn der Client nicht vertrauenswürdig ist)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"*,!exec,!fset,!set,!unset,!plugin,!script,!python,!perl,!ruby,!lua,!tcl,!guile,!javascript,!php,!secure,!upgrade,!quit"+`
+** Standardwert: `+"*,!exec,!fset,!guile,!javascript,!lua,!perl,!php,!plugin,!python,!quit,!repeat,!ruby,!script,!secure,!set,!tcl,!unset,!upgrade,!wait"+`
