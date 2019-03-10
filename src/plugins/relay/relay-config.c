@@ -1048,6 +1048,7 @@ relay_config_init ()
         "!fset,"
         "!guile,"
         "!javascript,"
+        "!key,"
         "!lua,"
         "!perl,"
         "!php,"
@@ -1060,6 +1061,7 @@ relay_config_init ()
         "!secure,"
         "!set,"
         "!tcl,"
+        "!trigger,"
         "!unset,"
         "!upgrade,"
         "!wait",
