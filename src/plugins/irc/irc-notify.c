@@ -373,7 +373,11 @@ irc_notify_new_for_server (struct t_irc_server *server)
     if (!notify || !notify[0])
         return;
 
-    items = weechat_string_split (notify, ",", 0, 0, &num_items);
+    items = weechat_string_split (notify, ",",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -388,8 +392,14 @@ irc_notify_new_for_server (struct t_irc_server *server)
                 {
                     pos_params++;
                 }
-                params = weechat_string_split (pos_params, "/", 0, 0,
-                                               &num_params);
+                params = weechat_string_split (
+                    pos_params,
+                    "/",
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0,
+                    &num_params);
                 if (params)
                 {
                     for (j = 0; j < num_params; j++)
@@ -827,11 +837,24 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
     if (strcmp (pattern, "ison") == 0)
     {
         /* redirection of command "ison" */
-        messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
+        messages = weechat_string_split (
+            output,
+            "\n",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &num_messages);
         if (messages)
         {
-            nicks_sent = weechat_string_split (ptr_args, " ", 0, 0,
-                                               &num_nicks_sent);
+            nicks_sent = weechat_string_split (
+                ptr_args,
+                " ",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &num_nicks_sent);
             if (!nicks_sent)
                 return WEECHAT_RC_OK;
             for (ptr_notify = ptr_server->notify_list;
@@ -857,8 +880,14 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                         }
                         if (pos[0])
                         {
-                            nicks_recv = weechat_string_split (pos, " ", 0, 0,
-                                                               &num_nicks_recv);
+                            nicks_recv = weechat_string_split (
+                                pos,
+                                " ",
+                                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                0,
+                                &num_nicks_recv);
                             if (nicks_recv)
                             {
                                 for (j = 0; j < num_nicks_recv; j++)
@@ -920,7 +949,14 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
         {
             away_message_updated = 0;
             no_such_nick = 0;
-            messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
+            messages = weechat_string_split (
+                output,
+                "\n",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &num_messages);
             if (messages)
             {
                 for (i = 0; i < num_messages; i++)

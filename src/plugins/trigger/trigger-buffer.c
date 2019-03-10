@@ -88,7 +88,14 @@ trigger_buffer_set_filter (const char *filter)
     }
 
     if (filter && filter[0])
-        trigger_buffer_filters = weechat_string_split (filter, ",", 0, 0, NULL);
+        trigger_buffer_filters = weechat_string_split (
+            filter,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            NULL);
 }
 
 /*

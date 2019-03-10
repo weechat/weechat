@@ -29,6 +29,7 @@ extern "C"
 #include "src/gui/gui-buffer.h"
 #include "src/gui/gui-chat.h"
 #include "src/gui/gui-line.h"
+#include "src/plugins/plugin.h"
 }
 
 #define TEST_BUFFER_NAME "test"
@@ -182,7 +183,11 @@ test_modifier_cb (const void *pointer, void *data,
     (void) modifier;
 
     /* split modifier_data, which is: "plugin;name;tags" */
-    items = string_split (modifier_data, ";", 0, 3, &num_items);
+    items = string_split (modifier_data, ";",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          3, &num_items);
     if (num_items < 2)
         return NULL;
 

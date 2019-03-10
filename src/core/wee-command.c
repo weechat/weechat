@@ -4554,8 +4554,11 @@ COMMAND_CALLBACK(plugin)
     {
         if (argc > 2)
         {
-            plugin_argv = string_split (argv_eol[2], " ", 0, 0,
-                                        &plugin_argc);
+            plugin_argv = string_split (argv_eol[2], " ",
+                                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                        0, &plugin_argc);
             plugin_auto_load (NULL, 1, 1, 1, plugin_argc, plugin_argv);
         }
         else
@@ -4570,8 +4573,11 @@ COMMAND_CALLBACK(plugin)
         plugin_argc = 0;
         if (argc > 3)
         {
-            plugin_argv = string_split (argv_eol[3], " ", 0, 0,
-                                        &plugin_argc);
+            plugin_argv = string_split (argv_eol[3], " ",
+                                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                        0, &plugin_argc);
         }
         full_name = util_search_full_lib_name (argv[2], "plugins");
         plugin_load (full_name, 1, plugin_argc, plugin_argv);
@@ -4588,8 +4594,12 @@ COMMAND_CALLBACK(plugin)
         {
             if (argc > 3)
             {
-                plugin_argv = string_split (argv_eol[3], " ", 0, 0,
-                                            &plugin_argc);
+                plugin_argv = string_split (
+                    argv_eol[3], " ",
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0, &plugin_argc);
                 if (strcmp (argv[2], "*") == 0)
                 {
                     plugin_unload_all ();

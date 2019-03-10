@@ -422,13 +422,29 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
         items[i] = NULL;
     }
     if (cmd_start)
-        items[0] = weechat_string_split (cmd_start, ",", 0, 0, &num_items[0]);
+        items[0] = weechat_string_split (cmd_start, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_items[0]);
     if (cmd_stop)
-        items[1] = weechat_string_split (cmd_stop, ",", 0, 0, &num_items[1]);
+        items[1] = weechat_string_split (cmd_stop, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_items[1]);
     if (cmd_extra)
-        items[2] = weechat_string_split (cmd_extra, ",", 0, 0, &num_items[2]);
+        items[2] = weechat_string_split (cmd_extra, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_items[2]);
     if (cmd_filter)
-        items[3] = weechat_string_split (cmd_filter, ",", 0, 0, &num_items[3]);
+        items[3] = weechat_string_split (cmd_filter, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_items[3]);
     for (i = 0; i < 4; i++)
     {
         if (items[i])
@@ -793,8 +809,14 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
 
     if (arguments && arguments[0])
     {
-        arguments_argv = weechat_string_split (arguments, " ", 0, 0,
-                                               &arguments_argc);
+        arguments_argv = weechat_string_split (
+            arguments,
+            " ",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &arguments_argc);
     }
     else
     {

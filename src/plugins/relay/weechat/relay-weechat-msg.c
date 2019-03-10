@@ -583,7 +583,11 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
         goto end;
 
     /* split path */
-    list_path = weechat_string_split (pos + 1, "/", 0, 0, &num_path);
+    list_path = weechat_string_split (pos + 1, "/",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_path);
     if (!list_path)
         goto end;
 
@@ -649,7 +653,11 @@ relay_weechat_msg_add_hdata (struct t_relay_weechat_msg *msg,
     /* split keys */
     if (!keys)
         keys = weechat_hdata_get_string (ptr_hdata, "var_keys");
-    list_keys = weechat_string_split (keys, ",", 0, 0, &num_keys);
+    list_keys = weechat_string_split (keys, ",",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_keys);
     if (!list_keys)
         goto end;
 
@@ -782,7 +790,14 @@ relay_weechat_msg_add_infolist (struct t_relay_weechat_msg *msg,
         fields = weechat_infolist_fields (ptr_infolist);
         if (fields)
         {
-            list_fields = weechat_string_split (fields, ",", 0, 0, &num_fields);
+            list_fields = weechat_string_split (
+                fields,
+                ",",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &num_fields);
             if (list_fields)
             {
                 count_items++;

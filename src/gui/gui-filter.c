@@ -395,9 +395,14 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->enabled = enabled;
         new_filter->name = strdup (name);
         new_filter->buffer_name = strdup ((buffer_name) ? buffer_name : "*");
-        new_filter->buffers = string_split (new_filter->buffer_name,
-                                            ",", 0, 0,
-                                            &new_filter->num_buffers);
+        new_filter->buffers = string_split (
+            new_filter->buffer_name,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &new_filter->num_buffers);
         new_filter->tags = (tags) ? strdup (tags) : NULL;
         new_filter->tags_array = string_split_tags (new_filter->tags,
                                                     &new_filter->tags_count);

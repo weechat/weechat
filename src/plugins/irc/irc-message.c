@@ -779,18 +779,30 @@ irc_message_split_join (struct t_hashtable *hashtable,
         str = weechat_strndup (arguments, pos - arguments);
         if (!str)
             return 0;
-        channels = weechat_string_split (str, ",", 0, 0, &channels_count);
+        channels = weechat_string_split (str, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &channels_count);
         free (str);
         while (pos[0] == ' ')
         {
             pos++;
         }
         if (pos[0])
-            keys = weechat_string_split (pos, ",", 0, 0, &keys_count);
+            keys = weechat_string_split (pos, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &keys_count);
     }
     else
     {
-        channels = weechat_string_split (arguments, ",", 0, 0, &channels_count);
+        channels = weechat_string_split (arguments, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &channels_count);
     }
 
     snprintf (msg_to_send, sizeof (msg_to_send), "%s%sJOIN",
@@ -1042,8 +1054,16 @@ irc_message_split (struct t_irc_server *server, const char *message)
         }
     }
 
-    argv = weechat_string_split (message, " ", 0, 0, &argc);
-    argv_eol = weechat_string_split (message, " ", 2, 0, NULL);
+    argv = weechat_string_split (message, " ",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
+    argv_eol = weechat_string_split (message, " ",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                                     | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                                     0, NULL);
 
     if (argc < 2)
         goto end;

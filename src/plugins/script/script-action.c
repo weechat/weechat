@@ -832,7 +832,11 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
     {
         if (out)
         {
-            lines = weechat_string_split (out, "\n", 0, 0, &num_lines);
+            lines = weechat_string_split (out, "\n",
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_lines);
             if (lines)
             {
                 diff_color = weechat_config_boolean (script_config_look_diff_color);
@@ -867,7 +871,11 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
         }
         else if (err)
         {
-            lines = weechat_string_split (err, "\n", 0, 0, &num_lines);
+            lines = weechat_string_split (err, "\n",
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_lines);
             if (lines)
             {
                 for (i = 0; i < num_lines; i++)
@@ -1173,7 +1181,11 @@ script_action_run ()
 
     script_get_loaded_plugins ();
 
-    actions = weechat_string_split (script_actions, "\n", 0, 0, &num_actions);
+    actions = weechat_string_split (script_actions, "\n",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &num_actions);
     if (actions)
     {
         for (i = 0; i < num_actions; i++)
@@ -1202,8 +1214,23 @@ script_action_run ()
                     ptr_action++;
                 }
             }
-            argv = weechat_string_split (ptr_action, " ", 0, 0, &argc);
-            argv_eol = weechat_string_split (ptr_action, " ", 1, 0, &argc);
+            argv = weechat_string_split (
+                ptr_action,
+                " ",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &argc);
+            argv_eol = weechat_string_split (
+                ptr_action,
+                " ",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                0,
+                &argc);
             if (argv && argv_eol)
             {
                 if (weechat_strcasecmp (argv[0], "buffer") == 0)

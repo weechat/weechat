@@ -101,7 +101,11 @@ spell_bar_item_suggest (const void *pointer, void *data,
     if (!str_suggest)
         return NULL;
 
-    suggestions = weechat_string_split (pos, "/", 0, 0, &num_suggestions);
+    suggestions = weechat_string_split (pos, "/",
+                                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                        0, &num_suggestions);
     if (!suggestions)
         goto end;
 
@@ -119,8 +123,14 @@ spell_bar_item_suggest (const void *pointer, void *data,
                 weechat_config_string (
                     spell_config_look_suggestion_delimiter_dict));
         }
-        suggestions2 = weechat_string_split (suggestions[i], ",", 0, 0,
-                                             &num_suggestions2);
+        suggestions2 = weechat_string_split (
+            suggestions[i],
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &num_suggestions2);
         if (suggestions2)
         {
             for (j = 0; j < num_suggestions2; j++)

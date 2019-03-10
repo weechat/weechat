@@ -57,6 +57,7 @@
 #include "wee-utf8.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-window.h"
+#include "../plugins/plugin.h"
 
 
 #ifdef HAVE_SYS_RESOURCE_H
@@ -205,8 +206,11 @@ util_setrlimit ()
     int num_items, i;
     long number;
 
-    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",", 0, 0,
-                          &num_items);
+    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -858,7 +862,11 @@ util_version_number (const char *version)
     int num_items, i, version_int[4], index_buf;
     long number;
 
-    items = string_split (version, ".", 0, 4, &num_items);
+    items = string_split (version, ".",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          4, &num_items);
     for (i = 0; i < 4; i++)
     {
         version_int[i] = 0;

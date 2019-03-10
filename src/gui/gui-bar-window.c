@@ -840,8 +840,14 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                                                                   i, sub);
                         if (ptr_content && ptr_content[0])
                         {
-                            split_items[i][sub] = string_split (ptr_content,
-                                                                "\n", 0, 0, NULL);
+                            split_items[i][sub] = string_split (
+                                ptr_content,
+                                "\n",
+                                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                0,
+                                NULL);
                             for (j = 0; split_items[i][sub][j]; j++)
                             {
                                 total_items++;

@@ -935,7 +935,12 @@ gui_color_buffer_display ()
         gui_chat_printf_y (gui_color_buffer, y++,
                            _("Nick colors:"));
         items = string_split (CONFIG_STRING(config_color_chat_nick_colors),
-                              ",", 0, 0, &num_items);
+                              ",",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0,
+                              &num_items);
         if (items)
         {
             str_line[0] = '\0';
@@ -1340,7 +1345,11 @@ gui_color_palette_new (int number, const char *value)
         str_alias = NULL;
         str_rgb = NULL;
 
-        items = string_split (value, ";", 0, 0, &num_items);
+        items = string_split (value, ";",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, &num_items);
         if (items)
         {
             for (i = 0; i < num_items; i++)

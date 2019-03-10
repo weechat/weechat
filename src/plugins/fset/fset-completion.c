@@ -81,7 +81,12 @@ fset_completion_option_cb (const void *pointer, void *data,
                     WEECHAT_LIST_POS_SORT);
                 words = weechat_string_split (
                     weechat_config_option_get_string (ptr_option, "name"),
-                    "_", 0, 0, &num_words);
+                    "_",
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0,
+                    &num_words);
                 if (words && (num_words > 1))
                 {
                     for (i = 0; i < num_words; i++)

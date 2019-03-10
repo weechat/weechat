@@ -35,6 +35,7 @@
 #include "wee-infolist.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "../plugins/plugin.h"
 
 
 #define URL_DEF_CONST(__prefix, __name)                                 \
@@ -866,7 +867,11 @@ weeurl_get_mask_value (struct t_url_constant *constants,
 
     mask = 0;
 
-    items = string_split (string_mask, "+", 0, 0, &num_items);
+    items = string_split (string_mask, "+",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -1014,7 +1019,11 @@ weeurl_option_map_cb (void *data,
                 }
                 break;
             case URL_TYPE_LIST:
-                items = string_split (value, "\n", 0, 0, &num_items);
+                items = string_split (value, "\n",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_items);
                 if (items)
                 {
                     slist = NULL;

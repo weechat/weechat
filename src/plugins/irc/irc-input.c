@@ -361,7 +361,14 @@ irc_input_send_cb (const void *pointer, void *data,
 
     if (options && options[0])
     {
-        list_options = weechat_string_split (options, ",", 0, 0, &num_options);
+        list_options = weechat_string_split (
+            options,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &num_options);
         if (list_options)
         {
             for (i = 0; i < num_options; i++)

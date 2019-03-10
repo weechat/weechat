@@ -171,9 +171,14 @@ hook_command_build_completion (struct t_hook_command *hook_command)
             hook_command->cplt_templates_static[i] = strdup (hook_command->cplt_templates[i]);
 
         /* build arguments for each template */
-        hook_command->cplt_template_args[i] = string_split (hook_command->cplt_templates[i],
-                                                            " ", 0, 0,
-                                                            &(hook_command->cplt_template_num_args[i]));
+        hook_command->cplt_template_args[i] = string_split (
+            hook_command->cplt_templates[i],
+            " ",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &(hook_command->cplt_template_num_args[i]));
         if (hook_command->cplt_template_num_args[i] > hook_command->cplt_template_num_args_concat)
             hook_command->cplt_template_num_args_concat = hook_command->cplt_template_num_args[i];
     }
@@ -210,8 +215,14 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                 {
                     if (i < hook_command->cplt_template_num_args[j])
                     {
-                        items = string_split (hook_command->cplt_template_args[j][i],
-                                              "|", 0, 0, &num_items);
+                        items = string_split (
+                            hook_command->cplt_template_args[j][i],
+                            "|",
+                            WEECHAT_STRING_SPLIT_STRIP_LEFT
+                            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                            0,
+                            &num_items);
                         for (k = 0; k < num_items; k++)
                         {
                             if (!weelist_search (list, items[k]))
@@ -338,13 +349,22 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     if (hook_command_run_exec (buffer, string) == WEECHAT_RC_OK_EAT)
         return HOOK_COMMAND_EXEC_OK;
 
-    argv = string_split (string, " ", 0, 0, &argc);
+    argv = string_split (string, " ",
+                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                         0, &argc);
     if (argc == 0)
     {
         string_free_split (argv);
         return HOOK_COMMAND_EXEC_NOT_FOUND;
     }
-    argv_eol = string_split (string, " ", 1, 0, NULL);
+    argv_eol = string_split (string, " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                             0, NULL);
 
     ptr_command_name = utf8_next_char (argv[0]);
     length_command_name = strlen (ptr_command_name);

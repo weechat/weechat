@@ -1794,18 +1794,17 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  * This function must not be called directly (call string_split or
  * string_split_shared instead).
  *
- * According to keep_eol value:
- *   -1: standard split, keep empty items: don't collapse several separators
- *       and items at the beginning/end of string are returned if the string
- *       starts and/or ends with a separator
- *    0: standard split, ignore empty items: collapse several separators
- *       and strip separators at the beginning/end of string before processing
- *    1: same as 0 and each argument contains the argument and all the
- *       following arguments
- *    2: same as 1 and separator is kept at the end of string.
+ * The flags is a combination of flags:
+ *   - WEECHAT_STRING_SPLIT_STRIP_LEFT: strip separators on the left
+ *     (beginning of string)
+ *   - WEECHAT_STRING_SPLIT_STRIP_RIGHT: strip separators on the right
+ *     (end of string)
+ *   - WEECHAT_STRING_SPLIT_COLLAPSE_SEPS: collapse multiple consecutive
+ *     separators into a single one
+ *   - WEECHAT_STRING_SPLIT_KEEP_EOL: keep end of line for each value
  *
  * Examples:
- *   string_split ("abc de  fghi ", " ", -1, 0, &argc)
+ *   string_split ("abc de  fghi ", " ", 0, 0, &argc)
  *     ==> array[0] == "abc"
  *         array[1] == "de"
  *         array[2] == ""
@@ -1813,19 +1812,32 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  *         array[4] == ""
  *         array[5] == NULL
  *         argc == 5
- *   string_split ("abc de  fghi ", " ", 0, 0, &argc)
+ *   string_split ("abc de  fghi ", " ",
+ *                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+ *                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+ *                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+ *                 0, &argc)
  *     ==> array[0] == "abc"
  *         array[1] == "de"
  *         array[2] == "fghi"
  *         array[3] == NULL
  *         argc == 3
- *   string_split ("abc de  fghi ", " ", 1, 0, &argc)
+ *   string_split ("abc de  fghi ", " ",
+ *                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+ *                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+ *                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+ *                 | WEECHAT_STRING_SPLIT_KEEP_EOL,
+ *                 0, &argc)
  *     ==> array[0] == "abc de  fghi"
  *         array[1] == "de  fghi"
  *         array[2] == "fghi"
  *         array[3] == NULL
  *         argc == 3
- *   string_split ("abc de  fghi ", " ", 2, 0, &argc)
+ *   string_split ("abc de  fghi ", " ",
+ *                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+ *                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+ *                 | WEECHAT_STRING_SPLIT_KEEP_EOL,
+ *                 0, &argc)
  *     ==> array[0] == "abc de  fghi "
  *         array[1] == "de  fghi "
  *         array[2] == "fghi "
@@ -1834,7 +1846,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
  */
 
 char **
-string_split_internal (const char *string, const char *separators, int keep_eol,
+string_split_internal (const char *string, const char *separators, int flags,
                        int num_items_max, int *num_items, int shared)
 {
     int i, j, count_items;
@@ -1848,10 +1860,11 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     if (!string || !string[0] || !separators || !separators[0])
         return NULL;
 
-    string2 = string_strip (string,
-                            (keep_eol != -1) ? 1 : 0,
-                            ((keep_eol == 0) || (keep_eol == 1)) ? 1 : 0,
-                            separators);
+    string2 = string_strip (
+        string,
+        (flags & WEECHAT_STRING_SPLIT_STRIP_LEFT) ? 1 : 0,
+        (flags & WEECHAT_STRING_SPLIT_STRIP_RIGHT) ? 1 : 0,
+        separators);
     if (!string2)
         return NULL;
     if (!string2[0])
@@ -1865,12 +1878,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        if (keep_eol == -1)
-        {
-            ptr++;
-            i++;
-        }
-        else
+        if (flags & WEECHAT_STRING_SPLIT_COLLAPSE_SEPS)
         {
             while (ptr[0] && strchr (separators, ptr[0]))
             {
@@ -1878,6 +1886,11 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
             }
             if (ptr[0])
                 i++;
+        }
+        else
+        {
+            ptr++;
+            i++;
         }
     }
     count_items = i;
@@ -1900,7 +1913,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
 
     for (i = 0; i < count_items; i++)
     {
-        if (keep_eol != -1)
+        if (flags & WEECHAT_STRING_SPLIT_COLLAPSE_SEPS)
         {
             /* skip separators to find the beginning of item */
             while (ptr1[0] && strchr (separators, ptr1[0]))
@@ -1937,7 +1950,7 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
         {
             if (ptr2 > ptr1)
             {
-                if ((keep_eol == 1) || (keep_eol == 2))
+                if (flags & WEECHAT_STRING_SPLIT_KEEP_EOL)
                 {
                     array[i] = (shared) ? (char *)string_shared_get (ptr1) : strdup (ptr1);
                     if (!array[i])
@@ -1959,8 +1972,11 @@ string_split_internal (const char *string, const char *separators, int keep_eol,
                         array[i] = (char *)str_shared;
                     }
                 }
-                if ((keep_eol == -1) && strchr (separators, ptr2[0]))
+                if (!(flags & WEECHAT_STRING_SPLIT_COLLAPSE_SEPS)
+                    && strchr (separators, ptr2[0]))
+                {
                     ptr2++;
+                }
                 ptr1 = ptr2;
             }
             else
@@ -2003,10 +2019,10 @@ error:
  */
 
 char **
-string_split (const char *string, const char *separators, int keep_eol,
+string_split (const char *string, const char *separators, int flags,
               int num_items_max, int *num_items)
 {
-    return string_split_internal (string, separators, keep_eol,
+    return string_split_internal (string, separators, flags,
                                   num_items_max, num_items, 0);
 }
 
@@ -2018,10 +2034,10 @@ string_split (const char *string, const char *separators, int keep_eol,
  */
 
 char **
-string_split_shared (const char *string, const char *separators, int keep_eol,
+string_split_shared (const char *string, const char *separators, int flags,
                      int num_items_max, int *num_items)
 {
-    return string_split_internal (string, separators, keep_eol,
+    return string_split_internal (string, separators, flags,
                                   num_items_max, num_items, 1);
 }
 
@@ -2429,7 +2445,11 @@ string_split_tags (const char *tags, int *num_tags)
 
     if (tags)
     {
-        tags_array_temp = string_split (tags, ",", 0, 0, &tags_count);
+        tags_array_temp = string_split (tags, ",",
+                                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                        0, &tags_count);
         if (tags_array_temp && (tags_count > 0))
         {
             tags_array = malloc ((tags_count + 1) * sizeof (*tags_array));

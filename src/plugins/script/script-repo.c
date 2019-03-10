@@ -934,9 +934,16 @@ script_repo_match_filter (struct t_script_repo *script)
     if (!script_repo_filter || strcmp (script_repo_filter, "*") == 0)
         return 1;
 
-    words = weechat_string_split (script_repo_filter, " ", 0, 0, &num_words);
-    tags = weechat_string_split ((script->tags) ? script->tags : "", ",", 0, 0,
-                                 &num_tags);
+    words = weechat_string_split (script_repo_filter, " ",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_words);
+    tags = weechat_string_split ((script->tags) ? script->tags : "", ",",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &num_tags);
     if (words)
     {
         for (i = 0; i < num_words; i++)

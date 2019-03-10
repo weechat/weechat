@@ -94,9 +94,14 @@ spell_config_change_commands (const void *pointer, void *data,
     value = weechat_config_string (option);
     if (value && value[0])
     {
-        spell_commands_to_check = weechat_string_split (value,
-                                                        ",", 0, 0,
-                                                        &spell_count_commands_to_check);
+        spell_commands_to_check = weechat_string_split (
+            value,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &spell_count_commands_to_check);
         if (spell_count_commands_to_check > 0)
         {
             spell_length_commands_to_check = malloc (spell_count_commands_to_check *

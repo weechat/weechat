@@ -78,7 +78,12 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
         new_hook_line->buffer_type = gui_buffer_search_type (buffer_type);
     new_hook_line->buffers = string_split (
         (buffer_name && buffer_name[0]) ? buffer_name : "*",
-        ",", 0, 0, &new_hook_line->num_buffers);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &new_hook_line->num_buffers);
     new_hook_line->tags_array = string_split_tags (tags,
                                                    &new_hook_line->tags_count);
 

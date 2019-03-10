@@ -340,7 +340,10 @@ relay_client_recv_text (struct t_relay_client *client, const char *data)
         pos[0] = '\0';
 
         lines = weechat_string_split (client->partial_message, "\n",
-                                      0, 0, &num_lines);
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_lines);
         if (lines)
         {
             for (i = 0; i < num_lines; i++)

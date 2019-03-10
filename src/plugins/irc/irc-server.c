@@ -425,7 +425,11 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     }
 
     /* split fingerprint */
-    fingerprints = weechat_string_split (fingerprint_eval, ",", 0, 0, NULL);
+    fingerprints = weechat_string_split (fingerprint_eval, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, NULL);
     if (!fingerprints)
         return fingerprint_eval;
 
@@ -607,7 +611,13 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     if (!addresses_eval)
         return 1;
     server->addresses_array = weechat_string_split (
-        addresses_eval, ",", 0, 0, &server->addresses_count);
+        addresses_eval,
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &server->addresses_count);
     server->ports_array = malloc (
         server->addresses_count * sizeof (server->ports_array[0]));
     server->retry_array = malloc (
@@ -702,7 +712,12 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
     /* set new nicks */
     server->nicks_array = weechat_string_split (
         (nicks2) ? nicks2 : IRC_SERVER_DEFAULT_NICKS,
-        ",", 0, 0, &server->nicks_count);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &server->nicks_count);
 
     if (nicks2)
         free (nicks2);
@@ -2615,7 +2630,11 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     }
 
     rc = 1;
-    items = weechat_string_split (vbuffer, "\n", 0, 0, &items_count);
+    items = weechat_string_split (vbuffer, "\n",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &items_count);
     for (i = 0; i < items_count; i++)
     {
         /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
@@ -4212,7 +4231,11 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
     }
 
     /* split good_fingerprints */
-    fingerprints = weechat_string_split (good_fingerprints, ",", 0, 0, NULL);
+    fingerprints = weechat_string_split (good_fingerprints, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, NULL);
     if (!fingerprints)
         return 0;
 
@@ -5121,8 +5144,14 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
             strdup (autojoin);
         if (autojoin2)
         {
-            channels = weechat_string_split (autojoin2, ",", 0, 0,
-                                             &num_channels);
+            channels = weechat_string_split (
+                autojoin2,
+                ",",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &num_channels);
             if (channels)
             {
                 for (i = 0; i < num_channels; i++)

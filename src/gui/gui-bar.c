@@ -704,7 +704,11 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
 
     if (items && items[0])
     {
-        tmp_array = string_split (items, ",", 0, 0, &count);
+        tmp_array = string_split (items, ",",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &count);
         if (count > 0)
         {
             bar->items_count = count;
@@ -716,8 +720,14 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
             bar->items_suffix = malloc (count * sizeof (*bar->items_suffix));
             for (i = 0; i < count; i++)
             {
-                bar->items_array[i] = string_split (tmp_array[i], "+", 0, 0,
-                                                    &(bar->items_subcount[i]));
+                bar->items_array[i] = string_split (
+                    tmp_array[i],
+                    "+",
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0,
+                    &(bar->items_subcount[i]));
                 if (bar->items_subcount[i] > 0)
                 {
                     bar->items_buffer[i] = malloc (bar->items_subcount[i] *

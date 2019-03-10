@@ -256,8 +256,14 @@ script_completion_tags_cb (const void *pointer, void *data,
     {
         if (ptr_script->tags)
         {
-            list_tags = weechat_string_split (ptr_script->tags, ",", 0, 0,
-                                              &num_tags);
+            list_tags = weechat_string_split (
+                ptr_script->tags,
+                ",",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &num_tags);
             if (list_tags)
             {
                 for (i = 0; i < num_tags; i++)

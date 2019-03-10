@@ -318,8 +318,14 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
         ptr_commands = hashtable_get (options, "commands");
         if (ptr_commands)
         {
-            new_commands_allowed = string_split (ptr_commands, ",", 0, 0,
-                                                 NULL);
+            new_commands_allowed = string_split (
+                ptr_commands,
+                ",",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                NULL);
             input_commands_allowed = new_commands_allowed;
         }
     }

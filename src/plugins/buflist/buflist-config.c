@@ -165,7 +165,11 @@ buflist_config_hook_signals_refresh ()
             BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX);
     }
 
-    signals = weechat_string_split (*all_signals, ",", 0, 0, &count);
+    signals = weechat_string_split (*all_signals, ",",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &count);
     if (signals)
     {
         signals_list = weechat_arraylist_new (
@@ -252,7 +256,12 @@ buflist_config_change_sort (const void *pointer, void *data,
 
     buflist_config_sort_fields = weechat_string_split (
         weechat_config_string (buflist_config_look_sort),
-        ",", 0, 0, &buflist_config_sort_fields_count);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &buflist_config_sort_fields_count);
 
     buflist_bar_item_update (0);
 }

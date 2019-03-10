@@ -404,7 +404,11 @@ relay_config_check_irc_backlog_tags (const void *pointer, void *data,
         return rc;
 
     /* split tags and check them */
-    tags = weechat_string_split (value, ",", 0, 0, &num_tags);
+    tags = weechat_string_split (value, ",",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &num_tags);
     if (tags)
     {
         for (i = 0; i < num_tags; i++)
@@ -448,8 +452,14 @@ relay_config_change_irc_backlog_tags (const void *pointer, void *data,
     else
         weechat_hashtable_remove_all (relay_config_hashtable_irc_backlog_tags);
 
-    items = weechat_string_split (weechat_config_string (relay_config_irc_backlog_tags),
-                                  ",", 0, 0, &num_items);
+    items = weechat_string_split (
+        weechat_config_string (relay_config_irc_backlog_tags),
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)

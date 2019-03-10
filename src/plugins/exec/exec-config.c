@@ -63,7 +63,12 @@ exec_config_change_command_default_options (const void *pointer, void *data,
 
     exec_config_cmd_options = weechat_string_split (
         weechat_config_string (exec_config_command_default_options),
-        " ", 0, 0, &exec_config_cmd_num_options);
+        " ",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &exec_config_cmd_num_options);
 }
 
 /*

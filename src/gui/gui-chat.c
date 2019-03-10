@@ -910,8 +910,11 @@ gui_chat_print_lines_waiting_buffer (FILE *f)
 
     if (gui_chat_lines_waiting_buffer)
     {
-        lines = string_split (*gui_chat_lines_waiting_buffer, "\n", 0, 0,
-                              &num_lines);
+        lines = string_split (*gui_chat_lines_waiting_buffer, "\n",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, &num_lines);
         if (lines)
         {
             for (i = 0; i < num_lines; i++)

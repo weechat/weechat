@@ -646,9 +646,14 @@ config_file_new_option (struct t_config_file *config_file,
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (string_values && string_values[0])
                 {
-                    new_option->string_values = string_split (string_values,
-                                                              "|", 0, 0,
-                                                              &argc);
+                    new_option->string_values = string_split (
+                        string_values,
+                        "|",
+                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                        0,
+                        &argc);
                     if (!new_option->string_values)
                         goto error;
                 }

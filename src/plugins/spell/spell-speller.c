@@ -99,7 +99,11 @@ spell_speller_check_dictionaries (const char *dict_list)
 
     if (dict_list)
     {
-        argv = weechat_string_split (dict_list, ",", 0, 0, &argc);
+        argv = weechat_string_split (dict_list, ",",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &argc);
         if (argv)
         {
             for (i = 0; i < argc; i++)
@@ -223,7 +227,11 @@ spell_speller_add_dicts_to_hash (struct t_hashtable *hashtable,
     if (!dict || !dict[0])
         return;
 
-    dicts = weechat_string_split (dict, ",", 0, 0, &num_dicts);
+    dicts = weechat_string_split (dict, ",",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_dicts);
     if (dicts)
     {
         for (i = 0; i < num_dicts; i++)
@@ -375,7 +383,11 @@ spell_speller_buffer_new (struct t_gui_buffer *buffer)
     buffer_dicts = spell_get_dict (buffer);
     if (buffer_dicts)
     {
-        dicts = weechat_string_split (buffer_dicts, ",", 0, 0, &num_dicts);
+        dicts = weechat_string_split (buffer_dicts, ",",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_dicts);
         if (dicts && (num_dicts > 0))
         {
             new_speller_buffer->spellers =

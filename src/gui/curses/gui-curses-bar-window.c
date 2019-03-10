@@ -32,6 +32,7 @@
 #include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
 #include "../gui-bar.h"
 #include "../gui-bar-item.h"
 #include "../gui-bar-window.h"
@@ -486,7 +487,11 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             }
         }
 
-        items = string_split (content, "\n", 0, 0, &items_count);
+        items = string_split (content, "\n",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, &items_count);
         if (items_count == 0)
         {
             if (CONFIG_INTEGER(bar_window->bar->options[GUI_BAR_OPTION_SIZE]) == 0)

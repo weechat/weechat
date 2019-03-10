@@ -64,7 +64,11 @@ plugin_script_api_string_match_list (struct t_weechat_plugin *weechat_plugin,
     int match;
 
     list_masks = (masks && masks[0]) ?
-        weechat_string_split (masks, ",", 0, 0, NULL) : NULL;
+        weechat_string_split (masks, ",",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, NULL) : NULL;
 
     match = weechat_string_match_list (string,
                                        (const char **)list_masks,

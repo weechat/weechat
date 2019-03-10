@@ -337,7 +337,11 @@ relay_irc_tag_relay_client_id (const char *tags)
 
     if (tags && tags[0])
     {
-        argv = weechat_string_split (tags, ",", 0, 0, &argc);
+        argv = weechat_string_split (tags, ",",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &argc);
         if (argv)
         {
             for (i = 0; i < argc; i++)
@@ -561,7 +565,11 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
     if (!output)
         return WEECHAT_RC_OK;
 
-    messages = weechat_string_split (output, "\n", 0, 0, &num_messages);
+    messages = weechat_string_split (output, "\n",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &num_messages);
     if (messages)
     {
         for (i = 0; i < num_messages; i++)
@@ -1347,8 +1355,23 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
     irc_args = weechat_hashtable_get (hash_parsed, "arguments");
     if (irc_args)
     {
-        irc_argv = weechat_string_split (irc_args, " ", 0, 0, &irc_argc);
-        irc_argv_eol = weechat_string_split (irc_args, " ", 1, 0, NULL);
+        irc_argv = weechat_string_split (
+            irc_args,
+            " ",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &irc_argc);
+        irc_argv_eol = weechat_string_split (
+            irc_args,
+            " ",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+            | WEECHAT_STRING_SPLIT_KEEP_EOL,
+            0,
+            NULL);
     }
 
     /*

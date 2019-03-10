@@ -1554,6 +1554,9 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_split
 
+// TRANSLATION MISSING
+_Updated in 2.5._
+
 Divide una stringa in base a uno o più delimitatori.
 
 Prototipo:
@@ -1561,22 +1564,38 @@ Prototipo:
 [source,C]
 ----
 char **weechat_string_split (const char *string, const char *separators,
-                             int keep_eol, int num_items_max,
-                             int *num_items);
+                             int flags, int num_items_max, int *num_items);
 ----
 
 Argomenti:
 
 * _string_: stringa da dividere
 * _separators_: delimitatori usati per dividere
-* _keep_eol_:
-** 0: ogni stringa conterrà una parola
-** 1: ogni stringa conterrà tutte le stringhe fino a fine riga
-   (consultare il seguente esempio)
-** 2: come il punto 1, ma non rimuove i delimitatori alla fine della stringa
-   prima della divisione _(WeeChat ≥ 0.3.6)_
+* _flags_: combination values to change the default behavior; if the value is 0,
+  the default behavior is used (no strip of separators at beginning/end of string,
+  multiple separators are kept as-is so empty strings can be returned);
+  the following flags are accepted:
+** WEECHAT_STRING_SPLIT_STRIP_LEFT: strip separators on the left
+   (beginning of string)
+** WEECHAT_STRING_SPLIT_STRIP_RIGHT: strip separators on the right
+   (end of string)
+** WEECHAT_STRING_SPLIT_COLLAPSE_SEPS: collapse multiple consecutive separators
+   into a single one
+** WEECHAT_STRING_SPLIT_KEEP_EOL: keep end of line for each value
 * _num_items_max_: numero massimo di elementi creati (0 = nessun limite)
 * _num_items_: puntatore ad int che conterrà il numero di elementi creati
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 2.4, the _flags_ argument was called _keep_eol_ and took other
+values, which must be converted like that:
+[width="100%",cols="1,10",options="header"]
+|===
+| keep_eol | flags
+| 0        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_STRIP_RIGHT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+| 1        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_STRIP_RIGHT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS \| WEECHAT_STRING_SPLIT_KEEP_EOL
+| 2        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS \| WEECHAT_STRING_SPLIT_KEEP_EOL
+|===
 
 Valore restituito:
 
@@ -1589,7 +1608,23 @@ Esempi:
 ----
 char **argv;
 int argc;
+
 argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
+/* result: argv[0] == "abc"
+           argv[1] == "de"
+           argv[2] = ""
+           argv[3] == "fghi"
+           argv[4] = ""
+           argv[5] == NULL
+           argc == 5
+*/
+weechat_string_free_split (argv);
+
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
 /* result: argv[0] == "abc"
            argv[1] == "de"
            argv[2] == "fghi"
@@ -1598,7 +1633,12 @@ argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ", 1, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                             0, &argc);
 /* result: argv[0] == "abc de  fghi"
            argv[1] == "de  fghi"
            argv[2] == "fghi"
@@ -1607,7 +1647,11 @@ argv = weechat_string_split ("abc de  fghi ", " ", 1, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ", 2, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                             0, &argc);
 /* result: argv[0] == "abc de  fghi "
            argv[1] == "de  fghi "
            argv[2] == "fghi "

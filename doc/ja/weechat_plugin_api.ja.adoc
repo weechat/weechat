@@ -1490,6 +1490,8 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
 
 ==== string_split
 
+_WeeChat バージョン 2.5 で更新。_
+
 1 つ以上の区切り文字に従って文字列を分割。
 
 プロトタイプ:
@@ -1497,21 +1499,43 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
 [source,C]
 ----
 char **weechat_string_split (const char *string, const char *separators,
-                             int keep_eol, int num_items_max,
-                             int *num_items);
+                             int flags, int num_items_max, int *num_items);
 ----
 
 引数:
 
 * _string_: 分割する文字列
 * _separators_: 分割に使う区切り文字
-* _keep_eol_:
-** 0: 区切り文字ごとの文字列に分割
-** 1: 文字列の最初から区切り文字までの文字列に分割 (下の例を参照)
-** 2: 1 と同じだが、文字列の最後から区切り文字を削除しない
-   _(WeeChat バージョン 0.3.6 以上で利用可)_
+// TRANSLATION MISSING
+* _flags_: combination values to change the default behavior; if the value is 0,
+  the default behavior is used (no strip of separators at beginning/end of string,
+  multiple separators are kept as-is so empty strings can be returned);
+  the following flags are accepted:
+// TRANSLATION MISSING
+** WEECHAT_STRING_SPLIT_STRIP_LEFT: strip separators on the left
+   (beginning of string)
+// TRANSLATION MISSING
+** WEECHAT_STRING_SPLIT_STRIP_RIGHT: strip separators on the right
+   (end of string)
+// TRANSLATION MISSING
+** WEECHAT_STRING_SPLIT_COLLAPSE_SEPS: collapse multiple consecutive separators
+   into a single one
+// TRANSLATION MISSING
+** WEECHAT_STRING_SPLIT_KEEP_EOL: keep end of line for each value
 * _num_items_max_: 分割回数の上限 (0 = 制限なし)
 * _num_items_: 分割回数を返す整数型変数へのポインタ
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≤ 2.4, the _flags_ argument was called _keep_eol_ and took other
+values, which must be converted like that:
+[width="100%",cols="1,10",options="header"]
+|===
+| keep_eol | flags
+| 0        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_STRIP_RIGHT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+| 1        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_STRIP_RIGHT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS \| WEECHAT_STRING_SPLIT_KEEP_EOL
+| 2        | WEECHAT_STRING_SPLIT_STRIP_LEFT \| WEECHAT_STRING_SPLIT_COLLAPSE_SEPS \| WEECHAT_STRING_SPLIT_KEEP_EOL
+|===
 
 戻り値:
 
@@ -1524,7 +1548,23 @@ C 言語での使用例:
 ----
 char **argv;
 int argc;
+
 argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
+/* result: argv[0] == "abc"
+           argv[1] == "de"
+           argv[2] == ""
+           argv[3] == "fghi"
+           argv[4] == ""
+           argv[5] == NULL
+           argc == 5
+*/
+weechat_string_free_split (argv);
+
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
 /* result: argv[0] == "abc"
            argv[1] == "de"
            argv[2] == "fghi"
@@ -1533,7 +1573,12 @@ argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ", 1, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                             0, &argc);
 /* result: argv[0] == "abc de  fghi"
            argv[1] == "de  fghi"
            argv[2] == "fghi"
@@ -1542,7 +1587,11 @@ argv = weechat_string_split ("abc de  fghi ", " ", 1, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ", 2, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                             | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                             0, &argc);
 /* result: argv[0] == "abc de  fghi "
            argv[1] == "de  fghi "
            argv[2] == "fghi "

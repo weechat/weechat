@@ -87,7 +87,11 @@ buflist_focus_cb (const void *pointer, void *data, struct t_hashtable *info)
 end:
     /* get list of keys */
     keys = weechat_hdata_get_string (buflist_hdata_buffer, "var_keys");
-    list_keys = weechat_string_split (keys, ",", 0, 0, &num_keys);
+    list_keys = weechat_string_split (keys, ",",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_keys);
     if (!list_keys)
         return info;
 

@@ -439,7 +439,11 @@ config_set_word_chars (const char *str_word_chars,
     if (!str_word_chars || !str_word_chars[0])
         return;
 
-    items = string_split (str_word_chars, ",", 0, 0, word_chars_count);
+    items = string_split (str_word_chars, ",",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, word_chars_count);
     if (!items)
     {
         *word_chars_count = 0;
@@ -688,8 +692,11 @@ config_set_nick_colors ()
 
     config_nick_colors = string_split (
         CONFIG_STRING(config_color_chat_nick_colors),
-        ",", 0, 0,
-        &config_num_nick_colors);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0, &config_num_nick_colors);
 }
 
 /*
@@ -721,8 +728,11 @@ config_change_look_nick_color_force (const void *pointer, void *data,
         hashtable_remove_all (config_hashtable_nick_color_force);
     }
 
-    items = string_split (CONFIG_STRING(config_look_nick_color_force),
-                          ";", 0, 0, &num_items);
+    items = string_split (CONFIG_STRING(config_look_nick_color_force), ";",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -1189,7 +1199,12 @@ config_change_completion_partial_completion_templates (const void *pointer,
 
     items = string_split (
         CONFIG_STRING(config_completion_partial_completion_templates),
-        ",", 0, 0, &num_items);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -1266,8 +1281,14 @@ config_change_plugin_extension (const void *pointer, void *data,
     if (CONFIG_STRING(config_plugin_extension)
         && CONFIG_STRING(config_plugin_extension)[0])
     {
-        config_plugin_extensions = string_split (CONFIG_STRING(config_plugin_extension),
-                                                 ",", 0, 0, &config_num_plugin_extensions);
+        config_plugin_extensions = string_split (
+            CONFIG_STRING(config_plugin_extension),
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &config_num_plugin_extensions);
     }
 }
 
@@ -1908,7 +1929,11 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
 
     if (string_strcasecmp (ptr_option_name, "buffer") == 0)
     {
-        argv = string_split (value, ";", 0, 0, &argc);
+        argv = string_split (value, ";",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
         if (argv)
         {
             if (argc >= 3)
@@ -1923,7 +1948,11 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
     }
     else if (string_strcasecmp (ptr_option_name, "window") == 0)
     {
-        argv = string_split (value, ";", 0, 0, &argc);
+        argv = string_split (value, ";",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
         if (argv)
         {
             if (argc >= 6)
@@ -2233,8 +2262,17 @@ config_weechat_filter_read_cb (const void *pointer, void *data,
 
     if (option_name && value && value[0])
     {
-        argv = string_split (value, ";", 0, 0, &argc);
-        argv_eol = string_split (value, ";", 1, 0, NULL);
+        argv = string_split (value, ";",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
+        argv_eol = string_split (value, ";",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                                 | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                                 0, NULL);
         if (argv && argv_eol && (argc >= 4))
         {
             gui_filter_new ((string_strcasecmp (argv[0], "on") == 0) ? 1 : 0,

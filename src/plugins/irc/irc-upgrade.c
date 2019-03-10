@@ -549,8 +549,14 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         str = weechat_infolist_string (infolist, "join_msg_received");
                         if (str)
                         {
-                            items = weechat_string_split (str, ",", 0, 0,
-                                                          &num_items);
+                            items = weechat_string_split (
+                                str,
+                                ",",
+                                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                0,
+                                &num_items);
                             if (items)
                             {
                                 for (i = 0; i < num_items; i++)
@@ -605,8 +611,14 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         str = weechat_infolist_string (infolist, "join_smart_filtered");
                         if (str)
                         {
-                            nicks = weechat_string_split (str, ",", 0, 0,
-                                                          &nicks_count);
+                            nicks = weechat_string_split (
+                                str,
+                                ",",
+                                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                0,
+                                &nicks_count);
                             if (nicks)
                             {
                                 for (i = 0; i < nicks_count; i++)

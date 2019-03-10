@@ -561,7 +561,12 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
     for (i = 0; i < HOOK_COMMAND(hook_command, cplt_num_templates); i++)
     {
         items = string_split (HOOK_COMMAND(hook_command, cplt_templates_static)[i],
-                              "|", 0, 0, &num_items);
+                              "|",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0,
+                              &num_items);
         if (items)
         {
             for (j = 0; j < num_items; j++)

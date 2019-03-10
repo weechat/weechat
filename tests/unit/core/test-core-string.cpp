@@ -1008,35 +1008,42 @@ TEST(CoreString, ReplaceWithCallback)
 TEST(CoreString, Split)
 {
     char **argv;
-    int argc;
+    int argc, flags;
 
     POINTERS_EQUAL(NULL, string_split (NULL, NULL, 0, 0, NULL));
     POINTERS_EQUAL(NULL, string_split (NULL, "", 0, 0, NULL));
     POINTERS_EQUAL(NULL, string_split ("", NULL, 0, 0, NULL));
     POINTERS_EQUAL(NULL, string_split ("", "", 0, 0, NULL));
 
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
+
     argc = -1;
-    POINTERS_EQUAL(NULL, string_split (NULL, NULL, 0, 0, &argc));
+    POINTERS_EQUAL(NULL, string_split (NULL, NULL, flags, 0, &argc));
     LONGS_EQUAL(0, argc);
     argc = -1;
-    POINTERS_EQUAL(NULL, string_split (NULL, "", 0, 0, &argc));
+    POINTERS_EQUAL(NULL, string_split (NULL, "", flags, 0, &argc));
     LONGS_EQUAL(0, argc);
     argc = -1;
-    POINTERS_EQUAL(NULL, string_split ("", NULL, 0, 0, &argc));
+    POINTERS_EQUAL(NULL, string_split ("", NULL, flags, 0, &argc));
     LONGS_EQUAL(0, argc);
     argc = -1;
-    POINTERS_EQUAL(NULL, string_split ("", "", 0, 0, &argc));
+    POINTERS_EQUAL(NULL, string_split ("", "", flags, 0, &argc));
     LONGS_EQUAL(0, argc);
     argc = -1;
-    POINTERS_EQUAL(NULL, string_split ("   ", " ", 0, 0, &argc));
+    POINTERS_EQUAL(NULL, string_split ("   ", " ", flags, 0, &argc));
     LONGS_EQUAL(0, argc);
 
     /* free split with NULL */
     string_free_split (NULL);
 
     /* standard split */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argc = -1;
-    argv = string_split ("abc de  fghi", " ", 0, 0, &argc);
+    argv = string_split ("abc de  fghi", " ", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1046,8 +1053,11 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* standard split */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1057,8 +1067,11 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* max 2 items */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 0, 2, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1066,9 +1079,13 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
-    /* keep eol == 1 */
+    /* strip left/right, keep eol for each value */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_KEEP_EOL;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 1, 0, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
@@ -1077,9 +1094,13 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
-    /* keep eol == 1 and max 2 items */
+    /* strip left/right, keep eol for each value, max 2 items */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_KEEP_EOL;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 1, 2, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi", argv[0]);
@@ -1087,9 +1108,12 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[2]);
     string_free_split (argv);
 
-    /* keep eol == 2 */
+    /* strip left, keep eol for each value */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_KEEP_EOL;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 2, 0, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi ", argv[0]);
@@ -1098,9 +1122,12 @@ TEST(CoreString, Split)
     POINTERS_EQUAL(NULL, argv[3]);
     string_free_split (argv);
 
-    /* keep eol == 2 and max 2 items */
+    /* strip left, keep eol for each value, max 2 items */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+        | WEECHAT_STRING_SPLIT_KEEP_EOL;
     argc = -1;
-    argv = string_split (" abc de  fghi ", " ", 2, 2, &argc);
+    argv = string_split (" abc de  fghi ", " ", flags, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc de  fghi ", argv[0]);
@@ -1109,8 +1136,11 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* standard split with comma separator */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argc = -1;
-    argv = string_split ("abc,de,fghi", ",", 0, 0, &argc);
+    argv = string_split ("abc,de,fghi", ",", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1120,8 +1150,11 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* standard split with comma separator and empty item (ignore this item) */
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
     argc = -1;
-    argv = string_split ("abc,,fghi", ",", 0, 0, &argc);
+    argv = string_split ("abc,,fghi", ",", flags, 0, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1130,8 +1163,9 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* standard split with comma separtor and empty item (keep this item) */
+    flags = 0;
     argc = -1;
-    argv = string_split ("abc,,fghi", ",", -1, 0, &argc);
+    argv = string_split ("abc,,fghi", ",", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1141,8 +1175,9 @@ TEST(CoreString, Split)
     string_free_split (argv);
 
     /* standard split with comma separtor and empty items (keep them) */
+    flags = 0;
     argc = -1;
-    argv = string_split (",abc,,fghi,", ",", -1, 0, &argc);
+    argv = string_split (",abc,,fghi,", ",", flags, 0, &argc);
     LONGS_EQUAL(5, argc);
     CHECK(argv);
     STRCMP_EQUAL("", argv[0]);
@@ -1157,8 +1192,9 @@ TEST(CoreString, Split)
      * standard split with comma separtor and empty items (keep them),
      * max 2 items
      */
+    flags = 0;
     argc = -1;
-    argv = string_split (",abc,,fghi,", ",", -1, 2, &argc);
+    argv = string_split (",abc,,fghi,", ",", flags, 2, &argc);
     LONGS_EQUAL(2, argc);
     CHECK(argv);
     STRCMP_EQUAL("", argv[0]);
@@ -1170,8 +1206,9 @@ TEST(CoreString, Split)
      * standard split with comma separtor and empty items (keep them),
      * max 3 items
      */
+    flags = 0;
     argc = -1;
-    argv = string_split (",abc,,fghi,", ",", -1, 3, &argc);
+    argv = string_split (",abc,,fghi,", ",", flags, 3, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("", argv[0]);
@@ -1184,8 +1221,9 @@ TEST(CoreString, Split)
      * standard split with comma separtor and empty items (keep them),
      * max 4 items
      */
+    flags = 0;
     argc = -1;
-    argv = string_split (",abc,,fghi,", ",", -1, 4, &argc);
+    argv = string_split (",abc,,fghi,", ",", flags, 4, &argc);
     LONGS_EQUAL(4, argc);
     CHECK(argv);
     STRCMP_EQUAL("", argv[0]);
@@ -1205,14 +1243,21 @@ TEST(CoreString, Split)
 TEST(CoreString, SplitShared)
 {
     char **argv;
-    int argc;
+    int argc, flags;
 
-    POINTERS_EQUAL(NULL, string_split_shared (NULL, NULL, 0, 0, NULL));
-    POINTERS_EQUAL(NULL, string_split_shared (NULL, "", 0, 0, NULL));
-    POINTERS_EQUAL(NULL, string_split_shared ("", NULL, 0, 0, NULL));
-    POINTERS_EQUAL(NULL, string_split_shared ("", "", 0, 0, NULL));
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
 
-    argv = string_split_shared (" abc de  abc ", " ", 0, 0, &argc);
+    POINTERS_EQUAL(NULL, string_split_shared (NULL, NULL, flags, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared (NULL, "", flags, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared ("", NULL, flags, 0, NULL));
+    POINTERS_EQUAL(NULL, string_split_shared ("", "", flags, 0, NULL));
+
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
+    argv = string_split_shared (" abc de  abc ", " ", flags, 0, &argc);
     LONGS_EQUAL(3, argc);
     CHECK(argv);
     STRCMP_EQUAL("abc", argv[0]);
@@ -1387,12 +1432,15 @@ TEST(CoreString, SplitTags)
 TEST(CoreString, SplitBuildWithSplitString)
 {
     char **argv, *str;
-    int argc;
+    int argc, flags;
 
     str = string_build_with_split_string (NULL, NULL);
     POINTERS_EQUAL(NULL, str);
 
-    argv = string_split (" abc de  fghi ", " ", 0, 0, &argc);
+    flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS;
+    argv = string_split (" abc de  fghi ", " ", flags, 0, &argc);
 
     str = string_build_with_split_string ((const char **)argv, NULL);
     STRCMP_EQUAL("abcdefghi", str);

@@ -787,7 +787,11 @@ gui_color_decode_ansi_cb (void *data, const char *text)
     if (!text2)
         goto end;
 
-    items = string_split (text2, ";", 0, 0, &num_items);
+    items = string_split (text2, ";",
+                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                          0, &num_items);
     if (!items)
         goto end;
 

@@ -1062,15 +1062,22 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(sync)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",", 0, 0,
-                                    &num_buffers);
+    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &num_buffers);
     if (buffers)
     {
         add_flags = RELAY_WEECHAT_PROTOCOL_SYNC_ALL;
         if (argc > 1)
         {
             add_flags = 0;
-            flags = weechat_string_split (argv[1], ",", 0, 0, &num_flags);
+            flags = weechat_string_split (argv[1], ",",
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_flags);
             if (flags)
             {
                 for (i = 0; i < num_flags; i++)
@@ -1141,15 +1148,22 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(desync)
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",", 0, 0,
-                                    &num_buffers);
+    buffers = weechat_string_split ((argc > 0) ? argv[0] : "*", ",",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &num_buffers);
     if (buffers)
     {
         sub_flags = RELAY_WEECHAT_PROTOCOL_SYNC_ALL;
         if (argc > 1)
         {
             sub_flags = 0;
-            flags = weechat_string_split (argv[1], ",", 0, 0, &num_flags);
+            flags = weechat_string_split (argv[1], ",",
+                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                          0, &num_flags);
             if (flags)
             {
                 for (i = 0; i < num_flags; i++)
@@ -1420,8 +1434,16 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
         {
             pos++;
         }
-        argv = weechat_string_split (pos, " ", 0, 0, &argc);
-        argv_eol = weechat_string_split (pos, " ", 2, 0, NULL);
+        argv = weechat_string_split (pos, " ",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &argc);
+        argv_eol = weechat_string_split (pos, " ",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                                         | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                                         0, NULL);
     }
 
     for (i = 0; protocol_cb[i].name; i++)

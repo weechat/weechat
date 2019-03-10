@@ -782,7 +782,11 @@ fset_buffer_display_option_eval (struct t_fset_option *fset_option)
         NULL);
     if (line)
     {
-        lines = weechat_string_split (line, "\r\n", 0, 0, &num_lines);
+        lines = weechat_string_split (line, "\r\n",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_lines);
         if (lines)
         {
             y = fset_option->index * fset_config_format_option_num_lines[format_number - 1];

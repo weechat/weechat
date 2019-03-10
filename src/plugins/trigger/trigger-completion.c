@@ -138,7 +138,11 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
     if (!args)
         return WEECHAT_RC_OK;
 
-    argv = weechat_string_split (args, " ", 0, 0, &argc);
+    argv = weechat_string_split (args, " ",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
     if (!argv)
         return WEECHAT_RC_OK;
 
@@ -273,7 +277,11 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
     if (!args)
         return;
 
-    argv = weechat_string_split (args, " ", 0, 0, &argc);
+    argv = weechat_string_split (args, " ",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
     if (!argv)
         return;
 
@@ -284,8 +292,14 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
         {
             if (default_strings[type][0] && split && split[0])
             {
-                items = weechat_string_split (default_strings[type], split,
-                                              0, 0, &num_items);
+                items = weechat_string_split (
+                    default_strings[type],
+                    split,
+                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                    0,
+                    &num_items);
                 if (items)
                 {
                     for (i = 0; i < num_items; i++)

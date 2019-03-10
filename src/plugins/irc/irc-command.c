@@ -419,7 +419,11 @@ irc_command_exec_all_channels (struct t_irc_server *server,
         return;
 
     channels = (str_channels && str_channels[0]) ?
-        weechat_string_split (str_channels, ",", 0, 0, &num_channels) : NULL;
+        weechat_string_split (str_channels, ",",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, &num_channels) : NULL;
 
     /* build a list of buffer names where the command will be executed */
     list_buffers = weechat_list_new ();
@@ -654,7 +658,11 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
         return;
 
     servers = (str_servers && str_servers[0]) ?
-        weechat_string_split (str_servers, ",", 0, 0, &num_servers) : NULL;
+        weechat_string_split (str_servers, ",",
+                              WEECHAT_STRING_SPLIT_STRIP_LEFT
+                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                              0, &num_servers) : NULL;
 
     /* build a list of buffer names where the command will be executed */
     list_buffers = weechat_list_new ();
@@ -1080,8 +1088,17 @@ irc_command_run_away (const void *pointer, void *data,
     int argc;
     char **argv, **argv_eol;
 
-    argv = weechat_string_split (command, " ", 0, 0, &argc);
-    argv_eol = weechat_string_split (command, " ", 1, 0, NULL);
+    argv = weechat_string_split (command, " ",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
+    argv_eol = weechat_string_split (command, " ",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                                     | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                                     0, NULL);
 
     if (argv && argv_eol)
     {
@@ -1549,7 +1566,11 @@ IRC_COMMAND_CALLBACK(ctcp)
 
     IRC_COMMAND_CHECK_SERVER("ctcp", 1);
 
-    targets = weechat_string_split (argv[arg_target], ",", 0, 0, &num_targets);
+    targets = weechat_string_split (argv[arg_target], ",",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &num_targets);
     if (!targets)
         WEECHAT_COMMAND_ERROR;
 
@@ -1655,8 +1676,11 @@ IRC_COMMAND_CALLBACK(cycle)
         {
             channel_name = argv[1];
             pos_args = argv_eol[2];
-            channels = weechat_string_split (channel_name, ",", 0, 0,
-                                             &num_channels);
+            channels = weechat_string_split (channel_name, ",",
+                                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                             0, &num_channels);
             if (channels)
             {
                 for (i = 0; i < num_channels; i++)
@@ -2504,15 +2528,22 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
             pos_keys++;
         }
         if (pos_keys[0])
-            keys = weechat_string_split (pos_keys, ",", 0, 0, &num_keys);
+            keys = weechat_string_split (pos_keys, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_keys);
     }
     else
         new_args = strdup (arguments);
 
     if (new_args)
     {
-        channels = weechat_string_split (new_args, ",", 0, 0,
-                                         &num_channels);
+        channels = weechat_string_split (new_args, ",",
+                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                         0, &num_channels);
         free (new_args);
     }
 
@@ -3260,8 +3291,11 @@ IRC_COMMAND_CALLBACK(msg)
 
     IRC_COMMAND_CHECK_SERVER("msg", 1);
 
-    targets = weechat_string_split (argv[arg_target], ",", 0, 0,
-                                    &num_targets);
+    targets = weechat_string_split (argv[arg_target], ",",
+                                    WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                    | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                    | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                    0, &num_targets);
     if (!targets)
         WEECHAT_COMMAND_ERROR;
 
@@ -4056,7 +4090,11 @@ IRC_COMMAND_CALLBACK(query)
 
     IRC_COMMAND_CHECK_SERVER("query", 1);
 
-    nicks = weechat_string_split (argv[arg_nick], ",", 0, 0, &num_nicks);
+    nicks = weechat_string_split (argv[arg_nick], ",",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_nicks);
     if (!nicks)
         WEECHAT_COMMAND_ERROR;
 

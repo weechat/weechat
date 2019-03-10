@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add option "addreplace" in command /filter (issue #1055, issue #1312)
+  * api: replace argument "keep_eol" by "flags" in function string_split (issue #1322)
   * api: add function command_options (issue #928)
   * api: add function string_match_list
   * relay: add option relay.weechat.commands (issue #928)
@@ -34,6 +35,7 @@ Bug fixes::
   * irc: quote NICK command argument sent to the server (issue #1319)
   * php: fix memory leak in functions string_eval_expression, string_eval_path_home, key_bind, hook_process_hashtable, hook_hsignal_send, info_get_hashtable, hdata_update
   * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
+  * trigger: fix split of hook arguments (issue #1322)
 
 Build::
 

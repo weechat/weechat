@@ -359,7 +359,12 @@ irc_config_change_look_display_join_message (const void *pointer, void *data,
 
     items = weechat_string_split (
         weechat_config_string (irc_config_look_display_join_message),
-        ",", 0, 0, &num_items);
+        ",",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -582,7 +587,12 @@ irc_config_change_look_nicks_hide_password (const void *pointer, void *data,
     if (nicks_hide_password && nicks_hide_password[0])
     {
         irc_config_nicks_hide_password = weechat_string_split (
-            nicks_hide_password, ",", 0, 0,
+            nicks_hide_password,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
             &irc_config_num_nicks_hide_password);
     }
 }
@@ -710,7 +720,12 @@ irc_config_change_color_mirc_remap (const void *pointer, void *data,
 
     items = weechat_string_split (
         weechat_config_string (irc_config_color_mirc_remap),
-        ";", 0, 0, &num_items);
+        ";",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -757,7 +772,12 @@ irc_config_change_color_nick_prefixes (const void *pointer, void *data,
 
     items = weechat_string_split (
         weechat_config_string (irc_config_color_nick_prefixes),
-        ";", 0, 0, &num_items);
+        ";",
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        &num_items);
     if (items)
     {
         for (i = 0; i < num_items; i++)
@@ -1023,14 +1043,26 @@ irc_config_check_autojoin (const char *autojoin)
     if (strstr (string, ", ") || strstr (string, " ,"))
         goto end;
 
-    items = weechat_string_split (string, " ", 0, 0, &num_items);
+    items = weechat_string_split (string, " ",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
     if (!items || (num_items < 1) || (num_items > 2))
         goto end;
 
-    channels = weechat_string_split (items[0], ",", 0, 0, &num_channels);
+    channels = weechat_string_split (items[0], ",",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &num_channels);
 
     if (num_items == 2)
-        keys = weechat_string_split (items[1], ",", 0, 0, &num_keys);
+        keys = weechat_string_split (items[1], ",",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &num_keys);
 
     /* error if there are more keys than channels to join */
     if (num_keys > num_channels)
@@ -1477,8 +1509,23 @@ irc_config_ignore_read_cb (const void *pointer, void *data,
     {
         if (value && value[0])
         {
-            argv = weechat_string_split (value, ";", 0, 0, &argc);
-            argv_eol = weechat_string_split (value, ";", 1, 0, NULL);
+            argv = weechat_string_split (
+                value,
+                ";",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                0,
+                &argc);
+            argv_eol = weechat_string_split (
+                value,
+                ";",
+                WEECHAT_STRING_SPLIT_STRIP_LEFT
+                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
+                | WEECHAT_STRING_SPLIT_KEEP_EOL,
+                0,
+                NULL);
             if (argv && argv_eol && (argc >= 3))
             {
                 irc_ignore_new (argv_eol[2], argv[0], argv[1]);

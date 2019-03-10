@@ -469,7 +469,11 @@ fset_command_run_set_cb (const void *pointer, void *data,
 
     rc = WEECHAT_RC_OK;
 
-    argv = weechat_string_split (command, " ", 0, 0, &argc);
+    argv = weechat_string_split (command, " ",
+                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                 0, &argc);
 
     if (argc > 2)
         goto end;

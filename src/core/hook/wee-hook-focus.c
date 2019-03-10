@@ -32,6 +32,7 @@
 #include "../wee-infolist.h"
 #include "../wee-log.h"
 #include "../wee-string.h"
+#include "../../plugins/plugin.h"
 
 
 /*
@@ -232,7 +233,11 @@ hook_focus_get_data (struct t_hashtable *hashtable_focus1,
         keys = hashtable_get_string (hashtable1, "keys");
         if (keys)
         {
-            list_keys = string_split (keys, ",", 0, 0, &num_keys);
+            list_keys = string_split (keys, ",",
+                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                      0, &num_keys);
             if (list_keys)
             {
                 for (i = 0; i < num_keys; i++)

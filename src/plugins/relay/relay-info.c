@@ -54,7 +54,11 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     protocol = -1;
     status = -1;
 
-    items = weechat_string_split (arguments, ",", 0, 0, &num_items);
+    items = weechat_string_split (arguments, ",",
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
     if (num_items > 2)
         goto end;
 

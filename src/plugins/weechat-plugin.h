@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20190228-01"
+#define WEECHAT_PLUGIN_API_VERSION "20190310-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -88,6 +88,12 @@ struct timeval;
 #define WEECHAT_RC_OK                               0
 #define WEECHAT_RC_OK_EAT                           1
 #define WEECHAT_RC_ERROR                           -1
+
+/* flags for string_split function */
+#define WEECHAT_STRING_SPLIT_STRIP_LEFT            (1 << 0)
+#define WEECHAT_STRING_SPLIT_STRIP_RIGHT           (1 << 1)
+#define WEECHAT_STRING_SPLIT_COLLAPSE_SEPS         (1 << 2)
+#define WEECHAT_STRING_SPLIT_KEEP_EOL              (1 << 3)
 
 /* return codes for config read functions/callbacks */
 #define WEECHAT_CONFIG_READ_OK                      0
@@ -316,7 +322,7 @@ struct t_weechat_plugin
                                                      const char *text),
                                    void *callback_data);
     char **(*string_split) (const char *string, const char *separators,
-                            int keep_eol, int num_items_max, int *num_items);
+                            int flags, int num_items_max, int *num_items);
     char **(*string_split_shell) (const char *string, int *num_items);
     void (*string_free_split) (char **split_string);
     char *(*string_build_with_split_string) (const char **split_string,
@@ -1213,9 +1219,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                            __reference_char,            \
                                            __callback,                  \
                                            __callback_data)
-#define weechat_string_split(__string, __separator, __eol, __max,       \
+#define weechat_string_split(__string, __separator, __flags, __max,     \
                              __num_items)                               \
-    (weechat_plugin->string_split)(__string, __separator, __eol,        \
+    (weechat_plugin->string_split)(__string, __separator, __flags,      \
                                    __max, __num_items)
 #define weechat_string_split_shell(__string, __num_items)               \
     (weechat_plugin->string_split_shell)(__string, __num_items)

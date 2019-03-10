@@ -130,7 +130,11 @@ irc_mode_channel_update (struct t_irc_server *server,
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
-        argv = weechat_string_split (pos_args, " ", 0, 0, &argc);
+        argv = weechat_string_split (pos_args, " ",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &argc);
     }
     else
     {
@@ -338,7 +342,11 @@ irc_mode_channel_set (struct t_irc_server *server,
     argc = 0;
     argv = NULL;
     if (modes_arguments)
-        argv = weechat_string_split (modes_arguments, " ", 0, 0, &argc);
+        argv = weechat_string_split (modes_arguments, " ",
+                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                     0, &argc);
 
     current_arg = 0;
 

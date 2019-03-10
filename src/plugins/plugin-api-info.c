@@ -670,7 +670,11 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         goto error;
 
-    argv = string_split (arguments, ",", 0, 0, &argc);
+    argv = string_split (arguments, ",",
+                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                         0, &argc);
     if (!argv || (argc < 1))
         goto error;
 
@@ -744,7 +748,11 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         goto error;
 
-    argv = string_split (arguments, ",", 0, 0, &argc);
+    argv = string_split (arguments, ",",
+                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                         0, &argc);
     if (!argv || (argc < 2))
         goto error;
 

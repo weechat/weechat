@@ -1004,9 +1004,14 @@ plugin_auto_load (char *force_plugin_autoload,
 
     if (ptr_plugin_autoload && ptr_plugin_autoload[0])
     {
-        plugin_autoload_array = string_split (ptr_plugin_autoload,
-                                              ",", 0, 0,
-                                              &plugin_autoload_count);
+        plugin_autoload_array = string_split (
+            ptr_plugin_autoload,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &plugin_autoload_count);
     }
 
     /* auto-load plugins in custom path */
