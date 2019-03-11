@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-11 20:47+0100\n"
-"PO-Revision-Date: 2019-03-09 19:33+0100\n"
+"POT-Creation-Date: 2019-03-11 20:59+0100\n"
+"PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -4982,8 +4982,10 @@ msgid "%sYou can not write text in this buffer"
 msgstr "%sIn diesen Buffer kann nicht geschrieben werden"
 
 #, c-format
-msgid "debug: command \"%s\" is not allowed in this context"
-msgstr "debug: Befehl \"%s\" ist in diesem Kontext nicht erlaubt"
+msgid ""
+"warning: the command \"%s\" is not currently allowed (command: \"%s\", "
+"buffer: \"%s\")"
+msgstr ""
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

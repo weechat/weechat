@@ -115,10 +115,13 @@ input_exec_command (struct t_gui_buffer *buffer,
     {
         if (weechat_debug_core >= 1)
         {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("debug: command \"%s\" is not "
-                                         "allowed in this context"),
-                                       command_name);
+            gui_chat_printf_date_tags (
+                NULL, 0, "command_forbidden," GUI_FILTER_TAG_NO_FILTER,
+                _("warning: the command \"%s\" is not currently allowed "
+                  "(command: \"%s\", buffer: \"%s\")"),
+                command_name,
+                command,
+                buffer->full_name);
         }
         rc = WEECHAT_RC_ERROR;
         goto end;

@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-11 20:47+0100\n"
-"PO-Revision-Date: 2019-02-28 20:53+0100\n"
+"POT-Creation-Date: 2019-03-11 20:59+0100\n"
+"PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -4642,9 +4642,11 @@ msgstr "%sシグナル %d を pid %d に送信中にエラー: %s"
 msgid "%sYou can not write text in this buffer"
 msgstr "%sこのバッファに書き込むことは出来ません"
 
-#, fuzzy, c-format
-msgid "debug: command \"%s\" is not allowed in this context"
-msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
+#, c-format
+msgid ""
+"warning: the command \"%s\" is not currently allowed (command: \"%s\", "
+"buffer: \"%s\")"
+msgstr ""
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

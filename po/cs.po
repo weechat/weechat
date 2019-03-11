@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-11 20:47+0100\n"
-"PO-Revision-Date: 2019-02-28 20:53+0100\n"
+"POT-Creation-Date: 2019-03-11 20:59+0100\n"
+"PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -4130,9 +4130,11 @@ msgstr "%sChyba odesílání signálu %d na pid %d: %s"
 msgid "%sYou can not write text in this buffer"
 msgstr "%sDo tohoto bufferu nemůžete zapisovat text"
 
-#, fuzzy, c-format
-msgid "debug: command \"%s\" is not allowed in this context"
-msgstr "%sBarva \"%s\" není definovávána v paletě"
+#, c-format
+msgid ""
+"warning: the command \"%s\" is not currently allowed (command: \"%s\", "
+"buffer: \"%s\")"
+msgstr ""
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"

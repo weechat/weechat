@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-11 20:47+0100\n"
-"PO-Revision-Date: 2019-02-28 20:53+0100\n"
+"POT-Creation-Date: 2019-03-11 20:59+0100\n"
+"PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -4750,9 +4750,11 @@ msgstr "%sBłąd wysyłania sygnału %d do pid %d: %s"
 msgid "%sYou can not write text in this buffer"
 msgstr "%s nie możesz nic pisać w tym buforze"
 
-#, fuzzy, c-format
-msgid "debug: command \"%s\" is not allowed in this context"
-msgstr "%sKomenda \"/%s eval\" nie jest jeszcze zaimplementowana"
+#, c-format
+msgid ""
+"warning: the command \"%s\" is not currently allowed (command: \"%s\", "
+"buffer: \"%s\")"
+msgstr ""
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
