@@ -183,7 +183,7 @@
 ** Standardwert: `+""+`
 
 * [[option_relay.weechat.commands]] *relay.weechat.commands*
-** Beschreibung: pass:none[durch Kommata getrennte Liste von Befehlen die erlaubt/verboten sind wenn Daten (Text oder Befehl) vom Client empfangen werden; "*" bedeutet alle Befehle sind erlaubt, beginnt ein Befehl hingegen mit "!" wird die Auswahl umgekehrt und der Befehl wird nicht ausgeführt, der Platzhalter "*" ist erlaubt; standardmäßig sind einige Befehle nicht erlaubt (die zu einem denial of service oder einer remote code execution führen können, wenn der Client nicht vertrauenswürdig ist)]
+** Beschreibung: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; this option should be set if the relay client is not safe (someone could use it to run commands); for example "*,!exec,!quit" allows any command except /exec and /quit]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"*,!exec,!fset,!guile,!javascript,!lua,!perl,!php,!plugin,!python,!quit,!repeat,!ruby,!script,!secure,!set,!tcl,!unset,!upgrade,!wait"+`
+** Standardwert: `+""+`

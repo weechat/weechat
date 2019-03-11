@@ -402,6 +402,7 @@ relay_weechat_protocol_input_timer_cb (const void *pointer,
                                        int remaining_calls)
 {
     char **timer_args;
+    const char *ptr_weechat_commands;
     int i;
     struct t_gui_buffer *ptr_buffer;
     struct t_hashtable *options;
@@ -420,18 +421,28 @@ relay_weechat_protocol_input_timer_cb (const void *pointer,
         ptr_buffer = weechat_buffer_search ("==", timer_args[0]);
         if (ptr_buffer)
         {
-            options = weechat_hashtable_new (8,
-                                             WEECHAT_HASHTABLE_STRING,
-                                             WEECHAT_HASHTABLE_STRING,
-                                             NULL, NULL);
-            if (options)
+            ptr_weechat_commands = weechat_config_string (
+                relay_config_weechat_commands);
+            if (ptr_weechat_commands && ptr_weechat_commands[0])
             {
-                weechat_hashtable_set (
-                    options,
-                    "commands",
-                    weechat_config_string (relay_config_weechat_commands));
-                weechat_command_options (ptr_buffer, timer_args[1], options);
-                weechat_hashtable_free (options);
+                options = weechat_hashtable_new (8,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 WEECHAT_HASHTABLE_STRING,
+                                                 NULL, NULL);
+                if (options)
+                {
+                    weechat_hashtable_set (
+                        options,
+                        "commands",
+                        weechat_config_string (relay_config_weechat_commands));
+                    weechat_command_options (ptr_buffer, timer_args[1],
+                                             options);
+                    weechat_hashtable_free (options);
+                }
+            }
+            else
+            {
+                weechat_command (ptr_buffer, timer_args[1]);
             }
         }
     }

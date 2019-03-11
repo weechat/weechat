@@ -1039,33 +1039,11 @@ relay_config_init ()
            "data (text or command) is received from a client; "
            "\"*\" means any command, a name beginning with \"!\" is "
            "a negative value to prevent a command from being executed, "
-           "wildcard \"*\" is allowed in names; by default some commands "
-           "are not allowed (they could lead to denial of service or remote "
-           "code execution if the client is not trusted)"),
-        NULL, 0, 0,
-        "*,"
-        "!exec,"
-        "!fset,"
-        "!guile,"
-        "!javascript,"
-        "!key,"
-        "!lua,"
-        "!perl,"
-        "!php,"
-        "!plugin,"
-        "!python,"
-        "!quit,"
-        "!repeat,"
-        "!ruby,"
-        "!script,"
-        "!secure,"
-        "!set,"
-        "!tcl,"
-        "!trigger,"
-        "!unset,"
-        "!upgrade,"
-        "!wait",
-        NULL, 0,
+           "wildcard \"*\" is allowed in names; this option should be set if "
+           "the relay client is not safe (someone could use it to run "
+           "commands); for example \"*,!exec,!quit\" allows any command "
+           "except /exec and /quit"),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);

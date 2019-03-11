@@ -183,7 +183,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_relay.weechat.commands]] *relay.weechat.commands*
-** description: pass:none[liste des commandes autorisées/interdites lorsque qu'une entrée de données (texte ou commande) est reçue du client (séparées par des virgules) ; "*" signifie toutes les commandes, un nom commençant par "!" est une valeur négative pour empêcher une commande d'être exécutée, le caractère joker "*" est autorisé dans les noms ; par défaut certaines commandes ne sont pas autorisées (elles pourraient conduire à un déni de service ou l'exécution de commandes à distance si le client n'est pas sûr)]
+** description: pass:none[liste des commandes autorisées/interdites lorsque qu'une entrée de données (texte ou commande) est reçue du client (séparées par des virgules) ; "*" signifie toutes les commandes, un nom commençant par "!" est une valeur négative pour empêcher une commande d'être exécutée, le caractère joker "*" est autorisé dans les noms ; cette option devrait être définie si le client relay n'est pas sûr (quelqu'un pourrait l'utiliser pour exécuter des commandes) ; par exemple "*,!exec,!quit" autorise toute commande sauf /exec et /quit]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"*,!exec,!fset,!guile,!javascript,!lua,!perl,!php,!plugin,!python,!quit,!repeat,!ruby,!script,!secure,!set,!tcl,!unset,!upgrade,!wait"+`
+** valeur par défaut: `+""+`
