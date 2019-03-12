@@ -307,6 +307,7 @@ relay_config_check_network_ssl_priorities (const void *pointer, void *data,
     return 0;
 #else
     /* make C compiler happy */
+    (void) pointer;
     (void) data;
     (void) option;
     (void) value;

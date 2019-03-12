@@ -484,6 +484,9 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     }
     return fingerprint_eval;
 #else
+    /* make C compiler happy */
+    (void) server;
+
     return strdup ("");
 #endif /* HAVE_GNUTLS */
 }
