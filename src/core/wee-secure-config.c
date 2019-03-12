@@ -54,7 +54,7 @@ void
 secure_config_get_passphrase_from_user (const char *error)
 {
     const char *prompt[5];
-    char passphrase[1024];
+    char passphrase[SECURE_PASSPHRASE_MAX_LENGTH + 1];
 
     prompt[0] = _("Please enter your passphrase to decrypt the data secured "
                   "by WeeChat:");

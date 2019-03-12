@@ -5466,6 +5466,16 @@ COMMAND_CALLBACK(secure)
     if (string_strcasecmp (argv[1], "passphrase") == 0)
     {
         COMMAND_MIN_ARGS(3, "passphrase");
+        if ((strcmp (argv[2], "-delete") != 0)
+            && (strlen (argv_eol[2]) > SECURE_PASSPHRASE_MAX_LENGTH))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: passphrase is too long "
+                               "(max: %d chars)"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             SECURE_PASSPHRASE_MAX_LENGTH);
+            return WEECHAT_RC_OK;
+        }
         passphrase_was_set = 0;
         if (secure_passphrase)
         {

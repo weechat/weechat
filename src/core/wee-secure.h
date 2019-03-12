@@ -22,12 +22,13 @@
 
 #include <time.h>
 
-#define SECURE_ENV_PASSPHRASE       "WEECHAT_PASSPHRASE"
-#define SECURE_SALT_DEFAULT         "WeeChat!"
-#define SECURE_DATA_PASSPHRASE_FLAG "__passphrase__"
-#define SECURE_SALT_SIZE            8
-#define SECURE_TOTP_MIN_DIGITS      4
-#define SECURE_TOTP_MAX_DIGITS      10
+#define SECURE_ENV_PASSPHRASE        "WEECHAT_PASSPHRASE"
+#define SECURE_PASSPHRASE_MAX_LENGTH 4096
+#define SECURE_SALT_DEFAULT          "WeeChat!"
+#define SECURE_DATA_PASSPHRASE_FLAG  "__passphrase__"
+#define SECURE_SALT_SIZE             8
+#define SECURE_TOTP_MIN_DIGITS       4
+#define SECURE_TOTP_MAX_DIGITS       10
 
 enum t_secure_config_hash_algo
 {

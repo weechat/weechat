@@ -30,6 +30,7 @@ New features::
 
 Bug fixes::
 
+  * core: set max length to 4096 for /secure passphrase (issue #1323)
   * core: refilter only affected buffers on filter change (issue #1309, issue #1311)
   * fset: fix slow refresh of fset buffer during /reload (issue #1313)
   * irc: quote NICK command argument sent to the server (issue #1319)
