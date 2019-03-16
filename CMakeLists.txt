@@ -30,6 +30,13 @@ set(CMAKE_SKIP_RPATH ON)
 set(CMAKE_C_FLAGS   "${CMAKE_C_FLAGS} -fsigned-char -Wall -Wextra -Werror-implicit-function-declaration")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsigned-char -Wall -Wextra")
 
+if(POLICY CMP0063)
+  cmake_policy(SET CMP0063 NEW)
+endif()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
 # version
 execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-major OUTPUT_VARIABLE VERSION_MAJOR)
 execute_process(COMMAND ${CMAKE_SOURCE_DIR}/version.sh devel-minor OUTPUT_VARIABLE VERSION_MINOR)
