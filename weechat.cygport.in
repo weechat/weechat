@@ -87,10 +87,10 @@ PKG_HINTS="setup python perl ruby lua tcl guile php devel doc"
 # Package "weechat": binary, all plugins except scripting languages,
 # translations, icon, man pages
 #
-weechat_SUMMARY="Fast, light and extensible chat client (IRC/XMPP)"
+weechat_SUMMARY="Fast, light and extensible chat client"
 weechat_DESCRIPTION="WeeChat (Wee Enhanced Environment for Chat) is a fast, \
-light and extensible chat client (IRC/XMPP). Everything can be done with a \
-keyboard, it is customizable and extensible with scripts."
+light and extensible chat client. Everything can be done with a keyboard, \
+it is customizable and extensible with plugins/scripts."
 weechat_CONTENTS="
     usr/bin/
     usr/lib/weechat/plugins/alias.dll
