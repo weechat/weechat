@@ -20,8 +20,8 @@
 #
 # This file is used to build Cygwin packages using the "cygport" command.
 #
-# It must be used *ONLY* for a stable release (version "X.Y.Z"), not for
-# a development version (version "X.Y.Z-dev" or "X.Y.Z-rcN").
+# It must be used *ONLY* for a stable release (version "X.Y" or "X.Y.Z"),
+# not for a development version (version "X.Y-dev" or "X.Y-rcN").
 #
 # Instructions:
 #
@@ -30,12 +30,12 @@
 #      $ gem install -n /usr/local/bin asciidoctor
 #
 #   2. execute these commands inside your build directory, after running cmake
-#      or configure script (replace X.Y.Z by WeeChat version):
+#      or configure script (replace X.Y by WeeChat version):
 #
-#      $ cygport weechat-X.Y.Z-1.cygport fetch
-#      $ cygport weechat-X.Y.Z-1.cygport almostall
+#      $ cygport weechat-X.Y-1.cygport fetch
+#      $ cygport weechat-X.Y-1.cygport almostall
 #
-#      Packages are built in directory: ./weechat-X.Y.Z-1.<arch>/dist/weechat/
+#      Packages are built in directory: ./weechat-X.Y-1.<arch>/dist/weechat/
 #
 
 inherit cmake
