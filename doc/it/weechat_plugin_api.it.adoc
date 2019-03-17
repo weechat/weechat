@@ -11478,7 +11478,7 @@ Argomenti:
 
 // TRANSLATION MISSING
 * _modifier_: nome modificatore, lista di modificatori utilizzati da
-  Weechat o dai plugin
+  WeeChat o dai plugin
   (priorità consentita, consultare la nota riguardo la
   <<hook_priority,priority>>), see table below
 * _callback_: funzione chiamata quando viene usato il modificatore,

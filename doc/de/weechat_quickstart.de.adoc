@@ -121,7 +121,7 @@ Um eine Verbindung zu einem IRC Server herzustellen wird der
 /server add freenode chat.freenode.net
 ----
 
-In dieser Zeile ist `freenode` der interne Servername der von Weechat genutzt wird:
+In dieser Zeile ist `freenode` der interne Servername der von WeeChat genutzt wird:
 Damit ist es möglich sich mit dem Server zu verbinden `/connect freenode` und um
 die Server relevanten Optionen anzupassen _irc.server.freenode.xxx_.
 

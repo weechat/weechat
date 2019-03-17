@@ -251,7 +251,7 @@ skompilowanym i załadowanym za pomocą komendy `/plugin`, natomiast _skrypt_ je
 plikiem tekstowym załadowanym przez wtyczkę jak _python_ za pomocą komendy
 `/python`.
 
-W momencie, kiedy Twój skrypt _test.py_ wywołuje funkcję z API Weechat, wygląda to tak:
+W momencie, kiedy Twój skrypt _test.py_ wywołuje funkcję z API WeeChat, wygląda to tak:
 
 ....
                ┌────────────────────────┐        ╔══════════════════╗

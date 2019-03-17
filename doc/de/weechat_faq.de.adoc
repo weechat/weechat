@@ -125,7 +125,7 @@ das man *ALLE* Lösungsmöglichkeiten prüft:
   (diese Option kann schwerwiegenden Darstellungsfehler verursachen, wenn man die Option aktiviert hat)
 
 [NOTE]
-Für Weechat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO
+Für WeeChat wird die Nutzung von UTF-8 locale empfohlen. Nutzt Du jedoch ISO
 oder andere locale, bitte vergewissere Dich, dass *alle* Deine Einstellungen
 (Terminal, screen, ...) sich auch auf ISO beziehen und *nicht* auf UTF-8.
 
@@ -160,7 +160,7 @@ Abhängig davon von wo WeeChat gestartet wird solltest Du folgenden Wert nutzen:
 Falls nötig korrigiere den Wert Deiner Variablen TERM: `export TERM="xxx"`.
 
 [[screen_weird_chars]]
-=== Wenn ich Weechat mit screen/tmux nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
+=== Wenn ich WeeChat mit screen/tmux nutze habe ich merkwürdige Zeichen, wie kann ich dies beheben?
 
 Dies kann durch einen falschen Wert in der TERM-Umgebungsvariable Deiner Shell hervorgerufen
 werden. Bitte überprüfe die Ausgabe von `echo $TERM` in Deinem Terminal (*außerhalb von screen/tmux*). +
@@ -388,7 +388,7 @@ Eine weitere Möglichkeit ist, ein Skript zu nutzen:
 ----
 
 [[change_locale_without_quit]]
-=== Ich möchte die Meldungen von Weechat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
+=== Ich möchte die Meldungen von WeeChat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
 
 Ja, mit WeeChat ≥ 1.0:
 
@@ -870,7 +870,7 @@ Teilnehmer haben:
 ----
 
 [NOTE]
-Für Weechat ≤ 0.3.3, lauten die Optionen _irc.network.away_check_ und
+Für WeeChat ≤ 0.3.3, lauten die Optionen _irc.network.away_check_ und
 _irc.network.away_check_max_nicks_.
 
 [[highlight_notification]]

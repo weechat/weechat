@@ -733,7 +733,7 @@ string_eval_path_home (const char *path,
     path2 = NULL;
     path3 = NULL;
 
-    /* replace "%h" by Weechat home */
+    /* replace "%h" by WeeChat home */
     if (strncmp (path, "%h", 2) == 0)
     {
         length = strlen (weechat_home) + strlen (path + 2) + 1;

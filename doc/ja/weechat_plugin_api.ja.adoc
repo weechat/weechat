@@ -11004,7 +11004,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 引数:
 
-* _modifier_: 修飾子名、Weechat またはプラグインが使う修飾子のリスト
+* _modifier_: 修飾子名、WeeChat またはプラグインが使う修飾子のリスト
   (優先度の設定が可能、<<hook_priority,フックの優先度>>に関する注意を参照)
   (以下の表を参照)
 * _callback_: 修飾子が使われた際に呼び出すコールバック関数、引数と戻り値:

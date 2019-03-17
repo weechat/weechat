@@ -35,7 +35,7 @@ pasuje ono do WeeChat!).
 [[why_choose_weechat]]
 === Dlaczego wybrać WeeChat? X-Chat i Irssi są takie dobre...
 
-Ponieważ Weechat jest bardzo lekki i posiada innowacyjne funkcje.
+Ponieważ WeeChat jest bardzo lekki i posiada innowacyjne funkcje.
 
 Więcej informacji o moliwościach WeeChat można znaleźć tutaj: https://weechat.org/about/features
 
@@ -412,7 +412,7 @@ term screen-256color
 ----
 
 Jeśli twoja zmienna _TERM_ posiada złą wartość i WeeChat jest już uruchomiony,
-możesz zmienić ją za pomocą tych dwóch komend (dla wersji Weechat ≥ 1.0):
+możesz zmienić ją za pomocą tych dwóch komend (dla wersji WeeChat ≥ 1.0):
 
 ----
 /set env TERM screen-256color

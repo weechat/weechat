@@ -543,7 +543,7 @@
 ** Standardwert: `+2+`
 
 * [[option_irc.server_default.autoconnect]] *irc.server_default.autoconnect*
-** Beschreibung: pass:none[Beim Programmstart von Weechat automatisch mit dem Server verbinden]
+** Beschreibung: pass:none[Beim Programmstart von WeeChat automatisch mit dem Server verbinden]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+off+`

@@ -42,7 +42,7 @@ Im Skript-Buffer, werden folgende Statusangaben für ein Skript angezeigt:
   | | | | | obsolete (neue Version verfügbar)
   | | | | Skript wird ausgeführt (geladen)
   | | | gehalten
-  | | Skript wird beim Start, von Weechat, automatisch gestartet
+  | | Skript wird beim Start, von WeeChat, automatisch gestartet
   | Skript ist installiert (wird aber nicht ausgeführt)
   es wird empfohlen dieses Skript zu installieren
 

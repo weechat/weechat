@@ -4,6 +4,6 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: weechat
-Description: Weechat plugins headers
+Description: WeeChat plugins headers
 Version: @VERSION@
 Cflags: -I${includedir}/@PACKAGE@

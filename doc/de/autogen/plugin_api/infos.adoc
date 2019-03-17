@@ -116,7 +116,7 @@
 
 | weechat | totp_validate | validiert ein Time-based One-Time Passwort (TOTP): 1 falls TOTP korrekt ist, ansonsten 0 | geheim (in base32), einmaliges Passwort, Zeitstempel (optional, standardmäßig aktuelle Zeit), Anzahl der zu testenden Passwörtern vorher/nachher (optional, standardmäßig 0)
 
-| weechat | uptime | Laufzeit von Weechat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
+| weechat | uptime | Laufzeit von WeeChat (Format: "days:hh:mm:ss") | "days" (Anzahl der Tage) oder "seconds" (Anzahl der Sekunden) (optional)
 
 | weechat | version | WeeChat-Version | -
 

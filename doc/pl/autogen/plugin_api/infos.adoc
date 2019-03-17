@@ -124,7 +124,7 @@
 
 | weechat | version_number | wersja WeeChat (jako liczba) | -
 
-| weechat | weechat_dir | katalog Weechat | -
+| weechat | weechat_dir | katalog WeeChat | -
 
 | weechat | weechat_libdir | katalog "lib" WeeChata | -
 

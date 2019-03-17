@@ -7981,7 +7981,7 @@ void weechat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 Paramètres :
 
 * _buffer_ : pointeur vers le tampon, si NULL, le message est affiché sur le
-  tampon Weechat
+  tampon WeeChat
 * _date_ : date pour le message (0 signifie la date/heure courante)
 * _tags_ : liste d'étiquettes séparées par des virgules (NULL signifie aucune
   étiquette)

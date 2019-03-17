@@ -242,7 +242,7 @@ název volby):
 Tento příkaz může být použit k vytvoření nového připojení k serveru bez
 použití příkazu `/server` (see `/help connect`).
 
-Ve výchozím nastavení jsou serverové bufery spojen s Weechat _core_ buferem.
+Ve výchozím nastavení jsou serverové bufery spojen s WeeChat _core_ buferem.
 K přepnutí mezi _core_ a server bufery můžete použít klávesu kbd:[Ctrl+x].
 
 Je možné vypnout automatické sloučení serverových buferů a mít nezávislé
@@ -335,7 +335,7 @@ To remove the split:
 [[key_bindings]]
 == Předvoblby klávesových zkratek
 
-Weechat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny
+WeeChat používá ve výchozím nastavení mnoho klávesových zkratek, Všechny
 najdete v dokumentaci, ale je dobré znát alespoň pár těchto důležitých:
 
 - kbd:[Alt+←] / kbd:[Alt+→] nebo kbd:[F5] / kbd:[F6]: přepnout na předchozí/další bufer

@@ -1859,7 +1859,7 @@ kbd:[Alt+%] die Mausunterstützung für 10 Sekunden deaktiviert werden:
 ----
 
 [IMPORTANT]
-Ist die Maus in Weechat aktiviert werden alle Mausereignisse duch WeeChat gefangen.
+Ist die Maus in WeeChat aktiviert werden alle Mausereignisse duch WeeChat gefangen.
 Dadurch werden Aktionen wie Kopieren+Einfügen oder Klicks auf URLs nicht an das
 Terminal weitergereicht. + Mittels der kbd:[Shift] Taste kann aber das Mausereignis
 an das Terminal weitergeleitet werden, als ob die Maus deaktiviert wäre (bei
@@ -2972,7 +2972,7 @@ Die IRC Erweiterung nutzt folgende Level:
 * Level 4: Server Nachrichten join/part/quit
 
 Setzen Sie also den Grad der Protokollierung für einen IRC Channel auf "3"
-wird Weechat alle Nachrichten protokollieren, ausgenommen join/part/quit
+wird WeeChat alle Nachrichten protokollieren, ausgenommen join/part/quit
 Nachrichten.
 
 weitere Beispiele:

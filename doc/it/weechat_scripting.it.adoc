@@ -255,7 +255,7 @@ un plugin è un file binario compilato e caricato con il comando
 un plugin come _python_ con il comando `python`.
 
 Quando il proprio script _test.py_ chiama una funzione delle API di
-Weechat, il path è simile a questo:
+WeeChat, il path è simile a questo:
 
 ....
                ┌──────────────────────┐        ╔══════════════════╗
@@ -986,7 +986,7 @@ weechat.hook_process("url:https://weechat.org/dev/info/stable/",
 ----
 
 [TIP]
-Tutte le informazioni disponibili su Weechat sono sulla pagina
+Tutte le informazioni disponibili su WeeChat sono sulla pagina
 https://weechat.org/dev/info
 
 Esempio di trasferimento di un URL con un'opzione: scaricare l'ultimo pacchetto

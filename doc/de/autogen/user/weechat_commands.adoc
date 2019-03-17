@@ -912,7 +912,7 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 ----
 
 [[command_weechat_uptime]]
-* `+uptime+`: Zeigt die Uptime von Weechat an
+* `+uptime+`: Zeigt die Uptime von WeeChat an
 
 ----
 /uptime  [-o | -ol]

@@ -872,7 +872,7 @@ Podstawowe kolory w WeeChat to:
 [[colors_extended]]
 ==== Rozszerzone kolory
 
-Weechat dynamicznie alokuje pary kolorów, kiedy kolory są używane na ekranie (do
+WeeChat dynamicznie alokuje pary kolorów, kiedy kolory są używane na ekranie (do
 wyświetlania buforów i pasków).
 
 W dodatku do podstawowych kolorów, możesz użyć numer koloru pomiędzy 1 a limitem
@@ -2197,10 +2197,10 @@ Wtyczka charset pozwala na zmianę kodowania dla wysyłanych i otrzymywanych dan
 Można zdefiniować domyślne kodowanie, oraz dla poszczególnych buforów (lub grup
 buforów).
 
-Ta wtyczka jest opcjonalna, jednak zalecana: jeśli nie jest załadowana Weechat
+Ta wtyczka jest opcjonalna, jednak zalecana: jeśli nie jest załadowana WeeChat
 może odczytywać/zapisywać dane tylko w UTF-8.
 
-Ta wtyczka powinna zostać automatycznie załadowana przy uruchomieniu Weechat.
+Ta wtyczka powinna zostać automatycznie załadowana przy uruchomieniu WeeChat.
 Aby się upewnić, że została załadowana, spróbuj:
 
 ----

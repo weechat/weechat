@@ -11035,7 +11035,7 @@ struct t_hook *weechat_hook_modifier (const char *modifier,
 
 Arguments:
 
-* _modifier_: modifier name, list of modifiers used by Weechat or plugins
+* _modifier_: modifier name, list of modifiers used by WeeChat or plugins
   (priority allowed, see note about <<hook_priority,priority>>)
   (see table below)
 * _callback_: function called when modifier is used, arguments and return value:

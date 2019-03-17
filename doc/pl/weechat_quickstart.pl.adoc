@@ -111,7 +111,7 @@ Możesz dodać serwer IRC za pomocą komendy `/server`, na przykład:
 /server add freenode chat.freenode.net
 ----
 
-W tej komendzie `freenode` to nazwa wewnętrzna używana przez Weechat:
+W tej komendzie `freenode` to nazwa wewnętrzna używana przez WeeChat:
 będziesz mógł połączyć się za pomocą `/connect freenode`. Opcje serwera
 będą miały postać _irc.server.freenode.xxx_.
 
