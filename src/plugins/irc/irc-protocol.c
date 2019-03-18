@@ -3566,13 +3566,15 @@ IRC_PROTOCOL_CALLBACK(323)
 
 IRC_PROTOCOL_CALLBACK(324)
 {
-    const char *ptr_modes;
+    const char *ptr_modes, *ptr_modes_args;
     struct t_irc_channel *ptr_channel;
+
+    IRC_PROTOCOL_MIN_ARGS(4);
 
     ptr_modes = (argc > 4) ?
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
-
-    IRC_PROTOCOL_MIN_ARGS(4);
+    ptr_modes_args = (argc > 5) ?
+        ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
 
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel)
@@ -3581,7 +3583,7 @@ IRC_PROTOCOL_CALLBACK(324)
         if (argc > 4)
         {
             (void) irc_mode_channel_set (server, ptr_channel, host,
-                                         ptr_modes, NULL);
+                                         ptr_modes, ptr_modes_args);
         }
     }
     if (!ptr_channel

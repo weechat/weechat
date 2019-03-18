@@ -342,11 +342,13 @@ irc_mode_channel_set (struct t_irc_server *server,
     argc = 0;
     argv = NULL;
     if (modes_arguments)
+    {
         argv = weechat_string_split (modes_arguments, " ",
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                      0, &argc);
+    }
 
     current_arg = 0;
 
