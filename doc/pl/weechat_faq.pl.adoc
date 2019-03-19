@@ -212,8 +212,9 @@ Aby przesunąć pasek na spód:
 Przewijanie paska: jeśli obsługa myszy jest włączona (skrót: kbd:[Alt+m]), możesz
 przewijać pasek za pomocą rolki myszy.
 
-Domyślne skróty do przewijania paska _buflist_ to kbd:[F1], kbd:[F2], kbd:[Alt+F1]
-oraz kbd:[Alt+F2].
+// TRANSLATION MISSING
+Domyślne skróty do przewijania paska _buflist_ to kbd:[F1] (or kbd:[Ctrl+F1]),
+kbd:[F2] (or kbd:[Ctrl+F2]), kbd:[Alt+F1] oraz kbd:[Alt+F2].
 
 Dla skryptu _buffers.pl_, możesz zdefiniować skróty w podobny sposób do istniejących
 skrótów do przewijania listy nicków. +

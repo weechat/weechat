@@ -219,8 +219,8 @@ Pour déplacer la barre en bas :
 Pour faire défiler la barre : si la souris est activée (touche : kbd:[Alt+m]),
 vous pouvez faire défiler avec la roulette de votre souris.
 
-Les touches par défaut pour faire défiler la barre _buflist_ sont kbd:[F1],
-kbd:[F2], kbd:[Alt+F1] et kbd:[Alt+F2].
+Les touches par défaut pour faire défiler la barre _buflist_ sont kbd:[F1]
+(ou kbd:[Ctrl+F1]), kbd:[F2] (ou kbd:[Ctrl+F2]), kbd:[Alt+F1] et kbd:[Alt+F2].
 
 Pour le script _buffers.pl_, vous pouvez définir des touches, comme les touches
 déjà existantes pour faire défiler la liste de pseudos. +

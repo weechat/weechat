@@ -209,8 +209,10 @@ WeeChat バージョン 1.8 以上の場合、link:weechat_user.ja.html#buflist_
 _buflist_ バーをスクロールする方法: マウスを有効化しているならば
 (キー: kbd:[Alt+m])、マウスホイールでバッファリストバーをスクロールできます。
 
+// TRANSLATION MISSING
 _buflist_ バーをスクロールするデフォルトキーは
-kbd:[F1]、kbd:[F2]、kbd:[Alt+F1]、kbd:[Alt+F2] です。
+kbd:[F1] (or kbd:[Ctrl+F1])、kbd:[F2] (or kbd:[Ctrl+F2])、kbd:[Alt+F1]、
+kbd:[Alt+F2] です。
 
 _buffers.pl_
 スクリプトをお使いの場合、ニックネームリストをスクロールするキーと似たキーを割り当てることも可能です。 +
