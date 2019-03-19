@@ -32,7 +32,7 @@
  */
 
 #ifndef WEECHAT_PLUGIN_PHP_H
-#define WEECHAT_PLUGIN_PHP_H 1
+#define WEECHAT_PLUGIN_PHP_H
 
 #define weechat_plugin weechat_php_plugin
 #define PHP_PLUGIN_NAME "php"

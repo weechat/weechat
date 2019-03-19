@@ -32,7 +32,7 @@
  */
 
 #ifndef WEECHAT_PLUGIN_PHP_API_H
-#define WEECHAT_PLUGIN_PHP_API_H 1
+#define WEECHAT_PLUGIN_PHP_API_H
 
 extern struct zval* weechat_php_api_funcs[];
 extern struct t_php_const weechat_php_api_consts[];
