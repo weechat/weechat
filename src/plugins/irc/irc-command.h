@@ -34,7 +34,7 @@ struct t_irc_channel;
     {                                                                   \
         weechat_printf (NULL,                                           \
                         _("%s%s: command \"%s\" must be executed on "   \
-                          "irc buffer (server or channel)"),            \
+                          "irc buffer (server, channel or private)"),   \
                         weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
                         __command);                                     \
         return WEECHAT_RC_OK;                                           \

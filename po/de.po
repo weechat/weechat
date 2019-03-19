@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-17 16:04+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -7488,6 +7488,14 @@ msgstr ""
 "%s%s: der Befehl /%s kann nicht ausgeführt werden, da der Channel Modus \"%s"
 "\" nicht vom Server unterstützt wird"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+"%s%s: Der Befehl \"%s\" kann nur im IRC-Buffer ausgeführt werden (Server "
+"oder Channel)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: künftige Abwesenheit: %s"
@@ -9170,8 +9178,10 @@ msgstr ""
 "Suche)\n"
 "target: Antwort soll auf diese Suchmaske zutreffen"
 
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
 "%s%s: Der Befehl \"%s\" kann nur im IRC-Buffer ausgeführt werden (Server "
 "oder Channel)"

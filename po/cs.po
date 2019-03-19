@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-17 18:32+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6074,6 +6074,13 @@ msgid ""
 "server"
 msgstr ""
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+"%s%s: příkaz \"%s\" nemůže být spuštěn v irc bufferu (server nebo kanál)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: Budoucí zpráva o nepřítomnosit: %s"
@@ -7662,8 +7669,10 @@ msgstr ""
 "vyhledávání)\n"
 "      cíl: odpověď musí odpovídat této masce"
 
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
 "%s%s: příkaz \"%s\" nemůže být spuštěn v irc bufferu (server nebo kanál)"
 

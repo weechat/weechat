@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6248,6 +6248,12 @@ msgid ""
 "server"
 msgstr ""
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr "%s%s: não foi possível criar novo canal \"%s\""
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr ""
@@ -7541,9 +7547,11 @@ msgid ""
 "target: reply should match this mask"
 msgstr ""
 
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
-msgstr ""
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
+msgstr "%s%s: não foi possível criar novo canal \"%s\""
 
 msgid "current IRC server"
 msgstr "servidor IRC atual"

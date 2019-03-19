@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-17 16:04+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -7149,6 +7149,13 @@ msgstr ""
 "%s%s: nie można wykonać komendy /%s, atrybut kanału \"%s\" nie jest "
 "wspierany przez serwer"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+"%s%s: komenda \"%s\" musi zostać wykonana w buforze irc (serwer lub kanał)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: przyszła nieobecność: %s"
@@ -8784,8 +8791,10 @@ msgstr ""
 "ujemnych)\n"
 "cel: odpowiedź powinna pasować do maski"
 
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
 "%s%s: komenda \"%s\" musi zostać wykonana w buforze irc (serwer lub kanał)"
 

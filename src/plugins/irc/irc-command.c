@@ -533,6 +533,16 @@ IRC_COMMAND_CALLBACK(allchan)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
         {
+            if (!ptr_server)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: command \"%s\" with option "
+                                  "\"%s\" must be executed on "
+                                  "irc buffer (server, channel or private)"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                "allchan", "-current");
+                return WEECHAT_RC_OK;
+            }
             current_server = 1;
             ptr_command = argv_eol[i + 1];
         }
@@ -592,6 +602,16 @@ IRC_COMMAND_CALLBACK(allpv)
     {
         if (weechat_strcasecmp (argv[i], "-current") == 0)
         {
+            if (!ptr_server)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: command \"%s\" with option "
+                                  "\"%s\" must be executed on "
+                                  "irc buffer (server, channel or private)"),
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                                "allpv", "-current");
+                return WEECHAT_RC_OK;
+            }
             current_server = 1;
             ptr_command = argv_eol[i + 1];
         }

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7023,6 +7023,14 @@ msgstr ""
 "%s%s: コマンド /%s を実行できません、このサーバはチャンネルモード \"%s\" をサ"
 "ポートしません"
 
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+"%s%s: コマンド \"%s\" は irc バッファで実行してください (サーバかチャンネル"
+"バッファ)"
+
 #, c-format
 msgid "%s: future away: %s"
 msgstr "%s: 離席予約: %s"
@@ -8643,8 +8651,10 @@ msgstr ""
 " count: リプライの個数 (負の値で完全な検索)\n"
 "target: マスクに一致するものだけを返す"
 
-#, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+#, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
 "%s%s: コマンド \"%s\" は irc バッファで実行してください (サーバかチャンネル"
 "バッファ)"

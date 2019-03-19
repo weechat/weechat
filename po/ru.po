@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5645,6 +5645,12 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "Планирование статуса на %s%s%s: %s\n"
 
@@ -7144,7 +7150,9 @@ msgstr ""
 "      цель: фильтровать результаты по маске"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr "%s \"%s\" команда может быть выполнена только в буфере сервера\n"
 
 #, fuzzy

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-02-28 20:18+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5608,6 +5608,12 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
+
+#, fuzzy, c-format
 msgid "%s: future away: %s"
 msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 
@@ -7115,7 +7121,9 @@ msgstr ""
 "        cél: a válasznak illeszkednie kell ehhez a feltételhez"
 
 #, fuzzy, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr "%s \"%s\" parancs nem futtatható a szerverablakban\n"
 
 #, fuzzy

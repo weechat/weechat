@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
 "PO-Revision-Date: 2019-03-17 16:04+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5178,6 +5178,12 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr ""
 
@@ -6473,7 +6479,9 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
 
 msgid "current IRC server"

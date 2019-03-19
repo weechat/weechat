@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-12 21:27+0100\n"
-"PO-Revision-Date: 2019-03-17 16:04+0100\n"
+"POT-Creation-Date: 2019-03-19 20:34+0100\n"
+"PO-Revision-Date: 2019-03-19 20:35+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7330,6 +7330,14 @@ msgstr ""
 "pas supporté par le serveur"
 
 #, c-format
+msgid ""
+"%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
+"(server, channel or private)"
+msgstr ""
+"%s%s : la commande \"%s\" avec l'option \"%s\" doit être exécutée sur un "
+"tampon irc (serveur, canal ou privé)"
+
+#, c-format
 msgid "%s: future away: %s"
 msgstr "%s : future absence : %s"
 
@@ -8986,10 +8994,12 @@ msgstr ""
 " cible : la réponse doit correspondre à ce masque"
 
 #, c-format
-msgid "%s%s: command \"%s\" must be executed on irc buffer (server or channel)"
+msgid ""
+"%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
+"private)"
 msgstr ""
-"%s%s : la commande \"%s\" doit être exécutée sur un tampon irc (serveur ou "
-"canal)"
+"%s%s : la commande \"%s\" doit être exécutée sur un tampon irc (serveur, "
+"canal ou privé)"
 
 msgid "current IRC server"
 msgstr "serveur IRC courant"
