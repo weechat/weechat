@@ -18,7 +18,7 @@
  */
 
 #ifndef WEECHAT_TESTS_H
-#define WEECHAT_TESTS_H 1
+#define WEECHAT_TESTS_H
 
 #define WEE_TEST_STR(__result, __test)                                  \
     str = __test;                                                       \
