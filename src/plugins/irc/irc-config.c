@@ -1735,8 +1735,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("fingerprint of certificate which is trusted and accepted "
                    "for the server; only hexadecimal digits are allowed (0-9, "
-                   "a-f): 64 chars for SHA-512, 32 chars for SHA-256, "
-                   "20 chars for SHA-1 (insecure, not recommended); many "
+                   "a-f): 128 chars for SHA-512, 64 chars for SHA-256, "
+                   "40 chars for SHA-1 (insecure, not recommended); many "
                    "fingerprints can be separated by commas; if this option "
                    "is set, the other checks on certificates are NOT "
                    "performed (option \"ssl_verify\") "

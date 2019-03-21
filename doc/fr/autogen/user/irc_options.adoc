@@ -741,7 +741,7 @@
 ** valeur par défaut: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** description: pass:none[empreinte du certificat qui est de confiance et accepté pour le serveur ; seuls les chiffres hexadécimaux sont autorisés (0-9, a-f) : 64 caractères pour SHA-512, 32 caractères pour SHA-256, 20 caractères pour SHA-1 (non sûr, non recommandé) ; plusieurs empreintes peuvent être séparées par des virgules ; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify") (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
+** description: pass:none[empreinte du certificat qui est de confiance et accepté pour le serveur ; seuls les chiffres hexadécimaux sont autorisés (0-9, a-f) : 128 caractères pour SHA-512, 64 caractères pour SHA-256, 40 caractères pour SHA-1 (non sûr, non recommandé) ; plusieurs empreintes peuvent être séparées par des virgules ; si cette option est définie, les autres vérifications sur les certificats ne sont PAS effectuées (option "ssl_verify") (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

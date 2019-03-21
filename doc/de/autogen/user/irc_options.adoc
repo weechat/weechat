@@ -741,7 +741,7 @@
 ** Standardwert: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** Beschreibung: pass:none[Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird; es sind nur hexadezimale Zeichen erlaubt (0-9, a-f): bei SHA-512 ist das Zertifikat 64 Zeichen lang, bei SHA-256 sind es 32 Zeichen, bei SHA-1 sind es 20 Zeichen (nicht empfohlen, da unsicher); mehrere Fingerprints können durch Kommata voneinander getrennt werden; wird diese Option genutzt, findet KEINE weitere Überprüfung der Zertifikate statt (Option "ssl_verify") (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
+** Beschreibung: pass:none[Fingerprint des Zertifikates welches als vertrauenswürdig eingestuft und für diesen Server akzeptiert wird; es sind nur hexadezimale Zeichen erlaubt (0-9, a-f): bei SHA-512 ist das Zertifikat 128 Zeichen lang, bei SHA-256 sind es 64 Zeichen, bei SHA-1 sind es 40 Zeichen (nicht empfohlen, da unsicher); mehrere Fingerprints können durch Kommata voneinander getrennt werden; wird diese Option genutzt, findet KEINE weitere Überprüfung der Zertifikate statt (Option "ssl_verify") (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`

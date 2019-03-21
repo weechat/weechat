@@ -741,7 +741,7 @@
 ** domyślna wartość: `+2048+`
 
 * [[option_irc.server_default.ssl_fingerprint]] *irc.server_default.ssl_fingerprint*
-** opis: pass:none[skrót certyfikatu, który jest zaufany i akceptowany dla serwera; tylko cyfry heksadecymalne są dozwolone (0-9, a-f): 64 znaki dla SHA-512, 32 znaki dla SHA-256, 20 znaków dla SHA-1 (mało bezpieczne, nie zalecane); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify") (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
+** opis: pass:none[skrót certyfikatu, który jest zaufany i akceptowany dla serwera; tylko cyfry heksadecymalne są dozwolone (0-9, a-f): 128 znaki dla SHA-512, 64 znaki dla SHA-256, 40 znaków dla SHA-1 (mało bezpieczne, nie zalecane); wiele skrótów można oddzielić przecinkami; jeśli ta opcja jest ustawiona, certyfikat NIE jest dalej sprawdzany (opcja "ssl_verify") (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

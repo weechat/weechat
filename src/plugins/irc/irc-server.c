@@ -4147,7 +4147,7 @@ irc_server_fingerprint_search_algo_with_size (int size)
  * Returns a string with sizes of allowed fingerprint,
  * in number of hexadecimal digits (== bits / 4).
  *
- * Example of output: "64=SHA-512, 32=SHA-256, 20=SHA-1".
+ * Example of output: "128=SHA-512, 64=SHA-256, 40=SHA-1".
  *
  * Note: result must be freed after use.
  */
@@ -4165,7 +4165,7 @@ irc_server_fingerprint_str_sizes ()
     {
         snprintf (str_one_size, sizeof (str_one_size),
                   "%d=%s%s",
-                  irc_fingerprint_digest_algos_size[i] / 8,
+                  irc_fingerprint_digest_algos_size[i] / 4,
                   irc_fingerprint_digest_algos_name[i],
                   (i > 0) ? ", " : "");
         strcat (str_sizes, str_one_size);

@@ -33,6 +33,7 @@ Bug fixes::
   * core: set max length to 4096 for /secure passphrase (issue #1323)
   * core: refilter only affected buffers on filter change (issue #1309, issue #1311)
   * fset: fix slow refresh of fset buffer during /reload (issue #1313)
+  * irc: fix length of string for SHA-512, SHA-256 and SHA-1 in help on ssl_fingerprint option
   * irc: display an error with /allchan -current or /allpv -current if the current buffer is not an irc buffer (issue #1325)
   * irc: fix update of channels modes with arguments when joining a channel (issue #1324)
   * irc: quote NICK command argument sent to the server (issue #1319)
