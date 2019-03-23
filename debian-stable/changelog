@@ -1,3 +1,17 @@
+weechat (2.4-1) unstable; urgency=medium
+
+  * New upstream release
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sun, 03 Mar 2019 19:29:13 +0000
+
+weechat (2.3-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.3.0
+  * Switch debhelper compatibility to 12
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 04 Jan 2019 16:06:44 +0000
+
 weechat (2.2-1) unstable; urgency=medium
 
   * New upstream release
