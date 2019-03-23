@@ -43,6 +43,7 @@ Bug fixes::
 
 Build::
 
+  * lua: add detection of Lua 5.3 with autotools
   * core: fix compilation on Mac OS (issue #1308)
 
 [[v2.4]]
