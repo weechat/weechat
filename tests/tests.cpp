@@ -217,7 +217,6 @@ main (int argc, char *argv[])
     printf ("WeeChat arguments: \"%s\"\n", args);
 
     /* init WeeChat */
-    printf ("------------------------------------------------------------\n");
     weechat_init_gettext ();
     weechat_init (weechat_argc, weechat_argv, &test_gui_init);
     if (weechat_argv)
@@ -256,20 +255,11 @@ main (int argc, char *argv[])
 
     /* run all tests */
     printf ("\n");
-    printf (">>>>>>>>>> TESTS >>>>>>>>>>\n");
     rc = CommandLineTestRunner::RunAllTests (argc, argv);
-    printf ("<<<<<<<<<< TESTS <<<<<<<<<<\n");
-    printf ("\n");
 
     /* end WeeChat */
+    gui_chat_mute = GUI_CHAT_MUTE_ALL_BUFFERS;
     weechat_end (&gui_main_end);
-    printf ("------------------------------------------------------------\n");
-
-    /* display status */
-    printf ("\n");
-    printf ("\33[%d;1m*** %s ***\33[0m\n",
-            (rc == 0) ? 32 : 31,  /* 32 = green (OK), 31 = red (error) */
-            (rc == 0) ? "OK" : "ERROR");
 
     dlclose (handle);
 
