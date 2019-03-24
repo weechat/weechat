@@ -60,8 +60,7 @@ endif()
 # binary to run tests
 set(WEECHAT_TESTS_SRC tests.cpp tests.h)
 add_executable(tests ${WEECHAT_TESTS_SRC})
-set(LIBS
-  ${LIBS}
+target_link_libraries(tests
   weechat_core
   weechat_plugins
   weechat_gui_common
@@ -74,9 +73,11 @@ set(LIBS
   ${CURL_LIBRARIES}
   ${CPPUTEST_LIBRARIES}
   -rdynamic)
-target_link_libraries(tests ${LIBS})
 add_dependencies(tests
-  weechat_core weechat_plugins weechat_gui_common weechat_gui_headless
+  weechat_core
+  weechat_plugins
+  weechat_gui_common
+  weechat_gui_headless
   weechat_ncurses_fake
   weechat_unit_tests_core)
 
