@@ -257,8 +257,11 @@ Liste des options couramment utilisées :
   Compiler <<scripts_plugins,l'extension Python>>.
 
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension Python>> en utilisant Python 3 (*NON*
-  recommandé car beaucoup de scripts ne sont pas compatibles avec Python 3).
+  Compiler <<scripts_plugins,l'extension Python>> en utilisant Python 3. +
+  Cette option n'est pas recommandée car beaucoup de scripts ne sont pas encore
+  compatibles avec Python 3. +
+  Vous pouvez suivre l'avancement de la transition vers Python 3 sur cette page :
+  https://weechat.org/scripts/python3/
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compiler <<relay_plugin,l'extension Relay>>.

@@ -260,9 +260,13 @@ Lista popularnych opcji:
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki python>>.
 
+// TRANSLATION MISSING
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Kompilacja <<scripts_plugins,wtyczki Python>> używając Pythona 3 (*NIE*
-  zalecane, ponieważ wiele skryptów nie jest kompatybilna z Pythonem 3).
+  Compile <<scripts_plugins,Python plugin>> using Python 3. +
+  This option is not recommended because many scripts are not yet compatible
+  with Python 3. +
+  You can follow the progress of Python 3 transition on this page:
+  https://weechat.org/scripts/python3/
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Kompilacja <<relay_plugin,wtyczki relay>>.

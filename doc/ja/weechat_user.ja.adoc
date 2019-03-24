@@ -259,9 +259,13 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   <<scripts_plugins,Python プラグイン>>のコンパイル。
 
+// TRANSLATION MISSING
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Python 3 を使った <<scripts_plugins,Python プラグイン>>のコンパイル
-  (多くのスクリプトは Python 3 と互換性がないため *非推奨* です)。
+  Compile <<scripts_plugins,Python plugin>> using Python 3. +
+  This option is not recommended because many scripts are not yet compatible
+  with Python 3. +
+  You can follow the progress of Python 3 transition on this page:
+  https://weechat.org/scripts/python3/
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   <<relay_plugin,リレープラグイン>>のコンパイル。
