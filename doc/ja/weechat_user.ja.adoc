@@ -203,12 +203,13 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   <<charset_plugin,Charset プラグイン>>のコンパイル。
 
+// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  man ページのコンパイル。
+  Build man page.
 
+// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  文書のコンパイル
-  (コンパイルには時間がかかります。文書を含めたバイナリパッケージをビルドする場合、オンラインで文書を見ることができない場合だけに推奨します)。
+  Build HTML documentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Enchant と含めた <<spell_plugin,Spell プラグイン>>のコンパイル。

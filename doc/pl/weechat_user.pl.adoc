@@ -204,13 +204,13 @@ Lista popularnych opcji:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Kompilacja <<charset_plugin,wtyczki charset>>.
 
+// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Kompilacja strony man.
+  Build man page.
 
+// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Kompilacja dokumentacji (trwa to sporo czasu, zalecane tylko podczas tworzenia
-  pakietu binarnego zawierającego dokumentację lub jeśli nie możesz przeglądać
-  dokumentacji online).
+  Build HTML documentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Kompilacja <<spell_plugin,wtyczki spell>> z Enchant.

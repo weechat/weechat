@@ -199,12 +199,10 @@ List of commonly used options:
   Compile <<charset_plugin,Charset plugin>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Compile man page.
+  Build man page.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Compile documentation (it takes a long time, recommended only if you build
-  a binary package embedding documentation or if you can't browse documentation
-  online).
+  Build HTML documentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Compile <<spell_plugin,Spell plugin>> with Enchant.

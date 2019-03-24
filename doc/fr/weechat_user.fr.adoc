@@ -203,12 +203,10 @@ Liste des options couramment utilisées :
   Compiler <<charset_plugin,l'extension Charset>>.
 
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Compiler la page man.
+  Construire la page man.
 
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Compiler la documentation (cela prend beaucoup de temps, recommandé
-  seulement si vous construisez un paquet binaire intégrant la documentation ou
-  si vous ne pouvez pas consulter la documentation en ligne).
+  Construire la documentation HTML.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Compiler <<spell_plugin,l'extension Spell>> avec Enchant.

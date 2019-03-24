@@ -206,13 +206,13 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   kompiliert <<charset_plugin,Charset Erweiterung>>.
 
+// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  kompiliert man page.
+  Build man page.
 
+// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  kompiliert Dokumentation (dies ist sehr zeitintensiv und wird nur empfohlen falls
-  Binärpakete erstellt werden, die die Dokumentation beinhalten sollen, oder man die
-  Dokumentation nicht auf der Homepage abrufen kann).
+  Build HTML documentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   kompiliert <<spell_plugin,Spell plugin>> mittels Enchant.
