@@ -70,7 +70,7 @@ def test_strings():
     check(weechat.string_format_size(0) == '0 bytes')
     check(weechat.string_format_size(1) == '1 byte')
     check(weechat.string_format_size(2097152) == '2.10 MB')
-    check(weechat.string_format_size(42000000000000) == '42.00 TB')
+    check(weechat.string_format_size(420000000) == '420.00 MB')
     check(weechat.string_remove_color('test', '?') == 'test')
     check(weechat.string_is_command_char('/test') == 1)
     check(weechat.string_is_command_char('test') == 0)
