@@ -135,7 +135,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 ^(2)^ WeeChat は libncurses**w**5-dev でコンパイルすることを推奨します
 (*w* が重要です)。libncurses5-dev でもコンパイル可能ですが、これは推奨
 *されません* (ワイドキャラクタの表示にバグを生じるでしょう)。 +
-^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、Gnutls
+^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
 バージョン 3.0.21 以上が必要です。 +
 ^(4)^ Python のバージョンは 2.7 をお勧めします (全てのスクリプトはバージョン 2.7
 で正しく動きますが、2.7 よりも低いバージョンまたは 3.0 以上のバージョンでは正しく動きません)。
@@ -224,7 +224,7 @@ cmake に対するオプションを指定するには、以下の書式を使�
   <<fset_plugin,Fset プラグイン>>のコンパイル。
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Gnutls の有効化 (SSL 用)。
+  GnuTLS の有効化 (SSL 用)。
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。

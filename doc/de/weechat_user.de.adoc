@@ -137,7 +137,7 @@ Versionen und Paketnamen können für andere Distributionen abweichend sein. +
 entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev erfolgen,
 aber dies wird *NICHT* empfohlen:
 Es können Darstellungsfehler mit breiten Zeichen auftreten. +
-^(3)^ Gnutls ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
+^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
 ^(4)^ Die empfohlene Version ist 2.7 (alle Skripten laufen mit der Version 2.7,
 aber nicht mit Version < 2.7 oder ≥ 3.0).
@@ -227,7 +227,7 @@ Liste von häufig verwendeten Optionen:
   kompiliert <<fset_plugin,Fset Erweiterung>>.
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  kompiliert Gnutls (für SSL).
+  kompiliert GnuTLS (für SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Guile Erweiterung>> (Scheme).

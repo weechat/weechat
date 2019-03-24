@@ -134,7 +134,7 @@ nom du paquet peut être différente. +
 important). WeeChat peut compiler avec libncurses5-dev, but ce n'est *PAS*
 recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
 larges. +
-^(3)^ Gnutls ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
+^(3)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ La version recommandée de Python est 2.7 (tous les scripts tournent bien
 avec la version 2.7, mais pas avec les versions < 2.7 ou ≥ 3.0).
@@ -221,7 +221,7 @@ Liste des options couramment utilisées :
   Compiler <<fset_plugin,l'extension Fset>>.
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Activer Gnutls (pour SSL).
+  Activer GnuTLS (pour SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compiler <<scripts_plugins,l'extension Guile>> (Scheme).

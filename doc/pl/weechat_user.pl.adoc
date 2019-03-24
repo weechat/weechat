@@ -136,7 +136,7 @@ mogą być inne w innych dystrybucjach. +
 ^(2)^ Zaleca się kompilację z użyciem libncurses**w**5-dev (*w* jest istotne).
 WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
 możesz doświadczyć błędów wyświetlania. +
-^(3)^ Gnutls ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
+^(3)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE. +
 ^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
 ale nie w wersjami < 2.7 lub ≥ 3.0).
@@ -225,7 +225,7 @@ Lista popularnych opcji:
   Kompilacja <<fset_plugin,wtyczki fset>>.
 
 | ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Włączenie Gnutls (dla SSL).
+  Włączenie GnuTLS (dla SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki guile>> (Scheme).
