@@ -25,7 +25,7 @@ set_target_properties(php PROPERTIES PREFIX "")
 if(PHP_FOUND)
   include_directories(${PHP_INCLUDE_DIRS})
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PHP_LDFLAGS}")
-  target_link_libraries(php ${PHP_LIB} weechat_plugins_scripts)
+  target_link_libraries(php ${PHP_LIB} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS php LIBRARY DESTINATION ${LIBDIR}/plugins)

@@ -57,7 +57,7 @@ add_dependencies(${EXECUTABLE} weechat_gui_curses_normal)
 list(APPEND EXTRA_LIBS ${NCURSES_LIBRARY})
 
 # Due to circular references, we must link two times with libweechat_core.a and libweechat_gui_common.a
-target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_curses_normal ${EXTRA_LIBS} ${STATIC_LIBS})
+target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_curses_normal ${EXTRA_LIBS} ${STATIC_LIBS} coverage_config)
 
 # Create a symbolic link weechat-curses -> weechat
 # This link is created for compatibility with old versions on /upgrade.

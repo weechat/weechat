@@ -29,7 +29,7 @@ if(TCL_FOUND)
   set(CMAKE_REQUIRED_LIBRARIES "${TCL_LIBRARY}")
   include_directories(${TCL_INCLUDE_PATH})
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${TCL_LFLAGS}")
-  target_link_libraries(tcl ${TCL_LIBRARY} weechat_plugins_scripts)
+  target_link_libraries(tcl ${TCL_LIBRARY} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS tcl LIBRARY DESTINATION ${LIBDIR}/plugins)

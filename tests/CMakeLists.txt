@@ -62,14 +62,14 @@ set(WEECHAT_TESTS_SRC tests.cpp tests.h)
 add_executable(tests ${WEECHAT_TESTS_SRC})
 set(LIBS
   ${LIBS}
-  ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
-  ${PROJECT_BINARY_DIR}/src/plugins/libweechat_plugins.a
-  ${PROJECT_BINARY_DIR}/src/gui/libweechat_gui_common.a
-  ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_gui_headless.a
-  ${PROJECT_BINARY_DIR}/src/gui/curses/headless/libweechat_ncurses_fake.a
-  ${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_core.a
+  weechat_core
+  weechat_plugins
+  weechat_gui_common
+  weechat_gui_headless
+  weechat_ncurses_fake
+  weechat_unit_tests_core
   # due to circular references, we must link two times with libweechat_core.a
-  ${PROJECT_BINARY_DIR}/src/core/libweechat_core.a
+  weechat_core
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
   ${CPPUTEST_LIBRARIES}

@@ -59,6 +59,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   list(APPEND LINK_LIBS "resolv")
 endif()
 
-target_link_libraries(irc ${LINK_LIBS})
+target_link_libraries(irc ${LINK_LIBS} coverage_config)
 
 install(TARGETS irc LIBRARY DESTINATION ${LIBDIR}/plugins)

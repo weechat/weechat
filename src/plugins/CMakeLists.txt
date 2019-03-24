@@ -34,6 +34,7 @@ set(LIB_PLUGINS_SCRIPTS_SRC
 
 include_directories(${CMAKE_BINARY_DIR})
 add_library(weechat_plugins STATIC ${LIB_PLUGINS_SRC})
+target_link_libraries(weechat_plugins coverage_config)
 
 add_definitions(${CMAKE_SHARED_LIBRARY_C_FLAGS})
 if(NOT CYGWIN)

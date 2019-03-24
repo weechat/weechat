@@ -25,6 +25,6 @@ alias-config.c alias-config.h
 alias-info.c alias-info.h)
 set_target_properties(alias PROPERTIES PREFIX "")
 
-target_link_libraries(alias)
+target_link_libraries(alias coverage_config)
 
 install(TARGETS alias LIBRARY DESTINATION ${LIBDIR}/plugins)

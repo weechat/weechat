@@ -293,6 +293,11 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   kompiliert Testumgebung.
+
+// TRANSLATION MISSING
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
+  Compile with code coverage options. +
+  This option should be used only for tests, to measure test coverage.
 |===
 
 Weitere Optionen können mit folgendem Befehl angezeigt werden:

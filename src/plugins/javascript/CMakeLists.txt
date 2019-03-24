@@ -27,7 +27,7 @@ set_target_properties(javascript PROPERTIES PREFIX "")
 
 if(V8_FOUND)
   include_directories(${V8_INCLUDE_DIR})
-  target_link_libraries(javascript ${V8_LIBRARY} weechat_plugins_scripts)
+  target_link_libraries(javascript ${V8_LIBRARY} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS javascript LIBRARY DESTINATION ${LIBDIR}/plugins)

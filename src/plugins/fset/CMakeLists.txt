@@ -29,6 +29,6 @@ fset-mouse.c fset-mouse.h
 fset-option.c fset-option.h)
 set_target_properties(fset PROPERTIES PREFIX "")
 
-target_link_libraries(fset)
+target_link_libraries(fset coverage_config)
 
 install(TARGETS fset LIBRARY DESTINATION ${LIBDIR}/plugins)

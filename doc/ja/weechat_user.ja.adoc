@@ -289,6 +289,11 @@ cmake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   コンパイルテスト。
+
+// TRANSLATION MISSING
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
+  Compile with code coverage options. +
+  This option should be used only for tests, to measure test coverage.
 |===
 
 その他のオプションは以下のコマンドで確認してください:

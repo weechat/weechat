@@ -25,6 +25,6 @@ exec-completion.c exec-completion.h
 exec-config.c exec-config.h)
 set_target_properties(exec PROPERTIES PREFIX "")
 
-target_link_libraries(exec)
+target_link_libraries(exec coverage_config)
 
 install(TARGETS exec LIBRARY DESTINATION ${LIBDIR}/plugins)

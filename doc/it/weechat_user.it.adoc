@@ -320,6 +320,11 @@ List of commonly used options:
 // TRANSLATION MISSING
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compile tests.
+
+// TRANSLATION MISSING
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
+  Compile with code coverage options. +
+  This option should be used only for tests, to measure test coverage.
 |===
 
 The other options can be displayed with this command:

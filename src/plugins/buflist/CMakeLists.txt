@@ -25,6 +25,6 @@ buflist-config.c buflist-config.h
 buflist-mouse.c buflist-mouse.h)
 set_target_properties(buflist PROPERTIES PREFIX "")
 
-target_link_libraries(buflist)
+target_link_libraries(buflist coverage_config)
 
 install(TARGETS buflist LIBRARY DESTINATION ${LIBDIR}/plugins)

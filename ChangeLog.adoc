@@ -43,8 +43,9 @@ Bug fixes::
 
 Build::
 
-  * lua: add detection of Lua 5.3 with autotools
+  * core: add CMake option "ENABLE_CODE_COVERAGE" to compile with code coverage options
   * core: fix compilation on Mac OS (issue #1308)
+  * lua: add detection of Lua 5.3 with autotools
 
 [[v2.4]]
 == Version 2.4 (2019-02-17)

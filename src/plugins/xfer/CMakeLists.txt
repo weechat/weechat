@@ -40,6 +40,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
   list(APPEND LINK_LIBS "resolv")
 endif()
 
-target_link_libraries(xfer ${LINK_LIBS})
+target_link_libraries(xfer ${LINK_LIBS} coverage_config)
 
 install(TARGETS xfer LIBRARY DESTINATION ${LIBDIR}/plugins)

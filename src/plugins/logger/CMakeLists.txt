@@ -26,6 +26,6 @@ logger-info.c logger-info.h
 logger-tail.c logger-tail.h)
 set_target_properties(logger PROPERTIES PREFIX "")
 
-target_link_libraries(logger)
+target_link_libraries(logger coverage_config)
 
 install(TARGETS logger LIBRARY DESTINATION ${LIBDIR}/plugins)

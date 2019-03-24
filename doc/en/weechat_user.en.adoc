@@ -285,6 +285,10 @@ List of commonly used options:
 
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Compile tests.
+
+| ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
+  Compile with code coverage options. +
+  This option should be used only for tests, to measure test coverage.
 |===
 
 The other options can be displayed with this command:

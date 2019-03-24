@@ -24,6 +24,6 @@ fifo-config.c fifo-config.h
 fifo-info.c fifo-info.h)
 set_target_properties(fifo PROPERTIES PREFIX "")
 
-target_link_libraries(fifo)
+target_link_libraries(fifo coverage_config)
 
 install(TARGETS fifo LIBRARY DESTINATION ${LIBDIR}/plugins)

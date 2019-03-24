@@ -26,6 +26,6 @@ trigger-completion.c trigger-completion.h
 trigger-config.c trigger-config.h)
 set_target_properties(trigger PROPERTIES PREFIX "")
 
-target_link_libraries(trigger)
+target_link_libraries(trigger coverage_config)
 
 install(TARGETS trigger LIBRARY DESTINATION ${LIBDIR}/plugins)

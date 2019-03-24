@@ -26,7 +26,7 @@ if(RUBY_FOUND)
   include_directories(${RUBY_INCLUDE_DIRS})
   set(LINK_LIBS)
   list(APPEND LINK_LIBS ${RUBY_LDFLAGS})
-  target_link_libraries(ruby ${LINK_LIBS} ${RUBY_LIB} weechat_plugins_scripts)
+  target_link_libraries(ruby ${LINK_LIBS} ${RUBY_LIB} weechat_plugins_scripts coverage_config)
 endif(RUBY_FOUND)
 
 install(TARGETS ruby LIBRARY DESTINATION ${LIBDIR}/plugins)

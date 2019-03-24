@@ -47,6 +47,6 @@ if(GNUTLS_FOUND)
   list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
 endif()
 
-target_link_libraries(relay ${LINK_LIBS})
+target_link_libraries(relay ${LINK_LIBS} coverage_config)
 
 install(TARGETS relay LIBRARY DESTINATION ${LIBDIR}/plugins)

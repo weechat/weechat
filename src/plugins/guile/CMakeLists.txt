@@ -26,7 +26,7 @@ if(GUILE_FOUND)
   include_directories(${GUILE_INCLUDE_DIRS})
   set(LINK_LIBS)
   list(APPEND LINK_LIBS ${GUILE_LDFLAGS})
-  target_link_libraries(guile ${LINK_LIBS} weechat_plugins_scripts)
+  target_link_libraries(guile ${LINK_LIBS} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS guile LIBRARY DESTINATION ${LIBDIR}/plugins)
