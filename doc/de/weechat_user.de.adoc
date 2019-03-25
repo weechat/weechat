@@ -104,7 +104,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | C compiler
   (gcc, clang, ...)      |               | *ja*     | zum Erstellen der Binärdatei.
 | C++ compiler           |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| cmake                  |               | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
+| cmake                  | ≥ 3.0         | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
 | pkg-config             |               | *ja*     | entdeckt installierte Bibliotheken.
 | libncursesw5-dev ^(2)^ |               | *ja*     | Ncurses Oberfläche.
 | libcurl4-gnutls-dev    |               | *ja*     | URL Transfer.

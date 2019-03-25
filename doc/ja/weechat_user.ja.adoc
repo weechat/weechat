@@ -103,7 +103,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 | C コンパイラ
   (gcc, clang, ...)      |                  | *必須* | ビルド
 | C++ コンパイラ         |                  |        | ビルドとテストの実行、JavaScript プラグイン
-| cmake                  |                  | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| cmake                  | ≥ 3.0            | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
 | pkg-config             |                  | *必須* | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | *必須* | URL 転送

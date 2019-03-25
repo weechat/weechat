@@ -98,7 +98,7 @@ compile WeeChat.
 | C compiler
   (gcc, clang, ...)      |               | *yes*    | Build.
 | C++ compiler           |               |          | Build and run tests, JavaScript plugin.
-| cmake                  |               | *yes*    | Build (autotools still possible, but cmake is recommended).
+| cmake                  | ≥ 3.0         | *yes*    | Build (autotools still possible, but cmake is recommended).
 | pkg-config             |               | *yes*    | Detect installed libraries.
 | libncursesw5-dev ^(2)^ |               | *yes*    | Ncurses interface.
 | libcurl4-gnutls-dev    |               | *yes*    | URL transfer.

@@ -116,7 +116,7 @@ compilare WeeChat.
   (gcc, clang, ...)      |               | *sì*      | Build.
 // TRANSLATION MISSING
 | C++ compiler           |               |           | Build and run tests, plugin JavaScript.
-| cmake                  |               | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
+| cmake                  | ≥ 3.0         | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
 // TRANSLATION MISSING
 | pkg-config             |               | *sì*      | Detect installed libraries.
 | libncursesw5-dev ^(2)^ |               | *sì*      | Interfaccia ncurses.
