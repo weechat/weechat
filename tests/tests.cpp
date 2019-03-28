@@ -162,7 +162,7 @@ void
 run_cmd (const char *command)
 {
     printf (">>> Running command: %s\n", command);
-    input_data (ptr_core_buffer, command);
+    input_data (ptr_core_buffer, command, NULL);
 }
 
 /*

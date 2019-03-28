@@ -75,17 +75,43 @@ int
 input_exec_command (struct t_gui_buffer *buffer,
                     int any_plugin,
                     struct t_weechat_plugin *plugin,
-                    const char *string)
+                    const char *string,
+                    const char *commands_allowed)
 {
     char *command, *command_name, *pos;
+    char **old_commands_allowed, **new_commands_allowed;
     int rc;
 
     if ((!string) || (!string[0]))
         return WEECHAT_RC_ERROR;
 
+    rc = WEECHAT_RC_OK;
+
+    command = NULL;
+    command_name = NULL;
+
+    old_commands_allowed = input_commands_allowed;
+    new_commands_allowed = NULL;
+
     command = strdup (string);
     if (!command)
-        return WEECHAT_RC_ERROR;
+    {
+        rc = WEECHAT_RC_ERROR;
+        goto end;
+    }
+
+    if (commands_allowed)
+    {
+        new_commands_allowed = string_split (
+            commands_allowed,
+            ",",
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            NULL);
+        input_commands_allowed = new_commands_allowed;
+    }
 
     /* ignore spaces at the end of command */
     pos = &command[strlen (command) - 1];
@@ -102,11 +128,9 @@ input_exec_command (struct t_gui_buffer *buffer,
         string_strndup (command, pos - command) : strdup (command);
     if (!command_name)
     {
-        free (command);
-        return WEECHAT_RC_ERROR;
+        rc = WEECHAT_RC_ERROR;
+        goto end;
     }
-
-    rc = WEECHAT_RC_OK;
 
     /* check if command is allowed */
     if (input_commands_allowed
@@ -195,8 +219,14 @@ input_exec_command (struct t_gui_buffer *buffer,
     }
 
 end:
-    free (command);
-    free (command_name);
+    if (command)
+        free (command);
+    if (command_name)
+        free (command_name);
+
+    if (new_commands_allowed)
+        string_free_split (new_commands_allowed);
+    input_commands_allowed = old_commands_allowed;
 
     return rc;
 }
@@ -210,22 +240,27 @@ end:
  */
 
 int
-input_data (struct t_gui_buffer *buffer, const char *data)
+input_data (struct t_gui_buffer *buffer, const char *data,
+            const char *commands_allowed)
 {
     char *pos, *buf, str_buffer[128], *new_data, *buffer_full_name;
     const char *ptr_data, *ptr_data_for_buffer;
     int length, char_size, first_command, rc;
 
+    if (!buffer || !gui_buffer_valid (buffer) || !data)
+        return WEECHAT_RC_ERROR;
+
     rc = WEECHAT_RC_OK;
 
-    if (!buffer || !gui_buffer_valid (buffer) || !data)
-    {
-        return WEECHAT_RC_ERROR;
-    }
+    buffer_full_name = NULL;
+    new_data = NULL;
 
     buffer_full_name = strdup (buffer->full_name);
     if (!buffer_full_name)
-        return WEECHAT_RC_ERROR;
+    {
+        rc = WEECHAT_RC_ERROR;
+        goto end;
+    }
 
     /* execute modifier "input_text_for_buffer" */
     snprintf (str_buffer, sizeof (str_buffer),
@@ -291,7 +326,8 @@ input_data (struct t_gui_buffer *buffer, const char *data)
         else
         {
             /* input string is a command */
-            rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data);
+            rc = input_exec_command (buffer, 1, buffer->plugin, ptr_data,
+                                     commands_allowed);
         }
 
         if (pos)
@@ -306,10 +342,10 @@ input_data (struct t_gui_buffer *buffer, const char *data)
     }
 
 end:
-    if (new_data)
-        free (new_data);
     if (buffer_full_name)
         free (buffer_full_name);
+    if (new_data)
+        free (new_data);
 
     return rc;
 }

@@ -1413,7 +1413,7 @@ COMMAND_CALLBACK(color)
     if (string_strcasecmp (argv[1], "-o") == 0)
     {
         gui_color_info_term_colors (str_color, sizeof (str_color));
-        (void) input_data (buffer, str_color);
+        (void) input_data (buffer, str_color, NULL);
         return WEECHAT_RC_OK;
     }
 
@@ -1472,7 +1472,7 @@ COMMAND_CALLBACK(color)
                   "/set weechat.palette.%d \"%s\"",
                   (int)number,
                   (str_color[0]) ? str_color + 1 : "");
-        (void) input_exec_command (buffer, 1, NULL, str_command);
+        (void) input_exec_command (buffer, 1, NULL, str_command, NULL);
 
         return WEECHAT_RC_OK;
     }
@@ -1519,7 +1519,7 @@ COMMAND_CALLBACK(color)
         snprintf (str_command, sizeof (str_command),
                   "/unset weechat.palette.%d",
                   (int)number);
-        (void) input_exec_command (buffer, 1, NULL, str_command);
+        (void) input_exec_command (buffer, 1, NULL, str_command, NULL);
 
         return WEECHAT_RC_OK;
     }
@@ -1628,7 +1628,7 @@ COMMAND_CALLBACK(command)
     if (string_is_command_char (argv_eol[index_args + 1]))
     {
         (void) input_exec_command (ptr_buffer, any_plugin, ptr_plugin,
-                                   argv_eol[index_args + 1]);
+                                   argv_eol[index_args + 1], NULL);
     }
     else
     {
@@ -1638,7 +1638,7 @@ COMMAND_CALLBACK(command)
         {
             snprintf (command, length, "/%s", argv_eol[index_args + 1]);
             (void) input_exec_command (ptr_buffer, any_plugin, ptr_plugin,
-                                       command);
+                                       command, NULL);
             free (command);
         }
     }
@@ -1920,7 +1920,7 @@ COMMAND_CALLBACK(debug)
     {
         COMMAND_MIN_ARGS(3, "time");
         gettimeofday (&time_start, NULL);
-        (void) input_data (buffer, argv_eol[2]);
+        (void) input_data (buffer, argv_eol[2], NULL);
         gettimeofday (&time_end, NULL);
         debug_display_time_elapsed (&time_start, &time_end, argv_eol[2], 1);
         return WEECHAT_RC_OK;
@@ -2043,7 +2043,7 @@ COMMAND_CALLBACK(eval)
                                                   options);
                         if (result)
                         {
-                            (void) input_data (buffer, result);
+                            (void) input_data (buffer, result, NULL);
                             free (result);
                         }
                         else
@@ -2059,7 +2059,7 @@ COMMAND_CALLBACK(eval)
                 result = eval_expression (ptr_args, pointers, NULL, options);
                 if (result)
                 {
-                    (void) input_data (buffer, result);
+                    (void) input_data (buffer, result, NULL);
                     free (result);
                 }
                 else
@@ -3130,7 +3130,7 @@ COMMAND_CALLBACK(input)
         gui_input_jump_smart (buffer);
     /* not used any more in WeeChat >= 1.0 (replaced by "/buffer ++") */
     else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
-        (void) input_data (buffer, "/buffer +");
+        (void) input_data (buffer, "/buffer +", NULL);
     else if (string_strcasecmp (argv[1], "jump_last_buffer_displayed") == 0)
         gui_input_jump_last_buffer_displayed (buffer);
     else if (string_strcasecmp (argv[1], "jump_previously_visited_buffer") == 0)
@@ -3163,7 +3163,7 @@ COMMAND_CALLBACK(input)
             gui_input_insert (buffer, argv_eol[2]);
     }
     else if (string_strcasecmp (argv[1], "send") == 0)
-        (void) input_data (buffer, argv_eol[2]);
+        (void) input_data (buffer, argv_eol[2], NULL);
     else if (string_strcasecmp (argv[1], "undo") == 0)
         gui_input_undo (buffer);
     else if (string_strcasecmp (argv[1], "redo") == 0)
@@ -4197,7 +4197,7 @@ COMMAND_CALLBACK(mute)
 
         if (string_is_command_char (ptr_command))
         {
-            (void) input_exec_command (buffer, 1, NULL, ptr_command);
+            (void) input_exec_command (buffer, 1, NULL, ptr_command, NULL);
         }
         else
         {
@@ -4206,7 +4206,7 @@ COMMAND_CALLBACK(mute)
             if (command)
             {
                 snprintf (command, length, "/%s", ptr_command);
-                (void) input_exec_command (buffer, 1, NULL, command);
+                (void) input_exec_command (buffer, 1, NULL, command, NULL);
                 free (command);
             }
         }
@@ -5228,12 +5228,13 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 
         /* execute command */
         if (ptr_buffer)
-            (void) input_exec_command (ptr_buffer, 1, NULL, repeat_args[1]);
+            (void) input_exec_command (ptr_buffer, 1, NULL, repeat_args[1],
+                                       repeat_args[2]);
     }
 
     if (remaining_calls == 0)
     {
-        for (i = 0; i < 2; i++)
+        for (i = 0; i < 3; i++)
         {
             if (repeat_args[i])
                 free (repeat_args[i]);
@@ -5294,20 +5295,20 @@ COMMAND_CALLBACK(repeat)
 
     if (command)
     {
-        (void) input_exec_command (buffer, 1, NULL, command);
+        (void) input_exec_command (buffer, 1, NULL, command, NULL);
         if (count > 1)
         {
             if (interval == 0)
             {
                 for (i = 0; i < count - 1; i++)
                 {
-                    (void) input_exec_command (buffer, 1, NULL, command);
+                    (void) input_exec_command (buffer, 1, NULL, command, NULL);
                 }
                 free (command);
             }
             else
             {
-                repeat_args = malloc (2 * sizeof (*repeat_args));
+                repeat_args = malloc (3 * sizeof (*repeat_args));
                 if (!repeat_args)
                 {
                     gui_chat_printf (NULL,
@@ -5318,6 +5319,9 @@ COMMAND_CALLBACK(repeat)
                 }
                 repeat_args[0] = strdup (buffer->full_name);
                 repeat_args[1] = command;
+                repeat_args[2] = (input_commands_allowed) ?
+                    string_build_with_split_string (
+                        (const char **)input_commands_allowed, ",") : NULL;
                 hook_timer (NULL, interval, 0, count - 1,
                             &command_repeat_timer_cb, repeat_args, NULL);
             }
@@ -6366,7 +6370,7 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   str_first_start);
-        (void) input_data (buffer, string);
+        (void) input_data (buffer, string, NULL);
     }
     else if ((argc >= 2) && (string_strcasecmp (argv[1], "-ol") == 0))
     {
@@ -6379,7 +6383,7 @@ COMMAND_CALLBACK(uptime)
                   minutes,
                   seconds,
                   util_get_time_string (&weechat_first_start_time));
-        (void) input_data (buffer, string);
+        (void) input_data (buffer, string, NULL);
     }
     else
     {
@@ -6458,7 +6462,7 @@ command_version_display (struct t_gui_buffer *buffer,
                       _("compiled on"),
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string);
+            (void) input_data (buffer, string, NULL);
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
@@ -6468,7 +6472,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           NG_("time", "times", weechat_upgrade_count),
                           str_first_start,
                           str_last_start);
-                (void) input_data (buffer, string);
+                (void) input_data (buffer, string, NULL);
             }
         }
         else
@@ -6479,7 +6483,7 @@ command_version_display (struct t_gui_buffer *buffer,
                       "compiled on",
                       version_get_compilation_date (),
                       version_get_compilation_time ());
-            (void) input_data (buffer, string);
+            (void) input_data (buffer, string, NULL);
             if (weechat_upgrade_count > 0)
             {
                 snprintf (string, sizeof (string),
@@ -6488,7 +6492,7 @@ command_version_display (struct t_gui_buffer *buffer,
                           (weechat_upgrade_count > 1) ? "times" : "time",
                           str_first_start,
                           str_last_start);
-                (void) input_data (buffer, string);
+                (void) input_data (buffer, string, NULL);
             }
         }
     }
@@ -6578,10 +6582,10 @@ command_wait_timer_cb (const void *pointer, void *data, int remaining_calls)
 
         /* execute command */
         if (ptr_buffer)
-            (void) input_data (ptr_buffer, timer_args[1]);
+            (void) input_data (ptr_buffer, timer_args[1], timer_args[2]);
     }
 
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < 3; i++)
     {
         if (timer_args[i])
             free (timer_args[i]);
@@ -6648,7 +6652,7 @@ COMMAND_CALLBACK(wait)
     delay = number * factor;
 
     /* build arguments for timer callback */
-    timer_args = malloc (2 * sizeof (*timer_args));
+    timer_args = malloc (3 * sizeof (*timer_args));
     if (!timer_args)
     {
         gui_chat_printf (NULL,
@@ -6659,6 +6663,9 @@ COMMAND_CALLBACK(wait)
     }
     timer_args[0] = strdup (buffer->full_name);
     timer_args[1] = strdup (argv_eol[2]);
+    timer_args[2] = (input_commands_allowed) ?
+        string_build_with_split_string (
+            (const char **)input_commands_allowed, ",") : NULL;
 
     /* schedule command, execute it after "delay" milliseconds */
     hook_timer (NULL, delay, 0, 1,
@@ -8385,7 +8392,7 @@ command_exec_list (const char *command_list)
             weechat_buffer = gui_buffer_search_main ();
             for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
             {
-                (void) input_data (weechat_buffer, *ptr_cmd);
+                (void) input_data (weechat_buffer, *ptr_cmd, NULL);
             }
             string_free_split_command (commands);
         }

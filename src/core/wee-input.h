@@ -28,7 +28,9 @@ extern char **input_commands_allowed;
 extern int input_exec_command (struct t_gui_buffer *buffer,
                                int any_plugin,
                                struct t_weechat_plugin *plugin,
-                               const char *string);
-extern int input_data (struct t_gui_buffer *buffer, const char *data);
+                               const char *string,
+                               const char *commands_allowed);
+extern int input_data (struct t_gui_buffer *buffer, const char *data,
+                       const char *commands_allowed);
 
 #endif /* WEECHAT_INPUT_H */

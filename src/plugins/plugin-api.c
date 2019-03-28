@@ -303,43 +303,24 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
                             struct t_gui_buffer *buffer, const char *command,
                             struct t_hashtable *options)
 {
-    char *command2, **old_commands_allowed, **new_commands_allowed;
-    const char *ptr_commands;
+    char *command2;
+    const char *ptr_commands_allowed;
     int rc;
 
     if (!plugin || !command)
         return WEECHAT_RC_ERROR;
 
-    old_commands_allowed = input_commands_allowed;
-    new_commands_allowed = NULL;
-
-    if (options)
-    {
-        ptr_commands = hashtable_get (options, "commands");
-        if (ptr_commands)
-        {
-            new_commands_allowed = string_split (
-                ptr_commands,
-                ",",
-                WEECHAT_STRING_SPLIT_STRIP_LEFT
-                | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                0,
-                NULL);
-            input_commands_allowed = new_commands_allowed;
-        }
-    }
+    ptr_commands_allowed = (options) ?
+        hashtable_get (options, "commands") : NULL;
 
     command2 = string_iconv_to_internal (plugin->charset, command);
     if (!buffer)
         buffer = gui_current_window->buffer;
-    rc = input_data (buffer, (command2) ? command2 : command);
+    rc = input_data (buffer,
+                     (command2) ? command2 : command,
+                     ptr_commands_allowed);
     if (command2)
         free (command2);
-
-    if (new_commands_allowed)
-        string_free_split (new_commands_allowed);
-    input_commands_allowed = old_commands_allowed;
 
     return rc;
 }
