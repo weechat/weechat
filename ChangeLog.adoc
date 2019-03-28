@@ -38,6 +38,7 @@ Bug fixes::
   * irc: fix update of channels modes with arguments when joining a channel (issue #1324)
   * irc: quote NICK command argument sent to the server (issue #1319)
   * php: fix memory leak in functions string_eval_expression, string_eval_path_home, key_bind, hook_process_hashtable, hook_hsignal_send, info_get_hashtable, hdata_update
+  * relay: fix crash when a weechat relay client reloads the relay plugin with /plugin reload relay (issue #1327)
   * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
   * trigger: fix split of hook arguments (issue #1322)
 
