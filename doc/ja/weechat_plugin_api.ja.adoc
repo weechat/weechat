@@ -14411,6 +14411,7 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 ** _commands_: a comma-separated list of commands allowed to be executed during
    this call; see function <<_string_match_list,string_match_list>> for the
    format
+** _delay_: delay to execute command, in milliseconds
 
 戻り値:
 
@@ -14422,7 +14423,7 @@ C 言語での使用例:
 // TRANSLATION MISSING
 [source,C]
 ----
-/* allow any command except /exec */
+/* allow any command except /exec, run command in 2 seconds */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -14430,6 +14431,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
                                                      NULL,
                                                      NULL);
 weechat_hashtable_set (options, "commands", "*,!exec");
+weechat_hashtable_set (options, "delay", "2000");
 rc = weechat_command_options (NULL, "/some_command arguments", options);
 ----
 

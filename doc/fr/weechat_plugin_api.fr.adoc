@@ -14758,6 +14758,7 @@ Paramètres :
 ** _commands_ : une liste de commandes autorisées pendant l'appel, séparées par
    des virgules ; voir la fonction <<_string_match_list,string_match_list>>
    pour le format
+** _delay_ : délai pour exécuter la commande, en millisecondes
 
 Valeur de retour :
 
@@ -14768,7 +14769,7 @@ Exemple en C :
 
 [source,C]
 ----
-/* autoriser toute commande sauf /exec */
+/* autoriser toute commande sauf /exec, lancer la commande dans 2 secondes */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -14776,6 +14777,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
                                                      NULL,
                                                      NULL);
 weechat_hashtable_set (options, "commands", "*,!exec");
+weechat_hashtable_set (options, "delay", "2000");
 rc = weechat_command_options (NULL, "/une_commande paramètres", options);
 ----
 

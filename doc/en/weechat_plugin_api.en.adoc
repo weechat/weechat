@@ -14443,6 +14443,7 @@ Arguments:
 ** _commands_: a comma-separated list of commands allowed to be executed during
    this call; see function <<_string_match_list,string_match_list>> for the
    format
+** _delay_: delay to execute command, in milliseconds
 
 Return value:
 
@@ -14453,7 +14454,7 @@ C example:
 
 [source,C]
 ----
-/* allow any command except /exec */
+/* allow any command except /exec, run command in 2 seconds */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -14461,6 +14462,7 @@ struct t_hashtable *options = weechat_hashtable_new (8,
                                                      NULL,
                                                      NULL);
 weechat_hashtable_set (options, "commands", "*,!exec");
+weechat_hashtable_set (options, "delay", "2000");
 rc = weechat_command_options (NULL, "/some_command arguments", options);
 ----
 

@@ -303,22 +303,37 @@ plugin_api_command_options (struct t_weechat_plugin *plugin,
                             struct t_gui_buffer *buffer, const char *command,
                             struct t_hashtable *options)
 {
-    char *command2;
-    const char *ptr_commands_allowed;
+    char *command2, *error;
+    const char *ptr_commands_allowed, *ptr_delay;
+    long delay;
     int rc;
 
     if (!plugin || !command)
         return WEECHAT_RC_ERROR;
 
-    ptr_commands_allowed = (options) ?
-        hashtable_get (options, "commands") : NULL;
+    ptr_commands_allowed = NULL;
+    delay = 0;
+
+    if (options)
+    {
+        ptr_commands_allowed = hashtable_get (options, "commands");
+        ptr_delay = hashtable_get (options, "delay");
+        if (ptr_delay)
+        {
+            error = NULL;
+            delay = strtol (ptr_delay, &error, 10);
+            if (!error || error[0])
+                delay = 0;
+        }
+    }
 
     command2 = string_iconv_to_internal (plugin->charset, command);
-    if (!buffer)
-        buffer = gui_current_window->buffer;
-    rc = input_data (buffer,
-                     (command2) ? command2 : command,
-                     ptr_commands_allowed);
+
+    rc = input_data_delayed ((buffer) ? buffer : gui_current_window->buffer,
+                             (command2) ? command2 : command,
+                             ptr_commands_allowed,
+                             delay);
+
     if (command2)
         free (command2);
 

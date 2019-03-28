@@ -32,5 +32,7 @@ extern int input_exec_command (struct t_gui_buffer *buffer,
                                const char *commands_allowed);
 extern int input_data (struct t_gui_buffer *buffer, const char *data,
                        const char *commands_allowed);
+extern int input_data_delayed (struct t_gui_buffer *buffer, const char *data,
+                               const char *commands_allowed, long delay);
 
 #endif /* WEECHAT_INPUT_H */

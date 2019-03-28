@@ -57,10 +57,12 @@ input_exec_data (struct t_gui_buffer *buffer, const char *data)
                                         data);
     }
     else
+    {
         gui_chat_printf (buffer,
                          _("%sYou can not write text in this "
                            "buffer"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    }
 }
 
 /*
@@ -232,7 +234,7 @@ end:
 }
 
 /*
- * Reads user input and sends data to buffer's callback.
+ * Sends data to a buffer's callback.
  *
  * Returns:
  *   WEECHAT_RC_OK: data properly sent (or command executed successfully)
@@ -348,4 +350,105 @@ end:
         free (new_data);
 
     return rc;
+}
+
+/*
+ * Callback for timer set by input_data_delayed.
+ */
+
+int
+input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
+{
+    char **timer_args;
+    int i;
+    struct t_gui_buffer *ptr_buffer;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) remaining_calls;
+
+    timer_args = (char **)pointer;
+
+    if (!timer_args)
+        return WEECHAT_RC_ERROR;
+
+    if (timer_args[0] && timer_args[1])
+    {
+        /* search buffer, fallback to core buffer if not found */
+        ptr_buffer = gui_buffer_search_by_full_name (timer_args[0]);
+        if (!ptr_buffer)
+            ptr_buffer = gui_buffer_search_main ();
+
+        /* execute command */
+        if (ptr_buffer)
+            (void) input_data (ptr_buffer, timer_args[1], timer_args[2]);
+    }
+
+    for (i = 0; i < 3; i++)
+    {
+        if (timer_args[i])
+            free (timer_args[i]);
+    }
+    free (timer_args);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Sends data to a buffer's callback with an optional delay (in milliseconds).
+ *
+ * If delay < 1, the command is executed immediately.
+ * If delay >= 1, the command is scheduled for execution in this number of ms.
+ *
+ * Returns:
+ *   WEECHAT_RC_OK: data properly sent or scheduled for execution
+ *   WEECHAT_RC_ERROR: error
+ */
+
+int
+input_data_delayed (struct t_gui_buffer *buffer, const char *data,
+                    const char *commands_allowed, long delay)
+{
+    char **timer_args, *new_commands_allowed;
+
+    if (delay < 1)
+        return input_data (buffer, data, commands_allowed);
+
+    timer_args = malloc (3 * sizeof (*timer_args));
+    if (!timer_args)
+    {
+        gui_chat_printf (NULL,
+                         _("%sNot enough memory (%s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "/wait");
+        return WEECHAT_RC_ERROR;
+    }
+
+    if (commands_allowed)
+    {
+        new_commands_allowed = strdup (commands_allowed);
+    }
+    else if (input_commands_allowed)
+    {
+        new_commands_allowed = string_build_with_split_string (
+            (const char **)input_commands_allowed, ",");
+    }
+    else
+    {
+        new_commands_allowed = NULL;
+    }
+
+    timer_args[0] = strdup (buffer->full_name);
+    timer_args[1] = strdup (data);
+    timer_args[2] = new_commands_allowed;
+
+    /* schedule command, execute it after "delay" milliseconds */
+    hook_timer (NULL,
+                (delay >= 1) ? delay : 1,
+                0,
+                1,
+                &input_data_timer_cb,
+                timer_args, NULL);
+
+    return WEECHAT_RC_OK;
 }

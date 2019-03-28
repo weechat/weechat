@@ -6554,48 +6554,6 @@ COMMAND_CALLBACK(version)
 }
 
 /*
- * Callback for timer set by command_wait.
- */
-
-int
-command_wait_timer_cb (const void *pointer, void *data, int remaining_calls)
-{
-    char **timer_args;
-    int i;
-    struct t_gui_buffer *ptr_buffer;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) remaining_calls;
-
-    timer_args = (char **)pointer;
-
-    if (!timer_args)
-        return WEECHAT_RC_ERROR;
-
-    if (timer_args[0] && timer_args[1])
-    {
-        /* search buffer, fallback to core buffer if not found */
-        ptr_buffer = gui_buffer_search_by_full_name (timer_args[0]);
-        if (!ptr_buffer)
-            ptr_buffer = gui_buffer_search_main ();
-
-        /* execute command */
-        if (ptr_buffer)
-            (void) input_data (ptr_buffer, timer_args[1], timer_args[2]);
-    }
-
-    for (i = 0; i < 3; i++)
-    {
-        if (timer_args[i])
-            free (timer_args[i]);
-    }
-    free (timer_args);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Callback for command "/wait": schedules a command execution in future.
  */
 
@@ -6603,7 +6561,6 @@ COMMAND_CALLBACK(wait)
 {
     char *pos, *str_number, *error;
     long number, factor, delay;
-    char **timer_args;
 
     /* make C compiler happy */
     (void) pointer;
@@ -6651,25 +6608,11 @@ COMMAND_CALLBACK(wait)
 
     delay = number * factor;
 
-    /* build arguments for timer callback */
-    timer_args = malloc (3 * sizeof (*timer_args));
-    if (!timer_args)
-    {
-        gui_chat_printf (NULL,
-                         _("%sNot enough memory (%s)"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "/wait");
-        return WEECHAT_RC_OK;
-    }
-    timer_args[0] = strdup (buffer->full_name);
-    timer_args[1] = strdup (argv_eol[2]);
-    timer_args[2] = (input_commands_allowed) ?
-        string_build_with_split_string (
-            (const char **)input_commands_allowed, ",") : NULL;
+    if (delay < 1)
+        COMMAND_ERROR;
 
-    /* schedule command, execute it after "delay" milliseconds */
-    hook_timer (NULL, delay, 0, 1,
-                &command_wait_timer_cb, timer_args, NULL);
+    if (input_data_delayed (buffer, argv_eol[2], NULL, delay) != WEECHAT_RC_OK)
+        COMMAND_ERROR;
 
     return WEECHAT_RC_OK;
 }
