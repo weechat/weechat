@@ -393,71 +393,6 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
 }
 
 /*
- * Timer callback for input command.
- */
-
-int
-relay_weechat_protocol_input_timer_cb (const void *pointer,
-                                       void *data,
-                                       int remaining_calls)
-{
-    char **timer_args;
-    const char *ptr_weechat_commands;
-    int i;
-    struct t_gui_buffer *ptr_buffer;
-    struct t_hashtable *options;
-
-    /* make C compiler happy */
-    (void) data;
-    (void) remaining_calls;
-
-    timer_args = (char **)pointer;
-
-    if (!timer_args)
-        return WEECHAT_RC_ERROR;
-
-    if (timer_args[0] && timer_args[1])
-    {
-        ptr_buffer = weechat_buffer_search ("==", timer_args[0]);
-        if (ptr_buffer)
-        {
-            ptr_weechat_commands = weechat_config_string (
-                relay_config_weechat_commands);
-            if (ptr_weechat_commands && ptr_weechat_commands[0])
-            {
-                options = weechat_hashtable_new (8,
-                                                 WEECHAT_HASHTABLE_STRING,
-                                                 WEECHAT_HASHTABLE_STRING,
-                                                 NULL, NULL);
-                if (options)
-                {
-                    weechat_hashtable_set (
-                        options,
-                        "commands",
-                        weechat_config_string (relay_config_weechat_commands));
-                    weechat_command_options (ptr_buffer, timer_args[1],
-                                             options);
-                    weechat_hashtable_free (options);
-                }
-            }
-            else
-            {
-                weechat_command (ptr_buffer, timer_args[1]);
-            }
-        }
-    }
-
-    for (i = 0; i < 2; i++)
-    {
-        if (timer_args[i])
-            free (timer_args[i]);
-    }
-    free (timer_args);
-
-    return WEECHAT_RC_OK;
-}
-
-/*
  * Callback for command "input" (from client).
  *
  * Message looks like:
@@ -469,7 +404,9 @@ relay_weechat_protocol_input_timer_cb (const void *pointer,
 RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 {
     struct t_gui_buffer *ptr_buffer;
-    char *pos, **timer_args;
+    struct t_hashtable *options;
+    const char *ptr_weechat_commands;
+    char *pos;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
@@ -489,25 +426,42 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
     }
 
     pos = strchr (argv_eol[0], ' ');
-    if (pos)
+    if (!pos)
+        return WEECHAT_RC_OK;
+
+    pos++;
+    options = weechat_hashtable_new (8,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     WEECHAT_HASHTABLE_STRING,
+                                     NULL, NULL);
+    if (!options)
     {
-        /*
-         * use a timer to execute the command after we go back in the
-         * WeeChat main loop (some commands like /upgrade executed now can
-         * cause a crash)
-         */
-        timer_args = malloc (2 * sizeof (*timer_args));
-        if (timer_args)
-        {
-            timer_args[0] = strdup (weechat_buffer_get_string (ptr_buffer,
-                                                               "full_name"));
-            timer_args[1] = strdup (pos + 1);
-            weechat_hook_timer (1, 0, 1,
-                                &relay_weechat_protocol_input_timer_cb,
-                                timer_args,
-                                NULL);
-        }
+        weechat_printf (NULL,
+                        _("%s%s: not enough memory"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        return WEECHAT_RC_OK;
     }
+
+    ptr_weechat_commands = weechat_config_string (
+        relay_config_weechat_commands);
+    if (ptr_weechat_commands && ptr_weechat_commands[0])
+    {
+        weechat_hashtable_set (
+            options,
+            "commands",
+            weechat_config_string (relay_config_weechat_commands));
+    }
+    /*
+     * delay the execution of command after we go back in the WeeChat
+     * main loop (some commands like /upgrade executed now can cause
+     * a crash)
+     */
+    weechat_hashtable_set (options, "delay", "1");
+
+    /* execute the command, with the delay */
+    weechat_command_options (ptr_buffer, pos, options);
+
+    weechat_hashtable_free (options);
 
     return WEECHAT_RC_OK;
 }
