@@ -43,6 +43,7 @@ after_success:
     - weechat --license
     - weechat --version
     - weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
+    - if [ "$CODECOVERAGE" = "1" ]; then bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov error"; fi
 
 matrix:
     fast_finish: true
