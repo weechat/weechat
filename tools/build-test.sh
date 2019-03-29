@@ -77,7 +77,7 @@ if [ "$BUILDTOOL" = "cmake" ]; then
         run "lcov --directory . --capture --output-file coverage.info"
         run "lcov --remove coverage.info '/usr/*' --output-file coverage.info"
         run "lcov --list coverage.info"
-        run "bash <(curl -s https://codecov.io/bash) -f coverage.info"
+        bash <(curl -s https://codecov.io/bash) -f coverage.info
     fi
 fi
 
