@@ -766,7 +766,7 @@ file: リロードする設定ファイル (拡張子 ".conf" は不要)
   count: number of times to execute command
 command: command to execute (or text to send to buffer if command does not start with '/')
 
-All commands are executed on buffer where this command was issued.
+Note: the command is executed on buffer where /repeat was executed (if the buffer does not exist any more, the command is not executed).
 
 Example:
   scroll 2 pages up:

@@ -5223,10 +5223,6 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
     {
         /* search buffer, fallback to core buffer if not found */
         ptr_buffer = gui_buffer_search_by_full_name (repeat_args[0]);
-        if (!ptr_buffer)
-            ptr_buffer = gui_buffer_search_main ();
-
-        /* execute command */
         if (ptr_buffer)
             (void) input_data (ptr_buffer, repeat_args[1], repeat_args[2]);
     }
@@ -7917,7 +7913,9 @@ command_init ()
            "command: command to execute (or text to send to buffer if command "
            "does not start with '/')\n"
            "\n"
-           "All commands are executed on buffer where this command was issued.\n"
+           "Note: the command is executed on buffer where /repeat was executed "
+           "(if the buffer does not exist any more, the command is not "
+           "executed).\n"
            "\n"
            "Example:\n"
            "  scroll 2 pages up:\n"

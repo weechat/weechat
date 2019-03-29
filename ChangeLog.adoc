@@ -32,7 +32,7 @@ New features::
 
 Bug fixes::
 
-  * core: don't execute command scheduled by /wait if the buffer does not exist any more
+  * core: don't execute command scheduled by /repeat and /wait if the buffer does not exist any more
   * core: set max length to 4096 for /secure passphrase (issue #1323)
   * core: refilter only affected buffers on filter change (issue #1309, issue #1311)
   * fset: fix slow refresh of fset buffer during /reload (issue #1313)

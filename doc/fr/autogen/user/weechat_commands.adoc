@@ -766,7 +766,7 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
   nombre : nombre de fois que la commande sera exécutée
 commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
-Toutes les commandes sont exécutées sur le tampon où la commande a été lancée.
+Note : la commande est exécutée sur le tampon où /repeat a été exécuté (si le tampon n'existe plus, la commande n'est pas exécutée).
 
 Exemple :
   faire défiler de 2 pages vers le haut :
