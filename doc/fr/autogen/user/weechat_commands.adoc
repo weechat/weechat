@@ -759,7 +759,7 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
 
    délai : délai entre l'exécution des commandes (en millisecondes)
   nombre : nombre de fois que la commande sera exécutée
-commande : commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
+commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
 Toutes les commandes sont exécutées sur le tampon où la commande a été lancée.
 

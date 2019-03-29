@@ -757,14 +757,14 @@ Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 ----
 /repeat  [-interval <ritardo>] <numero> <comando>
 
-ritardo: ritardo tra l'esecuzione dei comandi (in millisecondi)
- numero: numero di volte in cui eseguire il comando
-comando: comando da eseguire (una '/' viene aggiunta automaticamente se non viene trovata all'inizio del comando)
+  delay: delay between execution of commands (in milliseconds)
+  count: number of times to execute command
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Tutti i comandi sono eseguiti sul buffer su cui viene dato il comando.
+All commands are executed on buffer where this command was issued.
 
-Esempio:
-  scorre due pagine in alto:
+Example:
+  scroll 2 pages up:
     /repeat 2 /window page_up
 ----
 

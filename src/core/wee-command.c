@@ -5228,8 +5228,7 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 
         /* execute command */
         if (ptr_buffer)
-            (void) input_exec_command (ptr_buffer, 1, NULL, repeat_args[1],
-                                       repeat_args[2]);
+            (void) input_data (ptr_buffer, repeat_args[1], repeat_args[2]);
     }
 
     if (remaining_calls == 0)
@@ -5251,8 +5250,8 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 
 COMMAND_CALLBACK(repeat)
 {
-    int arg_count, count, interval, length, i;
-    char *error, *command, **repeat_args;
+    int arg_count, count, interval, i;
+    char *error, **repeat_args;
 
     /* make C compiler happy */
     (void) pointer;
@@ -5283,52 +5282,39 @@ COMMAND_CALLBACK(repeat)
         return WEECHAT_RC_OK;
     }
 
-    if (string_is_command_char (argv_eol[arg_count + 1]))
-        command = strdup (argv_eol[arg_count + 1]);
-    else
-    {
-        length = strlen (argv_eol[arg_count + 1]) + 2;
-        command = malloc (length);
-        if (command)
-            snprintf (command, length, "/%s", argv_eol[arg_count + 1]);
-    }
+    /* first execute command now */
+    (void) input_data (buffer, argv_eol[arg_count + 1], NULL);
 
-    if (command)
+    /* repeat execution of command */
+    if (count > 1)
     {
-        (void) input_exec_command (buffer, 1, NULL, command, NULL);
-        if (count > 1)
+        if (interval == 0)
         {
-            if (interval == 0)
+            /* execute command multiple times now */
+            for (i = 0; i < count - 1; i++)
             {
-                for (i = 0; i < count - 1; i++)
-                {
-                    (void) input_exec_command (buffer, 1, NULL, command, NULL);
-                }
-                free (command);
-            }
-            else
-            {
-                repeat_args = malloc (3 * sizeof (*repeat_args));
-                if (!repeat_args)
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sNot enough memory (%s)"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     "/repeat");
-                    return WEECHAT_RC_OK;
-                }
-                repeat_args[0] = strdup (buffer->full_name);
-                repeat_args[1] = command;
-                repeat_args[2] = (input_commands_allowed) ?
-                    string_build_with_split_string (
-                        (const char **)input_commands_allowed, ",") : NULL;
-                hook_timer (NULL, interval, 0, count - 1,
-                            &command_repeat_timer_cb, repeat_args, NULL);
+                (void) input_data (buffer, argv_eol[arg_count + 1], NULL);
             }
         }
         else
         {
-            free (command);
+            /* schedule execution of command in future */
+            repeat_args = malloc (3 * sizeof (*repeat_args));
+            if (!repeat_args)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sNot enough memory (%s)"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 "/repeat");
+                return WEECHAT_RC_OK;
+            }
+            repeat_args[0] = strdup (buffer->full_name);
+            repeat_args[1] = strdup (argv_eol[arg_count + 1]);
+            repeat_args[2] = (input_commands_allowed) ?
+                string_build_with_split_string (
+                    (const char **)input_commands_allowed, ",") : NULL;
+            hook_timer (NULL, interval, 0, count - 1,
+                        &command_repeat_timer_cb, repeat_args, NULL);
         }
     }
 
@@ -7963,8 +7949,8 @@ command_init ()
         N_("[-interval <delay>] <count> <command>"),
         N_("  delay: delay between execution of commands (in milliseconds)\n"
            "  count: number of times to execute command\n"
-           "command: command to execute (a '/' is automatically added if not "
-           "found at beginning of command)\n"
+           "command: command to execute (or text to send to buffer if command "
+           "does not start with '/')\n"
            "\n"
            "All commands are executed on buffer where this command was issued.\n"
            "\n"

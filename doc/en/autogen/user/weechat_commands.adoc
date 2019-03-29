@@ -759,7 +759,7 @@ Without argument, all files (WeeChat and plugins) are reloaded.
 
   delay: delay between execution of commands (in milliseconds)
   count: number of times to execute command
-command: command to execute (a '/' is automatically added if not found at beginning of command)
+command: command to execute (or text to send to buffer if command does not start with '/')
 
 All commands are executed on buffer where this command was issued.
 

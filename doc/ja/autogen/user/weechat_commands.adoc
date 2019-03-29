@@ -757,14 +757,14 @@ file: リロードする設定ファイル (拡張子 ".conf" は不要)
 ----
 /repeat  [-interval <delay>] <count> <command>
 
-  delay: コマンドの実行間隔 (ミリ秒単位)
-  count: コマンドの実行回数
-command: 実行するコマンド (最初に '/' が無い場合は自動的に追加されます)
+  delay: delay between execution of commands (in milliseconds)
+  count: number of times to execute command
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-全てのコマンドはこのコマンドが発行されたバッファで実行されます。
+All commands are executed on buffer where this command was issued.
 
-例:
-  2 ページ分上方向にスクロール:
+Example:
+  scroll 2 pages up:
     /repeat 2 /window page_up
 ----
 

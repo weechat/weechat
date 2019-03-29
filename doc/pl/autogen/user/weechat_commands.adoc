@@ -757,14 +757,14 @@ Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną przeładow
 ----
 /repeat  [-interval <opóźnienie>] <ilość> <komenda>
 
-  opóźnienie: czas pomiędzy wykonaniem komend (w milisekundach)
-  ilość: ile razy wykonać komendę
-komenda: komenda do wykonania ('/' jest automatycznie dodawane, jeśli nie znajduje się na początku komendy)
+  delay: delay between execution of commands (in milliseconds)
+  count: number of times to execute command
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Wszystkie komendy wykonane zostaną na buforze, w którym wykonano tą komendę.
+All commands are executed on buffer where this command was issued.
 
-Przykład:
-  przewija 2 strony do góry:
+Example:
+  scroll 2 pages up:
     /repeat 2 /window page_up
 ----
 

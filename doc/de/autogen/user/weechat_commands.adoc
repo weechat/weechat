@@ -757,14 +757,14 @@ Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und Erweiterunge
 ----
 /repeat  [-interval <delay>] <count> <command>
 
-  delay: Verzögerung zwischen dem Ausführen der Befehle (in Millisekunden)
-  count: Anzahl wie oft der Befehl ausgeführt werden soll
-command: Befehl welcher ausgeführt werden soll (das Befehlszeichen '/' wird automatisch hinzugefügt, falls es zum Befehlsbeginn nicht gefunden werden sollte)
+  delay: delay between execution of commands (in milliseconds)
+  count: number of times to execute command
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Alle Befehle werden in dem Buffer ausgeführt, in welchem dieser Befehl genutzt wird.
+All commands are executed on buffer where this command was issued.
 
-Beispiel:
-  scrolle zwei Seiten hoch:
+Example:
+  scroll 2 pages up:
     /repeat 2 /window page_up
 ----
 

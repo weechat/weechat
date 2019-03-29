@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: allow text in addition to a command in command /repeat
   * core: add option "addreplace" in command /filter (issue #1055, issue #1312)
   * api: replace argument "keep_eol" by "flags" in function string_split (issue #1322)
   * api: add function command_options (issue #928)
