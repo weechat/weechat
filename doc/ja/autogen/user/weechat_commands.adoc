@@ -755,9 +755,14 @@ file: リロードする設定ファイル (拡張子 ".conf" は不要)
 * `+repeat+`: 複数回コマンドを実行
 
 ----
-/repeat  [-interval <delay>] <count> <command>
+/repeat  [-interval <delay>[<unit>]] <count> <command>
 
-  delay: delay between execution of commands (in milliseconds)
+  delay: delay between execution of commands
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
   count: number of times to execute command
 command: command to execute (or text to send to buffer if command does not start with '/')
 

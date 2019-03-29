@@ -755,9 +755,14 @@ Senza argomento, vengono ricaricati tutti i file (WeeChat e plugin).
 * `+repeat+`: esegue un comando più volte
 
 ----
-/repeat  [-interval <ritardo>] <numero> <comando>
+/repeat  [-interval <delay>[<unit>]] <count> <command>
 
-  delay: delay between execution of commands (in milliseconds)
+  delay: delay between execution of commands
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
   count: number of times to execute command
 command: command to execute (or text to send to buffer if command does not start with '/')
 

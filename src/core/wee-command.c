@@ -5250,7 +5250,8 @@ command_repeat_timer_cb (const void *pointer, void *data, int remaining_calls)
 
 COMMAND_CALLBACK(repeat)
 {
-    int arg_count, count, interval, i;
+    int arg_count, count, i;
+    long interval;
     char *error, **repeat_args;
 
     /* make C compiler happy */
@@ -5264,9 +5265,8 @@ COMMAND_CALLBACK(repeat)
 
     if ((argc >= 5) && (string_strcasecmp (argv[1], "-interval") == 0))
     {
-        error = NULL;
-        interval = (int)strtol (argv[2], &error, 10);
-        if (!error || error[0] || (interval < 1))
+        interval = util_parse_delay (argv[2], 1000);
+        if (interval < 1)
             interval = 0;
         arg_count = 3;
     }
@@ -7906,8 +7906,13 @@ command_init ()
     hook_command (
         NULL, "repeat",
         N_("execute a command several times"),
-        N_("[-interval <delay>] <count> <command>"),
-        N_("  delay: delay between execution of commands (in milliseconds)\n"
+        N_("[-interval <delay>[<unit>]] <count> <command>"),
+        N_("  delay: delay between execution of commands\n"
+           "   unit: optional, values are:\n"
+           "           ms: milliseconds\n"
+           "            s: seconds (default)\n"
+           "            m: minutes\n"
+           "            h: hours\n"
            "  count: number of times to execute command\n"
            "command: command to execute (or text to send to buffer if command "
            "does not start with '/')\n"

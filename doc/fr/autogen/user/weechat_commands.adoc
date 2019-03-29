@@ -755,9 +755,14 @@ Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés.
 * `+repeat+`: exécuter une commande plusieurs fois
 
 ----
-/repeat  [-interval <délai>] <nombre> <commande>
+/repeat  [-interval <délai>[<unité>]] <nombre> <commande>
 
-   délai : délai entre l'exécution des commandes (en millisecondes)
+   délai : délai entre l'exécution des commandes
+   unité : optionnelle, valeurs possibles :
+             ms : millisecondes
+              s : secondes (par défaut)
+              m : minutes
+              h : heures
   nombre : nombre de fois que la commande sera exécutée
 commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
