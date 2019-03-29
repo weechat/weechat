@@ -757,19 +757,19 @@ Ohne Angabe von Argumenten werden alle Konfigurationen (WeeChat und Erweiterunge
 ----
 /repeat  [-interval <delay>[<unit>]] <count> <command>
 
-  delay: delay between execution of commands
-   unit: optional, values are:
-           ms: milliseconds
-            s: seconds (default)
-            m: minutes
-            h: hours
-  count: number of times to execute command
-command: command to execute (or text to send to buffer if command does not start with '/')
+  delay: Verzögerung zwischen dem Ausführen der Befehle
+   unit: mögliche Werte (optional):
+           ms: Millisekunden
+            s: Sekunden (Vorgabewert)
+            m: Minuten
+            h: Stunden
+  count: Anzahl, wie oft der Befehl ausgeführt werden soll
+command: Befehl welcher ausgeführt werden soll (oder ein Text der an einen Buffer gesendet werden soll, sofern der Befehl nicht mit '/' beginnt)
 
-Note: the command is executed on buffer where /repeat was executed (if the buffer does not exist any more, the command is not executed).
+Hinweis: Der Befehl wird in dem Buffer ausgeführt, in welchem der /repeat Befehl ausgeführt wurde (sollte der Buffer nicht mehr existieren, wird der Befehl nicht ausgeführt).
 
-Example:
-  scroll 2 pages up:
+Beispiel:
+  scrolle zwei Seiten hoch:
     /repeat 2 /window page_up
 ----
 
@@ -944,23 +944,23 @@ Um diesen Befehl in jedem Buffer ausführen zu können, kann der Standardkurzbef
 ----
 /wait  <number>[<unit>] <command>
 
- number: amount of time to wait (integer number)
-   unit: optional, values are:
-           ms: milliseconds
-            s: seconds (default)
-            m: minutes
-            h: hours
-command: command to execute (or text to send to buffer if command does not start with '/')
+ number: die Zeit, die gewartet werden soll (dies muss eine natürlich Zahl sein)
+   unit: mögliche Werte (optional):
+           ms: Millisekunden
+            s: Sekunden (Vorgabewert)
+            m: Minuten
+            h: Stunden
+command: Befehl welcher ausgeführt werden soll (oder ein Text der an einen Buffer gesendet werden soll, sofern der Befehl nicht mit '/' beginnt)\n
 
-Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
+Hinweis: Der Befehl wird in dem Buffer ausgeführt, in welchem der /wait Befehl ausgeführt wurde (sollte der Buffer nicht mehr existieren, wird der Befehl nicht ausgeführt).
 
-Examples:
-  join channel in 10 seconds:
-    /wait 10 /join #test
-  set away in 15 minutes:
-    /wait 15m /away -all I'm away
-  say 'hello' in 2 minutes:
-    /wait 2m hello
+Beispiele:
+  Betritt nach 10 Sekunden den Channel #test:
+  /wait 10 /join #test
+  Setzt nach 15 Minuten eine globale Abwesenheit:
+  /wait 15m /away -all Bin dann mal eben weg
+  Versendet nach zwei Minuten den Text 'Hallo':
+  /wait 2m Hallo
 ----
 
 [[command_weechat_window]]
