@@ -6545,8 +6545,7 @@ COMMAND_CALLBACK(version)
 
 COMMAND_CALLBACK(wait)
 {
-    char *pos, *str_number, *error;
-    long number, factor, delay;
+    long delay;
 
     /* make C compiler happy */
     (void) pointer;
@@ -6554,46 +6553,7 @@ COMMAND_CALLBACK(wait)
 
     COMMAND_MIN_ARGS(3, "");
 
-    pos = argv[1];
-    while (pos[0] && isdigit ((unsigned char)pos[0]))
-    {
-        pos++;
-    }
-
-    /* default is seconds (1000 milliseconds) */
-    factor = 1000;
-
-    if ((pos != argv[1]) && pos[0])
-    {
-        str_number = string_strndup (argv[1], pos - argv[1]);
-        if (strcmp (pos, "ms") == 0)
-            factor = 1;
-        else if (strcmp (pos, "s") == 0)
-            factor = 1000;
-        else if (strcmp (pos, "m") == 0)
-            factor = 1000 * 60;
-        else if (strcmp (pos, "h") == 0)
-            factor = 1000 * 60 * 60;
-        else
-            COMMAND_ERROR;
-    }
-    else
-        str_number = strdup (argv[1]);
-
-    if (!str_number)
-        COMMAND_ERROR;
-
-    error = NULL;
-    number = strtol (str_number, &error, 10);
-    if (!error || error[0])
-    {
-        free (str_number);
-        COMMAND_ERROR;
-    }
-    free (str_number);
-
-    delay = number * factor;
-
+    delay = util_parse_delay (argv[1], 1000);
     if (delay < 1)
         COMMAND_ERROR;
 

@@ -339,6 +339,78 @@ util_get_time_string (const time_t *date)
 }
 
 /*
+ * Parses a string with a delay and optional unit, returns the delay in
+ * milliseconds.
+ *
+ * The delay is a number followed by a unit which can be:
+ *   - "ms": milliseconds
+ *   - "s": seconds
+ *   - "m": minutes
+ *   - "h": hours
+ *
+ * The default factor sets the default unit:
+ *   - 1: milliseconds
+ *   - 1000: seconds
+ *   - 60000: minutes
+ *   - 3600000: hours
+ *
+ * Returns the delay in milliseconds, -1 if error.
+ */
+
+long
+util_parse_delay (const char *string_delay, long default_factor)
+{
+    const char *pos;
+    char *str_number, *error;
+    long factor, delay;
+
+    if (!string_delay || !string_delay[0] || (default_factor < 1))
+        return -1;
+
+    factor = default_factor;
+
+    pos = string_delay;
+    while (pos[0] && isdigit ((unsigned char)pos[0]))
+    {
+        pos++;
+    }
+
+    if ((pos > string_delay) && pos[0])
+    {
+        str_number = string_strndup (string_delay, pos - string_delay);
+        if (strcmp (pos, "ms") == 0)
+            factor = 1;
+        else if (strcmp (pos, "s") == 0)
+            factor = 1000;
+        else if (strcmp (pos, "m") == 0)
+            factor = 1000 * 60;
+        else if (strcmp (pos, "h") == 0)
+            factor = 1000 * 60 * 60;
+        else
+            return -1;
+    }
+    else
+    {
+        str_number = strdup (string_delay);
+    }
+
+    if (!str_number)
+        return -1;
+
+    error = NULL;
+    delay = strtol (str_number, &error, 10);
+    if (!error || error[0] || (delay < 0))
+    {
+        free (str_number);
+        return -1;
+    }
+
+    free (str_number);
+
+    return delay * factor;
+}
+
+/*
  * Gets a signal number with a name; only some commonly used signal names are
  * supported here (see declaration of util_signals[]).
  *
@@ -909,7 +981,7 @@ util_version_number (const char *version)
 }
 
 /*
- * Return uptime as number of days, hours, minutes, seconds.
+ * Returns uptime as number of days, hours, minutes, seconds.
  */
 
 void

@@ -47,6 +47,10 @@ extern void util_timeval_add (struct timeval *tv, long long interval);
 /* time */
 extern const char *util_get_time_string (const time_t *date);
 
+/* delay */
+
+extern long util_parse_delay (const char *string_delay, long default_factor);
+
 /* signal */
 extern int util_signal_search (const char *name);
 extern void util_catch_signal (int signum, void (*handler)(int));

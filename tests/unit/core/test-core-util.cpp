@@ -95,6 +95,55 @@ TEST(CoreUtil, GetTimeString)
 
 /*
  * Tests functions:
+ *   util_parse_delay
+ */
+
+TEST(CoreUtil, ParseDelay)
+{
+    /* error: no string */
+    LONGS_EQUAL(-1, util_parse_delay (NULL, -1));
+    LONGS_EQUAL(-1, util_parse_delay (NULL, 0));
+    LONGS_EQUAL(-1, util_parse_delay (NULL, 1));
+    LONGS_EQUAL(-1, util_parse_delay ("", -1));
+    LONGS_EQUAL(-1, util_parse_delay ("", 0));
+    LONGS_EQUAL(-1, util_parse_delay ("", 1));
+
+    /* error: bad default_factor */
+    LONGS_EQUAL(-1, util_parse_delay ("abcd", -1));
+    LONGS_EQUAL(-1, util_parse_delay ("abcd", 0));
+    LONGS_EQUAL(-1, util_parse_delay ("123", -1));
+    LONGS_EQUAL(-1, util_parse_delay ("123", 0));
+
+    /* error: bad unit */
+    LONGS_EQUAL(-1, util_parse_delay ("123a", 1));
+    LONGS_EQUAL(-1, util_parse_delay ("123ss", 1));
+    LONGS_EQUAL(-1, util_parse_delay ("123mss", 1));
+
+    /* error: bad number */
+    LONGS_EQUAL(-1, util_parse_delay ("abcd", 1));
+
+    /* tests with delay == 0 */
+    LONGS_EQUAL(0, util_parse_delay ("0", 1));
+    LONGS_EQUAL(0, util_parse_delay ("0s", 1));
+    LONGS_EQUAL(0, util_parse_delay ("0m", 1));
+    LONGS_EQUAL(0, util_parse_delay ("0h", 1));
+
+    /* tests with delay == 123, default_factor = 1 */
+    LONGS_EQUAL(123, util_parse_delay ("123", 1));
+    LONGS_EQUAL(123, util_parse_delay ("123", 1));
+    LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1));
+    LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1));
+    LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1));
+
+    /* tests with delay == 123, default_factor = 1000 */
+    LONGS_EQUAL(123 * 1000, util_parse_delay ("123", 1000));
+    LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1000));
+    LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1000));
+    LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1000));
+}
+
+/*
+ * Tests functions:
  *   util_signal_search
  *   util_catch_signal
  */
