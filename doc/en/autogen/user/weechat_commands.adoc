@@ -952,7 +952,7 @@ The default alias /v can be used to execute this command on all buffers (otherwi
             h: hours
 command: command to execute (or text to send to buffer if command does not start with '/')
 
-Note: command is executed on buffer where /wait was executed (if buffer is not found (for example if it has been closed before execution of command), then command is executed on WeeChat core buffer).
+Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
 
 Examples:
   join channel in 10 seconds:

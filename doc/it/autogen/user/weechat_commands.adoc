@@ -944,23 +944,23 @@ The default alias /v can be used to execute this command on all buffers (otherwi
 ----
 /wait  <numero>[<unità>] <comando>
 
- numero: tempo di attesa (numero intero)
-  unità: valori opzionali sono:
-           ms: millisecondi
-            s: secondi (predefinito)
-            m: minuti
-            h: ore
-comando: comando da eseguire (o testo da inviare al buffer se il comando non inizia con '/')
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Nota: il comando viene eseguito sui buffer dove /wait è stato eseguito (se il buffer non viene trovato (per esempio se è stato chiuso prima dell'esecuzione), allora il comando verrà eseguito sul buffer core di WeeChat)
+Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
 
-Esempi:
-  entra nel canale tra 10 secondi:
+Examples:
+  join channel in 10 seconds:
     /wait 10 /join #test
-  imposta assenza tra 15 minuti:
-    /wait 15m /away -all Sono assente
-  scrive 'ciao' tra 2 minuti:
-    /wait 2m ciao
+  set away in 15 minutes:
+    /wait 15m /away -all I'm away
+  say 'hello' in 2 minutes:
+    /wait 2m hello
 ----
 
 [[command_weechat_window]]

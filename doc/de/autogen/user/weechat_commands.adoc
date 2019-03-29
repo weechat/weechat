@@ -944,23 +944,23 @@ Um diesen Befehl in jedem Buffer ausführen zu können, kann der Standardkurzbef
 ----
 /wait  <number>[<unit>] <command>
 
- number: die Zeit, die gewartet werden soll (dies muss eine natürlich Zahl sein)
-   unit: mögliche Werte (optional):
-           ms: Millisekunden
-            s: Sekunden (Vorgabewert)
-            m: Minuten
-            h: Stunden
-command: Befehl der ausgeführt werden soll (ohne das führende '/') oder ein Text der in dem Buffer ausgegeben werden soll
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Hinweis: Der Befehl der zeitverzögert gestartet werden soll wird im selben Buffer ausgeführt in dem auch der /wait Befehl aufgerufen wurde. Falls der Buffer nicht gefunden werden kann, da er in der Zwischenzeit zum Beispiel geschlossen wurde, wird der Befehl im WeeChat Core-Buffer ausgeführt.
+Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
 
-Beispiele:
-  Betritt nach 10 Sekunden den Channel #test:
-  /wait 10 /join #test
-  Setzt nach 15 Minuten eine globale Abwesenheit:
-  /wait 15m /away -all Bin dann mal eben weg
-  Versendet nach zwei Minuten den Text 'Hallo':
-  /wait 2m Hallo
+Examples:
+  join channel in 10 seconds:
+    /wait 10 /join #test
+  set away in 15 minutes:
+    /wait 15m /away -all I'm away
+  say 'hello' in 2 minutes:
+    /wait 2m hello
 ----
 
 [[command_weechat_window]]

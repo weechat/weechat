@@ -944,22 +944,22 @@ path_to_binary: WeeChat バイナリへのパス (デフォルトは現在のバ
 ----
 /wait  <number>[<unit>] <command>
 
- number: 遅延時間 (整数)
-   unit: 任意、値は:
-           ms: ミリ秒
-            s: 秒 (デフォルト)
-            m: 分
-            h: 時
-command: 実行するコマンド (コマンドが '/' で始まらない場合はバッファに送信するテキスト)
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-注意: コマンドは /wait が実行されたバッファで実行されます (バッファが見つからない場合 (例えばコマンド実行前にバッファが閉じられた場合) は、コマンドは WeeChat コアバッファで実行されます)。
+Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
 
-例:
-  10 秒後にチャンネルに入る:
+Examples:
+  join channel in 10 seconds:
     /wait 10 /join #test
-  15 分後に離席状態に変更:
+  set away in 15 minutes:
     /wait 15m /away -all I'm away
-  2 分後に 'hello' と発言:
+  say 'hello' in 2 minutes:
     /wait 2m hello
 ----
 

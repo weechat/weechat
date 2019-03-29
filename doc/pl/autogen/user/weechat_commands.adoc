@@ -944,22 +944,22 @@ Domyślny alias /v może zostać użyty do wykonania tej komendy we wszystkich b
 ----
 /wait  <liczba>[<jednostka>] <komenda>
 
- liczba: ilość czasu do odczekania (liczba całkowita)
-   jednostka: opcjonalnie, możliwe wartości:
-           ms: milisekundy
-            s: sekundy (domyślnie)
-            m: minuty
-            h: godziny
-komenda: komenda do wykonania (lub tekst do wysłania do bufora jeżeli komenda nie zaczyna się od  '/')
+ number: amount of time to wait (integer number)
+   unit: optional, values are:
+           ms: milliseconds
+            s: seconds (default)
+            m: minutes
+            h: hours
+command: command to execute (or text to send to buffer if command does not start with '/')
 
-Ważne: komenda zostanie wykonana w buforze, gdzie zostało wykonane /wait (jeśli bufor nie zostanie znaleziony(na przykład jeśli został zamknięty przed wykonaniem komendy), wtedy komenda wykona się w głównym buforze WeeChat).
+Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
 
-Przykłady:
-  wejdzie na kanał za 10 sek:
+Examples:
+  join channel in 10 seconds:
     /wait 10 /join #test
-  ustawi stan nieobecności za 15 min:
+  set away in 15 minutes:
     /wait 15m /away -all I'm away
-  napisze 'hello' za 2 min:
+  say 'hello' in 2 minutes:
     /wait 2m hello
 ----
 

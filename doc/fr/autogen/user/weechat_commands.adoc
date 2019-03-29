@@ -952,7 +952,7 @@ L'alias par défaut /v peut être utilisé pour exécuter cette commande sur tou
               h : heures
 commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
-Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'est pas trouvé, alors la commande est exécutée sur le tampon WeeChat principal).
+Note : la commande est exécutée sur le tampon où /wait a été exécuté (si le tampon n'existe plus, la commande n'est pas exécutée).
 
 Exemples :
   rejoindre le canal dans 10 secondes :

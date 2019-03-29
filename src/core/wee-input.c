@@ -374,12 +374,7 @@ input_data_timer_cb (const void *pointer, void *data, int remaining_calls)
 
     if (timer_args[0] && timer_args[1])
     {
-        /* search buffer, fallback to core buffer if not found */
         ptr_buffer = gui_buffer_search_by_full_name (timer_args[0]);
-        if (!ptr_buffer)
-            ptr_buffer = gui_buffer_search_main ();
-
-        /* execute command */
         if (ptr_buffer)
             (void) input_data (ptr_buffer, timer_args[1], timer_args[2]);
     }
