@@ -468,6 +468,7 @@ TEST(CoreString, Match)
     LONGS_EQUAL(0, string_match ("test", "*es", 0));
     LONGS_EQUAL(0, string_match ("test", "*es", 1));
     LONGS_EQUAL(1, string_match ("test", "*es*", 0));
+    LONGS_EQUAL(1, string_match ("test", "**es**", 0));
     LONGS_EQUAL(1, string_match ("test", "*es*", 1));
     LONGS_EQUAL(1, string_match ("test", "*ES*", 0));
     LONGS_EQUAL(0, string_match ("test", "*ES*", 1));
