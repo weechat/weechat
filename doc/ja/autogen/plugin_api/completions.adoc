@@ -82,9 +82,9 @@
 
 | script | script_tags | リポジトリに存在するスクリプトに対するタグのリスト
 
-| spell | spell_dicts | list of installed dictionaries
+| spell | spell_dicts | インストール済み辞書のリスト
 
-| spell | spell_langs | list of all languages supported
+| spell | spell_langs | サポートされる全ての言語のリスト
 
 | tcl | tcl_script | スクリプトのリスト
 

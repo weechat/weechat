@@ -3,7 +3,7 @@
 // DO NOT EDIT BY HAND!
 //
 [[command_spell_spell]]
-* `+spell+`: spell plugin configuration
+* `+spell+`: スペルチェックプラグイン設定
 
 ----
 /spell  enable|disable|toggle
@@ -12,21 +12,21 @@
         deldict
         addword [<dict>] <word>
 
-  enable: enable spell checker
- disable: disable spell checker
-  toggle: toggle spell checker
-listdict: show installed dictionaries
- setdict: set dictionary for current buffer (multiple dictionaries can be separated by a comma)
- deldict: delete dictionary used on current buffer
- addword: add a word in personal dictionary
+  enable: スペルチェックの有効化
+ disable: スペルチェックの無効化
+  toggle: スペルチェックの有効無効を切り替え
+listdict: インストール済み辞書を表示
+ setdict: 現在のバッファ用の辞書を設定 (コンマで区切れば複数の辞書を指定可能)
+ deldict: 現在のバッファ用の辞書を削除
+ addword: 個人辞書に単語を追加
 
-Input line beginning with a '/' is not checked, except for some commands (see /set spell.check.commands).
+一部のコマンドを除いて '/' で始まる入力行はチェックされません (/set spell.check.commands を参照してください)。
 
-To enable spell checker on all buffers, use option "default_dict", then enable spell checker, for example:
+全てのバッファでスペルチェックを有効化するには、"default_dict" オプションを設定した後に、スペルチェックを有効化してください。例:
   /set spell.check.default_dict "en"
   /spell enable
 
-To display a list of suggestions in a bar, use item "spell_suggest".
+バーの中にスペル候補リストを表示するには、"spell_suggest" 要素を使ってください。
 
-Default key to toggle spell checker is alt-s.
+スペルチェックの有効無効を切り替えるデフォルトのキーは alt-s です。
 ----

@@ -9,7 +9,7 @@
 ** デフォルト値: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
-** 説明: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]
+** 説明: pass:none[バッファに辞書が定義されていない場合に使用されるデフォルト辞書 (または辞書のコンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いてスペルチェックを利用しない)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -21,7 +21,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_spell.check.enabled]] *spell.check.enabled*
-** 説明: pass:none[enable spell checker for command line]
+** 説明: pass:none[コマンドラインでスペルチェックを利用する]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+off+`
@@ -33,7 +33,7 @@
 ** デフォルト値: `+off+`
 
 * [[option_spell.check.suggestions]] *spell.check.suggestions*
-** 説明: pass:none[number of suggestions to display in bar item "spell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)]
+** 説明: pass:none[バッファ内の各辞書セットに対してバー要素 "spell_suggest" に表示する提案の数 (-1 = サジェスト機能を無効、0 = 全ての言語を使って全てのサジェスト結果を表示)]
 ** タイプ: 整数
 ** 値: -1 .. 2147483647
 ** デフォルト値: `+-1+`
@@ -51,31 +51,31 @@
 ** デフォルト値: `+lightred+`
 
 * [[option_spell.color.suggestion]] *spell.color.suggestion*
-** 説明: pass:none[text color for suggestion on a misspelled word in bar item "spell_suggest"]
+** 説明: pass:none[バー要素 "spell_suggest" 内でスペルミスのある単語に対する修正候補に付ける色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+default+`
 
 * [[option_spell.color.suggestion_delimiter_dict]] *spell.color.suggestion_delimiter_dict*
-** 説明: pass:none[text color for delimiters displayed between two dictionaries in bar item "spell_suggest"]
+** 説明: pass:none[バー要素 "spell_suggest" 内で 2 つの辞書間の区切り文字に付ける色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+cyan+`
 
 * [[option_spell.color.suggestion_delimiter_word]] *spell.color.suggestion_delimiter_word*
-** 説明: pass:none[text color for delimiters displayed between two words in bar item "spell_suggest"]
+** 説明: pass:none[バー要素 "aspell_suggest" 内で 2 つの単語間の区切り文字に付ける色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+cyan+`
 
 * [[option_spell.look.suggestion_delimiter_dict]] *spell.look.suggestion_delimiter_dict*
-** 説明: pass:none[delimiter displayed between two dictionaries in bar item "spell_suggest"]
+** 説明: pass:none[バー要素 "spell_suggest" 内の 2 つの辞書間の区切り文字]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+" / "+`
 
 * [[option_spell.look.suggestion_delimiter_word]] *spell.look.suggestion_delimiter_word*
-** 説明: pass:none[delimiter displayed between two words in bar item "spell_suggest"]
+** 説明: pass:none[バー要素 "spell_suggest" 内の 2 つの単語間の区切り文字]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+","+`
