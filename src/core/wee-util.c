@@ -422,6 +422,9 @@ util_signal_search (const char *name)
 {
     int i;
 
+    if (!name)
+        return -1;
+
     for (i = 0; util_signals[i].name; i++)
     {
         if (string_strcasecmp (util_signals[i].name, name) == 0)

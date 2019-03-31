@@ -36,6 +36,8 @@ struct t_util_signal
     int signal;                        /* signal number                     */
 };
 
+extern struct t_util_signal util_signals[];
+
 /* limits */
 extern void util_setrlimit ();
 
