@@ -57,13 +57,17 @@ TEST(CoreUtil, Timeval)
     LONGS_EQUAL(0, util_timeval_cmp (&tv1, &tv1));
     LONGS_EQUAL(-1, util_timeval_cmp (&tv1, &tv2));
     LONGS_EQUAL(1, util_timeval_cmp (&tv2, &tv1));
+    LONGS_EQUAL(-1, util_timeval_cmp (&tv1, &tv3));
+    LONGS_EQUAL(1, util_timeval_cmp (&tv3, &tv1));
 
     /* difference */
     LONGS_EQUAL(0, util_timeval_diff (NULL, NULL));
     LONGS_EQUAL(0, util_timeval_diff (NULL, &tv1));
     LONGS_EQUAL(0, util_timeval_diff (&tv1, NULL));
     LONGS_EQUAL(3000, util_timeval_diff (&tv1, &tv2));
+    LONGS_EQUAL(-3000, util_timeval_diff (&tv2, &tv1));
     LONGS_EQUAL(1003000, util_timeval_diff (&tv1, &tv3));
+    LONGS_EQUAL(-1003000, util_timeval_diff (&tv3, &tv1));
     CHECK(1409288400 * 1000000LL == util_timeval_diff (&tv_zero, &tv4));
 
     /* add interval */
@@ -76,6 +80,9 @@ TEST(CoreUtil, Timeval)
     util_timeval_add (&tv, 4000000);
     LONGS_EQUAL(123460, tv.tv_sec);
     LONGS_EQUAL(22000, tv.tv_usec);
+    util_timeval_add (&tv, 999000);
+    LONGS_EQUAL(123461, tv.tv_sec);
+    LONGS_EQUAL(21000, tv.tv_usec);
 }
 
 /*
