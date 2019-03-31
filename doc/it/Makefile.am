@@ -22,6 +22,7 @@ docdir = $(datadir)/doc/$(PACKAGE)
 EXTRA_DIST = CMakeLists.txt \
              docinfo.html \
              weechat.1.it.adoc \
+             weechat-headless.1.it.adoc \
              cmdline_options.it.adoc \
              weechat_user.it.adoc \
              weechat_plugin_api.it.adoc \
@@ -33,7 +34,8 @@ EXTRA_DIST = CMakeLists.txt \
              $(wildcard autogen/plugin_api/*.adoc)
 
 if MAN
-  man_targets = weechat.1
+  man_targets = weechat.1 \
+                weechat-headless.1
   man_install = install-man
   man_uninstall = uninstall-man
 endif
@@ -49,9 +51,11 @@ if DOC
 endif
 all-local: $(man_targets) $(doc_targets)
 
-# man page
+# man pages
 weechat.1: weechat.1.it.adoc cmdline_options.it.adoc
 	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/it/weechat.1.it.adoc
+weechat-headless.1: weechat-headless.1.it.adoc cmdline_options.it.adoc
+	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/it/weechat-headless.1.it.adoc
 
 # user's guide
 weechat_user.it.html: weechat_user.it.adoc cmdline_options.it.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
@@ -84,7 +88,6 @@ install-data-hook: $(man_install) $(doc_install)
 install-man:
 	$(mkinstalldirs) $(DESTDIR)$(mandir)/it/man1/
 	$(INSTALL_DATA) *.1 $(DESTDIR)$(mandir)/it/man1/
-	(cd '$(DESTDIR)$(mandir)/it/man1/' && $(RM) weechat-headless.1 && $(LN_S) weechat.1 weechat-headless.1)
 
 install-doc:
 	$(mkinstalldirs) $(DESTDIR)$(docdir)/
@@ -106,4 +109,4 @@ uninstall-doc:
 # clean
 
 clean-local:
-	-$(RM) weechat.1 weechat_*.html
+	-$(RM) weechat.1 weechat-headless.1 weechat_*.html
