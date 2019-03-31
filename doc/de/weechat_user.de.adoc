@@ -513,13 +513,22 @@ Um WeeChat zu starten muss folgender Befehl ausgeführt werden:
 $ weechat
 ----
 
-Befehlszeile:
-
-include::cmdline_options.de.adoc[]
-
 Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
 die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
+
+// TRANSLATION MISSING
+==== Command line options
+
+include::cmdline_options.de.adoc[]
+
+// TRANSLATION MISSING
+==== Extra debug options
+
+[WARNING]
+These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.de.adoc[]
 
 [[environment_variables]]
 === Umgebungsvariablen

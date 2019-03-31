@@ -419,7 +419,8 @@ Documentation files:
 |    docinfo.html                      | Asciidoctor style.
 |    docgen.py                         | Python script to build files in _autogen/_ directory (see below).
 |    XX/                               | Documentation for language XX (languages: en, fr, de, it, ...).
-|       cmdline_options.XX.adoc        | Command-line options (file included in man page and user's guide).
+|       cmdline_options.XX.adoc        | Command-line general options (file included in man pages and user's guide).
+|       cmdline_options_debug.XX.adoc  | Command-line debug options (file included in man pages and user's guide).
 |       weechat.1.XX.adoc              | Man page (`man weechat`).
 |       weechat_dev.XX.adoc            | link:weechat_dev.en.html[Developer's guide] (this document).
 |       weechat_faq.XX.adoc            | link:weechat_faq.en.html[FAQ].

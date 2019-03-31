@@ -516,13 +516,22 @@ Następnie jak w przypadku awarii, użyj polecenia `bt full`:
 $ weechat
 ----
 
-Parametry z linii poleceń:
-
-include::cmdline_options.pl.adoc[]
-
 Podczas pierwszego uruchomienia WeeChat tworzone są domyślne pliki konfiguracyjne
 w  _~/.weechat_ z domyślnymi opcjami i wartościami
 (zobacz <<files_and_directories,Pliki i foldery>>).
+
+// TRANSLATION MISSING
+==== Command line options
+
+include::cmdline_options.pl.adoc[]
+
+// TRANSLATION MISSING
+==== Extra debug options
+
+[WARNING]
+These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.pl.adoc[]
 
 [[environment_variables]]
 === Zmienne środowiskowe

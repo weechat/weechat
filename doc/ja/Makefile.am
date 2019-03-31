@@ -24,6 +24,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat.1.ja.adoc \
              weechat-headless.1.ja.adoc \
              cmdline_options.ja.adoc \
+             cmdline_options_debug.ja.adoc \
              weechat_user.ja.adoc \
              weechat_plugin_api.ja.adoc \
              weechat_scripting.ja.adoc \
@@ -56,13 +57,13 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man pages
-weechat.1: weechat.1.ja.adoc cmdline_options.ja.adoc
+weechat.1: weechat.1.ja.adoc cmdline_options.ja.adoc cmdline_options_debug.ja.adoc
 	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ja/weechat.1.ja.adoc
-weechat-headless.1: weechat-headless.1.ja.adoc cmdline_options.ja.adoc
+weechat-headless.1: weechat-headless.1.ja.adoc cmdline_options.ja.adoc cmdline_options_debug.ja.adoc
 	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/ja/weechat-headless.1.ja.adoc
 
 # user's guide
-weechat_user.ja.html: weechat_user.ja.adoc cmdline_options.ja.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
+weechat_user.ja.html: weechat_user.ja.adoc cmdline_options.ja.adoc cmdline_options_debug.ja.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_user.ja.html $(abs_top_srcdir)/doc/ja/weechat_user.ja.adoc
 
 # plugin API reference

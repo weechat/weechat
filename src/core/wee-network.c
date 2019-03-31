@@ -80,12 +80,12 @@ gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
 void
 network_init_gcrypt ()
 {
-    if (!weechat_no_gcrypt)
-    {
-        gcry_check_version (GCRYPT_VERSION);
-        gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
-        gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
-    }
+    if (weechat_no_gcrypt)
+        return;
+
+    gcry_check_version (GCRYPT_VERSION);
+    gcry_control (GCRYCTL_DISABLE_SECMEM, 0);
+    gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
 /*

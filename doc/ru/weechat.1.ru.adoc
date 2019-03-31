@@ -15,7 +15,7 @@ weechat - расширяемый чат-клиент
 
 // TRANSLATION MISSING
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [<плагин>:<параметр>...]
+*weechat* [-a|--no-connect] [-d|--dir <путь>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <команда>] [-s|--no-script] [--upgrade] [debug-option...] [<плагин>:<параметр>...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]
@@ -30,6 +30,13 @@ WeeChat (Wee Enhanced Environment for Chat) это свободный чат-к�
 == ПАРАМЕТРЫ
 
 include::cmdline_options.ru.adoc[]
+
+// TRANSLATION MISSING
+== DEBUG OPTIONS
+
+*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.ru.adoc[]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 

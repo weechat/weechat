@@ -189,6 +189,16 @@ weechat_display_usage ()
               "WeeChat is blocking and does not run in background)\n"));
         string_fprintf (stdout, "\n");
     }
+
+    /* debug options */
+    string_fprintf (
+        stdout,
+        _("Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
+          "      --no-dlclose         do not call function dlclose after "
+          "plugins are unloaded\n"
+          "      --no-gnutls          disable init/deinit of gnutls\n"
+          "      --no-gcrypt          disable init/deinit of gcrypt\n"));
+    string_fprintf (stdout, "\n");
 }
 
 /*

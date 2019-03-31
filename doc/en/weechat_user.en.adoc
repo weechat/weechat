@@ -504,13 +504,20 @@ To start WeeChat, issue this command:
 $ weechat
 ----
 
-Command line arguments:
-
-include::cmdline_options.en.adoc[]
-
 When you run WeeChat for the first time, the default configuration files are
 created in _~/.weechat_ with default options and values
 (see <<files_and_directories,Files and directories>>).
+
+==== Command line options
+
+include::cmdline_options.en.adoc[]
+
+==== Extra debug options
+
+[WARNING]
+These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.en.adoc[]
 
 [[environment_variables]]
 === Environment variables

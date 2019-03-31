@@ -12,8 +12,9 @@ weechat-headless - rozszerzalny klient rozmów (wersja headless)
 
 == SKŁADNIA
 
+// TRANSLATION MISSING
 [verse]
-*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <wtyczki>] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [wtyczka:opcja...]
+*weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <wtyczki>] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [debug-option...] [wtyczka:opcja...]
 *weechat-headless* [-c|--colors]
 *weechat-headless* [-h|--help]
 *weechat-headless* [-l|--license]
@@ -32,6 +33,13 @@ opcji "--daemon".
 == OPCJE
 
 include::cmdline_options.pl.adoc[]
+
+// TRANSLATION MISSING
+== DEBUG OPTIONS
+
+*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.pl.adoc[]
 
 == OPCJE WTYCZEK
 

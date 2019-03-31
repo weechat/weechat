@@ -508,13 +508,22 @@ WeeChat を起動させるには、以下コマンドを実行:
 $ weechat
 ----
 
-コマンドライン引数:
-
-include::cmdline_options.ja.adoc[]
-
 WeeChat の初回起動時にデフォルトのオプション設定を含む設定ファイルが
 _~/.weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
+
+// TRANSLATION MISSING
+==== Command line options
+
+include::cmdline_options.ja.adoc[]
+
+// TRANSLATION MISSING
+==== Extra debug options
+
+[WARNING]
+These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.ja.adoc[]
 
 [[environment_variables]]
 === 環境変数

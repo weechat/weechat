@@ -1,0 +1,16 @@
+// TRANSLATION MISSING
+*--no-dlclose*::
+    Do not call the function dlclose after plugins are unloaded.
+    This is useful with tools like Valgrind to display stack for unloaded
+    plugins.
+
+// TRANSLATION MISSING
+*--no-gnutls*::
+    Do not call the init and deinit functions of GnuTLS library.
+    This is useful with tools like Valgrind and electric-fence, to prevent
+    GnuTLS memory errors.
+
+// TRANSLATION MISSING
+*--no-gcrypt*::
+    Do not call the init and deinit functions of Gcrypt library.
+    This is useful with tools like Valgrind, to prevent Gcrypt memory errors.

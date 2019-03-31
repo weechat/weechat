@@ -25,6 +25,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.en.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options_debug.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_files.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.en.adoc
@@ -41,6 +42,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.en.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options_debug.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_files.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.en.adoc
@@ -64,6 +66,7 @@ if(ENABLE_DOC)
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.en.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.en.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options_debug.en.adoc
     ${AUTOGEN_USER}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.en.html"

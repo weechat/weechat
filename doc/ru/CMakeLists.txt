@@ -25,6 +25,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options_debug.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_files.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.ru.adoc
@@ -41,6 +42,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options_debug.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_files.ru.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.ru.adoc

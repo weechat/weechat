@@ -548,14 +548,23 @@ Per avviare WeeChat, digitare questo comando:
 $ weechat
 ----
 
-Argomenti a riga di comando:
-
-include::cmdline_options.it.adoc[]
-
 // TRANSLATION MISSING
 When you run WeeChat for the first time, the default configuration files are
 created in _~/.weechat_ with default options and values
 (see <<files_and_directories,Files and directories>>).
+
+// TRANSLATION MISSING
+==== Command line options
+
+include::cmdline_options.it.adoc[]
+
+// TRANSLATION MISSING
+==== Extra debug options
+
+[WARNING]
+These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.it.adoc[]
 
 // TRANSLATION MISSING
 [[environment_variables]]

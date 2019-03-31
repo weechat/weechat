@@ -12,8 +12,9 @@ weechat - der erweiterbare Chat Client
 
 == SYNOPSIS
 
+// TRANSLATION MISSING
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [plugin:option...]
+*weechat* [-a|--no-connect] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [debug-option...] [plugin:option...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]
@@ -28,6 +29,13 @@ Durch Skripten ist das Hauptprogramm äußerst flexibel und erweiterbar.
 == OPTIONEN
 
 include::cmdline_options.de.adoc[]
+
+// TRANSLATION MISSING
+== DEBUG OPTIONS
+
+*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+
+include::cmdline_options_debug.de.adoc[]
 
 == OPTIONEN von ERWEITERUNGEN
 

@@ -13,7 +13,7 @@ weechat - le client de discussion extensible
 == SYNOPSIS
 
 [verse]
-*weechat* [-a|--no-connect] [-d|--dir <répertoire>] [-t|--temp-dir]  [-p|--no-plugin] [-P|--plugins <extensions>] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [extension:option...]
+*weechat* [-a|--no-connect] [-d|--dir <répertoire>] [-t|--temp-dir]  [-p|--no-plugin] [-P|--plugins <extensions>] [-r|--run-command <commande>] [-s|--no-script] [--upgrade] [option-debug...] [extension:option...]
 *weechat* [-c|--colors]
 *weechat* [-h|--help]
 *weechat* [-l|--license]
@@ -28,6 +28,13 @@ Il est hautement paramétrable et extensible avec des scripts.
 == OPTIONS
 
 include::cmdline_options.fr.adoc[]
+
+== OPTIONS DE DEBUG
+
+*ATTENTION :* ces options sont pour du debug seulement,
+*NE PAS UTILISER EN PRODUCTION !*
+
+include::cmdline_options_debug.fr.adoc[]
 
 == OPTIONS D'EXTENSION
 
