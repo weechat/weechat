@@ -229,22 +229,14 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       alias-completion.c          | alias 補完
 |       alias-config.c              | alias 設定オプション (alias.conf ファイル)
 |       alias-info.c                | alias の情報/インフォリスト/hdata
-// TRANSLATION MISSING
-|    spell/                         | Spell checker plugin.
-// TRANSLATION MISSING
-|       spell.c                     | Main spell checker functions.
-// TRANSLATION MISSING
-|       spell-bar-item.c            | Spell checker bar items.
-// TRANSLATION MISSING
-|       spell-command.c             | Spell checker commands.
-// TRANSLATION MISSING
-|       spell-completion.c          | Spell checker completions.
-// TRANSLATION MISSING
-|       spell-config.c              | Spell checker config options (file spell.conf).
-// TRANSLATION MISSING
-|       spell-info.c                | Spell checker info/infolists/hdata.
-// TRANSLATION MISSING
-|       spell-speller.c             | Spellers management.
+|    spell/                         | spell プラグイン
+|       spell.c                     | spell の主関数
+|       spell-bar-item.c            | spell バー要素
+|       spell-command.c             | spell コマンド
+|       spell-completion.c          | spell 補完
+|       spell-config.c              | spell 設定オプション (spell.conf ファイル)
+|       spell-info.c                | spell の情報/インフォリスト/hdata
+|       spell-speller.c             | spell のスペラー管理
 |    buflist/                       | buflist プラグイン
 |       buflist.c                   | buflist の主要関数
 |       buflist-bar-item.c          | buflist バー要素

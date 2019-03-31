@@ -203,13 +203,11 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   <<charset_plugin,Charset プラグイン>>のコンパイル。
 
-// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Build man page.
+  man ページのコンパイル。
 
-// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Build HTML documentation.
+  HTML 文書のコンパイル。
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Enchant と含めた <<spell_plugin,Spell プラグイン>>のコンパイル。
@@ -259,12 +257,11 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   <<scripts_plugins,Python プラグイン>>のコンパイル。
 
-// TRANSLATION MISSING
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 3. +
-  This option is not recommended because many scripts are not yet compatible
-  with Python 3. +
-  You can follow the progress of Python 3 transition on this page:
+  Python 3 で <<scripts_plugins,Python プラグイン>>をコンパイル。 +
+  このオプションの有効化は非推奨です。なぜなら、多くのスクリプトはまだ
+  Python 3 と互換性がないからです。 +
+  Python 3 への移行の進捗状況は以下のページを参照してください:
   https://weechat.org/scripts/python3/
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
@@ -295,10 +292,9 @@ cmake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   コンパイルテスト。
 
-// TRANSLATION MISSING
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
-  Compile with code coverage options. +
-  This option should be used only for tests, to measure test coverage.
+  コードカバレッジオプションを有効化してコンパイル。 +
+  このオプションはテスト網羅率を測定するために用意されています。
 |===
 
 その他のオプションは以下のコマンドで確認してください:
@@ -1629,8 +1625,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+d]     | コマンドラインで次の単語を削除 (削除された文字列は WeeChat 専用の内部クリップボードに保存) | `/input delete_next_word`
 | kbd:[Alt+k]     | キー入力を奪って、コマンドラインにコード (キーが割り当てられていればコマンド) を入力 | `/input grab_key_command`
 | kbd:[Alt+r]     | コマンドラインへの入力をすべて削除 | `/input delete_line`
-// TRANSLATION MISSING
-| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
+| kbd:[Alt+s]     | スペルチェッカの有効無効を切り替え | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
