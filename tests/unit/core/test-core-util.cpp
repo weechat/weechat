@@ -124,6 +124,7 @@ TEST(CoreUtil, ParseDelay)
 
     /* tests with delay == 0 */
     LONGS_EQUAL(0, util_parse_delay ("0", 1));
+    LONGS_EQUAL(0, util_parse_delay ("0ms", 1));
     LONGS_EQUAL(0, util_parse_delay ("0s", 1));
     LONGS_EQUAL(0, util_parse_delay ("0m", 1));
     LONGS_EQUAL(0, util_parse_delay ("0h", 1));
@@ -131,12 +132,14 @@ TEST(CoreUtil, ParseDelay)
     /* tests with delay == 123, default_factor = 1 */
     LONGS_EQUAL(123, util_parse_delay ("123", 1));
     LONGS_EQUAL(123, util_parse_delay ("123", 1));
+    LONGS_EQUAL(123, util_parse_delay ("123ms", 1));
     LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1));
     LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1));
     LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1));
 
     /* tests with delay == 123, default_factor = 1000 */
     LONGS_EQUAL(123 * 1000, util_parse_delay ("123", 1000));
+    LONGS_EQUAL(123, util_parse_delay ("123ms", 1000));
     LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1000));
     LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1000));
     LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1000));
