@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-03-29 20:40+0100\n"
-"PO-Revision-Date: 2019-03-21 23:32+0100\n"
+"PO-Revision-Date: 2019-04-01 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -888,7 +888,7 @@ msgstr "%s保護データやパスフレーズを操作する前にデータを�
 
 #, c-format
 msgid "%sError: passphrase is too long (max: %d chars)"
-msgstr ""
+msgstr "%sエラー: パスフレーズが長すぎます (最大: %d 文字)"
 
 msgid "Passphrase deleted"
 msgstr "パスフレーズを削除しました"
@@ -1768,15 +1768,13 @@ msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr "タグか正規表現に基づくバッファメッセージの非表示/表示"
 
-#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
 msgstr ""
-"list || enable|disable|toggle [<name>|@] || add <name> <buffer>[,"
+"list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
 
-#, fuzzy
 msgid ""
 "      list: list all filters\n"
 "    enable: enable filters (filters are enabled by default)\n"
@@ -1845,37 +1843,38 @@ msgid ""
 "  filter lines that are strictly equal to \"WeeChat sucks\" on all buffers:\n"
 "    /filter add sucks2 * * (?-i)^WeeChat sucks$"
 msgstr ""
-"   list: 全てのフィルタをリストアップ\n"
-" enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)\n"
-"disable: フィルタを無効化\n"
-" toggle: フィルタの有効無効を切り替え\n"
-"   name: フィルタの名前 (\"@\" = 現在のバッファに設定されている全てのフィルタ"
-"を有効化/無効化)\n"
-"    add: フィルタを追加\n"
-" rename: フィルタをリネーム\n"
-"    del: フィルタを削除\n"
-"   -all: 全てのフィルタを削除\n"
-" buffer: フィルタが有効化されているバッファのコンマ区切りリスト:\n"
-"         - これはプラグイン名を含む完全な名前です (例: \"irc.freenode."
+"      list: 全てのフィルタをリストアップ\n"
+"    enable: フィルタを有効化 (フィルタはデフォルトで有効になっています)\n"
+"   disable: フィルタを無効化\n"
+"    toggle: フィルタの有効無効を切り替え\n"
+"      name: フィルタの名前 (\"@\" = 現在のバッファに設定されている全てのフィ"
+"ルタを有効化/無効化)\n"
+"       add: フィルタを追加\n"
+"addreplace: 既存のフィルタに追加もしくは置換\n"
+"    rename: フィルタをリネーム\n"
+"       del: フィルタを削除\n"
+"      -all: 全てのフィルタを削除\n"
+"    buffer: フィルタが有効化されているバッファのコンマ区切りリスト:\n"
+"            - これはプラグイン名を含む完全な名前です (例: \"irc.freenode."
 "#weechat\" または \"irc.server.freenode\")\n"
-"         - \"*\" は全てのバッファを意味します\n"
-"         - 名前が '!' から始まるものは除外されます\n"
-"         - ワイルドカード \"*\" を使うことができます\n"
-"   tags: タグのコンマ区切りリスト、例えば \"irc_join,irc_part,irc_quit\"\n"
-"         - 論理積 \"and\": タグ同士を \"+\" でつなげてください (例: "
+"            - \"*\" は全てのバッファを意味します\n"
+"            - 名前が '!' から始まるものは除外されます\n"
+"            - ワイルドカード \"*\" を使うことができます\n"
+"      tags: タグのコンマ区切りリスト、例えば \"irc_join,irc_part,irc_quit\"\n"
+"            - 論理積 \"and\": タグ同士を \"+\" でつなげてください (例: "
 "\"nick_toto+irc_action\")\n"
-"         - ワイルドカード \"*\" を使うことができます\n"
-"         - タグを '!' で始めると、そのタグが付けられたメッセージとそのタグを"
-"含むメッセージはフィルタされません\n"
-"  regex: 行単位検索の正規表現\n"
-"         - '\\t' を使うと、プレフィックスをメッセージから分離できます。'|' 等"
-"の特別な文字は '\\|' のようにエスケープしなければいけません\n"
-"         - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されます "
-"(最初の '!' にマッチさせたければ、'\\!' を使ってください)\n"
-"         - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッセー"
-"ジ用\n"
-"         - 正規表現は大文字小文字を区別しません、\"(?-i)\" から始まる場合は区"
-"別します\n"
+"            - ワイルドカード \"*\" を使うことができます\n"
+"            - タグを '!' で始めると、そのタグが付けられたメッセージとそのタグ"
+"を含むメッセージはフィルタされません\n"
+"     regex: 行単位検索の正規表現\n"
+"            - '\\t' を使うと、プレフィックスをメッセージから分離できま"
+"す。'|' 等の特別な文字は '\\|' のようにエスケープしなければいけません\n"
+"            - 正規表現の最初に '!' が含まれる場合は、マッチ結果が反転されま"
+"す (最初の '!' にマッチさせたければ、'\\!' を使ってください)\n"
+"            - 2 種類の正規表現があります: 一方はプレフィックス用、他方はメッ"
+"セージ用\n"
+"            - 正規表現は大文字小文字を区別しません、\"(?-i)\" から始まる場合"
+"は区別します\n"
 "\n"
 "デフォルトではキー alt+'=' ですべてのバッファについてフィルタリングの on/off "
 "を切り替えられます。現在のバッファに限りフィルタリングを切り替えるには alt"
@@ -2577,11 +2576,9 @@ msgstr ""
 msgid "execute a command several times"
 msgstr "複数回コマンドを実行"
 
-#, fuzzy
 msgid "[-interval <delay>[<unit>]] <count> <command>"
-msgstr "[-interval <delay>] <count> <command>"
+msgstr "[-interval <delay>[<unit>]] <count> <command>"
 
-#, fuzzy
 msgid ""
 "  delay: delay between execution of commands\n"
 "   unit: optional, values are:\n"
@@ -2600,11 +2597,18 @@ msgid ""
 "  scroll 2 pages up:\n"
 "    /repeat 2 /window page_up"
 msgstr ""
-"  delay: コマンドの実行間隔 (ミリ秒単位)\n"
+"  delay: コマンドの実行間隔\n"
+"   unit: 任意、以下の値を使ってください:\n"
+"           ms: ミリ秒\n"
+"            s: 秒 (デフォルト)\n"
+"            m: 分\n"
+"            h: 時間\n"
 "  count: コマンドの実行回数\n"
-"command: 実行するコマンド (最初に '/' が無い場合は自動的に追加されます)\n"
+"command: 実行するコマンド (最初に '/' が無い場合はバッファに送信するテキスト"
+"と解釈されます)\n"
 "\n"
-"全てのコマンドはこのコマンドが発行されたバッファで実行されます。\n"
+"注意: コマンドは /repeat を実行したバッファで実行されます (バッファが存在しな"
+"い場合、コマンドは実行されません)。\n"
 "\n"
 "例:\n"
 "  2 ページ分上方向にスクロール:\n"
@@ -2941,7 +2945,6 @@ msgstr "コマンドの実行を予約"
 msgid "<number>[<unit>] <command>"
 msgstr "<number>[<unit>] <command>"
 
-#, fuzzy
 msgid ""
 " number: amount of time to wait (integer number)\n"
 "   unit: optional, values are:\n"
@@ -4659,6 +4662,8 @@ msgid ""
 "warning: the command \"%s\" is not currently allowed (command: \"%s\", "
 "buffer: \"%s\")"
 msgstr ""
+"警告: コマンド \"%s\" は許可されていません (コマンド: \"%s\"、バッファ: \"%s"
+"\")"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -5165,13 +5170,12 @@ msgstr "%sフィルタ \"%s\" の追加エラー: %s"
 msgid "not enough arguments"
 msgstr "引数が不足しています"
 
-#, fuzzy
 msgid ""
 "a filter with same name already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
-"%s%s: トリガ \"%s\" は既に存在しています (他の名前を選ぶか、\"addreplace\" オ"
-"プションで上書きを有効化してください)"
+"同名のフィルタが存在します (名前を変えるか、\"addreplace\" オプションで既存の"
+"フィルタを上書きしてください)"
 
 #. TRANSLATORS: %s is the error returned by regerror
 #, c-format
@@ -7031,13 +7035,13 @@ msgstr ""
 "%s%s: コマンド /%s を実行できません、このサーバはチャンネルモード \"%s\" をサ"
 "ポートしません"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
-"%s%s: コマンド \"%s\" は irc バッファで実行してください (サーバかチャンネル"
-"バッファ)"
+"%1$s%2$s: オプション \"%4$s\" 付きのコマンド \"%3$s\" は irc バッファで実行し"
+"てください (サーバ、チャンネル、プライベートバッファ)"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -8659,7 +8663,7 @@ msgstr ""
 " count: リプライの個数 (負の値で完全な検索)\n"
 "target: マスクに一致するものだけを返す"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
 "private)"
@@ -12071,6 +12075,12 @@ msgid ""
 "the relay client is not safe (someone could use it to run commands); for "
 "example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgstr ""
+"クライアントからデータ (テキストまたはコマンド) を受け取った時に許可/拒否する"
+"コマンドのカンマ区切りリスト。\"*\" は任意のコマンド、\"!\" から始まるコマン"
+"ド名は拒否したいコマンド、ワイルドカード \"*\" をコマンド名に使うことも可能で"
+"す。このオプションはリレークライアントを信用できない (他人にコマンドを実行さ"
+"れては困る) 場合に使ってください。例えば \"*,!exec,!quit\" は/exec と /quit "
+"を除いたすべてのコマンドを許可します"
 
 msgid "number of clients for relay"
 msgstr "中継するクライアントのリスト"
@@ -12357,7 +12367,7 @@ msgid "URL"
 msgstr "URL"
 
 msgid "SHA-512"
-msgstr ""
+msgstr "SHA-512"
 
 msgid "Requires"
 msgstr "依存"
@@ -12806,14 +12816,13 @@ msgstr "%s%s: スクリプトリストのダウンロード中にエラー: %s"
 msgid "%s: downloading list of scripts..."
 msgstr "%s: スクリプトリストのダウンロード中..."
 
-#, fuzzy
 msgid "Spell checker for input"
-msgstr "入力に対するスペルチェッカ (Aspell を利用)"
+msgstr "入力に対するスペルチェッカ"
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format
 msgid "%s dictionaries list:"
-msgstr "%s ディレクトリリスト:"
+msgstr "%s プラグインの辞書リスト:"
 
 #, c-format
 msgid "%s: \"%s\" removed"
@@ -12821,7 +12830,7 @@ msgstr "%s: \"%s\" 削除しました"
 
 #, c-format
 msgid "%s: error: dictionary \"%s\" is not available on your system"
-msgstr "%s: エラー: ディレクトリ \"%s\" がシステム上に見つかりません"
+msgstr "%s: エラー: 辞書 \"%s\" がシステム上に見つかりません"
 
 #, c-format
 msgid "%s%s: no dictionary on this buffer for adding word"
@@ -12845,7 +12854,7 @@ msgstr "%s%s: 単語の個人辞書への登録に失敗"
 #. TRANSLATORS: second "%s" is "aspell" or "enchant"
 #, c-format
 msgid "%s (using %s)"
-msgstr "%s (%s を使用中)"
+msgstr "%s (%s プラグインを使用中)"
 
 msgid "Spell checking is enabled"
 msgstr "スペルチェックが有効化されています"
@@ -12855,25 +12864,22 @@ msgstr "スペルチェックが無効化されています"
 
 #, c-format
 msgid "Default dictionary: %s"
-msgstr "デフォルトディレクトリ: %s"
+msgstr "デフォルト辞書: %s"
 
 msgid "(not set)"
 msgstr "(未設定)"
 
 msgid "Specific dictionaries on buffers:"
-msgstr "あるバッファ用に設定した特別なディレクトリ:"
+msgstr "バッファで使う辞書:"
 
-#, fuzzy
 msgid "Spell checker enabled"
 msgstr "スペルチェックが有効化されています"
 
-#, fuzzy
 msgid "Spell checker disabled"
 msgstr "スペルチェックが無効化されています"
 
-#, fuzzy
 msgid "spell plugin configuration"
-msgstr "aspell プラグイン設定"
+msgstr "スペルチェックプラグイン設定"
 
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
@@ -12882,7 +12888,6 @@ msgstr ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
 "|| addword [<dict>] <word>"
 
-#, fuzzy
 msgid ""
 "  enable: enable spell checker\n"
 " disable: disable spell checker\n"
@@ -12905,75 +12910,69 @@ msgid ""
 "\n"
 "Default key to toggle spell checker is alt-s."
 msgstr ""
-"  enable: aspell の有効化\n"
-" disable: aspell の無効化\n"
-"  toggle: aspell の有効無効を切り替え\n"
+"  enable: スペルチェックの有効化\n"
+" disable: スペルチェックの無効化\n"
+"  toggle: スペルチェックの有効無効を切り替え\n"
 "listdict: インストール済み辞書を表示\n"
 " setdict: 現在のバッファ用の辞書を設定 (コンマで区切れば複数の辞書を指定可"
 "能)\n"
 " deldict: 現在のバッファ用の辞書を削除\n"
-" addword: aspell の個人辞書に単語を追加\n"
+" addword: 個人辞書に単語を追加\n"
 "\n"
-"いくつかのコマンドを除いて '/' で始まる入力行はチェックされません (/set "
-"aspell.check.commands を参照してください)。\n"
+"一部のコマンドを除いて '/' で始まる入力行はチェックされません (/set spell."
+"check.commands を参照してください)。\n"
 "\n"
-"全てのバッファで aspell を有効化するには、\"default_dict\" オプションを設定し"
-"た後に、aspell を有効化してください。例:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
+"全てのバッファでスペルチェックを有効化するには、\"default_dict\" オプションを"
+"設定した後に、スペルチェックを有効化してください。例:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
 "\n"
-"バーの中に提案のリストを表示するには、\"aspell_suggest\" 要素を使ってくださ"
-"い。\n"
+"バーの中にスペル候補リストを表示するには、\"spell_suggest\" 要素を使ってくだ"
+"さい。\n"
 "\n"
-"aspell の有効無効を切り替えるデフォルトのキーは alt-s です。"
+"スペルチェックの有効無効を切り替えるデフォルトのキーは alt-s です。"
 
-#, fuzzy
 msgid "list of all languages supported"
-msgstr "aspell でサポートされる全ての言語のリスト"
+msgstr "サポートされる全ての言語のリスト"
 
-#, fuzzy
 msgid "list of installed dictionaries"
-msgstr "aspell のインストール済み辞書のリスト"
+msgstr "インストール済み辞書のリスト"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "このバッファで使用中の辞書のコンマ区切りリスト"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: aspell 辞書 \"%s\" => \"%s\" の作成中にエラー"
+msgstr "%s%s: スペルチェック辞書 \"%s\" => \"%s\" の作成中にエラー"
 
 msgid ""
 "option for aspell (for list of available options and format, run command "
 "\"aspell config\" in a shell)"
 msgstr ""
 "aspell のオプション (利用可能なオプションと書式のリストを見るには、シェルで "
-"\"aspell config\" コマンドを実行)"
+"\"aspell config\" コマンドを実行してください)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell option \"%s\" => \"%s\""
-msgstr "%s%s: aspell オプション \"%s\" => \"%s\" の作成中にエラー"
+msgstr "%s%s: スペルチェックオプション \"%s\" => \"%s\" の作成中にエラー"
 
 msgid "text color for misspelled words (input bar)"
 msgstr "スペルミスのある単語に付ける色 (入力バー)"
 
-#, fuzzy
 msgid ""
 "text color for suggestion on a misspelled word in bar item \"spell_suggest\""
 msgstr ""
-"バー要素 \"aspell_suggest\" 内のスペルミスのある単語に対する修正候補に付ける"
-"色"
+"バー要素 \"spell_suggest\" 内でスペルミスのある単語に対する修正候補に付ける色"
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two dictionaries in bar item "
 "\"spell_suggest\""
-msgstr "バー要素 \"aspell_suggest\" 内の 2 つの辞書間の区切り文字に付ける色"
+msgstr "バー要素 \"spell_suggest\" 内で 2 つの辞書間の区切り文字に付ける色"
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two words in bar item "
 "\"spell_suggest\""
-msgstr "バー要素 \"aspell_suggest\" 内の 2 つの単語間の区切り文字に付ける色"
+msgstr "バー要素 \"aspell_suggest\" 内で 2 つの単語間の区切り文字に付ける色"
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -12982,22 +12981,20 @@ msgstr ""
 "スペルチェックを有効化するコマンドのコンマ区切りリスト (これ以外のコマンドで"
 "はスペルチェックは無効)"
 
-#, fuzzy
 msgid ""
 "default dictionary (or comma separated list of dictionaries) to use when "
 "buffer has no dictionary defined (leave blank to disable spell checker on "
 "buffers for which you didn't explicitly enabled it)"
 msgstr ""
 "バッファに辞書が定義されていない場合に使用されるデフォルト辞書 (または辞書の"
-"コンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いて "
-"aspell を利用しない)"
+"コンマ区切りリスト) (空のままであれば明示的に有効化されたバッファを除いてスペ"
+"ルチェックを利用しない)"
 
 msgid "check words during text search in buffer"
 msgstr "バッファ内のテキスト検索中に単語チェックを行う"
 
-#, fuzzy
 msgid "enable spell checker for command line"
-msgstr "コマンドラインで aspell を利用する"
+msgstr "コマンドラインでスペルチェックを利用する"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "
@@ -13006,13 +13003,12 @@ msgstr ""
 "単語のリアルタイムスペルチェック (遅い、デフォルトでは無効: 単語は区切りの後"
 "にだけチェックされる)"
 
-#, fuzzy
 msgid ""
 "number of suggestions to display in bar item \"spell_suggest\" for each "
 "dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
 "suggestions in all languages)"
 msgstr ""
-"バッファ内の各辞書セットに対してバー要素 \"aspell_suggest\" に表示する提案の"
+"バッファ内の各辞書セットに対してバー要素 \"spell_suggest\" に表示する提案の"
 "数 (-1 = サジェスト機能を無効、0 = 全ての言語を使って全てのサジェスト結果を表"
 "示)"
 
@@ -13020,14 +13016,12 @@ msgid ""
 "minimum length for a word to be spell checked (use 0 to check all words)"
 msgstr "スペルチェックを行う単語長の最小値 (0 の場合は全ての単語をチェック)"
 
-#, fuzzy
 msgid ""
 "delimiter displayed between two dictionaries in bar item \"spell_suggest\""
-msgstr "バー要素 \"aspell_suggest\" 内の 2 つの辞書間の区切り文字"
+msgstr "バー要素 \"spell_suggest\" 内の 2 つの辞書間の区切り文字"
 
-#, fuzzy
 msgid "delimiter displayed between two words in bar item \"spell_suggest\""
-msgstr "バー要素 \"aspell_suggest\" 内の 2 つの単語間の区切り文字"
+msgstr "バー要素 \"spell_suggest\" 内の 2 つの単語間の区切り文字"
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "バッファで使用中の辞書のコンマ区切りリスト"
@@ -13045,7 +13039,7 @@ msgstr "%s: 警告: 辞書 \"%s\" がこのシステム上では利用できま�
 
 #, c-format
 msgid "%s%s: error: unable to create speller for lang \"%s\""
-msgstr "%s%s: エラー: 言語 \"%s\" のスペラーを作成できません"
+msgstr "%s%s: エラー: 言語 \"%s\" のスペルチェッカを作成できません"
 
 msgid "Support of tcl scripts"
 msgstr "tcl スクリプトサポート"

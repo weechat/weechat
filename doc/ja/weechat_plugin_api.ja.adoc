@@ -906,12 +906,11 @@ match5 = weechat.string_match("abcdef", "*b*d*", 0)  # == 1
 
 ==== string_match_list
 
-_WeeChat ≥ 2.5._
+_WeeChat バージョン 2.5 以上で利用可。_
 
-// TRANSLATION MISSING
-Check if a string matches a list of masks where negative mask is allowed
-with the format "!word". A negative mask has higher priority than a standard
-mask.
+文字列が否定マスク
+(書式: "!word")
+を含むマスクリストにマッチするか確認します。否定マスクは通常のマスクよりも優先度が高いです。
 
 プロトタイプ:
 
@@ -923,17 +922,17 @@ int weechat_string_match_list (const char *string, const char **masks,
 
 引数:
 
-// TRANSLATION MISSING
 * _string_: 文字列
-* _masks_: list of masks, with a NULL after the last mask in list; each mask
-  is compared to the string with the function <<_string_match,string_match>>
-* _case_sensitive_: 1 for case sensitive comparison, otherwise 0
+* _masks_: マスクリスト、リストの最後には NULL をつけてください;
+  各マスクは関数 <<_string_match,string_match>> で文字列と比較されます
+* _case_sensitive_: 大文字と小文字を区別する場合は 1、区別しない場合は 0
 
 戻り値:
 
-// TRANSLATION MISSING
 * 1 if string matches list of masks (at least one mask matches and no negative
   mask matches), otherwise 0
+* 文字列がマスクリストとマッチした場合 (1 つ以上のマスクにマッチするか、否定マスクに
+  1 つもマッチしない場合) は 1、それ以外の場合は 0
 
 C 言語での使用例:
 
@@ -1506,29 +1505,23 @@ char **weechat_string_split (const char *string, const char *separators,
 
 * _string_: 分割する文字列
 * _separators_: 分割に使う区切り文字
-// TRANSLATION MISSING
-* _flags_: combination values to change the default behavior; if the value is 0,
-  the default behavior is used (no strip of separators at beginning/end of string,
-  multiple separators are kept as-is so empty strings can be returned);
-  the following flags are accepted:
-// TRANSLATION MISSING
-** WEECHAT_STRING_SPLIT_STRIP_LEFT: strip separators on the left
-   (beginning of string)
-// TRANSLATION MISSING
-** WEECHAT_STRING_SPLIT_STRIP_RIGHT: strip separators on the right
-   (end of string)
-// TRANSLATION MISSING
-** WEECHAT_STRING_SPLIT_COLLAPSE_SEPS: collapse multiple consecutive separators
-   into a single one
-// TRANSLATION MISSING
-** WEECHAT_STRING_SPLIT_KEEP_EOL: keep end of line for each value
+* _flags_:
+  デフォルト動作を変更するビットフラグの組合せ値; 値が 0 の場合、デフォルト動作
+  (文字列の先頭と末尾にある区切り文字を削除しない、連続する区切り文字を 1 つにまとめない)
+  になります。以下のフラグを組み合わせて値を指定してください:
+** WEECHAT_STRING_SPLIT_STRIP_LEFT:
+   文字列左端 (先頭) の区切り文字を削除する
+** WEECHAT_STRING_SPLIT_STRIP_RIGHT:
+   文字列右端 (末尾) の区切り文字を削除する
+** WEECHAT_STRING_SPLIT_COLLAPSE_SEPS:
+   連続する区切り文字を 1 つにまとめる
+** WEECHAT_STRING_SPLIT_KEEP_EOL: 分割後の各値は分割位置先頭から文字列の最後までとする
 * _num_items_max_: 分割回数の上限 (0 = 制限なし)
 * _num_items_: 分割回数を返す整数型変数へのポインタ
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 2.4, the _flags_ argument was called _keep_eol_ and took other
-values, which must be converted like that:
+WeeChat バージョン 2.4 以下で _keep_eol_ とされていた引数は現在 _flags_
+引数に変わられました。両引数の値の対応関係は以下の通りです:
 [width="100%",cols="1,10",options="header"]
 |===
 | keep_eol | flags
@@ -14386,10 +14379,9 @@ rc = weechat.command(weechat.buffer_search("irc", "freenode.#weechat"), "/whois 
 
 ==== command_options
 
-_WeeChat ≥ 2.5._
+_WeeChat バージョン 2.5 以上で利用可。_
 
-// TRANSLATION MISSING
-Execute a command or send text to buffer with options.
+バッファにてオプション付きでコマンドを実行またはテキストを送信
 
 プロトタイプ:
 
@@ -14405,13 +14397,13 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
   (コマンドは指定したバッファで実行されます、現在のバッファで実行するには NULL を指定してください)
 * _command_: 実行するコマンド ("/"
   で始まっている場合)、またはバッファに送信するテキスト
-// TRANSLATION MISSING
+* _options_: オプションを含むハッシュテーブル (キーと値は文字列です)
+  (NULL は使えません):
 * _options_: a hashtable with some options (keys and values must be string)
   (can be NULL):
-** _commands_: a comma-separated list of commands allowed to be executed during
-   this call; see function <<_string_match_list,string_match_list>> for the
-   format
-** _delay_: delay to execute command, in milliseconds
+** _commands_: 指定したコマンドの中で実行を許可するコマンドのカンマ区切りリスト、リストの書式は関数
+   <<_string_match_list,string_match_list>> を参考にしてください
+** _delay_: コマンド実行までの遅延時間、ミリ秒単位
 
 戻り値:
 
@@ -14420,10 +14412,9 @@ int weechat_command_options (struct t_gui_buffer *buffer, const char *command,
 
 C 言語での使用例:
 
-// TRANSLATION MISSING
 [source,C]
 ----
-/* allow any command except /exec, run command in 2 seconds */
+/* /exec 以外のコマンド実行を許可、2 秒後にコマンドを実行 */
 int rc;
 struct t_hashtable *options = weechat_hashtable_new (8,
                                                      WEECHAT_HASHTABLE_STRING,
@@ -14437,13 +14428,12 @@ rc = weechat_command_options (NULL, "/some_command arguments", options);
 
 スクリプト (Python) での使用例:
 
-// TRANSLATION MISSING
 [source,python]
 ----
 # プロトタイプ
 weechat.command_options(buffer, command, options)
 
-# example: allow any command except /exec
+# 例: /exec 以外のコマンド実行を許可
 rc = weechat.command("", "/some_command arguments", {"commands": "*,!exec"})
 ----
 
