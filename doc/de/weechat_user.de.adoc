@@ -517,13 +517,11 @@ Wird WeeChat das erste mal ausgeführt, wird die Standardkonfiguration und
 die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
 (siehe <<files_and_directories,Dateien und Verzeichnisse>>).
 
-// TRANSLATION MISSING
-==== Command line options
+==== Optionen für Befehlszeile
 
 include::cmdline_options.de.adoc[]
 
-// TRANSLATION MISSING
-==== Extra debug options
+==== zusätzliche Debug-Optionen
 
 [WARNING]
 These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*

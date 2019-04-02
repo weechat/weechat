@@ -12,7 +12,6 @@ weechat-headless - der erweiterbare Chat Client (headless version)
 
 == SYNOPSIS
 
-// TRANSLATION MISSING
 [verse]
 *weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [debug-option...] [plugin:option...]
 *weechat-headless* [-c|--colors]
@@ -34,14 +33,13 @@ zu starten. Dazu nutzt man die Option "--daemon".
 
 include::cmdline_options.de.adoc[]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== DEBUG-OPTIONEN
 
-*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+*WARNUNG:* Diese Optionen sind lediglich für Debug-Zwecke *DIESE FUNKTIONEN SOLLTE NICHT IM PRODUKTIVEM EINSATZ GENUTZT WERDEN!*
 
 include::cmdline_options_debug.de.adoc[]
 
-== OPTIONEN von ERWEITERUNGEN
+== OPTIONEN VON ERWEITERUNGEN
 
 include::man_plugin_options.de.adoc[]
 
