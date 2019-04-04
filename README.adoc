@@ -6,7 +6,6 @@
 pass:[<p align="center">] image:https://weechat.org/media/images/weechat_logo_large.png[align="center"] pass:[</p>]
 
 image:https://img.shields.io/badge/diaspora*-follow-blue.svg["Diaspora*", link="https://diasp.eu/u/weechat"]
-image:https://img.shields.io/badge/google%2B-follow-blue.svg["Google+", link="https://plus.google.com/+WeeChat"]
 image:https://img.shields.io/badge/devel%20blog-follow-blue.svg["Devel blog", link="https://weechat.org/blog/"]
 image:https://img.shields.io/badge/slant-recommend-28acad.svg["Slant", link="https://www.slant.co/topics/1323/~best-irc-clients-for-linux"]
 image:https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg["Donate", link="https://weechat.org/donate/"]
