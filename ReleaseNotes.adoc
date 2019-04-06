@@ -20,6 +20,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.5]]
 == Version 2.5 (under dev)
 
+[[v2.5_xfer_option_speed_limit]]
+=== Speed limit option for DCC files
+
+The option _xfer.network.speed_limit_ has been renamed to
+_xfer.network.speed_limit_send_.
+
+If you changed the value of this option, you must set it again after upgrade.
+
+A new option _xfer.network.speed_limit_recv_ has been added to limit the
+speed of received files.
+
 [[v2.5_aspell_plugin_renamed]]
 === Aspell plugin renamed to Spell
 

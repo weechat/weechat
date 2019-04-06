@@ -50,7 +50,8 @@ struct t_config_option *xfer_config_network_fast_send;
 struct t_config_option *xfer_config_network_own_ip;
 struct t_config_option *xfer_config_network_port_range;
 struct t_config_option *xfer_config_network_send_ack;
-struct t_config_option *xfer_config_network_speed_limit;
+struct t_config_option *xfer_config_network_speed_limit_send;
+struct t_config_option *xfer_config_network_speed_limit_recv;
 struct t_config_option *xfer_config_network_timeout;
 
 /* xfer config, file section */
@@ -294,10 +295,17 @@ xfer_config_init ()
            "the acks are not sent immediately to the sender"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_network_speed_limit = weechat_config_new_option (
+    xfer_config_network_speed_limit_send = weechat_config_new_option (
         xfer_config_file, ptr_section,
-        "speed_limit", "integer",
+        "speed_limit_send", "integer",
         N_("speed limit for sending files, in kilo-bytes by second (0 means "
+           "no limit)"),
+        NULL, 0, INT_MAX, "0", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_speed_limit_recv = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "speed_limit_recv", "integer",
+        N_("speed limit for receiving files, in kilo-bytes by second (0 means "
            "no limit)"),
         NULL, 0, INT_MAX, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);

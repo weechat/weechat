@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-31 23:52+0200\n"
+"POT-Creation-Date: 2019-04-06 14:03+0200\n"
 "PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11891,6 +11891,10 @@ msgstr ""
 
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+msgstr ""
+
+msgid ""
+"speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
 
 #, fuzzy

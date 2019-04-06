@@ -49,11 +49,11 @@
 void
 xfer_dcc_send_file_child (struct t_xfer *xfer)
 {
-    int num_read, num_sent, blocksize;
+    int num_read, num_sent;
     static char buffer[XFER_BLOCKSIZE_MAX];
     uint32_t ack;
     time_t last_sent, new_time, last_second, sent_ok;
-    unsigned long long sent_last_second;
+    unsigned long long blocksize, speed_limit, sent_last_second;
 
     /* empty file? just return immediately */
     if (xfer->pos >= xfer->size)
@@ -63,15 +63,15 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
         return;
     }
 
-    blocksize = xfer->blocksize;
-    if (weechat_config_integer (xfer_config_network_speed_limit) > 0)
-    {
-        if (blocksize > weechat_config_integer (xfer_config_network_speed_limit) * 1024)
-            blocksize = weechat_config_integer (xfer_config_network_speed_limit) * 1024;
-    }
+    speed_limit = (unsigned long long)weechat_config_integer (
+        xfer_config_network_speed_limit_send);
+
+    blocksize = (unsigned long long)(xfer->blocksize);
+    if ((speed_limit > 0) && (blocksize > speed_limit * 1024))
+        blocksize = speed_limit * 1024;
 
     last_sent = time (NULL);
-    last_second = time (NULL);
+    last_second = last_sent;
     sent_ok = 0;
     sent_last_second = 0;
     while (1)
@@ -113,8 +113,7 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
         if ((xfer->pos < xfer->size) &&
              (xfer->fast_send || (xfer->pos <= xfer->ack)))
         {
-            if ((weechat_config_integer (xfer_config_network_speed_limit) > 0)
-                && (sent_last_second >= (unsigned long long)weechat_config_integer (xfer_config_network_speed_limit) * 1024))
+            if ((speed_limit > 0) && (sent_last_second >= speed_limit * 1024))
             {
                 /* we're sending too fast (according to speed limit set by user) */
                 usleep (100);
@@ -311,12 +310,19 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
 {
     int flags, num_read, ready;
     static char buffer[XFER_BLOCKSIZE_MAX];
-    time_t last_sent, new_time;
-    unsigned long long pos_last_ack;
+    time_t last_sent, last_second, new_time;
+    unsigned long long blocksize, pos_last_ack, speed_limit, recv_last_second;
     struct pollfd poll_fd;
     ssize_t written, total_written;
     unsigned char *bin_hash;
     char hash[9];
+
+    speed_limit = (unsigned long long)weechat_config_integer (
+        xfer_config_network_speed_limit_recv);
+
+    blocksize = sizeof (buffer);
+    if ((speed_limit > 0) && (blocksize > speed_limit * 1024))
+        blocksize = speed_limit * 1024;
 
     /* if resuming, hash the portion of the file we have */
     if ((xfer->start_resume > 0) && xfer->hash_handle)
@@ -361,6 +367,8 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
     fcntl (xfer->sock, F_SETFL, flags | O_NONBLOCK);
 
     last_sent = time (NULL);
+    last_second = last_sent;
+    recv_last_second = 0;
     pos_last_ack = 0;
 
     while (1)
@@ -385,113 +393,132 @@ xfer_dcc_recv_file_child (struct t_xfer *xfer)
         /* read maximum data on socket (until nothing is available) */
         while (1)
         {
-            num_read = recv (xfer->sock, buffer, sizeof (buffer), 0);
-            if (num_read == -1)
+            if ((speed_limit > 0) && (recv_last_second >= speed_limit * 1024))
             {
-                if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR))
-                {
-                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                             XFER_ERROR_RECV_BLOCK);
-                    return;
-                }
                 /*
-                 * no more data available on socket: exit loop, send ACK, and
-                 * wait for new data on socket
+                 * we're receiving too fast
+                 * (according to speed limit set by user)
                  */
-                break;
+                usleep (100);
             }
             else
             {
-                if ((num_read == 0) && (xfer->pos < xfer->size))
+                num_read = recv (xfer->sock, buffer, blocksize, 0);
+                if (num_read == -1)
                 {
-                    xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                             XFER_ERROR_RECV_BLOCK);
-                    return;
-                }
-
-                /* bytes received, write to disk */
-                total_written = 0;
-                while (total_written < num_read)
-                {
-                    written = write (xfer->file,
-                                     buffer + total_written,
-                                     num_read - total_written);
-                    if (written < 0)
+                    if ((errno != EAGAIN) && (errno != EWOULDBLOCK) && (errno != EINTR))
                     {
-                        if (errno == EINTR)
-                            continue;
                         xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                                 XFER_ERROR_WRITE_LOCAL);
+                                                 XFER_ERROR_RECV_BLOCK);
                         return;
                     }
-                    else
+                    /*
+                     * no more data available on socket: exit loop, send ACK, and
+                     * wait for new data on socket
+                     */
+                    break;
+                }
+                else
+                {
+                    if ((num_read == 0) && (xfer->pos < xfer->size))
                     {
+                        xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                                 XFER_ERROR_RECV_BLOCK);
+                        return;
+                    }
+
+                    /* bytes received, write to disk */
+                    total_written = 0;
+                    while (total_written < num_read)
+                    {
+                        written = write (xfer->file,
+                                         buffer + total_written,
+                                         num_read - total_written);
+                        if (written < 0)
+                        {
+                            if (errno == EINTR)
+                                continue;
+                            xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                                     XFER_ERROR_WRITE_LOCAL);
+                            return;
+                        }
+                        else
+                        {
+                            if (xfer->hash_handle)
+                            {
+                                gcry_md_write (*xfer->hash_handle,
+                                               buffer + total_written,
+                                               written);
+                            }
+                            total_written += written;
+                        }
+                    }
+
+                    xfer->pos += (unsigned long long) num_read;
+                    recv_last_second += (unsigned long long) num_read;
+
+                    /* file received OK? */
+                    if (xfer->pos >= xfer->size)
+                    {
+                        /* check hash and report result to pipe */
                         if (xfer->hash_handle)
                         {
-                            gcry_md_write (*xfer->hash_handle,
-                                           buffer + total_written,
-                                           written);
+                            gcry_md_final (*xfer->hash_handle);
+                            bin_hash = gcry_md_read (*xfer->hash_handle, 0);
+                            if (bin_hash)
+                            {
+                                snprintf (hash, sizeof (hash), "%.2X%.2X%.2X%.2X",
+                                          bin_hash[0], bin_hash[1], bin_hash[2],
+                                          bin_hash[3]);
+                                if (weechat_strcasecmp (hash,
+                                                        xfer->hash_target) == 0)
+                                {
+                                    xfer_network_write_pipe (xfer,
+                                                             XFER_STATUS_HASHED,
+                                                             XFER_NO_ERROR);
+                                }
+                                else
+                                {
+                                    xfer_network_write_pipe (xfer,
+                                                             XFER_STATUS_HASHED,
+                                                             XFER_ERROR_HASH_MISMATCH);
+                                }
+                            }
                         }
-                        total_written += written;
+
+                        fsync (xfer->file);
+
+                        /*
+                         * extra delay before sending ACK, otherwise the send of ACK
+                         * may fail
+                         */
+                        usleep (100000);
+
+                        /* send ACK to sender without checking return code (file OK) */
+                        xfer_dcc_recv_file_send_ack (xfer);
+
+                        /* set status done and return */
+                        xfer_network_write_pipe (xfer, XFER_STATUS_DONE,
+                                                 XFER_NO_ERROR);
+                        return;
                     }
-                }
 
-                xfer->pos += (unsigned long long) num_read;
-
-                /* file received OK? */
-                if (xfer->pos >= xfer->size)
-                {
-                    /* check hash and report result to pipe */
-                    if (xfer->hash_handle)
+                    /* update status of DCC (parent process) */
+                    new_time = time (NULL);
+                    if (last_sent != new_time)
                     {
-                        gcry_md_final (*xfer->hash_handle);
-                        bin_hash = gcry_md_read (*xfer->hash_handle, 0);
-                        if (bin_hash)
-                        {
-                            snprintf (hash, sizeof (hash), "%.2X%.2X%.2X%.2X",
-                                      bin_hash[0], bin_hash[1], bin_hash[2],
-                                      bin_hash[3]);
-                            if (weechat_strcasecmp (hash,
-                                                    xfer->hash_target) == 0)
-                            {
-                                xfer_network_write_pipe (xfer,
-                                                         XFER_STATUS_HASHED,
-                                                         XFER_NO_ERROR);
-                            }
-                            else
-                            {
-                                xfer_network_write_pipe (xfer,
-                                                         XFER_STATUS_HASHED,
-                                                         XFER_ERROR_HASH_MISMATCH);
-                            }
-                        }
+                        last_sent = new_time;
+                        xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
+                                                 XFER_NO_ERROR);
                     }
-
-                    fsync (xfer->file);
-
-                    /*
-                     * extra delay before sending ACK, otherwise the send of ACK
-                     * may fail
-                     */
-                    usleep (100000);
-
-                    /* send ACK to sender without checking return code (file OK) */
-                    xfer_dcc_recv_file_send_ack (xfer);
-
-                    /* set status done and return */
-                    xfer_network_write_pipe (xfer, XFER_STATUS_DONE,
-                                             XFER_NO_ERROR);
-                    return;
                 }
+            }
 
-                /* update status of DCC (parent process) */
-                new_time = time (NULL);
-                if (last_sent != new_time)
-                {
-                    last_sent = new_time;
-                    xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
-                                             XFER_NO_ERROR);
-                }
+            new_time = time (NULL);
+            if (new_time > last_second)
+            {
+                last_second = new_time;
+                recv_last_second = 0;
             }
         }
 

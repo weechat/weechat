@@ -164,7 +164,13 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
-* [[option_xfer.network.speed_limit]] *xfer.network.speed_limit*
+* [[option_xfer.network.speed_limit_recv]] *xfer.network.speed_limit_recv*
+** opis: pass:none[speed limit for receiving files, in kilo-bytes by second (0 means no limit)]
+** typ: liczba
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+0+`
+
+* [[option_xfer.network.speed_limit_send]] *xfer.network.speed_limit_send*
 ** opis: pass:none[limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak limitu)]
 ** typ: liczba
 ** wartości: 0 .. 2147483647

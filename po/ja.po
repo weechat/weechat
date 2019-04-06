@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-03-31 23:52+0200\n"
+"POT-Creation-Date: 2019-04-06 14:03+0200\n"
 "PO-Revision-Date: 2019-04-01 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -13871,6 +13871,11 @@ msgstr ""
 
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+msgstr "ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
+
+#, fuzzy
+msgid ""
+"speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr "ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
 
 msgid "timeout for xfer request (in seconds)"
