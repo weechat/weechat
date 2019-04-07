@@ -165,7 +165,7 @@
 ** Standardwert: `+on+`
 
 * [[option_xfer.network.speed_limit_recv]] *xfer.network.speed_limit_recv*
-** Beschreibung: pass:none[speed limit for receiving files, in kilo-bytes by second (0 means no limit)]
+** Beschreibung: pass:none[Begrenzt die Übertragungsgeschwindigkeit beim Empfang, in Kilobytes pro Sekunde (0 = keine Begrenzung)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
 ** Standardwert: `+0+`
