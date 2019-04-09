@@ -23,6 +23,7 @@
 #include <string.h>
 #include <limits.h>
 #include <regex.h>
+#include <sys/un.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -36,6 +37,7 @@
 
 struct t_config_file *relay_config_file = NULL;
 struct t_config_section *relay_config_section_port = NULL;
+struct t_config_section *relay_config_section_path = NULL;
 
 /* relay config, look section */
 
@@ -185,7 +187,7 @@ relay_config_change_network_ipv6_cb (const void *pointer, void *data,
     {
         relay_server_get_protocol_args (ptr_server->protocol_string,
                                         &ptr_server->ipv4, &ptr_server->ipv6,
-                                        NULL, NULL, NULL);
+                                        NULL, &ptr_server->un, NULL, NULL);
         relay_server_close_socket (ptr_server);
         relay_server_create_socket (ptr_server);
     }
@@ -510,6 +512,75 @@ relay_config_check_port_cb (const void *pointer, void *data,
 }
 
 /*
+ * Checks if a UNIX path is too long or empty.
+ *
+ * Returns:
+ *   1: path is valid
+ *   0: path is empty, or too long
+ */
+
+int
+relay_config_check_path_len (const char *path)
+{
+    struct sockaddr_un addr;
+    size_t max_path, path_len;
+
+    max_path = sizeof (addr.sun_path);
+    path_len = strlen (path);
+    if (!path_len)
+    {
+        weechat_printf (NULL, _("%s%s: error: path is empty"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+        return 0;
+    }
+    if (path_len >= max_path)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error: path \"%s\" too long (length: %d; max: %d)"),
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME, path,
+                        path_len, max_path);
+        return 0;
+    }
+
+    return 1;
+}
+
+/*
+ * Checks if a path is valid.
+ *
+ * Returns:
+ *   1: path is valid
+ *   0: path is not valid
+ */
+
+int
+relay_config_check_path_cb (const void *pointer, void *data,
+                            struct t_config_option *option,
+                            const char *value)
+{
+    struct t_relay_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (!relay_config_check_path_len (value))
+        return 0;
+
+    ptr_server = relay_server_search_path (value);
+    if (ptr_server)
+    {
+        weechat_printf (NULL, _("%s%s: error: path \"%s\" is already used"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME, value);
+        return 0;
+    }
+
+    return 1;
+}
+
+/*
  * Callback for changes on options in section "port".
  */
 
@@ -561,7 +632,7 @@ relay_config_create_option_port (const void *pointer, void *data,
                                  const char *option_name,
                                  const char *value)
 {
-    int rc, protocol_number, ipv4, ipv6, ssl;
+    int rc, protocol_number, ipv4, ipv6, ssl, un;
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
@@ -575,7 +646,7 @@ relay_config_create_option_port (const void *pointer, void *data,
     protocol_number = -1;
     port = -1;
 
-    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl,
+    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl, &un,
                                     &protocol, &protocol_args);
 
 #ifndef HAVE_GNUTLS
@@ -625,14 +696,25 @@ relay_config_create_option_port (const void *pointer, void *data,
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        error = NULL;
-        port = strtol (value, &error, 10);
-        ptr_server = relay_server_search_port ((int)port);
+        if (un)
+        {
+            /* find dummy port for use with unix */
+            for (port = -1; relay_server_search_port ((int)port); --port);
+            ptr_server = relay_server_search_path (value);
+        }
+        else
+        {
+            error = NULL;
+            port = strtol (value, &error, 10);
+            ptr_server = relay_server_search_port ((int)port);
+        }
         if (ptr_server)
         {
-            weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
+            weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
                             weechat_prefix ("error"),
-                            RELAY_PLUGIN_NAME, (int)port);
+                            RELAY_PLUGIN_NAME,
+                            un ? "path" : "port",
+                            value);
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }
     }
@@ -640,16 +722,29 @@ relay_config_create_option_port (const void *pointer, void *data,
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (relay_server_new (option_name, protocol_number, protocol_args,
-                              port, ipv4, ipv6, ssl))
+                              port, value, ipv4, ipv6, ssl, un))
         {
             /* create configuration option */
-            weechat_config_new_option (
+            if (un)
+            {
+                weechat_config_new_option (
+                config_file, section,
+                option_name, "string", NULL,
+                NULL, 0, 0, "", value, 0,
+                &relay_config_check_path_cb, NULL, NULL,
+                &relay_config_change_port_cb, NULL, NULL,
+                &relay_config_delete_port_cb, NULL, NULL);
+            }
+            else
+            {
+                weechat_config_new_option (
                 config_file, section,
                 option_name, "integer", NULL,
                 NULL, 0, 65535, "", value, 0,
                 &relay_config_check_port_cb, NULL, NULL,
                 &relay_config_change_port_cb, NULL, NULL,
                 &relay_config_delete_port_cb, NULL, NULL);
+            }
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
         else
@@ -1067,6 +1162,23 @@ relay_config_init ()
 
     relay_config_section_port = ptr_section;
 
+    /* section path */
+    ptr_section = weechat_config_new_section (
+        relay_config_file, "path",
+        1, 1,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        &relay_config_create_option_port, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (relay_config_file);
+        relay_config_file = NULL;
+        return 0;
+    }
+
+    relay_config_section_path = ptr_section;
     return 1;
 }
 

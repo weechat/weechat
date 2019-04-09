@@ -21,7 +21,6 @@
 #define WEECHAT_PLUGIN_RELAY_SERVER_H
 
 #include <time.h>
-
 #ifdef HAVE_GNUTLS
 #define RELAY_SERVER_GNUTLS_DH_BITS 1024
 #endif /* HAVE_GNUTLS */
@@ -33,9 +32,14 @@ struct t_relay_server
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
     int port;                          /* listening on this port            */
+                                       /* or UNIX socket, if negative.      */
+    char *path;                        /* listening on this path (UNIX)     */
+                                       /* contains string representation of */
+                                       /* port if IP */
     int ipv4;                          /* IPv4 protocol enabled             */
     int ipv6;                          /* IPv6 protocol enabled             */
     int ssl;                           /* 1 if SSL is enabled               */
+    int un;                            /* 1 if UNIX socket                  */
     int sock;                          /* socket for connection             */
     struct t_hook *hook_fd;            /* hook for socket                   */
     time_t start_time;                 /* start time                        */
@@ -49,18 +53,20 @@ extern struct t_relay_server *last_relay_server;
 
 extern void relay_server_get_protocol_args (const char *protocol_and_string,
                                             int *ipv4, int *ipv6,
-                                            int *ssl,
+                                            int *ssl, int *un,
                                             char **protocol,
                                             char **protocol_args);
 extern struct t_relay_server *relay_server_search (const char *protocol_and_args);
 extern struct t_relay_server *relay_server_search_port (int port);
+extern struct t_relay_server *relay_server_search_path (const char *path);
 extern void relay_server_close_socket (struct t_relay_server *server);
 extern int relay_server_create_socket (struct t_relay_server *server);
 extern struct t_relay_server *relay_server_new (const char *protocol_string,
                                                 enum t_relay_protocol protocol,
                                                 const char *protocol_args,
-                                                int port, int ipv4, int ipv6,
-                                                int ssl);
+                                                int port, const char *path,
+                                                int ipv4, int ipv6,
+                                                int ssl, int un);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();
