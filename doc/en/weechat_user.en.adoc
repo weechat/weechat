@@ -642,7 +642,7 @@ Example of terminal with WeeChat:
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-Screen is composed by following areas:
+The screen is divided up into the following areas:
 
 * chat area (middle of screen) with chat lines, and for each line:
 ** time
