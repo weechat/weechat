@@ -564,7 +564,7 @@ The directories are:
 |===
 
 [NOTE]
-^(1)^ This directory often contains only symbolic links to scripts in parent directory.
+^(1)^ This directory often contains only symbolic links to scripts in the parent directory.
 
 The files in the WeeChat home directory are:
 
@@ -642,7 +642,7 @@ Example of terminal with WeeChat:
             ▲ bars "status" and "input"                               bar "nicklist" ▲
 ....
 
-Screen is composed by following areas:
+The screen is divided up into the following areas:
 
 * chat area (middle of screen) with chat lines, and for each line:
 ** time
