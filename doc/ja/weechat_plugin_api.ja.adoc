@@ -2425,7 +2425,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
-  `+${re:+++}+` +
+  `+${re:+}+` +
   `+${re:#}+` |
   `+test1 test2+` +
   `+test1+` +

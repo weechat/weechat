@@ -2463,7 +2463,7 @@ première étendue à la dernière) :
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
-  `+${re:+++}+` +
+  `+${re:+}+` +
   `+${re:#}+` |
   `+test1 test2+` +
   `+test1+` +

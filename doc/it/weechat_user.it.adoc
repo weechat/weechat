@@ -4059,7 +4059,7 @@ Matching groups can be used in "replace":
 
 * `+${re:0}+` to `+${re:99}+`: `+${re:0}+` is the whole match, `+${re:1}+` to
   `+${re:99}+` are groups captured
-* `+${re:+++}+`: the last match (with highest number)
+* `+${re:+}+`: the last match (with highest number)
 * `+${hide:c,${re:N}}+`: match "N" with all chars replaced by "c"
   (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
   `+*+`).
