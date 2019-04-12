@@ -644,8 +644,8 @@ xfer_new (const char *plugin_name, const char *plugin_id,
           const char *local_filename)
 {
     struct t_xfer *new_xfer;
-    const char *ptr_color, *ptr_crc32;
-    char str_address[NI_MAXHOST];
+    const char *ptr_crc32;
+    char str_address[NI_MAXHOST], *color;
     int rc;
 
     new_xfer = xfer_alloc ();
@@ -669,8 +669,10 @@ xfer_new (const char *plugin_name, const char *plugin_id,
     new_xfer->type = type;
     new_xfer->protocol = protocol;
     new_xfer->remote_nick = strdup (remote_nick);
-    ptr_color = weechat_info_get ("irc_nick_color_name", remote_nick);
-    new_xfer->remote_nick_color = (ptr_color) ? strdup (ptr_color) : NULL;
+    color = weechat_info_get ("irc_nick_color_name", remote_nick);
+    new_xfer->remote_nick_color = (color) ? strdup (color) : NULL;
+    if (color)
+        free (color);
     new_xfer->local_nick = (local_nick) ? strdup (local_nick) : NULL;
     new_xfer->charset_modifier = (charset_modifier) ? strdup (charset_modifier) : NULL;
     if (XFER_IS_FILE(type))

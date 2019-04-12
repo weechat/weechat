@@ -11507,7 +11507,7 @@ weechat.hook_modifier_exec("mon_modifier", mes_donnees, ma_chaine)
 
 ==== hook_info
 
-_Mis à jour dans la 1.5._
+_Mis à jour dans la 1.5, 2.5._
 
 Accrocher une information (la fonction de rappel prend et retourne une chaîne).
 
@@ -11518,10 +11518,10 @@ Prototype :
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
                                   const char *args_description,
-                                  const char *(*callback)(const void *pointer,
-                                                          void *data,
-                                                          const char *info_name,
-                                                          const char *arguments),
+                                  char *(*callback)(const void *pointer,
+                                                    void *data,
+                                                    const char *info_name,
+                                                    const char *arguments),
                                   const void *callback_pointer,
                                   void *callback_data);
 ----
@@ -11551,16 +11551,20 @@ Valeur de retour :
 
 * pointeur vers le nouveau "hook", NULL en cas d'erreur
 
+[NOTE]
+Avec WeeChat ≥ 2.5, la fonction de rappel renvoie une chaîne allouée
+(avec WeeChat ≤ 2.4, il s'agissait d'un pointeur vers une chaîne statique).
+
 Exemple en C :
 
 [source,C]
 ----
-const char *
+char *
 my_info_cb (const void *pointer, void *data, const char *info_name,
             const char *arguments)
 {
     /* ... */
-    return pointeur_vers_chaine;
+    return strdup ("some_info");
 }
 
 /* ajoute l'information "mon_info" */
@@ -14904,13 +14908,15 @@ Fonctions pour obtenir des informations.
 
 ==== info_get
 
+_Mis à jour dans la 2.5._
+
 Retourner une information, sous forme de chaîne, de WeeChat ou d'une extension.
 
 Prototype :
 
 [source,C]
 ----
-const char *weechat_info_get (const char *info_name, const char *arguments);
+char *weechat_info_get (const char *info_name, const char *arguments);
 ----
 
 Paramètres :
@@ -14923,6 +14929,10 @@ Valeur de retour :
 
 * chaîne avec l'information demandée, NULL en cas d'erreur
 
+[NOTE]
+Avec WeeChat ≥ 2.5, la valeur retournée est une chaîne allouée
+(avec WeeChat ≤ 2.4, il s'agissait d'un pointeur vers une chaîne statique).
+
 Infos :
 
 include::autogen/plugin_api/infos.adoc[]
@@ -14931,11 +14941,19 @@ Exemple en C :
 
 [source,C]
 ----
+char *version = weechat_info_get ("version", NULL);
+char *date = weechat_info_get ("date", NULL);
 weechat_printf (NULL, "La version de WeeChat est : %s (compilée le %s)",
-                weechat_info_get ("version", NULL),
-                weechat_info_get ("date", NULL));
-weechat_printf (NULL, "Le répertoire de WeeChat est : %s",
-                weechat_info_get ("weechat_dir", NULL));
+                version, date);
+if (version)
+    free (version);
+if (date)
+    free (date);
+
+weechat_dir = weechat_info_get ("weechat_dir", NULL);
+weechat_printf (NULL, "Le répertoire de WeeChat est : %s", weechat_dir);
+if (weechat_dir)
+    free (weechat_dir);
 ----
 
 Script (Python) :

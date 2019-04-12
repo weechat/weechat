@@ -56,7 +56,6 @@ int js_eval_mode = 0;
 int js_eval_send_input = 0;
 int js_eval_exec_commands = 0;
 struct t_gui_buffer *js_eval_buffer = NULL;
-char *js_eval_output = NULL;
 
 struct t_plugin_script *js_scripts = NULL;
 struct t_plugin_script *last_js_script = NULL;
@@ -756,12 +755,12 @@ weechat_js_hdata_cb (const void *pointer, void *data,
  * Returns javascript info "javascript_eval".
  */
 
-const char *
+char *
 weechat_js_info_eval_cb (const void *pointer, void *data,
                          const char *info_name,
                          const char *arguments)
 {
-    static const char *not_implemented = "not yet implemented";
+    const char *not_implemented = "not yet implemented";
 
     /* make C compiler happy */
     (void) pointer;
@@ -769,7 +768,7 @@ weechat_js_info_eval_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return not_implemented;
+    return strdup (not_implemented);
 }
 
 /*
@@ -977,8 +976,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (js_action_autoload_list)
         free (js_action_autoload_list);
     /* weechat_string_dyn_free (js_buffer_output, 1); */
-    if (js_eval_output)
-        free (js_eval_output);
 
     return WEECHAT_RC_OK;
 }

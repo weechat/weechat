@@ -50,8 +50,8 @@ struct t_config_option *charset_default_encode = NULL;
 struct t_config_section *charset_config_section_decode = NULL;
 struct t_config_section *charset_config_section_encode = NULL;
 
-const char *charset_terminal = NULL;
-const char *charset_internal = NULL;
+char *charset_terminal = NULL;
+char *charset_internal = NULL;
 
 
 /*
@@ -640,6 +640,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     charset_config_write ();
 
     weechat_config_free (charset_config_file);
+
+    if (charset_terminal)
+        free (charset_terminal);
+    if (charset_internal)
+        free (charset_internal);
 
     return WEECHAT_RC_OK;
 }

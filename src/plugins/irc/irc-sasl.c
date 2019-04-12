@@ -96,8 +96,7 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
 char *
 irc_sasl_get_key_content (struct t_irc_server *server, const char *sasl_key)
 {
-    const char *weechat_dir;
-    char *key_path1, *key_path2, *content;
+    char *weechat_dir, *key_path1, *key_path2, *content;
 
     if (!sasl_key)
         return NULL;
@@ -122,6 +121,8 @@ irc_sasl_get_key_content (struct t_irc_server *server, const char *sasl_key)
             (key_path2) ? key_path2 : ((key_path1) ? key_path1 : sasl_key));
     }
 
+    if (weechat_dir)
+        free (weechat_dir);
     if (key_path1)
         free (key_path1);
     if (key_path2)

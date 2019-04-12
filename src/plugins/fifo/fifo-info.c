@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "fifo.h"
@@ -29,7 +30,7 @@
  * Returns FIFO info "fifo_filename".
  */
 
-const char *
+char *
 fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
@@ -40,7 +41,7 @@ fifo_info_info_fifo_filename_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return fifo_filename;
+    return (fifo_filename) ? strdup (fifo_filename) : NULL;
 }
 
 /*

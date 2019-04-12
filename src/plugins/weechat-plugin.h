@@ -806,10 +806,10 @@ struct t_weechat_plugin
                                  const char *info_name,
                                  const char *description,
                                  const char *args_description,
-                                 const char *(*callback)(const void *pointer,
-                                                         void *data,
-                                                         const char *info_name,
-                                                         const char *arguments),
+                                 char *(*callback)(const void *pointer,
+                                                   void *data,
+                                                   const char *info_name,
+                                                   const char *arguments),
                                  const void *callback_pointer,
                                  void *callback_data);
     struct t_hook *(*hook_info_hashtable) (struct t_weechat_plugin *plugin,
@@ -1003,9 +1003,8 @@ struct t_weechat_plugin
                                socklen_t address_length);
 
     /* infos */
-    const char *(*info_get) (struct t_weechat_plugin *plugin,
-                             const char *info_name,
-                             const char *arguments);
+    char *(*info_get) (struct t_weechat_plugin *plugin, const char *info_name,
+                       const char *arguments);
     struct t_hashtable *(*info_get_hashtable) (struct t_weechat_plugin *plugin,
                                                const char *info_name,
                                                struct t_hashtable *hashtable);

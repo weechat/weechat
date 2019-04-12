@@ -169,8 +169,7 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
-    char **options, *pos, *password, *totp_secret, *info_totp_args;
-    const char *info_totp;
+    char **options, *pos, *password, *totp_secret, *info_totp_args, *info_totp;
     int i, compression, length;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
@@ -217,6 +216,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                             info_totp = weechat_info_get ("totp_validate", info_totp_args);
                             if (info_totp && (strcmp (info_totp, "1") == 0))
                                 RELAY_WEECHAT_DATA(client, totp_ok) = 1;
+                            if (info_totp)
+                                free (info_totp);
                             free (info_totp_args);
                         }
                         free (totp_secret);
@@ -290,7 +291,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(hdata)
 RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
 {
     struct t_relay_weechat_msg *msg;
-    const char *info;
+    char *info;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
 
@@ -304,6 +305,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(info)
         relay_weechat_msg_add_string (msg, info);
         relay_weechat_msg_send (client, msg);
         relay_weechat_msg_free (msg);
+        if (info)
+            free (info);
     }
 
     return WEECHAT_RC_OK;

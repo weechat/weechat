@@ -328,8 +328,7 @@ irc_ctcp_reply_to_nick (struct t_irc_server *server,
 char *
 irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
 {
-    char *res, *temp, *username, *realname;
-    const char *info;
+    char *res, *temp, *username, *realname, *info, *info2;
     time_t now;
     struct tm *local_time;
     char buf[4096];
@@ -354,6 +353,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     info = weechat_info_get ("version_git", "");
     temp = weechat_string_replace (res, "$git", info);
     free (res);
+    if (info)
+        free (info);
     if (!temp)
         return NULL;
     res = temp;
@@ -365,13 +366,18 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
      *   0.4.0-dev (git: v0.3.9-104-g7eb5cc4)
      */
     info = weechat_info_get ("version_git", "");
+    info2 = weechat_info_get ("version", "");
     snprintf (buf, sizeof (buf), "%s%s%s%s",
-              weechat_info_get ("version", ""),
+              info2,
               (info && info[0]) ? " (git: " : "",
               (info && info[0]) ? info : "",
               (info && info[0]) ? ")" : "");
     temp = weechat_string_replace (res, "$versiongit", buf);
     free (res);
+    if (info)
+        free (info);
+    if (info2)
+        free (info2);
     if (!temp)
         return NULL;
     res = temp;
@@ -384,6 +390,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     info = weechat_info_get ("version", "");
     temp = weechat_string_replace (res, "$version", info);
     free (res);
+    if (info)
+        free (info);
     if (!temp)
         return NULL;
     res = temp;
@@ -395,6 +403,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     info = weechat_info_get ("date", "");
     temp = weechat_string_replace (res, "$compilation", info);
     free (res);
+    if (info)
+        free (info);
     if (!temp)
         return NULL;
     res = temp;
@@ -430,6 +440,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     info = weechat_info_get ("weechat_site", "");
     temp = weechat_string_replace (res, "$site", info);
     free (res);
+    if (info)
+        free (info);
     if (!temp)
         return NULL;
     res = temp;
@@ -441,6 +453,8 @@ irc_ctcp_replace_variables (struct t_irc_server *server, const char *format)
     info = weechat_info_get ("weechat_site_download", "");
     temp = weechat_string_replace (res, "$download", info);
     free (res);
+    if (info)
+        free (info);
     if (!temp)
         return NULL;
     res = temp;
@@ -974,7 +988,7 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                const char *nick, const char *remote_nick, char *arguments,
                char *message)
 {
-    char *pos_end, *pos_space, *pos_args;
+    char *pos_end, *pos_space, *pos_args, *nick_color;
     const char *reply;
     char *decoded_reply;
     struct t_irc_channel *ptr_channel;
@@ -1014,6 +1028,12 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                 irc_channel_nick_speaking_time_remove_old (channel);
                 irc_channel_nick_speaking_time_add (server, channel, nick,
                                                     time (NULL));
+                if (ptr_nick)
+                    nick_color = strdup (ptr_nick->color);
+                else if (nick)
+                    nick_color = irc_nick_find_color (nick);
+                else
+                    nick_color = strdup (IRC_COLOR_CHAT_NICK);
                 weechat_printf_date_tags (
                     channel->buffer,
                     date,
@@ -1026,11 +1046,13 @@ irc_ctcp_recv (struct t_irc_server *server, time_t date, const char *command,
                     "%s%s%s%s%s%s%s",
                     weechat_prefix ("action"),
                     irc_nick_mode_for_display (server, ptr_nick, 0),
-                    (ptr_nick) ? ptr_nick->color : ((nick) ? irc_nick_find_color (nick) : IRC_COLOR_CHAT_NICK),
+                    nick_color,
                     nick,
                     (pos_args) ? IRC_COLOR_RESET : "",
                     (pos_args) ? " " : "",
                     (pos_args) ? pos_args : "");
+                if (nick_color)
+                    free (nick_color);
             }
             else
             {

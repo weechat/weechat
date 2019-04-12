@@ -23,6 +23,7 @@ New features::
   * core: use seconds by default in /repeat interval, allow unit for the interval
   * core: allow text in addition to a command in command /repeat
   * core: add option "addreplace" in command /filter (issue #1055, issue #1312)
+  * api: return allocated string in hook_info callback and function info_get
   * api: replace argument "keep_eol" by "flags" in function string_split (issue #1322)
   * api: add function command_options (issue #928)
   * api: add function string_match_list

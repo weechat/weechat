@@ -59,7 +59,6 @@ int guile_eval_mode = 0;
 int guile_eval_send_input = 0;
 int guile_eval_exec_commands = 0;
 struct t_gui_buffer *guile_eval_buffer = NULL;
-char *guile_eval_output = NULL;
 #define GUILE_EVAL_SCRIPT                                               \
     "(weechat:register \"" WEECHAT_SCRIPT_EVAL_NAME "\" \"\" \"1.0\" "  \
     "\"" WEECHAT_LICENSE "\" \"Evaluation of source code\" "            \
@@ -968,23 +967,23 @@ weechat_guile_hdata_cb (const void *pointer, void *data,
  * Returns guile info "guile_eval".
  */
 
-const char *
+char *
 weechat_guile_info_eval_cb (const void *pointer, void *data,
                             const char *info_name,
                             const char *arguments)
 {
+    char *output;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
     weechat_guile_eval (NULL, 0, 0, (arguments) ? arguments : "");
-    if (guile_eval_output)
-        free (guile_eval_output);
-    guile_eval_output = strdup (*guile_buffer_output);
+    output = strdup (*guile_buffer_output);
     weechat_string_dyn_copy (guile_buffer_output, NULL);
 
-    return guile_eval_output;
+    return output;
 }
 
 /*
@@ -1272,8 +1271,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (guile_action_autoload_list)
         free (guile_action_autoload_list);
     weechat_string_dyn_free (guile_buffer_output, 1);
-    if (guile_eval_output)
-        free (guile_eval_output);
 
     return WEECHAT_RC_OK;
 }

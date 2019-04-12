@@ -54,7 +54,6 @@ int perl_eval_mode = 0;
 int perl_eval_send_input = 0;
 int perl_eval_exec_commands = 0;
 struct t_gui_buffer *perl_eval_buffer = NULL;
-char *perl_eval_output = NULL;
 #define PERL_EVAL_SCRIPT                                                \
     "sub script_perl_eval {\n"                                          \
     "    eval \"$_[0]\";\n"                                             \
@@ -1053,23 +1052,23 @@ weechat_perl_hdata_cb (const void *pointer, void *data,
  * Returns perl info "perl_eval".
  */
 
-const char *
+char *
 weechat_perl_info_eval_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
+    char *output;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
     weechat_perl_eval (NULL, 0, 0, (arguments) ? arguments : "");
-    if (perl_eval_output)
-        free (perl_eval_output);
-    perl_eval_output = strdup (*perl_buffer_output);
+    output = strdup (*perl_buffer_output);
     weechat_string_dyn_copy (perl_buffer_output, NULL);
 
-    return perl_eval_output;
+    return output;
 }
 
 /*
@@ -1358,8 +1357,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (perl_action_autoload_list)
         free (perl_action_autoload_list);
     weechat_string_dyn_free (perl_buffer_output, 1);
-    if (perl_eval_output)
-        free (perl_eval_output);
 
     return WEECHAT_RC_OK;
 }

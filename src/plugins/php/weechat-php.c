@@ -65,7 +65,6 @@ int php_eval_mode = 0;
 int php_eval_send_input = 0;
 int php_eval_exec_commands = 0;
 struct t_gui_buffer *php_eval_buffer = NULL;
-char *php_eval_output = NULL;
 
 struct t_plugin_script *php_scripts = NULL;
 struct t_plugin_script *last_php_script = NULL;
@@ -1062,12 +1061,12 @@ weechat_php_hdata_cb (const void *pointer, void *data,
  * Returns PHP info "php_eval".
  */
 
-const char *
+char *
 weechat_php_info_eval_cb (const void *pointer, void *data,
                           const char *info_name,
                           const char *arguments)
 {
-    static const char *not_implemented = "not yet implemented";
+    const char *not_implemented = "not yet implemented";
 
     /* make C compiler happy */
     (void) pointer;
@@ -1075,7 +1074,7 @@ weechat_php_info_eval_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return not_implemented;
+    return strdup (not_implemented);
 }
 
 /*
@@ -1351,8 +1350,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (php_action_autoload_list)
         free (php_action_autoload_list);
     /* weechat_string_dyn_free (php_buffer_output, 1); */
-    if (php_eval_output)
-        free (php_eval_output);
 
     return WEECHAT_RC_OK;
 }

@@ -520,7 +520,7 @@ eval_replace_vars_cb (void *data, const char *text)
     /* 10. info */
     if (strncmp (text, "info:", 5) == 0)
     {
-        ptr_value = NULL;
+        value = NULL;
         ptr_arguments = strchr (text + 5, ',');
         if (ptr_arguments)
         {
@@ -531,10 +531,10 @@ eval_replace_vars_cb (void *data, const char *text)
             info_name = strdup (text + 5);
         if (info_name)
         {
-            ptr_value = hook_info_get (NULL, info_name, ptr_arguments);
+            value = hook_info_get (NULL, info_name, ptr_arguments);
             free (info_name);
         }
-        return strdup ((ptr_value) ? ptr_value : "");
+        return (value) ? value : strdup ("");
     }
 
     /* 11. current date/time */

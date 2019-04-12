@@ -2169,6 +2169,7 @@ IRC_PROTOCOL_CALLBACK(pong)
 IRC_PROTOCOL_CALLBACK(privmsg)
 {
     char *pos_args, *pos_target, str_tags[1024], *str_color, status_msg[2];
+    char *color;
     const char *remote_nick, *pv_tags;
     int is_channel, nick_is_me;
     struct t_irc_channel *ptr_channel;
@@ -2246,8 +2247,10 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             else
             {
                 /* standard message (to "#channel") */
-                str_color = irc_color_for_tags (
-                    irc_nick_find_color_name ((ptr_nick) ? ptr_nick->name : nick));
+                color = irc_nick_find_color_name ((ptr_nick) ? ptr_nick->name : nick);
+                str_color = irc_color_for_tags (color);
+                if (color)
+                    free (color);
                 snprintf (str_tags, sizeof (str_tags),
                           "notify_message,prefix_nick_%s",
                           (str_color) ? str_color : "default");
@@ -2318,8 +2321,10 @@ IRC_PROTOCOL_CALLBACK(privmsg)
         {
             if (weechat_config_boolean (irc_config_look_color_pv_nick_like_channel))
             {
-                str_color = irc_color_for_tags (
-                    irc_nick_find_color_name (nick));
+                color = irc_nick_find_color_name (nick);
+                str_color = irc_color_for_tags (color);
+                if (color)
+                    free (color);
             }
             else
             {
@@ -4667,7 +4672,7 @@ IRC_PROTOCOL_CALLBACK(352)
 IRC_PROTOCOL_CALLBACK(353)
 {
     char *pos_channel, *pos_nick, *pos_nick_orig, *pos_host, *nickname;
-    char *prefixes, *str_nicks;
+    char *prefixes, *str_nicks, *color;
     int args, i, length;
     struct t_irc_channel *ptr_channel;
 
@@ -4764,7 +4769,12 @@ IRC_PROTOCOL_CALLBACK(353)
                     if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
                         strcat (str_nicks, IRC_COLOR_CHAT_NICK_SELF);
                     else
-                        strcat (str_nicks, irc_nick_find_color (nickname));
+                    {
+                        color = irc_nick_find_color (nickname);
+                        strcat (str_nicks, color);
+                        if (color)
+                            free (color);
+                    }
                 }
                 else
                     strcat (str_nicks, IRC_COLOR_RESET);
@@ -4956,7 +4966,7 @@ IRC_PROTOCOL_CALLBACK(366)
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
-    char *string, str_nicks_count[2048];
+    char *string, str_nicks_count[2048], *color;
     const char *prefix, *prefix_color, *nickname;
 
     IRC_PROTOCOL_MIN_ARGS(5);
@@ -5029,7 +5039,12 @@ IRC_PROTOCOL_CALLBACK(366)
                                     if (irc_server_strcasecmp (server, nickname, server->nick) == 0)
                                         strcat (string, IRC_COLOR_CHAT_NICK_SELF);
                                     else
-                                        strcat (string, irc_nick_find_color (nickname));
+                                    {
+                                        color = irc_nick_find_color (nickname);
+                                        strcat (string, color);
+                                        if (color)
+                                            free (color);
+                                    }
                                 }
                                 else
                                     strcat (string, IRC_COLOR_RESET);

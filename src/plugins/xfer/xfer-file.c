@@ -80,8 +80,7 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
-    const char *dir_separator;
-    char *path, *filename2;
+    char *dir_separator, *path, *filename2;
     int length;
 
     if (!XFER_IS_FILE(xfer->type))
@@ -106,7 +105,11 @@ xfer_file_find_filename (struct t_xfer *xfer)
     dir_separator = weechat_info_get ("dir_separator", "");
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
+    {
         strcat (xfer->local_filename, dir_separator);
+    }
+    if (dir_separator)
+        free (dir_separator);
     if (weechat_config_boolean (xfer_config_file_use_nick_in_filename))
     {
         strcat (xfer->local_filename, xfer->remote_nick);

@@ -64,14 +64,13 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
  * Returns IRC info "irc_is_channel".
  */
 
-const char *
+char *
 irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
     char *pos_comma, *server;
     const char *pos_channel;
-    static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -92,37 +91,36 @@ irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
             free (server);
         }
     }
-    if (irc_channel_is_channel (ptr_server, pos_channel))
-        return str_true;
-    return NULL;
+
+    return (irc_channel_is_channel (ptr_server, pos_channel)) ?
+        strdup ("1") : NULL;
 }
 
 /*
  * Returns IRC info "irc_is_nick".
  */
 
-const char *
+char *
 irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
                               const char *info_name,
                               const char *arguments)
 {
-    static char str_true[2] = "1";
-
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    if (arguments && arguments[0] && irc_nick_is_nick (arguments))
-        return str_true;
-    return NULL;
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    return (irc_nick_is_nick (arguments)) ? strdup ("1") : NULL;
 }
 
 /*
  * Returns IRC info "irc_nick".
  */
 
-const char *
+char *
 irc_info_info_irc_nick_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
@@ -138,35 +136,40 @@ irc_info_info_irc_nick_cb (const void *pointer, void *data,
         return NULL;
 
     ptr_server = irc_server_search (arguments);
-    if (ptr_server)
-        return ptr_server->nick;
 
-    return NULL;
+    return (ptr_server && ptr_server->nick) ?
+        strdup (ptr_server->nick) : NULL;
 }
 
 /*
  * Returns IRC info "irc_nick_from_host".
  */
 
-const char *
+char *
 irc_info_info_irc_nick_from_host_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
 {
+    const char *ptr_host;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    return (arguments && arguments[0]) ?
-        irc_message_get_nick_from_host (arguments) : NULL;
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_host = irc_message_get_nick_from_host (arguments);
+
+    return (ptr_host) ? strdup (ptr_host) : NULL;
 }
 
 /*
  * Returns IRC info "irc_nick_color".
  */
 
-const char *
+char *
 irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
@@ -176,15 +179,17 @@ irc_info_info_irc_nick_color_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
-    return (arguments && arguments[0]) ?
-        irc_nick_find_color (arguments) : NULL;
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    return irc_nick_find_color (arguments);
 }
 
 /*
  * Returns IRC info "irc_nick_color_name".
  */
 
-const char *
+char *
 irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
@@ -194,15 +199,17 @@ irc_info_info_irc_nick_color_name_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
-    return (arguments && arguments[0]) ?
-        irc_nick_find_color_name (arguments) : NULL;
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    return irc_nick_find_color_name (arguments);
 }
 
 /*
  * Returns IRC info "irc_buffer".
  */
 
-const char *
+char *
 irc_info_info_irc_buffer_cb (const void *pointer, void *data,
                              const char *info_name,
                              const char *arguments)
@@ -281,14 +288,18 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
     {
         irc_info_create_string_with_pointer (&ptr_channel->buffer_as_string,
                                              ptr_channel->buffer);
-        return ptr_channel->buffer_as_string;
+        return (ptr_channel->buffer_as_string) ?
+            strdup (ptr_channel->buffer_as_string) : NULL;
     }
+
     if (ptr_server)
     {
         irc_info_create_string_with_pointer (&ptr_server->buffer_as_string,
                                              ptr_server->buffer);
-        return ptr_server->buffer_as_string;
+        return (ptr_server->buffer_as_string) ?
+            strdup (ptr_server->buffer_as_string) : NULL;
     }
+
     return NULL;
 }
 
@@ -296,14 +307,13 @@ irc_info_info_irc_buffer_cb (const void *pointer, void *data,
  * Returns IRC info "irc_server_isupport".
  */
 
-const char *
+char *
 irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
     char *pos_comma, *server;
     const char *isupport_value;
-    static char str_true[2] = "1";
     struct t_irc_server *ptr_server;
 
     /* make C compiler happy */
@@ -326,14 +336,15 @@ irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
             }
         }
     }
-    return (isupport_value) ? str_true : NULL;
+
+    return (isupport_value) ? strdup ("1") : NULL;
 }
 
 /*
  * Returns IRC info "irc_server_isupport_value".
  */
 
-const char *
+char *
 irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
                                             const char *info_name,
                                             const char *arguments)
@@ -362,7 +373,8 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
             }
         }
     }
-    return isupport_value;
+
+    return (isupport_value) ? strdup (isupport_value) : NULL;
 }
 
 /*

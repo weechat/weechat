@@ -52,7 +52,7 @@ void
 relay_network_set_ssl_cert_key (int verbose)
 {
 #ifdef HAVE_GNUTLS
-    char *certkey_path, *certkey_path2;
+    char *certkey_path, *certkey_path2, *weechat_dir;
     int ret;
 
     gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
@@ -63,9 +63,11 @@ relay_network_set_ssl_cert_key (int verbose)
     certkey_path = weechat_string_expand_home (weechat_config_string (relay_config_network_ssl_cert_key));
     if (certkey_path)
     {
+        weechat_dir = weechat_info_get ("weechat_dir", NULL);
         certkey_path2 = weechat_string_replace (certkey_path, "%h",
-                                                weechat_info_get ("weechat_dir",
-                                                                  NULL));
+                                                weechat_dir);
+        if (weechat_dir)
+            free (weechat_dir);
         if (certkey_path2)
         {
             ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,

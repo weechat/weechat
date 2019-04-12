@@ -25,9 +25,9 @@ struct t_infolist_item;
 
 #define HOOK_INFO(hook, var) (((struct t_hook_info *)hook->hook_data)->var)
 
-typedef const char *(t_hook_callback_info)(const void *pointer, void *data,
-                                           const char *info_name,
-                                           const char *arguments);
+typedef char *(t_hook_callback_info)(const void *pointer, void *data,
+                                     const char *info_name,
+                                     const char *arguments);
 
 struct t_hook_info
 {
@@ -44,9 +44,9 @@ extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
                                  t_hook_callback_info *callback,
                                  const void *callback_pointer,
                                  void *callback_data);
-extern const char *hook_info_get (struct t_weechat_plugin *plugin,
-                                  const char *info_name,
-                                  const char *arguments);
+extern char *hook_info_get (struct t_weechat_plugin *plugin,
+                            const char *info_name,
+                            const char *arguments);
 extern void hook_info_free_data (struct t_hook *hook);
 extern int hook_info_add_to_infolist (struct t_infolist_item *item,
                                       struct t_hook *hook);

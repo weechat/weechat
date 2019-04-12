@@ -32,14 +32,13 @@
  * Returns relay info "relay_client_count".
  */
 
-const char *
+char *
 relay_info_info_relay_client_count_cb (const void *pointer, void *data,
                                        const char *info_name,
                                        const char *arguments)
 {
-    static char str_count[32];
+    char str_count[32], **items;
     const char *ptr_count;
-    char **items;
     int count, protocol, status, num_items;
     struct t_relay_client *ptr_client;
 
@@ -110,7 +109,7 @@ end:
     if (items)
         weechat_string_free_split (items);
 
-    return ptr_count;
+    return (ptr_count) ? strdup (ptr_count) : NULL;
 }
 
 /*

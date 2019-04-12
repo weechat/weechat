@@ -57,7 +57,6 @@ int python_eval_mode = 0;
 int python_eval_send_input = 0;
 int python_eval_exec_commands = 0;
 struct t_gui_buffer *python_eval_buffer = NULL;
-char *python_eval_output = NULL;
 #define PYTHON_EVAL_SCRIPT                                              \
     "import weechat\n"                                                  \
     "\n"                                                                \
@@ -144,8 +143,7 @@ char *python_action_autoload_list = NULL;
 char *
 weechat_python_get_python2_bin ()
 {
-    const char *dir_separator;
-    char *py2_bin, *path, **paths, bin[4096];
+    char *dir_separator, *py2_bin, *path, **paths, bin[4096];
     char *versions[] = { "2.7", "2.6", "2.5", "2.4", "2.3", "2.2", "2", NULL };
     int num_paths, i, j, rc;
     struct stat stat_buf;
@@ -184,6 +182,9 @@ weechat_python_get_python2_bin ()
             weechat_string_free_split (paths);
         }
     }
+
+    if (dir_separator)
+        free (dir_separator);
 
     if (!py2_bin)
         py2_bin = strdup ("python");
@@ -753,7 +754,7 @@ weechat_python_load (const char *filename, const char *code)
 #endif /* PY_MAJOR_VERSION >= 3 */
     FILE *fp;
     PyObject *python_path, *path, *module_main, *globals, *rc;
-    const char *weechat_home;
+    char *weechat_home;
     char *str_home;
     int len;
 
@@ -842,6 +843,7 @@ weechat_python_load (const char *filename, const char *code)
             }
             free (str_home);
         }
+        free (weechat_home);
     }
 
     weechat_python_set_output ();
@@ -1332,7 +1334,7 @@ weechat_python_hdata_cb (const void *pointer, void *data,
  * Returns python info "python2_bin".
  */
 
-const char *
+char *
 weechat_python_info_python2_bin_cb (const void *pointer, void *data,
                                     const char *info_name,
                                     const char *arguments)
@@ -1355,30 +1357,30 @@ weechat_python_info_python2_bin_cb (const void *pointer, void *data,
             python2_bin = weechat_python_get_python2_bin ();
         }
     }
-    return python2_bin;
+    return (python2_bin) ? strdup (python2_bin) : NULL;
 }
 
 /*
  * Returns python info "python_eval".
  */
 
-const char *
+char *
 weechat_python_info_eval_cb (const void *pointer, void *data,
                              const char *info_name,
                              const char *arguments)
 {
+    char *output;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
     weechat_python_eval (NULL, 0, 0, (arguments) ? arguments : "");
-    if (python_eval_output)
-        free (python_eval_output);
-    python_eval_output = strdup (*python_buffer_output);
+    output = strdup (*python_buffer_output);
     weechat_string_dyn_copy (python_buffer_output, NULL);
 
-    return python_eval_output;
+    return output;
 }
 
 /*
@@ -1658,8 +1660,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (python_action_autoload_list)
         free (python_action_autoload_list);
     weechat_string_dyn_free (python_buffer_output, 1);
-    if (python_eval_output)
-        free (python_eval_output);
 
     return WEECHAT_RC_OK;
 }

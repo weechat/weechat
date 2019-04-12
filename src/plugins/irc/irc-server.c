@@ -1228,9 +1228,9 @@ irc_server_get_default_msg (const char *default_msg,
                             struct t_irc_server *server,
                             const char *channel_name)
 {
-    const char *version;
+    char *version;
     struct t_hashtable *extra_vars;
-    char *msg;
+    char *msg, *res;
 
     /*
      * "%v" for version is deprecated since WeeChat 1.6, where
@@ -1240,8 +1240,11 @@ irc_server_get_default_msg (const char *default_msg,
     if (strstr (default_msg, "%v") && !strstr (default_msg, "${"))
     {
         version = weechat_info_get ("version", "");
-        return weechat_string_replace (default_msg, "%v",
-                                       (version) ? version : "");
+        res = weechat_string_replace (default_msg, "%v",
+                                      (version) ? version : "");
+        if (version)
+            free (version);
+        return res;
     }
 
     extra_vars = weechat_hashtable_new (32,
@@ -4344,7 +4347,8 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
-    const char *weechat_dir, *ptr_fingerprint;
+    char *weechat_dir;
+    const char *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
@@ -4368,6 +4372,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     cert_list = NULL;
     cert_list_len = 0;
     fingerprint_eval = NULL;
+    weechat_dir = NULL;
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
@@ -4702,7 +4707,8 @@ end:
 
     if (cert_temp_init)
         gnutls_x509_crt_deinit (cert_temp);
-
+    if (weechat_dir)
+        free (weechat_dir);
     if (fingerprint_eval)
         free (fingerprint_eval);
 

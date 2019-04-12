@@ -166,8 +166,7 @@ script_repo_search_by_name_ext (const char *name_with_extension)
 char *
 script_repo_get_filename_loaded (struct t_script_repo *script)
 {
-    const char *weechat_home;
-    char *filename, resolved_path[PATH_MAX];
+    char *weechat_home, *filename, resolved_path[PATH_MAX];
     int length;
     struct stat st;
 
@@ -175,7 +174,11 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
     length = strlen (weechat_home) + strlen (script->name_with_extension) + 64;
     filename = malloc (length);
     if (!filename)
+    {
+        if (weechat_home)
+            free (weechat_home);
         return NULL;
+    }
 
     snprintf (filename, length, "%s/%s/autoload/%s",
               weechat_home,
@@ -192,6 +195,9 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
             filename[0] = '\0';
         }
     }
+
+    if (weechat_home)
+        free (weechat_home);
 
     if (!filename[0])
     {
@@ -801,8 +807,8 @@ script_repo_sha512sum_file (const char *filename)
 void
 script_repo_update_status (struct t_script_repo *script)
 {
-    const char *weechat_home, *version;
-    char *filename, *sha512sum;
+    const char *version;
+    char *weechat_home, *filename, *sha512sum;
     struct stat st;
     int length;
     struct t_script_repo *ptr_script;
@@ -840,6 +846,9 @@ script_repo_update_status (struct t_script_repo *script)
         }
         free (filename);
     }
+
+    if (weechat_home)
+        free (weechat_home);
 
     /* check if script is held */
     if (script_repo_script_is_held (script))
@@ -1140,8 +1149,8 @@ script_repo_file_read (int quiet)
 {
     char *filename, *ptr_line, line[4096], *pos, *pos2, *pos3;
     char *name, *value1, *value2, *value3, *value, *error;
-    char *locale, *locale_language;
-    const char *version, *ptr_locale, *ptr_desc;
+    char *info_locale, *locale, *locale_language, *version;
+    const char *ptr_desc;
     gzFile file;
     struct t_script_repo *script;
     int version_number, version_ok, script_ok, length;
@@ -1166,6 +1175,8 @@ script_repo_file_read (int quiet)
 
     version = weechat_info_get ("version", NULL);
     version_number = weechat_util_version_number (version);
+    if (version)
+        free (version);
 
     filename = script_config_get_xml_filename ();
     if (!filename)
@@ -1195,14 +1206,15 @@ script_repo_file_read (int quiet)
      */
     locale = NULL;
     locale_language = NULL;
-    ptr_locale = weechat_info_get ("locale", NULL);
-    if (ptr_locale)
+    info_locale = weechat_info_get ("locale", NULL);
+    if (info_locale)
     {
-        pos = strchr (ptr_locale, '.');
+        pos = strchr (info_locale, '.');
         if (pos)
-            locale = weechat_strndup (ptr_locale, pos - ptr_locale);
+            locale = weechat_strndup (info_locale, pos - info_locale);
         else
-            locale = strdup (ptr_locale);
+            locale = strdup (info_locale);
+        free (info_locale);
     }
     if (locale)
     {
@@ -1406,10 +1418,13 @@ script_repo_file_read (int quiet)
 
     if (scripts_repo && !quiet)
     {
+        version = weechat_info_get ("version", NULL);
         weechat_printf (NULL,
                         _("%s: %d scripts for WeeChat %s"),
                         SCRIPT_PLUGIN_NAME, script_repo_count,
-                        weechat_info_get ("version", NULL));
+                        version);
+        if (version)
+            free (version);
     }
 
     if (!scripts_repo)

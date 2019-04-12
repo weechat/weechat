@@ -96,7 +96,8 @@ struct t_config_option *script_config_scripts_url;
 const char *
 script_config_get_diff_command ()
 {
-    const char *diff_command, *dir_separator;
+    const char *diff_command;
+    char *dir_separator;
     static char result[64];
     struct stat st;
     char *path, **paths, bin[4096];
@@ -135,6 +136,8 @@ script_config_get_diff_command ()
                 weechat_string_free_split (paths);
             }
         }
+        if (dir_separator)
+            free (dir_separator);
         if (!result[0])
             snprintf (result, sizeof (result), "diff");
         return result;

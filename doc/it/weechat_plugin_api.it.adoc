@@ -11723,7 +11723,7 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 ==== hook_info
 
 // TRANSLATION MISSING
-_Updated in 1.5._
+_Updated in 1.5, 2.5._
 
 Hook su una informazione (la callback prende e restituisce una stringa).
 
@@ -11734,10 +11734,10 @@ Prototipo:
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
                                   const char *args_description,
-                                  const char *(*callback)(const void *pointer,
-                                                          void *data,
-                                                          const char *info_name,
-                                                          const char *arguments),
+                                  char *(*callback)(const void *pointer,
+                                                    void *data,
+                                                    const char *info_name,
+                                                    const char *arguments),
                                   const void *callback_pointer,
                                   void *callback_data);
 ----
@@ -11766,16 +11766,21 @@ Valore restituito:
 
 * puntatore al nuovo hook, NULL in caso di errore
 
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≥ 2.5, the callback returns an allocated string
+(with WeeChat ≤ 2.4, it was a pointer to a static string).
+
 Esempio in C:
 
 [source,C]
 ----
-const char *
+char *
 my_info_cb (const void *pointer, void *data, const char *info_name,
             const char *arguments)
 {
     /* ... */
-    return pointer_to_string;
+    return strdup ("some_info");
 }
 
 /* aggiunge informazione "my_info" */
@@ -15180,13 +15185,16 @@ Funzioni per ottenere info.
 
 ==== info_get
 
+// TRANSLATION MISSING
+_Updated in 2.5._
+
 Restituisce la info, come stringa, da WeeChat o da un plugin.
 
 Prototipo:
 
 [source,C]
 ----
-const char *weechat_info_get (const char *info_name, const char *arguments);
+char *weechat_info_get (const char *info_name, const char *arguments);
 ----
 
 Argomenti:
@@ -15201,6 +15209,11 @@ Valore restituito:
 * stringa con l'informazione richiesta, NULL in caso di errore
 
 // TRANSLATION MISSING
+[NOTE]
+With WeeChat ≥ 2.5, the value returned is an allocated string
+(with WeeChat ≤ 2.4, it was a pointer to a static string).
+
+// TRANSLATION MISSING
 Infos:
 
 include::autogen/plugin_api/infos.adoc[]
@@ -15209,11 +15222,19 @@ Esempio in C:
 
 [source,C]
 ----
+char *version = weechat_info_get ("version", NULL);
+char *date = weechat_info_get ("date", NULL);
 weechat_printf (NULL, "Current WeeChat version is: %s (compiled on %s)",
-                weechat_info_get ("version", NULL),
-                weechat_info_get ("date", NULL));
-weechat_printf (NULL, "WeeChat home is: %s",
-                weechat_info_get ("weechat_dir", NULL));
+                version, date);
+if (version)
+    free (version);
+if (date)
+    free (date);
+
+char *weechat_dir = weechat_info_get ("weechat_dir", NULL);
+weechat_printf (NULL, "WeeChat home is: %s", weechat_dir);
+if (weechat_dir)
+    free (weechat_dir);
 ----
 
 Script (Python):

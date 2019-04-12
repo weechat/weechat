@@ -20,6 +20,17 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.5]]
 == Version 2.5 (under dev)
 
+[[v2.5_hook_info_allocated_string]]
+=== Allocated string in hook info and function info_get
+
+The hook info callback now returns an allocated string, which must be freed
+after use (in previous versions, a pointer to a static string was returned).
+
+Consequently, the function info_get returns an allocated string, which must
+be freed after use.
+
+This affects only C code, no changes are required in scripts.
+
 [[v2.5_xfer_option_speed_limit]]
 === Speed limit option for DCC files
 

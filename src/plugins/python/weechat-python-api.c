@@ -59,8 +59,6 @@
     plugin_script_str2ptr (weechat_python_plugin,                       \
                            PYTHON_CURRENT_SCRIPT_NAME,                  \
                            python_function_name, __string)
-#define API_STATIC_STRING(__string)                                     \
-    plugin_script_get_static_string(&python_data, __string);
 #define API_RETURN_OK return PyLong_FromLong((long)1)
 #define API_RETURN_ERROR return PyLong_FromLong ((long)0)
 #define API_RETURN_EMPTY                                                \
@@ -3024,14 +3022,14 @@ API_FUNC(hook_modifier_exec)
     API_RETURN_STRING_FREE(result);
 }
 
-const char *
+char *
 weechat_python_api_hook_info_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
 {
     struct t_plugin_script *script;
     void *func_argv[3];
-    char empty_arg[1] = { '\0' }, *result;
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
 
     script = (struct t_plugin_script *)pointer;
@@ -3043,12 +3041,10 @@ weechat_python_api_hook_info_cb (const void *pointer, void *data,
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = (arguments) ? (char *)arguments : empty_arg;
 
-        result = (char *)weechat_python_exec (script,
-                                              WEECHAT_SCRIPT_EXEC_STRING,
-                                              ptr_function,
-                                              "sss", func_argv);
-
-        return API_STATIC_STRING(result);
+        return (char *)weechat_python_exec (script,
+                                            WEECHAT_SCRIPT_EXEC_STRING,
+                                            ptr_function,
+                                            "sss", func_argv);
     }
 
     return NULL;
@@ -4278,8 +4274,8 @@ API_FUNC(command_options)
 
 API_FUNC(info_get)
 {
-    char *info_name, *arguments;
-    const char *result;
+    char *info_name, *arguments, *result;
+    PyObject *return_value;
 
     API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     info_name = NULL;
@@ -4289,7 +4285,7 @@ API_FUNC(info_get)
 
     result = weechat_info_get (info_name, arguments);
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 API_FUNC(info_get_hashtable)

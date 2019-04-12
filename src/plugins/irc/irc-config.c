@@ -213,7 +213,7 @@ irc_config_compute_nick_colors ()
                 {
                     if (ptr_nick->color)
                         free (ptr_nick->color);
-                    ptr_nick->color = strdup (irc_nick_find_color (ptr_nick->name));
+                    ptr_nick->color = irc_nick_find_color (ptr_nick->name);
                 }
             }
             if (ptr_channel->pv_remote_nick_color)

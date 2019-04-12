@@ -31,7 +31,7 @@
  * Returns spell info "spell_dict".
  */
 
-const char *
+char *
 spell_info_info_spell_dict_cb (const void *pointer, void *data,
                                const char *info_name,
                                const char *arguments)
@@ -39,12 +39,14 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
     int rc;
     unsigned long value;
     struct t_gui_buffer *buffer;
-    const char *buffer_full_name;
+    const char *buffer_full_name, *ptr_dict;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
+
+    ptr_dict = NULL;
 
     if (!arguments)
         return NULL;
@@ -67,9 +69,9 @@ spell_info_info_spell_dict_cb (const void *pointer, void *data,
         buffer_full_name = arguments;
 
     if (buffer_full_name)
-        return spell_get_dict_with_buffer_name (buffer_full_name);
+        ptr_dict = spell_get_dict_with_buffer_name (buffer_full_name);
 
-    return NULL;
+    return (ptr_dict) ? strdup (ptr_dict) : NULL;
 }
 
 /*

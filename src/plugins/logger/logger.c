@@ -297,8 +297,7 @@ logger_get_mask_for_buffer (struct t_gui_buffer *buffer)
 char *
 logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
 {
-    char *mask2, *mask3, *mask4, *mask5, *mask6, *mask7;
-    const char *dir_separator;
+    char *mask2, *mask3, *mask4, *mask5, *mask6, *mask7, *dir_separator;
     int length;
     time_t seconds;
     struct tm *date_tmp;
@@ -374,6 +373,7 @@ logger_get_mask_expanded (struct t_gui_buffer *buffer, const char *mask)
     }
 
 end:
+    free (dir_separator);
     if (mask2)
         free (mask2);
     if (mask3)
@@ -397,9 +397,8 @@ end:
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    char *res, *mask_expanded, *file_path;
+    char *res, *mask_expanded, *file_path, *dir_separator, *weechat_dir;
     const char *mask;
-    const char *dir_separator, *weechat_dir;
     int length;
 
     res = NULL;
@@ -411,7 +410,10 @@ logger_get_filename (struct t_gui_buffer *buffer)
         return NULL;
     weechat_dir = weechat_info_get ("weechat_dir", "");
     if (!weechat_dir)
+    {
+        free (dir_separator);
         return NULL;
+    }
 
     /* get filename mask for buffer */
     mask = logger_get_mask_for_buffer (buffer);
@@ -423,6 +425,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
               "\"%s\", logging is disabled for this buffer"),
             weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
             weechat_buffer_get_string (buffer, "name"));
+        free (dir_separator);
+        free (weechat_dir);
         return NULL;
     }
 
@@ -447,6 +451,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
     }
 
 end:
+    free (dir_separator);
+    free (weechat_dir);
     if (mask_expanded)
         free (mask_expanded);
     if (file_path)
@@ -463,7 +469,7 @@ void
 logger_set_log_filename (struct t_logger_buffer *logger_buffer)
 {
     char *log_filename, *pos_last_sep;
-    const char *dir_separator;
+    char *dir_separator;
     struct t_logger_buffer *ptr_logger_buffer;
 
     /* get log filename for buffer */
@@ -505,6 +511,7 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
             weechat_mkdir_parents (log_filename, 0700);
             pos_last_sep[0] = dir_separator[0];
         }
+        free (dir_separator);
     }
 
     /* set log filename */
@@ -519,13 +526,10 @@ void
 logger_write_line (struct t_logger_buffer *logger_buffer,
                    const char *format, ...)
 {
-    char *message, buf_time[256], buf_beginning[1024];
-    const char *charset;
+    char *message, buf_time[256], buf_beginning[1024], *charset;
     time_t seconds;
     struct tm *date_tmp;
     int log_level;
-
-    charset = weechat_info_get ("charset_terminal", "");
 
     if (!logger_buffer->log_file)
     {
@@ -583,10 +587,13 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
             snprintf (buf_beginning, sizeof (buf_beginning),
                       _("%s\t****  Beginning of log  ****"),
                       buf_time);
+            charset = weechat_info_get ("charset_terminal", "");
             message = (charset) ?
                 weechat_iconv_from_internal (charset, buf_beginning) : NULL;
             fprintf (logger_buffer->log_file,
                      "%s\n", (message) ? message : buf_beginning);
+            if (charset)
+                free (charset);
             if (message)
                 free (message);
             logger_buffer->flush_needed = 1;
@@ -597,10 +604,13 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     weechat_va_format (format);
     if (vbuffer)
     {
+        charset = weechat_info_get ("charset_terminal", "");
         message = (charset) ?
             weechat_iconv_from_internal (charset, vbuffer) : NULL;
         fprintf (logger_buffer->log_file,
                  "%s\n", (message) ? message : vbuffer);
+        if (charset)
+            free (charset);
         if (message)
             free (message);
         logger_buffer->flush_needed = 1;
@@ -893,14 +903,11 @@ logger_backlog_check_conditions (struct t_gui_buffer *buffer)
 void
 logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
-    const char *charset;
     struct t_logger_line *last_lines, *ptr_lines;
-    char *pos_message, *pos_tab, *error, *message;
+    char *charset, *pos_message, *pos_tab, *error, *message;
     time_t datetime, time_now;
     struct tm tm_line;
     int num_lines;
-
-    charset = weechat_info_get ("charset_terminal", "");
 
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
 
@@ -932,8 +939,11 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         }
         pos_message = (pos_message && (datetime != 0)) ?
             pos_message + 1 : ptr_lines->data;
+        charset = weechat_info_get ("charset_terminal", "");
         message = (charset) ?
             weechat_iconv_to_internal (charset, pos_message) : strdup (pos_message);
+        if (charset)
+            free (charset);
         if (message)
         {
             pos_tab = strchr (message, '\t');

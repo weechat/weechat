@@ -189,8 +189,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
-    const char *weechat_home;
-    char *directory;
+    char *weechat_home, *directory;
     int length, i;
     void *pointers[2];
 
@@ -227,6 +226,9 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
         }
         free (directory);
     }
+
+    if (weechat_home)
+        free (weechat_home);
 
     return WEECHAT_RC_OK;
 }

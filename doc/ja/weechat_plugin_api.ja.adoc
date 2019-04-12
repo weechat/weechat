@@ -11229,7 +11229,7 @@ weechat.hook_modifier_exec("my_modifier", my_data, my_string)
 
 ==== hook_info
 
-_WeeChat バージョン 1.5 で更新。_
+_WeeChat バージョン 1.5, 2.5 で更新。_
 
 インフォをフック (コールバックを呼び出し、文字列を返す)。
 
@@ -11240,10 +11240,10 @@ _WeeChat バージョン 1.5 で更新。_
 struct t_hook *weechat_hook_info (const char *info_name,
                                   const char *description,
                                   const char *args_description,
-                                  const char *(*callback)(const void *pointer,
-                                                          void *data,
-                                                          const char *info_name,
-                                                          const char *arguments),
+                                  char *(*callback)(const void *pointer,
+                                                    void *data,
+                                                    const char *info_name,
+                                                    const char *arguments),
                                   const void *callback_pointer,
                                   void *callback_data);
 ----
@@ -11269,16 +11269,21 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≥ 2.5, the callback returns an allocated string
+(with WeeChat ≤ 2.4, it was a pointer to a static string).
+
 C 言語での使用例:
 
 [source,C]
 ----
-const char *
+char *
 my_info_cb (const void *pointer, void *data, const char *info_name,
             const char *arguments)
 {
     /* ... */
-    return pointer_to_string;
+    return strdup ("some_info");
 }
 
 /* add info "my_info" */
@@ -14549,13 +14554,15 @@ else
 
 ==== info_get
 
+_WeeChat バージョン 2.5 で更新。_
+
 文字列型で WeeChat またはプラグインからのインフォを返す。
 
 プロトタイプ:
 
 [source,C]
 ----
-const char *weechat_info_get (const char *info_name, const char *arguments);
+char *weechat_info_get (const char *info_name, const char *arguments);
 ----
 
 引数:
@@ -14568,6 +14575,11 @@ const char *weechat_info_get (const char *info_name, const char *arguments);
 
 * 指定したインフォを含む文字列、エラーが起きた場合は NULL
 
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≥ 2.5, the value returned is an allocated string
+(with WeeChat ≤ 2.4, it was a pointer to a static string).
+
 インフォ:
 
 include::autogen/plugin_api/infos.adoc[]
@@ -14576,11 +14588,19 @@ C 言語での使用例:
 
 [source,C]
 ----
+char *version = weechat_info_get ("version", NULL);
+char *date = weechat_info_get ("date", NULL);
 weechat_printf (NULL, "Current WeeChat version is: %s (compiled on %s)",
-                weechat_info_get ("version", NULL),
-                weechat_info_get ("date", NULL));
-weechat_printf (NULL, "WeeChat home is: %s",
-                weechat_info_get ("weechat_dir", NULL));
+                version, date);
+if (version)
+    free (version);
+if (date)
+    free (date);
+
+char *weechat_dir = weechat_info_get ("weechat_dir", NULL);
+weechat_printf (NULL, "WeeChat home is: %s", weechat_dir);
+if (weechat_dir)
+    free (weechat_dir);
 ----
 
 スクリプト (Python) での使用例:

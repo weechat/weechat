@@ -1322,11 +1322,12 @@ relay_irc_recv_command_capab (struct t_relay_client *client,
 void
 relay_irc_recv (struct t_relay_client *client, const char *data)
 {
-    char str_time[128], str_signal[128], str_server_channel[256];
-    char str_command[128], *target, **irc_argv, **irc_argv_eol, *pos, *password;
+    char str_time[128], str_signal[128], str_server_channel[256], *nick;
+    char *version, str_command[128], *target, **irc_argv, **irc_argv_eol;
+    char *pos, *password, *irc_is_channel, *info;
     const char *irc_command, *irc_channel, *irc_args, *irc_args2;
     int irc_argc, redirect_msg;
-    const char *nick, *irc_is_channel, *isupport, *info, *pos_password;
+    const char *isupport, *pos_password;
     struct t_hashtable *hash_parsed, *hash_redirect;
     struct t_infolist *infolist_server;
 
@@ -1512,7 +1513,10 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                 free (RELAY_IRC_DATA(client, nick));
                 RELAY_IRC_DATA(client, nick) = strdup (nick);
             }
+            if (nick)
+                free (nick);
 
+            version = weechat_info_get ("version", NULL);
             relay_irc_sendf (client,
                              ":%s 001 %s :Welcome to the Internet "
                              "Relay Chat Network %s!%s@proxy",
@@ -1525,7 +1529,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              "weechat-relay-irc, running version %s",
                              RELAY_IRC_DATA(client, address),
                              RELAY_IRC_DATA(client, nick),
-                             weechat_info_get ("version", NULL));
+                             version);
             snprintf (str_time, sizeof (str_time), "%s",
                       ctime (&client->listen_start_time));
             if (str_time[0])
@@ -1540,7 +1544,9 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                              RELAY_IRC_DATA(client, address),
                              RELAY_IRC_DATA(client, nick),
                              RELAY_IRC_DATA(client, address),
-                             weechat_info_get ("version", NULL));
+                             version);
+            if (version)
+                free (version);
             infolist_server = weechat_infolist_get ("irc_server", NULL,
                                                     client->protocol_args);
             if (infolist_server)
@@ -1651,6 +1657,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                                       "/query %s %s",
                                       irc_channel, irc_args2);
             }
+            if (irc_is_channel)
+                free (irc_is_channel);
         }
         else if (!relay_irc_command_ignored (irc_command))
         {
@@ -1721,6 +1729,8 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                                                        "mode_user");
                             }
                         }
+                        if (info)
+                            free (info);
                     }
                 }
                 else if (weechat_strcasecmp (irc_command, "ison") == 0)

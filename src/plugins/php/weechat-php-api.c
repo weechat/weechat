@@ -67,8 +67,6 @@
     plugin_script_str2ptr (weechat_php_plugin,                          \
                            PHP_CURRENT_SCRIPT_NAME,                     \
                            php_function_name, __string)
-#define API_STATIC_STRING(__string)                                     \
-    plugin_script_get_static_string(&php_data, __string);
 #define API_RETURN_OK RETURN_LONG((long)1)
 #define API_RETURN_ERROR RETURN_LONG((long)0)
 #define API_RETURN_EMPTY RETURN_NULL()
@@ -2889,7 +2887,7 @@ API_FUNC(hook_modifier_exec)
     API_RETURN_STRING_FREE(result);
 }
 
-static const char *
+static char *
 weechat_php_api_hook_info_cb (const void *pointer,
                               void *data,
                               const char *info_name,
@@ -2904,7 +2902,7 @@ weechat_php_api_hook_info_cb (const void *pointer,
     weechat_php_cb (pointer, data, func_argv, "sss",
                     WEECHAT_SCRIPT_EXEC_STRING, &rc);
 
-    return API_STATIC_STRING(rc);
+    return rc;
 }
 
 API_FUNC(hook_info)
@@ -4181,8 +4179,7 @@ API_FUNC(command_options)
 API_FUNC(info_get)
 {
     zend_string *z_info_name, *z_arguments;
-    char *info_name, *arguments;
-    const char *result;
+    char *info_name, *arguments, *result;
 
     API_INIT_FUNC(1, "info_get", API_RETURN_EMPTY);
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_info_name,
@@ -4194,7 +4191,7 @@ API_FUNC(info_get)
     result = weechat_info_get ((const char *)info_name,
                                (const char *)arguments);
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 API_FUNC(info_get_hashtable)

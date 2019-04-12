@@ -95,8 +95,6 @@ extern "C"
     plugin_script_str2ptr (weechat_js_plugin,                           \
                            JS_CURRENT_SCRIPT_NAME,                      \
                            js_function_name.c_str(), __string)
-#define API_STATIC_STRING(__string)                                     \
-    plugin_script_get_static_string(&js_data, __string);
 #define API_RETURN_OK return v8::True();
 #define API_RETURN_ERROR return v8::False();
 #define API_RETURN_EMPTY                                                \
@@ -2847,14 +2845,14 @@ API_FUNC(hook_modifier_exec)
     API_RETURN_STRING_FREE(result);
 }
 
-const char *
+char *
 weechat_js_api_hook_info_cb (const void *pointer, void *data,
                              const char *info_name,
                              const char *arguments)
 {
     struct t_plugin_script *script;
     void *func_argv[3];
-    char empty_arg[1] = { '\0' }, *result;
+    char empty_arg[1] = { '\0' };
     const char *ptr_function, *ptr_data;
 
     script = (struct t_plugin_script *)pointer;
@@ -2866,12 +2864,10 @@ weechat_js_api_hook_info_cb (const void *pointer, void *data,
         func_argv[1] = (info_name) ? (char *)info_name : empty_arg;
         func_argv[2] = (arguments) ? (char *)arguments : empty_arg;
 
-        result = (char *)weechat_js_exec (script,
-                                          WEECHAT_SCRIPT_EXEC_STRING,
-                                          ptr_function,
-                                          "sss", func_argv);
-
-        return API_STATIC_STRING(result);
+        return (char *)weechat_js_exec (script,
+                                        WEECHAT_SCRIPT_EXEC_STRING,
+                                        ptr_function,
+                                        "sss", func_argv);
     }
 
     return NULL;
@@ -4014,7 +4010,7 @@ API_FUNC(info_get)
 
     result = weechat_info_get (*info_name, *arguments);
 
-    API_RETURN_STRING(result);
+    API_RETURN_STRING_FREE(result);
 }
 
 API_FUNC(info_get_hashtable)

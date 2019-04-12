@@ -57,7 +57,6 @@ int lua_eval_mode = 0;
 int lua_eval_send_input = 0;
 int lua_eval_exec_commands = 0;
 struct t_gui_buffer *lua_eval_buffer = NULL;
-char *lua_eval_output = NULL;
 #if LUA_VERSION_NUM >= 502
 #define LUA_LOAD "load"
 #else
@@ -1071,23 +1070,23 @@ weechat_lua_hdata_cb (const void *pointer, void *data,
  * Returns lua info "lua_eval".
  */
 
-const char *
+char *
 weechat_lua_info_eval_cb (const void *pointer, void *data,
                           const char *info_name,
                           const char *arguments)
 {
+    char *output;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
     weechat_lua_eval (NULL, 0, 0, (arguments) ? arguments : "");
-    if (lua_eval_output)
-        free (lua_eval_output);
-    lua_eval_output = strdup (*lua_buffer_output);
+    output = strdup (*lua_buffer_output);
     weechat_string_dyn_copy (lua_buffer_output, NULL);
 
-    return lua_eval_output;
+    return output;
 }
 
 /*
@@ -1303,8 +1302,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (lua_action_autoload_list)
         free (lua_action_autoload_list);
     weechat_string_dyn_free (lua_buffer_output, 1);
-    if (lua_eval_output)
-        free (lua_eval_output);
 
     return WEECHAT_RC_OK;
 }

@@ -408,8 +408,7 @@ irc_color_encode (const char *string, int keep_colors)
 int
 irc_color_convert_rgb2irc (int rgb)
 {
-    char str_color[64], *error;
-    const char *info_color;
+    char str_color[64], *error, *info_color;
     long number;
 
     snprintf (str_color, sizeof (str_color),
@@ -419,15 +418,22 @@ irc_color_convert_rgb2irc (int rgb)
 
     info_color = weechat_info_get ("color_rgb2term", str_color);
     if (!info_color || !info_color[0])
+    {
+        if (info_color)
+            free (info_color);
         return -1;
+    }
 
     error = NULL;
     number = strtol (info_color, &error, 10);
     if (!error || error[0]
         || (number < 0) || (number >= IRC_COLOR_TERM2IRC_NUM_COLORS))
     {
+        free (info_color);
         return -1;
     }
+
+    free (info_color);
 
     return irc_color_term2irc[number];
 }
@@ -441,20 +447,28 @@ irc_color_convert_rgb2irc (int rgb)
 int
 irc_color_convert_term2irc (int color)
 {
-    char str_color[64], *error;
-    const char *info_color;
+    char str_color[64], *error, *info_color;
     long number;
 
     snprintf (str_color, sizeof (str_color), "%d", color);
 
     info_color = weechat_info_get ("color_term2rgb", str_color);
     if (!info_color || !info_color[0])
+    {
+        if (info_color)
+            free (info_color);
         return -1;
+    }
 
     error = NULL;
     number = strtol (info_color, &error, 10);
     if (!error || error[0] || (number < 0) || (number > 0xFFFFFF))
+    {
+        free (info_color);
         return -1;
+    }
+
+    free (info_color);
 
     return irc_color_convert_rgb2irc (number);
 }
@@ -740,6 +754,7 @@ char *
 irc_color_decode_ansi (const char *string, int keep_colors)
 {
     struct t_irc_color_ansi_state ansi_state;
+    char *ansi_regex;
 
     /* allocate/compile regex if needed (first call) */
     if (!irc_color_regex_ansi)
@@ -747,14 +762,19 @@ irc_color_decode_ansi (const char *string, int keep_colors)
         irc_color_regex_ansi = malloc (sizeof (*irc_color_regex_ansi));
         if (!irc_color_regex_ansi)
             return NULL;
+        ansi_regex = weechat_info_get ("color_ansi_regex", NULL);
         if (weechat_string_regcomp (irc_color_regex_ansi,
-                                    weechat_info_get ("color_ansi_regex", NULL),
+                                    ansi_regex,
                                     REG_EXTENDED) != 0)
         {
+            if (ansi_regex)
+                free (ansi_regex);
             free (irc_color_regex_ansi);
             irc_color_regex_ansi = NULL;
             return NULL;
         }
+        if (ansi_regex)
+            free (ansi_regex);
     }
 
     ansi_state.keep_colors = keep_colors;

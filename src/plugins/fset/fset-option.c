@@ -1522,7 +1522,7 @@ fset_option_config_cb (const void *pointer,
                        const char *option,
                        const char *value)
 {
-    const char *ptr_info;
+    char *info;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1534,9 +1534,14 @@ fset_option_config_cb (const void *pointer,
         return WEECHAT_RC_OK;
 
     /* do nothing if WeeChat is upgrading */
-    ptr_info = weechat_info_get ("weechat_upgrading", NULL);
-    if (ptr_info && (strcmp (ptr_info, "1") == 0))
+    info = weechat_info_get ("weechat_upgrading", NULL);
+    if (info && (strcmp (info, "1") == 0))
+    {
+        free (info);
         return WEECHAT_RC_OK;
+    }
+    if (info)
+        free (info);
 
     /*
      * we limit the number of options to display with the timer; for example

@@ -79,7 +79,6 @@ int ruby_eval_mode = 0;
 int ruby_eval_send_input = 0;
 int ruby_eval_exec_commands = 0;
 struct t_gui_buffer *ruby_eval_buffer = NULL;
-char *ruby_eval_output = NULL;
 #define RUBY_EVAL_SCRIPT                                                \
     "def weechat_init\n"                                                \
     "  Weechat.register('" WEECHAT_SCRIPT_EVAL_NAME "', '', '1.0', "    \
@@ -1111,23 +1110,23 @@ weechat_ruby_hdata_cb (const void *pointer, void *data,
  * Returns ruby info "ruby_eval".
  */
 
-const char *
+char *
 weechat_ruby_info_eval_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
+    char *output;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
     weechat_ruby_eval (NULL, 0, 0, (arguments) ? arguments : "");
-    if (ruby_eval_output)
-        free (ruby_eval_output);
-    ruby_eval_output = strdup (*ruby_buffer_output);
+    output = strdup (*ruby_buffer_output);
     weechat_string_dyn_copy (ruby_buffer_output, NULL);
 
-    return ruby_eval_output;
+    return output;
 }
 
 /*
@@ -1449,8 +1448,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     if (ruby_action_autoload_list)
         free (ruby_action_autoload_list);
     weechat_string_dyn_free (ruby_buffer_output, 1);
-    if (ruby_eval_output)
-        free (ruby_eval_output);
 
     return WEECHAT_RC_OK;
 }

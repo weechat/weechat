@@ -60,30 +60,33 @@
  * Returns WeeChat info "version".
  */
 
-const char *
+char *
 plugin_api_info_version_cb (const void *pointer, void *data,
                             const char *info_name,
                             const char *arguments)
 {
+    const char *version;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
 
-    return version_get_version ();
+    version = version_get_version ();
+    return (version) ? strdup (version) : NULL;
 }
 
 /*
  * Returns WeeChat info "version_number".
  */
 
-const char *
+char *
 plugin_api_info_version_number_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    static char version_number[32] = { '\0' };
+    char version_number[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -91,60 +94,63 @@ plugin_api_info_version_number_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    if (!version_number[0])
-    {
-        snprintf (version_number, sizeof (version_number), "%d",
-                  util_version_number (version_get_version ()));
-    }
-    return version_number;
+    snprintf (version_number, sizeof (version_number), "%d",
+              util_version_number (version_get_version ()));
+    return strdup (version_number);
 }
 
 /*
  * Returns WeeChat info "version_git".
  */
 
-const char *
+char *
 plugin_api_info_version_git_cb (const void *pointer, void *data,
                                 const char *info_name,
                                 const char *arguments)
 {
+    const char *version;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
 
-    return version_get_git ();
+    version = version_get_git ();
+    return (version) ? strdup (version) : NULL;
 }
 
 /*
  * Returns WeeChat info "date".
  */
 
-const char *
+char *
 plugin_api_info_date_cb (const void *pointer, void *data,
                          const char *info_name,
                          const char *arguments)
 {
+    const char *version;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
 
-    return version_get_compilation_date_time ();
+    version = version_get_compilation_date_time ();
+    return (version) ? strdup (version) : NULL;
 }
 
 /*
  * Returns WeeChat info "pid".
  */
 
-const char *
+char *
 plugin_api_info_pid_cb (const void *pointer, void *data,
                         const char *info_name,
                         const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -153,14 +159,14 @@ plugin_api_info_pid_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", (int)getpid ());
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "dir_separator".
  */
 
-const char *
+char *
 plugin_api_info_dir_separator_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
@@ -171,19 +177,19 @@ plugin_api_info_dir_separator_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return DIR_SEPARATOR;
+    return strdup (DIR_SEPARATOR);
 }
 
 /*
  * Returns WeeChat info "weechat_dir".
  */
 
-const char *
+char *
 plugin_api_info_weechat_dir_cb (const void *pointer, void *data,
                                 const char *info_name,
                                 const char *arguments)
 {
-    static char weechat_dir_absolute_path[PATH_MAX] = { '\0' };
+    char weechat_dir_absolute_path[PATH_MAX];
 
     /* make C compiler happy */
     (void) pointer;
@@ -191,20 +197,18 @@ plugin_api_info_weechat_dir_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    if (!weechat_dir_absolute_path[0])
-    {
-        if (!realpath (weechat_home, weechat_dir_absolute_path))
-            return NULL;
-    }
-    return (weechat_dir_absolute_path[0]) ?
-        weechat_dir_absolute_path : weechat_home;
+    if (!realpath (weechat_home, weechat_dir_absolute_path))
+        return NULL;
+
+    return strdup ((weechat_dir_absolute_path[0]) ?
+                   weechat_dir_absolute_path : weechat_home);
 }
 
 /*
  * Returns WeeChat info "weechat_libdir".
  */
 
-const char *
+char *
 plugin_api_info_weechat_libdir_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
@@ -215,14 +219,14 @@ plugin_api_info_weechat_libdir_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return WEECHAT_LIBDIR;
+    return strdup (WEECHAT_LIBDIR);
 }
 
 /*
  * Returns WeeChat info "weechat_sharedir".
  */
 
-const char *
+char *
 plugin_api_info_weechat_sharedir_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
@@ -233,14 +237,14 @@ plugin_api_info_weechat_sharedir_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return WEECHAT_SHAREDIR;
+    return strdup (WEECHAT_SHAREDIR);
 }
 
 /*
  * Returns WeeChat info "weechat_localedir".
  */
 
-const char *
+char *
 plugin_api_info_weechat_localedir_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
@@ -251,14 +255,14 @@ plugin_api_info_weechat_localedir_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return LOCALEDIR;
+    return strdup (LOCALEDIR);
 }
 
 /*
  * Returns WeeChat info "weechat_site".
  */
 
-const char *
+char *
 plugin_api_info_weechat_site_cb (const void *pointer, void *data,
                                  const char *info_name,
                                  const char *arguments)
@@ -269,14 +273,14 @@ plugin_api_info_weechat_site_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return WEECHAT_WEBSITE;
+    return strdup (WEECHAT_WEBSITE);
 }
 
 /*
  * Returns WeeChat info "weechat_site_download".
  */
 
-const char *
+char *
 plugin_api_info_weechat_site_download_cb (const void *pointer, void *data,
                                           const char *info_name,
                                           const char *arguments)
@@ -287,19 +291,19 @@ plugin_api_info_weechat_site_download_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return WEECHAT_WEBSITE_DOWNLOAD;
+    return strdup (WEECHAT_WEBSITE_DOWNLOAD);
 }
 
 /*
  * Returns WeeChat info "weechat_upgrading".
  */
 
-const char *
+char *
 plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
                                       const char *info_name,
                                       const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -308,14 +312,14 @@ plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", weechat_upgrading);
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "charset_terminal".
  */
 
-const char *
+char *
 plugin_api_info_charset_terminal_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
@@ -326,14 +330,14 @@ plugin_api_info_charset_terminal_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return weechat_local_charset;
+    return (weechat_local_charset) ? strdup (weechat_local_charset) : NULL;
 }
 
 /*
  * Returns WeeChat info "charset_internal".
  */
 
-const char *
+char *
 plugin_api_info_charset_internal_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
@@ -344,38 +348,41 @@ plugin_api_info_charset_internal_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return WEECHAT_INTERNAL_CHARSET;
+    return strdup (WEECHAT_INTERNAL_CHARSET);
 }
 
 /*
  * Returns WeeChat info "locale".
  */
 
-const char *
+char *
 plugin_api_info_locale_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
+    char *locale;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
 
-    return setlocale (LC_MESSAGES, NULL);
+    locale = setlocale (LC_MESSAGES, NULL);
+    return (locale) ? strdup (locale) : NULL;
 }
 
 /*
  * Returns WeeChat info "inactivity".
  */
 
-const char *
+char *
 plugin_api_info_inactivity_cb (const void *pointer, void *data,
                                const char *info_name,
                                const char *arguments)
 {
     time_t inactivity;
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -387,20 +394,22 @@ plugin_api_info_inactivity_cb (const void *pointer, void *data,
         inactivity = 0;
     else
         inactivity = time (NULL) - gui_key_last_activity_time;
+
     snprintf (value, sizeof (value), "%lld", (long long)inactivity);
-    return value;
+
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "filters_enabled".
  */
 
-const char *
+char *
 plugin_api_info_filters_enabled_cb (const void *pointer, void *data,
                                     const char *info_name,
                                     const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -409,19 +418,19 @@ plugin_api_info_filters_enabled_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", gui_filters_enabled);
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "cursor_mode".
  */
 
-const char *
+char *
 plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
                                 const char *info_name,
                                 const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -430,19 +439,19 @@ plugin_api_info_cursor_mode_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", gui_cursor_mode);
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "term_width".
  */
 
-const char *
+char *
 plugin_api_info_term_width_cb (const void *pointer, void *data,
                                const char *info_name,
                                const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -451,19 +460,19 @@ plugin_api_info_term_width_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", gui_window_get_width ());
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "term_height".
  */
 
-const char *
+char *
 plugin_api_info_term_height_cb (const void *pointer, void *data,
                                 const char *info_name,
                                 const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -472,14 +481,14 @@ plugin_api_info_term_height_cb (const void *pointer, void *data,
     (void) arguments;
 
     snprintf (value, sizeof (value), "%d", gui_window_get_height ());
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "color_ansi_regex".
  */
 
-const char *
+char *
 plugin_api_info_color_ansi_regex_cb (const void *pointer, void *data,
                                      const char *info_name,
                                      const char *arguments)
@@ -490,19 +499,19 @@ plugin_api_info_color_ansi_regex_cb (const void *pointer, void *data,
     (void) info_name;
     (void) arguments;
 
-    return GUI_COLOR_REGEX_ANSI_DECODE;
+    return strdup (GUI_COLOR_REGEX_ANSI_DECODE);
 }
 
 /*
  * Returns WeeChat info "color_term2rgb".
  */
 
-const char *
+char *
 plugin_api_info_color_term2rgb_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    static char value[32];
+    char value[32];
 
     /* make C compiler happy */
     (void) pointer;
@@ -515,21 +524,20 @@ plugin_api_info_color_term2rgb_cb (const void *pointer, void *data,
     snprintf (value, sizeof (value),
               "%d",
               gui_color_convert_term_to_rgb (atoi (arguments)));
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns WeeChat info "color_rgb2term".
  */
 
-const char *
+char *
 plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
                                    const char *info_name,
                                    const char *arguments)
 {
-    static char value[32];
+    char value[32], *pos, *color;
     int rgb, limit;
-    char *pos, *color;
 
     /* make C compiler happy */
     (void) pointer;
@@ -554,57 +562,64 @@ plugin_api_info_color_rgb2term_cb (const void *pointer, void *data,
     {
         rgb = atoi (arguments);
     }
+
     snprintf (value, sizeof (value),
               "%d",
               gui_color_convert_rgb_to_term (rgb, limit));
 
-    return value;
+    return strdup (value);
 }
 
 /*
  * Returns nick color code for a nickname.
  */
 
-const char *
+char *
 plugin_api_info_nick_color_cb (const void *pointer, void *data,
                                const char *info_name,
                                const char *arguments)
 {
+    const char *ptr_color;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    return gui_nick_find_color (arguments);
+    ptr_color = gui_nick_find_color (arguments);
+    return (ptr_color) ? strdup (ptr_color) : NULL;
 }
 
 /*
  * Returns nick color name for a nickname.
  */
 
-const char *
+char *
 plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
                                     const char *info_name,
                                     const char *arguments)
 {
+    const char *ptr_color;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    return gui_nick_find_color_name (arguments);
+    ptr_color = gui_nick_find_color_name (arguments);
+    return (ptr_color) ? strdup (ptr_color) : NULL;
 }
 
 /*
  * Returns WeeChat info "uptime".
  */
 
-const char *
+char *
 plugin_api_info_uptime_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
-    static char value[32];
+    char value[32];
     time_t total_seconds;
     int days, hours, minutes, seconds;
 
@@ -619,7 +634,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
         util_get_uptime (NULL, &days, &hours, &minutes, &seconds);
         snprintf (value, sizeof (value), "%d:%02d:%02d:%02d",
                   days, hours, minutes, seconds);
-        return value;
+        return strdup (value);
     }
 
     if (strcmp (arguments, "days") == 0)
@@ -627,7 +642,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
         /* return the number of days */
         util_get_uptime (NULL, &days, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%d", days);
-        return value;
+        return strdup (value);
     }
 
     if (strcmp (arguments, "seconds") == 0)
@@ -635,7 +650,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
         /* return the number of seconds */
         util_get_uptime (&total_seconds, NULL, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%lld", (long long)total_seconds);
-        return value;
+        return strdup (value);
     }
 
     return NULL;
@@ -648,14 +663,13 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
  * Arguments: "secret,timestamp,digits" (timestamp and digits are optional).
  */
 
-const char *
+char *
 plugin_api_info_totp_generate_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
 {
-    static char value[32];
     char **argv, *ptr_secret, *error, *totp;
-    int argc, digits, length;
+    int argc, digits;
     long number;
     time_t totp_time;
 
@@ -703,14 +717,9 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
     if (!totp)
         goto error;
 
-    length = snprintf (value, sizeof (value), "%s", totp);
-    if (length != digits)
-        goto error;
-
     string_free_split (argv);
-    free (totp);
 
-    return value;
+    return totp;
 
 error:
     if (argv)
@@ -727,13 +736,12 @@ error:
  * Arguments: "secret,otp,timestamp,window" (timestamp and window are optional).
  */
 
-const char *
+char *
 plugin_api_info_totp_validate_cb (const void *pointer, void *data,
                                   const char *info_name,
                                   const char *arguments)
 {
-    static char value[16];
-    char **argv, *ptr_secret, *ptr_otp, *error;
+    char value[16], **argv, *ptr_secret, *ptr_otp, *error;
     int argc, window, rc;
     long number;
     time_t totp_time;
@@ -784,7 +792,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
 
     string_free_split (argv);
 
-    return value;
+    return strdup (value);
 
 error:
     if (argv)

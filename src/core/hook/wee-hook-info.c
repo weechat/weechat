@@ -83,14 +83,16 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
 
 /*
  * Gets info (as string) via info hook.
+ *
+ * Note: result must be freed after use.
  */
 
-const char *
+char *
 hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
                const char *arguments)
 {
     struct t_hook *ptr_hook, *next_hook;
-    const char *value;
+    char *value;
 
     /* make C compiler happy */
     (void) plugin;
