@@ -334,6 +334,7 @@ irc_info_info_irc_server_isupport_cb (const void *pointer, void *data,
                 isupport_value = irc_server_get_isupport_value (ptr_server,
                                                                 pos_comma + 1);
             }
+            free (server);
         }
     }
 
@@ -371,6 +372,7 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
                 isupport_value = irc_server_get_isupport_value (ptr_server,
                                                                 pos_comma + 1);
             }
+            free (server);
         }
     }
 
