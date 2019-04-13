@@ -596,6 +596,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"%H:%M:%S"+`
 
+* [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
+** 説明: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (always display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+""+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** 説明: pass:none[明るい色と標準的な色の "darkgray" には "太字" 属性を強制 (このオプションはデフォルトでは無効: 太字は端末が 16 色以下の表示能力しかない場合に利用される)]
 ** タイプ: ブール

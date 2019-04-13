@@ -98,6 +98,7 @@ struct t_config_option *config_look_buffer_search_force_default;
 struct t_config_option *config_look_buffer_search_regex;
 struct t_config_option *config_look_buffer_search_where;
 struct t_config_option *config_look_buffer_time_format;
+struct t_config_option *config_look_buffer_time_same;
 struct t_config_option *config_look_color_basic_force_bold;
 struct t_config_option *config_look_color_inactive_buffer;
 struct t_config_option *config_look_color_inactive_message;
@@ -319,6 +320,7 @@ char **config_nick_colors = NULL;
 int config_num_nick_colors = 0;
 struct t_hashtable *config_hashtable_nick_color_force = NULL;
 char *config_item_time_evaluated = NULL;
+char *config_buffer_time_same_evaluated = NULL;
 struct t_hashtable *config_hashtable_completion_partial_templates = NULL;
 
 
@@ -655,6 +657,27 @@ config_change_buffer_time_format (const void *pointer, void *data,
     gui_chat_change_time_format ();
     if (gui_init_ok)
         gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.buffer_time_same".
+ */
+
+void
+config_change_buffer_time_same (const void *pointer, void *data,
+                                struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (config_buffer_time_same_evaluated)
+        free (config_buffer_time_same_evaluated);
+    config_buffer_time_same_evaluated = eval_expression (
+        CONFIG_STRING(config_look_buffer_time_same), NULL, NULL, NULL);
+
+    gui_window_ask_refresh (1);
 }
 
 /*
@@ -2663,6 +2686,19 @@ config_weechat_init_options ()
         NULL, 0, 0, "%H:%M:%S", NULL, 0,
         NULL, NULL, NULL,
         &config_change_buffer_time_format, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_buffer_time_same = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_time_same", "string",
+        /* TRANSLATORS: string "${color:xxx}" must NOT be translated */
+        N_("time displayed for a message with same time as previous message: "
+           "use a space \" \" to hide time, another string to display this "
+           "string instead of time, or an empty string to disable feature "
+           "(always display time) (note: content is evaluated, so you can use "
+           "colors with format \"${color:xxx}\", see /help eval)"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_buffer_time_same, NULL, NULL,
         NULL, NULL, NULL);
     config_look_color_basic_force_bold = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -4692,6 +4728,12 @@ config_weechat_free ()
     {
         free (config_item_time_evaluated);
         config_item_time_evaluated = NULL;
+    }
+
+    if (config_buffer_time_same_evaluated)
+    {
+        free (config_buffer_time_same_evaluated);
+        config_buffer_time_same_evaluated = NULL;
     }
 
     if (config_hashtable_completion_partial_templates)

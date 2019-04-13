@@ -596,6 +596,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"%H:%M:%S"+`
 
+* [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
+** opis: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (always display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** opis: pass:none[wymusza atrybut "bold" dla jasnych kolorów oraz "darkgray" w kolorach podstawowych (ta opcja jest domyślnie wyłączona: pogrubienie jest używane tylko jeśli terminal obsługuje poniżej 16 kolorów)]
 ** typ: bool

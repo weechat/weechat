@@ -596,6 +596,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%H:%M:%S"+`
 
+* [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
+** Beschreibung: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (always display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
+
 * [[option_weechat.look.color_basic_force_bold]] *weechat.look.color_basic_force_bold*
 ** Beschreibung: pass:none[erzwingt das Textattribut "fett" für helle Farben und "darkgray", um diese Farben stärker hervorzuheben (diese Einstellung ist standardmäßig deaktiviert: "fett" findet ausschließlich dann Verwendung falls das Terminal weniger als 16 Farben zur Verfügung stellt)]
 ** Typ: boolesch

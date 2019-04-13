@@ -149,6 +149,7 @@ extern struct t_config_option *config_look_buffer_search_force_default;
 extern struct t_config_option *config_look_buffer_search_regex;
 extern struct t_config_option *config_look_buffer_search_where;
 extern struct t_config_option *config_look_buffer_time_format;
+extern struct t_config_option *config_look_buffer_time_same;
 extern struct t_config_option *config_look_color_basic_force_bold;
 extern struct t_config_option *config_look_color_inactive_buffer;
 extern struct t_config_option *config_look_color_inactive_message;
@@ -355,6 +356,7 @@ extern int config_word_chars_input_count;
 extern char **config_nick_colors;
 extern int config_num_nick_colors;
 extern struct t_hashtable *config_hashtable_nick_color_force;
+extern char *config_buffer_time_same_evaluated;
 extern struct t_hashtable *config_hashtable_completion_partial_templates;
 
 extern void config_set_nick_colors ();
