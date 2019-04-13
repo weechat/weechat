@@ -16,6 +16,7 @@
 Alphabetically:
 
 * Adam Saponara (adsr)
+* Adrian Bjugård
 * Ailin Nemui (Nei)
 * Aleksey V Zapparov
 * Alex Tarkovsky
