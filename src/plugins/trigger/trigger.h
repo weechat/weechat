@@ -55,6 +55,7 @@ enum t_trigger_hook_type
     TRIGGER_HOOK_TIMER,
     TRIGGER_HOOK_CONFIG,
     TRIGGER_HOOK_FOCUS,
+    TRIGGER_HOOK_INFO,
     /* number of hook types */
     TRIGGER_NUM_HOOK_TYPES,
 };

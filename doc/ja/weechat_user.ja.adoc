@@ -3576,7 +3576,7 @@ WeeChat はデフォルトで 5
 トリガは以下のオプションをとります (名前は
 `trigger.trigger.<name>.<option>`):
 
-[width="100%",cols="2m,2,10",options="header"]
+[width="100%",cols="2m,3,10",options="header"]
 |===
 | オプション | 値 | 説明
 
@@ -3585,7 +3585,7 @@ WeeChat はデフォルトで 5
   の場合、トリガは無効化され、アクションは実行されません。
 
 | hook | `signal`、`hsignal`、`modifier`、`line`, `print`、`command`、
-  `command_run`、`timer`、`config`、`focus` |
+  `command_run`、`timer`、`config`、`focus`、`info`  |
   トリガの中で使われるフック。より詳しい情報は
   link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を参照してください。
 
@@ -3635,7 +3635,9 @@ trigger.trigger.beep.post_action = none
 . トリガ条件の確認: 偽の場合、終了
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
-. リターンコードを付けて終了 (_modifier_ と _focus_ フックの場合を除く)
+// TRANSLATION MISSING
+. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
+  _info_)
 . トリガ実行後の処遇を適用 (`none` 以外の場合)。
 
 [[trigger_hook_arguments]]
@@ -3731,6 +3733,14 @@ trigger.trigger.beep.post_action = none
   3. ... |
   `+buffer_nicklist+` |
   link:weechat_plugin_api.ja.html#_hook_focus[hook_focus]
+
+// TRANSLATION MISSING
+| info |
+  1. info name (優先度の指定も可) (必須) +
+  2. info name (優先度の指定も可) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.ja.html#_hook_info[hook_info]
 |===
 
 [[trigger_conditions]]
@@ -3776,6 +3786,7 @@ _var_
 | timer       | tg_remaining_calls |
 | config      | tg_value           |
 | focus       |                    |
+| info        | tg_info            | tg_info
 |===
 
 [NOTE]
@@ -4069,6 +4080,20 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 
 ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:
 string/string) が含まれています。
+
+// TRANSLATION MISSING
+[[trigger_data_info]]
+===== Info
+
+"info" コールバックは以下の変数をハッシュテーブルに格納します:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| 変数         | 型     | 説明
+| tg_info_name | string | Name of info.
+| tg_arguments | string | Arguments.
+| tg_info      | string | Empty string (the info to return).
+|===
 
 [[trigger_examples]]
 ==== 例

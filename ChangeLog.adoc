@@ -30,6 +30,7 @@ New features::
   * relay: add option relay.weechat.commands (issue #928)
   * script: use SHA-512 instead of MD5 for script checksum
   * spell: rename aspell plugin to spell (issue #1299)
+  * trigger: add hook "info"
   * xfer: rename option xfer.network.speed_limit to xfer.network.speed_limit_send, add option xfer.network.speed_limit_recv (issue #269)
 
 Bug fixes::

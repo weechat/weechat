@@ -127,6 +127,10 @@ extern int trigger_callback_config_cb  (const void *pointer, void *data,
 extern struct t_hashtable *trigger_callback_focus_cb (const void *pointer,
                                                       void *data,
                                                       struct t_hashtable *info);
+extern char *trigger_callback_info_cb (const void *pointer,
+                                       void *data,
+                                       const char *info_name,
+                                       const char *arguments);
 extern void trigger_callback_init ();
 extern void trigger_callback_end ();
 

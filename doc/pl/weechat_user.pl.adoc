@@ -3612,7 +3612,7 @@ Lista domyśłnych triggerów:
 
 Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`):
 
-[width="100%",cols="2m,2,10",options="header"]
+[width="100%",cols="2m,3,10",options="header"]
 |===
 | Opcja | Wartość | Opis
 
@@ -3621,7 +3621,7 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
   więcej wykonywane.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus` |
+  `command_run`, `timer`, `config`, `focus`, `info` |
   Zdarzenia używane przez trigger. Więcej informacji można znaleźć w
   link:weechat_plugin_api.en.html#hooks[WeeChat Plugin API Reference / Hooks] (Angielski).
 
@@ -3672,7 +3672,9 @@ kolejności, jeśli triggery są globalnie włączone i jeśli sam trigger jest 
 . sprawdzenie warunków triggera: jeśli nie jest spełniony następuje wyjście
 . zastępowanie tekstu w triggerze za pomocą wyrażenia
 . wykonanie komend(-y)
-. wyjście ze zwróceniem kodu (za wyjątkiem uchwytów _modifier_ i _focus_)
+// TRANSLATION MISSING
+. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
+  _info_)
 . wykonanie akcji kończącej (jeśli inna niż `none`).
 
 [[trigger_hook_arguments]]
@@ -3768,6 +3770,14 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   3. ... |
   `+buffer_nicklist+` |
   link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Angielski)
+
+// TRANSLATION MISSING
+| info |
+  1. info name (dozwolony priorytet) (wymagane) +
+  2. info name (dozwolony priorytet) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.en.html#_hook_info[hook_info] (Angielski)
 |===
 
 [[trigger_conditions]]
@@ -3814,6 +3824,7 @@ od typu uchwytu:
 | timer       | tg_remaining_calls |
 | config      | tg_value           |
 | focus       |                    |
+| info        | tg_info            | tg_info
 |===
 
 [NOTE]
@@ -4107,6 +4118,20 @@ Callback "focus" ustawia następujące zmienne w tablicy hashy:
 
 Tablica zawiera wszystkie klucze/wartości z otrzymanej tablicy hashy (typ:
 ciąg/ciąg).
+
+// TRANSLATION MISSING
+[[trigger_data_info]]
+===== Info
+
+Callback "info" ustawia następujące zmienne w tablicy hashy:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Zmienna      | Typ    | Opis
+| tg_info_name | string | Name of info.
+| tg_arguments | string | Arguments.
+| tg_info      | string | Empty string (the info to return).
+|===
 
 [[trigger_examples]]
 ==== Przykłady

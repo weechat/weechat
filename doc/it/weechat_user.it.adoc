@@ -3842,7 +3842,7 @@ List of default triggers:
 A trigger has the following options (names are
 `trigger.trigger.<name>.<option>`):
 
-[width="100%",cols="2m,2,10",options="header"]
+[width="100%",cols="2m,3,10",options="header"]
 |===
 | Option | Values | Description
 
@@ -3851,7 +3851,7 @@ A trigger has the following options (names are
   any more.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus` |
+  `command_run`, `timer`, `config`, `focus`, `info` |
   The hook used in trigger. For more information, see
   link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks].
 
@@ -3902,7 +3902,8 @@ order, if triggers are globally enabled and if the trigger itself is enabled:
 . check trigger conditions: if false, exit
 . replace text in trigger using regular expression(s)
 . execute command(s)
-. exit with a return code (except for hooks _modifier_ and _focus_)
+. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
+  _info_)
 . perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
@@ -3998,6 +3999,13 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. ... |
   `+buffer_nicklist+` |
   link:weechat_plugin_api.it.html#_hook_focus[hook_focus]
+
+| info |
+  1. info name (priority allowed) (required) +
+  2. info name (priority allowed) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.en.html#_hook_info[hook_info]
 |===
 
 [[trigger_conditions]]
@@ -4044,6 +4052,7 @@ type:
 | timer       | tg_remaining_calls |
 | config      | tg_value           |
 | focus       |                    |
+| info        | tg_info            | tg_info
 |===
 
 [NOTE]
@@ -4339,6 +4348,19 @@ The "focus" callback sets following variables in hashtable:
 
 The hashtable contains all keys/values from hashtable received (type:
 string/string).
+
+[[trigger_data_info]]
+===== Info
+
+The "info" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type   | Description
+| tg_info_name | string | Name of info.
+| tg_arguments | string | Arguments.
+| tg_info      | string | Empty string (the info to return).
+|===
 
 [[trigger_examples]]
 ==== Examples

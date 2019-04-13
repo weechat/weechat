@@ -50,20 +50,20 @@ char *trigger_option_default[TRIGGER_NUM_OPTIONS] =
 
 char *trigger_hook_type_string[TRIGGER_NUM_HOOK_TYPES] =
 { "signal", "hsignal", "modifier", "line", "print", "command", "command_run",
-  "timer", "config", "focus" };
+  "timer", "config", "focus", "info" };
 char *trigger_hook_option_values =
     "signal|hsignal|modifier|line|print|command|command_run|timer|config|"
-    "focus";
+    "focus|info";
 char *trigger_hook_default_arguments[TRIGGER_NUM_HOOK_TYPES] =
 { "xxx", "xxx", "xxx", "", "", "cmd;desc;args;args_desc;%(buffers_names)",
-  "/cmd", "60000;0;0", "xxx", "chat" };
+  "/cmd", "60000;0;0", "xxx", "chat", "xxx" };
 char *trigger_hook_default_rc[TRIGGER_NUM_HOOK_TYPES] =
 { "ok,ok_eat,error", "ok,ok_eat,error", "", "", "ok,error", "ok,error",
-  "ok,ok_eat,error", "ok", "ok", "" };
+  "ok,ok_eat,error", "ok", "ok", "", "" };
 
 char *trigger_hook_regex_default_var[TRIGGER_NUM_HOOK_TYPES] =
 { "tg_signal_data", "", "tg_string", "message", "tg_message", "tg_argv_eol1",
-  "tg_command", "tg_remaining_calls", "tg_value", "" };
+  "tg_command", "tg_remaining_calls", "tg_value", "", "tg_info" };
 
 char *trigger_return_code_string[TRIGGER_NUM_RETURN_CODES] =
 { "ok", "ok_eat", "error" };
@@ -485,6 +485,25 @@ trigger_hook (struct t_trigger *trigger)
                         trigger->hooks[i] = weechat_hook_focus (
                             argv[i],
                             &trigger_callback_focus_cb,
+                            trigger, NULL);
+                    }
+                }
+            }
+            break;
+        case TRIGGER_HOOK_INFO:
+            if (argv && (argc >= 1))
+            {
+                trigger->hooks = malloc (argc * sizeof (trigger->hooks[0]));
+                if (trigger->hooks)
+                {
+                    trigger->hooks_count = argc;
+                    for (i = 0; i < argc; i++)
+                    {
+                        trigger->hooks[i] = weechat_hook_info (
+                            argv[i],
+                            NULL,
+                            NULL,
+                            &trigger_callback_info_cb,
                             trigger, NULL);
                     }
                 }

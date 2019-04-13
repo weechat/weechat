@@ -1171,6 +1171,36 @@ end:
 }
 
 /*
+ * Callback for an info hooked.
+ */
+
+char *
+trigger_callback_info_cb (const void *pointer, void *data,
+                          const char *info_name, const char *arguments)
+{
+    const char *ptr_info;
+    char *info;
+
+    TRIGGER_CALLBACK_CB_INIT(NULL);
+
+    TRIGGER_CALLBACK_CB_NEW_EXTRA_VARS;
+
+    /* add data in hashtable used for conditions/replace/command */
+    weechat_hashtable_set (extra_vars, "tg_info_name", info_name);
+    weechat_hashtable_set (extra_vars, "tg_arguments", arguments);
+    weechat_hashtable_set (extra_vars, "tg_info", "");
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
+
+end:
+    ptr_info = weechat_hashtable_get (extra_vars, "tg_info");
+    info = (ptr_info) ? strdup (ptr_info) : NULL;
+
+    TRIGGER_CALLBACK_CB_END(info);
+}
+
+/*
  * Initializes trigger callback.
  */
 

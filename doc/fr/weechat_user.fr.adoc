@@ -3692,7 +3692,7 @@ Liste des triggers par défaut :
 Un trigger a les options suivantes (les noms sont
 `trigger.trigger.<nom>.<option>`) :
 
-[width="100%",cols="2m,2,10",options="header"]
+[width="100%",cols="2m,3,10",options="header"]
 |===
 | Option | Valeurs | Description
 
@@ -3701,7 +3701,7 @@ Un trigger a les options suivantes (les noms sont
   plus exécutées.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus` |
+  `command_run`, `timer`, `config`, `focus`, `info` |
   Le "hook" utilisé dans le trigger. Pour plus d'information, voir la
   link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
@@ -3756,7 +3756,8 @@ le trigger lui-même est activé :
 . vérifier les conditions du trigger : si faux, sortir
 . remplacer du texte dans le trigger en utilisant des expressions régulières
 . exécuter la/les commande(s)
-. sortir avec un code retour (sauf pour les "hooks" _modifier_ et _focus_)
+. sortir avec un code retour (sauf pour les "hooks" _modifier_, _line_,
+  _focus_ et _info_)
 . effectuer l'action "post" (si différente de `none`).
 
 [[trigger_hook_arguments]]
@@ -3853,6 +3854,13 @@ points-virgules.
   3. ... |
   `+buffer_nicklist+` |
   link:weechat_plugin_api.fr.html#_hook_focus[hook_focus]
+
+| info |
+  1. nom de l'info (priorité autorisée) (obligatoire) +
+  2. nom de l'info (priorité autorisée) +
+  3. ... |
+  `+mon_info+` |
+  link:weechat_plugin_api.fr.html#_hook_info[hook_info]
 |===
 
 [[trigger_conditions]]
@@ -3901,6 +3909,7 @@ du type de hook :
 | timer       | tg_remaining_calls  |
 | config      | tg_value            |
 | focus       |                     |
+| info        | tg_info             | tg_info
 |===
 
 [NOTE]
@@ -4214,6 +4223,20 @@ hachage :
 
 La table de hachage contient toutes les clés/valeurs de la table de hachage
 reçue (type : chaîne/chaîne).
+
+[[trigger_data_info]]
+===== Info
+
+La fonction de rappel "info" définit les variables suivantes dans la table de
+hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type   | Description
+| tg_info_name | string | Nom de l'info.
+| tg_arguments | string | Paramètres.
+| tg_info      | string | Chaîne vide (l'info à renvoyer).
+|===
 
 [[trigger_examples]]
 ==== Exemples
