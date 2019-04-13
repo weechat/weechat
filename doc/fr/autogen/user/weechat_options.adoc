@@ -597,7 +597,7 @@
 ** valeur par défaut: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** description: pass:none[heure affichée pour un message avec la même heure que le message précédent ; utilisez un espace " " pour cacher l'heure, une autre chaîne pour l'afficher à la place de l'heure, ou une chaîne vide pour désactiver cette fonctionnalité (toujours afficher l'heure) (note : le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)]
+** description: pass:none[heure affichée pour un message avec la même heure que le message précédent ; utilisez un espace " " pour cacher l'heure, une autre chaîne pour l'afficher à la place de l'heure, ou une chaîne vide pour désactiver cette fonctionnalité (afficher l'heure) (note : le contenu est évalué, donc vous pouvez utiliser des couleurs avec le format "${color:xxx}", voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

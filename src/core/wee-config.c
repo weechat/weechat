@@ -2716,7 +2716,7 @@ config_weechat_init_options ()
         N_("time displayed for a message with same time as previous message: "
            "use a space \" \" to hide time, another string to display this "
            "string instead of time, or an empty string to disable feature "
-           "(always display time) (note: content is evaluated, so you can use "
+           "(display time) (note: content is evaluated, so you can use "
            "colors with format \"${color:xxx}\", see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,

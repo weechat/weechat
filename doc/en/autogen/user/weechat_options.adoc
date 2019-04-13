@@ -597,7 +597,7 @@
 ** default value: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** description: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (always display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** description: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
 ** type: string
 ** values: any string
 ** default value: `+""+`

@@ -597,7 +597,7 @@
 ** デフォルト値: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** 説明: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (always display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** 説明: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
