@@ -3819,7 +3819,6 @@ ein Semikolon getrennt.
   `+buffer_nicklist+` |
   link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Englisch)
 
-// TRANSLATION MISSING
 | info |
   1. info name (Priorität erlaubt) (erforderlich) +
   2. info name (Priorität erlaubt) +
@@ -3827,7 +3826,6 @@ ein Semikolon getrennt.
   `+my_info+` |
   link:weechat_plugin_api.en.html#_hook_info[hook_info] (Englisch)
 
-// TRANSLATION MISSING
 | info_hashtable |
   1. info name (Priorität erlaubt) (erforderlich) +
   2. info name (Priorität erlaubt) +
@@ -3882,8 +3880,7 @@ welche abhängig von dem genutzten Hook ist:
 | config         | tg_value           |
 | focus          |                    |
 | info           | tg_info            | tg_info
-// TRANSLATION MISSING
-| info_hashtable |                    | all variables received in hashtable
+| info_hashtable |                    | alle Variablen die in der hashtable empfangen wurden
 |===
 
 [NOTE]
@@ -4185,7 +4182,6 @@ Der Callback von "focus" legt folgende Variablen in der Hashtable an:
 
 Das Hashtable enthält alle Schlüssel/Werte (Typ: string/string).
 
-// TRANSLATION MISSING
 [[trigger_data_info]]
 ===== Info
 
@@ -4194,12 +4190,11 @@ Der Callback von "info" legt folgende Variablen in der Hashtable an:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable     | Typ    | Beschreibung
-| tg_info_name | string | Name of info.
-| tg_arguments | string | Arguments.
-| tg_info      | string | Empty string (the info to return).
+| tg_info_name | string | Name der Information.
+| tg_arguments | string | Argumente.
+| tg_info      | string | ein leerer String (die Information die zurückgegeben werden soll).
 |===
 
-// TRANSLATION MISSING
 [[trigger_data_info_hashtable]]
 ===== Info_hashtable
 
@@ -4208,7 +4203,7 @@ Der Callback von "info_hashtable" legt folgende Variablen in der Hashtable an:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable     | Typ    | Beschreibung
-| tg_info_name | string | Name of info.
+| tg_info_name | string | Name der Information.
 |===
 
 Das Hashtable enthält alle Schlüssel/Werte (Typ: string/string).
