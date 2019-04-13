@@ -50,18 +50,18 @@ struct t_relay_server *last_relay_server = NULL;
  *
  * Examples:
  *
- *   string                    ipv4 ipv6 ssl un  protocol protocol_args
+ *   string                    ipv4 ipv6 ssl unix protocol protocol_args
  *   ---------------------------------------------------------------
- *   irc.freenode              1    1    0   0   irc      freenode
- *   ssl.irc.freenode          1    1    1   0   irc      freenode
- *   ipv4.irc.freenode         1    0    0   0   irc      freenode
- *   ipv6.irc.freenode         0    1    0   0   irc      freenode
- *   ipv4.ipv6.irc.freenode    1    1    0   0   irc      freenode
- *   ipv6.ssl.irc.freenode     0    1    1   0   irc      freenode
- *   weechat                   1    1    0   0   weechat
- *   ssl.weechat               1    1    1   0   weechat
- *   ipv6.ssl.weechat          0    1    1   0   weechat
- *   un.weechat                0    0    0   1   weechat
+ *   irc.freenode              1    1    0   0    irc      freenode
+ *   ssl.irc.freenode          1    1    1   0    irc      freenode
+ *   ipv4.irc.freenode         1    0    0   0    irc      freenode
+ *   ipv6.irc.freenode         0    1    0   0    irc      freenode
+ *   ipv4.ipv6.irc.freenode    1    1    0   0    irc      freenode
+ *   ipv6.ssl.irc.freenode     0    1    1   0    irc      freenode
+ *   weechat                   1    1    0   0    weechat
+ *   ssl.weechat               1    1    1   0    weechat
+ *   ipv6.ssl.weechat          0    1    1   0    weechat
+ *   unix.weechat              0    0    0   1    weechat
  *
  * Note: *protocol and *protocol_args must be freed after use.
  */
@@ -95,10 +95,10 @@ relay_server_get_protocol_args (const char *protocol_and_args,
             opt_ssl = 1;
             protocol_and_args += 4;
         }
-        else if (strncmp (protocol_and_args, "un.", 3) == 0)
+        else if (strncmp (protocol_and_args, "unix.", 5) == 0)
         {
             opt_un = 1;
-            protocol_and_args += 3;
+            protocol_and_args += 5;
         }
         else
             break;
@@ -112,6 +112,7 @@ relay_server_get_protocol_args (const char *protocol_and_args,
          */
         opt_ipv4 = 1;
         opt_ipv6 = weechat_config_boolean (relay_config_network_ipv6);
+        opt_un = 0;
     }
     else
     {
@@ -200,7 +201,7 @@ relay_server_search_port (int port)
 }
 
 /*
- * Searches for a server by path.
+ * Searches for a server by path. Only returns servers using a UNIX socket.
  *
  * Returns pointer to new server, NULL if not found.
  */
@@ -213,7 +214,8 @@ relay_server_search_path (const char *path)
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if (!strcmp (path, ptr_server->path))
+        /* only include UNIX socket relays, to allow for numerical paths */
+        if (!strcmp (path, ptr_server->path) && ptr_server->un)
             return ptr_server;
     }
 
@@ -227,7 +229,6 @@ relay_server_search_path (const char *path)
 void
 relay_server_close_socket (struct t_relay_server *server)
 {
-
     if (server->hook_fd)
     {
         weechat_unhook (server->hook_fd);
@@ -246,7 +247,7 @@ relay_server_close_socket (struct t_relay_server *server)
             weechat_printf (NULL,
                             _("%s: socket closed for %s (%s %s)"),
                             RELAY_PLUGIN_NAME, server->protocol_string,
-                            server->un ? "path" : "port",
+                            server->un ? _("path") : _("port"),
                             server->path);
         }
     }
@@ -306,7 +307,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         weechat_printf (NULL,
                         _("%s%s: cannot accept client on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? "path" : "port",
+                        server->un ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         goto error;
@@ -613,7 +614,7 @@ relay_server_create_socket (struct t_relay_server *server)
         weechat_printf (NULL,
                         _("%s%s: cannot \"bind\" on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? "path" : "port",
+                        server->un ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         close (server->sock);
@@ -630,7 +631,7 @@ relay_server_create_socket (struct t_relay_server *server)
         weechat_printf (NULL,
                         _("%s%s: cannot \"listen\" on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? "path" : "port",
+                        server->un ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         close (server->sock);
@@ -647,7 +648,7 @@ relay_server_create_socket (struct t_relay_server *server)
                 "%s: listening on %s %s (relay: %s, %s, max %d clients)",
                 max_clients),
             RELAY_PLUGIN_NAME,
-            server->un ? "path" : "port",
+            server->un ? _("path") : _("port"),
             server->path,
             server->protocol_string,
             ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : ((server->ipv4) ? "IPv4" : "UNIX"))),
@@ -659,7 +660,7 @@ relay_server_create_socket (struct t_relay_server *server)
             NULL,
             _("%s: listening on %s %s (relay: %s, %s)"),
             RELAY_PLUGIN_NAME,
-            server->un ? "path" : "port",
+            server->un ? _("path") : _("port"),
             server->path,
             server->protocol_string,
             ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : ((server->ipv4) ? "IPv4" : "UNIX"))));
@@ -685,14 +686,18 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
                   const char *protocol_args, int port, const char *path,
                   int ipv4, int ipv6, int ssl, int un)
 {
-    struct t_relay_server *new_server;
+    struct t_relay_server *new_server, *dup_server;
 
     if (!protocol_string)
         return NULL;
 
-    if (relay_server_search_port (port))
+    /* look for duplicate ports/paths */
+    dup_server = un ?
+        relay_server_search_path (path) : relay_server_search_port (port);
+    if (dup_server)
     {
-        weechat_printf (NULL, _("%s%s: error: port \"%d\" is already used"),
+        weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
+                        un ? _("path") : _("port"),
                         weechat_prefix ("error"),
                         RELAY_PLUGIN_NAME, port);
         return NULL;
@@ -876,7 +881,7 @@ relay_server_print_log ()
         weechat_log_printf ("  ipv4. . . . . . . . . : %d",    ptr_server->ipv4);
         weechat_log_printf ("  ipv6. . . . . . . . . : %d",    ptr_server->ipv6);
         weechat_log_printf ("  ssl . . . . . . . . . : %d",    ptr_server->ssl);
-        weechat_log_printf ("  un  . . . . . . . . . : %d",    ptr_server->un);
+        weechat_log_printf ("  unix. . . . . . . . . : %d",    ptr_server->un);
         weechat_log_printf ("  sock. . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_server->hook_fd);
         weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_server->start_time);

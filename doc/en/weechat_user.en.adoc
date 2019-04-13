@@ -3197,11 +3197,11 @@ The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 [[relay_unixsocket]]
 ==== UNIX domain sockets
 
-Using the protocol option "un" and the "/relay addpath" command, you can
+Using the protocol option "unix" with the "/relay add"  command, you can
 listen using any protocol on a UNIX domain socket at a given path. For exmaple:
 
 ----
-/relay addpath un.weechat /tmp/weesock
+/relay add unix.weechat /tmp/weesock
 ----
 
 will allow clients to connect using the WeeChat protocol to /tmp/weesock. This

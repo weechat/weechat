@@ -698,8 +698,6 @@ relay_config_create_option_port (const void *pointer, void *data,
     {
         if (un)
         {
-            /* find dummy port for use with unix */
-            for (port = -1; relay_server_search_port ((int)port); --port);
             ptr_server = relay_server_search_path (value);
         }
         else
@@ -713,7 +711,7 @@ relay_config_create_option_port (const void *pointer, void *data,
             weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
                             weechat_prefix ("error"),
                             RELAY_PLUGIN_NAME,
-                            un ? "path" : "port",
+                            un ? _("path") : _("port"),
                             value);
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }

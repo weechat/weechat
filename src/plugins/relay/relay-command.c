@@ -134,7 +134,7 @@ relay_command_server_list ()
     if (relay_servers)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Listening on ports/paths:"));
+        weechat_printf (NULL, _("Listening on:"));
         i = 1;
         for (ptr_server = relay_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -145,7 +145,7 @@ relay_command_server_list ()
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s (not started)"),
                     RELAY_COLOR_CHAT_BUFFER,
-                    ptr_server->un ? "path" : "port",
+                    ptr_server->un ? _("path") : _("port"),
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
                     RELAY_COLOR_CHAT_BUFFER,
@@ -166,8 +166,8 @@ relay_command_server_list ()
                 weechat_printf (
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s, started on: %s"),
+                    ptr_server->un ? _("path") : _("port"),
                     RELAY_COLOR_CHAT_BUFFER,
-                    ptr_server->un ? "path" : "port",
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
                     RELAY_COLOR_CHAT_BUFFER,
@@ -194,6 +194,7 @@ relay_command_relay (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
     struct t_config_option *ptr_option;
+    struct t_config_section *port_path_section;
     char *path;
 
     /* make C compiler happy */
@@ -224,33 +225,19 @@ relay_command_relay (const void *pointer, void *data,
         if (weechat_strcasecmp (argv[1], "add") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
+            /* check if we're expecting a path or a port */
+            port_path_section = strncmp (argv[2], "unix.", 5) ?
+                                    relay_config_section_port :
+                                    relay_config_section_path;
             if (relay_config_create_option_port (
                     NULL, NULL,
                     relay_config_file,
-                    relay_config_section_port,
+                    port_path_section,
                     argv[2],
                     argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
             {
                 weechat_printf (NULL,
-                                _("%s: relay \"%s\" (port %s) added"),
-                                RELAY_PLUGIN_NAME,
-                                argv[2], argv_eol[3]);
-            }
-            return WEECHAT_RC_OK;
-        }
-
-        if (weechat_strcasecmp (argv[1], "addpath") == 0)
-	    {
-		    WEECHAT_COMMAND_MIN_ARGS(4, "addpath");
-            if (relay_config_create_option_port (
-                    NULL, NULL,
-                    relay_config_file,
-                    relay_config_section_path,
-                    argv[2],
-                    argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
-            {
-                weechat_printf (NULL,
-                                _("%s: relay \"%s\" (path %s) added"),
+                                _("%s: relay \"%s\" (path/port: %s) added"),
                                 RELAY_PLUGIN_NAME,
                                 argv[2], argv_eol[3]);
             }
@@ -266,8 +253,8 @@ relay_command_relay (const void *pointer, void *data,
                 path = strdup (ptr_server->path);
                 relay_server_free (ptr_server);
                 ptr_option = weechat_config_search_option (relay_config_file,
-                                                           ptr_server->un ? 
-                                                               relay_config_section_path : 
+                                                           ptr_server->un ?
+                                                               relay_config_section_path :
                                                                relay_config_section_port,
                                                            argv_eol[2]);
                 if (ptr_option)
@@ -275,7 +262,7 @@ relay_command_relay (const void *pointer, void *data,
                 weechat_printf (NULL,
                                 _("%s: relay \"%s\" (%s %s) removed"),
                                 RELAY_PLUGIN_NAME,
-                                argv[2], ptr_server->un ? "path" : "port",
+                                argv[2], ptr_server->un ? _("path") : _("port"),
                                 path);
                 free (path);
             }
@@ -409,15 +396,13 @@ relay_command_init ()
         N_("relay control"),
         N_("list|listfull|listrelay"
            " || add <name> <port>"
-           " || addpath <name> <path>"
            " || del|start|restart|stop <name>"
            " || raw"
            " || sslcertkey"),
         N_("         list: list relay clients (only active relays)\n"
            "     listfull: list relay clients (verbose, all relays)\n"
            "    listrelay: list relays (name and port)\n"
-           "          add: add a relay (listen on a port)\n"
-           "      addpath: add a relay (listen on a UNIX domain socket)\n"
+           "          add: add a relay (listen on a port/path)\n"
            "          del: remove a relay (clients remain connected)\n"
            "        start: listen on port\n"
            "      restart: close the server socket and listen again on port "
@@ -433,7 +418,7 @@ relay_command_init ()
            "         ipv4: force use of IPv4\n"
            "         ipv6: force use of IPv6\n"
            "          ssl: enable SSL\n"
-           "  	       un: use UNIX domain socket\n"
+           "         unix: use UNIX domain socket\n"
            "protocol.name: protocol and name to relay:\n"
            "                 - protocol \"irc\": name is the server to share "
            "(optional, if not given, the server name must be sent by client in "
@@ -466,7 +451,7 @@ relay_command_init ()
            "  weechat protocol with SSL, using IPv4 + IPv6:\n"
            "    /relay add ipv4.ipv6.ssl.weechat 9001\n"
            "  weechat protocol over UNIX domain socket:\n"
-           "    /relay addpath un.weechat /tmp/weesock\n"),
+           "    /relay add unix.weechat /tmp/weesock\n"),
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
         " || listrelay"

@@ -40,7 +40,6 @@ extern struct t_config_option *relay_config_color_text_selected;
 extern struct t_config_option *relay_config_network_allow_empty_password;
 extern struct t_config_option *relay_config_network_allowed_ips;
 extern struct t_config_option *relay_config_network_bind_address;
-extern struct t_config_option *relay_config_network_unix_bind_path;
 extern struct t_config_option *relay_config_network_clients_purge_delay;
 extern struct t_config_option *relay_config_network_compression_level;
 extern struct t_config_option *relay_config_network_ipv6;
