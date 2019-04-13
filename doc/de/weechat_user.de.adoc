@@ -3667,7 +3667,7 @@ Ein Trigger hat folgende Optionen (Benennung ist
   Wenn die Option auf `off` gesetzt ist, dann ist der Trigger deaktiviert und die Ausführung ist gestoppt.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info` |
+  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
   Der hook welcher durch Trigger genutzt werden soll. Für weitere Informationen siehe
   link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
@@ -3721,7 +3721,7 @@ abgearbeitet:
 . ersetze Text mittels erweitertem regulärer POSIX Ausdruck (sofern im Trigger definiert)
 . ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
 . Beendigung mit einem Rückgabewert (ausgenommen sind die Hooks _modifier_,
-  _line_, _focus_ und _info_)
+  _line_, _focus_, _info_ und _info_hashtable_)
 . Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (falls der Wert abweichend von `none` sein sollte).
 
 [[trigger_hook_arguments]]
@@ -3826,6 +3826,14 @@ ein Semikolon getrennt.
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.en.html#_hook_info[hook_info] (Englisch)
+
+// TRANSLATION MISSING
+| info_hashtable |
+  1. info name (Priorität erlaubt) (erforderlich) +
+  2. info name (Priorität erlaubt) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.en.html#_hook_info_hashtable[hook_info_hashtable] (Englisch)
 |===
 
 [[trigger_conditions]]
@@ -3862,18 +3870,20 @@ welche abhängig von dem genutzten Hook ist:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook        | Standard-Variable  | Update allowed ^(1)^
-| signal      | tg_signal_data     |
-| hsignal     |                    |
-| modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
-| print       | tg_message         |
-| command     | tg_argv_eol1       |
-| command_run | tg_command         |
-| timer       | tg_remaining_calls |
-| config      | tg_value           |
-| focus       |                    |
-| info        | tg_info            | tg_info
+| Hook           | Standard-Variable  | Update allowed ^(1)^
+| signal         | tg_signal_data     |
+| hsignal        |                    |
+| modifier       | tg_string          | tg_string
+| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print          | tg_message         |
+| command        | tg_argv_eol1       |
+| command_run    | tg_command         |
+| timer          | tg_remaining_calls |
+| config         | tg_value           |
+| focus          |                    |
+| info           | tg_info            | tg_info
+// TRANSLATION MISSING
+| info_hashtable |                    | all variables received in hashtable
 |===
 
 [NOTE]
@@ -4188,6 +4198,20 @@ Der Callback von "info" legt folgende Variablen in der Hashtable an:
 | tg_arguments | string | Arguments.
 | tg_info      | string | Empty string (the info to return).
 |===
+
+// TRANSLATION MISSING
+[[trigger_data_info_hashtable]]
+===== Info_hashtable
+
+Der Callback von "info_hashtable" legt folgende Variablen in der Hashtable an:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Typ    | Beschreibung
+| tg_info_name | string | Name of info.
+|===
+
+Das Hashtable enthält alle Schlüssel/Werte (Typ: string/string).
 
 [[trigger_examples]]
 ==== Beispiele

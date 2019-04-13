@@ -1201,6 +1201,60 @@ end:
 }
 
 /*
+ * Callback for an info_hashtable hooked.
+ */
+
+struct t_hashtable *
+trigger_callback_info_hashtable_cb (const void *pointer, void *data,
+                                    const char *info_name,
+                                    struct t_hashtable *hashtable)
+{
+    struct t_hashtable *ret_hashtable;
+    struct t_weelist_item *ptr_item;
+    const char *ptr_key;
+
+    TRIGGER_CALLBACK_CB_INIT(NULL);
+
+    ret_hashtable = NULL;
+
+    TRIGGER_CALLBACK_CB_NEW_POINTERS;
+    TRIGGER_CALLBACK_CB_NEW_VARS_UPDATED;
+
+    extra_vars = weechat_hashtable_dup (hashtable);
+
+    /* add data in hashtable used for conditions/replace/command */
+    weechat_hashtable_set (extra_vars, "tg_info_name", info_name);
+
+    /* execute the trigger (conditions, regex, command) */
+    trigger_callback_execute (trigger, NULL, pointers, extra_vars,
+                              vars_updated);
+
+    ret_hashtable = weechat_hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL, NULL);
+    if (ret_hashtable)
+    {
+        /* copy updated variables into the result "ret_hashtable" */
+        for (ptr_item = weechat_list_get (vars_updated, 0); ptr_item;
+             ptr_item = weechat_list_next (ptr_item))
+        {
+            ptr_key = weechat_list_string (ptr_item);
+            if (weechat_hashtable_has_key (extra_vars, ptr_key))
+            {
+                weechat_hashtable_set (
+                    ret_hashtable,
+                    ptr_key,
+                    weechat_hashtable_get (extra_vars, ptr_key));
+            }
+        }
+    }
+
+end:
+    TRIGGER_CALLBACK_CB_END(ret_hashtable);
+}
+
+/*
  * Initializes trigger callback.
  */
 

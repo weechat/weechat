@@ -27,7 +27,7 @@ listdefault : lister les triggers par défaut
      addoff : ajouter un trigger (désactivé)
  addreplace : ajouter ou remplacer un trigger existant
         nom : nom du trigger
-       hook : signal, hsignal, modifier, line, print, command, command_run, timer, config, focus
+       hook : signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
  paramètres : paramètres pour le hook, dépendant du hook (séparés par des points-virgules) :
               signal : nom(s) de signal (obligatoire)
               hsignal : nom(s) de signal (obligatoire)
@@ -39,6 +39,8 @@ listdefault : lister les triggers par défaut
               timer : intervalle (obligatoire), alignement sur la seconde, nombre max d'appels
               config : nom(s) de l'option (obligatoire)
               focus : nom(s) de la zone (obligatoire)
+              info : nom(s) de l'info (obligatoire)
+              info_hashtable : nom(s) de l'info (obligatoire)
  conditions : conditions évaluées pour le trigger
       regex : une ou plusieurs expressions régulières pour remplacer des chaînes dans les variables
    commande : commande à exécuter (plusieurs commandes peuvent être séparées par ";")
@@ -70,7 +72,7 @@ Lorsqu'une fonction de rappel de trigger est appelée, les actions suivantes son
   1. vérifier les conditions ; si faux, sortir
   2. remplacer le texte en utilisant une/des expression(s)s régulière(s)s POSIX étendue(s)s (si définie(s) dans le trigger)
   3. exécuter le(s) commande(s) (si définie(s) dans le trigger)
-  4. sortir avec le code retour (sauf pour les modificateurs, line et focus)
+  4. sortir avec le code retour (sauf pour les modificateurs, line, focus, info et info_hashtable)
   5. effectuer l'action "post"
 
 Exemples (vous pouvez aussi regarder les triggers par défaut avec /trigger listdefault) :

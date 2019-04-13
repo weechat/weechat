@@ -3701,7 +3701,7 @@ Un trigger a les options suivantes (les noms sont
   plus exécutées.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info` |
+  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
   Le "hook" utilisé dans le trigger. Pour plus d'information, voir la
   link:weechat_plugin_api.fr.html#hooks[Référence API extension WeeChat / Hooks].
 
@@ -3757,7 +3757,7 @@ le trigger lui-même est activé :
 . remplacer du texte dans le trigger en utilisant des expressions régulières
 . exécuter la/les commande(s)
 . sortir avec un code retour (sauf pour les "hooks" _modifier_, _line_,
-  _focus_ et _info_)
+  _focus_, _info_ et _info_hashtable_)
 . effectuer l'action "post" (si différente de `none`).
 
 [[trigger_hook_arguments]]
@@ -3861,6 +3861,13 @@ points-virgules.
   3. ... |
   `+mon_info+` |
   link:weechat_plugin_api.fr.html#_hook_info[hook_info]
+
+| info_hashtable |
+  1. nom de l'info (priorité autorisée) (obligatoire) +
+  2. nom de l'info (priorité autorisée) +
+  3. ... |
+  `+mon_info+` |
+  link:weechat_plugin_api.fr.html#_hook_info_hashtable[hook_info_hashtable]
 |===
 
 [[trigger_conditions]]
@@ -3898,18 +3905,19 @@ du type de hook :
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook        | Variable par défaut | Mise à jour autorisée ^(1)^
-| signal      | tg_signal_data      |
-| hsignal     |                     |
-| modifier    | tg_string           | tg_string
-| line        | message             | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
-| print       | tg_message          |
-| command     | tg_argv_eol1        |
-| command_run | tg_command          |
-| timer       | tg_remaining_calls  |
-| config      | tg_value            |
-| focus       |                     |
-| info        | tg_info             | tg_info
+| Hook           | Variable par défaut | Mise à jour autorisée ^(1)^
+| signal         | tg_signal_data      |
+| hsignal        |                     |
+| modifier       | tg_string           | tg_string
+| line           | message             | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print          | tg_message          |
+| command        | tg_argv_eol1        |
+| command_run    | tg_command          |
+| timer          | tg_remaining_calls  |
+| config         | tg_value            |
+| focus          |                     |
+| info           | tg_info             | tg_info
+| info_hashtable |                     | toutes les variables reçues dans la table de hachage
 |===
 
 [NOTE]
@@ -4237,6 +4245,21 @@ hachage :
 | tg_arguments | string | Paramètres.
 | tg_info      | string | Chaîne vide (l'info à renvoyer).
 |===
+
+[[trigger_data_info_hashtable]]
+===== Info_hashtable
+
+La fonction de rappel "info_hashtable" définit les variables suivantes dans la
+table de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type   | Description
+| tg_info_name | string | Nom de l'info.
+|===
+
+La table de hachage contient toutes les clés/valeurs de la table de hachage
+reçue (type : chaîne/chaîne).
 
 [[trigger_examples]]
 ==== Exemples

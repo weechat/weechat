@@ -3621,7 +3621,7 @@ Trigger posiada następujące opcje (nazwy to `trigger.trigger.<nazwa>.<opcja>`)
   więcej wykonywane.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info` |
+  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
   Zdarzenia używane przez trigger. Więcej informacji można znaleźć w
   link:weechat_plugin_api.en.html#hooks[WeeChat Plugin API Reference / Hooks] (Angielski).
 
@@ -3673,8 +3673,8 @@ kolejności, jeśli triggery są globalnie włączone i jeśli sam trigger jest 
 . zastępowanie tekstu w triggerze za pomocą wyrażenia
 . wykonanie komend(-y)
 // TRANSLATION MISSING
-. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
-  _info_)
+. exit with a return code (except for hooks _modifier_, _line_, _focus_,
+  _info_ and _info_hashtable_)
 . wykonanie akcji kończącej (jeśli inna niż `none`).
 
 [[trigger_hook_arguments]]
@@ -3778,6 +3778,14 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.en.html#_hook_info[hook_info] (Angielski)
+
+// TRANSLATION MISSING
+| info_hashtable |
+  1. info name (dozwolony priorytet) (wymagane) +
+  2. info name (dozwolony priorytet) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.en.html#_hook_info_hashtable[hook_info_hashtable] (Angielski)
 |===
 
 [[trigger_conditions]]
@@ -3813,18 +3821,20 @@ od typu uchwytu:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Uchwyt      | Domyślna zmienna   | Dozwolona aktualizacja ^(1)^
-| signal      | tg_signal_data     |
-| hsignal     |                    |
-| modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
-| print       | tg_message         |
-| command     | tg_argv_eol1       |
-| command_run | tg_command         |
-| timer       | tg_remaining_calls |
-| config      | tg_value           |
-| focus       |                    |
-| info        | tg_info            | tg_info
+| Uchwyt         | Domyślna zmienna   | Dozwolona aktualizacja ^(1)^
+| signal         | tg_signal_data     |
+| hsignal        |                    |
+| modifier       | tg_string          | tg_string
+| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print          | tg_message         |
+| command        | tg_argv_eol1       |
+| command_run    | tg_command         |
+| timer          | tg_remaining_calls |
+| config         | tg_value           |
+| focus          |                    |
+| info           | tg_info            | tg_info
+// TRANSLATION MISSING
+| info_hashtable |                    | all variables received in hashtable
 |===
 
 [NOTE]
@@ -4132,6 +4142,21 @@ Callback "info" ustawia następujące zmienne w tablicy hashy:
 | tg_arguments | string | Arguments.
 | tg_info      | string | Empty string (the info to return).
 |===
+
+// TRANSLATION MISSING
+[[trigger_data_info_hashtable]]
+===== Info_hashtable
+
+Callback "info_hashtable" ustawia następujące zmienne w tablicy hashy:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Zmienna      | Typ    | Opis
+| tg_info_name | string | Name of info.
+|===
+
+Tablica zawiera wszystkie klucze/wartości z otrzymanej tablicy hashy (typ:
+ciąg/ciąg).
 
 [[trigger_examples]]
 ==== Przykłady

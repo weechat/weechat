@@ -3587,7 +3587,7 @@ A trigger has the following options (names are
   any more.
 
 | hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info` |
+  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
   The hook used in trigger. For more information, see
   link:weechat_plugin_api.en.html#hooks[WeeChat plugin API reference / Hooks].
 
@@ -3638,8 +3638,8 @@ order, if triggers are globally enabled and if the trigger itself is enabled:
 . check trigger conditions: if false, exit
 . replace text in trigger using regular expression(s)
 . execute command(s)
-. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
-  _info_)
+. exit with a return code (except for hooks _modifier_, _line_, _focus_,
+  _info_ and _info_hashtable_)
 . perform post action (if different from `none`).
 
 [[trigger_hook_arguments]]
@@ -3742,6 +3742,13 @@ The arguments depend on the hook used. They are separated by semicolons.
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.en.html#_hook_info[hook_info]
+
+| info_hashtable |
+  1. info name (priority allowed) (required) +
+  2. info name (priority allowed) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.en.html#_hook_info_hashtable[hook_info_hashtable]
 |===
 
 [[trigger_conditions]]
@@ -3776,18 +3783,19 @@ type:
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| Hook        | Default variable   | Update allowed ^(1)^
-| signal      | tg_signal_data     |
-| hsignal     |                    |
-| modifier    | tg_string          | tg_string
-| line        | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
-| print       | tg_message         |
-| command     | tg_argv_eol1       |
-| command_run | tg_command         |
-| timer       | tg_remaining_calls |
-| config      | tg_value           |
-| focus       |                    |
-| info        | tg_info            | tg_info
+| Hook           | Default variable   | Update allowed ^(1)^
+| signal         | tg_signal_data     |
+| hsignal        |                    |
+| modifier       | tg_string          | tg_string
+| line           | message            | buffer, buffer_name, y, date, date_printed, str_time, tags, notify_level, highlight, prefix, message
+| print          | tg_message         |
+| command        | tg_argv_eol1       |
+| command_run    | tg_command         |
+| timer          | tg_remaining_calls |
+| config         | tg_value           |
+| focus          |                    |
+| info           | tg_info            | tg_info
+| info_hashtable |                    | all variables received in hashtable
 |===
 
 [NOTE]
@@ -4096,6 +4104,20 @@ The "info" callback sets following variables in hashtable:
 | tg_arguments | string | Arguments.
 | tg_info      | string | Empty string (the info to return).
 |===
+
+[[trigger_data_info_hashtable]]
+===== Info_hashtable
+
+The "info_hashtable" callback sets following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable     | Type   | Description
+| tg_info_name | string | Name of info.
+|===
+
+The hashtable contains all keys/values from hashtable received (type:
+string/string).
 
 [[trigger_examples]]
 ==== Examples

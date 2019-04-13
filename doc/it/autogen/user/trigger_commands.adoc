@@ -27,7 +27,7 @@ listdefault: list default triggers
      addoff: add a trigger (disabled)
  addreplace: add or replace an existing trigger
        name: name of trigger
-       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus
+       hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
   arguments: arguments for the hook, depending on hook (separated by semicolons):
              signal: name(s) of signal (required)
              hsignal: name(s) of hsignal (required)
@@ -39,6 +39,8 @@ listdefault: list default triggers
              timer: interval (required), align on second, max calls
              config: name(s) of option (required)
              focus: name(s) of area (required)
+             info: name(s) of info (required)
+             info_hashtable: name(s) of info (required)
  conditions: evaluated conditions for the trigger
       regex: one or more regular expressions to replace strings in variables
     command: command to execute (many commands can be separated by ";")
@@ -70,7 +72,7 @@ When a trigger callback is called, following actions are performed, in this orde
   1. check conditions; if false, exit
   2. replace text using POSIX extended regular expression(s) (if defined in trigger)
   3. execute command(s) (if defined in trigger)
-  4. exit with a return code (except for modifier, line and focus)
+  4. exit with a return code (except for modifier, line, focus, info and info_hashtable)
   5. perform post action
 
 Examples (you can also look at default triggers with /trigger listdefault):

@@ -3585,7 +3585,7 @@ WeeChat はデフォルトで 5
   の場合、トリガは無効化され、アクションは実行されません。
 
 | hook | `signal`、`hsignal`、`modifier`、`line`, `print`、`command`、
-  `command_run`、`timer`、`config`、`focus`、`info`  |
+  `command_run`、`timer`、`config`、`focus`、`info`、`info_hashtable` |
   トリガの中で使われるフック。より詳しい情報は
   link:weechat_plugin_api.ja.html#hooks[WeeChat プラグイン API リファレンス / フック]を参照してください。
 
@@ -3636,8 +3636,8 @@ trigger.trigger.beep.post_action = none
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
 // TRANSLATION MISSING
-. exit with a return code (except for hooks _modifier_, _line_, _focus_ and
-  _info_)
+. exit with a return code (except for hooks _modifier_, _line_, _focus_,
+  _info_ and _info_hashtable_)
 . トリガ実行後の処遇を適用 (`none` 以外の場合)。
 
 [[trigger_hook_arguments]]
@@ -3741,6 +3741,14 @@ trigger.trigger.beep.post_action = none
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.ja.html#_hook_info[hook_info]
+
+// TRANSLATION MISSING
+| info_hashtable |
+  1. info name (優先度の指定も可) (必須) +
+  2. info name (優先度の指定も可) +
+  3. ... |
+  `+my_info+` |
+  link:weechat_plugin_api.ja.html#_hook_info_hashtable[hook_info_hashtable]
 |===
 
 [[trigger_conditions]]
@@ -3775,18 +3783,20 @@ _var_
 
 [width="100%",cols="2,3,7",options="header"]
 |===
-| フック      | デフォルト変数     | 更新が許可Update allowed ^(1)^
-| signal      | tg_signal_data     |
-| hsignal     |                    |
-| modifier    | tg_string          | tg_string
-| line        | message            | buffer、buffer_name、y、date、date_printed、str_time、tags、notify_level、highlight、prefix、message
-| print       | tg_message         |
-| command     | tg_argv_eol1       |
-| command_run | tg_command         |
-| timer       | tg_remaining_calls |
-| config      | tg_value           |
-| focus       |                    |
-| info        | tg_info            | tg_info
+| フック         | デフォルト変数     | 更新が許可Update allowed ^(1)^
+| signal         | tg_signal_data     |
+| hsignal        |                    |
+| modifier       | tg_string          | tg_string
+| line           | message            | buffer、buffer_name、y、date、date_printed、str_time、tags、notify_level、highlight、prefix、message
+| print          | tg_message         |
+| command        | tg_argv_eol1       |
+| command_run    | tg_command         |
+| timer          | tg_remaining_calls |
+| config         | tg_value           |
+| focus          |                    |
+| info           | tg_info            | tg_info
+// TRANSLATION MISSING
+| info_hashtable |                    | all variables received in hashtable
 |===
 
 [NOTE]
@@ -4094,6 +4104,21 @@ string/string) が含まれています。
 | tg_arguments | string | Arguments.
 | tg_info      | string | Empty string (the info to return).
 |===
+
+// TRANSLATION MISSING
+[[trigger_data_info_hashtable]]
+===== Info_hashtable
+
+"info_hashtable" コールバックは以下の変数をハッシュテーブルに格納します:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| 変数         | 型     | 説明
+| tg_info_name | string | Name of info.
+|===
+
+ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:
+string/string) が含まれています。
 
 [[trigger_examples]]
 ==== 例
