@@ -171,6 +171,7 @@ struct t_config_option *config_look_prefix_buffer_align_max;
 struct t_config_option *config_look_prefix_buffer_align_more;
 struct t_config_option *config_look_prefix_buffer_align_more_after;
 struct t_config_option *config_look_prefix_same_nick;
+struct t_config_option *config_look_prefix_same_nick_middle;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_quote_nick_prefix;
 struct t_config_option *config_look_quote_nick_suffix;
@@ -303,6 +304,7 @@ struct t_config_option *config_plugin_save_config_on_unload;
 
 int config_length_nick_prefix_suffix = 0;
 int config_length_prefix_same_nick = 0;
+int config_length_prefix_same_nick_middle = 0;
 struct t_hook *config_day_change_timer = NULL;
 int config_day_change_old_day = -1;
 int config_emphasized_attributes = 0;
@@ -810,6 +812,26 @@ config_change_prefix_same_nick (const void *pointer, void *data,
 
     config_length_prefix_same_nick =
         gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_same_nick));
+
+    config_compute_prefix_max_length_all_buffers ();
+    gui_window_ask_refresh (1);
+}
+
+/*
+ * Callback for changes on option "weechat.look.prefix_same_nick_middle".
+ */
+
+void
+config_change_prefix_same_nick_middle (const void *pointer, void *data,
+                                       struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    config_length_prefix_same_nick_middle =
+        gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_same_nick_middle));
 
     config_compute_prefix_max_length_all_buffers ();
     gui_window_ask_refresh (1);
@@ -3394,12 +3416,23 @@ config_weechat_init_options ()
         weechat_config_file, ptr_section,
         "prefix_same_nick", "string",
         N_("prefix displayed for a message with same nick as previous "
-           "message: use a space \" \" to hide prefix, another string to "
-           "display this string instead of prefix, or an empty string to "
-           "disable feature (display prefix)"),
+           "but not next message: use a space \" \" to hide prefix, another "
+           "string to display this string instead of prefix, or an empty "
+           "string to disable feature (display prefix)"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &config_change_prefix_same_nick, NULL, NULL,
+        NULL, NULL, NULL);
+    config_look_prefix_same_nick_middle = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "prefix_same_nick_middle", "string",
+        N_("prefix displayed for a message with same nick as previous "
+           "and next message: use a space \" \" to hide prefix, another "
+           "string to display this string instead of prefix, or an empty "
+           "string to disable feature (display prefix)"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL,
+        &config_change_prefix_same_nick_middle, NULL, NULL,
         NULL, NULL, NULL);
     config_look_prefix_suffix = config_file_new_option (
         weechat_config_file, ptr_section,

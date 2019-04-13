@@ -1053,7 +1053,13 @@
 ** domyślna wartość: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia wiadomość: spacja (" ") chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
+** opis: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
+
+* [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
+** opis: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

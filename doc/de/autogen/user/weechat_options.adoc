@@ -1053,7 +1053,13 @@
 ** Standardwert: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** Beschreibung: pass:none[setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen darf keine Zeichenkette angegeben werden]
+** Beschreibung: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
+
+* [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
+** Beschreibung: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`

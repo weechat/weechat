@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-04-13 14:42+0200\n"
+"POT-Creation-Date: 2019-04-13 20:30+0200\n"
 "PO-Revision-Date: 2019-03-11 21:10+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3126,11 +3126,20 @@ msgid ""
 "with same number) (must be exactly one char on screen)"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"prefix displayed for a message with same nick as previous message: use a "
-"space \" \" to hide prefix, another string to display this string instead of "
-"prefix, or an empty string to disable feature (display prefix)"
-msgstr ""
+"prefix displayed for a message with same nick as previous but not next "
+"message: use a space \" \" to hide prefix, another string to display this "
+"string instead of prefix, or an empty string to disable feature (display "
+"prefix)"
+msgstr "отображение маркера даты при смене дня"
+
+#, fuzzy
+msgid ""
+"prefix displayed for a message with same nick as previous and next message: "
+"use a space \" \" to hide prefix, another string to display this string "
+"instead of prefix, or an empty string to disable feature (display prefix)"
+msgstr "отображение маркера даты при смене дня"
 
 #, fuzzy
 msgid "string displayed after prefix"

@@ -222,6 +222,7 @@ extern struct t_config_option *config_look_prefix_buffer_align_max;
 extern struct t_config_option *config_look_prefix_buffer_align_more;
 extern struct t_config_option *config_look_prefix_buffer_align_more_after;
 extern struct t_config_option *config_look_prefix_same_nick;
+extern struct t_config_option *config_look_prefix_same_nick_middle;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_quote_nick_prefix;
 extern struct t_config_option *config_look_quote_nick_suffix;
@@ -342,6 +343,7 @@ extern struct t_config_option *config_plugin_save_config_on_unload;
 
 extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
+extern int config_length_prefix_same_nick_middle;
 extern int config_emphasized_attributes;
 extern regex_t *config_highlight_regex;
 extern char ***config_highlight_tags;

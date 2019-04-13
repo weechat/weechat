@@ -181,6 +181,58 @@ gui_line_prefix_is_same_nick_as_previous (struct t_gui_line *line)
 }
 
 /*
+ * Checks if prefix on line is a nick and is the same as nick on next line.
+ *
+ * Returns:
+ *   1: prefix is a nick and same as nick on next line
+ *   0: prefix is not a nick, or different from nick on next line
+ */
+
+int
+gui_line_prefix_is_same_nick_as_next (struct t_gui_line *line)
+{
+    const char *nick, *nick_next;
+    struct t_gui_line *next_line;
+
+    /*
+     * if line is not displayed, has a highlight, or does not have a tag
+     * beginning with "prefix_nick" => display standard prefix
+     */
+    if (!line->data->displayed || line->data->highlight
+        || !gui_line_search_tag_starting_with (line, "prefix_nick"))
+        return 0;
+
+    /* no nick on line => display standard prefix */
+    nick = gui_line_get_nick_tag (line);
+    if (!nick)
+        return 0;
+
+    /* next line is not found => display standard prefix */
+    next_line = gui_line_get_next_displayed (line);
+    if (!next_line)
+        return 0;
+
+    /* buffer is not the same as next line => display standard prefix */
+    if (line->data->buffer != next_line->data->buffer)
+        return 0;
+
+    /*
+     * next line does not have a tag beginning with "prefix_nick"
+     * => display standard prefix
+     */
+    if (!gui_line_search_tag_starting_with (next_line, "prefix_nick"))
+        return 0;
+
+    /* no nick on next line => display standard prefix */
+    nick_next = gui_line_get_nick_tag (next_line);
+    if (!nick_next)
+        return 0;
+
+    /* prefix can be hidden/replaced if nicks are equal */
+    return (strcmp (nick, nick_next) == 0) ? 1 : 0;
+}
+
+/*
  * Gets prefix and its length (for display only).
  *
  * If the prefix can be hidden (same nick as previous message), and if the
@@ -199,33 +251,68 @@ gui_line_get_prefix_for_display (struct t_gui_line *line,
         && CONFIG_STRING(config_look_prefix_same_nick)[0]
         && gui_line_prefix_is_same_nick_as_previous (line))
     {
-        /* same nick: return empty prefix or value from option */
-        if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
+        if (CONFIG_STRING(config_look_prefix_same_nick_middle)
+            && CONFIG_STRING(config_look_prefix_same_nick_middle)[0]
+            && gui_line_prefix_is_same_nick_as_next (line))
         {
-            /* return empty prefix */
-            if (prefix)
-                *prefix = gui_chat_prefix_empty;
-            if (length)
-                *length = 0;
-            if (color)
-                *color = NULL;
+            /* same nick: return empty prefix or value from option */
+            if (strcmp (CONFIG_STRING(config_look_prefix_same_nick_middle), " ") == 0)
+            {
+                /* return empty prefix */
+                if (prefix)
+                    *prefix = gui_chat_prefix_empty;
+                if (length)
+                    *length = 0;
+                if (color)
+                    *color = NULL;
+            }
+            else
+            {
+                /* return prefix from option "weechat.look.prefix_same_nick_middle" */
+                if (prefix)
+                    *prefix = CONFIG_STRING(config_look_prefix_same_nick_middle);
+                if (length)
+                    *length = config_length_prefix_same_nick_middle;
+                if (color)
+                {
+                    tag_prefix_nick = gui_line_search_tag_starting_with (line,
+                                                                         "prefix_nick_");
+                    *color = (tag_prefix_nick) ? (char *)(tag_prefix_nick + 12) : NULL;
+                }
+            }
+            if (prefix_is_nick)
+                *prefix_is_nick = 0;
         }
         else
         {
-            /* return prefix from option "weechat.look.prefix_same_nick" */
-            if (prefix)
-                *prefix = CONFIG_STRING(config_look_prefix_same_nick);
-            if (length)
-                *length = config_length_prefix_same_nick;
-            if (color)
+            /* same nick: return empty prefix or value from option */
+            if (strcmp (CONFIG_STRING(config_look_prefix_same_nick), " ") == 0)
             {
-                tag_prefix_nick = gui_line_search_tag_starting_with (line,
-                                                                     "prefix_nick_");
-                *color = (tag_prefix_nick) ? (char *)(tag_prefix_nick + 12) : NULL;
+                /* return empty prefix */
+                if (prefix)
+                    *prefix = gui_chat_prefix_empty;
+                if (length)
+                    *length = 0;
+                if (color)
+                    *color = NULL;
             }
+            else
+            {
+                /* return prefix from option "weechat.look.prefix_same_nick" */
+                if (prefix)
+                    *prefix = CONFIG_STRING(config_look_prefix_same_nick);
+                if (length)
+                    *length = config_length_prefix_same_nick;
+                if (color)
+                {
+                    tag_prefix_nick = gui_line_search_tag_starting_with (line,
+                                                                         "prefix_nick_");
+                    *color = (tag_prefix_nick) ? (char *)(tag_prefix_nick + 12) : NULL;
+                }
+            }
+            if (prefix_is_nick)
+                *prefix_is_nick = 0;
         }
-        if (prefix_is_nick)
-            *prefix_is_nick = 0;
     }
     else
     {

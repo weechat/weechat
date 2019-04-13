@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option weechat.look.prefix_same_nick_middle (issue #930, issue #931)
   * core: add option weechat.look.buffer_time_same (issue #1127)
   * core: use seconds by default in /repeat interval, allow unit for the interval
   * core: allow text in addition to a command in command /repeat

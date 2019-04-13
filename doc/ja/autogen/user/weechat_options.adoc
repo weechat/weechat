@@ -1053,7 +1053,13 @@
 ** デフォルト値: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** 説明: pass:none[同じニックネームからの連続したメッセージに前置するプレフィックス: 空白文字 " " の場合はプレフィックスを隠す、これ以外の文字列の場合はそれをプレフィックスとして用いる、空文字の場合はプレフィックス表示機能を使わない]
+** 説明: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+""+`
+
+* [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
+** 説明: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
