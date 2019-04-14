@@ -1,16 +1,16 @@
-// TRANSLATION MISSING
 *--no-dlclose*::
     Do not call the function dlclose after plugins are unloaded.
     This is useful with tools like Valgrind to display stack for unloaded
     plugins.
+    プラグインがアンロードされた後に関数
+    dlclose を呼び出さない。これは Valgrind
+    などのツールを使ってアンロードされたプラグインのスタックを表示する際に有用です。
 
-// TRANSLATION MISSING
 *--no-gnutls*::
-    Do not call the init and deinit functions of GnuTLS library.
-    This is useful with tools like Valgrind and electric-fence, to prevent
-    GnuTLS memory errors.
+    GnuTLS ライブラリの init および deinit
+    関数を呼び出さない。これは Valgrind および electric-fence
+    などのツールを使って GnuTLS メモリエラーを避ける際に有用です。
 
-// TRANSLATION MISSING
 *--no-gcrypt*::
-    Do not call the init and deinit functions of Gcrypt library.
-    This is useful with tools like Valgrind, to prevent Gcrypt memory errors.
+    Gcrypt ライブラリの init および deinit 関数を呼び出さない。これは
+    Valgrind などのツールを使って Gcrypt メモリエラーを避ける際に有効です。
