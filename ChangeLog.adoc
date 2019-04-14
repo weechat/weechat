@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: use getopt to parse command line arguments
   * core: add option weechat.look.prefix_same_nick_middle (issue #930, issue #931)
   * core: add option weechat.look.buffer_time_same (issue #1127)
   * core: use seconds by default in /repeat interval, allow unit for the interval
@@ -1826,7 +1827,7 @@ Bug fixes::
   * irc: fix import of certificates created by OpenSSL >= 1.0.0 (bug #30316)
   * irc: fix display of local SSL certificate when it is sent to server (patch #7218)
   * irc: use empty real name by default in config, instead of reading real name in /etc/passwd (bug #30111)
-  * irc: fix bug with command-line option "irc://" (bug #29990), new format for port and channels
+  * irc: fix bug with command line option "irc://" (bug #29990), new format for port and channels
   * irc: fix display of messages 330 and 333 on some servers
   * irc: fix bug with nick prefix "*" (chan founder) on some IRC servers (bug #29890)
   * irc: fix bug with option irc.network.lag_check when value is 0 (zero)

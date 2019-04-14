@@ -44,6 +44,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <getopt.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <time.h>
@@ -81,6 +82,10 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-api.h"
 
+/* debug command line options */
+#define OPTION_NO_DLCLOSE 1000
+#define OPTION_NO_GNUTLS  1001
+#define OPTION_NO_GCRYPT  1002
 
 int weechat_headless = 0;              /* 1 if running headless (no GUI)    */
 int weechat_debug_core = 0;            /* debug level for core              */
@@ -210,7 +215,27 @@ weechat_display_usage ()
 void
 weechat_parse_args (int argc, char *argv[])
 {
-    int i;
+    int opt;
+    struct option long_options[] = {
+        /* standard options */
+        { "no-connect",  no_argument,       NULL, 'a'  },
+        { "colors",      no_argument,       NULL, 'c'  },
+        { "dir",         required_argument, NULL, 'd'  },
+        { "temp-dir",    no_argument,       NULL, 't'  },
+        { "help",        no_argument,       NULL, 'h'  },
+        { "license",     no_argument,       NULL, 'l'  },
+        { "no-plugin",   no_argument,       NULL, 'p'  },
+        { "plugins",     required_argument, NULL, 'P'  },
+        { "run-command", required_argument, NULL, 'r'  },
+        { "no-script",   no_argument,       NULL, 's'  },
+        { "upgrade",     no_argument,       NULL, 'u'  },
+        { "version",     no_argument,       NULL, 'v'  },
+        /* debug options */
+        { "no-dlclose",  no_argument,       NULL, OPTION_NO_DLCLOSE },
+        { "no-gnutls",   no_argument,       NULL, OPTION_NO_GNUTLS  },
+        { "no-gcrypt",   no_argument,       NULL, OPTION_NO_GCRYPT  },
+        { NULL,          0,                 NULL, 0 },
+    };
 
     weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
     weechat_upgrading = 0;
@@ -221,140 +246,114 @@ weechat_parse_args (int argc, char *argv[])
     weechat_force_plugin_autoload = NULL;
     weechat_plugin_no_dlclose = 0;
 
-    for (i = 1; i < argc; i++)
+    optind = 0;
+    opterr = 0;
+
+    while ((opt = getopt_long (argc, argv,
+                               ":acd:thlpP:r:sv",
+                               long_options, NULL)) != -1)
     {
-        if ((strcmp (argv[i], "-c") == 0)
-            || (strcmp (argv[i], "--colors") == 0))
+        switch (opt)
         {
-            gui_color_display_terminal_colors ();
-            weechat_shutdown (EXIT_SUCCESS, 0);
-        }
-        else if ((strcmp (argv[i], "-d") == 0)
-                 || (strcmp (argv[i], "--dir") == 0))
-        {
-            if (weechat_home_temp)
+            case 'a': /* -a / --no-connect */
+                /* option ignored, it will be used by the irc plugin */
+                break;
+            case 'c': /* -c / --colors */
+                gui_color_display_terminal_colors ();
+                weechat_shutdown (EXIT_SUCCESS, 0);
+                break;
+            case 'd': /* -d / --dir */
                 weechat_home_temp = 0;
-            if (i + 1 < argc)
-            {
                 if (weechat_home)
                     free (weechat_home);
-                weechat_home = strdup (argv[++i]);
-            }
-            else
-            {
-                string_fprintf (stderr,
-                                _("Error: missing argument for \"%s\" option\n"),
-                                argv[i]);
-                weechat_shutdown (EXIT_FAILURE, 0);
-            }
-        }
-        else if ((strcmp (argv[i], "-t") == 0)
-                 || (strcmp (argv[i], "--temp-dir") == 0))
-        {
-            if (weechat_home)
-            {
-                free (weechat_home);
-                weechat_home = NULL;
-            }
-            weechat_home_temp = 1;
-        }
-        else if ((strcmp (argv[i], "-h") == 0)
-                || (strcmp (argv[i], "--help") == 0))
-        {
-            weechat_display_usage ();
-            weechat_shutdown (EXIT_SUCCESS, 0);
-        }
-        else if ((strcmp (argv[i], "-l") == 0)
-                 || (strcmp (argv[i], "--license") == 0))
-        {
-            weechat_display_copyright ();
-            string_fprintf (stdout, "\n");
-            string_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
-            weechat_shutdown (EXIT_SUCCESS, 0);
-        }
-        else if (strcmp (argv[i], "--no-dlclose") == 0)
-        {
-            /*
-             * Valgrind works better when dlclose() is not done after plugins
-             * are unloaded, it can display stack for plugins,* otherwise
-             * you'll see "???" in stack for functions of unloaded plugins.
-             * This option disables the call to dlclose(),
-             * it must NOT be used for other purposes!
-             */
-            weechat_plugin_no_dlclose = 1;
-        }
-        else if (strcmp (argv[i], "--no-gnutls") == 0)
-        {
-            /*
-             * Electric-fence is not working fine when gnutls loads
-             * certificates and Valgrind reports many memory errors with
-             * gnutls.
-             * This option disables the init/deinit of gnutls,
-             * it must NOT be used for other purposes!
-             */
-            weechat_no_gnutls = 1;
-        }
-        else if (strcmp (argv[i], "--no-gcrypt") == 0)
-        {
-            /*
-             * Valgrind reports many memory errors with gcrypt.
-             * This option disables the init/deinit of gcrypt,
-             * it must NOT be used for other purposes!
-             */
-            weechat_no_gcrypt = 1;
-        }
-        else if ((strcmp (argv[i], "-p") == 0)
-                 || (strcmp (argv[i], "--no-plugin") == 0))
-        {
-            if (weechat_force_plugin_autoload)
-                free (weechat_force_plugin_autoload);
-            weechat_force_plugin_autoload = strdup ("!*");
-        }
-        else if ((strcmp (argv[i], "-P") == 0)
-                 || (strcmp (argv[i], "--plugins") == 0))
-        {
-            if (i + 1 < argc)
-            {
+                weechat_home = strdup (optarg);
+                break;
+            case 't': /* -t / --temp-dir */
+                weechat_home_temp = 1;
+                if (weechat_home)
+                {
+                    free (weechat_home);
+                    weechat_home = NULL;
+                }
+                break;
+            case 'h': /* -h / --help */
+                weechat_display_usage ();
+                weechat_shutdown (EXIT_SUCCESS, 0);
+                break;
+            case 'l': /* -l / --license */
+                weechat_display_copyright ();
+                string_fprintf (stdout, "\n");
+                string_fprintf (stdout, "%s%s", WEECHAT_LICENSE_TEXT);
+                weechat_shutdown (EXIT_SUCCESS, 0);
+                break;
+            case 'p': /* -p / --no-plugin */
                 if (weechat_force_plugin_autoload)
                     free (weechat_force_plugin_autoload);
-                weechat_force_plugin_autoload = strdup (argv[++i]);
-            }
-            else
-            {
-                string_fprintf (stderr,
-                                _("Error: missing argument for \"%s\" option\n"),
-                                argv[i]);
-                weechat_shutdown (EXIT_FAILURE, 0);
-            }
-        }
-        else if ((strcmp (argv[i], "-r") == 0)
-                 || (strcmp (argv[i], "--run-command") == 0))
-        {
-            if (i + 1 < argc)
-            {
+                weechat_force_plugin_autoload = strdup ("!*");
+                break;
+            case 'P': /* -P / --plugins */
+                if (weechat_force_plugin_autoload)
+                    free (weechat_force_plugin_autoload);
+                weechat_force_plugin_autoload = strdup (optarg);
+                break;
+            case 'r': /* -r / --run-command */
                 if (!weechat_startup_commands)
                     weechat_startup_commands = weelist_new ();
-                weelist_add (weechat_startup_commands, argv[++i],
+                weelist_add (weechat_startup_commands, optarg,
                              WEECHAT_LIST_POS_END, NULL);
-            }
-            else
-            {
+                break;
+            case 's': /* -s / --no-script */
+                /* option ignored, it will be used by the scripting plugins */
+                break;
+            case 'u': /* --upgrade */
+                weechat_upgrading = 1;
+                break;
+            case 'v': /* -v / --version */
+                string_fprintf (stdout, version_get_version ());
+                fprintf (stdout, "\n");
+                weechat_shutdown (EXIT_SUCCESS, 0);
+                break;
+            case OPTION_NO_DLCLOSE: /* --no-dlclose */
+                /*
+                 * Valgrind works better when dlclose() is not done after
+                 * plugins are unloaded, it can display stack for plugins,*
+                 * otherwise you'll see "???" in stack for functions of
+                 * unloaded plugins.
+                 * This option disables the call to dlclose(),
+                 * it must NOT be used for other purposes!
+                 */
+                weechat_plugin_no_dlclose = 1;
+                break;
+            case OPTION_NO_GNUTLS: /* --no-gnutls */
+                /*
+                 * Electric-fence is not working fine when gnutls loads
+                 * certificates and Valgrind reports many memory errors with
+                 * gnutls.
+                 * This option disables the init/deinit of gnutls,
+                 * it must NOT be used for other purposes!
+                 */
+                weechat_no_gnutls = 1;
+                break;
+            case OPTION_NO_GCRYPT: /* --no-gcrypt */
+                /*
+                 * Valgrind reports many memory errors with gcrypt.
+                 * This option disables the init/deinit of gcrypt,
+                 * it must NOT be used for other purposes!
+                 */
+                weechat_no_gcrypt = 1;
+                break;
+            case ':':
                 string_fprintf (stderr,
                                 _("Error: missing argument for \"%s\" option\n"),
-                                argv[i]);
+                                argv[optind - 1]);
                 weechat_shutdown (EXIT_FAILURE, 0);
-            }
-        }
-        else if (strcmp (argv[i], "--upgrade") == 0)
-        {
-            weechat_upgrading = 1;
-        }
-        else if ((strcmp (argv[i], "-v") == 0)
-                 || (strcmp (argv[i], "--version") == 0))
-        {
-            string_fprintf (stdout, version_get_version ());
-            fprintf (stdout, "\n");
-            weechat_shutdown (EXIT_SUCCESS, 0);
+                break;
+            case '?':
+                /* ignore any unknown option; plugins can use them */
+                break;
+            default:
+                /* ignore any other error */
+                break;
         }
     }
 }
