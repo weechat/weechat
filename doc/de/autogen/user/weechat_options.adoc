@@ -597,7 +597,7 @@
 ** Standardwert: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** Beschreibung: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** Beschreibung: pass:none[Uhrzeit die bei einer Nachricht dargestellt werden soll, sofern die Uhrzeit der vorherigen Nachricht entspricht: bei einem Leerzeichen " " wird keine Uhrzeit angezeigt, oder man kann eine Zeichenkette anstelle der Uhrzeit anzeigen, keine Zeichenkette deaktiviert diese Funktion (Uhrzeit wird angezeigt) (Hinweis: Inhalt wird evaluiert, es kann z.B. eine Farbe mittels dem Format "${color:xxx}" angegeben werden, siehe /help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -1053,13 +1053,13 @@
 ** Standardwert: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** Beschreibung: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** Beschreibung: pass:none[setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige aber nicht die nachfolgende Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen, einfach keine Zeichenkette angeben]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
-** Beschreibung: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** Beschreibung: pass:none[setzt ein Präfix welches anstelle des Nicks der Nachricht vorangestellt wird, sofern die vorherige und die nachfolgende Nachricht von dem selben Nick geschrieben wurde. Wird ein Leerzeichen (" ") genutzt, dann wird der Nachricht kein Präfix vorangestellt. Um diese Funktion zu deaktivieren und den Nick als Präfix zu nutzen, einfach keine Zeichenkette angeben]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
