@@ -47,7 +47,7 @@ option name).
 WeeChat immediately uses the new value (you *never* need to restart WeeChat
 after changes to configuration).
 
-All settings are saved when WeeChat ends (or with `/save` command to force
+All settings are saved when WeeChat ends (or with the `/save` command to force
 a write of the options).
 
 [IMPORTANT]
@@ -82,7 +82,7 @@ The `/fset` command has completion on part of option names, so for example if
 you type `/fset hot` and press kbd:[Tab] this is completed as `/fset hotlist`.
 If you press kbd:[Enter], options about the hotlist are displayed.
 
-For more information about `/fset` command and keys, see `/help fset`.
+For more information about the `/fset` command and keys, see `/help fset`.
 
 [[core_vs_plugins]]
 == Core vs plugins
@@ -99,7 +99,7 @@ other plugins in the list.
 [[add_irc_server]]
 == Add an IRC server
 
-You can add an IRC server with `/server` command, for example:
+You can add an IRC server with the `/server` command, for example:
 
 ----
 /server add freenode chat.freenode.net
@@ -126,7 +126,7 @@ For each server option, WeeChat uses its value if it is defined (not
 "null"). Otherwise WeeChat uses default value ("irc.server_default.xxx").
 
 For example there are default nicks (based on your un*x login), and you can
-override them for freenode server with following command:
+override them for the freenode server with following command:
 
 ----
 /set irc.server.freenode.nicks "mynick,mynick2,mynick3,mynick4,mynick5"
@@ -152,7 +152,7 @@ To connect with SSL:
 /set irc.server.freenode.ssl on
 ----
 
-If SASL is available on server, you can use it for authentication (you will be
+If SASL is available on the server, you can use it for authentication (you will be
 identified before you join channels):
 
 ----
@@ -185,7 +185,7 @@ Then add a secured data with your freenode password:
 /secure set freenode_password xxxxxxx
 ----
 
-Then you can use `+${sec.data.freenode_password}+` instead of your password in
+Then you can use `+${sec.data.freenode_password}+` instead of your password in the
 IRC options mentioned above, for example:
 
 ----
@@ -210,7 +210,7 @@ for example to use default nicks (irc.server_default.nicks):
 /unset irc.server.freenode.nicks
 ----
 
-Other options: you can setup other options with following command ("xxx" is
+Other options: you can setup other options with the following command ("xxx" is
 option name):
 
 ----
@@ -225,11 +225,11 @@ option name):
 ----
 
 [NOTE]
-This command can be used to create and connect to a new server without using
+This command can be used to create and connect to a new server without using the
 `/server` command (see `/help connect`).
 
 By default, server buffers are merged with WeeChat _core_ buffer. To switch
-between _core_ buffer and server buffers, you can use kbd:[Ctrl+x].
+between the _core_ buffer and server buffers, you can use kbd:[Ctrl+x].
 
 It is possible to disable auto merge of server buffers to have independent
 server buffers:
@@ -247,7 +247,7 @@ Join a channel:
 /join #channel
 ----
 
-Part a channel (keeping buffer open):
+Part a channel (keeping the buffer open):
 
 ----
 /part [quit message]
@@ -292,7 +292,7 @@ A buffer is a component linked to a plugin with a number, a category,
 and a name. A buffer contains the data displayed on the screen.
 
 A window is a view on a buffer. By default there's only one window
-displaying one buffer. If you split screen, you will see many windows
+displaying one buffer. If you split the screen, you will see many windows
 with many buffers at same time.
 
 Commands to manage buffers and windows:
@@ -332,10 +332,10 @@ but you should know at least some vital keys:
 - kbd:[Alt+a]: jump to buffer with activity (in hotlist)
 
 According to your keyboard and/or your needs, you can rebind any key
-to a command with `/key` command.
+to a command with the `/key` command.
 A useful key is kbd:[Alt+k] to find key codes.
 
-For example, to bind kbd:[Alt+!] to command `/buffer close`:
+For example, to bind kbd:[Alt+!] to the command `/buffer close`:
 
 ----
 /key bind (press alt-k) (press alt-!) /buffer close
