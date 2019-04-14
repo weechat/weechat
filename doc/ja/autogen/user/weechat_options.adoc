@@ -597,7 +597,7 @@
 ** デフォルト値: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** 説明: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** 説明: pass:none[直前のメッセージと同じ時刻のメッセージに対して表示される時刻: 空白文字 " " の場合は時刻を隠す、これ以外の文字列の場合は時刻の代わりに設定文字列を表示、空文字列の場合はこの機能を無効化 (時刻を表示します) (注意: 設定値は評価されるため、${color:xxx} などを使えます、/help eval を参照してください)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
@@ -1053,13 +1053,13 @@
 ** デフォルト値: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** 説明: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** 説明: pass:none[同じニックネームからの連続したメッセージの中で最後のメッセージに前置するプレフィックス: 空白文字 " " の場合はプレフィックスを隠す、これ以外の文字列の場合は設定値をプレフィックスとして用いる、空文字の場合は本機能を使わない (プレフィックスを表示)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
 * [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
-** 説明: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** 説明: pass:none[同じニックネームからの連続したメッセージの中で最後のメッセージを除くメッセージに前置するプレフィックス: 空白文字 " " の場合はプレフィックスを隠す、これ以外の文字列の場合は設定値をプレフィックスとして用いる、空文字の場合は本機能を使わない (プレフィックスを表示)]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

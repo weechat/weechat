@@ -165,7 +165,7 @@
 ** デフォルト値: `+on+`
 
 * [[option_xfer.network.speed_limit_recv]] *xfer.network.speed_limit_recv*
-** 説明: pass:none[speed limit for receiving files, in kilo-bytes by second (0 means no limit)]
+** 説明: pass:none[ファイル受信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)]
 ** タイプ: 整数
 ** 値: 0 .. 2147483647
 ** デフォルト値: `+0+`
