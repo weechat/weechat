@@ -11269,10 +11269,9 @@ struct t_hook *weechat_hook_info (const char *info_name,
 
 * 新しいフックへのポインタ、エラーが起きた場合は NULL
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≥ 2.5, the callback returns an allocated string
-(with WeeChat ≤ 2.4, it was a pointer to a static string).
+WeeChat バージョン 2.5 以上の場合、コールバックは確保された文字列を返します
+(WeeChat バージョン 2.4 以下の場合、コールバックは定数文字列へのポインタを返します)。
 
 C 言語での使用例:
 
@@ -14575,10 +14574,9 @@ char *weechat_info_get (const char *info_name, const char *arguments);
 
 * 指定したインフォを含む文字列、エラーが起きた場合は NULL
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≥ 2.5, the value returned is an allocated string
-(with WeeChat ≤ 2.4, it was a pointer to a static string).
+WeeChat バージョン 2.5 以上の場合、返却される値は確保された文字列です
+(WeeChat バージョン 2.4 以下の場合、返却される値は定数文字列へのポインタです)。
 
 インフォ:
 

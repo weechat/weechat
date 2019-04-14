@@ -424,10 +424,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    docinfo.html                      | asciidoctor スタイル
 |    docgen.py                         | _autogen/_ ディレクトリ内のファイルを作成する Python スクリプト (以下を参照)
 |    XX/                               | 言語コード XX (言語コード: en、fr、de、it、...) 用のディレクトリ
-// TRANSLATION MISSING
-|       cmdline_options.XX.adoc        | Command-line general options (file included in man pages and user's guide).
-// TRANSLATION MISSING
-|       cmdline_options_debug.XX.adoc  | Command-line debug options (file included in man pages and user's guide).
+|       cmdline_options.XX.adoc        | 一般利用向けコマンドラインオプション (このファイルの内容は man ページとユーザーズガイドにも含まれます)
+|       cmdline_options_debug.XX.adoc  | デバッグ用コマンドラインオプション (このファイルの内容は man ページとユーザーズガイドにも含まれます)
 |       weechat.1.XX.adoc              | man ページ (`man weechat`)
 |       weechat_dev.XX.adoc            | link:weechat_dev.ja.html[開発者リファレンス] (この文書)
 |       weechat_faq.XX.adoc            | link:weechat_faq.ja.html[FAQ]

@@ -512,16 +512,14 @@ WeeChat の初回起動時にデフォルトのオプション設定を含む設
 _~/.weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
-// TRANSLATION MISSING
-==== Command line options
+==== コマンドラインオプション
 
 include::cmdline_options.ja.adoc[]
 
-// TRANSLATION MISSING
-==== Extra debug options
+==== デバッグオプション
 
 [WARNING]
-These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
 
 include::cmdline_options_debug.ja.adoc[]
 
@@ -3635,9 +3633,8 @@ trigger.trigger.beep.post_action = none
 . トリガ条件の確認: 偽の場合、終了
 . 正規表現を使ってトリガ内でテキスト置換
 . コマンドを実行
-// TRANSLATION MISSING
-. exit with a return code (except for hooks _modifier_, _line_, _focus_,
-  _info_ and _info_hashtable_)
+. 戻り値を返して終了
+  (_modifier_、_line_、_focus_、_info_、_info_hashtable_ フックを除く)
 . トリガ実行後の処遇を適用 (`none` 以外の場合)。
 
 [[trigger_hook_arguments]]
@@ -3734,18 +3731,16 @@ trigger.trigger.beep.post_action = none
   `+buffer_nicklist+` |
   link:weechat_plugin_api.ja.html#_hook_focus[hook_focus]
 
-// TRANSLATION MISSING
 | info |
-  1. info name (優先度の指定も可) (必須) +
-  2. info name (優先度の指定も可) +
+  1. インフォ名 (優先度の指定も可) (必須) +
+  2. インフォ名 (優先度の指定も可) +
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.ja.html#_hook_info[hook_info]
 
-// TRANSLATION MISSING
 | info_hashtable |
-  1. info name (優先度の指定も可) (必須) +
-  2. info name (優先度の指定も可) +
+  1. インフォ名 (優先度の指定も可) (必須) +
+  2. インフォ名 (優先度の指定も可) +
   3. ... |
   `+my_info+` |
   link:weechat_plugin_api.ja.html#_hook_info_hashtable[hook_info_hashtable]
@@ -3795,8 +3790,7 @@ _var_
 | config         | tg_value           |
 | focus          |                    |
 | info           | tg_info            | tg_info
-// TRANSLATION MISSING
-| info_hashtable |                    | all variables received in hashtable
+| info_hashtable |                    | ハッシュテーブルで受け取ったすべての変数
 |===
 
 [NOTE]
@@ -4091,7 +4085,6 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:
 string/string) が含まれています。
 
-// TRANSLATION MISSING
 [[trigger_data_info]]
 ===== Info
 
@@ -4100,12 +4093,11 @@ string/string) が含まれています。
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | 変数         | 型     | 説明
-| tg_info_name | string | Name of info.
-| tg_arguments | string | Arguments.
-| tg_info      | string | Empty string (the info to return).
+| tg_info_name | string | インフォ名
+| tg_arguments | string | 引数
+| tg_info      | string | 空文字列 (インフォの返却先)
 |===
 
-// TRANSLATION MISSING
 [[trigger_data_info_hashtable]]
 ===== Info_hashtable
 
@@ -4114,7 +4106,7 @@ string/string) が含まれています。
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | 変数         | 型     | 説明
-| tg_info_name | string | Name of info.
+| tg_info_name | string | インフォ名
 |===
 
 ハッシュテーブルには受け取ったハッシュテーブルに含まれる全てのキーおよび値 (型:

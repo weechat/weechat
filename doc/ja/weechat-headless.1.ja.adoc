@@ -12,7 +12,6 @@ weechat-headless - 拡張可能なチャットクライアント (ヘッドレ�
 
 == 書式
 
-// TRANSLATION MISSING
 [verse]
 *weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <plugins>] [-r|--run-command <command>] [-s|--no-script] [--upgrade] [debug-option...] [plugin:option...]
 *weechat-headless* [-c|--colors]
@@ -33,10 +32,9 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 include::cmdline_options.ja.adoc[]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== デバッグオプション
 
-*WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+*警告:* 以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
 
 include::cmdline_options_debug.ja.adoc[]
 
