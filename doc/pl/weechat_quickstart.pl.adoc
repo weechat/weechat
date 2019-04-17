@@ -41,14 +41,21 @@ Aby otrzymać pomoc dla konkretnej komendy wpisz:
 /help komenda
 ----
 
+// TRANSLATION MISSING
+Help is available for options as well:
+
+----
+/help config.section.option
+----
+
+(gdzie `config` jest nazwą konfiguracyjną (`weechat` dla rdzenia, lub nazwa
+wtyczki), `sekcja` sekcja pliku konfiguracyjnego, oraz `opcja` nazwa opcji).
+
 Do ustawiania opcji służy:
 
 ----
 /set config.sekcja.opcja wartość
 ----
-
-(gdzie `config` jest nazwą konfiguracyjną (`weechat` dla rdzenia, lub nazwa
-wtyczki), `sekcja` sekcja pliku konfiguracyjnego, oraz `opcja` nazwa opcji).
 
 WeeChat natychmiast używa nowej wartości (*nigdy* nie musisz restartować WeeChat
 po zmianach w ustawieniach).
@@ -63,12 +70,6 @@ oraz po każdej zmianie musisz wykonać komendę `/reload`
 (ryzykując utratę zmian, które nie zostały zapisane za pomocą `/save`). +
 Możesz użyć komendy `/set`, która sprawdza wartość i nanosi od razu wymagane
 zmiany.
-
-Pomoc jest dostępna dla opcji:
-
-----
-/help config.section.option
-----
 
 Wtyczka _fset_ pozwala na łatwe przeglądanie i zmianę opcji.
 

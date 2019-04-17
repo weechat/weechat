@@ -35,14 +35,21 @@ K získání nápovědy pro specifický příkaz napište:
 /help příkaz
 ----
 
+// TRANSLATION MISSING
+Help is available for options as well:
+
+----
+/help config.section.option
+----
+
+(kde `config` je jméno konfigurace (`weechat` pro jádro, nebo jméno pluginu),
+`section` sekce této konfigurace a `option` jméno volby).
+
 K nastavení voleb napište:
 
 ----
 /set config.section.option value
 ----
-
-(kde `config` je jméno konfigurace (`weechat` pro jádro, nebo jméno pluginu),
-`section` sekce této konfigurace a `option` jméno volby).
 
 WeeChat okamžitě použije novou hodnotu (*nikdy* nebudete potřebovat restart
 WeeChatu po změně konfigurace).
@@ -58,13 +65,6 @@ you must run the command `/reload` (with the risk of losing other changes
 that were not yet saved with `/save`). +
 You can use the command `/set`, which checks the value and applies immediately
 the changes.
-
-// TRANSLATION MISSING
-Help is available for options:
-
-----
-/help config.section.option
-----
 
 // TRANSLATION MISSING
 The plugin _fset_ allows you to easily browse options and change them.

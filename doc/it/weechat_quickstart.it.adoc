@@ -42,15 +42,22 @@ Per ricevere aiuto su un comando specifico, digitare:
 /help comando
 ----
 
-Per impostare le opzioni, utilizzare:
+// TRANSLATION MISSING
+Help is available for options as well:
 
 ----
-/set config.sezione.opzione valore
+/help config.section.option
 ----
 
 (dove `config` è il nome della configurazione (`weechat` per il core,
 oppure un nome plugin), `sezione` la sezione di questa configurazione
 e `opzione` il nome dell'opzione).
+
+Per impostare le opzioni, utilizzare:
+
+----
+/set config.sezione.opzione valore
+----
 
 WeeChat utilizza subito il nuovo valore (non c'è *mai* bisogno di riavviare
 WeeChat dopo aver cambiato la configurazione).
@@ -66,13 +73,6 @@ you must run the command `/reload` (with the risk of losing other changes
 that were not yet saved with `/save`). +
 You can use the command `/set`, which checks the value and applies immediately
 the changes.
-
-// TRANSLATION MISSING
-Help is available for options:
-
-----
-/help config.section.option
-----
 
 // TRANSLATION MISSING
 The plugin _fset_ allows you to easily browse options and change them.

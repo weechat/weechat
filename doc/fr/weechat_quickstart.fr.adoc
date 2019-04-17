@@ -36,15 +36,21 @@ Pour avoir de l'aide sur une commande, tapez :
 /help commande
 ----
 
-Pour modifier des options, tapez :
+L'aide est également disponible pour les options :
 
 ----
-/set config.section.option valeur
+/help config.section.option
 ----
 
 (où `config` est le nom de la configuration (`weechat` pour le cœur, ou
 un nom d'extension), `section` la section de cette configuration et
 `option` le nom de l'option).
+
+Pour modifier des options, tapez :
+
+----
+/set config.section.option valeur
+----
 
 WeeChat utilise immédiatement la nouvelle valeur (vous n'avez *jamais*
 besoin de redémarrer WeeChat après avoir changé la configuration).
@@ -59,12 +65,6 @@ chaque changement vous devez lancer la commande `/reload` (avec le risque de
 perdre d'autres changements qui n'auraient pas été sauvés avec `/save`). +
 Vous pouvez utiliser la commande `/set`, qui vérifie la valeur et applique
 les changements immédiatement.
-
-L'aide est disponible pour les options ;
-
-----
-/help config.section.option
-----
 
 L'extension _fset_ vous permet de parcourir les options facilement et de les
 modifier.

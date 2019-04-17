@@ -44,15 +44,22 @@ zu lassen:
 /help Befehl
 ----
 
-Um Optionen zu setzen benutzt man:
+// TRANSLATION MISSING
+Help is available for options as well:
 
 ----
-/set config.section.option Wert
+/help config.section.option
 ----
 
 (dabei ist _config_ der Konfigurationsname (_weechat_ für den Kern von weechat,
 oder der Name einer Erweiterung), _section_ ein Abschnitt dieser Konfiguration und _option_
 der Name der entsprechenden Option).
+
+Um Optionen zu setzen benutzt man:
+
+----
+/set config.section.option Wert
+----
 
 WeeChat verwendet umgehend einen neu eingestellten Wert (WeeChat muss also zu *keinem* Zeitpunkt
 neu gestartet werden, nach dem die Konfiguration verändert wurde).
@@ -68,12 +75,6 @@ geladen werden (mit dem Risiko von Datenverlust da Optionen kommentarlos übersc
 bevor man diese ggf. gesichert hat `/save`). +
 Aus diesen Gründen sollte immer der `/set` Befehl genutzt werden, da
 zusätzlich auch die Eingabe auf Plausibilität geprüft wird und Änderungen sofort wirksam werden.
-
-Hilfe ist für Optionen verfügbar:
-
-----
-/help config.section.option
-----
 
 Mit der _fset_ Erweiterung kann man sehr einfach Optionen finden und diese
 den eigenen Bedürfnissen anpassen.
