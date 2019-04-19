@@ -27,8 +27,9 @@
 $ weechat
 ----
 
-[[help_options]]
-== Помощь и параметры
+// TRANSLATION MISSING
+[[help]]
+== Online help
 
 В WeeChat есть справка по всем командам, просто наберите:
 
@@ -51,6 +52,10 @@ Help is available for options as well:
 
 (где `config` — название конфигурации (`weechat` для ядра или название плагина
 для плагина), `section` — группа параметров и `option` — название параметра).
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 Для задания параметров используйте:
 

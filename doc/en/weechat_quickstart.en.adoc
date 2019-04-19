@@ -45,7 +45,7 @@ name), `section` the section of this configuration and `option` the
 option name).
 
 [[options]]
-== Setting options
+== Set options
 
 To set options, issue:
 

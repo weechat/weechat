@@ -20,8 +20,8 @@ Spustění z Vašeho shellu:
 $ weechat
 ----
 
-[[help_options]]
-== On-line nápověda/ volby
+[[help]]
+== On-line nápověda
 
 WeeChat má nápovědů pro všechny příkazy, postě vložte:
 
@@ -44,6 +44,10 @@ Help is available for options as well:
 
 (kde `config` je jméno konfigurace (`weechat` pro jádro, nebo jméno pluginu),
 `section` sekce této konfigurace a `option` jméno volby).
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 K nastavení voleb napište:
 

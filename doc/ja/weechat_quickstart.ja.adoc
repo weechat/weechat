@@ -25,8 +25,8 @@ X 用端末エミュレータは rxvt-unicode を推奨します: UTF-8
 $ weechat
 ----
 
-[[help_options]]
-== オンラインヘルプ / オプション
+[[help]]
+== オンラインヘルプ
 
 WeeChat はすべてのコマンドにヘルプがあります。ヘルプを見るには、以下のコマンドを入力してください:
 
@@ -50,6 +50,10 @@ Help is available for options as well:
 (ここで `config` は設定名 (core の場合は
 `weechat` もしくはプラグイン名)、`section`
 はこの設定のセクション、`option` はオプション名)。
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 オプションを設定するには以下のコマンドを入力してください:
 

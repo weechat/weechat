@@ -28,8 +28,8 @@ Programmstart aus Deiner shell:
 $ weechat
 ----
 
-[[help_options]]
-== Online-Hilfe / Optionen
+[[help]]
+== Online-Hilfe
 
 Für jeden Befehl bietet WeeChat eine Hilfe an:
 
@@ -53,6 +53,10 @@ Für Optionen kann man ebenso eine Hilfe anfordern:
 (dabei ist _config_ der Konfigurationsname (_weechat_ für den Kern von weechat,
 oder der Name einer Erweiterung), _section_ ein Abschnitt dieser Konfiguration und _option_
 der Name der entsprechenden Option).
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 Um Optionen zu setzen benutzt man:
 

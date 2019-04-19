@@ -21,8 +21,8 @@ Lancer depuis votre shell :
 $ weechat
 ----
 
-[[help_options]]
-== Aide en ligne / options
+[[help]]
+== Aide en ligne
 
 WeeChat dispose d'aide pour toutes les commandes, tapez simplement :
 
@@ -45,6 +45,10 @@ L'aide est également disponible pour les options :
 (où `config` est le nom de la configuration (`weechat` pour le cœur, ou
 un nom d'extension), `section` la section de cette configuration et
 `option` le nom de l'option).
+
+// TRANSLATION MISSING
+[[options]]
+== Modifier les options
 
 Pour modifier des options, tapez :
 

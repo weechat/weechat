@@ -26,8 +26,8 @@ Wywołaj z terminala:
 $ weechat
 ----
 
-[[help_options]]
-== Pomoc online / opcje
+[[help]]
+== Pomoc online
 
 WeeChat posiada pomoc dla wszystkich komend, wystarczy wywołać:
 
@@ -50,6 +50,10 @@ Help is available for options as well:
 
 (gdzie `config` jest nazwą konfiguracyjną (`weechat` dla rdzenia, lub nazwa
 wtyczki), `sekcja` sekcja pliku konfiguracyjnego, oraz `opcja` nazwa opcji).
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 Do ustawiania opcji służy:
 

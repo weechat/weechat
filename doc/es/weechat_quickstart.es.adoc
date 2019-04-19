@@ -27,8 +27,8 @@ Run from your shell:
 $ weechat
 ----
 
-[[help_options]]
-== Ayuda en linea / Opciones
+[[help]]
+== Ayuda en linea
 
 WeeChat tiene ayuda para todos los comandos, solo teclee:
 
@@ -52,6 +52,10 @@ Help is available for options as well:
 (donde `config` es el nombre de la configuración del núcleo o del
 plugin que desea configurar,  `section`, la sección de esa configuración
 y `option` el nombre de la opción).
+
+// TRANSLATION MISSING
+[[options]]
+== Set options
 
 Para configurar una opción, use:
 
