@@ -44,8 +44,7 @@ zu lassen:
 /help Befehl
 ----
 
-// TRANSLATION MISSING
-Help is available for options as well:
+Für Optionen kann man ebenso eine Hilfe anfordern:
 
 ----
 /help config.section.option
