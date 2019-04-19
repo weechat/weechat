@@ -19,8 +19,8 @@ Run from your shell:
 $ weechat
 ----
 
-[[help_options]]
-== Online help / options
+[[help]]
+== Online help
 
 WeeChat has help for all commands, just issue:
 
@@ -43,6 +43,9 @@ Help is available for options as well:
 (where `config` is configuration name (`weechat` for core, or a plugin
 name), `section` the section of this configuration and `option` the
 option name).
+
+[[options]]
+== Setting options
 
 To set options, issue:
 
