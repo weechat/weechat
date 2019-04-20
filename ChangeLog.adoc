@@ -52,6 +52,10 @@ Bug fixes::
   * spell: fix detection of nick followed by the nick completer (issue #1306, issue #1307)
   * trigger: fix split of hook arguments (issue #1322)
 
+Tests::
+
+  * unit: add tests on function util_signal_search
+
 Build::
 
   * core: fix generation of man page weechat-headless with autotools
