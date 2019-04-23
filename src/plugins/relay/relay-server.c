@@ -528,7 +528,7 @@ relay_server_create_socket (struct t_relay_server *server)
     else
     {
         domain = AF_UNIX;
-        memset (&server_addr, 0, sizeof (struct sockaddr_un));
+        memset (&server_addr_un, 0, sizeof (struct sockaddr_un));
         server_addr_un.sun_family = domain;
         strncpy (server_addr_un.sun_path, server->path,
                  sizeof (server_addr_un.sun_path));
