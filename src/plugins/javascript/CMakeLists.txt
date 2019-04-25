@@ -30,4 +30,4 @@ if(V8_FOUND)
   target_link_libraries(javascript ${V8_LIBRARY} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS javascript LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS javascript LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

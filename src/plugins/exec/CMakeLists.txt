@@ -27,4 +27,4 @@ set_target_properties(exec PROPERTIES PREFIX "")
 
 target_link_libraries(exec coverage_config)
 
-install(TARGETS exec LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS exec LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

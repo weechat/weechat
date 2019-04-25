@@ -43,4 +43,4 @@ if(PERL_FOUND)
   endif()
 endif()
 
-install(TARGETS perl LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS perl LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

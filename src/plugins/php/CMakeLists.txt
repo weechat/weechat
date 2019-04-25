@@ -28,4 +28,4 @@ if(PHP_FOUND)
   target_link_libraries(php ${PHP_LIB} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS php LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS php LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

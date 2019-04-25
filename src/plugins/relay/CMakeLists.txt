@@ -49,4 +49,4 @@ endif()
 
 target_link_libraries(relay ${LINK_LIBS} coverage_config)
 
-install(TARGETS relay LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS relay LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

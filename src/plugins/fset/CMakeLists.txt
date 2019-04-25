@@ -31,4 +31,4 @@ set_target_properties(fset PROPERTIES PREFIX "")
 
 target_link_libraries(fset coverage_config)
 
-install(TARGETS fset LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS fset LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
