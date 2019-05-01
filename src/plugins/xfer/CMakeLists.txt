@@ -42,4 +42,4 @@ endif()
 
 target_link_libraries(xfer ${LINK_LIBS} coverage_config)
 
-install(TARGETS xfer LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS xfer LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

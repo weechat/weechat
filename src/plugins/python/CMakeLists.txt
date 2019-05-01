@@ -28,4 +28,4 @@ if(PYTHON_FOUND)
   target_link_libraries(python ${PYTHON_LIBRARY} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS python LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS python LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

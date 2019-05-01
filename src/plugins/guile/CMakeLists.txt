@@ -29,4 +29,4 @@ if(GUILE_FOUND)
   target_link_libraries(guile ${LINK_LIBS} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS guile LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS guile LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

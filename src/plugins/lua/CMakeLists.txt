@@ -28,4 +28,4 @@ if(LUA_FOUND)
   target_link_libraries(lua ${LUA_LDFLAGS} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS lua LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS lua LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)

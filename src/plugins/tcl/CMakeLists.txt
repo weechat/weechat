@@ -32,4 +32,4 @@ if(TCL_FOUND)
   target_link_libraries(tcl ${TCL_LIBRARY} weechat_plugins_scripts coverage_config)
 endif()
 
-install(TARGETS tcl LIBRARY DESTINATION ${LIBDIR}/plugins)
+install(TARGETS tcl LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
