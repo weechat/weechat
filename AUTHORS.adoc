@@ -106,6 +106,7 @@ Alphabetically:
 * Romero B. de S. Malaquias
 * Rudolf Polzer (divVerent)
 * Ruslan Bekenev
+* Ryan Farley
 * Ryuunosuke Ayanokouzi
 * scumjr
 * Sergio Durigan Junior
