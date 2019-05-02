@@ -580,8 +580,9 @@ gui_color_init_vars ()
         gui_color_term_color_pairs = COLOR_PAIRS;
         gui_color_term_can_change_color = (can_change_color ()) ? 1 : 0;
 
-        gui_color_num_pairs = (gui_color_term_color_pairs >= 256) ?
-            255 : gui_color_term_color_pairs - 1;
+        /* TODO: ncurses may support 65536, but short type used for pairs supports only 32768? */
+        gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
+            32767 : gui_color_term_color_pairs - 1;
         size = (gui_color_term_colors + 2)
             * (gui_color_term_colors + 2)
             * sizeof (gui_color_pairs[0]);
