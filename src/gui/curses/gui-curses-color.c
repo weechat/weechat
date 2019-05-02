@@ -700,7 +700,7 @@ gui_color_init_pairs_weechat ()
 void
 gui_color_display_terminal_colors ()
 {
-    int lines, line, col, color;
+    int lines, columns, line, col, color;
     char str_line[1024], str_color[64];
 
     initscr ();
@@ -728,13 +728,14 @@ gui_color_display_terminal_colors ()
         printf ("%s\n", _("Default colors:"));
         printf ("------------------------------------------------------------"
                 "--------------------\n");
-        lines = (gui_color_term_colors < 16) ? gui_color_term_colors : 16;
+        columns = 16;
+        lines = (gui_color_term_colors - 1) / columns + 1;
         for (line = 0; line < lines; line++)
         {
             str_line[0] = '\0';
-            for (col = 0; col < 16; col++)
+            for (col = 0; col < columns; col++)
             {
-                color = (col * 16) + line;
+                color = line * columns + col;
                 if (color < gui_color_term_colors)
                 {
                     snprintf (str_color, sizeof (str_color),
