@@ -20,6 +20,8 @@
 #ifndef WEECHAT_NCURSES_FAKE_H
 #define WEECHAT_NCURSES_FAKE_H
 
+#include <stddef.h>
+
 #define ERR (-1)
 #define OK  (0)
 
@@ -42,6 +44,7 @@
 #define COLOR_CYAN	6
 #define COLOR_WHITE	7
 
+#define A_NORMAL 0
 #define A_BOLD 0
 #define A_UNDERLINE 0
 #define A_REVERSE 0
@@ -69,6 +72,11 @@ typedef struct _window WINDOW;
 typedef unsigned char bool;
 typedef int attr_t;
 typedef unsigned chtype;
+
+struct _cchar_t
+{
+};
+typedef struct _cchar_t cchar_t;
 
 extern WINDOW *stdscr;
 extern chtype acs_map[];
@@ -107,6 +115,8 @@ extern int curs_set (int visibility);
 extern int nodelay (WINDOW *win, bool bf);
 extern int werase (WINDOW *win);
 extern int wbkgdset (WINDOW *win, chtype ch);
+extern void wbkgrndset (WINDOW *win, const cchar_t *wcval);
+extern int setcchar (cchar_t *wcval, const wchar_t *wch, attr_t attrs, short pair, const void *opts);
 extern void wchgat (WINDOW *win, int n, attr_t attr, short color,
                     const void *opts);
 extern int mvwchgat (WINDOW *win, int y, int x, int n, attr_t attr, short pair,

@@ -193,7 +193,9 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     else
         bg = gui_weechat_colors[bg & GUI_COLOR_EXTENDED_MASK].background;
 
-    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)) | attrs);
+    cchar_t c;
+    setcchar (&c, L" ", attrs, gui_color_get_pair (fg, bg), NULL);
+    wbkgrndset (window, &c);
     werase (window);
     wmove (window, 0, 0);
 }
@@ -205,9 +207,10 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 void
 gui_window_clrtoeol (WINDOW *window)
 {
-    wbkgdset (window,
-              ' ' | COLOR_PAIR (gui_color_get_pair (gui_window_current_style_fg,
-                                                    gui_window_current_style_bg)));
+    cchar_t c;
+    setcchar (&c, L" ", A_NORMAL, gui_color_get_pair (gui_window_current_style_fg,
+                                                      gui_window_current_style_bg), NULL);
+    wbkgrndset (window, &c);
     wclrtoeol (window);
 }
 
@@ -282,9 +285,8 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
     gui_window_current_style_bg = -1;
     gui_window_current_color_attr = 0;
 
-    wattroff (window, A_ALL_ATTR);
-    wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
-             gui_color[weechat_color]->attributes);
+    wattr_set (window, gui_color[weechat_color]->attributes,
+               gui_color_weechat_get_pair (weechat_color), NULL);
 }
 
 /*
@@ -297,8 +299,8 @@ gui_window_reset_color (WINDOW *window, int weechat_color)
     gui_window_current_style_fg = gui_color[weechat_color]->foreground;
     gui_window_current_style_bg = gui_color[weechat_color]->background;
 
-    wattron (window, COLOR_PAIR(gui_color_weechat_get_pair (weechat_color)) |
-             gui_color[weechat_color]->attributes);
+    wattron (window, gui_color[weechat_color]->attributes);
+    wcolor_set (window, gui_color_weechat_get_pair (weechat_color), NULL);
 }
 
 /*
@@ -333,7 +335,7 @@ gui_window_set_color (WINDOW *window, int fg, int bg)
     gui_window_current_style_fg = fg;
     gui_window_current_style_bg = bg;
 
-    wattron (window, COLOR_PAIR(gui_color_get_pair (fg, bg)));
+    wcolor_set (window, gui_color_get_pair (fg, bg), NULL);
 }
 
 /*
@@ -532,7 +534,7 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
     if ((pair >= 0) && (pair <= gui_color_num_pairs))
     {
         gui_window_remove_color_style (window, A_ALL_ATTR);
-        wattron (window, COLOR_PAIR(pair));
+        wcolor_set (window, pair, NULL);
     }
 }
 
