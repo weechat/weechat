@@ -793,7 +793,7 @@ gui_color_info_term_colors (char *buffer, int size)
 void
 gui_color_buffer_display ()
 {
-    int y, i, lines, line, col, color, max_color, num_items;
+    int y, i, lines, columns, line, col, color, max_color, num_items;
     char str_line[1024], str_color[64], str_rgb[64], **items;
     struct t_gui_color_palette *color_palette;
 
@@ -830,17 +830,16 @@ gui_color_buffer_display ()
                            gui_color_pairs_used,
                            gui_color_num_pairs - gui_color_pairs_used);
     }
+    columns = 16;
     max_color = (gui_color_use_term_colors) ?
-        gui_color_term_colors - 1 : gui_color_num_pairs;
-    if (max_color > 255)
-        max_color = 255;
-    lines = (max_color <= 64) ? 8 : 16;
+        gui_color_term_colors - 1 : gui_color_pairs_used;
+    lines = (max_color + columns) / columns;
     for (line = 0; line < lines; line++)
     {
         str_line[0] = '\0';
-        for (col = 0; col < 16; col++)
+        for (col = 0; col < columns; col++)
         {
-            color = (col * lines) + line;
+            color = line * columns + col;
             if (color <= max_color)
             {
                 if (color == 0)
@@ -852,13 +851,11 @@ gui_color_buffer_display ()
                          || (color <= gui_color_pairs_used))
                 {
                     snprintf (str_color, sizeof (str_color),
-                              "%c%c%05d%c%03d%c",
+                              (color <= 999) ? "%c%c%05d %3d " : "%c%c%05d%5d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_EXTENDED_CHAR,
                               color,
-                              (color == 0) ? '<' : ' ',
-                              color,
-                              (color == 0) ? '>' : ' ');
+                              color);
                 }
                 else
                 {
