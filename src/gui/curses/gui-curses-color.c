@@ -834,7 +834,9 @@ gui_color_buffer_display ()
     columns = 16;
     max_color = (gui_color_use_term_colors) ?
         gui_color_term_colors - 1 : gui_color_pairs_used;
-    lines = (max_color + columns) / columns;
+    /* round up to nearest multiple of columns */
+    max_color = (max_color / columns) * columns + columns - 1;
+    lines = max_color / columns + 1;
     for (line = 0; line < lines; line++)
     {
         str_line[0] = '\0';
@@ -852,7 +854,7 @@ gui_color_buffer_display ()
                          || (color <= gui_color_pairs_used))
                 {
                     snprintf (str_color, sizeof (str_color),
-                              (color <= 999) ? "%c%c%05d %3d " : "%c%c%05d%5d",
+                              (color <= 999) ? "%c%c%05d %03d " : "%c%c%05d%5d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_EXTENDED_CHAR,
                               color,
