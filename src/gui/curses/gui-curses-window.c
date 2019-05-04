@@ -193,9 +193,13 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     else
         bg = gui_weechat_colors[bg & GUI_COLOR_EXTENDED_MASK].background;
 
+#ifdef NCURSES_EXT_COLORS
     cchar_t c;
     setcchar (&c, L" ", attrs, gui_color_get_pair (fg, bg), NULL);
     wbkgrndset (window, &c);
+#else
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)) | attrs);
+#endif
     werase (window);
     wmove (window, 0, 0);
 }
@@ -207,10 +211,16 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 void
 gui_window_clrtoeol (WINDOW *window)
 {
+#ifdef NCURSES_EXT_COLORS
     cchar_t c;
     setcchar (&c, L" ", A_NORMAL, gui_color_get_pair (gui_window_current_style_fg,
                                                       gui_window_current_style_bg), NULL);
     wbkgrndset (window, &c);
+#else
+    wbkgdset (window,
+              ' ' | COLOR_PAIR (gui_color_get_pair (gui_window_current_style_fg,
+                                                    gui_window_current_style_bg)));
+#endif
     wclrtoeol (window);
 }
 
