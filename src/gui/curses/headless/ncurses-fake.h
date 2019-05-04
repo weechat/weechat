@@ -104,6 +104,7 @@ extern int wnoutrefresh (WINDOW *win);
 extern int wclrtoeol (WINDOW *win);
 extern int mvwprintw (WINDOW *win, int y, int x, const char *fmt, ...);
 extern int init_pair (short pair, short f, short b);
+extern int init_extended_pair (int pair, int f, int b);
 extern bool has_colors ();
 extern int cbreak ();
 extern int start_color ();

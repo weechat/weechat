@@ -60,7 +60,7 @@ struct t_gui_window_saved_style
     int color_attr;
     int emphasis;
     attr_t attrs;
-    short pair;
+    int pair;
 };
 
 struct t_gui_window_curses_objects

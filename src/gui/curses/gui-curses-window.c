@@ -176,7 +176,7 @@ gui_window_objects_free (struct t_gui_window *window, int free_separators)
 void
 gui_window_clear (WINDOW *window, int fg, int bg)
 {
-    int attrs;
+    int attrs, pair;
 
     if (!gui_init_ok)
         return;
@@ -195,7 +195,8 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 
 #ifdef NCURSES_EXT_COLORS
     cchar_t c;
-    setcchar (&c, L" ", attrs, gui_color_get_pair (fg, bg), NULL);
+    pair = gui_color_get_pair (fg, bg);
+    setcchar (&c, L" ", attrs, 0, &pair);
     wbkgrndset (window, &c);
 #else
     wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (fg, bg)) | attrs);
@@ -211,10 +212,13 @@ gui_window_clear (WINDOW *window, int fg, int bg)
 void
 gui_window_clrtoeol (WINDOW *window)
 {
+    int pair;
+
 #ifdef NCURSES_EXT_COLORS
     cchar_t c;
-    setcchar (&c, L" ", A_NORMAL, gui_color_get_pair (gui_window_current_style_fg,
-                                                      gui_window_current_style_bg), NULL);
+    pair = gui_color_get_pair (gui_window_current_style_fg,
+                               gui_window_current_style_bg);
+    setcchar (&c, L" ", A_NORMAL, 0, &pair);
     wbkgrndset (window, &c);
 #else
     wbkgdset (window,
@@ -233,7 +237,9 @@ gui_window_save_style (WINDOW *window)
 {
     struct t_gui_window_saved_style *ptr_saved_style;
     attr_t *ptr_attrs;
-    short *ptr_pair;
+    short short_pair;
+    short *ptr_short_pair;
+    int *ptr_int_pair;
 
     /* get pointer on saved style */
     ptr_saved_style = &gui_window_saved_style[gui_window_saved_style_index];
@@ -244,8 +250,14 @@ gui_window_save_style (WINDOW *window)
     ptr_saved_style->color_attr = gui_window_current_color_attr;
     ptr_saved_style->emphasis = gui_window_current_emphasis;
     ptr_attrs = &ptr_saved_style->attrs;
-    ptr_pair = &ptr_saved_style->pair;
-    wattr_get (window, ptr_attrs, ptr_pair, NULL);
+#ifdef NCURSES_EXT_COLORS
+    ptr_int_pair = &ptr_saved_style->pair;
+    wattr_get (window, ptr_attrs, (short*) NULL, ptr_int_pair);
+#else
+    ptr_short_pair = &short_pair;
+    wattr_get (window, ptr_attrs, ptr_short_pair, NULL);
+    ptr_saved_style->pair = short_pair;
+#endif
 
     /* increment style index (circular list) */
     gui_window_saved_style_index++;
@@ -275,13 +287,21 @@ gui_window_restore_style (WINDOW *window)
     gui_window_current_style_bg = ptr_saved_style->style_bg;
     gui_window_current_color_attr = ptr_saved_style->color_attr;
     gui_window_current_emphasis = ptr_saved_style->emphasis;
+#ifdef NCURSES_EXT_COLORS
+    wattr_set (window, ptr_saved_style->attrs, 0, &ptr_saved_style->pair);
+#else
     wattr_set (window, ptr_saved_style->attrs, ptr_saved_style->pair, NULL);
+#endif
     /*
      * for unknown reason, the wattr_set function sometimes
      * fails to set the color pair under FreeBSD, so we force
      * it again with wcolor_set
      */
+#ifdef NCURSES_EXT_COLORS
+    wcolor_set (window, 0, &ptr_saved_style->pair);
+#else
     wcolor_set (window, ptr_saved_style->pair, NULL);
+#endif
 }
 
 /*
@@ -291,12 +311,20 @@ gui_window_restore_style (WINDOW *window)
 void
 gui_window_reset_style (WINDOW *window, int weechat_color)
 {
+    int pair;
+
     gui_window_current_style_fg = -1;
     gui_window_current_style_bg = -1;
     gui_window_current_color_attr = 0;
 
+#ifdef NCURSES_EXT_COLORS
+    pair = gui_color_weechat_get_pair (weechat_color);
+    wattr_set (window, gui_color[weechat_color]->attributes,
+               0, &pair);
+#else
     wattr_set (window, gui_color[weechat_color]->attributes,
                gui_color_weechat_get_pair (weechat_color), NULL);
+#endif
 }
 
 /*
@@ -306,11 +334,18 @@ gui_window_reset_style (WINDOW *window, int weechat_color)
 void
 gui_window_reset_color (WINDOW *window, int weechat_color)
 {
+    int pair;
+
     gui_window_current_style_fg = gui_color[weechat_color]->foreground;
     gui_window_current_style_bg = gui_color[weechat_color]->background;
 
     wattron (window, gui_color[weechat_color]->attributes);
+#ifdef NCURSES_EXT_COLORS
+    pair = gui_color_weechat_get_pair (weechat_color);
+    wcolor_set (window, 0, &pair);
+#else
     wcolor_set (window, gui_color_weechat_get_pair (weechat_color), NULL);
+#endif
 }
 
 /*
@@ -342,10 +377,17 @@ gui_window_remove_color_style (WINDOW *window, int style)
 void
 gui_window_set_color (WINDOW *window, int fg, int bg)
 {
+    int pair;
+
     gui_window_current_style_fg = fg;
     gui_window_current_style_bg = bg;
 
+#ifdef NCURSES_EXT_COLORS
+    pair = gui_color_get_pair (fg, bg);
+    wcolor_set (window, 0, &pair);
+#else
     wcolor_set (window, gui_color_get_pair (fg, bg), NULL);
+#endif
 }
 
 /*
@@ -544,7 +586,11 @@ gui_window_set_custom_color_pair (WINDOW *window, int pair)
     if ((pair >= 0) && (pair <= gui_color_num_pairs))
     {
         gui_window_remove_color_style (window, A_ALL_ATTR);
+#ifdef NCURSES_EXT_COLORS
+        wcolor_set (window, 0, &pair);
+#else
         wcolor_set (window, pair, NULL);
+#endif
     }
 }
 
@@ -570,23 +616,37 @@ void
 gui_window_emphasize (WINDOW *window, int x, int y, int count)
 {
     attr_t attrs, *ptr_attrs;
-    short pair, *ptr_pair;
+    short short_pair, *ptr_short_pair;
+    int int_pair, *ptr_int_pair;
 
     if (config_emphasized_attributes == 0)
     {
         /* use color for emphasis (from config) */
+#ifdef NCURSES_EXT_COLORS
+        int_pair = gui_color_weechat_get_pair (GUI_COLOR_EMPHASIS);
+        mvwchgat (window, y, x, count,
+                  gui_color[GUI_COLOR_EMPHASIS]->attributes,
+                  0, &int_pair);
+#else
         mvwchgat (window, y, x, count,
                   gui_color[GUI_COLOR_EMPHASIS]->attributes,
                   gui_color_weechat_get_pair (GUI_COLOR_EMPHASIS), NULL);
+#endif
     }
     else
     {
         /* exclusive or (XOR) with attributes */
         attrs = 0;
-        pair = 0;
         ptr_attrs = &attrs;
-        ptr_pair = &pair;
-        wattr_get (window, ptr_attrs, ptr_pair, NULL);
+#ifdef NCURSES_EXT_COLORS
+        int_pair = 0;
+        ptr_int_pair = &int_pair;
+        wattr_get (window, ptr_attrs, (short*) NULL, ptr_int_pair);
+#else
+        short_pair = 0;
+        ptr_short_pair = &short_pair;
+        wattr_get (window, ptr_attrs, ptr_short_pair, NULL);
+#endif
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BOLD_FLAG)
             attrs ^= A_BOLD;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_REVERSE_FLAG)
@@ -595,7 +655,11 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
             attrs ^= A_ITALIC;
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
             attrs ^= A_UNDERLINE;
-        mvwchgat (window, y, x, count, attrs, pair, NULL);
+#ifdef NCURSES_EXT_COLORS
+        mvwchgat (window, y, x, count, attrs, 0, &int_pair);
+#else
+        mvwchgat (window, y, x, count, attrs, short_pair, NULL);
+#endif
     }
 
     /* move the cursor after the text (mvwchgat does not move cursor) */

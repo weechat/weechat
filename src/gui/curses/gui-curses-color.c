@@ -43,6 +43,13 @@
 #include "gui-curses.h"
 
 
+#ifdef NCURSES_EXT_FUNCS
+#define INIT_PAIR(__pair, __f, __b) (init_extended_pair (__pair, __f, __b))
+#else
+#define INIT_PAIR(__pair, __f, __b) (init_pair (__pair, __f, __b))
+#endif
+
+
 #define GUI_COLOR_TIMER_TERM_COLORS 10
 
 struct t_gui_color gui_weechat_colors_bold[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
@@ -97,7 +104,7 @@ short *gui_color_term_color_content = NULL; /* content of colors (r/b/g)    */
 
 /* pairs */
 int gui_color_num_pairs = 63;            /* number of pairs used by WeeChat */
-short *gui_color_pairs = NULL;           /* table with pair for each fg+bg  */
+int *gui_color_pairs = NULL;             /* table with pair for each fg+bg  */
 int gui_color_pairs_used = 0;            /* number of pairs currently used  */
 int gui_color_warning_pairs_full = 0;    /* warning displayed?              */
 int gui_color_pairs_auto_reset = 0;         /* auto reset of pairs needed   */
@@ -413,7 +420,7 @@ gui_color_get_pair (int fg, int bg)
         /* create a new pair if no pair exists for this fg/bg */
         gui_color_pairs_used++;
         gui_color_pairs[index] = gui_color_pairs_used;
-        init_pair (gui_color_pairs_used, fg, bg);
+        INIT_PAIR(gui_color_pairs_used, fg, bg);
         if ((gui_color_num_pairs > 1) && !gui_color_pairs_auto_reset_pending
             && (CONFIG_INTEGER(config_look_color_pairs_auto_reset) >= 0)
             && (gui_color_num_pairs - gui_color_pairs_used <= CONFIG_INTEGER(config_look_color_pairs_auto_reset)))
@@ -580,9 +587,12 @@ gui_color_init_vars ()
         gui_color_term_color_pairs = COLOR_PAIRS;
         gui_color_term_can_change_color = (can_change_color ()) ? 1 : 0;
 
-        /* TODO: ncurses may support 65536, but short type used for pairs supports only 32768? */
+#ifdef NCURSES_EXT_FUNCS
+        gui_color_num_pairs = gui_color_term_color_pairs - 1;
+#else
         gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
             32767 : gui_color_term_color_pairs - 1;
+#endif
         size = (gui_color_term_colors + 2)
             * (gui_color_term_colors + 2)
             * sizeof (gui_color_pairs[0]);
@@ -651,9 +661,9 @@ gui_color_init_pairs_terminal ()
 
     if (gui_color_term_has_colors)
     {
-        for (i = 1; i <= gui_color_num_pairs; i++)
+        for (i = 1; i <= gui_color_term_colors; i++)
         {
-            init_pair (i, i, -1);
+            INIT_PAIR(i, i, -1);
         }
     }
 }
@@ -679,9 +689,9 @@ gui_color_init_pairs_weechat ()
             for (i = 1; i <= gui_color_num_pairs; i++)
             {
                 if ((foregrounds[i] >= -1) && (backgrounds[i] >= -1))
-                    init_pair (i, foregrounds[i], backgrounds[i]);
+                    INIT_PAIR(i, foregrounds[i], backgrounds[i]);
                 else
-                    init_pair (i, i, -1);
+                    INIT_PAIR(i, i, -1);
             }
         }
         if (foregrounds)
