@@ -30,6 +30,7 @@ New features::
   * api: replace argument "keep_eol" by "flags" in function string_split (issue #1322)
   * api: add function command_options (issue #928)
   * api: add function string_match_list
+  * irc: add bar items "irc_nick", "irc_host" and "irc_nick_host"
   * irc: add variable "nick_host" in server structure
   * relay: add option relay.weechat.commands (issue #928)
   * script: use SHA-512 instead of MD5 for script checksum

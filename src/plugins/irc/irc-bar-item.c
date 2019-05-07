@@ -380,6 +380,106 @@ irc_bar_item_channel (const void *pointer, void *data,
 }
 
 /*
+ * Returns content of bar item "irc_nick": bar item with nick name
+ * (without modes).
+ */
+
+char *
+irc_bar_item_nick (const void *pointer, void *data,
+                   struct t_gui_bar_item *item,
+                   struct t_gui_window *window, struct t_gui_buffer *buffer,
+                   struct t_hashtable *extra_info)
+{
+    char buf[512];
+    struct t_irc_server *server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
+    if (!server || !server->nick)
+        return NULL;
+
+    snprintf (buf, sizeof (buf), "%s%s",
+              IRC_COLOR_INPUT_NICK,
+              server->nick);
+
+    return strdup (buf);
+}
+
+/*
+ * Returns content of bar item "irc_host": bar item with self host.
+ */
+
+char *
+irc_bar_item_host (const void *pointer, void *data,
+                   struct t_gui_bar_item *item,
+                   struct t_gui_window *window, struct t_gui_buffer *buffer,
+                   struct t_hashtable *extra_info)
+{
+    struct t_irc_server *server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
+    if (!server || !server->nick_host)
+        return NULL;
+
+    return strdup (server->nick_host);
+}
+
+/*
+ * Returns content of bar item "irc_nick_host": bar item with nick and host.
+ */
+
+char *
+irc_bar_item_nick_host (const void *pointer, void *data,
+                        struct t_gui_bar_item *item,
+                        struct t_gui_window *window,
+                        struct t_gui_buffer *buffer,
+                        struct t_hashtable *extra_info)
+{
+    char buf[512];
+    struct t_irc_server *server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
+    if (!server || !server->nick)
+        return NULL;
+
+    snprintf (buf, sizeof (buf), "%s%s%s",
+              server->nick,
+              (server->nick_host) ? "@" : "",
+              (server->nick_host) ? server->nick_host : "");
+
+    return strdup (buf);
+}
+
+/*
  * Returns content of bar item "lag": bar item with lag value.
  */
 
@@ -615,6 +715,9 @@ irc_bar_item_buffer_switch (const void *pointer, void *data,
     weechat_bar_item_update ("lag");
     weechat_bar_item_update ("input_prompt");
     weechat_bar_item_update ("irc_nick_modes");
+    weechat_bar_item_update ("irc_nick");
+    weechat_bar_item_update ("irc_host");
+    weechat_bar_item_update ("irc_nick_host");
 
     return WEECHAT_RC_OK;
 }
@@ -648,6 +751,12 @@ irc_bar_item_init ()
                           &irc_bar_item_buffer_modes, NULL, NULL);
     weechat_bar_item_new ("irc_channel",
                           &irc_bar_item_channel, NULL, NULL);
+    weechat_bar_item_new ("irc_nick",
+                          &irc_bar_item_nick, NULL, NULL);
+    weechat_bar_item_new ("irc_host",
+                          &irc_bar_item_host, NULL, NULL);
+    weechat_bar_item_new ("irc_nick_host",
+                          &irc_bar_item_nick_host, NULL, NULL);
     weechat_bar_item_new ("lag",
                           &irc_bar_item_lag, NULL, NULL);
     weechat_bar_item_new ("input_prompt",

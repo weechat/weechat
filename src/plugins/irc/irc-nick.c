@@ -624,7 +624,11 @@ irc_nick_set_mode (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_nicklist_add (server, channel, nick);
 
     if (irc_server_strcasecmp (server, nick->name, server->nick) == 0)
+    {
         weechat_bar_item_update ("input_prompt");
+        weechat_bar_item_update ("irc_nick");
+        weechat_bar_item_update ("irc_nick_host");
+    }
 }
 
 /*

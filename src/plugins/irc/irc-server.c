@@ -756,6 +756,8 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     }
 
     weechat_bar_item_update ("input_prompt");
+    weechat_bar_item_update ("irc_nick");
+    weechat_bar_item_update ("irc_nick_host");
 }
 
 /*
@@ -787,6 +789,9 @@ irc_server_set_nick_host (struct t_irc_server *server, const char *host)
         weechat_buffer_set (ptr_channel->buffer,
                             "localvar_set_nick_host", host);
     }
+
+    weechat_bar_item_update ("irc_host");
+    weechat_bar_item_update ("irc_nick_host");
 }
 
 /*
@@ -5115,6 +5120,8 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
     {
         free (server->nick_host);
         server->nick_host = NULL;
+        weechat_bar_item_update ("irc_host");
+        weechat_bar_item_update ("irc_nick_host");
     }
     server->checking_cap_ls = 0;
     weechat_hashtable_remove_all (server->cap_ls);
