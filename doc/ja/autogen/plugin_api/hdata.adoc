@@ -243,6 +243,7 @@ _nick_first_tried_   (integer) +
 _nick_alternate_number_   (integer) +
 _nick_   (string) +
 _nick_modes_   (string) +
+_nick_host_   (string) +
 _checking_cap_ls_   (integer) +
 _cap_ls_   (hashtable) +
 _checking_cap_list_   (integer) +

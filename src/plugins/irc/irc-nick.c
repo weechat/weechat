@@ -184,6 +184,26 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
 }
 
 /*
+ * Sets host for nick.
+ */
+
+void
+irc_nick_set_host (struct t_irc_nick *nick, const char *host)
+{
+    /* if host is the same, just return */
+    if ((!nick->host && !host)
+        || (nick->host && host && strcmp (nick->host, host) == 0))
+    {
+        return;
+    }
+
+    /* update the host in nick */
+    if (nick->host)
+        free (nick->host);
+    nick->host = (host) ? strdup (host) : NULL;
+}
+
+/*
  * Checks if nick is "op" (or better than "op", for example channel admin or
  * channel owner).
  *

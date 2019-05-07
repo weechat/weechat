@@ -50,6 +50,7 @@ extern int irc_nick_valid (struct t_irc_channel *channel,
 extern int irc_nick_is_nick (const char *string);
 extern char *irc_nick_find_color (const char *nickname);
 extern char *irc_nick_find_color_name (const char *nickname);
+extern void irc_nick_set_host (struct t_irc_nick *nick, const char *host);
 extern int irc_nick_is_op (struct t_irc_server *server,
                            struct t_irc_nick *nick);
 extern int irc_nick_has_prefix_mode (struct t_irc_server *server,

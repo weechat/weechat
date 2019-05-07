@@ -735,6 +735,14 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
 {
     struct t_irc_channel *ptr_channel;
 
+    /* if nick is the same, just return */
+    if ((!server->nick && !nick)
+        || (server->nick && nick && strcmp (server->nick, nick) == 0))
+    {
+        return;
+    }
+
+    /* update the nick in server */
     if (server->nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
@@ -748,6 +756,37 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
     }
 
     weechat_bar_item_update ("input_prompt");
+}
+
+/*
+ * Sets nick host for server.
+ */
+
+void
+irc_server_set_nick_host (struct t_irc_server *server, const char *host)
+{
+    struct t_irc_channel *ptr_channel;
+
+    /* if host is the same, just return */
+    if ((!server->nick_host && !host)
+        || (server->nick_host && host && strcmp (server->nick_host, host) == 0))
+    {
+        return;
+    }
+
+    /* update the nick host in server */
+    if (server->nick_host)
+        free (server->nick_host);
+    server->nick_host = (host) ? strdup (host) : NULL;
+
+    /* set local variable "nick_host" for server and all channels/pv */
+    weechat_buffer_set (server->buffer, "localvar_set_nick_host", host);
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        weechat_buffer_set (ptr_channel->buffer,
+                            "localvar_set_nick_host", host);
+    }
 }
 
 /*
@@ -1335,6 +1374,7 @@ irc_server_alloc (const char *name)
     new_server->nick_alternate_number = -1;
     new_server->nick = NULL;
     new_server->nick_modes = NULL;
+    new_server->nick_host = NULL;
     new_server->checking_cap_ls = 0;
     new_server->cap_ls = weechat_hashtable_new (32,
                                                 WEECHAT_HASHTABLE_STRING,
@@ -1862,6 +1902,8 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->nick);
     if (server->nick_modes)
         free (server->nick_modes);
+    if (server->nick_host)
+        free (server->nick_host);
     if (server->isupport)
         free (server->isupport);
     if (server->prefix_modes)
@@ -5069,6 +5111,11 @@ irc_server_disconnect (struct t_irc_server *server, int switch_address,
         weechat_bar_item_update ("input_prompt");
         weechat_bar_item_update ("irc_nick_modes");
     }
+    if (server->nick_host)
+    {
+        free (server->nick_host);
+        server->nick_host = NULL;
+    }
     server->checking_cap_ls = 0;
     weechat_hashtable_remove_all (server->cap_ls);
     server->checking_cap_list = 0;
@@ -5627,6 +5674,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_alternate_number, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_modes, STRING, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, nick_host, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, checking_cap_ls, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, cap_ls, HASHTABLE, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, checking_cap_list, INTEGER, 0, NULL, NULL);
@@ -5851,6 +5899,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "nick", server->nick))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nick_host", server->nick_host))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "checking_cap_ls", server->checking_cap_ls))
         return 0;
@@ -6238,6 +6288,7 @@ irc_server_print_log ()
         weechat_log_printf ("  nick_alternate_number: %d",    ptr_server->nick_alternate_number);
         weechat_log_printf ("  nick . . . . . . . . : '%s'",  ptr_server->nick);
         weechat_log_printf ("  nick_modes . . . . . : '%s'",  ptr_server->nick_modes);
+        weechat_log_printf ("  nick_host. . . . . . : '%s'",  ptr_server->nick_host);
         weechat_log_printf ("  checking_cap_ls. . . : %d",    ptr_server->checking_cap_ls);
         weechat_log_printf ("  cap_ls . . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_server->cap_ls,

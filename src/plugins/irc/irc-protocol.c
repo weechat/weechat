@@ -831,8 +831,11 @@ IRC_PROTOCOL_CALLBACK(chghost)
             weechat_prefix ("error"), IRC_PLUGIN_NAME, "chghost");
         return WEECHAT_RC_OK;
     }
-
     snprintf (str_host, length, "%s@%s", argv[2], pos_new_host);
+
+    if (local_chghost)
+        irc_server_set_nick_host (server, str_host);
+
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -869,10 +872,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
                     IRC_COLOR_CHAT_HOST,
                     str_host);
             }
-
-            if (ptr_nick->host)
-                free (ptr_nick->host);
-            ptr_nick->host = strdup (str_host);
+            irc_nick_set_host (ptr_nick, str_host);
         }
     }
 
@@ -1200,7 +1200,10 @@ IRC_PROTOCOL_CALLBACK(join)
     }
 
     if (local_join)
+    {
+        irc_server_set_nick_host (server, address);
         irc_bar_item_update_channel ();
+    }
 
     return WEECHAT_RC_OK;
 }
@@ -1519,7 +1522,10 @@ IRC_PROTOCOL_CALLBACK(nick)
     local_nick = (irc_server_strcasecmp (server, nick, server->nick) == 0) ? 1 : 0;
 
     if (local_nick)
+    {
         irc_server_set_nick (server, new_nick);
+        irc_server_set_nick_host (server, address);
+    }
 
     ptr_nick_found = NULL;
 
@@ -1586,8 +1592,7 @@ IRC_PROTOCOL_CALLBACK(nick)
                     weechat_buffer_set (NULL, "hotlist", "-");
 
                     /* set host in nick if needed */
-                    if (!ptr_nick->host)
-                        ptr_nick->host = strdup (address);
+                    irc_nick_set_host (ptr_nick, address);
 
                     /* change nick and display message on channel */
                     old_color = strdup (ptr_nick->color);
@@ -2224,8 +2229,7 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             /* other message */
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
-            if (ptr_nick && !ptr_nick->host)
-                ptr_nick->host = strdup (address);
+            irc_nick_set_host (ptr_nick, address);
 
             if (status_msg[0])
             {
@@ -4563,7 +4567,7 @@ IRC_PROTOCOL_CALLBACK(351)
 
 IRC_PROTOCOL_CALLBACK(352)
 {
-    char *pos_attr, *pos_hopcount, *pos_realname;
+    char *pos_attr, *pos_hopcount, *pos_realname, *str_host;
     int arg_start, length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -4602,12 +4606,14 @@ IRC_PROTOCOL_CALLBACK(352)
     /* update host in nick */
     if (ptr_nick)
     {
-        if (ptr_nick->host)
-            free (ptr_nick->host);
         length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
-        ptr_nick->host = malloc (length);
-        if (ptr_nick->host)
-            snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
+        str_host = malloc (length);
+        if (str_host)
+        {
+            snprintf (str_host, length, "%s@%s", argv[4], argv[5]);
+            irc_nick_set_host (ptr_nick, str_host);
+            free (str_host);
+        }
     }
 
     /* update away flag in nick */
@@ -4822,7 +4828,7 @@ IRC_PROTOCOL_CALLBACK(353)
 
 IRC_PROTOCOL_CALLBACK(354)
 {
-    char *pos_attr, *pos_hopcount, *pos_account, *pos_realname;
+    char *pos_attr, *pos_hopcount, *pos_account, *pos_realname, *str_host;
     int length;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -4869,15 +4875,14 @@ IRC_PROTOCOL_CALLBACK(354)
     /* update host in nick */
     if (ptr_nick)
     {
-        if (ptr_nick->host)
-        {
-            free (ptr_nick->host);
-            ptr_nick->host = NULL;
-        }
         length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
-        ptr_nick->host = malloc (length);
-        if (ptr_nick->host)
-            snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
+        str_host = malloc (length);
+        if (str_host)
+        {
+            snprintf (str_host, length, "%s@%s", argv[4], argv[5]);
+            irc_nick_set_host (ptr_nick, str_host);
+            free (str_host);
+        }
     }
 
     /* update away flag in nick */
