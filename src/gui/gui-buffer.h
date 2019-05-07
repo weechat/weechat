@@ -295,7 +295,7 @@ extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                            const char *new_tags);
 extern void gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
                                                     const char *new_hotlist_max_level_nicks);
-extern void gui_buffer_set_unread (struct t_gui_buffer *buffer);
+extern void gui_buffer_set_unread (struct t_gui_buffer *buffer, int target);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             const char *value);
 extern void gui_buffer_set_pointer (struct t_gui_buffer *buffer,

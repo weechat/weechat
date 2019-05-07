@@ -1848,21 +1848,35 @@ gui_buffer_set_input_get_empty (struct t_gui_buffer *buffer,
  */
 
 void
-gui_buffer_set_unread (struct t_gui_buffer *buffer)
+gui_buffer_set_unread (struct t_gui_buffer *buffer, int target)
 {
-    int refresh;
+    struct t_gui_window *window;
+    struct t_gui_line *old_last_read_line;
+    int old_first_line_not_read;
 
     if (!buffer || (buffer->type != GUI_BUFFER_TYPE_FORMATTED))
         return;
 
-    refresh = ((buffer->lines->last_read_line != NULL)
-               && (buffer->lines->last_read_line != buffer->lines->last_line));
+    window = gui_window_search_with_buffer (buffer);
+    old_last_read_line = buffer->lines->last_read_line;
+    old_first_line_not_read = buffer->lines->first_line_not_read;
 
-    buffer->lines->last_read_line = buffer->lines->last_line;
+    if (target < 0)
+        buffer->lines->last_read_line = buffer->lines->last_line;
+    else if (target == 0)
+        buffer->lines->last_read_line = NULL;
+    else
+        buffer->lines->last_read_line = (window && window->scroll->end_line) ?
+            window->scroll->end_line : buffer->lines->last_line;
     buffer->lines->first_line_not_read = (buffer->lines->last_read_line) ? 0 : 1;
 
-    if (refresh)
+    if (old_last_read_line != buffer->lines->last_read_line ||
+        old_first_line_not_read != buffer->lines->first_line_not_read)
+    {
+        if (window)
+            window->refresh_due_unread = 1;
         gui_buffer_ask_chat_refresh (buffer, 2);
+    }
 }
 
 /*
@@ -1910,7 +1924,12 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     /* properties that need a buffer */
     if (string_strcasecmp (property, "unread") == 0)
     {
-        gui_buffer_set_unread (buffer);
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && value[0] && !error[0])
+            gui_buffer_set_unread (buffer, number);
+        else
+            gui_buffer_set_unread (buffer, -1);
     }
     else if (string_strcasecmp (property, "display") == 0)
     {

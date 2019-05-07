@@ -3151,6 +3151,8 @@ COMMAND_CALLBACK(input)
         gui_input_set_unread ();
     else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
         gui_input_set_unread_current (buffer);
+    else if (string_strcasecmp (argv[1], "set_unread_current_buffer_here") == 0)
+        gui_input_set_unread_current_here (buffer);
     else if (string_strcasecmp (argv[1], "switch_active_buffer") == 0)
         gui_input_switch_active_buffer (buffer);
     else if (string_strcasecmp (argv[1], "zoom_merged_buffer") == 0)
@@ -7564,6 +7566,7 @@ command_init ()
            "  grab_mouse_area: grab mouse event code with area\n"
            "  set_unread: set unread marker for all buffers\n"
            "  set_unread_current_buffer: set unread marker for current buffer\n"
+           "  set_unread_current_buffer_here: set unread marker at current position\n"
            "  switch_active_buffer: switch to next merged buffer\n"
            "  switch_active_buffer_previous: switch to previous merged buffer\n"
            "  zoom_merged_buffer: zoom on merged buffer\n"
@@ -7588,7 +7591,8 @@ command_init ()
         "jump_previously_visited_buffer || jump_next_visited_buffer || "
         "hotlist_clear 1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|lowest|highest || "
         "grab_key || grab_key_command || grab_mouse || grab_mouse_area || "
-        "set_unread || set_unread_current_buffer || switch_active_buffer || "
+        "set_unread || set_unread_current_buffer || "
+        "set_unread_current_buffer_here || switch_active_buffer || "
         "switch_active_buffer_previous || zoom_merged_buffer || insert || "
         "send || paste_start || paste_stop",
         &command_input, NULL, NULL);

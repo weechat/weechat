@@ -12542,8 +12542,10 @@ Properties:
   "1": do not stop completion when command line is updated
   (global setting, buffer pointer is not used).
 
-| unread | - |
-  Set unread marker after last line of buffer.
+| unread | "0", "1", or "-1" |
+  "0": set unread marker before first line
+  "1": set unread marker after end line of current scroll position
+  "-1": set unread marker after last line of buffer
 
 | display | "1" or "auto" |
   "1": switch to this buffer in current window +

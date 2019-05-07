@@ -971,12 +971,12 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments,
             if (reset_unread_marker)
             {
                 if (weechat_buffer_get_integer (server->buffer, "num_displayed") > 0)
-                    weechat_buffer_set (server->buffer, "unread", "");
+                    weechat_buffer_set (server->buffer, "unread", "-1");
                 for (ptr_channel = server->channels; ptr_channel;
                      ptr_channel = ptr_channel->next_channel)
                 {
                     if (weechat_buffer_get_integer (ptr_channel->buffer, "num_displayed") > 0)
-                        weechat_buffer_set (ptr_channel->buffer, "unread", "");
+                        weechat_buffer_set (ptr_channel->buffer, "unread", "-1");
                 }
             }
 

@@ -1655,7 +1655,7 @@ gui_input_set_unread ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_buffer_set_unread (ptr_buffer);
+        gui_buffer_set_unread (ptr_buffer, -1);
     }
 }
 
@@ -1666,7 +1666,17 @@ gui_input_set_unread ()
 void
 gui_input_set_unread_current (struct t_gui_buffer *buffer)
 {
-    gui_buffer_set_unread (buffer);
+    gui_buffer_set_unread (buffer, -1);
+}
+
+/*
+ * Sets unread marker at current position.
+ */
+
+void
+gui_input_set_unread_current_here (struct t_gui_buffer *buffer)
+{
+    gui_buffer_set_unread (buffer, 1);
 }
 
 /*
