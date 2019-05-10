@@ -46,6 +46,7 @@ add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   unit/plugins/irc/test-irc-color.cpp
   unit/plugins/irc/test-irc-config.cpp
+  unit/plugins/irc/test-irc-mode.cpp
   unit/plugins/irc/test-irc-protocol.cpp
 )
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})

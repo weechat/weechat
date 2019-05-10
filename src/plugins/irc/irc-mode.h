@@ -23,6 +23,7 @@
 struct t_irc_server;
 struct t_irc_channel;
 
+extern char *irc_mode_get_arguments (const char *arguments);
 extern char irc_mode_get_chanmode_type (struct t_irc_server *server,
                                         char chanmode);
 extern int irc_mode_channel_set (struct t_irc_server *server,
