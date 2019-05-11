@@ -66,6 +66,7 @@ Build::
   * core: add CMake option "ENABLE_CODE_COVERAGE" to compile with code coverage options (CMake ≥ 3.0 is now required)
   * core: fix compilation on Mac OS (issue #1308)
   * lua: add detection of Lua 5.3 with autotools
+  * ruby: add detection of Ruby 2.6 (issue #1346)
   * tests: fix compilation of tests on FreeBSD
 
 [[v2.4]]
