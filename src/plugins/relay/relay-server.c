@@ -26,6 +26,7 @@
 #include <time.h>
 #include <fcntl.h>
 #include <errno.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -645,6 +646,10 @@ relay_server_create_socket (struct t_relay_server *server)
         server->sock = -1;
         return 0;
     }
+
+    /* change permissions: only the owner can use the unix socket */
+    if (server->unix_socket)
+        chmod (server->path, 0700);
 
 #ifdef SOMAXCONN
     if (listen (server->sock, SOMAXCONN) != 0)
