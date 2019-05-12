@@ -19,11 +19,15 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
 #include <regex.h>
 #include <sys/un.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -543,6 +547,40 @@ relay_config_check_path_length (const char *path)
     }
 
     return 1;
+}
+
+/*
+ * Checks if a UNIX path is available: it is available if not existing, or
+ * if a file of type socket already exists.
+ *
+ * Returns:
+ *    0: path is available
+ *   -1: path already exists and is not a socket
+ *   -2: invalid path
+ */
+
+int
+relay_config_check_path_available (const char *path)
+{
+    struct stat buf;
+    int rc;
+
+    rc = stat (path, &buf);
+
+    /* OK if an existing file is a socket */
+    if ((rc == 0) && S_ISSOCK(buf.st_mode))
+        return 0;
+
+    /* error if an existing file is NOT a socket */
+    if (rc == 0)
+        return -1;
+
+    /* OK if the file does not exist */
+    if (errno == ENOENT)
+        return 0;
+
+    /* on any other error, the path it considered as not available */
+    return -2;
 }
 
 /*

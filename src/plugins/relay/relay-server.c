@@ -472,7 +472,7 @@ end:
 int
 relay_server_create_socket (struct t_relay_server *server)
 {
-    int domain, set, max_clients, addr_size;
+    int domain, set, max_clients, addr_size, rc;
     struct sockaddr_in server_addr;
     struct sockaddr_in6 server_addr6;
     struct sockaddr_un server_addr_unix;
@@ -535,8 +535,32 @@ relay_server_create_socket (struct t_relay_server *server)
         ptr_addr = &server_addr_unix;
         addr_size = sizeof (struct sockaddr_un);
         if (!relay_config_check_path_length (server->path))
+        {
+            weechat_printf (NULL,
+                            _("%s%s: invalid socket path \"%s\""),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            server->path);
             return 0;
-        /* just in case it already exists */
+        }
+        rc = relay_config_check_path_available (server->path);
+        switch (rc)
+        {
+            case -1:
+                weechat_printf (NULL,
+                                _("%s%s: socket path \"%s\" exists and is not "
+                                  "a socket"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                server->path);
+                break;
+            case -2:
+                weechat_printf (NULL,
+                                _("%s%s: socket path \"%s\" is invalid"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                server->path);
+        }
+        if (rc < 0)
+            return 0;
+        /* just in case a socket already exists */
         unlink (server->path);
     }
 
@@ -749,11 +773,22 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 void
 relay_server_update_path (struct t_relay_server *server, const char *path)
 {
-    relay_server_close_socket (server);
-    free (server->path);
-    server->path = weechat_string_eval_path_home (path, NULL, NULL, NULL);
-    server->port = -1;
-    relay_server_create_socket (server);
+    char *new_path;
+
+    new_path = weechat_string_eval_path_home (path, NULL, NULL, NULL);
+    if (!new_path)
+        return;
+
+    if (strcmp (new_path, server->path) != 0)
+    {
+        relay_server_close_socket (server);
+        free (server->path);
+        server->path = strdup (new_path);
+        server->port = -1;
+        relay_server_create_socket (server);
+    }
+
+    free (new_path);
 }
 
 /*

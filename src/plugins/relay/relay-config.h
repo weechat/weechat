@@ -74,6 +74,7 @@ extern int relay_config_create_option_port_path (const void *pointer, void *data
                                                  const char *option_name,
                                                  const char *value);
 extern int relay_config_check_path_length (const char *path);
+extern int relay_config_check_path_available (const char *path);
 extern int relay_config_init ();
 extern int relay_config_read ();
 extern int relay_config_write ();
