@@ -194,8 +194,8 @@ relay_command_relay (const void *pointer, void *data,
 {
     struct t_relay_server *ptr_server;
     struct t_config_option *ptr_option;
-    struct t_config_section *port_path_section;
     char *path;
+    int unix_socket, rc;
 
     /* make C compiler happy */
     (void) pointer;
@@ -226,19 +226,21 @@ relay_command_relay (const void *pointer, void *data,
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
             /* check if we're expecting a path or a port */
-            port_path_section = (strncmp (argv[2], "unix.", 5) == 0) ?
-                relay_config_section_path : relay_config_section_port;
-            if (relay_config_create_option_port_path (
-                    NULL, NULL,
-                    relay_config_file,
-                    port_path_section,
-                    argv[2],
-                    argv_eol[3]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
+            unix_socket = (strncmp (argv[2], "unix.", 5) == 0) ? 1 : 0;
+            rc = relay_config_create_option_port_path (
+                NULL, NULL,
+                relay_config_file,
+                (unix_socket) ? relay_config_section_path : relay_config_section_port,
+                argv[2],
+                argv_eol[3]);
+            if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
             {
                 weechat_printf (NULL,
-                                _("%s: relay \"%s\" (path/port: %s) added"),
+                                _("%s: relay \"%s\" (%s: %s) added"),
                                 RELAY_PLUGIN_NAME,
-                                argv[2], argv_eol[3]);
+                                argv[2],
+                                (unix_socket) ? _("path") : _("port"),
+                                argv_eol[3]);
             }
             return WEECHAT_RC_OK;
         }
