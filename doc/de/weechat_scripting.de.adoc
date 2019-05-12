@@ -45,29 +45,28 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 [[scripts_in_weechat]]
 == Skripten in WeeChat
 
-// TRANSLATION MISSING
 [[weechat_architecture]]
-=== WeeChat architecture
+=== WeeChat Architektur
 
-WeeChat is single-threaded, and this applies to scripts as well.
+WeeChat ist einzelprozeßgestützt (Single-Threaded) und dies gilt ebenso für Skripten.
 
-The code of a script is executed:
+Der Code eines Skripts wird ausgeführt:
 
-* when the script is loaded: typically a call to the
-  <<register_function,register function>>
-* when a hook callback is called by WeeChat (see the chapter <<hooks,Hooks>>).
+* wenn das Skript geladen wird: typischer Weise durch einen Aufruf von
+  <<register_function,Register Funktion>>
+* wenn ein hook Callback von WeeChat aufgerufen wird (siehe Kapitel <<hooks,Hooks>>).
 
-When the code of a script is executed, WeeChat waits for the end of execution
-before going on. Therefore the script must *NOT* do blocking operations like
-network calls without using a dedicated API function like `hook_process`.
+Sobald der Code eines Skripts ausgeführt wird wartet WeeChat bis zum Ende der
+Ausführung, bevor fortgefahren wird. Deshalb dürfen innerhalb des Skripts *KEINE*
+blockierende Operationen ausgeführt werden wie zum Beispiel Netzwerkaufrufe,
+ohne die dafür vorgesehene API-Funktion zu verwenden, `hook_process`.
 
 [IMPORTANT]
-A script must *NEVER* fork or create threads without using a dedicated API
-function, this can crash WeeChat. +
-If something must be run in background, the function `hook_process` can be used.
-See example in the chapter <<hook_process,Hintergrundprozesse>>
-and the documentation on the function `hook_process` in the
-link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
+Ein Skript darf *NIEMALS* einen fork nutzen oder einen eigenen Thread erstellen,
+dafür gibt es explizit eine API Funktion, andernfalls kann WeeChat abstürzen. +
+Wenn etwas in einem Hintergrundprozess ausgeführt werden soll, kann die Funktion
+`hook_process` genutzt werden. Siehe Beispiele im Kapitel <<hook_process,Hintergrundprozesse>>
+und die Dokumentation für die Funktion `hook_process` in link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
 
 [[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
