@@ -225,8 +225,8 @@ relay_command_relay (const void *pointer, void *data,
         if (weechat_strcasecmp (argv[1], "add") == 0)
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
-            /* check if we're expecting a path or a port */
-            unix_socket = (strncmp (argv[2], "unix.", 5) == 0) ? 1 : 0;
+            relay_server_get_protocol_args (argv[2], NULL, NULL, NULL,
+                                            &unix_socket, NULL, NULL);
             rc = relay_config_create_option_port_path (
                 NULL, NULL,
                 relay_config_file,
