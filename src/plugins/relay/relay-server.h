@@ -33,9 +33,9 @@ struct t_relay_server
                                        /* example: server for irc protocol  */
     int port;                          /* listening on this port            */
                                        /* or UNIX socket, if negative.      */
-    char *path;                        /* listening on this path (UNIX)     */
+    char *path;                        /* listening on this path (UNIX),    */
                                        /* contains string representation of */
-                                       /* port if IP */
+                                       /* port if IP                        */
     int ipv4;                          /* IPv4 protocol enabled             */
     int ipv6;                          /* IPv6 protocol enabled             */
     int ssl;                           /* 1 if SSL is enabled               */
