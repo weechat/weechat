@@ -452,7 +452,7 @@ relay_command_init ()
            "  weechat protocol with SSL, using IPv4 + IPv6:\n"
            "    /relay add ipv4.ipv6.ssl.weechat 9001\n"
            "  weechat protocol over UNIX domain socket:\n"
-           "    /relay add unix.weechat /tmp/weesock\n"),
+           "    /relay add unix.weechat /tmp/weesock"),
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
         " || listrelay"
