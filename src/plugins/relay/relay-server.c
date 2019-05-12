@@ -215,7 +215,7 @@ relay_server_search_path (const char *path)
          ptr_server = ptr_server->next_server)
     {
         /* only include UNIX socket relays, to allow for numerical paths */
-        if (!strcmp (path, ptr_server->path) && ptr_server->un)
+        if (!strcmp (path, ptr_server->path) && ptr_server->unix_socket)
             return ptr_server;
     }
 
@@ -238,7 +238,7 @@ relay_server_close_socket (struct t_relay_server *server)
     {
         close (server->sock);
         server->sock = -1;
-        if (server->un)
+        if (server->unix_socket)
         {
             unlink (server->path);
         }
@@ -247,7 +247,7 @@ relay_server_close_socket (struct t_relay_server *server)
             weechat_printf (NULL,
                             _("%s: socket closed for %s (%s %s)"),
                             RELAY_PLUGIN_NAME, server->protocol_string,
-                            server->un ? _("path") : _("port"),
+                            server->unix_socket ? _("path") : _("port"),
                             server->path);
         }
     }
@@ -292,7 +292,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         ptr_addr = &client_addr;
         client_addr_size = sizeof (struct sockaddr_in);
     }
-    else if (server->un)
+    else if (server->unix_socket)
     {
         ptr_addr = &client_addr_un;
         client_addr_size = sizeof (struct sockaddr_un);
@@ -307,7 +307,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         weechat_printf (NULL,
                         _("%s%s: cannot accept client on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? _("path") : _("port"),
+                        server->unix_socket ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         goto error;
@@ -614,7 +614,7 @@ relay_server_create_socket (struct t_relay_server *server)
         weechat_printf (NULL,
                         _("%s%s: cannot \"bind\" on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? _("path") : _("port"),
+                        server->unix_socket ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         close (server->sock);
@@ -631,7 +631,7 @@ relay_server_create_socket (struct t_relay_server *server)
         weechat_printf (NULL,
                         _("%s%s: cannot \"listen\" on %s %s (%s): error %d %s"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        server->un ? _("path") : _("port"),
+                        server->unix_socket ? _("path") : _("port"),
                         server->path, server->protocol_string,
                         errno, strerror (errno));
         close (server->sock);
@@ -648,7 +648,7 @@ relay_server_create_socket (struct t_relay_server *server)
                 "%s: listening on %s %s (relay: %s, %s, max %d clients)",
                 max_clients),
             RELAY_PLUGIN_NAME,
-            server->un ? _("path") : _("port"),
+            server->unix_socket ? _("path") : _("port"),
             server->path,
             server->protocol_string,
             ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : ((server->ipv4) ? "IPv4" : "UNIX"))),
@@ -660,7 +660,7 @@ relay_server_create_socket (struct t_relay_server *server)
             NULL,
             _("%s: listening on %s %s (relay: %s, %s)"),
             RELAY_PLUGIN_NAME,
-            server->un ? _("path") : _("port"),
+            server->unix_socket ? _("path") : _("port"),
             server->path,
             server->protocol_string,
             ((server->ipv4 && server->ipv6) ? "IPv4+6" : ((server->ipv6) ? "IPv6" : ((server->ipv4) ? "IPv4" : "UNIX"))));
@@ -684,7 +684,7 @@ relay_server_create_socket (struct t_relay_server *server)
 struct t_relay_server *
 relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
                   const char *protocol_args, int port, const char *path,
-                  int ipv4, int ipv6, int ssl, int un)
+                  int ipv4, int ipv6, int ssl, int unix_socket)
 {
     struct t_relay_server *new_server, *dup_server;
 
@@ -692,12 +692,12 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         return NULL;
 
     /* look for duplicate ports/paths */
-    dup_server = un ?
+    dup_server = unix_socket ?
         relay_server_search_path (path) : relay_server_search_port (port);
     if (dup_server)
     {
         weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
-                        un ? _("path") : _("port"),
+                        unix_socket ? _("path") : _("port"),
                         weechat_prefix ("error"),
                         RELAY_PLUGIN_NAME, port);
         return NULL;
@@ -715,7 +715,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
-        new_server->un = un;
+        new_server->unix_socket = unix_socket;
         new_server->sock = -1;
         new_server->hook_fd = NULL;
         new_server->start_time = 0;
@@ -843,7 +843,7 @@ relay_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl", server->ssl))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "un", server->un))
+    if (!weechat_infolist_new_var_integer (ptr_item, "unix_socket", server->unix_socket))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
         return 0;
@@ -881,7 +881,7 @@ relay_server_print_log ()
         weechat_log_printf ("  ipv4. . . . . . . . . : %d",    ptr_server->ipv4);
         weechat_log_printf ("  ipv6. . . . . . . . . : %d",    ptr_server->ipv6);
         weechat_log_printf ("  ssl . . . . . . . . . : %d",    ptr_server->ssl);
-        weechat_log_printf ("  unix. . . . . . . . . : %d",    ptr_server->un);
+        weechat_log_printf ("  unix_socket . . . . . : %d",    ptr_server->unix_socket);
         weechat_log_printf ("  sock. . . . . . . . . : %d",    ptr_server->sock);
         weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_server->hook_fd);
         weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_server->start_time);

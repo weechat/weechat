@@ -39,7 +39,7 @@ struct t_relay_server
     int ipv4;                          /* IPv4 protocol enabled             */
     int ipv6;                          /* IPv6 protocol enabled             */
     int ssl;                           /* 1 if SSL is enabled               */
-    int un;                            /* 1 if UNIX socket                  */
+    int unix_socket;                   /* 1 if UNIX socket                  */
     int sock;                          /* socket for connection             */
     struct t_hook *hook_fd;            /* hook for socket                   */
     time_t start_time;                 /* start time                        */

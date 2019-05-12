@@ -145,7 +145,7 @@ relay_command_server_list ()
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s (not started)"),
                     RELAY_COLOR_CHAT_BUFFER,
-                    ptr_server->un ? _("path") : _("port"),
+                    ptr_server->unix_socket ? _("path") : _("port"),
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
                     RELAY_COLOR_CHAT_BUFFER,
@@ -166,7 +166,7 @@ relay_command_server_list ()
                 weechat_printf (
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s, started on: %s"),
-                    ptr_server->un ? _("path") : _("port"),
+                    ptr_server->unix_socket ? _("path") : _("port"),
                     RELAY_COLOR_CHAT_BUFFER,
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
@@ -253,7 +253,7 @@ relay_command_relay (const void *pointer, void *data,
                 path = strdup (ptr_server->path);
                 relay_server_free (ptr_server);
                 ptr_option = weechat_config_search_option (relay_config_file,
-                                                           ptr_server->un ?
+                                                           ptr_server->unix_socket ?
                                                                relay_config_section_path :
                                                                relay_config_section_port,
                                                            argv_eol[2]);
@@ -262,7 +262,7 @@ relay_command_relay (const void *pointer, void *data,
                 weechat_printf (NULL,
                                 _("%s: relay \"%s\" (%s %s) removed"),
                                 RELAY_PLUGIN_NAME,
-                                argv[2], ptr_server->un ? _("path") : _("port"),
+                                argv[2], ptr_server->unix_socket ? _("path") : _("port"),
                                 path);
                 free (path);
             }

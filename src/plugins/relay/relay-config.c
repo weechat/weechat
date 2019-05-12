@@ -187,7 +187,7 @@ relay_config_change_network_ipv6_cb (const void *pointer, void *data,
     {
         relay_server_get_protocol_args (ptr_server->protocol_string,
                                         &ptr_server->ipv4, &ptr_server->ipv6,
-                                        NULL, &ptr_server->un, NULL, NULL);
+                                        NULL, &ptr_server->unix_socket, NULL, NULL);
         relay_server_close_socket (ptr_server);
         relay_server_create_socket (ptr_server);
     }
