@@ -632,7 +632,7 @@ relay_config_create_option_port (const void *pointer, void *data,
                                  const char *option_name,
                                  const char *value)
 {
-    int rc, protocol_number, ipv4, ipv6, ssl, un;
+    int rc, protocol_number, ipv4, ipv6, ssl, unix_socket;
     char *error, *protocol, *protocol_args;
     long port;
     struct t_relay_server *ptr_server;
@@ -646,8 +646,8 @@ relay_config_create_option_port (const void *pointer, void *data,
     protocol_number = -1;
     port = -1;
 
-    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl, &un,
-                                    &protocol, &protocol_args);
+    relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl,
+                                    &unix_socket, &protocol, &protocol_args);
 
 #ifndef HAVE_GNUTLS
     if (ssl)
@@ -696,7 +696,7 @@ relay_config_create_option_port (const void *pointer, void *data,
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
-        if (un)
+        if (unix_socket)
         {
             ptr_server = relay_server_search_path (value);
         }
@@ -711,7 +711,7 @@ relay_config_create_option_port (const void *pointer, void *data,
             weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
                             weechat_prefix ("error"),
                             RELAY_PLUGIN_NAME,
-                            un ? _("path") : _("port"),
+                            (unix_socket) ? _("path") : _("port"),
                             value);
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }
@@ -720,28 +720,28 @@ relay_config_create_option_port (const void *pointer, void *data,
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (relay_server_new (option_name, protocol_number, protocol_args,
-                              port, value, ipv4, ipv6, ssl, un))
+                              port, value, ipv4, ipv6, ssl, unix_socket))
         {
             /* create configuration option */
-            if (un)
+            if (unix_socket)
             {
                 weechat_config_new_option (
-                config_file, section,
-                option_name, "string", NULL,
-                NULL, 0, 0, "", value, 0,
-                &relay_config_check_path_cb, NULL, NULL,
-                &relay_config_change_port_cb, NULL, NULL,
-                &relay_config_delete_port_cb, NULL, NULL);
+                    config_file, section,
+                    option_name, "string", NULL,
+                    NULL, 0, 0, "", value, 0,
+                    &relay_config_check_path_cb, NULL, NULL,
+                    &relay_config_change_port_cb, NULL, NULL,
+                    &relay_config_delete_port_cb, NULL, NULL);
             }
             else
             {
                 weechat_config_new_option (
-                config_file, section,
-                option_name, "integer", NULL,
-                NULL, 0, 65535, "", value, 0,
-                &relay_config_check_port_cb, NULL, NULL,
-                &relay_config_change_port_cb, NULL, NULL,
-                &relay_config_delete_port_cb, NULL, NULL);
+                    config_file, section,
+                    option_name, "integer", NULL,
+                    NULL, 0, 65535, "", value, 0,
+                    &relay_config_check_port_cb, NULL, NULL,
+                    &relay_config_change_port_cb, NULL, NULL,
+                    &relay_config_delete_port_cb, NULL, NULL);
             }
             rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
@@ -1177,6 +1177,7 @@ relay_config_init ()
     }
 
     relay_config_section_path = ptr_section;
+
     return 1;
 }
 

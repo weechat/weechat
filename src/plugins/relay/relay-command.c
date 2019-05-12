@@ -145,7 +145,7 @@ relay_command_server_list ()
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s (not started)"),
                     RELAY_COLOR_CHAT_BUFFER,
-                    ptr_server->unix_socket ? _("path") : _("port"),
+                    (ptr_server->unix_socket) ? _("path") : _("port"),
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
                     RELAY_COLOR_CHAT_BUFFER,
@@ -166,7 +166,7 @@ relay_command_server_list ()
                 weechat_printf (
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s, started on: %s"),
-                    ptr_server->unix_socket ? _("path") : _("port"),
+                    (ptr_server->unix_socket) ? _("path") : _("port"),
                     RELAY_COLOR_CHAT_BUFFER,
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
@@ -174,7 +174,7 @@ relay_command_server_list ()
                     ptr_server->protocol_string,
                     RELAY_COLOR_CHAT,
                     ((ptr_server->ipv4 && ptr_server->ipv6) ? "IPv4+6" : ((ptr_server->ipv6) ? "IPv6" : ((ptr_server->ipv4) ? "IPv4" : "UNIX"))),
-            date_start);
+                    date_start);
             }
             i++;
         }
@@ -226,9 +226,8 @@ relay_command_relay (const void *pointer, void *data,
         {
             WEECHAT_COMMAND_MIN_ARGS(4, "add");
             /* check if we're expecting a path or a port */
-            port_path_section = strncmp (argv[2], "unix.", 5) ?
-                                    relay_config_section_port :
-                                    relay_config_section_path;
+            port_path_section = (strncmp (argv[2], "unix.", 5) == 0) ?
+                relay_config_section_path : relay_config_section_port;
             if (relay_config_create_option_port (
                     NULL, NULL,
                     relay_config_file,
@@ -252,17 +251,17 @@ relay_command_relay (const void *pointer, void *data,
             {
                 path = strdup (ptr_server->path);
                 relay_server_free (ptr_server);
-                ptr_option = weechat_config_search_option (relay_config_file,
-                                                           ptr_server->unix_socket ?
-                                                               relay_config_section_path :
-                                                               relay_config_section_port,
-                                                           argv_eol[2]);
+                ptr_option = weechat_config_search_option (
+                    relay_config_file,
+                    (ptr_server->unix_socket) ? relay_config_section_path : relay_config_section_port,
+                    argv_eol[2]);
                 if (ptr_option)
                     weechat_config_option_free (ptr_option);
                 weechat_printf (NULL,
                                 _("%s: relay \"%s\" (%s %s) removed"),
                                 RELAY_PLUGIN_NAME,
-                                argv[2], ptr_server->unix_socket ? _("path") : _("port"),
+                                argv[2],
+                                (ptr_server->unix_socket) ? _("path") : _("port"),
                                 path);
                 free (path);
             }

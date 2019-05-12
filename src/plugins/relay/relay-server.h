@@ -53,7 +53,7 @@ extern struct t_relay_server *last_relay_server;
 
 extern void relay_server_get_protocol_args (const char *protocol_and_string,
                                             int *ipv4, int *ipv6,
-                                            int *ssl, int *un,
+                                            int *ssl, int *unix_socket,
                                             char **protocol,
                                             char **protocol_args);
 extern struct t_relay_server *relay_server_search (const char *protocol_and_args);
@@ -66,7 +66,7 @@ extern struct t_relay_server *relay_server_new (const char *protocol_string,
                                                 const char *protocol_args,
                                                 int port, const char *path,
                                                 int ipv4, int ipv6,
-                                                int ssl, int un);
+                                                int ssl, int unix_socket);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();
