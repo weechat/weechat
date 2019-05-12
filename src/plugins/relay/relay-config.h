@@ -26,6 +26,7 @@
 
 extern struct t_config_file *relay_config_file;
 extern struct t_config_section *relay_config_section_port;
+extern struct t_config_section *relay_config_section_path;
 
 extern struct t_config_option *relay_config_look_auto_open_buffer;
 extern struct t_config_option *relay_config_look_raw_messages;
@@ -72,6 +73,7 @@ extern int relay_config_create_option_port (const void *pointer, void *data,
                                             struct t_config_section *section,
                                             const char *option_name,
                                             const char *value);
+extern int relay_config_check_path_len (const char *path);
 extern int relay_config_init ();
 extern int relay_config_read ();
 extern int relay_config_write ();

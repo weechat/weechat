@@ -1355,9 +1355,9 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         relay_clients = new_client;
 
         weechat_printf_date_tags (NULL, 0, "relay_client",
-                                  _("%s: new client on port %d: %s%s%s"),
+                                  _("%s: new client on port/path %s: %s%s%s"),
                                   RELAY_PLUGIN_NAME,
-                                  server->port,
+                                  server->path,
                                   RELAY_COLOR_CHAT_CLIENT,
                                   new_client->desc,
                                   RELAY_COLOR_CHAT);
