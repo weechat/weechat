@@ -45,6 +45,30 @@ Allerdings ist die API für alle Skriptsprachen nahezu identisch.
 [[scripts_in_weechat]]
 == Skripten in WeeChat
 
+// TRANSLATION MISSING
+[[weechat_architecture]]
+=== WeeChat architecture
+
+WeeChat is single-threaded, and this applies to scripts as well.
+
+The code of a script is executed:
+
+* when the script is loaded: typically a call to the
+  <<register_function,register function>>
+* when a hook callback is called by WeeChat (see the chapter <<hooks,Hooks>>).
+
+When the code of a script is executed, WeeChat waits for the end of execution
+before going on. Therefore the script must *NOT* do blocking operations like
+network calls without using a dedicated API function like `hook_process`.
+
+[IMPORTANT]
+A script must *NEVER* fork or create threads without using a dedicated API
+function, this can crash WeeChat. +
+If something must be run in background, the function `hook_process` can be used.
+See example in the chapter <<hook_process,Hintergrundprozesse>>
+and the documentation on the function `hook_process` in the
+link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
+
 [[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
 

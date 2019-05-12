@@ -41,6 +41,33 @@ l'API est la même pour les autres langages.
 [[scripts_in_weechat]]
 == Scripts dans WeeChat
 
+[[weechat_architecture]]
+=== Architecture de WeeChat
+
+WeeChat tourne dans un seul thread, et ceci est valable pour les scripts
+également.
+
+Le code d'un script est exécuté :
+
+* lorsque le script est chargé : typiquement un appel à la
+  <<register_function,fonction register>>
+* lorsque la fonction de rappel d'un "hook" est appelée par WeeChat
+  (voir le chapitre <<hooks,Hooks>>).
+
+Lorsque le code du script est exécuté, WeeChat attend la fin de l'exécutio
+avant de continuer. Par conséquent, le script ne doit *PAS* faire d'opérations
+bloquantes comme des appels réseau sans utiliser une fonction API dédiée
+telle que `hook_process`.
+
+[IMPORTANT]
+Un script ne doit *JAMAIS* faire de "fork" ou créer des threads sans utiliser
+une fonction dédiée de l'API, cela pourrait provoquer un crash de WeeChat. +
+Si quelque chose doit être lancé en arrière-plan, la fonction `hook_process`
+peut être utilisée. Voir l'exemple dans le chapitre
+<<hook_process,Lancer un processus en tâche de fond>> et la documentation sur
+la fonction `hook_process` dans la
+link:weechat_plugin_api.en.html#_hook_process[Référence API extension WeeChat].
+
 [[languages_specificities]]
 === Spécificités des langages
 
