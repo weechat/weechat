@@ -3408,6 +3408,28 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 The port (9000 in example) is the port defined in Relay plugin.
 The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 
+// TRANSLATION MISSING
+[[relay_unix_socket]]
+==== UNIX domain sockets
+
+Using the protocol option "unix" with the `/relay add` command, you can listen
+using any protocol on a UNIX domain socket at a given path. For example:
+
+----
+/relay add unix.weechat %h/relay_socket
+----
+
+This allows clients to connect using the weechat protocol to
+_~/.weechat/relay_socket_. This is particularly useful to allow SSH forwarding
+for relay clients, when other ports cannot be opened. Using OpenSSH:
+
+----
+$ ssh -L 9000:.weechat/relay_socket user@hostname
+----
+
+This redirects local relay clients connecting on port 9000 to the WeeChat
+instance running on "hostname".
+
 [[relay_commands]]
 ==== Comandi
 

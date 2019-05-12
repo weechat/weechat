@@ -3197,23 +3197,23 @@ The URI must always end with "/weechat" (for _irc_ and _weechat_ protocols).
 [[relay_unix_socket]]
 ==== UNIX domain sockets
 
-Using the protocol option "unix" with the "/relay add" command, you can listen
+Using the protocol option "unix" with the `/relay add` command, you can listen
 using any protocol on a UNIX domain socket at a given path. For example:
 
 ----
 /relay add unix.weechat %h/relay_socket
 ----
 
-This will allow clients to connect using the WeeChat protocol to
+This allows clients to connect using the weechat protocol to
 _~/.weechat/relay_socket_. This is particularly useful to allow SSH forwarding
 for relay clients, when other ports cannot be opened. Using OpenSSH:
 
 ----
-$ ssh -L9000:/home/xxx/.weechat/relay_socket foo_host
+$ ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
-This will then allow for local relay clients to connect on port 9000 to a
-WeeChat instance running on "foo_host".
+This redirects local relay clients connecting on port 9000 to the WeeChat
+instance running on "hostname".
 
 [[relay_commands]]
 ==== Commands

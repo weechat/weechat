@@ -3303,6 +3303,29 @@ Le port (9000 dans l'exemple) est le port défini dans l'extension Relay.
 L'URI doit toujours se terminer par "/weechat" (pour les protocoles _irc_ et
 _weechat_).
 
+[[relay_unix_socket]]
+==== UNIX domain sockets
+
+En utilisant l'option de protocole "unix" avec la commande `/relay add`,
+vous pouvez écouter avec n'importe quel protocole sur un socket UNIX et un
+chemin donné. Par exemple :
+
+----
+/relay add unix.weechat %h/relay_socket
+----
+
+Cela autorise les clients à se connecter en utilisant le protocole weechat à
+_~/.weechat/relay_socket_. Cela est utile pour autoriser le "SSH forwarding"
+pour les clients relay, quand d'autres ports ne peuvent pas être ouverts.
+Avec OpenSSH :
+
+----
+$ ssh -L 9000:.weechat/relay_socket user@hostname
+----
+
+Cela redirige les clients relay locaux qui se connectent au port 9000 vers
+l'instance de WeeChat qui tourne sur "hostname".
+
 [[relay_commands]]
 ==== Commandes
 
