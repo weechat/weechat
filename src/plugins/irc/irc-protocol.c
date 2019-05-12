@@ -834,7 +834,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
     snprintf (str_host, length, "%s@%s", argv[2], pos_new_host);
 
     if (local_chghost)
-        irc_server_set_nick_host (server, str_host);
+        irc_server_set_host (server, str_host);
 
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -1201,7 +1201,7 @@ IRC_PROTOCOL_CALLBACK(join)
 
     if (local_join)
     {
-        irc_server_set_nick_host (server, address);
+        irc_server_set_host (server, address);
         irc_bar_item_update_channel ();
     }
 
@@ -1524,7 +1524,7 @@ IRC_PROTOCOL_CALLBACK(nick)
     if (local_nick)
     {
         irc_server_set_nick (server, new_nick);
-        irc_server_set_nick_host (server, address);
+        irc_server_set_host (server, address);
     }
 
     ptr_nick_found = NULL;

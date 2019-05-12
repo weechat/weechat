@@ -437,10 +437,10 @@ irc_bar_item_host (const void *pointer, void *data,
         return NULL;
 
     irc_buffer_get_server_and_channel (buffer, &server, NULL);
-    if (!server || !server->nick_host)
+    if (!server || !server->host)
         return NULL;
 
-    return strdup (server->nick_host);
+    return strdup (server->host);
 }
 
 /*
@@ -473,8 +473,8 @@ irc_bar_item_nick_host (const void *pointer, void *data,
 
     snprintf (buf, sizeof (buf), "%s%s%s",
               server->nick,
-              (server->nick_host) ? "@" : "",
-              (server->nick_host) ? server->nick_host : "");
+              (server->host) ? "@" : "",
+              (server->host) ? server->host : "");
 
     return strdup (buf);
 }

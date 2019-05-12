@@ -192,7 +192,7 @@ struct t_irc_server
                                     /* (nick____1, nick____2, ...)           */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
-    char *nick_host;                /* nick host (set if known)              */
+    char *host;                     /* self host (set if known)              */
     int checking_cap_ls;            /* 1 if checking supported capabilities  */
     struct t_hashtable *cap_ls;     /* list of supported capabilities        */
     int checking_cap_list;          /* 1 if checking enabled capabilities    */
@@ -295,8 +295,8 @@ extern void irc_server_set_nicks (struct t_irc_server *server,
                                   const char *nicks);
 extern void irc_server_set_nick (struct t_irc_server *server,
                                  const char *nick);
-extern void irc_server_set_nick_host (struct t_irc_server *server,
-                                      const char *nick_host);
+extern void irc_server_set_host (struct t_irc_server *server,
+                                 const char *host);
 extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
 extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
                                                   const char *feature);

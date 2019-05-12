@@ -328,7 +328,7 @@ irc_channel_create_buffer (struct t_irc_server *server,
     weechat_buffer_set (ptr_buffer, "localvar_set_type",
                         (channel_type == IRC_CHANNEL_TYPE_CHANNEL) ? "channel" : "private");
     weechat_buffer_set (ptr_buffer, "localvar_set_nick", server->nick);
-    weechat_buffer_set (ptr_buffer, "localvar_set_nick_host", server->nick_host);
+    weechat_buffer_set (ptr_buffer, "localvar_set_host", server->host);
     weechat_buffer_set (ptr_buffer, "localvar_set_server", server->name);
     weechat_buffer_set (ptr_buffer, "localvar_set_channel", channel_name);
     if (server->is_away && server->away_message)

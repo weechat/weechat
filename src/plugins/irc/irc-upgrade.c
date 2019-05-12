@@ -420,9 +420,9 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                     str = weechat_infolist_string (infolist, "nick_modes");
                     if (str)
                         irc_upgrade_current_server->nick_modes = strdup (str);
-                    str = weechat_infolist_string (infolist, "nick_host");
+                    str = weechat_infolist_string (infolist, "host");
                     if (str)
-                        irc_upgrade_current_server->nick_host = strdup (str);
+                        irc_upgrade_current_server->host = strdup (str);
                     /*
                      * "cap_ls" and "cap_list" replace "cap_away_notify",
                      * "cap_account_notify" and "cap_extended_join"
