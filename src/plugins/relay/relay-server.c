@@ -534,7 +534,7 @@ relay_server_create_socket (struct t_relay_server *server)
                  sizeof (server_addr_unix.sun_path));
         ptr_addr = &server_addr_unix;
         addr_size = sizeof (struct sockaddr_un);
-        if (!relay_config_check_path_len (server->path))
+        if (!relay_config_check_path_length (server->path))
             return 0;
         /* just in case it already exists */
         unlink (server->path);

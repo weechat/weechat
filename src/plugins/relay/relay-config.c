@@ -520,7 +520,7 @@ relay_config_check_port_cb (const void *pointer, void *data,
  */
 
 int
-relay_config_check_path_len (const char *path)
+relay_config_check_path_length (const char *path)
 {
     struct sockaddr_un addr;
     size_t max_path, path_len;
@@ -563,7 +563,7 @@ relay_config_check_path_cb (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-    if (!relay_config_check_path_len (value))
+    if (!relay_config_check_path_length (value))
         return 0;
 
     if (relay_server_search_path (value))
