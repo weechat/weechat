@@ -558,8 +558,6 @@ relay_config_check_path_cb (const void *pointer, void *data,
                             struct t_config_option *option,
                             const char *value)
 {
-    struct t_relay_server *ptr_server;
-
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -568,12 +566,10 @@ relay_config_check_path_cb (const void *pointer, void *data,
     if (!relay_config_check_path_len (value))
         return 0;
 
-    ptr_server = relay_server_search_path (value);
-    if (ptr_server)
+    if (relay_server_search_path (value))
     {
         weechat_printf (NULL, _("%s%s: error: path \"%s\" is already used"),
-                        weechat_prefix ("error"),
-                        RELAY_PLUGIN_NAME, value);
+                        weechat_prefix ("error"), RELAY_PLUGIN_NAME, value);
         return 0;
     }
 
