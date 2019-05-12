@@ -1354,13 +1354,26 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
             last_relay_client = new_client;
         relay_clients = new_client;
 
-        weechat_printf_date_tags (NULL, 0, "relay_client",
-                                  _("%s: new client on port/path %s: %s%s%s"),
-                                  RELAY_PLUGIN_NAME,
-                                  server->path,
-                                  RELAY_COLOR_CHAT_CLIENT,
-                                  new_client->desc,
-                                  RELAY_COLOR_CHAT);
+        if (server->unix_socket)
+        {
+            weechat_printf_date_tags (NULL, 0, "relay_client",
+                                      _("%s: new client on path %s: %s%s%s"),
+                                      RELAY_PLUGIN_NAME,
+                                      server->path,
+                                      RELAY_COLOR_CHAT_CLIENT,
+                                      new_client->desc,
+                                      RELAY_COLOR_CHAT);
+        }
+        else
+        {
+            weechat_printf_date_tags (NULL, 0, "relay_client",
+                                      _("%s: new client on port %s: %s%s%s"),
+                                      RELAY_PLUGIN_NAME,
+                                      server->path,
+                                      RELAY_COLOR_CHAT_CLIENT,
+                                      new_client->desc,
+                                      RELAY_COLOR_CHAT);
+        }
 
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
                                                1, 0, 0,
