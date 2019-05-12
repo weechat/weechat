@@ -577,6 +577,47 @@ relay_config_check_path_cb (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on options in section "path".
+ */
+
+void
+relay_config_change_path_cb (const void *pointer, void *data,
+                             struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_server)
+    {
+        relay_server_update_path (ptr_server,
+                                  (const char *)weechat_config_option_get_pointer (option, "value"));
+    }
+}
+
+/*
+ * Callback called when an option is deleted in section "path".
+ */
+
+void
+relay_config_delete_path_cb (const void *pointer, void *data,
+                             struct t_config_option *option)
+{
+    struct t_relay_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    ptr_server = relay_server_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_server)
+        relay_server_free (ptr_server);
+}
+
+/*
  * Callback for changes on options in section "port".
  */
 
@@ -726,8 +767,8 @@ relay_config_create_option_port_path (const void *pointer, void *data,
                     option_name, "string", NULL,
                     NULL, 0, 0, "", value, 0,
                     &relay_config_check_path_cb, NULL, NULL,
-                    &relay_config_change_port_cb, NULL, NULL,
-                    &relay_config_delete_port_cb, NULL, NULL);
+                    &relay_config_change_path_cb, NULL, NULL,
+                    &relay_config_delete_path_cb, NULL, NULL);
             }
             else
             {

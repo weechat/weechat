@@ -67,6 +67,8 @@ extern struct t_relay_server *relay_server_new (const char *protocol_string,
                                                 int port, const char *path,
                                                 int ipv4, int ipv6,
                                                 int ssl, int unix_socket);
+extern void relay_server_update_path (struct t_relay_server *server,
+                                      const char *path);
 extern void relay_server_update_port (struct t_relay_server *server, int port);
 extern void relay_server_free (struct t_relay_server *server);
 extern void relay_server_free_all ();

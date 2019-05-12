@@ -742,16 +742,38 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 }
 
 /*
+ * Updates path in a server.
+ */
+
+void
+relay_server_update_path (struct t_relay_server *server, const char *path)
+{
+    if (strcmp (path, server->path) != 0)
+    {
+        relay_server_close_socket (server);
+        free (server->path);
+        server->path = strdup (path);
+        server->port = -1;
+        relay_server_create_socket (server);
+    }
+}
+
+/*
  * Updates port in a server.
  */
 
 void
 relay_server_update_port (struct t_relay_server *server, int port)
 {
+    char str_path[128];
+
     if (port != server->port)
     {
         relay_server_close_socket (server);
         server->port = port;
+        snprintf (str_path, sizeof (str_path), "%d", port);
+        free (server->path);
+        server->path = strdup (str_path);
         relay_server_create_socket (server);
     }
 }
