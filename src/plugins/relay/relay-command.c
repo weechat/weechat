@@ -228,7 +228,7 @@ relay_command_relay (const void *pointer, void *data,
             /* check if we're expecting a path or a port */
             port_path_section = (strncmp (argv[2], "unix.", 5) == 0) ?
                 relay_config_section_path : relay_config_section_port;
-            if (relay_config_create_option_port (
+            if (relay_config_create_option_port_path (
                     NULL, NULL,
                     relay_config_file,
                     port_path_section,

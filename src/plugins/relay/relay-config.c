@@ -622,15 +622,15 @@ relay_config_delete_port_cb (const void *pointer, void *data,
 }
 
 /*
- * Callback called when an option is created in section "port".
+ * Callback called when an option is created in section "port" or "path".
  */
 
 int
-relay_config_create_option_port (const void *pointer, void *data,
-                                 struct t_config_file *config_file,
-                                 struct t_config_section *section,
-                                 const char *option_name,
-                                 const char *value)
+relay_config_create_option_port_path (const void *pointer, void *data,
+                                      struct t_config_file *config_file,
+                                      struct t_config_section *section,
+                                      const char *option_name,
+                                      const char *value)
 {
     int rc, protocol_number, ipv4, ipv6, ssl, unix_socket;
     char *error, *protocol, *protocol_args;
@@ -1149,7 +1149,7 @@ relay_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
-        &relay_config_create_option_port, NULL, NULL,
+        &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
     if (!ptr_section)
     {
@@ -1167,7 +1167,7 @@ relay_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
-        &relay_config_create_option_port, NULL, NULL,
+        &relay_config_create_option_port_path, NULL, NULL,
         NULL, NULL, NULL);
     if (!ptr_section)
     {
