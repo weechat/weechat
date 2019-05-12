@@ -54,7 +54,7 @@ Le code d'un script est exécuté :
 * lorsque la fonction de rappel d'un "hook" est appelée par WeeChat
   (voir le chapitre <<hooks,Hooks>>).
 
-Lorsque le code du script est exécuté, WeeChat attend la fin de l'exécutio
+Lorsque le code du script est exécuté, WeeChat attend la fin de l'exécution
 avant de continuer. Par conséquent, le script ne doit *PAS* faire d'opérations
 bloquantes comme des appels réseau sans utiliser une fonction API dédiée
 telle que `hook_process`.
