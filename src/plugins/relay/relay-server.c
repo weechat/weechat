@@ -711,7 +711,8 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->protocol_args =
             (protocol_args) ? strdup (protocol_args) : NULL;
         new_server->port = port;
-        new_server->path = strdup (path);
+        new_server->path = weechat_string_eval_path_home (path,
+                                                          NULL, NULL, NULL);
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
@@ -748,14 +749,11 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
 void
 relay_server_update_path (struct t_relay_server *server, const char *path)
 {
-    if (strcmp (path, server->path) != 0)
-    {
-        relay_server_close_socket (server);
-        free (server->path);
-        server->path = strdup (path);
-        server->port = -1;
-        relay_server_create_socket (server);
-    }
+    relay_server_close_socket (server);
+    free (server->path);
+    server->path = weechat_string_eval_path_home (path, NULL, NULL, NULL);
+    server->port = -1;
+    relay_server_create_socket (server);
 }
 
 /*
