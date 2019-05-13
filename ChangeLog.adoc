@@ -32,6 +32,7 @@ New features::
   * api: add function string_match_list
   * irc: add bar items "irc_nick", "irc_host" and "irc_nick_host"
   * irc: add variable "host" in server structure
+  * relay: add support of UNIX socket (issue #733, issue #1333)
   * relay: add option relay.weechat.commands (issue #928)
   * script: use SHA-512 instead of MD5 for script checksum
   * spell: rename aspell plugin to spell (issue #1299)
