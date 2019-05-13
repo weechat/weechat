@@ -293,7 +293,7 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
         ptr_addr = &client_addr;
         client_addr_size = sizeof (struct sockaddr_in);
     }
-    else if (server->unix_socket)
+    else
     {
         ptr_addr = &client_addr_unix;
         client_addr_size = sizeof (struct sockaddr_un);
