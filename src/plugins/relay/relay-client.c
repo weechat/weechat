@@ -1245,7 +1245,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 #endif /* HAVE_GNUTLS */
         new_client->websocket = 0;
         new_client->http_headers = NULL;
-        new_client->address = strdup ((address) ? address : "?");
+        new_client->address = strdup ((address && address[0]) ?
+                                      address : "local");
         new_client->real_ip = NULL;
         new_client->status = RELAY_STATUS_CONNECTED;
         new_client->protocol = server->protocol;
