@@ -7,7 +7,7 @@
 
 ----
 /relay  list|listfull|listrelay
-        add <name> <port>
+        add <name> <port>|<path>
         del|start|restart|stop <name>
         raw
         sslcertkey
@@ -15,20 +15,22 @@
          list: list relay clients (only active relays)
      listfull: list relay clients (verbose, all relays)
     listrelay: list relays (name and port)
-          add: add a relay (listen on a port)
+          add: add a relay (listen on a port/path)
           del: remove a relay (clients remain connected)
         start: listen on port
       restart: close the server socket and listen again on port (clients remain connected)
          stop: close the server socket (clients remain connected)
          name: relay name (see format below)
          port: port used for relay
+         path: path used for relay (for UNIX domain socket only); "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default), content is evaluated (see /help eval)
           raw: open buffer with raw Relay data
    sslcertkey: set SSL certificate/key using path in option relay.network.ssl_cert_key
 
-Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name>
+Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or unix.[ssl.]<protocol.name>
          ipv4: force use of IPv4
          ipv6: force use of IPv6
           ssl: enable SSL
+         unix: use UNIX domain socket
 protocol.name: protocol and name to relay:
                  - protocol "irc": name is the server to share (optional, if not given, the server name must be sent by client in command "PASS", with format: "PASS server:password")
                  - protocol "weechat" (name is not used)
@@ -55,4 +57,6 @@ Examples:
     /relay add ipv6.ssl.weechat 9001
   weechat protocol with SSL, using IPv4 + IPv6:
     /relay add ipv4.ipv6.ssl.weechat 9001
+  weechat protocol over UNIX domain socket:
+    /relay add unix.weechat %h/relay_socket
 ----

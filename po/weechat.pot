@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-04-13 20:37+0200\n"
+"POT-Creation-Date: 2019-05-13 21:29+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8946,7 +8946,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s: new client on port %d: %s%s%s"
+msgid "%s: new client on path %s: %s%s%s"
+msgstr ""
+
+#, c-format
+msgid "%s: new client on port %s: %s%s%s"
 msgstr ""
 
 #, c-format
@@ -8983,26 +8987,32 @@ msgstr ""
 msgid "No connected client for relay"
 msgstr ""
 
-msgid "Listening on ports:"
+msgid "Listening on:"
 msgstr ""
 
 #, c-format
-msgid "  port %s%d%s, relay: %s%s%s, %s (not started)"
+msgid "  %s %s%s%s, relay: %s%s%s, %s (not started)"
+msgstr ""
+
+msgid "path"
+msgstr ""
+
+msgid "port"
 msgstr ""
 
 #, c-format
-msgid "  port %s%d%s, relay: %s%s%s, %s, started on: %s"
+msgid "  %s %s%s%s, relay: %s%s%s, %s, started on: %s"
 msgstr ""
 
 msgid "No server for relay"
 msgstr ""
 
 #, c-format
-msgid "%s: relay \"%s\" (port %s) added"
+msgid "%s: relay \"%s\" (%s: %s) added"
 msgstr ""
 
 #, c-format
-msgid "%s: relay \"%s\" (port %d) removed"
+msgid "%s: relay \"%s\" (%s: %s) removed"
 msgstr ""
 
 #, c-format
@@ -9013,15 +9023,15 @@ msgid "relay control"
 msgstr ""
 
 msgid ""
-"list|listfull|listrelay || add <name> <port> || del|start|restart|stop "
-"<name> || raw || sslcertkey"
+"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
+"stop <name> || raw || sslcertkey"
 msgstr ""
 
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
 "    listrelay: list relays (name and port)\n"
-"          add: add a relay (listen on a port)\n"
+"          add: add a relay (listen on a port/path)\n"
 "          del: remove a relay (clients remain connected)\n"
 "        start: listen on port\n"
 "      restart: close the server socket and listen again on port (clients "
@@ -9029,14 +9039,19 @@ msgid ""
 "         stop: close the server socket (clients remain connected)\n"
 "         name: relay name (see format below)\n"
 "         port: port used for relay\n"
+"         path: path used for relay (for UNIX domain socket only); \"%h\" at "
+"beginning of string is replaced by WeeChat home (\"~/.weechat\" by default), "
+"content is evaluated (see /help eval)\n"
 "          raw: open buffer with raw Relay data\n"
 "   sslcertkey: set SSL certificate/key using path in option relay.network."
 "ssl_cert_key\n"
 "\n"
-"Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name>\n"
+"Relay name is: [ipv4.][ipv6.][ssl.]<protocol.name> or unix.[ssl.]<protocol."
+"name>\n"
 "         ipv4: force use of IPv4\n"
 "         ipv6: force use of IPv6\n"
 "          ssl: enable SSL\n"
+"         unix: use UNIX domain socket\n"
 "protocol.name: protocol and name to relay:\n"
 "                 - protocol \"irc\": name is the server to share (optional, "
 "if not given, the server name must be sent by client in command \"PASS\", "
@@ -9066,7 +9081,9 @@ msgid ""
 "  weechat protocol with SSL, using only IPv6:\n"
 "    /relay add ipv6.ssl.weechat 9001\n"
 "  weechat protocol with SSL, using IPv4 + IPv6:\n"
-"    /relay add ipv4.ipv6.ssl.weechat 9001"
+"    /relay add ipv4.ipv6.ssl.weechat 9001\n"
+"  weechat protocol over UNIX domain socket:\n"
+"    /relay add unix.weechat %h/relay_socket"
 msgstr ""
 
 msgid "all possible protocol.name for relay plugin"
@@ -9089,6 +9106,18 @@ msgid "%s%s: error: port \"%d\" is already used"
 msgstr ""
 
 #, c-format
+msgid "%s%s: error: path is empty"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: path \"%s\" too long (length: %d; max: %d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error: path \"%s\" is already used"
+msgstr ""
+
+#, c-format
 msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
 msgstr ""
 
@@ -9102,6 +9131,14 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error: relay for \"%s\" already exists"
+msgstr ""
+
+msgid ""
+"path to a socket file; \"%h\" at beginning of string is replaced by WeeChat "
+"home (\"~/.weechat\" by default), content is evaluated (see /help eval)"
+msgstr ""
+
+msgid "port for relay"
 msgstr ""
 
 msgid "auto open relay buffer when a new client is connecting"
@@ -9265,7 +9302,11 @@ msgid "Relay raw messages"
 msgstr ""
 
 #, c-format
-msgid "%s: socket closed for %s (port %d)"
+msgid "%s: socket closed for %s (%s: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot accept client on path %s (%s): error %d %s"
 msgstr ""
 
 #, c-format
@@ -9305,6 +9346,14 @@ msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr ""
 
 #, c-format
+msgid "%s%s: socket path \"%s\" is invalid"
+msgstr ""
+
+#, c-format
+msgid "%s%s: socket path \"%s\" already exists and is not a socket"
+msgstr ""
+
+#, c-format
 msgid "%s%s: cannot create socket: error %d %s"
 msgstr ""
 
@@ -9313,7 +9362,15 @@ msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr ""
 
 #, c-format
+msgid "%s%s: cannot \"bind\" on path %s (%s): error %d %s"
+msgstr ""
+
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
 msgstr ""
 
 #, c-format
@@ -9321,10 +9378,20 @@ msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr ""
 
 #, c-format
+msgid "%s: listening on path %s (relay: %s, %s, max %d client)"
+msgid_plural "%s: listening on path %s (relay: %s, %s, max %d clients)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
 msgstr[0] ""
 msgstr[1] ""
+
+#, c-format
+msgid "%s: listening on path %s (relay: %s, %s)"
+msgstr ""
 
 #, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"

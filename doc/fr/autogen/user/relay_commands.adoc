@@ -7,7 +7,7 @@
 
 ----
 /relay  list|listfull|listrelay
-        add <nom> <port>
+        add <nom> <port>|<chemin>
         del|start|restart|stop <nom>
         raw
         sslcertkey
@@ -22,13 +22,15 @@
       stop : fermer le socket serveur (les clients restent connectés)
        nom : nom du relai (voir le format ci-dessous)
       port : port utilisé pour le relai
+    chemin : chemin utilisé pour le relai (pour un socket de domaine UNIX seulement) ; "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat"), le contenu est évalué (voir /help eval)
        raw : ouvrir le tampon avec les données brutes Relay
 sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
 
-Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom>
+Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom> ou unix[.ssh].<protocole.nom>
          ipv4 : forcer l'utilisation d'IPv4
          ipv6 : forcer l'utilisation d'IPv6
           ssl : activer SSL
+         unix : utiliser un socket de domaine UNIX
 protocole.nom : protocole et nom à relayer :
                   - protocole "irc" : le nom est le serveur à partager (optionnel, si non donné, le nom de serveur doit être envoyé par le client dans la commande "PASS", avec le format : "PASS serveur:motdepasse")
                   - protocole "weechat" (le nom n'est pas utilisé)
@@ -55,4 +57,6 @@ Exemples :
     /relay add ipv6.ssl.weechat 9001
   protocole weechat avec SSL, en utilisant IPv4 + IPv6 :
     /relay add ipv4.ipv6.ssl.weechat 9001
+  protocole weechat avec un socket de domaine UNIX :
+    /relay add unix.weechat %h/relay_socket
 ----

@@ -784,11 +784,20 @@ relay_config_create_option_port_path (const void *pointer, void *data,
         }
         if (ptr_server)
         {
-            weechat_printf (NULL, _("%s%s: error: %s \"%s\" is already used"),
-                            weechat_prefix ("error"),
-                            RELAY_PLUGIN_NAME,
-                            (unix_socket) ? _("path") : _("port"),
-                            value);
+            if (unix_socket)
+            {
+                weechat_printf (NULL,
+                                _("%s%s: error: path \"%s\" is already used"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                value);
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: error: port \"%d\" is already used"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                (int)port);
+            }
             rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
         }
     }

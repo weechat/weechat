@@ -144,8 +144,8 @@ relay_command_server_list ()
                 weechat_printf (
                     NULL,
                     _("  %s %s%s%s, relay: %s%s%s, %s (not started)"),
-                    RELAY_COLOR_CHAT_BUFFER,
                     (ptr_server->unix_socket) ? _("path") : _("port"),
+                    RELAY_COLOR_CHAT_BUFFER,
                     ptr_server->path,
                     RELAY_COLOR_CHAT,
                     RELAY_COLOR_CHAT_BUFFER,
