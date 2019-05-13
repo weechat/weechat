@@ -23,22 +23,13 @@ endif()
 
 find_path(NCURSES_INCLUDE_PATH
   NAMES ncurses.h curses.h
-  PATHS /usr/local/include/ncursesw /usr/local/include/ncurses /usr/local/include
-  /usr/pkg/include/ncursesw /usr/pkg/include/ncurses /usr/pkg/include
-  /usr/include/ncursesw /usr/include/ncurses /usr/include
-  NO_DEFAULT_PATH
-)
-find_path(NCURSES_INCLUDE_PATH
-  NAMES ncurses.h curses.h
+  PATH_SUFFIXES ncursesw ncurses
+  PATHS /usr/include /usr/local/include /usr/pkg/include
 )
 
 find_library(NCURSESW_LIBRARY
   NAMES ncursesw
-  PATHS /usr/local/lib /usr/pkg/lib /usr/lib /lib
-  NO_DEFAULT_PATH
-)
-find_library(NCURSESW_LIBRARY
-  NAMES ncursesw
+  PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
 )
 
 if(NCURSESW_LIBRARY)
@@ -51,11 +42,7 @@ if(NCURSESW_LIBRARY)
 else()
   find_library(NCURSES_LIBRARY
     NAMES ncurses
-    PATHS /usr/local/lib /usr/pkg/lib /usr/lib /lib
-    NO_DEFAULT_PATH
-  )
-  find_library(NCURSES_LIBRARY
-    NAMES ncurses
+    PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
   )
   find_package(PkgConfig QUIET)
   if(PKG_CONFIG_FOUND)
