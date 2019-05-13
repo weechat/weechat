@@ -520,29 +520,30 @@ relay_config_check_port_cb (const void *pointer, void *data,
  *
  * Returns:
  *   1: path is valid
- *   0: path is empty, or too long
+ *   0: path is empty or too long
  */
 
 int
 relay_config_check_path_length (const char *path)
 {
     struct sockaddr_un addr;
-    size_t max_path, path_len;
+    size_t length, max_length;
 
-    max_path = sizeof (addr.sun_path);
-    path_len = strlen (path);
-    if (!path_len)
+    length = strlen (path);
+    if (length == 0)
     {
         weechat_printf (NULL, _("%s%s: error: path is empty"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         return 0;
     }
-    if (path_len >= max_path)
+
+    max_length = sizeof (addr.sun_path);
+    if (length + 1 > max_length)
     {
         weechat_printf (NULL,
                         _("%s%s: error: path \"%s\" too long (length: %d; max: %d)"),
                         weechat_prefix ("error"), RELAY_PLUGIN_NAME, path,
-                        path_len, max_path);
+                        length, max_length);
         return 0;
     }
 
