@@ -25,6 +25,7 @@
 #ifdef WEECHAT_HEADLESS
 #include "ncurses-fake.h"
 #else
+#define NCURSES_WIDECHAR 1
 #ifdef HAVE_NCURSESW_CURSES_H
 #include <ncursesw/ncurses.h>
 #elif HAVE_NCURSES_H
