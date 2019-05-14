@@ -2229,7 +2229,8 @@ IRC_PROTOCOL_CALLBACK(privmsg)
             /* other message */
             ptr_nick = irc_nick_search (server, ptr_channel, nick);
 
-            irc_nick_set_host (ptr_nick, address);
+            if (ptr_nick)
+                irc_nick_set_host (ptr_nick, address);
 
             if (status_msg[0])
             {
