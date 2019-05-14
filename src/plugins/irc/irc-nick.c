@@ -125,6 +125,9 @@ irc_nick_set_current_prefix (struct t_irc_nick *nick)
 {
     char *ptr_prefixes;
 
+    if (!nick)
+        return;
+
     nick->prefix[0] = ' ';
     for (ptr_prefixes = nick->prefixes; ptr_prefixes[0]; ptr_prefixes++)
     {
@@ -149,6 +152,9 @@ irc_nick_set_prefix (struct t_irc_server *server, struct t_irc_nick *nick,
 {
     int index;
 
+    if (!nick)
+        return;
+
     index = irc_server_get_prefix_char_index (server, prefix);
     if (index >= 0)
     {
@@ -166,6 +172,9 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
                        const char *prefixes)
 {
     const char *ptr_prefixes;
+
+    if (!nick)
+        return;
 
     /* reset all prefixes in nick */
     memset (nick->prefixes, ' ', strlen (nick->prefixes));
@@ -190,6 +199,9 @@ irc_nick_set_prefixes (struct t_irc_server *server, struct t_irc_nick *nick,
 void
 irc_nick_set_host (struct t_irc_nick *nick, const char *host)
 {
+    if (!nick)
+        return;
+
     /* if host is the same, just return */
     if ((!nick->host && !host)
         || (nick->host && host && strcmp (nick->host, host) == 0))
