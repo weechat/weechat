@@ -1217,12 +1217,12 @@ Aufzählung von Bar-Optionen:
 Die Option _items_ ist ein String, mit einer Anzahl von Bar-Items. Diese werden
 durch Kommata voneinander getrennt (auf dem Bildschirm wird das Komma durch ein
 Leerzeichen ersetzt). Möchte man die Items ohne Leerzeichen darstellen, nutzt
-man ein "+" um die Items zu trennen.
+man ein `+++` um die Items zu trennen.
 
 Eine Liste von Bar-Items kann man sich mit dem Befehl `/bar listitems` anzeigen lassen.
 
 Vor oder nach dem Item können Zeichen eingefügt werden. Diese dürfen nicht alphanumerisch,
-"-" oder "_" sein. Die Zeichen werden mit der entsprechenden Farbe, für Trennzeichen,
+`+-+` oder `+_+` sein. Die Zeichen werden mit der entsprechenden Farbe, für Trennzeichen,
 dargestellt (Option _color_delim_).
 
 Beispiel einer Bar mit den Items, "[time],buffer_number+:+buffer_plugin+.+buffer_name":

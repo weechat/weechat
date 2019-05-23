@@ -1231,13 +1231,13 @@ Liste des options de barre :
 ==== Objets
 
 L'option _items_ est une chaîne avec une liste d'objets de barre, séparés par
-une virgule (espace entre les objets à l'écran) ou un "+" (objets collés).
+une virgule (espace entre les objets à l'écran) ou un `+++` (objets collés).
 
 La liste des objets de barre est affichée avec la commande `/bar listitems`.
 
 Avant ou après l'objet de barre, vous pouvez utiliser des caractères (qui ne
-sont pas alphanumériques, "-" ou "_"). Ils seront affichés avant/après l'objet
-de barre avec la couleur des délimiteurs définie dans la barre (option
+sont pas alphanumériques, `+-+` ou `+_+`). Ils seront affichés avant/après
+l'objet de barre avec la couleur des délimiteurs définie dans la barre (option
 _color_delim_).
 
 Exemple de barre avec les objets

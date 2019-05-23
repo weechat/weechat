@@ -1213,12 +1213,12 @@ Lista opcji dla pasków:
 ==== Elementy
 
 Opcja _items_ jest ciągiem z listą elementów paska oddzielonych przecinkiem
-(spacja pomiędzy elementami na ekranie) lub "+" (elementy sklejone).
+(spacja pomiędzy elementami na ekranie) lub `+++` (elementy sklejone).
 
 Lista wszystkich elementów paska jest wyświetlana za pomocą komendy `/bar listitems`.
 
 Przed i za nazwą elementu można używać znaków (nie będących alfanumerycznymi,
-"-" lub "_"). Będą one wyświetlane przed/za elementem z kolorem separatorów
+`+-+` lub `+_+`). Będą one wyświetlane przed/za elementem z kolorem separatorów
 zdefiniowanych dla paska (opcja _color_delim_).
 
 Przykład paska z elementami "[time],buffer_number+:+buffer_plugin+.+buffer_name":
