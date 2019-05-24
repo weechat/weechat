@@ -1042,9 +1042,9 @@ Exemple :
 [source,python]
 ----
 script_options = {
-    "option1" : "valeur1",
-    "option2" : "valeur2",
-    "option3" : "valeur3",
+    "option1": "valeur1",
+    "option2": "valeur2",
+    "option3": "valeur3",
 }
 for option, default_value in script_options.items():
     if not weechat.config_is_set_plugin(option):

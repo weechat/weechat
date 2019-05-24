@@ -1037,9 +1037,9 @@ Beispiele:
 [source,python]
 ----
 skript_optionen = {
-    "Option1" : "Wert1",
-    "Option2" : "Wert2",
-    "Option3" : "Wert3",
+    "Option1": "Wert1",
+    "Option2": "Wert2",
+    "Option3": "Wert3",
 }
 for option, standardwert in skript_optionen.items():
     if not weechat.config_is_set_plugin(option):
