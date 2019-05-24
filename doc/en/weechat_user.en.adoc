@@ -1545,7 +1545,7 @@ You can display tags with the command `/debug tags` (same command to hide them).
 
 You can add specific tags to highlight with the option
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tags are separated by commas, and multiple tags can be separated by "+" to do
+Tags are separated by commas, and multiple tags can be separated by `+++` to do
 a logical "and" between them.
 
 For example to highlight all messages from nick "FlashCode" and all notices
@@ -1767,43 +1767,43 @@ These keys are used in context "mouse", namely when a mouse event occurs.
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Button ^(1)^ | Gesture      | Area                 | Description | Command
-| ◾◽◽          | -            | chat                 | Switch to window. | `/window ${_window_number}`
-| ◾◽◽          | left         | chat                 | Switch to previous buffer. | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | right        | chat                 | Switch to next buffer. | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | left (long)  | chat                 | Switch to first buffer. | `/window ${_window_number};/buffer 1`
-| ◾◽◽          | right (long) | chat                 | Switch to last buffer. | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽          | -            | chat (script buffer) | Select line in script buffer. | `/script go ${_chat_line_y}`
-| ◽◽◾          | -            | chat (script buffer) | Install/remove script. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑            | -            | chat                 | Scroll up a few lines in buffer history. | `/window scroll_up -window ${_window_number}`
-| ⇓            | -            | chat                 | Scroll down a few lines in buffer history. | `/window scroll_down -window ${_window_number}`
-| ⇑            | -            | chat (script buffer) | Move 5 lines up in script buffer. | `/script up 5`
-| ⇓            | -            | chat (script buffer) | Move 5 lines down in script buffer. | `/script down 5`
-| kbd:[Ctrl+⇑] | -            | chat                 | Scroll horizontally to the left. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓] | -            | chat                 | Scroll horizontally to the right. | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽          | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
-| ◾◽◽          | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
-| ◾◽◽          | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
-| ◽◽◾          | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
-| kbd:[Ctrl+⇑] | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
-| kbd:[Ctrl+⇓] | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
-| ◾◽◽          | up           | nicklist             | Scroll up one page in nicklist. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽          | down         | nicklist             | Scroll down one page in nicklist. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽          | up (long)    | nicklist             | Go to the beginning of nicklist. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽          | down (long)  | nicklist             | Go to the end of nicklist. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽          | -            | nicklist             | Open query with nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾          | -            | nicklist             | Do a whois on nick. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽          | left         | nicklist             | Kick nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽          | left (long)  | nicklist             | Kick and ban nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾          | left         | nicklist             | Ban nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾          | -            | input                | Grab a mouse event and insert its code in command line. | `/input grab_mouse_area`
-| ⇑            | -            | any bar              | Scroll bar by -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓            | -            | any bar              | Scroll bar by +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽          | -            | anywhere             | Start cursor mode at this point. | `/cursor go ${_x},${_y}`
+| Button/Wheel ^(1)^ | Gesture      | Area                 | Description | Command
+| ◾◽◽                | -            | chat                 | Switch to window. | `/window ${_window_number}`
+| ◾◽◽                | left         | chat                 | Switch to previous buffer. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                | right        | chat                 | Switch to next buffer. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                | left (long)  | chat                 | Switch to first buffer. | `/window ${_window_number};/buffer 1`
+| ◾◽◽                | right (long) | chat                 | Switch to last buffer. | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽                | -            | chat (script buffer) | Select line in script buffer. | `/script go ${_chat_line_y}`
+| ◽◽◾                | -            | chat (script buffer) | Install/remove script. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| kbd:[▲]            | -            | chat                 | Scroll up a few lines in buffer history. | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]            | -            | chat                 | Scroll down a few lines in buffer history. | `/window scroll_down -window ${_window_number}`
+| kbd:[▲]            | -            | chat (script buffer) | Move 5 lines up in script buffer. | `/script up 5`
+| kbd:[▼]            | -            | chat (script buffer) | Move 5 lines down in script buffer. | `/script down 5`
+| kbd:[Ctrl+▲]       | -            | chat                 | Scroll horizontally to the left. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]       | -            | chat                 | Scroll horizontally to the right. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽                | up / left    | buflist              | Move buffer to a lower number. | Signal `buflist_mouse`.
+| ◾◽◽                | down / right | buflist              | Move buffer to a higher number. | Signal `buflist_mouse`.
+| ◾◽◽                | -            | buflist              | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
+| ◽◽◾                | -            | buflist              | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
+| kbd:[Ctrl+▲]       | -            | buflist              | Switch to previous buffer. | Signal `buflist_mouse`.
+| kbd:[Ctrl+▼]       | -            | buflist              | Switch to next buffer. | Signal `buflist_mouse`.
+| ◾◽◽                | up           | nicklist             | Scroll up one page in nicklist. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽                | down         | nicklist             | Scroll down one page in nicklist. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽                | up (long)    | nicklist             | Go to the beginning of nicklist. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽                | down (long)  | nicklist             | Go to the end of nicklist. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽                | -            | nicklist             | Open query with nick. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾                | -            | nicklist             | Do a whois on nick. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽                | left         | nicklist             | Kick nick. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽                | left (long)  | nicklist             | Kick and ban nick. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾                | left         | nicklist             | Ban nick. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾                | -            | input                | Grab a mouse event and insert its code in command line. | `/input grab_mouse_area`
+| kbd:[▲]            | -            | any bar              | Scroll bar by -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]            | -            | any bar              | Scroll bar by +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽                | -            | anywhere             | Start cursor mode at this point. | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
-^(1)^ "⇑" and "⇓" are wheel up and down.
+^(1)^ kbd:[▲] and kbd:[▼] are wheel up and down.
 
 [[mouse]]
 === Mouse support
@@ -1854,7 +1854,7 @@ You can change or add bindings with the command `/key` using context "mouse"
 (for syntax, see command <<command_weechat_key,/key>>).
 
 Event name consists of a modifier (optional), a button/wheel name and a gesture
-(optional). Different elements are separated by "-".
+(optional). Different elements are separated by `+-+`.
 
 List of modifiers:
 
@@ -3837,7 +3837,7 @@ Matching groups can be used in "replace":
   (example: `+${hide:*,${re:2}}+` is the group #2 with all chars replaced by
   `+*+`).
 
-Example: use bold for words between "*":
+Example: use bold for words between `+*+`:
 
 ----
 /\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/

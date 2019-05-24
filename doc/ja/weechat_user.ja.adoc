@@ -1549,7 +1549,7 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 ハイライトするタグを明示するには
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>
 オプションを使います。複数のタグを指定するにはコンマで区切り、複数のタグの論理
-"and" を表すには "+" で区切ります。
+"and" を表すには `+++` で区切ります。
 
 例えば "FlashCode" というニックネームからのすべてのメッセージと "toto"
 で始まるニックネームからのすべての通知メッセージをハイライトするには以下のように設定します:
@@ -1770,43 +1770,44 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| ボタン^(1)^  | ジェスチャー | エリア                        | 説明 | コマンド
-| ◾◽◽          | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
-| ◾◽◽          | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽          | 左 (長く)    | チャット                      | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
-| ◾◽◽          | 右 (長く)    | チャット                      | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽          | -            | チャット (スクリプトバッファ) | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
-| ◽◽◾          | -            | チャット (スクリプトバッファ) | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
-| ⇑            | -            | チャット                      | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
-| ⇓            | -            | チャット                      | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
-| ⇑            | -            | チャット (スクリプトバッファ) | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
-| ⇓            | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
-| kbd:[Ctrl+⇑] | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓] | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽          | 上 / 左      | バッファリスト                | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
-| ◾◽◽          | 下 / 右      | バッファリスト                | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
-| ◾◽◽          | -            | バッファリスト                | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
-| ◽◽◾          | -            | バッファリスト                | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
-| kbd:[Ctrl+⇑] | -            | バッファリスト                | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
-| kbd:[Ctrl+⇓] | -            | バッファリスト                | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
-| ◾◽◽          | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽          | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽          | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽          | 下 (長く)    | ニックネームリスト            | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽          | -            | ニックネームリスト            | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
-| ◽◽◾          | -            | ニックネームリスト            | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽          | 左           | ニックネームリスト            | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽          | 左 (長く)    | ニックネームリスト            | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾          | 左           | ニックネームリスト            | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾          | -            | 入力                          | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
-| ⇑            | -            | 任意のバー                    | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓            | -            | 任意のバー                    | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽          | -            | 任意の場所                    | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
+// TRANSLATION MISSING
+| ボタン/Wheel ^(1)^ | ジェスチャー | エリア                        | 説明 | コマンド
+| ◾◽◽               | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
+| ◾◽◽               | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽               | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽               | 左 (長く)    | チャット                      | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
+| ◾◽◽               | 右 (長く)    | チャット                      | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽               | -            | チャット (スクリプトバッファ) | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
+| ◽◽◾               | -            | チャット (スクリプトバッファ) | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
+| kbd:[▲]           | -            | チャット                      | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]           | -            | チャット                      | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
+| kbd:[▲]           | -            | チャット (スクリプトバッファ) | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
+| kbd:[▼]           | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
+| kbd:[Ctrl+▲]      | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]      | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽               | 上 / 左      | バッファリスト                | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽               | 下 / 右      | バッファリスト                | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽               | -            | バッファリスト                | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
+| ◽◽◾               | -            | バッファリスト                | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+▲]      | -            | バッファリスト                | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+▼]      | -            | バッファリスト                | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| ◾◽◽               | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽               | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽               | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽               | 下 (長く)    | ニックネームリスト            | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽               | -            | ニックネームリスト            | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
+| ◽◽◾               | -            | ニックネームリスト            | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽               | 左           | ニックネームリスト            | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽               | 左 (長く)    | ニックネームリスト            | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾               | 左           | ニックネームリスト            | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾               | -            | 入力                          | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
+| kbd:[▲]           | -            | 任意のバー                    | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]           | -            | 任意のバー                    | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽               | -            | 任意の場所                    | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
-^(1)^ "⇑" と "⇓" はホイールの上方向回転と下方向回転に対応します。
+^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
 
 [[mouse]]
 === マウスサポート
@@ -1856,7 +1857,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 (詳しい使い方は <<command_weechat_key,/key>> コマンドを参照)。
 
 イベント名には修飾キー (任意)、ボタン/ホイール名、ジェスチャー (任意)
-を利用できます。異なるイベントは "-" で分割してください。
+を利用できます。異なるイベントは `+-+` で分割してください。
 
 修飾キーリスト:
 
@@ -3833,7 +3834,7 @@ WeeChat によって使われる値に影響を及ぼします
   (例: `+${hide:*,${re:2}}+` はグループ #2 のすべての文字を `+*+`
   で置換した文字列)。
 
-例: "*" で囲まれた文字を太字にする:
+例: `+*+` で囲まれた文字を太字にする:
 
 ----
 /\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/

@@ -1580,7 +1580,7 @@ beinhalten. + Diese "tags" können mit dem Befehl `/debug tags` dargestellt werd
 Um Tags als Highlights zu nutzen wird folgende Option verwendet:
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
 Tags werden durch Kommata getrennt und mehrere Tags können mit
-"+" genutzt werden um ein logischen "und" zu erstellen.
+`+++` genutzt werden um ein logischen "und" zu erstellen.
 
 Zum Beispiel um alle Nachrichten vom Nick "FlashCode" und alle notice-Nachrichten
 von Nicks die mit "toto" beginnen zu highlighten:
@@ -1802,43 +1802,43 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Maustaste ^(1)^ | Mausgeste    | Bereich              | Beschreibung | Befehl
-| ◾◽◽             | -            | Chat                 | wechselt zum Fenster. | `/window ${_window_number}`
-| ◾◽◽             | links        | Chat                 | zum vorherigen Buffer springen. | `/window ${_window_number};/buffer +1`
-| ◾◽◽             | rechts       | Chat                 | zum nächsten Buffer springen. | `/window ${_window_number};/buffer +1`
-| ◾◽◽             | links(lang)  | Chat                 | wechselt zum ersten Buffer. | `/window ${_window_number};/buffer 1`
-| ◾◽◽             | rechts(lang) | Chat                 | wechselt zum letzten Buffer. | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽             | -            | chat (script buffer) | wählt einen Eintrag im Script-Buffer aus. | `/script go ${_chat_line_y}`
-| ◽◽◾             | -            | chat (script buffer) | installiert/entfernt ein Skript. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑               | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up -window ${_window_number}`
-| ⇓               | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down -window ${_window_number}`
-| ⇑               | -            | chat (script buffer) | fünf Zeilen nach oben blättern, im Script-Buffer. | `/script up 5`
-| ⇓               | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer. | `/script down 5`
-| kbd:[Ctrl+⇑]    | -            | chat                 | horizontal, nach links scrollen. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓]    | -            | chat                 | horizontal, nach rechts scrollen. | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽             | up / left    | buflist              | verschiebt Buffer in der Reihenfolge nach unten. | Signal `buflist_mouse`.
-| ◾◽◽             | down / right | buflist              | verschiebt Buffer in der Reihenfolge nach oben. | Signal `buflist_mouse`.
-| ◾◽◽             | -            | buflist              | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `buflist_mouse`.
-| ◽◽◾             | -            | buflist              | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `buflist_mouse`.
-| kbd:[Ctrl+⇑]    | -            | buflist              | wechselt zum vorherigen Buffer. | Signal `buflist_mouse`.
-| kbd:[Ctrl+⇓]    | -            | buflist              | wechselt zum nächsten Buffer. | Signal `buflist_mouse`.
-| ◾◽◽             | hoch         | Benutzerliste        | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽             | runter       | Benutzerliste        | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽             | hoch(lang)   | Benutzerliste        | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽             | runter(lang) | Benutzerliste        | springt zum Ende der Benutzerliste. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽             | -            | Benutzerliste        | öffnet privaten Chat mit Nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾             | -            | Benutzerliste        | führt einen whois für Nick aus. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽             | links        | Benutzerliste        | kickt Nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽             | links(lang)  | Benutzerliste        | kickt und verbannt Nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾             | links        | Benutzerliste        | verbannt Nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾             | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `/input grab_mouse_area`
-| ⇑               | -            | jede Bar             | blättert Bar um 20% nach oben. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓               | -            | jede Bar             | blättert Bar um 20% nach unten. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽             | -            | überall              | aktiviert den Cursor-Modus an dieser Position. | `/cursor go ${_x},${_y}`
+| Maustaste/Mausrad ^(1)^ | Mausgeste    | Bereich              | Beschreibung | Befehl
+| ◾◽◽                     | -            | Chat                 | wechselt zum Fenster. | `/window ${_window_number}`
+| ◾◽◽                     | links        | Chat                 | zum vorherigen Buffer springen. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                     | rechts       | Chat                 | zum nächsten Buffer springen. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                     | links(lang)  | Chat                 | wechselt zum ersten Buffer. | `/window ${_window_number};/buffer 1`
+| ◾◽◽                     | rechts(lang) | Chat                 | wechselt zum letzten Buffer. | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽                     | -            | chat (script buffer) | wählt einen Eintrag im Script-Buffer aus. | `/script go ${_chat_line_y}`
+| ◽◽◾                     | -            | chat (script buffer) | installiert/entfernt ein Skript. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| kbd:[▲]                 | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]                 | -            | Chat                 | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down -window ${_window_number}`
+| kbd:[▲]                 | -            | chat (script buffer) | fünf Zeilen nach oben blättern, im Script-Buffer. | `/script up 5`
+| kbd:[▼]                 | -            | chat (script buffer) | fünf Zeilen nach unten blättern, im Script-Buffer. | `/script down 5`
+| kbd:[Ctrl+▲]            | -            | chat                 | horizontal, nach links scrollen. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]            | -            | chat                 | horizontal, nach rechts scrollen. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽                     | up / left    | buflist              | verschiebt Buffer in der Reihenfolge nach unten. | Signal `buflist_mouse`.
+| ◾◽◽                     | down / right | buflist              | verschiebt Buffer in der Reihenfolge nach oben. | Signal `buflist_mouse`.
+| ◾◽◽                     | -            | buflist              | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `buflist_mouse`.
+| ◽◽◾                     | -            | buflist              | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `buflist_mouse`.
+| kbd:[Ctrl+▲]            | -            | buflist              | wechselt zum vorherigen Buffer. | Signal `buflist_mouse`.
+| kbd:[Ctrl+▼]            | -            | buflist              | wechselt zum nächsten Buffer. | Signal `buflist_mouse`.
+| ◾◽◽                     | hoch         | Benutzerliste        | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽                     | runter       | Benutzerliste        | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽                     | hoch(lang)   | Benutzerliste        | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽                     | runter(lang) | Benutzerliste        | springt zum Ende der Benutzerliste. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽                     | -            | Benutzerliste        | öffnet privaten Chat mit Nick. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾                     | -            | Benutzerliste        | führt einen whois für Nick aus. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽                     | links        | Benutzerliste        | kickt Nick. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽                     | links(lang)  | Benutzerliste        | kickt und verbannt Nick. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾                     | links        | Benutzerliste        | verbannt Nick. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾                     | -            | Input                | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `/input grab_mouse_area`
+| kbd:[▲]                 | -            | jede Bar             | blättert Bar um 20% nach oben. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]                 | -            | jede Bar             | blättert Bar um 20% nach unten. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽                     | -            | überall              | aktiviert den Cursor-Modus an dieser Position. | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
-^(1)^ "⇑" und "⇓" sind Symbole für Mausrad hoch/runter.
+^(1)^ kbd:[▲] und kbd:[▼] sind Symbole für Mausrad hoch/runter.
 
 [[mouse]]
 === Mausunterstützung
@@ -1892,7 +1892,7 @@ Man kann mit dem Befehl `/key` im Kontext "mouse" aber auch eigene Befehle zuwei
 und löschen (für die Syntax, siehe Befehl <<command_weechat_key,/key>>).
 
 Der Name eines Ereignisses besteht aus einem Modifier (optional), einer Maustaste/Mausrad
-und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein "-" getrennt.
+und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein `+-+` getrennt.
 
 Liste der Modifiers:
 
@@ -3927,7 +3927,7 @@ Matching groups können in "replace" genutzt werden:
   (Beispiel: `+${hide:*,${re:2}}+` ist die group #2 mit allen Zeichen die durch
   `+*+` ersetzt wurden).
 
-Beispiel: nutzte Fettschrift zwischen dem Zeichen "*":
+Beispiel: nutzte Fettschrift zwischen dem Zeichen `+*+`:
 
 ----
 /\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/

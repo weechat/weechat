@@ -1562,7 +1562,7 @@ Możesz wyświetlić tagi za pomocą komendy `/debug tags` (ta sama komenda je u
 
 Możesz dodać konkretne tagi do podświetleń za pomocą opcji
 <<option_weechat.look.highlight_tags,weechat.look.highlight_tags>>.
-Tagi są oddzielane przecinkami, kilka tagów może być oddzielone przez "+" dla wykonania
+Tagi są oddzielane przecinkami, kilka tagów może być oddzielone przez `+++` dla wykonania
 logicznego "i" między nimi.
 
 Na przykład dla podświetlenia wszytkich wiadomości od nicka "FlashCode" oraz powiadomień od
@@ -1786,43 +1786,44 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Klawisz ^(1)^ | Gest          | Obszar                | Opis | Komenda
-| ◾◽◽           | -             | chat                  | Przełącz na okno. | `/window ${_window_number}`
-| ◾◽◽           | lewo          | chat                  | Przełącz na poprzedni bufor. | `/window ${_window_number};/buffer +1`
-| ◾◽◽           | prawo         | chat                  | Przełącz na następny bufor. | `/window ${_window_number};/buffer +1`
-| ◾◽◽           | lewo (długo)  | chat                  | Przełącz na pierwszy bufor. | `/window ${_window_number};/buffer 1`
-| ◾◽◽           | prawo (długo) | chat                  | Przełącz na ostatni bufor. | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽           | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów. | `/script go ${_chat_line_y}`
-| ◽◽◾           | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ⇑             | -             | chat                  | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up -window ${_window_number}`
-| ⇓             | -             | chat                  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down -window ${_window_number}`
-| ⇑             | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów. | `/script up 5`
-| ⇓             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
-| kbd:[Ctrl+⇑]  | -             | chat                  | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+⇓]  | -             | chat                  | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽          | góra / lewo    | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
-| ◾◽◽          | dół / prawo | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
-| ◾◽◽          | -            | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
-| ◽◽◾          | -            | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
-| kbd:[Ctrl+⇑] | -            | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
-| kbd:[Ctrl+⇓] | -            | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
-| ◾◽◽           | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽           | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽           | góra (długo)  | lista nicków          | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽           | dół (długo)   | lista nicków          | Idź na koniec listy nicków. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽           | -             | lista nicków          | Otwórz prywatną rozmowę z nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾           | -             | lista nicków          | Wykonaj whois dla nicka. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽           | lewo          | lista nicków          | Wykop nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽           | lewo (długo)  | lista nicków          | Wykop i zbanuj nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾           | lewo          | lista nicków          | Zbanuj nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾           | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń. | `/input grab_mouse_area`
-| ⇑             | -             | dowolny pasek         | Przewiń pasek o -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| ⇓             | -             | dowolny pasek         | Przewiń pasek o +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽           | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu. | `/cursor go ${_x},${_y}`
+// TRANSLATION MISSING
+| Klawisz/Wheel ^(1)^ | Gest          | Obszar                | Opis | Komenda
+| ◾◽◽                 | -             | chat                  | Przełącz na okno. | `/window ${_window_number}`
+| ◾◽◽                 | lewo          | chat                  | Przełącz na poprzedni bufor. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                 | prawo         | chat                  | Przełącz na następny bufor. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                 | lewo (długo)  | chat                  | Przełącz na pierwszy bufor. | `/window ${_window_number};/buffer 1`
+| ◾◽◽                 | prawo (długo) | chat                  | Przełącz na ostatni bufor. | `/window ${_window_number};/input jump_last_buffer`
+| ◾◽◽                 | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów. | `/script go ${_chat_line_y}`
+| ◽◽◾                 | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| kbd:[▲]             | -             | chat                  | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]             | -             | chat                  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down -window ${_window_number}`
+| kbd:[▲]             | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów. | `/script up 5`
+| kbd:[▼]             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
+| kbd:[Ctrl+▲]        | -             | chat                  | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]        | -             | chat                  | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽                 | góra / lewo    | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | dół / prawo | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | -            | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
+| ◽◽◾                 | -            | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+▲]        | -                  | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+▼]        | -            | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽                 | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽                 | góra (długo)  | lista nicków          | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽                 | dół (długo)   | lista nicków          | Idź na koniec listy nicków. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽                 | -             | lista nicków          | Otwórz prywatną rozmowę z nick. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾                 | -             | lista nicków          | Wykonaj whois dla nicka. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽                 | lewo          | lista nicków          | Wykop nick. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽                 | lewo (długo)  | lista nicków          | Wykop i zbanuj nick. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾                 | lewo          | lista nicków          | Zbanuj nick. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾                 | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń. | `/input grab_mouse_area`
+| kbd:[▲]             | -             | dowolny pasek         | Przewiń pasek o -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]             | -             | dowolny pasek         | Przewiń pasek o +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽                 | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu. | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
-^(1)^ "⇑" i "⇓" to przewijanie rolką myszy w górę i w dół.
+^(1)^ kbd:[▲] i kbd:[▼] to przewijanie rolką myszy w górę i w dół.
 
 [[mouse]]
 === Wsparcie myszy
@@ -1874,7 +1875,7 @@ Możesz zmienić lub dodać przypisania za pomocą komendy `/key` używając kon
 "mouse" (dla składni zobacz komenda <<command_weechat_key,/key>>).
 
 Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
-(opcjonalny). Różne elementy są rozdzielane przez "-".
+(opcjonalny). Różne elementy są rozdzielane przez `+-+`.
 
 Lista modyfikatorów:
 
@@ -3877,7 +3878,7 @@ Dopasowane grupy, które mogą zostać użyte w "zamień":
 * `+${hide:c,${re:N}}+`: dopasowanie "N" z wszystkimi znakami zastąpionymi "c"
   (przykład: `+${hide:*,${re:2}}+` to grupa #2 ze znakami zastąpionymi `+*+`).
 
-Przykład: użyj pogrubienia dla słów pomiędzy "*":
+Przykład: użyj pogrubienia dla słów pomiędzy `+*+`:
 
 ----
 /\*([^ ]+)\*/*${color:bold}${re:1}${color:-bold}*/
