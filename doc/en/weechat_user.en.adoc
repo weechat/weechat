@@ -917,11 +917,11 @@ For example:
 It is possible to use some attributes for colors. One or more attributes can be
 added before color name or number:
 
-* `+*+` : bold text
-* `+!+` : reverse video
-* `+/+` : italic
-* `+_+` : underlined text
-* `+|+` : keep attributes: do not reset bold/reverse/italic/underlined when
+* `+*+`: bold text
+* `+!+`: reverse video
+* `+/+`: italic
+* `+_+`: underlined text
+* `+|+`: keep attributes: do not reset bold/reverse/italic/underlined when
   changing color
 
 For example if you want self nick as white underlined, do:
@@ -1333,7 +1333,7 @@ Following pointers are available:
 * `+${buffer}+`: the buffer of window where condition is evaluated
 
 Example to display nicklist bar in all buffers with a nicklist, and only if
-width of window is > 100 :
+width of window is > 100:
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"

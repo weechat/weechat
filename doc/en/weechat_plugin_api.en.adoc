@@ -7732,20 +7732,20 @@ Arguments:
 Format of color is: attributes (optional) + color name + ",background"
 (optional). Possible attributes are:
 
-* `+*+` : bold text
-* `+!+` : reverse video
-* `+/+` : italic
-* `+_+` : underlined text
-* `+|+` : keep attributes: do not reset bold/reverse/italic/underlined when
+* `+*+`: bold text
+* `+!+`: reverse video
+* `+/+`: italic
+* `+_+`: underlined text
+* `+|+`: keep attributes: do not reset bold/reverse/italic/underlined when
   changing color _(WeeChat ≥ 0.3.6)_
 
 Examples:
 
-* `+yellow+` : yellow
-* `+_green+` : underlined green
-* `+*214+` : bold orange
-* `+yellow,red+` : yellow on red
-* `+|cyan+` : cyan (and keep any attribute which was set previously)
+* `+yellow+`: yellow
+* `+_green+`: underlined green
+* `+*214+`: bold orange
+* `+yellow,red+`: yellow on red
+* `+|cyan+`: cyan (and keep any attribute which was set previously)
 
 Return value:
 
