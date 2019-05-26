@@ -551,7 +551,10 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 WeeChat écrit ses fichiers de configuration et les autres données dans
 `~/.weechat` par défaut.
 
-Les répertoires sont :
+[[weechat_directories]]
+==== Répertoires de WeeChat
+
+Les répertoires de WeeChat sont :
 
 [width="100%",cols="1m,3",options="header"]
 |===
@@ -579,6 +582,9 @@ Les répertoires sont :
 [NOTE]
 ^(1)^ Ce répertoire contient souvent seulement des liens symboliques vers les
 scripts dans le répertoire parent.
+
+[[weechat_files]]
+==== Fichiers de WeeChat
 
 Les fichiers dans le répertoire principal de WeeChat sont :
 

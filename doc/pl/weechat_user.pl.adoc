@@ -551,7 +551,12 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 
 WeeChat zapisuje pliki konfiguracyjne i inne rzeczy domyślnie w folderze `~/.weechat`.
 
-Foldery to:
+// TRANSLATION MISSING
+[[weechat_directories]]
+==== WeeChat directories
+
+// TRANSLATION MISSING
+The WeeChat directories are:
 
 [width="100%",cols="1m,3",options="header"]
 |===
@@ -578,6 +583,10 @@ Foldery to:
 
 [NOTE]
 ^(1)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
+
+// TRANSLATION MISSING
+[[weechat_files]]
+==== WeeChat files
 
 Pliki tworzone w katalogu domowym WeeChat:
 

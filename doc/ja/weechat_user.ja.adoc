@@ -542,7 +542,12 @@ include::cmdline_options_debug.ja.adoc[]
 デフォルト状態の WeeChat は `~/.weechat`
 ディレクトリ内に設定ファイルおよびその他のデータを書き込みます。
 
-このディレクトリには以下の内容が含まれます:
+// TRANSLATION MISSING
+[[weechat_directories]]
+==== WeeChat directories
+
+// TRANSLATION MISSING
+The WeeChat directories are:
 
 [width="100%",cols="1m,3",options="header"]
 |===
@@ -569,6 +574,10 @@ include::cmdline_options_debug.ja.adoc[]
 
 [NOTE]
 ^(1)^ このディレクトリには親ディレクトリ内にあるスクリプトへのシンボリックリンクのみが含まれることが多いです。
+
+// TRANSLATION MISSING
+[[weechat_files]]
+==== WeeChat files
 
 WeeChat ホームディレクトリには以下のファイルが含まれます:
 
