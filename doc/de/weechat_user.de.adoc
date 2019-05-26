@@ -547,12 +547,10 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 WeeChat schreibt standardmäßig seine Konfiguration und andere
 Daten in folgendes Verzeichnis:  `~/.weechat`
 
-// TRANSLATION MISSING
 [[weechat_directories]]
-==== WeeChat directories
+==== WeeChat Verzeichnisse
 
-// TRANSLATION MISSING
-The WeeChat directories are:
+Es gibt folgende WeeChat Verzeichnisse:
 
 [width="100%",cols="1m,3",options="header"]
 |===
@@ -580,9 +578,8 @@ The WeeChat directories are:
 [NOTE]
 ^(1)^ Das Verzeichnis besteht meistens aus symbolischen Links welche auf das eigentliche Skript zeigen.
 
-// TRANSLATION MISSING
 [[weechat_files]]
-==== WeeChat files
+==== WeeChat Dateien
 
 Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 
