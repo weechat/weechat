@@ -40,8 +40,7 @@ WeeChat はすべてのコマンドにヘルプがあります。ヘルプを見
 /help command
 ----
 
-// TRANSLATION MISSING
-Help is available for options as well:
+各オプションに関するヘルプもあります:
 
 ----
 /help config.section.option
@@ -51,9 +50,8 @@ Help is available for options as well:
 `weechat` もしくはプラグイン名)、`section`
 はこの設定のセクション、`option` はオプション名)。
 
-// TRANSLATION MISSING
 [[options]]
-== Set options
+== オプションの設定
 
 オプションを設定するには以下のコマンドを入力してください:
 
