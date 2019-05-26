@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-05-13 21:29+0200\n"
-"PO-Revision-Date: 2019-05-13 21:31+0200\n"
+"PO-Revision-Date: 2019-05-26 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -11725,13 +11725,13 @@ msgstr ""
 "%s%s: 警告: SSL 証明書/鍵が見つかりません (オプション relay.network."
 "ssl_cert_key)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on path %s: %s%s%s"
-msgstr "%s: ポート %d に新規クライアント: %s%s%s"
+msgstr "%s: パス %s に新規クライアントが接続中: %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on port %s: %s%s%s"
-msgstr "%s: ポート %d に新規クライアント: %s%s%s"
+msgstr "%s: ポート %s に新規クライアントが接続中: %s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -11769,34 +11769,33 @@ msgstr "リレーするクライアントがありません"
 msgid "No connected client for relay"
 msgstr "リレーするクライアントはありません"
 
-#, fuzzy
 msgid "Listening on:"
-msgstr "リッスンポート:"
+msgstr "リッスン先:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s (not started)"
-msgstr "  ポート %s%d%s、リレー: %s%s%s、%s (開始していません)"
+msgstr "  %s %s%s%s、リレー: %s%s%s、%s (開始していません)"
 
 msgid "path"
-msgstr ""
+msgstr "パス"
 
 msgid "port"
-msgstr ""
+msgstr "ポート"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s, started on: %s"
-msgstr "  ポート %s%d%s、リレー: %s%s%s、%s、開始日時: %s"
+msgstr "  %s %s%s%s、リレー: %s%s%s、%s、開始日時: %s"
 
 msgid "No server for relay"
 msgstr "リレーするサーバがありません"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
-msgstr "%s: リレー \"%s\" (ポート %s) が追加されました"
+msgstr "%s: リレー \"%s\" (%s: %s) が追加されました"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) removed"
-msgstr "%s: リレー \"%s\" (ポート %d) が削除されました"
+msgstr "%s: リレー \"%s\" (%s: %s) が削除されました"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
@@ -11805,15 +11804,13 @@ msgstr "%s%s: リレー \"%s\" が見つかりません"
 msgid "relay control"
 msgstr "リレー管理"
 
-#, fuzzy
 msgid ""
 "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
 "stop <name> || raw || sslcertkey"
 msgstr ""
-"list|listfull|listrelay || add <name> <port> || del|start|restart|stop "
-"<name> || raw || sslcertkey"
+"list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
+"stop <name> || raw || sslcertkey"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -11875,22 +11872,27 @@ msgstr ""
 "         list: リレーするクライアントをリストアップ (アクティブなもののみ)\n"
 "     listfull: リレーするクライアントをリストアップ (詳細、全てのリレー)\n"
 "    listrelay: リレーをリストアップ (名前とポート番号)\n"
-"          add: リレーを追加 (ポートで接続を待ち受ける)\n"
+"          add: リレーを追加 (ポート/パスで接続を待ち受ける)\n"
 "          del: リレーを削除 (クライアントとの接続は保持)\n"
 "        start: ポートリッスンを開始する\n"
 "      restart: サーバソケットを閉じて同じポートで接続を待つ (クライアントとの"
 "接続は保持)\n"
 "         stop: サーバソケットを閉じる (クライアントとの接続は保持)\n"
 "         name: リレー名 (以下の書式を参照してください)\n"
-"         port: リレーが使うポートの番号\n"
+"         port: リレーが使うポート\n"
+"         path: リレーが使うパス (UNIX ドメインソケット); 文字列先頭の \"%h\" "
+"は WeeChat ホーム (デフォルトは \"~/.weechat\") で置き換えられ、内容は評価さ"
+"れます (/help eval を参照してください)\n"
 "          raw: 生リレーデータを表示するバッファを開く\n"
 "   sslcertkey: オプション relay.network.ssl_cert_key のパスを使って SSL 証明"
 "書/鍵を指定\n"
 "\n"
-"リレー名の書式: [ipv4.][ipv6.][ssl.]<protocol.name>\n"
+"リレー名の書式: [ipv4.][ipv6.][ssl.]<protocol.name> または unix."
+"[ssl.]<protocol.name>\n"
 "         ipv4: IPv4 を強制的に利用\n"
 "         ipv6: IPv6 を強制的に利用\n"
 "          ssl: SSL を有効化\n"
+"         unix: UNIX ドメインソケットを利用\n"
 "protocol.name: リレーするプロトコルと名前:\n"
 "                 - \"irc\" プロトコル: name は共有するサーバ名 (任意指定、指"
 "定しない場合、サーバ名は \"PASS\" コマンドでクライアントが送信するものと同じ"
@@ -11921,7 +11923,9 @@ msgstr ""
 "  SSL を有効にした weechat プロトコル、IPv6 だけを利用:\n"
 "    /relay add ipv6.ssl.weechat 9001\n"
 "  SSL を有効にした weechat プロトコル、IPv4 と IPv6 を利用:\n"
-"    /relay add ipv4.ipv6.ssl.weechat 9001"
+"    /relay add ipv4.ipv6.ssl.weechat 9001\n"
+"  UNIX ドメインソケットを介した weechat プロトコル:\n"
+"    /relay add unix.weechat %h/relay_socket"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "リレープラグインで利用可能な全ての protocol.name"
@@ -11945,17 +11949,17 @@ msgstr ""
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: エラー: ポート \"%d\" は既に使われています"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path is empty"
-msgstr "%s%s: エラー: %s"
+msgstr "%s%s: エラー: パスが空です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path \"%s\" too long (length: %d; max: %d)"
-msgstr "%sエラー: パスフレーズが長すぎます (最大: %d 文字)"
+msgstr "%s%s: エラー: パス \"%s\" が長すぎます (長さ: %d; 最大: %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path \"%s\" is already used"
-msgstr "%s%s: エラー: ポート \"%d\" は既に使われています"
+msgstr "%s%s: エラー: パス \"%s\" は既に使われています"
 
 #, c-format
 msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
@@ -11975,18 +11979,16 @@ msgstr "%s%s: エラー: プロトコル \"%s\" では name を使えません"
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s%s: エラー: \"%s\" のリレーは既に存在しています"
 
-#, fuzzy
 msgid ""
 "path to a socket file; \"%h\" at beginning of string is replaced by WeeChat "
 "home (\"~/.weechat\" by default), content is evaluated (see /help eval)"
 msgstr ""
-"受信ファイルのパス: 文字列最初の \"%h\" は WeeChat ホーム に置換されます (デ"
-"フォルトでは \"~/.weechat\" に置換されます) (注意: 内容は評価されます、/help "
-"eval 参照)"
+"ソケットファイルのパス; 文字列先頭の \"%h\" は WeeChat ホーム に置換されます "
+"(デフォルトは \"~/.weechat\")、内容は評価されます (/help eval を参照してくだ"
+"さい)"
 
-#, fuzzy
 msgid "port for relay"
-msgstr "リレーするクライアントがありません"
+msgstr "リレーするポート"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "新しいクライアントが接続したらリレーバッファを自動的に開く"
@@ -12196,21 +12198,18 @@ msgstr "%s%s: SSL 優先度の初期化に失敗"
 msgid "Relay raw messages"
 msgstr "Relay 生メッセージ"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed for %s (%s: %s)"
-msgstr "%s: %s (ポート %d) のソケットが閉じられました"
+msgstr "%s: %s とのソケットが閉じられました (%s: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on path %s (%s): error %d %s"
-msgstr ""
-"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
-"%s"
+msgstr "%s%s: パス %s (%s) へのクライアントを受け入れできません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr ""
-"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
-"%s"
+"%s%s: ポート %d (%s) へのクライアントを受け入れできません: エラー %d %s"
 
 #, c-format
 msgid ""
@@ -12249,13 +12248,13 @@ msgstr "%s%s: ソケットオプション \"%s\" を %d に設定できません
 msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr "%1$s%2$s: %4$s 用に割り当てた不正なアドレス \"%3$s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" is invalid"
-msgstr "%s: スクリプト \"%s\" はホールド状態です"
+msgstr "%s%s: スクリプトパス \"%s\" は無効です"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" already exists and is not a socket"
-msgstr "%s%s: サーバ \"%s\" は既に存在しており、追加できません"
+msgstr "%s%s: ソケットパス \"%s\" は既に存在しており、ソケットでもありません"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -12265,43 +12264,39 @@ msgstr "%s%s: ソケットの作成に失敗: エラー %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: /set relay.network.ipv6 off を試してください"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on path %s (%s): error %d %s"
-msgstr "%s%s: ポート %d (%s) に \"bind\" できません: エラー %d %s"
+msgstr "%s%s: パス %s (%s) に \"bind\" できません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: ポート %d (%s) に \"bind\" できません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
-msgstr ""
-"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
-"%s"
+msgstr "%s%s: パス %s (%s) ではリッスンできません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
-msgstr ""
-"%s%s: ポート %d (%s) ではクライアントを受け付けることができません: エラー %d "
-"%s"
+msgstr "%s%s: ポート %d (%s) ではリッスンできません: エラー %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on path %s (relay: %s, %s, max %d clients)"
 msgstr[0] ""
-"%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
+"%s: パス %s をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
 msgstr[0] ""
 "%s: ポート %d をリッスンしています (リレー: %s、%s、最大 %d クライアント)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s)"
-msgstr "%s: ポート %d をリッスンしています (リレー: %s、%s)"
+msgstr "%s: パス %s をリッスンしています (リレー: %s、%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
 msgstr "%s: ポート %d をリッスンしています (リレー: %s、%s)"
 

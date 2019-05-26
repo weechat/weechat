@@ -1770,8 +1770,7 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-// TRANSLATION MISSING
-| ボタン/Wheel ^(1)^ | ジェスチャー | エリア                        | 説明 | コマンド
+| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                        | 説明 | コマンド
 | ◾◽◽               | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
 | ◾◽◽               | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
 | ◾◽◽               | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
@@ -3192,27 +3191,26 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 ポート番号 (例では 9000 番) は Relay プラグインで定義したものです。URI
 の最後には必ず "/weechat" をつけます (_irc_ と _weechat_ プロトコルの場合)。
 
-// TRANSLATION MISSING
 [[relay_unix_socket]]
-==== UNIX domain sockets
+==== UNIX ドメインソケット
 
-Using the protocol option "unix" with the `/relay add` command, you can listen
-using any protocol on a UNIX domain socket at a given path. For example:
+`/relay add` コマンドにプロトコルオプション "unix" をつけることで、指定したパスで動作する
+UNIX ドメインソケット上の任意のプロトコルをリッスンできます。例:
 
 ----
 /relay add unix.weechat %h/relay_socket
 ----
 
-This allows clients to connect using the weechat protocol to
-_~/.weechat/relay_socket_. This is particularly useful to allow SSH forwarding
-for relay clients, when other ports cannot be opened. Using OpenSSH:
+こうすることで、クライアントは weechat プロトコルを使って _~/.weechat/relay_socket_
+に接続できます。これは、他のポートをオープンが禁止されている状況下で、リレークライアントの
+SSH 転送を許可する際に特に便利です。OpenSSH を使った例:
 
 ----
 $ ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
-This redirects local relay clients connecting on port 9000 to the WeeChat
-instance running on "hostname".
+これでポート 9000 番に接続してきたローカルのリレークライアントは
+"hostname" 上で動作中の WeeChat インスタンスへ転送されます。
 
 [[relay_commands]]
 ==== コマンド

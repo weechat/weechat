@@ -45,29 +45,28 @@ WeeChat (Wee Enhanced Environment for Chat)
 [[scripts_in_weechat]]
 == WeeChat のスクリプト
 
-// TRANSLATION MISSING
 [[weechat_architecture]]
-=== WeeChat architecture
+=== WeeChat のアーキテクチャ
 
-WeeChat is single-threaded, and this applies to scripts as well.
+WeeChat はシングルスレッドで、この点はスクリプトも同じです。
 
-The code of a script is executed:
+スクリプトのコードは以下の場合に実行されます:
 
-* when the script is loaded: typically a call to the
-  <<register_function,register function>>
-* when a hook callback is called by WeeChat (see the chapter <<hooks,フック>>).
+* スクリプトを読み込んだ時: 通常これは
+  <<register_function,register function>> 関数を呼び出すことを意味します。
+* WeeChat がフックコールバックを呼び出した時 (<<hooks,フック>>を参照してください)。
 
-When the code of a script is executed, WeeChat waits for the end of execution
-before going on. Therefore the script must *NOT* do blocking operations like
-network calls without using a dedicated API function like `hook_process`.
+スクリプトのコードが実行されると、WeeChat
+は一時停止し、実行の完了を待ってから再開します。このため、スクリプトは操作をブロックしては
+*絶対にいけません*。ネットワークを呼び出す等の場合には、`hook_process` 等の専用 API 関数を使ってください。
 
 [IMPORTANT]
-A script must *NEVER* fork or create threads without using a dedicated API
-function, this can crash WeeChat. +
-If something must be run in background, the function `hook_process` can be used.
-See example in the chapter <<hook_process,バックグラウンドプロセスの実行>>
-and the documentation on the function `hook_process` in the
-link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス].
+WeeChat がクラッシュするため、スクリプトで fork したりスレッドを作ることは *禁止*
+されています。これが必要な場合には専用 API 関数を使ってください。 +
+どうしてもバックグラウンド実行を避けられない場合には `hook_process`
+関数を使ってください。<<hook_process,バックグラウンドプロセスの実行>>の例および
+link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス]内の
+`hook_process` 関数の文書を参照してください。
 
 [[languages_specificities]]
 === 言語仕様
