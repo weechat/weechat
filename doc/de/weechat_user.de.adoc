@@ -3208,12 +3208,11 @@ Die Relay Erweiterung kann wie ein IRC Proxy genutzt werden. Dabei simuliert
 die Erweiterung einen IRC Server und man kann sich mit jedem IRC Client zu WeeChat
 verbinden.
 
-Es kann für jeden IRC Server ein Port definiert werden, oder aber ein Port für
-alle Server.
+Es kann für jeden IRC Server ein Port definiert werden, oder aber man nutzt ein Port
+für alle Server.
 
-// TRANSLATION MISSING
 Wird ein Port für alle Server genutzt, dann muss der Client den internen Namen
-des zu nutzenden Servers mit dem IRC Befehl "PASS" anfordern (see example below):
+des zu nutzenden Servers mit dem IRC Befehl "PASS" anfordern (siehe folgendes Beispiel):
 
 ----
 PASS server:meinPasswort
@@ -3235,10 +3234,9 @@ Nun kann man eine Verbindung zum Port 8000 mit jedem beliebigen IRC Client
 herstellen, indem man das Server Passwort "meinPasswort" nutzt (oder
 "freenode:meinPasswort" sofern kein Server angegeben wurde).
 
-// TRANSLATION MISSING
-For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with this
-command:
+Wenn man Beispielsweise WeeChat als IRC Client über das Relay nutzen möchte
+und der genutzte Server heisst "relay" und das entsprechende Passwort "geheim",
+kann man das Passwort mit folgendem Befehl setzen:
 
 ----
 /set irc.server.relay.password "freenode:secret"
