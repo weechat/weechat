@@ -317,8 +317,9 @@ użyty w żadnym z pasków:
 [[terminal_copy_paste]]
 === Jak mogę kopiować/wklejać tekst bez wklejania listy nicków?
 
-W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]),
-który wyświetli zawartość obecnie wybranego okna bez żadnego formatowania.
+W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania
+(domyślnie: kbd:[Alt+l] (`L`)), który wyświetli zawartość obecnie wybranego okna
+bez żadnego formatowania.
 
 Możesz użyć terminala z prostokątnym zaznaczaniem (jak rxvt-unicode,
 konsole, gnome-terminal, ...). Klawisze to zazwyczaj kbd:[Ctrl] + kbd:[Alt] + zaznaczenie myszką.
@@ -332,7 +333,8 @@ Innym rozwiązaniem jest przesunięcie listy nicków na górę lub dół, na prz
 [[urls]]
 === Jak mogę kliknąć na długi URL (dłuższy niż linia)?
 
-W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania (domyślnie: kbd:[Alt+l]).
+W WeeChat od wersji ≥ 1.0, możesz użyć trybu niesformatowanego wyświetlania
+(domyślnie: kbd:[Alt+l] (`L`)).
 
 Żeby operowanie na URLach było latwiejsze możesz:
 

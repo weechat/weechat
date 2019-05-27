@@ -1373,7 +1373,7 @@ URL を簡単にクリックしたり、テキストを簡単に選択できる�
   端末でやるのと同じように URL をクリックしたりテキストを選択できます
 * ncurses を使わない、このため URL を行の最後で分断されることがなくなります。
 
-最小限表示を有効化するデフォルトキーは kbd:[Alt+l] で、終了するには同じキーを押してください
+最小限表示を有効化するデフォルトキーは kbd:[Alt+l] (`L`) で、終了するには同じキーを押してください
 (また、デフォルトでは入力が変更された場合に最小限表示を終了します、<<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>
 オプションを参照)。
 
@@ -1649,78 +1649,78 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| キー            | 説明 | コマンド
-| kbd:[Ctrl+l]    | 全ウィンドウを再描画 | `/window refresh`
+| キー               | 説明 | コマンド
+| kbd:[Ctrl+l] (`L`) | 全ウィンドウを再描画 | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | すべてのバッファに未読マークをセット | `/input set_unread`
-| kbd:[Ctrl+x]    | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | `/input switch_active_buffer`
-| kbd:[Alt+x]     | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | バッファ履歴を 1 ページ分上方向にスクロール | `/window page_up`
-| kbd:[PgDn]      | バッファ履歴を 1 ページ分下方向にスクロール | `/window page_down`
-| kbd:[Alt+PgUp]  | バッファ履歴を数行分上方向にスクロール | `/window scroll_up`
-| kbd:[Alt+PgDn]  | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
-| kbd:[Alt+Home]  | バッファ履歴を最初までスクロール | `/window scroll_top`
-| kbd:[Alt+End]   | バッファ履歴を最後までスクロール | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | すべてのバッファに未読マークをセット | `/input set_unread`
+| kbd:[Ctrl+x]       | 同じ番号を持つバッファにアタッチされていた場合、現在のバッファに移動 | `/input switch_active_buffer`
+| kbd:[Alt+x]        | マージされたバッファに再ズーム (kbd:[Alt+x]: 全てのマージされたバッファを表示) | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | バッファ履歴を 1 ページ分上方向にスクロール | `/window page_up`
+| kbd:[PgDn]         | バッファ履歴を 1 ページ分下方向にスクロール | `/window page_down`
+| kbd:[Alt+PgUp]     | バッファ履歴を数行分上方向にスクロール | `/window scroll_up`
+| kbd:[Alt+PgDn]     | バッファ履歴を数行分下方向にスクロール | `/window scroll_down`
+| kbd:[Alt+Home]     | バッファ履歴を最初までスクロール | `/window scroll_top`
+| kbd:[Alt+End]      | バッファ履歴を最後までスクロール | `/window scroll_bottom`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | バッファリストを上方に 1 ページスクロール | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | バッファリストを上方に 1 ページスクロール | `/bar scroll buflist * -100%`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | バッファリストを下方に 1 ページスクロール | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]    | バッファリストを上端までスクロール | `/bar scroll buflist * b`
-| kbd:[Alt+F2]    | バッファリストを下端までスクロール | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | バッファリストを下方に 1 ページスクロール | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]       | バッファリストを上端までスクロール | `/bar scroll buflist * b`
+| kbd:[Alt+F2]       | バッファリストを下端までスクロール | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | 前のバッファに移動 | `/buffer -1`
+  kbd:[F5]           | 前のバッファに移動 | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | 後のバッファに移動 | `/buffer +1`
-| kbd:[F7]        | ウィンドウを前に移動 | `/window -1`
-| kbd:[F8]        | ウィンドウを後に移動 | `/window +1`
-| kbd:[F9]        | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
-| kbd:[F10]       | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
+  kbd:[F6]           | 後のバッファに移動 | `/buffer +1`
+| kbd:[F7]           | ウィンドウを前に移動 | `/window -1`
+| kbd:[F8]           | ウィンドウを後に移動 | `/window +1`
+| kbd:[F9]           | バッファタイトルを左方向にスクロール | `+/bar scroll title * -30%+`
+| kbd:[F10]          | バッファタイトルを右方向にスクロール | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | ニックネームリストを上方向にスクロール | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
-| kbd:[Alt+h]     | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | ニックネームリストを下方向にスクロール | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
+| kbd:[Alt+h]        | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | 最初のバッファに移動 | `/buffer -`
+  kbd:[Alt+f]        | 最初のバッファに移動 | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | 最後のバッファに移動 | `/buffer +`
+  kbd:[Alt+l] (`L`)  | 最後のバッファに移動 | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | IRC 生バッファに移動 | `/server raw`
+  kbd:[Alt+r]        | IRC 生バッファに移動 | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | IRC サーババッファに移動 | `/server jump`
-| kbd:[Alt+0...9] | 番号のバッファに移動 (0 = 10) | `/buffer *N`
+  kbd:[Alt+s]        | IRC サーババッファに移動 | `/server jump`
+| kbd:[Alt+0...9]    | 番号のバッファに移動 (0 = 10) | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | 番号のバッファに移動 | `/buffer *NN`
-| kbd:[Alt+l]     | 最小限表示の有効無効を切り替え | `/window bare`
-| kbd:[Alt+m]     | マウスの有効無効を切り替え | `/mouse toggle`
-| kbd:[Alt+n]     | 次のハイライトまでスクロール | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | バッファを最初の未読行までスクロール | `/window scroll_unread`
+  kbd:[01...99]      | 番号のバッファに移動 | `/buffer *NN`
+| kbd:[Alt+l] (`L`)  | 最小限表示の有効無効を切り替え | `/window bare`
+| kbd:[Alt+m]        | マウスの有効無効を切り替え | `/mouse toggle`
+| kbd:[Alt+n]        | 次のハイライトまでスクロール | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | バッファを最初の未読行までスクロール | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | 上のウィンドウに移動 | `/window up`
+  kbd:[Alt+↑]        | 上のウィンドウに移動 | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | 下のウィンドウに移動 | `/window down`
+  kbd:[Alt+↓]        | 下のウィンドウに移動 | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | 左のウィンドウに移動 | `/window left`
+  kbd:[Alt+←]        | 左のウィンドウに移動 | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | 右のウィンドウに移動 | `/window right`
+  kbd:[Alt+→]        | 右のウィンドウに移動 | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | すべてのウィンドウサイズを均等に | `/window balance`
+  kbd:[Alt+b]        | すべてのウィンドウサイズを均等に | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | 2 つのウィンドウを入れ替え | `/window swap`
-| kbd:[Alt+z]     | 現在のウィンドウを最大化 (再度 kbd:[Alt+z] することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `/window zoom`
-| kbd:[Alt+<]     | バッファ訪問履歴で前のバッファに移動 | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | フィルタの有効無効を切り替え | `/filter toggle`
-| kbd:[Alt+-]     | 現在のバッファのフィルタの有効無効を切り替え | `/filter toggle @`
+  kbd:[Alt+s]        | 2 つのウィンドウを入れ替え | `/window swap`
+| kbd:[Alt+z]        | 現在のウィンドウを最大化 (再度 kbd:[Alt+z] することで: 最初のウィンドウ状態に戻す、最大化前の状態) | `/window zoom`
+| kbd:[Alt+<]        | バッファ訪問履歴で前のバッファに移動 | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | バッファ訪問履歴で次のバッファに移動 | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | 最後に表示したバッファに移動 (バッファ移動前に表示していたウィンドウ) | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | フィルタの有効無効を切り替え | `/filter toggle`
+| kbd:[Alt+-]        | 現在のバッファのフィルタの有効無効を切り替え | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

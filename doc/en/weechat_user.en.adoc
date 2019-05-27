@@ -1366,8 +1366,8 @@ The bare display has following features:
   mouse like you do in the terminal to click on URLs and select text.
 * Ncurses is not used, therefore URLs are not cut at the end of lines.
 
-The default key to enabled bare display is kbd:[Alt+l], and same key to exit (or
-by default anything changing the input will exit the bare display, see option
+The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
+(or by default anything changing the input will exit the bare display, see option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
 The time format can be customized with the option
@@ -1643,78 +1643,78 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Key             | Description | Command
-| kbd:[Ctrl+l]    | Redraw whole window. | `/window refresh`
+| Key                | Description | Command
+| kbd:[Ctrl+l] (`L`) | Redraw whole window. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | Set unread marker on all buffers. | `/input set_unread`
-| kbd:[Ctrl+x]    | Switch current buffer if buffers are attached with same number. | `/input switch_active_buffer`
-| kbd:[Alt+x]     | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Scroll up one page in buffer history. | `/window page_up`
-| kbd:[PgDn]      | Scroll down one page in buffer history. | `/window page_down`
-| kbd:[Alt+PgUp]  | Scroll up a few lines in buffer history. | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Scroll down a few lines in buffer history. | `/window scroll_down`
-| kbd:[Alt+Home]  | Scroll to top of buffer. | `/window scroll_top`
-| kbd:[Alt+End]   | Scroll to bottom of buffer. | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | Set unread marker on all buffers. | `/input set_unread`
+| kbd:[Ctrl+x]       | Switch current buffer if buffers are attached with same number. | `/input switch_active_buffer`
+| kbd:[Alt+x]        | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | Scroll up one page in buffer history. | `/window page_up`
+| kbd:[PgDn]         | Scroll down one page in buffer history. | `/window page_down`
+| kbd:[Alt+PgUp]     | Scroll up a few lines in buffer history. | `/window scroll_up`
+| kbd:[Alt+PgDn]     | Scroll down a few lines in buffer history. | `/window scroll_down`
+| kbd:[Alt+Home]     | Scroll to top of buffer. | `/window scroll_top`
+| kbd:[Alt+End]      | Scroll to bottom of buffer. | `/window scroll_bottom`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
-| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]       | Go to the beginning of buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]       | Go to the end of buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Switch to previous buffer. | `/buffer -1`
+  kbd:[F5]           | Switch to previous buffer. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Switch to next buffer. | `/buffer +1`
-| kbd:[F7]        | Switch to previous window. | `/window -1`
-| kbd:[F8]        | Switch to next window. | `/window +1`
-| kbd:[F9]        | Scroll buffer's title on the left. | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Scroll buffer's title on the right. | `+/bar scroll title * +30%+`
+  kbd:[F6]           | Switch to next buffer. | `/buffer +1`
+| kbd:[F7]           | Switch to previous window. | `/window -1`
+| kbd:[F8]           | Switch to next window. | `/window +1`
+| kbd:[F9]           | Scroll buffer's title on the left. | `+/bar scroll title * -30%+`
+| kbd:[F10]          | Scroll buffer's title on the right. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | Scroll up one page in nicklist. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Scroll up one page in nicklist. | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | Scroll down one page in nicklist. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Go to the beginning of nicklist. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Go to the end of nicklist. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Switch to next buffer with activity (with priority: highlight, message, other). | `/input jump_smart`
-| kbd:[Alt+h]     | Clear hotlist (activity notification on other buffers). | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | Scroll down one page in nicklist. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | Go to the beginning of nicklist. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | Go to the end of nicklist. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | Switch to next buffer with activity (with priority: highlight, message, other). | `/input jump_smart`
+| kbd:[Alt+h]        | Clear hotlist (activity notification on other buffers). | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | Switch to first buffer. | `/buffer -`
+  kbd:[Alt+f]        | Switch to first buffer. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | Switch to last buffer. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | Switch to last buffer. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | Switch to IRC raw buffer. | `/server raw`
+  kbd:[Alt+r]        | Switch to IRC raw buffer. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | Switch to IRC server buffer. | `/server jump`
-| kbd:[Alt+0...9] | Switch to buffer by number (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | Switch to IRC server buffer. | `/server jump`
+| kbd:[Alt+0...9]    | Switch to buffer by number (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Switch to buffer by number. | `/buffer *NN`
-| kbd:[Alt+l]     | Toggle bare display on/off. | `/window bare`
-| kbd:[Alt+m]     | Toggle mouse. | `/mouse toggle`
-| kbd:[Alt+n]     | Scroll to next highlight. | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Scroll to previous highlight. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Scroll to first unread line in buffer. | `/window scroll_unread`
+  kbd:[01...99]      | Switch to buffer by number. | `/buffer *NN`
+| kbd:[Alt+l] (`L`)  | Toggle bare display on/off. | `/window bare`
+| kbd:[Alt+m]        | Toggle mouse. | `/mouse toggle`
+| kbd:[Alt+n]        | Scroll to next highlight. | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | Scroll to previous highlight. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | Scroll to first unread line in buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | Switch to window above. | `/window up`
+  kbd:[Alt+↑]        | Switch to window above. | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | Switch to window below. | `/window down`
+  kbd:[Alt+↓]        | Switch to window below. | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | Switch to window on the left. | `/window left`
+  kbd:[Alt+←]        | Switch to window on the left. | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | Switch to window on the right. | `/window right`
+  kbd:[Alt+→]        | Switch to window on the right. | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | Balance the sizes of all windows. | `/window balance`
+  kbd:[Alt+b]        | Balance the sizes of all windows. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | Swap buffers of two windows. | `/window swap`
-| kbd:[Alt+z]     | Zoom on current window (kbd:[Alt+z] again: restore initial windows state, before zoom). | `/window zoom`
-| kbd:[Alt+<]     | Switch to previous buffer in list of visited buffers. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Switch to next buffer in list of visited buffers. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Switch to last buffer displayed (before last jump to a buffer). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Toggle filters on/off. | `/filter toggle`
-| kbd:[Alt+-]     | Toggle filters on/off in current buffer. | `/filter toggle @`
+  kbd:[Alt+s]        | Swap buffers of two windows. | `/window swap`
+| kbd:[Alt+z]        | Zoom on current window (kbd:[Alt+z] again: restore initial windows state, before zoom). | `/window zoom`
+| kbd:[Alt+<]        | Switch to previous buffer in list of visited buffers. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | Switch to next buffer in list of visited buffers. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | Switch to last buffer displayed (before last jump to a buffer). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | Toggle filters on/off. | `/filter toggle`
+| kbd:[Alt+-]        | Toggle filters on/off in current buffer. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

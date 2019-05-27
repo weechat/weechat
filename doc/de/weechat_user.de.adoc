@@ -1390,7 +1390,7 @@ Der vereinfachte Anzeigemodus hat folgende Funktionen:
   wie in einem Terminal genutzt werden um URLs anzuklicken oder Text zu markieren
 * ncurses wird nicht genutzt, deshalb werden URLs am Ende der Zeile nicht abgeschnitten.
 
-Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist kbd:[Alt+l],
+Der Standardtastenbefehl um den vereinfachten Textmodus zu aktivieren ist kbd:[Alt+l] (`L`),
 mit dem selben Tastenbefehl wird dieser Modus wieder beendet (dieser Modus kann auch
 mit jeder beliegen Tasteneingabe beendet werden, siehe Option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
@@ -1678,78 +1678,78 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Taste           | Beschreibung | Befehl
-| kbd:[Ctrl+l]    | Fenster wird neu gezeichnet. | `/window refresh`
+| Taste              | Beschreibung | Befehl
+| kbd:[Ctrl+l] (`L`) | Fenster wird neu gezeichnet. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `/input set_unread`
-| kbd:[Ctrl+x]    | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch. | `/input switch_active_buffer`
-| kbd:[Alt+x]     | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `/window page_up`
-| kbd:[PgDn]      | eine Seite im Verlaufsspeicher des Buffer nach unten blättern. | `/window page_down`
-| kbd:[Alt+PgUp]  | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up`
-| kbd:[Alt+PgDn]  | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
-| kbd:[Alt+Home]  | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
-| kbd:[Alt+End]   | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `/input set_unread`
+| kbd:[Ctrl+x]       | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch. | `/input switch_active_buffer`
+| kbd:[Alt+x]        | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `/window page_up`
+| kbd:[PgDn]         | eine Seite im Verlaufsspeicher des Buffer nach unten blättern. | `/window page_down`
+| kbd:[Alt+PgUp]     | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up`
+| kbd:[Alt+PgDn]     | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
+| kbd:[Alt+Home]     | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
+| kbd:[Alt+End]      | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]    | springt zum Anfang der buflist. | `/bar scroll buflist * b`
-| kbd:[Alt+F2]    | springt zum Ende der buflist. | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]       | springt zum Anfang der buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]       | springt zum Ende der buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | zum vorherigen Buffer springen. | `/buffer -1`
+  kbd:[F5]           | zum vorherigen Buffer springen. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | zum nächsten Buffer springen. | `/buffer +1`
-| kbd:[F7]        | zum vorherigen Fenster wechseln. | `/window -1`
-| kbd:[F8]        | zum nächsten Fenster wechseln. | `/window +1`
-| kbd:[F9]        | Titel des Buffers nach links verschieben. | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Titel des Buffers nach rechts verschieben. | `+/bar scroll title * +30%+`
+  kbd:[F6]           | zum nächsten Buffer springen. | `/buffer +1`
+| kbd:[F7]           | zum vorherigen Fenster wechseln. | `/window -1`
+| kbd:[F8]           | zum nächsten Fenster wechseln. | `/window +1`
+| kbd:[F9]           | Titel des Buffers nach links verschieben. | `+/bar scroll title * -30%+`
+| kbd:[F10]          | Titel des Buffers nach rechts verschieben. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | springt zum Ende der Benutzerliste. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `/input jump_smart`
-| kbd:[Alt+h]     | löscht Hotliste (Aktivitätsanzeige für die Buffer). | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | springt zum Ende der Benutzerliste. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `/input jump_smart`
+| kbd:[Alt+h]        | löscht Hotliste (Aktivitätsanzeige für die Buffer). | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | wechselt zum ersten Buffer. | `/buffer -`
+  kbd:[Alt+f]        | wechselt zum ersten Buffer. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | wechselt zum letzten Buffer. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | wechselt zum letzten Buffer. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | wechselt zum IRC RAW Buffer. | `/server raw`
+  kbd:[Alt+r]        | wechselt zum IRC RAW Buffer. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | wechselt zum IRC Server Buffer. | `/server jump`
-| kbd:[Alt+0...9] | wechselt zum Buffer mit der Nummer (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | wechselt zum IRC Server Buffer. | `/server jump`
+| kbd:[Alt+0...9]    | wechselt zum Buffer mit der Nummer (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | wechselt zum Buffer mit der angegeben Nummer. | `/buffer *NN`
-| kbd:[Alt+l]     | schaltet einfachen Anzeigemodus an/aus. | `/window bare`
-| kbd:[Alt+m]     | schaltet Mausfunktion ein/aus. | `/mouse toggle`
-| kbd:[Alt+n]     | springt zur nächsten Highlight Nachricht. | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | springt zur vorherigen Highlight Nachricht. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | springt zur ersten ungelesenen Zeile im Buffer. | `/window scroll_unread`
+  kbd:[01...99]      | wechselt zum Buffer mit der angegeben Nummer. | `/buffer *NN`
+| kbd:[Alt+l] (`L`)  | schaltet einfachen Anzeigemodus an/aus. | `/window bare`
+| kbd:[Alt+m]        | schaltet Mausfunktion ein/aus. | `/mouse toggle`
+| kbd:[Alt+n]        | springt zur nächsten Highlight Nachricht. | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | springt zur vorherigen Highlight Nachricht. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | springt zur ersten ungelesenen Zeile im Buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | wechselt zum oberen Fenster. | `/window up`
+  kbd:[Alt+↑]        | wechselt zum oberen Fenster. | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | wechselt zum unteren Fenster. | `/window down`
+  kbd:[Alt+↓]        | wechselt zum unteren Fenster. | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | wechselt zum linken Fenster. | `/window left`
+  kbd:[Alt+←]        | wechselt zum linken Fenster. | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | wechselt zum rechten Fenster. | `/window right`
+  kbd:[Alt+→]        | wechselt zum rechten Fenster. | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | passt die Größe aller Fenster an. | `/window balance`
+  kbd:[Alt+b]        | passt die Größe aller Fenster an. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | Wechselt Buffer von zwei Fenstern. | `/window swap`
-| kbd:[Alt+z]     | Zoom für aktuelles Fenster (nochmals kbd:[Alt+z]: stellt die vorherigen Einstellungen wieder her). | `/window zoom`
-| kbd:[Alt+<]     | springt zum letzten besuchten Buffer. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | springt zum nächsten besuchten Buffer. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | wechselt zum jeweils zuletzt angezeigten Buffern. | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | schaltet Filterfunktion an/aus. | `/filter toggle`
-| kbd:[Alt+-]     | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `/filter toggle @`
+  kbd:[Alt+s]        | Wechselt Buffer von zwei Fenstern. | `/window swap`
+| kbd:[Alt+z]        | Zoom für aktuelles Fenster (nochmals kbd:[Alt+z]: stellt die vorherigen Einstellungen wieder her). | `/window zoom`
+| kbd:[Alt+<]        | springt zum letzten besuchten Buffer. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | springt zum nächsten besuchten Buffer. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | wechselt zum jeweils zuletzt angezeigten Buffern. | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | schaltet Filterfunktion an/aus. | `/filter toggle`
+| kbd:[Alt+-]        | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

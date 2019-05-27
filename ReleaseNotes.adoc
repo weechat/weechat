@@ -819,7 +819,7 @@ behavior (never hide arguments, even with a channel key), you can do:
 === Jump to first/last buffer
 
 The command `/input jump_last_buffer` has been replaced by `/buffer +`.
-You can rebind the key kbd:[Alt+j], kbd:[Alt+l]:
+You can rebind the key kbd:[Alt+j], kbd:[Alt+l] (`L`):
 
 ----
 /key bind meta-jmeta-l /buffer +
@@ -876,7 +876,7 @@ obsolete plugins).
 === Bare display
 
 A bare display mode has been added (for easy text selection and click on URLs),
-the new default key is kbd:[Alt+l].
+the new default key is kbd:[Alt+l] (`L`).
 
 Use command `/key missing` to add the key or `/key listdiff` to see differences
 between your current keys and WeeChat default keys.

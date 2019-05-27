@@ -815,7 +815,7 @@ New features::
   * core: add option weechat.look.hotlist_add_conditions, remove option weechat.look.hotlist_add_buffer_if_away
   * core: add option weechat.look.hotlist_remove (issue #99)
   * core: add options "-beep" and "-current" in command /print
-  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l], new option "bare" in command /window, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
+  * core: add bare display mode for easy text selection and click on URLs, new key: kbd:[Alt+l] (`L`), new option "bare" in command /window, new options: weechat.look.bare_display_exit_on_input and weechat.look.bare_display_time_format
   * core: add signals "key_combo_{default|search|cursor}"
   * core: add terabyte unit for size displayed
   * core: display a warning in case of inconsistency between the options weechat.look.save_{config|layout}_on_exit
@@ -2694,8 +2694,8 @@ New features::
   * logging buffers to disk (server/channel/private according to user preferences)
   * add config option "look_display_away" to announce away in channels
   * DCC file receive OK (kbd:[Alt+d] for DCC view)
-  * add key for redrawing terminal (kbd:[Ctrl+l])
-  * add key for clearing hotlist (kbd:[Alt+r])
+  * add key kbd:[Ctrl+l] (`L`) for redrawing terminal
+  * add key kbd:[Alt+r] for clearing hotlist
 
 Bug fixes::
 

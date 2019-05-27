@@ -331,7 +331,7 @@ werden sollte:
 [[terminal_copy_paste]]
 === Wie kann ich einen Text kopieren und einfügen ohne das die Nickliste (Benutzerliste) mit kopiert wird?
 
-Seit WeeChat ≥ 1.0 gibt es einen neuen Anzeigemodus (Standardtastenbelegung: kbd:[Alt+l]), der dazu genutzt
+Seit WeeChat ≥ 1.0 gibt es einen neuen Anzeigemodus (Standardtastenbelegung: kbd:[Alt+l] (`L`)), der dazu genutzt
 werden kann um den Inhalt des aktuellen Fensters ohne eine Formatierung anzeigen zu lassen.
 
 Hierzu kannst Du ein Terminal nutzen welches Block-Auswahl erlaubt (wie z.B. rxvt-unicode,
@@ -348,7 +348,7 @@ Bildschirm zu positionieren:
 [[urls]]
 === Wie kann ich eine URL aufrufen die einen Zeilenumbruch besitzt?
 
-Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: kbd:[Alt+l]).
+Ab WeeChat ≥ 1.0 kann ein einfacher Anzeigemodus genutzt werden (Standardtastenbelegung: kbd:[Alt+l] (`L`)).
 
 Um URLs einfacher zu öffnen:
 

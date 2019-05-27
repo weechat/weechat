@@ -1451,8 +1451,8 @@ The bare display has following features:
   mouse like you do in the terminal to click on URLs and select text
 * ncurses is not used, therefore URLs are not cut at the end of lines.
 
-The default key to enabled bare display is kbd:[Alt+l], and same key to exit (or
-by default anything changing the input will exit the bare display, see option
+The default key to enable bare display is kbd:[Alt+l] (`L`), and same key to exit
+(or by default anything changing the input will exit the bare display, see option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
 The time format can be customized with the option
@@ -1739,86 +1739,86 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Tasti           | Descrizione | Comando
-| kbd:[Ctrl+l]    | Ridisegna l'intera finestra. | `/window refresh`
+| Tasti              | Descrizione | Comando
+| kbd:[Ctrl+l] (`L`) | Ridisegna l'intera finestra. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[ctrl-u]    | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `/input set_unread`
-| kbd:[Ctrl+x]    | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `/input switch_active_buffer`
+  kbd:[Ctrl+u]       | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `/input set_unread`
+| kbd:[Ctrl+x]       | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `/input switch_active_buffer`
 // TRANSLATION MISSING
-| kbd:[Alt+x]     | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Scorre in alto di una pagina nella cronologia del buffer. | `/window page_up`
-| kbd:[PgDn]      | Scorre di una pagina in basso nella cronologia del buffer. | `/window page_down`
-| kbd:[Alt+PgUp]  | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down`
-| kbd:[Alt+Home]  | Scorre in cima al buffer. | `/window scroll_top`
-| kbd:[Alt+End]   | Scorre alla fine del del buffer. | `/window scroll_bottom`
+| kbd:[Alt+x]        | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | Scorre in alto di una pagina nella cronologia del buffer. | `/window page_up`
+| kbd:[PgDn]         | Scorre di una pagina in basso nella cronologia del buffer. | `/window page_down`
+| kbd:[Alt+PgUp]     | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up`
+| kbd:[Alt+PgDn]     | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down`
+| kbd:[Alt+Home]     | Scorre in cima al buffer. | `/window scroll_top`
+| kbd:[Alt+End]      | Scorre alla fine del del buffer. | `/window scroll_bottom`
 // TRANSLATION MISSING
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
 // TRANSLATION MISSING
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+  kbd:[Ctrl+F2]      | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
 // TRANSLATION MISSING
-| kbd:[Alt+F1]    | Go to the beginning of buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F1]       | Go to the beginning of buflist. | `/bar scroll buflist * b`
 // TRANSLATION MISSING
-| kbd:[Alt+F2]    | Go to the end of buflist. | `/bar scroll buflist * e`
+| kbd:[Alt+F2]       | Go to the end of buflist. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Passa al buffer precedente. | `/buffer -1`
+  kbd:[F5]           | Passa al buffer precedente. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Passa al buffer successivo. | `/buffer +1`
-| kbd:[F7]        | Passa alla finestra precedente. | `/window -1`
-| kbd:[F8]        | Passa alla finestra successiva. | `/window +1`
-| kbd:[F9]        | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
+  kbd:[F6]           | Passa al buffer successivo. | `/buffer +1`
+| kbd:[F7]           | Passa alla finestra precedente. | `/window -1`
+| kbd:[F8]           | Passa alla finestra successiva. | `/window +1`
+| kbd:[F9]           | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
+| kbd:[F10]          | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`
-| kbd:[Alt+h]     | Pulisce hotlist (notifica di attività su altri buffer). | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`
+| kbd:[Alt+h]        | Pulisce hotlist (notifica di attività su altri buffer). | `/input hotlist_clear`
 // TRANSLATION MISSING
 | kbd:[Alt+j],
-  kbd:[alt-f]     | Switch to first buffer. | `/buffer -`
+  kbd:[Alt+f]        | Switch to first buffer. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[alt-l]     | Passa all'ultimo buffer. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | Passa all'ultimo buffer. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[alt-r]     | Passa al buffer raw IRC. | `/server raw`
+  kbd:[Alt+r]        | Passa al buffer raw IRC. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[alt-s]     | Passa al buffer server IRC. | `/server jump`
-| kbd:[Alt+0...9] | Passa al buffer numero (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | Passa al buffer server IRC. | `/server jump`
+| kbd:[Alt+0...9]    | Passa al buffer numero (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Passa al buffer numero. | `/buffer *NN`
+  kbd:[01...99]      | Passa al buffer numero. | `/buffer *NN`
 // TRANSLATION MISSING
-| kbd:[Alt+l]     | Toggle bare display on/off. | `/window bare`
-| kbd:[Alt+m]     | Abilita/disabilita. | `/mouse toggle`
-| kbd:[Alt+n]     | Scorre fino alla notifica successiva. | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Scorre fino alla notifica precedente. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Scorre fino alla prima riga non letta nel buffer. | `/window scroll_unread`
+| kbd:[Alt+l] (`L`)  | Toggle bare display on/off. | `/window bare`
+| kbd:[Alt+m]        | Abilita/disabilita. | `/mouse toggle`
+| kbd:[Alt+n]        | Scorre fino alla notifica successiva. | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | Scorre fino alla notifica precedente. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | Scorre fino alla prima riga non letta nel buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[alt-↑]     | Passa alla finestra in alto. | `/window up`
+  kbd:[Alt+↑]        | Passa alla finestra in alto. | `/window up`
 | kbd:[Alt+w],
-  kbd:[alt-↓]     | Passa alla finestra in basso. | `/window down`
+  kbd:[Alt+↓]        | Passa alla finestra in basso. | `/window down`
 | kbd:[Alt+w],
-  kbd:[alt-←]     | Passa alla finestra sulla sinistra. | `/window left`
+  kbd:[Alt+←]        | Passa alla finestra sulla sinistra. | `/window left`
 | kbd:[Alt+w],
-  kbd:[alt-→]     | Passa alla finestrs sulla destra. | `/window right`
+  kbd:[Alt+→]        | Passa alla finestrs sulla destra. | `/window right`
 | kbd:[Alt+w],
-  kbd:[alt-b]     | Bilancia le dimensioni di tutte le finestre. | `/window balance`
+  kbd:[Alt+b]        | Bilancia le dimensioni di tutte le finestre. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[alt-s]     | Scambia i buffer di due finestra. | `/window swap`
-| kbd:[Alt+z]     | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `/window zoom`
-| kbd:[Alt+<]     | Passa al buffer precedente nella lista dei buffer visitati. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Passa al buffer successivo nella lista dei buffer visitati. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Attiva/disattiva filtri. | `/filter toggle`
+  kbd:[Alt+s]        | Scambia i buffer di due finestra. | `/window swap`
+| kbd:[Alt+z]        | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `/window zoom`
+| kbd:[Alt+<]        | Passa al buffer precedente nella lista dei buffer visitati. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | Passa al buffer successivo nella lista dei buffer visitati. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | Attiva/disattiva filtri. | `/filter toggle`
 // TRANSLATION MISSING
-| kbd:[Alt+-]     | Toggle filters on/off in current buffer. | `/filter toggle @`
+| kbd:[Alt+-]        | Toggle filters on/off in current buffer. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

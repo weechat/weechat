@@ -1386,7 +1386,7 @@ Tryb niesformatowanego ekranu posiada następujące cechy:
   tekstu
 * ncurses nie jest używane, dlatego URLe nie są obcinane z końcem linii.
 
-Domyślnym skrótem uruchamiającym ten tryb jest kbd:[Alt+l], tak jak wyłączającym
+Domyślnym skrótem uruchamiającym ten tryb jest kbd:[Alt+l] (`L`), tak jak wyłączającym
 go (lub domyślnie dowolna zmiana wejścia spowoduje wyjście z tego trybu, zobacz
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1664,78 +1664,78 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Skrót           | Opis | Komenda
-| kbd:[Ctrl+l]    | Przerysuj całe okno. | `/window refresh`
+| Skrót              | Opis | Komenda
+| kbd:[Ctrl+l] (`L`) | Przerysuj całe okno. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `/input set_unread`
-| kbd:[Ctrl+x]    | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem. | `/input switch_active_buffer`
-| kbd:[Alt+x]     | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Przewiń jedną stronę w górę w historii bufora. | `/window page_up`
-| kbd:[PgDn]      | Przewiń jedną stronę w dół w historii bufora. | `/window page_down`
-| kbd:[Alt+PgUp]  | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
-| kbd:[Alt+Home]  | Przewiń na górę bufora. | `/window scroll_top`
-| kbd:[Alt+End]   | Przewiń na dół bufora. | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | Ustaw znacznik nieprzeczytania we wszystkich buforach. | `/input set_unread`
+| kbd:[Ctrl+x]       | Przełącz obecny bufor jeśli bufory są dołączone z tym samym numerem. | `/input switch_active_buffer`
+| kbd:[Alt+x]        | Pokaż wybrany z połączonych buforów (naciśnij kbd:[Alt+x] ponownie: wyświetl wszystkie połączone bufory). | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | Przewiń jedną stronę w górę w historii bufora. | `/window page_up`
+| kbd:[PgDn]         | Przewiń jedną stronę w dół w historii bufora. | `/window page_down`
+| kbd:[Alt+PgUp]     | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up`
+| kbd:[Alt+PgDn]     | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down`
+| kbd:[Alt+Home]     | Przewiń na górę bufora. | `/window scroll_top`
+| kbd:[Alt+End]      | Przewiń na dół bufora. | `/window scroll_bottom`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | Przewiń do góry jedną stronę na liście buforów. | `/bar scroll buflist * -100%`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]    | Idź na początek listy buforów. | `/bar scroll buflist * b`
-| kbd:[Alt+F2]    | Idź na koniec listy buforów. | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | Przewiń w dół jedną stronę na liście buforów. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]       | Idź na początek listy buforów. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]       | Idź na koniec listy buforów. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Przełącz na poprzedni bufor. | `/buffer -1`
+  kbd:[F5]           | Przełącz na poprzedni bufor. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Przełącz na następny bufor. | `/buffer +1`
-| kbd:[F7]        | Przełącz na poprzednie okno. | `/window -1`
-| kbd:[F8]        | Przełącz na następne okno. | `/window +1`
-| kbd:[F9]        | Przewiń tytuł bufora w lewo. | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Przewiń tytuł bufora w prawo. | `+/bar scroll title * +30%+`
+  kbd:[F6]           | Przełącz na następny bufor. | `/buffer +1`
+| kbd:[F7]           | Przełącz na poprzednie okno. | `/window -1`
+| kbd:[F8]           | Przełącz na następne okno. | `/window +1`
+| kbd:[F9]           | Przewiń tytuł bufora w lewo. | `+/bar scroll title * -30%+`
+| kbd:[F10]          | Przewiń tytuł bufora w prawo. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Idź na początek listy nicków. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Idź na koniec listy nicków. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `/input jump_smart`
-| kbd:[Alt+h]     | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach). | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | Idź na początek listy nicków. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | Idź na koniec listy nicków. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `/input jump_smart`
+| kbd:[Alt+h]        | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach). | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | Przełącz na pierwszy bufor. | `/buffer -`
+  kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | Przełącz na ostatni bufor. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | Przełącz na ostatni bufor. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | Przełącz na bufor IRC raw. | `/server raw`
+  kbd:[Alt+r]        | Przełącz na bufor IRC raw. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | Przełącz na bufor serwera IRC. | `/server jump`
-| kbd:[Alt+0...9] | Przełącz na bufor za pomocą liczb (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | Przełącz na bufor serwera IRC. | `/server jump`
+| kbd:[Alt+0...9]    | Przełącz na bufor za pomocą liczb (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Przełącz na bufor za pomocą liczb. | `/buffer *NN`
-| kbd:[Alt+l]     | Przełącz tryb niesformatowanego wyświetlania. | `/window bare`
-| kbd:[Alt+m]     | Przełącz obsługę myszy. | `/mouse toggle`
-| kbd:[Alt+n]     | Przewiń do następnego powiadomienia. | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Przewiń do poprzedniego powiadomienia. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `/window scroll_unread`
+  kbd:[01...99]      | Przełącz na bufor za pomocą liczb. | `/buffer *NN`
+| kbd:[Alt+l] (`L`)  | Przełącz tryb niesformatowanego wyświetlania. | `/window bare`
+| kbd:[Alt+m]        | Przełącz obsługę myszy. | `/mouse toggle`
+| kbd:[Alt+n]        | Przewiń do następnego powiadomienia. | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | Przewiń do poprzedniego powiadomienia. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | Przełącz na okno wyżej. | `/window up`
+  kbd:[Alt+↑]        | Przełącz na okno wyżej. | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | Przełącz na okno niżej. | `/window down`
+  kbd:[Alt+↓]        | Przełącz na okno niżej. | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | Przełącz na okno z lewej. | `/window left`
+  kbd:[Alt+←]        | Przełącz na okno z lewej. | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | Przełącz na okno z prawej. | `/window right`
+  kbd:[Alt+→]        | Przełącz na okno z prawej. | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | Balansuj rozmiar wszystkich okien. | `/window balance`
+  kbd:[Alt+b]        | Balansuj rozmiar wszystkich okien. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | Zamień bufory między dwoma oknami. | `/window swap`
-| kbd:[Alt+z]     | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien). | `/window zoom`
-| kbd:[Alt+<]     | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Przełącz na następny bufor z listy odwiedzonych buforów. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Włącz/wyłącz filtry. | `/filter toggle`
-| kbd:[Alt+-]     | Włącz/wyłącz filtry w bieżącym buforze. | `/filter toggle @`
+  kbd:[Alt+s]        | Zamień bufory między dwoma oknami. | `/window swap`
+| kbd:[Alt+z]        | Pokaż obecne okno (ponowne wciśnięcie kbd:[Alt+z]: przywraca wcześniejszy układ okien). | `/window zoom`
+| kbd:[Alt+<]        | Przełącz na poprzedni bufor z listy odwiedzonych buforów. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | Przełącz na następny bufor z listy odwiedzonych buforów. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | Przełącz na ostatnio wyświetlony bufor (przed ostatnią zmianą bufora). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | Włącz/wyłącz filtry. | `/filter toggle`
+| kbd:[Alt+-]        | Włącz/wyłącz filtry w bieżącym buforze. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

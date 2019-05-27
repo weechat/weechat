@@ -1407,8 +1407,8 @@ L'affichage dépouillé a les caractéristiques suivantes :
 * Ncurses n'est pas utilisé, par conséquent les URLs ne sont pas coupés en fin
   de ligne.
 
-La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l], et la
-même touche pour en sortir (ou par défaut tout changement dans la ligne de
+La touche par défaut pour activer l'affichage dépouillé est kbd:[Alt+l] (`L`),
+et la même touche pour en sortir (ou par défaut tout changement dans la ligne de
 commande sortira de l'affichage dépouillé, voir l'option
 <<option_weechat.look.bare_display_exit_on_input,weechat.look.bare_display_exit_on_input>>).
 
@@ -1697,78 +1697,78 @@ avec `/help buffer_autoset`.
 
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
-| Touche          | Description | Commande
-| kbd:[Ctrl+l]    | Réafficher toute la fenêtre. | `/window refresh`
+| Touche             | Description | Commande
+| kbd:[Ctrl+l] (`L`) | Réafficher toute la fenêtre. | `/window refresh`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]    | Positionner le marqueur de données non lues sur tous les tampons. | `/input set_unread`
-| kbd:[Ctrl+x]    | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `/input switch_active_buffer`
-| kbd:[Alt+x]     | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `/input zoom_merged_buffer`
-| kbd:[PgUp]      | Monter d'une page dans l'historique du tampon. | `/window page_up`
-| kbd:[PgDn]      | Descendre d'une page dans l'historique du tampon. | `/window page_down`
-| kbd:[Alt+PgUp]  | Monter de quelques lignes dans l'historique du tampon. | `/window scroll_up`
-| kbd:[Alt+PgDn]  | Descendre de quelques lignes dans l'historique du tampon. | `/window scroll_down`
-| kbd:[Alt+Home]  | Aller au début du tampon. | `/window scroll_top`
-| kbd:[Alt+End]   | Aller à la fin du tampon. | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | Positionner le marqueur de données non lues sur tous les tampons. | `/input set_unread`
+| kbd:[Ctrl+x]       | Changer de tampon courant si plusieurs tampons sont attachés avec le même numéro. | `/input switch_active_buffer`
+| kbd:[Alt+x]        | Zoomer sur le tampon mélangé (kbd:[Alt+x] de nouveau : afficher tous les tampons mélangés). | `/input zoom_merged_buffer`
+| kbd:[PgUp]         | Monter d'une page dans l'historique du tampon. | `/window page_up`
+| kbd:[PgDn]         | Descendre d'une page dans l'historique du tampon. | `/window page_down`
+| kbd:[Alt+PgUp]     | Monter de quelques lignes dans l'historique du tampon. | `/window scroll_up`
+| kbd:[Alt+PgDn]     | Descendre de quelques lignes dans l'historique du tampon. | `/window scroll_down`
+| kbd:[Alt+Home]     | Aller au début du tampon. | `/window scroll_top`
+| kbd:[Alt+End]      | Aller à la fin du tampon. | `/window scroll_bottom`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]   | Monter d'une page dans la liste des tampons. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | Monter d'une page dans la liste des tampons. | `/bar scroll buflist * -100%`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]   | Descendre d'une page dans la liste des tampons. | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]    | Aller au début de la liste des tampons. | `/bar scroll buflist * b`
-| kbd:[Alt+F2]    | Aller à la fin de la liste des tampons. | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | Descendre d'une page dans la liste des tampons. | `/bar scroll buflist * +100%`
+| kbd:[Alt+F1]       | Aller au début de la liste des tampons. | `/bar scroll buflist * b`
+| kbd:[Alt+F2]       | Aller à la fin de la liste des tampons. | `/bar scroll buflist * e`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]        | Aller au tampon précédent. | `/buffer -1`
+  kbd:[F5]           | Aller au tampon précédent. | `/buffer -1`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]        | Aller au tampon suivant. | `/buffer +1`
-| kbd:[F7]        | Aller à la fenêtre précédente. | `/window -1`
-| kbd:[F8]        | Aller à la fenêtre suivante. | `/window +1`
-| kbd:[F9]        | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
-| kbd:[F10]       | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
+  kbd:[F6]           | Aller au tampon suivant. | `/buffer +1`
+| kbd:[F7]           | Aller à la fenêtre précédente. | `/window -1`
+| kbd:[F8]           | Aller à la fenêtre suivante. | `/window +1`
+| kbd:[F9]           | Faire défiler le titre du tampon vers la gauche. | `+/bar scroll title * -30%+`
+| kbd:[F10]          | Faire défiler le titre du tampon vers la droite. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]  | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Monter d'une page dans la liste des pseudos. | `/bar scroll nicklist * -100%`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]  | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]   | Aller au début de la liste des pseudos. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]   | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]     | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `/input jump_smart`
-| kbd:[Alt+h]     | Vider la hotlist (notification d'activité sur les autres tampons). | `/input hotlist_clear`
+  kbd:[Ctrl+F12]     | Descendre d'une page dans la liste des pseudos. | `/bar scroll nicklist * +100%`
+| kbd:[Alt+F11]      | Aller au début de la liste des pseudos. | `/bar scroll nicklist * b`
+| kbd:[Alt+F12]      | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist * e`
+| kbd:[Alt+a]        | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `/input jump_smart`
+| kbd:[Alt+h]        | Vider la hotlist (notification d'activité sur les autres tampons). | `/input hotlist_clear`
 | kbd:[Alt+j],
-  kbd:[Alt+f]     | Sauter au premier tampon. | `/buffer -`
+  kbd:[Alt+f]        | Sauter au premier tampon. | `/buffer -`
 | kbd:[Alt+j],
-  kbd:[Alt+l]     | Sauter au dernier tampon. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | Sauter au dernier tampon. | `/buffer +`
 | kbd:[Alt+j],
-  kbd:[Alt+r]     | Sauter au tampon IRC de données brutes. | `/server raw`
+  kbd:[Alt+r]        | Sauter au tampon IRC de données brutes. | `/server raw`
 | kbd:[Alt+j],
-  kbd:[Alt+s]     | Sauter au tampon IRC du serveur. | `/server jump`
-| kbd:[Alt+0...9] | Sauter au tampon qui porte ce numéro (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | Sauter au tampon IRC du serveur. | `/server jump`
+| kbd:[Alt+0...9]    | Sauter au tampon qui porte ce numéro (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
-  kbd:[01...99]   | Sauter au tampon qui porte ce numéro. | `/buffer *NN`
-| kbd:[Alt+l]     | Activer/désactiver le mode d'affichage dépouillé. | `/window bare`
-| kbd:[Alt+m]     | Activer/désactiver la souris. | `/mouse toggle`
-| kbd:[Alt+n]     | Se positionner sur le highlight suivant. | `/window scroll_next_highlight`
-| kbd:[Alt+p]     | Se positionner sur le highlight précédent. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]     | Se positionner sur la première ligne non lue du tampon. | `/window scroll_unread`
+  kbd:[01...99]      | Sauter au tampon qui porte ce numéro. | `/buffer *NN`
+| kbd:[Alt+l] (`L`)  | Activer/désactiver le mode d'affichage dépouillé. | `/window bare`
+| kbd:[Alt+m]        | Activer/désactiver la souris. | `/mouse toggle`
+| kbd:[Alt+n]        | Se positionner sur le highlight suivant. | `/window scroll_next_highlight`
+| kbd:[Alt+p]        | Se positionner sur le highlight précédent. | `/window scroll_previous_highlight`
+| kbd:[Alt+u]        | Se positionner sur la première ligne non lue du tampon. | `/window scroll_unread`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]     | Sauter à la fenêtre au dessus. | `/window up`
+  kbd:[Alt+↑]        | Sauter à la fenêtre au dessus. | `/window up`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]     | Sauter à la fenêtre en dessous. | `/window down`
+  kbd:[Alt+↓]        | Sauter à la fenêtre en dessous. | `/window down`
 | kbd:[Alt+w],
-  kbd:[Alt+←]     | Sauter à la fenêtre de gauche. | `/window left`
+  kbd:[Alt+←]        | Sauter à la fenêtre de gauche. | `/window left`
 | kbd:[Alt+w],
-  kbd:[Alt+→]     | Sauter à la fenêtre de droite. | `/window right`
+  kbd:[Alt+→]        | Sauter à la fenêtre de droite. | `/window right`
 | kbd:[Alt+w],
-  kbd:[Alt+b]     | Équilibrer la taille de toutes les fenêtres. | `/window balance`
+  kbd:[Alt+b]        | Équilibrer la taille de toutes les fenêtres. | `/window balance`
 | kbd:[Alt+w],
-  kbd:[Alt+s]     | Échanger les tampons de deux fenêtres. | `/window swap`
-| kbd:[Alt+z]     | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `/window zoom`
-| kbd:[Alt+<]     | Sauter au tampon précédent dans la liste des tampons visités. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]     | Sauter au tampon suivant dans la liste des tampons visités. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]     | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]     | Activer/désactiver les filtres. | `/filter toggle`
-| kbd:[Alt+-]     | Activer/désactiver les filtres dans le tampon courant. | `/filter toggle @`
+  kbd:[Alt+s]        | Échanger les tampons de deux fenêtres. | `/window swap`
+| kbd:[Alt+z]        | Zoomer sur la fenêtre courante (kbd:[Alt+z] de nouveau : restaurer l'état initial des fenêtres, avant le zoom). | `/window zoom`
+| kbd:[Alt+<]        | Sauter au tampon précédent dans la liste des tampons visités. | `/input jump_previously_visited_buffer`
+| kbd:[Alt+>]        | Sauter au tampon suivant dans la liste des tampons visités. | `/input jump_next_visited_buffer`
+| kbd:[Alt+/]        | Sauter au dernier tampon affiché (avant le dernier saut vers un tampon). | `/input jump_last_buffer_displayed`
+| kbd:[Alt+=]        | Activer/désactiver les filtres. | `/filter toggle`
+| kbd:[Alt+-]        | Activer/désactiver les filtres dans le tampon courant. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

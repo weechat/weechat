@@ -314,7 +314,7 @@ any bar:
 [[terminal_copy_paste]]
 === How can I copy/paste text without pasting nicklist?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]),
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)),
 which will show just the contents of the currently selected window,
 without any formatting.
 
@@ -331,7 +331,7 @@ Another solution is to move nicklist to top or bottom, for example:
 [[urls]]
 === How can I click on long URLs (more than one line)?
 
-With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l]).
+With WeeChat ≥ 1.0, you can use the bare display (default key: kbd:[Alt+l] (`L`)).
 
 To make opening URLs easier, you can:
 

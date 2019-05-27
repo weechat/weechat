@@ -327,8 +327,8 @@ barre, WeeChat recréera automatiquement la barre par défaut "input" si l'objet
 === Comment puis-je copier/coller du texte sans coller la liste des pseudos ?
 
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : kbd:[Alt+l]), qui affiche juste le contenu de la fenêtre actuellement
-sélectionnée sans aucun formatage.
+défaut : kbd:[Alt+l] (`L`)), qui affiche juste le contenu de la fenêtre
+actuellement sélectionnée sans aucun formatage.
 
 Vous pouvez utiliser un terminal qui propose la sélection rectangulaire (comme
 rxvt-unicode, konsole, gnome-terminal, etc.). La touche est habituellement
@@ -345,7 +345,7 @@ exemple :
 === Comment puis-je cliquer sur les longs URLs (plus d'une ligne) ?
 
 Avec WeeChat ≥ 1.0, vous pouvez utiliser l'affichage dépouillé (touche par
-défaut : kbd:[Alt+l]).
+défaut : kbd:[Alt+l] (`L`)).
 
 Pour rendre le clic d'URL plus facile, vous pouvez :
 
