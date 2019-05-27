@@ -3242,7 +3242,8 @@ Vous pouvez définir un port par serveur IRC, ou bien un port générique pour t
 les serveurs.
 
 Lors de l'utilisation d'un port pour tous les serveurs, le client doit envoyer
-le nom interne du serveur dans la commande IRC "PASS", avec le format :
+le nom interne du serveur dans la commande IRC "PASS", avec le format
+(voir l'exemple ci-dessous) :
 
 ----
 PASS serveur:motdepasse
@@ -3263,6 +3264,14 @@ Exemple : proxy IRC sans SSL seulement pour le serveur "freenode" :
 Maintenant vous pouvez vous connecter sur le port 8000 avec n'importe quel
 client IRC en utilisant le mot de passe "motdepasse" (ou "freenode:motdepasse"
 si aucun serveur n'a été spécifié dans le relai).
+
+Par exemple si vous utilisez WeeChat comme client IRC du relai, avec un serveur
+"relay" et un mot de passe relay "secret", vous pouvez configurer le mot de passe
+avec cette commande :
+
+----
+/set irc.server.relay.password "freenode:secret"
+----
 
 [[relay_weechat_protocol]]
 ==== Protocole WeeChat

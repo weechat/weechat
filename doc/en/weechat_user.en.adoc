@@ -3139,7 +3139,7 @@ you can connect to WeeChat with any other IRC client (including WeeChat itself).
 You can define one port by IRC server, or one generic port for all servers.
 
 When using one port for all servers, the client must send the internal name of
-server in the IRC "PASS" command, with this format:
+server in the IRC "PASS" command, with this format (see example below):
 
 ----
 PASS server:password
@@ -3159,6 +3159,14 @@ Example: IRC proxy without SSL only for server "freenode":
 
 Now you can connect on port 8000 with any IRC client using server password
 "mypassword" (or "freenode:mypassword" if no server was specified in the relay).
+
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with this
+command:
+
+----
+/set irc.server.relay.password "freenode:secret"
+----
 
 [[relay_weechat_protocol]]
 ==== WeeChat protocol

@@ -3138,8 +3138,10 @@ Relay プラグインは IRC プロキシとしても使えます: Relay プラ�
 
 IRC サーバごとに異なるポート、もしくは全てのサーバに対して共通のポートを定義することができます。
 
+// TRANSLATION MISSING
 すべてのサーバに対して共通のポートを定義した場合には、クライアントからサーバの内部名を
-IRC の "PASS" コマンドに含めて送信するようにしてください、以下の書式を使ってください:
+IRC の "PASS" コマンドに含めて送信するようにしてください、以下の書式を使ってください
+(see example below):
 
 ----
 PASS server:mypass
@@ -3159,6 +3161,15 @@ PASS server:mypass
 
 任意の IRC クライアントからサーバパスワード "mypass" (全てのサーバに対して共通の
 IRC プロキシを設定した場合には "freenode:mypass") で 8000 番ポートに接続出来ます。
+
+// TRANSLATION MISSING
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with this
+command:
+
+----
+/set irc.server.relay.password "freenode:secret"
+----
 
 [[relay_weechat_protocol]]
 ==== WeeChat プロトコル

@@ -3174,8 +3174,10 @@ możesz się połączyć do niego za pomocą dowolnego klienta IRC (w tym WeeCha
 
 Możesz zdefiniować oddzielne porty dla serwerów IRC, lub jeden dla wszystkich.
 
+// TRANSLATION MISSING
 Jeśli używasz jednego portu dla wszystkich serwerów, klient musi wysłać
-wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format:
+wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format
+(see example below):
 
 ----
 PASS serwer:hasło
@@ -3196,6 +3198,15 @@ Przykład: proxy IRC bez SSL tylko dla serwera "freenode":
 Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
 używając hasła serwera "moje_hasło" (lub "freenode:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
+
+// TRANSLATION MISSING
+For example if you use WeeChat as IRC client of the relay, with a server called
+"relay" and the relay password "secret", you can setup the password with this
+command:
+
+----
+/set irc.server.relay.password "freenode:secret"
+----
 
 [[relay_weechat_protocol]]
 ==== Protokół WeeChat
