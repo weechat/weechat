@@ -12,7 +12,6 @@ weechat - rozszerzalny klient rozmów
 
 == SKŁADNIA
 
-// TRANSLATION MISSING
 [verse]
 *weechat* [-a|--no-connect] [-d|--dir <ścieżka>] [-t|--temp-dir]  [-p|--no-plugin] [-P|--plugins <wtyczki>] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [debug-option...] [wtyczka:opcja...]
 *weechat* [-c|--colors]
@@ -30,8 +29,7 @@ Posiada dużo opcji konfiguracyjnych i dodatkowych wtyczek.
 
 include::cmdline_options.pl.adoc[]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== OPCJE DEBUGUJĄCE
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 

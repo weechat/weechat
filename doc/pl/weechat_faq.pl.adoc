@@ -212,9 +212,8 @@ Aby przesunąć pasek na spód:
 Przewijanie paska: jeśli obsługa myszy jest włączona (skrót: kbd:[Alt+m]), możesz
 przewijać pasek za pomocą rolki myszy.
 
-// TRANSLATION MISSING
-Domyślne skróty do przewijania paska _buflist_ to kbd:[F1] (or kbd:[Ctrl+F1]),
-kbd:[F2] (or kbd:[Ctrl+F2]), kbd:[Alt+F1] oraz kbd:[Alt+F2].
+Domyślne skróty do przewijania paska _buflist_ to kbd:[F1] (lub kbd:[Ctrl+F1]),
+kbd:[F2] (lub kbd:[Ctrl+F2]), kbd:[Alt+F1] oraz kbd:[Alt+F2].
 
 Dla skryptu _buffers.pl_, możesz zdefiniować skróty w podobny sposób do istniejących
 skrótów do przewijania listy nicków. +
@@ -975,9 +974,8 @@ Musisz przeładować wtyczkę spell:
 /plugin reload spell
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-With WeeChat ≤ 2.4, the "spell" plugin was named "aspell", so the command is:
+Od WeeChat w wersji ≤ 2.4, wtyczka "spell" zmieniła nazwę na "aspell", dlatego należy wykonać polecenie:
 `/plugin reload aspell`.
 
 [[settings]]

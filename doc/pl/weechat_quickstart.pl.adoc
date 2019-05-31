@@ -41,8 +41,7 @@ Aby otrzymać pomoc dla konkretnej komendy wpisz:
 /help komenda
 ----
 
-// TRANSLATION MISSING
-Help is available for options as well:
+Pomoc dostępna jest równiez dla opcji:
 
 ----
 /help config.section.option
@@ -51,9 +50,8 @@ Help is available for options as well:
 (gdzie `config` jest nazwą konfiguracyjną (`weechat` dla rdzenia, lub nazwa
 wtyczki), `sekcja` sekcja pliku konfiguracyjnego, oraz `opcja` nazwa opcji).
 
-// TRANSLATION MISSING
 [[options]]
-== Set options
+== Ustawianie opcji
 
 Do ustawiania opcji służy:
 

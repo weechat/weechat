@@ -204,13 +204,11 @@ Lista popularnych opcji:
 | ENABLE_CHARSET | `ON`, `OFF` | ON |
   Kompilacja <<charset_plugin,wtyczki charset>>.
 
-// TRANSLATION MISSING
 | ENABLE_MAN | `ON`, `OFF` | OFF |
-  Build man page.
+  Generowanie strony manuala.
 
-// TRANSLATION MISSING
 | ENABLE_DOC | `ON`, `OFF` | OFF |
-  Build HTML documentation.
+  Generowanie dokumentacji HTML.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
   Kompilacja <<spell_plugin,wtyczki spell>> z Enchant.
@@ -258,14 +256,13 @@ Lista popularnych opcji:
   Kompilacja <<scripts_plugins,wtyczki PHP>>.
 
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
-  Kompilacja <<scripts_plugins,wtyczki python>>.
+  Kompilacja <<scripts_plugins,wtyczki Python>>.
 
-// TRANSLATION MISSING
 | ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 3. +
-  This option is not recommended because many scripts are not yet compatible
-  with Python 3. +
-  You can follow the progress of Python 3 transition on this page:
+  Kompilacja <<scripts_plugins,wtyczki Python>> z użyciem Pythona 3. +
+  Ta opcja nie jest zalecana, ponieważ wiele skryptów jeszcze nie jest kompatybilna +
+  z Pythonem 3. +
+  Postęp w przejściu na Pythona 3 można śledzić na stronie:
   https://weechat.org/scripts/python3/
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
@@ -296,10 +293,9 @@ Lista popularnych opcji:
 | ENABLE_TESTS | `ON`, `OFF` | OFF |
   Kompiluje testy.
 
-// TRANSLATION MISSING
 | ENABLE_CODE_COVERAGE | `ON`, `OFF` | OFF |
-  Compile with code coverage options. +
-  This option should be used only for tests, to measure test coverage.
+  Kompilacja z opcja pokrycia kodu. +
+  Ta opcja powinna być używana tylko dla testów, w celu pomiaru pokrycia kodu.
 |===
 
 Pozostałe opcje można wyświetlić poleceniem:
@@ -520,16 +516,14 @@ Podczas pierwszego uruchomienia WeeChat tworzone są domyślne pliki konfiguracy
 w  _~/.weechat_ z domyślnymi opcjami i wartościami
 (zobacz <<files_and_directories,Pliki i foldery>>).
 
-// TRANSLATION MISSING
-==== Command line options
+==== Argumenty linii poleceń
 
 include::cmdline_options.pl.adoc[]
 
-// TRANSLATION MISSING
-==== Extra debug options
+==== Dodatkowe opcje do debugowania
 
 [WARNING]
-These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
+Te opcje służą tylko do debugowania błędów, *NIE UŻYWAĆ NA PRODUKCJI!*
 
 include::cmdline_options_debug.pl.adoc[]
 
@@ -551,17 +545,15 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 
 WeeChat zapisuje pliki konfiguracyjne i inne rzeczy domyślnie w folderze `~/.weechat`.
 
-// TRANSLATION MISSING
 [[weechat_directories]]
-==== WeeChat directories
+==== Katalogi WeeChat
 
-// TRANSLATION MISSING
-The WeeChat directories are:
+Katalogi używane przez WeeChat to:
 
 [width="100%",cols="1m,3",options="header"]
 |===
 | Ścieżka/plik      | Opis
-| ~/.weechat/       | Katalog domowy WeeChat (można go zmienić, zobacz <<running_weechat,Running WeeChat>>).
+| ~/.weechat/       | Katalog domowy WeeChat (można go zmienić, zobacz <<running_weechat,Uruchamianie WeeChat>>).
 |    logs/          | Pliki z logami (jeden na bufor).
 |    python/        | Skrypty pythonowe.
 |       autoload/   | Skrypty pythonowe automatycznie ładowane przy starcie ^(1)^.
@@ -584,9 +576,8 @@ The WeeChat directories are:
 [NOTE]
 ^(1)^ Ten folder zawiera przewazine linki symboliczne do plików w folderze nadrzędnym.
 
-// TRANSLATION MISSING
 [[weechat_files]]
-==== WeeChat files
+==== Pliki WeeChat
 
 Pliki tworzone w katalogu domowym WeeChat:
 
@@ -594,7 +585,7 @@ Pliki tworzone w katalogu domowym WeeChat:
 |===
 | Plik            | Opis                                         | Wrażliwe dane
 | weechat.conf    | Główny plik konfiguracyjny WeeChat           | Możliwe (przykład: lista kanałów w zapisanym układzie buforów).
-| sec.conf        | Plik konfiguracyjny z zabezpieczonymi danymi | *Tak, bardzo prażliwe*: Tym plikiem nie powinno się z nikim dzielić.
+| sec.conf        | Plik konfiguracyjny z zabezpieczonymi danymi | *Tak, bardzo wrażliwe*: Tym plikiem nie powinno się z nikim dzielić.
 | plugins.conf    | Plik konfiguracyjny wtyczek                  | Możliwe, zależy od wtyczki/skryptu.
 | alias.conf      | Plik konfiguracyjny wtyczki _alias_          | Możliwe, zależy od aliasu.
 | buflist.conf    | Plik konfiguracyjny wtyczki _buflist_        | Nie.
@@ -1655,8 +1646,7 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+d]     | Usuń następne słowo w linii poleceń (usuwany ciąg jest kopiowany do wewnętrznego schowka). | `/input delete_next_word`
 | kbd:[Alt+k]     | Przechwyć wciśnięte klawisze i zwróć ich kod (i przypisaną komendę, jeśli istnieje) w linii poleceń. | `/input grab_key_command`
 | kbd:[Alt+r]     | Usuń całą zawartość linii poleceń. | `/input delete_line`
-// TRANSLATION MISSING
-| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
+| kbd:[Alt+s]     | Włącz/wyłącz sprawdzenie pisowni. | `/mute spell toggle`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -1795,7 +1785,6 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-// TRANSLATION MISSING
 | Klawisz/Wheel ^(1)^ | Gest          | Obszar                | Opis | Komenda
 | ◾◽◽                 | -             | chat                  | Przełącz na okno. | `/window ${_window_number}`
 | ◾◽◽                 | lewo          | chat                  | Przełącz na poprzedni bufor. | `/window ${_window_number};/buffer +1`
@@ -3174,10 +3163,9 @@ możesz się połączyć do niego za pomocą dowolnego klienta IRC (w tym WeeCha
 
 Możesz zdefiniować oddzielne porty dla serwerów IRC, lub jeden dla wszystkich.
 
-// TRANSLATION MISSING
 Jeśli używasz jednego portu dla wszystkich serwerów, klient musi wysłać
 wewnętrzną nazwę serwera w komendzie IRC "PASS", zachowując format
-(see example below):
+(zobacz poniższy przykład):
 
 ----
 PASS serwer:hasło
@@ -3199,10 +3187,8 @@ Teraz możesz się połączyć na porcie 8000 za pomocą dowolnego klienta IRC
 używając hasła serwera "moje_hasło" (lub "freenode:moje_hasło" jeśli żaden
 serwer nie został podany w przekaźniku).
 
-// TRANSLATION MISSING
-For example if you use WeeChat as IRC client of the relay, with a server called
-"relay" and the relay password "secret", you can setup the password with this
-command:
+Na przykład jeśli używasz WeeChat jako klienta porednika IRC, z serwerem nazwanym
+"relay" i hasłem "secret", możesz ustawić hasło za pomocą tej komendy:
 
 ----
 /set irc.server.relay.password "freenode:secret"
@@ -3249,27 +3235,26 @@ websocket = new WebSocket("ws://server.com:9000/weechat");
 Port (9000 w przykładzie) to port zdefiniowany we wtyczce relay.
 Adres URL musi się zawsze kończyć "/weechat" (dla protokołów _irc_ i _weechat_).
 
-// TRANSLATION MISSING
 [[relay_unix_socket]]
-==== UNIX domain sockets
+==== Sockety UNIXowe
 
-Using the protocol option "unix" with the `/relay add` command, you can listen
-using any protocol on a UNIX domain socket at a given path. For example:
+Używając opcji protokołu "unix" razem z komendą `/relay`, można nasłuchiwać dowolnego 
+protokołu za pomocą socketu UNIXowego w podanej ścieżce. Na przykład:
 
 ----
 /relay add unix.weechat %h/relay_socket
 ----
 
-This allows clients to connect using the weechat protocol to
-_~/.weechat/relay_socket_. This is particularly useful to allow SSH forwarding
-for relay clients, when other ports cannot be opened. Using OpenSSH:
+Pozwala to na połączenia od klientów za pomocą protokołu weechat do
+_~/.weechat/relay_socket_. Jest to przydatne zwłaszcza jeśli chcemy tunelować klienty 
+przez SSH, w przypadku, kiedy inne porty nie moga być otwierane. Za pomocą OpenSSH:
 
 ----
 $ ssh -L 9000:.weechat/relay_socket user@hostname
 ----
 
-This redirects local relay clients connecting on port 9000 to the WeeChat
-instance running on "hostname".
+Przekerowuje to połączenia lokalnych klientów łączących się na port 9000 do intancji
+WeeChat uruchomionej na "hostname".
 
 [[relay_commands]]
 ==== Komendy
@@ -3715,9 +3700,8 @@ kolejności, jeśli triggery są globalnie włączone i jeśli sam trigger jest 
 . sprawdzenie warunków triggera: jeśli nie jest spełniony następuje wyjście
 . zastępowanie tekstu w triggerze za pomocą wyrażenia
 . wykonanie komend(-y)
-// TRANSLATION MISSING
-. exit with a return code (except for hooks _modifier_, _line_, _focus_,
-  _info_ and _info_hashtable_)
+. wyjście z kodem poweoru (nie dotyczy hooków _modifier_, _line_, _focus_,
+  _info_ i _info_hashtable_)
 . wykonanie akcji kończącej (jeśli inna niż `none`).
 
 [[trigger_hook_arguments]]
@@ -3814,7 +3798,6 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+buffer_nicklist+` |
   link:weechat_plugin_api.en.html#_hook_focus[hook_focus] (Angielski)
 
-// TRANSLATION MISSING
 | info |
   1. info name (dozwolony priorytet) (wymagane) +
   2. info name (dozwolony priorytet) +
@@ -3822,7 +3805,6 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+my_info+` |
   link:weechat_plugin_api.en.html#_hook_info[hook_info] (Angielski)
 
-// TRANSLATION MISSING
 | info_hashtable |
   1. info name (dozwolony priorytet) (wymagane) +
   2. info name (dozwolony priorytet) +
@@ -3876,8 +3858,7 @@ od typu uchwytu:
 | config         | tg_value           |
 | focus          |                    |
 | info           | tg_info            | tg_info
-// TRANSLATION MISSING
-| info_hashtable |                    | all variables received in hashtable
+| info_hashtable |                    | wszytkie zmienne otrzymane w tablicy hashy
 |===
 
 [NOTE]
@@ -4172,7 +4153,6 @@ Callback "focus" ustawia następujące zmienne w tablicy hashy:
 Tablica zawiera wszystkie klucze/wartości z otrzymanej tablicy hashy (typ:
 ciąg/ciąg).
 
-// TRANSLATION MISSING
 [[trigger_data_info]]
 ===== Info
 
@@ -4186,7 +4166,6 @@ Callback "info" ustawia następujące zmienne w tablicy hashy:
 | tg_info      | string | Empty string (the info to return).
 |===
 
-// TRANSLATION MISSING
 [[trigger_data_info_hashtable]]
 ===== Info_hashtable
 

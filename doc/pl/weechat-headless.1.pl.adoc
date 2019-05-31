@@ -12,7 +12,6 @@ weechat-headless - rozszerzalny klient rozmów (wersja headless)
 
 == SKŁADNIA
 
-// TRANSLATION MISSING
 [verse]
 *weechat-headless* [-a|--no-connect] [--daemon] [-d|--dir <path>] [-t|--temp-dir] [-p|--no-plugin] [-P|--plugins <wtyczki>] [-r|--run-command <komenda>] [-s|--no-script] [--upgrade] [debug-option...] [wtyczka:opcja...]
 *weechat-headless* [-c|--colors]
@@ -34,8 +33,7 @@ opcji "--daemon".
 
 include::cmdline_options.pl.adoc[]
 
-// TRANSLATION MISSING
-== DEBUG OPTIONS
+== OPCJE DEBUGUJĄCE 
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
