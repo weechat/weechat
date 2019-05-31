@@ -23,16 +23,16 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-05-13 21:29+0200\n"
-"PO-Revision-Date: 2019-05-13 21:31+0200\n"
+"PO-Revision-Date: 2019-06-01 00:12+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2);\n"
-"X-Generator: Lokalize 18.12.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10"
+" || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Lokalize 19.04.0\n"
 
 msgid "any string"
 msgstr "dowolny ciąg"
@@ -228,6 +228,10 @@ msgid ""
 "      --no-gnutls          disable init/deinit of gnutls\n"
 "      --no-gcrypt          disable init/deinit of gcrypt\n"
 msgstr ""
+"Opcje debugujące (dla narzędzi jak valgrind, NIE UŻYWAĆ NA PRODUKCJI):\n"
+"      --no-dlclose         nie wykonuj dlclose po wyładowaniu wtyczek\n"
+"      --no-gnutls          wyłącza funkcje init/deinit z gnutls\n"
+"      --no-gcrypt          wyłącza funkcje init/deinit z gcrypt\n"
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
@@ -904,7 +908,7 @@ msgstr ""
 
 #, c-format
 msgid "%sError: passphrase is too long (max: %d chars)"
-msgstr ""
+msgstr "%sBłąd: hasło jest za długie (max: %d znaków)"
 
 msgid "Passphrase deleted"
 msgstr "Usunięto hasło"
@@ -1816,15 +1820,13 @@ msgstr ""
 "filtruje wiadomości w buforach, aby je ukryć/pokazać w zależności do tagów "
 "lub wyrażeń regularnych"
 
-#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
 msgstr ""
-"list || enable|disable|toggle [<nazwa>|@] || add <nazwa> <bufor>[,"
+"list || enable|disable|toggle [<nazwa>|@] || add | addreplace<nazwa> <bufor>[,"
 "<bufor>...] <tagi> <regex> || rename <nazwa> <nowa_nazwa> || del <nazwa>|-all"
 
-#, fuzzy
 msgid ""
 "      list: list all filters\n"
 "    enable: enable filters (filters are enabled by default)\n"
@@ -1900,6 +1902,7 @@ msgstr ""
 "  nazwa: nazwa filtru (\"@\" = włącza/wyłącza wszystkie filtry w obecnym "
 "buforze)\n"
 "    add: dodaje filtr\n"
+"addreplace: dodaje lub nadpisuje istniejący filtr\n"
 " rename: zmienia nazwę filtru\n"
 "    del: usuwa filtr\n"
 "   -all: usuwa wszystkie filtry\n"
@@ -2636,11 +2639,9 @@ msgstr ""
 msgid "execute a command several times"
 msgstr "wykonuje komendę kilka razy"
 
-#, fuzzy
 msgid "[-interval <delay>[<unit>]] <count> <command>"
-msgstr "[-interval <opóźnienie>] <ilość> <komenda>"
+msgstr "[-interval <opóźnienie>[<jednostka>]] <ilość> <komenda>"
 
-#, fuzzy
 msgid ""
 "  delay: delay between execution of commands\n"
 "   unit: optional, values are:\n"
@@ -2659,13 +2660,18 @@ msgid ""
 "  scroll 2 pages up:\n"
 "    /repeat 2 /window page_up"
 msgstr ""
-"  opóźnienie: czas pomiędzy wykonaniem komend (w milisekundach)\n"
+"  opóźnienie: czas pomiędzy wykonaniem komend\n"
+"   jednostka: opcjonalna, dostępne wartości:\n"
+"           ms: milisekundy\n"
+"            s: sekundy (domyślnie)\n"
+"            m: minuty\n"
+"            h: godziny\n"
 "  ilość: ile razy wykonać komendę\n"
 "komenda: komenda do wykonania ('/' jest automatycznie dodawane, jeśli nie "
 "znajduje się na początku komendy)\n"
 "\n"
-"Wszystkie komendy wykonane zostaną na buforze, w którym wykonano tą "
-"komendę.\n"
+"Ważne: komenda zostanie wykonana w buforze, gdzie zostało wykonane /repeat "
+"(jeśli bufor nie zostanie znaleziony komenda nie zostanie wykonana).\n"
 "\n"
 "Przykład:\n"
 "  przewija 2 strony do góry:\n"
@@ -3004,7 +3010,6 @@ msgstr "planuje komendę do wykonania w przyszłości"
 msgid "<number>[<unit>] <command>"
 msgstr "<liczba>[<jednostka>] <komenda>"
 
-#, fuzzy
 msgid ""
 " number: amount of time to wait (integer number)\n"
 "   unit: optional, values are:\n"
@@ -3036,9 +3041,7 @@ msgstr ""
 "komenda nie zaczyna się od  '/')\n"
 "\n"
 "Ważne: komenda zostanie wykonana w buforze, gdzie zostało wykonane /wait "
-"(jeśli bufor nie zostanie znaleziony(na przykład jeśli został zamknięty "
-"przed wykonaniem komendy), wtedy komenda wykona się w głównym buforze "
-"WeeChat).\n"
+"(jeśli bufor nie zostanie znaleziony komenda nie zostanie wykonana).\n"
 "\n"
 "Przykłady:\n"
 "  wejdzie na kanał za 10 sek:\n"
@@ -3530,7 +3533,6 @@ msgstr ""
 "\"${color:252}%H${color:245}%M${color:240}%S\""
 
 #. TRANSLATORS: string "${color:xxx}" must NOT be translated
-#, fuzzy
 msgid ""
 "time displayed for a message with same time as previous message: use a space "
 "\" \" to hide time, another string to display this string instead of time, "
@@ -3538,9 +3540,12 @@ msgid ""
 "evaluated, so you can use colors with format \"${color:xxx}\", see /help "
 "eval)"
 msgstr ""
-"prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia "
-"wiadomość: spacja (\" \") chowa prefiks, inny ciąg wyświetlany zamiast "
-"prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)"
+"czas wyświetlany dla wiadomości z takim samym czasem jak poprzednia "
+"wiadomość: spacja \" \" chowa czas, inny ciąg wyświetlany zamiast "
+"czasu lub pusty ciąg dla wyłączenia opcji (wyświetlanie czasu) (uwaga:"
+" zawartość "
+"jest przetwarzana, możesz użyć kolorów w formacie \"$(color:xxx}\", zobacz "
+"/help eval)"
 
 msgid ""
 "force \"bold\" attribute for light colors and \"darkgray\" in basic colors "
@@ -4095,7 +4100,6 @@ msgstr ""
 "znak wyświetlany jeśli nazwa bufora została obcięta (kiedy wiele buforów "
 "jest scalonych z takim samym numerem)(dokładnie jeden znak na ekranie)"
 
-#, fuzzy
 msgid ""
 "prefix displayed for a message with same nick as previous but not next "
 "message: use a space \" \" to hide prefix, another string to display this "
@@ -4103,17 +4107,18 @@ msgid ""
 "prefix)"
 msgstr ""
 "prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia "
-"wiadomość: spacja (\" \") chowa prefiks, inny ciąg wyświetlany zamiast "
-"prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)"
+"ale nie jak następna wiadomość: spacja \" \" chowa prefiks, inny ciąg "
+"wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji "
+"(wyświetlanie przedrostka)"
 
-#, fuzzy
 msgid ""
 "prefix displayed for a message with same nick as previous and next message: "
 "use a space \" \" to hide prefix, another string to display this string "
 "instead of prefix, or an empty string to disable feature (display prefix)"
 msgstr ""
 "prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia "
-"wiadomość: spacja (\" \") chowa prefiks, inny ciąg wyświetlany zamiast "
+"i następna wiadomość: spacja \" \" chowa prefiks, inny ciąg wyświetlany"
+" zamiast "
 "prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)"
 
 msgid "string displayed after prefix"
@@ -4800,6 +4805,8 @@ msgid ""
 "warning: the command \"%s\" is not currently allowed (command: \"%s\", "
 "buffer: \"%s\")"
 msgstr ""
+"uwaga: komenda \"%s\" nie jest obecnie dozwolona (komenda: \"%s\", "
+"bufor: \"%s\")"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -5317,13 +5324,12 @@ msgstr "%sBłąd podczas dodawania filtru \"%s\": %s"
 msgid "not enough arguments"
 msgstr "za mało argumentów"
 
-#, fuzzy
 msgid ""
 "a filter with same name already exists (choose another name or use option "
 "\"addreplace\" to overwrite it)"
 msgstr ""
-"%s%s: trigger \"%s\" już istnieje (wybierz inną nazwę lub użyj opcji "
-"\"addreplace\" żeby nadpisać istniejący)"
+"filtr o takiej samej nazwie już istnieje (wybierz inna nazwę lub użyj opcji "
+"\"addreplace\" aby nadpisać)"
 
 #. TRANSLATORS: %s is the error returned by regerror
 #, c-format
@@ -7190,12 +7196,13 @@ msgstr ""
 "%s%s: nie można wykonać komendy /%s, atrybut kanału \"%s\" nie jest "
 "wspierany przez serwer"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: command \"%s\" with option \"%s\" must be executed on irc buffer "
 "(server, channel or private)"
 msgstr ""
-"%s%s: komenda \"%s\" musi zostać wykonana w buforze irc (serwer lub kanał)"
+"%s%s: komenda \"%s\" z opcją \"%s\" musi zostać wykonana w buforze irc "
+"(serwer, kanał lub prywatne)"
 
 #, c-format
 msgid "%s: future away: %s"
@@ -8832,12 +8839,13 @@ msgstr ""
 "ujemnych)\n"
 "cel: odpowiedź powinna pasować do maski"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: command \"%s\" must be executed on irc buffer (server, channel or "
 "private)"
 msgstr ""
-"%s%s: komenda \"%s\" musi zostać wykonana w buforze irc (serwer lub kanał)"
+"%s%s: komenda \"%s\" musi zostać wykonana w buforze irc (serwer, kanał "
+"lub prywatne)"
 
 msgid "current IRC server"
 msgstr "obecny serwer IRC"
@@ -11890,13 +11898,13 @@ msgstr ""
 "%s%s: ostrzeżenie: nie znaleziono certyfikatu/klucza SSL (opcja relay."
 "network.ssl_cert_key)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on path %s: %s%s%s"
-msgstr "%s: nowy klient na porcie %d: %s%s%s"
+msgstr "%s: nowy klient na ścieżce %s: %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: new client on port %s: %s%s%s"
-msgstr "%s: nowy klient na porcie %d: %s%s%s"
+msgstr "%s: nowy klient na porcie %s: %s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
@@ -11934,34 +11942,33 @@ msgstr "Brak klientów do przesłania"
 msgid "No connected client for relay"
 msgstr "Brak klientów do przekazywania"
 
-#, fuzzy
 msgid "Listening on:"
-msgstr "Nasłuchuję na portach:"
+msgstr "Nasłuchuję na:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s (not started)"
-msgstr "  port %s%d%s, pośrednik: %s%s%s, %s, (nie rozpoczęto)"
+msgstr "  %s %s%s%s, pośrednik: %s%s%s, %s (nie rozpoczęto)"
 
 msgid "path"
-msgstr ""
+msgstr "ścieżka"
 
 msgid "port"
-msgstr ""
+msgstr "port"
 
-#, fuzzy, c-format
+#, c-format
 msgid "  %s %s%s%s, relay: %s%s%s, %s, started on: %s"
-msgstr "  port %s%d%s, relay:%s%s%s, %s, rozpoczęto: %s"
+msgstr "  %s %s%s%s, pośrednik:%s%s%s, %s, rozpoczęto: %s"
 
 msgid "No server for relay"
 msgstr "Brak serwera dla relay"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) added"
-msgstr "%s: relay \"%s\" (port %s) dodany"
+msgstr "%s: pośrednik \"%s\" (%s: %s) dodany"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: relay \"%s\" (%s: %s) removed"
-msgstr "%s: relay \"%s\" (port %d) usunięty"
+msgstr "%s: pośrednik \"%s\" (%s: %s) usunięty"
 
 #, c-format
 msgid "%s%s: relay \"%s\" not found"
@@ -11970,15 +11977,13 @@ msgstr "%s%s: relay \"%s\" nie został znaleziony"
 msgid "relay control"
 msgstr "zarządzanie przesyłaniem"
 
-#, fuzzy
 msgid ""
 "list|listfull|listrelay || add <name> <port>|<path> || del|start|restart|"
 "stop <name> || raw || sslcertkey"
 msgstr ""
-"list|listfull|listrelay || add <nazwa> <port> || del|start|restart|stop "
-"<nazwa> || raw || sslcertkey"
+"list|listfull|listrelay || add <nazwa> <port>|<ścieżka> || del|start| "
+"restart|stop <nazwa> || raw || sslcertkey"
 
-#, fuzzy
 msgid ""
 "         list: list relay clients (only active relays)\n"
 "     listfull: list relay clients (verbose, all relays)\n"
@@ -12042,27 +12047,34 @@ msgstr ""
 "    listrelay: wyświetla pośredników (nazwa i port)\n"
 "          add: dodaje relay (nasłuchuje na porcie)\n"
 "          del: usuwa relay (klienty zostają połączone)\n"
-"        start: nasłuchuje na portcie\n"
+"        start: nasłuchuje na porcie\n"
 "      restart: zamyka porta serwera i otwiera go ponownie nasłuchując na nim "
 "(klienty zostają połączone)\n"
 "         stop: zamyka gniazdo serwera (klienty zostają połączone)\n"
 "        nazwa: nazwa pośrednika (format poniżej)\n"
 "         port: port używany przez pośrednika\n"
+"         ścieżka: ścieżka używana przez pośrednika (tylko dla socketów"
+" UNIXowych); "
+"\"%h\" na początku ciągu jest zastępowane katalogiem domowym WeeChat "
+"(domyślnie \"~/.weechat\"), zawartość jest przetwarzana (zobacz /help eval)\n"
 "          raw: otwiera bufor z nieprzetworzonymi danymi pośrednika\n"
 "   sslcertkey: ustawia certyfikat SSL/hasło używając ścieżki w opcji relay."
 "network.ssl_cert_key\n"
 "\n"
-"Nazwa pośrednika to: [ipv4.][ipv6.][ssl.]<protokół.nazwa>\n"
+"Nazwa pośrednika to: [ipv4.][ipv6.][ssl.]<protokół.nazwa> lub unix.[ssl.]<"
+"protokół. "
+"nazwa>\n"
 "         ipv4: wymusza użycie IPv4\n"
 "         ipv6: wymusza użycie IPv6\n"
 "          ssl: włącza SSL\n"
+"         unix: używa socketu UNIXowego\n"
 "protokół.nazwa: protokół i nazwa do przekazywania:\n"
 "                 - protokół \"irc\": nazwą jest serwer do współdzielenia "
 "(opcjonalne, jeśli nie podane, nazwa serwera musi być wysłana przez klienta "
 "w komendzie \"PASS\", format: \"PASS serwer:hasło\")\n"
 "                 - protokół \"weechat\" (nazwa nie jest używana)\n"
 "\n"
-"Protokół \"irc\" pozwala dowolnemu klientowi IRC (włączajac w to WeeChat) "
+"Protokół \"irc\" pozwala dowolnemu klientowi IRC (włączając w to WeeChat) "
 "połączyć się na ustawionym porcie.\n"
 "Protokół \"weechat\" pozwala na połączenie się zdalnym interfejsem, lista "
 "dostępna pod adresem: https://weechat.org/about/interfaces\n"
@@ -12085,7 +12097,9 @@ msgstr ""
 "  protokół weechat z SSL, używający tylko IPv6:\n"
 "    /relay add ipv6.ssl.weechat 9001\n"
 "  protokół weechat z SSL, używający IPv4 + IPv6:\n"
-"    /relay add ipv4.ipv6.ssl.weechat 9001"
+"    /relay add ipv4.ipv6.ssl.weechat 9001\n"
+"  protokół weechat po sockecie UNIXowym:\n"
+"    /relay add unix.weechat %h/relay_socket"
 
 msgid "all possible protocol.name for relay plugin"
 msgstr "wszystkie możliwe protokół.nazwa dla wtyczki relay"
@@ -12109,17 +12123,17 @@ msgstr ""
 msgid "%s%s: error: port \"%d\" is already used"
 msgstr "%s%s: błąd: port \"%d\" jest już w użyciu"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path is empty"
-msgstr "%s%s: błąd: %s"
+msgstr "%s%s: błąd: ścieżka jest pusta"
 
 #, c-format
 msgid "%s%s: error: path \"%s\" too long (length: %d; max: %d)"
-msgstr ""
+msgstr "%s%s: błąd: ścieżka \"%s\" jest za długa (długość: %d; max: %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error: path \"%s\" is already used"
-msgstr "%s%s: błąd: port \"%d\" jest już w użyciu"
+msgstr "%s%s: błąd: ścieżka \"%s\" jest już w użyciu"
 
 #, c-format
 msgid "%s%s: cannot use SSL because WeeChat was not built with GnuTLS support"
@@ -12139,18 +12153,16 @@ msgstr "%s%s: błąd: nie jest dozwolona dla protokołu \"%s\""
 msgid "%s%s: error: relay for \"%s\" already exists"
 msgstr "%s%s: błąd: relay dla \"%s\" już istnieje"
 
-#, fuzzy
 msgid ""
 "path to a socket file; \"%h\" at beginning of string is replaced by WeeChat "
 "home (\"~/.weechat\" by default), content is evaluated (see /help eval)"
 msgstr ""
-"ścieżka, do której zapisywane będą pliki przychodzące; \"%h\" na początku "
-"ciągu zostanie zastąpione przez katalog domowy WeeChat (domyślnie \"~/."
-"weechat\")  (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
+"ścieżka, do pliku socketa; \"%h\" na początku ciągu zostanie zastąpione przez "
+" katalog domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: zawartość jest "
+"przetwarzana, zobacz /help eval)"
 
-#, fuzzy
 msgid "port for relay"
-msgstr "Brak klientów do przesłania"
+msgstr "port dla pośrednika"
 
 msgid "auto open relay buffer when a new client is connecting"
 msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
@@ -12332,6 +12344,16 @@ msgid ""
 "the relay client is not safe (someone could use it to run commands); for "
 "example \"*,!exec,!quit\" allows any command except /exec and /quit"
 msgstr ""
+"oddzielona przecinkami lista poleceń dozwolonych/zakazanych kiedy dane "
+"(tekst lub polecenia) zostaną odebrane od klienta; \"*\" oznacza dowolną"
+" komendę, "
+"nazwa zaczynająca się od \"!\" oznacza nie dozwoloną komendę, znak \"*\""
+" dozwolony jest "
+"w nazwach; ta opcja powinna być ustawiona jeśli pośrednik nie jest bezpieczny"
+" (ktoś może "
+"go użyć do wykonywania poleceń); na przykład \"*,!exec,!quit\" zezwala na"
+" wszystkie polecenia "
+"poza /exec i /quit"
 
 msgid "number of clients for relay"
 msgstr "liczba podłączonych klientów"
@@ -12363,15 +12385,15 @@ msgstr "%s%s: nie można zainicjować priorytetu dla SSL"
 msgid "Relay raw messages"
 msgstr "Nieprzetworzone wiadomości relay"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: socket closed for %s (%s: %s)"
-msgstr "%s: gniazdo zamknięte dla %s (port %d)"
+msgstr "%s: gniazdo zamknięte dla %s (%s: %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on path %s (%s): error %d %s"
-msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s): błąd %d %s"
+msgstr "%s%s: nie można zaakceptować klienta na ścieżce %s (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot accept client on port %d (%s): error %d %s"
 msgstr "%s%s: nie można zaakceptować klienta na porcie %d (%s): błąd %d %s"
 
@@ -12418,13 +12440,13 @@ msgstr "%s%s: nie można ustawić opcji gniazda \"%s\" na %d: błąd %d %s"
 msgid "%s%s: invalid bind address \"%s\" for %s"
 msgstr "%s%s: niepoprawny adres powiązania \"%s\" dla %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" is invalid"
-msgstr "%s: skrypt \"%s\" wystrzymano"
+msgstr "%s%s: ścieżka socketu \"%s\" jest niepoprawna"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: socket path \"%s\" already exists and is not a socket"
-msgstr "%s%s: serwer \"%s\" już istnieje, nie mogę go dodać!"
+msgstr "%s%s: ścieżka socketu \"%s\" już istnieje i nie jest socketem"
 
 #, c-format
 msgid "%s%s: cannot create socket: error %d %s"
@@ -12434,43 +12456,43 @@ msgstr "%s%s: nie można utworzyć gniazda: błąd %d %s"
 msgid "%s%s: try /set relay.network.ipv6 off"
 msgstr "%s%s: spróbuj /set relay.network.ipv6 off"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on path %s (%s): error %d %s"
-msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
+msgstr "%s%s: nie można wykonać \"bind\" na ścieżce %s (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"bind\" on port %d (%s): error %d %s"
 msgstr "%s%s: nie można wykonać \"bind\" na porcie %d (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on path %s (%s): error %d %s"
-msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
+msgstr "%s%s: nie można wykonać \"listen\" na ścieżce %s (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: cannot \"listen\" on port %d (%s): error %d %s"
 msgstr "%s%s: nie można wykonać \"listen\" na porcie %d (%s): błąd %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on path %s (relay: %s, %s, max %d clients)"
-msgstr[0] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klient)"
-msgstr[1] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klienty)"
-msgstr[2] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
+msgstr[0] "%s: nasłuchuję na ścieżce %s (pośrednik: %s, %s, max %d klient)"
+msgstr[1] "%s: nasłuchuję na porcie %s (relay: %s, %s, max %d klienty)"
+msgstr[2] "%s: nasłuchuję na porcie %s (relay: %s, %s, max %d klientów)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s, max %d client)"
 msgid_plural "%s: listening on port %d (relay: %s, %s, max %d clients)"
-msgstr[0] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klient)"
+msgstr[0] "%s: nasłuchuję na porcie %d (pośrednik: %s, %s, max %d klient)"
 msgstr[1] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klienty)"
 msgstr[2] "%s: nasłuchuję na porcie %d (relay: %s, %s, max %d klientów)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on path %s (relay: %s, %s)"
-msgstr "%s: nasłuchuję na porcie %d (relay: %s, %s)"
+msgstr "%s: nasłuchuję na ścieżce %s (pośrednik: %s, %s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: listening on port %d (relay: %s, %s)"
-msgstr "%s: nasłuchuję na porcie %d (relay: %s, %s)"
+msgstr "%s: nasłuchuję na porcie %d (pośrednik: %s, %s)"
 
 #, c-format
 msgid "%s%s: not enough memory for listening on new port"
@@ -12651,7 +12673,7 @@ msgid "URL"
 msgstr "URL"
 
 msgid "SHA-512"
-msgstr ""
+msgstr "SHA-512"
 
 msgid "Requires"
 msgstr "Wymaga"
@@ -13107,9 +13129,8 @@ msgstr "%s%s: błąd podczas pobierania listy skryptów: %s"
 msgid "%s: downloading list of scripts..."
 msgstr "%s: pobieram listę skryptów..."
 
-#, fuzzy
 msgid "Spell checker for input"
-msgstr "Sprawdzanie pisowni dla wejścia (poprzez Aspell)"
+msgstr "Sprawdzanie pisowni dla wejścia"
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format
@@ -13164,17 +13185,14 @@ msgstr "(nie ustawione)"
 msgid "Specific dictionaries on buffers:"
 msgstr "Specyficzne słowniki dla buforów:"
 
-#, fuzzy
 msgid "Spell checker enabled"
 msgstr "Sprawdzanie pisowni jest włączone"
 
-#, fuzzy
 msgid "Spell checker disabled"
 msgstr "Sprawdzanie pisowni jest wyłączone"
 
-#, fuzzy
 msgid "spell plugin configuration"
-msgstr "konfiguracja wtyczki aspell"
+msgstr "konfiguracja wtyczki spell"
 
 msgid ""
 "enable|disable|toggle || listdict || setdict <dict>[,<dict>...] || deldict "
@@ -13183,7 +13201,6 @@ msgstr ""
 "enable|disable|toggle || listdict || setdict <język>[,<język>...] || deldict "
 "|| addword [<język>] <słowo>"
 
-#, fuzzy
 msgid ""
 "  enable: enable spell checker\n"
 " disable: disable spell checker\n"
@@ -13206,42 +13223,41 @@ msgid ""
 "\n"
 "Default key to toggle spell checker is alt-s."
 msgstr ""
-"  enable: włącza aspell\n"
-" disable: wyłącza aspell\n"
-"  toggle: przełącza aspell\n"
+"  enable: włącza sprawdzanie pisowni\n"
+" disable: wyłącza sprawdzanie pisowni\n"
+"  toggle: przełącza sprawdzanie pisowni\n"
 "listdict: pokazuje zainstalowane słowniki\n"
 " setdict: ustawia słownik dla obecnego buforu (kilka słowników może być "
 "podanych po przecinku)\n"
 " deldict: usuwa słownik używany w obecnym buforze\n"
-" addword: dodaje słowo do osobistego słownika aspell\n"
+" addword: dodaje słowo do osobistego słownika\n"
 "\n"
 "Jeśli wprowadzany tekst zaczyna się od '/' nie będzie on sprawdzany, za "
-"wyjątkiem kilku komend (zobacz /set aspell.check.commands).\n"
+"wyjątkiem kilku komend (zobacz /set spell.check.commands).\n"
 "\n"
-"W celu włączenia aspell dla wszystkich buforów, należy użyć opcji "
-"\"default_dict\", następnie włączyć aspell, na przykład:\n"
-"  /set aspell.check.default_dict \"en\"\n"
-"  /aspell enable\n"
+"W celu włączenia sprawdzania pisowni dla wszystkich buforów, należy użyć"
+" opcji "
+"\"default_dict\", następnie włączyć sprawdzanie pisowni, na przykład:\n"
+"  /set spell.check.default_dict \"en\"\n"
+"  /spell enable\n"
 "\n"
-"W celu wyświetlenia listy sugestii na pasku, użyj elementu \"aspell_suggest"
+"W celu wyświetlenia listy sugestii na pasku, użyj elementu \"spell_suggest"
 "\".\n"
 "\n"
-"Domyślny skrót klawiszowy przełączający aspell to alt-s."
+"Domyślny skrót klawiszowy przełączający sprawdzanie pisowni to alt-s."
 
-#, fuzzy
 msgid "list of all languages supported"
-msgstr "lista wszystkich języków wspieranych przez aspell"
+msgstr "lista wszystkich wspieranych języków"
 
-#, fuzzy
 msgid "list of installed dictionaries"
-msgstr "lista zainstalowanych słowników aspell"
+msgstr "lista zainstalowanych słowników"
 
 msgid "comma separated list of dictionaries to use on this buffer"
 msgstr "oddzielona przecinkami lista słowników do użycia w tym buforze"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell dictionary \"%s\" => \"%s\""
-msgstr "%s%s: błąd podczas tworzenia słownika aspell \"%s\" => \"%s\""
+msgstr "%s%s: błąd podczas tworzenia słownika spell \"%s\" => \"%s\""
 
 msgid ""
 "option for aspell (for list of available options and format, run command "
@@ -13250,35 +13266,32 @@ msgstr ""
 "opcja dla aspell (listę dostępnych opcji i format można uzyskać wykonując "
 "polecenie \"aspell config\" w powłoce)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: error creating spell option \"%s\" => \"%s\""
-msgstr "%s%s: błąd podczas tworzenia opcji aspell \"%s\" => \"%s\""
+msgstr "%s%s: błąd podczas tworzenia opcji spell \"%s\" => \"%s\""
 
 msgid "text color for misspelled words (input bar)"
 msgstr "kolor używany dla błędnie zapisanych słów (pasek wprowadzania)"
 
-#, fuzzy
 msgid ""
 "text color for suggestion on a misspelled word in bar item \"spell_suggest\""
 msgstr ""
 "kolor tekstu sugestii dla błędnie wprowadzonego słowa w elemencie paska "
-"\"aspell_suggest\""
+"\"spell_suggest\""
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two dictionaries in bar item "
 "\"spell_suggest\""
 msgstr ""
 "kolor tekstu separatorów wyświetlanych pomiędzy dwoma słownikami w elemenci "
-"paska \"aspell_suggest\""
+"paska \"spell_suggest\""
 
-#, fuzzy
 msgid ""
 "text color for delimiters displayed between two words in bar item "
 "\"spell_suggest\""
 msgstr ""
 "kolor tekstu dla separatorów wyświetlanych pomiędzy dwoma słowami w "
-"elemencie paska \"aspell_suggest\""
+"elemencie paska \"spell_suggest\""
 
 msgid ""
 "comma separated list of commands for which spell checking is enabled (spell "
@@ -13287,22 +13300,20 @@ msgstr ""
 "oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna "
 "pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)"
 
-#, fuzzy
 msgid ""
 "default dictionary (or comma separated list of dictionaries) to use when "
 "buffer has no dictionary defined (leave blank to disable spell checker on "
 "buffers for which you didn't explicitly enabled it)"
 msgstr ""
 "domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy "
-"bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć słownik w "
-"buforach, które nie posiadają konkretnie przypisanego słownika aspell)"
+"bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć sprawdzanie "
+"pisowni w buforach, w których nie zostało to włączone)"
 
 msgid "check words during text search in buffer"
 msgstr "sprawdzaj słowa podczas wyszukiwania tekstu w buforze"
 
-#, fuzzy
 msgid "enable spell checker for command line"
-msgstr "włącza sprawdzanie aspell dla linii komend"
+msgstr "włącza sprawdzanie pisowni dla linii komend"
 
 msgid ""
 "real-time spell checking of words (slower, disabled by default: words are "
@@ -13311,13 +13322,12 @@ msgstr ""
 "sprawdzanie pisowni w czasie rzeczywistym (wolniejsze, wyłączone domyślnie: "
 "słowa są sprawdzane tylko jeśli za nimi znajduje się separator)"
 
-#, fuzzy
 msgid ""
 "number of suggestions to display in bar item \"spell_suggest\" for each "
 "dictionary set in buffer (-1 = disable suggestions, 0 = display all possible "
 "suggestions in all languages)"
 msgstr ""
-"numer podpowiedzi wyświetlanych w elemencie paska \"aspell_suggest\" dla "
+"numer podpowiedzi wyświetlanych w elemencie paska \"spell_suggest\" dla "
 "każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = "
 "wyświetla wszystkie możliwe podpowiedzi dla każdego języka)"
 
@@ -13326,18 +13336,16 @@ msgid ""
 msgstr ""
 "minimalna długość słowa do sprawdzenia ( 0 - sprawdzaj wszystkie słowa)"
 
-#, fuzzy
 msgid ""
 "delimiter displayed between two dictionaries in bar item \"spell_suggest\""
 msgstr ""
 "separator wyświetlany pomiędzy dwoma słownikami w elemencie paska "
-"\"aspell_suggest\""
+"\"spell_suggest\""
 
-#, fuzzy
 msgid "delimiter displayed between two words in bar item \"spell_suggest\""
 msgstr ""
 "separator wyświetlany pomiędzy dwoma słowami w elemencie paska "
-"\"aspell_suggest\""
+"\"spell_suggest\""
 
 msgid "comma-separated list of dictionaries used in buffer"
 msgstr "oddzielona przecinkami lista słowników używanych w buforze"
@@ -13565,7 +13573,6 @@ msgstr ""
 "[<nazwa>...] || show <nazwa> || del <nazwa>|-all [<nazwa>...] || restore "
 "<nazwa> [<nazwa>...] || default -yes || monitor [<filtr>]"
 
-#, fuzzy
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
@@ -13667,14 +13674,14 @@ msgstr ""
 " addreplace: dodaje lub zastępuje istniejący trigger\n"
 "       nazwa: nazwa triggera\n"
 "       hook: signal, hsignal, modifier, line, print, command, command_run, "
-"timer, config, focus\n"
+"timer, config, focus, info, info_hashtable\n"
 "  argumenty: argumenty dla uchwytu, w zależności od jego typu (oddzielone "
 "średnikami):\n"
 "             signal: nazwa(-y) signal (wymagane)\n"
 "             hsignal: nazwa(-y) hsignal (wymagane)\n"
 "             modifier: nazwa(-y) modifier (wymagane)\n"
 "             line: typ bufora(\"formatted\", \"free\" lub \"*\"), lista mask "
-"buforów, tagów\n"
+"buforów, tagi\n"
 "             print: bufor, tagi, wiadomość, pomiń kolory\n"
 "             command: komenda (wymagane), opis, argumenty, opis argumentów, "
 "dopełnienie\n"
@@ -13682,6 +13689,8 @@ msgstr ""
 "             timer: interwał (wymagane), wyrównanie sekund, ilość wywołań\n"
 "             config: nazwa(-y) opcji (wymagane)\n"
 "             focus: nazwa(-y) obszarów (wymagane)\n"
+"             info: nazwa(y) informacji (wymagane)\n"
+"             info_hashtable: nazwa(y) informacji (wymagane)\n"
 " warunki: przetwarzane warunki dla triggera\n"
 "      regex: jedno lub więcej wyrażeń regularnych do zastępowania ciągów w "
 "zmiennych\n"
@@ -14203,11 +14212,10 @@ msgstr ""
 "limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak "
 "limitu)"
 
-#, fuzzy
 msgid ""
 "speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
-"limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak "
+"limit prędkości odbierania plików, w kilobajtach na sekundę (0 oznacza brak "
 "limitu)"
 
 msgid "timeout for xfer request (in seconds)"
