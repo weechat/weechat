@@ -597,7 +597,7 @@
 ** domyślna wartość: `+"%H:%M:%S"+`
 
 * [[option_weechat.look.buffer_time_same]] *weechat.look.buffer_time_same*
-** opis: pass:none[time displayed for a message with same time as previous message: use a space " " to hide time, another string to display this string instead of time, or an empty string to disable feature (display time) (note: content is evaluated, so you can use colors with format "${color:xxx}", see /help eval)]
+** opis: pass:none[czas wyświetlany dla wiadomości z takim samym czasem jak poprzednia wiadomość: spacja " " chowa czas, inny ciąg wyświetlany zamiast czasu lub pusty ciąg dla wyłączenia opcji (wyświetlanie czasu) (uwaga: zawartość jest przetwarzana, możesz użyć kolorów w formacie "$(color:xxx}", zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -1053,13 +1053,13 @@
 ** domyślna wartość: `+"<--"+`
 
 * [[option_weechat.look.prefix_same_nick]] *weechat.look.prefix_same_nick*
-** opis: pass:none[prefix displayed for a message with same nick as previous but not next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia ale nie jak następna wiadomość: spacja " " chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.look.prefix_same_nick_middle]] *weechat.look.prefix_same_nick_middle*
-** opis: pass:none[prefix displayed for a message with same nick as previous and next message: use a space " " to hide prefix, another string to display this string instead of prefix, or an empty string to disable feature (display prefix)]
+** opis: pass:none[prefiks wyświetlany dla wiadomości z takim samym nickiem jak poprzednia i następna wiadomość: spacja " " chowa prefiks, inny ciąg wyświetlany zamiast prefiksu lub pusty ciąg dla wyłączenia opcji (wyświetlanie przedrostka)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

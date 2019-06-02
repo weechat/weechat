@@ -82,9 +82,9 @@
 
 | script | script_tags | tagi skryptów w repozytorium
 
-| spell | spell_dicts | list of installed dictionaries
+| spell | spell_dicts | lista zainstalowanych słowników
 
-| spell | spell_langs | list of all languages supported
+| spell | spell_langs | lista wszystkich wspieranych języków
 
 | tcl | tcl_script | lista skryptów
 

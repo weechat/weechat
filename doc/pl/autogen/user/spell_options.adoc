@@ -9,7 +9,7 @@
 ** domyślna wartość: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
-** opis: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]
+** opis: pass:none[domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć sprawdzanie pisowni w buforach, w których nie zostało to włączone)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -21,7 +21,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_spell.check.enabled]] *spell.check.enabled*
-** opis: pass:none[enable spell checker for command line]
+** opis: pass:none[włącza sprawdzanie pisowni dla linii komend]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
@@ -33,7 +33,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_spell.check.suggestions]] *spell.check.suggestions*
-** opis: pass:none[number of suggestions to display in bar item "spell_suggest" for each dictionary set in buffer (-1 = disable suggestions, 0 = display all possible suggestions in all languages)]
+** opis: pass:none[numer podpowiedzi wyświetlanych w elemencie paska "spell_suggest" dla każdego słownika ustawionego w buforze (-1 = wyłącza podpowiedzi, 0 = wyświetla wszystkie możliwe podpowiedzi dla każdego języka)]
 ** typ: liczba
 ** wartości: -1 .. 2147483647
 ** domyślna wartość: `+-1+`
@@ -51,31 +51,31 @@
 ** domyślna wartość: `+lightred+`
 
 * [[option_spell.color.suggestion]] *spell.color.suggestion*
-** opis: pass:none[text color for suggestion on a misspelled word in bar item "spell_suggest"]
+** opis: pass:none[kolor tekstu sugestii dla błędnie wprowadzonego słowa w elemencie paska "spell_suggest"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+default+`
 
 * [[option_spell.color.suggestion_delimiter_dict]] *spell.color.suggestion_delimiter_dict*
-** opis: pass:none[text color for delimiters displayed between two dictionaries in bar item "spell_suggest"]
+** opis: pass:none[kolor tekstu separatorów wyświetlanych pomiędzy dwoma słownikami w elemenci paska "spell_suggest"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+cyan+`
 
 * [[option_spell.color.suggestion_delimiter_word]] *spell.color.suggestion_delimiter_word*
-** opis: pass:none[text color for delimiters displayed between two words in bar item "spell_suggest"]
+** opis: pass:none[kolor tekstu dla separatorów wyświetlanych pomiędzy dwoma słowami w elemencie paska "spell_suggest"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+cyan+`
 
 * [[option_spell.look.suggestion_delimiter_dict]] *spell.look.suggestion_delimiter_dict*
-** opis: pass:none[delimiter displayed between two dictionaries in bar item "spell_suggest"]
+** opis: pass:none[separator wyświetlany pomiędzy dwoma słownikami w elemencie paska "spell_suggest"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+" / "+`
 
 * [[option_spell.look.suggestion_delimiter_word]] *spell.look.suggestion_delimiter_word*
-** opis: pass:none[delimiter displayed between two words in bar item "spell_suggest"]
+** opis: pass:none[separator wyświetlany pomiędzy dwoma słowami w elemencie paska "spell_suggest"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+","+`

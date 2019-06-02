@@ -183,7 +183,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_relay.weechat.commands]] *relay.weechat.commands*
-** opis: pass:none[comma-separated list of commands allowed/denied when input data (text or command) is received from a client; "*" means any command, a name beginning with "!" is a negative value to prevent a command from being executed, wildcard "*" is allowed in names; this option should be set if the relay client is not safe (someone could use it to run commands); for example "*,!exec,!quit" allows any command except /exec and /quit]
+** opis: pass:none[oddzielona przecinkami lista poleceń dozwolonych/zakazanych kiedy dane (tekst lub polecenia) zostaną odebrane od klienta; "*" oznacza dowolną komendę, nazwa zaczynająca się od "!" oznacza nie dozwoloną komendę, znak "*" dozwolony jest w nazwach; ta opcja powinna być ustawiona jeśli pośrednik nie jest bezpieczny (ktoś może go użyć do wykonywania poleceń); na przykład "*,!exec,!quit" zezwala na wszystkie polecenia poza /exec i /quit]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

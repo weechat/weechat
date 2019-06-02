@@ -350,63 +350,63 @@ Przykłady (warunki):
 
 ----
 /filter  list
-         enable|disable|toggle [<name>|@]
-         add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
-         rename <name> <new_name>
-         del <name>|-all
+         enable|disable|toggle [<nazwa>|@]
+         add | addreplace<nazwa> <bufor>[,<bufor>...] <tagi> <regex>
+         rename <nazwa> <nowa_nazwa>
+         del <nazwa>|-all
 
-      list: list all filters
-    enable: enable filters (filters are enabled by default)
-   disable: disable filters
-    toggle: toggle filters
-      name: filter name ("@" = enable/disable all filters in current buffer)
-       add: add a filter
-addreplace: add or replace an existing filter
-    rename: rename a filter
-       del: delete a filter
-      -all: delete all filters
-    buffer: comma separated list of buffers where filter is active:
-            - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-            - "*" means all buffers
-            - a name starting with '!' is excluded
-            - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-            - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-            - wildcard "*" is allowed
-            - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-            - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-            - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-            - two regular expressions are created: one for prefix and one for message
-            - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+   list: wyświetla wszystkie filtry
+ enable: włącza filtry (filtry są domyślnie włączone)
+disable: wyłącza filtry
+ toggle: przełącza filtry
+  nazwa: nazwa filtru ("@" = włącza/wyłącza wszystkie filtry w obecnym buforze)
+    add: dodaje filtr
+addreplace: dodaje lub nadpisuje istniejący filtr
+ rename: zmienia nazwę filtru
+    del: usuwa filtr
+   -all: usuwa wszystkie filtry
+ bufor: oddzielona przecinkami lisa buforów, dla których filtr jest aktywny:
+         - jest to pełna nazwa zawierająca wtyczkę (przykład: "irc.freenode.#weechat" lub "irc.server.freenode")
+         - "*" oznacza wszystkie bufory
+         - nazwa zaczynająca się od '!' jest wykluczana
+         - dozwolony jest znak "*"
+   tagi: lista tagów oddzielona przecinkiem, np: "irc_join,irc_part,irc_quit"
+         - logiczne "i": użyj "+" pomiędzy tagami (na przykład: "nick_toto+irc_action")
+         - dozwolony jest znak "*"
+         - jeśli tag zaczyna się od '!', wtedy jest on wykluczony i NIE może znajdować się w wiadomości
+  regex: rozszerzone wyrażenie regularne POSIX do wyszukania w linii
+         - użyj '\t' do oddzielenia prefiksu od wiadomości, znaki specjalne jak '|' muszą zostać poprzedzone '\' np: '\|'
+         - jeśli wyrażenie zaczyna się od '!', wtedy pasujący wynik jest odwracany (użyj '\!', aby zacząć od '!')
+         - dwa wyrażenia są tworzone: jedno dla prefiksu, drugie dla wiadomości
+         - wielkość znaków nie ma znaczenia dla wyrażeń, jeśli zaczynają się od "(?-i)" wielkość znaków ma znaczenie
 
-The default key alt+'=' toggles filtering on/off globally and alt+'-' toggles filtering on/off in the current buffer.
+Domyślny skrót klawiszowy alt+'=' włącza/wyłącza filtrowanie globalnie i alt+'-' włącza/wyłącza filtrowanie w obecnym buforze.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Najczęściej używane tagi:
+  no_filter, no_highlight, no_log, log0..log9 (poziom logowania),
   notify_none, notify_message, notify_private, notify_highlight,
-  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  self_msg, nick_xxx (xxx to nick w wiadomości), prefix_nick_ccc (ccc to kolor nicka),
+  host_xxx (xxx to użytkownik + host w wiadomości),
+  irc_xxx (xxx to nazwa komendy, lub numer; zobacz /server raw lub /debug tags),
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Aby zobaczyć listę tagów w liniach buforów wykonaj: /debug tags
 
-Examples:
-  use IRC smart filter on all buffers:
+Przykłady:
+  użyj inteligentnego filtru we wszystkich buforach IRC:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  użyj inteligentnego filtru we wszystkich buforach IRC poza tymi zawierającymi "#weechat" w nazwie:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtruj wszystkie wiadomości IRC o join/part/quit:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtruj nicki wyświetlane przy wejściu na kanał albo za pomocą /names:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtruj nick "toto" na kanale IRC #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtruj wejścia/akcje IRC od użytkownika "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtruj linie zawierające frazę "weechat sucks" na kanale IRC #weechat:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-  filter lines that are strictly equal to "WeeChat sucks" on all buffers:
+  filtruj linie "WeeChat sucks" we wszystkich buforach:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 
@@ -755,21 +755,21 @@ Bez podania argumentu wszystkie pliki (WeeChat oraz wtyczki) zostaną przeładow
 * `+repeat+`: wykonuje komendę kilka razy
 
 ----
-/repeat  [-interval <delay>[<unit>]] <count> <command>
+/repeat  [-interval <opóźnienie>[<jednostka>]] <ilość> <komenda>
 
-  delay: delay between execution of commands
-   unit: optional, values are:
-           ms: milliseconds
-            s: seconds (default)
-            m: minutes
-            h: hours
-  count: number of times to execute command
-command: command to execute (or text to send to buffer if command does not start with '/')
+  opóźnienie: czas pomiędzy wykonaniem komend
+   jednostka: opcjonalna, dostępne wartości:
+           ms: milisekundy
+            s: sekundy (domyślnie)
+            m: minuty
+            h: godziny
+  ilość: ile razy wykonać komendę
+komenda: komenda do wykonania ('/' jest automatycznie dodawane, jeśli nie znajduje się na początku komendy)
 
-Note: the command is executed on buffer where /repeat was executed (if the buffer does not exist any more, the command is not executed).
+Ważne: komenda zostanie wykonana w buforze, gdzie zostało wykonane /repeat (jeśli bufor nie zostanie znaleziony komenda nie zostanie wykonana).
 
-Example:
-  scroll 2 pages up:
+Przykład:
+  przewija 2 strony do góry:
     /repeat 2 /window page_up
 ----
 
@@ -944,22 +944,22 @@ Domyślny alias /v może zostać użyty do wykonania tej komendy we wszystkich b
 ----
 /wait  <liczba>[<jednostka>] <komenda>
 
- number: amount of time to wait (integer number)
-   unit: optional, values are:
-           ms: milliseconds
-            s: seconds (default)
-            m: minutes
-            h: hours
-command: command to execute (or text to send to buffer if command does not start with '/')
+ liczba: ilość czasu do odczekania (liczba całkowita)
+   jednostka: opcjonalnie, możliwe wartości:
+           ms: milisekundy
+            s: sekundy (domyślnie)
+            m: minuty
+            h: godziny
+komenda: komenda do wykonania (lub tekst do wysłania do bufora jeżeli komenda nie zaczyna się od  '/')
 
-Note: the command is executed on buffer where /wait was executed (if the buffer does not exist any more, the command is not executed).
+Ważne: komenda zostanie wykonana w buforze, gdzie zostało wykonane /wait (jeśli bufor nie zostanie znaleziony komenda nie zostanie wykonana).
 
-Examples:
-  join channel in 10 seconds:
+Przykłady:
+  wejdzie na kanał za 10 sek:
     /wait 10 /join #test
-  set away in 15 minutes:
+  ustawi stan nieobecności za 15 min:
     /wait 15m /away -all I'm away
-  say 'hello' in 2 minutes:
+  napisze 'hello' za 2 min:
     /wait 2m hello
 ----
 
