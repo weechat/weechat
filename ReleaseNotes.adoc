@@ -20,28 +20,6 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.5]]
 == Version 2.5 (under dev)
 
-[[v2.5_hook_info_allocated_string]]
-=== Allocated string in hook info and function info_get
-
-The hook info callback now returns an allocated string, which must be freed
-after use (in previous versions, a pointer to a static string was returned).
-
-Consequently, the function info_get returns an allocated string, which must
-be freed after use.
-
-This affects only C code, no changes are required in scripts.
-
-[[v2.5_xfer_option_speed_limit]]
-=== Speed limit option for DCC files
-
-The option _xfer.network.speed_limit_ has been renamed to
-_xfer.network.speed_limit_send_.
-
-If you changed the value of this option, you must set it again after upgrade.
-
-A new option _xfer.network.speed_limit_recv_ has been added to limit the
-speed of received files.
-
 [[v2.5_aspell_plugin_renamed]]
 === Aspell plugin renamed to Spell
 
@@ -88,6 +66,28 @@ The default key kbd:[Alt+s] can be changed to the new `/spell` command:
 ----
 /key bind meta-s /mute spell toggle
 ----
+
+[[v2.5_xfer_option_speed_limit]]
+=== Speed limit option for DCC files
+
+The option _xfer.network.speed_limit_ has been renamed to
+_xfer.network.speed_limit_send_.
+
+If you changed the value of this option, you must set it again after upgrade.
+
+A new option _xfer.network.speed_limit_recv_ has been added to limit the
+speed of received files.
+
+[[v2.5_hook_info_allocated_string]]
+=== Allocated string in hook info and function info_get
+
+The hook info callback now returns an allocated string, which must be freed
+after use (in previous versions, a pointer to a static string was returned).
+
+Consequently, the function info_get returns an allocated string, which must
+be freed after use.
+
+This affects only C code, no changes are required in scripts.
 
 [[v2.4]]
 == Version 2.4 (2019-02-17)
@@ -221,6 +221,26 @@ In version 2.1, this binary was in the package _weechat-curses_.
 [[v2.1]]
 == Version 2.1 (2018-03-18)
 
+[[v2.1_option_name_completion]]
+=== Completion for /set and /help commands
+
+A new option weechat.completion.partial_completion_templates has been added to
+force partial completion on some templates.  By default, the option name
+completed in `/set` and `/help` commands are now using partial completion.
+
+If you prefer old behavior, you can remove the templates from the new option
+with this command:
+
+----
+/set weechat.completion.partial_completion_templates ""
+----
+
+For more information about this feature, you can read help with:
+
+----
+/help weechat.completion.partial_completion_templates
+----
+
 [[v2.1_script_plugin_check_license]]
 === Option to check license of scripts loaded
 
@@ -241,26 +261,6 @@ List of options moved:
 * _plugins.var.guile.check_license_ (string) moved to _guile.look.check_license_ (boolean)
 * _plugins.var.javascript.check_license_ (string) moved to _javascript.look.check_license_ (boolean)
 * _plugins.var.php.check_license_ (string) moved to _php.look.check_license_ (boolean)
-
-[[v2.1_option_name_completion]]
-=== Completion for /set and /help commands
-
-A new option weechat.completion.partial_completion_templates has been added to
-force partial completion on some templates.  By default, the option name
-completed in `/set` and `/help` commands are now using partial completion.
-
-If you prefer old behavior, you can remove the templates from the new option
-with this command:
-
-----
-/set weechat.completion.partial_completion_templates ""
-----
-
-For more information about this feature, you can read help with:
-
-----
-/help weechat.completion.partial_completion_templates
-----
 
 [[v2.0.1]]
 == Version 2.0.1 (2017-12-20)
@@ -369,20 +369,6 @@ No release note.
 
 [[v1.8]]
 == Version 1.8 (2017-05-13)
-[[v1.8_options]]
-
-=== Options
-
-The option _script.scripts.url_force_https_ has been removed because now the
-site weechat.org can only be used with HTTPS. +
-Both HTTP and HTTPS protocols are allowed in the option _script.scripts.url_.
-For http://weechat.org/ an automatic redirection to https://weechat.org/ will
-occur, so you should check that the CA certificates are properly installed
-on your machine.
-
-Aspell option with color for suggestion on a misspelled word has been renamed:
-
-* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
 
 [[v1.8_buflist_plugin]]
 === Buflist plugin
@@ -413,6 +399,20 @@ prevent the plugin from loading on next startup:
 /bar del buflist
 /set weechat.plugin.autoload "*,!buflist"
 ----
+
+[[v1.8_options]]
+=== Options
+
+The option _script.scripts.url_force_https_ has been removed because now the
+site weechat.org can only be used with HTTPS. +
+Both HTTP and HTTPS protocols are allowed in the option _script.scripts.url_.
+For http://weechat.org/ an automatic redirection to https://weechat.org/ will
+occur, so you should check that the CA certificates are properly installed
+on your machine.
+
+Aspell option with color for suggestion on a misspelled word has been renamed:
+
+* _aspell.color.suggestions_ has been renamed to _aspell.color.suggestion_
 
 [[v1.7.1]]
 == Version 1.7.1 (2017-04-22)
