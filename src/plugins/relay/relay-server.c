@@ -639,19 +639,22 @@ relay_server_create_socket (struct t_relay_server *server)
         }
     }
 
-    /* set option SO_KEEPALIVE to 1 */
-    set = 1;
-    if (setsockopt (server->sock, SOL_SOCKET, SO_KEEPALIVE,
-                    (void *) &set, sizeof (set)) < 0)
+    /* set option SO_KEEPALIVE to 1 (only for TCP socket) */
+    if (!server->unix_socket)
     {
-        weechat_printf (NULL,
-                        _("%s%s: cannot set socket option \"%s\" to %d: "
-                          "error %d %s"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        "SO_KEEPALIVE", set, errno, strerror (errno));
-        close (server->sock);
-        server->sock = -1;
-        return 0;
+        set = 1;
+        if (setsockopt (server->sock, SOL_SOCKET, SO_KEEPALIVE,
+                        (void *) &set, sizeof (set)) < 0)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: cannot set socket option \"%s\" to %d: "
+                              "error %d %s"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            "SO_KEEPALIVE", set, errno, strerror (errno));
+            close (server->sock);
+            server->sock = -1;
+            return 0;
+        }
     }
 
     /* bind */
