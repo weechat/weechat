@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-05-13 21:29+0200\n"
-"PO-Revision-Date: 2019-05-13 21:32+0200\n"
+"POT-Creation-Date: 2019-06-04 20:20+0200\n"
+"PO-Revision-Date: 2019-06-04 20:23+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -13414,6 +13414,18 @@ msgstr "%s : téléchargement de la liste des scripts..."
 
 msgid "Spell checker for input"
 msgstr "Vérificateur d'orthographe pour la saisie"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+"%s%s : attention : l'extension \"aspell\" a été renommée en \"spell\" et le "
+"fichier %s existe toujours (mais pas %s) ; si vous avez mis à jour depuis "
+"une version plus ancienne, vous devriez vérifier les instructions dans les "
+"notes de version (version 2.5) pour récupérer vos paramètres"
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format

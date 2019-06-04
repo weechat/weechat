@@ -25,6 +25,7 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -180,6 +181,45 @@ char *spell_url_prefix[] =
   "ldap:", "file:", "telnet:", "gopher:", "irc:", "ircs:", "irc6:", "irc6s:",
   "cvs:", "svn:", "svn+ssh:", "git:", NULL };
 
+
+/*
+ * Displays a warning if the file aspell.conf is still present in WeeChat
+ * home directory and spell.conf not yet created (upgrade from a version ≤ 2.4
+ * to a version ≥ 2.5).
+ */
+
+void
+spell_warning_aspell_config ()
+{
+    char *aspell_filename, *spell_filename;
+
+    aspell_filename = weechat_string_eval_path_home (
+        "%h/aspell.conf", NULL, NULL, NULL);
+    spell_filename = weechat_string_eval_path_home (
+        "%h/" SPELL_CONFIG_NAME ".conf", NULL, NULL, NULL);
+
+    /* if aspell.conf is there and not spell.conf, display a warning */
+    if (aspell_filename && spell_filename
+        && (access (aspell_filename, F_OK) == 0)
+        && (access (spell_filename, F_OK) != 0))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: warning: the plugin \"aspell\" has been "
+                          "renamed to \"spell\" and the file %s still exists "
+                          "(but not %s); if you upgraded from an older "
+                          "version, you should check instructions in release "
+                          "notes (version 2.5) to recover your settings"),
+                        weechat_prefix ("error"),
+                        SPELL_PLUGIN_NAME,
+                        aspell_filename,
+                        spell_filename);
+    }
+
+    if (aspell_filename)
+        free (aspell_filename);
+    if (spell_filename)
+        free (spell_filename);
+}
 
 /*
  * Builds full name of buffer.
@@ -1087,6 +1127,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     (void) argv;
 
     weechat_plugin = plugin;
+
+    spell_warning_aspell_config ();
 
 #ifdef USE_ENCHANT
     /* acquire enchant broker */

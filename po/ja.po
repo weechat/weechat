@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-05-13 21:29+0200\n"
+"POT-Creation-Date: 2019-06-04 20:20+0200\n"
 "PO-Revision-Date: 2019-05-26 09:00+0900\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -12931,6 +12931,14 @@ msgstr "%s: スクリプトリストのダウンロード中..."
 
 msgid "Spell checker for input"
 msgstr "入力に対するスペルチェッカ"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format

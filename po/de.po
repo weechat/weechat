@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-05-13 21:29+0200\n"
-"PO-Revision-Date: 2019-05-16 19:10+0200\n"
+"POT-Creation-Date: 2019-06-04 20:20+0200\n"
+"PO-Revision-Date: 2019-06-04 20:21+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -13705,6 +13705,18 @@ msgstr "%s: Liste der Skripten herunterladen..."
 
 msgid "Spell checker for input"
 msgstr "Rechtschreibprüfung für die Eingabezeile"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
+"%s%s: Warnung: Die Erweiterung \"aspell\" wurde umbenannt zu \"spell\". Die "
+"Datei %s ist weiterhin vorhanden (nicht aber %s); solltest Du von einer "
+"älteren Version upgraden, wird empfohlen die Release Notes (Version 2.5) zu "
+"lesen um die Einstellungen wiederherzustellen"
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format

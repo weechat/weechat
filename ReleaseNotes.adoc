@@ -53,6 +53,8 @@ If you already upgraded WeeChat:
 /reload spell
 ----
 
+Once configuration is OK, you can delete the file _~/.weechat/aspell.conf_.
+
 Then you can search if you are using "aspell" in values of options:
 
 ----

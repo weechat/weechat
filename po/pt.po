@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-05-13 21:29+0200\n"
+"POT-Creation-Date: 2019-06-04 20:20+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -12761,6 +12761,14 @@ msgstr "%s: a transferir a lista de scripts..."
 #, fuzzy
 msgid "Spell checker for input"
 msgstr "Verificador ortográfico da entrada (com Aspell)"
+
+#, c-format
+msgid ""
+"%s%s: warning: the plugin \"aspell\" has been renamed to \"spell\" and the "
+"file %s still exists (but not %s); if you upgraded from an older version, "
+"you should check instructions in release notes (version 2.5) to recover your "
+"settings"
+msgstr ""
 
 #. TRANSLATORS: "%s" is "spell" (name of plugin)
 #, c-format
