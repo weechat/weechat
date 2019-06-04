@@ -251,11 +251,12 @@ relay_command_relay (const void *pointer, void *data,
             ptr_server = relay_server_search (argv_eol[2]);
             if (ptr_server)
             {
+                unix_socket = ptr_server->unix_socket;
                 path = strdup (ptr_server->path);
                 relay_server_free (ptr_server);
                 ptr_option = weechat_config_search_option (
                     relay_config_file,
-                    (ptr_server->unix_socket) ? relay_config_section_path : relay_config_section_port,
+                    (unix_socket) ? relay_config_section_path : relay_config_section_port,
                     argv_eol[2]);
                 if (ptr_option)
                     weechat_config_option_free (ptr_option);
@@ -263,7 +264,7 @@ relay_command_relay (const void *pointer, void *data,
                                 _("%s: relay \"%s\" (%s: %s) removed"),
                                 RELAY_PLUGIN_NAME,
                                 argv[2],
-                                (ptr_server->unix_socket) ? _("path") : _("port"),
+                                (unix_socket) ? _("path") : _("port"),
                                 path);
                 free (path);
             }
