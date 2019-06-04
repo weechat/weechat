@@ -265,7 +265,6 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     struct sockaddr_in client_addr;
     struct sockaddr_in6 client_addr6;
     struct sockaddr_un client_addr_unix;
-
     socklen_t client_addr_size;
     void *ptr_addr;
     int client_fd, flags, set, max_clients, num_clients_on_port;
@@ -418,8 +417,9 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     }
     else
     {
-        strncpy (unix_address, client_addr_unix.sun_path,
-                 sizeof (unix_address));
+        snprintf (unix_address, sizeof (unix_address),
+                  "%s",
+                  client_addr_unix.sun_path);
         ptr_ip_address = unix_address;
     }
 
@@ -544,8 +544,10 @@ relay_server_create_socket (struct t_relay_server *server)
         domain = AF_UNIX;
         memset (&server_addr_unix, 0, sizeof (struct sockaddr_un));
         server_addr_unix.sun_family = domain;
-        strncpy (server_addr_unix.sun_path, server->path,
-                 sizeof (server_addr_unix.sun_path));
+        snprintf (server_addr_unix.sun_path,
+                  sizeof (server_addr_unix.sun_path),
+                  "%s",
+                  server->path);
         ptr_addr = &server_addr_unix;
         addr_size = sizeof (struct sockaddr_un);
         if (!relay_config_check_path_length (server->path))
