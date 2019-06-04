@@ -39,7 +39,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
                                    struct t_gui_completion *completion)
 {
     struct t_infolist *infolist;
-    char protocol_name[512];
+    char protocol_name[1024];
 
     /* make C compiler happy */
     (void) pointer;
@@ -52,6 +52,7 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
     {
         while (weechat_infolist_next (infolist))
         {
+            /* TCP socket */
             snprintf (protocol_name, sizeof (protocol_name), "irc.%s",
                       weechat_infolist_string (infolist, "name"));
             weechat_hook_completion_list_add (completion, protocol_name,
@@ -60,13 +61,29 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
                       weechat_infolist_string (infolist, "name"));
             weechat_hook_completion_list_add (completion, protocol_name,
                                               0, WEECHAT_LIST_POS_SORT);
+            /* UNIX domain socket */
+            snprintf (protocol_name, sizeof (protocol_name), "unix.irc.%s",
+                      weechat_infolist_string (infolist, "name"));
+            weechat_hook_completion_list_add (completion, protocol_name,
+                                              0, WEECHAT_LIST_POS_SORT);
+            snprintf (protocol_name, sizeof (protocol_name), "unix.ssl.irc.%s",
+                      weechat_infolist_string (infolist, "name"));
+            weechat_hook_completion_list_add (completion, protocol_name,
+                                              0, WEECHAT_LIST_POS_SORT);
         }
         weechat_infolist_free (infolist);
     }
 
+    /* TCP socket */
     weechat_hook_completion_list_add (completion, "weechat",
                                       0, WEECHAT_LIST_POS_SORT);
     weechat_hook_completion_list_add (completion, "ssl.weechat",
+                                      0, WEECHAT_LIST_POS_SORT);
+
+    /* UNIX domain socket */
+    weechat_hook_completion_list_add (completion, "unix.weechat",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "unix.ssl.weechat",
                                       0, WEECHAT_LIST_POS_SORT);
 
     return WEECHAT_RC_OK;
