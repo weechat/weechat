@@ -445,16 +445,19 @@ relay_server_sock_cb (const void *pointer, void *data, int fd)
     fcntl (client_fd, F_SETFL, flags | O_NONBLOCK);
 
     /* set socket option SO_REUSEADDR */
-    set = 1;
-    if (setsockopt (client_fd, SOL_SOCKET, SO_REUSEADDR,
-                    (void *) &set, sizeof (set)) < 0)
+    if (!server->unix_socket)
     {
-        weechat_printf (NULL,
-                        _("%s%s: cannot set socket option \"%s\" to %d: "
-                          "error %d %s"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME,
-                        "SO_REUSEADDR", set, errno, strerror (errno));
-        goto error;
+        set = 1;
+        if (setsockopt (client_fd, SOL_SOCKET, SO_REUSEADDR,
+                        (void *) &set, sizeof (set)) < 0)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: cannot set socket option \"%s\" to %d: "
+                              "error %d %s"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                            "SO_REUSEADDR", set, errno, strerror (errno));
+            goto error;
+        }
     }
 
     /* add the client */
