@@ -26,7 +26,7 @@
        raw : ouvrir le tampon avec les données brutes Relay
 sslcertkey : définir le certificat/clé SSL en utilisant le chemin de l'option relay.network.ssl_cert_key
 
-Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom> ou unix[.ssh].<protocole.nom>
+Le nom du relai est : [ipv4.][ipv6.][ssl.]<protocole.nom> ou unix[.ssl].<protocole.nom>
          ipv4 : forcer l'utilisation d'IPv4
          ipv6 : forcer l'utilisation d'IPv6
           ssl : activer SSL
