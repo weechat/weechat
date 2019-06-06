@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.5]]
-== Version 2.5 (under dev)
+== Version 2.5 (2019-06-06)
 
 [[v2.5_aspell_plugin_renamed]]
 === Aspell plugin renamed to Spell
