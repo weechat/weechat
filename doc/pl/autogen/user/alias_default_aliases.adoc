@@ -7,8 +7,6 @@
 | Alias | Komenda | Dopełnienie
 
 | /AAWAY | /allserv /away | -
-| /AME | /allchan /me | -
-| /AMSG | /allchan /msg * | -
 | /ANICK | /allserv /nick | -
 | /BEEP | /print -beep | -
 | /BYE | /quit | -

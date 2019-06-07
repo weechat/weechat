@@ -6,7 +6,7 @@
 ** description: pass:none[liste de commandes (séparées par des virgules) pour lesquelles la vérification orthographique est activée (la vérification est désactivée pour toutes les autres commandes)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
+** valeur par défaut: `+"away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
 ** description: pass:none[dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez blanc pour désactiver le vérificateur d'orthographe sur les tampons pour lesquels vous ne l'avez pas explicitement activé)]

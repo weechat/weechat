@@ -509,7 +509,7 @@ spell_config_init ()
         N_("comma separated list of commands for which spell checking is "
            "enabled (spell checking is disabled for all other commands)"),
         NULL, 0, 0,
-        "ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,"
+        "away,command,cycle,kick,kickban,me,msg,notice,part,query,"
         "quit,topic", NULL, 0,
         NULL, NULL, NULL,
         &spell_config_change_commands, NULL, NULL,

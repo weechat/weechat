@@ -6,7 +6,7 @@
 ** opis: pass:none[oddzielona przecinkiem lista komend, dla których sprawdzana jest poprawna pisownia (sprawdzanie pisowni jest wyłączone dla pozostałych komend)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
-** domyślna wartość: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
+** domyślna wartość: `+"away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
 ** opis: pass:none[domyślny słownik (lub oddzielona przecinkami lista słowników) używany, kiedy bufor nie ma zdefiniowanego słownika (zostaw puste, aby wyłączyć sprawdzanie pisowni w buforach, w których nie zostało to włączone)]
