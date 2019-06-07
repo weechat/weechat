@@ -54,6 +54,7 @@ Alphabetically:
 * Jakub Jirutka
 * Jason A. Donenfeld (zx2c4)
 * JD Horelick (jdhore)
+* jesopo
 * Jim Ramsay (lack)
 * Jiri Golembiovsky (GolemJ)
 * Joey Pabalinas (alyptik)
