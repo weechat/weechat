@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Bug fixes::
 
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
+  * alias: remove default aliases /AME and /AMSG (issue #1355)
 
 [[v2.5]]
 == Version 2.5 (2019-06-06)
