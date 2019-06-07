@@ -87,7 +87,7 @@ $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
 
-ソースをビルドするには cmake を使うことを推奨します:
+ソースをビルドするには CMake を使うことを推奨します:
 
 ----
 $ mkdir build
@@ -97,7 +97,7 @@ $ make
 $ make install
 ----
 
-cmake が無い場合は autotools を使うことも可能です:
+CMake が無い場合は autotools を使うことも可能です:
 
 ----
 $ ./autogen.sh

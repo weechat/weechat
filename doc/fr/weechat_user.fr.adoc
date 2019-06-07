@@ -81,7 +81,7 @@ la distribution pour la méthode d'installation.
 [[source_package]]
 === Paquet source
 
-WeeChat peut être compilé avec cmake ou les autotools (cmake est la méthode
+WeeChat peut être compilé avec CMake ou les autotools (CMake est la méthode
 recommandée).
 
 [NOTE]
@@ -101,7 +101,7 @@ compiler WeeChat.
 | compilateur C
   (gcc, clang, ...)      |               | *oui*  | Construction.
 | compilateur C++        |               |        | Construction et lancement des tests, extension JavaScript.
-| cmake                  | ≥ 3.0         | *oui*  | Construction (autotools toujours possible, mais cmake est recommandé).
+| cmake                  | ≥ 3.0         | *oui*  | Construction (autotools toujours possible, mais CMake est recommandé).
 | pkg-config             |               | *oui*  | Détection des bibliothèques installées.
 | libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses.
 | libcurl4-gnutls-dev    |               | *oui*  | Transfert d'URL.
@@ -148,7 +148,7 @@ pouvez installer toutes les dépendances avec la commande :
 ----
 
 [[compile_with_cmake]]
-==== Compilation avec cmake
+==== Compilation avec CMake
 
 * Installation dans les répertoires systèmes (nécessite les droits _root_) :
 
@@ -170,7 +170,7 @@ $ make
 $ make install
 ----
 
-Des options peuvent être utilisées pour cmake, avec le format : "-DOPTION=VALUE".
+Des options peuvent être utilisées pour CMake, avec le format : "-DOPTION=VALUE".
 
 Liste des options couramment utilisées :
 
@@ -313,11 +313,11 @@ $ ccmake ..
 ==== Compilation avec autotools
 
 [WARNING]
-Seulement cmake est officiellement supporté pour construire WeeChat. Vous ne
+Seulement CMake est officiellement supporté pour construire WeeChat. Vous ne
 devriez utiliser les autotools que si vous n'avez pas la possibilité d'utiliser
-cmake. +
+CMake. +
 La compilation avec les autotools requiert plus de dépendances et est plus lente
-qu'avec cmake.
+qu'avec CMake.
 
 * Installation dans les répertoires systèmes (nécessite les droits _root_) :
 
@@ -356,14 +356,14 @@ Les paquets suivants sont nécessaires pour compiler les tests :
 * libcpputest-dev
 * C++ compiler
 
-Les tests doivent être activés pour compiler WeeChat (avec cmake) :
+Les tests doivent être activés pour compiler WeeChat (avec CMake) :
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
 Ils peuvent être lancés après compilation depuis le répertoire de construction
-(avec cmake) :
+(avec CMake) :
 
 ----
 $ ctest -V
@@ -398,7 +398,7 @@ futur de WeeChat, vous devez :
 [[debug_info]]
 ==== Infos de debug
 
-Si vous compilez avec cmake :
+Si vous compilez avec CMake :
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug

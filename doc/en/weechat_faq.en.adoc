@@ -47,10 +47,10 @@ https://weechat.org/about/interfaces
 === I can't compile WeeChat after cloning git repository, why?
 
 The recommended way to compile WeeChat is with
-link:weechat_user.en.html#compile_with_cmake[cmake].
+link:weechat_user.en.html#compile_with_cmake[CMake].
 
 If you're compiling with link:weechat_user.en.html#compile_with_autotools[autotools]
-(and not cmake), check that you have latest version of autoconf and automake.
+(and not CMake), check that you have latest version of autoconf and automake.
 
 The other way is to install the "devel package", which needs less dependencies.
 This package is built almost every day using git repository. Note that this

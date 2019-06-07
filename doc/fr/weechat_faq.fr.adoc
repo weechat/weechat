@@ -48,10 +48,10 @@ distantes : https://weechat.org/about/interfaces
 === Je ne peux pas compiler WeeChat après avoir cloné la base git, pourquoi ?
 
 La méthode recommandée pour compiler WeeChat est d'utiliser
-link:weechat_user.fr.html#compile_with_cmake[cmake].
+link:weechat_user.fr.html#compile_with_cmake[CMake].
 
 Si vous compilez avec les link:weechat_user.fr.html#compile_with_autotools[autotools]
-(et non cmake), vérifiez que vous avez bien la dernière version d'autoconf et
+(et non CMake), vérifiez que vous avez bien la dernière version d'autoconf et
 automake.
 
 Une autre façon de faire est de compiler le "paquet devel", qui nécessite moins

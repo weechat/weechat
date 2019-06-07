@@ -432,7 +432,7 @@ Bug fixes::
 Build::
 
   * core, irc, xfer: fix compilation on macOS (add link with resolv) (issue #276)
-  * core: add build of xz package with make dist (cmake)
+  * core: add build of xz package with make dist (CMake)
   * tests: fix compilation of tests on FreeBSD 11.0
 
 [[v1.6]]
@@ -618,7 +618,7 @@ Bug fixes::
 
 Documentation::
 
-  * replace PREFIX with CMAKE_INSTALL_PREFIX in cmake instructions (issue #354)
+  * replace PREFIX with CMAKE_INSTALL_PREFIX in CMake instructions (issue #354)
 
 Build::
 
@@ -697,7 +697,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix random error when creating symbolic link weechat-curses on make install with cmake (bug #40313)
+  * core: fix random error when creating symbolic link weechat-curses on make install with CMake (bug #40313)
 
 [[v1.1]]
 == Version 1.1 (2015-01-11)
@@ -761,7 +761,7 @@ Bug fixes::
 Build::
 
   * core: fix compilation of man pages with autotools in source directory
-  * core: fix compilation of plugins with cmake >= 3.1 (issue #287)
+  * core: fix compilation of plugins with CMake >= 3.1 (issue #287)
   * lua: add detection of Lua 5.2
   * python: fix Python detection with Homebrew (issue #217)
   * tests: fix compilation of tests with clang (issue #275)
@@ -949,7 +949,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix cmake warning CMP0007 on "make uninstall" (bug #41528)
+  * core: fix CMake warning CMP0007 on "make uninstall" (bug #41528)
   * core: use glibtoolize on macOS (autotools) (issue #22)
   * ruby: add detection of Ruby 2.1
 
@@ -1138,8 +1138,8 @@ Documentation::
 
 Build::
 
-  * core: add CA_FILE option in cmake and configure to setup default value of option weechat.network.gnutls_ca_file (default is "/etc/ssl/certs/ca-certificates.crt") (task #12725)
-  * core: disable build of doc by default, add cmake option ENABLE_MAN to compile man page (off by default)
+  * core: add CA_FILE option in CMake and configure to setup default value of option weechat.network.gnutls_ca_file (default is "/etc/ssl/certs/ca-certificates.crt") (task #12725)
+  * core: disable build of doc by default, add CMake option ENABLE_MAN to compile man page (off by default)
   * xfer: fix compilation on OpenBSD (bug #39071)
 
 [[v0.4.1]]
@@ -1221,7 +1221,7 @@ Bug fixes::
 Build::
 
   * core: install icon file (patch #7972)
-  * core: fix detection of iconv with cmake on macOS (bug #38321)
+  * core: fix detection of iconv with CMake on macOS (bug #38321)
   * guile: fix compilation with Guile 2.0
   * python: fix detection of Python on Ubuntu Raring
   * script: fix compilation on GNU/Hurd (patch #7977)
@@ -1309,7 +1309,7 @@ Bug fixes::
 Build::
 
   * core: add git version in build, display it in "weechat-curses --help" and /version
-  * core: stop cmake if gcrypt lib is not found (bug #37671)
+  * core: stop CMake if gcrypt lib is not found (bug #37671)
   * guile: fix detection of Guile in configure
   * script: fix compilation on macOS
 
@@ -1407,10 +1407,10 @@ Documentation::
 
 Build::
 
-  * core: move the set of cmake policy CMP0003 in directory src (so it applies to all plugins) (bug #37311)
+  * core: move the set of CMake policy CMP0003 in directory src (so it applies to all plugins) (bug #37311)
   * core: fix names of cache variables in configure.in (bug #36971)
-  * core: add cmake option "MANDIR" (bug #36776)
-  * guile: fix path of Guile include dirs in cmake build (patch #7790)
+  * core: add CMake option "MANDIR" (bug #36776)
+  * guile: fix path of Guile include dirs in CMake build (patch #7790)
   * lua: add support of Lua 5.2
   * python: fix detection of Python (first try "python2.x" and then "python") (bug #36835)
   * ruby: add detection of Ruby 1.9.3
@@ -1561,8 +1561,8 @@ Documentation::
 
 Build::
 
-  * core: add library "pthread" in cmake file for link on OpenBSD
-  * core: add WEECHAT_HOME option in cmake and configure to setup default WeeChat home (default is "~/.weechat") (task #11266)
+  * core: add library "pthread" in CMake file for link on OpenBSD
+  * core: add WEECHAT_HOME option in CMake and configure to setup default WeeChat home (default is "~/.weechat") (task #11266)
   * core: fix compilation under OpenBSD 5.0 (lib utf8 not needed any more) (bug #34727)
   * core: fix compilation error with "pid_t" on macOS (bug #34639)
 
@@ -1801,7 +1801,7 @@ Bug fixes::
 
 Build::
 
-  * core: add support of Python 2.7 in cmake and configure (debian #606989)
+  * core: add support of Python 2.7 in CMake and configure (debian #606989)
   * ruby: fix compilation with Ruby 1.9.2 (patch #7316)
 
 [[v0.3.3]]
@@ -1980,7 +1980,7 @@ Bug fixes::
 
 Build::
 
-  * core: fix cmake directories: let user customize lib, share, locale and include directories (patch #6922)
+  * core: fix CMake directories: let user customize lib, share, locale and include directories (patch #6922)
   * ruby: add support of Ruby >= 1.9.1 (patch #6989)
 
 [[v0.3.0]]
@@ -2157,7 +2157,7 @@ Bug fixes::
 
 Build::
 
-  * add cmake for weechat compilation (patch #5943)
+  * add CMake for weechat compilation (patch #5943)
 
 [[v0.2.4]]
 == Version 0.2.4 (2007-03-29)

@@ -52,12 +52,12 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === Ich kann WeeChat nach Cloning des git Repository nicht kompilieren - weshalb?
 
-Es wird empfohlen link:weechat_user.de.html#compile_with_cmake[cmake] zum
+Es wird empfohlen link:weechat_user.de.html#compile_with_cmake[CMake] zum
 kompilieren von WeeChat zu nutzen.
 
 Falls Du WeeChat mit Hilfe der
 link:weechat_user.de.html#compile_with_autotools[autotools] kompilieren solltest
-(dich also nicht für cmake entscheidest), stelle sicher, dass Du die neueste
+(dich also nicht für CMake entscheidest), stelle sicher, dass Du die neueste
 Version von autoconf und automake besitzt.
 
 Die zweite Möglichkeit besteht darin das "Entwickler-Paket" zu installieren, denn dies

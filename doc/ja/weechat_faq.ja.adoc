@@ -51,10 +51,10 @@ https://weechat.org/about/interfaces
 [[compile_git]]
 === git リポジトリをクローンした後に WeeChat をコンパイルできません。
 
-WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[cmake]
+WeeChat をコンパイルするには link:weechat_user.ja.html#compile_with_cmake[CMake]
 を使うことが推奨されています。
 
-link:weechat_user.ja.html#compile_with_autotools[autotools] を使って (cmake を使わずに)
+link:weechat_user.ja.html#compile_with_autotools[autotools] を使って (CMake を使わずに)
 コンパイルする場合、最新の autoconf と automake を使ってください。
 
 他には「開発パッケージ」をインストール方法があります。この場合、インストールするのに必要なパッケージの数が減ります。このパッケージは

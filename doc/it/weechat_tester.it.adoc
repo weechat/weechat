@@ -94,7 +94,7 @@ $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
 
-Per compilare i sorgenti, si raccomanda cmake:
+Per compilare i sorgenti, si raccomanda CMake:
 
 ----
 $ mkdir build
@@ -104,7 +104,7 @@ $ make
 $ make install
 ----
 
-Se cmake non è installato, è ancora possibile usare gli autotools:
+Se CMake non è installato, è ancora possibile usare gli autotools:
 
 ----
 $ ./autogen.sh

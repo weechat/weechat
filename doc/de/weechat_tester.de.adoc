@@ -97,7 +97,7 @@ $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
 
-Um die Quellen zu übersetzen, wird cmake empfohlen:
+Um die Quellen zu übersetzen, wird CMake empfohlen:
 
 ----
 $ mkdir build
@@ -107,7 +107,7 @@ $ make
 $ make install
 ----
 
-Falls Du cmake nicht hast, ist es auch möglich die autotools zu nutzen:
+Falls Du CMake nicht hast, ist es auch möglich die autotools zu nutzen:
 
 ----
 $ ./autogen.sh

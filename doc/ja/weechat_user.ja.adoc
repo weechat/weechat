@@ -84,7 +84,7 @@ WeeChat をインストールするには、以下のものが必要です:
 [[source_package]]
 === ソースパッケージ
 
-WeeChat は cmake または autotools を使ってコンパイルできます (cmake を使うことが推奨されています)。
+WeeChat は CMake または autotools を使ってコンパイルできます (CMake を使うことが推奨されています)。
 
 [NOTE]
 macOS では https://brew.sh/[Homebrew] を使ってください:
@@ -103,7 +103,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 | C コンパイラ
   (gcc, clang, ...)      |                  | *必須* | ビルド
 | C++ コンパイラ         |                  |        | ビルドとテストの実行、JavaScript プラグイン
-| cmake                  | ≥ 3.0            | *必須* | ビルド (autotools でも可能ですが、cmake を推奨します)
+| cmake                  | ≥ 3.0            | *必須* | ビルド (autotools でも可能ですが、CMake を推奨します)
 | pkg-config             |                  | *必須* | インストール済みライブラリを検出
 | libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | *必須* | URL 転送
@@ -149,7 +149,7 @@ Debian および Ubuntu
 ----
 
 [[compile_with_cmake]]
-==== cmake によるコンパイル
+==== CMake によるコンパイル
 
 * システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
@@ -171,7 +171,7 @@ $ make
 $ make install
 ----
 
-cmake に対するオプションを指定するには、以下の書式を使ってください: "-DOPTION=VALUE"。
+CMake に対するオプションを指定するには、以下の書式を使ってください: "-DOPTION=VALUE"。
 
 よく利用されるオプションのリスト:
 
@@ -313,9 +313,9 @@ $ ccmake ..
 ==== autotools によるコンパイル
 
 [WARNING]
-cmake 以外を用いた WeeChat のビルドは公式にサポートされません。cmake
+CMake 以外を用いた WeeChat のビルドは公式にサポートされません。CMake
 を利用できない場合のみ autotools を使ってください。 +
-autotools を用いてビルドする場合、cmake よりも多くの依存パッケージとより長い時間が必要です。
+autotools を用いてビルドする場合、CMake よりも多くの依存パッケージとより長い時間が必要です。
 
 * システムディレクトリにインストールする場合 (_root_ 特権が必要です):
 
@@ -354,13 +354,13 @@ $ ./configure --help
 * libcpputest-dev
 * C++ compiler
 
-テストは WeeChat のコンパイル時に有効化しなければいけません (cmake を使う場合):
+テストは WeeChat のコンパイル時に有効化しなければいけません (CMake を使う場合):
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-コンパイル終了後、build ディレクトリでテストを起動してください (cmake を使う場合):
+コンパイル終了後、build ディレクトリでテストを起動してください (CMake を使う場合):
 
 ----
 $ ctest -V
@@ -394,7 +394,7 @@ WeeChat がクラッシュした場合、または WeeChat
 [[debug_info]]
 ==== デバッグ情報
 
-cmake でコンパイルする場合:
+CMake でコンパイルする場合:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug

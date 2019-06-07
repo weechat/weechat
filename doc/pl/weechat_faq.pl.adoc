@@ -52,10 +52,10 @@ https://weechat.org/about/interfaces
 === Nie mogę skompilować WeeChat po sklonowaniu repozytorium git, dlaczego?
 
 Zalecaną metodą kompilacji WeeChat jest użycie
-link:weechat_user.pl.html#compile_with_cmake[cmake].
+link:weechat_user.pl.html#compile_with_cmake[CMake].
 
 Jeśli kompilujesz używając link:weechat_user.pl.html#compile_with_autotools[autotools]
-(nie cmake), upewnij się, że posiadasz najnowszą wersję autoconf i automake.
+(nie CMake), upewnij się, że posiadasz najnowszą wersję autoconf i automake.
 
 Innym sposobem jest zainstalowanie "paczki deweloperskiej", która wymaga mniej
 zależności. Ten pakiet jest budowany prawie codziennie z użyciem repozytorium

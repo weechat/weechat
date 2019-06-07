@@ -1076,17 +1076,17 @@ accordingly).
 
 [NOTE]
 For packagers: you should create the link `weechat-curses` -> `weechat` if it's
-not automatically created in the package (both cmake and configure are creating
+not automatically created in the package (both CMake and configure are creating
 this link on make install).
 
 [[v0.4.2_man_page_documentation]]
 === Man page / documentation
 
 Documentation is not built by default any more, you have to use option
-`-DENABLE_DOC=ON` in cmake to enable it.
+`-DENABLE_DOC=ON` in cmake command to enable it.
 
 The man page is now built with asciidoc and translated in several
-languages. A new cmake option `ENABLE_MAN` has been added to compile man page
+languages. A new CMake option `ENABLE_MAN` has been added to compile man page
 (`OFF` by default).
 
 [[v0.4.2_aspell_colors]]

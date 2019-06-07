@@ -93,8 +93,8 @@ installazione.
 [[source_package]]
 === Sorgenti
 
-WeeChat può essere compilato con cmake oppure autotools
-(tuttavia si raccomanda cmake).
+WeeChat può essere compilato con CMake oppure autotools
+(tuttavia si raccomanda CMake).
 
 // TRANSLATION MISSING
 [NOTE]
@@ -116,7 +116,7 @@ compilare WeeChat.
   (gcc, clang, ...)      |               | *sì*      | Build.
 // TRANSLATION MISSING
 | C++ compiler           |               |           | Build and run tests, plugin JavaScript.
-| cmake                  | ≥ 3.0         | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda cmake).
+| cmake                  | ≥ 3.0         | *sì*      | Compilazione (ancora possibile con autotools, ma si raccomanda CMake).
 // TRANSLATION MISSING
 | pkg-config             |               | *sì*      | Detect installed libraries.
 | libncursesw5-dev ^(2)^ |               | *sì*      | Interfaccia ncurses.
@@ -174,7 +174,7 @@ all dependencies with the command:
 ----
 
 [[compile_with_cmake]]
-==== Compilazione con cmake
+==== Compilazione con CMake
 
 * Installazione nelle directory di sistema (richiede privilegi di _root_):
 
@@ -198,7 +198,7 @@ $ make install
 ----
 
 // TRANSLATION MISSING
-Options can be used for cmake, with format: "-DOPTION=VALUE".
+Options can be used for CMake, with format: "-DOPTION=VALUE".
 
 // TRANSLATION MISSING
 List of commonly used options:
@@ -343,9 +343,9 @@ $ ccmake ..
 
 // TRANSLATION MISSING
 [WARNING]
-Only cmake is officially supported to build WeeChat. You should use autotools
-only if you are not able to use cmake. +
-Build with autotools requires more dependencies and is slower than with cmake.
+Only CMake is officially supported to build WeeChat. You should use autotools
+only if you are not able to use CMake. +
+Build with autotools requires more dependencies and is slower than with CMake.
 
 * Installazione nelle directory di sistema (richiede privilegi di _root_):
 
@@ -387,13 +387,13 @@ Following packages are *required* to compile tests:
 * libcpputest-dev
 * C++ compiler
 
-Tests must be enabled when compiling WeeChat (with cmake):
+Tests must be enabled when compiling WeeChat (with CMake):
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-They can be launched after compilation from the build directory (with cmake):
+They can be launched after compilation from the build directory (with CMake):
 
 ----
 $ ctest -V
@@ -428,7 +428,7 @@ futuro di WeeChat, è necessario:
 [[debug_info]]
 ==== Informazioni di debug
 
-Se si compila con cmake:
+Se si compila con CMake:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug

@@ -56,10 +56,10 @@ https://weechat.org/about/interfaces
 === Non è possibile compilare WeeChat dopo aver clonato il repository git, perché?
 
 Il metodo raccomandato per compilare WeeChat è utilizzando
-link:weechat_user.it.html#compile_with_cmake[cmake].
+link:weechat_user.it.html#compile_with_cmake[CMake].
 
 Se si sta compilando con link:weechat_user.it.html#compile_with_autotools[autotools]
-(e non cmake), verificare che siano installate le ultime versioni di autoconf e
+(e non CMake), verificare che siano installate le ultime versioni di autoconf e
 automake.
 
 L'altro metodo è installare il "pacchetto di sviluppo", che richiede meno

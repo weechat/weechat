@@ -85,7 +85,7 @@ wie man Pakete installiert.
 [[source_package]]
 === Quellpakete
 
-WeeChat kann mittels cmake oder autotools kompiliert werden (cmake sollte dabei die bevorzugte Methode sein).
+WeeChat kann mittels CMake oder autotools kompiliert werden (CMake sollte dabei die bevorzugte Methode sein).
 
 [NOTE]
 Unter macOS kann https://brew.sh/[Homebrew] verwendet werden:
@@ -104,7 +104,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | C compiler
   (gcc, clang, ...)      |               | *ja*     | zum Erstellen der Binärdatei.
 | C++ compiler           |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| cmake                  | ≥ 3.0         | *ja*     | zum kompilieren (autotools ist möglich. cmake wird aber empfohlen).
+| cmake                  | ≥ 3.0         | *ja*     | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
 | pkg-config             |               | *ja*     | entdeckt installierte Bibliotheken.
 | libncursesw5-dev ^(2)^ |               | *ja*     | Ncurses Oberfläche.
 | libcurl4-gnutls-dev    |               | *ja*     | URL Transfer.
@@ -152,7 +152,7 @@ installieren:
 ----
 
 [[compile_with_cmake]]
-==== Kompilieren mit cmake
+==== Kompilieren mit CMake
 
 * Installation in das Systemverzeichnis (benötigt _root_ Privilegien):
 
@@ -174,7 +174,7 @@ $ make
 $ make install
 ----
 
-Optionen für cmake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
+Optionen für CMake können mit dem Format, "-DOPTION=VALUE", genutzt werden.
 
 Liste von häufig verwendeten Optionen:
 
@@ -316,10 +316,10 @@ $ ccmake ..
 ==== Kompilieren mit autotools
 
 [WARNING]
-Ausschließlich das Kompilieren mittels cmake wird offiziell unterstützt. Autotools
-sollte nur verwendet werden falls man keine Möglichkeit hat cmake zu nutzen. +
+Ausschließlich das Kompilieren mittels CMake wird offiziell unterstützt. Autotools
+sollte nur verwendet werden falls man keine Möglichkeit hat CMake zu nutzen. +
 Für die Erstellung mittels autotools werden zusätzliche Pakete benötigt und es ist
-zeitintensiver als cmake.
+zeitintensiver als CMake.
 
 * Installation in das Systemverzeichnis (benötigt _root_ Privilegien):
 
@@ -358,13 +358,13 @@ Folgende Pakete werden *benötigt* um Tests zu kompilieren:
 * libcpputest-dev
 * C++ compiler
 
-Tests muss aktiviert werden wenn WeeChat kompiliert wird (mittels cmake):
+Tests muss aktiviert werden wenn WeeChat kompiliert wird (mittels CMake):
 
 ----
 $ cmake .. -DENABLE_TESTS=ON
 ----
 
-Nach der Kompilierung wird die Testumgebung im build-Verzeichnis (bei cmake) ausgeführt:
+Nach der Kompilierung wird die Testumgebung im build-Verzeichnis (bei CMake) ausgeführt:
 
 ----
 $ ctest -V
@@ -396,7 +396,7 @@ Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 [[debug_info]]
 ==== Debug info
 
-Bei der Kompilierung mit cmake muss folgende Option gesetzt werden:
+Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug

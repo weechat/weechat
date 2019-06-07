@@ -1086,7 +1086,7 @@ Examples of commit messages:
 irc: add command /unquiet (closes #36)
 core: add callback "nickcmp" for nick comparison in buffers
 irc: fix freeze when reading on socket with SSL enabled (bug #35097)
-ruby: add detection of ruby version 1.9.3 in cmake
+ruby: add detection of ruby version 1.9.3 in CMake
 python: fix crash when unloading a script without pointer to interpreter
 core: update Japanese translations (patch #7783)
 ----

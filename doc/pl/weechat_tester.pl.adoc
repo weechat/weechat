@@ -90,7 +90,7 @@ $ tar xvjf weechat-devel.tar.bz2
 $ cd weechat-devel
 ----
 
-Do zbudowania źródeł zaleca się cmake:
+Do zbudowania źródeł zaleca się CMake:
 
 ----
 $ mkdir build
@@ -100,7 +100,7 @@ $ make
 $ make install
 ----
 
-Jeśli nie posiadasz cmake, nadal jest możliwe użycie autotools:
+Jeśli nie posiadasz CMake, nadal jest możliwe użycie autotools:
 
 ----
 $ ./autogen.sh
