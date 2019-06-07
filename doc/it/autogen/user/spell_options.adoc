@@ -6,7 +6,7 @@
 ** descrizione: pass:none[elenco separato da virgole di comandi per cui il controllo ortografico è abilitato (il controllo ortografico è disabilitato per tutti gli altri comandi)]
 ** tipo: stringa
 ** valori: qualsiasi stringa
-** valore predefinito: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
+** valore predefinito: `+"away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
 ** descrizione: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]

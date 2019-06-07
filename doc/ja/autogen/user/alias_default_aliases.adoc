@@ -7,8 +7,6 @@
 | 別名 | コマンド | 補完
 
 | /AAWAY | /allserv /away | -
-| /AME | /allchan /me | -
-| /AMSG | /allchan /msg * | -
 | /ANICK | /allserv /nick | -
 | /BEEP | /print -beep | -
 | /BYE | /quit | -

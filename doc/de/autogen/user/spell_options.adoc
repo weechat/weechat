@@ -6,7 +6,7 @@
 ** Beschreibung: pass:none[durch Kommata getrennte Liste der Befehle, für die eine Rechtschreibprüfung gelten soll (Rechtschreibprüfung ist für andere Befehle deaktiviert)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
-** Standardwert: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
+** Standardwert: `+"away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
 ** Beschreibung: pass:none[Voreingestelltes Wörterbuch (oder durch Kommata getrennte Liste der Wörterbücher) welche(s) genutzt werden soll, sofern kein Wörterbuch für einen Buffer definiert wurde (wird kein Wörterbuch angegeben dann ist die Rechtschreibprüfung in allen Buffer deaktiviert, außer es wird für einen Buffer explizit ein Wörterbuch angegeben)]

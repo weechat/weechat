@@ -1,4 +1,4 @@
-/*
+    /*
  * alias-config.c - alias configuration options (file alias.conf)
  *
  * Copyright (C) 2003-2019 Sébastien Helleu <flashcode@flashtux.org>
@@ -33,8 +33,6 @@ struct t_config_section *alias_config_section_completion = NULL;
 
 char *alias_default[][3] =
 { { "AAWAY",   "allserv /away",        NULL            },
-  { "AME",     "allchan /me",          NULL            },
-  { "AMSG",    "allchan /msg *",       NULL            },
   { "ANICK",   "allserv /nick",        NULL            },
   { "BEEP",    "print -beep",          NULL            },
   { "BYE",     "quit",                 NULL            },

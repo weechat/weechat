@@ -6,7 +6,7 @@
 ** description: pass:none[comma separated list of commands for which spell checking is enabled (spell checking is disabled for all other commands)]
 ** type: string
 ** values: any string
-** default value: `+"ame,amsg,away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
+** default value: `+"away,command,cycle,kick,kickban,me,msg,notice,part,query,quit,topic"+`
 
 * [[option_spell.check.default_dict]] *spell.check.default_dict*
 ** description: pass:none[default dictionary (or comma separated list of dictionaries) to use when buffer has no dictionary defined (leave blank to disable spell checker on buffers for which you didn't explicitly enabled it)]
