@@ -888,33 +888,47 @@ Toutes les combinaisons sont résumées dans ce tableau :
 
 [width="100%",cols="4,2,2,8",options="header"]
 |===
-| Code                                 | Exemple                      | Aires         | Description
-| [hex]#19# + STD                      | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
-| [hex]#19# + EXT                      | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
-| [hex]#19# + "F" + (A)STD             | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "F" + (A)EXT             | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "B" + STD                | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
-| [hex]#19# + "B" + EXT                | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
-| [hex]#19# + "*" + (A)STD             | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT             | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
-| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
-| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
-| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
-| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
-| [hex]#19# + "b" + "F"                | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
-| [hex]#19# + "b" + "D"                | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
-| [hex]#19# + "b" + "B"                | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
-| [hex]#19# + "b" + "_"                | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "-"                | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "#"                | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
-| [hex]#19# + "b" + "i"                | [hex]#19# `+bi+`             | barres        | Début d'objet.
-| [hex]#19# + "b" + "l" (lower L)      | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
-| [hex]#19# + "E"                      | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
-| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
-| [hex]#1A# + ATTR                     | [hex]#1A# `+*+`              | chat + barres | Activer un attribut.
-| [hex]#1B# + ATTR                     | [hex]#1B# `+*+`              | chat + barres | Supprimer un attribut.
-| [hex]#1C#                            | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
+| Code                                       | Exemple                      | Aires         | Description
+| [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + barres | Définir les attributs et la couleur en utilisant une option, voir le tableau ci-dessous.
+| [hex]#19# + EXT                            | [hex]#19# `+@00001+`         | chat          | Définir une couleur avec la paire ncurses (utilisé seulement sur le tampon `/color`).
+| [hex]#19# + "F" + (A)STD                   | [hex]#19# `+F*05+`           | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + "F" + (A)EXT                   | [hex]#19# `+F@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + "B" + STD                      | [hex]#19# `+B05+`            | chat + barres | Définir la couleur de fond (couleur WeeChat).
+| [hex]#19# + "B" + EXT                      | [hex]#19# `+B@00124+`        | chat + barres | Définir le couleur de fond (couleur étendue).
+| [hex]#19# + "*" + (A)STD                   | [hex]#19# `+*05+`            | chat + barres | Définir la couleur de texte (couleur WeeChat).
+| [hex]#19# + "*" + (A)EXT                   | [hex]#19# `+*@00214+`        | chat + barres | Définir la couleur de texte (couleur étendue).
+| [hex]#19# + "*" + (A)STD + "," + STD ^(1)^ | [hex]#19# `+*08,05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + "*" + (A)STD + "," + EXT ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + "*" + (A)EXT + "," + STD ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + "*" + (A)EXT + "," + EXT ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + "*" + (A)STD + "~" + STD       | [hex]#19# `+*08~05+`         | chat + barres | Définir la couleur de texte/fond (couleurs WeeChat).
+| [hex]#19# + "*" + (A)STD + "~" + EXT       | [hex]#19# `+*01~@00214+`     | chat + barres | Définir la couleur de texte (couleur WeeChat) et de fond (couleur étendue).
+| [hex]#19# + "*" + (A)EXT + "~" + STD       | [hex]#19# `+*@00214~05+`     | chat + barres | Définir la couleur de texte (couleur étendue) et de fond (couleur WeeChat).
+| [hex]#19# + "*" + (A)EXT + "~" + EXT       | [hex]#19# `+*@00214~@00017+` | chat + barres | Définir la couleur de texte/fond (couleurs étendues).
+| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | barres        | Définir la couleur de texte de la barre.
+| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | barres        | Définir la couleur du délimiteur de la barre.
+| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | barres        | Définir la couleur de fond de la barre.
+| [hex]#19# + "b" + "_"                      | [hex]#19# `+b_+`             | barre input   | Caractère de démarrage dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + "b" + "-"                      | [hex]#19# `+b-+`             | barre input   | Caractère de démarrage caché dans l'entrée (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + "b" + "#"                      | [hex]#19# `+b#+`             | barre input   | Caractère de déplacement du curseur (utilisé seulement dans l'objet "input_text").
+| [hex]#19# + "b" + "i"                      | [hex]#19# `+bi+`             | barres        | Début d'objet.
+| [hex]#19# + "b" + "l" (lower L)            | [hex]#19# `+bl+`             | barres        | Ligne de démarrage d'objet.
+| [hex]#19# + "E"                            | [hex]#19# `+E+`              | chat + barres | Texte mis en valeur _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | chat + barres | Réinitialiser la couleur (garder les attributs).
+| [hex]#1A# + ATTR                           | [hex]#1A# `+*+`              | chat + barres | Activer un attribut.
+| [hex]#1B# + ATTR                           | [hex]#1B# `+*+`              | chat + barres | Supprimer un attribut.
+| [hex]#1C#                                  | [hex]#1C#                    | chat + barres | Réinitialiser les attributs et la couleur.
 |===
+
+[NOTE]
+^(1)^ L'utilisation de virgule comme séparateur était utilisé jusqu'à
+WeeChat 2.5. +
+Avec WeeChat WeeChat ≥ 2.6, un tilde est utilisé pour séparer la
+couleur du texte et du fond. Si vous développez un client WeeChat relay et
+voulez être compatible avec toutes les versions de WeeChat, vous devriez
+supporter les deux séparateurs (par exemple si un utilisateur avec WeeChat ≤ 2.5
+lance `/upgrade` vers une version ≥ 2.6, les deux séparateurs pourront être
+utilisés au même moment dans les tampons).
 
 Les codes couleur utilisant des options (voir _t_gui_color_enum_, dans le
 fichier _src/gui/gui-color.h_) :

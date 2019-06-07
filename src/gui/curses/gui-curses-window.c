@@ -792,7 +792,12 @@ gui_window_string_apply_color_fg_bg (unsigned char **string, WINDOW *window)
             ptr_string += 2;
         }
     }
-    if (ptr_string[0] == ',')
+    /*
+     * note: the comma is an old separator not used any more
+     * (since WeeChat 2.6), but we still use it here so in case of /upgrade
+     * this will not break colors in old messages
+     */
+    if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
     {
         ptr_string++;
         if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)

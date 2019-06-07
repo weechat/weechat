@@ -873,33 +873,45 @@ All combinations are summarized in this table:
 
 [width="100%",cols="4,2,2,8",options="header"]
 |===
-| Code                                 | Example                      | Areas       | Description
-| [hex]#19# + STD                      | [hex]#19# `+01+`             | chat + bars | Set attributes and color using option, see table below.
-| [hex]#19# + EXT                      | [hex]#19# `+@00001+`         | chat        | Set color with a ncurses pair (used only on `/color` buffer).
-| [hex]#19# + "F" + (A)STD             | [hex]#19# `+F*05+`           | chat + bars | Set foreground (WeeChat color).
-| [hex]#19# + "F" + (A)EXT             | [hex]#19# `+F@00214+`        | chat + bars | Set foreground (extended color).
-| [hex]#19# + "B" + STD                | [hex]#19# `+B05+`            | chat + bars | Set background (WeeChat color).
-| [hex]#19# + "B" + EXT                | [hex]#19# `+B@00124+`        | chat + bars | Set background (extended color).
-| [hex]#19# + "*" + (A)STD             | [hex]#19# `+*05+`            | chat + bars | Set foreground (WeeChat color).
-| [hex]#19# + "*" + (A)EXT             | [hex]#19# `+*@00214+`        | chat + bars | Set foreground (extended color).
-| [hex]#19# + "*" + (A)STD + "," + STD | [hex]#19# `+*08,05+`         | chat + bars | Set foreground/background (WeeChat colors).
-| [hex]#19# + "*" + (A)STD + "," + EXT | [hex]#19# `+*01,@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
-| [hex]#19# + "*" + (A)EXT + "," + STD | [hex]#19# `+*@00214,05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).
-| [hex]#19# + "*" + (A)EXT + "," + EXT | [hex]#19# `+*@00214,@00017+` | chat + bars | Set foreground/background (extended colors).
-| [hex]#19# + "b" + "F"                | [hex]#19# `+bF+`             | bars        | Set bar foreground color.
-| [hex]#19# + "b" + "D"                | [hex]#19# `+bD+`             | bars        | Set bar delimiter color.
-| [hex]#19# + "b" + "B"                | [hex]#19# `+bB+`             | bars        | Set bar background color.
-| [hex]#19# + "b" + "_"                | [hex]#19# `+b_+`             | input bar   | Start input char (used only in item "input_text").
-| [hex]#19# + "b" + "-"                | [hex]#19# `+b-+`             | input bar   | Start input hidden char (used only in item "input_text").
-| [hex]#19# + "b" + "#"                | [hex]#19# `+b#+`             | input bar   | Move cursor char (used only in item "input_text").
-| [hex]#19# + "b" + "i"                | [hex]#19# `+bi+`             | bars        | Start item.
-| [hex]#19# + "b" + "l" (lower L)      | [hex]#19# `+bl+`             | bars        | Start line item.
-| [hex]#19# + "E"                      | [hex]#19# `+E+`              | chat + bars | Emphasize text _(WeeChat ≥ 0.4.2)_.
-| [hex]#19# + [hex]#1C#                | [hex]#19# [hex]#1C#          | chat + bars | Reset color (keep attributes).
-| [hex]#1A# + ATTR                     | [hex]#1A# `+*+`              | chat + bars | Set attribute.
-| [hex]#1B# + ATTR                     | [hex]#1B# `+*+`              | chat + bars | Remove attribute.
-| [hex]#1C#                            | [hex]#1C#                    | chat + bars | Reset attributes and color.
+| Code                                       | Example                      | Areas       | Description
+| [hex]#19# + STD                            | [hex]#19# `+01+`             | chat + bars | Set attributes and color using option, see table below.
+| [hex]#19# + EXT                            | [hex]#19# `+@00001+`         | chat        | Set color with a ncurses pair (used only on `/color` buffer).
+| [hex]#19# + "F" + (A)STD                   | [hex]#19# `+F*05+`           | chat + bars | Set foreground (WeeChat color).
+| [hex]#19# + "F" + (A)EXT                   | [hex]#19# `+F@00214+`        | chat + bars | Set foreground (extended color).
+| [hex]#19# + "B" + STD                      | [hex]#19# `+B05+`            | chat + bars | Set background (WeeChat color).
+| [hex]#19# + "B" + EXT                      | [hex]#19# `+B@00124+`        | chat + bars | Set background (extended color).
+| [hex]#19# + "*" + (A)STD                   | [hex]#19# `+*05+`            | chat + bars | Set foreground (WeeChat color).
+| [hex]#19# + "*" + (A)EXT                   | [hex]#19# `+*@00214+`        | chat + bars | Set foreground (extended color).
+| [hex]#19# + "*" + (A)STD + "," + STD ^(1)^ | [hex]#19# `+*08,05+`         | chat + bars | Set foreground/background (WeeChat colors).
+| [hex]#19# + "*" + (A)STD + "," + EXT ^(1)^ | [hex]#19# `+*01,@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
+| [hex]#19# + "*" + (A)EXT + "," + STD ^(1)^ | [hex]#19# `+*@00214,05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).
+| [hex]#19# + "*" + (A)EXT + "," + EXT ^(1)^ | [hex]#19# `+*@00214,@00017+` | chat + bars | Set foreground/background (extended colors).
+| [hex]#19# + "*" + (A)STD + "~" + STD       | [hex]#19# `+*08~05+`         | chat + bars | Set foreground/background (WeeChat colors).
+| [hex]#19# + "*" + (A)STD + "~" + EXT       | [hex]#19# `+*01~@00214+`     | chat + bars | Set foreground (WeeChat color) and background (extended color).
+| [hex]#19# + "*" + (A)EXT + "~" + STD       | [hex]#19# `+*@00214~05+`     | chat + bars | Set foreground (extended color) and background (WeeChat color).
+| [hex]#19# + "*" + (A)EXT + "~" + EXT       | [hex]#19# `+*@00214~@00017+` | chat + bars | Set foreground/background (extended colors).
+| [hex]#19# + "b" + "F"                      | [hex]#19# `+bF+`             | bars        | Set bar foreground color.
+| [hex]#19# + "b" + "D"                      | [hex]#19# `+bD+`             | bars        | Set bar delimiter color.
+| [hex]#19# + "b" + "B"                      | [hex]#19# `+bB+`             | bars        | Set bar background color.
+| [hex]#19# + "b" + "_"                      | [hex]#19# `+b_+`             | input bar   | Start input char (used only in item "input_text").
+| [hex]#19# + "b" + "-"                      | [hex]#19# `+b-+`             | input bar   | Start input hidden char (used only in item "input_text").
+| [hex]#19# + "b" + "#"                      | [hex]#19# `+b#+`             | input bar   | Move cursor char (used only in item "input_text").
+| [hex]#19# + "b" + "i"                      | [hex]#19# `+bi+`             | bars        | Start item.
+| [hex]#19# + "b" + "l" (lower L)            | [hex]#19# `+bl+`             | bars        | Start line item.
+| [hex]#19# + "E"                            | [hex]#19# `+E+`              | chat + bars | Emphasize text _(WeeChat ≥ 0.4.2)_.
+| [hex]#19# + [hex]#1C#                      | [hex]#19# [hex]#1C#          | chat + bars | Reset color (keep attributes).
+| [hex]#1A# + ATTR                           | [hex]#1A# `+*+`              | chat + bars | Set attribute.
+| [hex]#1B# + ATTR                           | [hex]#1B# `+*+`              | chat + bars | Remove attribute.
+| [hex]#1C#                                  | [hex]#1C#                    | chat + bars | Reset attributes and color.
 |===
+
+[NOTE]
+^(1)^ The use of comma as separator was used until WeeChat 2.5. +
+With WeeChat ≥ 2.6, a tilde is used to separate foreground from background
+color. If you are developing a WeeChat relay client and want to be compatible
+with all WeeChat versions, you should support both separators (for example if a
+user with WeeChat ≤ 2.5 runs `/upgrade` to a version ≥ 2.6, both separators
+could be used at same time in buffers).
 
 Color codes using options (see _t_gui_color_enum_, in file
 _src/gui/gui-color.h_):

@@ -461,8 +461,13 @@ gui_color_get_custom (const char *color_name)
 
         if (color_fg[0] && color_bg[0])
         {
+            /*
+             * note: until WeeChat 2.5, the separator was a comma, and it has
+             * been changed to a tilde (to prevent problems with /eval and
+             * ${color:FF,BB}
+             */
             snprintf (color[index_color], sizeof (color[index_color]),
-                      "%c%c%s,%s",
+                      "%c%c%s~%s",
                       GUI_COLOR_COLOR_CHAR,
                       GUI_COLOR_FG_BG_CHAR,
                       color_fg,
@@ -659,7 +664,13 @@ gui_color_decode (const char *string, const char *replacement)
                             if (ptr_string[0] && ptr_string[1])
                                 ptr_string += 2;
                         }
-                        if (ptr_string[0] == ',')
+                        /*
+                         * note: the comma is an old separator not used any
+                         * more (since WeeChat 2.6), but we still use it here
+                         * so in case of/upgrade this will not break colors in
+                         * old messages
+                         */
+                        if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
                         {
                             if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
                             {
