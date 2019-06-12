@@ -3014,16 +3014,21 @@ na przykład:
 Spowoduje powstanie następującej struktury:
 
 ....
-~/.weechat/
-    |--- logs/
-        |--- 2010/
-            |--- 11/
-            |       irc.server.freenode.weechatlog
-            |       irc.freenode.#weechat.weechatlog
-        |--- 2010/
-            |--- 12/
-            |       irc.server.freenode.weechatlog
-            |       irc.freenode.#weechat.weechatlog
+~/.weechat
+└── logs
+    ├── 2010
+    │   ├── 11
+    │   │   ├── irc.server.freenode.weechatlog
+    │   │   └── irc.freenode.#weechat.weechatlog
+    │   └── 12
+    │       ├── irc.server.freenode.weechatlog
+    │       └── irc.freenode.#weechat.weechatlog
+    ├── 2011
+    │   ├── 01
+    │   │   ├── irc.server.freenode.weechatlog
+    │   │   └── irc.freenode.#weechat.weechatlog
+    │   ├── 02
+    ...
 ....
 
 [[logger_irc_files_by_server_channel]]
@@ -3039,17 +3044,18 @@ każdego kanału:
 Spowoduje powstanie następującej struktury:
 
 ....
-~/.weechat/
-    |--- logs/
-        |--- irc/
-            |--- freenode/
-            |       freenode.weechatlog
-            |       #weechat.weechatlog
-            |       #mychan.weechatlog
-            |--- oftc/
-            |       oftc.weechatlog
-            |       #chan1.weechatlog
-            |       #chan2.weechatlog
+~/.weechat
+└── logs
+    └── irc
+        ├── freenode
+        │   ├── freenode.weechatlog
+        │   ├── #weechat.weechatlog
+        │   └── #mychan.weechatlog
+        ├── oftc
+        │   ├── oftc.weechatlog
+        │   ├── #chan1.weechatlog
+        │   └── #chan2.weechatlog
+        ...
 ....
 
 [[logger_commands]]
