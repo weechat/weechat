@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.6]]
 == Version 2.6 (under dev)
 
+New features::
+
+  * exec: evaluate option exec.command.shell, change default value to "${env:SHELL}" (issue #1356)
+
 Bug fixes::
 
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)

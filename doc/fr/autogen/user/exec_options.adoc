@@ -27,7 +27,7 @@
 ** valeur par défaut: `+0+`
 
 * [[option_exec.command.shell]] *exec.command.shell*
-** description: pass:none[shell à utiliser avec la commande "/exec -sh" ; cela peut être seulement le nom du shell s'il est dans le PATH (par exemple "bash") ou le chemin absolu vers le shell (par exemple "/bin/bash")]
+** description: pass:none[shell à utiliser avec la commande "/exec -sh" ; cela peut être seulement le nom du shell s'il est dans le PATH (par exemple "bash") ou le chemin absolu vers le shell (par exemple "/bin/bash"); si la valeur est vide, "sh" est utilisé (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne
 ** valeurs: toute chaîne
-** valeur par défaut: `+"sh"+`
+** valeur par défaut: `+"${env:SHELL}"+`

@@ -141,8 +141,9 @@ exec_config_init ()
         "shell", "string",
         N_("shell to use with command \"/exec -sh\"; it can be just the name "
            "of shell if it is in PATH (for example \"bash\") or the absolute "
-           "path to the shell (for example \"/bin/bash\")"),
-        NULL, 0, 0, "sh", NULL, 0,
+           "path to the shell (for example \"/bin/bash\"); if value is empty, "
+           "\"sh\" is used (note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "${env:SHELL}", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);

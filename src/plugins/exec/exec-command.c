@@ -405,13 +405,16 @@ int
 exec_command_run (struct t_gui_buffer *buffer,
                   int argc, char **argv, char **argv_eol, int start_arg)
 {
-    char str_buffer[512], *default_shell = "sh";
-    const char *ptr_shell;
+    char str_buffer[512], *shell, *default_shell = "sh";
     struct t_exec_cmd *new_exec_cmd;
     struct t_exec_cmd_options cmd_options;
     struct t_hashtable *process_options;
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_new_buffer;
+
+    shell = NULL;
+    new_exec_cmd = NULL;
+    process_options = NULL;
 
     /* parse command options */
     cmd_options.command_index = -1;
@@ -444,29 +447,33 @@ exec_command_run (struct t_gui_buffer *buffer,
                         _("%s%s: invalid options in option "
                           "exec.command.default_options"),
                         weechat_prefix ("error"), EXEC_PLUGIN_NAME);
-        return WEECHAT_RC_ERROR;
+        goto error;
     }
     if (!exec_command_parse_options (&cmd_options, argc, argv, start_arg, 1))
-        return WEECHAT_RC_ERROR;
+        goto error;
 
     /* options "-bg" and "-o"/"-oc"/"-n" are incompatible */
     if (cmd_options.detached
         && (cmd_options.output_to_buffer || cmd_options.new_buffer))
-        return WEECHAT_RC_ERROR;
+    {
+        goto error;
+    }
 
     /* options "-pipe" and "-bg"/"-o"/"-oc"/"-n" are incompatible */
     if (cmd_options.pipe_command
         && (cmd_options.detached || cmd_options.output_to_buffer
             || cmd_options.new_buffer))
-        return WEECHAT_RC_ERROR;
+    {
+        goto error;
+    }
 
     /* command not found? */
     if (cmd_options.command_index < 0)
-        return WEECHAT_RC_ERROR;
+        goto error;
 
     new_exec_cmd = exec_add ();
     if (!new_exec_cmd)
-        return WEECHAT_RC_ERROR;
+        goto error;
 
     /* create hashtable for weechat_hook_process_hashtable() */
     process_options = weechat_hashtable_new (32,
@@ -474,10 +481,8 @@ exec_command_run (struct t_gui_buffer *buffer,
                                              WEECHAT_HASHTABLE_STRING,
                                              NULL, NULL);
     if (!process_options)
-    {
-        exec_free (new_exec_cmd);
-        return WEECHAT_RC_ERROR;
-    }
+        goto error;
+
     /* automatically disable shell if we are downloading an URL */
     if (strncmp (argv_eol[cmd_options.command_index], "url:", 4) == 0)
         cmd_options.use_shell = 0;
@@ -485,13 +490,15 @@ exec_command_run (struct t_gui_buffer *buffer,
     /* get default shell */
     if (cmd_options.use_shell)
     {
-        ptr_shell = weechat_config_string (exec_config_command_shell);
-        if (!ptr_shell || !ptr_shell[0])
-            ptr_shell = default_shell;
-    }
-    else
-    {
-        ptr_shell = NULL;
+        shell = weechat_string_eval_expression (
+            weechat_config_string (exec_config_command_shell),
+            NULL, NULL, NULL);
+        if (!shell || !shell[0])
+        {
+            if (shell)
+                free (shell);
+            shell = strdup (default_shell);
+        }
     }
 
     if (cmd_options.use_shell)
@@ -590,13 +597,13 @@ exec_command_run (struct t_gui_buffer *buffer,
     {
         weechat_printf (NULL, "%s: executing command: \"%s%s%s%s\"",
                         EXEC_PLUGIN_NAME,
-                        (cmd_options.use_shell) ? ptr_shell : "",
+                        (cmd_options.use_shell) ? shell : "",
                         (cmd_options.use_shell) ? " -c '" : "",
                         argv_eol[cmd_options.command_index],
                         (cmd_options.use_shell) ? "'" : "");
     }
     new_exec_cmd->hook = weechat_hook_process_hashtable (
-        (cmd_options.use_shell) ? ptr_shell : argv_eol[cmd_options.command_index],
+        (cmd_options.use_shell) ? shell : argv_eol[cmd_options.command_index],
         process_options,
         cmd_options.timeout * 1000,
         &exec_process_cb,
@@ -626,9 +633,21 @@ exec_command_run (struct t_gui_buffer *buffer,
                         argv_eol[cmd_options.command_index]);
     }
 
+    if (shell)
+        free (shell);
     weechat_hashtable_free (process_options);
 
     return WEECHAT_RC_OK;
+
+error:
+    if (shell)
+        free (shell);
+    if (new_exec_cmd)
+        exec_free (new_exec_cmd);
+    if (process_options)
+        weechat_hashtable_free (process_options);
+
+    return WEECHAT_RC_ERROR;
 }
 
 /*
