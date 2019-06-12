@@ -58,6 +58,7 @@ Alphabetically:
 * Jim Ramsay (lack)
 * Jiri Golembiovsky (GolemJ)
 * Joey Pabalinas (alyptik)
+* Johan Rylander
 * Jos Ahrens
 * Joseph Kichline
 * Juan Francisco Cantero Hurtado
