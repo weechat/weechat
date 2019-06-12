@@ -73,7 +73,7 @@ brew info weechat
 Vous pouvez installer WeeChat avec cette commande :
 
 ----
-brew install weechat --with-aspell --with-curl --with-python --with-perl --with-ruby --with-lua --with-guile
+brew install weechat
 ----
 
 [[lost]]
