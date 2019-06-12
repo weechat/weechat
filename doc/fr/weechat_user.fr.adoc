@@ -86,8 +86,7 @@ recommandée).
 
 [NOTE]
 Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew] :
-`brew install weechat --with-python --with-perl`
-(pour l'aide : `brew info weechat`).
+`brew install weechat` (pour l'aide : `brew info weechat`).
 
 [[dependencies]]
 ==== Dépendances

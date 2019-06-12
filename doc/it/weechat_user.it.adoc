@@ -99,8 +99,7 @@ WeeChat può essere compilato con CMake oppure autotools
 // TRANSLATION MISSING
 [NOTE]
 On macOS, you can use https://brew.sh/[Homebrew]:
-`brew install weechat --with-python --with-perl`
-(for help: `brew info weechat`).
+`brew install weechat` (for help: `brew info weechat`).
 
 [[dependencies]]
 ==== Dipendenze

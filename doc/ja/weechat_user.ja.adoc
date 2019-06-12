@@ -88,8 +88,7 @@ WeeChat は CMake または autotools を使ってコンパイルできます (C
 
 [NOTE]
 macOS では https://brew.sh/[Homebrew] を使ってください:
-`brew install weechat --with-python --with-perl`
-(ヘルプを見るには: `brew info weechat`)。
+`brew install weechat` (ヘルプを見るには: `brew info weechat`)。
 
 [[dependencies]]
 ==== 依存関係
