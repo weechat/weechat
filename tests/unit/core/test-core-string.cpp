@@ -1839,7 +1839,10 @@ TEST(CoreString, Shared)
     const char *str1, *str2, *str3;
     int count;
 
-    count = string_hashtable_shared->items_count;
+    count = (string_hashtable_shared) ?
+        string_hashtable_shared->items_count : 0;
+
+    POINTERS_EQUAL(NULL, string_shared_get (NULL));
 
     str1 = string_shared_get ("this is a test");
     CHECK(str1);

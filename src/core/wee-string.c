@@ -3616,6 +3616,9 @@ string_shared_get (const char *string)
     char *key;
     int length;
 
+    if (!string)
+        return NULL;
+
     if (!string_hashtable_shared)
     {
         /*
