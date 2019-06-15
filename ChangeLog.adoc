@@ -27,6 +27,7 @@ Bug fixes::
 
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
   * alias: remove default aliases /AME and /AMSG (issue #1355)
+  * irc: strip spaces at beginning/end of addresses in server option "addresses" (issue #195)
   * irc: fix display of enabled/disabled client capabilities received in command CAP ACK (issue #151)
 
 [[v2.5]]

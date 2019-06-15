@@ -616,7 +616,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     server->addresses_array = weechat_string_split (
         addresses_eval,
         ",",
-        NULL,
+        " ",
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
