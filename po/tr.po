@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-12 18:25+0200\n"
+"POT-Creation-Date: 2019-06-15 08:06+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7577,9 +7577,17 @@ msgstr "%s: betik kaldırıldı: %s"
 msgid "%s%s: client capability, currently enabled: %s"
 msgstr "%s: betik kaldırıldı: %s"
 
+#, fuzzy, c-format
+msgid "%s%s: client capability, enabled: %s, disabled: %s"
+msgstr "%s: betik kaldırıldı: %s"
+
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, disabled: %s"
+msgstr "%s: betik kaldırıldı: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"

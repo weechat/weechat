@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-12 18:25+0200\n"
+"POT-Creation-Date: 2019-06-15 08:06+0200\n"
 "PO-Revision-Date: 2019-06-01 00:12+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -10225,8 +10225,16 @@ msgstr "%s%s: możliwości klienta, serwer wspiera: %s"
 msgid "%s%s: client capability, currently enabled: %s"
 msgstr "%s%s: możliwości klienta, aktualnie włączone: %s"
 
+#, fuzzy, c-format
+msgid "%s%s: client capability, enabled: %s, disabled: %s"
+msgstr "%s%s: możliwości klienta, włączone: %s"
+
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
+msgstr "%s%s: możliwości klienta, włączone: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: client capability, disabled: %s"
 msgstr "%s%s: możliwości klienta, włączone: %s"
 
 #, c-format
