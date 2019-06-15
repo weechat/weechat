@@ -87,10 +87,11 @@ extern char *string_replace_regex (const char *string, void *regex,
                                    char *(*callback)(void *data, const char *text),
                                    void *callback_data);
 extern char **string_split (const char *string, const char *separators,
-                            int flags, int num_items_max, int *num_items);
+                            const char *strip_items, int flags,
+                            int num_items_max, int *num_items);
 extern char **string_split_shared (const char *string, const char *separators,
-                                   int flags, int num_items_max,
-                                   int *num_items);
+                                   const char *strip_items, int flags,
+                                   int num_items_max, int *num_items);
 extern char **string_split_shell (const char *string, int *num_items);
 extern void string_free_split (char **split_string);
 extern void string_free_split_shared (char **split_string);

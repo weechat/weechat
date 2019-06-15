@@ -165,7 +165,7 @@ buflist_config_hook_signals_refresh ()
             BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX);
     }
 
-    signals = weechat_string_split (*all_signals, ",",
+    signals = weechat_string_split (*all_signals, ",", NULL,
                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -257,6 +257,7 @@ buflist_config_change_sort (const void *pointer, void *data,
     buflist_config_sort_fields = weechat_string_split (
         weechat_config_string (buflist_config_look_sort),
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -1019,7 +1019,7 @@ gui_buffer_match_list (struct t_gui_buffer *buffer, const char *string)
 
     match = 0;
 
-    buffers = string_split (string, ",",
+    buffers = string_split (string, ",", NULL,
                             WEECHAT_STRING_SPLIT_STRIP_LEFT
                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1492,12 +1492,12 @@ gui_buffer_add_highlight_words (struct t_gui_buffer *buffer,
     if (!list)
         return;
 
-    current_words = string_split (buffer->highlight_words, ",",
+    current_words = string_split (buffer->highlight_words, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                   0, &current_count);
-    add_words = string_split (words_to_add, ",",
+    add_words = string_split (words_to_add, ",", NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1543,12 +1543,12 @@ gui_buffer_remove_highlight_words (struct t_gui_buffer *buffer,
     if (!list)
         return;
 
-    current_words = string_split (buffer->highlight_words, ",",
+    current_words = string_split (buffer->highlight_words, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                   0, &current_count);
-    remove_words = string_split (words_to_remove, ",",
+    remove_words = string_split (words_to_remove, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1713,7 +1713,7 @@ gui_buffer_set_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
 
     if (new_hotlist_max_level_nicks && new_hotlist_max_level_nicks[0])
     {
-        nicks = string_split (new_hotlist_max_level_nicks, ",",
+        nicks = string_split (new_hotlist_max_level_nicks, ",", NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1756,7 +1756,7 @@ gui_buffer_add_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
     if (!buffer || !nicks_to_add)
         return;
 
-    nicks = string_split (nicks_to_add, ",",
+    nicks = string_split (nicks_to_add, ",", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1797,7 +1797,7 @@ gui_buffer_remove_hotlist_max_level_nicks (struct t_gui_buffer *buffer,
     if (!buffer || !nicks_to_remove)
         return;
 
-    nicks = string_split (nicks_to_remove, ",",
+    nicks = string_split (nicks_to_remove, ",", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

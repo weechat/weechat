@@ -964,7 +964,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
     if (!completion->args)
         return WEECHAT_RC_OK;
 
-    argv = string_split (completion->args, " ",
+    argv = string_split (completion->args, " ", NULL,
                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1653,7 +1653,7 @@ completion_list_add_env_value_cb (const void *pointer, void *data,
 
     if (completion->args)
     {
-        argv = string_split (completion->args, " ",
+        argv = string_split (completion->args, " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -261,6 +261,7 @@ script_completion_tags_cb (const void *pointer, void *data,
             list_tags = weechat_string_split (
                 ptr_script->tags,
                 ",",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

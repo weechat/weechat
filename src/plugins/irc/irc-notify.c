@@ -373,7 +373,7 @@ irc_notify_new_for_server (struct t_irc_server *server)
     if (!notify || !notify[0])
         return;
 
-    items = weechat_string_split (notify, ",",
+    items = weechat_string_split (notify, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -395,6 +395,7 @@ irc_notify_new_for_server (struct t_irc_server *server)
                 params = weechat_string_split (
                     pos_params,
                     "/",
+                    NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -840,6 +841,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
         messages = weechat_string_split (
             output,
             "\n",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -850,6 +852,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             nicks_sent = weechat_string_split (
                 ptr_args,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -883,6 +886,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                             nicks_recv = weechat_string_split (
                                 pos,
                                 " ",
+                                NULL,
                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -952,6 +956,7 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             messages = weechat_string_split (
                 output,
                 "\n",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

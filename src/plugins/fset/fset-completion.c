@@ -82,6 +82,7 @@ fset_completion_option_cb (const void *pointer, void *data,
                 words = weechat_string_split (
                     weechat_config_option_get_string (ptr_option, "name"),
                     "_",
+                    NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

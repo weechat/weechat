@@ -779,7 +779,7 @@ irc_message_split_join (struct t_hashtable *hashtable,
         str = weechat_strndup (arguments, pos - arguments);
         if (!str)
             return 0;
-        channels = weechat_string_split (str, ",",
+        channels = weechat_string_split (str, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -790,7 +790,7 @@ irc_message_split_join (struct t_hashtable *hashtable,
             pos++;
         }
         if (pos[0])
-            keys = weechat_string_split (pos, ",",
+            keys = weechat_string_split (pos, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -798,7 +798,7 @@ irc_message_split_join (struct t_hashtable *hashtable,
     }
     else
     {
-        channels = weechat_string_split (arguments, ",",
+        channels = weechat_string_split (arguments, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1054,12 +1054,12 @@ irc_message_split (struct t_irc_server *server, const char *message)
         }
     }
 
-    argv = weechat_string_split (message, " ",
+    argv = weechat_string_split (message, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                  0, &argc);
-    argv_eol = weechat_string_split (message, " ",
+    argv_eol = weechat_string_split (message, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                                      | WEECHAT_STRING_SPLIT_KEEP_EOL,

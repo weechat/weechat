@@ -291,7 +291,7 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
         fields = infolist_fields (infolist);
         if (fields)
         {
-            argv = string_split (fields, ",",
+            argv = string_split (fields, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

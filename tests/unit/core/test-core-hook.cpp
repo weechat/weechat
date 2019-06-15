@@ -183,7 +183,7 @@ test_modifier_cb (const void *pointer, void *data,
     (void) modifier;
 
     /* split modifier_data, which is: "plugin;name;tags" */
-    items = string_split (modifier_data, ";",
+    items = string_split (modifier_data, ";", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

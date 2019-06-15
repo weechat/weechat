@@ -682,11 +682,14 @@ trigger_command_trigger (const void *pointer, void *data,
                 goto end;
             }
         }
-        items = weechat_string_split (trigger_hook_default_rc[type], ",",
+        items = weechat_string_split (trigger_hook_default_rc[type],
+                                      ",",
+                                      NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                       | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                      0, &num_items);
+                                      0,
+                                      &num_items);
         snprintf (input, sizeof (input),
                   "/trigger add name %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
                   trigger_hook_type_string[type],

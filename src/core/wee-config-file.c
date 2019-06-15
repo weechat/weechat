@@ -649,6 +649,7 @@ config_file_new_option (struct t_config_file *config_file,
                     new_option->string_values = string_split (
                         string_values,
                         "|",
+                        NULL,
                         WEECHAT_STRING_SPLIT_STRIP_LEFT
                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

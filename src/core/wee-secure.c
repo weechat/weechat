@@ -456,6 +456,7 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
     keys = string_split (hashtable_get_string (secure_hashtable_data_encrypted,
                                                "keys"),
                          ",",
+                         NULL,
                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

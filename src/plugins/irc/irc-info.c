@@ -526,7 +526,7 @@ irc_info_infolist_irc_channel_cb (const void *pointer, void *data,
 
     ptr_server = NULL;
     ptr_channel = NULL;
-    argv = weechat_string_split (arguments, ",",
+    argv = weechat_string_split (arguments, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -618,7 +618,7 @@ irc_info_infolist_irc_modelist_cb (const void *pointer, void *data,
 
     ptr_server = NULL;
     ptr_channel = NULL;
-    argv = weechat_string_split (arguments, ",",
+    argv = weechat_string_split (arguments, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -719,7 +719,7 @@ irc_info_infolist_irc_modelist_item_cb (const void *pointer, void *data,
 
     ptr_server = NULL;
     ptr_channel = NULL;
-    argv = weechat_string_split (arguments, ",",
+    argv = weechat_string_split (arguments, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -831,7 +831,7 @@ irc_info_infolist_irc_nick_cb (const void *pointer, void *data,
 
     ptr_server = NULL;
     ptr_channel = NULL;
-    argv = weechat_string_split (arguments, ",",
+    argv = weechat_string_split (arguments, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

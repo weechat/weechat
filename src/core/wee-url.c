@@ -867,7 +867,7 @@ weeurl_get_mask_value (struct t_url_constant *constants,
 
     mask = 0;
 
-    items = string_split (string_mask, "+",
+    items = string_split (string_mask, "+", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1019,7 +1019,7 @@ weeurl_option_map_cb (void *data,
                 }
                 break;
             case URL_TYPE_LIST:
-                items = string_split (value, "\n",
+                items = string_split (value, "\n", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                       | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

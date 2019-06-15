@@ -337,7 +337,7 @@ relay_irc_tag_relay_client_id (const char *tags)
 
     if (tags && tags[0])
     {
-        argv = weechat_string_split (tags, ",",
+        argv = weechat_string_split (tags, ",", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -565,7 +565,7 @@ relay_irc_hsignal_irc_redir_cb (const void *pointer, void *data,
     if (!output)
         return WEECHAT_RC_OK;
 
-    messages = weechat_string_split (output, "\n",
+    messages = weechat_string_split (output, "\n", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1359,6 +1359,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
         irc_argv = weechat_string_split (
             irc_args,
             " ",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1367,6 +1368,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
         irc_argv_eol = weechat_string_split (
             irc_args,
             " ",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS

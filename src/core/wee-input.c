@@ -107,6 +107,7 @@ input_exec_command (struct t_gui_buffer *buffer,
         new_commands_allowed = string_split (
             commands_allowed,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

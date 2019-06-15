@@ -843,6 +843,7 @@ gui_bar_window_content_get_with_filling (struct t_gui_bar_window *bar_window,
                             split_items[i][sub] = string_split (
                                 ptr_content,
                                 "\n",
+                                NULL,
                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

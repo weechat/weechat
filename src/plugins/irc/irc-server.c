@@ -425,7 +425,7 @@ irc_server_eval_fingerprint (struct t_irc_server *server)
     }
 
     /* split fingerprint */
-    fingerprints = weechat_string_split (fingerprint_eval, ",",
+    fingerprints = weechat_string_split (fingerprint_eval, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -616,6 +616,7 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     server->addresses_array = weechat_string_split (
         addresses_eval,
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -716,6 +717,7 @@ irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
     server->nicks_array = weechat_string_split (
         (nicks2) ? nicks2 : IRC_SERVER_DEFAULT_NICKS,
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -2683,7 +2685,7 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     }
 
     rc = 1;
-    items = weechat_string_split (vbuffer, "\n",
+    items = weechat_string_split (vbuffer, "\n", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -4284,7 +4286,7 @@ irc_server_check_certificate_fingerprint (struct t_irc_server *server,
     }
 
     /* split good_fingerprints */
-    fingerprints = weechat_string_split (good_fingerprints, ",",
+    fingerprints = weechat_string_split (good_fingerprints, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -5210,6 +5212,7 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
             channels = weechat_string_split (
                 autojoin2,
                 ",",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

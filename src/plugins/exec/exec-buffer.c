@@ -53,12 +53,12 @@ exec_buffer_input_cb (const void *pointer, void *data,
         return WEECHAT_RC_OK;
     }
 
-    argv = weechat_string_split (input_data, " ",
+    argv = weechat_string_split (input_data, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                  0, &argc);
-    argv_eol = weechat_string_split (input_data, " ",
+    argv_eol = weechat_string_split (input_data, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS

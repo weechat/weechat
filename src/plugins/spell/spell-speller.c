@@ -99,7 +99,7 @@ spell_speller_check_dictionaries (const char *dict_list)
 
     if (dict_list)
     {
-        argv = weechat_string_split (dict_list, ",",
+        argv = weechat_string_split (dict_list, ",", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -227,7 +227,7 @@ spell_speller_add_dicts_to_hash (struct t_hashtable *hashtable,
     if (!dict || !dict[0])
         return;
 
-    dicts = weechat_string_split (dict, ",",
+    dicts = weechat_string_split (dict, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -383,7 +383,7 @@ spell_speller_buffer_new (struct t_gui_buffer *buffer)
     buffer_dicts = spell_get_dict (buffer);
     if (buffer_dicts)
     {
-        dicts = weechat_string_split (buffer_dicts, ",",
+        dicts = weechat_string_split (buffer_dicts, ",", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                       | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

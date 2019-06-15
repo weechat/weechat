@@ -1489,7 +1489,7 @@ if (weechat_string_regcomp (&my_regex, "([0-9]{4})-([0-9]{2})-([0-9]{2})",
 
 ==== string_split
 
-_WeeChat バージョン 2.5 で更新。_
+_WeeChat バージョン 2.5、2.6 で更新。_
 
 1 つ以上の区切り文字に従って文字列を分割。
 
@@ -1498,13 +1498,17 @@ _WeeChat バージョン 2.5 で更新。_
 [source,C]
 ----
 char **weechat_string_split (const char *string, const char *separators,
-                             int flags, int num_items_max, int *num_items);
+                             const char *strip_items, int flags,
+                             int num_items_max, int *num_items);
 ----
 
 引数:
 
 * _string_: 分割する文字列
 * _separators_: 分割に使う区切り文字
+// TRANSLATION MISSING
+* _strip_items_: chars to strip from returned items (left/right);
+  optional, can be NULL
 * _flags_:
   デフォルト動作を変更するビットフラグの組合せ値; 値が 0 の場合、デフォルト動作
   (文字列の先頭と末尾にある区切り文字を削除しない、連続する区切り文字を 1 つにまとめない)
@@ -1542,7 +1546,7 @@ C 言語での使用例:
 char **argv;
 int argc;
 
-argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ", NULL, 0, 0, &argc);
 /* result: argv[0] == "abc"
            argv[1] == "de"
            argv[2] == ""
@@ -1553,7 +1557,7 @@ argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1566,7 +1570,7 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
@@ -1580,7 +1584,7 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
@@ -1588,6 +1592,19 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 /* result: argv[0] == "abc de  fghi "
            argv[1] == "de  fghi "
            argv[2] == "fghi "
+           argv[3] == NULL
+           argc == 3
+*/
+weechat_string_free_split (argv);
+
+argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
+/* result: argv[0] == "abc"
+           argv[1] == "de"
+           argv[2] == "fghi"
            argv[3] == NULL
            argc == 3
 */

@@ -511,7 +511,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
     if (!text2)
         goto end;
 
-    items = weechat_string_split (text2, ";",
+    items = weechat_string_split (text2, ";", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

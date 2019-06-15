@@ -736,6 +736,7 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                         tags = weechat_string_split (
                             pos2,
                             ",",
+                            NULL,
                             WEECHAT_STRING_SPLIT_STRIP_LEFT
                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -824,11 +825,14 @@ trigger_callback_line_cb (const void *pointer, void *data,
 
     weechat_hashtable_set (pointers, "buffer", buffer);
     ptr_value = weechat_hashtable_get (line, "tags");
-    tags = weechat_string_split ((ptr_value) ? ptr_value : "", ",",
+    tags = weechat_string_split ((ptr_value) ? ptr_value : "",
+                                 ",",
+                                 NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                 0, &num_tags);
+                                 0,
+                                 &num_tags);
 
     /* build string with tags and commas around: ",tag1,tag2,tag3," */
     length = 1 + strlen ((ptr_value) ? ptr_value : "") + 1 + 1;

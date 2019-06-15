@@ -114,7 +114,7 @@ script_config_get_diff_command ()
         result[0] = '\0';
         if (dir_separator && path)
         {
-            paths = weechat_string_split (path, ":",
+            paths = weechat_string_split (path, ":", NULL,
                                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -299,6 +299,7 @@ script_config_hold (const char *name_with_extension)
         items = weechat_string_split (
             weechat_config_string (script_config_scripts_hold),
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -348,6 +349,7 @@ script_config_unhold (const char *name_with_extension)
         items = weechat_string_split (
             weechat_config_string (script_config_scripts_hold),
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

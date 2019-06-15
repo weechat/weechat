@@ -138,7 +138,7 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
     if (!args)
         return WEECHAT_RC_OK;
 
-    argv = weechat_string_split (args, " ",
+    argv = weechat_string_split (args, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -277,7 +277,7 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
     if (!args)
         return;
 
-    argv = weechat_string_split (args, " ",
+    argv = weechat_string_split (args, " ", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -295,6 +295,7 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
                 items = weechat_string_split (
                     default_strings[type],
                     split,
+                    NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

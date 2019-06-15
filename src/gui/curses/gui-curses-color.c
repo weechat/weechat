@@ -936,6 +936,7 @@ gui_color_buffer_display ()
                            _("Nick colors:"));
         items = string_split (CONFIG_STRING(config_color_chat_nick_colors),
                               ",",
+                              NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1345,7 +1346,7 @@ gui_color_palette_new (int number, const char *value)
         str_alias = NULL;
         str_rgb = NULL;
 
-        items = string_split (value, ";",
+        items = string_split (value, ";", NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

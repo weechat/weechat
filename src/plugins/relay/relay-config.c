@@ -411,7 +411,7 @@ relay_config_check_irc_backlog_tags (const void *pointer, void *data,
         return rc;
 
     /* split tags and check them */
-    tags = weechat_string_split (value, ",",
+    tags = weechat_string_split (value, ",", NULL,
                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -462,6 +462,7 @@ relay_config_change_irc_backlog_tags (const void *pointer, void *data,
     items = weechat_string_split (
         weechat_config_string (relay_config_irc_backlog_tags),
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -398,6 +398,7 @@ gui_filter_new (int enabled, const char *name, const char *buffer_name,
         new_filter->buffers = string_split (
             new_filter->buffer_name,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

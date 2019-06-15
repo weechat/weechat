@@ -422,25 +422,25 @@ irc_redirect_new_with_commands (struct t_irc_server *server,
         items[i] = NULL;
     }
     if (cmd_start)
-        items[0] = weechat_string_split (cmd_start, ",",
+        items[0] = weechat_string_split (cmd_start, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                          0, &num_items[0]);
     if (cmd_stop)
-        items[1] = weechat_string_split (cmd_stop, ",",
+        items[1] = weechat_string_split (cmd_stop, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                          0, &num_items[1]);
     if (cmd_extra)
-        items[2] = weechat_string_split (cmd_extra, ",",
+        items[2] = weechat_string_split (cmd_extra, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                          0, &num_items[2]);
     if (cmd_filter)
-        items[3] = weechat_string_split (cmd_filter, ",",
+        items[3] = weechat_string_split (cmd_filter, ",", NULL,
                                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -812,6 +812,7 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
         arguments_argv = weechat_string_split (
             arguments,
             " ",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

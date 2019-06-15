@@ -206,7 +206,7 @@ util_setrlimit ()
     int num_items, i;
     long number;
 
-    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",",
+    items = string_split (CONFIG_STRING(config_startup_sys_rlimit), ",", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -937,7 +937,7 @@ util_version_number (const char *version)
     int num_items, i, version_int[4], index_buf;
     long number;
 
-    items = string_split (version, ".",
+    items = string_split (version, ".", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

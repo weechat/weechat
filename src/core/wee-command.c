@@ -4554,7 +4554,7 @@ COMMAND_CALLBACK(plugin)
     {
         if (argc > 2)
         {
-            plugin_argv = string_split (argv_eol[2], " ",
+            plugin_argv = string_split (argv_eol[2], " ", NULL,
                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -4573,7 +4573,7 @@ COMMAND_CALLBACK(plugin)
         plugin_argc = 0;
         if (argc > 3)
         {
-            plugin_argv = string_split (argv_eol[3], " ",
+            plugin_argv = string_split (argv_eol[3], " ", NULL,
                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -4595,7 +4595,7 @@ COMMAND_CALLBACK(plugin)
             if (argc > 3)
             {
                 plugin_argv = string_split (
-                    argv_eol[3], " ",
+                    argv_eol[3], " ", NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

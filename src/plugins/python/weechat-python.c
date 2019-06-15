@@ -155,7 +155,7 @@ weechat_python_get_python2_bin ()
 
     if (dir_separator && path)
     {
-        paths = weechat_string_split (path, ":",
+        paths = weechat_string_split (path, ":", NULL,
                                       WEECHAT_STRING_SPLIT_STRIP_LEFT
                                       | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                       | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

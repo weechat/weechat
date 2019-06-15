@@ -79,7 +79,7 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
     args = weechat_hook_completion_get_string (completion, "args");
     if (args)
     {
-        argv = weechat_string_split (args, " ",
+        argv = weechat_string_split (args, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

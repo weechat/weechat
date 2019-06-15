@@ -832,7 +832,7 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
     {
         if (out)
         {
-            lines = weechat_string_split (out, "\n",
+            lines = weechat_string_split (out, "\n", NULL,
                                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -871,7 +871,7 @@ script_action_show_diff_process_cb (const void *pointer, void *data,
         }
         else if (err)
         {
-            lines = weechat_string_split (err, "\n",
+            lines = weechat_string_split (err, "\n", NULL,
                                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1181,7 +1181,7 @@ script_action_run ()
 
     script_get_loaded_plugins ();
 
-    actions = weechat_string_split (script_actions, "\n",
+    actions = weechat_string_split (script_actions, "\n", NULL,
                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1217,6 +1217,7 @@ script_action_run ()
             argv = weechat_string_split (
                 ptr_action,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1225,6 +1226,7 @@ script_action_run ()
             argv_eol = weechat_string_split (
                 ptr_action,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS

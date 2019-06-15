@@ -98,7 +98,7 @@ gui_line_tags_alloc (struct t_gui_line_data *line_data, const char *tags)
 {
     if (tags)
     {
-        line_data->tags_array = string_split_shared (tags, ",", 0, 0,
+        line_data->tags_array = string_split_shared (tags, ",", NULL, 0, 0,
                                                      &line_data->tags_count);
     }
     else

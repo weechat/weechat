@@ -541,6 +541,7 @@ xfer_nick_auto_accepted (const char *server, const char *nick)
     nicks = weechat_string_split (
         weechat_config_string (xfer_config_file_auto_accept_nicks),
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

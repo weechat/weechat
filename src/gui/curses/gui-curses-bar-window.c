@@ -487,7 +487,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             }
         }
 
-        items = string_split (content, "\n",
+        items = string_split (content, "\n", NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

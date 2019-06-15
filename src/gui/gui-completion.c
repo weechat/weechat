@@ -562,6 +562,7 @@ gui_completion_get_matching_template (struct t_gui_completion *completion,
     {
         items = string_split (HOOK_COMMAND(hook_command, cplt_templates_static)[i],
                               "|",
+                              NULL,
                               WEECHAT_STRING_SPLIT_STRIP_LEFT
                               | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                               | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -704,7 +704,7 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
 
     if (items && items[0])
     {
-        tmp_array = string_split (items, ",",
+        tmp_array = string_split (items, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -723,6 +723,7 @@ gui_bar_set_items_array (struct t_gui_bar *bar, const char *items)
                 bar->items_array[i] = string_split (
                     tmp_array[i],
                     "+",
+                    NULL,
                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

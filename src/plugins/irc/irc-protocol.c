@@ -398,6 +398,7 @@ irc_protocol_cap_sync (struct t_irc_server *server, int sasl)
         caps_requested = weechat_string_split (
             cap_option,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -515,6 +516,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             caps_supported = weechat_string_split (
                 ptr_caps,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -597,6 +599,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             caps_enabled = weechat_string_split (
                 ptr_caps,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -658,6 +661,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             caps_supported = weechat_string_split (
                 ptr_caps,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -770,6 +774,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             caps_added = weechat_string_split (
                 ptr_caps,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -816,6 +821,7 @@ IRC_PROTOCOL_CALLBACK(cap)
             caps_removed = weechat_string_split (
                 ptr_caps,
                 " ",
+                NULL,
                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -5891,6 +5897,7 @@ IRC_PROTOCOL_CALLBACK(730)
     nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
                                   argv_eol[3] + 1 : argv_eol[3],
                                   ",",
+                                  NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -5934,6 +5941,7 @@ IRC_PROTOCOL_CALLBACK(731)
     nicks = weechat_string_split ((argv_eol[3][0] == ':') ?
                                   argv_eol[3] + 1 : argv_eol[3],
                                   ",",
+                                  NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -6178,7 +6186,7 @@ irc_protocol_get_message_tags (const char *tags)
     if (!hashtable)
         return NULL;
 
-    items = weechat_string_split (tags, ";",
+    items = weechat_string_split (tags, ";", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -6596,7 +6604,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         }
         else
             message_colors_decoded = NULL;
-        argv = weechat_string_split (message_colors_decoded, " ",
+        argv = weechat_string_split (message_colors_decoded, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                      | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -6606,8 +6614,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
             | WEECHAT_STRING_SPLIT_KEEP_EOL;
         if (keep_trailing_spaces)
             flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
-        argv_eol = weechat_string_split (message_colors_decoded, " ", flags,
-                                         0, NULL);
+        argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
+                                         flags, 0, NULL);
 
         return_code = (int) (cmd_recv_func) (server,
                                              date, nick, address_color,

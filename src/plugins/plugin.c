@@ -1007,6 +1007,7 @@ plugin_auto_load (char *force_plugin_autoload,
         plugin_autoload_array = string_split (
             ptr_plugin_autoload,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

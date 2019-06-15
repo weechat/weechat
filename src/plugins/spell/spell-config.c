@@ -97,6 +97,7 @@ spell_config_change_commands (const void *pointer, void *data,
         spell_commands_to_check = weechat_string_split (
             value,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -91,6 +91,7 @@ trigger_buffer_set_filter (const char *filter)
         trigger_buffer_filters = weechat_string_split (
             filter,
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

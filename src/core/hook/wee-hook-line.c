@@ -79,6 +79,7 @@ hook_line (struct t_weechat_plugin *plugin, const char *buffer_type,
     new_hook_line->buffers = string_split (
         (buffer_name && buffer_name[0]) ? buffer_name : "*",
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

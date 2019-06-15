@@ -154,6 +154,7 @@ fset_config_change_sort_cb (const void *pointer, void *data,
     fset_config_sort_fields = weechat_string_split (
         weechat_config_string (fset_config_look_sort),
         ",",
+        NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

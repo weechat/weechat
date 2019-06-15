@@ -174,6 +174,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
         hook_command->cplt_template_args[i] = string_split (
             hook_command->cplt_templates[i],
             " ",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -218,6 +219,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
                         items = string_split (
                             hook_command->cplt_template_args[j][i],
                             "|",
+                            NULL,
                             WEECHAT_STRING_SPLIT_STRIP_LEFT
                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -349,7 +351,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     if (hook_command_run_exec (buffer, string) == WEECHAT_RC_OK_EAT)
         return HOOK_COMMAND_EXEC_OK;
 
-    argv = string_split (string, " ",
+    argv = string_split (string, " ", NULL,
                          WEECHAT_STRING_SPLIT_STRIP_LEFT
                          | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                          | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -359,7 +361,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         string_free_split (argv);
         return HOOK_COMMAND_EXEC_NOT_FOUND;
     }
-    argv_eol = string_split (string, " ",
+    argv_eol = string_split (string, " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS

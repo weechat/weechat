@@ -101,7 +101,7 @@ spell_bar_item_suggest (const void *pointer, void *data,
     if (!str_suggest)
         return NULL;
 
-    suggestions = weechat_string_split (pos, "/",
+    suggestions = weechat_string_split (pos, "/", NULL,
                                         WEECHAT_STRING_SPLIT_STRIP_LEFT
                                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -126,6 +126,7 @@ spell_bar_item_suggest (const void *pointer, void *data,
         suggestions2 = weechat_string_split (
             suggestions[i],
             ",",
+            NULL,
             WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -53,7 +53,7 @@ relay_info_info_relay_client_count_cb (const void *pointer, void *data,
     protocol = -1;
     status = -1;
 
-    items = weechat_string_split (arguments, ",",
+    items = weechat_string_split (arguments, ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
                                   | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                   | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,

@@ -1509,7 +1509,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_split
 
-_Mis à jour dans la 2.5._
+_Mis à jour dans la 2.5, 2.6._
 
 Découper une chaîne à l'aide de délimiteur(s).
 
@@ -1518,13 +1518,16 @@ Prototype :
 [source,C]
 ----
 char **weechat_string_split (const char *string, const char *separators,
-                             int flags, int num_items_max, int *num_items);
+                             const char *strip_items, int flags,
+                             int num_items_max, int *num_items);
 ----
 
 Paramètres :
 
 * _string_ : chaîne à découper
 * _separators_ : délimiteurs utilisés pour le découpage
+* _strip_items_ : caractères à supprimer des chaînes retournées (gauche/droite) ;
+  optionnel, peut être NULL
 * _flags_ : combinaison de valeurs pour changer le comportement par défaut ;
   si la valeur est 0, le comportement par défaut est utilisé (pas de suppression
   des séparateurs en début/fin de chaîne, plusieurs séparateurs consécutifs
@@ -1564,7 +1567,7 @@ Exemples en C :
 char **argv;
 int argc;
 
-argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
+argv = weechat_string_split ("abc de  fghi ", " ", NULL, 0, 0, &argc);
 /* résultat :  argv[0] == "abc"
                argv[1] == "de"
                argv[2] == ""
@@ -1575,7 +1578,7 @@ argv = weechat_string_split ("abc de  fghi ", " ", 0, 0, &argc);
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1588,7 +1591,7 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
@@ -1602,7 +1605,7 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 */
 weechat_string_free_split (argv);
 
-argv = weechat_string_split ("abc de  fghi ", " ",
+argv = weechat_string_split ("abc de  fghi ", " ", NULL,
                              WEECHAT_STRING_SPLIT_STRIP_LEFT
                              | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
                              | WEECHAT_STRING_SPLIT_KEEP_EOL,
@@ -1610,6 +1613,19 @@ argv = weechat_string_split ("abc de  fghi ", " ",
 /* résultat : argv[0] == "abc de  fghi "
               argv[1] == "de  fghi "
               argv[2] == "fghi "
+              argv[3] == NULL
+              argc == 3
+*/
+weechat_string_free_split (argv);
+
+argv = weechat_string_split (" abc, de,, fghi ", ",", " ",
+                             WEECHAT_STRING_SPLIT_STRIP_LEFT
+                             | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                             0, &argc);
+/* résultat : argv[0] == "abc"
+              argv[1] == "de"
+              argv[2] == "fghi"
               argv[3] == NULL
               argc == 3
 */

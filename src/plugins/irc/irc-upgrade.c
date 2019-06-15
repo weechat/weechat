@@ -555,6 +555,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             items = weechat_string_split (
                                 str,
                                 ",",
+                                NULL,
                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -617,6 +618,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                             nicks = weechat_string_split (
                                 str,
                                 ",",
+                                NULL,
                                 WEECHAT_STRING_SPLIT_STRIP_LEFT
                                 | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                 | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
