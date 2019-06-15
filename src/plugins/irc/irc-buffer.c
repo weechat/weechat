@@ -188,6 +188,10 @@ irc_buffer_close_cb (const void *pointer, void *data,
                     irc_server_disconnect (ptr_server, 0, 0);
                 }
 
+                /* disable reconnection */
+                ptr_server->reconnect_delay = 0;
+                ptr_server->reconnect_start = 0;
+
                 /* close server channels/privates */
                 ptr_channel = ptr_server->channels;
                 while (ptr_channel)
