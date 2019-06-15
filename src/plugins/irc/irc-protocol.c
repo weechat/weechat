@@ -673,6 +673,9 @@ IRC_PROTOCOL_CALLBACK(cap)
                             weechat_string_dyn_concat (str_caps_disabled, " ");
                         weechat_string_dyn_concat (str_caps_disabled,
                                                    caps_supported[i] + 1);
+
+                        weechat_hashtable_remove (server->cap_list,
+                                                  caps_supported[i] + 1);
                     }
                     else
                     {
