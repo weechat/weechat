@@ -62,6 +62,8 @@
 
 | unix_socket_path | string |
 
+| abstract_unix_socket | string |
+
 | path_as_is | long |
 
 | proxy_service_name | string |
@@ -72,15 +74,21 @@
 
 | tcp_fastopen | long |
 
+| socks5_auth | long |
+
+| haproxyprotocol | long |
+
+| doh_url | string |
+
 | netrc | long | ignored, optional, required
 
 | userpwd | string |
 
 | proxyuserpwd | string |
 
-| httpauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+| httpauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer
 
-| proxyauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate
+| proxyauth | mask | none, basic, digest, ntlm, any, anysafe, digest_ie, only, ntlm_wb, negotiate, gssapi, bearer
 
 | netrc_file | string |
 
@@ -104,6 +112,8 @@
 
 | login_options | string |
 
+| disallow_username_in_url | long |
+
 | autoreferer | long |
 
 | followlocation | long |
@@ -113,8 +123,6 @@
 | post | long |
 
 | postfields | string |
-
-| httppost | list |
 
 | referer | string |
 
@@ -169,6 +177,8 @@
 | pipewait | long |
 
 | stream_weight | long |
+
+| request_target | string |
 
 | mail_from | string |
 
@@ -258,6 +268,10 @@
 
 | maxfilesize_large | long long |
 
+| timevalue_large | long long |
+
+| upload_buffersize | long |
+
 | timeout | long |
 
 | low_speed_limit | long |
@@ -300,9 +314,15 @@
 
 | connect_to | list |
 
+| happy_eyeballs_timeout_ms | long |
+
+| dns_shuffle_addresses | long |
+
+| upkeep_interval_ms | long |
+
 | sslcert | string |
 
-| sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3
+| sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3, max_default, max_none, max_tlsv1_0, max_tlsv1_1, max_tlsv1_2, max_tlsv1_3
 
 | ssl_verifypeer | long |
 
@@ -342,7 +362,7 @@
 
 | gssapi_delegation | long | none, policy_flag, flag
 
-| ssl_options | long | allow_beast, no_revoke
+| ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend
 
 | ssl_enable_alpn | long |
 
@@ -372,11 +392,11 @@
 
 | proxy_sslkeytype | string |
 
-| proxy_sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3
+| proxy_sslversion | long | default, tlsv1, sslv2, sslv3, tlsv1_0, tlsv1_1, tlsv1_2, tlsv1_3, max_default, max_none, max_tlsv1_0, max_tlsv1_1, max_tlsv1_2, max_tlsv1_3
 
 | proxy_ssl_cipher_list | list |
 
-| proxy_ssl_options | long | allow_beast, no_revoke
+| proxy_ssl_options | long | allow_beast, no_revoke, no_backends, ok, too_late, unknown_backend
 
 | proxy_ssl_verifyhost | long |
 
@@ -388,6 +408,10 @@
 
 | proxy_tlsauth_username | string |
 
+| tls13_ciphers | list |
+
+| proxy_tls13_ciphers | list |
+
 | ssh_auth_types | mask | none, policy_flag, flag
 
 | ssh_public_keyfile | string |
@@ -397,6 +421,8 @@
 | ssh_host_public_key_md5 | string |
 
 | ssh_knownhosts | string |
+
+| ssh_compression | long |
 
 | new_file_perms | long |
 
