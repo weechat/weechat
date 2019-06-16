@@ -72,13 +72,17 @@ hook_command_build_completion (struct t_hook_command *hook_command)
 {
     int i, j, k, length, num_items;
     struct t_weelist *list;
-    char *pos_completion, *pos_double_pipe, *pos_start, *pos_end;
+    char *completion, *pos_completion, *pos_double_pipe, *pos_start, *pos_end;
     char **items;
     const char *last_space, *ptr_template;
 
+    completion = string_replace (hook_command->completion, "\n", " ");
+    if (!completion)
+        return;
+
     /* split templates using "||" as separator */
     hook_command->cplt_num_templates = 1;
-    pos_completion = hook_command->completion;
+    pos_completion = completion;
     while ((pos_double_pipe = strstr (pos_completion, "||")) != NULL)
     {
         hook_command->cplt_num_templates++;
@@ -90,7 +94,7 @@ hook_command_build_completion (struct t_hook_command *hook_command)
     {
         hook_command->cplt_templates[i] = NULL;
     }
-    pos_completion = hook_command->completion;
+    pos_completion = completion;
     i = 0;
     while (pos_completion)
     {
@@ -244,6 +248,8 @@ hook_command_build_completion (struct t_hook_command *hook_command)
         }
         weelist_free (list);
     }
+
+    free (completion);
 }
 
 /*
