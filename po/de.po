@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-06-15 08:06+0200\n"
-"PO-Revision-Date: 2019-06-04 20:21+0200\n"
+"PO-Revision-Date: 2019-06-16 14:09+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -6496,7 +6496,6 @@ msgstr ""
 "Wartezeit bis nicht mehr ausgeführte Befehle gelöscht werden (in Sekunden, 0 "
 "= lösche Befehle unmittelbar, -1 = niemals löschen)"
 
-#, fuzzy
 msgid ""
 "shell to use with command \"/exec -sh\"; it can be just the name of shell if "
 "it is in PATH (for example \"bash\") or the absolute path to the shell (for "
@@ -6506,7 +6505,8 @@ msgstr ""
 "shell welche für den Befehl \"/exec -sh\" genutzt werden soll; hierbei kann "
 "es sich um den Namen der shell handeln der über PATH gefunden wird (zum "
 "Beispiel \"bash\") oder man nutzt eine absolute Pfadangabe zur Binärdatei "
-"(zum Beispiel \"/bin/bash\")"
+"(zum Beispiel \"/bin/bash\"); wenn kein Wert angegeben ist, wird \"sh\" "
+"genutzt (Hinweis: Inhalt ist evaluiert, siehe /help eval)"
 
 msgid "text color for a running command flag in list of commands"
 msgstr ""
@@ -10707,17 +10707,17 @@ msgstr "%s%s: Clientfähigkeiten, Server unterstützt: %s"
 msgid "%s%s: client capability, currently enabled: %s"
 msgstr "%s%s: Clientfähigkeiten (CAP), aktuell aktiviert: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, enabled: %s, disabled: %s"
-msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
+msgstr "%s%s: Clientfähigkeit, aktiviert: %s, deaktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, enabled: %s"
 msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: client capability, disabled: %s"
-msgstr "%s%s: Clientfähigkeit, aktiviert: %s"
+msgstr "%s%s: Clientfähigkeit, deaktiviert: %s"
 
 #, c-format
 msgid "%s%s: client capability, refused: %s"
