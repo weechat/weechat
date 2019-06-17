@@ -60,9 +60,10 @@ char *alias_default[][3] =
   { "UMODE",   "mode $nick",           NULL            },
   { "V",       "command core version", NULL            },
   { "W",       "who",                  NULL            },
-  { "WC",      "window merge",         NULL            },
+  { "WC",      "window close",         NULL            },
   { "WI",      "whois",                NULL            },
   { "WII",     "whois $1 $1",          NULL            },
+  { "WM",      "window merge",         NULL            },
   { "WW",      "whowas",               NULL            },
   { NULL,      NULL,                   NULL            },
 };

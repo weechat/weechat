@@ -6839,6 +6839,21 @@ COMMAND_CALLBACK(window)
         return WEECHAT_RC_OK;
     }
 
+    /* close window */
+    if (string_strcasecmp (argv[1], "close") == 0)
+    {
+        if (!gui_window_close (ptr_win))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: can not close window, "
+                               "there's no other window with same "
+                               "size near current one"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
+        return WEECHAT_RC_OK;
+    }
+
     /* switch to previous window */
     if (string_strcasecmp (argv[1], "-1") == 0)
     {
@@ -8148,6 +8163,7 @@ command_init ()
            " || resize [-window <number>] [h|v][+|-]<pct>"
            " || balance"
            " || merge [-window <number>] [all]"
+           " || close [-window <number>]"
            " || page_up|page_down [-window <number>]"
            " || refresh"
            " || scroll [-window <number>] [+|-]<value>[s|m|h|d|M|y]"
@@ -8181,6 +8197,7 @@ command_init ()
            "      balance: balance the sizes of all windows\n"
            "        merge: merge window with another (all = keep only one "
            "window)\n"
+           "        close: close window\n"
            "      page_up: scroll one page up\n"
            "    page_down: scroll one page down\n"
            "      refresh: refresh screen\n"
@@ -8225,8 +8242,10 @@ command_init ()
            "    /window resize 75\n"
            "  resize vertical split, add 10% in size:\n"
            "    /window resize v+10\n"
-           "  remove the split:\n"
+           "  remove the split, keep the current window:\n"
            "    /window merge\n"
+           "  close the current window:\n"
+           "    /window close\n"
            "  enable bare display for 2 seconds:\n"
            "    /window bare 2"),
         "list"
@@ -8256,6 +8275,7 @@ command_init ()
         " || swap up|down|left|right|-window %(windows_numbers)"
         " || zoom -window %(windows_numbers)"
         " || merge all|-window %(windows_numbers)"
+        " || close -window %(windows_numbers)"
         " || bare"
         " || %(windows_numbers)",
         &command_window, NULL, NULL);

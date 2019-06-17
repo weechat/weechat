@@ -233,6 +233,7 @@ extern void gui_window_resize_delta (struct t_gui_window_tree *tree,
                                      int delta_percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);
+extern int gui_window_close (struct t_gui_window *window);
 extern void gui_window_switch_up (struct t_gui_window *window);
 extern void gui_window_switch_down (struct t_gui_window *window);
 extern void gui_window_switch_left (struct t_gui_window *window);

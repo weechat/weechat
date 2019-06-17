@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option "close" in command /window (issue #853)
   * api: add argument "strip_items" in function string_split
   * exec: evaluate option exec.command.shell, change default value to "${env:SHELL}" (issue #1356)
 

@@ -1969,40 +1969,39 @@ gui_window_merge (struct t_gui_window *window)
         return 0;
 
     parent = window->ptr_tree->parent_node;
-    if (parent)
+    if (!parent)
+        return 0;
+
+    sister = (parent->child1->window == window) ?
+        parent->child2 : parent->child1;
+    if (!(sister->window))
+        return 0;
+
+    if (window->win_y == sister->window->win_y)
     {
-        sister = (parent->child1->window == window) ?
-            parent->child2 : parent->child1;
-
-        if (!(sister->window))
-            return 0;
-
-        if (window->win_y == sister->window->win_y)
-        {
-            /* horizontal merge */
-            separator = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)) ? 1 : 0;
-            window->win_width += sister->window->win_width + separator;
-            window->win_width_pct += sister->window->win_width_pct;
-        }
-        else
-        {
-            /* vertical merge */
-            separator = (CONFIG_BOOLEAN(config_look_window_separator_vertical)) ? 1 : 0;
-            window->win_height += sister->window->win_height + separator;
-            window->win_height_pct += sister->window->win_height_pct;
-        }
-        if (sister->window->win_x < window->win_x)
-            window->win_x = sister->window->win_x;
-        if (sister->window->win_y < window->win_y)
-            window->win_y = sister->window->win_y;
-
-        gui_window_free (sister->window);
-        gui_window_tree_node_to_leaf (parent, window);
-
-        gui_window_switch_to_buffer (window, window->buffer, 1);
-        return 1;
+        /* horizontal merge */
+        separator = (CONFIG_BOOLEAN(config_look_window_separator_horizontal)) ? 1 : 0;
+        window->win_width += sister->window->win_width + separator;
+        window->win_width_pct += sister->window->win_width_pct;
     }
-    return 0;
+    else
+    {
+        /* vertical merge */
+        separator = (CONFIG_BOOLEAN(config_look_window_separator_vertical)) ? 1 : 0;
+        window->win_height += sister->window->win_height + separator;
+        window->win_height_pct += sister->window->win_height_pct;
+    }
+    if (sister->window->win_x < window->win_x)
+        window->win_x = sister->window->win_x;
+    if (sister->window->win_y < window->win_y)
+        window->win_y = sister->window->win_y;
+
+    gui_window_free (sister->window);
+    gui_window_tree_node_to_leaf (parent, window);
+
+    gui_window_switch_to_buffer (window, window->buffer, 1);
+
+    return 1;
 }
 
 /*
@@ -2045,6 +2044,34 @@ gui_window_merge_all (struct t_gui_window *window)
         gui_current_window = window;
         gui_window_switch_to_buffer (window, window->buffer, 1);
     }
+}
+
+/*
+ * Closes a window.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+gui_window_close (struct t_gui_window *window)
+{
+    struct t_gui_window_tree *parent, *sister;
+
+    if (!gui_init_ok)
+        return 0;
+
+    parent = window->ptr_tree->parent_node;
+    if (!parent)
+        return 0;
+
+    sister = (parent->child1->window == window) ?
+        parent->child2 : parent->child1;
+    if (!(sister->window))
+        return 0;
+
+    return gui_window_merge (sister->window);
 }
 
 /*

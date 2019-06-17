@@ -974,6 +974,7 @@ Exemples :
          resize [-window <numéro>] [h|v][+|-]<pct>
          balance
          merge [-window <numéro>] [all]
+         close [-window <numéro>]
          page_up|page_down [-window <numéro>]
          refresh
          scroll [-window <numéro>] [+|-]<valeur>[s|m|h|d|M|y]
@@ -998,6 +999,7 @@ Exemples :
                 si "h" ou "v" est spécifié, le redimensionnement affecte la fenêtre parente la plus proche avec un découpage de ce type (horizontal/vertical)
       balance : équilibrer la taille de toutes les fenêtres
         merge : fusionner la fenêtre avec une autre
+        close : fermer la fenêtre
       page_up : faire défiler d'une page vers le haut
     page_down : faire défiler d'une page vers le bas
       refresh : redessiner l'écran
@@ -1034,8 +1036,10 @@ Exemples :
     /window resize 75
   redimensionner le découpage vertical, ajouter 10% dans la taille :
     /window resize v+10
-  supprimer l'éclatement :
+  supprimer l'éclatement, garder la fenêtre courante :
     /window merge
+  fermer la fenêtre courante :
+    /window close
   activer le mode d'affichage dépouillé pendant 2 secondes :
     /window bare 2
 ----
