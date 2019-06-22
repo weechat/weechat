@@ -984,62 +984,62 @@ Beispiele:
          zoom [-window <number>]
          bare [<delay>]
 
-         list: list opened windows (without argument, this list is displayed)
-           -1: jump to previous window
-           +1: jump to next window
-           b#: jump to next window displaying buffer number #
-           up: switch to window above current one
-         down: switch to window below current one
-         left: switch to window on the left
-        right: switch to window on the right
-       number: window number (see /window list)
-       splith: split current window horizontally (to undo: /window merge)
-       splitv: split current window vertically (to undo: /window merge)
-       resize: resize window size, new size is <pct> percentage of parent window
-               if "h" or "v" is specified, the resize affects the nearest parent window with a split of this type (horizontal/vertical)
-      balance: balance the sizes of all windows
-        merge: merge window with another (all = keep only one window)
-        close: close window
-      page_up: scroll one page up
-    page_down: scroll one page down
-      refresh: refresh screen
-       scroll: scroll a number of lines (+/-N) or with time: s=seconds, m=minutes, h=hours, d=days, M=months, y=years
- scroll_horiz: scroll horizontally a number of columns (+/-N) or percentage of window size (this scrolling is possible only on buffers with free content)
-    scroll_up: scroll a few lines up
-  scroll_down: scroll a few lines down
-   scroll_top: scroll to top of buffer
-scroll_bottom: scroll to bottom of buffer
-scroll_beyond_end: scroll beyond the end of buffer
-scroll_previous_highlight: scroll to previous highlight
-scroll_next_highlight: scroll to next highlight
-scroll_unread: scroll to unread marker
-         swap: swap buffers of two windows (with optional direction for target window)
-         zoom: zoom on window
-         bare: toggle bare display (with optional delay in seconds for automatic return to standard display mode)
+         list: listet die geöffneten Fenster (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+           -1: springt zum vorherigen Fenster
+           +1: springt zum nächsten Fenster
+           b#: springt zum nächsten Fenster, welches die Buffer Nummer # besitzt
+           up: wechselt zum Fenster über dem aktuellen
+         down: wechselt zum Fenster unter dem aktuellen
+         left: wechselt zum linken Fenster
+        right: wechselt zum rechten Fenster
+       number: Nummer des Fensters (siehe /window list)
+       splith: teilt das aktuelle Fenster horizontal (um den Vorgang rückgängig zu machen: /window merge)
+       splitv: teilt das aktuelle Fenster vertikal (um den Vorgang rückgängig zu machen: /window merge)
+       resize: verändert die Größe des aktuellen Fensters. Die neue Größe des Fensters ist prozentual <pct> zum Stammfensters groß
+               wird "h" oder "v" angegeben, findet eine Größenanpassung des Stammfenster statt, sofern es vom selben Typ ist (horizontal/vertikal)
+      balance: passt die Größe aller Fenster an
+        merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+        close: Fenster wird geschlossen
+      page_up: scrollt eine Seite nach oben
+    page_down: scrollt eine Seite nach unten
+      refresh: Seite wird neu aufgebaut
+       scroll: scrollt eine Anzahl an Zeilen (+/-N) oder zu einer angegebenen Zeit: s=Sekunden, m=Minuten, h=Stunden, d=Tage, M=Monate, y=Jahre
+ scroll_horiz: scrollt horizontal eine Anzahl an Spalten (+/-N) oder prozentual von der Fenstergröße ausgehend (dieses scrolling ist nur in Buffern möglich die über einen freien Inhalt verfügen)
+    scroll_up: scrollt ein paar Zeilen nach oben
+  scroll_down: scrollt ein paar Zeilen nach unten
+   scroll_top: scrollt zum Anfang des Buffers
+scroll_bottom: scrollt zum Ende des Buffers
+scroll_beyond_end: scrollt über das Ende des Buffers hinaus
+scroll_previous_highlight: scrollt zum vorherigen Hightlight
+scroll_next_highlight: scrollt zum nächsten Highlight
+scroll_unread: scrollt zur ersten ungelesenen Zeile in einem Buffer
+         swap: tauscht die Buffer von zwei Fenstern (mit optionaler Angabe für das Zielfenster)
+         zoom: vergrößert ein Fenster auf 100%
+         bare: wechselt zum einfachen Anzeigemodus (optional kann eine Wartezeit in Sekunden angegeben werden, wann wieder zum Standardmodus zurück gewechselt werden soll)
 
-For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
+Für splith und splitv gibt "pct" die Größe des neuen Fensters im Verhältnis zur aktuellen Größe an. Zum Beispiel würde ein Wert von 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters besitzt.
 
-Examples:
-  jump to window displaying buffer #1:
+Beispiele:
+  springt zum Fenster mit dem Buffer #1:
     /window b1
-  scroll 2 lines up:
+   scrollt zwei Zeilen hoch:
     /window scroll -2
-  scroll 2 days up:
+  scrollt zwei Tage hoch:
     /window scroll -2d
-  scroll to beginning of current day:
+  scrollt zum Beginn des aktuellen Tages:
     /window scroll -d
-  zoom on window #2:
+  Fenster #2 wird vergrößert:
     /window zoom -window 2
-  split window horizontally using 30% of space for the window on top:
+  teilt das Fenster horizontal, wobei das obere Fenster 30% an Platz zugeteilt bekommt:
     /window splith 30
-  resize window to 75% of the parent window size:
+  ändert die Größe auf 75% des Stammfensters:
     /window resize 75
-  resize vertical split, add 10% in size:
+  die vertikale Aufteilung um 10% vergrößern:
     /window resize v+10
-  remove the split, keep the current window:
+  eine Teilung wird rückgängig gemacht:
     /window merge
-  close the current window:
+  das aktuelle Fenster wird geschlossen:
     /window close
-  enable bare display for 2 seconds:
+  aktiviert den einfachen Anzeigemodus für zwei Sekunden:
     /window bare 2
 ----
