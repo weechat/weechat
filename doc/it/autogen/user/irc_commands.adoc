@@ -124,7 +124,7 @@ Examples:
 * `+connect+`: connette ad uno o più server IRC
 
 ----
-/connect  <server> [<server>...] [-<opzione>[=<valore>]] [-no<option>] [-nojoin] [-switch]
+/connect  [<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
     server: server name, which can be:

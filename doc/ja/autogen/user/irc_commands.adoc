@@ -124,7 +124,7 @@ WeeChat がサポートする機能: account-notify、away-notify、cap-notify�
 * `+connect+`: IRC サーバに接続
 
 ----
-/connect  <server> [<server>...] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
+/connect  [<server> [<server>...]] [-<option>[=<value>]] [-no<option>] [-nojoin] [-switch]
           -all|-auto|-open [-nojoin] [-switch]
 
     server: サーバ名、これは:

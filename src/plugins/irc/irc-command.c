@@ -6433,7 +6433,7 @@ irc_command_init ()
     weechat_hook_command (
         "connect",
         N_("connect to IRC server(s)"),
-        N_("<server> [<server>...] [-<option>[=<value>]] [-no<option>] "
+        N_("[<server> [<server>...]] [-<option>[=<value>]] [-no<option>] "
            "[-nojoin] [-switch]"
            " || -all|-auto|-open [-nojoin] [-switch]"),
         N_("    server: server name, which can be:\n"
