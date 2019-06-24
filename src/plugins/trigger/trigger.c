@@ -1301,7 +1301,9 @@ trigger_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    int i, upgrading;
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
 
     weechat_plugin = plugin;
 
@@ -1320,17 +1322,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* hook completions */
     trigger_completion_init ();
 
-    /* look at arguments */
-    upgrading = 0;
-    for (i = 0; i < argc; i++)
-    {
-        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
-        {
-            upgrading = 1;
-        }
-    }
-
-    if (upgrading)
+    if (weechat_trigger_plugin->upgrading)
         trigger_buffer_set_callbacks ();
 
     return WEECHAT_RC_OK;

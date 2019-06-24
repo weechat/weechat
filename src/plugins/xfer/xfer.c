@@ -1805,7 +1805,9 @@ xfer_debug_dump_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    int i, upgrading;
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
 
     weechat_plugin = plugin;
 
@@ -1835,15 +1837,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     xfer_info_init ();
 
-    /* look at arguments */
-    upgrading = 0;
-    for (i = 0; i < argc; i++)
-    {
-        if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
-            upgrading = 1;
-    }
-
-    if (upgrading)
+    if (weechat_xfer_plugin->upgrading)
         xfer_upgrade_load ();
 
     return WEECHAT_RC_OK;

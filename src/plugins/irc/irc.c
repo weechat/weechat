@@ -164,7 +164,7 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    int i, auto_connect, upgrading;
+    int i, auto_connect;
 
     weechat_plugin = plugin;
 
@@ -217,7 +217,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* look at arguments */
     auto_connect = 1;
-    upgrading = 0;
     for (i = 0; i < argc; i++)
     {
         if ((weechat_strcasecmp (argv[i], "-a") == 0)
@@ -236,13 +235,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                     weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[i]);
             }
         }
-        else if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
-        {
-            upgrading = 1;
-        }
     }
 
-    if (upgrading)
+    if (weechat_irc_plugin->upgrading)
     {
         if (!irc_upgrade_load ())
         {

@@ -808,8 +808,10 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
 
     if (weechat_upgrading)
     {
-        upgrade_weechat_load ();        /* upgrade with session file        */
-        weechat_upgrade_count++;        /* increase /upgrade count          */
+        if (upgrade_weechat_load ())    /* upgrade with session file        */
+            weechat_upgrade_count++;    /* increase /upgrade count          */
+        else
+            weechat_upgrading = 0;
     }
     weechat_startup_message ();         /* display WeeChat startup message  */
     gui_chat_print_lines_waiting_buffer (NULL); /* display lines waiting    */

@@ -26,6 +26,7 @@ New features::
 
 Bug fixes::
 
+  * core: auto disable upgrade process (command line option "--upgrade") if the file weechat.upgrade is not found
   * core: replace newlines by spaces in argument "completion" of function hook_command (issue #538)
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
   * alias: remove default aliases /AME and /AMSG (issue #1355)
