@@ -273,11 +273,13 @@ plugin_get_args (struct t_weechat_plugin *plugin,
                  int argc, char **argv,
                  int *plugin_argc, char ***plugin_argv)
 {
-    int i, temp_argc;
+    int i, temp_argc, length_plugin_name;
     char **temp_argv;
 
     temp_argc = 0;
     temp_argv = NULL;
+
+    length_plugin_name = strlen (plugin->name);
 
     if (argc > 0)
     {
@@ -290,8 +292,9 @@ plugin_get_args (struct t_weechat_plugin *plugin,
                     || (strcmp (argv[i], "--no-connect") == 0)
                     || (strcmp (argv[i], "-s") == 0)
                     || (strcmp (argv[i], "--no-script") == 0)
-                    || (strncmp (argv[i], plugin->name,
-                                 strlen (plugin->name)) == 0))
+                    || ((strncmp (argv[i], plugin->name,
+                                  length_plugin_name) == 0)
+                        && (argv[i][length_plugin_name] == ':')))
                 {
                     temp_argv[temp_argc++] = argv[i];
                 }

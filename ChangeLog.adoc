@@ -26,6 +26,7 @@ New features::
 
 Bug fixes::
 
+  * core: send command line parameter to plugins only if the name starts with the plugin name followed by a colon
   * core: auto disable upgrade process (command line option "--upgrade") if the file weechat.upgrade is not found
   * core: replace newlines by spaces in argument "completion" of function hook_command (issue #538)
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
