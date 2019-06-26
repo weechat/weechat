@@ -97,14 +97,39 @@ Paramètres :
 
 * _plugin_ : pointeur vers la structure d'extension WeeChat, utilisé pour
   initialiser le pointeur global `weechat_plugin`
-* _argc_ : nombre de paramètres pour l'extension (donnés sur la ligne de
-  commande par l'utilisateur)
-* _argv_ : paramètres pour l'extension
+* _argc_ : nombre de paramètres pour l'extension
+* _argv_ : paramètres pour l'extension (voir ci-dessous)
 
 Valeur de retour :
 
 * _WEECHAT_RC_OK_ si ok (l'extension sera chargée)
 * _WEECHAT_RC_ERROR_ si erreur (l'extension ne sera PAS chargée)
+
+[[plugin_arguments]]
+===== Paramètres de l'extension
+
+Lorsque l'extension est chargée par WeeChat, elle reçoit la liste des
+paramètres dans `argv` et le nombre de paramètres dans `argc`.
+
+Les paramètres peuvent être :
+
+* les paramètres de ligne de commande lors du lancement du binaire WeeChat,
+* les paramètres donnés à la commande `/plugin load xxx`, lorsque l'extension
+  est chargée manuellement par l'utilisateur.
+
+Lorsque les paramètres proviennent de la ligne de commande, seulement ces
+paramètres sont envoyés à l'extension :
+
+*-a*, *--no-connect*::
+    Supprimer la connexion automatique aux serveurs lors du démarrage.
+
+*-s*, *--no-script*::
+    Supprimer le chargement automatique des scripts au démarrage.
+
+*extension:option*::
+    Option pour une extension : seulement les options liées à l'extension sont
+    envoyées, par exemple seulement les options démarrant par `irc:` sont
+    envoyées à l'extension "irc".
 
 [[plugin_priority]]
 ===== Priorité de l'extension

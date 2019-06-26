@@ -100,13 +100,40 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 
 * _plugin_: WeeChat プラグイン構造体へのポインタ。これはグローバルポインタ
   `weechat_plugin` を初期化する際に使われます
-* _argc_: プラグインに対する引数の数 (ユーザがコマンドラインで指定)
-* _argv_: プラグインに対する引数
+* _argc_: プラグインに対する引数の数
+// TRANSLATION MISSING
+* _argv_: プラグインに対する引数 (see below)
 
 戻り値:
 
 * _WEECHAT_RC_OK_ 成功した場合 (プラグインをロードします)
 * _WEECHAT_RC_ERROR_ エラーが起きた場合 (プラグインをロードしません)
+
+// TRANSLATION MISSING
+[[plugin_arguments]]
+===== Plugin arguments
+
+When the plugin is loaded by WeeChat, it receives the list of arguments
+in parameter `argv` and the number of arguments in `argc`.
+
+The arguments can be:
+
+* command line arguments when running the WeeChat binary,
+* arguments given to the command `/plugin load xxx`, when the plugin is manually
+  loaded by the user.
+
+When the arguments come from the command line, only these arguments are sent to
+the plugin:
+
+*-a*, *--no-connect*::
+    WeeChat の起動時にサーバへの自動接続を行わない
+
+*-s*, *--no-script*::
+    スクリプトの自動ロードを止める
+
+*plugin:option*::
+    Option for a plugin: only the plugin-related options are sent, for example
+    only the options starting with `irc:` are sent to the plugin called "irc".
 
 [[plugin_priority]]
 ===== プラグインの優先度

@@ -106,9 +106,9 @@ Argomenti:
 // TRANSLATION MISSING
 * _plugin_: puntatore alla struttura del plugin di WeeChat, used to initialize
   the convenience global pointer `weechat_plugin`
-* _argc_: numero di argomenti per il plugin (fornito dalla riga di comando
-  dall'utente)
-* _argv_: argomenti per il plugin
+* _argc_: numero di argomenti per il plugin
+// TRANSLATION MISSING
+* _argv_: argomenti per il plugin (see below)
 
 Valori restituiti:
 
@@ -116,6 +116,32 @@ Valori restituiti:
   verrà caricato)
 * _WEECHAT_RC_ERROR_ se c'è un errore (il plugin NON
   verrà caricato)
+
+// TRANSLATION MISSING
+[[plugin_arguments]]
+===== Plugin arguments
+
+When the plugin is loaded by WeeChat, it receives the list of arguments
+in parameter `argv` and the number of arguments in `argc`.
+
+The arguments can be:
+
+* command line arguments when running the WeeChat binary,
+* arguments given to the command `/plugin load xxx`, when the plugin is manually
+  loaded by the user.
+
+When the arguments come from the command line, only these arguments are sent to
+the plugin:
+
+*-a*, *--no-connect*::
+    Disabilita la connessione automatica ai server all'avvio di WeeChat.
+
+*-s*, *--no-script*::
+    Disabilita il caricamento automatico dei script.
+
+*plugin:option*::
+    Option for a plugin: only the plugin-related options are sent, for example
+    only the options starting with `irc:` are sent to the plugin called "irc".
 
 // TRANSLATION MISSING
 [[plugin_priority]]

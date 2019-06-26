@@ -94,13 +94,38 @@ Arguments:
 
 * _plugin_: pointer to WeeChat plugin structure, used to initialize the
   convenience global pointer `weechat_plugin`
-* _argc_: number of arguments for plugin (given on command line by user)
-* _argv_: arguments for plugin
+* _argc_: number of arguments for plugin
+* _argv_: arguments for plugin (see below)
 
 Return value:
 
 * _WEECHAT_RC_OK_ if successful (plugin will be loaded)
 * _WEECHAT_RC_ERROR_ if error (plugin will NOT be loaded)
+
+[[plugin_arguments]]
+===== Plugin arguments
+
+When the plugin is loaded by WeeChat, it receives the list of arguments
+in parameter `argv` and the number of arguments in `argc`.
+
+The arguments can be:
+
+* command line arguments when running the WeeChat binary,
+* arguments given to the command `/plugin load xxx`, when the plugin is manually
+  loaded by the user.
+
+When the arguments come from the command line, only these arguments are sent to
+the plugin:
+
+*-a*, *--no-connect*::
+    Disable auto-connect to servers when WeeChat is starting.
+
+*-s*, *--no-script*::
+    Disable scripts auto-load.
+
+*plugin:option*::
+    Option for a plugin: only the plugin-related options are sent, for example
+    only the options starting with `irc:` are sent to the plugin called "irc".
 
 [[plugin_priority]]
 ===== Plugin priority
