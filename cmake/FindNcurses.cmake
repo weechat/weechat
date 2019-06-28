@@ -23,9 +23,8 @@ endif()
 
 find_path(NCURSES_INCLUDE_PATH
   NAMES ncurses.h curses.h
-  PATHS /usr/include/ncursesw /usr/include/ncurses /usr/include
-  /usr/local/include/ncursesw /usr/local/include/ncurses /usr/local/include
-  /usr/pkg/include/ncursesw /usr/pkg/include/ncurses /usr/pkg/include
+  PATH_SUFFIXES ncursesw ncurses
+  PATHS /usr/include /usr/local/include /usr/pkg/include
 )
 
 find_library(NCURSESW_LIBRARY

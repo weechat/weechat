@@ -317,6 +317,25 @@ wbkgdset (WINDOW *win, chtype ch)
 }
 
 void
+wbkgrndset (WINDOW *win, const cchar_t *wcval)
+{
+    (void) win;
+    (void) wcval;
+}
+
+int
+setcchar (cchar_t *wcval, const wchar_t *wch, attr_t attrs, short pair, const void *opts)
+{
+    (void) wcval;
+    (void) wch;
+    (void) attrs;
+    (void) pair;
+    (void) opts;
+
+    return OK;
+}
+
+void
 wchgat (WINDOW *win, int n, attr_t attr, short color, const void *opts)
 {
     (void) win;

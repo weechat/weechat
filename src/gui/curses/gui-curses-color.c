@@ -580,8 +580,9 @@ gui_color_init_vars ()
         gui_color_term_color_pairs = COLOR_PAIRS;
         gui_color_term_can_change_color = (can_change_color ()) ? 1 : 0;
 
-        gui_color_num_pairs = (gui_color_term_color_pairs >= 256) ?
-            255 : gui_color_term_color_pairs - 1;
+        /* TODO: ncurses may support 65536, but short type used for pairs supports only 32768? */
+        gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
+            32767 : gui_color_term_color_pairs - 1;
         size = (gui_color_term_colors + 2)
             * (gui_color_term_colors + 2)
             * sizeof (gui_color_pairs[0]);
@@ -699,7 +700,7 @@ gui_color_init_pairs_weechat ()
 void
 gui_color_display_terminal_colors ()
 {
-    int lines, line, col, color;
+    int lines, columns, line, col, color;
     char str_line[1024], str_color[64];
 
     initscr ();
@@ -727,13 +728,14 @@ gui_color_display_terminal_colors ()
         printf ("%s\n", _("Default colors:"));
         printf ("------------------------------------------------------------"
                 "--------------------\n");
-        lines = (gui_color_term_colors < 16) ? gui_color_term_colors : 16;
+        columns = 16;
+        lines = (gui_color_term_colors - 1) / columns + 1;
         for (line = 0; line < lines; line++)
         {
             str_line[0] = '\0';
-            for (col = 0; col < 16; col++)
+            for (col = 0; col < columns; col++)
             {
-                color = (col * 16) + line;
+                color = line * columns + col;
                 if (color < gui_color_term_colors)
                 {
                     snprintf (str_color, sizeof (str_color),
@@ -792,7 +794,7 @@ gui_color_info_term_colors (char *buffer, int size)
 void
 gui_color_buffer_display ()
 {
-    int y, i, lines, line, col, color, max_color, num_items;
+    int y, i, lines, columns, line, col, color, max_color, num_items;
     char str_line[1024], str_color[64], str_rgb[64], **items;
     struct t_gui_color_palette *color_palette;
 
@@ -829,17 +831,18 @@ gui_color_buffer_display ()
                            gui_color_pairs_used,
                            gui_color_num_pairs - gui_color_pairs_used);
     }
+    columns = 16;
     max_color = (gui_color_use_term_colors) ?
-        gui_color_term_colors - 1 : gui_color_num_pairs;
-    if (max_color > 255)
-        max_color = 255;
-    lines = (max_color <= 64) ? 8 : 16;
+        gui_color_term_colors - 1 : gui_color_pairs_used;
+    /* round up to nearest multiple of columns */
+    max_color = (max_color / columns) * columns + columns - 1;
+    lines = max_color / columns + 1;
     for (line = 0; line < lines; line++)
     {
         str_line[0] = '\0';
-        for (col = 0; col < 16; col++)
+        for (col = 0; col < columns; col++)
         {
-            color = (col * lines) + line;
+            color = line * columns + col;
             if (color <= max_color)
             {
                 if (color == 0)
@@ -851,13 +854,11 @@ gui_color_buffer_display ()
                          || (color <= gui_color_pairs_used))
                 {
                     snprintf (str_color, sizeof (str_color),
-                              "%c%c%05d%c%03d%c",
+                              (color <= 999) ? "%c%c%05d %03d " : "%c%c%05d%5d",
                               GUI_COLOR_COLOR_CHAR,
                               GUI_COLOR_EXTENDED_CHAR,
                               color,
-                              (color == 0) ? '<' : ' ',
-                              color,
-                              (color == 0) ? '>' : ' ');
+                              color);
                 }
                 else
                 {
