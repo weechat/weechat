@@ -816,7 +816,7 @@ mittels der Option <<option_irc.color.mirc_remap,irc.color.mirc_remap>>.
 [[colors]]
 === Farben
 
-WeeChat kann bis zu 256 Farbpaarungen nutzen um einen Text in Bars oder im
+WeeChat kann bis zu 32767 Farbpaarungen nutzen um einen Text in Bars oder im
 Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten).
 
 Gemäß der Einstellung in der _TERM_-Umgebungsvariable bestehen folgende Einschränkungen
@@ -825,12 +825,12 @@ was die Farbdarstellung in WeeChat betrifft:
 [width="50%",cols="8,>2,>2",options="header"]
 |===
 | $TERM                                  | Farben | Paare
-| "rxvt-unicode", "xterm", ...           |     88 |   256
-| "rxvt-256color", "xterm-256color", ... |    256 |   256
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
 | "screen"                               |      8 |    64
-| "screen-256color"                      |    256 |   256
+| "screen-256color"                      |    256 | 32767
 | "tmux"                                 |      8 |    64
-| "tmux-256color"                        |    256 |   256
+| "tmux-256color"                        |    256 | 32767
 |===
 
 Mittels `weechat --colors` oder dem internen WeeChat-Befehl `/color` kann man sich

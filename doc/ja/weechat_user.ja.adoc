@@ -815,7 +815,7 @@ irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
 [[colors]]
 === 色
 
-WeeChat ではバーやチャットエリアにおけるテキスト表示に 256 個の色ペアを利用できます
+WeeChat ではバーやチャットエリアにおけるテキスト表示に 32767 個の色ペアを利用できます
 (この機能を利用するには WeeChat が実行されている端末が 256 色表示に対応している必要があります)。
 
 _TERM_ 環境変数の値によって、WeeChat
@@ -824,12 +824,12 @@ _TERM_ 環境変数の値によって、WeeChat
 [width="50%",cols="8,>2,>2",options="header"]
 |===
 | $TERM                                  | 色     | ペア
-| "rxvt-unicode", "xterm", ...           |     88 |  256
-| "rxvt-256color", "xterm-256color", ... |    256 |  256
-| "screen"                               |      8 |   64
-| "screen-256color"                      |    256 |  256
-| "tmux"                                 |      8 |   64
-| "tmux-256color"                        |    256 |  256
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 | 32767
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 | 32767
 |===
 
 `weechat --colors` を実行するか、`/color` コマンドを WeeChat

@@ -815,7 +815,7 @@ We wtyczce irc, można zmienić przypisania tych kolorów za pomocą opcji
 [[colors]]
 === Kolory
 
-WeeChat może użyć do 256 par kolorów do wyświetlania tekstu w paskach i obszarze
+WeeChat może użyć do 32767 par kolorów do wyświetlania tekstu w paskach i obszarze
 rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w WeeChat).
 
 Zgodnie z wartością zmiennej środowiskowej _TERM_, możesz posiadać następujące
@@ -823,13 +823,13 @@ limity dla kolorów w WeeChat:
 
 [width="50%",cols="8,>2,>2",options="header"]
 |===
-| $TERM                                  | Kolory | Pary
-| "rxvt-unicode", "xterm", ...           |     88 |  256
-| "rxvt-256color", "xterm-256color", ... |    256 |  256
-| "screen"                               |      8 |   64
-| "screen-256color"                      |    256 |  256
-| "tmux"                                 |      8 |   64
-| "tmux-256color"                        |    256 |  256
+| $TERM                                  | Kolory |  Pary
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
+| "screen"                               |      8 |    64
+| "screen-256color"                      |    256 | 32767
+| "tmux"                                 |      8 |    64
+| "tmux-256color"                        |    256 | 32767
 |===
 
 Możesz wykonać `weechat --colors` lub użyć komendy `/color` w WeeChat, aby

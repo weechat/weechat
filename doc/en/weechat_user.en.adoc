@@ -808,7 +808,7 @@ In irc plugin, you can remap these colors using option
 [[colors]]
 === Colors
 
-WeeChat can use up to 256 color pairs to display text in bars and chat area
+WeeChat can use up to 32767 color pairs to display text in bars and chat area
 (your terminal must support 256 colors to use them in WeeChat).
 
 According to value of _TERM_ environment variable, you may have following limits
@@ -817,12 +817,12 @@ for colors in WeeChat:
 [width="50%",cols="8,>2,>2",options="header"]
 |===
 | $TERM                                  | Colors | Pairs
-| "rxvt-unicode", "xterm", ...           |     88 |   256
-| "rxvt-256color", "xterm-256color", ... |    256 |   256
+| "rxvt-unicode", "xterm", ...           |     88 | 32767
+| "rxvt-256color", "xterm-256color", ... |    256 | 32767
 | "screen"                               |      8 |    64
-| "screen-256color"                      |    256 |   256
+| "screen-256color"                      |    256 | 32767
 | "tmux"                                 |      8 |    64
-| "tmux-256color"                        |    256 |   256
+| "tmux-256color"                        |    256 | 32767
 |===
 
 You can run `weechat --colors` or use command `/color` in WeeChat to
