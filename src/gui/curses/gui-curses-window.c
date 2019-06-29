@@ -258,7 +258,7 @@ gui_window_save_style (WINDOW *window)
     ptr_pair = &ptr_saved_style->pair;
     wattr_get (window, ptr_attrs, &short_pair, EXT_COLORS_OPTS(ptr_pair));
 #ifndef NCURSES_65K_PAIRS
-    ptr_saved_style->pair = short_pair;
+    *ptr_pair = short_pair;
 #endif /* NCURSES_65K_PAIRS */
 
     /* increment style index (circular list) */
