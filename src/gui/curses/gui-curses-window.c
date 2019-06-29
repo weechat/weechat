@@ -58,11 +58,11 @@
 #include "gui-curses.h"
 
 
-#ifdef NCURSES_EXT_COLORS
+#ifdef NCURSES_65K_PAIRS
 #define EXT_COLORS_OPTS(__ptr) (__ptr)
 #else
 #define EXT_COLORS_OPTS(__ptr) (NULL)
-#endif
+#endif /* NCURSES_65K_PAIRS */
 
 
 #define GUI_WINDOW_MAX_SAVED_STYLES 32
@@ -201,13 +201,13 @@ gui_window_clear (WINDOW *window, int fg, int bg)
         bg = gui_weechat_colors[bg & GUI_COLOR_EXTENDED_MASK].background;
 
     pair = gui_color_get_pair (fg, bg);
-#ifdef NCURSES_EXT_COLORS
+#ifdef NCURSES_32K_PAIRS
     cchar_t c;
-    setcchar (&c, L" ", attrs, pair, &pair);
+    setcchar (&c, L" ", attrs, pair, EXT_COLORS_OPTS(&pair));
     wbkgrndset (window, &c);
 #else
     wbkgdset (window, ' ' | COLOR_PAIR (pair) | attrs);
-#endif
+#endif /* NCURSES_32K_PAIRS */
     werase (window);
     wmove (window, 0, 0);
 }
@@ -223,13 +223,13 @@ gui_window_clrtoeol (WINDOW *window)
 
     pair = gui_color_get_pair (gui_window_current_style_fg,
                                gui_window_current_style_bg);
-#ifdef NCURSES_EXT_COLORS
+#ifdef NCURSES_32K_PAIRS
     cchar_t c;
-    setcchar (&c, L" ", A_NORMAL, pair, &pair);
+    setcchar (&c, L" ", A_NORMAL, pair, EXT_COLORS_OPTS(&pair));
     wbkgrndset (window, &c);
 #else
     wbkgdset (window, ' ' | COLOR_PAIR (pair));
-#endif
+#endif /* NCURSES_32K_PAIRS */
     wclrtoeol (window);
 }
 
@@ -257,9 +257,9 @@ gui_window_save_style (WINDOW *window)
     short_pair = 0;
     ptr_pair = &ptr_saved_style->pair;
     wattr_get (window, ptr_attrs, &short_pair, EXT_COLORS_OPTS(ptr_pair));
-#ifndef NCURSES_EXT_COLORS
+#ifndef NCURSES_65K_PAIRS
     ptr_saved_style->pair = short_pair;
-#endif
+#endif /* NCURSES_65K_PAIRS */
 
     /* increment style index (circular list) */
     gui_window_saved_style_index++;
@@ -612,9 +612,9 @@ gui_window_emphasize (WINDOW *window, int x, int y, int count)
         short_pair = 0;
         pair = 0;
         wattr_get (window, &attrs, &short_pair, EXT_COLORS_OPTS(&pair));
-#ifndef NCURSES_EXT_COLORS
+#ifndef NCURSES_65K_PAIRS
         pair = short_pair;
-#endif
+#endif /* NCURSES_65K_PAIRS */
 
         if (config_emphasized_attributes & GUI_COLOR_EXTENDED_BOLD_FLAG)
             attrs ^= A_BOLD;

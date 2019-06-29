@@ -35,6 +35,17 @@
 #endif /* HAVE_NCURSESW_CURSES_H */
 #endif /* WEECHAT_HEADLESS */
 
+#undef NCURSES_32K_PAIRS
+#undef NCURSES_65K_PAIRS
+#ifdef NCURSES_EXT_COLORS
+#define NCURSES_32K_PAIRS 1
+#if defined(NCURSES_EXT_FUNCS) && NCURSES_VERSION_PATCH >= 20170401
+/* init_extended_pair and opts color pair are only supported since 20170401 */
+#define NCURSES_65K_PAIRS 1
+#endif /* defined(NCURSES_EXT_FUNCS) && NCURSES_VERSION_PATCH >= 20170401 */
+#endif /* NCURSES_EXT_COLORS */
+
+
 struct t_gui_buffer;
 struct t_gui_line;
 struct t_gui_window;

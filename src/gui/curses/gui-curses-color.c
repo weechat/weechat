@@ -43,11 +43,11 @@
 #include "gui-curses.h"
 
 
-#ifdef NCURSES_EXT_FUNCS
+#ifdef NCURSES_65K_PAIRS
 #define INIT_PAIR(__pair, __f, __b) (init_extended_pair (__pair, __f, __b))
 #else
 #define INIT_PAIR(__pair, __f, __b) (init_pair (__pair, __f, __b))
-#endif
+#endif /* NCURSES_65K_PAIRS */
 
 
 #define GUI_COLOR_TIMER_TERM_COLORS 10
@@ -587,12 +587,12 @@ gui_color_init_vars ()
         gui_color_term_color_pairs = COLOR_PAIRS;
         gui_color_term_can_change_color = (can_change_color ()) ? 1 : 0;
 
-#ifdef NCURSES_EXT_FUNCS
+#ifdef NCURSES_65K_PAIRS
         gui_color_num_pairs = gui_color_term_color_pairs - 1;
 #else
         gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
             32767 : gui_color_term_color_pairs - 1;
-#endif
+#endif /* NCURSES_65K_PAIRS */
         size = (gui_color_term_colors + 2)
             * (gui_color_term_colors + 2)
             * sizeof (gui_color_pairs[0]);
