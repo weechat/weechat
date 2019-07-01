@@ -9,7 +9,7 @@ Build-Depends:
     libncursesw5-dev,
     gem2deb,
     libperl-dev,
-    python-dev,
+    python3-dev,
     libaspell-dev,
     liblua5.1-0-dev,
     tcl8.6-dev,

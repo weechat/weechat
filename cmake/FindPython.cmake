@@ -33,14 +33,14 @@ if(PYTHON_FOUND)
    set(PYTHON_FIND_QUIETLY TRUE)
 endif()
 
-if(ENABLE_PYTHON3)
+if(ENABLE_PYTHON2)
   find_program(PYTHON_EXECUTABLE
-    NAMES python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+    NAMES python2.7 python2.6 python2.5 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
 else()
   find_program(PYTHON_EXECUTABLE
-    NAMES python2.7 python2.6 python2.5 python
+    NAMES python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
     )
 endif()
@@ -65,14 +65,14 @@ if(PYTHON_EXECUTABLE)
     NAMES Python.h
     HINTS ${PYTHON_INC_DIR}
     )
-  if(ENABLE_PYTHON3)
+  if(ENABLE_PYTHON2)
     find_library(PYTHON_LIBRARY
-      NAMES python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python
+      NAMES python2.7 python2.6 python2.5 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python
       HINTS ${PYTHON_POSSIBLE_LIB_PATH}
       )
   else()
     find_library(PYTHON_LIBRARY
-      NAMES python2.7 python2.6 python2.5 python
+      NAMES python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python
       HINTS ${PYTHON_POSSIBLE_LIB_PATH}
       )
   endif()

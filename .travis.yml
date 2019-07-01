@@ -8,11 +8,11 @@ compiler:
 
 env:
     - BUILDTOOL="cmake" BUILDARGS=""
-    # - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON3=ON"
+    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_GNUTLS=OFF"
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
     - BUILDTOOL="autotools" BUILDARGS=""
-    # - BUILDTOOL="autotools" BUILDARGS="--enable-python3"
+    - BUILDTOOL="autotools" BUILDARGS="--enable-python2"
     - BUILDTOOL="autotools" BUILDARGS="--disable-gnutls"
 
 matrix:

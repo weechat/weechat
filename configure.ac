@@ -153,7 +153,7 @@ AC_ARG_ENABLE(script,       [  --disable-script        turn off Script plugin (d
 AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (perl, python, ...) (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
 AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
 AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
-AC_ARG_ENABLE(python3,      [  --enable-python3        use Python 3.x if found (NOT recommended because many "official" scripts won't work) (default=off)],enable_python3=$enableval,enable_python3=no)
+AC_ARG_ENABLE(python2,      [  --enable-python2        use Python 2 first, fallback on Python 3 (default=off)],enable_python2=$enableval,enable_python2=no)
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
@@ -473,10 +473,10 @@ fi
 PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
-    if test "x$enable_python3" = "xyes" ; then
-        AC_PATH_PROGS(PYTHON, python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python2.7 python2.6 python2.5 python2 python)
+    if test "x$enable_python2" = "xyes" ; then
+        AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python)
     else
-        AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2 python)
+        AC_PATH_PROGS(PYTHON, python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3 python)
     fi
     if test -z $PYTHON ; then
         AC_MSG_WARN([

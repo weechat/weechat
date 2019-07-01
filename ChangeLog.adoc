@@ -36,6 +36,10 @@ Bug fixes::
   * irc: strip spaces at beginning/end of addresses in server option "addresses" (issue #195)
   * irc: fix display of enabled/disabled client capabilities received in command CAP ACK (issue #151)
 
+Build::
+
+  * python: compile with Python 3 by default
+
 [[v2.5]]
 == Version 2.5 (2019-06-06)
 
