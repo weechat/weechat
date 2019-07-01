@@ -17,6 +17,18 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.6]]
+== Version 2.6 (under dev)
+
+[[v2.6_python3_default]]
+=== Python 3 by default
+
+Python 3 is now used by default to compile the "python" plugin.
+
+The CMake option `ENABLE_PYTHON3` has been renamed to `ENABLE_PYTHON2`
+(configure option `--enable-python2`). If this option is enabled, the "python"
+plugin is built with Python 2 (if found), with a fallback on Python 3.
+
 [[v2.5]]
 == Version 2.5 (2019-06-06)
 
