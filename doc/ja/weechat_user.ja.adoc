@@ -256,12 +256,10 @@ CMake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   <<scripts_plugins,Python プラグイン>>のコンパイル。
 
-| ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  Python 3 で <<scripts_plugins,Python プラグイン>>をコンパイル。 +
-  このオプションの有効化は非推奨です。なぜなら、多くのスクリプトはまだ
-  Python 3 と互換性がないからです。 +
-  Python 3 への移行の進捗状況は以下のページを参照してください:
-  https://weechat.org/scripts/python3/
+// TRANSLATION MISSING
+| ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
+  Compile <<scripts_plugins,Python plugin>> using Python 2 first, then fallback
+  on Python 3 if not found.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   <<relay_plugin,リレープラグイン>>のコンパイル。

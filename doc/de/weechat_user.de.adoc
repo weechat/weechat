@@ -259,12 +259,10 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Python Erweiterung>>.
 
-| ENABLE_PYTHON3 | `ON`, `OFF` | OFF |
-  kompiliert <<scripts_plugins,Python plugin>> mit Python 3. +
-  Diese Option wird zur Zeit nicht empfohlen, da die meisten Skripten noch
-  nicht kompatible mit Python 3 sind. +
-  Den Fortschritt der Python 3 Unterstützung kann man auf dieser Seite verfolgen:
-  https://weechat.org/scripts/python3/
+// TRANSLATION MISSING
+| ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
+  Compile <<scripts_plugins,Python plugin>> using Python 2 first, then fallback
+  on Python 3 if not found.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   kompiliert <<relay_plugin,Relay Erweiterung>>.
