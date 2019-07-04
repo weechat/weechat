@@ -2452,6 +2452,13 @@ config_file_write_internal (struct t_config_file *config_file,
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
+                if (CONFIG_BOOLEAN(config_look_save_config_changed_only) &&
+                    /* TODO: bar options have user values as defaults,
+                     * would disappear because not changed */
+                    ptr_option->section != weechat_config_section_bar &&
+                    !config_file_option_has_changed (ptr_option))
+                    continue;
+
                 if (!config_file_write_option (config_file, ptr_option))
                     goto error;
             }
