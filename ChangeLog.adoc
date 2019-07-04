@@ -24,6 +24,7 @@ New features::
   * core: add option "close" in command /window (issue #853)
   * api: add argument "strip_items" in function string_split
   * exec: evaluate option exec.command.shell, change default value to "${env:SHELL}" (issue #1356)
+  * irc: return all arguments in the PONG response to a PING (issue #1369)
 
 Bug fixes::
 
