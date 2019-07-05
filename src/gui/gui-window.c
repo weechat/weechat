@@ -1780,6 +1780,7 @@ void
 gui_window_zoom (struct t_gui_window *window)
 {
     struct t_gui_layout *ptr_layout;
+    struct t_gui_buffer *ptr_buffer;
 
     if (!gui_init_ok || !window)
         return;
@@ -1791,9 +1792,12 @@ gui_window_zoom (struct t_gui_window *window)
         (void) hook_signal_send ("window_unzoom",
                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                  gui_current_window);
+        ptr_buffer = gui_current_window->buffer;
         gui_layout_window_apply (ptr_layout,
                                  ptr_layout->internal_id_current_window);
         gui_layout_remove (ptr_layout);
+        if (CONFIG_BOOLEAN(config_look_window_unzoom_keep_buffer))
+            gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 0);
         (void) hook_signal_send ("window_unzoomed",
                                  WEECHAT_HOOK_SIGNAL_POINTER,
                                  gui_current_window);

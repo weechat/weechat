@@ -191,6 +191,7 @@ struct t_config_option *config_look_separator_vertical;
 struct t_config_option *config_look_tab_width;
 struct t_config_option *config_look_time_format;
 struct t_config_option *config_look_window_auto_zoom;
+struct t_config_option *config_look_window_unzoom_keep_buffer;
 struct t_config_option *config_look_window_separator_horizontal;
 struct t_config_option *config_look_window_separator_vertical;
 struct t_config_option *config_look_window_title;
@@ -3591,6 +3592,13 @@ config_weechat_init_options ()
         N_("automatically zoom on current window if the terminal becomes too "
            "small to display all windows (use alt-z to unzoom windows when the "
            "terminal is big enough)"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_window_unzoom_keep_buffer = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "window_unzoom_keep_buffer", "boolean",
+        N_("keep current buffer when unzooming window after switching buffer "
+           "during zoom"),
         NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_window_separator_horizontal = config_file_new_option (
