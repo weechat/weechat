@@ -9140,7 +9140,7 @@ struct t_hashtable *options_url1 = weechat_hashtable_new (8,
                                                           NULL);
 if (options_url1)
 {
-    weechat_hashtable_set (options, "file_out", "/tmp/weechat.org.html");
+    weechat_hashtable_set (options_url1, "file_out", "/tmp/weechat.org.html");
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:https://weechat.org/",
                                                                      options_url1,
                                                                      20000,
@@ -9156,7 +9156,7 @@ struct t_hashtable *options_url2 = weechat_hashtable_new (8,
                                                           NULL);
 if (options_url2)
 {
-    weechat_hashtable_set (options, "httpheader",
+    weechat_hashtable_set (options_url2, "httpheader",
                            "Header1: valeur1\n"
                            "Header2: valeur2");
     struct t_hook *my_process_hook = weechat_hook_process_hashtable ("url:http://localhost:8080/",
