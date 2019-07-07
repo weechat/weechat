@@ -11,7 +11,7 @@ Build-Depends:
     libperl-dev,
     python3-dev,
     libaspell-dev,
-    liblua5.1-0-dev,
+    liblua5.3-dev,
     tcl8.6-dev,
     guile-2.0-dev,
     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],

@@ -22,7 +22,7 @@ index d3a1dad8b..4c5953e46 100644
 @@ -12,14 +11,12 @@ Build-Depends:
      python3-dev,
      libaspell-dev,
-     liblua5.1-0-dev,
+     liblua5.3-dev,
 -    tcl8.6-dev,
 +    tcl8.5-dev,
      guile-2.0-dev,
@@ -138,7 +138,7 @@ index 8fbf582b3..a30e30053 100644
 @@ -12,14 +11,12 @@ Build-Depends:
      python3-dev,
      libaspell-dev,
-     liblua5.1-0-dev,
+     liblua5.3-dev,
 -    tcl8.6-dev,
 +    tcl8.5-dev,
      guile-2.0-dev,

@@ -1,15 +1,15 @@
 diff --git a/debian-devel/compat b/debian-devel/compat
-index b4de394..ec63514 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-devel/compat
 +++ b/debian-devel/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-devel/control b/debian-devel/control
-index d3a1dad..948815c 100644
+index ffca1a17f..8ccf774c9 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
-@@ -3,8 +3,7 @@ Section: net
+@@ -3,20 +3,17 @@ Section: net
  Priority: optional
  Maintainer: Sébastien Helleu <flashcode@flashtux.org>
  Build-Depends:
@@ -19,7 +19,11 @@ index d3a1dad..948815c 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -15,8 +14,6 @@ Build-Depends:
+     libperl-dev,
+     python3-dev,
+     libaspell-dev,
+-    liblua5.3-dev,
++    liblua5.1-0-dev,
      tcl8.6-dev,
      guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
@@ -78,7 +82,7 @@ index d3a1dad..948815c 100644
  Architecture: all
 diff --git a/debian-devel/weechat-devel-php.dirs b/debian-devel/weechat-devel-php.dirs
 deleted file mode 120000
-index e4853a5..0000000
+index e4853a588..000000000
 --- a/debian-devel/weechat-devel-php.dirs
 +++ /dev/null
 @@ -1 +0,0 @@
@@ -86,24 +90,24 @@ index e4853a5..0000000
 \ No newline at end of file
 diff --git a/debian-devel/weechat-devel-php.install b/debian-devel/weechat-devel-php.install
 deleted file mode 120000
-index e358b51..0000000
+index e358b515a..000000000
 --- a/debian-devel/weechat-devel-php.install
 +++ /dev/null
 @@ -1 +0,0 @@
 -../debian-stable/weechat-php.install
 \ No newline at end of file
 diff --git a/debian-stable/compat b/debian-stable/compat
-index b4de394..ec63514 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-stable/compat
 +++ b/debian-stable/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-stable/control b/debian-stable/control
-index 8fbf582..53743f5 100644
+index 8fd0bf1a6..9cbe9d127 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
-@@ -3,8 +3,7 @@ Section: net
+@@ -3,20 +3,17 @@ Section: net
  Priority: optional
  Maintainer: Emmanuel Bouthenot <kolter@debian.org>
  Build-Depends:
@@ -113,7 +117,11 @@ index 8fbf582..53743f5 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -15,8 +14,6 @@ Build-Depends:
+     libperl-dev,
+     python3-dev,
+     libaspell-dev,
+-    liblua5.3-dev,
++    liblua5.1-0-dev,
      tcl8.6-dev,
      guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
@@ -171,14 +179,14 @@ index 8fbf582..53743f5 100644
  Architecture: all
 diff --git a/debian-stable/weechat-php.dirs b/debian-stable/weechat-php.dirs
 deleted file mode 100644
-index 6845771..0000000
+index 68457717b..000000000
 --- a/debian-stable/weechat-php.dirs
 +++ /dev/null
 @@ -1 +0,0 @@
 -usr/lib
 diff --git a/debian-stable/weechat-php.install b/debian-stable/weechat-php.install
 deleted file mode 100644
-index 0a1b735..0000000
+index 0a1b73563..000000000
 --- a/debian-stable/weechat-php.install
 +++ /dev/null
 @@ -1 +0,0 @@

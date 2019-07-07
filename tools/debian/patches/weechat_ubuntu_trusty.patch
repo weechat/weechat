@@ -20,7 +20,7 @@ index d3a1dad8b..718ae26b5 100644
      libncursesw5-dev,
      gem2deb,
 @@ -14,12 +13,10 @@ Build-Depends:
-     liblua5.1-0-dev,
+     liblua5.3-dev,
      tcl8.6-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
@@ -121,7 +121,7 @@ index 8fbf582b3..f08af5ea6 100644
      libncursesw5-dev,
      gem2deb,
 @@ -14,12 +13,10 @@ Build-Depends:
-     liblua5.1-0-dev,
+     liblua5.3-dev,
      tcl8.6-dev,
      guile-2.0-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
