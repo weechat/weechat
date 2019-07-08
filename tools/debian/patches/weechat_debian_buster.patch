@@ -1,0 +1,171 @@
+diff --git a/debian-devel/control b/debian-devel/control
+index ffca1a17f..5e93066ef 100644
+--- a/debian-devel/control
++++ b/debian-devel/control
+@@ -14,7 +14,6 @@ Build-Depends:
+     liblua5.3-dev,
+     tcl8.6-dev,
+     guile-2.0-dev,
+-    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+     php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+@@ -47,7 +46,7 @@ Description: Fast, light and extensible chat client (metapackage)
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -77,7 +76,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -108,7 +107,7 @@ Description: Fast, light and extensible chat client - headless client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -233,19 +232,6 @@ Description: Fast, light and extensible chat client - Guile plugin
+  .
+  This package provides the Guile scripting API plugin.
+ 
+-Package: weechat-devel-javascript
+-Architecture: amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386
+-Depends:
+-    ${misc:Depends},
+-    ${shlibs:Depends},
+-    weechat-devel-curses (= ${binary:Version}) | weechat-devel-headless (= ${binary:Version})
+-Conflicts: weechat-javascript
+-Description: Fast, light and extensible chat client - JavaScript plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the JavaScript scripting API plugin.
+-
+ Package: weechat-devel-php
+ Architecture: any
+ Depends:
+diff --git a/debian-devel/rules b/debian-devel/rules
+index 16a5f9516..9f6dd8106 100755
+--- a/debian-devel/rules
++++ b/debian-devel/rules
+@@ -12,6 +12,7 @@ $(BUILDDIR)/Makefile:
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_JAVASCRIPT:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+diff --git a/debian-devel/weechat-devel-javascript.dirs b/debian-devel/weechat-devel-javascript.dirs
+deleted file mode 120000
+index 1043d969a..000000000
+--- a/debian-devel/weechat-devel-javascript.dirs
++++ /dev/null
+@@ -1 +0,0 @@
+-../debian-stable/weechat-javascript.dirs
+\ No newline at end of file
+diff --git a/debian-devel/weechat-devel-javascript.install b/debian-devel/weechat-devel-javascript.install
+deleted file mode 120000
+index d6f1f4a52..000000000
+--- a/debian-devel/weechat-devel-javascript.install
++++ /dev/null
+@@ -1 +0,0 @@
+-../debian-stable/weechat-javascript.install
+\ No newline at end of file
+diff --git a/debian-stable/control b/debian-stable/control
+index 8fd0bf1a6..d8ab6f6e2 100644
+--- a/debian-stable/control
++++ b/debian-stable/control
+@@ -14,7 +14,6 @@ Build-Depends:
+     liblua5.3-dev,
+     tcl8.6-dev,
+     guile-2.0-dev,
+-    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
+     php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
+     libxml2-dev,
+     libcurl4-gnutls-dev,
+@@ -46,7 +45,7 @@ Description: Fast, light and extensible chat client (metapackage)
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -75,7 +74,7 @@ Description: Fast, light and extensible chat client - console client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -105,7 +104,7 @@ Description: Fast, light and extensible chat client - headless client
+   - 256 colors support
+   - incremental text search
+   - dynamic filtering of buffer content
+-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
++  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
+   - script manager
+   - spell checking
+   - highly customizable and extensible
+@@ -222,18 +221,6 @@ Description: Fast, light and extensible chat client - Guile plugin
+  .
+  This package provides the Guile scripting API plugin.
+ 
+-Package: weechat-javascript
+-Architecture: amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386
+-Depends:
+-    ${misc:Depends},
+-    ${shlibs:Depends},
+-    weechat-curses (= ${binary:Version}) | weechat-headless (= ${binary:Version})
+-Description: Fast, light and extensible chat client - JavaScript plugin
+- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
+- for many operating systems. Everything can be done with a keyboard.
+- .
+- This package provides the JavaScript scripting API plugin.
+-
+ Package: weechat-php
+ Architecture: any
+ Depends:
+diff --git a/debian-stable/rules b/debian-stable/rules
+index 16a5f9516..9f6dd8106 100755
+--- a/debian-stable/rules
++++ b/debian-stable/rules
+@@ -12,6 +12,7 @@ $(BUILDDIR)/Makefile:
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_JAVASCRIPT:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
+diff --git a/debian-stable/weechat-javascript.dirs b/debian-stable/weechat-javascript.dirs
+deleted file mode 100644
+index 68457717b..000000000
+--- a/debian-stable/weechat-javascript.dirs
++++ /dev/null
+@@ -1 +0,0 @@
+-usr/lib
+diff --git a/debian-stable/weechat-javascript.install b/debian-stable/weechat-javascript.install
+deleted file mode 100644
+index 6e9829e1c..000000000
+--- a/debian-stable/weechat-javascript.install
++++ /dev/null
+@@ -1 +0,0 @@
+-usr/lib/*/weechat/plugins/javascript.so

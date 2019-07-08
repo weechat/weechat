@@ -39,6 +39,7 @@ Bug fixes::
 
 Build::
 
+  * debian: disable Javascript plugin on Debian Buster/Bullseye (issue #1374)
   * python: compile with Python 3 by default
 
 [[v2.5]]
