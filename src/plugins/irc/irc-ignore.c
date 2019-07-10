@@ -164,6 +164,85 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 }
 
 /*
+ * Checks if an ignore matches a server name.
+ *
+ * Returns:
+ *   1: ignore matches the server name
+ *   0: ignore does not match the server name
+ */
+
+int
+irc_ignore_check_server (struct t_irc_ignore *ignore, const char *server)
+{
+    if (strcmp (ignore->server, "*") == 0)
+        return 1;
+
+    return (weechat_strcasecmp (ignore->server, server) == 0) ? 1 : 0;
+}
+
+/*
+ * Checks if an ignore matches a channel name (or a nick if the channel name
+ * is not a valid channel name).
+ *
+ * Returns:
+ *   1: ignore matches the channel name
+ *   0: ignore does not match the channel name
+ */
+
+int
+irc_ignore_check_channel (struct t_irc_ignore *ignore,
+                          struct t_irc_server *server,
+                          const char *channel, const char *nick)
+{
+    if (!channel || (strcmp (ignore->channel, "*") == 0))
+        return 1;
+
+    if (irc_channel_is_channel (server, channel))
+        return (weechat_strcasecmp (ignore->channel, channel) == 0) ? 1 : 0;
+
+    if (nick)
+        return (weechat_strcasecmp (ignore->channel, nick) == 0) ? 1 : 0;
+
+    return 0;
+}
+
+/*
+ * Checks if an ignore matches a host.
+ *
+ * Returns:
+ *   1: ignore matches the host
+ *   0: ignore does not match the host
+ */
+
+int
+irc_ignore_check_host (struct t_irc_ignore *ignore,
+                       const char *nick, const char *host)
+{
+    const char *pos;
+
+    if (nick && (regexec (ignore->regex_mask, nick, 0, NULL, 0) == 0))
+        return 1;
+
+    if (host)
+    {
+        if (regexec (ignore->regex_mask, host, 0, NULL, 0) == 0)
+            return 1;
+
+        if (!strchr (ignore->mask, '!'))
+        {
+            pos = strchr (host, '!');
+            if (pos && (regexec (ignore->regex_mask, pos + 1,
+                                 0, NULL, 0) == 0))
+            {
+                return 1;
+            }
+        }
+    }
+
+    return 0;
+}
+
+/*
  * Checks if a message (from an IRC server) should be ignored or not.
  *
  * Returns:
@@ -176,8 +255,6 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
                   const char *nick, const char *host)
 {
     struct t_irc_ignore *ptr_ignore;
-    int server_match, channel_match;
-    char *pos;
 
     if (!server)
         return 0;
@@ -195,47 +272,11 @@ irc_ignore_check (struct t_irc_server *server, const char *channel,
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        if (strcmp (ptr_ignore->server, "*") == 0)
-            server_match = 1;
-        else
-            server_match = (weechat_strcasecmp (ptr_ignore->server,
-                                                server->name) == 0);
-
-        channel_match = 0;
-        if (!channel || (strcmp (ptr_ignore->channel, "*") == 0))
-            channel_match = 1;
-        else
+        if (irc_ignore_check_server (ptr_ignore, server->name)
+            && irc_ignore_check_channel (ptr_ignore, server, channel, nick))
         {
-            if (irc_channel_is_channel (server, channel))
-            {
-                channel_match = (weechat_strcasecmp (ptr_ignore->channel,
-                                                     channel) == 0);
-            }
-            else if (nick)
-            {
-                channel_match = (weechat_strcasecmp (ptr_ignore->channel,
-                                                     nick) == 0);
-            }
-        }
-
-        if (server_match && channel_match)
-        {
-            if (nick && (regexec (ptr_ignore->regex_mask, nick, 0, NULL, 0) == 0))
+            if (irc_ignore_check_host (ptr_ignore, nick, host))
                 return 1;
-            if (host)
-            {
-                if (regexec (ptr_ignore->regex_mask, host, 0, NULL, 0) == 0)
-                    return 1;
-                if (!strchr (ptr_ignore->mask, '!'))
-                {
-                    pos = strchr (host, '!');
-                    if (pos && (regexec (ptr_ignore->regex_mask, pos + 1,
-                                         0, NULL, 0) == 0))
-                    {
-                        return 1;
-                    }
-                }
-            }
         }
     }
 

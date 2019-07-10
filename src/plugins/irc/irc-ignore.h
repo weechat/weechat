@@ -37,6 +37,7 @@ struct t_irc_ignore
 };
 
 extern struct t_irc_ignore *irc_ignore_list;
+extern struct t_irc_ignore *last_irc_ignore;
 
 extern int irc_ignore_valid (struct t_irc_ignore *ignore);
 extern struct t_irc_ignore *irc_ignore_search (const char *mask,
@@ -46,6 +47,14 @@ extern struct t_irc_ignore *irc_ignore_search_by_number (int number);
 extern struct t_irc_ignore *irc_ignore_new (const char *mask,
                                             const char *server,
                                             const char *channel);
+extern int irc_ignore_check_server (struct t_irc_ignore *ignore,
+                                    const char *server);
+extern int irc_ignore_check_channel (struct t_irc_ignore *ignore,
+                                     struct t_irc_server *server,
+                                     const char *channel,
+                                     const char *nick);
+extern int irc_ignore_check_host (struct t_irc_ignore *ignore,
+                                  const char *nick, const char *host);
 extern int irc_ignore_check (struct t_irc_server *server,
                              const char *channel, const char *nick,
                              const char *host);
