@@ -402,7 +402,10 @@ WeeChat "core" is located in following directories:
 |          test-gui-line.cpp        | Tests: lines.
 |       plugins/                    | Root of unit tests for plugins.
 |          irc/                     | Root of unit tests for IRC plugin.
+|             test-irc-color.cpp    | Tests: IRC colors.
 |             test-irc-config.cpp   | Tests: IRC configuration.
+|             test-irc-ignore.cpp   | Tests: IRC ignores.
+|             test-irc-mode.cpp     | Tests: IRC modes.
 |             test-irc-protocol.cpp | Tests: IRC protocol.
 
 |===

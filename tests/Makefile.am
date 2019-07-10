@@ -63,6 +63,7 @@ lib_LTLIBRARIES = lib_weechat_unit_tests_plugins.la
 
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/irc/test-irc-color.cpp \
                                             unit/plugins/irc/test-irc-config.cpp \
+                                            unit/plugins/irc/test-irc-ignore.cpp \
                                             unit/plugins/irc/test-irc-mode.cpp \
                                             unit/plugins/irc/test-irc-protocol.cpp
 

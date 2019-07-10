@@ -37,6 +37,10 @@ Bug fixes::
   * irc: strip spaces at beginning/end of addresses in server option "addresses" (issue #195)
   * irc: fix display of enabled/disabled client capabilities received in command CAP ACK (issue #151)
 
+Tests::
+
+  * unit: add tests on IRC ignore functions
+
 Build::
 
   * debian: disable Javascript plugin on Debian Buster/Bullseye (issue #1374)
