@@ -29,6 +29,7 @@
 #include "buflist-bar-item.h"
 #include "buflist-command.h"
 #include "buflist-config.h"
+#include "buflist-info.h"
 #include "buflist-mouse.h"
 
 
@@ -505,6 +506,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     weechat_hook_signal ("perl_script_loaded",
                          &buflist_script_loaded_cb, NULL, NULL);
+
+    buflist_info_init ();
 
     return WEECHAT_RC_OK;
 }
