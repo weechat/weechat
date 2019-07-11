@@ -22,6 +22,7 @@ buflist.c buflist.h
 buflist-bar-item.c buflist-bar-item.h
 buflist-command.c buflist-command.h
 buflist-config.c buflist-config.h
+buflist-info.c buflist-info.h
 buflist-mouse.c buflist-mouse.h)
 set_target_properties(buflist PROPERTIES PREFIX "")
 

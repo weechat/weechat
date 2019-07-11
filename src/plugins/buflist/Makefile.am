@@ -31,6 +31,8 @@ buflist_la_SOURCES = buflist.c \
                      buflist-command.h \
                      buflist-config.c \
                      buflist-config.h \
+                     buflist-info.c \
+                     buflist-info.h \
                      buflist-mouse.c \
                      buflist-mouse.h
 
