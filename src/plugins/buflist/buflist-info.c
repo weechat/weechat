@@ -2,6 +2,7 @@
  * buflist-info.c - infolist hook for buflist plugin
  *
  * Copyright (C) 2019 Simmo Saan <simmo.saan@gmail.com>
+ * Copyright (C) 2019 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -62,6 +63,8 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
     int item_index, i, size;
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
+    struct t_hdata *hdata_buffer;
+    void *gui_buffers;
 
     /* make C compiler happy */
     (void) pointer;
@@ -85,15 +88,23 @@ buflist_info_infolist_buflist_cb (const void *pointer, void *data,
     if (!ptr_infolist)
         return NULL;
 
+    hdata_buffer = weechat_hdata_get ("buffer");
+    gui_buffers = weechat_hdata_get_list (hdata_buffer, "gui_buffers");
+
     /* build list with all buffers in buflist */
     size = weechat_arraylist_size (buflist_list_buffers[item_index]);
     for (i = 0; i < size; i++)
     {
         ptr_buffer = weechat_arraylist_get (buflist_list_buffers[item_index], i);
-        if (!buflist_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
+
+        /* check if ptr_buffer is still valid (buffer not closed) */
+        if (weechat_hdata_check_pointer (hdata_buffer, gui_buffers, ptr_buffer))
         {
-            weechat_infolist_free (ptr_infolist);
-            return NULL;
+            if (!buflist_buffer_add_to_infolist (ptr_infolist, ptr_buffer))
+            {
+                weechat_infolist_free (ptr_infolist);
+                return NULL;
+            }
         }
     }
     return ptr_infolist;
