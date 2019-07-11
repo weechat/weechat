@@ -13034,8 +13034,8 @@ weechat.prnt("", "current window is at position (x,y): (%d,%d)"
 
 [source,C]
 ----
-int weechat_window_get_string (struct t_gui_window *window,
-                               const char *property);
+const char *weechat_window_get_string (struct t_gui_window *window,
+                                       const char *property);
 ----
 
 引数:
