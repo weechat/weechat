@@ -13381,6 +13381,14 @@ Valeur de retour :
 
 * valeur de la propriété, sous forme de chaîne
 
+Script (Python) :
+
+[source,python]
+----
+# prototype
+value = weechat.window_get_string(buffer, property)
+----
+
 ==== window_get_pointer
 
 Retourner la valeur d'une propriété, sous forme d'un pointeur.

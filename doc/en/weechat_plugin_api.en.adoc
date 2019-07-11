@@ -13086,6 +13086,14 @@ Return value:
 
 * string value of property
 
+Script (Python):
+
+[source,python]
+----
+# prototype
+value = weechat.window_get_string(window, property)
+----
+
 ==== window_get_pointer
 
 Return pointer value of a window property.

@@ -13635,6 +13635,14 @@ Valore restituito:
 
 * valore stringa della proprietà
 
+Script (Python):
+
+[source,python]
+----
+# prototipo
+value = weechat.window_get_string(buffer, property)
+----
+
 ==== window_get_pointer
 
 Restituisce il valore puntatore della proprietà di una finestra.

@@ -13047,6 +13047,14 @@ const char *weechat_window_get_string (struct t_gui_window *window,
 
 * プロパティの文字列値
 
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+value = weechat.window_get_string(buffer, property)
+----
+
 ==== window_get_pointer
 
 ウィンドウプロパティのポインタ値を返す。
