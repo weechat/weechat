@@ -281,6 +281,30 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 * C 言語での使用例、
 * Python スクリプトでの使用例 (他のスクリプト言語を使う場合も文法は似ています)。
 
+// TRANSLATION MISSING
+[[registering]]
+=== Registering
+
+Functions to register a script: used only by scripting API, not the C API.
+
+==== register
+
+Register the script.
+
+For more information, see the
+link:weechat_scripting.ja.html#register_function[WeeChat scripting guide].
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+weechat.register(name, author, version, license, description, shutdown_function, charset)
+----
+
+[NOTE]
+This function is not available in the C API.
+
 [[plugins]]
 === プラグイン
 

@@ -280,6 +280,31 @@ Pour chaque fonction, on donne :
 * un exemple en script Python (la syntaxe pour les autres langages de script est
   similaire).
 
+// TRANSLATION MISSING
+[[registering]]
+=== Enregistrement
+
+Functions pour enregistrer un script : utilisées seulement par l'API script,
+pas l'API C.
+
+==== register
+
+Enregistrer le script.
+
+Pour plus d'informations, voir le
+link:weechat_scripting.fr.html#register_function[Guide pour scripts WeeChat].
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.register(name, author, version, license, description, shutdown_function, charset)
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API C.
+
 [[plugins]]
 === Extensions
 
