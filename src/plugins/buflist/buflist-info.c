@@ -118,8 +118,8 @@ void
 buflist_info_init ()
 {
     weechat_hook_infolist (
-        "buflist", N_("list of buffers in a buflist"),
+        "buflist", N_("list of buffers in a buflist bar item"),
         NULL,
-        N_("buflist item name (optional)"),
+        N_("buflist bar item name (optional)"),
         &buflist_info_infolist_buflist_cb, NULL, NULL);
 }

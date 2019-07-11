@@ -10,6 +10,8 @@
 
 | alias | alias_default | list of default aliases | - | -
 
+| buflist | buflist | list of buffers in a buflist bar item | - | buflist bar item name (optional)
+
 | fset | fset_option | list of fset options | fset option pointer (optional) | option name (wildcard "*" is allowed) (optional)
 
 | guile | guile_script | elenco degli script | puntatore allo script (opzionale) | script name (wildcard "*" is allowed) (optional)

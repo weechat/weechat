@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-06-22 08:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -5874,6 +5874,14 @@ msgid ""
 msgstr ""
 "format dla numeru bufora, ${number} to wyrównany numr (uwaga: zawartość jest "
 "przetwarzana, zobacz /help buflist)"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "lista buforów w hotliście"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "wskaźnik elementu modlisty (opcjonalne)"
 
 msgid "Charset conversions"
 msgstr "Konwersja kodowania"

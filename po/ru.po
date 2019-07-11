@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4670,6 +4670,14 @@ msgid ""
 "format for buffer number, ${number} is the indented number (note: content is "
 "evaluated, see /help buflist)"
 msgstr "ник, используемый на IRC сервере"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "максимальная длина имён в хотлисте"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "настроить параметры конфигурации"
 
 #, fuzzy
 msgid "Charset conversions"

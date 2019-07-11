@@ -10,6 +10,8 @@
 
 | alias | alias_default | lista domyślnych aliasów | - | -
 
+| buflist | buflist | list of buffers in a buflist bar item | - | buflist bar item name (optional)
+
 | fset | fset_option | lista opcji fset | wskaźnik opcji fset (opcjonalne) | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
 
 | guile | guile_script | lista skryptów | wskaźnik skryptu (opcjonalne) | nazwa skryptu (wildcard "*" jest dozwolony) (opcjonalne)

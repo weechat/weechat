@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5271,6 +5271,14 @@ msgid ""
 msgstr ""
 "comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
 "(nota: conteúdo é avaliado, veja /help eval)"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "lista de buffers na lista de atividade"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "ponteiro do item da barra (opcional)"
 
 #, fuzzy
 msgid "Charset conversions"

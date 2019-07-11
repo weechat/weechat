@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-06-22 08:39+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -6160,6 +6160,14 @@ msgstr ""
 "Format für die Darstellung der Buffernummer, hierbei ist die Variable "
 "${number} die eingerückte Nummer (Hinweis: Inhalt wird evaluiert, siehe /"
 "help buflist)"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "Liste der Buffer in Hotlist"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "Modelist Item Pointer (optional)"
 
 msgid "Charset conversions"
 msgstr "Zeichensatzkonvertierung"

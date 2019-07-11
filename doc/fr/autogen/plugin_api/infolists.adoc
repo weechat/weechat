@@ -10,6 +10,8 @@
 
 | alias | alias_default | liste des alias par défaut | - | -
 
+| buflist | buflist | liste des tampons dans un objet de barre buflist | - | nom d'objet de barre buflist (optionnel)
+
 | fset | fset_option | liste des options fset | pointeur vers l'option fset (optionnel) | nom d'option (le caractère joker "*" est autorisé) (optionnel)
 
 | guile | guile_script | liste des scripts | pointeur vers le script (optionnel) | nom de script (le caractère joker "*" est autorisé) (optionnel)

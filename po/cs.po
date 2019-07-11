@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5092,6 +5092,14 @@ msgid ""
 "format for buffer number, ${number} is the indented number (note: content is "
 "evaluated, see /help buflist)"
 msgstr "příkaz spuštěný při startu WeeChat, před načtením pluginů"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "seznam bufferů v hotlistu"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "ukazatel položky pole (volitelný)"
 
 msgid "Charset conversions"
 msgstr "konverze znakové sady"

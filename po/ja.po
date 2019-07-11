@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-06-22 08:38+0200\n"
+"POT-Creation-Date: 2019-07-11 07:28+0200\n"
 "PO-Revision-Date: 2019-06-22 08:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5760,6 +5760,14 @@ msgid ""
 msgstr ""
 "バッファ番号の表示書式、${number} はインデント済み番号です (注意: 値は評価さ"
 "れます、/help eval を参照してください)"
+
+#, fuzzy
+msgid "list of buffers in a buflist bar item"
+msgstr "ホットリストに含まれるバッファ"
+
+#, fuzzy
+msgid "buflist bar item name (optional)"
+msgstr "モードリスト要素のポインタ (任意)"
 
 msgid "Charset conversions"
 msgstr "文字セット変換"

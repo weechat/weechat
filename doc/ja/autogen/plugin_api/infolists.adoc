@@ -10,6 +10,8 @@
 
 | alias | alias_default | デフォルトで定義された別名のリスト | - | -
 
+| buflist | buflist | list of buffers in a buflist bar item | - | buflist bar item name (optional)
+
 | fset | fset_option | fset オプションのリスト | fset オプションポインタ (任意) | オプション名 (ワイルドカード "*" を使うことができます) (任意)
 
 | guile | guile_script | スクリプトのリスト | スクリプトポインタ (任意) | スクリプト名 (ワイルドカード "*" を使うことができます) (任意)
