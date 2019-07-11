@@ -23,6 +23,7 @@ New features::
   * core: add support of 32767 color pairs (issue #1343, issue #1345)
   * core: add option "close" in command /window (issue #853)
   * api: add argument "strip_items" in function string_split
+  * buflist: add infolist "buflist" with list of buffer pointers (issue #1375)
   * exec: evaluate option exec.command.shell, change default value to "${env:SHELL}" (issue #1356)
 
 Bug fixes::
