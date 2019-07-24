@@ -274,8 +274,8 @@ pseudo : pseudo ou masque (le caractère joker "*" est autorisé)
         del : supprimer un ignore
      numéro : numéro du ignore à supprimer (voir la liste des ignore pour le trouver)
        -all : supprimer tous les ignores
-    serveur : nom de serveur interne où le ignore fonctionnera
-      canal : canal où le ignore fonctionnera
+    serveur : nom de serveur interne où l'ignore fonctionnera
+      canal : canal où l'ignore fonctionnera
 
 Note : l'expression régulière peut commencer par "(?-i)" pour devenir sensible à la casse.
 

@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-07-11 07:28+0200\n"
-"PO-Revision-Date: 2019-07-11 07:28+0200\n"
+"PO-Revision-Date: 2019-07-24 18:45+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7490,7 +7490,7 @@ msgstr "  %s[%s%d%s]%s masque : %s / serveur : %s / canal : %s"
 
 #, c-format
 msgid "%s: ignore list:"
-msgstr "%s : liste ignore :"
+msgstr "%s : liste d'ignore :"
 
 #, c-format
 msgid "%s: no ignore in list"
@@ -7498,7 +7498,7 @@ msgstr "%s : pas d'ignore dans la liste"
 
 #, c-format
 msgid "%s%s: ignore already exists"
-msgstr "%s%s : le ignore existe déjà"
+msgstr "%s%s : l'ignore existe déjà"
 
 #, c-format
 msgid "%s: ignore added:"
@@ -7510,7 +7510,7 @@ msgstr "%s%s : erreur d'ajout du ignore"
 
 #, c-format
 msgid "%s: all ignores deleted"
-msgstr "%s : ignores supprimés"
+msgstr "%s : tous les ignores supprimés"
 
 #, c-format
 msgid "%s: ignore \"%s\" deleted"
@@ -8174,8 +8174,8 @@ msgstr ""
 "     numéro : numéro du ignore à supprimer (voir la liste des ignore pour le "
 "trouver)\n"
 "       -all : supprimer tous les ignores\n"
-"    serveur : nom de serveur interne où le ignore fonctionnera\n"
-"      canal : canal où le ignore fonctionnera\n"
+"    serveur : nom de serveur interne où l'ignore fonctionnera\n"
+"      canal : canal où l'ignore fonctionnera\n"
 "\n"
 "Note : l'expression régulière peut commencer par \"(?-i)\" pour devenir "
 "sensible à la casse.\n"
