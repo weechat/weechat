@@ -30,6 +30,8 @@ before_script:
     - travis_retry sudo gem install asciidoctor
     - travis_retry sudo -H pip install --ignore-installed msgcheck pylint
     - phpenv local system
+      # work around broken travis environment variables, see https://github.com/travis-ci/travis-ci/issues/5301
+    - unset PYTHON_CFLAGS
 
 script:
     - ./tools/build-test.sh
