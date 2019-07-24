@@ -23,9 +23,9 @@ weechat-python-api.c weechat-python-api.h)
 set_target_properties(python PROPERTIES PREFIX "")
 
 if(PYTHON_FOUND)
-  include_directories(${PYTHON_INCLUDE_PATH})
-  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PYTHON_LFLAGS}")
-  target_link_libraries(python ${PYTHON_LIBRARY} weechat_plugins_scripts coverage_config)
+  include_directories(${PYTHON_INCLUDE_DIRS})
+  set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PYTHON_LDFLAGS}")
+  target_link_libraries(python ${PYTHON_LIBRARIES} weechat_plugins_scripts coverage_config)
 endif()
 
 install(TARGETS python LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
