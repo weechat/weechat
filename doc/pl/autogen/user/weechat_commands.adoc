@@ -194,30 +194,35 @@ komenda: komenda do wywołania ( '/' jest automatycznie dodawane jeśli nie wyst
          move up|down|left|right|area_up|area_down|area_left|area_right
          stop
 
-  go: przesuwa kursor do obszaru rozmowy, paska (używając nazwy paska) lub położenia "x,y"
-move: przesuwa kursor w kierunku
-stop: wyłącza tryb kursora
+  go: move cursor to chat area, a bar (using bar name) or coordinates "x,y"
+move: move cursor with direction
+stop: stop cursor mode
 
-Bez argumentu komenda przełącza obsługę kursora.
+Without argument, this command toggles cursor mode.
 
-Kiedy obsługa myszy jest włączona (zobacz /help mouse), domyślnie wciśnięcie środkowego przycisku włącza tryb kursora we wskazanym punkcie.
+When mouse is enabled (see /help mouse), by default a middle click will start cursor mode at this point.
 
-Domyślne skróty dla trybu kursora w oknie rozmowy:
-  m  cytuj wiadomość
-  q  cytuj prefiks + wiadomość
-  Q  cytuj czas + prefiks + wiadomość
+Default keys in cursor mode on chat messages:
+  m  quote message
+  q  quote prefix + message
+  Q  quote time + prefix + message
 
-Domyślne skróty dla trybu kursora na liście nicków:
-  b  zbanuj nick (/ban)
-  k  wykop nick (/kick)
-  K  wykop i zbanuj nick (/kickban)
-  q  otworz okno prywatnej rozmowy (/query)
-  w  zapytaj o informacje o użytkowniku (/whois)
+Default keys in cursor mode on nicklist:
+  b  ban nick (/ban)
+  k  kick nick (/kick)
+  K  kick and ban nick (/kickban)
+  q  open query with nick (/query)
+  w  query information about user (/whois)
 
-Przykłady:
-  przejdź do listy nicków:
+Other default keys in cursor mode:
+  arrow      move cursor
+  alt+arrow  move cursor to the next area
+  enter      exit cursor mode
+
+Examples:
+  go to nicklist:
     /cursor go nicklist
-  przejdź do współrzędnych x=10, y=5:
+  go to coordinates x=10, y=5:
     /cursor go 10,5
 ----
 

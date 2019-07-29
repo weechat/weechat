@@ -214,6 +214,11 @@ Touches par défaut dans le mode curseur sur la liste de pseudos :
   q  ouvrir une discussion privée avec le pseudo (/query)
   w  demander les informations sur l'utilisateur (/whois)
 
+Autres touches par défaut dans le mode curseur :
+  flèche      déplacer le curseur
+  alt+flèche  déplacer le curseur vers la zone suivante
+  entrée      sortir du mode curseur
+
 Exemples :
   aller dans la liste des pseudos :
     /cursor go nicklist

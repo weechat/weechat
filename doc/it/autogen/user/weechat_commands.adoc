@@ -214,6 +214,11 @@ Default keys in cursor mode on nicklist:
   q  open query with nick (/query)
   w  query information about user (/whois)
 
+Other default keys in cursor mode:
+  arrow      move cursor
+  alt+arrow  move cursor to the next area
+  enter      exit cursor mode
+
 Examples:
   go to nicklist:
     /cursor go nicklist
