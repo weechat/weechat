@@ -28,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix memory leak in case of error when building content of bar item for display (issue #1384)
   * core: send command line parameter to plugins only if the name starts with the plugin name followed by a colon
   * core: auto disable upgrade process (command line option "--upgrade") if the file weechat.upgrade is not found
   * core: replace newlines by spaces in argument "completion" of function hook_command (issue #538)
