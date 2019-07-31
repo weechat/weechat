@@ -36,6 +36,7 @@ Alphabetically:
 * Dominik Honnef
 * Dominique Martinet
 * Eduardo Elias
+* Eli Schwartz
 * Elizabeth Myers (Elizacat)
 * Elián Hanisch (m4v)
 * Emanuele Giaquinta
