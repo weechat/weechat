@@ -135,8 +135,9 @@ recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
 larges. +
 ^(3)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
 ECDSA-NIST256P-CHALLENGE. +
-^(4)^ La version recommandée de Python est 2.7 (tous les scripts tournent bien
-avec la version 2.7, mais pas avec les versions < 2.7 ou ≥ 3.0).
+^(4)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
+`ENABLE_PYTHON2` (voir ci-dessous), seule la version 2.7 de Python est
+recommandée.
 
 Si vous utilisez une distribution basée sur Debian ou Ubuntu, et si vous avez
 des entrées source "deb-src" dans votre fichier _/etc/apt/sources.list_, vous

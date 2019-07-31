@@ -160,8 +160,9 @@ you may experience display bugs with wide chars. +
 // TRANSLATION MISSING
 ^(3)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE. +
-^(4)^ La versione raccomandata di Python è la 2.7 (tutti gli script funzionano
-correttamente con la versione 2.7, ma non con le versioni < 2.7 o ≥ 3.0).
+// TRANSLATION MISSING
+^(4)^ By default Python 3.x is used. If you enable option `ENABLE_PYTHON2` (see
+below), only the version 2.7 of Python is recommended.
 
 // TRANSLATION MISSING
 If you are using a Debian/Ubuntu based distribution, and if you have some

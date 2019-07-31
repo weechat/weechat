@@ -137,8 +137,9 @@ WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecan
 możesz doświadczyć błędów wyświetlania. +
 ^(3)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE. +
-^(4)^ Zalecana wersja Pythona to 2.7 (wszystkie skrypty działają z wersją 2.7,
-ale nie w wersjami < 2.7 lub ≥ 3.0).
+// TRANSLATION MISSING
+^(4)^ By default Python 3.x is used. If you enable option `ENABLE_PYTHON2` (see
+below), only the version 2.7 of Python is recommended.
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
 "deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
