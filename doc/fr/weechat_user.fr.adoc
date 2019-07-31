@@ -256,8 +256,8 @@ Liste des options couramment utilisées :
   Compiler <<scripts_plugins,l'extension Python>>.
 
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compiler <<scripts_plugins,l'extension Python>> avec Python 2 en priorité,
-  et utiliser Python 3 s'il n'est pas trouvé.
+  Compiler <<scripts_plugins,l'extension Python>> avec Python 2 au lieu de
+  Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compiler <<relay_plugin,l'extension Relay>>.

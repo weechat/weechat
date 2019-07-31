@@ -252,8 +252,7 @@ List of commonly used options:
   Compile <<scripts_plugins,Python plugin>>.
 
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 2 first, then fallback
-  on Python 3 if not found.
+  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Compile <<relay_plugin,Relay plugin>>.

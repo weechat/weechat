@@ -259,9 +259,9 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Python Erweiterung>>.
 
+// TRANSLATION MISSING
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  kompiliert <<scripts_plugins,Python plugin>> zuerst mittles Python 2 , fällt dann
-  zurück auf Python 3, falls nicht vorhanden.
+  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   kompiliert <<relay_plugin,Relay Erweiterung>>.
