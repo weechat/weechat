@@ -475,67 +475,17 @@ PYTHON_VERSION=
 
 if test "x$enable_python" = "xyes" ; then
     if test "x$enable_python2" = "xyes" ; then
-        PKG_CHECK_MODULES(PYTHON, [python2], [PYTHON_FOUND=yes], [PYTHON_FOUND=no])
-        AC_PATH_PROGS(PYTHON, python2.7 python2.6 python2.5 python2)
+        PKG_CHECK_MODULES(PYTHON, [python2], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python2`], [PYTHON_FOUND=no])
     else
-        PKG_CHECK_MODULES(PYTHON, [python3], [PYTHON_FOUND=yes], [PYTHON_FOUND=no])
-        AC_PATH_PROGS(PYTHON, python3.7 python3.6 python3.5 python3.4 python3.3 python3.2 python3.1 python3.0 python3)
+        PKG_CHECK_MODULES(PYTHON, [python3], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python3`], [PYTHON_FOUND=no])
     fi
-    if test -z $PYTHON && test "x$PYTHON_FOUND" != "xyes" ; then
+    if test "x$PYTHON_FOUND" != "xyes" ; then
         AC_MSG_WARN([
 *** Python must be installed on your system but python interpreter couldn't be found in path.
 *** Please check that python is in path, or install it with your software package manager.
 *** WeeChat will be built without Python support.])
         enable_python="no"
         not_found="$not_found python"
-    elif test "x$PYTHON_FOUND" != "xyes"; then
-        PYTHON_SYSPREFIX=`$PYTHON -c 'import sys; sys.stdout.write("%s" % sys.prefix)'`
-        PYTHON_VERSION=`$PYTHON -c 'import sys; sys.stdout.write(sys.version[[:3]])'`
-        PYTHON_INCLUDE=`$PYTHON -c "import sys, distutils.sysconfig, string; sys.stdout.write(distutils.sysconfig.get_config_var('INCLUDEPY'))"`
-        PYTHON_OLD_VERSION=`$PYTHON -c "import sys; sys.stdout.write(str(sys.version_info < (2,5)))"`
-        if test "x$PYTHON_OLD_VERSION" = "xTrue" ; then
-            AC_MSG_WARN([
-*** Python >= 2.5 is needed to build Python plugin, version found: $PYTHON_VERSION.
-*** WeeChat will be built without Python support.])
-            enable_python="no"
-            not_found="$not_found python"
-        else
-            AC_MSG_CHECKING(for Python header files)
-            if test -r "$PYTHON_INCLUDE/Python.h"; then
-                PYTHON_CFLAGS="-I$PYTHON_INCLUDE"
-                AC_MSG_RESULT(found)
-                PYTHON_LIB=`$PYTHON -c "import sys, distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_config_var('LIBPL'))"`
-                PYTHON_LIBS="-lpython$PYTHON_VERSION "`$PYTHON -c "import sys, distutils.sysconfig; sys.stdout.write(distutils.sysconfig.get_config_var('LIBS')+' '+distutils.sysconfig.get_config_var('SYSLIBS')+' '+distutils.sysconfig.get_config_var('LINKFORSHARED'))"`
-                AC_MSG_CHECKING(for Python library)
-                if test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.so"; then
-                   PYTHON_LIBS="-L$PYTHON_LIB $PYTHON_LIBS"
-                   AC_MSG_RESULT(found)
-                elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.a"; then
-                   PYTHON_LIBS="-L$PYTHON_LIB $PYTHON_LIBS"
-                   AC_MSG_RESULT(found)
-                elif test -r "$PYTHON_LIB/libpython$PYTHON_VERSION.dll.a"; then
-                   PYTHON_LIBS="-L$PYTHON_LIB $PYTHON_LIBS"
-                   AC_MSG_RESULT(found)
-                elif test -r "$PYTHON_SYSPREFIX/lib/libpython$PYTHON_VERSION.so"; then
-                   PYTHON_LIBS="-L$PYTHON_SYSPREFIX/lib/ $PYTHON_LIBS"
-                   AC_MSG_RESULT(found)
-                else
-                    AC_MSG_WARN([
-*** Python library couldn't be found on your system.
-*** Try to install it with your software package manager.
-*** WeeChat will be built without Python support.])
-                    enable_python="no"
-                    not_found="$not_found python"
-                fi
-            else
-                AC_MSG_WARN([
-*** Python header files couldn't be found on your system.
-*** Try to install them with your software package manager.
-*** WeeChat will be built without Python support.])
-                enable_python="no"
-                not_found="$not_found python"
-            fi
-        fi
     fi
 else
     not_asked="$not_asked python"
@@ -544,6 +494,7 @@ fi
 if test "x$enable_python" = "xyes" ; then
     AC_SUBST(PYTHON_CFLAGS)
     AC_SUBST(PYTHON_LIBS)
+    AC_SUBST(PYTHON_VERSION)
     AC_DEFINE(PLUGIN_PYTHON)
 fi
 
