@@ -138,9 +138,8 @@ aber dies wird *NICHT* empfohlen:
 Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
-// TRANSLATION MISSING
-^(4)^ By default Python 3.x is used. If you enable option `ENABLE_PYTHON2` (see
-below), only the version 2.7 of Python is recommended.
+^(4)^ standardmäßig wird Python 3.x verwendet. Wird die Option `ENABLE_PYTHON2` aktiviert
+(siehe unten), sollte die Version 2.7 von Python genutzt werden.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
 "deb-src" Quelleintrag in _/etc/apt/sources.list_ eingetragen hat, dann ist
@@ -213,7 +212,7 @@ Liste von häufig verwendeten Optionen:
   erstellt die HTML Dokumentation.
 
 | ENABLE_ENCHANT | `ON`, `OFF` | OFF |
-  kompiliert <<spell_plugin,Spell plugin>> mittels Enchant.
+  kompiliert <<spell_plugin,Spell Erweiterung>> mittels Enchant.
 
 | ENABLE_EXEC | `ON`, `OFF` | ON |
   kompiliert <<exec_plugin,Exec Erweiterung>>.
@@ -260,9 +259,8 @@ Liste von häufig verwendeten Optionen:
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Python Erweiterung>>.
 
-// TRANSLATION MISSING
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
+  kompiliert <<scripts_plugins,Python Erweiterung>> nutzt Python 2 anstelle von Python 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   kompiliert <<relay_plugin,Relay Erweiterung>>.
