@@ -495,6 +495,9 @@ irc_message_get_address_from_host (const char *host)
     char host2[256], *pos_space, *pos;
     const char *ptr_host;
 
+    if (!host)
+        return NULL;
+
     address[0] = '\0';
     if (host)
     {

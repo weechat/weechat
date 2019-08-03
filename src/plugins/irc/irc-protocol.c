@@ -914,7 +914,7 @@ IRC_PROTOCOL_CALLBACK(chghost)
                     nick,
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_CHAT_HOST,
-                    address,
+                    (address) ? address : "",
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_MESSAGE_CHGHOST,
                     IRC_COLOR_CHAT_HOST,
