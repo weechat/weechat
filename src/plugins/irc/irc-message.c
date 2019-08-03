@@ -336,7 +336,7 @@ struct t_hashtable *
 irc_message_parse_to_hashtable (struct t_irc_server *server,
                                 const char *message)
 {
-    char *tags,*message_without_tags, *nick, *host, *command, *channel;
+    char *tags, *message_without_tags, *nick, *host, *command, *channel;
     char *arguments, *text, str_pos[32];
     char empty_str[1] = { '\0' };
     int pos_command, pos_arguments, pos_channel, pos_text;
