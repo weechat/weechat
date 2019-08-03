@@ -415,6 +415,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |             test-irc-ignore.cpp   | Tests: IRC ignores.
 // TRANSLATION MISSING
+|             test-irc-message.cpp  | Tests: IRC messages.
+// TRANSLATION MISSING
 |             test-irc-mode.cpp     | Tests: IRC modes.
 |             test-irc-protocol.cpp | テスト: IRC プロトコル
 |===

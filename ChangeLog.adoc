@@ -42,7 +42,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on IRC ignore functions
+  * unit: add tests on IRC ignore and message functions
 
 Build::
 
