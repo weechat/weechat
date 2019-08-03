@@ -23,7 +23,9 @@
 
 extern "C"
 {
+#include "tests/tests.h"
 #include "src/plugins/irc/irc-message.h"
+#include "src/plugins/irc/irc-server.h"
 }
 
 #define NICK_256_WITH_SPACE "nick_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
@@ -108,7 +110,50 @@ TEST(IrcMessage, GetAddressFromHost)
 
 TEST(IrcMessage, ReplaceVars)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    char *str;
+
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+
+    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, NULL, NULL));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (server, NULL, NULL));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (NULL, "#test", NULL));
+    WEE_TEST_STR(NULL, irc_message_replace_vars (server, "#test", NULL));
+    WEE_TEST_STR("", irc_message_replace_vars (NULL, NULL, ""));
+    WEE_TEST_STR("", irc_message_replace_vars (server, NULL, ""));
+    WEE_TEST_STR("", irc_message_replace_vars (NULL, "#test", ""));
+    WEE_TEST_STR("", irc_message_replace_vars (server, "#test", ""));
+
+    /* empty nick, empty channel, empty server */
+    WEE_TEST_STR("nick '', channel '', server ''",
+                 irc_message_replace_vars (
+                     NULL, NULL,
+                     "nick '$nick', channel '$channel', server '$server'"));
+
+    irc_server_set_nick (server, "my_nick");
+
+    /* nick, empty channel, server */
+    WEE_TEST_STR("nick 'my_nick', channel '', server 'my_ircd'",
+                 irc_message_replace_vars (
+                     server, NULL,
+                     "nick '$nick', channel '$channel', server '$server'"));
+
+    /* nick, channel, server */
+    WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd'",
+                 irc_message_replace_vars (
+                     server, "#test",
+                     "nick '$nick', channel '$channel', server '$server'"));
+
+    /* nick, channel, server (2 vars for each) */
+    WEE_TEST_STR("nick 'my_nick', channel '#test', server 'my_ircd', "
+                 "nick 'my_nick', channel '#test', server 'my_ircd'",
+                 irc_message_replace_vars (
+                     server, "#test",
+                     "nick '$nick', channel '$channel', server '$server', "
+                     "nick '$nick', channel '$channel', server '$server'"));
+
+    irc_server_free (server);
 }
 
 /*
