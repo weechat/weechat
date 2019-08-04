@@ -35,6 +35,7 @@ Bug fixes::
   * core: replace newlines by spaces in argument "completion" of function hook_command (issue #538)
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
   * alias: remove default aliases /AME and /AMSG (issue #1355)
+  * irc: fix length of user/nick/host in split of messages (issue #1387)
   * irc: quote NICK command argument sent to the server only if there's a ":" in the nick (issue #1376, issue #1319)
   * irc: return all arguments in the PONG response to a PING (issue #1369)
   * irc: disable server reconnection when the server buffer is closed (issue #236)

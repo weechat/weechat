@@ -707,8 +707,7 @@ TEST(IrcMessage, Split)
                  "k25 nick26 nick27 nick28 nick29 nick30 nick31 nick32 nick33"
                  " nick34 nick35 nick36 nick37 nick38 nick39 nick40 nick41 ni"
                  "ck42 nick43 nick44 nick45 nick46 nick47 nick48 nick49 nick5"
-                 "0 nick51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 n"
-                 "ick59 nick60",
+                 "0 nick51 nick52 nick53 nick54 nick55 nick56 nick57 nick58",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("nick01 nick02 nick03 nick04 nick05 nick06 nick07 nick08 nic"
                  "k09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 nick17"
@@ -716,14 +715,13 @@ TEST(IrcMessage, Split)
                  "ck26 nick27 nick28 nick29 nick30 nick31 nick32 nick33 nick3"
                  "4 nick35 nick36 nick37 nick38 nick39 nick40 nick41 nick42 n"
                  "ick43 nick44 nick45 nick46 nick47 nick48 nick49 nick50 nick"
-                 "51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 nick59 "
-                 "nick60",
+                 "51 nick52 nick53 nick54 nick55 nick56 nick57 nick58",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("ISON :nick61 nick62 nick63 nick64 nick65 nick66 nick67 nick"
-                 "68 nick69 nick70 nick71 nick72 nick__73",
+    STRCMP_EQUAL("ISON :nick59 nick60 nick61 nick62 nick63 nick64 nick65 nick"
+                 "66 nick67 nick68 nick69 nick70 nick71 nick72 nick__73",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("nick61 nick62 nick63 nick64 nick65 nick66 nick67 nick68 nic"
-                 "k69 nick70 nick71 nick72 nick__73",
+    STRCMP_EQUAL("nick59 nick60 nick61 nick62 nick63 nick64 nick65 nick66 nic"
+                 "k67 nick68 nick69 nick70 nick71 nick72 nick__73",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -831,7 +829,7 @@ TEST(IrcMessage, Split)
                  "ck33,nick34,nick35,nick36,nick37,nick38,nick39,nick40,nick4"
                  "1,nick42,nick43,nick44,nick45,nick46,nick47,nick48,nick49,n"
                  "ick50,nick51,nick52,nick53,nick54,nick55,nick56,nick57,nick"
-                 "58,nick59",
+                 "58",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("nick01,nick02,nick03,nick04,nick05,nick06,nick07,nick08,nic"
                  "k09,nick10,nick11,nick12,nick13,nick14,nick15,nick16,nick17"
@@ -839,13 +837,13 @@ TEST(IrcMessage, Split)
                  "ck26,nick27,nick28,nick29,nick30,nick31,nick32,nick33,nick3"
                  "4,nick35,nick36,nick37,nick38,nick39,nick40,nick41,nick42,n"
                  "ick43,nick44,nick45,nick46,nick47,nick48,nick49,nick50,nick"
-                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58,nick59",
+                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("MONITOR + nick60,nick61,nick62,nick63,nick64,nick65,nick66,"
-                 "nick67,nick68,nick69,nick70,nick71,nick72,nick__73",
+    STRCMP_EQUAL("MONITOR + nick59,nick60,nick61,nick62,nick63,nick64,nick65,"
+                 "nick66,nick67,nick68,nick69,nick70,nick71,nick72,nick__73",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("nick60,nick61,nick62,nick63,nick64,nick65,nick66,nick67,nic"
-                 "k68,nick69,nick70,nick71,nick72,nick__73",
+    STRCMP_EQUAL("nick59,nick60,nick61,nick62,nick63,nick64,nick65,nick66,nic"
+                 "k67,nick68,nick69,nick70,nick71,nick72,nick__73",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -862,7 +860,7 @@ TEST(IrcMessage, Split)
                  "k33,nick34,nick35,nick36,nick37,nick38,nick39,nick40,nick41"
                  ",nick42,nick43,nick44,nick45,nick46,nick47,nick48,nick49,ni"
                  "ck50,nick51,nick52,nick53,nick54,nick55,nick56,nick57,nick5"
-                 "8,nick59,nick60",
+                 "8",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("nick01,nick02,nick03,nick04,nick05,nick06,nick07,nick08,nic"
                  "k09,nick10,nick11,nick12,nick13,nick14,nick15,nick16,nick17"
@@ -870,14 +868,13 @@ TEST(IrcMessage, Split)
                  "ck26,nick27,nick28,nick29,nick30,nick31,nick32,nick33,nick3"
                  "4,nick35,nick36,nick37,nick38,nick39,nick40,nick41,nick42,n"
                  "ick43,nick44,nick45,nick46,nick47,nick48,nick49,nick50,nick"
-                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58,nick59,"
-                 "nick60",
+                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("MONITOR :nick61,nick62,nick63,nick64,nick65,nick66,nick67,n"
-                 "ick68,nick69,nick70,nick71,nick72,nick__73",
+    STRCMP_EQUAL("MONITOR :nick59,nick60,nick61,nick62,nick63,nick64,nick65,n"
+                 "ick66,nick67,nick68,nick69,nick70,nick71,nick72,nick__73",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("nick61,nick62,nick63,nick64,nick65,nick66,nick67,nick68,nic"
-                 "k69,nick70,nick71,nick72,nick__73",
+    STRCMP_EQUAL("nick59,nick60,nick61,nick62,nick63,nick64,nick65,nick66,nic"
+                 "k67,nick68,nick69,nick70,nick71,nick72,nick__73",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -917,7 +914,7 @@ TEST(IrcMessage, Split)
                  "ligula ut nibh malesuada, vel vehicula leo pulvinar. Nullam"
                  " tellus dolor, posuere sed orci in, pretium fermentum ante."
                  " Donec a quam vulputate, fermentum nisi nec, convallis sapi"
-                 "en. Vestibulum",
+                 "en.",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -925,14 +922,14 @@ TEST(IrcMessage, Split)
                  "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
                  "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
-                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 "utate, fermentum nisi nec, convallis sapien.",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("PRIVMSG #channel :malesuada dui eget iaculis sagittis. Prae"
-                 "sent egestas non ex quis blandit. Maecenas quis leo nunc. I"
-                 "n.",
+    STRCMP_EQUAL("PRIVMSG #channel :Vestibulum malesuada dui eget iaculis sag"
+                 "ittis. Praesent egestas non ex quis blandit. Maecenas quis "
+                 "leo nunc. In.",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
-                 "x quis blandit. Maecenas quis leo nunc. In.",
+    STRCMP_EQUAL("Vestibulum malesuada dui eget iaculis sagittis. Praesent eg"
+                 "estas non ex quis blandit. Maecenas quis leo nunc. In.",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -952,8 +949,7 @@ TEST(IrcMessage, Split)
                  " suscipit pharetra metus eu hendrerit. Proin viverra ligula"
                  " ut nibh malesuada, vel vehicula leo pulvinar. Nullam tellu"
                  "s dolor, posuere sed orci in, pretium fermentum ante. Donec"
-                 " a quam vulputate, fermentum nisi nec, convallis sapien. Ve"
-                 "stibulum",
+                 " a quam vulputate, fermentum nisi nec, convallis sapien.",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -961,14 +957,15 @@ TEST(IrcMessage, Split)
                  "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
                  "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
-                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 "utate, fermentum nisi nec, convallis sapien.",
                  (const char *)hashtable_get (hashtable, "args1"));
     STRCMP_EQUAL("@tag1=value1;tag2=value2;tag3=value3 :nick!user@host PRIVMS"
-                 "G #channel :malesuada dui eget iaculis sagittis. Praesent e"
-                 "gestas non ex quis blandit. Maecenas quis leo nunc. In.",
+                 "G #channel :Vestibulum malesuada dui eget iaculis sagittis."
+                 " Praesent egestas non ex quis blandit. Maecenas quis leo nu"
+                 "nc. In.",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
-                 "x quis blandit. Maecenas quis leo nunc. In.",
+    STRCMP_EQUAL("Vestibulum malesuada dui eget iaculis sagittis. Praesent eg"
+                 "estas non ex quis blandit. Maecenas quis leo nunc. In.",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -989,7 +986,7 @@ TEST(IrcMessage, Split)
                  "erit. Proin viverra ligula ut nibh malesuada, vel vehicula "
                  "leo pulvinar. Nullam tellus dolor, posuere sed orci in, pre"
                  "tium fermentum ante. Donec a quam vulputate, fermentum nisi"
-                 " nec, convallis sapien." "\x01",
+                 " nec, convallis" "\x01",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -997,14 +994,15 @@ TEST(IrcMessage, Split)
                  "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
                  "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
-                 "utate, fermentum nisi nec, convallis sapien.",
+                 "utate, fermentum nisi nec, convallis",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "Vestibulum malesuada "
-                 "dui eget iaculis sagittis. Praesent egestas non ex quis bla"
-                 "ndit. Maecenas quis leo nunc. In." "\x01",
+    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "sapien. Vestibulum ma"
+                 "lesuada dui eget iaculis sagittis. Praesent egestas non ex "
+                 "quis blandit. Maecenas quis leo nunc. In." "\x01",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("Vestibulum malesuada dui eget iaculis sagittis. Praesent eg"
-                 "estas non ex quis blandit. Maecenas quis leo nunc. In.",
+    STRCMP_EQUAL("sapien. Vestibulum malesuada dui eget iaculis sagittis. Pra"
+                 "esent egestas non ex quis blandit. Maecenas quis leo nunc. "
+                 "In.",
                  (const char *)hashtable_get (hashtable, "args2"));
     hashtable_free (hashtable);
 
@@ -1022,7 +1020,7 @@ TEST(IrcMessage, Split)
                  "ligula ut nibh malesuada, vel vehicula leo pulvinar. Nullam"
                  " tellus dolor, posuere sed orci in, pretium fermentum ante."
                  " Donec a quam vulputate, fermentum nisi nec, convallis sapi"
-                 "en. Vestibulum",
+                 "en.",
                  (const char *)hashtable_get (hashtable, "msg1"));
     STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
                  "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
@@ -1030,34 +1028,34 @@ TEST(IrcMessage, Split)
                  "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
                  "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
                  "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
-                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 "utate, fermentum nisi nec, convallis sapien.",
                  (const char *)hashtable_get (hashtable, "args1"));
-    STRCMP_EQUAL("PRIVMSG #channel :malesuada dui eget iaculis sagittis. Prae"
-                 "sent egestas non ex quis blandit. Maecenas quis leo nunc. I"
-                 "nteger eget tincidunt sapien, id lobortis libero. Aliquam p"
-                 "osuere turpis in libero luctus pharetra. Vestibulum dui aug"
-                 "ue, volutpat ultricies laoreet in, varius sodales ante. Ut "
-                 "nec urna non lacus bibendum scelerisque. Nullam convallis a"
-                 "liquet lectus interdum volutpat. Phasellus lacus tortor, el"
-                 "ementum",
+    STRCMP_EQUAL("PRIVMSG #channel :Vestibulum malesuada dui eget iaculis sag"
+                 "ittis. Praesent egestas non ex quis blandit. Maecenas quis "
+                 "leo nunc. Integer eget tincidunt sapien, id lobortis libero"
+                 ". Aliquam posuere turpis in libero luctus pharetra. Vestibu"
+                 "lum dui augue, volutpat ultricies laoreet in, varius sodale"
+                 "s ante. Ut nec urna non lacus bibendum scelerisque. Nullam "
+                 "convallis aliquet lectus interdum volutpat. Phasellus lacus",
                  (const char *)hashtable_get (hashtable, "msg2"));
-    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
-                 "x quis blandit. Maecenas quis leo nunc. Integer eget tincid"
-                 "unt sapien, id lobortis libero. Aliquam posuere turpis in l"
-                 "ibero luctus pharetra. Vestibulum dui augue, volutpat ultri"
-                 "cies laoreet in, varius sodales ante. Ut nec urna non lacus"
-                 " bibendum scelerisque. Nullam convallis aliquet lectus inte"
-                 "rdum volutpat. Phasellus lacus tortor, elementum",
+    STRCMP_EQUAL("Vestibulum malesuada dui eget iaculis sagittis. Praesent eg"
+                 "estas non ex quis blandit. Maecenas quis leo nunc. Integer "
+                 "eget tincidunt sapien, id lobortis libero. Aliquam posuere "
+                 "turpis in libero luctus pharetra. Vestibulum dui augue, vol"
+                 "utpat ultricies laoreet in, varius sodales ante. Ut nec urn"
+                 "a non lacus bibendum scelerisque. Nullam convallis aliquet "
+                 "lectus interdum volutpat. Phasellus lacus",
                  (const char *)hashtable_get (hashtable, "args2"));
-    STRCMP_EQUAL("PRIVMSG #channel :hendrerit lobortis ac, commodo id augue. "
+    STRCMP_EQUAL("PRIVMSG #channel :tortor, elementum hendrerit lobortis ac, "
+                 "commodo id augue. Morbi imperdiet interdum consequat. Mauri"
+                 "s purus lectus, ultrices sed velit et, pretium rhoncus erat"
+                 ". Pellentesque pellentesque efficitur nisl quis sodales. Na"
+                 "m hendreri.",
+                 (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("tortor, elementum hendrerit lobortis ac, commodo id augue. "
                  "Morbi imperdiet interdum consequat. Mauris purus lectus, ul"
                  "trices sed velit et, pretium rhoncus erat. Pellentesque pel"
                  "lentesque efficitur nisl quis sodales. Nam hendreri.",
-                 (const char *)hashtable_get (hashtable, "msg3"));
-    STRCMP_EQUAL("hendrerit lobortis ac, commodo id augue. Morbi imperdiet in"
-                 "terdum consequat. Mauris purus lectus, ultrices sed velit e"
-                 "t, pretium rhoncus erat. Pellentesque pellentesque efficitu"
-                 "r nisl quis sodales. Nam hendreri.",
                  (const char *)hashtable_get (hashtable, "args3"));
     hashtable_free (hashtable);
 

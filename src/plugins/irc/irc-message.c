@@ -658,7 +658,7 @@ irc_message_split_string (struct t_hashtable *hashtable,
                           const char *arguments,
                           const char *suffix,
                           const char delimiter,
-                          int max_length_host,
+                          int max_length_nick_user_host,
                           int max_length)
 {
     const char *pos, *pos_max, *pos_next, *pos_last_delim;
@@ -666,8 +666,8 @@ irc_message_split_string (struct t_hashtable *hashtable,
     int number;
 
     max_length -= 2;  /* by default: 512 - 2 = 510 bytes */
-    if (max_length_host >= 0)
-        max_length -= max_length_host;
+    if (max_length_nick_user_host >= 0)
+        max_length -= max_length_nick_user_host;
     else
         max_length -= (host) ? strlen (host) + 1 : 0;
     max_length -= strlen (command) + 1;
@@ -886,7 +886,7 @@ int
 irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
                                   char *tags, char *host, char *command,
                                   char *target, char *arguments,
-                                  int max_length_host,
+                                  int max_length_nick_user_host,
                                   int max_length)
 {
     char prefix[4096], suffix[2], *pos, saved_char;
@@ -926,7 +926,7 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
 
     rc = irc_message_split_string (hashtable, tags, host, command, target,
                                    prefix, arguments, suffix,
-                                   ' ', max_length_host, max_length);
+                                   ' ', max_length_nick_user_host, max_length);
 
     return rc;
 }
@@ -1002,8 +1002,8 @@ irc_message_split (struct t_irc_server *server, const char *message)
     struct t_hashtable *hashtable;
     char **argv, **argv_eol, *tags, *host, *command, *arguments, target[4096];
     char *pos, monitor_action[3];
-    int split_ok, argc, index_args, max_length_nick, max_length_host;
-    int split_msg_max_length;
+    int split_ok, argc, index_args, max_length_nick, max_length_user;
+    int max_length_host, max_length_nick_user_host, split_msg_max_length;
 
     split_ok = 0;
     tags = NULL;
@@ -1089,11 +1089,18 @@ irc_message_split (struct t_irc_server *server, const char *message)
 
     max_length_nick = (server && (server->nick_max_length > 0)) ?
         server->nick_max_length : 16;
-    max_length_host = 1 + /* ":"  */
-        max_length_nick + /* nick */
-        1 +               /* "!"  */
-        63 +              /* host */
-        1;                /* " "  */
+    max_length_user = (server && (server->user_max_length > 0)) ?
+        server->user_max_length : 10;
+    max_length_host = (server && (server->host_max_length > 0)) ?
+        server->host_max_length : 63;
+
+    max_length_nick_user_host = 1 +  /* ":"  */
+        max_length_nick +            /* nick */
+        1 +                          /* "!"  */
+        max_length_user +            /* user */
+        1 +                          /* @    */
+        max_length_host +            /* host */
+        1;                           /* " "  */
 
     if ((weechat_strcasecmp (command, "ison") == 0)
         || (weechat_strcasecmp (command, "wallops") == 0))
@@ -1106,7 +1113,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
             hashtable, tags, host, command, NULL, ":",
             (argv_eol[index_args][0] == ':') ?
             argv_eol[index_args] + 1 : argv_eol[index_args],
-            NULL, ' ', max_length_host, split_msg_max_length);
+            NULL, ' ', max_length_nick_user_host, split_msg_max_length);
     }
     else if (weechat_strcasecmp (command, "monitor") == 0)
     {
@@ -1121,7 +1128,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                       "%c ", argv_eol[index_args][0]);
             split_ok = irc_message_split_string (
                 hashtable, tags, host, command, NULL, monitor_action,
-                argv_eol[index_args] + 2, NULL, ',', max_length_host,
+                argv_eol[index_args] + 2, NULL, ',', max_length_nick_user_host,
                 split_msg_max_length);
         }
         else
@@ -1130,7 +1137,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 hashtable, tags, host, command, NULL, ":",
                 (argv_eol[index_args][0] == ':') ?
                 argv_eol[index_args] + 1 : argv_eol[index_args],
-                NULL, ',', max_length_host, split_msg_max_length);
+                NULL, ',', max_length_nick_user_host, split_msg_max_length);
         }
     }
     else if (weechat_strcasecmp (command, "join") == 0)
@@ -1156,7 +1163,7 @@ irc_message_split (struct t_irc_server *server, const char *message)
                 hashtable, tags, host, command, argv[index_args],
                 (argv_eol[index_args + 1][0] == ':') ?
                 argv_eol[index_args + 1] + 1 : argv_eol[index_args + 1],
-                max_length_host, split_msg_max_length);
+                max_length_nick_user_host, split_msg_max_length);
         }
     }
     else if (weechat_strcasecmp (command, "005") == 0)
