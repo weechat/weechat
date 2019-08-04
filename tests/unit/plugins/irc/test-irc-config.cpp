@@ -38,11 +38,11 @@ TEST_GROUP(IrcConfig)
 TEST(IrcConfig, CheckAutojoin)
 {
     /* NULL/empty string */
-    LONGS_EQUAL(1, irc_config_check_autojoin(NULL));
-    LONGS_EQUAL(1, irc_config_check_autojoin(""));
+    LONGS_EQUAL(1, irc_config_check_autojoin (NULL));
+    LONGS_EQUAL(1, irc_config_check_autojoin (""));
 
     /* wrong delimiter: space instead of comma */
-    LONGS_EQUAL(0, irc_config_check_autojoin("#chan1 #chan2 #chan3"));
+    LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1 #chan2 #chan3"));
 
     /* no spaces allowed around comma */
     LONGS_EQUAL(0, irc_config_check_autojoin ("#chan1, #chan2"));
