@@ -92,7 +92,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
     /* make C compiler happy */
     (void) plugin;
 
-    if (!modifier || !modifier[0])
+    if (!modifier || !modifier[0] || !string)
         return NULL;
 
     new_msg = NULL;
