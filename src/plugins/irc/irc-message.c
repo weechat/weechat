@@ -1210,7 +1210,11 @@ end:
     if (!split_ok
         || (weechat_hashtable_get_integer (hashtable, "items_count") == 0))
     {
-        irc_message_split_add (hashtable, 1, tags, message, arguments);
+        irc_message_split_add (hashtable,
+                               (message) ? 1 : 0,
+                               tags,
+                               message,
+                               arguments);
     }
 
     if (tags)

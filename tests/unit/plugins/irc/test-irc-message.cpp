@@ -25,8 +25,10 @@ extern "C"
 {
 #include "string.h"
 #include "tests/tests.h"
+#include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
+#include "src/plugins/irc/irc-config.h"
 #include "src/plugins/irc/irc-message.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -35,6 +37,74 @@ extern "C"
     "xxxxxxxxxxxxxx_64_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
     "xxxxxx_128_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
     "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx_256 test"
+
+#define LOREM_IPSUM_512 "Lorem ipsum dolor sit amet, consectetur adipiscing " \
+    "elit. Fusce auctor ac leo ut maximus. Curabitur vestibulum facilisis ne" \
+    "que, vitae sodales elit pulvinar ac. Mauris suscipit pharetra metus eu " \
+    "hendrerit. Proin viverra ligula ut nibh malesuada, vel vehicula leo pul" \
+    "vinar. Nullam tellus dolor, posuere sed orci in, pretium fermentum ante" \
+    ". Donec a quam vulputate, fermentum nisi nec, convallis sapien. Vestibu" \
+    "lum malesuada dui eget iaculis sagittis. Praesent egestas non ex quis b" \
+    "landit. Maecenas quis leo nunc. In."
+
+#define LOREM_IPSUM_1024 "Lorem ipsum dolor sit amet, consectetur adipiscing" \
+    " elit. Fusce auctor ac leo ut maximus. Curabitur vestibulum facilisis n" \
+    "eque, vitae sodales elit pulvinar ac. Mauris suscipit pharetra metus eu" \
+    " hendrerit. Proin viverra ligula ut nibh malesuada, vel vehicula leo pu" \
+    "lvinar. Nullam tellus dolor, posuere sed orci in, pretium fermentum ant" \
+    "e. Donec a quam vulputate, fermentum nisi nec, convallis sapien. Vestib" \
+    "ulum malesuada dui eget iaculis sagittis. Praesent egestas non ex quis " \
+    "blandit. Maecenas quis leo nunc. Integer eget tincidunt sapien, id lobo" \
+    "rtis libero. Aliquam posuere turpis in libero luctus pharetra. Vestibul" \
+    "um dui augue, volutpat ultricies laoreet in, varius sodales ante. Ut ne" \
+    "c urna non lacus bibendum scelerisque. Nullam convallis aliquet lectus " \
+    "interdum volutpat. Phasellus lacus tortor, elementum hendrerit lobortis" \
+    " ac, commodo id augue. Morbi imperdiet interdum consequat. Mauris purus" \
+    " lectus, ultrices sed velit et, pretium rhoncus erat. Pellentesque pell" \
+    "entesque efficitur nisl quis sodales. Nam hendreri."
+
+#define CHANNELS_512 "#channel01,#channel02,#channel03,#channel04,#channel05" \
+    ",#channel06,#channel07,#channel08,#channel09,#channel10,#channel11,#cha" \
+    "nnel12,#channel13,#channel14,#channel15,#channel16,#channel17,#channel1" \
+    "8,#channel19,#channel20,#channel21,#channel22,#channel23,#channel24,#ch" \
+    "annel25,#channel26,#channel27,#channel28,#channel29,#channel30,#channel" \
+    "31,#channel32,#channel33,#channel34,#channel35,#channel36,#channel37,#c" \
+    "hannel38,#channel39,#channel40,#channel41,#channel42,#channel43,#channe" \
+    "l44,#channel45,#channel46,#cha47"
+
+#define NICKS_512_SPACE "nick01 nick02 nick03 nick04 nick05 nick06 nick07 ni" \
+    "ck08 nick09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 nick17 nic" \
+    "k18 nick19 nick20 nick21 nick22 nick23 nick24 nick25 nick26 nick27 nick" \
+    "28 nick29 nick30 nick31 nick32 nick33 nick34 nick35 nick36 nick37 nick3" \
+    "8 nick39 nick40 nick41 nick42 nick43 nick44 nick45 nick46 nick47 nick48" \
+    " nick49 nick50 nick51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 " \
+    "nick59 nick60 nick61 nick62 nick63 nick64 nick65 nick66 nick67 nick68 n" \
+    "ick69 nick70 nick71 nick72 nick__73"
+
+#define NICKS_512_COMMA "nick01,nick02,nick03,nick04,nick05,nick06,nick07,ni" \
+    "ck08,nick09,nick10,nick11,nick12,nick13,nick14,nick15,nick16,nick17,nic" \
+    "k18,nick19,nick20,nick21,nick22,nick23,nick24,nick25,nick26,nick27,nick" \
+    "28,nick29,nick30,nick31,nick32,nick33,nick34,nick35,nick36,nick37,nick3" \
+    "8,nick39,nick40,nick41,nick42,nick43,nick44,nick45,nick46,nick47,nick48" \
+    ",nick49,nick50,nick51,nick52,nick53,nick54,nick55,nick56,nick57,nick58," \
+    "nick59,nick60,nick61,nick62,nick63,nick64,nick65,nick66,nick67,nick68,n" \
+    "ick69,nick70,nick71,nick72,nick__73"
+
+#define MSG_005 "CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn" \
+    "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWORK=fr" \
+    "eenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii NICKLE" \
+    "N=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:" \
+    "1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=" \
+    "3.0 SAFELIST ELIST=CTU CPRIVMSG :are supported by this server"
+
+#define MSG_LONG_005 "CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQS" \
+    "cgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES=4 NETWO" \
+    "RK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1459 CHARSET=ascii N" \
+    "ICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1," \
+    "KICK:1,WHOIS:1,PRIVMSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIEN" \
+    "TVER=3.0 SAFELIST ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST" \
+    "4:jkl TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1 DEF:2 GHI:" \
+    "3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :are supported by this server"
 
 #define WEE_CHECK_PARSE(__tags, __message_without_tags, __nick, __host, \
                         __command, __channel, __arguments, __text,      \
@@ -581,5 +651,587 @@ TEST(IrcMessage, ReplaceVars)
 
 TEST(IrcMessage, Split)
 {
-    /* TODO: write tests */
+    struct t_irc_server *server;
+    struct t_hashtable *hashtable;
+
+    server = irc_server_alloc ("test_split_msg");
+    CHECK(server);
+
+    /* NULL server, NULL message */
+    hashtable = irc_message_split (NULL, NULL);
+    CHECK(hashtable);
+    LONGS_EQUAL(1, hashtable->items_count);
+    STRCMP_EQUAL("0",
+                 (const char *)hashtable_get (hashtable, "count"));
+    hashtable_free (hashtable);
+
+    /* NULL message */
+    hashtable = irc_message_split (server, NULL);
+    CHECK(hashtable);
+    LONGS_EQUAL(1, hashtable->items_count);
+    STRCMP_EQUAL("0",
+                 (const char *)hashtable_get (hashtable, "count"));
+    hashtable_free (hashtable);
+
+    /* empty message: no split */
+    hashtable = irc_message_split (server, "");
+    CHECK(hashtable);
+    LONGS_EQUAL(2, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    /* ISON with small content: no split */
+    hashtable = irc_message_split (server, "ISON :nick1 nick2");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("ISON :nick1 nick2",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick1 nick2",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* ISON with 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server, "ISON :" NICKS_512_SPACE);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("ISON :nick01 nick02 nick03 nick04 nick05 nick06 nick07 nick"
+                 "08 nick09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 "
+                 "nick17 nick18 nick19 nick20 nick21 nick22 nick23 nick24 nic"
+                 "k25 nick26 nick27 nick28 nick29 nick30 nick31 nick32 nick33"
+                 " nick34 nick35 nick36 nick37 nick38 nick39 nick40 nick41 ni"
+                 "ck42 nick43 nick44 nick45 nick46 nick47 nick48 nick49 nick5"
+                 "0 nick51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 n"
+                 "ick59 nick60",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick01 nick02 nick03 nick04 nick05 nick06 nick07 nick08 nic"
+                 "k09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 nick17"
+                 " nick18 nick19 nick20 nick21 nick22 nick23 nick24 nick25 ni"
+                 "ck26 nick27 nick28 nick29 nick30 nick31 nick32 nick33 nick3"
+                 "4 nick35 nick36 nick37 nick38 nick39 nick40 nick41 nick42 n"
+                 "ick43 nick44 nick45 nick46 nick47 nick48 nick49 nick50 nick"
+                 "51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 nick59 "
+                 "nick60",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("ISON :nick61 nick62 nick63 nick64 nick65 nick66 nick67 nick"
+                 "68 nick69 nick70 nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("nick61 nick62 nick63 nick64 nick65 nick66 nick67 nick68 nic"
+                 "k69 nick70 nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* JOIN with small content: no split */
+    hashtable = irc_message_split (server, "JOIN #channel1,#channel2");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("JOIN #channel1,#channel2",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("#channel1,#channel2",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* JOIN with 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server, "JOIN " CHANNELS_512);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("JOIN #channel01,#channel02,#channel03,#channel04,#channel05"
+                 ",#channel06,#channel07,#channel08,#channel09,#channel10,#ch"
+                 "annel11,#channel12,#channel13,#channel14,#channel15,#channe"
+                 "l16,#channel17,#channel18,#channel19,#channel20,#channel21,"
+                 "#channel22,#channel23,#channel24,#channel25,#channel26,#cha"
+                 "nnel27,#channel28,#channel29,#channel30,#channel31,#channel"
+                 "32,#channel33,#channel34,#channel35,#channel36,#channel37,#"
+                 "channel38,#channel39,#channel40,#channel41,#channel42,#chan"
+                 "nel43,#channel44,#channel45",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("#channel01,#channel02,#channel03,#channel04,#channel05,#cha"
+                 "nnel06,#channel07,#channel08,#channel09,#channel10,#channel"
+                 "11,#channel12,#channel13,#channel14,#channel15,#channel16,#"
+                 "channel17,#channel18,#channel19,#channel20,#channel21,#chan"
+                 "nel22,#channel23,#channel24,#channel25,#channel26,#channel2"
+                 "7,#channel28,#channel29,#channel30,#channel31,#channel32,#c"
+                 "hannel33,#channel34,#channel35,#channel36,#channel37,#chann"
+                 "el38,#channel39,#channel40,#channel41,#channel42,#channel43"
+                 ",#channel44,#channel45",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("JOIN #channel46,#cha47",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("#channel46,#cha47",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* JOIN with 512 bytes of content and 3 keys: 1 split */
+    hashtable = irc_message_split (server,
+                                   "JOIN "
+                                   CHANNELS_512
+                                   " key1,key2,key3");
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("JOIN #channel01,#channel02,#channel03,#channel04,#channel05"
+                 ",#channel06,#channel07,#channel08,#channel09,#channel10,#ch"
+                 "annel11,#channel12,#channel13,#channel14,#channel15,#channe"
+                 "l16,#channel17,#channel18,#channel19,#channel20,#channel21,"
+                 "#channel22,#channel23,#channel24,#channel25,#channel26,#cha"
+                 "nnel27,#channel28,#channel29,#channel30,#channel31,#channel"
+                 "32,#channel33,#channel34,#channel35,#channel36,#channel37,#"
+                 "channel38,#channel39,#channel40,#channel41,#channel42,#chan"
+                 "nel43,#channel44 key1,key2,key3",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("#channel01,#channel02,#channel03,#channel04,#channel05,#cha"
+                 "nnel06,#channel07,#channel08,#channel09,#channel10,#channel"
+                 "11,#channel12,#channel13,#channel14,#channel15,#channel16,#"
+                 "channel17,#channel18,#channel19,#channel20,#channel21,#chan"
+                 "nel22,#channel23,#channel24,#channel25,#channel26,#channel2"
+                 "7,#channel28,#channel29,#channel30,#channel31,#channel32,#c"
+                 "hannel33,#channel34,#channel35,#channel36,#channel37,#chann"
+                 "el38,#channel39,#channel40,#channel41,#channel42,#channel43"
+                 ",#channel44 key1,key2,key3",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("JOIN #channel45,#channel46,#cha47",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("#channel45,#channel46,#cha47",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* MONITOR with small content: no split */
+    hashtable = irc_message_split (server, "MONITOR + nick1,nick2");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("MONITOR + nick1,nick2",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick1,nick2",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* MONITOR with 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server, "MONITOR + " NICKS_512_COMMA);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("MONITOR + nick01,nick02,nick03,nick04,nick05,nick06,nick07,"
+                 "nick08,nick09,nick10,nick11,nick12,nick13,nick14,nick15,nic"
+                 "k16,nick17,nick18,nick19,nick20,nick21,nick22,nick23,nick24"
+                 ",nick25,nick26,nick27,nick28,nick29,nick30,nick31,nick32,ni"
+                 "ck33,nick34,nick35,nick36,nick37,nick38,nick39,nick40,nick4"
+                 "1,nick42,nick43,nick44,nick45,nick46,nick47,nick48,nick49,n"
+                 "ick50,nick51,nick52,nick53,nick54,nick55,nick56,nick57,nick"
+                 "58,nick59",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick01,nick02,nick03,nick04,nick05,nick06,nick07,nick08,nic"
+                 "k09,nick10,nick11,nick12,nick13,nick14,nick15,nick16,nick17"
+                 ",nick18,nick19,nick20,nick21,nick22,nick23,nick24,nick25,ni"
+                 "ck26,nick27,nick28,nick29,nick30,nick31,nick32,nick33,nick3"
+                 "4,nick35,nick36,nick37,nick38,nick39,nick40,nick41,nick42,n"
+                 "ick43,nick44,nick45,nick46,nick47,nick48,nick49,nick50,nick"
+                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58,nick59",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("MONITOR + nick60,nick61,nick62,nick63,nick64,nick65,nick66,"
+                 "nick67,nick68,nick69,nick70,nick71,nick72,nick__73",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("nick60,nick61,nick62,nick63,nick64,nick65,nick66,nick67,nic"
+                 "k68,nick69,nick70,nick71,nick72,nick__73",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* MONITOR with 512 bytes of content (invalid, no action): 1 split */
+    hashtable = irc_message_split (server, "MONITOR :" NICKS_512_COMMA);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("MONITOR :nick01,nick02,nick03,nick04,nick05,nick06,nick07,n"
+                 "ick08,nick09,nick10,nick11,nick12,nick13,nick14,nick15,nick"
+                 "16,nick17,nick18,nick19,nick20,nick21,nick22,nick23,nick24,"
+                 "nick25,nick26,nick27,nick28,nick29,nick30,nick31,nick32,nic"
+                 "k33,nick34,nick35,nick36,nick37,nick38,nick39,nick40,nick41"
+                 ",nick42,nick43,nick44,nick45,nick46,nick47,nick48,nick49,ni"
+                 "ck50,nick51,nick52,nick53,nick54,nick55,nick56,nick57,nick5"
+                 "8,nick59,nick60",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick01,nick02,nick03,nick04,nick05,nick06,nick07,nick08,nic"
+                 "k09,nick10,nick11,nick12,nick13,nick14,nick15,nick16,nick17"
+                 ",nick18,nick19,nick20,nick21,nick22,nick23,nick24,nick25,ni"
+                 "ck26,nick27,nick28,nick29,nick30,nick31,nick32,nick33,nick3"
+                 "4,nick35,nick36,nick37,nick38,nick39,nick40,nick41,nick42,n"
+                 "ick43,nick44,nick45,nick46,nick47,nick48,nick49,nick50,nick"
+                 "51,nick52,nick53,nick54,nick55,nick56,nick57,nick58,nick59,"
+                 "nick60",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("MONITOR :nick61,nick62,nick63,nick64,nick65,nick66,nick67,n"
+                 "ick68,nick69,nick70,nick71,nick72,nick__73",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("nick61,nick62,nick63,nick64,nick65,nick66,nick67,nick68,nic"
+                 "k69,nick70,nick71,nick72,nick__73",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* PONG: no split */
+    hashtable = irc_message_split (server, "PONG");
+    CHECK(hashtable);
+    LONGS_EQUAL(2, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PONG",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with small content: no split */
+    hashtable = irc_message_split (server, "PRIVMSG #channel :test");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :test",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("test",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #channel :" LOREM_IPSUM_512);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :Lorem ipsum dolor sit amet, consectetur a"
+                 "dipiscing elit. Fusce auctor ac leo ut maximus. Curabitur v"
+                 "estibulum facilisis neque, vitae sodales elit pulvinar ac. "
+                 "Mauris suscipit pharetra metus eu hendrerit. Proin viverra "
+                 "ligula ut nibh malesuada, vel vehicula leo pulvinar. Nullam"
+                 " tellus dolor, posuere sed orci in, pretium fermentum ante."
+                 " Donec a quam vulputate, fermentum nisi nec, convallis sapi"
+                 "en. Vestibulum",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
+                 "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
+                 "s neque, vitae sodales elit pulvinar ac. Mauris suscipit ph"
+                 "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
+                 "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
+                 "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
+                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("PRIVMSG #channel :malesuada dui eget iaculis sagittis. Prae"
+                 "sent egestas non ex quis blandit. Maecenas quis leo nunc. I"
+                 "n.",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
+                 "x quis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with tags and host and 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server,
+                                   "@tag1=value1;tag2=value2;tag3=value3 "
+                                   ":nick!user@host "
+                                   "PRIVMSG #channel :" LOREM_IPSUM_512);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("@tag1=value1;tag2=value2;tag3=value3 :nick!user@host PRIVMS"
+                 "G #channel :Lorem ipsum dolor sit amet, consectetur adipisc"
+                 "ing elit. Fusce auctor ac leo ut maximus. Curabitur vestibu"
+                 "lum facilisis neque, vitae sodales elit pulvinar ac. Mauris"
+                 " suscipit pharetra metus eu hendrerit. Proin viverra ligula"
+                 " ut nibh malesuada, vel vehicula leo pulvinar. Nullam tellu"
+                 "s dolor, posuere sed orci in, pretium fermentum ante. Donec"
+                 " a quam vulputate, fermentum nisi nec, convallis sapien. Ve"
+                 "stibulum",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
+                 "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
+                 "s neque, vitae sodales elit pulvinar ac. Mauris suscipit ph"
+                 "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
+                 "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
+                 "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
+                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("@tag1=value1;tag2=value2;tag3=value3 :nick!user@host PRIVMS"
+                 "G #channel :malesuada dui eget iaculis sagittis. Praesent e"
+                 "gestas non ex quis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
+                 "x quis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with "\x01ACTION " + 512 bytes + "\x01": 1 split */
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #channel :"
+                                   "\x01" "ACTION "
+                                   LOREM_IPSUM_512
+                                   "\x01");
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "Lorem ipsum dolor sit"
+                 " amet, consectetur adipiscing elit. Fusce auctor ac leo ut "
+                 "maximus. Curabitur vestibulum facilisis neque, vitae sodale"
+                 "s elit pulvinar ac. Mauris suscipit pharetra metus eu hendr"
+                 "erit. Proin viverra ligula ut nibh malesuada, vel vehicula "
+                 "leo pulvinar. Nullam tellus dolor, posuere sed orci in, pre"
+                 "tium fermentum ante. Donec a quam vulputate, fermentum nisi"
+                 " nec, convallis sapien." "\x01",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
+                 "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
+                 "s neque, vitae sodales elit pulvinar ac. Mauris suscipit ph"
+                 "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
+                 "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
+                 "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
+                 "utate, fermentum nisi nec, convallis sapien.",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("PRIVMSG #channel :" "\x01" "ACTION " "Vestibulum malesuada "
+                 "dui eget iaculis sagittis. Praesent egestas non ex quis bla"
+                 "ndit. Maecenas quis leo nunc. In." "\x01",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("Vestibulum malesuada dui eget iaculis sagittis. Praesent eg"
+                 "estas non ex quis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with 1024 bytes of content: 2 splits */
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #channel :" LOREM_IPSUM_1024);
+    CHECK(hashtable);
+    LONGS_EQUAL(7, hashtable->items_count);
+    STRCMP_EQUAL("3",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :Lorem ipsum dolor sit amet, consectetur a"
+                 "dipiscing elit. Fusce auctor ac leo ut maximus. Curabitur v"
+                 "estibulum facilisis neque, vitae sodales elit pulvinar ac. "
+                 "Mauris suscipit pharetra metus eu hendrerit. Proin viverra "
+                 "ligula ut nibh malesuada, vel vehicula leo pulvinar. Nullam"
+                 " tellus dolor, posuere sed orci in, pretium fermentum ante."
+                 " Donec a quam vulputate, fermentum nisi nec, convallis sapi"
+                 "en. Vestibulum",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
+                 "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
+                 "s neque, vitae sodales elit pulvinar ac. Mauris suscipit ph"
+                 "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
+                 "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
+                 "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
+                 "utate, fermentum nisi nec, convallis sapien. Vestibulum",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("PRIVMSG #channel :malesuada dui eget iaculis sagittis. Prae"
+                 "sent egestas non ex quis blandit. Maecenas quis leo nunc. I"
+                 "nteger eget tincidunt sapien, id lobortis libero. Aliquam p"
+                 "osuere turpis in libero luctus pharetra. Vestibulum dui aug"
+                 "ue, volutpat ultricies laoreet in, varius sodales ante. Ut "
+                 "nec urna non lacus bibendum scelerisque. Nullam convallis a"
+                 "liquet lectus interdum volutpat. Phasellus lacus tortor, el"
+                 "ementum",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("malesuada dui eget iaculis sagittis. Praesent egestas non e"
+                 "x quis blandit. Maecenas quis leo nunc. Integer eget tincid"
+                 "unt sapien, id lobortis libero. Aliquam posuere turpis in l"
+                 "ibero luctus pharetra. Vestibulum dui augue, volutpat ultri"
+                 "cies laoreet in, varius sodales ante. Ut nec urna non lacus"
+                 " bibendum scelerisque. Nullam convallis aliquet lectus inte"
+                 "rdum volutpat. Phasellus lacus tortor, elementum",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    STRCMP_EQUAL("PRIVMSG #channel :hendrerit lobortis ac, commodo id augue. "
+                 "Morbi imperdiet interdum consequat. Mauris purus lectus, ul"
+                 "trices sed velit et, pretium rhoncus erat. Pellentesque pel"
+                 "lentesque efficitur nisl quis sodales. Nam hendreri.",
+                 (const char *)hashtable_get (hashtable, "msg3"));
+    STRCMP_EQUAL("hendrerit lobortis ac, commodo id augue. Morbi imperdiet in"
+                 "terdum consequat. Mauris purus lectus, ultrices sed velit e"
+                 "t, pretium rhoncus erat. Pellentesque pellentesque efficitu"
+                 "r nisl quis sodales. Nam hendreri.",
+                 (const char *)hashtable_get (hashtable, "args3"));
+    hashtable_free (hashtable);
+
+    /* 005: no split */
+    hashtable = irc_message_split (server, "005 nick " MSG_005);
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFL"
+                 "MPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:1"
+                 "00 MODES=4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAP"
+                 "PING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLE"
+                 "N=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIV"
+                 "MSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3."
+                 "0 SAFELIST ELIST=CTU CPRIVMSG :are supported by this server",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn"
+                 "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES="
+                 "4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1"
+                 "459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEA"
+                 "F=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOT"
+                 "ICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIS"
+                 "T ELIST=CTU CPRIVMSG",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* long 005: 1 split */
+    hashtable = irc_message_split (server, "005 nick " MSG_LONG_005);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("005 nick CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFL"
+                 "MPQScgimnprstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:1"
+                 "00 MODES=4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAP"
+                 "PING=rfc1459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLE"
+                 "N=390 DEAF=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIV"
+                 "MSG:4,NOTICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3."
+                 "0 SAFELIST ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi"
+                 " TEST4:jkl TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz"
+                 " ABC:1 :are supported by this server",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("CHANTYPES=# EXCEPTS INVEX CHANMODES=eIbq,k,flj,CFLMPQScgimn"
+                 "prstz CHANLIMIT=#:120 PREFIX=(ov)@+ MAXLIST=bqeI:100 MODES="
+                 "4 NETWORK=freenode STATUSMSG=@+ CALLERID=g CASEMAPPING=rfc1"
+                 "459 CHARSET=ascii NICKLEN=16 CHANNELLEN=50 TOPICLEN=390 DEA"
+                 "F=D FNC TARGMAX=NAMES:1,LIST:1,KICK:1,WHOIS:1,PRIVMSG:4,NOT"
+                 "ICE:4,ACCEPT:,MONITOR: EXTBAN=$,ajrxz CLIENTVER=3.0 SAFELIS"
+                 "T ELIST=CTU CPRIVMSG TEST1:abc TEST2:dev TEST3:ghi TEST4:jk"
+                 "l TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL("005 nick DEF:2 GHI:3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :ar"
+                 "e supported by this server",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("DEF:2 GHI:3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* 353 with small of content: no split */
+    hashtable = irc_message_split (server,
+                                   ":irc.example.org 353 mynick = #channel "
+                                   ":nick1 nick2");
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL(":irc.example.org 353 mynick = #channel :nick1 nick2",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick1 nick2",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+
+    /* 353 with 512 bytes of content: 1 split */
+    hashtable = irc_message_split (server,
+                                   ":irc.example.org 353 mynick = #channel "
+                                   ":" NICKS_512_SPACE);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL(":irc.example.org 353 mynick = #channel :nick01 nick02 nick0"
+                 "3 nick04 nick05 nick06 nick07 nick08 nick09 nick10 nick11 n"
+                 "ick12 nick13 nick14 nick15 nick16 nick17 nick18 nick19 nick"
+                 "20 nick21 nick22 nick23 nick24 nick25 nick26 nick27 nick28 "
+                 "nick29 nick30 nick31 nick32 nick33 nick34 nick35 nick36 nic"
+                 "k37 nick38 nick39 nick40 nick41 nick42 nick43 nick44 nick45"
+                 " nick46 nick47 nick48 nick49 nick50 nick51 nick52 nick53 ni"
+                 "ck54 nick55 nick56 nick57 nick58 nick59 nick60 nick61 nick6"
+                 "2 nick63 nick64 nick65 nick66 nick67",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick01 nick02 nick03 nick04 nick05 nick06 nick07 nick08 nic"
+                 "k09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 nick17"
+                 " nick18 nick19 nick20 nick21 nick22 nick23 nick24 nick25 ni"
+                 "ck26 nick27 nick28 nick29 nick30 nick31 nick32 nick33 nick3"
+                 "4 nick35 nick36 nick37 nick38 nick39 nick40 nick41 nick42 n"
+                 "ick43 nick44 nick45 nick46 nick47 nick48 nick49 nick50 nick"
+                 "51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 nick59 "
+                 "nick60 nick61 nick62 nick63 nick64 nick65 nick66 nick67",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL(":irc.example.org 353 mynick = #channel :nick68 nick69 nick7"
+                 "0 nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("nick68 nick69 nick70 nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* 353 with 512 bytes of content but no "=": 1 split */
+    hashtable = irc_message_split (server,
+                                   ":irc.example.org 353 mynick #channel "
+                                   ":" NICKS_512_SPACE);
+    CHECK(hashtable);
+    LONGS_EQUAL(5, hashtable->items_count);
+    STRCMP_EQUAL("2",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL(":irc.example.org 353 mynick #channel :nick01 nick02 nick03 "
+                 "nick04 nick05 nick06 nick07 nick08 nick09 nick10 nick11 nic"
+                 "k12 nick13 nick14 nick15 nick16 nick17 nick18 nick19 nick20"
+                 " nick21 nick22 nick23 nick24 nick25 nick26 nick27 nick28 ni"
+                 "ck29 nick30 nick31 nick32 nick33 nick34 nick35 nick36 nick3"
+                 "7 nick38 nick39 nick40 nick41 nick42 nick43 nick44 nick45 n"
+                 "ick46 nick47 nick48 nick49 nick50 nick51 nick52 nick53 nick"
+                 "54 nick55 nick56 nick57 nick58 nick59 nick60 nick61 nick62 "
+                 "nick63 nick64 nick65 nick66 nick67",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("nick01 nick02 nick03 nick04 nick05 nick06 nick07 nick08 nic"
+                 "k09 nick10 nick11 nick12 nick13 nick14 nick15 nick16 nick17"
+                 " nick18 nick19 nick20 nick21 nick22 nick23 nick24 nick25 ni"
+                 "ck26 nick27 nick28 nick29 nick30 nick31 nick32 nick33 nick3"
+                 "4 nick35 nick36 nick37 nick38 nick39 nick40 nick41 nick42 n"
+                 "ick43 nick44 nick45 nick46 nick47 nick48 nick49 nick50 nick"
+                 "51 nick52 nick53 nick54 nick55 nick56 nick57 nick58 nick59 "
+                 "nick60 nick61 nick62 nick63 nick64 nick65 nick66 nick67",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    STRCMP_EQUAL(":irc.example.org 353 mynick #channel :nick68 nick69 nick70 "
+                 "nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "msg2"));
+    STRCMP_EQUAL("nick68 nick69 nick70 nick71 nick72 nick__73",
+                 (const char *)hashtable_get (hashtable, "args2"));
+    hashtable_free (hashtable);
+
+    /* PRIVMSG with 512 bytes and split_msg_max_length == 0: no split */
+    config_file_option_set (
+        irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH],
+        "0", 0);
+    hashtable = irc_message_split (server,
+                                   "PRIVMSG #channel :" LOREM_IPSUM_512);
+    CHECK(hashtable);
+    LONGS_EQUAL(3, hashtable->items_count);
+    STRCMP_EQUAL("1",
+                 (const char *)hashtable_get (hashtable, "count"));
+    STRCMP_EQUAL("PRIVMSG #channel :Lorem ipsum dolor sit amet, consectetur a"
+                 "dipiscing elit. Fusce auctor ac leo ut maximus. Curabitur v"
+                 "estibulum facilisis neque, vitae sodales elit pulvinar ac. "
+                 "Mauris suscipit pharetra metus eu hendrerit. Proin viverra "
+                 "ligula ut nibh malesuada, vel vehicula leo pulvinar. Nullam"
+                 " tellus dolor, posuere sed orci in, pretium fermentum ante."
+                 " Donec a quam vulputate, fermentum nisi nec, convallis sapi"
+                 "en. Vestibulum malesuada dui eget iaculis sagittis. Praesen"
+                 "t egestas non ex quis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "msg1"));
+    STRCMP_EQUAL("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fu"
+                 "sce auctor ac leo ut maximus. Curabitur vestibulum facilisi"
+                 "s neque, vitae sodales elit pulvinar ac. Mauris suscipit ph"
+                 "aretra metus eu hendrerit. Proin viverra ligula ut nibh mal"
+                 "esuada, vel vehicula leo pulvinar. Nullam tellus dolor, pos"
+                 "uere sed orci in, pretium fermentum ante. Donec a quam vulp"
+                 "utate, fermentum nisi nec, convallis sapien. Vestibulum mal"
+                 "esuada dui eget iaculis sagittis. Praesent egestas non ex q"
+                 "uis blandit. Maecenas quis leo nunc. In.",
+                 (const char *)hashtable_get (hashtable, "args1"));
+    hashtable_free (hashtable);
+    config_file_option_unset (
+        irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH]);
+
+    irc_server_free (server);
 }
