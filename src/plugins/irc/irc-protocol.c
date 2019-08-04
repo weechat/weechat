@@ -2944,6 +2944,38 @@ IRC_PROTOCOL_CALLBACK(005)
             pos2[0] = ' ';
     }
 
+    /* save max user length */
+    pos = strstr (argv_eol[3], "USERLEN=");
+    if (pos)
+    {
+        pos += 8;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        error = NULL;
+        value = strtol (pos, &error, 10);
+        if (error && !error[0] && (value > 0))
+            server->user_max_length = (int)value;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save max host length */
+    pos = strstr (argv_eol[3], "HOSTLEN=");
+    if (pos)
+    {
+        pos += 8;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        error = NULL;
+        value = strtol (pos, &error, 10);
+        if (error && !error[0] && (value > 0))
+            server->host_max_length = (int)value;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
     /* save casemapping */
     pos = strstr (argv_eol[3], "CASEMAPPING=");
     if (pos)

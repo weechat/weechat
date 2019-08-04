@@ -25,6 +25,7 @@ New features::
   * api: add argument "strip_items" in function string_split
   * buflist: add infolist "buflist" with list of buffer pointers (issue #1375)
   * exec: evaluate option exec.command.shell, change default value to "${env:SHELL}" (issue #1356)
+  * irc: add variables "user_max_length" and "host_max_length" in server structure (issue #1387)
 
 Bug fixes::
 

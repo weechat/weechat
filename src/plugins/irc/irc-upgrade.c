@@ -476,6 +476,42 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
                     irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
+                    /* "user_max_length" is new in WeeChat 2.6  */
+                    if (weechat_infolist_search_var (infolist, "user_max_length"))
+                    {
+                        irc_upgrade_current_server->user_max_length = weechat_infolist_integer (infolist, "user_max_length");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 2.5 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "USERLEN");
+                        if (str)
+                        {
+                            error = NULL;
+                            number = strtol (str, &error, 10);
+                            if (error && !error[0])
+                                irc_upgrade_current_server->user_max_length = (int)number;
+                        }
+                    }
+                    /* "host_max_length" is new in WeeChat 2.6  */
+                    if (weechat_infolist_search_var (infolist, "host_max_length"))
+                    {
+                        irc_upgrade_current_server->host_max_length = weechat_infolist_integer (infolist, "host_max_length");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 2.5 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "HOSTLEN");
+                        if (str)
+                        {
+                            error = NULL;
+                            number = strtol (str, &error, 10);
+                            if (error && !error[0])
+                                irc_upgrade_current_server->host_max_length = (int)number;
+                        }
+                    }
                     irc_upgrade_current_server->casemapping = weechat_infolist_integer (infolist, "casemapping");
                     str = weechat_infolist_string (infolist, "chantypes");
                     if (str)

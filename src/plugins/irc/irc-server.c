@@ -1398,6 +1398,8 @@ irc_server_alloc (const char *name)
     new_server->prefix_modes = NULL;
     new_server->prefix_chars = NULL;
     new_server->nick_max_length = 0;
+    new_server->user_max_length = 0;
+    new_server->host_max_length = 0;
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
     new_server->chantypes = NULL;
     new_server->chanmodes = NULL;
@@ -5694,6 +5696,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_modes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, prefix_chars, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, nick_max_length, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, user_max_length, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, host_max_length, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
@@ -5928,6 +5932,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "prefix_chars", server->prefix_chars))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "nick_max_length", server->nick_max_length))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "user_max_length", server->user_max_length))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "host_max_length", server->host_max_length))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "casemapping", server->casemapping))
         return 0;
@@ -6312,6 +6320,8 @@ irc_server_print_log ()
         weechat_log_printf ("  prefix_modes . . . . : '%s'",  ptr_server->prefix_modes);
         weechat_log_printf ("  prefix_chars . . . . : '%s'",  ptr_server->prefix_chars);
         weechat_log_printf ("  nick_max_length. . . : %d",    ptr_server->nick_max_length);
+        weechat_log_printf ("  user_max_length. . . : %d",    ptr_server->user_max_length);
+        weechat_log_printf ("  host_max_length. . . : %d",    ptr_server->host_max_length);
         weechat_log_printf ("  casemapping. . . . . : %d (%s)",
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
