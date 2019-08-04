@@ -252,6 +252,8 @@ _isupport_   (string) +
 _prefix_modes_   (string) +
 _prefix_chars_   (string) +
 _nick_max_length_   (integer) +
+_user_max_length_   (integer) +
+_host_max_length_   (integer) +
 _casemapping_   (integer) +
 _chantypes_   (string) +
 _chanmodes_   (string) +
