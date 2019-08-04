@@ -23,8 +23,10 @@
 
 extern "C"
 {
+#include "string.h"
 #include "tests/tests.h"
 #include "src/core/wee-hashtable.h"
+#include "src/core/wee-hook.h"
 #include "src/plugins/irc/irc-message.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -417,6 +419,33 @@ TEST(IrcMessage, ParseToHashtable)
     hashtable_free (hashtable);
 }
 
+char *
+convert_irc_charset_cb (const void *pointer, void *data,
+                        const char *modifier, const char *modifier_data,
+                        const char *string)
+{
+    char *new_string;
+    int length;
+
+    /* make C++ compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    if (!string)
+        return NULL;
+
+    length = strlen (string) + 32 + 1;
+    new_string = (char *)malloc (length);
+    if (!new_string)
+        return NULL;
+
+    snprintf (new_string, length, "%s MODIFIED", string);
+
+    return new_string;
+}
+
 /*
  * Tests functions:
  *   irc_message_convert_charset
@@ -424,7 +453,22 @@ TEST(IrcMessage, ParseToHashtable)
 
 TEST(IrcMessage, ConvertCharset)
 {
-    /* TODO: write tests */
+    struct t_hook *hook;
+    char *str;
+
+    hook = hook_modifier (NULL, "convert_irc_charset",
+                          &convert_irc_charset_cb, NULL, NULL);
+
+    POINTERS_EQUAL(NULL,
+                   irc_message_convert_charset (NULL, 0,
+                                                "convert_irc_charset", NULL));
+
+    str = irc_message_convert_charset ("PRIVMSG #channel :this is a test", 18,
+                                       "convert_irc_charset", NULL);
+    STRCMP_EQUAL("PRIVMSG #channel :this is a test MODIFIED", str);
+    free (str);
+
+    unhook (hook);
 }
 
 /*
