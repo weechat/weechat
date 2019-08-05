@@ -1913,6 +1913,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->nick_modes);
     if (server->host)
         free (server->host);
+    if (server->cap_ls)
+        weechat_hashtable_free (server->cap_ls);
+    if (server->cap_list)
+        weechat_hashtable_free (server->cap_list);
     if (server->isupport)
         free (server->isupport);
     if (server->prefix_modes)
