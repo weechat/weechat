@@ -108,7 +108,7 @@ compile WeeChat.
 | ca-certificates        |               |          | Certificates for SSL connections.
 | libaspell-dev
   ∥ libenchant-dev       |               |          | Spell plugin.
-| python-dev             | ≥ 2.6 ^(4)^   |          | Python plugin.
+| python3-dev            | ^(4)^         |          | Python plugin.
 | libperl-dev            |               |          | Perl plugin.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Ruby plugin.
 | liblua5.3-dev          |               |          | Lua plugin.

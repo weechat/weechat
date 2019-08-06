@@ -114,7 +114,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | ca-certificates        |               |          | Zertifikate für SSL Verbindungen.
 | libaspell-dev
   ∥ libenchant-dev       |               |          | Spell Erweiterung.
-| python-dev             | ≥ 2.6 ^(4)^   |          | Python Erweiterung.
+| python3-dev            | ^(4)^         |          | Python Erweiterung.
 | libperl-dev            |               |          | Perl Erweiterung.
 | ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Ruby Erweiterung.
 | liblua5.3-dev          |               |          | Lua Erweiterung.
