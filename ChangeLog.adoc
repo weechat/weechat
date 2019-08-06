@@ -45,7 +45,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on IRC ignore and message functions
+  * unit: add tests on IRC ignore, message and nick functions
 
 Build::
 

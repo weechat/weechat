@@ -408,6 +408,7 @@ WeeChat "core" is located in following directories:
 |             test-irc-ignore.cpp   | Tests: IRC ignores.
 |             test-irc-message.cpp  | Tests: IRC messages.
 |             test-irc-mode.cpp     | Tests: IRC modes.
+|             test-irc-nick.cpp     | Tests: IRC nicks.
 |             test-irc-protocol.cpp | Tests: IRC protocol.
 
 |===

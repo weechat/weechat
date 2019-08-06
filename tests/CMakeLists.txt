@@ -49,6 +49,7 @@ set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   unit/plugins/irc/test-irc-ignore.cpp
   unit/plugins/irc/test-irc-message.cpp
   unit/plugins/irc/test-irc-mode.cpp
+  unit/plugins/irc/test-irc-nick.cpp
   unit/plugins/irc/test-irc-protocol.cpp
 )
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
