@@ -23,12 +23,12 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.6_python3_default]]
 === Python 3 by default
 
-Python 3 is now used by default to compile the "python" plugin (without fallback
+Python 3 is now used by default to compile the "python" plugin (no fallback
 on Python 2).
 
 The CMake option `ENABLE_PYTHON3` has been renamed to `ENABLE_PYTHON2`
 (configure option `--enable-python2`). If this option is enabled, the "python"
-plugin is built with Python 2 instead of Python 3.
+plugin is built with Python 2 (no fallback on Python 3).
 
 [[v2.5]]
 == Version 2.5 (2019-06-06)
