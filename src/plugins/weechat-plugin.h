@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20190624-01"
+#define WEECHAT_PLUGIN_API_VERSION "20190810-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -409,6 +409,7 @@ struct t_weechat_plugin
     struct t_weelist_item *(*list_next) (struct t_weelist_item *item);
     struct t_weelist_item *(*list_prev) (struct t_weelist_item *item);
     const char *(*list_string) (struct t_weelist_item *item);
+    void *(*list_user_data) (struct t_weelist_item *item);
     int (*list_size) (struct t_weelist *weelist);
     void (*list_remove) (struct t_weelist *weelist,
                          struct t_weelist_item *item);
@@ -1357,6 +1358,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->list_prev)(__item)
 #define weechat_list_string(__item)                                     \
     (weechat_plugin->list_string)(__item)
+#define weechat_list_user_data(__item)                                  \
+    (weechat_plugin->list_user_data)(__item)
 #define weechat_list_size(__list)                                       \
     (weechat_plugin->list_size)(__list)
 #define weechat_list_remove(__list, __item)                             \

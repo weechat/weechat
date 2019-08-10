@@ -51,6 +51,7 @@ extern void weelist_set (struct t_weelist_item *item, const char *value);
 extern struct t_weelist_item *weelist_next (struct t_weelist_item *item);
 extern struct t_weelist_item *weelist_prev (struct t_weelist_item *item);
 extern const char *weelist_string (struct t_weelist_item *item);
+extern void *weelist_user_data (struct t_weelist_item *item);
 extern int weelist_size (struct t_weelist *weelist);
 extern void weelist_remove (struct t_weelist *weelist,
                             struct t_weelist_item *item);

@@ -672,6 +672,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->list_next = &weelist_next;
         new_plugin->list_prev = &weelist_prev;
         new_plugin->list_string = &weelist_string;
+        new_plugin->list_user_data = &weelist_user_data;
         new_plugin->list_size = &weelist_size;
         new_plugin->list_remove = &weelist_remove;
         new_plugin->list_remove_all = &weelist_remove_all;

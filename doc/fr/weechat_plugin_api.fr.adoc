@@ -4123,7 +4123,7 @@ Exemple en C :
 
 [source,C]
 ----
-weechat_printf (NULL, "valeur de l'item : %s", weechat_list_string (item));
+weechat_printf (NULL, "valeur de l'élément : %s", weechat_list_string (item));
 ----
 
 Script (Python) :
@@ -4134,8 +4134,40 @@ Script (Python) :
 value = weechat.list_string(item)
 
 # exemple
-weechat.prnt("", "valeur de l'item : %s" % weechat.list_string(item))
+weechat.prnt("", "valeur de l'élément : %s" % weechat.list_string(item))
 ----
+
+==== list_user_data
+
+_WeeChat ≥ 2.6._
+
+// TRANSLATION MISSING
+Retourner le pointeur vers les données utilisateur de l'élément.
+
+Prototype :
+
+[source,C]
+----
+void *weechat_list_user_data (struct t_weelist_item *item);
+----
+
+Paramètres :
+
+* _item_ : pointeur vers l'élément
+
+Valeur de retour :
+
+* pointeur vers les données utilisateur de l'élément
+
+Exemple en C :
+
+[source,C]
+----
+weechat_printf (NULL, "données utilisateur de l'élément : 0x%lx", weechat_list_user_data (item));
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
 
 ==== list_size
 
@@ -4416,7 +4448,7 @@ Exemple en C :
 
 [source,C]
 ----
-void *pointer = weechat_arraylist_get (arraylist, 0);  /* first item */
+void *pointer = weechat_arraylist_get (arraylist, 0);  /* premier élément */
 ----
 
 [NOTE]
@@ -4763,7 +4795,7 @@ Paramètres :
 
 Valeur de retour :
 
-* pointeur vers l'item créé/mis à jour, NULL en cas d'erreur
+* pointeur vers l'entrée créée/mise à jour, NULL en cas d'erreur
 
 Exemple en C :
 
