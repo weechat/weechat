@@ -32,7 +32,7 @@ Die folgenden Variablen können in den obigen Optionen genutzt werden:
     - ${format_buffer}: der evaluierte Wert der Option buflist.format.buffer; dies kann in der Option buflist.format.buffer_current genutzt werden um zum Beispiel die Hintergrundfarbe zu verändern
     - ${current_buffer}: ein Boolean ("0" oder "1"), "1" falls es sich um den aktuellen Buffer handelt; dies kann in einer Bedingung verwendet werden: ${if:${current_buffer}?...:...}
     - ${merged}: ein Boolean ("0" oder "1"), "1" wenn der Buffer mit einem anderen zusammengefügt ist; kann innerhalb einer Bedingung genutzt werden: ${if:${merged}?...:...}
-    - ${format_number}: eingerückte Numer mit Trennzeichen (evaluiert aus Option buflist.format.number)
+    - ${format_number}: eingerückte Nummer mit Trennzeichen (evaluiert aus Option buflist.format.number)
     - ${number}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt; bei zusammengefügten Buffern enthält die Variable für den ersten Buffer die entsprechende Nummer, die weiteren Buffer enthalten ein Leerzeichen anstelle der Nummer
     - ${number2}: eingerückte Nummer, zum Beispiel " 1", falls die Anzahl der Buffer zwischen 10 und 99 liegt
     - ${number_displayed}: "1" falls Nummer angezeigt wird, ansonsten "0"
