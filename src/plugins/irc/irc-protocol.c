@@ -2801,8 +2801,8 @@ IRC_PROTOCOL_CALLBACK(wallops)
 
 IRC_PROTOCOL_CALLBACK(001)
 {
-    char *server_command, **commands, **ptr_command, *vars_replaced, *away_msg;
-    char *usermode, *slash_command;
+    char *server_command, **commands, **ptr_command, *command2, *slash_command;
+    char *away_msg, *usermode;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2868,27 +2868,27 @@ IRC_PROTOCOL_CALLBACK(001)
         {
             for (ptr_command = commands; *ptr_command; ptr_command++)
             {
-                vars_replaced = irc_message_replace_vars (server, NULL,
-                                                          *ptr_command);
-                if (weechat_string_is_command_char (*ptr_command))
+                command2 = irc_message_replace_vars (server, NULL,
+                                                     *ptr_command);
+                if (command2)
                 {
-                    weechat_command (server->buffer,
-                                     (vars_replaced) ? vars_replaced : *ptr_command);
-                }
-                else
-                {
-                    slash_command = malloc (1 + strlen((vars_replaced) ? vars_replaced : *ptr_command) + 1);
-                    if (slash_command)
+                    if (weechat_string_is_command_char (command2))
                     {
-                        strcpy (slash_command, "/");
-                        strcat (slash_command, (vars_replaced) ? vars_replaced : *ptr_command);
-                        weechat_command (server->buffer, slash_command);
-                        free (slash_command);
+                        weechat_command (server->buffer, command2);
                     }
+                    else
+                    {
+                        slash_command = malloc (1 + strlen(command2) + 1);
+                        if (slash_command)
+                        {
+                            strcpy (slash_command, "/");
+                            strcat (slash_command, command2);
+                            weechat_command (server->buffer, slash_command);
+                            free (slash_command);
+                        }
+                    }
+                    free (command2);
                 }
-
-                if (vars_replaced)
-                    free (vars_replaced);
             }
             weechat_string_free_split_command (commands);
         }
