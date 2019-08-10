@@ -2803,6 +2803,7 @@ IRC_PROTOCOL_CALLBACK(001)
 {
     char *server_command, **commands, **ptr_command, *command2, *slash_command;
     char *away_msg, *usermode;
+    int length;
 
     IRC_PROTOCOL_MIN_ARGS(3);
 
@@ -2878,11 +2879,11 @@ IRC_PROTOCOL_CALLBACK(001)
                     }
                     else
                     {
-                        slash_command = malloc (1 + strlen(command2) + 1);
+                        length = 1 + strlen(command2) + 1;
+                        slash_command = malloc (length);
                         if (slash_command)
                         {
-                            strcpy (slash_command, "/");
-                            strcat (slash_command, command2);
+                            snprintf (slash_command, length, "/%s", command2);
                             weechat_command (server->buffer, slash_command);
                             free (slash_command);
                         }
