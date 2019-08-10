@@ -246,6 +246,7 @@ extern char *gui_buffer_properties_set[];
 /* buffer functions */
 
 extern int gui_buffer_search_type (const char *type);
+extern int gui_buffer_search_notify (const char *notify);
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);

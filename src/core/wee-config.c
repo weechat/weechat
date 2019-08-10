@@ -2153,6 +2153,27 @@ config_weechat_layout_write_cb (const void *pointer, void *data,
 }
 
 /*
+ * Checks notify option value.
+ *
+ * Returns:
+ *   1: value OK
+ *   0: invalid value
+ */
+
+int
+config_weechat_notify_check_cb (const void *pointer, void *data,
+                                 struct t_config_option *option,
+                                 const char *value)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    return (gui_buffer_search_notify (value) >= 0) ? 1 : 0;
+}
+
+/*
  * Callback for changes on a notify option.
  */
 
@@ -2180,7 +2201,7 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
                                         const char *value)
 {
     struct t_config_option *ptr_option;
-    int rc;
+    int rc, notify;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2206,19 +2227,29 @@ config_weechat_notify_create_option_cb (const void *pointer, void *data,
         {
             if (value && value[0])
             {
-                ptr_option = config_file_new_option (
-                    config_file, section,
-                    option_name, "integer", _("Notify level for buffer"),
-                    "none|highlight|message|all",
-                    0, 0, "", value, 0,
-                    NULL, NULL, NULL,
-                    &config_weechat_notify_change_cb, NULL, NULL,
-                    NULL, NULL, NULL);
-                rc = (ptr_option) ?
-                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                notify = gui_buffer_search_notify (value);
+                if (notify >= 0)
+                {
+                    ptr_option = config_file_new_option (
+                        config_file, section,
+                        option_name, "integer", _("Notify level for buffer"),
+                        "none|highlight|message|all",
+                        0, 0, "", value, 0,
+                        &config_weechat_notify_check_cb, NULL, NULL,
+                        &config_weechat_notify_change_cb, NULL, NULL,
+                        NULL, NULL, NULL);
+                    rc = (ptr_option) ?
+                        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+                }
+                else
+                {
+                    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+                }
             }
             else
+            {
                 rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
         }
     }
 
@@ -2265,31 +2296,20 @@ config_weechat_notify_delete_option_cb (const void *pointer, void *data,
 int
 config_weechat_notify_set (struct t_gui_buffer *buffer, const char *notify)
 {
-    int i, value;
+    int rc;
 
     if (!buffer || !notify)
         return 0;
 
-    value = -1;
-    for (i = 0; i < GUI_BUFFER_NUM_NOTIFY; i++)
-    {
-        if (strcmp (gui_buffer_notify_string[i], notify) == 0)
-        {
-            value = i;
-            break;
-        }
-    }
-    if ((value < 0) && (strcmp (notify, "reset") != 0))
-        return 0;
-
     /* create/update option */
-    return (config_weechat_notify_create_option_cb (
-                NULL, NULL,
-                weechat_config_file,
-                weechat_config_section_notify,
-                buffer->full_name,
-                (value < 0) ?
-                NULL : gui_buffer_notify_string[value]) != WEECHAT_CONFIG_OPTION_SET_ERROR) ? 1 : 0;
+    rc = config_weechat_notify_create_option_cb (
+        NULL, NULL,
+        weechat_config_file,
+        weechat_config_section_notify,
+        buffer->full_name,
+        (strcmp (notify, "reset") == 0) ? "none" : notify);
+
+    return (rc != WEECHAT_CONFIG_OPTION_SET_ERROR) ? 1 : 0;
 }
 
 /*

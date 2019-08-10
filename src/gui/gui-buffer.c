@@ -124,7 +124,7 @@ char *gui_buffer_properties_set[] =
 /*
  * Searches for buffer type.
  *
- * Returns pointer to hotlist found, NULL if not found.
+ * Returns index of bufffer type found, -1 if not found.
  */
 
 int
@@ -132,9 +132,35 @@ gui_buffer_search_type (const char *type)
 {
     int i;
 
+    if (!type)
+        return -1;
+
     for (i = 0; i < GUI_BUFFER_NUM_TYPES; i++)
     {
         if (string_strcasecmp (gui_buffer_type_string[i], type) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+/*
+ * Searches for buffer notif levely.
+ *
+ * Returns index of notify level, -1 if not found.
+ */
+
+int
+gui_buffer_search_notify (const char *notify)
+{
+    int i;
+
+    if (!notify)
+        return -1;
+
+    for (i = 0; i < GUI_BUFFER_NUM_NOTIFY; i++)
+    {
+        if (string_strcasecmp (gui_buffer_notify_string[i], notify) == 0)
             return i;
     }
 
@@ -1873,8 +1899,10 @@ void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 const char *value)
 {
+    int gui_chat_mute_old;
     long number;
     char *error;
+    const char *ptr_notify;
 
     if (!property || !value)
         return;
@@ -1993,15 +2021,28 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "notify") == 0)
     {
+        ptr_notify = NULL;
         error = NULL;
         number = strtol (value, &error, 10);
-        if (error && !error[0]
-            && (number < GUI_BUFFER_NUM_NOTIFY))
+        if (error && !error[0])
         {
-            if (number < 0)
-                buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
-            else
-                buffer->notify = number;
+            if (number < GUI_BUFFER_NUM_NOTIFY)
+            {
+                if (number < 0)
+                    number = CONFIG_INTEGER(config_look_buffer_notify_default);
+                ptr_notify = gui_buffer_notify_string[number];
+            }
+        }
+        else
+        {
+            ptr_notify = value;
+        }
+        if (ptr_notify)
+        {
+            gui_chat_mute_old = gui_chat_mute;
+            gui_chat_mute = GUI_CHAT_MUTE_ALL_BUFFERS;
+            config_weechat_notify_set (buffer, ptr_notify);
+            gui_chat_mute = gui_chat_mute_old;
         }
     }
     else if (string_strcasecmp (property, "title") == 0)
