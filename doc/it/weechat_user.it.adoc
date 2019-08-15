@@ -2780,8 +2780,13 @@ host/IP e porta dipendono dalla propria configurazione di TOR):
 Now, add a new server, for example:
 
 ----
-/server add freenode-tor freenodeok2gncmy.onion
+/server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+If you are using an old version of TOR (before 0.3.5) you should use the address
+`freenodeok2gncmy.onion` instead.
 
 Impostare il proxy per TOR:
 
