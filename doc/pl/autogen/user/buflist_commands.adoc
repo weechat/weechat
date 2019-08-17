@@ -9,42 +9,48 @@
 /buflist  bar
           refresh
 
-    bar: dodaje pasek "buflist"
-refresh: wymusza odświeżenie elementów paska (buflist, buflist2 oraz buflist3)
+    bar: add the "buflist" bar
+refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
 
-Linie z buforami są wyświetlane za pomocą przetwarzania ciągów (zobacz /help eval żeby poznać format), za pomocą tych opcji:
-  - buflist.look.display_conditions: warunki wyświetlenia buforu na liście
-  - buflist.format.buffer: format dla buforu nie będącego obecnym buforem
-  - buflist.format.buffer_current: format format dla obecnego buforu
+The lines with buffers are displayed using string evaluation (see /help eval for the format), with these options:
+  - buflist.look.display_conditions: conditions to display a buffer in the list
+  - buflist.format.buffer: format for a buffer which is not current buffer
+  - buflist.format.buffer_current: format for the current buffer
 
-Następujące zmienne mogą być użyte w powyższych opcjach:
-  - dane elementu paska (pełną listę można znaleźć w dokumentacji API dla hdata "bar_item"), na przykład:
+The following variables can be used in the option "buflist.look.display_conditions" (see below for the description):
+  - bar_item
+  - buffer
+  - irc_server
+  - irc_channel
+
+The following variables can be used in the options "buflist.format.*":
+  - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
     - ${bar_item.name}
-  - dane buforu (zobacz hdata "buffer" w dokumentacji API dla pełnej listy zmiennych), na przykład:
+  - buffer data (see hdata "buffer" in API doc for a complete list), for example:
     - ${buffer.number}
     - ${buffer.name}
     - ${buffer.full_name}
     - ${buffer.short_name}
     - ${buffer.nicklist_nicks_count}
-  - irc_server: dane serwera IRC, zdefiniowane tylko w buforze IRC (zobacz hdata "irc_server" w dokumentacji API)
-  - irc_channel: dane kanału IRC, zdefiniowane tylko w buforze kanału IRC (zobacz hdata "irc_channel" w dokumentacji API)
-  - dodatkowe zmienne dodane dla wygody przez listę buforów:
-    - ${format_buffer}: przetworzona wartość opcji buflist.format.buffer; może to zostać użyte w opcji buflist.format.buffer_current na przykład do zmiany koloru tła
-    - ${current_buffer}: boolowskie ("0" lub "1"), "1" jeśli jest to obecny bufor; może zostać użyte w warunku: ${if: ${current_buffer}?...:...}
-    - ${merged}: boolowskie ("0" lub "1"), "1" jeśli bufor jest połączony z przynajmniej jednym innym buforem; może zostać użyte w warunku: ${if:${merged}?...:...}
-    - ${format_number}: wyrównany numer z separatorem (przetworzona opcja buflist.format.number)
-    - ${number}: wyrównany numer, na przykład " 1" jeśli buforów jest między 10 a 99
-    - ${number2}: wyrównany numer, na przykład " 1" jeśli buforów jest między 10 a 99
-    - ${number_displayed}: "1" jeśli numer jest wyświetlany, w przeciwnym wypadku "0"
-    - ${indent}: wyrównanie dla nazwy (kanały i bufory prywatne są wyrównywane) (przetworzona opcja buflist.format.indent)
-    - ${format_nick_prefix}: kolorowy prefiks nicka dla kanału (przetworzona opcja buflist.format.nick_prefix)
-    - ${color_nick_prefix}: kolor prefiksu nicka dla kanału (ustawiany, jeśli opcja buflist.look.nick_prefix jest włączona)
-    - ${nick_prefix}: prefix nicka dla kanału (ustawiany, jeśli opcja buflist.look.nick_prefix jest włączona)
-    - ${format_name}: sformatowana nazwa (przetworzona opcja buflist.format.name)
-    - ${name}: skrócona nazwa (jeśli ustawiona inaczej zwraca pełną nazwę)
-    - ${color_hotlist}: kolor zależący od najwyższego poziomu hotlisty dla bufora (przetworzona opcja buflist.format.hotlist_xxx,  gdzie xxx to poziom)
-    - ${format_hotlist}: sformatowana hotlista (przetworzenie opcji buflist.format.hotlist)
-    - ${hotlist}: niesformatowana hotlista
-    - ${hotlist_priority}: "none", "low", "message", "private" lub "highlight"
-    - ${format_lag}: opóźnienie buforu serwera IRC, puste jeśli nie ma opóźnienia (przetworzona opcja buflist.format.lag)
+  - irc_server: IRC server data, defined only on an IRC buffer (see hdata "irc_server" in API doc)
+  - irc_channel: IRC channel data, defined only on an IRC channel buffer (see hdata "irc_channel" in API doc)
+  - extra variables added by buflist for convenience:
+    - ${format_buffer}: the evaluated value of option buflist.format.buffer; this can be used in option buflist.format.buffer_current to just change the background color for example
+    - ${current_buffer}: a boolean ("0" or "1"), "1" if this is the current buffer; it can be used in a condition: ${if:${current_buffer}?...:...}
+    - ${merged}: a boolean ("0" or "1"), "1" if the buffer is merged with at least another buffer; it can be used in a condition: ${if:${merged}?...:...}
+    - ${format_number}: indented number with separator (evaluation of option buflist.format.number)
+    - ${number}: indented number, for example " 1" if there are between 10 and 99 buffers; for merged buffers, this variable is set with number for the first buffer and spaces for the next buffers with same number
+    - ${number2}: indented number, for example " 1" if there are between 10 and 99 buffers
+    - ${number_displayed}: "1" if the number is displayed, otherwise "0"
+    - ${indent}: indentation for name (channel and private buffers are indented) (evaluation of option buflist.format.indent)
+    - ${format_nick_prefix}: colored nick prefix for a channel (evaluation of option buflist.format.nick_prefix)
+    - ${color_nick_prefix}: color of nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${nick_prefix}: nick prefix for a channel (set only if the option buflist.look.nick_prefix is enabled)
+    - ${format_name}: formatted name (evaluation of option buflist.format.name)
+    - ${name}: the short name (if set), with a fallback on the name
+    - ${color_hotlist}: the color depending on the highest hotlist level for the buffer (evaluation of option buflist.format.hotlist_xxx where xxx is the level)
+    - ${format_hotlist}: the formatted hotlist (evaluation of option buflist.format.hotlist)
+    - ${hotlist}: the raw hotlist
+    - ${hotlist_priority}: "none", "low", "message", "private" or "highlight"
+    - ${format_lag}: the lag for an IRC server buffer, empty if there's no lag (evaluation of option buflist.format.lag)
 ----

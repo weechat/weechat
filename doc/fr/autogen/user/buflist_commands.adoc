@@ -17,7 +17,13 @@ Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaîn
   - buflist.format.buffer : format pour un tampon qui n'est pas le tampon courant
   - buflist.format.buffer_current: format pour le tampon courant
 
-Les variables suivantes peuvent être utilisées dans ces options :
+Les variables suivantes peuvent être utilisées dans l'option "buflist.look.display_conditions" (voir la description ci-dessous) :
+  - bar_item
+  - buffer
+  - irc_server
+  - irc_channel
+
+Les variables suivantes peuvent être utilisées dans les options "buflist.format.*" :
   - données de l'objet de barre (voir le hdata "bar_item" dans la doc API pour une liste complète), par exemple :
     - ${bar_item.name}
   - données du tampon (voir le hdata "buffer" dans la doc API pour une liste complète), par exemple :

@@ -440,7 +440,9 @@ buflist_config_init ()
         buflist_config_file, ptr_section,
         "display_conditions", "string",
         N_("conditions to display a buffer "
-           "(note: content is evaluated, see /help buflist); for example "
+           "(note: content is evaluated, see /help buflist); variables "
+           "available are: bar_item, buffer, irc_server and irc_channel "
+           "(see /help buflist for more information); for example "
            "to hide server buffers if they are merged with core buffer: "
            "\"${buffer.hidden}==0 && ((${type}!=server && "
            "${buffer.full_name}!=core.weechat) || ${buffer.active}==1)\""),
