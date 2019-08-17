@@ -2657,10 +2657,9 @@ Jetzt muss der neue Server hinzufügt werden, zum Beispiel:
 /server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-If you are using an old version of TOR (before 0.3.5) you should use the address
-`freenodeok2gncmy.onion` instead.
+Sollte eine alte Version (vor 0.3.5) von TOR verwendet werden, muss diese
+Adresse, `freenodeok2gncmy.onion`, genutzt werden.
 
 Einen Proxy für TOR anlegen:
 
