@@ -17,13 +17,7 @@ The lines with buffers are displayed using string evaluation (see /help eval for
   - buflist.format.buffer: format for a buffer which is not current buffer
   - buflist.format.buffer_current: format for the current buffer
 
-The following variables can be used in the option "buflist.look.display_conditions" (see below for the description):
-  - bar_item
-  - buffer
-  - irc_server
-  - irc_channel
-
-The following variables can be used in the options "buflist.format.*":
+The following variables can be used in these options:
   - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
     - ${bar_item.name}
   - buffer data (see hdata "buffer" in API doc for a complete list), for example:

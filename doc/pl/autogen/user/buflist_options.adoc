@@ -99,7 +99,7 @@
 ** domyślna wartość: `+50+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** opis: pass:none[conditions to display a buffer (note: content is evaluated, see /help buflist); variables available are: bar_item, buffer, irc_server and irc_channel (see /help buflist for more information); for example to hide server buffers if they are merged with core buffer: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
+** opis: pass:none[warunki do wyświetlenia buforu (uwaga: zawartość jest przetwarzana, zobacz /help buflist); na przykład w celu ukrycia buforów serwerów, kiedy są połączone z głównym buforem: "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${buffer.hidden}==0"+`

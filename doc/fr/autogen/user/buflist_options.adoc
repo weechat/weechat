@@ -99,7 +99,7 @@
 ** valeur par défaut: `+50+`
 
 * [[option_buflist.look.display_conditions]] *buflist.look.display_conditions*
-** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist) ; les variables disponibles sont : bar_item, buffer, irc_server et irc_channel (voir /help buflist pour plus d'information) ; par exemple pour cacher les tampons de serveurs s'ils sont fusionnés avec le tampon "core" : "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
+** description: pass:none[conditions pour afficher un tampon (note : le contenu est évalué, voir /help buflist) ; par exemple pour cacher les tampons de serveurs s'ils sont fusionnés avec le tampon "core" : "${buffer.hidden}==0 && ((${type}!=server && ${buffer.full_name}!=core.weechat) || ${buffer.active}==1)"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${buffer.hidden}==0"+`
