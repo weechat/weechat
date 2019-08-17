@@ -350,25 +350,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         weechat_hashtable_set (buflist_hashtable_pointers,
                                "irc_channel", ptr_channel);
 
-        /* check condition: if false, the buffer is not displayed */
-        condition = weechat_string_eval_expression (
-            weechat_config_string (buflist_config_look_display_conditions),
-            buflist_hashtable_pointers,
-            NULL,  /* extra vars */
-            buflist_hashtable_options_conditions);
-        rc = (condition && (strcmp (condition, "1") == 0));
-        if (condition)
-            free (condition);
-        if (!rc)
-            continue;
-
-        weechat_arraylist_add (buflist_list_buffers[item_index], ptr_buffer);
-
-        current_buffer = (ptr_buffer == ptr_current_buffer);
-
-        ptr_hotlist = weechat_hdata_pointer (buflist_hdata_buffer,
-                                             ptr_buffer, "hotlist");
-
+        /* name / short name */
         ptr_name = weechat_hdata_string (buflist_hdata_buffer,
                                          ptr_buffer, "short_name");
         if (!ptr_name)
@@ -385,11 +367,10 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         }
 
         /* current buffer */
+        current_buffer = (ptr_buffer == ptr_current_buffer);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
                                "current_buffer",
                                (current_buffer) ? "1" : "0");
-        if (current_buffer)
-            line_number_current_buffer = line_number;
 
         /* buffer number */
         number = weechat_hdata_integer (buflist_hdata_buffer,
@@ -410,7 +391,6 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         }
         snprintf (str_number2, sizeof (str_number2),
                   str_format_number, number);
-        prev_number = number;
 
         /* buffer merged */
         ptr_buffer_prev = weechat_hdata_move (buflist_hdata_buffer,
@@ -508,6 +488,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                    buflist_config_format_name));
 
         /* hotlist */
+        ptr_hotlist = weechat_hdata_pointer (buflist_hdata_buffer,
+                                             ptr_buffer, "hotlist");
         ptr_hotlist_format = weechat_config_string (
             buflist_config_format_hotlist_level_none);
         ptr_hotlist_priority = hotlist_priority_none;
@@ -585,6 +567,26 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             weechat_hashtable_set (buflist_hashtable_extra_vars,
                                    "format_lag", "");
         }
+
+        /* check condition: if false, the buffer is not displayed */
+        condition = weechat_string_eval_expression (
+            weechat_config_string (buflist_config_look_display_conditions),
+            buflist_hashtable_pointers,
+            buflist_hashtable_extra_vars,
+            buflist_hashtable_options_conditions);
+        rc = (condition && (strcmp (condition, "1") == 0));
+        if (condition)
+            free (condition);
+        if (!rc)
+            continue;
+
+        /* add buffer in list */
+        weechat_arraylist_add (buflist_list_buffers[item_index], ptr_buffer);
+
+        /* set some other variables */
+        if (current_buffer)
+            line_number_current_buffer = line_number;
+        prev_number = number;
 
         /* build string */
         line = weechat_string_eval_expression (
