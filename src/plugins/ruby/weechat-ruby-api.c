@@ -30,6 +30,7 @@
 #include "../plugin-script.h"
 #include "../plugin-script-api.h"
 #include "weechat-ruby.h"
+#include "weechat-ruby-api.h"
 
 
 #define API_DEF_FUNC(__name, __argc)                                    \
@@ -75,7 +76,7 @@
 #define API_RETURN_INT(__int)                                           \
     return INT2FIX (__int)
 #define API_RETURN_LONG(__long)                                         \
-    return LONG2FIX (__long)
+    return LONG2NUM (__long)
 
 
 /*
@@ -283,11 +284,11 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
 
     Check_Type (single, T_STRING);
     Check_Type (plural, T_STRING);
-    Check_Type (count, T_FIXNUM);
+    CHECK_INTEGER(count);
 
     c_single = StringValuePtr (single);
     c_plural = StringValuePtr (plural);
-    c_count = FIX2INT (count);
+    c_count = NUM2INT (count);
 
     result = weechat_ngettext (c_single, c_plural, c_count);
 
@@ -326,11 +327,11 @@ weechat_ruby_api_string_match (VALUE class, VALUE string, VALUE mask,
 
     Check_Type (string, T_STRING);
     Check_Type (mask, T_STRING);
-    Check_Type (case_sensitive, T_FIXNUM);
+    CHECK_INTEGER(case_sensitive);
 
     c_string = StringValuePtr (string);
     c_mask = StringValuePtr (mask);
-    c_case_sensitive = FIX2INT (case_sensitive);
+    c_case_sensitive = NUM2INT (case_sensitive);
 
     value = weechat_string_match (c_string, c_mask, c_case_sensitive);
 
@@ -350,11 +351,11 @@ weechat_ruby_api_string_match_list (VALUE class, VALUE string, VALUE masks,
 
     Check_Type (string, T_STRING);
     Check_Type (masks, T_STRING);
-    Check_Type (case_sensitive, T_FIXNUM);
+    CHECK_INTEGER(case_sensitive);
 
     c_string = StringValuePtr (string);
     c_masks = StringValuePtr (masks);
-    c_case_sensitive = FIX2INT (case_sensitive);
+    c_case_sensitive = NUM2INT (case_sensitive);
 
     value = plugin_script_api_string_match_list (weechat_ruby_plugin,
                                                  c_string,
@@ -438,9 +439,9 @@ weechat_ruby_api_string_format_size (VALUE class, VALUE size)
     if (NIL_P (size))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (size, T_FIXNUM);
+    CHECK_INTEGER(size);
 
-    c_size = FIX2LONG (size);
+    c_size = NUM2ULONG (size);
 
     result = weechat_string_format_size (c_size);
 
@@ -613,10 +614,10 @@ weechat_ruby_api_mkdir_home (VALUE class, VALUE directory, VALUE mode)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (directory, T_STRING);
-    Check_Type (mode, T_FIXNUM);
+    CHECK_INTEGER(mode);
 
     c_directory = StringValuePtr (directory);
-    c_mode = FIX2INT (mode);
+    c_mode = NUM2INT (mode);
 
     if (weechat_mkdir_home (c_directory, c_mode))
         API_RETURN_OK;
@@ -635,10 +636,10 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (directory, T_STRING);
-    Check_Type (mode, T_FIXNUM);
+    CHECK_INTEGER(mode);
 
     c_directory = StringValuePtr (directory);
-    c_mode = FIX2INT (mode);
+    c_mode = NUM2INT (mode);
 
     if (weechat_mkdir (c_directory, c_mode))
         API_RETURN_OK;
@@ -657,10 +658,10 @@ weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (directory, T_STRING);
-    Check_Type (mode, T_FIXNUM);
+    CHECK_INTEGER(mode);
 
     c_directory = StringValuePtr (directory);
-    c_mode = FIX2INT (mode);
+    c_mode = NUM2INT (mode);
 
     if (weechat_mkdir_parents (c_directory, c_mode))
         API_RETURN_OK;
@@ -807,10 +808,10 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (weelist, T_STRING);
-    Check_Type (position, T_FIXNUM);
+    CHECK_INTEGER(position);
 
     c_weelist = StringValuePtr (weelist);
-    c_position = FIX2INT (position);
+    c_position = NUM2INT (position);
 
     result = API_PTR2STR(weechat_list_get (API_STR2PTR(c_weelist),
                                            c_position));
@@ -1276,8 +1277,8 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
 
     Check_Type (config_file, T_STRING);
     Check_Type (name, T_STRING);
-    Check_Type (user_can_add_options, T_FIXNUM);
-    Check_Type (user_can_delete_options, T_FIXNUM);
+    CHECK_INTEGER(user_can_add_options);
+    CHECK_INTEGER(user_can_delete_options);
     Check_Type (function_read, T_STRING);
     Check_Type (data_read, T_STRING);
     Check_Type (function_write, T_STRING);
@@ -1291,8 +1292,8 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
 
     c_config_file = StringValuePtr (config_file);
     c_name = StringValuePtr (name);
-    c_user_can_add_options = FIX2INT (user_can_add_options);
-    c_user_can_delete_options = FIX2INT (user_can_delete_options);
+    c_user_can_add_options = NUM2INT (user_can_add_options);
+    c_user_can_delete_options = NUM2INT (user_can_delete_options);
     c_function_read = StringValuePtr (function_read);
     c_data_read = StringValuePtr (data_read);
     c_function_write = StringValuePtr (function_write);
@@ -1479,11 +1480,11 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     Check_Type (type, T_STRING);
     Check_Type (description, T_STRING);
     Check_Type (string_values, T_STRING);
-    Check_Type (min, T_FIXNUM);
-    Check_Type (max, T_FIXNUM);
+    CHECK_INTEGER(min);
+    CHECK_INTEGER(max);
     Check_Type (default_value, T_STRING);
     Check_Type (value, T_STRING);
-    Check_Type (null_value_allowed, T_FIXNUM);
+    CHECK_INTEGER(null_value_allowed);
     Check_Type (callbacks, T_ARRAY);
 
     /*
@@ -1506,11 +1507,11 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
     c_type = StringValuePtr (type);
     c_description = StringValuePtr (description);
     c_string_values = StringValuePtr (string_values);
-    c_min = FIX2INT (min);
-    c_max = FIX2INT (max);
+    c_min = NUM2INT (min);
+    c_max = NUM2INT (max);
     c_default_value = StringValuePtr (default_value);
     c_value = StringValuePtr (value);
-    c_null_value_allowed = FIX2INT (null_value_allowed);
+    c_null_value_allowed = NUM2INT (null_value_allowed);
     c_function_check_value = StringValuePtr (function_check_value);
     c_data_check_value = StringValuePtr (data_check_value);
     c_function_change = StringValuePtr (function_change);
@@ -1601,10 +1602,10 @@ weechat_ruby_api_config_option_reset (VALUE class, VALUE option,
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     Check_Type (option, T_STRING);
-    Check_Type (run_callback, T_FIXNUM);
+    CHECK_INTEGER(run_callback);
 
     c_option = StringValuePtr (option);
-    c_run_callback = FIX2INT (run_callback);
+    c_run_callback = NUM2INT (run_callback);
 
     rc = weechat_config_option_reset (API_STR2PTR(c_option),
                                       c_run_callback);
@@ -1625,11 +1626,11 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
 
     Check_Type (option, T_STRING);
     Check_Type (new_value, T_STRING);
-    Check_Type (run_callback, T_FIXNUM);
+    CHECK_INTEGER(run_callback);
 
     c_option = StringValuePtr (option);
     c_new_value = StringValuePtr (new_value);
-    c_run_callback = FIX2INT (run_callback);
+    c_run_callback = NUM2INT (run_callback);
 
     rc = weechat_config_option_set (API_STR2PTR(c_option),
                                     c_new_value,
@@ -1650,10 +1651,10 @@ weechat_ruby_api_config_option_set_null (VALUE class, VALUE option,
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_SET_ERROR));
 
     Check_Type (option, T_STRING);
-    Check_Type (run_callback, T_FIXNUM);
+    CHECK_INTEGER(run_callback);
 
     c_option = StringValuePtr (option);
-    c_run_callback = FIX2INT (run_callback);
+    c_run_callback = NUM2INT (run_callback);
 
     rc = weechat_config_option_set_null (API_STR2PTR(c_option),
                                          c_run_callback);
@@ -2314,19 +2315,19 @@ weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
                                   VALUE tags, VALUE message)
 {
     char *c_buffer, *c_tags, *c_message;
-    int c_date;
+    time_t c_date;
 
     API_INIT_FUNC(1, "print_date_tags", API_RETURN_ERROR);
     if (NIL_P (buffer) || NIL_P (date) || NIL_P (tags) || NIL_P (message))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (buffer, T_STRING);
-    Check_Type (date, T_FIXNUM);
+    CHECK_INTEGER(date);
     Check_Type (tags, T_STRING);
     Check_Type (message, T_STRING);
 
     c_buffer = StringValuePtr (buffer);
-    c_date = FIX2INT (date);
+    c_date = NUM2ULONG (date);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
 
@@ -2351,11 +2352,11 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (buffer, T_STRING);
-    Check_Type (y, T_FIXNUM);
+    CHECK_INTEGER(y);
     Check_Type (message, T_STRING);
 
     c_buffer = StringValuePtr (buffer);
-    c_y = FIX2INT (y);
+    c_y = NUM2INT (y);
     c_message = StringValuePtr (message);
 
     plugin_script_api_printf_y (weechat_ruby_plugin,
@@ -2587,12 +2588,12 @@ weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
 
     Check_Type (completion, T_STRING);
     Check_Type (word, T_STRING);
-    Check_Type (nick_completion, T_FIXNUM);
+    CHECK_INTEGER(nick_completion);
     Check_Type (where, T_STRING);
 
     c_completion = StringValuePtr (completion);
     c_word = StringValuePtr (word);
-    c_nick_completion = FIX2INT (nick_completion);
+    c_nick_completion = NUM2INT (nick_completion);
     c_where = StringValuePtr (where);
 
     weechat_hook_completion_list_add (API_STR2PTR(c_completion),
@@ -2724,15 +2725,15 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (interval, T_FIXNUM);
-    Check_Type (align_second, T_FIXNUM);
-    Check_Type (max_calls, T_FIXNUM);
+    CHECK_INTEGER(interval);
+    CHECK_INTEGER(align_second);
+    CHECK_INTEGER(max_calls);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
-    c_interval = FIX2INT (interval);
-    c_align_second = FIX2INT (align_second);
-    c_max_calls = FIX2INT (max_calls);
+    c_interval = NUM2INT (interval);
+    c_align_second = NUM2INT (align_second);
+    c_max_calls = NUM2INT (max_calls);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
 
@@ -2797,17 +2798,17 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
         || NIL_P (function) || NIL_P (data))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    Check_Type (fd, T_FIXNUM);
-    Check_Type (read, T_FIXNUM);
-    Check_Type (write, T_FIXNUM);
-    Check_Type (exception, T_FIXNUM);
+    CHECK_INTEGER(fd);
+    CHECK_INTEGER(read);
+    CHECK_INTEGER(write);
+    CHECK_INTEGER(exception);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
-    c_fd = FIX2INT (fd);
-    c_read = FIX2INT (read);
-    c_write = FIX2INT (write);
-    c_exception = FIX2INT (exception);
+    c_fd = NUM2INT (fd);
+    c_read = NUM2INT (read);
+    c_write = NUM2INT (write);
+    c_exception = NUM2INT (exception);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
 
@@ -2897,12 +2898,12 @@ weechat_ruby_api_hook_process (VALUE class, VALUE command, VALUE timeout,
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (command, T_STRING);
-    Check_Type (timeout, T_FIXNUM);
+    CHECK_INTEGER(timeout);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
     c_command = StringValuePtr (command);
-    c_timeout = FIX2INT (timeout);
+    c_timeout = NUM2INT (timeout);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
 
@@ -2934,7 +2935,7 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
 
     Check_Type (command, T_STRING);
     Check_Type (options, T_HASH);
-    Check_Type (timeout, T_FIXNUM);
+    CHECK_INTEGER(timeout);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
@@ -2943,7 +2944,7 @@ weechat_ruby_api_hook_process_hashtable (VALUE class, VALUE command,
                                                 WEECHAT_SCRIPT_HASHTABLE_DEFAULT_SIZE,
                                                 WEECHAT_HASHTABLE_STRING,
                                                 WEECHAT_HASHTABLE_STRING);
-    c_timeout = FIX2INT (timeout);
+    c_timeout = NUM2INT (timeout);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
 
@@ -3023,18 +3024,18 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE proxy, VALUE address,
 
     Check_Type (proxy, T_STRING);
     Check_Type (address, T_STRING);
-    Check_Type (port, T_FIXNUM);
-    Check_Type (ipv6, T_FIXNUM);
-    Check_Type (retry, T_FIXNUM);
+    CHECK_INTEGER(port);
+    CHECK_INTEGER(ipv6);
+    CHECK_INTEGER(retry);
     Check_Type (local_hostname, T_STRING);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
     c_proxy = StringValuePtr (proxy);
     c_address = StringValuePtr (address);
-    c_port = FIX2INT (port);
-    c_ipv6 = FIX2INT (ipv6);
-    c_retry = FIX2INT (retry);
+    c_port = NUM2INT (port);
+    c_ipv6 = NUM2INT (ipv6);
+    c_retry = NUM2INT (retry);
     c_local_hostname = StringValuePtr (local_hostname);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
@@ -3195,14 +3196,14 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE tags,
     Check_Type (buffer, T_STRING);
     Check_Type (tags, T_STRING);
     Check_Type (message, T_STRING);
-    Check_Type (strip_colors, T_FIXNUM);
+    CHECK_INTEGER(strip_colors);
     Check_Type (function, T_STRING);
     Check_Type (data, T_STRING);
 
     c_buffer = StringValuePtr (buffer);
     c_tags = StringValuePtr (tags);
     c_message = StringValuePtr (message);
-    c_strip_colors = FIX2INT (strip_colors);
+    c_strip_colors = NUM2INT (strip_colors);
     c_function = StringValuePtr (function);
     c_data = StringValuePtr (data);
 
@@ -3333,8 +3334,8 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     }
     else if (strcmp (c_type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        Check_Type (signal_data, T_FIXNUM);
-        number = FIX2INT (signal_data);
+        CHECK_INTEGER(signal_data);
+        number = NUM2INT (signal_data);
         rc = weechat_hook_signal_send (c_signal, c_type_data, &number);
         API_RETURN_INT(rc);
     }
@@ -4147,10 +4148,10 @@ weechat_ruby_api_buffer_unmerge (VALUE class, VALUE buffer, VALUE number)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     Check_Type (buffer, T_STRING);
-    Check_Type (number, T_FIXNUM);
+    CHECK_INTEGER(number);
 
     c_buffer = StringValuePtr (buffer);
-    c_number = FIX2INT (number);
+    c_number = NUM2INT (number);
 
     weechat_buffer_unmerge (API_STR2PTR(c_buffer), c_number);
 
@@ -4424,13 +4425,13 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
     Check_Type (parent_group, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (color, T_STRING);
-    Check_Type (visible, T_FIXNUM);
+    CHECK_INTEGER(visible);
 
     c_buffer = StringValuePtr (buffer);
     c_parent_group = StringValuePtr (parent_group);
     c_name = StringValuePtr (name);
     c_color = StringValuePtr (color);
-    c_visible = FIX2INT (visible);
+    c_visible = NUM2INT (visible);
 
     result = API_PTR2STR(weechat_nicklist_add_group (API_STR2PTR(c_buffer),
                                                      API_STR2PTR(c_parent_group),
@@ -4487,7 +4488,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     Check_Type (color, T_STRING);
     Check_Type (prefix, T_STRING);
     Check_Type (prefix_color, T_STRING);
-    Check_Type (visible, T_FIXNUM);
+    CHECK_INTEGER(visible);
 
     c_buffer = StringValuePtr (buffer);
     c_group = StringValuePtr (group);
@@ -4495,7 +4496,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
     c_color = StringValuePtr (color);
     c_prefix = StringValuePtr (prefix);
     c_prefix_color = StringValuePtr (prefix_color);
-    c_visible = FIX2INT (visible);
+    c_visible = NUM2INT (visible);
 
     result = API_PTR2STR(weechat_nicklist_add_nick (API_STR2PTR(c_buffer),
                                                     API_STR2PTR(c_group),
@@ -5247,11 +5248,11 @@ weechat_ruby_api_infolist_new_var_integer (VALUE class, VALUE item,
 
     Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
-    Check_Type (value, T_FIXNUM);
+    CHECK_INTEGER(value);
 
     c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
-    c_value = FIX2INT (value);
+    c_value = NUM2INT (value);
 
     result = API_PTR2STR(weechat_infolist_new_var_integer (API_STR2PTR(c_item),
                                                            c_name,
@@ -5318,7 +5319,7 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
 {
     char *c_item, *c_name;
     const char *result;
-    int c_value;
+    time_t c_value;
 
     API_INIT_FUNC(1, "infolist_new_var_time", API_RETURN_EMPTY);
     if (NIL_P (item) || NIL_P (name) || NIL_P (value))
@@ -5326,11 +5327,11 @@ weechat_ruby_api_infolist_new_var_time (VALUE class, VALUE item,
 
     Check_Type (item, T_STRING);
     Check_Type (name, T_STRING);
-    Check_Type (value, T_FIXNUM);
+    CHECK_INTEGER(value);
 
     c_item = StringValuePtr (item);
     c_name = StringValuePtr (name);
-    c_value = FIX2INT (value);
+    c_value = NUM2ULONG (value);
 
     result = API_PTR2STR(weechat_infolist_new_var_time (API_STR2PTR(c_item),
                                                         c_name,
@@ -5761,11 +5762,11 @@ weechat_ruby_api_hdata_move (VALUE class, VALUE hdata, VALUE pointer,
 
     Check_Type (hdata, T_STRING);
     Check_Type (pointer, T_STRING);
-    Check_Type (count, T_FIXNUM);
+    CHECK_INTEGER(count);
 
     c_hdata = StringValuePtr (hdata);
     c_pointer = StringValuePtr (pointer);
-    c_count = FIX2INT (count);
+    c_count = NUM2INT (count);
 
     result = API_PTR2STR(weechat_hdata_move (API_STR2PTR(c_hdata),
                                              API_STR2PTR(c_pointer),
@@ -5789,12 +5790,12 @@ weechat_ruby_api_hdata_search (VALUE class, VALUE hdata, VALUE pointer,
     Check_Type (hdata, T_STRING);
     Check_Type (pointer, T_STRING);
     Check_Type (search, T_STRING);
-    Check_Type (move, T_FIXNUM);
+    CHECK_INTEGER(move);
 
     c_hdata = StringValuePtr (hdata);
     c_pointer = StringValuePtr (pointer);
     c_search = StringValuePtr (search);
-    c_move = FIX2INT (move);
+    c_move = NUM2INT (move);
 
     result = API_PTR2STR(weechat_hdata_search (API_STR2PTR(c_hdata),
                                                API_STR2PTR(c_pointer),
@@ -6004,13 +6005,13 @@ weechat_ruby_api_hdata_compare (VALUE class, VALUE hdata,
     Check_Type (pointer1, T_STRING);
     Check_Type (pointer2, T_STRING);
     Check_Type (name, T_STRING);
-    Check_Type (case_sensitive, T_FIXNUM);
+    CHECK_INTEGER(case_sensitive);
 
     c_hdata = StringValuePtr (hdata);
     c_pointer1 = StringValuePtr (pointer1);
     c_pointer2 = StringValuePtr (pointer2);
     c_name = StringValuePtr (name);
-    c_case_sensitive = FIX2INT (case_sensitive);
+    c_case_sensitive = NUM2INT (case_sensitive);
 
     rc = weechat_hdata_compare (API_STR2PTR(c_hdata),
                                 API_STR2PTR(c_pointer1),
@@ -6162,11 +6163,11 @@ weechat_ruby_api_upgrade_write_object (VALUE class, VALUE upgrade_file,
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     Check_Type (upgrade_file, T_STRING);
-    Check_Type (object_id, T_FIXNUM);
+    CHECK_INTEGER(object_id);
     Check_Type (infolist, T_STRING);
 
     c_upgrade_file = StringValuePtr (upgrade_file);
-    c_object_id = FIX2INT (object_id);
+    c_object_id = NUM2INT (object_id);
     c_infolist = StringValuePtr (infolist);
 
     rc = weechat_upgrade_write_object (API_STR2PTR(c_upgrade_file),

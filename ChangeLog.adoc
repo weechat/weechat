@@ -46,6 +46,7 @@ Bug fixes::
   * irc: disable server reconnection when the server buffer is closed (issue #236)
   * irc: strip spaces at beginning/end of addresses in server option "addresses" (issue #195)
   * irc: fix display of enabled/disabled client capabilities received in command CAP ACK (issue #151)
+  * ruby: fix conversion of big integers on 32bit architecture (issue #1395)
 
 Tests::
 
