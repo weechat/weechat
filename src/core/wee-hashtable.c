@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <time.h>
 
@@ -75,7 +76,7 @@ hashtable_get_type (const char *type)
 unsigned long long
 hashtable_hash_key_djb2 (const char *string)
 {
-    unsigned long long hash;
+    uint64_t hash;
     const char *ptr_string;
 
     hash = 5381;

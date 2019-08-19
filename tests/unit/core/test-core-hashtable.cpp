@@ -28,9 +28,11 @@ extern "C"
 #include "src/plugins/plugin.h"
 }
 
-#define HASHTABLE_TEST_KEY      "test"
-#define HASHTABLE_TEST_KEY_HASH 5849825121ULL
-#define HASHTABLE_TEST_VALUE    "this is a value"
+#define HASHTABLE_TEST_KEY           "test"
+#define HASHTABLE_TEST_KEY_HASH      5849825121ULL
+#define HASHTABLE_TEST_KEY_LONG      "abcdefghijklmnopqrstuvwxyz"
+#define HASHTABLE_TEST_KEY_LONG_HASH 11232856562070989738ULL
+#define HASHTABLE_TEST_VALUE         "this is a value"
 
 TEST_GROUP(CoreHashtable)
 {
@@ -47,6 +49,9 @@ TEST(CoreHashtable, HashDbj2)
 
     hash = hashtable_hash_key_djb2 (HASHTABLE_TEST_KEY);
     CHECK(hash == HASHTABLE_TEST_KEY_HASH);
+
+    hash = hashtable_hash_key_djb2 (HASHTABLE_TEST_KEY_LONG);
+    CHECK(hash == HASHTABLE_TEST_KEY_LONG_HASH);
 }
 
 /*
