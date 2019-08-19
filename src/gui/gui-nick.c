@@ -24,6 +24,7 @@
 #endif
 
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #include "../core/weechat.h"
@@ -45,7 +46,7 @@
 int
 gui_nick_hash_color (const char *nickname)
 {
-    unsigned long color;
+    uint64_t color;
     const char *ptr_nick;
 
     if (!nickname || !nickname[0])

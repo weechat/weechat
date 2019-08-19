@@ -31,6 +31,7 @@ New features::
 
 Bug fixes::
 
+  * core: use fixed-width integer for computing nick hash (issue #1394)
   * core: create or update option weechat.notify.xxx when function buffer_set is called with "notify" property (issue #1390)
   * core: fix memory leak in case of error when building content of bar item for display (issue #1384)
   * core: send command line parameter to plugins only if the name starts with the plugin name followed by a colon

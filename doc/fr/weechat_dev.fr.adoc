@@ -403,6 +403,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-util.cpp       | Tests : fonctions utiles.
 |       gui/                        | Racine des tests unitaires pour les interfaces.
 |          test-gui-line.cpp        | Tests : lignes.
+|          test-gui-nick.cpp        | Tests : pseudos.
 |       plugins/                    | Racine des tests unitaires pour les extensions.
 |          irc/                     | Racine des tests unitaires pour l'extension IRC.
 |             test-irc-color.cpp    | Tests : couleurs IRC.

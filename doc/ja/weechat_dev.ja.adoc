@@ -407,6 +407,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-util.cpp       | テスト: ユーティリティ関数
 |       gui/                        | インターフェースの単体テストを収める最上位ディレクトリ
 |          test-gui-line.cpp        | テスト: 行
+// TRANSLATION MISSING
+|          test-gui-nick.cpp        | テスト: nicks
 |       plugins/                    | プラグインの単体テストを収める最上位ディレクトリ
 |          irc/                     | IRC プラグインの単体テストを収める最上位ディレクトリ
 // TRANSLATION MISSING

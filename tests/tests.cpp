@@ -74,6 +74,7 @@ IMPORT_TEST_GROUP(CoreUtf8);
 IMPORT_TEST_GROUP(CoreUtil);
 /* GUI */
 IMPORT_TEST_GROUP(GuiLine);
+IMPORT_TEST_GROUP(GuiNick);
 /* scripts */
 IMPORT_TEST_GROUP(Scripts);
 
