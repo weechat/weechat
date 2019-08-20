@@ -58,6 +58,8 @@ enum t_config_look_nick_color_hash
 {
     CONFIG_LOOK_NICK_COLOR_HASH_DJB2 = 0,
     CONFIG_LOOK_NICK_COLOR_HASH_SUM,
+    CONFIG_LOOK_NICK_COLOR_HASH_DJB2_32,
+    CONFIG_LOOK_NICK_COLOR_HASH_SUM_32,
 };
 
 enum t_config_look_prefix_align

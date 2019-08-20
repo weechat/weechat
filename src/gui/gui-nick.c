@@ -47,6 +47,7 @@ int
 gui_nick_hash_color (const char *nickname)
 {
     uint64_t color;
+    uint32_t color_32;
     const char *ptr_nick;
 
     if (!nickname || !nickname[0])
@@ -80,6 +81,27 @@ gui_nick_hash_color (const char *nickname)
                 color += utf8_char_int (ptr_nick);
                 ptr_nick = utf8_next_char (ptr_nick);
             }
+            break;
+        case CONFIG_LOOK_NICK_COLOR_HASH_DJB2_32:
+            /* variant of djb2 hash (using 32-bit integer) */
+            color_32 = 5381;
+            while (ptr_nick && ptr_nick[0])
+            {
+                color_32 ^= (color_32 << 5) + (color_32 >> 2)
+                    + utf8_char_int (ptr_nick);
+                ptr_nick = utf8_next_char (ptr_nick);
+            }
+            color = color_32;
+            break;
+        case CONFIG_LOOK_NICK_COLOR_HASH_SUM_32:
+            /* sum of letters (using 32-bit integer) */
+            color_32 = 0;
+            while (ptr_nick && ptr_nick[0])
+            {
+                color_32 += utf8_char_int (ptr_nick);
+                ptr_nick = utf8_next_char (ptr_nick);
+            }
+            color = color_32;
             break;
     }
 

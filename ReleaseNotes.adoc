@@ -20,6 +20,28 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.6]]
 == Version 2.6 (under dev)
 
+[[v2.6_nick_colors]]
+=== Nick colors
+
+The function to compute the colors based on the nick letters has been fixed
+(now the function uses only a 64-bit integer even if the underlying architecture
+is 32-bit).
+
+If you're running WeeChat on a 32-bit architecture and want to keep same colors
+as the previous releases, you can use one of the two new hash values.
+
+If you were using "djb2", you can switch to "djb2_32":
+
+----
+/set weechat.look.nick_color_hash djb2_32
+----
+
+If you were using "sum", you can switch to "sum_32":
+
+----
+/set weechat.look.nick_color_hash sum_32
+----
+
 [[v2.6_python3_default]]
 === Python 3 by default
 

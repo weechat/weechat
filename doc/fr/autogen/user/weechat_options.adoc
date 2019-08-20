@@ -921,9 +921,9 @@
 ** valeur par défaut: `+""+`
 
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
-** description: pass:none[algorithme de hash utilisé pour trouver la couleur du pseudo : djb2 = variante de djb2 (la position des lettres compte : les anagrammes d'un pseudo ont une couleur différente), sum = somme des lettres]
+** description: pass:none[algorithme de hash utilisé pour trouver la couleur du pseudo : djb2 = variante de djb2 (la position des lettres compte : les anagrammes d'un pseudo ont une couleur différente), sum = somme des lettres, djb2_32 = variante de djb2 en utilisant un entier sur 32 bits au lieu de 64 bits, sum_32 = somme des lettres en utilisant un entier sur 32 bits au lieu de 64 bits]
 ** type: entier
-** valeurs: djb2, sum
+** valeurs: djb2, sum, djb2_32, sum_32
 ** valeur par défaut: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*

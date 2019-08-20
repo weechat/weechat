@@ -921,9 +921,9 @@
 ** default value: `+""+`
 
 * [[option_weechat.look.nick_color_hash]] *weechat.look.nick_color_hash*
-** description: pass:none[hash algorithm used to find the color for a nick: djb2 = variant of djb2 (position of letters matters: anagrams of a nick have different color), sum = sum of letters]
+** description: pass:none[hash algorithm used to find the color for a nick: djb2 = variant of djb2 (position of letters matters: anagrams of a nick have different color), djb2_32 = variant of djb2 using 32-bit instead of 64-bit integer, sum = sum of letters, sum_32 = sum of letters using 32-bit instead of 64-bit integer]
 ** type: integer
-** values: djb2, sum
+** values: djb2, sum, djb2_32, sum_32
 ** default value: `+djb2+`
 
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
