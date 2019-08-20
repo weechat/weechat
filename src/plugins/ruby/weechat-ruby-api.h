@@ -21,10 +21,16 @@
 #ifndef WEECHAT_PLUGIN_RUBY_API_H
 #define WEECHAT_PLUGIN_RUBY_API_H
 
+/* required for Ruby < 2.3 */
+#ifndef RB_FIXNUM_P
+#define RB_FIXNUM_P(f) (((int)(SIGNED_VALUE)(f))&RUBY_FIXNUM_FLAG)
+#endif
+
 /* required for Ruby < 2.4 */
 #ifndef RB_INTEGER_TYPE_P
 #define RB_INTEGER_TYPE_P(obj) (RB_FIXNUM_P(obj) || RB_TYPE_P(obj, T_BIGNUM))
 #endif
+
 #define CHECK_INTEGER(obj)                      \
     if (!RB_INTEGER_TYPE_P(obj))                \
     {                                           \
