@@ -40,6 +40,7 @@ Bug fixes::
   * core: replace char "," by "~" in color codes to separate foreground from background (issue #1264)
   * alias: remove default aliases /AME and /AMSG (issue #1355)
   * buflist: use extra variables in option buflist.look.display_conditions (issue #1393)
+  * irc: fix parsing of message 367 (banlist) when there is a colon before the timestamp (issue #1396)
   * irc: fix memory leak when removing a server
   * irc: fix length of user/nick/host in split of messages (issue #1387)
   * irc: quote NICK command argument sent to the server only if there's a ":" in the nick (issue #1376, issue #1319)
