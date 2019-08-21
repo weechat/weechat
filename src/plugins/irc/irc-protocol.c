@@ -5332,7 +5332,7 @@ IRC_PROTOCOL_CALLBACK(367)
             irc_message_get_address_from_host (argv[5]));
         if (argc >= 7)
         {
-            datetime = (time_t)(atol (argv[6]));
+            datetime = (time_t)(atol (argv[6][0] == ':' ? argv[6] + 1 : argv[6]));
             if (ptr_modelist)
                 irc_modelist_item_new (ptr_modelist, argv[4], argv[5], datetime);
             weechat_printf_date_tags (
