@@ -372,6 +372,22 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
         /* filter by modified values */
         return (fset_option_value_is_changed (fset_option)) ? 1 : 0;
     }
+    else if (strncmp (filter, "h=", 2) == 0)
+    {
+        /* filter by help text (translated) */
+        return (fset_option_string_match (
+                    (fset_option->description && fset_option->description[0]) ?
+                    _(fset_option->description) : "",
+                    filter + 2)) ? 1 : 0;
+    }
+    else if (strncmp (filter, "he=", 3) == 0)
+    {
+        /* filter by help text (in English) */
+        return (fset_option_string_match (
+                    (fset_option->description && fset_option->description[0]) ?
+                    fset_option->description : "",
+                    filter + 3)) ? 1 : 0;
+    }
     else if (strncmp (filter, "==", 2) == 0)
     {
         /* filter by exact value */

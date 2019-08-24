@@ -23,136 +23,138 @@
        -export [-help|-nohelp] <filename>
        <filter>
 
-       -bar: ヘルプバーを追加します
-   -refresh: オプションリストを再読込した後、画面全体を再描画します (コマンド: /window refresh)
-        -up: 選択行を "number" 行だけ上に移動
-      -down: 選択行を "number" 行だけ下に移動
-      -left: fset バッファをその幅の "percent" だけ左にスクロール
-     -right: fset バッファをその幅の "percent" だけ右にスクロール
-        -go: 番号を使って行を選択、1 行目は 0 ("end" で最後の行を選択)
-    -toggle: ブール値をトグル
-       -add: 整数型と色の場合は "value" を追加 (負の値でも可)、その他の型の場合は値を設定または追加 (負の値を設定、正の値を追加)
-     -reset: オプションの値をリセット
-     -unset: オプションをアンセット
-       -set: オプションの値を編集する目的で /set コマンドを入力に追加 (カーソルを値の先頭に移動)
-    -setnew: オプションの新しい値を編集する目的で /set コマンドを入力に追加
-    -append: オプションの値に何かを追加する目的で /set コマンドを追加 (カーソルを値の末尾に移動)
-      -mark: マークをトグル
-    -format: 次の利用可能な書式に切り替える
-    -export: 表示されているオプションと値をファイルにエクスポート (各行の書式: "/set name value" または "/unset name")
-      -help: エクスポートされるファイルにオプションのヘルプを強制的に書き込む (/help fset.look.export_help_default を参照してください)
-    -nohelp: エクスポートされるファイルにオプションのヘルプを書き込まない (/help fset.look.export_help_default を参照してください)
-     filter: 表示オプションを制限するフィルタ (このフィルタを fset バッファの入力として使うことも可能です); フィルタの書式は以下の例に従ってください:
-               *       すべてのオプションを表示します (フィルタなし)
-               xxx     名前に "xxx" が含まれるオプションだけを表示
-               f:xxx   設定ファイル "xxx" に含まれるオプションだけを表示
-               t:xxx   型が "xxx" (bool/int/str/col) のオプションだけを表示
-               d       変更されたオプションだけを表示
-               d:xxx   変更されたオプションかつ名前に "xxx" が含まれるものだけを表示
-               d=xxx   変更されたオプションかつ値に "xxx" が含まれるものだけを表示
-               d==xxx  変更されたオプションかつ値が "xxx" と完全に一致するものだけを表示
-               =xxx    値に "xxx" が含まれるオプションだけを表示
-               ==xxx   値が "xxx" と完全に一致するオプションだけを表示
-               c:xxx   評価された状態が "xxx" に一致するオプションだけを表示、評価は以下の変数に対して行われます: file、section、option、name、parent_name、type、type_en、type_short (bool/int/str/col)、type_tiny (b/i/s/c)、default_value、default_value_undef、value、quoted_value、value_undef、value_changed、parent_value、min、max、description、description2、description_en、description_en2、string_values
+       -bar: add the help bar
+   -refresh: refresh list of options, then whole screen (command: /window refresh)
+        -up: move the selected line up by "number" lines
+      -down: move the selected line down by "number" lines
+      -left: scroll the fset buffer by "percent" of width on the left
+     -right: scroll the fset buffer by "percent" of width on the right
+        -go: select a line by number, first line number is 0 ("end" to select the last line)
+    -toggle: toggle the boolean value
+       -add: add "value" (which can be a negative number) for integers and colors, set/append to value for other types (set for a negative value, append for a positive value)
+     -reset: reset the value of option
+     -unset: unset the option
+       -set: add the /set command in input to edit the value of option (move the cursor at the beginning of value)
+    -setnew: add the /set command in input to edit a new value for the option
+    -append: add the /set command to append something in the value of option (move the cursor at the end of value)
+      -mark: toggle mark
+    -format: switch to the next available format
+    -export: export the options and values displayed in a file (each line has format: "/set name value" or "/unset name")
+      -help: force writing of help on options in exported file (see /help fset.look.export_help_default)
+    -nohelp: do not write help on options in exported file (see /help fset.look.export_help_default)
+     filter: set a new filter to see only matching options (this filter can be used as input in fset buffer as well); allowed formats are:
+               *       show all options (no filter)
+               xxx     show only options with "xxx" in name
+               f:xxx   show only configuration file "xxx"
+               t:xxx   show only type "xxx" (bool/int/str/col)
+               d       show only changed options
+               d:xxx   show only changed options with "xxx" in name
+               d=xxx   show only changed options with "xxx" in value
+               d==xxx  show only changed options with exact value "xxx"
+               h=xxx   show only options with "xxx" in description (translated)
+               he=xxx  show only options with "xxx" in description (in English)
+               =xxx    show only options with "xxx" in value
+               ==xxx   show only options with exact value "xxx"
+               c:xxx   show only options matching the evaluated condition "xxx", using following variables: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
 
-オプションの表示書式 (この書式に関しては /help eval を参照してください) を設定するには、以下のオプションを使います:
-  - fset.format.option1: オプションに対する 1 番目の書式
-  - fset.format.option2: オプションに対する 2 番目の書式
+The lines with options are displayed using string evaluation (see /help eval for the format), with these options:
+  - fset.format.option1: first format for an option
+  - fset.format.option2: second format for an option
 
-オプションの表示書式には以下の変数を使うことが可能です:
-  - オプションに関するデータ、色をつけたり、スペースで右寄せできます:
-    - ${file}: 設定ファイル名 ("weechat" や "irc" など)
-    - ${section}: セクション名
-    - ${option}: オプション名
-    - ${name}: 完全なオプション名 (file.section.option)
-    - ${parent_name}: 親オプション名
-    - ${type}: オプション型 (翻訳済み)
-    - ${type_en}: オプション型 (英語)
-    - ${type_short}: オプション型の略称 (bool/int/str/col)
-    - ${type_tiny}: オプション型の短縮名 (b/i/s/c)
-    - ${default_value}: オプションのデフォルト値
-    - ${default_value_undef}: デフォルト値が null の場合に "1"、それ以外の場合に "0"
-    - ${value}: オプションの値
-    - ${value_undef}: オプションの値が null の場合に "1"、それ以外の場合に "0"
-    - ${value_changed}: オプションの値がデフォルト値と異なる場合に "1"、それ以外の場合に "0"
-    - ${value2}: オプションの値、null の場合に値は継承されます
-    - ${parent_value}: 親オプションの値
-    - ${min}: 最小値
-    - ${max}: 最大値
-    - ${description}: オプションの説明 (翻訳済み)
-    - ${description2}: オプションの説明 (翻訳済み)、オプションの説明がない場合は "(説明がありません)" と表示されます
-    - ${description_en}: オプションの説明 (英語)
-    - ${description_en2}: オプションの説明 (英語)、オプションの説明がない場合は "(no description)" と表示されます
-    - ${string_values}: 文字列で設定可能な整数型オプションで使える文字列値
-    - ${marked}: オプションがマークされている場合に "1"、それ以外の場合に "0"
-    - ${index}: オプションのリストインデックス
-  - オプションに関するデータ、色を付けることが可能、スペースを含めることは不可能:
-    - 上記変数名の前にアンダースコアを付ける、例: ${_name}、${_type}、...
-  - オプションに関するデータ、生情報 (色もスペースもつけられません):
-    - 上記変数名の前にアンダースコアを 2 つ付ける、例: ${__name}、${__type}、...
-  - オプションに関するデータ、スペースのみつけられます:
-    - 上記変数名の前に "empty_" を付ける、例: ${empty_name}、${empty_type}
-  - その他のデータ:
-    - ${selected_line}: 行が選択されている場合に "1"、それ以外の場合に "0"
-    - ${newline}: この位置に改行を挿入します、オプションは複数行に渡って表示されます
+The following variables can be used in these options:
+  - option data, with color and padded by spaces on the right:
+    - ${file}: configuration file (for example "weechat" or "irc")
+    - ${section}: section
+    - ${option}: option name
+    - ${name}: full option name (file.section.option)
+    - ${parent_name}: parent option name
+    - ${type}: option type (translated)
+    - ${type_en}: option type (in English)
+    - ${type_short}: short option type (bool/int/str/col)
+    - ${type_tiny}: tiny option type (b/i/s/c)
+    - ${default_value}: option default value
+    - ${default_value_undef}: "1" if default value is null, otherwise "0"
+    - ${value}: option value
+    - ${value_undef}: "1" if value is null, otherwise "0"
+    - ${value_changed}: "1" if value is different from default value, otherwise "0"
+    - ${value2}: option value, with inherited value if null
+    - ${parent_value}: parent option value
+    - ${min}: min value
+    - ${max}: max value
+    - ${description}: option description (translated)
+    - ${description2}: option description (translated), "(no description)" (translated) if there's no description
+    - ${description_en}: option description (in English)
+    - ${description_en2}: option description (in English), "(no description)" if there's no description
+    - ${string_values}: string values allowed for set of an integer option using strings
+    - ${marked}: "1" if option is marked, otherwise "0"
+    - ${index}: index of option in list
+  - option data, with color but no spaces:
+    - same names prefixed by underscore, for example: ${_name}, ${_type}, ...
+  - option data, raw format (no colors/spaces):
+    - same names prefixed by two underscores, for example: ${__name}, ${__type}, ...
+  - option data, only spaces:
+    - same names prefixed with "empty_", for example: ${empty_name}, ${empty_type}
+  - other data:
+    - ${selected_line}: "1" if the line is selected, otherwise "0"
+    - ${newline}: insert a new line at point, so the option is displayed on multiple lines
 
-fset バッファを操作するキーと入力:
-  up                        1 行上に移動
-  down                      1 行下に移動
-  pgup                      1 ページ上に移動
-  pgdn                      1 ページ下に移動
-  alt-home          <<      最上部に移動
-  alt-end           >>      最下部に移動
-  F11               <       水平左方向にスクロール
-  F12               >       水平右方向にスクロール
+Keys and input to move in on fset buffer:
+  up                        move one line up
+  down                      move one line down
+  pgup                      move one page up
+  pgdn                      move one page down
+  alt-home          <<      move to first line
+  alt-end           >>      move to last line
+  F11               <       scroll horizontally on the left
+  F12               >       scroll horizontally on the right
 
-fset バッファでオプションを設定するためのキーと入力:
-  alt+space         t       ブール値をトグル
-  alt+'-'           -       整数型および色の場合は値を 1 減らす、その他の型の場合は値を設定する
-  alt+'+'           +       整数型および色の場合は値を 1 増やす、その他の型の場合は値を追加する
-  alt+f, alt+r      r       値をリセット
-  alt+f, alt+u      u       値をアンセット
-  alt+enter         s       値を設定
-  alt+f, alt+n      n       新しい値を設定
-  alt+f, alt+a      a       値を追加
-  alt+','           ,       オプションをマーク/アンマーク
-  shift+up                  上の項目に移動してオプションをマーク/アンマーク
-  shift+down                オプションをマーク/アンマークして下の項目に移動
-                    m:xxx   フィルタ "xxx" にマッチしたことで表示されるオプションをマーク (オプションの名前や値に対する任意のフィルタが使えます、フィルタの詳細は上を参照してください)
-                    u:xxx   フィルタ "xxx" にマッチしたことで表示されるオプションをアンマーク (オプションの名前や値に対する任意のフィルタが使えます、フィルタの詳細は上を参照してください)
+Keys and input to set options on fset buffer:
+  alt+space         t       toggle boolean value
+  alt+'-'           -       subtract 1 from value for integer/color, set value for other types
+  alt+'+'           +       add 1 to value for integer/color, append to value for other types
+  alt+f, alt+r      r       reset value
+  alt+f, alt+u      u       unset value
+  alt+enter         s       set value
+  alt+f, alt+n      n       set new value
+  alt+f, alt+a      a       append to value
+  alt+','           ,       mark/unmark option
+  shift+up                  move one line up and mark/unmark option
+  shift+down                mark/unmark option and move one line down
+                    m:xxx   mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
+                    u:xxx   unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see filters above)
 
-fset バッファを操作するその他のキーと入力:
-  ctrl+L                    オプションの再読込とスクリーンの再描画 (コマンド: /fset -refresh)
-                    $       オプションの再読込 (オプションのマーク状態は変わりません)
-                    $$      オプションの再読込 (すべてのオプションをアンマーク)
-  alt+p             p       プラグイン説明のオプションをトグル (plugins.desc.*)
-  alt+v             v       ヘルプバーをトグル
-                    s:x,y   オプションをフィールド x と y でソート (/help fset.look.sort を参照してください)
-                    s:      ソートをリセットしてデフォルトの順番に整列 (/help fset.look.sort を参照してください)
-                    w:xxx   オプションをファイル "xxx" にエクスポート
-                    w-:xxx  ヘルプを含めずに、オプションをファイル "xxx" にエクスポート
-                    w+:xxx  ヘルプを含めて、オプションをファイル "xxx" にエクスポート
-  ctrl+X            x       オプション表示用の書式を切り替える
-                    q       fset バッファを閉じる
+Other keys and input on fset buffer:
+  ctrl+L                    refresh options and whole screen (command: /fset -refresh)
+                    $       refresh options (keep marked options)
+                    $$      refresh options (unmark all options)
+  alt+p             p       toggle plugin description options (plugins.desc.*)
+  alt+v             v       toggle help bar
+                    s:x,y   sort options by fields x,y (see /help fset.look.sort)
+                    s:      reset sort to its default value (see /help fset.look.sort)
+                    w:xxx   export options in file "xxx"
+                    w-:xxx  export options in file "xxx" without help
+                    w+:xxx  export options in file "xxx" with help
+  ctrl+X            x       switch the format used to display options
+                    q       close fset buffer
 
-fset バッファのマウス操作:
-  ホイールの上下                  行を上方向/下方向へスクロール
-  左ボタン                        行をクリック位置に移動
-  右ボタン                        ブール値をトグル (オン/オフ) またはオプション値を編集
-  右ボタン + 左/右にドラッグ      整数型と色の場合は値を増加/減少、その他の型の場合は値を設定/追加
-  右ボタン + 上/下にドラッグ      複数のオプションをマーク/アンマーク
+Mouse actions on fset buffer:
+  wheel up/down                   move line up/down
+  left button                     move line here
+  right button                    toggle boolean (on/off) or edit the option value
+  right button + drag left/right  increase/decrease value for integer/color, set/append to value for other types
+  right button + drag up/down     mark/unmark multiple options
 
-注意: 入力の先頭に 1 文字以上のスペースがある場合、以降の文字列はフィルタと解釈されます。例えば " q" はすべてのオプションから名前に "q" が含まれるものを検索しますが、"q" は fset バッファを閉じます。
+Note: if input has one or more leading spaces, the following text is interpreted as a filter, without the spaces. For example " q" searches all options with "q" inside name while "q" closes the fset buffer.
 
-例:
-  変更された IRC オプションを表示:
+Examples:
+  show IRC options changed:
     /fset d:irc.*
-  名前に "nicklist" が含まれるすべてのオプションを表示:
+  show all options with "nicklist" in name:
     /fset nicklist
-  値に "red" が含まれるすべてのオプションを表示:
+  show all values which contain "red":
     /fset =red
-  値が "red" と完全に一致するすべてのオプションを表示:
+  show all values which are exactly "red":
     /fset ==red
-  irc プラグインから整数型のすべてのオプションを表示:
+  show all integer options in irc plugin:
     /fset c:${file} == irc && ${type_en} == integer
 ----

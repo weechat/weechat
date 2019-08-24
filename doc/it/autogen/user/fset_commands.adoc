@@ -51,6 +51,8 @@
                d:xxx   show only changed options with "xxx" in name
                d=xxx   show only changed options with "xxx" in value
                d==xxx  show only changed options with exact value "xxx"
+               h=xxx   show only options with "xxx" in description (translated)
+               he=xxx  show only options with "xxx" in description (in English)
                =xxx    show only options with "xxx" in value
                ==xxx   show only options with exact value "xxx"
                c:xxx   show only options matching the evaluated condition "xxx", using following variables: file, section, option, name, parent_name, type, type_en, type_short (bool/int/str/col), type_tiny (b/i/s/c), default_value, default_value_undef, value, quoted_value, value_undef, value_changed, parent_value, min, max, description, description2, description_en, description_en2, string_values
