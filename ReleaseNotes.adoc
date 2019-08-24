@@ -20,6 +20,16 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.6]]
 == Version 2.6 (under dev)
 
+[[v2.6_python3_default]]
+=== Python 3 by default
+
+Python 3 is now used by default to compile the "python" plugin (no fallback
+on Python 2).
+
+The CMake option `ENABLE_PYTHON3` has been renamed to `ENABLE_PYTHON2`
+(configure option `--enable-python2`). If this option is enabled, the "python"
+plugin is built with Python 2 (no fallback on Python 3).
+
 [[v2.6_nick_colors]]
 === Nick colors
 
@@ -41,16 +51,6 @@ If you were using "sum", you can switch to "sum_32":
 ----
 /set weechat.look.nick_color_hash sum_32
 ----
-
-[[v2.6_python3_default]]
-=== Python 3 by default
-
-Python 3 is now used by default to compile the "python" plugin (no fallback
-on Python 2).
-
-The CMake option `ENABLE_PYTHON3` has been renamed to `ENABLE_PYTHON2`
-(configure option `--enable-python2`). If this option is enabled, the "python"
-plugin is built with Python 2 (no fallback on Python 3).
 
 [[v2.5]]
 == Version 2.5 (2019-06-06)
