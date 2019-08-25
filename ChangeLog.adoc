@@ -22,6 +22,7 @@ New features::
 
   * core: add support of 32767 color pairs (issue #1343, issue #1345)
   * core: add option "close" in command /window (issue #853)
+  * api: add infos "term_colors" and "term_color_pairs"
   * api: add function list_user_data (issue #666)
   * api: add argument "strip_items" in function string_split
   * buflist: add infolist "buflist" with list of buffer pointers (issue #1375)

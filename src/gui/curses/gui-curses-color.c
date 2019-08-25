@@ -286,6 +286,16 @@ gui_color_get_term_colors ()
 }
 
 /*
+ * Gets number of color pairs supported by terminal.
+ */
+
+int
+gui_color_get_term_color_pairs ()
+{
+    return gui_color_term_color_pairs;
+}
+
+/*
  * Gets current pairs as arrays (one array for foregrounds, another for
  * backgrounds).
  *

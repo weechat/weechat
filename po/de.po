@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-08-24 07:05+0200\n"
+"POT-Creation-Date: 2019-08-25 17:27+0200\n"
 "PO-Revision-Date: 2019-08-24 08:05+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11935,6 +11935,14 @@ msgstr "Breite des Terminals"
 
 msgid "height of terminal"
 msgstr "Höhe des Terminals"
+
+#, fuzzy
+msgid "number of colors supported in terminal"
+msgstr "keine Farbunterstützung durch Terminal."
+
+#, fuzzy
+msgid "number of color pairs supported in terminal"
+msgstr "keine Farbunterstützung durch Terminal."
 
 msgid "POSIX extended regular expression to search ANSI escape codes"
 msgstr "erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen"

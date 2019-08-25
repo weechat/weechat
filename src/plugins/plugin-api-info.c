@@ -485,6 +485,48 @@ plugin_api_info_term_height_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "term_colors".
+ */
+
+char *
+plugin_api_info_term_colors_cb (const void *pointer, void *data,
+                                const char *info_name,
+                                const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_color_get_term_colors ());
+    return strdup (value);
+}
+
+/*
+ * Returns WeeChat info "term_color_pairs".
+ */
+
+char *
+plugin_api_info_term_color_pairs_cb (const void *pointer, void *data,
+                                     const char *info_name,
+                                     const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", gui_color_get_term_color_pairs ());
+    return strdup (value);
+}
+
+/*
  * Returns WeeChat info "color_ansi_regex".
  */
 
@@ -1718,6 +1760,12 @@ plugin_api_info_init ()
     hook_info (NULL, "term_height",
                N_("height of terminal"),
                NULL, &plugin_api_info_term_height_cb, NULL, NULL);
+    hook_info (NULL, "term_colors",
+               N_("number of colors supported in terminal"),
+               NULL, &plugin_api_info_term_colors_cb, NULL, NULL);
+    hook_info (NULL, "term_color_pairs",
+               N_("number of color pairs supported in terminal"),
+               NULL, &plugin_api_info_term_color_pairs_cb, NULL, NULL);
     hook_info (NULL, "color_ansi_regex",
                N_("POSIX extended regular expression to search ANSI escape "
                   "codes"),
