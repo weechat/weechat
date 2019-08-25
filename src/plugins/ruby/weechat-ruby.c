@@ -72,7 +72,6 @@ struct t_config_option *ruby_config_look_check_license = NULL;
 struct t_config_option *ruby_config_look_eval_keep_context = NULL;
 
 int ruby_quiet = 0;
-int ruby_hide_errors = 0;
 
 struct t_plugin_script *ruby_script_eval = NULL;
 int ruby_eval_mode = 0;
@@ -433,9 +432,6 @@ weechat_ruby_output (VALUE self, VALUE str)
 
     /* make C compiler happy */
     (void) self;
-
-    if (ruby_hide_errors)
-        return Qnil;
 
     msg = strdup (StringValuePtr (str));
 
