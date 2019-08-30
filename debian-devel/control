@@ -162,11 +162,11 @@ Depends:
     ${shlibs:Depends},
     weechat-devel-curses (= ${binary:Version}) | weechat-devel-headless (= ${binary:Version})
 Conflicts: weechat-python
-Description: Fast, light and extensible chat client - Python plugin
+Description: Fast, light and extensible chat client - Python 3 plugin
  WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
  for many operating systems. Everything can be done with a keyboard.
  .
- This package provides the Python scripting API plugin.
+ This package provides the Python 3 scripting API plugin.
 
 Package: weechat-devel-perl
 Architecture: any
