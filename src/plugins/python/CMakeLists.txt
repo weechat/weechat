@@ -23,6 +23,11 @@ weechat-python-api.c weechat-python-api.h)
 set_target_properties(python PROPERTIES PREFIX "")
 
 if(PYTHON_FOUND)
+  # There's a weird bug on FreeBSD: the value of PYTHON_LDFLAGS is
+  # "-L/usr/local/lib;-lpython3.6m" instead of "-L/usr/local/lib -lpython3.6m".
+  # This is a temporary hack to fix the value, waiting for a clean fix.
+  string(REPLACE ";" " " PYTHON_LDFLAGS "${PYTHON_LDFLAGS}")
+
   include_directories(${PYTHON_INCLUDE_DIRS})
   set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${PYTHON_LDFLAGS}")
   target_link_libraries(python ${PYTHON_LIBRARIES} weechat_plugins_scripts coverage_config)
