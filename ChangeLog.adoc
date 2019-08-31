@@ -58,6 +58,7 @@ Tests::
 
 Build::
 
+  * core: fix compilation with autotools on FreeBSD 12.0
   * debian: disable Javascript plugin on Debian Buster/Bullseye (issue #1374)
   * python: compile with Python 3 by default
   * python: use pkg-config to detect Python (issue #1382)

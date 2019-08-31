@@ -21,6 +21,7 @@
 #define WEECHAT_HOOK_TIMER_H
 
 #include <time.h>
+#include <sys/time.h>
 
 struct t_weechat_plugin;
 struct t_infolist_item;
