@@ -137,9 +137,8 @@ WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecan
 możesz doświadczyć błędów wyświetlania. +
 ^(3)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
 mechanizmu ECDSA-NIST256P-CHALLENGE. +
-// TRANSLATION MISSING
-^(4)^ By default Python 3.x is used. If you enable option `ENABLE_PYTHON2` (see
-below), only the version 2.7 of Python is recommended.
+^(4)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `ENABLE_PYTHON2` (zobacz
+niżej), zaleca się uzywania wersji 2.7 Pythona.
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy
 "deb-src" w pliku _/etc/apt/sources.list_, możesz zainstalować wszytkie zależności
@@ -258,9 +257,8 @@ Lista popularnych opcji:
 | ENABLE_PYTHON | `ON`, `OFF` | ON |
   Kompilacja <<scripts_plugins,wtyczki Python>>.
 
-// TRANSLATION MISSING
 | ENABLE_PYTHON2 | `ON`, `OFF` | OFF |
-  Compile <<scripts_plugins,Python plugin>> using Python 2 instead of Python 3.
+  Kompilacja <<scripts_plugins,wtyczki Python>> z użyciem Pythona 2 zamiast Pythona 3.
 
 | ENABLE_RELAY | `ON`, `OFF` | ON |
   Kompilacja <<relay_plugin,wtyczki relay>>.
@@ -2621,10 +2619,9 @@ Teraz dodaj nowy serwer na przykład:
 /server add freenode-tor ajnvpgl6prmkb7yktvue6im5wiedlz2w32uhcwaamdiecdrfpwwgnlqd.onion
 ----
 
-// TRANSLATION MISSING
 [NOTE]
-If you are using an old version of TOR (before 0.3.5) you should use the address
-`freenodeok2gncmy.onion` instead.
+Jeśli używasz starszej wersji TORa (przed 0.3.5) powinieneś użyć adresu
+`freenodeok2gncmy.onion`.
 
 Ustaw proxy dla TOR:
 
