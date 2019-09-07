@@ -27,7 +27,7 @@
 ** domyślna wartość: `+0+`
 
 * [[option_exec.command.shell]] *exec.command.shell*
-** opis: pass:none[shell to use with command "/exec -sh"; it can be just the name of shell if it is in PATH (for example "bash") or the absolute path to the shell (for example "/bin/bash"); if value is empty, "sh" is used (note: content is evaluated, see /help eval)]
+** opis: pass:none[powłoka używana przez komendę "/exec -sh"; może to być nazwa powłoki jeśli znajduje się ona w PATH (na przykład "bash") lub ścieżka absolutna (na przykład "/bin/bash"); jeśli wartość jest pusta, zostanie użyte "sh" (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${env:SHELL}"+`

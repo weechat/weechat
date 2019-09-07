@@ -10,7 +10,7 @@
 
 | alias | alias_default | lista domyślnych aliasów | - | -
 
-| buflist | buflist | list of buffers in a buflist bar item | - | buflist bar item name (optional)
+| buflist | buflist | lista buforów w w elemencie paska buflist | - | nazwa elementu paska buflist (opcjonalne)
 
 | fset | fset_option | lista opcji fset | wskaźnik opcji fset (opcjonalne) | nazwa opcji (wildcard "*" jest dozwolony) (opcjonalne)
 

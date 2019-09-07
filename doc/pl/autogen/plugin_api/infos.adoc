@@ -108,9 +108,9 @@
 
 | weechat | pid | WeeChat PID (ID procesu) | -
 
-| weechat | term_color_pairs | number of color pairs supported in terminal | -
+| weechat | term_color_pairs | ilość par kolorów wspieranych przez terminal | -
 
-| weechat | term_colors | number of colors supported in terminal | -
+| weechat | term_colors | ilość kolorów wpieranych przez terminal | -
 
 | weechat | term_height | wysokość terminala | -
 
