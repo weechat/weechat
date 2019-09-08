@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.6]]
-== Version 2.6 (under dev)
+== Version 2.6 (2019-09-08)
 
 [[v2.6_python3_default]]
 === Python 3 by default

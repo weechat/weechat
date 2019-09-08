@@ -32,9 +32,9 @@
 #     devel-patch  the patch version of devel (e.g. 2 for version 1.4.2)
 #
 
-WEECHAT_STABLE=2.5
+WEECHAT_STABLE=2.6
 WEECHAT_DEVEL=2.6
-WEECHAT_DEVEL_FULL=2.6-rc2
+WEECHAT_DEVEL_FULL=2.6
 
 if [ $# -lt 1 ]; then
     echo >&2 "Syntax: $0 stable|devel|devel-full|devel-major|devel-minor|devel-patch"
