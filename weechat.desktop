@@ -2,7 +2,7 @@
 Name=Weechat
 GenericName=IRC Client
 Comment=Extensible chat client
-Exec=/usr/bin/weechat %u
+Exec=weechat %u
 Terminal=true
 Icon=weechat
 Type=Application
