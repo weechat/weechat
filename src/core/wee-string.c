@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#include <limits.h>
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
@@ -224,6 +225,10 @@ string_repeat (const char *string, int count)
         return strdup (string);
 
     length_string = strlen (string);
+
+    if (count >= INT_MAX / length_string)
+        return NULL;
+
     length_result = (length_string * count) + 1;
     result = malloc (length_result);
     if (!result)
