@@ -19,6 +19,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 == Version 2.7 (under dev)
 
 Build::
+  * core: remove file FindTCL.cmake
   * core: display an error on missing dependency in CMake (issue #916, issue #956)
 
 [[v2.6]]
