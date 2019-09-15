@@ -15,6 +15,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v2.7]]
+== Version 2.7 (under dev)
+
+Build::
+  * core: display an error on missing dependency in CMake (issue #916, issue #956)
+
 [[v2.6]]
 == Version 2.6 (2019-09-08)
 

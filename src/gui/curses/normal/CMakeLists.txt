@@ -40,6 +40,8 @@ if(NCURSES_FOUND)
       add_definitions(-DHAVE_NCURSES_H)
     endif()
   endif()
+else()
+  message(SEND_ERROR "Ncurses not found")
 endif()
 
 include_directories(.. ../../core ../../plugins ${NCURSES_INCLUDE_PATH})
