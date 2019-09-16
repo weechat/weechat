@@ -6,7 +6,7 @@ index 48082f72f..ec635144f 100644
 -12
 +9
 diff --git a/debian-devel/control b/debian-devel/control
-index ffca1a17f..8ccf774c9 100644
+index 957110a55..574235330 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,20 +3,17 @@ Section: net
@@ -80,6 +80,18 @@ index ffca1a17f..8ccf774c9 100644
  Package: weechat-devel-doc
  Section: doc
  Architecture: all
+diff --git a/debian-devel/rules b/debian-devel/rules
+index 16a5f9516..e42c2a6b2 100755
+--- a/debian-devel/rules
++++ b/debian-devel/rules
+@@ -12,6 +12,7 @@ $(BUILDDIR)/Makefile:
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_PHP:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
 diff --git a/debian-devel/weechat-devel-php.dirs b/debian-devel/weechat-devel-php.dirs
 deleted file mode 120000
 index e4853a588..000000000
@@ -104,7 +116,7 @@ index 48082f72f..ec635144f 100644
 -12
 +9
 diff --git a/debian-stable/control b/debian-stable/control
-index 8fd0bf1a6..9cbe9d127 100644
+index 516580bed..c3e7ed681 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,20 +3,17 @@ Section: net
@@ -177,6 +189,18 @@ index 8fd0bf1a6..9cbe9d127 100644
  Package: weechat-doc
  Section: doc
  Architecture: all
+diff --git a/debian-stable/rules b/debian-stable/rules
+index 16a5f9516..e42c2a6b2 100755
+--- a/debian-stable/rules
++++ b/debian-stable/rules
+@@ -12,6 +12,7 @@ $(BUILDDIR)/Makefile:
+ 		-DLIBDIR=/usr/lib/${DEB_HOST_MULTIARCH} \
+ 		-DENABLE_DOC:BOOL=ON \
+ 		-DENABLE_MAN:BOOL=ON \
++		-DENABLE_PHP:BOOL=OFF \
+ 		-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
+ 		-DCMAKE_C_FLAGS_RELWITHDEBINFO:STRING="$(CFLAGS) -D_FORTIFY_SOURCE=2" \
+ 		-DCMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO:STRING="$(LDFLAGS)" \
 diff --git a/debian-stable/weechat-php.dirs b/debian-stable/weechat-php.dirs
 deleted file mode 100644
 index 68457717b..000000000
