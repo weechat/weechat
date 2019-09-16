@@ -915,7 +915,7 @@
 ** valeur par défaut: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
-** description: pass:none[force la couleur pour certains pseudos : le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est : "pseudo1:couleur1;pseudo2:couleur2") ; la recherche de pseudos s'effectue avec la casse exacte puis en minuscules, donc il est possible d'utiliser uniquement des minuscules pour les pseudos dans cette option]
+** description: pass:none[force la couleur pour certains pseudos : le hash calculé avec le pseudo pour trouver la couleur ne sera pas utilisé pour ces pseudos (le format est : "pseudo1:couleur1;pseudo2:couleur2") ; la recherche de pseudos s'effectue avec la casse exacte puis en minuscules, donc il est possible d'utiliser uniquement des minuscules pour les pseudos dans cette option ; la couleur peut inclure le fond avec le format "texte,fond", par exemple "yellow,red"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

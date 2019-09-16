@@ -3230,7 +3230,8 @@ config_weechat_init_options ()
            "to find color will not be used for these nicks (format is: "
            "\"nick1:color1;nick2:color2\"); look up for nicks is with "
            "exact case then lower case, so it's possible to use only lower "
-           "case for nicks in this option"),
+           "case for nicks in this option; color can include background with "
+           "the format \"text,background\", for example \"yellow,red\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         &config_change_look_nick_color_force, NULL, NULL,

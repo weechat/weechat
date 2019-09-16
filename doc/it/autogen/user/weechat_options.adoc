@@ -915,7 +915,7 @@
 ** valore predefinito: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
-** descrizione: pass:none[force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option]
+** descrizione: pass:none[force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option; color can include background with the format "text,background", for example "yellow,red"]
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`

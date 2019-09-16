@@ -915,7 +915,7 @@
 ** デフォルト値: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
-** 説明: pass:none[一部のニックネームでニックネーム色を強制する: ニックネームから計算されるハッシュを元にした色を利用しない (書式: "nick1:color1;nick2:color2"); ニックネームの検索はまず大文字小文字が区別された状態で行われ、そのあとに小文字で行われます。このため、このオプションのニックネーム部分を小文字だけで書く事もできます]
+** 説明: pass:none[force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option; color can include background with the format "text,background", for example "yellow,red"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
