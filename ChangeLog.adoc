@@ -18,7 +18,12 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.7]]
 == Version 2.7 (under dev)
 
+Bug fixes::
+
+  * buflist: fix extra spaces between buffers when conditions are used to hide buffers (regression introduced in version 2.6) (issue #1403)
+
 Build::
+
   * core: remove file FindTCL.cmake
   * core: display an error on missing dependency in CMake (issue #916, issue #956)
 

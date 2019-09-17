@@ -359,13 +359,6 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                              ptr_buffer, "name");
         }
 
-        if (weechat_config_boolean (buflist_config_look_add_newline)
-            && *buflist[0])
-        {
-            if (!weechat_string_dyn_concat (buflist, "\n"))
-                goto error;
-        }
-
         /* current buffer */
         current_buffer = (ptr_buffer == ptr_current_buffer);
         weechat_hashtable_set (buflist_hashtable_extra_vars,
@@ -587,6 +580,14 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         if (current_buffer)
             line_number_current_buffer = line_number;
         prev_number = number;
+
+        /* add newline between each buffer (if needed) */
+        if (weechat_config_boolean (buflist_config_look_add_newline)
+            && *buflist[0])
+        {
+            if (!weechat_string_dyn_concat (buflist, "\n"))
+                goto error;
+        }
 
         /* build string */
         line = weechat_string_eval_expression (
