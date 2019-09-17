@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * core: fixed segfault during excessive evaluation in function string_repeat (issue #1400)
   * buflist: fix extra spaces between buffers when conditions are used to hide buffers (regression introduced in version 2.6) (issue #1403)
 
 Build::
