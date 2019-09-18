@@ -26,6 +26,7 @@ extern "C"
 #ifndef HAVE_CONFIG_H
 #define HAVE_CONFIG_H
 #endif
+#include <limits.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -300,6 +301,8 @@ TEST(CoreString, Reverse)
 TEST(CoreString, Repeat)
 {
     POINTERS_EQUAL(NULL, string_repeat (NULL, 1));
+    POINTERS_EQUAL(NULL, string_repeat ("----", INT_MAX / 4));
+
     STRCMP_EQUAL("", string_repeat ("", 1));
 
     STRCMP_EQUAL("", string_repeat ("x", -1));

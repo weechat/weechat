@@ -915,7 +915,7 @@
 ** Standardwert: `+100+`
 
 * [[option_weechat.look.nick_color_force]] *weechat.look.nick_color_force*
-** Beschreibung: pass:none[force color for some nicks: hash computed with nickname to find color will not be used for these nicks (format is: "nick1:color1;nick2:color2"); look up for nicks is with exact case then lower case, so it's possible to use only lower case for nicks in this option; color can include background with the format "text,background", for example "yellow,red"]
+** Beschreibung: pass:none[erzwingt für einen Nick eine spezielle Farbe. Die standardmäßig, mittels Streuwertfunktion aus dem Nicknamen, generierte Farbe findet für diese Nicks keine Anwendung (Format:"Nick1:Farbe1;Nick2:Farbe2"). Zuerst wird beim Namen des Nick nach Groß- und Kleinschreibung unterschieden. Sollte der Nick nicht gefunden werden findet keine Unterscheidung mehr statt. Somit ist es möglich die Nicks, für diese Einstellung, ausschließlich in Kleinschrift aufzuführen; die Farbauswahl kann auch eine Hintergrundfarbe beinhalten "Textfarbe,Hintergrundfarbe", zum Beispiel "yellow,red"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
