@@ -115,7 +115,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
   ∥ libenchant-dev       |                  |        | spell プラグイン
 | python3-dev            | ^(4)^            |        | python プラグイン
 | libperl-dev            |                  |        | perl プラグイン
-| ruby2.5, ruby2.5-dev   | 1.8 以上         |        | ruby プラグイン
+| ruby2.5, ruby2.5-dev   | 1.9.1 以上       |        | ruby プラグイン
 | liblua5.3-dev          |                  |        | lua プラグイン
 | tcl-dev                | 8.5 以上         |        | tcl プラグイン
 | guile-2.0-dev          | 2.0 以上         |        | guile (scheme) プラグイン

@@ -113,7 +113,7 @@ compiler WeeChat.
   ∥ libenchant-dev       |               |        | Extension spell.
 | python3-dev            | ^(4)^         |        | Extension python.
 | libperl-dev            |               |        | Extension perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.8         |        | Extension ruby.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |        | Extension ruby.
 | liblua5.3-dev          |               |        | Extension lua.
 | tcl-dev                | ≥ 8.5         |        | Extension tcl.
 | guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme).

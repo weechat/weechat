@@ -132,7 +132,7 @@ compilare WeeChat.
   ∥ libenchant-dev       |               |           | Plugin spell.
 | python3-dev            | ^(4)^         |           | Plugin python.
 | libperl-dev            |               |           | Plugin perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.8         |           | Plugin ruby.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |           | Plugin ruby.
 | liblua5.3-dev          |               |           | Plugin lua.
 | tcl-dev                | ≥ 8.5         |           | Plugin tcl.
 | guile-2.0-dev          | ≥ 2.0         |           | Plugin guile (scheme).

@@ -116,7 +116,7 @@ WeeChat.
   ∥ libenchant-dev       |               |          | Wtyczka spell.
 | python3-dev            | ^(4)^         |          | Wtyczka python.
 | libperl-dev            |               |          | Wtyczka perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.8         |          | Wtyczka ruby.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |          | Wtyczka ruby.
 | liblua5.3-dev          |               |          | Wtyczka lua.
 | tcl-dev                | ≥ 8.5         |          | Wtyczka tcl.
 | guile-2.0-dev          | ≥ 2.0         |          | Wtyczka guile (scheme).
