@@ -171,7 +171,7 @@
 ** Standardwert: `+""+`
 
 * [[option_relay.network.totp_window]] *relay.network.totp_window*
-** Beschreibung: pass:none[Anzahl der Time-based One-Time Passwörter die vor und nach dem aktuellen Passwort akzeptiert  werden: 0 = nur das aktuelle Passwort wird akzeptiert, 1 = akzeptiert ein Passwort vorher, das aktuelle und ein Passwort danach, 2 = akzeptiert zwei Passwörter vorher, das aktuelle und zwei Passwörter danach, ...; umso höher die genutzte Zahl umso unsicherer das Verfahren (0 oder 1 sind empfohlene Werte)]
+** Beschreibung: pass:none[Anzahl der Time-based One-Time Passwörter die vor und nach dem aktuellen Passwort akzeptiert werden: 0 = nur das aktuelle Passwort wird akzeptiert, 1 = akzeptiert ein Passwort vorher, das aktuelle und ein Passwort danach, 2 = akzeptiert zwei Passwörter vorher, das aktuelle und zwei Passwörter danach, ...; umso höher die genutzte Zahl umso unsicherer das Verfahren (0 oder 1 sind empfohlene Werte)]
 ** Typ: integer
 ** Werte: 0 .. 256
 ** Standardwert: `+0+`

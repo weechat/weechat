@@ -33,7 +33,7 @@ listdefault: zeigt die standardmäßig genutzten Trigger an
              hsignal: Name(en) des hsignal (erforderlich)
              modifier: Name(en) des modifier (erforderlich)
              line: Buffertyp ("formatted", "free" oder "*"), Liste von Buffermasken, Tags
-             print: buffer, tags, message, strip colors
+             print: Buffer, Tags, Nachricht, Farben entfernen
              command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung
              command_run: Befehl(e) (erforderlich)
              timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen

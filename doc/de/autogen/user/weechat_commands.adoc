@@ -97,7 +97,7 @@ Beispiele:
  unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
     hide: versteckt einen Buffer
   unhide: macht Buffer wieder sichtbar
-renumber: Buffer werden um nummeriert (Einstellung weechat.look.buffer_auto_renumber muss deaktiviert sein)
+renumber: Buffer werden umnummeriert (Einstellung weechat.look.buffer_auto_renumber muss deaktiviert sein)
    close: Buffer schließen (Nummer oder Bereich ist optional)
   notify: setzt den Status der Benachrichtigung für den aktuellen Buffer. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung und ob der Buffer in der Hotlist angezeigt wird:
             none: keine Benachrichtigung
@@ -351,7 +351,7 @@ Beispiele (Bedingungen):
 ----
 
 [[command_weechat_filter]]
-* `+filter+`: Filterfunktion um Nachrichten in Buffer aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden
+* `+filter+`: Filterfunktion um Nachrichten in Buffern aus- oder einzublenden, dazu können Schlagwörter oder reguläre Ausdrücke verwendet werden
 
 ----
 /filter  list
