@@ -290,7 +290,7 @@ script_command_init ()
     weechat_hook_command (
         "script",
         N_("WeeChat script manager"),
-        N_("list [-o|-i]"
+        N_("list [-o|-ol|-i|-il]"
            " || search <text>"
            " || show <script>"
            " || load|unload|reload <script> [<script>...]"
@@ -299,9 +299,14 @@ script_command_init ()
            " || upgrade"
            " || update"),
         N_("          list: list loaded scripts (all languages)\n"
-           "            -o: send list of loaded scripts to buffer\n"
+           "            -o: send list of loaded scripts to buffer "
+           "(string in English)\n"
+           "           -ol: send list of loaded scripts to buffer "
+           "(translated string)\n"
            "            -i: copy list of loaded scripts in command line (for "
-           "sending to buffer)\n"
+           "sending to buffer) (string in English)\n"
+           "           -il: copy list of loaded scripts in command line (for "
+           "sending to buffer) (translated string)\n"
            "        search: search scripts by tags, language (python, "
            "perl, ...), filename extension (py, pl, ...) or text; result is "
            "displayed on scripts buffer\n"

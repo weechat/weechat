@@ -96,21 +96,21 @@ script_action_list ()
  * Lists loaded scripts (all languages) in input.
  *
  * Sends input to buffer if send_to_buffer == 1.
+ * String is translated if translated == 1 (otherwise it's English).
  */
 
 void
-script_action_list_input (int send_to_buffer)
+script_action_list_input (int send_to_buffer, int translated)
 {
     int i, length;
-    char hdata_name[128], *buf, str_pos[16];
+    char hdata_name[128], **buf, str_pos[16];
     struct t_hdata *hdata;
     void *ptr_script;
 
-    buf = malloc (16384);
+    buf = weechat_string_dyn_alloc (256);
     if (!buf)
         return;
 
-    buf[0] = '\0';
     length = 0;
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
@@ -121,35 +121,51 @@ script_action_list_input (int send_to_buffer)
         ptr_script = weechat_hdata_get_list (hdata, "scripts");
         while (ptr_script)
         {
-            if (buf[0])
-                strcat (buf, ", ");
-            strcat (buf, weechat_hdata_string (hdata, ptr_script, "name"));
-            strcat (buf, ".");
-            strcat (buf, script_extension[i]);
-            strcat (buf, " ");
-            strcat (buf, weechat_hdata_string (hdata, ptr_script, "version"));
-            length = strlen (buf);
-            if (length > 16384 - 64)
+            if (*buf[0])
             {
-                strcat (buf, "...");
-                length += 3;
-                break;
+                weechat_string_dyn_concat (buf, ", ");
             }
+            else
+            {
+                weechat_string_dyn_concat (
+                    buf,
+                    (translated) ? _("Scripts loaded:") : "Scripts loaded:");
+                weechat_string_dyn_concat (buf, " ");
+            }
+            weechat_string_dyn_concat (buf,
+                                       weechat_hdata_string (hdata,
+                                                             ptr_script,
+                                                             "name"));
+            weechat_string_dyn_concat (buf, ".");
+            weechat_string_dyn_concat (buf, script_extension[i]);
+            weechat_string_dyn_concat (buf, " ");
+            weechat_string_dyn_concat (buf, weechat_hdata_string (hdata,
+                                                                  ptr_script,
+                                                                  "version"));
             ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
         }
     }
 
-    if (buf[0])
+    if (!*buf[0])
     {
-        if (send_to_buffer)
-            weechat_command (weechat_current_buffer (), buf);
-        else
-        {
-            weechat_buffer_set (weechat_current_buffer (), "input", buf);
-            snprintf (str_pos, sizeof (str_pos), "%d", length);
-            weechat_buffer_set (weechat_current_buffer (), "input_pos", str_pos);
-        }
+        weechat_string_dyn_concat (
+            buf,
+            (translated) ? _("No scripts loaded") : "No scripts loaded");
     }
+
+    if (send_to_buffer)
+    {
+        weechat_command (weechat_current_buffer (), *buf);
+    }
+    else
+    {
+        weechat_buffer_set (weechat_current_buffer (), "input", *buf);
+        length = strlen (*buf);
+        snprintf (str_pos, sizeof (str_pos), "%d", length);
+        weechat_buffer_set (weechat_current_buffer (), "input_pos", str_pos);
+    }
+
+    weechat_string_dyn_free (buf, 1);
 }
 
 /*
@@ -1250,9 +1266,13 @@ script_action_run ()
                     if (argc > 1)
                     {
                         if (weechat_strcasecmp (argv[1], "-i") == 0)
-                            script_action_list_input (0);
+                            script_action_list_input (0, 0);
+                        if (weechat_strcasecmp (argv[1], "-il") == 0)
+                            script_action_list_input (0, 1);
                         else if (weechat_strcasecmp (argv[1], "-o") == 0)
-                            script_action_list_input (1);
+                            script_action_list_input (1, 0);
+                        else if (weechat_strcasecmp (argv[1], "-ol") == 0)
+                            script_action_list_input (1, 1);
                         else
                             script_action_list ();
                     }
