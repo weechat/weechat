@@ -27,6 +27,8 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-arraylist.h \
                              wee-backtrace.c \
                              wee-backtrace.h \
+                             wee-calc.c \
+                             wee-calc.h \
                              wee-command.c \
                              wee-command.h \
                              wee-completion.c \

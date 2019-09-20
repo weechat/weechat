@@ -126,6 +126,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 | core/                           | コア関数: エントリポイント、内部構造体
 |    wee-arraylist.c              | 配列リスト
 |    wee-backtrace.c              | クラッシュした際にバックトレースを表示
+// TRANSLATION MISSING
+|    wee-calc.c                   | Calculate result of expressions.
 |    wee-command.c                | WeeChat コアコマンド
 |    wee-completion.c             | デフォルト補完
 |    wee-config-file.c            | 設定ファイル管理

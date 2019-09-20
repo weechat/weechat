@@ -308,9 +308,10 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   9. current date/time (format: "date" or "date:format")
   10. an environment variable (format: "env:XXX")
   11. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  12. an option (format: "file.section.option")
-  13. a local variable in buffer
-  14. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  12. result of an expression with parentheses and operators + - * / // % (format: "calc:xxx")
+  13. an option (format: "file.section.option")
+  14. a local variable in buffer
+  15. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list, for example:
@@ -337,6 +338,7 @@ Examples (simple strings):
   /eval -n ${if:${info:term_width}>80?big:small} ==> big
   /eval -n ${rev:Hello}                          ==> olleH
   /eval -n ${repeat:5,-}                         ==> -----
+  /eval -n ${calc:(5+2)*3}                       ==> 21
 
 Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0

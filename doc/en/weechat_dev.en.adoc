@@ -120,6 +120,7 @@ WeeChat "core" is located in following directories:
 | core/                           | Core functions: entry point, internal structures.
 |    wee-arraylist.c              | Array lists.
 |    wee-backtrace.c              | Display a backtrace after a crash.
+|    wee-calc.c                   | Calculate result of expressions.
 |    wee-command.c                | WeeChat core commands.
 |    wee-completion.c             | Default completions.
 |    wee-config-file.c            | Configuration file management.

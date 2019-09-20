@@ -26,6 +26,7 @@ include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOU
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/test-plugins.cpp
   unit/core/test-core-arraylist.cpp
+  unit/core/test-core-calc.cpp
   unit/core/test-core-eval.cpp
   unit/core/test-core-hashtable.cpp
   unit/core/test-core-hdata.cpp

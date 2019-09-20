@@ -2161,7 +2161,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、0.4.3、1.0、1.1、1.2、1.3、1.6、1.8、2.0 で更新。_
+_WeeChat バージョン 0.4.0 以上で利用可、バージョン 0.4.2、0.4.3、1.0、1.1、1.2、1.3、1.6、1.8、2.0, 2.7 で更新。_
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2545,6 +2545,24 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   "1" または "0" が返されます |
   `+${if:${info:term_width}>80?big:small}+` |
   `+big+`
+
+// TRANSLATION MISSING
+| `+${calc:xxx}+` +
+  (_WeeChat バージョン 2.7 以上で利用可_) |
+  Result of expression, where parentheses and the following operators are
+  supported: +
+  `+`: addition +
+  `-`: subtraction +
+  `*`: multiplication +
+  `/`: division +
+  `//`: result of division without fractional part +
+  `%`: remainder of division. |
+  `+${calc:5+2*3}+` +
+  `+${calc:(5+2)*3}+` +
+  `+${calc:9.2%3}+` |
+  `+11+` +
+  `+21+` +
+  `+0.2+`
 
 | `+${sec.data.name}+` |
   セキュアデータ `name` の値 |

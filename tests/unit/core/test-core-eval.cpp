@@ -145,6 +145,8 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${test2} == value2");
     WEE_CHECK_EVAL("0", "${buffer.number} == 2");
     WEE_CHECK_EVAL("0", "${window.buffer.number} == 2");
+    WEE_CHECK_EVAL("0", "${calc:2+3} < 5");
+    WEE_CHECK_EVAL("0", "${calc:1.5*3} < 4.5");
 
     /* conditions evaluated as true */
     WEE_CHECK_EVAL("1", "1");
@@ -203,6 +205,8 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "${test2} ==");
     WEE_CHECK_EVAL("1", "${buffer.number} == 1");
     WEE_CHECK_EVAL("1", "${window.buffer.number} == 1");
+    WEE_CHECK_EVAL("1", "${calc:2+3} >= 5");
+    WEE_CHECK_EVAL("1", "${calc:1.5*3} >= 4.5");
 
     /* evaluation of extra_vars */
     hashtable_set (options, "extra", "eval");
@@ -406,6 +410,14 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "${if:${if:abc==abc}}");
     WEE_CHECK_EVAL("0", "${if:${rev:${if:42==42?hello:bye}}==eyb}");
     WEE_CHECK_EVAL("1", "${if:${rev:${if:42==42?hello:bye}}==olleh}");
+
+    /* test calc */
+    WEE_CHECK_EVAL("0", "${calc:}");
+    WEE_CHECK_EVAL("123", "${calc:123}");
+    WEE_CHECK_EVAL("4", "${calc:1+3}");
+    WEE_CHECK_EVAL("8", "${calc:5+1*3}");
+    WEE_CHECK_EVAL("18", "${calc:(5+1)*3}");
+    WEE_CHECK_EVAL("123129", "${calc:${repeat:2,123}+2*3}");
 
     /* test option */
     snprintf (str_value, sizeof (str_value),

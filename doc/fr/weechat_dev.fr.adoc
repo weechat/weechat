@@ -122,6 +122,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 | core/                           | Fonctions du cœur : point d'entrée, structures internes.
 |    wee-arraylist.c              | Listes avec tableau (« arraylists »).
 |    wee-backtrace.c              | Afficher une trace après un plantage.
+|    wee-calc.c                   | Calcul du résultat d'expressions.
 |    wee-command.c                | Commandes du cœur de WeeChat.
 |    wee-completion.c             | Complétions par défaut.
 |    wee-config-file.c            | Gestion des fichiers de configuration.

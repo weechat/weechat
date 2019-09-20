@@ -30,6 +30,7 @@
 
 #include "weechat.h"
 #include "wee-eval.h"
+#include "wee-calc.h"
 #include "wee-config-file.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
@@ -301,9 +302,10 @@ end:
  *  11. current date/time (format: date or date:xxx)
  *  12. an environment variable (format: env:XXX)
  *  13. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  14. an option (format: file.section.option)
- *  15. a buffer local variable
- *  16. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  14. calculate result of an expression (format: calc:xxx)
+ *  15. an option (format: file.section.option)
+ *  16. a buffer local variable
+ *  17. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -625,7 +627,16 @@ eval_replace_vars_cb (void *data, const char *text)
         return (value) ? value : strdup ("");
     }
 
-    /* 14. option: if found, return this value */
+    /*
+     * 14. calculate the result of an expression
+     * (with number, operators and parentheses)
+     */
+    if (strncmp (text, "calc:", 5) == 0)
+    {
+        return calc_expression (text + 5);
+    }
+
+    /* 15. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -658,7 +669,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 15. local variable in buffer */
+    /* 16. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -667,7 +678,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 16. hdata */
+    /* 17. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;

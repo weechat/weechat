@@ -25,6 +25,7 @@ Bug fixes::
 
 New features::
 
+  * core: add calculation of expression in evaluation of expressions with "calc:..." (issue #997)
   * script: add options "-ol" and "-il" in command /script to send translated string with list of scripts loaded, display "No scripts loaded" if no scripts are loaded
 
 Build::

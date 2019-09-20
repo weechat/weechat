@@ -23,6 +23,7 @@ noinst_LIBRARIES = lib_weechat_unit_tests_core.a
 
 lib_weechat_unit_tests_core_a_SOURCES = unit/test-plugins.cpp \
                                         unit/core/test-core-arraylist.cpp \
+                                        unit/core/test-core-calc.cpp \
                                         unit/core/test-core-eval.cpp \
                                         unit/core/test-core-hashtable.cpp \
                                         unit/core/test-core-hdata.cpp \

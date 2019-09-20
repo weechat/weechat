@@ -42,6 +42,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-backtrace.h
 ./src/core/weechat.c
 ./src/core/weechat.h
+./src/core/wee-calc.c
+./src/core/wee-calc.h
 ./src/core/wee-command.c
 ./src/core/wee-command.h
 ./src/core/wee-completion.c
