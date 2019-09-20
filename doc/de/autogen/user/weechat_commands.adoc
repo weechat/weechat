@@ -925,7 +925,7 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 * `+uptime+`: Zeigt die Uptime von WeeChat an
 
 ----
-/uptime  [-o | -ol]
+/uptime  [-o|-ol]
 
  -o: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in englischer Sprache)
 -ol: die Laufzeit von WeeChat wird in den aktuellen Buffer geschrieben (in der voreingestellten Landessprache)
@@ -935,7 +935,7 @@ Es ist möglich die WeeChat-Sitzung auf einem anderen Rechner wiederherzustellen
 * `+version+`: Zeigt die WeeChat-Version und das Datum der Kompilierung an
 
 ----
-/version  [-o | -ol]
+/version  [-o|-ol]
 
  -o: die Version von WeeChat wird in den aktuellen Buffer ausgegeben (in englischer Sprache)
 -ol: die Version von WeeChat wird in den aktuellen Buffer ausgegeben (in der voreingestellten Landessprache)

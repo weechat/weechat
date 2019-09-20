@@ -925,7 +925,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 * `+uptime+`: mostra l'uptime di WeeChat
 
 ----
-/uptime  [-o | -ol]
+/uptime  [-o|-ol]
 
  -o: invia l'uptime al buffer corrente come input (stringa in inglese)
 -ol: invia l'uptime al buffer corrente come input (stringa tradotta)
@@ -935,7 +935,7 @@ It is possible to restore WeeChat session on another machine if you copy the con
 * `+version+`: mostra la versione e la data di compilazione di WeeChat
 
 ----
-/version  [-o | -ol]
+/version  [-o|-ol]
 
  -o: send version to current buffer as input (English string)
 -ol: send version to current buffer as input (translated string)

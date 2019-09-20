@@ -925,7 +925,7 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 * `+uptime+`: pokazuje czas pracy WeeChat
 
 ----
-/uptime  [-o | -ol]
+/uptime  [-o|-ol]
 
  -o: wysyła uptime jako wejście do obecnego bufora (po angielsku)
 -ol: wysyła uptime jako wejście do obecnego bufora (przetłumaczony)
@@ -935,7 +935,7 @@ Jest możliwe przywrócenie sesji WeeChat na innej maszynie, jeśli skopiujemy z
 * `+version+`: pokazuje wersję i datę, kiedy skompilowano WeeChat
 
 ----
-/version  [-o | -ol]
+/version  [-o|-ol]
 
  -o: wysyła wersje jako wejście do obecnego bufora (po angielsku)
 -ol: wysyła wersje jako wejście do obecnego bufora (przetłumaczony)
