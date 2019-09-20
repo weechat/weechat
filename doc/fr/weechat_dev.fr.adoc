@@ -391,6 +391,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       test-plugins.cpp            | Tests : extensions.
 |       core/                       | Racine des tests unitaires pour le cœur.
 |          test-core-arraylist.cpp  | Tests : listes avec tableau (« arraylists »).
+|          test-core-calc.cpp       | Tests : calcul d'expressions.
 |          test-core-eval.cpp       | Tests : évaluation d'expressions.
 |          test-core-hashtble.cpp   | Tests : tables de hachage.
 |          test-core-hdata.cpp      | Tests : hdata.

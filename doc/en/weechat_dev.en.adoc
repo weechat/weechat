@@ -389,6 +389,7 @@ WeeChat "core" is located in following directories:
 |       test-plugins.cpp            | Tests: plugins.
 |       core/                       | Root of unit tests for core.
 |          test-core-arraylist.cpp  | Tests: arraylists.
+|          test-core-calc.cpp       | Tests: calculation of expressions.
 |          test-core-eval.cpp       | Tests: evaluation of expressions.
 |          test-core-hashtble.cpp   | Tests: hashtables.
 |          test-core-hdata.cpp      | Tests: hdata.
