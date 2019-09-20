@@ -17,6 +17,45 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.7]]
+== Version 2.7 (under dev)
+
+[[v2.7_cmake_errors]]
+=== CMake errors on missing dependencies
+
+When compiling WeeChat with CMake (which is the recommended way), errors are
+now displayed on any missing dependency, if the optional feature was asked
+(most features are automatically enabled, except doc/man page and tests).
+
+Any error on a missing dependency is fatal, so WeeChat can not be compiled.
+This is a new behavior compared to old versions, where any missing dependency
+was silently ignored and the compilation was possible anyway.
+
+For example if PHP is not installed on your system, CMake will display an error
+on missing PHP library:
+
+----
+-- checking for one of the modules 'php7'
+CMake Warning at cmake/FindPHP.cmake:57 (message):
+  Could not find libphp7.  Ensure PHP >=7.0.0 development libraries are
+  installed and compiled with `--enable-embed`.  Ensure `php-config` is in
+  `PATH`.  You may set `-DCMAKE_LIBRARY_PATH=...` to the directory containing
+  libphp7.
+Call Stack (most recent call first):
+  src/plugins/CMakeLists.txt:157 (find_package)
+
+
+CMake Error at src/plugins/CMakeLists.txt:161 (message):
+  Php not found
+----
+
+Then you can either install PHP or explicitly disable PHP if you don't need this
+plugin, using this cmake option:
+
+----
+cmake .. -DENABLE_PHP=OFF
+----
+
 [[v2.6]]
 == Version 2.6 (2019-09-08)
 
