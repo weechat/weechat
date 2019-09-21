@@ -2476,7 +2476,7 @@ expanded to last):
 
 | `+${length:xxx}+` +
   (_WeeChat ≥ 2.7_) |
-  Length of string (number of UTF-8 chars). |
+  Length of string (number of UTF-8 chars), color codes are ignored. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
   `+4+` +
@@ -2484,7 +2484,7 @@ expanded to last):
 
 | `+${lengthscr:xxx}+` +
   (_WeeChat ≥ 2.7_) |
-  Length of string displayed on screen. |
+  Length of string displayed on screen, color codes are ignored. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
   `+4+` +

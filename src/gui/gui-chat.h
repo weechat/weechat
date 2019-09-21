@@ -69,6 +69,7 @@ extern int gui_chat_display_tags;
 extern void gui_chat_init ();
 extern void gui_chat_prefix_build ();
 extern int gui_chat_utf_char_valid (const char *utf_char);
+extern int gui_chat_strlen (const char *string);
 extern int gui_chat_strlen_screen (const char *string);
 extern const char *gui_chat_string_add_offset (const char *string, int offset);
 extern const char *gui_chat_string_add_offset_screen (const char *string,

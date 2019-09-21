@@ -167,6 +167,30 @@ gui_chat_char_size_screen (const char *utf_char)
 }
 
 /*
+ * Returns number of char in a string (special chars like colors/attributes are
+ * ignored).
+ */
+
+int
+gui_chat_strlen (const char *string)
+{
+    int length;
+
+    length = 0;
+    while (string && string[0])
+    {
+        string = gui_chat_string_next_char (NULL, NULL,
+                                            (unsigned char *)string, 0, 0, 0);
+        if (string)
+        {
+            length++;
+            string = utf8_next_char (string);
+        }
+    }
+    return length;
+}
+
+/*
  * Returns number of char needed on screen to display a word (special chars like
  * colors/attributes are ignored).
  */

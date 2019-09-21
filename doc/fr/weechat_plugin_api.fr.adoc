@@ -2523,7 +2523,8 @@ première étendue à la dernière) :
 
 | `+${length:xxx}+` +
   (_WeeChat ≥ 2.7_) |
-  Longueur de la chaîne (nombre de caractères UTF-8). |
+  Longueur de la chaîne (nombre de caractères UTF-8), les codes couleurs sont
+  ignorés. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
   `+4+` +
@@ -2531,7 +2532,7 @@ première étendue à la dernière) :
 
 | `+${lengthscr:xxx}+` +
   (_WeeChat ≥ 2.7_) |
-  Longueur de la chaîne affichée à l'écran. |
+  Longueur de la chaîne affichée à l'écran, les codes couleurs sont ignorés. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
   `+4+` +

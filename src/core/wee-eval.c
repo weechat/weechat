@@ -39,6 +39,7 @@
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "../gui/gui-buffer.h"
+#include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -297,7 +298,7 @@ end:
  *   6. a reversed string (format: rev:xxx)
  *   7. a repeated string (format: repeat:count,string)
  *   8. length of a string (format: length:xxx) or length of a string on screen
- *      (format: lengthscr:xxx)
+ *      (format: lengthscr:xxx); color codes are ignored
  *   9. a regex group captured (format: re:N (0.99) or re:+)
  *  10. a color (format: color:xxx)
  *  11. an info (format: info:name,arguments)
@@ -487,13 +488,13 @@ eval_replace_vars_cb (void *data, const char *text)
      */
     if (strncmp (text, "length:", 7) == 0)
     {
-        length = utf8_strlen (text + 7);
+        length = gui_chat_strlen (text + 7);
         snprintf (str_value, sizeof (str_value), "%d", length);
         return strdup (str_value);
     }
     if (strncmp (text, "lengthscr:", 10) == 0)
     {
-        length = utf8_strlen_screen (text + 10);
+        length = gui_chat_strlen_screen (text + 10);
         snprintf (str_value, sizeof (str_value), "%d", length);
         return strdup (str_value);
     }
