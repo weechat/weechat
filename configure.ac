@@ -517,7 +517,7 @@ if test "x$enable_ruby" = "xyes" ; then
 
     # detect old Ruby versions
     if test "x$RUBY_CFLAGS" = "x" -o "x$RUBY_LFLAGS" = "x" ; then
-        AC_PATH_PROGS(RUBY, ruby1.9.3 ruby1.9.2 ruby1.9.1 ruby1.9 ruby1.8 ruby)
+        AC_PATH_PROGS(RUBY, ruby1.9.3 ruby1.9.2 ruby1.9.1 ruby1.9 ruby)
         if test -z $RUBY ; then
             AC_MSG_WARN([
 *** Ruby must be installed on your system but ruby interpreter couldn't be found in path.
