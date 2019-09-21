@@ -303,15 +303,16 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
      ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
   5. une chaîne inversée (format : "rev:xxx")
   6. une chaîne répétée (format : "repeat:nombre,chaîne")
-  7. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  8. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  9. la date/heure courante (format : "date" ou "date:format")
-  10. une variable d'environnement (format : "env:XXX")
-  11. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  12. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % (format: "calc:xxx")
-  13. une option (format : "fichier.section.option")
-  14. une variable locale du tampon
-  15. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  7. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
+  8. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
+  9. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  10. la date/heure courante (format : "date" ou "date:format")
+  11. une variable d'environnement (format : "env:XXX")
+  12. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  13. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % (format: "calc:xxx")
+  14. une option (format : "fichier.section.option")
+  15. une variable locale du tampon
+  16. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
@@ -338,6 +339,7 @@ Exemples (chaînes simples) :
   /eval -n ${if:${info:term_width}>80?big:small} ==> big
   /eval -n ${rev:Hello}                          ==> olleH
   /eval -n ${repeat:5,-}                         ==> -----
+  /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
 
 Exemples (conditions) :

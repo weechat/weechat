@@ -2582,6 +2582,22 @@ expanded to last):
   `+${repeat:5,-}+` |
   `+-----+`
 
+| `+${length:xxx}+` +
+  (_WeeChat ≥ 2.7_) |
+  Length of string (number of UTF-8 chars). |
+  `+${length:test}+` +
+  `+${length:こんにちは世界}+` |
+  `+4+` +
+  `+7+`
+
+| `+${lengthscr:xxx}+` +
+  (_WeeChat ≥ 2.7_) |
+  Length of string displayed on screen. |
+  `+${lengthscr:test}+` +
+  `+${lengthscr:こんにちは世界}+` |
+  `+4+` +
+  `+14+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Regex captured group: `0` = whole string matching, `1` to `99` = group
@@ -2642,7 +2658,6 @@ expanded to last):
   `+${if:${info:term_width}>80?big:small}+` |
   `+big+`
 
-// TRANSLATION MISSING
 | `+${calc:xxx}+` +
   (_WeeChat ≥ 2.7_) |
   Result of expression, where parentheses and the following operators are

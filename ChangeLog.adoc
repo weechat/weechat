@@ -20,7 +20,8 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add calculation of expression in evaluation of expressions with "calc:..." (issue #997)
+  * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
+  * core: add calculation of expression in evaluation of expressions with "calc:xxx" (issue #997)
   * script: add options "-ol" and "-il" in command /script to send translated string with list of scripts loaded, display "No scripts loaded" if no scripts are loaded
 
 Bug fixes::

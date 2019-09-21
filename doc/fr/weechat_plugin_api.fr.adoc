@@ -2521,6 +2521,22 @@ première étendue à la dernière) :
   `+${repeat:5,-}+` |
   `+-----+`
 
+| `+${length:xxx}+` +
+  (_WeeChat ≥ 2.7_) |
+  Longueur de la chaîne (nombre de caractères UTF-8). |
+  `+${length:test}+` +
+  `+${length:こんにちは世界}+` |
+  `+4+` +
+  `+7+`
+
+| `+${lengthscr:xxx}+` +
+  (_WeeChat ≥ 2.7_) |
+  Longueur de la chaîne affichée à l'écran. |
+  `+${lengthscr:test}+` +
+  `+${lengthscr:こんにちは世界}+` |
+  `+4+` +
+  `+14+`
+
 | `+${re:N}+` +
   (_WeeChat ≥ 1.1_) |
   Groupe regex capturé : `0` = toute la chaîne correspondante,

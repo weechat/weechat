@@ -363,6 +363,15 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("cbacbacba", "${repeat:3,${rev:abc}}");
     WEE_CHECK_EVAL("cbacba", "${repeat:${rev:20},${rev:abc}}");
 
+    /* test length of string */
+    WEE_CHECK_EVAL("0", "${length:}");
+    WEE_CHECK_EVAL("4", "${length:test}");
+    WEE_CHECK_EVAL("7", "${length:こんにちは世界}");
+
+    WEE_CHECK_EVAL("0", "${lengthscr:}");
+    WEE_CHECK_EVAL("4", "${lengthscr:test}");
+    WEE_CHECK_EVAL("14", "${lengthscr:こんにちは世界}");
+
     /* test color */
     WEE_CHECK_EVAL(gui_color_get_custom ("green"), "${color:green}");
     WEE_CHECK_EVAL(gui_color_get_custom ("*214"), "${color:*214}");

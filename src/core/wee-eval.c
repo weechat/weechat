@@ -296,16 +296,18 @@ end:
  *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
  *   6. a reversed string (format: rev:xxx)
  *   7. a repeated string (format: repeat:count,string)
- *   8. a regex group captured (format: re:N (0.99) or re:+)
- *   9. a color (format: color:xxx)
- *  10. an info (format: info:name,arguments)
- *  11. current date/time (format: date or date:xxx)
- *  12. an environment variable (format: env:XXX)
- *  13. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  14. calculate result of an expression (format: calc:xxx)
- *  15. an option (format: file.section.option)
- *  16. a buffer local variable
- *  17. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *   8. length of a string (format: length:xxx) or length of a string on screen
+ *      (format: lengthscr:xxx)
+ *   9. a regex group captured (format: re:N (0.99) or re:+)
+ *  10. a color (format: color:xxx)
+ *  11. an info (format: info:name,arguments)
+ *  12. current date/time (format: date or date:xxx)
+ *  13. an environment variable (format: env:XXX)
+ *  14. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  15. calculate result of an expression (format: calc:xxx)
+ *  16. an option (format: file.section.option)
+ *  17. a buffer local variable
+ *  18. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -478,7 +480,25 @@ eval_replace_vars_cb (void *data, const char *text)
         return string_repeat (pos + 1, number);
     }
 
-    /* 8. regex group captured */
+    /*
+     * 8. length of string:
+     *   length: number of chars
+     *   lengthscr: number of chars displayed on screen
+     */
+    if (strncmp (text, "length:", 7) == 0)
+    {
+        length = utf8_strlen (text + 7);
+        snprintf (str_value, sizeof (str_value), "%d", length);
+        return strdup (str_value);
+    }
+    if (strncmp (text, "lengthscr:", 10) == 0)
+    {
+        length = utf8_strlen_screen (text + 10);
+        snprintf (str_value, sizeof (str_value), "%d", length);
+        return strdup (str_value);
+    }
+
+    /* 9. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         if (eval_context->regex && eval_context->regex->result)
@@ -509,7 +529,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ("");
     }
 
-    /* 9. color code */
+    /* 10. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         ptr_value = gui_color_search_config (text + 6);
@@ -519,7 +539,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((ptr_value) ? ptr_value : "");
     }
 
-    /* 10. info */
+    /* 11. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         value = NULL;
@@ -539,7 +559,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return (value) ? value : strdup ("");
     }
 
-    /* 11. current date/time */
+    /* 12. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         date = time (NULL);
@@ -552,7 +572,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup ((rc > 0) ? str_value : "");
     }
 
-    /* 12. environment variable */
+    /* 13. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -560,7 +580,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 13: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 14: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = NULL;
@@ -628,7 +648,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 14. calculate the result of an expression
+     * 15. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
@@ -636,7 +656,7 @@ eval_replace_vars_cb (void *data, const char *text)
         return calc_expression (text + 5);
     }
 
-    /* 15. option: if found, return this value */
+    /* 16. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -669,7 +689,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 16. local variable in buffer */
+    /* 17. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -678,7 +698,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 17. hdata */
+    /* 18. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
