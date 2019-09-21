@@ -914,9 +914,24 @@ weechat_guile_command_cb (const void *pointer, void *data,
                 else
                     break;
             }
+            /*
+             * FIXME: this does not yet work with Guile >= 2.2, so the eval
+             * feature is temporarily disabled, waiting for a fix
+             */
+            /*
             if (!weechat_guile_eval (buffer, send_to_buffer_as_input,
                                      exec_commands, ptr_code))
                 WEECHAT_COMMAND_ERROR;
+            */
+            /* TODO: fix /guile eval */
+            (void) buffer;
+            (void) ptr_code;
+            (void) send_to_buffer_as_input;
+            (void) exec_commands;
+            weechat_printf (NULL,
+                            _("%sCommand \"/%s eval\" is not yet implemented"),
+                            weechat_prefix ("error"),
+                            weechat_guile_plugin->name);
         }
         else
             WEECHAT_COMMAND_ERROR;
