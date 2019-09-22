@@ -28,6 +28,7 @@ Bug fixes::
 
   * core: fixed segfault during excessive evaluation in function string_repeat (issue #1400)
   * buflist: fix extra spaces between buffers when conditions are used to hide buffers (regression introduced in version 2.6) (issue #1403)
+  * irc: remove option irc.network.channel_encode, add server option "charset_message" to control which part of the IRC message is decoded/encoded to the target charset (issue #832)
 
 Build::
 

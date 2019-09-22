@@ -446,12 +446,6 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"*!$ident@$host"+`
 
-* [[option_irc.network.channel_encode]] *irc.network.channel_encode*
-** opis: pass:none[dekodowanie/kodowanie nazwy kanału wewnątrz wiadomości za pomocą opcji charset; zaleca się nie włączanie jej w przypadku używania tylko nazw kanałów UTF-8; możesz włączyć tą opcję jeśli używasz egzotycznych kodowań jak ISO w nazwach kanałów]
-** typ: bool
-** wartości: on, off
-** domyślna wartość: `+off+`
-
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** opis: pass:none[kiedy wyłączone (off) kody kolorów są ignorowane w przychodzących wiadomościach]
 ** typ: bool
@@ -595,6 +589,12 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
+
+* [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
+** opis: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]
+** typ: liczba
+** wartości: message, channel, text
+** domyślna wartość: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** opis: pass:none[komenda(y) do wykonania po połączeniu z serwerem przed automatycznym wejściem na kanały (wiele komend powinno zostać oddzielone ";", użyj "\;" dla średnika, specjalne zmienne $nick, $channel oraz $server są zastępowane ich wartościami) (uwaga: zawartość jest przetwarzana, zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]

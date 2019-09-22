@@ -119,6 +119,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "msg_quit",             "WeeChat ${info:version}" },
   { "notify",               ""                        },
   { "split_msg_max_length", "512"                     },
+  { "charset_message",      "message"                 },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -2499,10 +2500,19 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
         msg_encoded = NULL;
         irc_message_parse (server, ptr_msg, NULL, NULL, NULL, NULL, NULL, NULL,
                            NULL, NULL, NULL, NULL, &pos_channel, &pos_text);
-        if (weechat_config_boolean (irc_config_network_channel_encode))
-            pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
-        else
-            pos_encode = pos_text;
+        switch (IRC_SERVER_OPTION_INTEGER(server,
+                                          IRC_SERVER_OPTION_CHARSET_MESSAGE))
+        {
+            case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
+                pos_encode = 0;
+                break;
+            case IRC_SERVER_CHARSET_MESSAGE_CHANNEL:
+                pos_encode = (pos_channel >= 0) ? pos_channel : pos_text;
+                break;
+            case IRC_SERVER_CHARSET_MESSAGE_TEXT:
+                pos_encode = pos_text;
+                break;
+        }
         if (pos_encode >= 0)
         {
             ptr_chan_nick = (channel) ? channel : nick;
@@ -3009,10 +3019,21 @@ irc_server_msgq_flush ()
                                                &pos_channel, &pos_text);
 
                             msg_decoded = NULL;
-                            if (weechat_config_boolean (irc_config_network_channel_encode))
-                                pos_decode = (pos_channel >= 0) ? pos_channel : pos_text;
-                            else
-                                pos_decode = pos_text;
+
+
+                            switch (IRC_SERVER_OPTION_INTEGER(irc_recv_msgq->server,
+                                                              IRC_SERVER_OPTION_CHARSET_MESSAGE))
+                            {
+                                case IRC_SERVER_CHARSET_MESSAGE_MESSAGE:
+                                    pos_decode = 0;
+                                    break;
+                                case IRC_SERVER_CHARSET_MESSAGE_CHANNEL:
+                                    pos_decode = (pos_channel >= 0) ? pos_channel : pos_text;
+                                    break;
+                                case IRC_SERVER_CHARSET_MESSAGE_TEXT:
+                                    pos_decode = pos_text;
+                                    break;
+                            }
                             if (pos_decode >= 0)
                             {
                                 /* convert charset for message */

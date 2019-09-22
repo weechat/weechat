@@ -5076,7 +5076,6 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  notify . . . . . . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_NOTIFY]));
-
         /* split_msg_max_length */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH]))
             weechat_printf (NULL, "  split_msg_max_length :   (%d)",
@@ -5085,6 +5084,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  split_msg_max_length : %s%d",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_integer (server->options[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH]));
+        /* charset_message */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_CHARSET_MESSAGE]))
+            weechat_printf (NULL, "  charset_message. . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_CHARSET_MESSAGE));
+        else
+            weechat_printf (NULL, "  charset_message. . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_CHARSET_MESSAGE]));
     }
     else
     {

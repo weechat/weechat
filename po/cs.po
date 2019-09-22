@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-21 07:54+0200\n"
+"POT-Creation-Date: 2019-09-22 18:49+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6084,6 +6084,10 @@ msgstr "%s: skript \"%s\" odebrán"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skript \"%s\" nenačten"
 
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sBarva \"%s\" není definovávána v paletě"
+
 msgid "server"
 msgid_plural "servers"
 msgstr[0] "server"
@@ -8168,6 +8172,14 @@ msgid ""
 "non-standard IRC servers, for example gateways like bitlbee"
 msgstr ""
 
+msgid ""
+"part of the IRC message (received or sent) which is decoded/encoded to the "
+"target charset; message = the whole IRC message (default), channel = "
+"starting from the channel name only (if found, with fallback on text), text "
+"= starting from the text only (you should try this value if you have issues "
+"with the channel name encoding)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: error adding server \"%s\""
 msgstr "%s%s: chyba při přidávání notifikace"
@@ -8597,13 +8609,6 @@ msgid ""
 "user@host\"); $ident is the same as $user if $user does not start with \"~"
 "\", otherwise it is set to \"*\"; this default mask is used only if WeeChat "
 "knows the host for the nick"
-msgstr ""
-
-msgid ""
-"decode/encode channel name inside messages using charset options; it is "
-"recommended to keep that off if you use only UTF-8 in channel names; you can "
-"enable this option if you are using an exotic charset like ISO in channel "
-"names"
 msgstr ""
 
 msgid "when off, colors codes are ignored in incoming messages"
@@ -9688,10 +9693,6 @@ msgstr "%s%s: nemůžu načíst soubor \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nemůžu spustit soubor \"%s\""
-
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sBarva \"%s\" není definovávána v paletě"
 
 #, fuzzy
 msgid "Log buffers to files"

@@ -42,6 +42,13 @@ enum t_irc_server_sasl_fail
     IRC_SERVER_NUM_SASL_FAIL,
 };
 
+enum t_irc_server_charset_message
+{
+    IRC_SERVER_CHARSET_MESSAGE_MESSAGE = 0,
+    IRC_SERVER_CHARSET_MESSAGE_CHANNEL,
+    IRC_SERVER_CHARSET_MESSAGE_TEXT,
+};
+
 enum t_irc_server_option
 {
     IRC_SERVER_OPTION_ADDRESSES = 0, /* server addresses (IP/name with port) */
@@ -85,6 +92,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_MSG_QUIT,             /* default quit message          */
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
+    IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };

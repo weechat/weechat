@@ -446,12 +446,6 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"*!$ident@$host"+`
 
-* [[option_irc.network.channel_encode]] *irc.network.channel_encode*
-** description: pass:none[décoder/encoder le nom du canal dans les messages en utilisant les options de charset ; il est recommandé de garder cette option désactivée si vous utilisez seulement UTF-8 dans les noms de canaux ; vous pouvez activer cette option si vous utilisez un charset exotique comme ISO dans les noms de canaux]
-** type: booléen
-** valeurs: on, off
-** valeur par défaut: `+off+`
-
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** description: pass:none[si désactivé, les codes couleurs des messages entrants sont ignorés]
 ** type: booléen
@@ -595,6 +589,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
+
+* [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
+** description: pass:none[partie du message IRC (reçu ou envoyé) qui est décodé/encode vers le jeu de caractères cible ; message = le message IRC entier (par défaut), channel = à partir du nom du canal seulement (si trouvé, sinon à partir du texte), text = à partir du texte seulement (vous devriez essayer cette valeur si vous avec des problèmes d'encodage avec le nom du canal)]
+** type: entier
+** valeurs: message, channel, text
+** valeur par défaut: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** description: pass:none[commande(s) à exécuter après la connexion au serveur et avant le "join" automatique des canaux (plusieurs commandes peuvent être séparées par ";", utilisez "\;" pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur) (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]

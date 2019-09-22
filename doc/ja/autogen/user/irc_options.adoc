@@ -446,12 +446,6 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"*!$ident@$host"+`
 
-* [[option_irc.network.channel_encode]] *irc.network.channel_encode*
-** 説明: pass:none[文字セットオプションを使ってメッセージに含まれるチャンネル名をデコードおよびエンコードする; チャンネル名に UTF-8 を使っている場合のみこれを無効化しておくことをおすすめします; チャンネル名に ISO などの文字セットを使っている場合にはこれを有効化します]
-** タイプ: ブール
-** 値: on, off
-** デフォルト値: `+off+`
-
 * [[option_irc.network.colors_receive]] *irc.network.colors_receive*
 ** 説明: pass:none[オフの場合、到着メッセージに含まれる色コードを無視]
 ** タイプ: ブール
@@ -595,6 +589,12 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
+
+* [[option_irc.server_default.charset_message]] *irc.server_default.charset_message*
+** 説明: pass:none[part of the IRC message (received or sent) which is decoded/encoded to the target charset; message = the whole IRC message (default), channel = starting from the channel name only (if found, with fallback on text), text = starting from the text only (you should try this value if you have issues with the channel name encoding)]
+** タイプ: 整数
+** 値: message, channel, text
+** デフォルト値: `+message+`
 
 * [[option_irc.server_default.command]] *irc.server_default.command*
 ** 説明: pass:none[サーバに接続した後、チャンネルに自動参加する前に実行するコマンド (";" で分けて 複数のコマンドを列挙できます、セミコロンは "\;" のように使ってください、特殊変数 $nick、$channel、$server はそれぞれの値に置換されます) (注意: 値は評価されます、/help eval を参照してください; ここで ${irc_server.xxx} はサーバオプション、${server} はサーバ名を意味します)]

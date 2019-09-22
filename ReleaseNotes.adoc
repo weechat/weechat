@@ -56,6 +56,25 @@ plugin, using this cmake option:
 cmake .. -DENABLE_PHP=OFF
 ----
 
+[[v2.7_irc_message_decoding]]
+=== IRC message decoding/encoding
+
+A new server option called "charset_message" has been added, replacing the
+option _irc.network.channel_encode_.
+
+This new server option has three possible values:
+
+* _message_ (default): the whole IRC message is decoded/encoded, this is the
+  new default behavior; in case of problem with channel names, try to use
+  _text_ instead
+* _channel_: the message is decoded/encoded starting at the channel name (or
+  the text if no channel is present); this is like setting the old option
+  _irc.network.channel_encode_ to _on_
+* _text_: the message is decoded/encoded starting from the text (for example
+  the user message); this is like setting the old option
+  _irc.network.channel_encode_ to _off_ (so this was the default behavior
+  in previous versions)
+
 [[v2.6]]
 == Version 2.6 (2019-09-08)
 

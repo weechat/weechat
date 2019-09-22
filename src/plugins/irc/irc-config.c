@@ -130,7 +130,6 @@ struct t_config_option *irc_config_color_topic_old;
 struct t_config_option *irc_config_network_autoreconnect_delay_growing;
 struct t_config_option *irc_config_network_autoreconnect_delay_max;
 struct t_config_option *irc_config_network_ban_mask_default;
-struct t_config_option *irc_config_network_channel_encode;
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_lag_check;
@@ -2394,6 +2393,28 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_CHARSET_MESSAGE:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "integer",
+                N_("part of the IRC message (received or sent) which is "
+                   "decoded/encoded to the target charset; "
+                   "message = the whole IRC message (default), "
+                   "channel = starting from the channel name only "
+                   "(if found, with fallback on text), "
+                   "text = starting from the text only (you should try this "
+                   "value if you have issues with the channel name encoding)"),
+                "message|channel|text", 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_NUM_OPTIONS:
             break;
     }
@@ -3270,15 +3291,6 @@ irc_config_init ()
            "$user does not start with \"~\", otherwise it is set to \"*\"; this "
             "default mask is used only if WeeChat knows the host for the nick"),
         NULL, 0, 0, "*!$ident@$host", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_network_channel_encode = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "channel_encode", "boolean",
-        N_("decode/encode channel name inside messages using charset options; "
-           "it is recommended to keep that off if you use only UTF-8 in "
-           "channel names; you can enable this option if you are using an "
-           "exotic charset like ISO in channel names"),
-        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_network_colors_receive = weechat_config_new_option (
         irc_config_file, ptr_section,
