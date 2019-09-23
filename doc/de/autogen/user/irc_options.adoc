@@ -45,7 +45,7 @@
 ** Standardwert: `+green+`
 
 * [[option_irc.color.message_kick]] *irc.color.message_kick*
-** Beschreibung: pass:none[color for text in kick/kill messages]
+** Beschreibung: pass:none[Textfarbe in der die Meldungen für kick/kill Nachrichten angezeigt werden soll]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+red+`
@@ -75,7 +75,7 @@
 ** Standardwert: `+green+`
 
 * [[option_irc.color.reason_kick]] *irc.color.reason_kick*
-** Beschreibung: pass:none[color for reason in kick/kill messages]
+** Beschreibung: pass:none[Textfarbe in der die Begründung einer kick/kill Nachricht angezeigt werden soll]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
