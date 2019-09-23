@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9463,6 +9463,10 @@ msgstr "cor do texto das mensagens de join"
 msgid "color for text in chghost messages"
 msgstr "cor do texto das mensagens de join"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "cor do texto das mensagens de join"
+
 msgid "color for text in part/quit messages"
 msgstr "cor do texto das mensagens de part/quit"
 
@@ -9501,6 +9505,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "cor do texto \"Notice\" em notices"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "cor da razão nas mensagens de part/quit"
 
 msgid "color for reason in part/quit messages"
 msgstr "cor da razão nas mensagens de part/quit"

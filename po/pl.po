@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -9809,6 +9809,10 @@ msgstr "kolor tekstu w wiadomościach o wejściu na kanał"
 msgid "color for text in chghost messages"
 msgstr "kolor tekstu w wiadomościach o zmianie hosta"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "kolor tekstu w wiadomościach o wejściu na kanał"
+
 msgid "color for text in part/quit messages"
 msgstr "kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC"
 
@@ -9846,6 +9850,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "kolor tekstu \"Notice\" w podświetleniach"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "kolor tekstu powodu opuszczenia kanału/wyjścia z IRC"
 
 msgid "color for reason in part/quit messages"
 msgstr "kolor tekstu powodu opuszczenia kanału/wyjścia z IRC"

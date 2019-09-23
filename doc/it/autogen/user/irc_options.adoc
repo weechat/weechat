@@ -44,6 +44,12 @@
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** valore predefinito: `+green+`
 
+* [[option_irc.color.message_kick]] *irc.color.message_kick*
+** descrizione: pass:none[color for text in kick/kill messages]
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+red+`
+
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** descrizione: pass:none[colore per il testo nei messaggi di uscita/abbandono]
 ** tipo: colore
@@ -67,6 +73,12 @@
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** valore predefinito: `+green+`
+
+* [[option_irc.color.reason_kick]] *irc.color.reason_kick*
+** descrizione: pass:none[color for reason in kick/kill messages]
+** tipo: colore
+** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** valore predefinito: `+default+`
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** descrizione: pass:none[colore per il motivo nei messaggi di uscita/abbandono]

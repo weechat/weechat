@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -9643,6 +9643,10 @@ msgstr "参加メッセージの色"
 msgid "color for text in chghost messages"
 msgstr "chghost メッセージの色"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "参加メッセージの色"
+
 msgid "color for text in part/quit messages"
 msgstr "退出/終了 メッセージの色"
 
@@ -9679,6 +9683,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "notices に含まれるテキスト \"Notice\" の色"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "退出/終了メッセージに含まれる理由の色"
 
 msgid "color for reason in part/quit messages"
 msgstr "退出/終了メッセージに含まれる理由の色"

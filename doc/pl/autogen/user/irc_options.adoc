@@ -44,6 +44,12 @@
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+green+`
 
+* [[option_irc.color.message_kick]] *irc.color.message_kick*
+** opis: pass:none[color for text in kick/kill messages]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+red+`
+
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** opis: pass:none[kolor tekstu w wiadomościach o opuszczeniu kanału/wyjściu z IRC]
 ** typ: kolor
@@ -67,6 +73,12 @@
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+green+`
+
+* [[option_irc.color.reason_kick]] *irc.color.reason_kick*
+** opis: pass:none[color for reason in kick/kill messages]
+** typ: kolor
+** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
+** domyślna wartość: `+default+`
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** opis: pass:none[kolor tekstu powodu opuszczenia kanału/wyjścia z IRC]

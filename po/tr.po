@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7213,6 +7213,10 @@ msgstr "Bağlanma iletisi metni için renk"
 msgid "color for text in chghost messages"
 msgstr "Bağlanma iletisi metni için renk"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "Bağlanma iletisi metni için renk"
+
 msgid "color for text in part/quit messages"
 msgstr "ayrılma/çıkış iletisindeki metin için renk"
 
@@ -7237,6 +7241,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr ""
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "ayrılma/çıkış iletisindeki sebep için renk"
 
 msgid "color for reason in part/quit messages"
 msgstr "ayrılma/çıkış iletisindeki sebep için renk"

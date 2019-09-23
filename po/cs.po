@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8546,6 +8546,10 @@ msgstr "barva textu vezprávách připojení"
 msgid "color for text in chghost messages"
 msgstr "barva textu vezprávách připojení"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "barva textu vezprávách připojení"
+
 msgid "color for text in part/quit messages"
 msgstr "barva textu ve zprávách odchodu/ukončení"
 
@@ -8575,6 +8579,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "barva textu \"Notice\" v upozorněních"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "barva textu důvodu ve zprávách odchodu/ukončení"
 
 msgid "color for reason in part/quit messages"
 msgstr "barva textu důvodu ve zprávách odchodu/ukončení"

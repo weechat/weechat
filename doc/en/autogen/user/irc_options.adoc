@@ -44,6 +44,12 @@
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** default value: `+green+`
 
+* [[option_irc.color.message_kick]] *irc.color.message_kick*
+** description: pass:none[color for text in kick/kill messages]
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** default value: `+red+`
+
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** description: pass:none[color for text in part/quit messages]
 ** type: color
@@ -67,6 +73,12 @@
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** default value: `+green+`
+
+* [[option_irc.color.reason_kick]] *irc.color.reason_kick*
+** description: pass:none[color for reason in kick/kill messages]
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** default value: `+default+`
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** description: pass:none[color for reason in part/quit messages]

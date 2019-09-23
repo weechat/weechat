@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8835,6 +8835,10 @@ msgstr "color para el texto en mensajes de unión"
 msgid "color for text in chghost messages"
 msgstr "color para el texto en mensajes de unión"
 
+#, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "color para el texto en mensajes de unión"
+
 msgid "color for text in part/quit messages"
 msgstr "color para el texto en mensajes de salida/abandono"
 
@@ -8873,6 +8877,10 @@ msgstr ""
 
 msgid "color for text \"Notice\" in notices"
 msgstr "color para el texto \"Aviso\" en los mensajes de aviso"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "color para el mensaje de salida/abandono"
 
 msgid "color for reason in part/quit messages"
 msgstr "color para el mensaje de salida/abandono"

@@ -44,6 +44,12 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+green+`
 
+* [[option_irc.color.message_kick]] *irc.color.message_kick*
+** 説明: pass:none[color for text in kick/kill messages]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+red+`
+
 * [[option_irc.color.message_quit]] *irc.color.message_quit*
 ** 説明: pass:none[退出/終了 メッセージの色]
 ** タイプ: 色
@@ -67,6 +73,12 @@
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+green+`
+
+* [[option_irc.color.reason_kick]] *irc.color.reason_kick*
+** 説明: pass:none[color for reason in kick/kill messages]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+default+`
 
 * [[option_irc.color.reason_quit]] *irc.color.reason_quit*
 ** 説明: pass:none[退出/終了メッセージに含まれる理由の色]

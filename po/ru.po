@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-22 18:49+0200\n"
+"POT-Creation-Date: 2019-09-23 08:04+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7976,6 +7976,10 @@ msgid "color for text in chghost messages"
 msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
+msgid "color for text in kick/kill messages"
+msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
 msgid "color for text in part/quit messages"
 msgstr "сообщение о выходе по-умолчанию"
 
@@ -8001,6 +8005,10 @@ msgstr ""
 #, fuzzy
 msgid "color for text \"Notice\" in notices"
 msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+msgid "color for reason in kick/kill messages"
+msgstr "сообщение о выходе по-умолчанию"
 
 #, fuzzy
 msgid "color for reason in part/quit messages"
