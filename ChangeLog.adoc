@@ -22,6 +22,7 @@ New features::
 
   * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
   * core: add calculation of expression in evaluation of expressions with "calc:xxx" (issue #997)
+  * irc: add options irc.color.message_kick and irc.color.reason_kick (issue #683, issue #684)
   * script: add options "-ol" and "-il" in command /script to send translated string with list of scripts loaded, display "No scripts loaded" if no scripts are loaded
 
 Bug fixes::

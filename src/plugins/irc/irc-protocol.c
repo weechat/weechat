@@ -1295,12 +1295,12 @@ IRC_PROTOCOL_CALLBACK(kick)
             weechat_prefix ("quit"),
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
-            IRC_COLOR_MESSAGE_QUIT,
+            IRC_COLOR_MESSAGE_KICK,
             irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
             argv[3],
-            IRC_COLOR_MESSAGE_QUIT,
+            IRC_COLOR_MESSAGE_KICK,
             IRC_COLOR_CHAT_DELIMITERS,
-            IRC_COLOR_RESET,
+            IRC_COLOR_REASON_KICK,
             pos_comment,
             IRC_COLOR_CHAT_DELIMITERS);
     }
@@ -1315,10 +1315,10 @@ IRC_PROTOCOL_CALLBACK(kick)
             weechat_prefix ("quit"),
             irc_nick_color_for_msg (server, 1, ptr_nick, nick),
             nick,
-            IRC_COLOR_MESSAGE_QUIT,
+            IRC_COLOR_MESSAGE_KICK,
             irc_nick_color_for_msg (server, 1, ptr_nick_kicked, argv[3]),
             argv[3],
-            IRC_COLOR_MESSAGE_QUIT);
+            IRC_COLOR_MESSAGE_KICK);
     }
 
     if (irc_server_strcasecmp (server, argv[3], server->nick) == 0)
@@ -1414,12 +1414,12 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_protocol_tags (command, NULL, NULL, address),
                 _("%s%sYou were killed by %s%s%s %s(%s%s%s)"),
                 weechat_prefix ("quit"),
-                IRC_COLOR_MESSAGE_QUIT,
+                IRC_COLOR_MESSAGE_KICK,
                 irc_nick_color_for_msg (server, 1, ptr_nick, nick),
                 nick,
-                IRC_COLOR_MESSAGE_QUIT,
+                IRC_COLOR_MESSAGE_KICK,
                 IRC_COLOR_CHAT_DELIMITERS,
-                IRC_COLOR_RESET,
+                IRC_COLOR_REASON_KICK,
                 pos_comment,
                 IRC_COLOR_CHAT_DELIMITERS);
         }
@@ -1432,10 +1432,10 @@ IRC_PROTOCOL_CALLBACK(kill)
                 irc_protocol_tags (command, NULL, NULL, address),
                 _("%s%sYou were killed by %s%s%s"),
                 weechat_prefix ("quit"),
-                IRC_COLOR_MESSAGE_QUIT,
+                IRC_COLOR_MESSAGE_KICK,
                 irc_nick_color_for_msg (server, 1, ptr_nick, nick),
                 nick,
-                IRC_COLOR_MESSAGE_QUIT);
+                IRC_COLOR_MESSAGE_KICK);
         }
 
         if (irc_server_strcasecmp (server, argv[2], server->nick) == 0)
