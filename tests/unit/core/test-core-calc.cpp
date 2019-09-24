@@ -53,13 +53,13 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("0", "-");
     WEE_CHECK_CALC("0", "*");
     WEE_CHECK_CALC("0", "/");
+    WEE_CHECK_CALC("0", "%");
     WEE_CHECK_CALC("0", "0/0");
     WEE_CHECK_CALC("0", "0//0");
     WEE_CHECK_CALC("0", "0%0");
 
     /* no operator */
     WEE_CHECK_CALC("123", "123");
-    WEE_CHECK_CALC("-2", "-2");
     WEE_CHECK_CALC("1.5", "1.5");
 
     /* addition */
@@ -70,6 +70,25 @@ TEST(CoreCalc, Expression)
     /* subtraction */
     WEE_CHECK_CALC("5", "8-3");
     WEE_CHECK_CALC("-5", "3-8");
+
+    /* unary minus */
+    WEE_CHECK_CALC("0", "-0");
+    WEE_CHECK_CALC("-0.001", "-0.001");
+    WEE_CHECK_CALC("0", "(-0)");
+    WEE_CHECK_CALC("0", "0-0");
+    WEE_CHECK_CALC("-1", "-1");
+    WEE_CHECK_CALC("-2", "-1+-1");
+    WEE_CHECK_CALC("0", "-1+1");
+    WEE_CHECK_CALC("-2", "-3+1");
+    WEE_CHECK_CALC("-3", "1+-4");
+    WEE_CHECK_CALC("-4", "2*-2");
+    WEE_CHECK_CALC("-6", "-3*2");
+    WEE_CHECK_CALC("9", "-3*-3");
+    WEE_CHECK_CALC("-6", "3*(-2)");
+    WEE_CHECK_CALC("6", "-3*(-2)");
+    WEE_CHECK_CALC("12", "(-3)*(-4)");
+    WEE_CHECK_CALC("15", "(-3)*-5");
+    WEE_CHECK_CALC("9", "(-3)*(-4+1)");
 
     /* multiplication */
     WEE_CHECK_CALC("20", "10*2");
@@ -86,6 +105,8 @@ TEST(CoreCalc, Expression)
     /* modulo */
     WEE_CHECK_CALC("4", "9%5");
     WEE_CHECK_CALC("0.2", "9.2%3");
+    WEE_CHECK_CALC("-2", "-2%4");
+    WEE_CHECK_CALC("0", "-2%2");
 
     /* multiple operators */
     WEE_CHECK_CALC("11", "5+2*3");
@@ -105,6 +126,8 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("0", "1/123456789012");
 
     /* expressions with parentheses */
+    WEE_CHECK_CALC("6", "((6))");
+    WEE_CHECK_CALC("-7.234", "((-7.234))");
     WEE_CHECK_CALC("21", "(5+2)*3");
     WEE_CHECK_CALC("3.15", "(1.5+2)*(1.8/2)");
     WEE_CHECK_CALC("-1.26", "(1.5+2)*(1.8/(2-7))");

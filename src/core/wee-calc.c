@@ -33,6 +33,15 @@
 #include "wee-arraylist.h"
 #include "wee-string.h"
 
+enum t_calc_symbol
+{
+    CALC_SYMBOL_NONE = 0,
+    CALC_SYMBOL_PARENTHESIS_OPEN,
+    CALC_SYMBOL_PARENTHESIS_CLOSE,
+    CALC_SYMBOL_VALUE,
+    CALC_SYMBOL_OPERATOR,
+};
+
 
 /*
  * Callback called to free a value or op in the arraylist.
@@ -178,7 +187,10 @@ calc_format_result (double value, char *result, int max_size)
      * used (instead of a comma in French for example)
      */
     setlocale (LC_ALL, "C");
-    snprintf (result, max_size, "%.10f", value);
+    snprintf (result, max_size,
+              "%.10f",
+              /* ensure result is not "-0" */
+              (value == -0.0) ? 0.0 : value);
     setlocale (LC_ALL, "");
 
     pos_point = strchr (result, '.');
@@ -225,7 +237,8 @@ calc_expression (const char *expr)
     struct t_arraylist *list_values, *list_ops;
     char str_result[64], *ptr_operator, *operator;
     int i, i2, index_op, decimals;
-    double value, *ptr_value;
+    enum t_calc_symbol last_symbol;
+    double value, factor, *ptr_value;
 
     list_values = NULL;
     list_ops = NULL;
@@ -250,6 +263,7 @@ calc_expression (const char *expr)
     if (!list_ops)
         goto end;
 
+    last_symbol = CALC_SYMBOL_NONE;
     for (i = 0; expr[i]; i++)
     {
         if (expr[i] == ' ')
@@ -261,11 +275,22 @@ calc_expression (const char *expr)
         {
             ptr_operator = string_strndup (expr + i, 1);
             arraylist_add (list_ops, ptr_operator);
+            last_symbol = CALC_SYMBOL_PARENTHESIS_OPEN;
         }
-        else if (isdigit (expr[i]) || (expr[i] == '.'))
+        else if (isdigit (expr[i]) || (expr[i] == '.')
+                 || ((expr[i] == '-')
+                     && ((last_symbol == CALC_SYMBOL_NONE)
+                         || (last_symbol == CALC_SYMBOL_PARENTHESIS_OPEN)
+                         || (last_symbol == CALC_SYMBOL_OPERATOR))))
         {
             value = 0;
             decimals = 0;
+            factor = 1;
+            if (expr[i] == '-')
+            {
+                factor = -1;
+                i++;
+            }
             while (expr[i] && (isdigit (expr[i]) || (expr[i] == '.')))
             {
                 if (expr[i] == '.')
@@ -288,9 +313,11 @@ calc_expression (const char *expr)
                 i++;
             }
             i--;
+            value *= factor;
             ptr_value = malloc (sizeof (value));
             *ptr_value = value;
             arraylist_add (list_values, ptr_value);
+            last_symbol = CALC_SYMBOL_VALUE;
         }
         else if (expr[i] == ')')
         {
@@ -307,6 +334,7 @@ calc_expression (const char *expr)
             index_op = arraylist_size (list_ops) - 1;
             if (index_op >= 0)
                 arraylist_remove (list_ops, index_op);
+            last_symbol = CALC_SYMBOL_PARENTHESIS_CLOSE;
         }
         else
         {
@@ -314,7 +342,7 @@ calc_expression (const char *expr)
             i2 = i + 1;
             while (expr[i2] && (expr[i2] != ' ') && (expr[i2] != '(')
                    && (expr[i2] != ')') && (expr[i2] != '.')
-                   && !isdigit (expr[i2]))
+                   && (expr[i2] != '-') && !isdigit (expr[i2]))
             {
                 i2++;
             }
@@ -334,6 +362,7 @@ calc_expression (const char *expr)
                 }
                 arraylist_add (list_ops, operator);
             }
+            last_symbol = CALC_SYMBOL_OPERATOR;
         }
     }
 
