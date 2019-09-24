@@ -7366,7 +7366,7 @@ command_init ()
            "  12. a ternary operator (format: "
            "\"if:condition?value_if_true:value_if_false\")\n"
            "  13. result of an expression with parentheses and operators "
-           "+ - * / // % (format: \"calc:xxx\")\n"
+           "+ - * / // % ** (format: \"calc:xxx\")\n"
            "  14. an option (format: \"file.section.option\")\n"
            "  15. a local variable in buffer\n"
            "  16. a hdata name/variable (the value is automatically converted "

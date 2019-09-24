@@ -108,6 +108,18 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("-2", "-2%4");
     WEE_CHECK_CALC("0", "-2%2");
 
+    /* power */
+    WEE_CHECK_CALC("1", "0**0");
+    WEE_CHECK_CALC("0", "0**1");
+    WEE_CHECK_CALC("1", "1**0");
+    WEE_CHECK_CALC("1", "2**0");
+    WEE_CHECK_CALC("2", "2**1");
+    WEE_CHECK_CALC("4", "2**2");
+    WEE_CHECK_CALC("8", "2**3");
+    WEE_CHECK_CALC("4294967296", "2**32");
+    WEE_CHECK_CALC("0.5", "2**-1");
+    WEE_CHECK_CALC("0.25", "2**-2");
+
     /* multiple operators */
     WEE_CHECK_CALC("11", "5+2*3");
 

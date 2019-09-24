@@ -309,7 +309,7 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   10. current date/time (format: "date" or "date:format")
   11. an environment variable (format: "env:XXX")
   12. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  13. result of an expression with parentheses and operators + - * / // % (format: "calc:xxx")
+  13. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
   14. an option (format: "file.section.option")
   15. a local variable in buffer
   16. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.

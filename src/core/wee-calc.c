@@ -73,7 +73,8 @@ calc_operator_precedence (char *operator)
     if ((strcmp (operator, "*") == 0)
         || (strcmp (operator, "/") == 0)
         || (strcmp (operator, "//") == 0)
-        || (strcmp (operator, "%") == 0))
+        || (strcmp (operator, "%") == 0)
+        || (strcmp (operator, "**") == 0))
     {
         return 2;
     }
@@ -134,6 +135,9 @@ calc_operation (char *operator, double value1, double value2)
 
     if (strcmp (operator, "%") == 0)
         return (value2 != 0) ? fmod (value1, value2) : 0;
+
+    if (strcmp (operator, "**") == 0)
+        return pow (value1, value2);
 
     return 0;
 }
@@ -217,12 +221,13 @@ calc_format_result (double value, char *result, int max_size)
  * Calculates an expression, which can contain:
  *   - integer and decimal numbers (ie 2 or 2.5)
  *   - operators:
- *       +: addition
- *       -: subtraction
- *       *: multiplication
- *       /: division
- *       \: division giving an integer as result
- *       %: remainder of division
+ *        +: addition
+ *        -: subtraction
+ *        *: multiplication
+ *        /: division
+ *        \: division giving an integer as result
+ *        %: remainder of division
+ *       **: power
  *   - parentheses: ( )
  *
  * The value returned is a string representation of the result, which can be

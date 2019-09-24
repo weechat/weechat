@@ -309,7 +309,7 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   10. la date/heure courante (format : "date" ou "date:format")
   11. une variable d'environnement (format : "env:XXX")
   12. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  13. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % (format: "calc:xxx")
+  13. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
   14. une option (format : "fichier.section.option")
   15. une variable locale du tampon
   16. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.

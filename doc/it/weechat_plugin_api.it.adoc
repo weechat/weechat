@@ -2662,18 +2662,21 @@ expanded to last):
   (_WeeChat ≥ 2.7_) |
   Result of expression, where parentheses and the following operators are
   supported: +
-  `+`: addition +
-  `-`: subtraction +
-  `*`: multiplication +
-  `/`: division +
-  `//`: result of division without fractional part +
-  `%`: remainder of division. |
+  `+++`: addition +
+  `+-+`: subtraction +
+  `+*+`: multiplication +
+  `+/+`: division +
+  `+//+`: result of division without fractional part +
+  `+%+`: remainder of division +
+  `+**+`: power. |
   `+${calc:5+2*3}+` +
   `+${calc:(5+2)*3}+` +
-  `+${calc:9.2%3}+` |
+  `+${calc:9.2%3}+` +
+  `+${calc:2**16}+` |
   `+11+` +
   `+21+` +
-  `+0.2+`
+  `+0.2+` +
+  `+65536+`
 
 | `+${sec.data.name}+` |
   Value of the secured data `name`. |

@@ -2603,18 +2603,21 @@ première étendue à la dernière) :
   (_WeeChat ≥ 2.7_) |
   Résultat de l'expression, où les parenthèses et les opérateurs suivants sont
   supportés : +
-  `+` : addition +
-  `-` : soustraction +
-  `*` : multiplication +
-  `/` : division +
-  `//` : résultat de la division sans la partie décimale +
-  `%` : reste de la division. |
+  `+++` : addition +
+  `+-+` : soustraction +
+  `+*+` : multiplication +
+  `+/+` : division +
+  `+//+` : résultat de la division sans la partie décimale +
+  `+%+` : reste de la division +
+  `+**+`: puissance. |
   `+${calc:5+2*3}+` +
   `+${calc:(5+2)*3}+` +
-  `+${calc:9.2%3}+` |
+  `+${calc:9.2%3}+` +
+  `+${calc:2**16}+` |
   `+11+` +
   `+21+` +
-  `+0.2+`
+  `+0.2+` +
+  `+65536+`
 
 | `+${sec.data.nom}+` |
   Valeur de la donnée sécurisée `nom`. |
