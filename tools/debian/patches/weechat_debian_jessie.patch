@@ -6,7 +6,7 @@ index 48082f72f..ec635144f 100644
 -12
 +9
 diff --git a/debian-devel/control b/debian-devel/control
-index 957110a55..574235330 100644
+index a862fdd6c..574235330 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,20 +3,17 @@ Section: net
@@ -25,7 +25,8 @@ index 957110a55..574235330 100644
 -    liblua5.3-dev,
 +    liblua5.1-0-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
++    guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 -    libxml2-dev,
@@ -116,7 +117,7 @@ index 48082f72f..ec635144f 100644
 -12
 +9
 diff --git a/debian-stable/control b/debian-stable/control
-index 516580bed..c3e7ed681 100644
+index c0326b3f5..c3e7ed681 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,20 +3,17 @@ Section: net
@@ -135,7 +136,8 @@ index 516580bed..c3e7ed681 100644
 -    liblua5.3-dev,
 +    liblua5.1-0-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
++    guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 -    libxml2-dev,

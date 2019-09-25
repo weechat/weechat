@@ -13,7 +13,7 @@ Build-Depends:
     libaspell-dev,
     liblua5.3-dev,
     tcl8.6-dev,
-    guile-2.0-dev,
+    guile-2.2-dev,
     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
     php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
     libxml2-dev,

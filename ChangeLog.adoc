@@ -35,6 +35,7 @@ Build::
 
   * core: remove file FindTCL.cmake
   * core: display an error on missing dependency in CMake (issue #916, issue #956)
+  * debian: build with Guile 2.2
   * guile: add support of Guile 2.2, disable /guile eval (issue #1098)
 
 [[v2.6]]

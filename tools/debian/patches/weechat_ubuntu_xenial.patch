@@ -1,12 +1,12 @@
 diff --git a/debian-devel/compat b/debian-devel/compat
-index b4de39476..ec635144f 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-devel/compat
 +++ b/debian-devel/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-devel/control b/debian-devel/control
-index d3a1dad8b..b078f38ac 100644
+index a862fdd6c..cf68a75dd 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -4,7 +4,7 @@ Priority: optional
@@ -18,9 +18,12 @@ index d3a1dad8b..b078f38ac 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -15,7 +15,7 @@ Build-Depends:
+@@ -13,9 +13,9 @@ Build-Depends:
+     libaspell-dev,
+     liblua5.3-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
++    guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 +    php-dev, libphp-embed,
@@ -28,14 +31,14 @@ index d3a1dad8b..b078f38ac 100644
      libcurl4-gnutls-dev,
      libgcrypt20-dev,
 diff --git a/debian-stable/compat b/debian-stable/compat
-index b4de39476..ec635144f 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-stable/compat
 +++ b/debian-stable/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-stable/control b/debian-stable/control
-index 8fbf582b3..cb34db2da 100644
+index c0326b3f5..2a3892192 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -4,7 +4,7 @@ Priority: optional
@@ -47,9 +50,12 @@ index 8fbf582b3..cb34db2da 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -15,7 +15,7 @@ Build-Depends:
+@@ -13,9 +13,9 @@ Build-Depends:
+     libaspell-dev,
+     liblua5.3-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
++    guile-2.0-dev,
      libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 +    php-dev, libphp-embed,

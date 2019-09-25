@@ -5,7 +5,7 @@ index ffca1a17f..5e93066ef 100644
 @@ -14,7 +14,6 @@ Build-Depends:
      liblua5.3-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+     guile-2.2-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
      php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
      libxml2-dev,
@@ -92,7 +92,7 @@ index 8fd0bf1a6..d8ab6f6e2 100644
 @@ -14,7 +14,6 @@ Build-Depends:
      liblua5.3-dev,
      tcl8.6-dev,
-     guile-2.0-dev,
+     guile-2.2-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
      php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
      libxml2-dev,

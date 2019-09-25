@@ -1,12 +1,12 @@
 diff --git a/debian-devel/compat b/debian-devel/compat
-index b4de39476..ec635144f 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-devel/compat
 +++ b/debian-devel/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-devel/control b/debian-devel/control
-index d3a1dad8b..4c5953e46 100644
+index a862fdd6c..0b3c016ff 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -3,8 +3,7 @@ Section: net
@@ -24,11 +24,12 @@ index d3a1dad8b..4c5953e46 100644
      libaspell-dev,
      liblua5.3-dev,
 -    tcl8.6-dev,
-+    tcl8.5-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 -    libxml2-dev,
++    tcl8.5-dev,
++    guile-2.0-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
@@ -115,14 +116,14 @@ index e358b515a..000000000
 -../debian-stable/weechat-php.install
 \ No newline at end of file
 diff --git a/debian-stable/compat b/debian-stable/compat
-index b4de39476..ec635144f 100644
+index 48082f72f..ec635144f 100644
 --- a/debian-stable/compat
 +++ b/debian-stable/compat
 @@ -1 +1 @@
 -12
 +9
 diff --git a/debian-stable/control b/debian-stable/control
-index 8fbf582b3..a30e30053 100644
+index c0326b3f5..44206d418 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -3,8 +3,7 @@ Section: net
@@ -140,11 +141,12 @@ index 8fbf582b3..a30e30053 100644
      libaspell-dev,
      liblua5.3-dev,
 -    tcl8.6-dev,
-+    tcl8.5-dev,
-     guile-2.0-dev,
+-    guile-2.2-dev,
 -    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
 -    libxml2-dev,
++    tcl8.5-dev,
++    guile-2.0-dev,
 +    libv8-dev,
      libcurl4-gnutls-dev,
 -    libgcrypt20-dev,
