@@ -304,6 +304,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |       weechat-js-v8.cpp           | JavaScript v8 関数
 |    logger/                        | logger プラグイン
 |       logger.c                    | logger の主要関数
+// TRANSLATION MISSING
+|       logger-backlog.c            | Logger backlog functions.
 |       logger-buffer.c             | logger バッファリスト管理
 |       logger-command.c            | logger コマンド
 |       logger-config.c             | logger 設定オプション (logger.conf ファイル)

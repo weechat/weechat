@@ -299,6 +299,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       weechat-js-v8.cpp           | Fonctions JavaScript v8.
 |    logger/                        | Extension Logger.
 |       logger.c                    | Fonctions principales pour Logger.
+|       logger-backlog.c            | Fonctions de backlog pour Logger.
 |       logger-buffer.c             | Gestion des listes de tampons pour Logger.
 |       logger-command.c            | Commandes de Logger.
 |       logger-config.c             | Options de configuration pour Logger (fichier logger.conf).

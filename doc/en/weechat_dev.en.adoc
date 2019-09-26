@@ -297,6 +297,7 @@ WeeChat "core" is located in following directories:
 |       weechat-js-v8.cpp           | JavaScript v8 functions.
 |    logger/                        | Logger plugin.
 |       logger.c                    | Main logger functions.
+|       logger-backlog.c            | Logger backlog functions.
 |       logger-buffer.c             | Logger buffer list management.
 |       logger-command.c            | Logger commands.
 |       logger-config.c             | Logger config options (file logger.conf).

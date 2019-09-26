@@ -25,6 +25,8 @@ lib_LTLIBRARIES = logger.la
 
 logger_la_SOURCES = logger.c \
                     logger.h \
+                    logger-backlog.c \
+                    logger-backlog.h \
                     logger-buffer.c \
                     logger-buffer.h \
                     logger-command.c \
