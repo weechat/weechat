@@ -14845,6 +14845,7 @@ if (hashtable_in)
      *   "tags"                : "time=2015-06-27T16:40:35.000Z"
      *   "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!"
      *   "nick"                : "nick"
+     *   "user"                : "user"
      *   "host"                : "nick!user@host"
      *   "command"             : "PRIVMSG"
      *   "channel"             : "#weechat"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-24 20:55+0200\n"
+"POT-Creation-Date: 2019-09-27 18:18+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9275,10 +9275,10 @@ msgstr "\"message\": messaggio IRC, \"server\": nome server (opzionale)"
 #, fuzzy
 msgid ""
 "\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
-"\"arguments\": arguments (includes channel), \"text\": text (for example "
-"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
-"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
+"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
+"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
+"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -10197,6 +10197,10 @@ msgstr "%s%s: impossibile caricare il file \"%s\""
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: impossibile eseguire il file \"%s\""
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr "%s===\t%s========== Fine della cronologia (%d righe) =========="
+
 msgid "Log buffers to files"
 msgstr "Registra i buffer su file"
 
@@ -10235,10 +10239,6 @@ msgstr "%s\t****  Inizio del log  ****"
 #, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Fine del log  ****"
-
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s========== Fine della cronologia (%d righe) =========="
 
 msgid "Logging on buffers:"
 msgstr "Logging sui buffer:"

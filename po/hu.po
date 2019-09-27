@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-24 20:55+0200\n"
+"POT-Creation-Date: 2019-09-27 18:18+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8179,10 +8179,10 @@ msgstr ""
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
 msgid ""
 "\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
-"\"arguments\": arguments (includes channel), \"text\": text (for example "
-"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
-"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
+"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
+"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
+"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -9089,6 +9089,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr ""
+
 #, fuzzy
 msgid "Log buffers to files"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
@@ -9124,10 +9128,6 @@ msgstr "****  Naplófájl kezdete  "
 #, fuzzy, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "****  Naplófájl vége  "
-
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr ""
 
 #, fuzzy
 msgid "Logging on buffers:"

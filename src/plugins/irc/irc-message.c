@@ -53,6 +53,7 @@
  *               tags: "time=2015-06-27T16:40:35.000Z"
  *   msg_without_tags: ":nick!user@host PRIVMSG #weechat :hello!"
  *               nick: "nick"
+ *               user: "user"
  *               host: "nick!user@host"
  *            command: "PRIVMSG"
  *            channel: "#weechat"
@@ -67,7 +68,7 @@
 void
 irc_message_parse (struct t_irc_server *server, const char *message,
                    char **tags, char **message_without_tags, char **nick,
-                   char **host, char **command, char **channel,
+                   char **user, char **host, char **command, char **channel,
                    char **arguments, char **text,
                    int *pos_command, int *pos_arguments, int *pos_channel,
                    int *pos_text)
@@ -80,6 +81,8 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         *message_without_tags = NULL;
     if (nick)
         *nick = NULL;
+    if (user)
+        *user = NULL;
     if (host)
         *host = NULL;
     if (command)
@@ -146,6 +149,11 @@ irc_message_parse (struct t_irc_server *server, const char *message,
         /* if the prefix doesn't contain a '!', split the nick at '@' */
         if (!pos2 || (pos && pos2 > pos))
             pos2 = pos3;
+        if (pos2 && pos3 && (pos3 > pos2))
+        {
+            if (user)
+                *user = weechat_strndup (pos2 + 1, pos3 - pos2 - 1);
+        }
         if (pos2 && (!pos || pos > pos2))
         {
             if (nick)
@@ -336,14 +344,14 @@ struct t_hashtable *
 irc_message_parse_to_hashtable (struct t_irc_server *server,
                                 const char *message)
 {
-    char *tags, *message_without_tags, *nick, *host, *command, *channel;
+    char *tags, *message_without_tags, *nick, *user, *host, *command, *channel;
     char *arguments, *text, str_pos[32];
     char empty_str[1] = { '\0' };
     int pos_command, pos_arguments, pos_channel, pos_text;
     struct t_hashtable *hashtable;
 
     irc_message_parse (server, message, &tags, &message_without_tags, &nick,
-                       &host, &command, &channel, &arguments, &text,
+                       &user, &host, &command, &channel, &arguments, &text,
                        &pos_command, &pos_arguments, &pos_channel, &pos_text);
 
     hashtable = weechat_hashtable_new (32,
@@ -359,6 +367,8 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
                            (message_without_tags) ? message_without_tags : empty_str);
     weechat_hashtable_set (hashtable, "nick",
                            (nick) ? nick : empty_str);
+    weechat_hashtable_set (hashtable, "user",
+                           (user) ? user : empty_str);
     weechat_hashtable_set (hashtable, "host",
                            (host) ? host : empty_str);
     weechat_hashtable_set (hashtable, "command",
@@ -384,6 +394,8 @@ irc_message_parse_to_hashtable (struct t_irc_server *server,
         free (message_without_tags);
     if (nick)
         free (nick);
+    if (user)
+        free (user);
     if (host)
         free (host);
     if (command)

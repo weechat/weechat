@@ -2499,7 +2499,8 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
 
         msg_encoded = NULL;
         irc_message_parse (server, ptr_msg, NULL, NULL, NULL, NULL, NULL, NULL,
-                           NULL, NULL, NULL, NULL, &pos_channel, &pos_text);
+                           NULL, NULL, NULL, NULL, NULL, &pos_channel,
+                           &pos_text);
         switch (IRC_SERVER_OPTION_INTEGER(server,
                                           IRC_SERVER_OPTION_CHARSET_MESSAGE))
         {
@@ -2710,8 +2711,8 @@ irc_server_sendf (struct t_irc_server *server, int flags, const char *tags,
     {
         /* run modifier "irc_out1_xxx" (like "irc_out_xxx", but before split) */
         irc_message_parse (server, items[i], NULL, NULL,
-                           &nick, NULL, &command, &channel, NULL, NULL, NULL,
-                           NULL, NULL, NULL);
+                           &nick, NULL, NULL, &command, &channel, NULL, NULL,
+                           NULL, NULL, NULL, NULL);
         snprintf (str_modifier, sizeof (str_modifier),
                   "irc_out1_%s",
                   (command) ? command : "unknown");
@@ -2972,7 +2973,7 @@ irc_server_msgq_flush ()
                                    ptr_data);
 
                     irc_message_parse (irc_recv_msgq->server,
-                                       ptr_data, NULL, NULL, NULL, NULL,
+                                       ptr_data, NULL, NULL, NULL, NULL, NULL,
                                        &command, NULL, NULL, NULL, NULL, NULL,
                                        NULL, NULL);
                     snprintf (str_modifier, sizeof (str_modifier),
@@ -3013,7 +3014,7 @@ irc_server_msgq_flush ()
                             }
 
                             irc_message_parse (irc_recv_msgq->server, ptr_msg,
-                                               NULL, NULL, &nick, &host,
+                                               NULL, NULL, &nick, NULL, &host,
                                                &command, &channel, &arguments,
                                                NULL, NULL, NULL,
                                                &pos_channel, &pos_text);

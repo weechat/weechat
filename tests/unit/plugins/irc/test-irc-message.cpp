@@ -106,13 +106,14 @@ extern "C"
     "4:jkl TEST5:mno TEST6:pqr TEST7:stu TEST8:vwx TEST9:yz ABC:1 DEF:2 GHI:" \
     "3 JKL:4 MNO:5 PQR:6 STU:7 VWX:8 YT:9 :are supported by this server"
 
-#define WEE_CHECK_PARSE(__tags, __message_without_tags, __nick, __host, \
-                        __command, __channel, __arguments, __text,      \
-                        __pos_command, __pos_arguments, __pos_channel,  \
-                        __pos_text, __server, __message)                \
+#define WEE_CHECK_PARSE(__tags, __message_without_tags, __nick, __user, \
+                        __host, __command, __channel, __arguments,      \
+                        __text, __pos_command, __pos_arguments,         \
+                        __pos_channel, __pos_text, __server, __message) \
     tags = NULL;                                                        \
     message_without_tags = NULL;                                        \
     nick = NULL;                                                        \
+    user = NULL;                                                        \
     host = NULL;                                                        \
     command = NULL;                                                     \
     channel = NULL;                                                     \
@@ -124,8 +125,8 @@ extern "C"
                                                                         \
     irc_message_parse (__server, __message, &tags,                      \
                        &message_without_tags,                           \
-                       &nick, &host, &command, &channel, &arguments,    \
-                       &text, &pos_command, &pos_arguments,             \
+                       &nick, &user, &host, &command, &channel,         \
+                       &arguments, &text, &pos_command, &pos_arguments, \
                        &pos_channel, &pos_text);                        \
                                                                         \
     if (__tags == NULL)                                                 \
@@ -151,6 +152,14 @@ extern "C"
     else                                                                \
     {                                                                   \
         STRCMP_EQUAL(__nick, nick);                                     \
+    }                                                                   \
+    if (__user == NULL)                                                 \
+    {                                                                   \
+        POINTERS_EQUAL(NULL, user);                                     \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        STRCMP_EQUAL(__user, user);                                     \
     }                                                                   \
     if (__host == NULL)                                                 \
     {                                                                   \
@@ -225,29 +234,30 @@ TEST_GROUP(IrcMessage)
 
 TEST(IrcMessage, Parse)
 {
-    char *tags, *message_without_tags, *nick, *host, *command, *channel;
+    char *tags, *message_without_tags, *nick, *user, *host, *command, *channel;
     char *arguments, *text;
     int pos_command, pos_arguments, pos_channel, pos_text;
 
-    WEE_CHECK_PARSE(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
+    WEE_CHECK_PARSE(NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL,
                     -1, -1, -1, -1,
                     NULL, NULL);
 
-    WEE_CHECK_PARSE(NULL, "", NULL, NULL, NULL, NULL, NULL, NULL,
+    WEE_CHECK_PARSE(NULL, "", NULL, NULL, NULL, NULL, NULL, NULL, NULL,
                     -1, -1, -1, -1,
                     NULL, "");
 
-    WEE_CHECK_PARSE(NULL, ":nick!user@host", "nick", "nick!user@host", NULL,
-                    NULL, NULL, NULL,
+    WEE_CHECK_PARSE(NULL, ":nick!user@host", "nick", "user", "nick!user@host",
+                    NULL, NULL, NULL, NULL,
                     -1, -1, -1, -1,
                     NULL, ":nick!user@host");
 
     /* AWAY */
-    WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY", "nick", "nick!user@host",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY", "nick", "user",
+                    "nick!user@host",
                     "AWAY", NULL, NULL, NULL,
                     16, -1, -1, -1,
                     NULL, ":nick!user@host AWAY");
-    WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY :I am away", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host AWAY :I am away", "nick", "user",
                     "nick!user@host", "AWAY", NULL, ":I am away", "I am away",
                     16, 21, -1, 22,
                     NULL, ":nick!user@host AWAY :I am away");
@@ -255,7 +265,7 @@ TEST(IrcMessage, Parse)
     /* CAP */
     WEE_CHECK_PARSE(NULL,
                     ":irc.example.com CAP * LS :identify-msg multi-prefix sasl",
-                    "irc.example.com", "irc.example.com", "CAP", "*",
+                    "irc.example.com", NULL, "irc.example.com", "CAP", "*",
                     "* LS :identify-msg multi-prefix sasl",
                     "LS :identify-msg multi-prefix sasl",
                     17, 21, 21, 23,
@@ -263,105 +273,106 @@ TEST(IrcMessage, Parse)
                     ":irc.example.com CAP * LS :identify-msg multi-prefix sasl");
 
     /* JOIN */
-    WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN #channel", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN #channel", "nick", "user",
                     "nick!user@host", "JOIN", "#channel", "#channel", NULL,
                     16, 21, 21, -1,
                     NULL, ":nick!user@host JOIN #channel");
 
     /* JOIN with colon */
-    WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN :#channel", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN :#channel", "nick", "user",
                     "nick!user@host", "JOIN", "#channel", ":#channel", NULL,
                     16, 21, 22, -1,
                     NULL, ":nick!user@host JOIN :#channel");
 
     /* JOIN with extended join capability */
     WEE_CHECK_PARSE(NULL, ":nick!user@host JOIN #channel account :real name",
-                    "nick", "nick!user@host", "JOIN", "#channel",
+                    "nick", "user", "nick!user@host", "JOIN", "#channel",
                     "#channel account :real name", "account :real name",
                     16, 21, 21, 30,
                     NULL, ":nick!user@host JOIN #channel account :real name");
 
     /* KICK */
     WEE_CHECK_PARSE(NULL, ":nick1!user@host KICK #channel nick2 :kick reason",
-                    "nick1", "nick1!user@host", "KICK", "#channel",
+                    "nick1", "user", "nick1!user@host", "KICK", "#channel",
                     "#channel nick2 :kick reason", "nick2 :kick reason",
                     17, 22, 22, 31,
                     NULL, ":nick1!user@host KICK #channel nick2 :kick reason");
 
     /* MODE */
     WEE_CHECK_PARSE(NULL, ":nick!user@host MODE #channel +o nick",
-                    "nick", "nick!user@host", "MODE", "#channel",
+                    "nick", "user", "nick!user@host", "MODE", "#channel",
                     "#channel +o nick", "+o nick",
                     16, 21, 21, 30,
                     NULL, ":nick!user@host MODE #channel +o nick");
 
     /* MODE with colon */
     WEE_CHECK_PARSE(NULL, ":nick!user@host MODE #channel :+o nick",
-                    "nick", "nick!user@host", "MODE", "#channel",
+                    "nick", "user", "nick!user@host", "MODE", "#channel",
                     "#channel :+o nick", "+o nick",
                     16, 21, 21, 31,
                     NULL, ":nick!user@host MODE #channel :+o nick");
 
     /* NICK */
     WEE_CHECK_PARSE(NULL, ":oldnick!user@host NICK :newnick",
-                    "oldnick", "oldnick!user@host", "NICK", NULL,
+                    "oldnick", "user", "oldnick!user@host", "NICK", NULL,
                     ":newnick", "newnick",
                     19, 24, -1, 25,
                     NULL, ":oldnick!user@host NICK :newnick");
 
     /* NOTICE */
     WEE_CHECK_PARSE(NULL, "NOTICE AUTH :*** Looking up your hostname...",
-                    "AUTH", NULL, "NOTICE", "AUTH",
+                    "AUTH", NULL, NULL, "NOTICE", "AUTH",
                     "AUTH :*** Looking up your hostname...",
                     "*** Looking up your hostname...",
                     0, 7, 7, 13,
                     NULL, "NOTICE AUTH :*** Looking up your hostname...");
 
     /* PING */
-    WEE_CHECK_PARSE(NULL, "PING :arguments", NULL, NULL, "PING", NULL,
+    WEE_CHECK_PARSE(NULL, "PING :arguments", NULL, NULL, NULL, "PING", NULL,
                     ":arguments", "arguments",
                     0, 5, -1, 6,
                     NULL, "PING :arguments");
 
-
     /* PART */
-    WEE_CHECK_PARSE(NULL, ":nick!user@host PART #channel", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PART #channel", "nick", "user",
                     "nick!user@host", "PART", "#channel", "#channel", NULL,
                     16, 21, 21, -1,
                     NULL, ":nick!user@host PART #channel");
 
     /* PART with colon */
-    WEE_CHECK_PARSE(NULL, ":nick!user@host PART :#channel", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PART :#channel", "nick", "user",
                     "nick!user@host", "PART", "#channel", ":#channel", NULL,
                     16, 21, 22, -1,
                     NULL, ":nick!user@host PART :#channel");
 
     /* INVITE */
     WEE_CHECK_PARSE(NULL, ":nick!user@host INVITE nick2 #channel", "nick",
-                    "nick!user@host", "INVITE", "#channel", "nick2 #channel",
+                    "user", "nick!user@host", "INVITE", "#channel",
+                    "nick2 #channel",
                     NULL,
                     16, 23, 29, -1,
                     NULL, ":nick!user@host INVITE nick2 #channel");
 
     /* PRIVMSG */
-    WEE_CHECK_PARSE(NULL, ":nick PRIVMSG", "nick", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick PRIVMSG", "nick", NULL, "nick",
                     "PRIVMSG", NULL, NULL, NULL,
                     6, -1, -1, -1,
                     NULL, ":nick PRIVMSG");
-    WEE_CHECK_PARSE(NULL, ":nick@host PRIVMSG", "nick", "nick@host",
+    WEE_CHECK_PARSE(NULL, ":nick@host PRIVMSG", "nick", NULL, "nick@host",
                     "PRIVMSG", NULL, NULL, NULL,
                     11, -1, -1, -1,
                     NULL, ":nick@host PRIVMSG");
-    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG", "nick", "nick!user@host",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG", "nick", "user",
+                    "nick!user@host",
                     "PRIVMSG", NULL, NULL, NULL,
                     16, -1, -1, -1,
                     NULL, ":nick!user@host PRIVMSG");
-    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel", "nick",
+    WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel", "nick", "user",
                     "nick!user@host", "PRIVMSG", "#channel", "#channel", NULL,
                     16, 24, 24, -1,
                     NULL, ":nick!user@host PRIVMSG #channel");
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG #channel :the message",
-                    "nick", "nick!user@host", "PRIVMSG", "#channel",
+                    "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
                     16, 24, 24, 34,
                     NULL, ":nick!user@host PRIVMSG #channel :the message");
@@ -369,7 +380,7 @@ TEST(IrcMessage, Parse)
     /* PRIVMSG with tags */
     WEE_CHECK_PARSE("time=2019-08-03T12:13:00.000Z",
                     ":nick!user@host PRIVMSG #channel :the message",
-                    "nick", "nick!user@host", "PRIVMSG", "#channel",
+                    "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel :the message", "the message",
                     47, 55, 55, 65,
                     NULL,
@@ -379,7 +390,7 @@ TEST(IrcMessage, Parse)
     /* PRIVMSG with tags and extra spaces*/
     WEE_CHECK_PARSE("time=2019-08-03T12:13:00.000Z",
                     ":nick!user@host  PRIVMSG  #channel  :the message",
-                    "nick", "nick!user@host", "PRIVMSG", "#channel",
+                    "nick", "user", "nick!user@host", "PRIVMSG", "#channel",
                     "#channel  :the message", "the message",
                     49, 58, 58, 69,
                     NULL,
@@ -388,7 +399,7 @@ TEST(IrcMessage, Parse)
 
     /* PRIVMSG to a nick */
     WEE_CHECK_PARSE(NULL, ":nick!user@host PRIVMSG nick2 :the message",
-                    "nick", "nick!user@host", "PRIVMSG", "nick2",
+                    "nick", "user", "nick!user@host", "PRIVMSG", "nick2",
                     "nick2 :the message", "the message",
                     16, 24, 24, 31,
                     NULL, ":nick!user@host PRIVMSG nick2 :the message");
@@ -400,7 +411,8 @@ TEST(IrcMessage, Parse)
                     "KICKLEN=450 CHANNELLEN=30 KEYLEN=23 CHANTYPES=# "
                     "PREFIX=(ov)@+ CASEMAPPING=ascii CAPAB IRCD=dancer "
                     ":are available on this server",
-                    "irc.example.com", "irc.example.com", "005", "mynick",
+                    "irc.example.com", NULL, "irc.example.com", "005",
+                    "mynick",
                     "mynick MODES=4 CHANLIMIT=#:20 NICKLEN=16 USERLEN=10 "
                     "HOSTLEN=63 TOPICLEN=450 KICKLEN=450 CHANNELLEN=30 "
                     "KEYLEN=23 CHANTYPES=# PREFIX=(ov)@+ CASEMAPPING=ascii "
@@ -420,7 +432,8 @@ TEST(IrcMessage, Parse)
     /* 301 */
     WEE_CHECK_PARSE(NULL,
                     ":irc.example.com 301 mynick nick :away message for nick",
-                    "irc.example.com", "irc.example.com", "301", "mynick",
+                    "irc.example.com", NULL, "irc.example.com", "301",
+                    "mynick",
                     "mynick nick :away message for nick",
                     "nick :away message for nick",
                     17, 21, 21, 28,
@@ -430,7 +443,7 @@ TEST(IrcMessage, Parse)
     /* error */
     WEE_CHECK_PARSE(NULL,
                     "404 nick #channel :Cannot send to channel",
-                    "nick", NULL, "404", "#channel",
+                    "nick", NULL, NULL, "404", "#channel",
                     "nick #channel :Cannot send to channel",
                     "Cannot send to channel",
                     0, 4, 9, 19,
@@ -438,7 +451,8 @@ TEST(IrcMessage, Parse)
                     "404 nick #channel :Cannot send to channel");
     WEE_CHECK_PARSE(NULL,
                     ":irc.example.com 404 nick #channel :Cannot send to channel",
-                    "irc.example.com", "irc.example.com", "404", "#channel",
+                    "irc.example.com", NULL, "irc.example.com", "404",
+                    "#channel",
                     "nick #channel :Cannot send to channel",
                     "Cannot send to channel",
                     17, 21, 26, 36,

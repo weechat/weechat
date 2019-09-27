@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-24 20:55+0200\n"
+"POT-Creation-Date: 2019-09-27 18:18+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -9725,12 +9725,13 @@ msgid "\"message\": IRC message, \"server\": server name (optional)"
 msgstr "\"message\": mensagem de IRC, \"server\": nome do servidor (opcional)"
 
 #. TRANSLATORS: please do not translate key names (enclosed by quotes)
+#, fuzzy
 msgid ""
 "\"tags\": tags, \"message_without_tags\": message without the tags, \"nick"
-"\": nick, \"host\": host, \"command\": command, \"channel\": channel, "
-"\"arguments\": arguments (includes channel), \"text\": text (for example "
-"user message), \"pos_command\": index of \"command\" message (\"-1\" if "
-"\"command\" was not found), \"pos_arguments\": index of \"arguments\" "
+"\": nick, \"user\": user, \"host\": host, \"command\": command, \"channel\": "
+"channel, \"arguments\": arguments (includes channel), \"text\": text (for "
+"example user message), \"pos_command\": index of \"command\" message (\"-1\" "
+"if \"command\" was not found), \"pos_arguments\": index of \"arguments\" "
 "message (\"-1\" if \"arguments\" was not found), \"pos_channel\": index of "
 "\"channel\" message (\"-1\" if \"channel\" was not found), \"pos_text\": "
 "index of \"text\" message (\"-1\" if \"text\" was not found)"
@@ -10663,6 +10664,10 @@ msgstr "%s%s: não foi possível carregar o ficheiro \"%s\""
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: não foi possível executar o ficheiro \"%s\""
 
+#, c-format
+msgid "%s===\t%s========== End of backlog (%d lines) =========="
+msgstr "%s===\t%s====== Fim do registo recente (%d linhas) ====="
+
 msgid "Log buffers to files"
 msgstr "Registar buffers em ficheiros"
 
@@ -10701,10 +10706,6 @@ msgstr "%s\t****  Início do registo  ****"
 #, c-format
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Fim do registo  ****"
-
-#, c-format
-msgid "%s===\t%s========== End of backlog (%d lines) =========="
-msgstr "%s===\t%s====== Fim do registo recente (%d linhas) ====="
 
 msgid "Logging on buffers:"
 msgstr "A registar os buffers:"

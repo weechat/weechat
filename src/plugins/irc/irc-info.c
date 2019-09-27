@@ -1118,6 +1118,7 @@ irc_info_init ()
         N_("\"tags\": tags, "
            "\"message_without_tags\": message without the tags, "
            "\"nick\": nick, "
+           "\"user\": user, "
            "\"host\": host, "
            "\"command\": command, "
            "\"channel\": channel, "

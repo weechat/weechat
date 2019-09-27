@@ -869,8 +869,8 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
             for (i = 0; i < num_messages; i++)
             {
                 irc_message_parse (ptr_server, messages[i], NULL, NULL, NULL,
-                                   NULL, NULL, NULL, &arguments, NULL, NULL,
-                                   NULL, NULL, NULL);
+                                   NULL, NULL, NULL, NULL, &arguments, NULL,
+                                   NULL, NULL, NULL, NULL);
                 if (arguments)
                 {
                     pos = strchr (arguments, ' ');
@@ -967,8 +967,9 @@ irc_notify_hsignal_cb (const void *pointer, void *data, const char *signal,
                 for (i = 0; i < num_messages; i++)
                 {
                     irc_message_parse (ptr_server, messages[i], NULL, NULL,
-                                       NULL, NULL, &irc_cmd, NULL, &arguments,
-                                       NULL, NULL, NULL, NULL, NULL);
+                                       NULL, NULL, NULL, &irc_cmd, NULL,
+                                       &arguments, NULL, NULL, NULL, NULL,
+                                       NULL);
                     if (irc_cmd && arguments)
                     {
                         if (strcmp (irc_cmd, "401") == 0)

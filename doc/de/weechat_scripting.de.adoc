@@ -1177,6 +1177,11 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   der ursprüngliche Nick. |
   `nick`
 
+// TRANSLATION MISSING
+| user | ≥ 2.7 |
+  The origin user. |
+  `user`
+
 | host | ≥ 0.3.4 |
   der ursprüngliche Host (beinhaltet den Nick). |
   `nick!user@host`
@@ -1224,6 +1229,7 @@ dict = weechat.info_get_hashtable(
 #     "tags": "time=2015-06-27T16:40:35.000Z",
 #     "message_without_tags": ":nick!user@host PRIVMSG #weechat :hello!",
 #     "nick": "nick",
+#     "user": "user",
 #     "host": "nick!user@host",
 #     "command": "PRIVMSG",
 #     "channel": "#weechat",

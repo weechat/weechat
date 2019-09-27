@@ -6,7 +6,7 @@
 |===
 | Wtyczka | Nazwa | Opis | Hashtable (wejście) | Hashtable (wyjście)
 
-| irc | irc_message_parse | przetwarza wiadomość IRC | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "tags": tagi, "message_without_tags": wiadomość bez tagów, "nick": nick, "host": host, "command": komenda, "channel": kanał, "arguments": argumenty (razem z kanałem), "text": tekst (na przykład wiadomość użytkownika), "pos_command": indeks wiadomości "command" message ("-1" jeśli "command" nie zostało znalezione), "pos_arguments": indeks wiadomości "arguments" ("-1" jeśli "arguments" nie zostało znalezione), "pos_channel": indeks wiadomości "channel" ("-1" jeśli "channel" nie został znaleziony), "pos_text": indeks słowa "text" ("-1" jeśli "text" nie został znaleziony)
+| irc | irc_message_parse | przetwarza wiadomość IRC | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "tags": tags, "message_without_tags": message without the tags, "nick": nick, "user": user, "host": host, "command": command, "channel": channel, "arguments": arguments (includes channel), "text": text (for example user message), "pos_command": index of "command" message ("-1" if "command" was not found), "pos_arguments": index of "arguments" message ("-1" if "arguments" was not found), "pos_channel": index of "channel" message ("-1" if "channel" was not found), "pos_text": index of "text" message ("-1" if "text" was not found)
 
 | irc | irc_message_split | dziel wiadomość IRC (aby zmieściła się domyślnie w 512 bajtach) | "message": wiadomość IRC, "server": nazwa serwera (opcjonalne) | "msg1" ... "msgN": wiadomości do wysłania (bez kończącego "\r\n"), "args1" ... "argsN": argumenty wiadomości, "count": ilość wiadomości
 
