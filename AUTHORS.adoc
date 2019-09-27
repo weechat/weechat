@@ -68,6 +68,7 @@ Alphabetically:
 * Koka El Kiwi (KiwiDash)
 * Krzysztof Koroscik (soltys)
 * Kyle Fuller (kylef)
+* Kyle Sabo
 * Leonid Evdokimov
 * Lázaro A.
 * Linus Heckemann
