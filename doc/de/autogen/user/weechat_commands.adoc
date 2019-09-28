@@ -266,67 +266,67 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n|-s] <expression>
        [-n] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
-            - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
-                =*  is matching mask (wildcard "*" is allowed)
-                !*  is NOT matching mask (wildcard "*" is allowed)
+        -n: gibt das Ergebnis aus, ohne das dieses in den Buffer gesendet wird (debug Modus)
+        -s: teilt Ausdrücke bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
+                =*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
+                !*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
+Für einen Vergleich werden Fließkommazahlen genutzt sofern es sich bei beiden Ausdrücken um gültige Nummer handelt, folgende Formate werden unterstützt:
+  - Integer (Beispiele: 5, -7)
+  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
+  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. an evaluated sub-string (format: "eval:xxx")
-  2. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  3. a string with chars to hide (format: "hide:char,string")
-  4. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  5. a reversed string (format: "rev:xxx")
-  6. a repeated string (format: "repeat:count,string")
-  7. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  8. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  9. an info (format: "info:name,arguments", arguments are optional)
-  10. current date/time (format: "date" or "date:format")
-  11. an environment variable (format: "env:XXX")
-  12. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  13. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  14. an option (format: "file.section.option")
-  15. a local variable in buffer
-  16. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck, mittels der Formatierung ${variable}, ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  2. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  3. Zeichen welche in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  4. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:+Max,Suffix,Zeichenkette")
+     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
+  5. Ende einer Zeichenkette nutzen (Format: "rev:xxx")
+  6. Wiederholung einer Zeichenkette  (Format: "repeat:Anzahl,Zeichenkette")
+  7. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  8. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  9. eine Info (Format: "info:Name,Argumente", Argumente sind optional)
+  10. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  11. eine Umgebungsvariable (Format: "env:XXX")
+  12. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  13. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  14. eine Option (Format: "file.section.option")
+  15. der Name einer lokalen Variablen eines Buffer
+  16. ein hdata Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
+    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
+Beispiele (einfache Zeichenketten):
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.freenode_password}         ==> geheim
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -342,16 +342,16 @@ Examples (simple strings):
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
 
-Examples (conditions):
-  /eval -n -c ${window.buffer.number} > 2 ==> 0
-  /eval -n -c ${window.win_width} > 100   ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
-  /eval -n -c abcd =~ ^ABC                ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
-  /eval -n -c abcd =~ (?-i)^abc           ==> 1
-  /eval -n -c abcd !~ abc                 ==> 0
-  /eval -n -c abcd =* a*d                 ==> 1
+Beispiele (Bedingungen):
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
+  /eval -n -c abcd =* a*d                  ==> 1
 ----
 
 [[command_weechat_filter]]
