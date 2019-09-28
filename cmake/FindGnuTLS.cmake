@@ -30,23 +30,23 @@
 #  GNUTLS_LDFLAGS = ldflags to use to compile
 
 if(GNUTLS_INCLUDE_PATH AND GNUTLS_LIBRARY)
-   # Already in cache, be silent
-   set(GNUTLS_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(GNUTLS_FIND_QUIETLY TRUE)
 endif()
 
 find_program(PKG_CONFIG_EXECUTABLE NAMES pkg-config)
 
 execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --variable=prefix gnutls
-   OUTPUT_VARIABLE GNUTLS_PREFIX
+  OUTPUT_VARIABLE GNUTLS_PREFIX
 )
 
 execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --cflags gnutls
-   OUTPUT_VARIABLE GNUTLS_CFLAGS
+  OUTPUT_VARIABLE GNUTLS_CFLAGS
 )
 string(REGEX REPLACE "[\r\n]" "" GNUTLS_CFLAGS "${GNUTLS_CFLAGS}")
 
 execute_process(COMMAND ${PKG_CONFIG_EXECUTABLE} --libs gnutls
-   OUTPUT_VARIABLE GNUTLS_LDFLAGS
+  OUTPUT_VARIABLE GNUTLS_LDFLAGS
 )
 string(REGEX REPLACE "[\r\n]" "" GNUTLS_LDFLAGS "${GNUTLS_LDFLAGS}")
 

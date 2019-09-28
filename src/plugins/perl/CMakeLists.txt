@@ -17,9 +17,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(perl MODULE weechat-perl.c weechat-perl.h weechat-perl-api.c
-weechat-perl-api.h)
-
+add_library(perl MODULE
+  weechat-perl.c weechat-perl.h
+  weechat-perl-api.c weechat-perl-api.h
+)
 set_target_properties(perl PROPERTIES PREFIX "")
 
 if(PERL_FOUND)

@@ -27,8 +27,8 @@
 # GUILE_LIBRARIES    = Link options to compile Guile
 
 if(GUILE_FOUND)
-   # Already in cache, be silent
-   set(GUILE_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(GUILE_FIND_QUIETLY TRUE)
 endif()
 
 find_package(PkgConfig)

@@ -30,7 +30,7 @@ set(PO_FILES
   pt_BR.po
   ru.po
   tr.po
-  )
+)
 
 set(BUGS_ADDRESS "flashcode@flashtux.org")
 set(POT_FILE ${PROJECT_NAME}.pot)
@@ -60,7 +60,7 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     ARGS -o ${POT_FILE_PATH} --add-comments='TRANSLATORS:' --keyword='_' --keyword='weechat_gettext' --keyword='N_' --keyword='NG_:1,2' --keyword='weechat_ngettext:1,2' --no-location --from-code=UTF-8 --directory=${CMAKE_SOURCE_DIR} --package-name='WeeChat' --package-version=${VERSION} --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder='NAME' ${SRC_FILES}
     DEPENDS ${POT_DEPENDS}
     COMMENT "Generating ${POT_FILE}"
-    )
+  )
 
   set(GMO_FILES)
   set(UPDATE_PO_TARGETS)
@@ -76,14 +76,14 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
       COMMAND ${MSGFMT_EXECUTABLE} ARGS -c --statistics --verbose --output-file=/dev/null ${CMAKE_CURRENT_BINARY_DIR}/${pofile}
       DEPENDS ${POT_FILE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/${pofile}
       COMMENT "Compiling ${polang}.po"
-      )
+    )
 
     # Update .po files in source directory (if needed)
     add_custom_target(
       update-${pofile}
       COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${pofile} ${POT_FILE_PATH}
       COMMENT "Updating ${polang}.po"
-      )
+    )
     set(UPDATE_PO_TARGETS ${UPDATE_PO_TARGETS} update-${pofile})
 
     install(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
@@ -97,7 +97,7 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
     update-${POT_FILE}
     COMMAND ${MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${CMAKE_CURRENT_SOURCE_DIR}/${POT_FILE} ${POT_FILE_PATH}
     COMMENT "Updating ${POT_FILE}"
-    )
+  )
 
   # Update all .po and weechat.pot in source directory (if needed)
   add_custom_target(update-po DEPENDS update-${POT_FILE} ${UPDATE_PO_TARGETS})

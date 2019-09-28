@@ -29,8 +29,8 @@
 #  LUA_FOUND = is liblua usable on system?
 
 if(LUA_FOUND)
-   # Already in cache, be silent
-   set(LUA_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(LUA_FIND_QUIETLY TRUE)
 endif()
 
 find_package(PkgConfig)

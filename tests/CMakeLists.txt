@@ -82,21 +82,25 @@ target_link_libraries(tests
   ${EXTRA_LIBS}
   ${CURL_LIBRARIES}
   ${CPPUTEST_LIBRARIES}
-  -rdynamic)
+  -rdynamic
+)
 add_dependencies(tests
   weechat_core
   weechat_plugins
   weechat_gui_common
   weechat_gui_headless
   weechat_ncurses_fake
-  weechat_unit_tests_core)
+  weechat_unit_tests_core
+)
 
 # test for cmake (ctest)
 add_test(NAME unit
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-  COMMAND tests -v)
+  COMMAND tests -v
+)
 set_property(TEST unit PROPERTY
   ENVIRONMENT "WEECHAT_TESTS_ARGS=-p;"
   "WEECHAT_EXTRA_LIBDIR=${PROJECT_BINARY_DIR}/src;"
   "WEECHAT_TESTS_SCRIPTS_DIR=${CMAKE_CURRENT_SOURCE_DIR}/scripts/python"
-  "WEECHAT_TESTS_PLUGINS_LIB=${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_plugins.so")
+  "WEECHAT_TESTS_PLUGINS_LIB=${CMAKE_CURRENT_BINARY_DIR}/libweechat_unit_tests_plugins.so"
+)

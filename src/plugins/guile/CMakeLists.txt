@@ -17,9 +17,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(guile MODULE weechat-guile.c weechat-guile.h
-weechat-guile-api.c weechat-guile-api.h)
-
+add_library(guile MODULE
+  weechat-guile.c weechat-guile.h
+  weechat-guile-api.c weechat-guile-api.h
+)
 set_target_properties(guile PROPERTIES PREFIX "")
 
 if(GUILE_FOUND)

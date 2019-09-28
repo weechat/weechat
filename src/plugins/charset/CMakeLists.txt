@@ -17,7 +17,9 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(charset MODULE charset.c)
+add_library(charset MODULE
+  charset.c
+)
 set_target_properties(charset PROPERTIES PREFIX "")
 
 if(ICONV_FOUND)

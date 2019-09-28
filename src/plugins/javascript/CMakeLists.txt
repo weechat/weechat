@@ -19,10 +19,11 @@
 
 enable_language(CXX)
 
-add_library(javascript MODULE weechat-js.cpp weechat-js.h
-weechat-js-v8.cpp weechat-js-v8.h
-weechat-js-api.cpp weechat-js-api.h)
-
+add_library(javascript MODULE
+  weechat-js.cpp weechat-js.h
+  weechat-js-v8.cpp weechat-js-v8.h
+  weechat-js-api.cpp weechat-js-api.h
+)
 set_target_properties(javascript PROPERTIES PREFIX "")
 
 if(V8_FOUND)

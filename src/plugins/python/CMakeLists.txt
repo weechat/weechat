@@ -17,9 +17,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(python MODULE weechat-python.c weechat-python.h
-weechat-python-api.c weechat-python-api.h)
-
+add_library(python MODULE
+  weechat-python.c weechat-python.h
+  weechat-python-api.c weechat-python-api.h
+)
 set_target_properties(python PROPERTIES PREFIX "")
 
 if(PYTHON_FOUND)

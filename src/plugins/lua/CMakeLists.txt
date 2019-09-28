@@ -18,9 +18,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(lua MODULE weechat-lua.c weechat-lua.h weechat-lua-api.c
-weechat-lua-api.h)
-
+add_library(lua MODULE
+  weechat-lua.c weechat-lua.h
+  weechat-lua-api.c weechat-lua-api.h
+)
 set_target_properties(lua PROPERTIES PREFIX "")
 
 if(LUA_FOUND)

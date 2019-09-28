@@ -13,10 +13,8 @@
 
 
 if(ENCHANT_INCLUDE_DIR AND ENCHANT_LIBRARIES)
-
   # in cache already
   set(ENCHANT_FOUND TRUE)
-
 else()
   if(NOT WIN32)
     # use pkg-config to get the directories and then use these values
@@ -27,17 +25,19 @@ else()
   endif()
 
   find_path(ENCHANT_INCLUDE_DIR
-            NAMES enchant++.h
-            HINTS ${PC_ENCHANT_INCLUDEDIR}
-                  ${PC_ENCHANT_INCLUDE_DIRS}
-            PATH_SUFFIXES enchant )
+    NAMES enchant++.h
+    HINTS ${PC_ENCHANT_INCLUDEDIR} ${PC_ENCHANT_INCLUDE_DIRS}
+    PATH_SUFFIXES enchant
+  )
 
-  find_library(ENCHANT_LIBRARIES NAMES enchant
-               HINTS ${PC_ENCHANT_LIBDIR}
-                      ${PC_ENCHANT_LIBRARY_DIRS} )
+  find_library(ENCHANT_LIBRARIES
+    NAMES enchant
+    HINTS ${PC_ENCHANT_LIBDIR}
+    ${PC_ENCHANT_LIBRARY_DIRS}
+  )
 
   include(FindPackageHandleStandardArgs)
-  find_package_handle_standard_args(ENCHANT  DEFAULT_MSG  ENCHANT_INCLUDE_DIR ENCHANT_LIBRARIES )
+  find_package_handle_standard_args(ENCHANT DEFAULT_MSG ENCHANT_INCLUDE_DIR ENCHANT_LIBRARIES)
 
   mark_as_advanced(ENCHANT_INCLUDE_DIR ENCHANT_LIBRARIES)
 
@@ -47,5 +47,4 @@ else()
   check_symbol_exists(enchant_get_version "enchant.h" HAVE_ENCHANT_GET_VERSION)
   set(CMAKE_REQUIRED_INCLUDES)
   set(CMAKE_REQUIRED_LIBRARIES)
-
 endif()

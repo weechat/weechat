@@ -29,8 +29,8 @@
 #  ICONV_FOUND = is iconv usable on system?
 
 if(ICONV_FOUND)
-   # Already in cache, be silent
-   set(ICONV_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(ICONV_FIND_QUIETLY TRUE)
 endif()
 
 include(CheckLibraryExists)

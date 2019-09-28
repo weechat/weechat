@@ -46,12 +46,24 @@ set(WEECHAT_CURSES_MAIN_HEADLESS_SRC main.c)
 
 set(EXECUTABLE weechat-headless)
 
-add_executable(${EXECUTABLE} ${WEECHAT_CURSES_MAIN_HEADLESS_SRC})
+add_executable(${EXECUTABLE}
+  ${WEECHAT_CURSES_MAIN_HEADLESS_SRC}
+)
 
-add_dependencies(${EXECUTABLE} weechat_gui_headless weechat_ncurses_fake)
+add_dependencies(${EXECUTABLE}
+  weechat_gui_headless
+  weechat_ncurses_fake
+)
 
 # Due to circular references, we must link two times with libweechat_core.a and libweechat_gui_common.a
-target_link_libraries(${EXECUTABLE} ${STATIC_LIBS} weechat_gui_headless weechat_ncurses_fake ${EXTRA_LIBS} ${STATIC_LIBS} coverage_config)
+target_link_libraries(${EXECUTABLE}
+  ${STATIC_LIBS}
+  weechat_gui_headless
+  weechat_ncurses_fake
+  ${EXTRA_LIBS}
+  ${STATIC_LIBS}
+  coverage_config
+)
 
 # Install executable
 install(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

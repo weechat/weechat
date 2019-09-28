@@ -34,7 +34,7 @@ if(ASCIIDOCTOR_EXECUTABLE)
   execute_process(
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} --version
     OUTPUT_VARIABLE ASCIIDOCTOR_VERSION
-    )
+  )
 
   string(REGEX REPLACE "^Asciidoctor ([^ ]+) .*" "\\1" ASCIIDOCTOR_VERSION "${ASCIIDOCTOR_VERSION}")
 
@@ -45,5 +45,5 @@ if(ASCIIDOCTOR_EXECUTABLE)
   mark_as_advanced(
     ASCIIDOCTOR_EXECUTABLE
     ASCIIDOCTOR_VERSION
-    )
+  )
 endif()

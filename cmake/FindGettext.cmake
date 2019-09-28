@@ -28,8 +28,8 @@
 #  GETTEXT_FOUND = is gettext usable on system?
 
 if(GETTEXT_FOUND)
-   # Already in cache, be silent
-   set(GETTEXT_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(GETTEXT_FIND_QUIETLY TRUE)
 endif()
 
 include(CheckIncludeFiles)
@@ -54,7 +54,7 @@ if(HAVE_LIBINTL_H)
       PATHS
       /usr/local/lib
       /usr/lib
-      )
+    )
     if(LIBINTL_LIBRARY)
       if(${CMAKE_SYSTEM_NAME} STREQUAL "OpenBSD")
         set(CMAKE_REQUIRED_LIBRARIES "iconv")
@@ -62,7 +62,6 @@ if(HAVE_LIBINTL_H)
       else()
         check_library_exists(${LIBINTL_LIBRARY} "dgettext" "" LIBINTL_HAS_DGETTEXT)
       endif()
-
       if(LIBINTL_HAS_DGETTEXT)
         set(GETTEXT_FOUND TRUE)
       endif()

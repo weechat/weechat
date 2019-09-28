@@ -31,7 +31,7 @@
 include(FindPkgConfig)
 
 if(ENABLE_PYTHON2)
-    pkg_check_modules(PYTHON python2)
+  pkg_check_modules(PYTHON python2)
 else()
-    pkg_check_modules(PYTHON python3)
+  pkg_check_modules(PYTHON python3)
 endif()

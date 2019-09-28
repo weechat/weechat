@@ -18,13 +18,14 @@
 #
 
 add_library(logger MODULE
-logger.c logger.h
-logger-backlog.c logger-backlog.h
-logger-buffer.c logger-buffer.h
-logger-command.c logger-command.h
-logger-config.c logger-config.h
-logger-info.c logger-info.h
-logger-tail.c logger-tail.h)
+  logger.c logger.h
+  logger-backlog.c logger-backlog.h
+  logger-buffer.c logger-buffer.h
+  logger-command.c logger-command.h
+  logger-config.c logger-config.h
+  logger-info.c logger-info.h
+  logger-tail.c logger-tail.h
+)
 set_target_properties(logger PROPERTIES PREFIX "")
 
 target_link_libraries(logger coverage_config)

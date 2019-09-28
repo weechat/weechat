@@ -19,13 +19,14 @@
 #
 
 add_library(spell MODULE
-spell.c spell.h
-spell-bar-item.c spell-bar-item.h
-spell-command.c spell-command.h
-spell-completion.c spell-completion.h
-spell-config.c spell-config.h
-spell-info.c spell-info.h
-spell-speller.c spell-speller.h)
+  spell.c spell.h
+  spell-bar-item.c spell-bar-item.h
+  spell-command.c spell-command.h
+  spell-completion.c spell-completion.h
+  spell-config.c spell-config.h
+  spell-info.c spell-info.h
+  spell-speller.c spell-speller.h
+)
 set_target_properties(spell PROPERTIES PREFIX "")
 
 if(ENCHANT_FOUND)

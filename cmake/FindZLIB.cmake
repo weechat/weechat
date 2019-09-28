@@ -41,7 +41,7 @@ find_library(ZLIB_LIBRARY
   ${ZLIB_NAMES}
   PATHS
   "[HKEY_LOCAL_MACHINE\\SOFTWARE\\GnuWin32\\Zlib;InstallPath]/lib"
-  )
+)
 mark_as_advanced(ZLIB_LIBRARY ZLIB_INCLUDE_DIR)
 
 if(ZLIB_INCLUDE_DIR AND EXISTS "${ZLIB_INCLUDE_DIR}/zlib.h")

@@ -17,9 +17,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(php MODULE weechat-php.c weechat-php.h weechat-php-api.c
-weechat-php-api.h)
-
+add_library(php MODULE
+  weechat-php.c weechat-php.h
+  weechat-php-api.c weechat-php-api.h
+)
 set_target_properties(php PROPERTIES PREFIX "")
 
 if(PHP_FOUND)

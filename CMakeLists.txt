@@ -257,19 +257,23 @@ configure_file(config.h.cmake config.h @ONLY)
 # set the git version in "config-git.h"
 add_custom_target(version_git ALL
   COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/git-version.sh" "${CMAKE_CURRENT_SOURCE_DIR}" "${VERSION}" "config-git.h"
-  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+)
 
 configure_file(
   "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
   "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-  IMMEDIATE @ONLY)
+  IMMEDIATE @ONLY
+)
 
 add_custom_target(uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake")
+  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+)
 
 add_custom_target(dist
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/makedist.sh" "${VERSION}" "HEAD" "${CMAKE_CURRENT_BINARY_DIR}"
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
 # pkgconfig file
 set(PACKAGE "${PROJECT_NAME}")
@@ -291,7 +295,8 @@ if(CYGWIN)
     ${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/README.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc
-    DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+    DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME}
+  )
 endif()
 
 # icon
@@ -313,7 +318,8 @@ set(CPACK_PACKAGE_FILE_NAME weechat-binary-${VERSION})
 # source package
 set(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME weechat-${VERSION})
-set(CPACK_SOURCE_IGNORE_FILES "/\\\\.git" "/build/" "/m4/"
+set(CPACK_SOURCE_IGNORE_FILES
+  "/\\\\.git" "/build/" "/m4/"
   "/autom4te\\\\.cache/" "/ABOUT-NLS$" "/config\\\\.guess$" "/config\\\\.h$"
   "/config\\\\.h.in$" "/config\\\\.log$" "/config\\\\.rpath$"
   "/config\\\\.status$" "/config\\\\.sub$" "/configure$" "/depcomp$"

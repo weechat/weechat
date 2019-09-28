@@ -18,15 +18,16 @@
 #
 
 add_library(script MODULE
-script.c script.h
-script-action.c script-action.h
-script-buffer.c script-buffer.h
-script-command.c script-command.h
-script-completion.c script-completion.h
-script-config.c script-config.h
-script-info.c script-info.h
-script-mouse.c script-mouse.h
-script-repo.c script-repo.h)
+  script.c script.h
+  script-action.c script-action.h
+  script-buffer.c script-buffer.h
+  script-command.c script-command.h
+  script-completion.c script-completion.h
+  script-config.c script-config.h
+  script-info.c script-info.h
+  script-mouse.c script-mouse.h
+  script-repo.c script-repo.h
+)
 set_target_properties(script PROPERTIES PREFIX "")
 
 set(LINK_LIBS)

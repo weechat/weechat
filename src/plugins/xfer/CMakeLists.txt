@@ -18,17 +18,18 @@
 #
 
 add_library(xfer MODULE
-xfer.c xfer.h
-xfer-buffer.c xfer-buffer.h
-xfer-chat.c xfer-chat.h
-xfer-command.c xfer-command.h
-xfer-completion.c xfer-completion.h
-xfer-config.c xfer-config.h
-xfer-dcc.c xfer-dcc.h
-xfer-file.c xfer-file.h
-xfer-info.c xfer-info.h
-xfer-network.c xfer-network.h
-xfer-upgrade.c xfer-upgrade.h)
+  xfer.c xfer.h
+  xfer-buffer.c xfer-buffer.h
+  xfer-chat.c xfer-chat.h
+  xfer-command.c xfer-command.h
+  xfer-completion.c xfer-completion.h
+  xfer-config.c xfer-config.h
+  xfer-dcc.c xfer-dcc.h
+  xfer-file.c xfer-file.h
+  xfer-info.c xfer-info.h
+  xfer-network.c xfer-network.h
+  xfer-upgrade.c xfer-upgrade.h
+)
 set_target_properties(xfer PROPERTIES PREFIX "")
 
 set(LINK_LIBS)

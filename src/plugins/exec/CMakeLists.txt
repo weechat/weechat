@@ -18,11 +18,12 @@
 #
 
 add_library(exec MODULE
-exec.c exec.h
-exec-buffer.c exec-buffer.h
-exec-command.c exec-command.h
-exec-completion.c exec-completion.h
-exec-config.c exec-config.h)
+  exec.c exec.h
+  exec-buffer.c exec-buffer.h
+  exec-command.c exec-command.h
+  exec-completion.c exec-completion.h
+  exec-config.c exec-config.h
+)
 set_target_properties(exec PROPERTIES PREFIX "")
 
 target_link_libraries(exec coverage_config)

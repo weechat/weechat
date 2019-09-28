@@ -17,9 +17,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(ruby MODULE weechat-ruby.c weechat-ruby.h weechat-ruby-api.c
-weechat-ruby-api.h)
-
+add_library(ruby MODULE
+  weechat-ruby.c weechat-ruby.h
+  weechat-ruby-api.c weechat-ruby-api.h
+)
 set_target_properties(ruby PROPERTIES PREFIX "")
 
 if(RUBY_FOUND)

@@ -19,9 +19,10 @@
 # along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-add_library(tcl MODULE weechat-tcl.c weechat-tcl.h
-weechat-tcl-api.c weechat-tcl-api.h)
-
+add_library(tcl MODULE
+  weechat-tcl.c weechat-tcl.h
+  weechat-tcl-api.c weechat-tcl-api.h
+)
 set_target_properties(tcl PROPERTIES PREFIX "")
 
 if(TCL_FOUND)

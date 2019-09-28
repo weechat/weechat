@@ -55,4 +55,4 @@ endif()
 mark_as_advanced(
   ASPELL_INCLUDE_PATH
   ASPELL_LIBRARY
-  )
+)

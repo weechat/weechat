@@ -27,8 +27,8 @@
 #  RUBY_LIB          = ruby library (found without pkg-config)
 
 if(RUBY_FOUND)
-   # Already in cache, be silent
-   set(RUBY_FIND_QUIETLY TRUE)
+  # Already in cache, be silent
+  set(RUBY_FIND_QUIETLY TRUE)
 endif()
 
 find_package(PkgConfig)
@@ -43,33 +43,33 @@ else()
   find_program(RUBY_EXECUTABLE
     NAMES ruby2.6.0 ruby260 ruby2.6 ruby2.5.0 ruby250 ruby2.5 ruby2.4.0 ruby240 ruby2.4 ruby2.3.0 ruby230 ruby2.3 ruby23 ruby2.2.3 ruby223 ruby2.2.2 ruby222 ruby2.2.1 ruby221 ruby2.2.0 ruby220 ruby2.2 ruby22 ruby2.1.7 ruby217 ruby2.1.6 ruby216 ruby2.1.5 ruby215 ruby2.1.4 ruby214 ruby2.1.3 ruby213 ruby2.1.2 ruby212 ruby2.1.1 ruby211 ruby2.1.0 ruby210 ruby2.1 ruby21 ruby2.0 ruby20 ruby1.9.3 ruby193 ruby1.9.2 ruby192 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby
     PATHS /usr/bin /usr/local/bin /usr/pkg/bin
-    )
+  )
   if(RUBY_EXECUTABLE)
     execute_process(
       COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubyhdrdir'] || RbConfig::CONFIG['archdir']"
       OUTPUT_VARIABLE RUBY_ARCH_DIR
-      )
+    )
     execute_process(
       COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['arch']"
       OUTPUT_VARIABLE RUBY_ARCH
-      )
+    )
     execute_process(
       COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['libdir']"
       OUTPUT_VARIABLE RUBY_POSSIBLE_LIB_PATH
-      )
+    )
     execute_process(
       COMMAND ${RUBY_EXECUTABLE} -r rbconfig -e "print RbConfig::CONFIG['rubylibdir']"
       OUTPUT_VARIABLE RUBY_RUBY_LIB_PATH
-      )
+    )
     find_path(RUBY_INCLUDE_DIRS
       NAMES ruby.h
       PATHS ${RUBY_ARCH_DIR}
-      )
+    )
     set(RUBY_INCLUDE_ARCH "${RUBY_INCLUDE_DIRS}/${RUBY_ARCH}")
     find_library(RUBY_LIB
       NAMES ruby-1.9.3 ruby1.9.3 ruby193 ruby-1.9.2 ruby1.9.2 ruby192 ruby-1.9.1 ruby1.9.1 ruby191 ruby1.9 ruby19 ruby
       PATHS ${RUBY_POSSIBLE_LIB_PATH} ${RUBY_RUBY_LIB_PATH}
-      )
+    )
     if(RUBY_LIB AND RUBY_INCLUDE_DIRS)
       set(RUBY_FOUND TRUE)
     endif()
@@ -78,6 +78,6 @@ else()
       RUBY_INCLUDE_DIRS
       RUBY_LIBRARY_DIRS
       RUBY_LIB
-      )
+    )
   endif()
 endif()
