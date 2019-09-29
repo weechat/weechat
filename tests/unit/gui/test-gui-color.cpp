@@ -437,6 +437,15 @@ TEST(GuiColor, ColorDecodeAnsi)
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[1mbold\x1B[21m_end", 1);
     WEE_CHECK_DECODE_ANSI(string, "test_\x1B[1mbold\x1B[22m_end", 1);
 
+    /* reverse */
+    WEE_CHECK_DECODE_ANSI("test_reverse_end",
+                          "test_\x1B[7mreverse\x1B[27m_end", 0);
+    snprintf (string, sizeof (string),
+              "test_%sreverse%s_end",
+              gui_color_get_custom ("reverse"),
+              gui_color_get_custom ("-reverse"));
+    WEE_CHECK_DECODE_ANSI(string, "test_\x1B[7mreverse\x1B[27m_end", 1);
+
     /* italic */
     WEE_CHECK_DECODE_ANSI("test_italic_end",
                           "test_\x1B[3mitalic\x1B[23m_end", 0);

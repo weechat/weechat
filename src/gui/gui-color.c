@@ -833,11 +833,17 @@ gui_color_decode_ansi_cb (void *data, const char *text)
             case 4: /* underline */
                 strcat (output, gui_color_get_custom ("underline"));
                 break;
+            case 7: /* reverse */
+                strcat (output, gui_color_get_custom ("reverse"));
+                break;
             case 23: /* remove italic */
                 strcat (output, gui_color_get_custom ("-italic"));
                 break;
             case 24: /* remove underline */
                 strcat (output, gui_color_get_custom ("-underline"));
+                break;
+            case 27: /* remove reverse */
+                strcat (output, gui_color_get_custom ("-reverse"));
                 break;
             case 30: /* text color */
             case 31:
