@@ -11375,6 +11375,12 @@ List of modifiers defined by WeeChat and plugins that can be used:
   "1" to keep colors, "0" to remove colors |
   Any string. |
   String with ANSI colors converted to WeeChat colors (or ANSI colors removed).
+
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
+  _(WeeChat ≥ 2.7)_ |
+  - |
+  Any string. |
+  String with WeeChat colors converted to ANSI colors.
 |===
 
 C example:

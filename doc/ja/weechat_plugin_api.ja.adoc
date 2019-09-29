@@ -11347,6 +11347,13 @@ WeeChat とプラグインが定義する修飾子のリスト:
   色を保持する場合は "1"、削除する場合は "0" |
   任意の文字列 |
   WeeChat 色コードに変換された ANSI 色コードを含む (または ANSI 色コードを削除された) 文字列
+
+// TRANSLATION MISSING
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
+  _(WeeChat バージョン 2.7 以上で利用可)_ |
+  - |
+  任意の文字列 |
+  String with WeeChat colors converted to ANSI colors.
 |===
 
 C 言語での使用例:

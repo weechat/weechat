@@ -352,7 +352,8 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Modifier to decode ANSI colors.
+ * Modifier to decode ANSI colors: convert ANSI color codes to WeeChat colors
+ * (or removes them)
  */
 
 char *
@@ -370,6 +371,25 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
         string,
         (modifier_data && (strcmp (modifier_data, "1") == 0)) ?
         1: 0);
+}
+
+/*
+ * Modifier to encode ANSI colors: convert WeeChat colors to ANSI color codes
+ */
+
+char *
+plugin_api_modifier_color_encode_ansi_cb (const void *pointer, void *data,
+                                          const char *modifier,
+                                          const char *modifier_data,
+                                          const char *string)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    return gui_color_encode_ansi (string);
 }
 
 /*
@@ -521,6 +541,8 @@ plugin_api_init ()
     /* WeeChat core modifiers */
     hook_modifier (NULL, "color_decode_ansi",
                    &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
+    hook_modifier (NULL, "color_encode_ansi",
+                   &plugin_api_modifier_color_encode_ansi_cb, NULL, NULL);
 
     /* WeeChat core info/infolist hooks */
     plugin_api_info_init ();

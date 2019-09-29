@@ -11619,6 +11619,12 @@ utilisés :
   Toute chaîne. |
   Chaîne avec les couleurs ANSI converties en couleurs WeeChat (ou avec les
   couleurs ANSI supprimées).
+
+| [[hook_modifier_color_encode_ansi]] color_encode_ansi +
+  _(WeeChat ≥ 2.7)_ |
+  - |
+  Toute chaîne. |
+  Chaîne avec les couleurs WeeChat converties en couleurs ANSI.
 |===
 
 Exemple en C :
