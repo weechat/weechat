@@ -17,7 +17,10 @@ def stub_api_python_prototypes(stub_file):
             m_function = m["function"]
             m_args = args_pattern.split(m["args"])
 
-            stub_file.write(f"def {m_function}({', '.join(m_args)}): ...\n")
+            stub_file.write(f"""def {m_function}({', '.join(m_args)}):
+    \"""`{m_function} in WeeChat plugin API reference <https://weechat.org/files/doc/devel/weechat_plugin_api.en.html#_{m_function}>`_\"""
+    ...
+""")
 
 
 def stub_scripting_constants(stub_file):
