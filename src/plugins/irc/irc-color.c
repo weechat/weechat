@@ -489,7 +489,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
 
     ansi_state = (struct t_irc_color_ansi_state *)data;
 
-    /* if we don't keep colors of if text is empty, just return empty string */
+    /* if we don't keep colors or if text is empty, just return empty string */
     if (!ansi_state->keep_colors || !text || !text[0])
         return strdup ("");
 

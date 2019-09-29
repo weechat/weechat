@@ -882,7 +882,7 @@ irc_redirect_message (struct t_irc_server *server, const char *message,
                 if (match_stop || ptr_redirect->cmd_start_received)
                 {
                     /*
-                     * add message to output if matching stop of if command
+                     * add message to output if matching stop or if command
                      * is numeric
                      */
                     irc_redirect_message_add (ptr_redirect, message, command);

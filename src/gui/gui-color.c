@@ -776,7 +776,7 @@ gui_color_decode_ansi_cb (void *data, const char *text)
 
     keep_colors = (data) ? 1 : 0;;
 
-    /* if we don't keep colors of if text is empty, just return empty string */
+    /* if we don't keep colors or if text is empty, just return empty string */
     if (!keep_colors || !text || !text[0])
         return strdup ("");
 

@@ -311,7 +311,7 @@ irc_command_mode_masks (struct t_irc_server *server,
                      sizeof (masks));
 
         /*
-         * if we reached the max number of modes allowed of if the mask doesn't
+         * if we reached the max number of modes allowed or if the mask doesn't
          * fits in string, send the MODE command now and flush the modes/masks
          * strings
          */
