@@ -403,6 +403,7 @@ WeeChat "core" is located in following directories:
 |          test-core-utf8.cpp       | Tests: UTF-8.
 |          test-core-util.cpp       | Tests: utility functions.
 |       gui/                        | Root of unit tests for interfaces.
+|          test-gui-color.cpp       | Tests: colors.
 |          test-gui-line.cpp        | Tests: lines.
 |          test-gui-nick.cpp        | Tests: nicks.
 |       plugins/                    | Root of unit tests for plugins.

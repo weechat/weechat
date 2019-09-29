@@ -38,6 +38,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
+  unit/gui/test-gui-color.cpp
   unit/gui/test-gui-line.cpp
   unit/gui/test-gui-nick.cpp
   scripts/test-scripts.cpp

@@ -32,6 +32,10 @@ Bug fixes::
   * buflist: fix extra spaces between buffers when conditions are used to hide buffers (regression introduced in version 2.6) (issue #1403)
   * irc: remove option irc.network.channel_encode, add server option "charset_message" to control which part of the IRC message is decoded/encoded to the target charset (issue #832)
 
+Tests::
+
+  * unit: add tests on GUI color functions
+
 Build::
 
   * core: fix build on Alpine
