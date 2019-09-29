@@ -23,6 +23,7 @@
 
 extern "C"
 {
+#include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
 #include "src/gui/gui-color.h"
 }
@@ -36,6 +37,11 @@ extern "C"
     decoded = gui_color_decode_ansi (__string, __keep_colors);          \
     STRCMP_EQUAL(__result, decoded);                                    \
     free (decoded);
+
+#define WEE_CHECK_ENCODE_ANSI(__result, __string)                       \
+    encoded = gui_color_encode_ansi (__string);                         \
+    STRCMP_EQUAL(__result, encoded);                                    \
+    free (encoded);
 
 #define WEE_CHECK_EMPHASIZE(__result, __string, __search,               \
                             __case_sensitive, __regex)                  \
@@ -388,6 +394,14 @@ TEST(GuiColor, ColorDecode)
     WEE_CHECK_DECODE("test_227,blue", string, NULL);
     WEE_CHECK_DECODE("test_227,blue", string, "");
     WEE_CHECK_DECODE("test_?227,blue", string, "?");
+
+    /* WeeChat color */
+    snprintf (string, sizeof (string),
+              "test_%soption_weechat.color.chat_host",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST));
+    WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, NULL);
+    WEE_CHECK_DECODE("test_option_weechat.color.chat_host", string, "");
+    WEE_CHECK_DECODE("test_?option_weechat.color.chat_host", string, "?");
 }
 
 /*
@@ -548,6 +562,132 @@ TEST(GuiColor, ColorDecodeAnsi)
         string,
         "test_\x1B[38;2;255;0;255m\x1B[48;2;0;0;128mfg_13_bg_04",
         1);
+}
+
+/*
+ * Tests functions:
+ *   gui_color_encode_ansi
+ */
+
+TEST(GuiColor, ColorEncodeAnsi)
+{
+    char string[256], *encoded;
+
+    /* NULL/empty string */
+    POINTERS_EQUAL(NULL, gui_color_encode_ansi (NULL));
+    WEE_CHECK_ENCODE_ANSI("", "");
+
+    /* reset */
+    snprintf (string, sizeof (string),
+              "test_%sreset", gui_color_get_custom ("reset"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[0mreset", string);
+
+    /* bold */
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[1mbold\x1B[21m_end", string);
+
+    /* reverse */
+    snprintf (string, sizeof (string),
+              "test_%sreverse%s_end",
+              gui_color_get_custom ("reverse"),
+              gui_color_get_custom ("-reverse"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[7mreverse\x1B[27m_end", string);
+
+    /* italic */
+    snprintf (string, sizeof (string),
+              "test_%sitalic%s_end",
+              gui_color_get_custom ("italic"),
+              gui_color_get_custom ("-italic"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[3mitalic\x1B[23m_end", string);
+
+    /* underline */
+    snprintf (string, sizeof (string),
+              "test_%sunderline%s_end",
+              gui_color_get_custom ("underline"),
+              gui_color_get_custom ("-underline"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[4munderline\x1B[24m_end", string);
+
+    /* text color */
+    snprintf (string, sizeof (string),
+              "test_%sblue",
+              gui_color_get_custom ("blue"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[34mblue", string);
+
+    /* bright text color */
+    snprintf (string, sizeof (string),
+              "test_%slightgreen",
+              gui_color_get_custom ("lightgreen"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[92mlightgreen", string);
+
+    /* text terminal color */
+    snprintf (string, sizeof (string),
+              "test_%s214",
+              gui_color_get_custom ("214"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[38;5;214m214", string);
+
+    /* background color */
+    snprintf (string, sizeof (string),
+              "test_%sbg_red",
+              gui_color_get_custom (",red"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[41mbg_red", string);
+
+    /* bright background color */
+    snprintf (string, sizeof (string),
+              "test_%sbg_lightgreen",
+              gui_color_get_custom (",lightgreen"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[102mbg_lightgreen", string);
+
+    /* background terminal color */
+    snprintf (string, sizeof (string),
+              "test_%sbg_240",
+              gui_color_get_custom (",240"));
+    WEE_CHECK_ENCODE_ANSI("test_\x1B[48;5;240mbg_240", string);
+
+    /* WeeChat color */
+    snprintf (string, sizeof (string),
+              "test_%soption_weechat.color.chat_host",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m\x1B[38;5;6m\x1B[49m"
+        "option_weechat.color.chat_host",
+        string);
+
+    /* WeeChat bright color */
+    snprintf (string, sizeof (string),
+              "test_%soption_weechat.color.chat_nick",
+              GUI_COLOR(GUI_COLOR_CHAT_NICK));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m\x1B[38;5;14m\x1B[49m"
+        "option_weechat.color.chat_nick",
+        string);
+
+    /* WeeChat color with attributes */
+    config_file_option_set (config_color_chat_host, "_green", 1);
+    snprintf (string, sizeof (string),
+              "test_%soption_weechat.color.chat_host",
+              GUI_COLOR(GUI_COLOR_CHAT_HOST));
+    WEE_CHECK_ENCODE_ANSI(
+        "test_\x1B[0m\x1B[4m\x1B[38;5;2m\x1B[49m"
+        "option_weechat.color.chat_host",
+        string);
+    config_file_option_reset (config_color_chat_host, 1);
+
+    /* multiple colors/attributes */
+    snprintf (string, sizeof (string),
+              "%shello, %sthis is%s a test %sblue %sreset %syellow,red here!",
+              gui_color_get_custom (",blue"),
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"),
+              gui_color_get_custom ("blue"),
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("yellow,red"));
+    WEE_CHECK_ENCODE_ANSI(
+        "\x1B[44mhello, \x1B[1mthis is\x1B[21m a test \x1B[34mblue \x1B[0m"
+        "reset \x1B[93m\x1B[41myellow,red here!",
+        string);
 }
 
 /*

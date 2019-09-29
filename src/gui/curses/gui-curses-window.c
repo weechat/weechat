@@ -181,7 +181,7 @@ gui_window_clear (WINDOW *window, int fg, int bg)
     if (!gui_init_ok)
         return;
 
-    attrs = gui_color_get_extended_attrs (fg);
+    attrs = gui_color_get_gui_attrs (fg);
 
     if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
         fg &= GUI_COLOR_EXTENDED_MASK;
@@ -420,7 +420,7 @@ gui_window_set_custom_color_fg (WINDOW *window, int fg)
         {
             if (!(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = gui_color_get_extended_attrs (fg) |
+            attributes = gui_color_get_gui_attrs (fg) |
                 gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
             gui_window_set_color_style (window, attributes);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;
@@ -505,7 +505,7 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg,
         {
             if (reset_attributes && !(fg & GUI_COLOR_EXTENDED_KEEPATTR_FLAG))
                 gui_window_remove_color_style (window, A_ALL_ATTR);
-            attributes = gui_color_get_extended_attrs (fg) |
+            attributes = gui_color_get_gui_attrs (fg) |
                 gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].attributes;
             gui_window_set_color_style (window, attributes);
             fg = gui_weechat_colors[fg & GUI_COLOR_EXTENDED_MASK].foreground;

@@ -188,6 +188,7 @@ extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
+extern char *gui_color_encode_ansi (const char *string);
 extern char *gui_color_emphasize (const char *string, const char *search,
                                   int case_sensitive, regex_t *regex);
 extern void gui_color_free (struct t_gui_color *color);
@@ -202,6 +203,8 @@ extern void gui_color_end ();
 /* color functions (GUI dependent) */
 
 extern int gui_color_search (const char *color_name);
+extern const char *gui_color_search_index (int index);
+extern int gui_color_get_extended_flags (int attrs);
 extern int gui_color_assign (int *color, char const *color_name);
 extern int gui_color_assign_by_diff (int *color, const char *color_name,
                                      int diff);

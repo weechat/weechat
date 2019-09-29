@@ -45,10 +45,10 @@
 #define COLOR_WHITE	7
 
 #define A_NORMAL 0
-#define A_BOLD 0
-#define A_UNDERLINE 0
-#define A_REVERSE 0
-#define A_ITALIC 0
+#define A_BOLD (1 << (13 + 8))
+#define A_UNDERLINE (1 << (9 + 8))
+#define A_REVERSE (1 << (10 + 8))
+#define A_ITALIC (1 << (23 + 8))
 
 #define ACS_HLINE '-'
 #define ACS_VLINE '|'

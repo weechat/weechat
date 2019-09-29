@@ -91,7 +91,8 @@ extern void gui_main_init ();
 extern void gui_main_loop ();
 
 /* color functions */
-extern int gui_color_get_extended_attrs (int color);
+extern int gui_color_get_gui_attrs (int color);
+extern int gui_color_get_extended_flags (int attrs);
 extern int gui_color_get_pair (int fg, int bg);
 extern int gui_color_weechat_get_pair (int weechat_color);
 extern void gui_color_alloc ();

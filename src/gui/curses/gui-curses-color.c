@@ -115,7 +115,7 @@ int gui_color_timer = 0;                      /* timer in seconds           */
 /*
  * Searches for a color by name.
  *
- * Return index of color in WeeChat colors table, -1 if not found.
+ * Returns index of color in WeeChat colors table, -1 if not found.
  */
 
 int
@@ -134,11 +134,32 @@ gui_color_search (const char *color_name)
 }
 
 /*
+ * Searches for a color by index.
+ *
+ * Returns name of color in WeeChat colors table, NULL if not found.
+ */
+
+const char *
+gui_color_search_index (int index)
+{
+    int i;
+
+    for (i = 0; gui_weechat_colors[i].string; i++)
+    {
+        if (i == index)
+            return gui_weechat_colors[i].string;
+    }
+
+    /* color not found */
+    return NULL;
+}
+
+/*
  * Get Curses attributes corresponding to extended attributes flags in a color.
  */
 
 int
-gui_color_get_extended_attrs (int color)
+gui_color_get_gui_attrs (int color)
 {
     int attributes;
 
@@ -154,6 +175,29 @@ gui_color_get_extended_attrs (int color)
         attributes |= A_UNDERLINE;
 
     return attributes;
+}
+
+/*
+ * Get extended flags corresponding to Curses attributes in a color.
+ */
+
+int
+gui_color_get_extended_flags (int attrs)
+{
+    int flags;
+
+    flags = 0;
+
+    if (attrs & A_BOLD)
+        flags |= GUI_COLOR_EXTENDED_BOLD_FLAG;
+    if (attrs & A_REVERSE)
+        flags |= GUI_COLOR_EXTENDED_REVERSE_FLAG;
+    if (attrs & A_ITALIC)
+        flags |= GUI_COLOR_EXTENDED_ITALIC_FLAG;
+    if (attrs & A_UNDERLINE)
+        flags |= GUI_COLOR_EXTENDED_UNDERLINE_FLAG;
+
+    return flags;
 }
 
 /*
@@ -546,7 +590,7 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->foreground = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].foreground;
         gui_color[number]->attributes = gui_weechat_colors[foreground & GUI_COLOR_EXTENDED_MASK].attributes;
     }
-    gui_color[number]->attributes |= gui_color_get_extended_attrs (foreground);
+    gui_color[number]->attributes |= gui_color_get_gui_attrs (foreground);
 
     /* set background */
     if (background & GUI_COLOR_EXTENDED_FLAG)
