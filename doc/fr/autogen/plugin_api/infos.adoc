@@ -116,7 +116,7 @@
 
 | weechat | term_width | largeur du terminal | -
 
-| weechat | totp_generate | générer un mot de passe à usage unique basé sur le temps (TOTP) | secret (en base32), horodatage (optionnel, heure courante par défaut), nombre de chiffres (optionnal, entre 4 et 10, 6 par défaut)
+| weechat | totp_generate | générer un mot de passe à usage unique basé sur le temps (TOTP) | secret (en base32), horodatage (optionnel, heure courante par défaut), nombre de chiffres (optionnel, entre 4 et 10, 6 par défaut)
 
 | weechat | totp_validate | valider un mot de passe à usage unique basé sur le temps (TOTP) : 1 si le TOTP est correct, sinon 0 | secret (en base32), mot de passe à usage unique, horodatage (optionnel, heure courante par défaut), nombre de mots de passe avant/après à tester (optionnel, 0 par défaut)
 
