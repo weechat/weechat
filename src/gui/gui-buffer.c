@@ -688,7 +688,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                   plugin_get_name (plugin),
                                   name,
                                   &(new_buffer->layout_number),
-                                  &(new_buffer->layout_number_merge_order));
+                                  &(new_buffer->layout_number_merge_order),
+                                  &(new_buffer->layout_active));
     new_buffer->name = strdup (name);
     new_buffer->full_name = NULL;
     gui_buffer_build_full_name (new_buffer);
@@ -1127,6 +1128,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->layout_number;
     else if (string_strcasecmp (property, "layout_number_merge_order") == 0)
         return buffer->layout_number_merge_order;
+    else if (string_strcasecmp (property, "layout_active") == 0)
+        return buffer->layout_active;
     else if (string_strcasecmp (property, "short_name_is_set") == 0)
         return (buffer->short_name) ? 1 : 0;
     else if (string_strcasecmp (property, "type") == 0)
@@ -4204,6 +4207,7 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, number, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, layout_number_merge_order, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, layout_active, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, full_name, STRING, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, short_name, STRING, 0, NULL, NULL);
@@ -4384,6 +4388,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_integer (ptr_item, "layout_number", buffer->layout_number))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "layout_number_merge_order", buffer->layout_number_merge_order))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "layout_active", buffer->layout_active))
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
         return 0;
@@ -4614,6 +4620,7 @@ gui_buffer_print_log ()
         log_printf ("  number. . . . . . . . . : %d",    ptr_buffer->number);
         log_printf ("  layout_number . . . . . : %d",    ptr_buffer->layout_number);
         log_printf ("  layout_number_merge_order: %d",    ptr_buffer->layout_number_merge_order);
+        log_printf ("  layout_active . . . . . : %d",    ptr_buffer->layout_active);
         log_printf ("  name. . . . . . . . . . : '%s'",  ptr_buffer->name);
         log_printf ("  full_name . . . . . . . : '%s'",  ptr_buffer->full_name);
         log_printf ("  short_name. . . . . . . : '%s'",  ptr_buffer->short_name);
