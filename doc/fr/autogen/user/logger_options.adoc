@@ -9,7 +9,7 @@
 ** valeur par défaut: `+default+`
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** description: pass:none[couleur pour les lignes de l'historique]
+** description: pass:none[couleur pour les lignes de l'historique, utilisée seulement si l'option logger.file.color_lines est désactivée]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
 ** valeur par défaut: `+default+`
@@ -19,6 +19,12 @@
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
+
+* [[option_logger.file.color_lines]] *logger.file.color_lines*
+** description: pass:none[utiliser des codes de couleurs ANSI dans les lignes écrites dans les fichiers de log et afficher les lignes de l'historique avec ces couleurs]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** description: pass:none[nombre de secondes entre les "flush" (écriture) dans les fichiers de log (0 = écrire immédiatement dans les fichiers de log pour chaque ligne affichée)]

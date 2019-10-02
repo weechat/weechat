@@ -51,7 +51,8 @@ WEECHAT_PLUGIN_PRIORITY(14000);
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
-struct t_hook *logger_timer = NULL;    /* timer to flush log files          */
+struct t_hook *logger_hook_timer = NULL;    /* timer to flush log files     */
+struct t_hook *logger_hook_print = NULL;
 
 
 /*
@@ -610,7 +611,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
         if (message)
             free (message);
         logger_buffer->flush_needed = 1;
-        if (!logger_timer)
+        if (!logger_hook_timer)
         {
             fflush (logger_buffer->log_file);
             if (weechat_config_boolean (logger_config_file_fsync))
@@ -1007,8 +1008,9 @@ logger_print_cb (const void *pointer, void *data,
 {
     struct t_logger_buffer *ptr_logger_buffer;
     struct tm *date_tmp;
-    char buf_time[256];
-    int line_log_level, prefix_is_nick;
+    char buf_time[256], *prefix_ansi, *message_ansi;
+    const char *ptr_prefix, *ptr_message;
+    int line_log_level, prefix_is_nick, color_lines;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1018,32 +1020,56 @@ logger_print_cb (const void *pointer, void *data,
 
     logger_get_line_tag_info (tags_count, tags, &line_log_level,
                               &prefix_is_nick);
-    if (line_log_level >= 0)
-    {
-        ptr_logger_buffer = logger_buffer_search_buffer (buffer);
-        if (ptr_logger_buffer
-            && ptr_logger_buffer->log_enabled
-            && (date > 0)
-            && (line_log_level <= ptr_logger_buffer->log_level))
-        {
-            buf_time[0] = '\0';
-            date_tmp = localtime (&date);
-            if (date_tmp)
-            {
-                if (strftime (buf_time, sizeof (buf_time) - 1,
-                              weechat_config_string (logger_config_file_time_format),
-                              date_tmp) == 0)
-                    buf_time[0] = '\0';
-            }
+    if (line_log_level < 0)
+        return WEECHAT_RC_OK;
 
-            logger_write_line (ptr_logger_buffer,
-                               "%s\t%s%s%s\t%s",
-                               buf_time,
-                               (prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
-                               (prefix) ? prefix : "",
-                               (prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
-                               message);
+    ptr_logger_buffer = logger_buffer_search_buffer (buffer);
+    if (ptr_logger_buffer
+        && ptr_logger_buffer->log_enabled
+        && (date > 0)
+        && (line_log_level <= ptr_logger_buffer->log_level))
+    {
+        prefix_ansi = NULL;
+        message_ansi = NULL;
+        color_lines = weechat_config_boolean (logger_config_file_color_lines);
+        if (color_lines)
+        {
+            prefix_ansi = weechat_hook_modifier_exec ("color_encode_ansi",
+                                                      NULL, prefix);
+            message_ansi = weechat_hook_modifier_exec ("color_encode_ansi",
+                                                      NULL, message);
+            ptr_prefix = prefix_ansi;
+            ptr_message = message_ansi;
         }
+        else
+        {
+            ptr_prefix = prefix;
+            ptr_message = message;
+        }
+        buf_time[0] = '\0';
+        date_tmp = localtime (&date);
+        if (date_tmp)
+        {
+            if (strftime (buf_time, sizeof (buf_time) - 1,
+                          weechat_config_string (logger_config_file_time_format),
+                          date_tmp) == 0)
+                buf_time[0] = '\0';
+        }
+
+        logger_write_line (
+            ptr_logger_buffer,
+            "%s\t%s%s%s\t%s%s",
+            buf_time,
+            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_prefix) : "",
+            (ptr_prefix) ? ptr_prefix : "",
+            (ptr_prefix && prefix_is_nick) ? weechat_config_string (logger_config_file_nick_suffix) : "",
+            (color_lines) ? "\x1B[0m" : "",
+            ptr_message);
+
+        if (prefix_ansi)
+            free (prefix_ansi);
+        if (message_ansi)
+            free (message_ansi);
     }
 
     return WEECHAT_RC_OK;
@@ -1103,7 +1129,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("day_changed",
                          &logger_day_changed_signal_cb, NULL, NULL);
 
-    weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL, NULL);
+    logger_config_color_lines_change (NULL, NULL, NULL);
 
     logger_info_init ();
 
@@ -1120,10 +1146,16 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
 
-    if (logger_timer)
+    if (logger_hook_print)
     {
-        weechat_unhook (logger_timer);
-        logger_timer = NULL;
+        weechat_unhook (logger_hook_print);
+        logger_hook_print = NULL;
+    }
+
+    if (logger_hook_timer)
+    {
+        weechat_unhook (logger_hook_timer);
+        logger_hook_timer = NULL;
     }
 
     logger_config_write ();

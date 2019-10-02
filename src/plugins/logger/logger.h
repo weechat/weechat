@@ -30,7 +30,8 @@ struct t_logger_buffer;
 
 extern struct t_weechat_plugin *weechat_logger_plugin;
 
-extern struct t_hook *logger_timer;
+extern struct t_hook *logger_hook_timer;
+extern struct t_hook *logger_hook_print;
 
 extern char *logger_build_option_name (struct t_gui_buffer *buffer);
 extern void logger_set_log_filename (struct t_logger_buffer *logger_buffer);
@@ -38,6 +39,11 @@ extern void logger_start_buffer_all (int write_info_line);
 extern void logger_flush ();
 extern void logger_stop_all (int write_info_line);
 extern void logger_adjust_log_filenames ();
+extern int logger_print_cb (const void *pointer, void *data,
+                            struct t_gui_buffer *buffer, time_t date,
+                            int tags_count, const char **tags,
+                            int displayed, int highlight,
+                            const char *prefix, const char *message);
 extern int logger_timer_cb (const void *pointer, void *data,
                             int remaining_calls);
 

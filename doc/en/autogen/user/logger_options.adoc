@@ -9,7 +9,7 @@
 ** default value: `+default+`
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** description: pass:none[color for backlog lines]
+** description: pass:none[color for backlog lines, used only if the option logger.file.color_lines is off]
 ** type: color
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** default value: `+default+`
@@ -19,6 +19,12 @@
 ** type: boolean
 ** values: on, off
 ** default value: `+on+`
+
+* [[option_logger.file.color_lines]] *logger.file.color_lines*
+** description: pass:none[use ANSI color codes in lines written in log files and display backlog lines with these colors]
+** type: boolean
+** values: on, off
+** default value: `+off+`
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** description: pass:none[number of seconds between flush of log files (0 = write in log files immediately for each line printed)]

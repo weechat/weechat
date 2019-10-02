@@ -9,7 +9,7 @@
 ** デフォルト値: `+default+`
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** 説明: pass:none[バックログ行の色]
+** 説明: pass:none[color for backlog lines, used only if the option logger.file.color_lines is off]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+default+`
@@ -19,6 +19,12 @@
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`
+
+* [[option_logger.file.color_lines]] *logger.file.color_lines*
+** 説明: pass:none[use ANSI color codes in lines written in log files and display backlog lines with these colors]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+off+`
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** 説明: pass:none[ログファイルをフラッシュする間隔の秒数 (0 = 行が表示されたらすぐにログファイルに書き込み)]

@@ -30,6 +30,7 @@ extern struct t_config_option *logger_config_color_backlog_end;
 extern struct t_config_option *logger_config_color_backlog_line;
 
 extern struct t_config_option *logger_config_file_auto_log;
+extern struct t_config_option *logger_config_file_color_lines;
 extern struct t_config_option *logger_config_file_flush_delay;
 extern struct t_config_option *logger_config_file_fsync;
 extern struct t_config_option *logger_config_file_info_lines;
@@ -44,6 +45,8 @@ extern struct t_config_option *logger_config_file_time_format;
 extern struct t_config_option *logger_config_get_level (const char *name);
 extern int logger_config_set_level (const char *name, const char *value);
 extern struct t_config_option *logger_config_get_mask (const char *name);
+extern void logger_config_color_lines_change (const void *pointer, void *data,
+                                              struct t_config_option *option);
 extern int logger_config_init ();
 extern int logger_config_read ();
 extern int logger_config_write ();

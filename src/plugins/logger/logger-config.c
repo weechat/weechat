@@ -46,6 +46,7 @@ struct t_config_option *logger_config_color_backlog_line;
 /* logger config, file section */
 
 struct t_config_option *logger_config_file_auto_log;
+struct t_config_option *logger_config_file_color_lines;
 struct t_config_option *logger_config_file_flush_delay;
 struct t_config_option *logger_config_file_fsync;
 struct t_config_option *logger_config_file_info_lines;
@@ -77,6 +78,31 @@ logger_config_change_file_option_restart_log (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on option "logger.file.color_lines".
+ */
+
+void
+logger_config_color_lines_change (const void *pointer, void *data,
+                                  struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (logger_config_loading)
+        return;
+
+    if (logger_hook_print)
+        weechat_unhook (logger_hook_print);
+
+    logger_hook_print = weechat_hook_print (
+        NULL, NULL, NULL,
+        (weechat_config_boolean (logger_config_file_color_lines)) ? 0 : 1,
+        &logger_print_cb, NULL, NULL);
+}
+
+/*
  * Callback for changes on option "logger.file.flush_delay".
  */
 
@@ -92,7 +118,7 @@ logger_config_flush_delay_change (const void *pointer, void *data,
     if (logger_config_loading)
         return;
 
-    if (logger_timer)
+    if (logger_hook_timer)
     {
         if (weechat_logger_plugin->debug)
         {
@@ -100,8 +126,8 @@ logger_config_flush_delay_change (const void *pointer, void *data,
                 NULL, 0, "no_log",
                 "%s: stopping timer", LOGGER_PLUGIN_NAME);
         }
-        weechat_unhook (logger_timer);
-        logger_timer = NULL;
+        weechat_unhook (logger_hook_timer);
+        logger_hook_timer = NULL;
     }
 
     if (weechat_config_integer (logger_config_file_flush_delay) > 0)
@@ -114,9 +140,10 @@ logger_config_flush_delay_change (const void *pointer, void *data,
                 LOGGER_PLUGIN_NAME,
                 weechat_config_integer (logger_config_file_flush_delay));
         }
-        logger_timer = weechat_hook_timer (weechat_config_integer (logger_config_file_flush_delay) * 1000,
-                                           0, 0,
-                                           &logger_timer_cb, NULL, NULL);
+        logger_hook_timer = weechat_hook_timer (
+            weechat_config_integer (logger_config_file_flush_delay) * 1000,
+            0, 0,
+            &logger_timer_cb, NULL, NULL);
     }
 }
 
@@ -435,7 +462,8 @@ logger_config_init ()
     logger_config_color_backlog_line = weechat_config_new_option (
         logger_config_file, ptr_section,
         "backlog_line", "color",
-        N_("color for backlog lines"),
+        N_("color for backlog lines, used only if the option "
+           "logger.file.color_lines is off"),
         NULL, -1, 0, "default", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -461,6 +489,15 @@ logger_config_init ()
            "disables log)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    logger_config_file_color_lines = weechat_config_new_option (
+        logger_config_file, ptr_section,
+        "color_lines", "boolean",
+        N_("use ANSI color codes in lines written in log files and display "
+           "backlog lines with these colors"),
+        NULL, 0, 0, "off", NULL, 0,
+        NULL, NULL, NULL,
+        &logger_config_color_lines_change, NULL, NULL,
+        NULL, NULL, NULL);
     logger_config_file_flush_delay = weechat_config_new_option (
         logger_config_file, ptr_section,
         "flush_delay", "integer",

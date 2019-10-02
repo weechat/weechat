@@ -110,12 +110,14 @@ void
 logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
     struct t_logger_line *last_lines, *ptr_lines;
-    char *charset, *pos_message, *pos_tab, *error, *message;
+    char *charset, *pos_message, *pos_tab, *error, *message, *message2;
     time_t datetime, time_now;
     struct tm tm_line;
-    int num_lines;
+    int color_lines, num_lines;
 
     weechat_buffer_set (buffer, "print_hooks_enabled", "0");
+
+    color_lines = weechat_config_boolean (logger_config_file_color_lines);
 
     num_lines = 0;
     last_lines = logger_tail_file (filename, lines);
@@ -145,26 +147,35 @@ logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
         }
         pos_message = (pos_message && (datetime != 0)) ?
             pos_message + 1 : ptr_lines->data;
-        charset = weechat_info_get ("charset_terminal", "");
-        message = (charset) ?
-            weechat_iconv_to_internal (charset, pos_message) : strdup (pos_message);
-        if (charset)
-            free (charset);
+        message = weechat_hook_modifier_exec (
+            "color_decode_ansi",
+            (color_lines) ? "1" : "0",
+            pos_message);
         if (message)
         {
-            pos_tab = strchr (message, '\t');
-            if (pos_tab)
-                pos_tab[0] = '\0';
-            weechat_printf_date_tags (buffer, datetime,
-                                      "no_highlight,notify_none,logger_backlog",
-                                      "%s%s%s%s%s",
-                                      weechat_color (weechat_config_string (logger_config_color_backlog_line)),
-                                      message,
-                                      (pos_tab) ? "\t" : "",
-                                      (pos_tab) ? weechat_color (weechat_config_string (logger_config_color_backlog_line)) : "",
-                                      (pos_tab) ? pos_tab + 1 : "");
-            if (pos_tab)
-                pos_tab[0] = '\t';
+            charset = weechat_info_get ("charset_terminal", "");
+            message2 = (charset) ?
+                weechat_iconv_to_internal (charset, message) : strdup (message);
+            if (charset)
+                free (charset);
+            if (message2)
+            {
+                pos_tab = strchr (message2, '\t');
+                if (pos_tab)
+                    pos_tab[0] = '\0';
+                weechat_printf_date_tags (
+                    buffer, datetime,
+                    "no_highlight,notify_none,logger_backlog",
+                    "%s%s%s%s%s",
+                    (color_lines) ? "" : weechat_color (weechat_config_string (logger_config_color_backlog_line)),
+                    message2,
+                    (pos_tab) ? "\t" : "",
+                    (pos_tab && !color_lines) ? weechat_color (weechat_config_string (logger_config_color_backlog_line)) : "",
+                    (pos_tab) ? pos_tab + 1 : "");
+                if (pos_tab)
+                    pos_tab[0] = '\t';
+                free (message2);
+            }
             free (message);
         }
         num_lines++;

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-09-27 18:18+0200\n"
+"POT-Creation-Date: 2019-10-02 20:42+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9246,12 +9246,18 @@ msgstr ""
 msgid "color for line ending the backlog"
 msgstr "цвет ников"
 
-#, fuzzy
-msgid "color for backlog lines"
-msgstr "цвет отошедших ников"
+msgid ""
+"color for backlog lines, used only if the option logger.file.color_lines is "
+"off"
+msgstr ""
 
 msgid ""
 "automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+
+msgid ""
+"use ANSI color codes in lines written in log files and display backlog lines "
+"with these colors"
 msgstr ""
 
 msgid ""
@@ -12198,3 +12204,7 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy
+#~ msgid "color for backlog lines"
+#~ msgstr "цвет отошедших ников"

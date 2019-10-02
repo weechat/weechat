@@ -9,7 +9,7 @@
 ** Standardwert: `+default+`
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** Beschreibung: pass:none[Textfarbe in der der Verlaufsspeicher dargestellt werden soll]
+** Beschreibung: pass:none[color for backlog lines, used only if the option logger.file.color_lines is off]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+default+`
@@ -19,6 +19,12 @@
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
+
+* [[option_logger.file.color_lines]] *logger.file.color_lines*
+** Beschreibung: pass:none[use ANSI color codes in lines written in log files and display backlog lines with these colors]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+off+`
 
 * [[option_logger.file.flush_delay]] *logger.file.flush_delay*
 ** Beschreibung: pass:none[Zeit, in Sekunden, die verstreicht bis eine Protokolldatei gesichert wird (0 = Protokolldatei wird unmittelbar gesichert, nachdem eine neue Zeile dargestellt wurde)]
