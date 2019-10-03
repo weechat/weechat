@@ -3670,24 +3670,22 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
 void
 gui_buffer_unmerge_all ()
 {
-    struct t_gui_buffer *ptr_buffer, *ptr_next_buffer;
+    struct t_gui_buffer *ptr_buffer, *ptr_prev_buffer;
     int number;
 
-    ptr_buffer = gui_buffers;
+    ptr_buffer = last_gui_buffer;
     while (ptr_buffer)
     {
         number = ptr_buffer->number;
         while (gui_buffer_count_merged_buffers (number) > 1)
         {
-            ptr_next_buffer = ptr_buffer->next_buffer;
+            ptr_prev_buffer = ptr_buffer->prev_buffer;
             gui_buffer_unmerge (ptr_buffer, -1);
-            ptr_buffer = ptr_next_buffer;
+            ptr_buffer = ptr_prev_buffer;
         }
-        /* go to the next number */
-        while (ptr_buffer && (ptr_buffer->number == number))
-        {
-            ptr_buffer = ptr_buffer->next_buffer;
-        }
+        /* go to the previous number */
+        if (ptr_buffer)
+            ptr_buffer = ptr_buffer->prev_buffer;
     }
 }
 
