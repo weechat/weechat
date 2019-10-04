@@ -373,7 +373,7 @@ reason: 理由
 ----
 
 [[command_irc_links]]
-* `+links+`: このクエリに応答するサーバが知っている全てのサーバ名をリストアップ
+* `+links+`: list all server names which are known by the server answering the query
 
 ----
 /links  [[<target>] <server_mask>]

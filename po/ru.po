@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-02 20:42+0200\n"
+"POT-Creation-Date: 2019-10-04 20:38+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6475,7 +6475,8 @@ msgstr ""
 "  ник: приглашаемый ник\n"
 "канал: целевой канал"
 
-msgid "list all servernames which are known by the server answering the query"
+#, fuzzy
+msgid "list all server names which are known by the server answering the query"
 msgstr "перечислить все серверы известные серверу, отвечающему на запрос"
 
 #, fuzzy

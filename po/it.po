@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-02 20:42+0200\n"
+"POT-Creation-Date: 2019-10-04 20:38+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7395,7 +7395,8 @@ msgstr ""
 "  nick: nick\n"
 "motivo: motivo"
 
-msgid "list all servernames which are known by the server answering the query"
+#, fuzzy
+msgid "list all server names which are known by the server answering the query"
 msgstr ""
 "elenca tutti i nomi server conosciuti dal server che risponde alla richiesta"
 

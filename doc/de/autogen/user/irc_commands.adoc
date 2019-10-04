@@ -373,7 +373,7 @@ reason: Grund der Abmeldung
 ----
 
 [[command_irc_links]]
-* `+links+`: alle Servernamen auflisten die dem antwortenden Server bekannt sind
+* `+links+`: list all server names which are known by the server answering the query
 
 ----
 /links  [[<target>] <server_mask>]

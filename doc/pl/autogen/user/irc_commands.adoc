@@ -373,7 +373,7 @@ powód: powód
 ----
 
 [[command_irc_links]]
-* `+links+`: wyświetla wszystkie nazwy serwerów, które są połączone z tym samym serwerem co my
+* `+links+`: list all server names which are known by the server answering the query
 
 ----
 /links  [[<cel>] <maska>]

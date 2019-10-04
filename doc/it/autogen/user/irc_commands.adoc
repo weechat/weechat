@@ -373,7 +373,7 @@ motivo: motivo
 ----
 
 [[command_irc_links]]
-* `+links+`: elenca tutti i nomi server conosciuti dal server che risponde alla richiesta
+* `+links+`: list all server names which are known by the server answering the query
 
 ----
 /links  [[<target>] <server_mask>]

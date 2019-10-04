@@ -6667,7 +6667,7 @@ irc_command_init ()
         "%(nicks) %-", &irc_command_kill, NULL, NULL);
     weechat_hook_command (
         "links",
-        N_("list all servernames which are known by the server answering the "
+        N_("list all server names which are known by the server answering the "
            "query"),
         N_("[[<target>] <server_mask>]"),
         N_("     target: this remote server should answer the query\n"
