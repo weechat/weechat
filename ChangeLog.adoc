@@ -26,7 +26,7 @@ New features::
   * irc: add "user" in output of irc_message_parse (issue #136)
   * irc: add options irc.color.message_kick and irc.color.reason_kick (issue #683, issue #684)
   * logger: add option logger.file.color_lines (issue #528, issue #621)
-  * script: add options "-ol" and "-il" in command /script to send translated string with list of scripts loaded, display "No scripts loaded" if no scripts are loaded
+  * script: add options "-ol" and "-il" in command "/script list" to send translated string with list of scripts loaded, display "No scripts loaded" if no scripts are loaded
   * xfer: add option xfer.file.download_temporary_suffix with default value ".part" (issue #1237)
 
 Bug fixes::
