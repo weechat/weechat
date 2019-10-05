@@ -465,9 +465,16 @@ xfer_alloc ()
 
     time_now = time (NULL);
 
-    /* default values */
+    new_xfer->plugin_id = NULL;
+    new_xfer->plugin_name = NULL;
+    new_xfer->type = 0;
+    new_xfer->protocol = 0;
+    new_xfer->remote_nick = NULL;
+    new_xfer->local_nick = NULL;
+    new_xfer->charset_modifier = NULL;
     new_xfer->filename = NULL;
     new_xfer->size = 0;
+    new_xfer->proxy = NULL;
     new_xfer->local_address = NULL;
     new_xfer->local_address_length = 0;
     new_xfer->local_address_str = NULL;
@@ -475,16 +482,11 @@ xfer_alloc ()
     new_xfer->remote_address_length = 0;
     new_xfer->remote_address_str = NULL;
     new_xfer->port = 0;
-    new_xfer->remote_nick = NULL;
-    new_xfer->local_nick = NULL;
-    new_xfer->charset_modifier = NULL;
-
-    new_xfer->type = 0;
-    new_xfer->protocol = 0;
     new_xfer->status = 0;
     new_xfer->buffer = NULL;
     new_xfer->remote_nick_color = NULL;
     new_xfer->fast_send = weechat_config_boolean (xfer_config_network_fast_send);
+    new_xfer->send_ack = weechat_config_boolean (xfer_config_network_send_ack);
     new_xfer->blocksize = weechat_config_integer (xfer_config_network_blocksize);
     new_xfer->start_time = time_now;
     new_xfer->start_transfer = time_now;
@@ -501,13 +503,15 @@ xfer_alloc ()
     new_xfer->filename_suffix = -1;
     new_xfer->pos = 0;
     new_xfer->ack = 0;
-    new_xfer->send_ack = weechat_config_boolean (xfer_config_network_send_ack);
     new_xfer->start_resume = 0;
     new_xfer->last_check_time = time_now;
     new_xfer->last_check_pos = time_now;
     new_xfer->last_activity = 0;
     new_xfer->bytes_per_sec = 0;
     new_xfer->eta = 0;
+    new_xfer->hash_handle = NULL;
+    new_xfer->hash_target = NULL;
+    new_xfer->hash_status = XFER_HASH_STATUS_UNKNOWN;
 
     new_xfer->prev_xfer = NULL;
     new_xfer->next_xfer = xfer_list;
@@ -917,6 +921,8 @@ xfer_free (struct t_xfer *xfer)
     /* free data */
     if (xfer->plugin_id)
         free (xfer->plugin_id);
+    if (xfer->plugin_name)
+        free (xfer->plugin_name);
     if (xfer->remote_nick)
         free (xfer->remote_nick);
     if (xfer->local_nick)
@@ -925,6 +931,8 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->charset_modifier);
     if (xfer->filename)
         free (xfer->filename);
+    if (xfer->proxy)
+        free (xfer->proxy);
     if (xfer->local_address)
         free (xfer->local_address);
     if (xfer->local_address_str)
@@ -933,8 +941,16 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->remote_address);
     if (xfer->remote_address_str)
         free (xfer->remote_address_str);
+    if (xfer->buffer)
+        free (xfer->buffer);
     if (xfer->remote_nick_color)
         free (xfer->remote_nick_color);
+    if (xfer->hook_fd)
+        weechat_unhook (xfer->hook_fd);
+    if (xfer->hook_timer)
+        weechat_unhook (xfer->hook_timer);
+    if (xfer->hook_connect)
+        weechat_unhook (xfer->hook_connect);
     if (xfer->unterminated_message)
         free (xfer->unterminated_message);
     if (xfer->local_filename)
@@ -956,6 +972,18 @@ xfer_free (struct t_xfer *xfer)
         xfer_buffer_selected_line = (xfer_count == 0) ? 0 : xfer_count - 1;
 }
 
+/*
+ * Frees all xfers.
+ */
+
+void
+xfer_free_all ()
+{
+    while (xfer_list)
+    {
+        xfer_free (xfer_list);
+    }
+}
 
 /*
  * Resolves address.
@@ -1859,6 +1887,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         xfer_upgrade_save ();
     else
         xfer_disconnect_all ();
+
+    xfer_free_all ();
 
     return WEECHAT_RC_OK;
 }
