@@ -203,7 +203,7 @@ New features::
   * core: allow multiple options "-r" (or "--run-command") in command line arguments (issue #1248)
   * core: add command line option "-P" (or "--plugins") to customize the plugins to load at startup
   * core: allow partial buffer name in command "/buffer close" (issue #1226)
-  * api: add function hook_line
+  * api: add function hook_line (issue #66)
   * irc: display a warning when the value of option irc.server.xxx.autojoin is set to an invalid value
   * relay: add real IP in client description (issue #1256)
   * trigger: allow creation of temporary variables with the regex
