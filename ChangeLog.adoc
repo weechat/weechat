@@ -199,10 +199,10 @@ New features::
 
   * core: add repeat of string in evaluation of expressions with "repeat:count,string" (issue #958)
   * core: allow specifying buffer number/name for /buffer localvar (issue #1259)
-  * core: allow multiple arguments in command /buffer close
+  * core: allow multiple arguments in command "/buffer close"
   * core: allow multiple options "-r" (or "--run-command") in command line arguments (issue #1248)
   * core: add command line option "-P" (or "--plugins") to customize the plugins to load at startup
-  * core: allow partial buffer name in command /buffer close (issue #1226)
+  * core: allow partial buffer name in command "/buffer close" (issue #1226)
   * api: add function hook_line
   * irc: display a warning when the value of option irc.server.xxx.autojoin is set to an invalid value
   * relay: add real IP in client description (issue #1256)
@@ -344,7 +344,7 @@ New features::
   * core: add flag "input_get_empty" in buffer
   * core: add signals "buffer_filters_enabled" and "buffer_filters_disabled"
   * core: support loading of plugins from path in environment variable "WEECHAT_EXTRA_LIBDIR" (issue #971, issue #979)
-  * core: make value optional in command /buffer set (issue #746, issue #1088)
+  * core: make value optional in command "/buffer set" (issue #746, issue #1088)
   * core: allow floating point and hexadecimal numbers in comparison of evaluated values
   * core: add option weechat.look.save_config_with_fsync (issue #1083)
   * api: add support of prefix "quiet:" in function key_unbind to quietly remove keys
@@ -522,7 +522,7 @@ Build::
 
 New features::
 
-  * core: add optional argument "lowest", "highest" or level mask in command /input hotlist_clear
+  * core: add optional argument "lowest", "highest" or level mask in command "/input hotlist_clear"
   * core: add option "cycle" in command /buffer
   * core, irc, xfer: display more information on memory allocation errors (issue #573)
   * api: add "extra" argument to evaluate extra variables in function string_eval_expression (issue #534)
@@ -719,7 +719,7 @@ New features::
   * core: add options weechat.look.word_chars_{highlight|input} (issue #55, task #9459)
   * core: remove WeeChat version from config files (issue #407)
   * core: display a warning on startup if the locale can not be set (issue #373)
-  * core: allow "*" as plugin name in command /plugin reload to reload all plugins with options
+  * core: allow "*" as plugin name in command "/plugin reload" to reload all plugins with options
   * core: add option "-s" in command /eval to split expression before evaluating it (no more split by default) (issue #324)
   * core: add priority in plugins to initialize them in order
   * api: add support of environment variables in function string_eval_expression and command /eval
@@ -1663,14 +1663,14 @@ New features::
   * core: allow name of buffer for command /buffer clear (task #11269)
   * core: add new command /repeat (execute a command several times)
   * core: save and restore layout for buffers and windows on /upgrade
-  * core: add option "-all" in command /buffer unmerge
+  * core: add option "-all" in command "/buffer unmerge"
   * core: add number in windows (add optional argument "-window" so some actions for command /window)
   * core: allow buffer name in /buffer close
   * core: add support of mouse: new command /mouse, new key context "mouse", new options weechat.look.mouse and weechat.look.mouse_timer_delay (task #5435)
   * core: add command /cursor (free movement of cursor on screen), with key context "cursor"
   * core: automatic scroll direction in /bar scroll (x/y is now optional)
   * core: add optional delay for key grab (commands /input grab_key and /input grab_key_command, default is 500 milliseconds)
-  * core: allow plugin name in command /buffer name
+  * core: allow plugin name in command "/buffer name"
   * core: add context "search" for keys (to define keys used during search in buffer with kbd:[Ctrl+r])
   * core: add new option weechat.look.separator_vertical, rename option weechat.look.hline_char to weechat.look.separator_horizontal
   * core: add local variable "highlight_regex" in buffers
@@ -1751,7 +1751,7 @@ New features::
   * core: add option weechat.look.hotlist_buffer_separator
   * core: add messages counts in hotlist for each buffer, new options: weechat.look.hotlist_count_max, weechat.look.hotlist_count_min_msg and weechat.color.status_count_{msg|private|highlight|other}
   * core: add tag "notify_none" (line with this tag will not update hotlist)
-  * core: add optional bar name in command /bar default
+  * core: add optional bar name in command "/bar default"
   * core: add new option weechat.look.highlight_tags (force highlight on tags)
   * core: allow list of buffers in command /filter (exclusion with prefix "!") (task #10880)
   * core: allow relative size for command /window resize
