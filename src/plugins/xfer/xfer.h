@@ -170,6 +170,9 @@ struct t_xfer
     char *unterminated_message;        /* beginning of a message            */
     int file;                          /* local file (read or write)        */
     char *local_filename;              /* local filename (with path)        */
+    char *temp_local_filename;         /* local filename filename with      */
+                                       /* temp. suffix (during transfer,    */
+                                       /* for receive file only)            */
     int filename_suffix;               /* suffix (like .1) if renaming file */
     unsigned long long pos;            /* number of bytes received/sent     */
     unsigned long long ack;            /* number of bytes received OK       */

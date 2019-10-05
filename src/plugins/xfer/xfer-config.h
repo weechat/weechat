@@ -52,6 +52,7 @@ extern struct t_config_option *xfer_config_file_auto_resume;
 extern struct t_config_option *xfer_config_file_auto_check_crc32;
 extern struct t_config_option *xfer_config_file_convert_spaces;
 extern struct t_config_option *xfer_config_file_download_path;
+extern struct t_config_option *xfer_config_file_download_temporary_suffix;
 extern struct t_config_option *xfer_config_file_upload_path;
 extern struct t_config_option *xfer_config_file_use_nick_in_filename;
 

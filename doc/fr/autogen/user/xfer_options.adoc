@@ -104,6 +104,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"%h/xfer"+`
 
+* [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
+** description: pass:none[suffixe de fichier temporaire utilisé pendant le transfert pour un fichier reçu, il est supprimé après un transfert réussi ; si chaîne vide, aucun suffixe de fichier n'est utilisé pendant le transfert]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+".part"+`
+
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
 ** description: pass:none[chemin pour lire les fichiers envoyés (quand aucun chemin n'est spécifié par l'utilisateur) : "%h" au début de la chaîne est remplacé par le répertoire de base WeeChat (par défaut : "~/.weechat") (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne

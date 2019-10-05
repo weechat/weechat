@@ -71,6 +71,135 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 }
 
 /*
+ * Checks if file can be downloaded with a given suffix index (if 0 the
+ * filename is unchanged, otherwise .1, .2, etc. are added to the filename).
+ *
+ * Returns 1 if the file can be downloaded with this suffix, 0 if it can not.
+ */
+
+int
+xfer_file_check_suffix (struct t_xfer *xfer, int suffix)
+{
+    char *new_filename, *new_temp_filename;
+    const char *ptr_suffix;
+    int rc, length_suffix, length, filename_exists, temp_filename_exists;
+    int same_files;
+
+    rc = 0;
+    new_filename = NULL;
+    new_temp_filename = NULL;
+
+    ptr_suffix = weechat_config_string (
+        xfer_config_file_download_temporary_suffix);
+    length_suffix = (ptr_suffix) ? strlen (ptr_suffix) : 0;
+
+    /* build filename with suffix */
+    if (suffix == 0)
+    {
+        new_filename = strdup (xfer->local_filename);
+    }
+    else
+    {
+        length = strlen (xfer->local_filename) + 16 + 1;
+        new_filename = malloc (length);
+        if (new_filename)
+        {
+            snprintf (new_filename, length, "%s.%d",
+                      xfer->local_filename,
+                      suffix);
+        }
+    }
+    if (!new_filename)
+        goto error;
+
+    /* build temp filename with suffix */
+    length = strlen (new_filename) + length_suffix + 1;
+    new_temp_filename = malloc (length);
+    if (!new_temp_filename)
+        goto error;
+    snprintf (new_temp_filename, length,
+              "%s%s",
+              new_filename,
+              (ptr_suffix) ? ptr_suffix : "");
+
+    filename_exists = (access (new_filename, F_OK) == 0);
+    temp_filename_exists = (access (new_temp_filename, F_OK) == 0);
+    same_files = (length_suffix == 0);
+
+    /* if both filenames don't exist, we can use this prefix */
+    if (!filename_exists && !temp_filename_exists)
+        goto use_prefix;
+
+    /*
+     * we try to resume if one of this condition is true:
+     *   - filename == temp filename and it exists
+     *   - filename != temp filename and only the temp filename exists
+     * in any other case, we skip this suffix index
+     */
+
+    if ((same_files && filename_exists)
+        || (!same_files && !filename_exists && temp_filename_exists))
+    {
+        if (xfer_file_resume (xfer, new_temp_filename))
+            goto use_prefix;
+    }
+
+    /* we skip this suffix index */
+    goto end;
+
+use_prefix:
+    free (xfer->local_filename);
+    xfer->local_filename = new_filename;
+    xfer->temp_local_filename = new_temp_filename;
+    return 1;
+
+error:
+    /*
+     * in case of error, we remove the local filename and return 1 to stop the
+     * infinite loop used to find a suffix index
+     */
+    free (xfer->local_filename);
+    xfer->local_filename = NULL;
+    rc = 1;
+
+end:
+    if (new_filename)
+        free (new_filename);
+    if (new_temp_filename)
+        free (new_temp_filename);
+    return rc;
+}
+
+/*
+ * Finds the suffix needed for a file, if the file already exists.
+ *
+ * If no suffix is needed, nothing is changed in the xfer.
+ * If a suffix is needed, temp_local_filename and local_filename are changed
+ * and filename_suffix is set with the suffix number (starts to 1).
+ */
+
+void
+xfer_file_find_suffix (struct t_xfer *xfer)
+{
+    if (xfer_file_check_suffix (xfer, 0))
+        return;
+
+    /* if auto rename is not set, then abort xfer */
+    if (!xfer_config_file_auto_rename)
+    {
+        xfer_close (xfer, XFER_STATUS_FAILED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+        return;
+    }
+
+    /* loop until we find a suffix we can use, starting with suffix == 1 */
+    xfer->filename_suffix = 0;
+    while (!xfer_file_check_suffix (xfer, ++xfer->filename_suffix))
+    {
+    }
+}
+
+/*
  * Searches for local filename for a xfer.
  *
  * If type is file/recv, adds a suffix (like .1) if needed.
@@ -80,8 +209,7 @@ xfer_file_resume (struct t_xfer *xfer, const char *filename)
 void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
-    char *dir_separator, *path, *filename2;
-    int length;
+    char *dir_separator, *path;
 
     if (!XFER_IS_FILE(xfer->type))
         return;
@@ -119,49 +247,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
 
     free (path);
 
-    /* file already exists? */
-    if (access (xfer->local_filename, F_OK) == 0)
-    {
-        if (xfer_file_resume (xfer, xfer->local_filename))
-            return;
-
-        /* if auto rename is not set, then abort xfer */
-        if (!xfer_config_file_auto_rename)
-        {
-            xfer_close (xfer, XFER_STATUS_FAILED);
-            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
-            return;
-        }
-
-        length = strlen (xfer->local_filename) + 16;
-        filename2 = malloc (length);
-        if (!filename2)
-        {
-            xfer_close (xfer, XFER_STATUS_FAILED);
-            xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
-            return;
-        }
-        xfer->filename_suffix = 0;
-        do
-        {
-            xfer->filename_suffix++;
-            snprintf (filename2, length, "%s.%d",
-                      xfer->local_filename,
-                      xfer->filename_suffix);
-            if (access (filename2, F_OK) == 0)
-            {
-                if (xfer_file_resume (xfer, filename2))
-                    break;
-            }
-            else
-                break;
-        }
-        while (1);
-
-        free (xfer->local_filename);
-        xfer->local_filename = strdup (filename2);
-        free (filename2);
-    }
+    xfer_file_find_suffix (xfer);
 }
 
 /*

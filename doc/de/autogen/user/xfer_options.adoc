@@ -104,6 +104,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"%h/xfer"+`
 
+* [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
+** Beschreibung: pass:none[temporary filename suffix used during the transfer for a file received, it is removed after successful transfer; if empty string, no filename suffix is used during the transfer]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+".part"+`
+
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
 ** Beschreibung: pass:none[Pfad für ausgehende Dateien (falls kein Pfad durch den Anwender angegeben wurde): "%h" wird durch das WeeChat Verzeichnis ersetzt (Standardpfad: "~/.weechat") (Hinweis: Inhalt wird evaluiert, siehe /help eval)]
 ** Typ: Zeichenkette

@@ -75,6 +75,22 @@ This new server option has three possible values:
   _irc.network.channel_encode_ to _off_ (so this was the default behavior
   in previous versions)
 
+[[v2.7_xfer_file_receive_suffix]]
+=== Suffix for files received via DCC
+
+Files received via DCC (xfer plugin) now have a suffix ".part" during the
+transfer. When the transfer is successful, the suffix is removed.
+
+This suffix can be customized with the new option
+_xfer.file.download_temporary_suffix_.
+
+If you prefer the legacy behavior (no suffix added), you can set an empty value
+in the new option:
+
+----
+/set xfer.file.download_temporary_suffix ""
+----
+
 [[v2.6]]
 == Version 2.6 (2019-09-08)
 

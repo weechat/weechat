@@ -290,12 +290,16 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
         return;
 
     if (xfer->start_resume > 0)
-        xfer->file = open (xfer->local_filename,
+    {
+        xfer->file = open (xfer->temp_local_filename,
                            O_APPEND | O_WRONLY | O_NONBLOCK);
+    }
     else
-        xfer->file = open (xfer->local_filename,
+    {
+        xfer->file = open (xfer->temp_local_filename,
                            O_CREAT | O_TRUNC | O_WRONLY | O_NONBLOCK,
                            0644);
+    }
 
     switch (pid = fork ())
     {

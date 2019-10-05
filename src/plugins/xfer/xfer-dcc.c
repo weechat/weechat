@@ -255,7 +255,7 @@ xfer_dcc_resume_hash (struct t_xfer *xfer)
 
     while (fd <= 0)
     {
-        fd = open (xfer->local_filename, O_RDONLY);
+        fd = open (xfer->temp_local_filename, O_RDONLY);
         if (fd < 0)
         {
             if (errno == EINTR)

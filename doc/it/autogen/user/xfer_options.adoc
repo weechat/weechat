@@ -104,6 +104,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"%h/xfer"+`
 
+* [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
+** descrizione: pass:none[temporary filename suffix used during the transfer for a file received, it is removed after successful transfer; if empty string, no filename suffix is used during the transfer]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+".part"+`
+
 * [[option_xfer.file.upload_path]] *xfer.file.upload_path*
 ** descrizione: pass:none[path for reading files when sending (when no path is specified by user): "%h" at beginning of string is replaced by WeeChat home ("~/.weechat" by default) (note: content is evaluated, see /help eval)]
 ** tipo: stringa

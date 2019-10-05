@@ -64,6 +64,7 @@ struct t_config_option *xfer_config_file_auto_rename;
 struct t_config_option *xfer_config_file_auto_resume;
 struct t_config_option *xfer_config_file_convert_spaces;
 struct t_config_option *xfer_config_file_download_path;
+struct t_config_option *xfer_config_file_download_temporary_suffix;
 struct t_config_option *xfer_config_file_upload_path;
 struct t_config_option *xfer_config_file_use_nick_in_filename;
 
@@ -384,6 +385,14 @@ xfer_config_init ()
            "replaced by WeeChat home (\"~/.weechat\" by default) "
            "(note: content is evaluated, see /help eval)"),
         NULL, 0, 0, "%h/xfer", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_download_temporary_suffix = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "download_temporary_suffix", "string",
+        N_("temporary filename suffix used during the transfer for a file "
+           "received, it is removed after successful transfer; "
+           "if empty string, no filename suffix is used during the transfer"),
+        NULL, 0, 0, ".part", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_upload_path = weechat_config_new_option (
         xfer_config_file, ptr_section,

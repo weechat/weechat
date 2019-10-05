@@ -346,15 +346,24 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
          || (xfer->status == XFER_STATUS_ABORTED))
         && XFER_IS_FILE(xfer->type)
         && XFER_IS_RECV(xfer->type)
-        && xfer->local_filename
+        && xfer->temp_local_filename
         && xfer->pos == 0)
     {
         /* erase file only if really empty on disk */
-        if (stat (xfer->local_filename, &st) != -1)
+        if (stat (xfer->temp_local_filename, &st) != -1)
         {
             if ((unsigned long long) st.st_size == 0)
-                unlink (xfer->local_filename);
+                unlink (xfer->temp_local_filename);
         }
+    }
+
+    /* rename received file if it has a suffix */
+    if ((xfer->status == XFER_STATUS_DONE)
+        && XFER_IS_FILE(xfer->type)
+        && XFER_IS_RECV(xfer->type)
+        && (strcmp (xfer->local_filename, xfer->temp_local_filename) != 0))
+    {
+        rename (xfer->temp_local_filename, xfer->local_filename);
     }
 
     if (XFER_IS_FILE(xfer->type))
@@ -500,6 +509,7 @@ xfer_alloc ()
     new_xfer->unterminated_message = NULL;
     new_xfer->file = -1;
     new_xfer->local_filename = NULL;
+    new_xfer->temp_local_filename = NULL;
     new_xfer->filename_suffix = -1;
     new_xfer->pos = 0;
     new_xfer->ack = 0;
@@ -955,6 +965,8 @@ xfer_free (struct t_xfer *xfer)
         free (xfer->unterminated_message);
     if (xfer->local_filename)
         free (xfer->local_filename);
+    if (xfer->temp_local_filename)
+        free (xfer->temp_local_filename);
     if (xfer->hash_handle)
     {
         gcry_md_close (*xfer->hash_handle);
@@ -1688,6 +1700,8 @@ xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "local_filename", xfer->local_filename))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "temp_local_filename", xfer->temp_local_filename))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "filename_suffix", xfer->filename_suffix))
         return 0;
     snprintf (value, sizeof (value), "%llu", xfer->pos);
@@ -1776,6 +1790,7 @@ xfer_print_log ()
         weechat_log_printf ("  unterminated_message. . : '%s'",  ptr_xfer->unterminated_message);
         weechat_log_printf ("  file. . . . . . . . . . : %d",    ptr_xfer->file);
         weechat_log_printf ("  local_filename. . . . . : '%s'",  ptr_xfer->local_filename);
+        weechat_log_printf ("  temp_local_filename . . : '%s'",  ptr_xfer->temp_local_filename);
         weechat_log_printf ("  filename_suffix . . . . : %d",    ptr_xfer->filename_suffix);
         weechat_log_printf ("  pos . . . . . . . . . . : %llu",  ptr_xfer->pos);
         weechat_log_printf ("  ack . . . . . . . . . . : %llu",  ptr_xfer->ack);
