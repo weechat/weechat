@@ -446,12 +446,11 @@ completion_list_add_filename_cb (const void *pointer, void *data,
     /* make C compiler happy */
     (void) pointer;
     (void) data;
-    (void) completion_item;
     (void) buffer;
 
     completion->add_space = 0;
 
-    pos_args = strchr (completion_item, ':');
+    pos_args = (completion_item) ? strchr (completion_item, ':') : NULL;
     if (pos_args)
         pos_args++;
 
