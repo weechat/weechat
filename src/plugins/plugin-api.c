@@ -394,6 +394,25 @@ plugin_api_modifier_color_encode_ansi_cb (const void *pointer, void *data,
 }
 
 /*
+ * Modifier callback: evaluates a home path.
+ */
+
+char *
+plugin_api_modifier_eval_path_home_cb (const void *pointer, void *data,
+                                       const char *modifier,
+                                       const char *modifier_data,
+                                       const char *string)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) modifier;
+    (void) modifier_data;
+
+    return string_eval_path_home (string, NULL, NULL, NULL);
+}
+
+/*
  * Moves item pointer to next item in an infolist.
  *
  * Returns:
@@ -544,6 +563,8 @@ plugin_api_init ()
                    &plugin_api_modifier_color_decode_ansi_cb, NULL, NULL);
     hook_modifier (NULL, "color_encode_ansi",
                    &plugin_api_modifier_color_encode_ansi_cb, NULL, NULL);
+    hook_modifier (NULL, "eval_path_home",
+                   &plugin_api_modifier_eval_path_home_cb, NULL, NULL);
 
     /* WeeChat core info/infolist hooks */
     plugin_api_info_init ();

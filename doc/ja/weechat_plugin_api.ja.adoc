@@ -11354,6 +11354,14 @@ WeeChat とプラグインが定義する修飾子のリスト:
   - |
   任意の文字列 |
   String with WeeChat colors converted to ANSI colors.
+
+// TRANSLATION MISSING
+| [[hook_modifier_eval_path_home]] eval_path_home +
+  _(WeeChat バージョン 2.7 以上で利用可)_ |
+  - |
+  Any string. |
+  Evaluated path, result of the function
+  <<_string_eval_path_home,string_eval_path_home>>.
 |===
 
 C 言語での使用例:
