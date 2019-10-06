@@ -1115,7 +1115,9 @@ gui_window_vline (WINDOW *window, int x, int y, int height, const char *string)
 void
 gui_window_draw_separators (struct t_gui_window *window)
 {
-    int separator_horizontal, separator_vertical, x, width;
+    int separator_horizontal, separator_vertical;
+    int horiz_overlap, x, width, height;
+    struct t_gui_window_tree *ptr_tree, *ptr_child;
 
     /* remove separators */
     if (GUI_WINDOW_OBJECTS(window)->win_separator_horiz)
@@ -1136,11 +1138,30 @@ gui_window_draw_separators (struct t_gui_window *window)
     separator_vertical = (CONFIG_BOOLEAN(config_look_window_separator_vertical)
                           && (window->win_x > gui_bar_root_get_size (NULL, GUI_BAR_POSITION_LEFT)));
 
+    /* check if horizontal separator must overlap in lower left corner */
+    horiz_overlap = 0;
+    ptr_child = window->ptr_tree;
+    ptr_tree = ptr_child->parent_node;
+    while (ptr_tree)
+    {
+        /* is right/top child */
+        if (ptr_tree->child2 == ptr_child)
+        {
+            /* horizontal overlap is needed when window is right in vertical split */
+            /* horizontal overlap is not needed when window is top in horizontal split */
+            horiz_overlap = !ptr_tree->split_horizontal;
+            break;
+        }
+
+        ptr_child = ptr_child->parent_node;
+        ptr_tree = ptr_tree->parent_node;
+    }
+
     /* create/draw horizontal separator */
     if (separator_horizontal)
     {
-        x = (separator_vertical) ? window->win_x - 1 : window->win_x;
-        width = (separator_vertical) ? window->win_width + 1 : window->win_width;
+        x = (separator_vertical && horiz_overlap) ? window->win_x - 1 : window->win_x;
+        width = (separator_vertical && horiz_overlap) ? window->win_width + 1 : window->win_width;
         GUI_WINDOW_OBJECTS(window)->win_separator_horiz = newwin (1,
                                                                   width,
                                                                   window->win_y + window->win_height,
@@ -1156,14 +1177,15 @@ gui_window_draw_separators (struct t_gui_window *window)
     /* create/draw vertical separator */
     if (separator_vertical)
     {
-        GUI_WINDOW_OBJECTS(window)->win_separator_vertic = newwin (window->win_height,
+        height = (separator_horizontal && !horiz_overlap) ? window->win_height + 1 : window->win_height;
+        GUI_WINDOW_OBJECTS(window)->win_separator_vertic = newwin (height,
                                                                    1,
                                                                    window->win_y,
                                                                    window->win_x - 1);
         gui_window_set_weechat_color (GUI_WINDOW_OBJECTS(window)->win_separator_vertic,
                                       GUI_COLOR_SEPARATOR);
         gui_window_vline (GUI_WINDOW_OBJECTS(window)->win_separator_vertic,
-                          0, 0, window->win_height,
+                          0, 0, height,
                           CONFIG_STRING(config_look_separator_vertical));
         wnoutrefresh (GUI_WINDOW_OBJECTS(window)->win_separator_vertic);
     }
@@ -1817,6 +1839,9 @@ gui_window_split_horizontal (struct t_gui_window *window, int percentage)
             gui_window_ask_refresh (1);
 
             gui_window_switch (new_window);
+
+            /* create & draw separators */
+            gui_window_draw_separators (gui_current_window);
         }
     }
 
