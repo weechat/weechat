@@ -91,6 +91,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
         new_logger_buffer->buffer = buffer;
         new_logger_buffer->log_filename = NULL;
         new_logger_buffer->log_file = NULL;
+        new_logger_buffer->log_file_inode = 0;
         new_logger_buffer->log_enabled = 1;
         new_logger_buffer->log_level = log_level;
         new_logger_buffer->write_start_info_line = 1;
@@ -233,6 +234,8 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "log_filename", logger_buffer->log_filename))
         return 0;
     if (!weechat_infolist_new_var_pointer (ptr_item, "log_file", logger_buffer->log_file))
+        return 0;
+    if (!weechat_infolist_new_var_buffer (ptr_item, "log_file_inode", &(logger_buffer->log_file_inode), sizeof(logger_buffer->log_file_inode)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "log_enabled", logger_buffer->log_enabled))
         return 0;

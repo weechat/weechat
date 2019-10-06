@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 09:20+0200\n"
+"POT-Creation-Date: 2019-10-06 13:24+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -10702,6 +10702,10 @@ msgstr "%s%s: não foi possível criar diretório para registos (\"%s\")"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%s%s: não foi possível escrever o ficheiro de registo \"%s\": %s"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get file status of log file \"%s\": %s"
 msgstr "%s%s: não foi possível escrever o ficheiro de registo \"%s\": %s"
 
 #, c-format

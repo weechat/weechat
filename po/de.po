@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 09:20+0200\n"
+"POT-Creation-Date: 2019-10-06 13:24+0200\n"
 "PO-Revision-Date: 2019-10-03 15:25+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -11557,6 +11557,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden: %s"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get file status of log file \"%s\": %s"
 msgstr "%s%s: Protokoll-Datei \"%s\" kann nicht geschrieben werden: %s"
 
 #, c-format

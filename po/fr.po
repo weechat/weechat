@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 09:20+0200\n"
-"PO-Revision-Date: 2019-10-06 09:22+0200\n"
+"POT-Creation-Date: 2019-10-06 13:24+0200\n"
+"PO-Revision-Date: 2019-10-06 13:25+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -11287,6 +11287,10 @@ msgstr "%s%s : impossible de créer le répertoire pour les logs (\"%s\")"
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
 msgstr "%s%s : impossible d'écrire le fichier log \"%s\" : %s"
+
+#, c-format
+msgid "%s%s: unable to get file status of log file \"%s\": %s"
+msgstr "%s%s : impossible de récupérer le statut du fichier de log \"%s\" : %s"
 
 #, c-format
 msgid "%s\t****  Beginning of log  ****"

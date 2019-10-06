@@ -21,6 +21,9 @@
 #define WEECHAT_PLUGIN_LOGGER_BUFFER_H
 
 #include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 struct t_infolist;
 
@@ -29,6 +32,7 @@ struct t_logger_buffer
     struct t_gui_buffer *buffer;          /* pointer to buffer              */
     char *log_filename;                   /* log filename                   */
     FILE *log_file;                       /* log file                       */
+    ino_t log_file_inode;                 /* inode of log file              */
     int log_enabled;                      /* log enabled ?                  */
     int log_level;                        /* log level (0..9)               */
     int write_start_info_line;            /* 1 if start info line must be   */

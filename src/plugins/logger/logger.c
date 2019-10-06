@@ -516,6 +516,132 @@ logger_set_log_filename (struct t_logger_buffer *logger_buffer)
 }
 
 /*
+ * Creates a log file.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+logger_create_log_file (struct t_logger_buffer *logger_buffer)
+{
+    char *charset, *message, buf_time[256], buf_beginning[1024];
+    int log_level, rc;
+    time_t seconds;
+    struct tm *date_tmp;
+    struct stat statbuf;
+
+    if (logger_buffer->log_file)
+    {
+        /*
+         * check that the inode has not changed, otherwise that means the file
+         * was deleted, and we must reopen it
+         */
+        rc = stat (logger_buffer->log_filename, &statbuf);
+        if ((rc == 0) && (statbuf.st_ino == logger_buffer->log_file_inode))
+        {
+            /* inode has not changed, we can write in this file */
+            return 1;
+        }
+        fclose (logger_buffer->log_file);
+        logger_buffer->log_file = NULL;
+        logger_buffer->log_file_inode = 0;
+    }
+
+    /* get log level */
+    log_level = logger_get_level_for_buffer (logger_buffer->buffer);
+    if (log_level == 0)
+    {
+        logger_buffer_free (logger_buffer);
+        return 0;
+    }
+
+    /* create directory */
+    if (!logger_create_directory ())
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to create directory for logs "
+              "(\"%s\")"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            weechat_config_string (logger_config_file_path));
+        logger_buffer_free (logger_buffer);
+        return 0;
+    }
+    if (!logger_buffer->log_filename)
+        logger_set_log_filename (logger_buffer);
+    if (!logger_buffer->log_filename)
+    {
+        logger_buffer_free (logger_buffer);
+        return 0;
+    }
+
+    /* create or append to log file */
+    logger_buffer->log_file =
+        fopen (logger_buffer->log_filename, "a");
+    if (!logger_buffer->log_file)
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to write log file \"%s\": %s"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            logger_buffer->log_filename, strerror (errno));
+        logger_buffer_free (logger_buffer);
+        return 0;
+    }
+
+    /* get file inode */
+    rc = stat (logger_buffer->log_filename, &statbuf);
+    if (rc != 0)
+    {
+        weechat_printf_date_tags (
+            NULL, 0, "no_log",
+            _("%s%s: unable to get file status of log file \"%s\": %s"),
+            weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
+            logger_buffer->log_filename, strerror (errno));
+        fclose (logger_buffer->log_file);
+        logger_buffer->log_file = NULL;
+        logger_buffer->log_file_inode = 0;
+        logger_buffer_free (logger_buffer);
+        return 0;
+    }
+    logger_buffer->log_file_inode = statbuf.st_ino;
+
+    /* write info line */
+    if (weechat_config_boolean (logger_config_file_info_lines)
+        && logger_buffer->write_start_info_line)
+    {
+        buf_time[0] = '\0';
+        seconds = time (NULL);
+        date_tmp = localtime (&seconds);
+        if (date_tmp)
+        {
+            if (strftime (buf_time, sizeof (buf_time) - 1,
+                          weechat_config_string (logger_config_file_time_format),
+                          date_tmp) == 0)
+                buf_time[0] = '\0';
+        }
+        snprintf (buf_beginning, sizeof (buf_beginning),
+                  _("%s\t****  Beginning of log  ****"),
+                  buf_time);
+        charset = weechat_info_get ("charset_terminal", "");
+        message = (charset) ?
+            weechat_iconv_from_internal (charset, buf_beginning) : NULL;
+        fprintf (logger_buffer->log_file,
+                 "%s\n", (message) ? message : buf_beginning);
+        if (charset)
+            free (charset);
+        if (message)
+            free (message);
+        logger_buffer->flush_needed = 1;
+    }
+    logger_buffer->write_start_info_line = 0;
+
+    return 1;
+}
+
+/*
  * Writes a line to log file.
  */
 
@@ -523,80 +649,10 @@ void
 logger_write_line (struct t_logger_buffer *logger_buffer,
                    const char *format, ...)
 {
-    char *message, buf_time[256], buf_beginning[1024], *charset;
-    time_t seconds;
-    struct tm *date_tmp;
-    int log_level;
+    char *charset, *message;
 
-    if (!logger_buffer->log_file)
-    {
-        log_level = logger_get_level_for_buffer (logger_buffer->buffer);
-        if (log_level == 0)
-        {
-            logger_buffer_free (logger_buffer);
-            return;
-        }
-        if (!logger_create_directory ())
-        {
-            weechat_printf_date_tags (
-                NULL, 0, "no_log",
-                _("%s%s: unable to create directory for logs "
-                  "(\"%s\")"),
-                weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-                weechat_config_string (logger_config_file_path));
-            logger_buffer_free (logger_buffer);
-            return;
-        }
-        if (!logger_buffer->log_filename)
-            logger_set_log_filename (logger_buffer);
-        if (!logger_buffer->log_filename)
-        {
-            logger_buffer_free (logger_buffer);
-            return;
-        }
-
-        logger_buffer->log_file =
-            fopen (logger_buffer->log_filename, "a");
-        if (!logger_buffer->log_file)
-        {
-            weechat_printf_date_tags (
-                NULL, 0, "no_log",
-                _("%s%s: unable to write log file \"%s\": %s"),
-                weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
-                logger_buffer->log_filename, strerror (errno));
-            logger_buffer_free (logger_buffer);
-            return;
-        }
-
-        if (weechat_config_boolean (logger_config_file_info_lines)
-            && logger_buffer->write_start_info_line)
-        {
-            buf_time[0] = '\0';
-            seconds = time (NULL);
-            date_tmp = localtime (&seconds);
-            if (date_tmp)
-            {
-                if (strftime (buf_time, sizeof (buf_time) - 1,
-                              weechat_config_string (logger_config_file_time_format),
-                              date_tmp) == 0)
-                    buf_time[0] = '\0';
-            }
-            snprintf (buf_beginning, sizeof (buf_beginning),
-                      _("%s\t****  Beginning of log  ****"),
-                      buf_time);
-            charset = weechat_info_get ("charset_terminal", "");
-            message = (charset) ?
-                weechat_iconv_from_internal (charset, buf_beginning) : NULL;
-            fprintf (logger_buffer->log_file,
-                     "%s\n", (message) ? message : buf_beginning);
-            if (charset)
-                free (charset);
-            if (message)
-                free (message);
-            logger_buffer->flush_needed = 1;
-        }
-        logger_buffer->write_start_info_line = 0;
-    }
+    if (!logger_create_log_file (logger_buffer))
+        return;
 
     weechat_va_format (format);
     if (vbuffer)
@@ -656,6 +712,7 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
         }
         fclose (logger_buffer->log_file);
         logger_buffer->log_file = NULL;
+        logger_buffer->log_file_inode = 0;
     }
     logger_buffer_free (logger_buffer);
 }
@@ -716,6 +773,7 @@ logger_start_buffer (struct t_gui_buffer *buffer, int write_info_line)
                     {
                         fclose (ptr_logger_buffer->log_file);
                         ptr_logger_buffer->log_file = NULL;
+                        ptr_logger_buffer->log_file_inode = 0;
                     }
                 }
             }

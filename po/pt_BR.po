@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 09:20+0200\n"
+"POT-Creation-Date: 2019-10-06 13:24+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9568,6 +9568,10 @@ msgstr "%s%s: não foi possível criar diretório para registros (\"%s\")"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%s%s: não foi possível escrever arquivo de registro \"%s\": %s"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get file status of log file \"%s\": %s"
 msgstr "%s%s: não foi possível escrever arquivo de registro \"%s\": %s"
 
 #, c-format

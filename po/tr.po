@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 09:20+0200\n"
+"POT-Creation-Date: 2019-10-06 13:24+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8327,6 +8327,10 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\": %s"
+msgstr "%sHata: dosya \"%s\" oluşturulamaz"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get file status of log file \"%s\": %s"
 msgstr "%sHata: dosya \"%s\" oluşturulamaz"
 
 #, c-format
