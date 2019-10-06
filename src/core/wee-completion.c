@@ -1,3 +1,4 @@
+
 /*
  * wee-completion.c - completion for WeeChat commands
  *
@@ -36,6 +37,7 @@
 #include "weechat.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-list.h"
@@ -435,6 +437,7 @@ completion_list_add_filename_cb (const void *pointer, void *data,
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
     char *ptr_home, *pos, buf[PATH_MAX], *real_prefix, *prefix, *path_dir;
     char *path_base, *dir_name;
+    const char *pos_args;
     int length_path_base;
     DIR *dp;
     struct dirent *entry;
@@ -447,6 +450,10 @@ completion_list_add_filename_cb (const void *pointer, void *data,
     (void) buffer;
 
     completion->add_space = 0;
+
+    pos_args = strchr (completion_item, ':');
+    if (pos_args)
+        pos_args++;
 
     ptr_home = getenv ("HOME");
 
@@ -466,7 +473,18 @@ completion_list_add_filename_cb (const void *pointer, void *data,
         if (!completion->base_word[0]
             || completion->base_word[0] != DIR_SEPARATOR_CHAR)
         {
-            real_prefix = strdup (weechat_home);
+            real_prefix = NULL;
+            if (pos_args && pos_args[0])
+            {
+                real_prefix = eval_expression (pos_args, NULL, NULL, NULL);
+                if (real_prefix && !real_prefix[0])
+                {
+                    free (real_prefix);
+                    real_prefix = NULL;
+                }
+            }
+            if (!real_prefix)
+                real_prefix = strdup (weechat_home);
             prefix = strdup ("");
         }
         else
@@ -1714,7 +1732,9 @@ completion_init ()
                      N_("configuration files"),
                      &completion_list_add_config_files_cb, NULL, NULL);
     hook_completion (NULL, "filename", /* formerly "%f" */
-                     N_("filename"),
+                     N_("filename; "
+                        "optional argument: default path (evaluated, "
+                        "see /help eval)"),
                      &completion_list_add_filename_cb, NULL, NULL);
     hook_completion (NULL, "filters_names", /* formerly "%F" */
                      N_("names of filters"),

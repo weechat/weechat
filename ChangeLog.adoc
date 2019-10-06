@@ -22,6 +22,7 @@ New features::
 
   * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
   * core: add calculation of expression in evaluation of expressions with "calc:xxx" (issue #997)
+  * core: add optional default path (evaluated) in completion "filename"
   * core: add support of modifiers in evaluation of expressions with "modifier:name,data,string"
   * api: add modifier "color_encode_ansi" (issue #528)
   * api: add modifier "eval_path_home"

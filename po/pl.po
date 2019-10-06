@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 08:58+0200\n"
+"POT-Creation-Date: 2019-10-06 09:20+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -3277,8 +3277,11 @@ msgstr "paleta kolorów"
 msgid "configuration files"
 msgstr "pliki konfiguracyjne"
 
-msgid "filename"
-msgstr "nazwa pliku"
+#, fuzzy
+msgid "filename; optional argument: default path (evaluated, see /help eval)"
+msgstr ""
+"nazwa użytkownika dla serwera proxy (zawartość jest przetwarzana, zobacz /"
+"help eval)"
 
 msgid "names of filters"
 msgstr "nazwy filtrów"
@@ -14451,6 +14454,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "filename"
+#~ msgstr "nazwa pliku"
 
 #~ msgid "color for backlog lines"
 #~ msgstr "kolor linii backloga"

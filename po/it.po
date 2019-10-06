@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 08:58+0200\n"
+"POT-Creation-Date: 2019-10-06 09:20+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3031,8 +3031,11 @@ msgstr "Tavolozza dei colori"
 msgid "configuration files"
 msgstr "file di configurazione"
 
-msgid "filename"
-msgstr "nome file"
+#, fuzzy
+msgid "filename; optional argument: default path (evaluated, see /help eval)"
+msgstr ""
+"nome utente per il server proxy (nota: il contenuto viene valutato, "
+"consultare /help eval)"
 
 msgid "names of filters"
 msgstr "nomi dei filtri"
@@ -13429,6 +13432,9 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "filename"
+#~ msgstr "nome file"
 
 #~ msgid "color for backlog lines"
 #~ msgstr "colore per la cronologia"

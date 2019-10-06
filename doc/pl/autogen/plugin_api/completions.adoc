@@ -142,7 +142,7 @@
 
 | weechat | env_vars | zmienne środowiskowe
 
-| weechat | filename | nazwa pliku
+| weechat | filename | filename; optional argument: default path (evaluated, see /help eval)
 
 | weechat | filters_names | nazwy filtrów
 

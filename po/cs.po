@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 08:58+0200\n"
+"POT-Creation-Date: 2019-10-06 09:20+0200\n"
 "PO-Revision-Date: 2019-05-13 21:31+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2827,8 +2827,10 @@ msgstr "barvy palety"
 msgid "configuration files"
 msgstr "konfigurační soubory"
 
-msgid "filename"
-msgstr "jméno souboru"
+#, fuzzy
+msgid "filename; optional argument: default path (evaluated, see /help eval)"
+msgstr ""
+"uživatelské jméno pro proxy server(pozn.: obsah je vykonán, viz /help eval)"
 
 msgid "names of filters"
 msgstr "jména filtrů"
@@ -12925,6 +12927,9 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "filename"
+#~ msgstr "jméno souboru"
 
 #, fuzzy
 #~ msgid "color for backlog lines"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-06 08:58+0200\n"
+"POT-Creation-Date: 2019-10-06 09:20+0200\n"
 "PO-Revision-Date: 2019-09-22 18:54+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -3223,8 +3223,11 @@ msgstr "パレット色"
 msgid "configuration files"
 msgstr "設定ファイル"
 
-msgid "filename"
-msgstr "ファイル名"
+#, fuzzy
+msgid "filename; optional argument: default path (evaluated, see /help eval)"
+msgstr ""
+"プロキシサーバのユーザ名 (注意: 値は評価されます、/help eval を参照してくださ"
+"い)"
 
 msgid "names of filters"
 msgstr "フィルタ名"
@@ -14217,6 +14220,9 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "filename"
+#~ msgstr "ファイル名"
 
 #~ msgid "color for backlog lines"
 #~ msgstr "バックログ行の色"
