@@ -105,7 +105,7 @@
 ** Standardwert: `+"%h/xfer"+`
 
 * [[option_xfer.file.download_temporary_suffix]] *xfer.file.download_temporary_suffix*
-** Beschreibung: pass:none[temporary filename suffix used during the transfer for a file received, it is removed after successful transfer; if empty string, no filename suffix is used during the transfer]
+** Beschreibung: pass:none[Dateiendung der temporären Datei, die während eines eingehenden Datei-Transfers genutzt wird und die gelöscht wird, sobald die Übertragung erfolgreich beendet wurde; wenn -leer-, dann wird keine temporäre Dateiendung während des Transfers genutzt]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+".part"+`
