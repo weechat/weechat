@@ -352,8 +352,8 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * Modifier to decode ANSI colors: convert ANSI color codes to WeeChat colors
- * (or removes them)
+ * Modifier callback: decodes ANSI colors: converts ANSI color codes to WeeChat
+ * colors (or removes them).
  */
 
 char *
@@ -374,7 +374,8 @@ plugin_api_modifier_color_decode_ansi_cb (const void *pointer, void *data,
 }
 
 /*
- * Modifier to encode ANSI colors: convert WeeChat colors to ANSI color codes
+ * Modifier callback: encodes ANSI colors: converts WeeChat colors to ANSI
+ * color codes.
  */
 
 char *
