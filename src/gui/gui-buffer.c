@@ -86,10 +86,10 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
 char *gui_buffer_properties_get_integer[] =
-{ "number", "layout_number", "layout_number_merge_order", "type", "notify",
-  "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
-  "day_change", "clear", "filter", "closing", "lines_hidden",
-  "prefix_max_length", "time_for_each_line", "nicklist",
+{ "number", "layout_number", "layout_number_merge_order", "layout_active",
+  "type", "notify", "num_displayed", "active", "hidden", "zoomed",
+  "print_hooks_enabled", "day_change", "clear", "filter", "closing",
+  "lines_hidden", "prefix_max_length", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
   "nicklist_visible_count", "input", "input_get_unknown_commands",

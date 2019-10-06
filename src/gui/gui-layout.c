@@ -263,6 +263,7 @@ gui_layout_buffer_get_number (struct t_gui_layout *layout,
 
     *layout_number = 0;
     *layout_number_merge_order = 0;
+    *layout_active = 0;
 
     if (!layout)
         return;

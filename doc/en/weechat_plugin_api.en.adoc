@@ -12464,6 +12464,7 @@ Arguments:
 ** _number_: number of buffer (starts to 1)
 ** _layout_number_: number of buffer saved in layout
 ** _layout_number_merge_order_: order in merge for layout
+** _layout_active_: active status in layout
 ** _short_name_is_set_: 1 if short name is set, 0 if not set
 ** _type_: buffer type (0: formatted, 1: free content)
 ** _notify_: notify level for buffer

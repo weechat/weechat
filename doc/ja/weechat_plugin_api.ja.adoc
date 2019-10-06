@@ -12435,6 +12435,8 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _number_: バッファの番号 (1 以上)
 ** _layout_number_: レイアウトに保存されたバッファの番号
 ** _layout_number_merge_order_: レイアウトのマージをする際の順番
+// TRANSLATION MISSING
+** _layout_active_: active status in layout
 ** _short_name_is_set_: 短い名前が設定されている場合は 1、そうでない場合は 0
 ** _type_: バッファタイプ (0: 書式あり、1: 自由内容)
 ** _notify_: バッファの通知レベル
