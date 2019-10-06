@@ -183,9 +183,11 @@ gui_window_get_context_at_xy (struct t_gui_window *window,
     if (!window->coords[win_y].data)
         return;
 
-    coords_x_message = gui_line_get_align ((*line)->data->buffer, *line, 1,
-                                           ((win_y > 0) &&
-                                            (window->coords[win_y - 1].line != *line)));
+    coords_x_message = gui_line_get_align (
+        (*line)->data->buffer,
+        *line,
+        1,  /* with suffix */
+        ((win_y > 0) && (window->coords[win_y - 1].line != *line)));
 
     if (win_x < coords_x_message)
     {
