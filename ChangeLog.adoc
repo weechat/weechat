@@ -34,6 +34,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix cursor mode info when prefix_align is none and with words split across lines (issue #610, issue #617, issue #619)
   * core: add support of reverse video in ANSI color codes
   * core: fixed segfault during excessive evaluation in function string_repeat (issue #1400)
   * buflist: fix extra spaces between buffers when conditions are used to hide buffers (regression introduced in version 2.6) (issue #1403)
