@@ -620,7 +620,7 @@ completion_list_add_commands_cb (const void *pointer, void *data,
     (void) data;
     (void) buffer;
 
-    pos = strchr (completion_item, ':');
+    pos = (completion_item) ? strchr (completion_item, ':') : NULL;
     if (pos)
         pos++;
 
@@ -991,7 +991,7 @@ completion_list_add_plugins_commands_cb (const void *pointer, void *data,
 
     if (argc > 0)
     {
-        pos = strchr (completion_item, ':');
+        pos = (completion_item) ? strchr (completion_item, ':') : NULL;
         if (pos)
             pos++;
 
@@ -1288,7 +1288,7 @@ completion_list_add_weechat_commands_cb (const void *pointer, void *data,
     (void) data;
     (void) buffer;
 
-    pos = strchr (completion_item, ':');
+    pos = (completion_item) ? strchr (completion_item, ':') : NULL;
     if (pos)
         pos++;
 
