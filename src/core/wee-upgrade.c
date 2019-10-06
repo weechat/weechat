@@ -414,7 +414,7 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     gui_layout_buffer_add (upgrade_layout,
                            plugin_name, name,
                            infolist_integer (infolist, "number"),
-                           infolist_integer (infolist, "active")); /* TODO: actual active in upgrade infolist */
+                           infolist_integer (infolist, "active"));
     main_buffer = gui_buffer_is_main (plugin_name, name);
     if (main_buffer)
     {
