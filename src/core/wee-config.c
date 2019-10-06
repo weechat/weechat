@@ -1991,14 +1991,25 @@ config_weechat_layout_read_cb (const void *pointer, void *data,
             {
                 error1 = NULL;
                 number1 = strtol (argv[2], &error1, 10);
-                error2 = NULL;
                 if (argc >= 4)
+                {
+                    error2 = NULL;
                     number2 = strtol (argv[3], &error2, 10);
+                    if (error1 && !error1[0] && error2 && !error2[0])
+                    {
+                        gui_layout_buffer_add (ptr_layout, argv[0], argv[1],
+                                               number1, number2);
+                    }
+                }
                 else
+                {
                     number2 = 0; /* TODO: 1 for first buffer under each number for backwards compatibility? */
-                if (error1 && !error1[0] && error2 && !error2[0])
-                    gui_layout_buffer_add (ptr_layout, argv[0], argv[1],
-                                           number1, number2);
+                    if (error1 && !error1[0])
+                    {
+                        gui_layout_buffer_add (ptr_layout, argv[0], argv[1],
+                                               number1, number2);
+                    }
+                }
             }
             string_free_split (argv);
         }
