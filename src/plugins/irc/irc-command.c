@@ -6515,7 +6515,8 @@ irc_command_init ()
            "  send file \"/home/foo/bar.txt\" to nick \"toto\":\n"
            "    /dcc send toto /home/foo/bar.txt"),
         "chat %(nicks)"
-        " || send %(nicks) %(filename)",
+        " || send %(nicks) "
+        "%(filename:${modifier:eval_path_home,,${xfer.file.upload_path}})",
         &irc_command_dcc, NULL, NULL);
     weechat_hook_command (
         "dehalfop",
