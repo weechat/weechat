@@ -263,6 +263,10 @@ donde "xxx" es el nombre de la opción.
 ----
 
 // TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
+
+// TRANSLATION MISSING
 [NOTE]
 Este comando también puede usarse para crear y conectarse a un nuevo
 servidor sin usar el comando `/server` (see `/help connect`).

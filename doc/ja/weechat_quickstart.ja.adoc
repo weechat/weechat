@@ -226,12 +226,17 @@ kbd:[Shift+Tab] キーを使えば部分的に補完することも可能です
 /set irc.server.freenode.xxx value
 ----
 
+// TRANSLATION MISSING
 [[connect_to_irc_server]]
-== サーバに接続し、チャンネルに自動接続する
+== Connect to IRC server
 
 ----
 /connect freenode
 ----
+
+// TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 [NOTE]
 このコマンドは、`/server`

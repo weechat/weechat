@@ -251,11 +251,15 @@ Altre opzioni: è possibile impostare altre opzioni con il seguente comando
 ----
 
 [[connect_to_irc_server]]
-== Connessione al server IRC e ingresso automatico nei canali
+== Connessione al server IRC
 
 ----
 /connect freenode
 ----
+
+// TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 // TRANSLATION MISSING
 [NOTE]

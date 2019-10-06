@@ -226,12 +226,17 @@ nazwa opcji):
 /set irc.server.freenode.xxx wartość
 ----
 
+// TRANSLATION MISSING
 [[connect_to_irc_server]]
-== Łączenie się z serwerem IRC i automatyczne wchodzenie na kanały
+== Connect to IRC server
 
 ----
 /connect freenode
 ----
+
+// TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 [NOTE]
 Ta komenda może być użyta do utworzenia i połączenia się z nowym serwerem bez

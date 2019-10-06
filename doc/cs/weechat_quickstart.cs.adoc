@@ -235,11 +235,15 @@ název volby):
 ----
 
 [[connect_to_irc_server]]
-== Připojení k IRC serveru a automatické ořipojení kanálů
+== Připojení k IRC serveru
 
 ----
 /connect freenode
 ----
+
+// TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 // TRANSLATION MISSING
 [NOTE]

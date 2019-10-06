@@ -221,11 +221,14 @@ option name):
 ----
 
 [[connect_to_irc_server]]
-== Connect to IRC server and auto-join channels
+== Connect to IRC server
 
 ----
 /connect freenode
 ----
+
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 [NOTE]
 This command can be used to create and connect to a new server without using the

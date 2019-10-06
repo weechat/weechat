@@ -254,11 +254,15 @@ Werte anderer Server-Optionen (`xxx`) können festgelegt werden mit:
 ----
 
 [[connect_to_irc_server]]
-== Verbinden mit dem IRC-Server und auto-join der Channel
+== Verbinden mit dem IRC-Server
 
 ----
 /connect freenode
 ----
+
+// TRANSLATION MISSING
+With this command, WeeChat connects to the freenode server and auto-joins the
+channels configured in the "autojoin" server option.
 
 [NOTE]
 Dieser Befehl kann dazu benutzt werden um einen neuen Server zu erstellen und

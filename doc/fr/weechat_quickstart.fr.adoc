@@ -231,11 +231,14 @@ suivante ("xxx" est le nom d'une option) :
 ----
 
 [[connect_to_irc_server]]
-== Se connecter au serveur IRC et rejoindre les canaux
+== Se connecter au serveur IRC
 
 ----
 /connect freenode
 ----
+
+Avec cette commande, WeeChat se connecte au serveur freenode et rejoint
+automatiquement les canaux configurés dans l'option "autojoin" du serveur.
 
 [NOTE]
 Cette commande peut aussi être utilisée pour créer et se connecter au serveur
