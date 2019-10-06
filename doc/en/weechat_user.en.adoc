@@ -2958,11 +2958,14 @@ Some examples:
 ==== Filenames masks
 
 It is possible to define a filename mask for each buffer, and use local buffer
-variables to build filename. To see local variables for current buffer:
+variables to build filename. To see available local variables for current buffer:
 
 ----
 /buffer localvar
 ----
+
+Masks will be matched on options in descending order of specificity on 
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
 For example, on buffer "irc.freenode.#weechat", WeeChat will search a mask with
 option name, in this order:
