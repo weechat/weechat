@@ -434,9 +434,7 @@ Zeige eine liste aller verfügbaren Skripten:
 /script
 ----
 
-Auf *weechat.org* von Drittanbietern bereitgestellte Scripten:
-
-https://weechat.org/scripts
+Auf *weechat.org* von Drittanbietern bereitgestellte Scripten: https://weechat.org/scripts
 
 [[more_doc]]
 == Weitere Dokumentation
@@ -444,8 +442,6 @@ https://weechat.org/scripts
 Mit dieser Quickstart-Anleitung wurden dir die wesentlichen
 Bedienungswerkzeuge von WeeChat nähergebracht.
 Für das eingehende Studium aller verfügbaren Funktionalitäten
-sei dir unsere ausführliche FAQ/Dokumentation ans Herz gelegt:
-
-https://weechat.org/doc
+sei dir unsere ausführliche FAQ/Dokumentation ans Herz gelegt: https://weechat.org/doc
 
 Viel Spass mit WeeChat!
