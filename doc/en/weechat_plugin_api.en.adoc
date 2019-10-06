@@ -2190,7 +2190,7 @@ Arguments:
 ** _extra_: default behavior is to just replace extra variables (_extra_vars_),
    other behavior can be selected:
 *** _eval_: extra variables (_extra_vars_) are evaluated themselves before
-    replacing (_WeeChat ≥ 1.6_)
+    replacing _(WeeChat ≥ 1.6)_
 ** _regex_: a regex used to replace text in _expr_ (which is then not
    evaluated)
 ** _regex_replace_: the replacement text to use with _regex_, to replace
@@ -2314,7 +2314,7 @@ from first used to last):
   `+1+`
 
 | `+=*+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Is matching mask where "*" is allowed (see function <<_string_match,string_match>>) |
   `+abc def =* a*f+` +
   `+abc def =* y*z+` |
@@ -2322,7 +2322,7 @@ from first used to last):
   `+0+`
 
 | `+!*+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Is NOT wildcard mask where "*" is allowed (see function <<_string_match,string_match>>) |
   `+abc def !* a*f+` +
   `+abc def !* y*z+` |
@@ -2392,8 +2392,8 @@ The comparison is made using floating point numbers if the two expressions are
 valid numbers, with one of the following formats:
 
 * integer (examples: 5, -7)
-* floating point number (examples: 5.2, -7.5, 2.83e-2) (_WeeChat ≥ 2.0_)
-* hexadecimal number (examples: 0xA3, -0xA3) (_WeeChat ≥ 2.0_)
+* floating point number (examples: 5.2, -7.5, 2.83e-2) _(WeeChat ≥ 2.0)_
+* hexadecimal number (examples: 0xA3, -0xA3) _(WeeChat ≥ 2.0)_
 
 To force a string comparison, you can add double quotes around each expression,
 for example:
@@ -2417,7 +2417,7 @@ expanded to last):
   `+value+`
 
 | `+${eval:xxx}+` +
-  (_WeeChat ≥ 1.3_) |
+  _(WeeChat ≥ 1.3)_ |
   String to evaluate. |
   `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
   `+19:02:45+` (with colors if there are color codes in the option
@@ -2425,7 +2425,7 @@ expanded to last):
 
 | `+${esc:xxx}+` +
   `+${\xxx}+` +
-  (_WeeChat ≥ 1.0_) |
+  _(WeeChat ≥ 1.0)_ |
   String with escaped chars. |
   `+${esc:prefix\tmessage}+` +
   `+${\ua9}+` |
@@ -2433,14 +2433,14 @@ expanded to last):
   `+©+`
 
 | `+${hide:x,string}+` +
-  (_WeeChat ≥ 1.1_) |
+  _(WeeChat ≥ 1.1)_ |
   String with hidden chars (all chars in `string` replaced by `x`). |
   `+${hide:*,password}+` |
   `+********+`
 
 | `+${cut:max,suffix,string}+` +
   `+${cut:+max,suffix,string}+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   String with `max` chars, and optional `suffix` if string is cut. +
   With the format `+max`, the suffix is counted in max length. |
   `+${cut:4,…,this is a test}+` +
@@ -2452,7 +2452,7 @@ expanded to last):
 
 | `+${cutscr:max,suffix,string}+` +
   `+${cutscr:+max,suffix,string}+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   String with `max` chars displayed on screen, and optional `suffix` if string is cut. +
   With the format `+max`, the suffix is counted in max length. |
   `+${cutscr:4,…,this is a test}+` +
@@ -2463,19 +2463,19 @@ expanded to last):
   `+こ>>+`
 
 | `+${rev:xxx}+` +
-  (_WeeChat ≥ 2.2_) |
+  _(WeeChat ≥ 2.2)_ |
   Reversed string. |
   `+${rev:Hello, world!}+` |
   `+!dlrow ,olleH+`
 
 | `+${repeat:count,string}+` +
-  (_WeeChat ≥ 2.3_) |
+  _(WeeChat ≥ 2.3)_ |
   Repeated string. |
   `+${repeat:5,-}+` |
   `+-----+`
 
 | `+${length:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Length of string (number of UTF-8 chars), color codes are ignored. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
@@ -2483,7 +2483,7 @@ expanded to last):
   `+7+`
 
 | `+${lengthscr:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Length of string displayed on screen, color codes are ignored. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
@@ -2491,10 +2491,10 @@ expanded to last):
   `+14+`
 
 | `+${re:N}+` +
-  (_WeeChat ≥ 1.1_) |
+  _(WeeChat ≥ 1.1)_ |
   Regex captured group: `0` = whole string matching, `1` to `99` = group
   captured, `+++` = last group captured,
-  `#` = index of last group captured (_WeeChat ≥ 1.8_). |
+  `#` = index of last group captured _(WeeChat ≥ 1.8)_. |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
@@ -2507,7 +2507,7 @@ expanded to last):
   `+2+`
 
 | `+${color:name}+` +
-  (_WeeChat ≥ 0.4.2_) |
+  _(WeeChat ≥ 0.4.2)_ |
   WeeChat color code (the name of color has optional attributes),
   see function <<_color,color>> for supported formats. |
   `+${color:red}red text+` +
@@ -2516,7 +2516,7 @@ expanded to last):
   `+bold orange text+` (in bold orange)
 
 | `+${modifier:name,data,string}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Result of a modifier, see function
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
@@ -2526,7 +2526,7 @@ expanded to last):
 
 | `+${info:name}+` +
   `+${info:name,arguments}+` +
-  (_WeeChat ≥ 0.4.3_) |
+  _(WeeChat ≥ 0.4.3)_ |
   Info from WeeChat or a plugin, see function
   <<_info_get,info_get>>. |
   `+${info:version}+` +
@@ -2536,7 +2536,7 @@ expanded to last):
 
 | `+${date}+` +
   `+${date:xxx}+` +
-  (_WeeChat ≥ 1.3_) |
+  _(WeeChat ≥ 1.3)_ |
   Current date/time, with custom format (see `man strftime`),
   default format is `%F %T`. |
   `+${date}+` +
@@ -2545,7 +2545,7 @@ expanded to last):
   `+19:02:45+`
 
 | `+${env:NAME}+` +
-  (_WeeChat ≥ 1.2_) |
+  _(WeeChat ≥ 1.2)_ |
   Value of the environment variable `NAME`. |
   `+${env:HOME}+` |
   `+/home/user+`
@@ -2553,7 +2553,7 @@ expanded to last):
 | `+${if:condition}+` +
   `+${if:condition?true}+`
   `+${if:condition?true:false}+`
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Ternary operator with a condition, a value if the condition is true (optional)
   and another value if the condition is false (optional). If values are not
   given, "1" or "0" are returned, according to the result of the condition. |
@@ -2561,7 +2561,7 @@ expanded to last):
   `+big+`
 
 | `+${calc:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Result of expression, where parentheses and the following operators are
   supported: +
   `+++`: addition +
@@ -3460,7 +3460,7 @@ void weechat_exec_on_files (const char *directory,
 Arguments:
 
 * _directory_: directory for searching files
-* _recurse_subdirs_: 1 to recurse into sub-directories (_WeeChat ≥ 2.0_)
+* _recurse_subdirs_: 1 to recurse into sub-directories _(WeeChat ≥ 2.0)_
 * _hidden_files_: 1 to include hidden files, otherwise 0
 * _callback_: function called for each file found, arguments:
 ** _void *data_: pointer
@@ -7739,7 +7739,7 @@ Arguments:
 * _context_: context for keys (see <<_key_bind,key_bind>>)
 * _key_: key to remove or a special value "area:XXX" to remove all keys having
   _XXX_ as first or second area; if the key starts with "quiet:", the keys
-  removed are not displayed in _core_ buffer (_WeeChat ≥ 2.0_).
+  removed are not displayed in _core_ buffer _(WeeChat ≥ 2.0)_.
 
 Return value:
 
@@ -7847,7 +7847,7 @@ Arguments:
 ** WeeChat color option name (from weechat.color.xxx), for example
    _chat_delimiters_
 ** option name (format: file.section.option), for example
-   _irc.color.message_quit_ (_WeeChat ≥ 1.2_)
+   _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** color with optional attributes/background (see below)
 ** attribute:
 *** _bold_: set bold
@@ -14558,7 +14558,7 @@ Arguments:
 * _command_: command to execute (if beginning with a "/"), or text to send to
   buffer
 
-Return value (_WeeChat ≥ 1.1_):
+Return value _(WeeChat ≥ 1.1)_:
 
 * _WEECHAT_RC_OK_ if successful
 * _WEECHAT_RC_ERROR_ if error

@@ -2234,7 +2234,7 @@ Paramètres :
 ** _extra_ : le comportement par défaut est juste de remplacer les variables
    additionnelles (_extra_vars_), un autre comportement peut être sélectionné :
 *** _eval_ : les variables additionnelles (_extra_vars_) sont évaluées
-    elles-mêmes avant remplacement (_WeeChat ≥ 1.6_)
+    elles-mêmes avant remplacement _(WeeChat ≥ 1.6)_
 ** _regex_ : une expression regulière pour remplacer du texte dans _expr_ (qui
    n'est alors pas évalué)
 ** _regex_replace_ : le texte de remplacement à utiliser avec _regex_, pour
@@ -2360,7 +2360,7 @@ Liste des opérateurs de comparaison qui peuvent être utilisés dans les condit
   `+1+`
 
 | `+=*+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Correspond au masque où le caractère joker "*" est autorisé (voir la fonction <<_string_match,string_match>>) |
   `+abc def =* a*f+` +
   `+abc def =* y*z+` |
@@ -2368,7 +2368,7 @@ Liste des opérateurs de comparaison qui peuvent être utilisés dans les condit
   `+0+`
 
 | `+!*+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Ne correspond PAS au masque où le caractère joker "*" est autorisé (voir la fonction <<_string_match,string_match>>) |
   `+abc def !* a*f+` +
   `+abc def !* y*z+` |
@@ -2438,8 +2438,8 @@ La comparaison est faite en utilisant des nombres à virgule si les deux express
 sont des nombres valides, avec l'un de ces formats :
 
 * entier (exemples : 5, -7)
-* nombre à virgule (exemples : 5.2, -7.5, 2.83e-2) (_WeeChat ≥ 2.0_)
-* nombre hexadécimal (exemples : 0xA3, -0xA3) (_WeeChat ≥ 2.0_)
+* nombre à virgule (exemples : 5.2, -7.5, 2.83e-2) _(WeeChat ≥ 2.0)_
+* nombre hexadécimal (exemples : 0xA3, -0xA3) _(WeeChat ≥ 2.0)_
 
 Pour forcer une comparaison de chaînes, vous pouvez ajouter des guillemets autour
 de chaque expression, par exemple :
@@ -2463,7 +2463,7 @@ première étendue à la dernière) :
   `+valeur+`
 
 | `+${eval:xxx}+` +
-  (_WeeChat ≥ 1.3_) |
+  _(WeeChat ≥ 1.3)_ |
   Chaîne à évaluer. |
   `+${eval:${date:${weechat.look.buffer_time_format}}}+` |
   `+19:02:45+` (avec des couleurs s'il y a des codes couleur dans l'option
@@ -2471,7 +2471,7 @@ première étendue à la dernière) :
 
 | `+${esc:xxx}+` +
   `+${\xxx}+` +
-  (_WeeChat ≥ 1.0_) |
+  _(WeeChat ≥ 1.0)_ |
   Chaîne avec caractères échappés. |
   `+${esc:préfixe\tmessage}+` +
   `+${\ua9}+` |
@@ -2479,7 +2479,7 @@ première étendue à la dernière) :
   `+©+`
 
 | `+${hide:x,chaîne}+` +
-  (_WeeChat ≥ 1.1_) |
+  _(WeeChat ≥ 1.1)_ |
   Chaîne avec les caractères masqués (tous les caractères dans `chaîne`
   remplacés par `x`). |
   `+${hide:*,mot_de_passe}+` |
@@ -2487,7 +2487,7 @@ première étendue à la dernière) :
 
 | `+${cut:max,suffixe,chaîne}+` +
   `+${cut:+max,suffixe,chaîne}+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Chaîne avec `max` caractères, et un `suffixe` facultatif si la chaîne est coupée. +
   Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
   `+${cut:4,…,ceci est un test}+` +
@@ -2499,7 +2499,7 @@ première étendue à la dernière) :
 
 | `+${cutscr:max,suffixe,chaîne}+` +
   `+${cutscr:+max,suffixe,chaîne}+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Chaîne avec `max` caractères affichés à l'écran, et un `suffixe` facultatif si la chaîne est coupée. +
   Avec le format `+max`, le suffixe est compté dans la longueur maximale. |
   `+${cutscr:4,…,ceci est un test}+` +
@@ -2510,19 +2510,19 @@ première étendue à la dernière) :
   `+こ>>+`
 
 | `+${rev:xxx}+` +
-  (_WeeChat ≥ 2.2_) |
+  _(WeeChat ≥ 2.2)_ |
   Chaîne inversée. |
   `+${rev:Bonjour !}+` |
   `+! ruojnoB+`
 
 | `+${repeat:nombre,chaîne}+` +
-  (_WeeChat ≥ 2.3_) |
+  _(WeeChat ≥ 2.3)_ |
   Chaîne répétée. |
   `+${repeat:5,-}+` |
   `+-----+`
 
 | `+${length:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Longueur de la chaîne (nombre de caractères UTF-8), les codes couleurs sont
   ignorés. |
   `+${length:test}+` +
@@ -2531,7 +2531,7 @@ première étendue à la dernière) :
   `+7+`
 
 | `+${lengthscr:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Longueur de la chaîne affichée à l'écran, les codes couleurs sont ignorés. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |
@@ -2539,10 +2539,10 @@ première étendue à la dernière) :
   `+14+`
 
 | `+${re:N}+` +
-  (_WeeChat ≥ 1.1_) |
+  _(WeeChat ≥ 1.1)_ |
   Groupe regex capturé : `0` = toute la chaîne correspondante,
   `1` à `99` = groupe capturé, `+++` = dernier groupe capturé,
-  `#` = index du dernier groupe capturé (_WeeChat ≥ 1.8_). |
+  `#` = index du dernier groupe capturé _(WeeChat ≥ 1.8)_. |
   `+${re:0}+` +
   `+${re:1}+` +
   `+${re:2}+` +
@@ -2555,7 +2555,7 @@ première étendue à la dernière) :
   `+2+`
 
 | `+${color:nom}+` +
-  (_WeeChat ≥ 0.4.2_) |
+  _(WeeChat ≥ 0.4.2)_ |
   Code couleur WeeChat (le nom de couleur a des attributs facultatifs),
   voir la fonction <<_color,color>> pour les formats supportés. |
   `+${color:red}texte rouge+` +
@@ -2564,7 +2564,7 @@ première étendue à la dernière) :
   `+texte orange gras+` (en orange gras)
 
 | `+${modifier:name,data,string}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Résultat d'un modificateur, voir la fonction
   <<_hook_modifier_exec,hook_modifier_exec>>. |
   `+${modifier:eval_path_home,,~}+` +
@@ -2574,7 +2574,7 @@ première étendue à la dernière) :
 
 | `+${info:nom}+` +
   `+${info:nom,paramètres}+` +
-  (_WeeChat ≥ 0.4.3_) |
+  _(WeeChat ≥ 0.4.3)_ |
   Info de WeeChat ou d'une extension, voir la fonction <<_info_get,info_get>>. |
   `+${info:version}+` +
   `+${info:nick_color_name,foo}+` |
@@ -2583,7 +2583,7 @@ première étendue à la dernière) :
 
 | `+${date}+` +
   `+${date:xxx}+` +
-  (_WeeChat ≥ 1.3_) |
+  _(WeeChat ≥ 1.3)_ |
   La date/heure courante, avec un format personnalisé (voir `man strftime`),
   le format par défaut est `%F %T`. |
   `+${date}+` +
@@ -2592,7 +2592,7 @@ première étendue à la dernière) :
   `+19:02:45+`
 
 | `+${env:NOM}+` +
-  (_WeeChat ≥ 1.2_) |
+  _(WeeChat ≥ 1.2)_ |
   Valeur de la variable d'environnement `NOM`. |
   `+${env:HOME}+` |
   `+/home/user+`
@@ -2600,7 +2600,7 @@ première étendue à la dernière) :
 | `+${if:condition}+` +
   `+${if:condition?vrai}+`
   `+${if:condition?vrai:faux}+` +
-  (_WeeChat ≥ 1.8_) |
+  _(WeeChat ≥ 1.8)_ |
   Opérateur ternaire avec une condition, une valeur si la condition est vraie
   (optionnelle) et une autre valeur si la condition est fausse (optionnelle).
   Si les valeurs ne sont pas données, "1" ou "0" est retourné, selon le résultat
@@ -2609,7 +2609,7 @@ première étendue à la dernière) :
   `+grand+`
 
 | `+${calc:xxx}+` +
-  (_WeeChat ≥ 2.7_) |
+  _(WeeChat ≥ 2.7)_ |
   Résultat de l'expression, où les parenthèses et les opérateurs suivants sont
   supportés : +
   `+++` : addition +
@@ -3521,7 +3521,7 @@ void weechat_exec_on_files (const char *directory,
 Paramètres :
 
 * _directory_ : répertoire où chercher les fichiers
-* _recurse_subdirs_ : 1 pour entrer dans les sous-répertoires (_WeeChat ≥ 2.0_)
+* _recurse_subdirs_ : 1 pour entrer dans les sous-répertoires _(WeeChat ≥ 2.0)_
 * _hidden_files_ : 1 pour inclure les fichiers cachés, sinon 0
 * _callback_ : fonction appelée pour chaque fichier trouvé, paramètres :
 ** _void *data_ : pointeur
@@ -7862,7 +7862,7 @@ Paramètres :
 * _key_ : touche à supprimer ou la valeur spéciale "area:XXX" pour supprimer
   toutes les touches ayant _XXX_ comme première ou deuxième zone; si la touche
   commence par "quiet:", les touches supprimées ne sont pas affichées dans le
-  tampon _core_ (_WeeChat ≥ 2.0_).
+  tampon _core_ _(WeeChat ≥ 2.0)_.
 
 Valeur de retour :
 
@@ -7970,7 +7970,7 @@ Paramètres :
 ** le nom d'une option de couleur WeeChat (de weechat.color.xxx), par exemple
   _chat_delimiters_
 ** le nom d'une option (format : fichier.section.option), par exemple
-   _irc.color.message_quit_ (_WeeChat ≥ 1.2_)
+   _irc.color.message_quit_ _(WeeChat ≥ 1.2)_
 ** une couleur avec des attributs/fond optionnels (voir ci-dessous)
 ** un attribut :
 *** _bold_ : activer le gras
@@ -14878,7 +14878,7 @@ Paramètres :
 * _command_ : commande à exécuter (si elle commence par "/"), ou texte à
   envoyer au tampon
 
-Valeur de retour (_WeeChat ≥ 1.1_) :
+Valeur de retour _(WeeChat ≥ 1.1)_ :
 
 * _WEECHAT_RC_OK_ si ok
 * _WEECHAT_RC_ERROR_ si erreur
