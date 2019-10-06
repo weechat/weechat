@@ -392,6 +392,20 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value, "${color:irc.color.message_join}-test-");
     WEE_CHECK_EVAL("test", "${option.not.found}test");
 
+    /* test modifier */
+    WEE_CHECK_EVAL("test_string", "test_${modifier:xxx,data,string}");
+    WEE_CHECK_EVAL("test_no_color",
+                   "${modifier:color_decode_ansi,0,test_\x1B[92mno_color}");
+    snprintf (str_value, sizeof (str_value),
+              "test_%slightgreen",
+              gui_color_get_custom ("lightgreen"));
+    WEE_CHECK_EVAL(str_value,
+                   "${modifier:color_decode_ansi,1,test_\x1B[92mlightgreen}");
+    snprintf (str_value, sizeof (str_value),
+              "${modifier:color_encode_ansi,,test_%slightgreen}",
+              gui_color_get_custom ("lightgreen"));
+    WEE_CHECK_EVAL("test_\x1B[92mlightgreen", str_value);
+
     /* test info */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
 

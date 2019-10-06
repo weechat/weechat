@@ -2563,6 +2563,15 @@ première étendue à la dernière) :
   `+texte rouge+` (en rouge) +
   `+texte orange gras+` (en orange gras)
 
+| `+${modifier:name,data,string}+` +
+  (_WeeChat ≥ 2.7_) |
+  Résultat d'un modificateur, voir la fonction
+  <<_hook_modifier_exec,hook_modifier_exec>>. |
+  `+${modifier:eval_path_home,,~}+` +
+  `+${modifier:eval_path_home,,%h/python}+` |
+  `+/home/xxx+` +
+  `+/home/xxx/.weechat/python+`
+
 | `+${info:nom}+` +
   `+${info:nom,paramètres}+` +
   (_WeeChat ≥ 0.4.3_) |

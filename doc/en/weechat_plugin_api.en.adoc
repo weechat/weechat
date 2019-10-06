@@ -2515,6 +2515,15 @@ expanded to last):
   `+red text+` (in red) +
   `+bold orange text+` (in bold orange)
 
+| `+${modifier:name,data,string}+` +
+  (_WeeChat ≥ 2.7_) |
+  Result of a modifier, see function
+  <<_hook_modifier_exec,hook_modifier_exec>>. |
+  `+${modifier:eval_path_home,,~}+` +
+  `+${modifier:eval_path_home,,%h/python}+` |
+  `+/home/xxx+` +
+  `+/home/xxx/.weechat/python+`
+
 | `+${info:name}+` +
   `+${info:name,arguments}+` +
   (_WeeChat ≥ 0.4.3_) |

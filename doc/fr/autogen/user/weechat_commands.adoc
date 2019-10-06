@@ -305,14 +305,15 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   6. une chaîne répétée (format : "repeat:nombre,chaîne")
   7. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
   8. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  9. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  10. la date/heure courante (format : "date" ou "date:format")
-  11. une variable d'environnement (format : "env:XXX")
-  12. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  13. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  14. une option (format : "fichier.section.option")
-  15. une variable locale du tampon
-  16. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  9. un modificateur (format : "modifier:nom,données,chaîne")
+  10. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  11. la date/heure courante (format : "date" ou "date:format")
+  12. une variable d'environnement (format : "env:XXX")
+  13. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  14. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
+  15. une option (format : "fichier.section.option")
+  16. une variable locale du tampon
+  17. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :

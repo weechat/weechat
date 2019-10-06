@@ -2528,6 +2528,16 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+red text+` (赤色で) +
   `+bold orange text+` (太字オレンジ色で)
 
+// TRANSLATION MISSING
+| `+${modifier:name,data,string}+` +
+  (_WeeChat バージョン 2.7 以上で利用可_) |
+  Result of a modifier, see function
+  <<_hook_modifier_exec,hook_modifier_exec>>. |
+  `+${modifier:eval_path_home,,~}+` +
+  `+${modifier:eval_path_home,,%h/python}+` |
+  `+/home/xxx+` +
+  `+/home/xxx/.weechat/python+`
+
 | `+${info:name}+` +
   `+${info:name,arguments}+` +
   (_WeeChat バージョン 0.4.3 以上で利用可_) |
