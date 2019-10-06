@@ -533,7 +533,10 @@ gui_chat_display_word (struct t_gui_window *window,
                 }
             }
             if (window->win_chat_cursor_y < window->coords_size)
+            {
+                window->coords[window->win_chat_cursor_y].line = line;
                 window->coords[window->win_chat_cursor_y].data = (char *)word + (ptr_data - data);
+            }
         }
 
         chars_to_display = gui_chat_strlen_screen (ptr_data);
@@ -1389,7 +1392,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     {
         if (window->win_chat_cursor_y < window->coords_size)
             window->coords[window->win_chat_cursor_y].data = line->data->message;
-        window->coords_x_message = window->win_chat_cursor_x;
     }
 
     /* reset color & style for a new line */

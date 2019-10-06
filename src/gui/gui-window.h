@@ -76,7 +76,6 @@ struct t_gui_window
     /* coordinates (for focus) */
     int coords_size;                   /* size of coords (number of lines)  */
     struct t_gui_window_coords *coords;/* coords for window                 */
-    int coords_x_message;              /* start X for messages              */
 
     /* tree */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
