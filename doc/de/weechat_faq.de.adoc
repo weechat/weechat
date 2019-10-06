@@ -808,7 +808,7 @@ von der "irc"-Erweiterung gelöscht. Es gibt somit keine Möglichkeit,
 diese Nachrichten rückwirkend anzuzeigen, auch dann nicht,
 wenn die Ignorierung wieder entfernt wird.
 
-Der Befehl `/filter` ist im WeeChat core angsiedelt
+Der Befehl `/filter` ist im WeeChat core angesiedelt
 und beeinflusst die Darstellung der Inhalte aller Buffer.
 Dieser Befehl eröffnet die Möglichkeit,
 bestimmte Zeilen in Buffern mittels Tags
