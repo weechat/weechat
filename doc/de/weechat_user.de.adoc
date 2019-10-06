@@ -3021,12 +3021,18 @@ weitere Beispiele:
 [[logger_filenames_masks]]
 ==== Dateinamenmaske
 
+// TRANSLATION MISSING
 Es ist möglich eine Dateinamenmaske für jeden Buffer zu erstellen und diese Maske
-mit lokalen Buffervariablen zu füllen. Um zu sehen welche lokalen Variabel es gibt:
+mit lokalen Buffervariablen zu füllen. To see available local variables for
+current buffer:
 
 ----
 /buffer localvar
 ----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
 Zum Beispiel für den Buffer "irc.freenode.#weechat". WeeChat sucht in dieser
 Reihenfolge nach einer Maske:

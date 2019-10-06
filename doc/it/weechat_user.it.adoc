@@ -3162,13 +3162,18 @@ Alcuni esempi:
 [[logger_filenames_masks]]
 ==== Mask per il nome file
 
+// TRANSLATION MISSING
 È possibile definire un mask per il nome del file di ogni buffer, ed utilizzare
-le variabili buffer locali per costruire il nome del file. Per visualizzare le
-variabili locali per il buffer corrente:
+le variabili buffer locali per costruire il nome del file. To see available
+local variables for current buffer:
 
 ----
 /buffer localvar
 ----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
 Ad esempio, sul buffer "irc.freenode.#weechat", WeeChat cercherà un mask con il
 nome dell'opzione, in quest'ordine:

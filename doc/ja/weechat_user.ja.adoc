@@ -2961,11 +2961,17 @@ Logger
 [[logger_filenames_masks]]
 ==== ファイル名マスク
 
-バッファに対し個別にファイル名マスクを設定することができます、ファイル名にはローカルバッファ変数が利用されます。現在のバッファに設定されたローカル変数を確認するには:
+// TRANSLATION MISSING
+It is possible to define a filename mask for each buffer, and use local buffer
+variables to build filename. To see available local variables for current buffer:
 
 ----
 /buffer localvar
 ----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
 例えば "irc.freenode.#weechat" バッファの場合、WeeChat
 は以下の順番でオプションに設定されたファイル名マスクを検索します:

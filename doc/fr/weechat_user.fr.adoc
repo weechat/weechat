@@ -3057,11 +3057,14 @@ Quelques exemples :
 
 Il est possible de définir un masque de nom de fichier pour chaque tampon, et
 d'utiliser les variables locales du tampon pour construire le nom de fichier.
-Pour voir les variables du tampon courant :
+Pour voir les variables disponibles sur le tampon courant :
 
 ----
 /buffer localvar
 ----
+
+Les masques seront utilisés par ordre de priorité descendante sur
+`logger.mask.$plugin.*`, avec `logger.file.mask` comme option par défaut.
 
 Par exemple, sur le tampon "irc.freenode.#weechat", WeeChat cherchera un masque
 avec le nom de l'option, dans cet ordre :

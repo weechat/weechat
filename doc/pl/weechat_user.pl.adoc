@@ -2978,13 +2978,18 @@ Kilka przykładów:
 [[logger_filenames_masks]]
 ==== Maski dla nazw plików
 
+// TRANSLATION MISSING
 Możliwe jest zdefiniowanie maski dla nazwy pliku z logiem dla każdego bufora i
-użycie do tego zmiennych lokalnych bufora. Żeby zobaczyć zmienne lokalne dla
-obecnego bufora wykonaj:
+użycie do tego zmiennych lokalnych bufora. To see available local variables for
+current buffer:
 
 ----
 /buffer localvar
 ----
+
+// TRANSLATION MISSING
+Masks will be matched on options in descending order of specificity on
+`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
 
 Na przykład, w buforze "irc.freenode.#weechat", WeeChat będzie szukał maski dla
 nazwy w takiej kolejności:
