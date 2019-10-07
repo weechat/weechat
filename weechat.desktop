@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=WeeChat
+GenericName=Chat client
+Comment=Extensible chat client
+Exec=weechat %u
+Terminal=true
+Icon=weechat
+Type=Application
+Categories=Network;Chat;IRCClient;ConsoleOnly;
+MimeType=x-scheme-handler/irc;x-scheme-handler/ircs;
