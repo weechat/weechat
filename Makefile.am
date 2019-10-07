@@ -66,17 +66,21 @@ EXTRA_DIST = AUTHORS.adoc \
              tools/git-version.sh \
              tools/makedist.sh \
              version.sh \
+             weechat.desktop \
              weechat.png \
              weechat.pc.in \
              weechat.cygport.in
 
 ACLOCAL_AMFLAGS = -I m4
 
-pkgconfigdir   = $(libdir)/pkgconfig
+pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = weechat.pc
 
-icondir   = $(datadir)/icons/hicolor/32x32/apps
+icondir = $(datadir)/icons/hicolor/32x32/apps
 icon_DATA = weechat.png
+
+desktopdir = $(datadir)/applications
+desktop_DATA = weechat.desktop
 
 clean-local:
 	$(RM) config-git.h
