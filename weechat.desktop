@@ -1,7 +1,9 @@
 [Desktop Entry]
 Name=WeeChat
 GenericName=Chat client
+GenericName[fr]=Client de discussion
 Comment=Extensible chat client
+Comment[fr]=Client de discussion extensible
 Exec=weechat %u
 Terminal=true
 Icon=weechat
