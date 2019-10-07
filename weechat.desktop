@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Weechat
-GenericName=IRC Client
+Name=WeeChat
+GenericName=Chat client
 Comment=Extensible chat client
 Exec=weechat %u
 Terminal=true
