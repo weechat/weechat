@@ -1,10 +1,13 @@
 [Desktop Entry]
 Name=WeeChat
 GenericName=Chat client
+GenericName[de]=Chat-Client
 GenericName[fr]=Client de discussion
 Comment=Extensible chat client
+Comment[de]=erweiterbarer Chat-Client
 Comment[fr]=Client de discussion extensible
 Keywords=WeeChat;extensible;chat;IRC;client;console;terminal;
+Keywords[de]=WeeChat;erweiterbar;Diskussion;IRC;Client;console;terminal;
 Keywords[fr]=WeeChat;extensible;discussion;IRC;client;console;terminal;
 Exec=weechat %u
 Terminal=true
