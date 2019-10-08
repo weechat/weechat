@@ -4112,7 +4112,8 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 | str_time           | string  | Datum für Darstellung. Kann Farbkodierungen erhalten.
 | tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | displayed          | string  | "1" wenn Zeile dargestellt wird, "0" wenn Zeile gefiltert wird.
-| notify_level       | string  | "0" = low level, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
+// TRANSLATION MISSING
+| notify_level       | string  | "-1" = no notify, "0" = low level, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
 | highlight          | string  | "1" wenn Highlight, andernfalls "0".
 | prefix             | string  | Prefix.
 | tg_prefix_nocolor  | string  | Prefix, ohne Farbkodierung.

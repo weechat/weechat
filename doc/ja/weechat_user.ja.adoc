@@ -4021,7 +4021,8 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 | str_time           | string  | 表示に使う日付、色コードを含めることも可能
 | tags               | string  | メッセージのタグ (文字列の最初と最後にコンマが追加されます)
 | displayed          | string  | "1" の場合は表示、"0" の場合は非表示
-| notify_level       | string  | "0" = 低レベル、"1" = メッセージ、"2" = プライベートメッセージ、"3" = ハイライト
+// TRANSLATION MISSING
+| notify_level       | string  | "-1" = no notify, "0" = 低レベル、"1" = メッセージ、"2" = プライベートメッセージ、"3" = ハイライト
 | highlight          | string  | "1" の場合はハイライトあり、"0" の場合はハイライトなし
 | prefix             | string  | プレフィックス
 | tg_prefix_nocolor  | string  | 色コードを含まないプレフィックス

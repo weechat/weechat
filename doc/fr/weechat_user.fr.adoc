@@ -4155,7 +4155,7 @@ de hachage :
 | str_time           | chaîne   | Date pour l'affichage. Elle peut contenir des codes couleur.
 | tags               | chaîne   | Étiquettes du message (avec une virgule en début/fin de chaîne).
 | displayed          | chaîne   | "1" si affichée, "0" si la ligne est filtrée.
-| notify_level       | chaîne   | "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
+| notify_level       | chaîne   | "-1" = pas de notification, "0" = niveau bas, "1" = message, "2" = message privé, "3" = highlight
 | highlight          | chaîne   | "1" si highlight, sinon "0".
 | prefix             | chaîne   | Préfixe.
 | tg_prefix_nocolor  | chaîne   | Préfixe sans les codes couleur.

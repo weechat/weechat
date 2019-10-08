@@ -4044,7 +4044,8 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | str_time           | ciąg     | Date do wyświetlenia. Może zawierać kody kolorów.
 | tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | displayed          | ciąg     | "1" jeśli wyświetlono, "0" jeśli nie wyświetlono.
-| notify_level       | ciąg     | "0" = poziom niski, "1" = wiadomość, "2" = wiadomość prywatna, "3" = podświetlenie
+// TRANSLATION MISSING
+| notify_level       | ciąg     | "-1" = no notify, "0" = poziom niski, "1" = wiadomość, "2" = wiadomość prywatna, "3" = podświetlenie
 | highlight          | ciąg     | "1" jeśli podświetlenie, inaczej "0".
 | prefix             | ciąg     | Prefiks.
 | tg_prefix_nocolor  | ciag     | Prefiks bez kodów kolorów.

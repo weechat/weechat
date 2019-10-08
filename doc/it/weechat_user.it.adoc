@@ -4288,7 +4288,8 @@ The "line" callback sets following variables in hashtable:
 | str_time           | string  | Date for display. It may contain color codes.
 | tags               | string  | Tags of message (with comma added at beginning/end of string).
 | displayed          | string  | "1" if displayed, "0" if line filtered.
-| notify_level       | string  | "0" = low level, "1" = message, "2" = private message, "3" = highlight
+// TRANSLATION MISSING
+| notify_level       | string  | "-1" = no notify, "0" = low level, "1" = message, "2" = private message, "3" = highlight
 | highlight          | string  | "1" if highlight, otherwise "0".
 | prefix             | string  | Prefix.
 | tg_prefix_nocolor  | string  | Prefix without color codes.
