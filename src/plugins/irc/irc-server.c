@@ -2513,6 +2513,9 @@ irc_server_send_one_msg (struct t_irc_server *server, int flags,
             case IRC_SERVER_CHARSET_MESSAGE_TEXT:
                 pos_encode = pos_text;
                 break;
+            default:
+                pos_encode = 0;
+                break;
         }
         if (pos_encode >= 0)
         {
@@ -3033,6 +3036,9 @@ irc_server_msgq_flush ()
                                     break;
                                 case IRC_SERVER_CHARSET_MESSAGE_TEXT:
                                     pos_decode = pos_text;
+                                    break;
+                                default:
+                                    pos_decode = 0;
                                     break;
                             }
                             if (pos_decode >= 0)
