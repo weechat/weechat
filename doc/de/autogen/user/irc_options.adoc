@@ -758,6 +758,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
+* [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
+** Beschreibung: pass:none[password for SSL certificate's private key (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** Beschreibung: pass:none[Zeichenkette mit Prioritäten für gnutls (für die korrekte Syntax siehe gnutls Dokumentation unter Funktion gnutls_priority_init. Gebräuchliche Zeichenketten sind: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** Typ: Zeichenkette

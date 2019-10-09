@@ -758,6 +758,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
+** description: pass:none[mot de passe pour la clé privée du certificat SSL (note : le contenu est évalué, voir /help eval ; les options de serveur sont évaluées avec ${irc_server.xxx} et ${server} est remplacé par le nom du serveur)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** description: pass:none[chaîne avec les priorités pour gnutls (pour la syntaxe, voir la documentation de la fonction gnutls_priority_init du manuel gnutls, les chaînes courantes sont : "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** type: chaîne

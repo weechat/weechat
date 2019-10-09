@@ -758,6 +758,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
+** 説明: pass:none[password for SSL certificate's private key (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+""+`
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** 説明: pass:none[gnutls の優先度を示した文字列 (構文は、gnutls マニュアルの gnutls_priority_init 関数のドキュメントを参照してください、通例: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** タイプ: 文字列

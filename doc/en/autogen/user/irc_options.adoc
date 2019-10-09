@@ -758,6 +758,12 @@
 ** values: any string
 ** default value: `+""+`
 
+* [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
+** description: pass:none[password for SSL certificate's private key (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** type: string
+** values: any string
+** default value: `+""+`
+
 * [[option_irc.server_default.ssl_priorities]] *irc.server_default.ssl_priorities*
 ** description: pass:none[string with priorities for gnutls (for syntax, see documentation of function gnutls_priority_init in gnutls manual, common strings are: "PERFORMANCE", "NORMAL", "SECURE128", "SECURE256", "EXPORT", "NONE")]
 ** type: string
