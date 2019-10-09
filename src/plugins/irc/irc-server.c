@@ -83,6 +83,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "ipv6",                 "on"                      },
   { "ssl",                  "off"                     },
   { "ssl_cert",             ""                        },
+  { "ssl_password",         ""                        },
   { "ssl_priorities",       "NORMAL:-VERS-SSL3.0"     },
   { "ssl_dhkey_size",       "2048"                    },
   { "ssl_fingerprint",      ""                        },
@@ -4425,7 +4426,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
-    char *weechat_dir;
+    char *weechat_dir, *ssl_password;
     const char *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
@@ -4695,18 +4696,26 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     gnutls_x509_crt_import (server->tls_cert, &filedatum,
                                             GNUTLS_X509_FMT_PEM);
 
+                    /* key password */
+                    ssl_password = irc_server_eval_expression (
+                        server,
+                        IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SSL_PASSWORD));
+
                     /* key */
                     gnutls_x509_privkey_init (&server->tls_cert_key);
-                    ret = gnutls_x509_privkey_import (server->tls_cert_key,
-                                                      &filedatum,
-                                                      GNUTLS_X509_FMT_PEM);
+                    ret = gnutls_x509_privkey_import2 (server->tls_cert_key,
+                                                       &filedatum,
+                                                       GNUTLS_X509_FMT_PEM,
+                                                       ssl_password,
+                                                       0);
                     if (ret < 0)
                     {
                         ret = gnutls_x509_privkey_import_pkcs8 (
                             server->tls_cert_key,
                             &filedatum,
                             GNUTLS_X509_FMT_PEM,
-                            NULL,
+                            ssl_password,
                             GNUTLS_PKCS_PLAIN);
                     }
                     if (ret < 0)
@@ -4758,6 +4767,9 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         memcpy (answer, &tls_struct, sizeof (tls_struct));
                         free (cert_str);
                     }
+
+                    if (ssl_password)
+                        free (ssl_password);
                 }
                 else
                 {
@@ -5816,6 +5828,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "ssl_cert",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CERT)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "ssl_password",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PASSWORD)))
+        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "ssl_priorities",
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES)))
         return 0;
@@ -6066,6 +6081,11 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  ssl_cert . . . . . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CERT]));
+        /* ssl_password */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PASSWORD]))
+            weechat_log_printf ("  ssl_password . . . . : null");
+        else
+            weechat_log_printf ("  ssl_password . . . . : (hidden)");
         /* ssl_priorities */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_PRIORITIES]))
             weechat_log_printf ("  ssl_priorities . . . : null ('%s')",

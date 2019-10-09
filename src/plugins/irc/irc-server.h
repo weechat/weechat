@@ -56,6 +56,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_IPV6,          /* use IPv6 protocol                    */
     IRC_SERVER_OPTION_SSL,           /* SSL protocol                         */
     IRC_SERVER_OPTION_SSL_CERT,      /* client ssl certificate file          */
+    IRC_SERVER_OPTION_SSL_PASSWORD,   /* client ssl certificate key password */
     IRC_SERVER_OPTION_SSL_PRIORITIES, /* gnutls priorities                   */
     IRC_SERVER_OPTION_SSL_DHKEY_SIZE, /* Diffie Hellman key size             */
     IRC_SERVER_OPTION_SSL_FINGERPRINT, /* SHA1 fingerprint of certificate    */
