@@ -9494,6 +9494,7 @@ Line data sent to the callback is a hashtable, with following values
   `+1+`
 
 | notify_level |
+  "-1" = no notify +
   "0" = low level +
   "1" = message +
   "2" = private message +
@@ -9573,7 +9574,7 @@ in this hashtable):
   The values of `notify_level` and `highlight` are updated accordingly.
 
 | notify_level |
-  Integer ("0" to "3"). |
+  Integer ("-1" to "3"). |
   N/A. |
   The notify level is set to this value. The hotlist will be updated
   accordingly once the line is added in the buffer. +

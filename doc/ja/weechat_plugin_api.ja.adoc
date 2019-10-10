@@ -9467,7 +9467,9 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
   `+0+` +
   `+1+`
 
+// TRANSLATION MISSING
 | notify_level |
+  "-1" = no notify +
   "0" = 低レベル +
   "1" = メッセージ +
   "2" = プライベートメッセージ +
@@ -9547,7 +9549,7 @@ WeeChat はそれらを無視します。
   これに対応して `notify_level` と `highlight` も更新されます。
 
 | notify_level |
-  整数 ("0" から "3") |
+  整数 ("-1" から "3") |
   利用不可 |
   通知レベルがこの値に設定されます。バッファに行が追加されるとホットリストも更新されます。 +
   この値に対応して `highlight` の値も更新されます。 +

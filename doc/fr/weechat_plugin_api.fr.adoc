@@ -9683,6 +9683,7 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
   `+1+`
 
 | notify_level |
+  "-1" = pas de notification +
   "0" = niveau bas +
   "1" = message +
   "2" = message privé +
@@ -9766,7 +9767,7 @@ valeurs sont des chaînes dans cette table de hachage) :
   Les valeurs de `notify_level` et `highlight` sont mises à jour en conséquence.
 
 | notify_level |
-  Entier ("0" à "3"). |
+  Entier ("-1" à "3"). |
   N/A. |
   Le niveau de notification est positionné à cette valeur. La hotlist sera mise
   à jour en conséquence une fois que la ligne sera ajoutée dans la tampon. +
