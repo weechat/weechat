@@ -110,6 +110,7 @@ extern struct t_config_option *irc_config_look_display_join_message;
 extern struct t_config_option *irc_config_look_display_old_topic;
 extern struct t_config_option *irc_config_look_display_pv_away_once;
 extern struct t_config_option *irc_config_look_display_pv_back;
+extern struct t_config_option *irc_config_look_display_pv_warning_address;
 extern struct t_config_option *irc_config_look_highlight_channel;
 extern struct t_config_option *irc_config_look_highlight_pv;
 extern struct t_config_option *irc_config_look_highlight_server;

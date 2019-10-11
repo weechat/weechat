@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-09 21:37+0200\n"
+"POT-Creation-Date: 2019-10-11 13:59+0200\n"
 "PO-Revision-Date: 2019-05-13 21:32+0200\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5231,6 +5231,10 @@ msgid "%s%s: cannot allocate new channel"
 msgstr ""
 
 #, c-format
+msgid "%sWarning: the address of remote nick has changed"
+msgstr ""
+
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr ""
 
@@ -6994,6 +6998,10 @@ msgid "display remote away message only once in private"
 msgstr ""
 
 msgid "display a message in private when user is back (after quit on server)"
+msgstr ""
+
+msgid ""
+"display a warning in private buffer if the address of remote nick has changed"
 msgstr ""
 
 msgid ""

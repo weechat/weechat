@@ -569,11 +569,57 @@ irc_channel_set_buffer_title (struct t_irc_channel *channel)
 void
 irc_channel_set_topic (struct t_irc_channel *channel, const char *topic)
 {
+    int display_warning;
+
+    /*
+     * display a warning in the private buffer if the address of remote
+     * nick has changed (that means you may talk to someone else!)
+     */
+    display_warning = (
+        (channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+        && weechat_config_boolean (irc_config_look_display_pv_warning_address)
+        && channel->topic && channel->topic[0]
+        && topic && topic[0]
+        && (strcmp (channel->topic, topic) != 0));
+
     if (channel->topic)
         free (channel->topic);
     channel->topic = (topic) ? strdup (topic) : NULL;
 
     irc_channel_set_buffer_title (channel);
+
+    if (display_warning)
+    {
+        weechat_printf_date_tags (
+                    channel->buffer,
+                    0,
+                    "no_log,warning_nick_address",
+                    _("%sWarning: the address of remote nick has changed"),
+                    weechat_prefix ("error"));
+    }
+}
+
+/*
+ * Sets topic of all private buffers with a nick.
+ */
+
+void
+irc_channel_set_topic_private_buffers (struct t_irc_server *server,
+                                       struct t_irc_nick *nick,
+                                       const char *nickname,
+                                       const char *topic)
+{
+    struct t_irc_channel *ptr_channel;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+            && (irc_server_strcasecmp (server, ptr_channel->name, (nick) ? nick->name : nickname) == 0))
+        {
+            irc_channel_set_topic (ptr_channel, topic);
+        }
+    }
 }
 
 /*

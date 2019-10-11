@@ -1244,7 +1244,11 @@ IRC_PROTOCOL_CALLBACK(join)
 
         /* display message in private if private has flag "has_quit_server" */
         if (!local_join)
+        {
             irc_channel_display_nick_back_in_pv (server, ptr_nick, nick);
+            irc_channel_set_topic_private_buffers (server, ptr_nick, nick,
+                                                   address);
+        }
     }
 
     if (local_join)
@@ -1717,7 +1721,11 @@ IRC_PROTOCOL_CALLBACK(nick)
     }
 
     if (!local_nick)
+    {
         irc_channel_display_nick_back_in_pv (server, ptr_nick_found, new_nick);
+        irc_channel_set_topic_private_buffers (server, ptr_nick_found,
+                                               new_nick, address);
+    }
 
     return WEECHAT_RC_OK;
 }

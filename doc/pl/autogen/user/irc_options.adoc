@@ -224,6 +224,12 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
+** opis: pass:none[display a warning in private buffer if the address of remote nick has changed]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** opis: pass:none[oddzielona przecinkami lista słów do podświetleń w buforach kanałów (wielkość liter nie ma znaczenia, użyj "(?-i)" na początku słów, dla których wielkość liter ma znaczenie; zmienne specjalne $nick, $channel i $server są zastępowane odpowiednimi wartościami), słowa te są dodawane do zmiennej lokalnej bufora  "highlight_words" tylko kiedy bufor jest tworzony (nie ma wpływu na obecne bufory), pusty ciąg wyłącza domyślne podświetlenia nicka, przykłady: "$nick", "(?-i)$nick"]
 ** typ: ciąg

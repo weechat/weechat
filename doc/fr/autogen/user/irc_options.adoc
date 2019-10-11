@@ -224,6 +224,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
+** description: pass:none[afficher un avertissement dans le tampon privé si l'adresse du pseudo distant a changé]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** description: pass:none[liste de mots pour le highlight dans les tampons de type "canal", séparés par des virgules (insensible à la casse, utilisez "(?-i)" au début des mots pour les rendre sensibles à la casse ; les variables spéciales $nick, $channel et $server sont remplacées par leurs valeurs), ces mots sont ajoutés à la propriété du tampon "highlight_words" seulement lorsque le tampon est créé (cela n'affecte pas les tampons courants), une chaîne vide désactive le highlight par défaut sur le pseudo, exemples : "$nick", "(?-i)$nick"]
 ** type: chaîne

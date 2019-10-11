@@ -224,6 +224,12 @@
 ** values: on, off
 ** default value: `+on+`
 
+* [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
+** description: pass:none[display a warning in private buffer if the address of remote nick has changed]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** description: pass:none[comma separated list of words to highlight in channel buffers (case insensitive, use "(?-i)" at beginning of words to make them case sensitive; special variables $nick, $channel and $server are replaced by their value), these words are added to buffer property "highlight_words" only when buffer is created (it does not affect current buffers), an empty string disables default highlight on nick, examples: "$nick", "(?-i)$nick"]
 ** type: string

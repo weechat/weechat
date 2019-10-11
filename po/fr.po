@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-09 21:37+0200\n"
-"PO-Revision-Date: 2019-10-09 21:39+0200\n"
+"POT-Creation-Date: 2019-10-11 13:59+0200\n"
+"PO-Revision-Date: 2019-10-11 20:23+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7424,6 +7424,10 @@ msgid "%s%s: cannot allocate new channel"
 msgstr "%s%s : impossible d'allouer un nouveau canal"
 
 #, c-format
+msgid "%sWarning: the address of remote nick has changed"
+msgstr "%sAttention : l'adresse du pseudo distant a changé"
+
+#, c-format
 msgid "%s%s%s %s(%s%s%s)%s is back on server"
 msgstr "%s%s%s %s(%s%s%s)%s est de retour sur le serveur"
 
@@ -9735,6 +9739,12 @@ msgid "display a message in private when user is back (after quit on server)"
 msgstr ""
 "afficher un message en privé lorsque l'utilisateur est de retour (après "
 "avoir quitté le serveur)"
+
+msgid ""
+"display a warning in private buffer if the address of remote nick has changed"
+msgstr ""
+"afficher un avertissement dans le tampon privé si l'adresse du pseudo "
+"distant a changé"
 
 msgid ""
 "comma separated list of words to highlight in channel buffers (case "

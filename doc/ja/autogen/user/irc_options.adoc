@@ -224,6 +224,12 @@
 ** 値: on, off
 ** デフォルト値: `+on+`
 
+* [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
+** 説明: pass:none[display a warning in private buffer if the address of remote nick has changed]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_irc.look.highlight_channel]] *irc.look.highlight_channel*
 ** 説明: pass:none[現在のバッファでハイライトする単語のコンマ区切りリスト (大文字小文字を区別しない、"(?-i)" を単語の最初につければ大文字小文字を区別する; 特殊変数 $nick、$channel、$server はそれぞれの値に置換される)、これらの単語は、バッファの作成時にバッファプロパティ "highlight_words" に追加される (既存のバッファには影響なし)、空文字列はニックネームに関するデフォルトのハイライトを無効にする、例: "$nick", "(?-i)$nick"]
 ** タイプ: 文字列

@@ -70,6 +70,7 @@ struct t_config_option *irc_config_look_display_join_message;
 struct t_config_option *irc_config_look_display_old_topic;
 struct t_config_option *irc_config_look_display_pv_away_once;
 struct t_config_option *irc_config_look_display_pv_back;
+struct t_config_option *irc_config_look_display_pv_warning_address;
 struct t_config_option *irc_config_look_highlight_channel;
 struct t_config_option *irc_config_look_highlight_pv;
 struct t_config_option *irc_config_look_highlight_server;
@@ -2823,6 +2824,13 @@ irc_config_init ()
         "display_pv_back", "boolean",
         N_("display a message in private when user is back (after quit on "
            "server)"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_pv_warning_address = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_pv_warning_address", "boolean",
+        N_("display a warning in private buffer if the address of remote nick "
+           "has changed"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_channel = weechat_config_new_option (

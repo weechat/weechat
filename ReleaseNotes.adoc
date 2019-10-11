@@ -75,6 +75,20 @@ This new server option has three possible values:
   _irc.network.channel_encode_ to _off_ (so this was the default behavior
   in previous versions)
 
+[[v2.7_irc_pv_warning_address]]
+=== Warning when nick address changes in private buffer
+
+A new option _irc.look.display_pv_warning_address_ has been added to display
+a warning in a private buffer if the address of remote nick has changed.
+
+The warning is enabled by default and can be disabled with this command:
+
+----
+/set irc.look.display_pv_warning_address off
+----
+
+See issue #892 for more information.
+
 [[v2.7_xfer_file_receive_suffix]]
 === Suffix for files received via DCC
 
