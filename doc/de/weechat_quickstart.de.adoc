@@ -260,9 +260,9 @@ Werte anderer Server-Optionen (`xxx`) können festgelegt werden mit:
 /connect freenode
 ----
 
-// TRANSLATION MISSING
-With this command, WeeChat connects to the freenode server and auto-joins the
-channels configured in the "autojoin" server option.
+Mittels obigem Befehl stellt WeeChat eine Verbindung zum freenode Server
+her und betritt automatisch die Kanäle die in der "autojoin" Server-Option
+aufgeführt sind.
 
 [NOTE]
 Dieser Befehl kann dazu benutzt werden um einen neuen Server zu erstellen und

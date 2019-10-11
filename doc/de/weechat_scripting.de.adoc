@@ -1177,9 +1177,8 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   der ursprüngliche Nick. |
   `nick`
 
-// TRANSLATION MISSING
 | user | ≥ 2.7 |
-  The origin user. |
+  der ursprüngliche Benutzer. |
   `user`
 
 | host | ≥ 0.3.4 |

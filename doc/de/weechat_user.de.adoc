@@ -3021,18 +3021,16 @@ weitere Beispiele:
 [[logger_filenames_masks]]
 ==== Dateinamenmaske
 
-// TRANSLATION MISSING
 Es ist möglich eine Dateinamenmaske für jeden Buffer zu erstellen und diese Maske
-mit lokalen Buffervariablen zu füllen. To see available local variables for
-current buffer:
+mit lokalen Buffervariablen zu füllen. Um sich die verfügbaren lokalen Variablen
+für den aktuellen Buffer anzeigen zu lassen:
 
 ----
 /buffer localvar
 ----
 
-// TRANSLATION MISSING
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+Masken werden in absteigender Reihenfolge abgeglichen, beginnend mit
+`logger.mask.$plugin.*`, dabei fungiert `logger.file.mask` als Fallback-Option.
 
 Zum Beispiel für den Buffer "irc.freenode.#weechat". WeeChat sucht in dieser
 Reihenfolge nach einer Maske:
@@ -4112,8 +4110,7 @@ Der Callback von "line" legt folgende Variablen in der Hashtable an:
 | str_time           | string  | Datum für Darstellung. Kann Farbkodierungen erhalten.
 | tags               | string  | Tags einer Nachricht (Komma wird automatisch zu Beginn und Ende den Tags hinzugefügt).
 | displayed          | string  | "1" wenn Zeile dargestellt wird, "0" wenn Zeile gefiltert wird.
-// TRANSLATION MISSING
-| notify_level       | string  | "-1" = no notify, "0" = low level, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
+| notify_level       | string  | "-1" = keine Benachrichtigung, "0" = niedrige Stufe, "1" = Nachricht, "2" = private Nachricht, "3" = Highlight
 | highlight          | string  | "1" wenn Highlight, andernfalls "0".
 | prefix             | string  | Prefix.
 | tg_prefix_nocolor  | string  | Prefix, ohne Farbkodierung.
