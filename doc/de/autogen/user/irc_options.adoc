@@ -225,7 +225,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.display_pv_warning_address]] *irc.look.display_pv_warning_address*
-** Beschreibung: pass:none[display a warning in private buffer if the address of remote nick has changed]
+** Beschreibung: pass:none[eine Warnung wird im privaten Buffer ausgegeben, falls sich die Adresse des remote Nick geändert hat]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -765,7 +765,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
-** Beschreibung: pass:none[password for SSL certificate's private key (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
+** Beschreibung: pass:none[Passwort für SSL Zertifikat des privaten Schlüssels (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
