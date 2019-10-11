@@ -125,6 +125,7 @@ msgstr "Variáveis"
 
 msgid "Update allowed:"
 msgstr ""
+"Update permitido:"
 
 #, fuzzy
 msgid "Option"
@@ -132,9 +133,11 @@ msgstr "<opção>"
 
 msgid "Type"
 msgstr ""
+"Tipo"
 
 msgid "Constants"
 msgstr ""
+"Constantes"
 
 #, c-format
 msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
@@ -147,6 +150,7 @@ msgstr "%sErro: descritor de arquivo ruim (%d) usado em hook_fd"
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
 msgstr ""
+"Fim do comando '%s', tempo limite esgotado (%.1fs)"
 
 #, c-format
 msgid "System clock skew detected (%+ld seconds), reinitializing all timers"
@@ -234,16 +238,21 @@ msgstr ""
 
 msgid "Extra options in headless mode:\n"
 msgstr ""
+"Opções extra no modo headless:\n"
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
 "file descriptors closed);\n"
 msgstr ""
+"      --daemon             rodar o WeeChat como daemon (fork, novo grupo de processos, "
+"descritores de arquivos fechados);\n"
 
 msgid ""
 "                           (by default in headless mode WeeChat is blocking "
 "and does not run in background)\n"
 msgstr ""
+"                           (por padrão, no modo headless o WeeChat é bloqueado "
+"e não roda em background)\n"
 
 msgid ""
 "Debug options (for tools like valgrind, DO NOT USE IN PRODUCTION):\n"
@@ -282,6 +291,7 @@ msgstr "Erro: não foi possível criar o diretório \"%s\"\n"
 
 msgid "WeeChat is running in headless mode (Ctrl-C to quit)."
 msgstr ""
+"WeeChat está rodadondo no modo headless (Ctrl-C para fechar)."
 
 msgid ""
 "Welcome to WeeChat!\n"
@@ -298,6 +308,19 @@ msgid ""
 "You can add and connect to an IRC server with /server and /connect commands "
 "(see /help server)."
 msgstr ""
+"Bem-vindo ao WeeChat!\n"
+"\n"
+"Se você está iniciando no WeeChat é recomendável ler pelo menos o"
+"guia de início rápido e o guia de usuário, se você tiver algum tempo. Neles você"
+"entenderá os principais conceitos do WeeChat.\n"
+"Todos os documentos do WeeChat estão disponíveis em: https://weechat.org/doc\n"
+"\n"
+"Além disso, há um comando de ajuda no chat, /help, disponível em todos os comandos e opções (use"
+"Tecla Tab para completar o nome).\n"
+"O comando /fset pode te ajudar a personalizar o WeeChat.\n"
+"\n"
+"Você pode adicionar e conectar-se a um servidor IRC com os comandos /server e /connect"
+"(consulte /help na aba servidor para ajuda)."
 
 #. TRANSLATORS: the "under %s" can be "under screen" or "under tmux"
 #, c-format
@@ -305,16 +328,21 @@ msgid ""
 "%sWarning: WeeChat is running under %s and $TERM is \"%s\", which can cause "
 "display bugs; $TERM should be set to one of these values: %s"
 msgstr ""
+"%sAviso: WeeChat está rodando em plano de fundo %s e $TERM está como \"%s\", o que pode causar "
+"erros no display; $TERM deveria ser alterado para um desses valores: %s"
 
 #, c-format
 msgid "%sYou should add this line in the file %s:  %s"
 msgstr ""
+"%sVocê deveria adicionar esta linha em seu arquivo %s:  &s"
 
 #, c-format
 msgid ""
 "%sWarning: cannot set the locale; make sure $LANG and $LC_* variables are "
 "correct"
 msgstr ""
+"%sAviso: não é possivel setar o local; tenha certeza que as variaveis $LANG e $LC_* estão "
+"corretas"
 
 msgid "List of bars:"
 msgstr "Lista de barras:"
