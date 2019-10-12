@@ -301,7 +301,7 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   3. a string with chars to hide (format: "hide:char,string")
   4. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
      or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  5. a reversed string (format: "rev:xxx")
+  5. a reversed string (format: "rev:xxx" or "revscr:xxx")
   6. a repeated string (format: "repeat:count,string")
   7. length of a string (format: "length:xxx" or "lengthscr:xxx")
   8. a color (format: "color:xxx", see "Plugin API reference", function "color")

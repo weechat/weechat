@@ -295,7 +295,8 @@ end:
  *   5. a string with max chars (format: cut:max,suffix,string or
  *      cut:+max,suffix,string) or max chars on screen
  *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   6. a reversed string (format: rev:xxx)
+ *   6. a reversed string (format: rev:xxx) or reversed string for screen,
+ *      color codes are not reversed (format: revscr:xxx)
  *   7. a repeated string (format: repeat:count,string)
  *   8. length of a string (format: length:xxx) or length of a string on screen
  *      (format: lengthscr:xxx); color codes are ignored
@@ -459,9 +460,9 @@ eval_replace_vars_cb (void *data, const char *text)
 
     /* 6. reverse string */
     if (strncmp (text, "rev:", 4) == 0)
-    {
         return string_reverse (text + 4);
-    }
+    if (strncmp (text, "revscr:", 7) == 0)
+        return string_reverse_screen (text + 7);
 
     /* 7. repeated string */
     if (strncmp (text, "repeat:", 7) == 0)

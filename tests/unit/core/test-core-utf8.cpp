@@ -353,6 +353,14 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(3, utf8_char_size ("€"));
     LONGS_EQUAL(3, utf8_char_size (cjk_yellow));
     LONGS_EQUAL(4, utf8_char_size (han_char));
+    /* ë as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(1, utf8_char_size ("\xeb"));
+    /* ël as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(2, utf8_char_size ("\xebl"));
+    /* ëlm as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(3, utf8_char_size ("\xeblm"));
+    /* ëlmn as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(3, utf8_char_size ("\xeblmn"));
 
     /* char size on screen */
     LONGS_EQUAL(0, utf8_char_size_screen (NULL));
@@ -361,6 +369,14 @@ TEST(CoreUtf8, Size)
     LONGS_EQUAL(1, utf8_char_size_screen ("ë"));
     LONGS_EQUAL(1, utf8_char_size_screen ("€"));
     LONGS_EQUAL(2, utf8_char_size_screen (cjk_yellow));
+    /* ë as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(1, utf8_char_size_screen ("\xeb"));
+    /* ël as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(1, utf8_char_size_screen ("\xebl"));
+    /* ëlm as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(1, utf8_char_size_screen ("\xeblm"));
+    /* ëlmn as iso-8859-15: invalid UTF-8 */
+    LONGS_EQUAL(1, utf8_char_size_screen ("\xeblmn"));
 
     /* length of string (in chars) */
     LONGS_EQUAL(0, utf8_strlen (NULL));

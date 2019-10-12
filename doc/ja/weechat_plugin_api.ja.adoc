@@ -2473,11 +2473,24 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+thi…+` +
   `+こ>>+`
 
+// TRANSLATION MISSING
 | `+${rev:xxx}+` +
   _(WeeChat バージョン 2.2 以上で利用可)_ |
-  文字順を反転させた文字列。|
-  `+${rev:Hello, world!}+` |
-  `+!dlrow ,olleH+`
+  Reversed string (color codes are reversed, so the string should not contain
+  color codes). |
+  `+${rev:Hello, world!}+` +
+  `+${rev:Hello, ${color:red}world!}+` |
+  `+!dlrow ,olleH+` +
+  `+!dlrow30F ,olleH+` (no color, the color code is reversed)
+
+// TRANSLATION MISSING
+| `+${revscr:xxx}+` +
+  _(WeeChat バージョン 2.7 以上で利用可)_ |
+  Reversed string for screen, color codes are not reversed. |
+  `+${revscr:Hello, world!}+` +
+  `+${revscr:Hello, ${color:red}world!}+` |
+  `+!dlrow ,olleH+` +
+  `+!dlrow ,olleH+` (`pass:[ ,olleH]` in red)
 
 | `+${repeat:count,string}+` +
   _(WeeChat バージョン 2.3 以上で利用可)_ |
@@ -2487,7 +2500,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+${length:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+  _(WeeChat バージョン 2.7 以上で利用可)_ |
   Length of string (number of UTF-8 chars), color codes are ignored. |
   `+${length:test}+` +
   `+${length:こんにちは世界}+` |
@@ -2496,7 +2509,7 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 
 // TRANSLATION MISSING
 | `+${lengthscr:xxx}+` +
-  _(WeeChat ≥ 2.7)_ |
+  _(WeeChat バージョン 2.7 以上で利用可)_ |
   Length of string displayed on screen, color codes are ignored. |
   `+${lengthscr:test}+` +
   `+${lengthscr:こんにちは世界}+` |

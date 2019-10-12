@@ -2511,9 +2511,20 @@ première étendue à la dernière) :
 
 | `+${rev:xxx}+` +
   _(WeeChat ≥ 2.2)_ |
-  Chaîne inversée. |
-  `+${rev:Bonjour !}+` |
-  `+! ruojnoB+`
+  Chaîne inversée (les codes couleurs sont inversés, donc la chaîne ne devrait
+  pas contenir de codes couleurs). |
+  `+${rev:Bonjour, le monde !}+` +
+  `+${rev:Bonjour, ${color:red}le monde !}+` |
+  `+! ednom el ,ruojnoB+` +
+  `+! ednom el30F ,ruojnoB+` (pas de couleur, le code couleur est inversé)
+
+| `+${revscr:xxx}+` +
+  _(WeeChat ≥ 2.7)_ |
+  Chaîne inversée pour l'écran : les codes couleurs ne sont pas inversés. |
+  `+${revscr:Bonjour, le monde !}+` +
+  `+${revscr:Bonjour, ${color:red}le monde !}+` |
+  `+! ednom el ,ruojnoB+` +
+  `+! ednom el ,ruojnoB+` (`pass:[ ,ruojnoB]` en rouge)
 
 | `+${repeat:nombre,chaîne}+` +
   _(WeeChat ≥ 2.3)_ |

@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * core: add file weechat.desktop
+  * core: add reverse of string for screen in evaluation of expressions with "revscr:"
   * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
   * core: add calculation of expression in evaluation of expressions with "calc:xxx" (issue #997)
   * core: add optional default path (evaluated) in completion "filename"

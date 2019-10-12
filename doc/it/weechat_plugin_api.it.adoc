@@ -2572,9 +2572,20 @@ expanded to last):
 
 | `+${rev:xxx}+` +
   _(WeeChat ≥ 2.2)_ |
-  Reversed string. |
-  `+${rev:Hello, world!}+` |
-  `+!dlrow ,olleH+`
+  Reversed string (color codes are reversed, so the string should not contain
+  color codes). |
+  `+${rev:Hello, world!}+` +
+  `+${rev:Hello, ${color:red}world!}+` |
+  `+!dlrow ,olleH+` +
+  `+!dlrow30F ,olleH+` (no color, the color code is reversed)
+
+| `+${revscr:xxx}+` +
+  _(WeeChat ≥ 2.7)_ |
+  Reversed string for screen, color codes are not reversed. |
+  `+${revscr:Hello, world!}+` +
+  `+${revscr:Hello, ${color:red}world!}+` |
+  `+!dlrow ,olleH+` +
+  `+!dlrow ,olleH+` (`pass:[ ,olleH]` in red)
 
 | `+${repeat:count,string}+` +
   _(WeeChat ≥ 2.3)_ |

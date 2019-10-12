@@ -204,6 +204,66 @@ string_reverse (const char *string)
 }
 
 /*
+ * Reverses a string for screen: color codes are not reversed.
+ * For example: reverse of "<red>test" is "test<red>" where the color code
+ * "<red>" is kept as-is, so it is still valid (this is not the case with
+ * function string_reverse).
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+string_reverse_screen (const char *string)
+{
+    int length, color_size, char_size;
+    const char *ptr_string, *ptr_next;
+    char *result, *ptr_result;
+
+    if (!string)
+        return NULL;
+
+    if (!string[0])
+        return strdup (string);
+
+    length = strlen (string);
+    result = malloc (length + 1);
+    if (!result)
+        return NULL;
+
+    ptr_string = string;
+    ptr_result = result + length;
+    ptr_result[0] = '\0';
+
+    while (ptr_string && ptr_string[0])
+    {
+        ptr_next = gui_chat_string_next_char (NULL, NULL,
+                                              (const unsigned char *)ptr_string,
+                                              0, 0, 0);
+        if (!ptr_next)
+            ptr_next = ptr_string + strlen (ptr_string);
+        color_size = ptr_next - ptr_string;
+        if (color_size > 0)
+        {
+            /* add the color code as-is */
+            ptr_result -= color_size;
+            memcpy (ptr_result, ptr_string, color_size);
+            ptr_string += color_size;
+        }
+
+        if (ptr_string[0])
+        {
+            char_size = utf8_char_size (ptr_string);
+
+            ptr_result -= char_size;
+            memcpy (ptr_result, ptr_string, char_size);
+            ptr_string += char_size;
+        }
+    }
+
+    return result;
+}
+
+/*
  * Repeats a string a given number of times.
  *
  * Note: result must be freed after use.

@@ -354,6 +354,18 @@ TEST(CoreEval, EvalExpression)
     /* test reverse of string */
     WEE_CHECK_EVAL("!dlrow ,olleH", "${rev:Hello, world!}");
     WEE_CHECK_EVAL("界世はちにんこ", "${rev:こんにちは世界}");
+    WEE_CHECK_EVAL("!dlrow30F\x19 ,olleH",
+                   "${rev:Hello, ${color:red}world!}");
+    WEE_CHECK_EVAL("Hello, \x19" "F03world!",
+                   "${rev:${rev:Hello, ${color:red}world!}}");
+
+    /* test reverse of string (for screen) */
+    WEE_CHECK_EVAL("!dlrow ,olleH", "${revscr:Hello, world!}");
+    WEE_CHECK_EVAL("界世はちにんこ", "${revscr:こんにちは世界}");
+    WEE_CHECK_EVAL("!dlrow\x19" "F03 ,olleH",
+                   "${revscr:Hello, ${color:red}world!}");
+    WEE_CHECK_EVAL("Hello, \x19" "F03world!",
+                   "${revscr:${revscr:Hello, ${color:red}world!}}");
 
     /* test repeat of string */
     WEE_CHECK_EVAL("", "${repeat:-1,x}");

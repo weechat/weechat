@@ -301,7 +301,7 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   3. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
   4. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
      ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
-  5. une chaîne inversée (format : "rev:xxx")
+  5. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
   6. une chaîne répétée (format : "repeat:nombre,chaîne")
   7. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
   8. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")

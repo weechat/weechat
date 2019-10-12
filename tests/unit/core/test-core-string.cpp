@@ -35,6 +35,7 @@ extern "C"
 #include "src/core/weechat.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-hashtable.h"
+#include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
 
@@ -276,6 +277,8 @@ TEST(CoreString, Cut)
 
 TEST(CoreString, Reverse)
 {
+    char string[128];
+
     POINTERS_EQUAL(NULL, string_reverse (NULL));
     STRCMP_EQUAL("", string_reverse (""));
 
@@ -291,6 +294,73 @@ TEST(CoreString, Reverse)
      * the function string_reverse accepts only an UTF-8 string as input
      */
     STRCMP_EQUAL("\xeblon", string_reverse ("no\xebl"));
+
+    /* reverse of string with color codes */
+    snprintf (string, sizeof (string),
+              "%s",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL("30F\x19", string_reverse (string));
+
+    snprintf (string, sizeof (string),
+              "%s red",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL("der 30F\x19", string_reverse (string));
+
+    snprintf (string, sizeof (string),
+              "red %s",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL("30F\x19 der", string_reverse (string));
+}
+
+/*
+ * Tests functions:
+ *   string_reverse_screen
+ */
+
+TEST(CoreString, ReverseScreen)
+{
+    char string[128], result[128];
+
+    POINTERS_EQUAL(NULL, string_reverse_screen (NULL));
+    STRCMP_EQUAL("", string_reverse_screen (""));
+
+    /* reverse of UTF-8 string */
+    STRCMP_EQUAL("n", string_reverse_screen ("n"));
+    STRCMP_EQUAL("on", string_reverse_screen ("no"));
+    STRCMP_EQUAL("ëon", string_reverse_screen ("noë"));
+    STRCMP_EQUAL("lëon", string_reverse_screen ("noël"));
+    STRCMP_EQUAL("界世はちにんこ", string_reverse_screen ("こんにちは世界"));
+
+    /*
+     * reverse of ISO-8859-15 string: the result may not be what you expect:
+     * the function string_reverse_screen accepts only an UTF-8 string as input
+     */
+    STRCMP_EQUAL("\xeblon", string_reverse_screen ("no\xebl"));
+
+    /* reverse of string with color codes */
+    snprintf (string, sizeof (string),
+              "%s",
+              gui_color_get_custom ("red"));
+    snprintf (result, sizeof (result),
+              "%s",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL(result, string_reverse_screen (string));
+
+    snprintf (string, sizeof (string),
+              "%s red",
+              gui_color_get_custom ("red"));
+    snprintf (result, sizeof (result),
+              "der %s",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL(result, string_reverse_screen (string));
+
+    snprintf (string, sizeof (string),
+              "red %s",
+              gui_color_get_custom ("red"));
+    snprintf (result, sizeof (result),
+              "%s der",
+              gui_color_get_custom ("red"));
+    STRCMP_EQUAL(result, string_reverse_screen (string));
 }
 
 /*

@@ -7353,7 +7353,7 @@ command_init ()
            "     or max chars displayed on screen "
            "(format: \"cutscr:max,suffix,string\" or "
            "\"cutscr:+max,suffix,string\")\n"
-           "  5. a reversed string (format: \"rev:xxx\")\n"
+           "  5. a reversed string (format: \"rev:xxx\" or \"revscr:xxx\")\n"
            "  6. a repeated string (format: \"repeat:count,string\")\n"
            "  7. length of a string (format: \"length:xxx\" or "
            "\"lengthscr:xxx\")\n"
