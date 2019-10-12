@@ -9816,677 +9816,822 @@ List of signals sent by WeeChat and plugins:
 |===
 | Plugin | Signal | Arguments | Description
 
-| guile | guile_script_loaded +
+| guile |
+  [[hook_signal_guile_script_loaded]] guile_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Scheme script loaded.
 
-| guile | guile_script_unloaded +
+| guile |
+  [[hook_signal_guile_script_unloaded]] guile_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Scheme script unloaded.
 
-| guile | guile_script_installed +
+| guile |
+  [[hook_signal_guile_script_installed]] guile_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Scheme script(s) installed.
 
-| guile | guile_script_removed +
+| guile |
+  [[hook_signal_guile_script_removed]] guile_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Scheme script(s) removed.
 
-| irc | xxx,irc_in_yyy ^(1)^ |
+| irc |
+  [[hook_signal_xxx_irc_in_yyy]] xxx,irc_in_yyy ^(1)^ |
   String: message. |
   IRC message from server (before irc plugin uses it,
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | xxx,irc_in2_yyy ^(1)^ |
+| irc |
+  [[hook_signal_xxx_irc_in2_yyy]] xxx,irc_in2_yyy ^(1)^ |
   String: message. |
   IRC message from server (after irc plugin uses it,
   signal sent only if message is *not* ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | xxx,irc_raw_in_yyy ^(1)^ +
+| irc |
+  [[hook_signal_xxx_irc_raw_in_yyy]] xxx,irc_raw_in_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: message. |
   IRC message from server (before irc plugin uses it,
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | xxx,irc_raw_in2_yyy ^(1)^ +
+| irc |
+  [[hook_signal_xxx_irc_raw_in2_yyy]] xxx,irc_raw_in2_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.2)_ |
   String: message. |
   IRC message from server (after irc plugin uses it,
   signal sent even if message is ignored). +
   Since version 2.2, the whole IRC message is sent, including tags.
 
-| irc | xxx,irc_out1_yyy ^(1)^ +
+| irc |
+  [[hook_signal_xxx_irc_out1_yyy]] xxx,irc_out1_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.7)_ |
   String: message. |
   IRC message sent to server before automatic split
   (to fit in 512 bytes by default).
 
-| irc | xxx,irc_out_yyy ^(1)^ |
+| irc |
+  [[hook_signal_xxx_irc_out_yyy]] xxx,irc_out_yyy ^(1)^ |
   String: message. |
   IRC message sent to server after automatic split
   (to fit in 512 bytes by default). +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc | xxx,irc_outtags_yyy ^(1)^ +
+| irc |
+  [[hook_signal_xxx_irc_outtags_yyy]] xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
   String: tags + ";" + message. |
   Tags + IRC message sent to server. +
   *Warning:* the string may contain invalid UTF-8 data.
   Signal "xxx,irc_out1_yyy" is recommended instead.
 
-| irc | irc_ctcp |
+| irc |
+  [[hook_signal_irc_ctcp]] irc_ctcp |
   String: message. |
   CTCP received.
 
-| irc | irc_dcc |
+| irc |
+  [[hook_signal_irc_dcc]] irc_dcc |
   String: message. |
   New DCC.
 
-| irc | irc_pv |
+| irc |
+  [[hook_signal_irc_pv]] irc_pv |
   String: message. |
   Private message received.
 
-| irc | irc_channel_opened |
+| irc |
+  [[hook_signal_irc_channel_opened]] irc_channel_opened |
   Pointer: buffer. |
   Channel opened.
 
-| irc | irc_pv_opened |
+| irc |
+  [[hook_signal_irc_pv_opened]] irc_pv_opened |
   Pointer: buffer. |
   Private opened.
 
-| irc | irc_server_opened +
+| irc |
+  [[hook_signal_irc_server_opened]] irc_server_opened +
   _(WeeChat ≥ 0.3.7)_ |
   Pointer: buffer. |
   Server buffer opened.
 
-| irc | irc_server_connecting |
+| irc |
+  [[hook_signal_irc_server_connecting]] irc_server_connecting |
   String: server name. |
   Connecting to server.
 
-| irc | irc_server_connected |
+| irc |
+  [[hook_signal_irc_server_connected]] irc_server_connected |
   String: server name. |
   Connected to server.
 
-| irc | irc_server_disconnected |
+| irc |
+  [[hook_signal_irc_server_disconnected]] irc_server_disconnected |
   String: server name. |
   Disconnected from server.
 
-| irc | irc_server_lag_changed +
+| irc |
+  [[hook_signal_irc_server_lag_changed]] irc_server_lag_changed +
   _(WeeChat ≥ 1.8)_ |
   String: server name. |
   Lag changed on the server.
 
-| irc | irc_ignore_removing |
+| irc |
+  [[hook_signal_irc_ignore_removing]] irc_ignore_removing |
   Pointer: ignore. |
   Removing ignore.
 
-| irc | irc_ignore_removed |
+| irc |
+  [[hook_signal_irc_ignore_removed]] irc_ignore_removed |
   - |
   Ignore removed.
 
-| irc | irc_notify_join +
+| irc |
+  [[hook_signal_irc_notify_join]] irc_notify_join +
   _(WeeChat ≥ 0.3.8)_ |
   String: server name + "," + nick. |
   A nick in notify list has joined server.
 
-| irc | irc_notify_quit +
+| irc |
+  [[hook_signal_irc_notify_quit]] irc_notify_quit +
   _(WeeChat ≥ 0.3.8)_ |
   String: server name + "," + nick. |
   A nick in notify list has quit server.
 
-| irc | irc_notify_away +
+| irc |
+  [[hook_signal_irc_notify_away]] irc_notify_away +
   _(WeeChat ≥ 0.3.8)_ |
   String: server name + "," + nick + "," + away message. |
   A nick in notify list is now away on server.
 
-| irc | irc_notify_still_away +
+| irc |
+  [[hook_signal_irc_notify_still_away]] irc_notify_still_away +
   _(WeeChat ≥ 0.3.8)_ |
   String: server name + "," + nick + "," + away message. |
   A nick in notify list is still away on server (away message has changed).
 
-| irc | irc_notify_back +
+| irc |
+  [[hook_signal_irc_notify_back]] irc_notify_back +
   _(WeeChat ≥ 0.3.8)_ |
   String: server name + "," + nick. |
   A nick in notify list is back (away status removed).
 
-| javascript | javascript_script_loaded +
+| javascript |
+  [[hook_signal_javascript_script_loaded]] javascript_script_loaded +
   _(WeeChat ≥ 1.2)_ |
   String: path to script. |
   JavaScript script loaded.
 
-| javascript | javascript_script_unloaded +
+| javascript |
+  [[hook_signal_javascript_script_unloaded]] javascript_script_unloaded +
   _(WeeChat ≥ 1.2)_ |
   String: path to script. |
   JavaScript script unloaded.
 
-| javascript | javascript_script_installed +
+| javascript |
+  [[hook_signal_javascript_script_installed]] javascript_script_installed +
   _(WeeChat ≥ 1.2)_ |
   String: comma-separated list of paths to scripts installed. |
   JavaScript script(s) installed.
 
-| javascript | javascript_script_removed +
+| javascript |
+  [[hook_signal_javascript_script_removed]] javascript_script_removed +
   _(WeeChat ≥ 1.2)_ |
   String: comma-separated list of scripts removed. |
   JavaScript script(s) removed.
 
-| logger | logger_start |
+| logger |
+  [[hook_signal_logger_start]] logger_start |
   Pointer: buffer. |
   Start logging for buffer.
 
-| logger | logger_stop |
+| logger |
+  [[hook_signal_logger_stop]] logger_stop |
   Pointer: buffer. |
   Stop logging for buffer.
 
-| logger | logger_backlog |
+| logger |
+  [[hook_signal_logger_backlog]] logger_backlog |
   Pointer: buffer. |
   Display backlog for buffer.
 
-| lua | lua_script_loaded +
+| lua |
+  [[hook_signal_lua_script_loaded]] lua_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Lua script loaded.
 
-| lua | lua_script_unloaded +
+| lua |
+  [[hook_signal_lua_script_unloaded]] lua_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Lua script unloaded.
 
-| lua | lua_script_installed +
+| lua |
+  [[hook_signal_lua_script_installed]] lua_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Lua script(s) installed.
 
-| lua | lua_script_removed +
+| lua |
+  [[hook_signal_lua_script_removed]] lua_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Lua script(s) removed.
 
-| perl | perl_script_loaded +
+| perl |
+  [[hook_signal_perl_script_loaded]] perl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Perl script loaded.
 
-| perl | perl_script_unloaded +
+| perl |
+  [[hook_signal_perl_script_unloaded]] perl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Perl script unloaded.
 
-| perl | perl_script_installed +
+| perl |
+  [[hook_signal_perl_script_installed]] perl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Perl script(s) installed.
 
-| perl | perl_script_removed +
+| perl |
+  [[hook_signal_perl_script_removed]] perl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Perl script(s) removed.
 
-| php | php_script_loaded +
+| php |
+  [[hook_signal_php_script_loaded]] php_script_loaded +
   _(WeeChat ≥ 2.0)_ |
   String: path to script. |
   PHP script loaded.
 
-| php | php_script_unloaded +
+| php |
+  [[hook_signal_php_script_unloaded]] php_script_unloaded +
   _(WeeChat ≥ 2.0)_ |
   String: path to script. |
   PHP script unloaded.
 
-| php | php_script_installed +
+| php |
+  [[hook_signal_php_script_installed]] php_script_installed +
   _(WeeChat ≥ 2.0)_ |
   String: comma-separated list of paths to scripts installed. |
   PHP script(s) installed.
 
-| php | php_script_removed +
+| php |
+  [[hook_signal_php_script_removed]] php_script_removed +
   _(WeeChat ≥ 2.0)_ |
   String: comma-separated list of scripts removed. |
   PHP script(s) removed.
 
-| python | python_script_loaded +
+| python |
+  [[hook_signal_python_script_loaded]] python_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Python script loaded.
 
-| python | python_script_unloaded +
+| python |
+  [[hook_signal_python_script_unloaded]] python_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Python script unloaded.
 
-| python | python_script_installed +
+| python |
+  [[hook_signal_python_script_installed]] python_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Python script(s) installed.
 
-| python | python_script_removed +
+| python |
+  [[hook_signal_python_script_removed]] python_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Python script(s) removed.
 
-| relay | relay_client_connecting +
+| relay |
+  [[hook_signal_relay_client_connecting]] relay_client_connecting +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   A relay client is connecting.
 
-| relay | relay_client_waiting_auth +
+| relay |
+  [[hook_signal_relay_client_waiting_auth]] relay_client_waiting_auth +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   Waiting for authentication from a relay client.
 
-| relay | relay_client_auth_ok +
+| relay |
+  [[hook_signal_relay_client_auth_ok]] relay_client_auth_ok +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   Successful authentication from a relay client.
 
-| relay | relay_client_connected +
+| relay |
+  [[hook_signal_relay_client_connected]] relay_client_connected +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   A relay client is connected.
 
-| relay | relay_client_auth_failed +
+| relay |
+  [[hook_signal_relay_client_auth_failed]] relay_client_auth_failed +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   Authentication of a relay client has failed.
 
-| relay | relay_client_disconnected +
+| relay |
+  [[hook_signal_relay_client_disconnected]] relay_client_disconnected +
   _(WeeChat ≥ 1.0)_ |
   Pointer: relay client. |
   A relay client is disconnected.
 
-| ruby | ruby_script_loaded +
+| ruby |
+  [[hook_signal_ruby_script_loaded]] ruby_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Ruby script loaded.
 
-| ruby | ruby_script_unloaded +
+| ruby |
+  [[hook_signal_ruby_script_unloaded]] ruby_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Ruby script unloaded.
 
-| ruby | ruby_script_installed +
+| ruby |
+  [[hook_signal_ruby_script_installed]] ruby_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Ruby script(s) installed.
 
-| ruby | ruby_script_removed +
+| ruby |
+  [[hook_signal_ruby_script_removed]] ruby_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Ruby script(s) removed.
 
-| spell | spell_suggest +
+| spell |
+  [[hook_signal_spell_suggest]] spell_suggest +
   _(WeeChat ≥ 2.4)_ |
   Pointer: buffer. |
   New suggestions for a misspelled word.
 
-| tcl | tcl_script_loaded +
+| tcl |
+  [[hook_signal_tcl_script_loaded]] tcl_script_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Tcl script loaded.
 
-| tcl | tcl_script_unloaded +
+| tcl |
+  [[hook_signal_tcl_script_unloaded]] tcl_script_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to script. |
   Tcl script unloaded.
 
-| tcl | tcl_script_installed +
+| tcl |
+  [[hook_signal_tcl_script_installed]] tcl_script_installed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of paths to scripts installed. |
   Tcl script(s) installed.
 
-| tcl | tcl_script_removed +
+| tcl |
+  [[hook_signal_tcl_script_removed]] tcl_script_removed +
   _(WeeChat ≥ 0.3.9)_ |
   String: comma-separated list of scripts removed. |
   Tcl script(s) removed.
 
-| weechat | buffer_opened |
+| weechat |
+  [[hook_signal_buffer_opened]] buffer_opened |
   Pointer: buffer. |
   Buffer opened.
 
-| weechat | buffer_closing |
+| weechat |
+  [[hook_signal_buffer_closing]] buffer_closing |
   Pointer: buffer. |
   Closing buffer.
 
-| weechat | buffer_closed |
+| weechat |
+  [[hook_signal_buffer_closed]] buffer_closed |
   Pointer: buffer. |
   Buffer closed.
 
-| weechat | buffer_cleared |
+| weechat |
+  [[hook_signal_buffer_cleared]] buffer_cleared |
   Pointer: buffer. |
   Buffer cleared.
 
-| weechat | buffer_filters_enabled +
+| weechat |
+  [[hook_signal_buffer_filters_enabled]] buffer_filters_enabled +
   _(WeeChat ≥ 2.0)_ |
   Pointer: buffer. |
   Filters enabled in buffer.
 
-| weechat | buffer_filters_disabled +
+| weechat |
+  [[hook_signal_buffer_filters_disabled]] buffer_filters_disabled +
   _(WeeChat ≥ 2.0)_ |
   Pointer: buffer. |
   Filters disabled in buffer.
 
-| weechat | buffer_hidden |
+| weechat |
+  [[hook_signal_buffer_hidden]] buffer_hidden |
   Pointer: buffer. |
   Buffer hidden.
 
-| weechat | buffer_unhidden |
+| weechat |
+  [[hook_signal_buffer_unhidden]] buffer_unhidden |
   Pointer: buffer. |
   Buffer unhidden.
 
-| weechat | buffer_line_added +
+| weechat |
+  [[hook_signal_buffer_line_added]] buffer_line_added +
   _(WeeChat ≥ 0.3.7)_ |
   Pointer: line. |
   Line added in a buffer.
 
-| weechat | buffer_lines_hidden |
+| weechat |
+  [[hook_signal_buffer_lines_hidden]] buffer_lines_hidden |
   Pointer: buffer. |
   Lines hidden in buffer.
 
-| weechat | buffer_localvar_added |
+| weechat |
+  [[hook_signal_buffer_localvar_added]] buffer_localvar_added |
   Pointer: buffer. |
   Local variable has been added.
 
-| weechat | buffer_localvar_changed |
+| weechat |
+  [[hook_signal_buffer_localvar_changed]] buffer_localvar_changed |
   Pointer: buffer. |
   Local variable has changed.
 
-| weechat | buffer_localvar_removed |
+| weechat |
+  [[hook_signal_buffer_localvar_removed]] buffer_localvar_removed |
   Pointer: buffer. |
   Local variable has been removed.
 
-| weechat | buffer_merged |
+| weechat |
+  [[hook_signal_buffer_merged]] buffer_merged |
   Pointer: buffer. |
   Buffer merged.
 
-| weechat | buffer_unmerged |
+| weechat |
+  [[hook_signal_buffer_unmerged]] buffer_unmerged |
   Pointer: buffer. |
   Buffer unmerged.
 
-| weechat | buffer_moved |
+| weechat |
+  [[hook_signal_buffer_moved]] buffer_moved |
   Pointer: buffer. |
   Buffer moved.
 
-| weechat | buffer_renamed |
+| weechat |
+  [[hook_signal_buffer_renamed]] buffer_renamed |
   Pointer: buffer. |
   Buffer renamed.
 
-| weechat | buffer_switch |
+| weechat |
+  [[hook_signal_buffer_switch]] buffer_switch |
   Pointer: buffer. |
   Switching buffer.
 
-| weechat | buffer_title_changed |
+| weechat |
+  [[hook_signal_buffer_title_changed]] buffer_title_changed |
   Pointer: buffer. |
   Title of buffer changed.
 
-| weechat | buffer_type_changed |
+| weechat |
+  [[hook_signal_buffer_type_changed]] buffer_type_changed |
   Pointer: buffer. |
   Type of buffer changed.
 
-| weechat | buffer_zoomed +
+| weechat |
+  [[hook_signal_buffer_zoomed]] buffer_zoomed +
   _(WeeChat ≥ 0.4.3)_ |
   Pointer: buffer. |
   Merged buffer zoomed.
 
-| weechat | buffer_unzoomed +
+| weechat |
+  [[hook_signal_buffer_unzoomed]] buffer_unzoomed +
   _(WeeChat ≥ 0.4.3)_ |
   Pointer: buffer. |
   Merged buffer unzoomed.
 
-| weechat | day_changed +
+| weechat |
+  [[hook_signal_day_changed]] day_changed +
   _(WeeChat ≥ 0.3.2)_ |
   String: new date, format: "2010-01-31". |
   Day of system date has changed.
 
-| weechat | debug_dump |
+| weechat |
+  [[hook_signal_debug_dump]] debug_dump |
   String: plugin name. |
   Dump request.
 
-| weechat | debug_libs |
+| weechat |
+  [[hook_signal_debug_libs]] debug_libs |
   - |
   Display external libraries used.
 
-| weechat | filter_added |
+| weechat |
+  [[hook_signal_filter_added]] filter_added |
   Pointer: filter. |
   Filter added.
 
-| weechat | filter_removing |
+| weechat |
+  [[hook_signal_filter_removing]] filter_removing |
   Pointer: filter. |
   Removing filter.
 
-| weechat | filter_removed |
+| weechat |
+  [[hook_signal_filter_removed]] filter_removed |
   - |
   Filter removed.
 
-| weechat | filters_enabled |
+| weechat |
+  [[hook_signal_filters_enabled]] filters_enabled |
   - |
   Filters enabled.
 
-| weechat | filters_disabled |
+| weechat |
+  [[hook_signal_filters_disabled]] filters_disabled |
   - |
   Filters disabled.
 
-| weechat | hotlist_changed |
+| weechat |
+  [[hook_signal_hotlist_changed]] hotlist_changed |
   Pointer: buffer (can be NULL). |
   Hotlist changed.
 
-| weechat | input_paste_pending |
+| weechat |
+  [[hook_signal_input_paste_pending]] input_paste_pending |
   - |
   Paste pending.
 
-| weechat | input_search |
+| weechat |
+  [[hook_signal_input_search]] input_search |
   Pointer: buffer. |
   Text search in buffer.
 
-| weechat | input_text_changed |
+| weechat |
+  [[hook_signal_input_text_changed]] input_text_changed |
   Pointer: buffer. |
   Input text changed.
 
-| weechat | input_text_cursor_moved |
+| weechat |
+  [[hook_signal_input_text_cursor_moved]] input_text_cursor_moved |
   Pointer: buffer. |
   Input text cursor moved.
 
-| weechat | key_bind |
+| weechat |
+  [[hook_signal_key_bind]] key_bind |
   String: key. |
   Key added.
 
-| weechat | key_unbind |
+| weechat |
+  [[hook_signal_key_unbind]] key_unbind |
   String: key. |
   Key removed.
 
-| weechat | key_pressed |
+| weechat |
+  [[hook_signal_key_pressed]] key_pressed |
   String: key pressed. |
   Key pressed.
 
-| weechat | key_combo_default +
+| weechat |
+  [[hook_signal_key_combo_default]] key_combo_default +
   _(WeeChat ≥ 1.0)_ |
   String: key combo. |
   Key combo in _default_ context.
 
-| weechat | key_combo_search +
+| weechat |
+  [[hook_signal_key_combo_search]] key_combo_search +
   _(WeeChat ≥ 1.0)_ |
   String: key combo. |
   Key combo in _search_ context.
 
-| weechat | key_combo_cursor +
+| weechat |
+  [[hook_signal_key_combo_cursor]] key_combo_cursor +
   _(WeeChat ≥ 1.0)_ |
   String: key combo. |
   Key combo in _cursor_ context.
 
-| weechat | mouse_enabled +
+| weechat |
+  [[hook_signal_mouse_enabled]] mouse_enabled +
   _(WeeChat ≥ 1.1)_ |
   - |
   Mouse enabled.
 
-| weechat | mouse_disabled +
+| weechat |
+  [[hook_signal_mouse_disabled]] mouse_disabled +
   _(WeeChat ≥ 1.1)_ |
   - |
   Mouse disabled.
 
-| weechat | nicklist_group_added +
+| weechat |
+  [[hook_signal_nicklist_group_added]] nicklist_group_added +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name. |
   Group added in nicklist.
 
-| weechat | nicklist_group_changed +
+| weechat |
+  [[hook_signal_nicklist_group_changed]] nicklist_group_changed +
   _(WeeChat ≥ 0.3.4)_ |
   String: buffer pointer + "," + group name. |
   Group changed in nicklist.
 
-| weechat | nicklist_group_removing +
+| weechat |
+  [[hook_signal_nicklist_group_removing]] nicklist_group_removing +
   _(WeeChat ≥ 0.4.1)_ |
   String: buffer pointer + "," + group name. |
   Removing group from nicklist.
 
-| weechat | nicklist_group_removed +
+| weechat |
+  [[hook_signal_nicklist_group_removed]] nicklist_group_removed +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + group name. |
   Group removed from nicklist.
 
-| weechat | nicklist_nick_added +
+| weechat |
+  [[hook_signal_nicklist_nick_added]] nicklist_nick_added +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + nick name. |
   Nick added in nicklist.
 
-| weechat | nicklist_nick_changed +
+| weechat |
+  [[hook_signal_nicklist_nick_changed]] nicklist_nick_changed +
   _(WeeChat ≥ 0.3.4)_ |
   String: buffer pointer + "," + nick name. |
   Nick changed in nicklist.
 
-| weechat | nicklist_nick_removing +
+| weechat |
+  [[hook_signal_nicklist_nick_removing]] nicklist_nick_removing +
   _(WeeChat ≥ 0.4.1)_ |
   String: buffer pointer + "," + nick name. |
   Removing nick from nicklist.
 
-| weechat | nicklist_nick_removed +
+| weechat |
+  [[hook_signal_nicklist_nick_removed]] nicklist_nick_removed +
   _(WeeChat ≥ 0.3.2)_ |
   String: buffer pointer + "," + nick name. |
   Nick removed from nicklist.
 
-| weechat | partial_completion |
+| weechat |
+  [[hook_signal_partial_completion]] partial_completion |
   - |
   Partial completion happened.
 
-| weechat | plugin_loaded +
+| weechat |
+  [[hook_signal_plugin_loaded]] plugin_loaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: path to plugin loaded. |
   Plugin loaded.
 
-| weechat | plugin_unloaded +
+| weechat |
+  [[hook_signal_plugin_unloaded]] plugin_unloaded +
   _(WeeChat ≥ 0.3.9)_ |
   String: name of plugin unloaded (example: "irc"). |
   Plugin unloaded.
 
-| weechat | quit |
+| weechat |
+  [[hook_signal_quit]] quit |
   String: arguments for /quit. |
   Command `/quit` issued by user.
 
-| weechat | signal_sighup +
+| weechat |
+  [[hook_signal_signal_sighup]] signal_sighup +
   _(WeeChat ≥ 1.3)_ |
   - |
   Signal SIGHUP received.
 
-| weechat | signal_sigquit +
+| weechat |
+  [[hook_signal_signal_sigquit]] signal_sigquit +
   _(WeeChat ≥ 1.2)_ |
   - |
   Signal SIGQUIT received (quit request with core dump).
 
-| weechat | signal_sigterm +
+| weechat |
+  [[hook_signal_signal_sigterm]] signal_sigterm +
   _(WeeChat ≥ 1.2)_ |
   - |
   Signal SIGTERM received (graceful termination of WeeChat process).
 
-| weechat | signal_sigwinch +
+| weechat |
+  [[hook_signal_signal_sigwinch]] signal_sigwinch +
   _(WeeChat ≥ 0.4.3)_ |
   - |
   Signal SIGWINCH received (terminal was resized).
 
-| weechat | upgrade |
+| weechat |
+  [[hook_signal_upgrade]] upgrade |
   String: "quit" if "-quit" argument was given for /upgrade, otherwise NULL. |
   Command `/upgrade` issued by user.
 
-| weechat | upgrade_ended +
+| weechat |
+  [[hook_signal_upgrade_ended]] upgrade_ended +
   _(WeeChat ≥ 0.3.4)_ |
   - |
   End of upgrade process (command `/upgrade`).
 
-| weechat | weechat_highlight |
+| weechat |
+  [[hook_signal_weechat_highlight]] weechat_highlight |
   String: message with prefix. |
   Highlight happened.
 
-| weechat | weechat_pv |
+| weechat |
+  [[hook_signal_weechat_pv]] weechat_pv |
   String: message with prefix. |
   Private message displayed.
 
-| weechat | window_closing +
+| weechat |
+  [[hook_signal_window_closing]] window_closing +
   _(WeeChat ≥ 0.3.6)_ |
   Pointer: window. |
   Closing window.
 
-| weechat | window_closed +
+| weechat |
+  [[hook_signal_window_closed]] window_closed +
   _(WeeChat ≥ 0.3.6)_ |
   Pointer: window. |
   Window closed.
 
-| weechat | window_opened +
+| weechat |
+  [[hook_signal_window_opened]] window_opened +
   _(WeeChat ≥ 0.4.1)_ |
   Pointer: window. |
   Window opened.
 
-| weechat | window_scrolled |
+| weechat |
+  [[hook_signal_window_scrolled]] window_scrolled |
   Pointer: window. |
   Scroll in window.
 
-| weechat | window_switch +
+| weechat |
+  [[hook_signal_window_switch]] window_switch +
   _(WeeChat ≥ 0.3.7)_ |
   Pointer: window. |
   Switching window.
 
-| weechat | window_zoom |
+| weechat |
+  [[hook_signal_window_zoom]] window_zoom |
   Pointer: current window. |
   Zomming window.
 
-| weechat | window_zoomed |
+| weechat |
+  [[hook_signal_window_zoomed]] window_zoomed |
   Pointer: current window. |
   Window zoomed.
 
-| weechat | window_unzoom |
+| weechat |
+  [[hook_signal_window_unzoom]] window_unzoom |
   Pointer: current window. |
   Unzooming window.
 
-| weechat | window_unzoomed |
+| weechat |
+  [[hook_signal_window_unzoomed]] window_unzoomed |
   Pointer: current window. |
   Window unzoomed.
 
-| xfer | xfer_add |
+| xfer |
+  [[hook_signal_xfer_add]] xfer_add |
   Pointer: infolist with xfer info. |
   New xfer.
 
-| xfer | xfer_send_ready |
+| xfer |
+  [[hook_signal_xfer_send_ready]] xfer_send_ready |
   Pointer: infolist with xfer info. |
   Xfer ready.
 
-| xfer | xfer_accept_resume |
+| xfer |
+  [[hook_signal_xfer_accept_resume]] xfer_accept_resume |
   Pointer: infolist with xfer info. |
   Accept xfer resume.
 
-| xfer | xfer_send_accept_resume |
+| xfer |
+  [[hook_signal_xfer_send_accept_resume]] xfer_send_accept_resume |
   Pointer: infolist with xfer info. |
   Xfer resumed.
 
-| xfer | xfer_start_resume |
+| xfer |
+  [[hook_signal_xfer_start_resume]] xfer_start_resume |
   Pointer: infolist with xfer info. |
   Start resume.
 
-| xfer | xfer_resume_ready |
+| xfer |
+  [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
   Pointer: infolist with xfer info. |
   Xfer resume ready.
 
-| xfer | xfer_ended +
+| xfer |
+  [[hook_signal_xfer_ended]] xfer_ended +
   _(WeeChat ≥ 0.3.2)_ |
   Pointer: infolist with xfer info. |
   Xfer has ended.
@@ -10779,47 +10924,54 @@ List of hsignals:
 |===
 | Plugin | Signal | Arguments | Description
 
-| irc | irc_redirection_xxx_yyy ^(1)^ +
+| irc |
+  [[hook_hsignal_irc_redirection_xxx_yyy]] irc_redirection_xxx_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
   See <<hsignal_irc_redirect_command,hsignal_irc_redirect_command>> |
   Redirection output.
 
-| weechat | nicklist_group_added +
+| weechat |
+  [[hook_hsignal_nicklist_group_added]] nicklist_group_added +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group added in nicklist.
 
-| weechat | nicklist_nick_added +
+| weechat |
+  [[hook_hsignal_nicklist_nick_added]] nicklist_nick_added +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Nick added in nicklist.
 
-| weechat | nicklist_group_removing +
+| weechat |
+  [[hook_hsignal_nicklist_group_removing]] nicklist_group_removing +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Removing group from nicklist.
 
-| weechat | nicklist_nick_removing +
+| weechat |
+  [[hook_hsignal_nicklist_nick_removing]] nicklist_nick_removing +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _nick_ (_struct t_gui_nick *_): nick |
   Removing nick from nicklist.
 
-| weechat | nicklist_group_changed +
+| weechat |
+  [[hook_hsignal_nicklist_group_changed]] nicklist_group_changed +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
   _group_ (_struct t_gui_nick_group *_): group |
   Group changed in nicklist.
 
-| weechat | nicklist_nick_changed +
+| weechat |
+  [[hook_hsignal_nicklist_nick_changed]] nicklist_nick_changed +
   _(WeeChat ≥ 0.4.1)_ |
   _buffer_ (_struct t_gui_buffer *_): buffer +
   _parent_group_ (_struct t_gui_nick_group *_): parent group +
