@@ -3,8 +3,9 @@
 :email: flashcode@flashtux.org
 :lang: en
 :toc: left
-:toclevels: 3
+:toclevels: 4
 :sectnums:
+:sectnumlevels: 3
 :docinfo1:
 
 
@@ -67,22 +68,89 @@ link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference].
 
 ==== Python
 
-* You have to `import weechat`.
-* Functions `+print*+` are called `+prnt*+` in python (because _print_ is reserved
-  keyword).
-* Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+===== Module
+
+WeeChat defines a `weechat` module which must be imported with `import weechat`.
+
+===== Functions
+
+Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+
+Functions `+print*+` are called `+prnt*+` in python (because `print` was a
+reserved keyword in Python 2).
+
+===== Strings received in callbacks
+
+In Python 3 and with WeeChat ≥ 2.7, the strings received in callbacks have type
+`str` if the string has valid UTF-8 data (which is the most common case),
+or `bytes` if the string is not UTF-8 valid. So the callback should take care
+about this type if some invalid UTF-8 content can be received.
+
+Some invalid UTF-8 data may be received in these cases, so the callback can
+receive a string of type `str` or `bytes` (this list is not exhaustive):
+
+[width="100%",cols="3m,3m,3m,8",options="header"]
+|===
+| API function | Arguments | Examples | Description
+
+| hook_modifier |
+  irc_in_yyy |
+  pass:[irc_in_privmsg] +
+  pass:[irc_in_notice] |
+  A message received in IRC plugin, before it is decoded to UTF-8 (used
+  internally). +
+  +
+  It is recommended to use modifier `irc_in2_yyy` instead, the string received
+  is always UTF-8 valid. +
+  See function `hook_modifier` in the
+  link:weechat_plugin_api.en.html#_hook_modifier[WeeChat plugin API reference].
+
+| hook_signal |
+  xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy |
+  pass:[*,irc_out_privmsg] +
+  pass:[*,irc_out_notice] +
+  pass:[*,irc_outtags_privmsg] +
+  pass:[*,irc_outtags_notice] |
+  A message sent by IRC plugin, after it is encoded to the `encode` charset
+  defined by the user (if different from the default `UTF-8`). +
+  +
+  It is recommended to use signal `xxx,irc_out1_yyy` instead, the string received
+  is always UTF-8 valid. +
+  See function `hook_signal` in the
+  link:weechat_plugin_api.en.html#_hook_signal[WeeChat plugin API reference].
+
+| hook_process +
+  hook_process_hashtable |
+  - |
+  - |
+  Output of the command, sent to the callback, can contain invalid UTF-8 data.
+
+|===
+
+In Python 2, which is now deprecated and should not be used any more, the
+strings sent to callbacks were always of type `str`, and may contain invalid
+UTF-8 data, in the cases mentioned above.
 
 ==== Perl
 
-* Functions are called with `weechat::xxx(arg1, arg2, ...);`.
+===== Functions
+
+Functions are called with `weechat::xxx(arg1, arg2, ...);`.
 
 ==== Ruby
 
-* You have to define _weechat_init_ and call _register_ inside.
-* Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
-* Due to a limitation of Ruby (15 arguments max by function), the function
-  `Weechat.config_new_option` receives the callbacks in an array of 6 strings
-  (3 callbacks + 3 data strings), so a call to this function looks like:
+===== Initialization
+
+You have to define _weechat_init_ and call _register_ inside.
+
+===== Functions
+
+Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
+
+Due to a limitation of Ruby (15 arguments max by function), the function
+`Weechat.config_new_option` receives the callbacks in an array of 6 strings
+(3 callbacks + 3 data strings), so a call to this function looks like:
 
 [source,ruby]
 ----
@@ -92,29 +160,41 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Lua
 
-* Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+===== Functions
+
+Functions are called with `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Tcl
 
-* Functions are called with `weechat::xxx arg1 arg2 ...`.
+===== Functions
+
+Functions are called with `weechat::xxx arg1 arg2 ...`.
 
 ==== Guile (Scheme)
 
-* Functions are called with `(weechat:xxx arg1 arg2 ...)`.
-* Following functions take one list of arguments (instead of many arguments
-  for other functions), because number of arguments exceed number of allowed
-  arguments in Guile:
-** config_new_section
-** config_new_option
-** bar_new
+===== Functions
+
+Functions are called with `(weechat:xxx arg1 arg2 ...)`.
+
+The following functions take one list of arguments (instead of many arguments
+for other functions), because number of arguments exceed number of allowed
+arguments in Guile:
+
+* config_new_section
+* config_new_option
+* bar_new
 
 ==== JavaScript
 
-* Functions are called with `weechat.xxx(arg1, arg2, ...);`.
+===== Functions
+
+Functions are called with `weechat.xxx(arg1, arg2, ...);`.
 
 ==== PHP
 
-* Functions are called with `weechat_xxx(arg1, arg2, ...);`.
+===== Functions
+
+Functions are called with `weechat_xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Register function
@@ -1081,14 +1161,20 @@ weechat.prnt("", "value of option weechat.color.chat_delimiters is: %s"
 [[irc_catch_messages]]
 ==== Catch messages
 
-IRC plugin sends two signals for a message received (`xxx` is IRC internal
+IRC plugin sends four signals for a message received (`xxx` is IRC internal
 server name, `yyy` is IRC command name like JOIN, QUIT, PRIVMSG, 301, ..):
 
-xxxx,irc_in_yyy::
-    signal sent before processing message
+xxx,irc_in_yyy::
+    signal sent before processing message, only if message is *not* ignored
 
 xxx,irc_in2_yyy::
-    signal sent after processing message
+    signal sent after processing message, only if message is *not* ignored
+
+xxx,irc_raw_in_yyy::
+    signal sent before processing message, even if message is ignored
+
+xxx,irc_raw_in2_yyy::
+    signal sent after processing message, even if message is ignored
 
 [source,python]
 ----
@@ -1110,8 +1196,16 @@ weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 [[irc_modify_messages]]
 ==== Modify messages
 
-IRC plugin sends a "modifier" called "irc_in_xxx" ("xxx" is IRC command) for a
-message received, so that you can modify it.
+IRC plugin sends two "modifiers" for a message received ("xxx" is IRC command),
+so that you can modify it:
+
+irc_in_xxx::
+    modifier sent before charset decoding: use with caution, the string may
+    contain invalid UTF-8 data; use only for raw operations on a message
+
+irc_in2_xxx::
+    modifier sent after charset decoding, so the string received is always
+    UTF-8 valid (*recommended*)
 
 [source,python]
 ----
@@ -1120,7 +1214,7 @@ def modifier_cb(data, modifier, modifier_data, string):
     # (OK that's not very useful, but that's just an example!)
     return "%s %s" % (string, modifier_data)
 
-weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
+weechat.hook_modifier("irc_in2_privmsg", "modifier_cb", "")
 ----
 
 [WARNING]

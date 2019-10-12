@@ -3,9 +3,10 @@
 :email: flashcode@flashtux.org
 :lang: fr
 :toc: left
-:toclevels: 3
+:toclevels: 4
 :toc-title: Table des matières
 :sectnums:
+:sectnumlevels: 3
 :docinfo1:
 
 
@@ -73,23 +74,93 @@ link:weechat_plugin_api.en.html#_hook_process[Référence API extension WeeChat]
 
 ==== Python
 
-* Vous devez utiliser `import weechat`.
-* Les fonctions `+print*+` se nomment `+prnt*+` en python (car _print_ est un mot
-  clé réservé).
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`.
+===== Module
+
+WeeChat définit un module `weechat` qui doit être importé avec `import weechat`.
+
+===== Fonctions
+
+Les fonctions sont appelées avec `weechat.xxx(arg1, arg2, ...)`.
+
+Les fonctions `+print*+` se nomment `+prnt*+` en python (car `print` était un
+mot clé réservé en Python 2).
+
+===== Chaînes reçues dans les fonctions de rappel
+
+En Python 3 et avec WeeChat ≥ 2.7, les chaînes reçues dans les fonctions de
+rappel ont le type `str` si la chaîne a des données valides UTF-8 (ce qui est
+le cas le plus courant) ou `bytes` si la chaîne n'est pas valide UTF-8. Donc la
+fonction de rappel doit prendre en compte ce type si des données non valides
+UTF-8 peuvent être reçues.
+
+Des données invalides UTF-8 peuvent être reçues dans ces cas, donc la fonction
+de rappel peut recevoir une chaîne de type `str` ou `bytes` (cette liste n'est
+pas exhaustive) :
+
+[width="100%",cols="3m,3m,3m,8",options="header"]
+|===
+| Fonction API | Paramètres | Exemples | Description
+
+| hook_modifier |
+  irc_in_yyy |
+  pass:[irc_in_privmsg] +
+  pass:[irc_in_notice] |
+  Un message reçu dans l'extension IRC, avant qu'il ne soit décodé vers UTF-8. +
+  +
+  Il est recommandé d'utiliser plutôt le modificateur `irc_in2_yyy`, la chaîne
+  reçue sera toujours valide UTF-8. +
+  Voir la fonction `hook_modifier` dans la
+  link:weechat_plugin_api.fr.html#_hook_modifier[Référence API extension WeeChat].
+
+| hook_signal |
+  xxx,irc_out_yyy +
+  xxx,irc_outtags_yyy |
+  pass:[*,irc_out_privmsg] +
+  pass:[*,irc_out_notice] +
+  pass:[*,irc_outtags_privmsg] +
+  pass:[*,irc_outtags_notice] |
+  Un message envoyé par l'extension IRC, après encodage vers le jeu de caractères
+  `encode` défini par l'utilisateur (si différent de `UTF-8`, qui est la valeur
+  par défaut). +
+  +
+  Il est recommandé d'utiliser plutôt le signal `xxx,irc_out1_yyy`, la chaîne
+  reçue sera toujours valide UTF-8. +
+  Voir la fonction `hook_signal` dans la
+  link:weechat_plugin_api.fr.html#_hook_signal[Référence API extension WeeChat].
+
+| hook_process +
+  hook_process_hashtable |
+  - |
+  - |
+  La sortie de la commande, envoyée à la fonction de rappel, peut contenir des
+  données invalides UTF-8.
+
+|===
+
+En Python 2, qui est déconseillé et ne devrait plus être utilisé, les chaînes
+envoyées aux fonctions de rappel sont toujours de type `str`, et peuvent contenir
+des données invalides UTF-8, dans les cas mentionnés ci-dessus.
 
 ==== Perl
 
-* Les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`.
+===== Fonctions
+
+Les fonctions sont appelées par `weechat::xxx(arg1, arg2, ...);`.
 
 ==== Ruby
 
-* Vous devez définir _weechat_init_ et appeler _register_ dedans.
-* Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`.
-* En raison d'une limitation de Ruby (15 paramètres maximum par fonction), la
-  fonction `Weechat.config_new_option` reçoit les fonctions de rappel dans un tableau de
-  6 chaînes de caractères (3 fonctions de rappel + 3 chaînes de données), donc un appel à
-  cette fonction ressemble à ceci :
+===== Initialisation
+
+Vous devez définir _weechat_init_ et appeler _register_ dedans.
+
+===== Fonctions
+
+Les fonctions sont appelées par `Weechat.xxx(arg1, arg2, ...)`.
+
+En raison d'une limitation de Ruby (15 paramètres maximum par fonction), la
+fonction `Weechat.config_new_option` reçoit les fonctions de rappel dans un
+tableau de 6 chaînes de caractères (3 fonctions de rappel + 3 chaînes de
+données), donc un appel à cette fonction ressemble à ceci :
 
 [source,ruby]
 ----
@@ -99,29 +170,41 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ==== Lua
 
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`.
+===== Fonctions
+
+Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Tcl
 
-* Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`.
+===== Fonctions
+
+Les fonctions sont appelées par `weechat::xxx arg1 arg2 ...`.
 
 ==== Guile (Scheme)
 
-* Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`.
-* Les fonctions suivantes prennent une liste de paramètres en entrée (au lieu
-  de plusieurs paramètres pour les autres fonctions), car le nombre de
-  paramètres excède la limite de Guile :
-** config_new_section
-** config_new_option
-** bar_new
+===== Fonctions
+
+Les fonctions sont appelées par `(weechat:xxx arg1 arg2 ...)`.
+
+Les fonctions suivantes prennent une liste de paramètres en entrée (au lieu de
+plusieurs paramètres pour les autres fonctions), car le nombre de paramètres
+excède la limite de Guile :
+
+* config_new_section
+* config_new_option
+* bar_new
 
 ==== JavaScript
 
-* Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...);`.
+===== Fonctions
+
+Les fonctions sont appelées par `weechat.xxx(arg1, arg2, ...);`.
 
 ==== PHP
 
-* Les fonctions sont appelées par `weechat_xxx(arg1, arg2, ...);`.
+===== Fonctions
+
+Les fonctions sont appelées par `weechat_xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Fonction register
@@ -1109,15 +1192,23 @@ weechat.prnt("", "la valeur de l'option weechat.color.chat_delimiters est : %s"
 [[irc_catch_messages]]
 ==== Intercepter des messages
 
-L'extension IRC envoie deux signaux pour un message reçu (`xxx` est le nom
+L'extension IRC envoie quatre signaux pour un message reçu (`xxx` est le nom
 interne du serveur IRC, `yyy` est le nom de la commande IRC comme JOIN, QUIT,
 PRIVMSG, 301, ..) :
 
-xxxx,irc_in_yyy::
-    signal envoyé avant traitement du message
+xxx,irc_in_yyy::
+    signal envoyé avant traitement du message, uniquement si le message n'est
+    *pas* ignoré
 
 xxx,irc_in2_yyy::
-    message sent après traitement du message
+    signal envoyé après traitement du message, uniquement si le message n'est
+    *pas* ignoré
+
+xxx,irc_raw_in_yyy::
+    signal envoyé avant traitement du message, même si le message est ignoré
+
+xxx,irc_raw_in2_yyy::
+    signal envoyé après traitement du message, même si le message est ignoré
 
 [source,python]
 ----
@@ -1139,8 +1230,17 @@ weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 [[irc_modify_messages]]
 ==== Modifier des messages
 
-L'extension IRC envoie un modificateur appelé "irc_in_xxx" ("xxx" est la
-commande IRC) pour un message reçu, de sorte que vous puissiez le modifier.
+L'extension IRC envoie deux modificateurs pour un message reçu ("xxx" est la
+commande IRC), de sorte que vous puissiez le modifier :
+
+irc_in_xxx::
+    modificateur envoyé avant le décodage du jeu de caractères : à utiliser avec
+    précaution, la chaîne peut contenir des données invalides UTF-8 ; à utiliser
+    seulement pour les opérations de bas niveau sur le message
+
+irc_in2_xxx::
+    modificateur envoyé après décodage du jeu de caractères, donc la chaîne
+    reçue est toujours valide UTF-8 (*recommendé*)
 
 [source,python]
 ----
@@ -1149,7 +1249,7 @@ def modifier_cb(data, modifier, modifier_data, string):
     # (ok ce n'est pas très utile, mais c'est juste un exemple !)
     return "%s %s" % (string, modifier_data)
 
-weechat.hook_modifier("irc_in_privmsg", "modifier_cb", "")
+weechat.hook_modifier("irc_in2_privmsg", "modifier_cb", "")
 ----
 
 [WARNING]

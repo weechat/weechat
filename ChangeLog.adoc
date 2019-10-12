@@ -46,6 +46,7 @@ Bug fixes::
   * irc: remove option irc.network.channel_encode, add server option "charset_message" to control which part of the IRC message is decoded/encoded to the target charset (issue #832)
   * irc: use path from option xfer.file.upload_path to complete filename in command "/dcc send" (issue #60)
   * logger: fix write in log file if it has been deleted or renamed (issue #123)
+  * python: send "bytes" instead of "str" to callbacks in Python 3 when the string is not UTF-8 valid (issue #1389)
   * xfer: fix memory leak when a xfer is freed and when the plugin is unloaded
 
 Tests::

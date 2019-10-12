@@ -9844,15 +9844,21 @@ WeeChat とプラグインが送信するシグナルのリスト:
   サーバに送信する IRC メッセージ
   (自動分割前、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。
 
+// TRANSLATION MISSING
 | irc | xxx,irc_out_yyy ^(1)^ |
   String: メッセージ |
   サーバに送信する IRC メッセージ
-  (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。
+  (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。 +
+  *Warning:* the string may contain invalid UTF-8 data.
+  Signal "xxx,irc_out1_yyy" is recommended instead.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat バージョン 0.3.4 以上で利用可)_ |
   String: タグ  + ";" + メッセージ |
-  タグ + サーバに送信する IRC メッセージ
+  タグ + サーバに送信する IRC メッセージ +
+  *Warning:* the string may contain invalid UTF-8 data.
+  Signal "xxx,irc_out1_yyy" is recommended instead.
 
 | irc | irc_ctcp |
   String: メッセージ |
@@ -11188,9 +11194,13 @@ WeeChat とプラグインが使う修飾子のリスト:
 |===
 | 修飾子 | 修飾子データ | 文字列 | 出力
 
+// TRANSLATION MISSING
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   サーバ名 |
-  IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) |
+  IRC サーバから受信したメッセージの内容 (文字セットをデコードする前) +
+  *Warning:* the string may contain invalid UTF-8 data; use only for raw
+  operations on a message.
+  Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   メッセージの新しい内容
 
 | [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +

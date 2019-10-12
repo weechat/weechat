@@ -10209,12 +10209,17 @@ List of signals sent by WeeChat and plugins:
 | irc | xxx,irc_out_yyy ^(1)^ |
   String: messaggio. |
   IRC message sent to server after automatic split
-  (to fit in 512 bytes by default).
+  (to fit in 512 bytes by default). +
+  *Warning:* the string may contain invalid UTF-8 data.
+  Signal "xxx,irc_out1_yyy" is recommended instead.
 
+// TRANSLATION MISSING
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
   Stringa: tag + ";" + messaggio. |
-  Tag + messaggio IRC inviato al server.
+  Tag + messaggio IRC inviato al server. +
+  *Warning:* the string may contain invalid UTF-8 data.
+  Signal "xxx,irc_out1_yyy" is recommended instead.
 
 | irc | irc_ctcp |
   String: messaggio. |
@@ -11663,9 +11668,13 @@ List of modifiers used by WeeChat and plugins:
 |===
 | Modificatore | Dati modificatore | Stringa | Output
 
+// TRANSLATION MISSING
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nome server |
-  Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). |
+  Contenuto del messaggio ricevuto dal server IRC (prima della codifica del set caratteri). +
+  *Warning:* the string may contain invalid UTF-8 data; use only for raw
+  operations on a message.
+  Modifier <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> is recommended instead. |
   Nuovo contenuto del messaggio.
 
 | [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +

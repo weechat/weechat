@@ -446,12 +446,13 @@ weechat_python_output (PyObject *self, PyObject *args)
 void *
 weechat_python_exec (struct t_plugin_script *script,
                      int ret_type, const char *function,
-                     char *format, void **argv)
+                     const char *format, void **argv)
 {
     struct t_plugin_script *old_python_current_script;
     PyThreadState *old_interpreter;
     PyObject *evMain, *evDict, *evFunc, *rc;
     void *argv2[16], *ret_value, *ret_temp;
+    char format2[17];
     int i, argc, *ret_int;
 
     ret_value = NULL;
@@ -485,9 +486,33 @@ weechat_python_exec (struct t_plugin_script *script,
         argc = strlen (format);
         for (i = 0; i < 16; i++)
         {
-            argv2[i] = (i < argc) ? argv[i] : NULL;
+            if (i < argc)
+            {
+                argv2[i] = argv[i];
+                if (format[i] == 's')
+                {
+#if PY_MAJOR_VERSION >= 3
+                    if (weechat_utf8_is_valid (argv2[i], -1, NULL))
+                        format2[i] = 's';  /* Python 3: str */
+                    else
+                        format2[i] = 'y';  /* Python 3: bytes */
+#else
+                    format2[i] = 's';  /* Python 2: str */
+#endif
+                }
+                else
+                {
+                    format2[i] = format[i];
+                }
+            }
+            else
+            {
+                argv2[i] = NULL;
+            }
         }
-        rc = PyObject_CallFunction (evFunc, format,
+        format2[argc] = '\0';
+
+        rc = PyObject_CallFunction (evFunc, format2,
                                     argv2[0], argv2[1],
                                     argv2[2], argv2[3],
                                     argv2[4], argv2[5],

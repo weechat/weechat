@@ -10072,12 +10072,16 @@ Liste des signaux envoyés par WeeChat et les extensions :
   _(WeeChat ≥ 0.3.7)_ |
   Chaîne : message. |
   Message IRC envoyé au serveur avant découpage automatique
-  (pour tenir dans les 512 octets par défaut).
+  (pour tenir dans les 512 octets par défaut). +
+  *Attention :* la chaîne peut contenir des données invalides UTF-8.
+  Le signal "xxx,irc_out1_yyy" est recommandé à la place de celui-ci.
 
 | irc | xxx,irc_out_yyy ^(1)^ |
   Chaîne : message. |
   Message IRC envoyé au serveur après découpage automatique
-  (pour tenir dans les 512 octets par défaut).
+  (pour tenir dans les 512 octets par défaut). +
+  *Attention :* la chaîne peut contenir des données invalides UTF-8.
+  Le signal "xxx,irc_out1_yyy" est recommandé à la place de celui-ci.
 
 | irc | xxx,irc_outtags_yyy ^(1)^ +
   _(WeeChat ≥ 0.3.4)_ |
@@ -11449,7 +11453,11 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 
 | [[hook_modifier_irc_in_xxx]] irc_in_xxx ^(1)^ |
   Nom de serveur |
-  Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). |
+  Contenu du message reçu du serveur IRC (avant décodage du jeu de caractères). +
+  *Attention :* la chaîne peut contenir des données invalides UTF-8 ; à utiliser
+  seulement pour les opérations de bas niveau sur le message.
+  Le modificateur <<hook_modifier_irc_in2_xxx,irc_in2_xxx>> est recommandé à la
+  place de celui-ci. |
   Nouveau contenu du message.
 
 | [[hook_modifier_irc_in2_xxx]] irc_in2_xxx ^(1)^ +
