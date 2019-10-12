@@ -112,7 +112,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use modifier `irc_in2_yyy` instead, the string received
   is always UTF-8 valid. +
   See function `hook_modifier` in the
-  link:weechat_plugin_api.en.html#_hook_modifier[WeeChat plugin API reference].
+  link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference].
 
 | hook_signal |
   xxx,irc_out_yyy +
@@ -127,7 +127,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   It is recommended to use signal `xxx,irc_out1_yyy` instead, the string received
   is always UTF-8 valid. +
   See function `hook_signal` in the
-  link:weechat_plugin_api.en.html#_hook_signal[WeeChat plugin API reference].
+  link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference].
 
 | hook_process +
   hook_process_hashtable |
