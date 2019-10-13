@@ -56,6 +56,26 @@ plugin, using this cmake option:
 cmake .. -DENABLE_PHP=OFF
 ----
 
+[[v2.7_python3_callbacks_strings]]
+=== Strings received in Python 3 callbacks
+
+The strings sent to script callbacks in Python 3 are now automatically converted
+according to the content:
+
+* if the string is valid UTF-8, it is sent as `str` (legacy behavior)
+* if the string is not valid UTF-8, it is sent as `bytes` (new).
+
+In some cases only, the string may not be valid UTF-8, so it is received as
+`bytes` in the callback, which must take care of that.
+
+For more information, see the WeeChat scripting guide: chapter about strings
+received in callbacks (see also issue #1389).
+
+Note: there are no changes for Python 2 (which is now deprecated and should not
+be used any more), the strings sent to callbacks are always of type `str`, and
+may contain invalid UTF-8 data, in the cases mentioned in the WeeChat scripting
+guide.
+
 [[v2.7_irc_message_decoding]]
 === IRC message decoding/encoding
 
