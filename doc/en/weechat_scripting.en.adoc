@@ -129,7 +129,7 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
 |===
 
 In Python 2, which is now deprecated and should not be used any more, the
-strings sent to callbacks were always of type `str`, and may contain invalid
+strings sent to callbacks are always of type `str`, and may contain invalid
 UTF-8 data, in the cases mentioned above.
 
 ==== Perl
