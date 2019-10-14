@@ -2055,8 +2055,17 @@ gui_chat_draw_bare (struct t_gui_window *window)
     {
         /* display from top to bottom (starting with "start_line") */
         y = 0;
-        ptr_line = (window->scroll->start_line) ?
-            window->scroll->start_line : gui_line_get_first_displayed (window->buffer);
+        if (window->scroll->start_line)
+        {
+            ptr_line = window->scroll->start_line;
+            window->scroll->first_line_displayed =
+                (ptr_line == gui_line_get_first_displayed (window->buffer));
+        }
+        else
+        {
+            ptr_line = gui_line_get_first_displayed (window->buffer);
+            window->scroll->first_line_displayed = 1;
+        }
         while (ptr_line && (y < gui_term_lines))
         {
             line = gui_chat_get_bare_line (ptr_line);
@@ -2093,6 +2102,8 @@ gui_chat_draw_bare (struct t_gui_window *window)
             free (line);
             ptr_line = gui_line_get_prev_displayed (ptr_line);
         }
+        window->scroll->first_line_displayed =
+            (ptr_line == gui_line_get_first_displayed (window->buffer));
     }
 
     /*
