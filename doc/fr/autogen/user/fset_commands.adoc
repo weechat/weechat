@@ -42,7 +42,7 @@
     -export : exporter les options et valeurs affichées dans un fichier (chaque ligne a le format : "/set nom valeur" ou "/unset nom")
       -help : forcer l'écriture de l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
     -nohelp : ne pas écrire l'aide sur les options dans le fichier exporté (voir /help fset.look.export_help_default)
-     filter : définir un nouveau filtre pour voir seulement les options correspondantes (ce filtre peut aussi être utilisé en entrée du tampon fset) ; les formats autorisés sont :
+     filtre : définir un nouveau filtre pour voir seulement les options correspondantes (ce filtre peut aussi être utilisé en entrée du tampon fset) ; les formats autorisés sont :
                *       afficher toutes les options (pas de filtre)
                xxx     afficher seulement les options avec "xxx" dans le nom
                f:xxx   afficher seulement le fichier de configuration "xxx"
