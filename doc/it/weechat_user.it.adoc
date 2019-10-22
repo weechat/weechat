@@ -857,12 +857,22 @@ include::autogen/user/irc_colors.adoc[]
 To show all available colors in your terminal, you can do `/color` then
 kbd:[Alt+c] in WeeChat or run this command in terminal: `weechat --colors`.
 
-Esempio: visualizza "ciao a tutti!" con "ciao" scritto in blu chiaro grassetto
-e "a tutti" in rosso chiaro sottolineato:
+Esempio: visualizza "ciao Alice!" con "ciao" scritto in blu chiaro grassetto
+e "Alice" in rosso chiaro sottolineato:
 
 ----
-^Cc12^Cbciao ^Cb^Cc04^C_a tutti^C_^Cc !
+^Cc12^Cbciao ^Cb^Cc04^C_Alice^C_^Cc !
 ----
+
+// TRANSLATION MISSING
+Keys:
+
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[c] kbd:[i] kbd:[a] kbd:[o] kbd:[Space] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[!]
 
 [NOTE]
 Nel plugin irc, si possono riorganizzare i colori usando l'opzione

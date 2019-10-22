@@ -797,12 +797,22 @@ W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykon
 komendę `/color` następnie kbd:[Alt+c] (w WeeChat) lub wywołać w terminalu:
 `weechat --colors`.
 
-Przykład: wyświetlenie "hello everybody!" z pogrubionym jasno niebieskim "hello"
-i podkreślonym jasno czerwonym "everybody":
+Przykład: wyświetlenie "hello Alice!" z pogrubionym jasno niebieskim "hello"
+i podkreślonym jasno czerwonym "Alice":
 
 ----
-^Cc12^Cbhello ^Cb^Cc04^C_everybody^C_^Cc!
+^Cc12^Cbhello ^Cb^Cc04^C_Alice^C_^Cc!
 ----
+
+// TRANSLATION MISSING
+Keys:
+
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[h] kbd:[e] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[!]
 
 [NOTE]
 We wtyczce irc, można zmienić przypisania tych kolorów za pomocą opcji

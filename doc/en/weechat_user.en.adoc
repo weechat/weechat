@@ -790,12 +790,21 @@ include::autogen/user/irc_colors.adoc[]
 To show all available colors in your terminal, you can do `/color` then
 kbd:[Alt+c] in WeeChat or run this command in terminal: `weechat --colors`.
 
-Example: display of "hello everybody!" with "hello" in light blue bold and
-"everybody" in light red underlined:
+Example: display of "hello Alice!" with "hello" in light blue bold and
+"Alice" in light red underlined:
 
 ----
-^Cc12^Cbhello ^Cb^Cc04^C_everybody^C_^Cc!
+^Cc12^Cbhello ^Cb^Cc04^C_Alice^C_^Cc!
 ----
+
+Keys:
+
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[h] kbd:[e] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[!]
 
 [NOTE]
 In irc plugin, you can remap these colors using option

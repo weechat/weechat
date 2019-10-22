@@ -809,12 +809,21 @@ Pour voir toutes les couleurs disponibles dans votre terminal, vous pouvez
 taper `/color` puis kbd:[Alt+c] dans WeeChat ou lancez cette commande dans le
 terminal : `weechat --colors`.
 
-Exemple : affichage de "bonjour tout le monde !" avec "bonjour" en bleu clair
-gras, et "tout le monde" en rouge clair souligné :
+Exemple : affichage de "bonjour Alice !" avec "bonjour" en bleu clair
+gras, et "Alice" en rouge clair souligné :
 
 ----
-^Cc12^Cbbonjour ^Cb^Cc04^C_tout le monde^C_^Cc !
+^Cc12^Cbbonjour ^Cb^Cc04^C_Alice^C_^Cc !
 ----
+
+Touches :
+
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[b] kbd:[o] kbd:[n] kbd:[j] kbd:[o] kbd:[u] kbd:[r] kbd:[Espace] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[Espace] kbd:[!]
 
 [NOTE]
 Dans l'extension irc, vous pouvez réassigner les couleurs en utilisant l'option

@@ -798,12 +798,22 @@ Um sich alle verfügbaren Farben anzeigen zu lassen, die der Terminal
 unterstützt, kann man in WeeChat die Tastenkombination kbd:[Alt+c]
 im `/color` Buffer nutzen oder im Terminal den Befehl `weechat --colors` ausführen.
 
-Beispiel: Im Buffer wird "Hallo an alle!" ausgegeben. Dabei wird "Hallo" in Fettschrift
-und hellblau und "an alle" rot und unterstrichen dargestellt.
+Beispiel: Im Buffer wird "Hallo Alice!" ausgegeben. Dabei wird "Hallo" in Fettschrift
+und hellblau und "Alice" rot und unterstrichen dargestellt.
 
 ----
-^Cc12^CbHallo ^Cb^Cc04^C_an alle^C_^Cc!
+^Cc12^CbHallo ^Cb^Cc04^C_Alice^C_^Cc!
 ----
+
+// TRANSLATION MISSING
+Keys:
+
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[H] kbd:[a] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[!]
 
 [NOTE]
 Die Farben können in der IRC Erweiterung neu belegt werden,

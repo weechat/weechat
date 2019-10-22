@@ -799,12 +799,25 @@ include::autogen/user/irc_colors.adoc[]
 端末で利用可能なすべての色を表示するには、WeeChat で `/color` を実行した後
 kbd:[Alt+c] を入力するか、端末で以下のコマンドを実行してください: `weechat --colors`。
 
-例:
-「こんにちは皆さん!」の「こんにちは」を太字の明るい青、「皆さん」を下線付きの明るい赤に表示したい場合:
+// TRANSLATION MISSING
+Example: display of "hello Alice!" with "hello" in light blue bold and
+"Alice" in light red underlined:
 
+// TRANSLATION MISSING
 ----
-^Cc12^Cbこんにちは^Cb^Cc04^C_皆さん^C_^Cc!
+^Cc12^Cbhello ^Cb^Cc04^C_Alice^C_^Cc!
 ----
+
+// TRANSLATION MISSING
+Keys:
+
+// TRANSLATION MISSING
+kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
+kbd:[h] kbd:[e] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
+kbd:[Ctrl+c] kbd:[b] kbd:[Ctrl+c] kbd:[c] kbd:[0] kbd:[4] kbd:[Ctrl+c] kbd:[pass:[_]] +
+kbd:[A] kbd:[l] kbd:[i] kbd:[c] kbd:[e] +
+kbd:[Ctrl+c] kbd:[pass:[_]] kbd:[Ctrl+c] kbd:[c] +
+kbd:[!]
 
 [NOTE]
 irc プラグインでは、<<option_irc.color.mirc_remap,irc.color.mirc_remap>>
