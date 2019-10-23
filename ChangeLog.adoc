@@ -39,6 +39,7 @@ New features::
 
 Bug fixes::
 
+  * core: optimize load of configuration files
   * core: fix window separators not respecting window splits (issue #630)
   * core: fix cursor mode info when prefix_align is none and with words split across lines (issue #610, issue #617, issue #619)
   * core: add support of reverse video in ANSI color codes

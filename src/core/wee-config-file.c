@@ -416,12 +416,13 @@ config_file_option_find_pos (struct t_config_section *section, const char *name)
 
     if (section && name)
     {
-        for (ptr_option = section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        for (ptr_option = section->last_option; ptr_option;
+             ptr_option = ptr_option->prev_option)
         {
-            if (string_strcasecmp (name, ptr_option->name) < 0)
-                return ptr_option;
+            if (string_strcasecmp (name, ptr_option->name) >= 0)
+                return ptr_option->next_option;
         }
+        return section->options;
     }
 
     /* position not found (we will add to the end of list) */
@@ -832,14 +833,18 @@ config_file_search_option (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
+    int rc;
 
     if (section)
     {
-        for (ptr_option = section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        for (ptr_option = section->last_option; ptr_option;
+             ptr_option = ptr_option->prev_option)
         {
-            if (string_strcasecmp (ptr_option->name, option_name) == 0)
+            rc = string_strcasecmp (ptr_option->name, option_name);
+            if (rc == 0)
                 return ptr_option;
+            else if (rc < 0)
+                return NULL;
         }
     }
     else if (config_file)
@@ -847,11 +852,14 @@ config_file_search_option (struct t_config_file *config_file,
         for (ptr_section = config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
-            for (ptr_option = ptr_section->options; ptr_option;
-                 ptr_option = ptr_option->next_option)
+            for (ptr_option = ptr_section->last_option; ptr_option;
+                 ptr_option = ptr_option->prev_option)
             {
-                if (string_strcasecmp (ptr_option->name, option_name) == 0)
+                rc = string_strcasecmp (ptr_option->name, option_name);
+                if (rc == 0)
                     return ptr_option;
+                else if (rc < 0)
+                    return NULL;
             }
         }
     }
@@ -876,21 +884,25 @@ config_file_search_section_option (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
+    int rc;
 
     *section_found = NULL;
     *option_found = NULL;
 
     if (section)
     {
-        for (ptr_option = section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        for (ptr_option = section->last_option; ptr_option;
+             ptr_option = ptr_option->prev_option)
         {
-            if (string_strcasecmp (ptr_option->name, option_name) == 0)
+            rc = string_strcasecmp (ptr_option->name, option_name);
+            if (rc == 0)
             {
                 *section_found = section;
                 *option_found = ptr_option;
                 return;
             }
+            else if (rc < 0)
+                return;
         }
     }
     else if (config_file)
@@ -898,14 +910,18 @@ config_file_search_section_option (struct t_config_file *config_file,
         for (ptr_section = config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
-            for (ptr_option = ptr_section->options; ptr_option;
-                 ptr_option = ptr_option->next_option)
+            for (ptr_option = ptr_section->last_option; ptr_option;
+                 ptr_option = ptr_option->prev_option)
             {
-                if (string_strcasecmp (ptr_option->name, option_name) == 0)
+                rc = string_strcasecmp (ptr_option->name, option_name);
+                if (rc == 0)
                 {
                     *section_found = ptr_section;
                     *option_found = ptr_option;
+                    return;
                 }
+                else if (rc < 0)
+                    return;
             }
         }
     }
