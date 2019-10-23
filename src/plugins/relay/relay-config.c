@@ -933,22 +933,6 @@ relay_config_init ()
         N_("text color for client description"),
         NULL, 0, 0, "cyan", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_connecting", "color",
-        N_("text color for \"connecting\" status"),
-        NULL, 0, 0, "yellow", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "status_waiting_auth", "color",
-        N_("text color for \"waiting authentication\" status"),
-        NULL, 0, 0, "brown", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_CONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_active", "color",
@@ -965,11 +949,27 @@ relay_config_init ()
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
+    relay_config_color_status[RELAY_STATUS_CONNECTING] = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "status_connecting", "color",
+        N_("text color for \"connecting\" status"),
+        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     relay_config_color_status[RELAY_STATUS_DISCONNECTED] = weechat_config_new_option (
         relay_config_file, ptr_section,
         "status_disconnected", "color",
         N_("text color for \"disconnected\" status"),
         NULL, 0, 0, "lightred", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    relay_config_color_status[RELAY_STATUS_WAITING_AUTH] = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "status_waiting_auth", "color",
+        N_("text color for \"waiting authentication\" status"),
+        NULL, 0, 0, "brown", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);

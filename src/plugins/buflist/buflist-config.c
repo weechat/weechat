@@ -473,6 +473,15 @@ buflist_config_init ()
         NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
+    buflist_config_look_mouse_wheel = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "mouse_wheel", "boolean",
+        N_("if enabled, mouse wheel up/down actions jump to previous/next "
+           "buffer in list"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     buflist_config_look_nick_prefix = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "nick_prefix", "boolean",
@@ -492,15 +501,6 @@ buflist_config_init ()
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
-        NULL, NULL, NULL);
-    buflist_config_look_mouse_wheel = weechat_config_new_option (
-        buflist_config_file, ptr_section,
-        "mouse_wheel", "boolean",
-        N_("if enabled, mouse wheel up/down actions jump to previous/next "
-           "buffer in list"),
-        NULL, 0, 0, "on", NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
         NULL, NULL, NULL);
     buflist_config_look_signals_refresh = weechat_config_new_option (
         buflist_config_file, ptr_section,
@@ -581,6 +581,15 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_format, NULL, NULL,
         NULL, NULL, NULL);
+    buflist_config_format_hotlist_level[3] = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "hotlist_highlight", "string",
+        N_("format for a buffer with hotlist level \"highlight\" "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0, "${color:magenta}", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
     buflist_config_format_hotlist_level[0] = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_low", "string",
@@ -599,30 +608,21 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-    buflist_config_format_hotlist_level[2] = weechat_config_new_option (
-        buflist_config_file, ptr_section,
-        "hotlist_private", "string",
-        N_("format for a buffer with hotlist level \"private\" "
-           "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0, "${color:green}", NULL, 0,
-        NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
-        NULL, NULL, NULL);
-    buflist_config_format_hotlist_level[3] = weechat_config_new_option (
-        buflist_config_file, ptr_section,
-        "hotlist_highlight", "string",
-        N_("format for a buffer with hotlist level \"highlight\" "
-           "(note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0, "${color:magenta}", NULL, 0,
-        NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
-        NULL, NULL, NULL);
     buflist_config_format_hotlist_level_none = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "hotlist_none", "string",
         N_("format for a buffer not in hotlist "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0, "${color:default}", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_hotlist_level[2] = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "hotlist_private", "string",
+        N_("format for a buffer with hotlist level \"private\" "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0, "${color:green}", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);

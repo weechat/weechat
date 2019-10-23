@@ -50,8 +50,8 @@ struct t_config_option *xfer_config_network_fast_send;
 struct t_config_option *xfer_config_network_own_ip;
 struct t_config_option *xfer_config_network_port_range;
 struct t_config_option *xfer_config_network_send_ack;
-struct t_config_option *xfer_config_network_speed_limit_send;
 struct t_config_option *xfer_config_network_speed_limit_recv;
+struct t_config_option *xfer_config_network_speed_limit_send;
 struct t_config_option *xfer_config_network_timeout;
 
 /* xfer config, file section */
@@ -170,19 +170,11 @@ xfer_config_init ()
         return 0;
     }
 
-    xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (
+    xfer_config_color_status[XFER_STATUS_ABORTED] = weechat_config_new_option (
         xfer_config_file, ptr_section,
-        "status_waiting", "color",
-        N_("text color for \"waiting\" status"),
-        NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, NULL,
-        &xfer_config_refresh_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    xfer_config_color_status[XFER_STATUS_CONNECTING] = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "status_connecting", "color",
-        N_("text color for \"connecting\" status"),
-        NULL, 0, 0, "yellow", NULL, 0,
+        "status_aborted", "color",
+        N_("text color for \"aborted\" status"),
+        NULL, 0, 0, "lightred", NULL, 0,
         NULL, NULL, NULL,
         &xfer_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -191,6 +183,14 @@ xfer_config_init ()
         "status_active", "color",
         N_("text color for \"active\" status"),
         NULL, 0, 0, "lightblue", NULL, 0,
+        NULL, NULL, NULL,
+        &xfer_config_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    xfer_config_color_status[XFER_STATUS_CONNECTING] = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "status_connecting", "color",
+        N_("text color for \"connecting\" status"),
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &xfer_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -210,11 +210,11 @@ xfer_config_init ()
         NULL, NULL, NULL,
         &xfer_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
-    xfer_config_color_status[XFER_STATUS_ABORTED] = weechat_config_new_option (
+    xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (
         xfer_config_file, ptr_section,
-        "status_aborted", "color",
-        N_("text color for \"aborted\" status"),
-        NULL, 0, 0, "lightred", NULL, 0,
+        "status_waiting", "color",
+        N_("text color for \"waiting\" status"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &xfer_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -296,17 +296,17 @@ xfer_config_init ()
            "the acks are not sent immediately to the sender"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_network_speed_limit_send = weechat_config_new_option (
-        xfer_config_file, ptr_section,
-        "speed_limit_send", "integer",
-        N_("speed limit for sending files, in kilo-bytes by second (0 means "
-           "no limit)"),
-        NULL, 0, INT_MAX, "0", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_network_speed_limit_recv = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "speed_limit_recv", "integer",
         N_("speed limit for receiving files, in kilo-bytes by second (0 means "
+           "no limit)"),
+        NULL, 0, INT_MAX, "0", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_speed_limit_send = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "speed_limit_send", "integer",
+        N_("speed limit for sending files, in kilo-bytes by second (0 means "
            "no limit)"),
         NULL, 0, INT_MAX, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);

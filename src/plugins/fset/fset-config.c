@@ -49,10 +49,10 @@ struct t_config_option *fset_config_look_use_mute;
 
 /* fset config, format section */
 
-struct t_config_option *fset_config_format_option[2];
 struct t_config_option *fset_config_format_export_help;
 struct t_config_option *fset_config_format_export_option;
 struct t_config_option *fset_config_format_export_option_null;
+struct t_config_option *fset_config_format_option[2];
 
 /* fset config, color section */
 
@@ -462,6 +462,39 @@ fset_config_init ()
         return 0;
     }
 
+    fset_config_format_export_help = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_help", "string",
+        N_("format of help line written before each option exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "# ${description2}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_format_export_option = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_option", "string",
+        N_("format of each option exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "/set ${name} ${quoted_value}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_format_export_option_null = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "export_option_null", "string",
+        N_("format of each option with \"null\" value exported in a file "
+           "(note: content is evaluated, see /help fset)"),
+        NULL, 0, 0,
+        "/unset ${name}",
+        NULL, 0,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_format_option[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "option1", "string",
@@ -496,39 +529,6 @@ fset_config_init ()
         NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_format_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_format_export_help = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "export_help", "string",
-        N_("format of help line written before each option exported in a file "
-           "(note: content is evaluated, see /help fset)"),
-        NULL, 0, 0,
-        "# ${description2}",
-        NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_format_export_option = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "export_option", "string",
-        N_("format of each option exported in a file "
-           "(note: content is evaluated, see /help fset)"),
-        NULL, 0, 0,
-        "/set ${name} ${quoted_value}",
-        NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_format_export_option_null = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "export_option_null", "string",
-        N_("format of each option with \"null\" value exported in a file "
-           "(note: content is evaluated, see /help fset)"),
-        NULL, 0, 0,
-        "/unset ${name}",
-        NULL, 0,
-        NULL, NULL, NULL,
-        NULL, NULL, NULL,
         NULL, NULL, NULL);
 
     /* color */
@@ -586,14 +586,6 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_file[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "file_selected", "color",
-        N_("color for file on the selected line"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
     fset_config_color_file_changed[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "file_changed", "color",
@@ -607,6 +599,14 @@ fset_config_init ()
         "file_changed_selected", "color",
         N_("color for file if value is changed on the selected line"),
         NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_file[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "file_selected", "color",
+        N_("color for file on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -758,14 +758,6 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_name[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "name_selected", "color",
-        N_("color for name on the selected line"),
-        NULL, 0, 0, "white", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
     fset_config_color_name_changed[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "name_changed", "color",
@@ -782,19 +774,19 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_color_name[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "name_selected", "color",
+        N_("color for name on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_color_option[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "option", "color",
         N_("color for option"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_color_option[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "option_selected", "color",
-        N_("color for option on the selected line"),
-        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -814,7 +806,15 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-   fset_config_color_parent_name[0] = weechat_config_new_option (
+    fset_config_color_option[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "option_selected", "color",
+        N_("color for option on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_parent_name[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "parent_name", "color",
         N_("color for name of parent option"),
@@ -854,14 +854,6 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_quotes[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "quotes_selected", "color",
-        N_("color for quotes around string values on the selected line"),
-        NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
     fset_config_color_quotes_changed[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "quotes_changed", "color",
@@ -879,19 +871,19 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
+    fset_config_color_quotes[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "quotes_selected", "color",
+        N_("color for quotes around string values on the selected line"),
+        NULL, 0, 0, "default", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_color_section[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "section", "color",
         N_("color for section"),
         NULL, 0, 0, "default", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
-    fset_config_color_section[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "section_selected", "color",
-        N_("color for section on the selected line"),
-        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -908,6 +900,14 @@ fset_config_init ()
         "section_changed_selected", "color",
         N_("color for section if value is changed on the selected line"),
         NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_section[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "section_selected", "color",
+        N_("color for section on the selected line"),
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -1009,14 +1009,6 @@ fset_config_init ()
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);
-    fset_config_color_value[1] = weechat_config_new_option (
-        fset_config_file, ptr_section,
-        "value_selected", "color",
-        N_("color for value on the selected line"),
-        NULL, 0, 0, "lightcyan", NULL, 0,
-        NULL, NULL, NULL,
-        &fset_config_change_color_cb, NULL, NULL,
-        NULL, NULL, NULL);
     fset_config_color_value_changed[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "value_changed", "color",
@@ -1031,6 +1023,14 @@ fset_config_init ()
         N_("color for value changed (different from default) on the selected "
            "line"),
         NULL, 0, 0, "yellow", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_color_cb, NULL, NULL,
+        NULL, NULL, NULL);
+    fset_config_color_value[1] = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "value_selected", "color",
+        N_("color for value on the selected line"),
+        NULL, 0, 0, "lightcyan", NULL, 0,
         NULL, NULL, NULL,
         &fset_config_change_color_cb, NULL, NULL,
         NULL, NULL, NULL);

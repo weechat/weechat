@@ -80,8 +80,8 @@ struct t_config_option *script_config_color_text_version_selected;
 struct t_config_option *script_config_scripts_autoload;
 struct t_config_option *script_config_scripts_cache_expire;
 struct t_config_option *script_config_scripts_download_timeout;
-struct t_config_option *script_config_scripts_path;
 struct t_config_option *script_config_scripts_hold;
+struct t_config_option *script_config_scripts_path;
 struct t_config_option *script_config_scripts_url;
 
 
@@ -759,14 +759,6 @@ script_config_init ()
         N_("timeout (in seconds) for download of scripts and list of scripts"),
         NULL, 1, 3600, "30", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    script_config_scripts_path = weechat_config_new_option (
-        script_config_file, ptr_section,
-        "path", "string",
-        N_("local cache directory for scripts; \"%h\" at beginning of string "
-           "is replaced by WeeChat home (\"~/.weechat\" by default) "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/script", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_hold = weechat_config_new_option (
         script_config_file, ptr_section,
         "hold", "string",
@@ -777,6 +769,14 @@ script_config_init ()
         NULL, NULL, NULL,
         &script_config_change_hold_cb, NULL, NULL,
         NULL, NULL, NULL);
+    script_config_scripts_path = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "path", "string",
+        N_("local cache directory for scripts; \"%h\" at beginning of string "
+           "is replaced by WeeChat home (\"~/.weechat\" by default) "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "%h/script", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_url = weechat_config_new_option (
         script_config_file, ptr_section,
         "url", "string",

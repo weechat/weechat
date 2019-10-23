@@ -38,8 +38,8 @@ struct t_config_option *exec_config_command_shell;
 
 /* exec config, color section */
 
-struct t_config_option *exec_config_color_flag_running;
 struct t_config_option *exec_config_color_flag_finished;
+struct t_config_option *exec_config_color_flag_running;
 
 char **exec_config_cmd_options = NULL;
 int exec_config_cmd_num_options = 0;
@@ -164,17 +164,17 @@ exec_config_init ()
         return 0;
     }
 
-    exec_config_color_flag_running = weechat_config_new_option (
-        exec_config_file, ptr_section,
-        "flag_running", "color",
-        N_("text color for a running command flag in list of commands"),
-        NULL, 0, 0, "lightgreen", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     exec_config_color_flag_finished = weechat_config_new_option (
         exec_config_file, ptr_section,
         "flag_finished", "color",
         N_("text color for a finished command flag in list of commands"),
         NULL, 0, 0, "lightred", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    exec_config_color_flag_running = weechat_config_new_option (
+        exec_config_file, ptr_section,
+        "flag_running", "color",
+        N_("text color for a running command flag in list of commands"),
+        NULL, 0, 0, "lightgreen", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     return 1;

@@ -28,8 +28,8 @@ extern struct t_config_option *exec_config_command_default_options;
 extern struct t_config_option *exec_config_command_purge_delay;
 extern struct t_config_option *exec_config_command_shell;
 
-extern struct t_config_option *exec_config_color_flag_running;
 extern struct t_config_option *exec_config_color_flag_finished;
+extern struct t_config_option *exec_config_color_flag_running;
 
 extern char **exec_config_cmd_options;
 extern int exec_config_cmd_num_options;

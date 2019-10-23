@@ -37,10 +37,10 @@ extern struct t_config_option *fset_config_look_use_color_value;
 extern struct t_config_option *fset_config_look_use_keys;
 extern struct t_config_option *fset_config_look_use_mute;
 
-extern struct t_config_option *fset_config_format_option[2];
 extern struct t_config_option *fset_config_format_export_help;
 extern struct t_config_option *fset_config_format_export_option;
 extern struct t_config_option *fset_config_format_export_option_null;
+extern struct t_config_option *fset_config_format_option[2];
 
 extern struct t_config_option *fset_config_color_default_value[2];
 extern struct t_config_option *fset_config_color_description[2];
