@@ -319,7 +319,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
             fset_option_filter_hashtable_extra_vars,
             fset_option);
         result = weechat_string_eval_expression (
-            fset_option_filter + 2,
+            filter + 2,
             fset_option_filter_hashtable_pointers,
             fset_option_filter_hashtable_extra_vars,
             fset_option_filter_hashtable_options);
