@@ -313,6 +313,7 @@ fset_option_match_filter (struct t_fset_option *fset_option, const char *filter)
 
     if (strncmp (filter, "c:", 2) == 0)
     {
+        /* filter by evaluated condition */
         weechat_hashtable_set (fset_option_filter_hashtable_pointers,
                                "fset_option", fset_option);
         fset_option_add_option_in_hashtable (
