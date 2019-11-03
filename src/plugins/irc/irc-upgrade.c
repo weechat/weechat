@@ -894,6 +894,7 @@ irc_upgrade_load ()
 {
     int rc;
     struct t_upgrade_file *upgrade_file;
+    const char *ptr_filter;
 
     irc_upgrade_set_buffer_callbacks ();
 
@@ -905,6 +906,14 @@ irc_upgrade_load ()
     rc = weechat_upgrade_read (upgrade_file);
 
     weechat_upgrade_close (upgrade_file);
+
+    if (irc_raw_buffer)
+    {
+        ptr_filter = weechat_buffer_get_string (irc_raw_buffer,
+                                                "localvar_filter");
+        if (ptr_filter && ptr_filter[0])
+            irc_raw_filter_options (ptr_filter);
+    }
 
     return rc;
 }
