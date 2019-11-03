@@ -911,8 +911,8 @@ irc_upgrade_load ()
     {
         ptr_filter = weechat_buffer_get_string (irc_raw_buffer,
                                                 "localvar_filter");
-        if (ptr_filter && ptr_filter[0])
-            irc_raw_filter_options (ptr_filter);
+        irc_raw_filter_options (
+            (ptr_filter && ptr_filter[0]) ? ptr_filter : "*");
     }
 
     return rc;
