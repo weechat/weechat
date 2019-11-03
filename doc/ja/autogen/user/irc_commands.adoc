@@ -752,21 +752,21 @@ nooption: set boolean option to 'off' (for example: -nossl)
             s:xxx   show only messages for server "xxx"
             f:xxx   show only messages with a flag: recv (message received), sent (message sent), modified (message modified by a modifier), redirected (message redirected)
             m:xxx   show only IRC command "xxx"
-            c:xxx   show only options matching the evaluated condition "xxx", using following variables: output of function irc_message_parse (like nick, command, channel, text, etc., see function info_get_hashtable in plugin API reference for the list of all variables), date (format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
+            c:xxx   show only messages matching the evaluated condition "xxx", using following variables: output of function irc_message_parse (like nick, command, channel, text, etc., see function info_get_hashtable in plugin API reference for the list of all variables), date (format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
 
 Examples:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server raw
-  /server raw s:freenode
-  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode
   /server del freenode
   /server deloutq
+  /server raw
+  /server raw s:freenode
+  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
 [[command_irc_service]]

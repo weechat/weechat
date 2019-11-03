@@ -729,44 +729,44 @@ reason: Grund der Abmeldung
          deloutq|jump
          raw [<filter>]
 
-    list: list servers (without argument, this list is displayed)
-listfull: list servers with detailed info for each server
-     add: add a new server
-    name: server name, for internal and display use; this name is used to connect to the server (/connect name) and to set server options: irc.server.name.xxx
-hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
-   -temp: add a temporary server (not saved)
-  option: set option for server (for boolean option, value can be omitted)
-nooption: set boolean option to 'off' (for example: -nossl)
-    copy: duplicate a server
-  rename: rename a server
- reorder: reorder list of servers
-    open: open the server buffer without connecting
-    keep: keep server in config file (for temporary servers only)
-     del: delete a server
- deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
-    jump: jump to server buffer
-     raw: open buffer with raw IRC data
-  filter: set a new filter to see only matching messages (this filter can be used as input in raw IRC data buffer as well); allowed formats are:
-            *       show all messages (no filter)
-            xxx     show only messages containing "xxx"
-            s:xxx   show only messages for server "xxx"
-            f:xxx   show only messages with a flag: recv (message received), sent (message sent), modified (message modified by a modifier), redirected (message redirected)
-            m:xxx   show only IRC command "xxx"
-            c:xxx   show only options matching the evaluated condition "xxx", using following variables: output of function irc_message_parse (like nick, command, channel, text, etc., see function info_get_hashtable in plugin API reference for the list of all variables), date (format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
+    list: listet Server auf (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+listfull: listet alle Server auf, mit detaillierten Informationen zu jedem einzelnen Server
+     add: erstellt einen neuen Server
+    name: Servername, dient der internen Nutzung und zur Darstellung; dieser Name wird genutzt um sich mit dem Server zu verbinden (/connect name) und um die entsprechenden Optionen anzupassen: irc.server.name.xxx
+hostname: Name oder IP-Adresse des Servers. Optional kann zusätzlich der Port festgelegt werden (Standard-Port: 6667). Mehrere Adressen können durch Kommata getrennt werden
+   -temp: erstellt temporären Server (wird nicht gespeichert)
+  option: legt die Optionen für den Server fest (die Boolean-Optionen können weggelassen werden)
+nooption: stellt die Boolean Einstellung auf 'off' (Beispiel: -nossl)
+    copy: erstellt eine Kopie des Servers
+  rename: benennt den Server um
+ reorder: Anordnung der Server ändern
+    open: öffnet den Serverbuffer, ohne eine Verbindung herzustellen
+    keep: übernimmt den Server in die Konfigurationsdatei (nur sinnvoll bei temporär angelegten Servern)
+     del: entfernt einen Server
+ deloutq: löscht bei allen Servern alle ausgehende Nachrichten, die in der Warteschlange stehen (dies betrifft alle Nachrichten die WeeChat gerade sendet)
+    jump: springt zum Server-Buffer
+     raw: öffnet Buffer mit Roh-IRC-Daten
+  filter: setzt einen neuen Filter um übereinstimmende Nachrichten anzuzeigen (ein Filter kann auch in der Eingabezeile im IRC Datenbuffer angelegt werden); erlaubte Formattierungen:
+            *       zeigt alle Nachrichten an (keine Filterung von Nachrichten)
+            xxx     zeigt nur Nachrichten mit "xxx" an
+            s:xxx   zeigt nur Nachrichten von Server "xxx" an
+            f:xxx   zeigt nur Nachrichten mit dem entsprechenden Flag an: recv (erhaltene Nachricht), sent (gesendete Nachricht), modified (Nachricht welche modifiziert wurde), redirected (umgeleitete Nachricht)
+            m:xxx   zeigt nur IRC Befehl "xxx" an
+            c:xxx   zeigt nur Nachrichten an auf die die evaluierte Bedingung "xxx" zutrifft, folgende Variable können verwendet werden: Ausgabe der Funktion irc_message_parse (wie nick, command, channel, text, etc., siehe Funktion info_get_hashtable in der Anleitung für API Erweiterung für eine Liste aller möglichen Variablen), date (Format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
 
-Examples:
+Beispiele:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
-  /server raw
-  /server raw s:freenode
-  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode
   /server del freenode
   /server deloutq
+  /server raw
+  /server raw s:freenode
+  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
 [[command_irc_service]]
