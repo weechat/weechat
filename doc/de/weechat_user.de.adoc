@@ -805,8 +805,7 @@ und hellblau und "Alice" rot und unterstrichen dargestellt.
 ^Cc12^CbHallo ^Cb^Cc04^C_Alice^C_^Cc!
 ----
 
-// TRANSLATION MISSING
-Keys:
+Tastenbefehl:
 
 kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
 kbd:[H] kbd:[a] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
