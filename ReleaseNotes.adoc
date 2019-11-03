@@ -24,8 +24,9 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 === CMake errors on missing dependencies
 
 When compiling WeeChat with CMake (which is the recommended way), errors are
-now displayed on any missing dependency, if the optional feature was asked
-(most features are automatically enabled, except doc/man page and tests).
+now displayed on any missing dependency, if the optional feature was enabled
+(most features are automatically enabled, except documentation, man page and
+tests).
 
 Any error on a missing dependency is fatal, so WeeChat can not be compiled.
 This is a new behavior compared to old versions, where any missing dependency
