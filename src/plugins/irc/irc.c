@@ -173,6 +173,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     irc_config_read ();
 
+    irc_raw_init ();
+
     irc_command_init ();
 
     irc_info_init ();
@@ -287,7 +289,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 
     irc_ignore_free_all ();
 
-    irc_raw_message_free_all ();
+    irc_raw_end ();
 
     irc_server_free_all ();
 

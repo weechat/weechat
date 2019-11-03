@@ -726,7 +726,8 @@ motivo: motivo
          reorder <name> [<name>...]
          open <name>|-all [<name>...]
          del|keep <name>
-         deloutq|jump|raw
+         deloutq|jump
+         raw [<filter>]
 
     list: list servers (without argument, this list is displayed)
 listfull: list servers with detailed info for each server
@@ -745,12 +746,22 @@ nooption: set boolean option to 'off' (for example: -nossl)
  deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
     jump: jump to server buffer
      raw: open buffer with raw IRC data
+  filter: set a new filter to see only matching messages (this filter can be used as input in raw IRC data buffer as well); allowed formats are:
+            *       show all messages (no filter)
+            xxx     show only messages containing "xxx"
+            s:xxx   show only messages for server "xxx"
+            f:xxx   show only messages with a flag: recv (message received), sent (message sent), modified (message modified by a modifier), redirected (message redirected)
+            m:xxx   show only IRC command "xxx"
+            c:xxx   show only options matching the evaluated condition "xxx", using following variables: output of function irc_message_parse (like nick, command, channel, text, etc., see function info_get_hashtable in plugin API reference for the list of all variables), date (format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
 
 Examples:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
+  /server raw
+  /server raw s:freenode
+  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode

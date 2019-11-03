@@ -204,6 +204,8 @@ irc_input_data (struct t_gui_buffer *buffer, const char *input_data, int flags,
     {
         if (weechat_strcasecmp (input_data, "q") == 0)
             weechat_buffer_close (buffer);
+        else
+            irc_raw_filter_options (input_data);
     }
     else
     {

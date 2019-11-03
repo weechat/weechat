@@ -720,36 +720,48 @@ powód: powód
 * `+server+`: wyświetla, dodaje lub usuwa serwery IRC
 
 ----
-/server  list|listfull [<nazwa>]
-         add <nazwa> <host>[/<port>] [-temp] [-<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <nazwa> <nowa_nazwa>
-         reorder <nazwa> [<nazwa>...]
-         open <nazwa>|-all [<nazwa>...]
-         del|keep <nazwa>
-         deloutq|jump|raw
+/server  list|listfull [<name>]
+         add <name> <hostname>[/<port>] [-temp] [-<option>[=<value>]] [-no<option>]
+         copy|rename <name> <new_name>
+         reorder <name> [<name>...]
+         open <name>|-all [<name>...]
+         del|keep <name>
+         deloutq|jump
+         raw [<filter>]
 
-    list: wyświetla listę serwerów (bez argumentu wyświetlana jest ta lista)
-listfull: wyświetla listę serwerów ze szczegółowymi informacjami dla każdego serwera
-     add: tworzy nowy serwer
-  nazwa: nazwa serwera, do użytku wewnętrznego i  wyświetlania; ta nazwa jest używana do połączenia z serwerem (/connect nazwa) i do ustawiania opcji serwera: irc.server.nazwa.xxx
-host: nazwa albo adres IP serwera, z opcjonalnym numerem portu (domyślnie: 6667), wiele adresów należy rozdzielić przecinkiem
-   -temp: tworzy serwer tymczasowy (nie zapisany)
-  opcja: ustawia opcję dla serwera (dla opcji boolowskich wartość może zostać pominięta)
-noopcja: ustawia opcje boolowskie na 'off' (na przykład: -nossl)
-    copy: duplikuje serwer
-  rename: zmienia nazwę serwera
- reorder: zmienia kolejność na liście serwerów
-    open: otwiera bufor serwera nie łącząc się z nim
-    keep: zachowuje serwer w pliku konfiguracyjnym (tylko dla serwerów tymczasowych)
-     del: usuwa serwer
- deloutq: usuń wiadomości z kolejki dla wszystkich serwerów (wszystkie wiadomości jakie WeeChat obecnie wysyła)
-    jump: przechodzi do bufora serwera
-     raw: otwiera bufor z nieprzetworzonymi danymi IRC
+    list: list servers (without argument, this list is displayed)
+listfull: list servers with detailed info for each server
+     add: add a new server
+    name: server name, for internal and display use; this name is used to connect to the server (/connect name) and to set server options: irc.server.name.xxx
+hostname: name or IP address of server, with optional port (default: 6667), many addresses can be separated by a comma
+   -temp: add a temporary server (not saved)
+  option: set option for server (for boolean option, value can be omitted)
+nooption: set boolean option to 'off' (for example: -nossl)
+    copy: duplicate a server
+  rename: rename a server
+ reorder: reorder list of servers
+    open: open the server buffer without connecting
+    keep: keep server in config file (for temporary servers only)
+     del: delete a server
+ deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    jump: jump to server buffer
+     raw: open buffer with raw IRC data
+  filter: set a new filter to see only matching messages (this filter can be used as input in raw IRC data buffer as well); allowed formats are:
+            *       show all messages (no filter)
+            xxx     show only messages containing "xxx"
+            s:xxx   show only messages for server "xxx"
+            f:xxx   show only messages with a flag: recv (message received), sent (message sent), modified (message modified by a modifier), redirected (message redirected)
+            m:xxx   show only IRC command "xxx"
+            c:xxx   show only options matching the evaluated condition "xxx", using following variables: output of function irc_message_parse (like nick, command, channel, text, etc., see function info_get_hashtable in plugin API reference for the list of all variables), date (format: "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
 
-Przykłady:
+Examples:
   /server listfull
   /server add freenode chat.freenode.net
   /server add freenode chat.freenode.net/6697 -ssl -autoconnect
   /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667
+  /server raw
+  /server raw s:freenode
+  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
   /server copy freenode freenode-test
   /server rename freenode-test freenode2
   /server reorder freenode2 freenode

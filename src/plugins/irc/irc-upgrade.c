@@ -345,6 +345,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
     char *buf, option_name[64], **nicks, *nick_join, *pos, *error;
     char **items;
     const char *buffer_name, *str, *nick;
+    struct t_irc_server *ptr_server;
     struct t_irc_nick *ptr_nick;
     struct t_irc_redirect *ptr_redirect;
     struct t_irc_notify *ptr_notify;
@@ -859,9 +860,20 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                 }
                 break;
             case IRC_UPGRADE_TYPE_RAW_MESSAGE:
-                irc_raw_message_add_to_list (weechat_infolist_time (infolist, "date"),
-                                             weechat_infolist_string (infolist, "prefix"),
-                                             weechat_infolist_string (infolist, "message"));
+                /* "server" and "flags" are new in WeeChat 2.7  */
+                str = weechat_infolist_string (infolist, "server");
+                if (str && str[0])
+                {
+                    ptr_server = irc_server_search (str);
+                    if (ptr_server)
+                    {
+                        irc_raw_message_add_to_list (
+                            weechat_infolist_time (infolist, "date"),
+                            ptr_server,
+                            weechat_infolist_integer (infolist, "flags"),
+                            weechat_infolist_string (infolist, "message"));
+                    }
+                }
                 break;
         }
     }

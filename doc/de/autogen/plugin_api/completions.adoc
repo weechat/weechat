@@ -38,6 +38,8 @@
 
 | irc | irc_privates | Private auf allen IRC Servern
 
+| irc | irc_raw_filters | filters for irc raw buffer
+
 | irc | irc_server | aktueller IRC-Server
 
 | irc | irc_server_channels | Channels des derzeitigen IRC-Server

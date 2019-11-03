@@ -36,10 +36,13 @@
 #define IRC_RAW_FLAG_REDIRECT (1 << 3)
 #define IRC_RAW_FLAG_BINARY   (1 << 4)
 
+struct t_irc_server;
+
 struct t_irc_raw_message
 {
     time_t date;                       /* date/time of message              */
-    char *prefix;                      /* prefix                            */
+    struct t_irc_server *server;       /* server                            */
+    int flags;                         /* flags                             */
     char *message;                     /* message                           */
     struct t_irc_raw_message *prev_message; /* pointer to previous message  */
     struct t_irc_raw_message *next_message; /* pointer to next message      */
@@ -51,14 +54,19 @@ extern struct t_gui_buffer *irc_raw_buffer;
 extern int irc_raw_messages_count;
 extern struct t_irc_raw_message *irc_raw_messages, *last_irc_raw_message;
 
+extern void irc_raw_refresh (int clear);
 extern void irc_raw_open (int switch_to_buffer);
+extern void irc_raw_set_filter (const char *filter);
+extern void irc_raw_filter_options (const char *filter);
 extern struct t_irc_raw_message *irc_raw_message_add_to_list (time_t date,
-                                                              const char *prefix,
+                                                              struct t_irc_server *server,
+                                                              int flags,
                                                               const char *message);
 extern void irc_raw_print (struct t_irc_server *server, int flags,
                            const char *message);
-extern void irc_raw_message_free_all ();
 extern int irc_raw_add_to_infolist (struct t_infolist *infolist,
                                     struct t_irc_raw_message *raw_message);
+extern void irc_raw_init ();
+extern void irc_raw_end ();
 
 #endif /* WEECHAT_PLUGIN_IRC_RAW_H */

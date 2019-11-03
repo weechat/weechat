@@ -38,6 +38,8 @@
 
 | irc | irc_privates | privés sur tous les serveurs IRC
 
+| irc | irc_raw_filters | filtres pour le tampon de données brutes irc
+
 | irc | irc_server | serveur IRC courant
 
 | irc | irc_server_channels | canaux sur le serveur IRC courant

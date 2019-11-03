@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-12 17:09+0200\n"
-"PO-Revision-Date: 2019-09-22 18:54+0200\n"
+"POT-Creation-Date: 2019-11-03 08:55+0100\n"
+"PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -5633,6 +5633,12 @@ msgstr ""
 "ファを移動します"
 
 msgid ""
+"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
+msgstr ""
+"有効の場合、マウスのホイールアップまたはダウンすることでリスト内の一つ前また"
+"は次のバッファに移動します"
+
+msgid ""
 "get the nick prefix and its color from nicklist so that ${nick_prefix} can "
 "be used in format; this can be slow on buffers with lot of nicks in "
 "nicklist, so this option is disabled by default"
@@ -5649,12 +5655,6 @@ msgstr ""
 "ニックネームプレフィックスが有効化された状態で、そのバッファで対象のニック"
 "ネームにプレフィックスが付かない場合に、プレフィックスの代わりに空白を表示し"
 "ます"
-
-msgid ""
-"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
-msgstr ""
-"有効の場合、マウスのホイールアップまたはダウンすることでリスト内の一つ前また"
-"は次のバッファに移動します"
 
 msgid ""
 "comma-separated list of extra signals that are hooked and trigger the "
@@ -5708,6 +5708,13 @@ msgstr ""
 "い)"
 
 msgid ""
+"format for a buffer with hotlist level \"highlight\" (note: content is "
+"evaluated, see /help buflist)"
+msgstr ""
+"ホットリストレベルが \"highlight\" のバッファの表示書式 (注意: 値は評価されま"
+"す、/help eval を参照してください)"
+
+msgid ""
 "format for a buffer with hotlist level \"low\" (note: content is evaluated, "
 "see /help buflist)"
 msgstr ""
@@ -5722,25 +5729,18 @@ msgstr ""
 "す、/help eval を参照してください)"
 
 msgid ""
-"format for a buffer with hotlist level \"private\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"ホットリストレベルが \"private\" のバッファの表示書式 (注意: 値は評価されま"
-"す、/help eval を参照してください)"
-
-msgid ""
-"format for a buffer with hotlist level \"highlight\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"ホットリストレベルが \"highlight\" のバッファの表示書式 (注意: 値は評価されま"
-"す、/help eval を参照してください)"
-
-msgid ""
 "format for a buffer not in hotlist (note: content is evaluated, see /help "
 "buflist)"
 msgstr ""
 "ホットリストにないバッファの表示書式 (注意: 値は評価されます、/help eval を参"
 "照してください)"
+
+msgid ""
+"format for a buffer with hotlist level \"private\" (note: content is "
+"evaluated, see /help buflist)"
+msgstr ""
+"ホットリストレベルが \"private\" のバッファの表示書式 (注意: 値は評価されま"
+"す、/help eval を参照してください)"
 
 msgid ""
 "separator for counts in hotlist (note: content is evaluated, see /help "
@@ -6131,11 +6131,11 @@ msgstr ""
 "コマンド \"/exec -sh\" で使うシェル; シェルの名前 (PATH に含まれるシェル、例"
 "えば \"bash\" など) もしくはシェルへの絶対パス (例えば \"/bin/bash\")"
 
-msgid "text color for a running command flag in list of commands"
-msgstr "コマンドリストで使う実行中コマンドのフラグに対するテキスト色"
-
 msgid "text color for a finished command flag in list of commands"
 msgstr "コマンドリストで使う実行完了コマンドのフラグに対するテキスト色"
+
+msgid "text color for a running command flag in list of commands"
+msgstr "コマンドリストで使う実行中コマンドのフラグに対するテキスト色"
 
 msgid "FIFO pipe for remote control"
 msgstr "リモート操作用の FIFO パイプ"
@@ -6731,6 +6731,28 @@ msgid "use /mute command to set options"
 msgstr "オプション設定時に /mute コマンドを使う"
 
 msgid ""
+"format of help line written before each option exported in a file (note: "
+"content is evaluated, see /help fset)"
+msgstr ""
+"オプションをファイルへエクスポートする際に使うヘルプ行の書式 (注意: 値は評価"
+"されます、/help fset を参照してください)"
+
+msgid ""
+"format of each option exported in a file (note: content is evaluated, see /"
+"help fset)"
+msgstr ""
+"オプションをファイルへエクスポートする際に使うオプションの書式 (注意: 値は評"
+"価されます、/help fset を参照してください)"
+
+msgid ""
+"format of each option with \"null\" value exported in a file (note: content "
+"is evaluated, see /help fset)"
+msgstr ""
+"オプション値が \"null\" の場合に、そのオプションをファイルへエクスポートする"
+"際に使うオプションの書式 (注意: 値は評価されます、/help fset を参照してくださ"
+"い)"
+
+msgid ""
 "first format of each line with an option which is not marked nor the "
 "selected one (note: content is evaluated, see /help fset); an empty string "
 "uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
@@ -6754,28 +6776,6 @@ msgstr ""
 "書式 (\"${marked} ${name}  ${type}  ${value2}\") を使います、デフォルト書式は"
 "文字列を評価しないので高速です; 書式を切り替えるには ctrl+X を使います"
 
-msgid ""
-"format of help line written before each option exported in a file (note: "
-"content is evaluated, see /help fset)"
-msgstr ""
-"オプションをファイルへエクスポートする際に使うヘルプ行の書式 (注意: 値は評価"
-"されます、/help fset を参照してください)"
-
-msgid ""
-"format of each option exported in a file (note: content is evaluated, see /"
-"help fset)"
-msgstr ""
-"オプションをファイルへエクスポートする際に使うオプションの書式 (注意: 値は評"
-"価されます、/help fset を参照してください)"
-
-msgid ""
-"format of each option with \"null\" value exported in a file (note: content "
-"is evaluated, see /help fset)"
-msgstr ""
-"オプション値が \"null\" の場合に、そのオプションをファイルへエクスポートする"
-"際に使うオプションの書式 (注意: 値は評価されます、/help fset を参照してくださ"
-"い)"
-
 msgid "color for default value"
 msgstr "デフォルト値を意味するテキスト色"
 
@@ -6791,14 +6791,14 @@ msgstr "オプション説明文のテキスト色 (選択行に表示される�
 msgid "color for file"
 msgstr "ファイルのテキスト色"
 
-msgid "color for file on the selected line"
-msgstr "ファイルのテキスト色 (選択行に表示される場合)"
-
 msgid "color for file if value is changed"
 msgstr "ファイルのテキスト色 (値が変更されている場合)"
 
 msgid "color for file if value is changed on the selected line"
 msgstr "ファイルのテキスト色 (値が変更されており、選択行に表示される場合)"
+
+msgid "color for file on the selected line"
+msgstr "ファイルのテキスト色 (選択行に表示される場合)"
 
 msgid "color for default value in help bar"
 msgstr "デフォルト値を意味する色 (ヘルプバー内に表示される場合)"
@@ -6870,9 +6870,6 @@ msgstr "最小値を意味するテキスト色 (選択行に表示される場�
 msgid "color for name"
 msgstr "完全なオプション名のテキスト色"
 
-msgid "color for name on the selected line"
-msgstr "完全なオプション名のテキスト色 (選択行に表示される場合)"
-
 msgid "color for name if value is changed"
 msgstr "完全なオプション名のテキスト色 (値が変更されている場合)"
 
@@ -6880,17 +6877,20 @@ msgid "color for name if value is changed on the selected line"
 msgstr ""
 "完全なオプション名のテキスト色 (値が変更されており、選択行に表示される場合)"
 
+msgid "color for name on the selected line"
+msgstr "完全なオプション名のテキスト色 (選択行に表示される場合)"
+
 msgid "color for option"
 msgstr "オプション名のテキスト色"
-
-msgid "color for option on the selected line"
-msgstr "オプション名のテキスト色 (選択行に表示される場合)"
 
 msgid "color for option if value is changed"
 msgstr "オプション名のテキスト色 (値が変更されている場合)"
 
 msgid "color for option if value is changed on the selected line"
 msgstr "オプション名のテキスト色 (値が変更されており、選択行に表示される場合)"
+
+msgid "color for option on the selected line"
+msgstr "オプション名のテキスト色 (選択行に表示される場合)"
 
 msgid "color for name of parent option"
 msgstr "親オプション名のテキスト色"
@@ -6904,9 +6904,6 @@ msgstr "親オプション値のテキスト色"
 msgid "color for value of parent option on the selected line"
 msgstr "親オプション値のテキスト色 (選択行に表示される場合)"
 
-msgid "color for quotes around string values on the selected line"
-msgstr "文字列値を囲む引用符のテキスト色 (選択行に表示される場合)"
-
 msgid "color for quotes around string values which are changed"
 msgstr "文字列値を囲む引用符のテキスト色 (値が変更されている場合)"
 
@@ -6915,17 +6912,20 @@ msgid ""
 msgstr ""
 "文字列値を囲む引用符のテキスト色 (値が変更されており、選択行に表示される場合)"
 
+msgid "color for quotes around string values on the selected line"
+msgstr "文字列値を囲む引用符のテキスト色 (選択行に表示される場合)"
+
 msgid "color for section"
 msgstr "セクション名のテキスト色"
-
-msgid "color for section on the selected line"
-msgstr "セクション名のテキスト色 (選択行に表示される場合)"
 
 msgid "color for section if value is changed"
 msgstr "セクション名のテキスト色 (値が変更されている場合)"
 
 msgid "color for section if value is changed on the selected line"
 msgstr "セクション名のテキスト色 (値が変更されており、選択行に表示される場合)"
+
+msgid "color for section on the selected line"
+msgstr "セクション名のテキスト色 (選択行に表示される場合)"
 
 msgid "color for string values"
 msgstr "文字列値のテキスト色"
@@ -6967,15 +6967,15 @@ msgstr ""
 msgid "color for value"
 msgstr "値のテキスト色"
 
-msgid "color for value on the selected line"
-msgstr "値のテキスト色 (選択行に表示される場合)"
-
 msgid "color for value changed (different from default)"
 msgstr "値のテキスト色 (値がデフォルト値と同じではない場合)"
 
 msgid "color for value changed (different from default) on the selected line"
 msgstr ""
 "値のテキスト色 (値がデフォルト値と同じではなく、選択行に表示される場合)"
+
+msgid "color for value on the selected line"
+msgstr "値のテキスト色 (選択行に表示される場合)"
 
 msgid "color for undefined value"
 msgstr "未定義値のテキスト色"
@@ -8447,17 +8447,19 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "IRC サーバのリストアップ、追加、削除"
 
+#, fuzzy
 msgid ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump|raw"
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
 "<name> || deloutq|jump|raw"
 
+#, fuzzy
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
@@ -8480,12 +8482,29 @@ msgid ""
 "currently sending)\n"
 "    jump: jump to server buffer\n"
 "     raw: open buffer with raw IRC data\n"
+"  filter: set a new filter to see only matching messages (this filter can be "
+"used as input in raw IRC data buffer as well); allowed formats are:\n"
+"            *       show all messages (no filter)\n"
+"            xxx     show only messages containing \"xxx\"\n"
+"            s:xxx   show only messages for server \"xxx\"\n"
+"            f:xxx   show only messages with a flag: recv (message received), "
+"sent (message sent), modified (message modified by a modifier), redirected "
+"(message redirected)\n"
+"            m:xxx   show only IRC command \"xxx\"\n"
+"            c:xxx   show only options matching the evaluated condition \"xxx"
+"\", using following variables: output of function irc_message_parse (like "
+"nick, command, channel, text, etc., see function info_get_hashtable in "
+"plugin API reference for the list of all variables), date (format: \"yyyy-mm-"
+"dd hh:mm:ss\"), server, recv, sent, modified, redirected\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
 "  /server add freenode chat.freenode.net\n"
 "  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
 "  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667\n"
+"  /server raw\n"
+"  /server raw s:freenode\n"
+"  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo\n"
 "  /server copy freenode freenode-test\n"
 "  /server rename freenode-test freenode2\n"
 "  /server reorder freenode2 freenode\n"
@@ -8819,6 +8838,10 @@ msgstr "無視エントリの数"
 
 msgid "nicks in notify list"
 msgstr "通知エントリのニックネーム"
+
+#, fuzzy
+msgid "filters for irc raw buffer"
+msgstr "リレーバッファ内のテキスト色"
 
 #, c-format
 msgid ""
@@ -9659,11 +9682,11 @@ msgstr "pong がサーバから返った場合の、遅延インジケータの�
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "\"input_prompt\" バー要素内のニックネームモードに付ける色"
 
-msgid "color for text in join messages"
-msgstr "参加メッセージの色"
-
 msgid "color for text in chghost messages"
 msgstr "chghost メッセージの色"
+
+msgid "color for text in join messages"
+msgstr "参加メッセージの色"
 
 #, fuzzy
 msgid "color for text in kick/kill messages"
@@ -10481,7 +10504,8 @@ msgstr ""
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: ホスト名を含めずに \"%s\" コマンドを受信"
 
-msgid "IRC raw messages"
+#, fuzzy, c-format
+msgid "IRC raw messages | Filter: %s"
 msgstr "IRC 生メッセージ"
 
 #, c-format
@@ -12093,20 +12117,20 @@ msgstr "新しいクライアントが接続したらリレーバッファを自
 msgid "text color for client description"
 msgstr "クライアント説明用のテキスト色"
 
-msgid "text color for \"connecting\" status"
-msgstr "\"接続中\" 状態のテキスト色"
-
-msgid "text color for \"waiting authentication\" status"
-msgstr "\"認証待ち\" 状態のテキスト色"
-
 msgid "text color for \"connected\" status"
 msgstr "\"接続済み\" 状態のテキスト色"
 
 msgid "text color for \"authentication failed\" status"
 msgstr "\"認証失敗\" 状態のテキスト色"
 
+msgid "text color for \"connecting\" status"
+msgstr "\"接続中\" 状態のテキスト色"
+
 msgid "text color for \"disconnected\" status"
 msgstr "\"接続切断\" 状態のテキスト色"
+
+msgid "text color for \"waiting authentication\" status"
+msgstr "\"認証待ち\" 状態のテキスト色"
 
 msgid "text color in relay buffer"
 msgstr "リレーバッファ内のテキスト色"
@@ -12961,6 +12985,14 @@ msgstr ""
 "スクリプトのダウンロードとスクリプトのリストに対するタイムアウト時間 (秒単位)"
 
 msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
+msgstr ""
+"\"ホールド\" するスクリプト: コンマ区切りのスクリプトリスト、このリストに含ま"
+"れるスクリプトはアップグレードされませんし、削除もされません、例: \"go.py,"
+"urlserver.py\""
+
+msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
@@ -12968,14 +13000,6 @@ msgstr ""
 "スクリプト用のローカルキャッシュディレクトリ; 文字列最初の \"%h\" は WeeChat "
 "ホーム に置換されます (デフォルトでは \"~/.weechat\" に置換されます) (注意: "
 "内容は評価されます、/help eval 参照)"
-
-msgid ""
-"scripts to \"hold\": comma-separated list of scripts which will never been "
-"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
-msgstr ""
-"\"ホールド\" するスクリプト: コンマ区切りのスクリプトリスト、このリストに含ま"
-"れるスクリプトはアップグレードされませんし、削除もされません、例: \"go.py,"
-"urlserver.py\""
 
 msgid "URL for file with list of scripts"
 msgstr "スクリプトのリストを含むファイルの URL"
@@ -14034,8 +14058,8 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 "プログレスバーのサイズ、文字数単位 (0 の場合、プログレスバーを使わない)"
 
-msgid "text color for \"waiting\" status"
-msgstr "\"接続待ち\" 状態のテキスト色"
+msgid "text color for \"aborted\" status"
+msgstr "\"中止\" 状態のテキスト色"
 
 msgid "text color for \"active\" status"
 msgstr "\"アクティブ\" 状態のテキスト色"
@@ -14046,8 +14070,8 @@ msgstr "\"終了\" 状態のテキスト色"
 msgid "text color for \"failed\" status"
 msgstr "\"失敗\" 状態のテキスト色"
 
-msgid "text color for \"aborted\" status"
-msgstr "\"中止\" 状態のテキスト色"
+msgid "text color for \"waiting\" status"
+msgstr "\"接続待ち\" 状態のテキスト色"
 
 msgid "text color in xfer buffer"
 msgstr "xfer バッファのテキスト色"
@@ -14095,12 +14119,12 @@ msgstr ""
 "かもしれません"
 
 msgid ""
-"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
-msgstr "ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
-
-msgid ""
 "speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr "ファイル受信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
+
+msgid ""
+"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+msgstr "ファイル送信の速度制限、1 秒あたりのキロバイトで指定 (0 は制限無し)"
 
 msgid "timeout for xfer request (in seconds)"
 msgstr "xfer 要求のタイムアウト (秒単位)"
@@ -14241,9 +14265,3 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
-
-#~ msgid "filename"
-#~ msgstr "ファイル名"
-
-#~ msgid "color for backlog lines"
-#~ msgstr "バックログ行の色"

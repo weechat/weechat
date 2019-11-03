@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-12 17:09+0200\n"
-"PO-Revision-Date: 2019-09-22 18:54+0200\n"
+"POT-Creation-Date: 2019-11-03 08:55+0100\n"
+"PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -5755,6 +5755,12 @@ msgstr ""
 "jeśli włączone, gesty myszy (przeciągnij i upuść) przesuwają bufory na liście"
 
 msgid ""
+"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
+msgstr ""
+"jeśli włączone, ruch rolką myszy w góre/dół przeskakuje do poprzedniego/"
+"następnego bufora na liście"
+
+msgid ""
 "get the nick prefix and its color from nicklist so that ${nick_prefix} can "
 "be used in format; this can be slow on buffers with lot of nicks in "
 "nicklist, so this option is disabled by default"
@@ -5769,12 +5775,6 @@ msgid ""
 msgstr ""
 "kiedy prefiks nicka jet włączony, wywietla spacje, kiedy nick nie ma "
 "prefiksu w buforze"
-
-msgid ""
-"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
-msgstr ""
-"jeśli włączone, ruch rolką myszy w góre/dół przeskakuje do poprzedniego/"
-"następnego bufora na liście"
 
 msgid ""
 "comma-separated list of extra signals that are hooked and trigger the "
@@ -5828,6 +5828,13 @@ msgstr ""
 "format hotlisty (uwaga: zawartość jest przetwarzana, zobacz /help buflist)"
 
 msgid ""
+"format for a buffer with hotlist level \"highlight\" (note: content is "
+"evaluated, see /help buflist)"
+msgstr ""
+"format dla bufora z poziomem hotlisty \"highlight\" (uwaga: zawartość jest "
+"przetwarzana, zobacz /help buflist)"
+
+msgid ""
 "format for a buffer with hotlist level \"low\" (note: content is evaluated, "
 "see /help buflist)"
 msgstr ""
@@ -5842,24 +5849,17 @@ msgstr ""
 "przetwarzana, zobacz /help buflist)"
 
 msgid ""
-"format for a buffer with hotlist level \"private\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"format dla bufora z poziomem hotlisty \"private\" (uwaga: zawartość jest "
-"przetwarzana, zobacz /help buflist)"
-
-msgid ""
-"format for a buffer with hotlist level \"highlight\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"format dla bufora z poziomem hotlisty \"highlight\" (uwaga: zawartość jest "
-"przetwarzana, zobacz /help buflist)"
-
-msgid ""
 "format for a buffer not in hotlist (note: content is evaluated, see /help "
 "buflist)"
 msgstr ""
 "format dla bufora nie znajdującego się na hotliście (uwaga: zawartość jest "
+"przetwarzana, zobacz /help buflist)"
+
+msgid ""
+"format for a buffer with hotlist level \"private\" (note: content is "
+"evaluated, see /help buflist)"
+msgstr ""
+"format dla bufora z poziomem hotlisty \"private\" (uwaga: zawartość jest "
 "przetwarzana, zobacz /help buflist)"
 
 msgid ""
@@ -6252,11 +6252,11 @@ msgstr ""
 "przykład \"/bin/bash\"); jeśli wartość jest pusta, zostanie użyte \"sh"
 "\" (uwaga: zawartość jest przetwarzana, zobacz /help eval)"
 
-msgid "text color for a running command flag in list of commands"
-msgstr "kolor dla flagi wykonywanej komendy na liście komend"
-
 msgid "text color for a finished command flag in list of commands"
 msgstr "kolor tekstu dla flagi zakończonej komendy na liście komend"
+
+msgid "text color for a running command flag in list of commands"
+msgstr "kolor dla flagi wykonywanej komendy na liście komend"
 
 msgid "FIFO pipe for remote control"
 msgstr "kolejka FIFO dla zdalnego sterowania"
@@ -6859,6 +6859,27 @@ msgid "use /mute command to set options"
 msgstr "użyj komendy /mute do ustawienia opcji"
 
 msgid ""
+"format of help line written before each option exported in a file (note: "
+"content is evaluated, see /help fset)"
+msgstr ""
+"format linii z pomocą zapisanej przed każdą opcją eskportowaną do pliku "
+"(uwaga: zawartość jest przetwarzana, zobacz /help fset)"
+
+msgid ""
+"format of each option exported in a file (note: content is evaluated, see /"
+"help fset)"
+msgstr ""
+"format każdej opcji eskportowanej do pliku (uwaga: zawartość jest "
+"przetwarzana, zobacz /help fset)"
+
+msgid ""
+"format of each option with \"null\" value exported in a file (note: content "
+"is evaluated, see /help fset)"
+msgstr ""
+"format każdej opcji z wartością \"null\" eksportowanej do pliku (uwaga: "
+"zawartość jest przetwarzana, zobacz /help fset)"
+
+msgid ""
 "first format of each line with an option which is not marked nor the "
 "selected one (note: content is evaluated, see /help fset); an empty string "
 "uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
@@ -6884,27 +6905,6 @@ msgstr ""
 "przetwarza siągów, przez co jest szybszy; formaty można zmienić za pomocą "
 "ctrl-X"
 
-msgid ""
-"format of help line written before each option exported in a file (note: "
-"content is evaluated, see /help fset)"
-msgstr ""
-"format linii z pomocą zapisanej przed każdą opcją eskportowaną do pliku "
-"(uwaga: zawartość jest przetwarzana, zobacz /help fset)"
-
-msgid ""
-"format of each option exported in a file (note: content is evaluated, see /"
-"help fset)"
-msgstr ""
-"format każdej opcji eskportowanej do pliku (uwaga: zawartość jest "
-"przetwarzana, zobacz /help fset)"
-
-msgid ""
-"format of each option with \"null\" value exported in a file (note: content "
-"is evaluated, see /help fset)"
-msgstr ""
-"format każdej opcji z wartością \"null\" eksportowanej do pliku (uwaga: "
-"zawartość jest przetwarzana, zobacz /help fset)"
-
 msgid "color for default value"
 msgstr "kolor dla wartości domyślnej"
 
@@ -6920,14 +6920,14 @@ msgstr "kolor dla opisu w zaznaczonej linii"
 msgid "color for file"
 msgstr "kolor dla pliku"
 
-msgid "color for file on the selected line"
-msgstr "kolor dla pliku w zaznaczonej linii"
-
 msgid "color for file if value is changed"
 msgstr "kolor dla pliku, jeśli wartość została zmieniona"
 
 msgid "color for file if value is changed on the selected line"
 msgstr "kolor dla pliku w zaznaczonej linii, jeśli wartość została zmieniona"
+
+msgid "color for file on the selected line"
+msgstr "kolor dla pliku w zaznaczonej linii"
 
 msgid "color for default value in help bar"
 msgstr "kolor dla domyślnej wartości w pasku pomocy"
@@ -6999,26 +6999,26 @@ msgstr "kolor minimalnej wartości w wybranej linii"
 msgid "color for name"
 msgstr "kolor nazwy"
 
-msgid "color for name on the selected line"
-msgstr "kolor nazwy w wybranej linii"
-
 msgid "color for name if value is changed"
 msgstr "kolor nazwy jeśli wartość została zmieniona"
 
 msgid "color for name if value is changed on the selected line"
 msgstr "kolor nazwy jeśli wartość została zmieniona w wybranej linii"
 
+msgid "color for name on the selected line"
+msgstr "kolor nazwy w wybranej linii"
+
 msgid "color for option"
 msgstr "kolor opcji"
-
-msgid "color for option on the selected line"
-msgstr "kolor opcji w wybranej linii"
 
 msgid "color for option if value is changed"
 msgstr "kolor opcji jeśli wartość została zmieniona"
 
 msgid "color for option if value is changed on the selected line"
 msgstr "kolor opcji jeśli wartość została zmieniona w wybranej linii"
+
+msgid "color for option on the selected line"
+msgstr "kolor opcji w wybranej linii"
 
 msgid "color for name of parent option"
 msgstr "kolor nazwy opcji nadrzędnej"
@@ -7032,9 +7032,6 @@ msgstr "kolor wartości wybranej opcji"
 msgid "color for value of parent option on the selected line"
 msgstr "kolor wartości wybranej opcji w wybranej linii"
 
-msgid "color for quotes around string values on the selected line"
-msgstr "kolor cudzysłowów do okoła wartości w wybranej linii"
-
 msgid "color for quotes around string values which are changed"
 msgstr "kolor dla cudzysłowów do okoła wartości, które uległy zmianie"
 
@@ -7042,17 +7039,20 @@ msgid ""
 "color for quotes around string values which are changed on the selected line"
 msgstr "kolor cudzysłowów do okoła zmienionych wartości w wybranej linii"
 
+msgid "color for quotes around string values on the selected line"
+msgstr "kolor cudzysłowów do okoła wartości w wybranej linii"
+
 msgid "color for section"
 msgstr "kolor zaznaczenia"
-
-msgid "color for section on the selected line"
-msgstr "kolor sekcji w wybranej linii"
 
 msgid "color for section if value is changed"
 msgstr "kolor sekcji, jeśli wartość została zmieniona"
 
 msgid "color for section if value is changed on the selected line"
 msgstr "kolor sekcji, jeśli wartość została zmieniona w wybranej linii"
+
+msgid "color for section on the selected line"
+msgstr "kolor sekcji w wybranej linii"
 
 msgid "color for string values"
 msgstr "kolor dla wartości ciągów"
@@ -7095,14 +7095,14 @@ msgstr ""
 msgid "color for value"
 msgstr "kolor wartości"
 
-msgid "color for value on the selected line"
-msgstr "kolor wartości w wybranej linii"
-
 msgid "color for value changed (different from default)"
 msgstr "kolor dla zmienionej wartości (inny niż domyślny)"
 
 msgid "color for value changed (different from default) on the selected line"
 msgstr "kolor dla zmienionej wartości (inny niż domyślny) w wybranej linii"
+
+msgid "color for value on the selected line"
+msgstr "kolor wartości w wybranej linii"
 
 msgid "color for undefined value"
 msgstr "kolor niezdefiniowanej wartości"
@@ -8587,17 +8587,19 @@ msgstr ""
 msgid "list, add or remove IRC servers"
 msgstr "wyświetla, dodaje lub usuwa serwery IRC"
 
+#, fuzzy
 msgid ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump|raw"
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 "list|listfull [<nazwa>] || add <nazwa> <host>[/<port>] [-temp] [-"
 "<opcja>[=<wartość>]] [-no<opcja>]|| copy|rename <nazwa> <nowa_nazwa> || "
 "reorder <nazwa> [<nazwa>...] || open <nazwa>|-all [<nazwa>...] || del|keep "
 "<nazwa> || deloutq|jump|raw"
 
+#, fuzzy
 msgid ""
 "    list: list servers (without argument, this list is displayed)\n"
 "listfull: list servers with detailed info for each server\n"
@@ -8620,12 +8622,29 @@ msgid ""
 "currently sending)\n"
 "    jump: jump to server buffer\n"
 "     raw: open buffer with raw IRC data\n"
+"  filter: set a new filter to see only matching messages (this filter can be "
+"used as input in raw IRC data buffer as well); allowed formats are:\n"
+"            *       show all messages (no filter)\n"
+"            xxx     show only messages containing \"xxx\"\n"
+"            s:xxx   show only messages for server \"xxx\"\n"
+"            f:xxx   show only messages with a flag: recv (message received), "
+"sent (message sent), modified (message modified by a modifier), redirected "
+"(message redirected)\n"
+"            m:xxx   show only IRC command \"xxx\"\n"
+"            c:xxx   show only options matching the evaluated condition \"xxx"
+"\", using following variables: output of function irc_message_parse (like "
+"nick, command, channel, text, etc., see function info_get_hashtable in "
+"plugin API reference for the list of all variables), date (format: \"yyyy-mm-"
+"dd hh:mm:ss\"), server, recv, sent, modified, redirected\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
 "  /server add freenode chat.freenode.net\n"
 "  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
 "  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667\n"
+"  /server raw\n"
+"  /server raw s:freenode\n"
+"  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo\n"
 "  /server copy freenode freenode-test\n"
 "  /server rename freenode-test freenode2\n"
 "  /server reorder freenode2 freenode\n"
@@ -8964,6 +8983,10 @@ msgstr "numery zdefiniowanych ignorów"
 
 msgid "nicks in notify list"
 msgstr "nicki na liście powiadomień"
+
+#, fuzzy
+msgid "filters for irc raw buffer"
+msgstr "kolor tekstu w buforze pośrednika"
 
 #, c-format
 msgid ""
@@ -9826,11 +9849,11 @@ msgstr "kolor wskaźnika opóźnienia, kiedy otrzymamy pong od serwera"
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "kolor dla atrybutów nicka w elemencie paska \"input_prompt\""
 
-msgid "color for text in join messages"
-msgstr "kolor tekstu w wiadomościach o wejściu na kanał"
-
 msgid "color for text in chghost messages"
 msgstr "kolor tekstu w wiadomościach o zmianie hosta"
+
+msgid "color for text in join messages"
+msgstr "kolor tekstu w wiadomościach o wejściu na kanał"
 
 #, fuzzy
 msgid "color for text in kick/kill messages"
@@ -10653,7 +10676,8 @@ msgstr ""
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: \"%s\" komenda otrzymana bez hosta"
 
-msgid "IRC raw messages"
+#, fuzzy, c-format
+msgid "IRC raw messages | Filter: %s"
 msgstr "nieprzetworzone wiadomości IRC"
 
 #, c-format
@@ -12273,20 +12297,20 @@ msgstr "automatycznie otwiera bufor kiedy podłącza się nowy klient"
 msgid "text color for client description"
 msgstr "kolor tekstu dla opisu klienta"
 
-msgid "text color for \"connecting\" status"
-msgstr "kolor statusu \"connecting\""
-
-msgid "text color for \"waiting authentication\" status"
-msgstr "kolor statusu \"waiting authentication\""
-
 msgid "text color for \"connected\" status"
 msgstr "kolor statusu \"connected\""
 
 msgid "text color for \"authentication failed\" status"
 msgstr "kolor statusu \"authentication failed\""
 
+msgid "text color for \"connecting\" status"
+msgstr "kolor statusu \"connecting\""
+
 msgid "text color for \"disconnected\" status"
 msgstr "kolor statusu \"disconnected\""
+
+msgid "text color for \"waiting authentication\" status"
+msgstr "kolor statusu \"waiting authentication\""
 
 msgid "text color in relay buffer"
 msgstr "kolor tekstu w buforze pośrednika"
@@ -13163,6 +13187,14 @@ msgid "timeout (in seconds) for download of scripts and list of scripts"
 msgstr "czas oczekiwania (w sekundach) na pobranie skryptu i listy skryptów"
 
 msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
+msgstr ""
+"skrypty do \"wstrzymania\": oddzielona przecinkami lista skryptów, które "
+"nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: \"go."
+"py,urlserver.py\""
+
+msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
 "by WeeChat home (\"~/.weechat\" by default) (note: content is evaluated, "
 "see /help eval)"
@@ -13170,14 +13202,6 @@ msgstr ""
 "lokalny katalog z cache skryptów; \"%h\" na początku ciągu zostanie "
 "zastąpione przez katalog domowy WeeChat (domyślnie \"~/.weechat\")  (uwaga: "
 "zawartość jest przetwarzana, zobacz /help eval)"
-
-msgid ""
-"scripts to \"hold\": comma-separated list of scripts which will never been "
-"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
-msgstr ""
-"skrypty do \"wstrzymania\": oddzielona przecinkami lista skryptów, które "
-"nigdy nie zostaną zaktualizowane i nie mogą być usunięte, na przykład: \"go."
-"py,urlserver.py\""
 
 msgid "URL for file with list of scripts"
 msgstr "adres URL pliku z listą skryptów"
@@ -14264,8 +14288,8 @@ msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 "rozmiar paska postępu, w znakach (jeśli 0 pasek postępu zostanie wyłączony)"
 
-msgid "text color for \"waiting\" status"
-msgstr "kolor statusu \"waiting\""
+msgid "text color for \"aborted\" status"
+msgstr "kolor statusu \"aborted\""
 
 msgid "text color for \"active\" status"
 msgstr "kolor statusu \"active\""
@@ -14276,8 +14300,8 @@ msgstr "kolor statusu \"done\""
 msgid "text color for \"failed\" status"
 msgstr "kolor statusu \"failed\""
 
-msgid "text color for \"aborted\" status"
-msgstr "kolor statusu \"aborted\""
+msgid "text color for \"waiting\" status"
+msgstr "kolor statusu \"waiting\""
 
 msgid "text color in xfer buffer"
 msgstr "kolor tekstu w buforze xfer"
@@ -14326,15 +14350,15 @@ msgstr ""
 "nadawcy"
 
 msgid ""
-"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
-msgstr ""
-"limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak "
-"limitu)"
-
-msgid ""
 "speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
 "limit prędkości odbierania plików, w kilobajtach na sekundę (0 oznacza brak "
+"limitu)"
+
+msgid ""
+"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+msgstr ""
+"limit prędkości wysyłania plików, w kilobajtach na sekundę (0 oznacza brak "
 "limitu)"
 
 msgid "timeout for xfer request (in seconds)"
@@ -14476,9 +14500,3 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
-
-#~ msgid "filename"
-#~ msgstr "nazwa pliku"
-
-#~ msgid "color for backlog lines"
-#~ msgstr "kolor linii backloga"

@@ -38,6 +38,8 @@
 
 | irc | irc_privates | 全ての IRC サーバにあるプライベートチャンネル
 
+| irc | irc_raw_filters | filters for irc raw buffer
+
 | irc | irc_server | 現在の IRC サーバ
 
 | irc | irc_server_channels | 現在の IRC サーバにあるチャンネル名

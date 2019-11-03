@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-10-12 17:09+0200\n"
-"PO-Revision-Date: 2019-05-13 21:32+0200\n"
+"POT-Creation-Date: 2019-11-03 08:55+0100\n"
+"PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -5146,6 +5146,10 @@ msgid "if enabled, mouse gestures (drag & drop) move buffers in list"
 msgstr ""
 
 msgid ""
+"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
+msgstr ""
+
+msgid ""
 "get the nick prefix and its color from nicklist so that ${nick_prefix} can "
 "be used in format; this can be slow on buffers with lot of nicks in "
 "nicklist, so this option is disabled by default"
@@ -5154,10 +5158,6 @@ msgstr ""
 msgid ""
 "when the nick prefix is enabled, display a space instead if there is no nick "
 "prefix on the buffer"
-msgstr ""
-
-msgid ""
-"if enabled, mouse wheel up/down actions jump to previous/next buffer in list"
 msgstr ""
 
 #, fuzzy
@@ -5201,6 +5201,14 @@ msgstr ""
 
 #, fuzzy
 msgid ""
+"format for a buffer with hotlist level \"highlight\" (note: content is "
+"evaluated, see /help buflist)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
+
+#, fuzzy
+msgid ""
 "format for a buffer with hotlist level \"low\" (note: content is evaluated, "
 "see /help buflist)"
 msgstr ""
@@ -5217,24 +5225,16 @@ msgstr ""
 
 #, fuzzy
 msgid ""
-"format for a buffer with hotlist level \"private\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
-"(nota: conteúdo é avaliado, veja /help eval)"
-
-#, fuzzy
-msgid ""
-"format for a buffer with hotlist level \"highlight\" (note: content is "
-"evaluated, see /help buflist)"
-msgstr ""
-"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
-"(nota: conteúdo é avaliado, veja /help eval)"
-
-#, fuzzy
-msgid ""
 "format for a buffer not in hotlist (note: content is evaluated, see /help "
 "buflist)"
+msgstr ""
+"comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
+"(nota: conteúdo é avaliado, veja /help eval)"
+
+#, fuzzy
+msgid ""
+"format for a buffer with hotlist level \"private\" (note: content is "
+"evaluated, see /help buflist)"
 msgstr ""
 "comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
 "(nota: conteúdo é avaliado, veja /help eval)"
@@ -5534,11 +5534,11 @@ msgid ""
 msgstr ""
 
 #, fuzzy
-msgid "text color for a running command flag in list of commands"
+msgid "text color for a finished command flag in list of commands"
 msgstr "cor de texto para ações de linha de entrada"
 
 #, fuzzy
-msgid "text color for a finished command flag in list of commands"
+msgid "text color for a running command flag in list of commands"
 msgstr "cor de texto para ações de linha de entrada"
 
 msgid "FIFO pipe for remote control"
@@ -5913,22 +5913,6 @@ msgstr ""
 msgid "use /mute command to set options"
 msgstr "mostra a ajuda sobre comandos e opções"
 
-msgid ""
-"first format of each line with an option which is not marked nor the "
-"selected one (note: content is evaluated, see /help fset); an empty string "
-"uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
-"is without evaluation of string and then much faster; formats can be "
-"switched with key ctrl+X"
-msgstr ""
-
-msgid ""
-"second format of each line with an option which is not marked nor the "
-"selected one (note: content is evaluated, see /help fset); an empty string "
-"uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
-"is without evaluation of string and then much faster; formats can be "
-"switched with key ctrl+X"
-msgstr ""
-
 #, fuzzy
 msgid ""
 "format of help line written before each option exported in a file (note: "
@@ -5953,6 +5937,22 @@ msgstr ""
 "comando executado quando o WeeChat inicia, antes do carregamento dos plugins "
 "(nota: conteúdo é avaliado, veja /help eval)"
 
+msgid ""
+"first format of each line with an option which is not marked nor the "
+"selected one (note: content is evaluated, see /help fset); an empty string "
+"uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
+"is without evaluation of string and then much faster; formats can be "
+"switched with key ctrl+X"
+msgstr ""
+
+msgid ""
+"second format of each line with an option which is not marked nor the "
+"selected one (note: content is evaluated, see /help fset); an empty string "
+"uses the default format (\"${marked} ${name}  ${type}  ${value2}\"), which "
+"is without evaluation of string and then much faster; formats can be "
+"switched with key ctrl+X"
+msgstr ""
+
 #, fuzzy
 msgid "color for default value"
 msgstr "valor padrão"
@@ -5973,15 +5973,15 @@ msgid "color for file"
 msgstr "cor de texto para valores"
 
 #, fuzzy
-msgid "color for file on the selected line"
-msgstr "cor para o apelido na barra de entrada"
-
-#, fuzzy
 msgid "color for file if value is changed"
 msgstr "cor para o tópico antigo do canal (quando o tópico é alterado)"
 
 msgid "color for file if value is changed on the selected line"
 msgstr ""
+
+#, fuzzy
+msgid "color for file on the selected line"
+msgstr "cor para o apelido na barra de entrada"
 
 #, fuzzy
 msgid "color for default value in help bar"
@@ -6061,10 +6061,6 @@ msgid "color for name"
 msgstr "obter nome da cor do apelido"
 
 #, fuzzy
-msgid "color for name on the selected line"
-msgstr "cor para o apelido na barra de entrada"
-
-#, fuzzy
 msgid "color for name if value is changed"
 msgstr "cor para o novo tópico do canal (quando o tópico é alterado)"
 
@@ -6072,12 +6068,12 @@ msgid "color for name if value is changed on the selected line"
 msgstr ""
 
 #, fuzzy
-msgid "color for option"
-msgstr "opção de configuração"
+msgid "color for name on the selected line"
+msgstr "cor para o apelido na barra de entrada"
 
 #, fuzzy
-msgid "color for option on the selected line"
-msgstr "cor de texto para ações de linha de entrada"
+msgid "color for option"
+msgstr "opção de configuração"
 
 #, fuzzy
 msgid "color for option if value is changed"
@@ -6085,6 +6081,10 @@ msgstr "%s%d%s opção de configuração com valor trocado"
 
 msgid "color for option if value is changed on the selected line"
 msgstr ""
+
+#, fuzzy
+msgid "color for option on the selected line"
+msgstr "cor de texto para ações de linha de entrada"
 
 #, fuzzy
 msgid "color for name of parent option"
@@ -6102,9 +6102,6 @@ msgstr "cor do texto para delimitadores de tempo"
 msgid "color for value of parent option on the selected line"
 msgstr "cor de texto para ações de linha de entrada"
 
-msgid "color for quotes around string values on the selected line"
-msgstr ""
-
 msgid "color for quotes around string values which are changed"
 msgstr ""
 
@@ -6112,13 +6109,12 @@ msgid ""
 "color for quotes around string values which are changed on the selected line"
 msgstr ""
 
+msgid "color for quotes around string values on the selected line"
+msgstr ""
+
 #, fuzzy
 msgid "color for section"
 msgstr "seção de configuração"
-
-#, fuzzy
-msgid "color for section on the selected line"
-msgstr "cor de texto para ações de linha de entrada"
 
 #, fuzzy
 msgid "color for section if value is changed"
@@ -6126,6 +6122,10 @@ msgstr "%s%d%s opção de configuração com valor trocado"
 
 msgid "color for section if value is changed on the selected line"
 msgstr ""
+
+#, fuzzy
+msgid "color for section on the selected line"
+msgstr "cor de texto para ações de linha de entrada"
 
 #, fuzzy
 msgid "color for string values"
@@ -6174,15 +6174,15 @@ msgstr "cor do texto da linha do cliente selecionada"
 msgid "color for value"
 msgstr "cor de texto para valores"
 
-#, fuzzy
-msgid "color for value on the selected line"
-msgstr "cor de texto para valores"
-
 msgid "color for value changed (different from default)"
 msgstr ""
 
 msgid "color for value changed (different from default) on the selected line"
 msgstr ""
+
+#, fuzzy
+msgid "color for value on the selected line"
+msgstr "cor de texto para valores"
 
 #, fuzzy
 msgid "color for undefined value"
@@ -7389,7 +7389,7 @@ msgid ""
 "list|listfull [<name>] || add <name> <hostname>[/<port>] [-temp] [-"
 "<option>[=<value>]] [-no<option>] || copy|rename <name> <new_name> || "
 "reorder <name> [<name>...] || open <name>|-all [<name>...] || del|keep "
-"<name> || deloutq|jump|raw"
+"<name> || deloutq|jump || raw [<filter>]"
 msgstr ""
 
 msgid ""
@@ -7414,12 +7414,29 @@ msgid ""
 "currently sending)\n"
 "    jump: jump to server buffer\n"
 "     raw: open buffer with raw IRC data\n"
+"  filter: set a new filter to see only matching messages (this filter can be "
+"used as input in raw IRC data buffer as well); allowed formats are:\n"
+"            *       show all messages (no filter)\n"
+"            xxx     show only messages containing \"xxx\"\n"
+"            s:xxx   show only messages for server \"xxx\"\n"
+"            f:xxx   show only messages with a flag: recv (message received), "
+"sent (message sent), modified (message modified by a modifier), redirected "
+"(message redirected)\n"
+"            m:xxx   show only IRC command \"xxx\"\n"
+"            c:xxx   show only options matching the evaluated condition \"xxx"
+"\", using following variables: output of function irc_message_parse (like "
+"nick, command, channel, text, etc., see function info_get_hashtable in "
+"plugin API reference for the list of all variables), date (format: \"yyyy-mm-"
+"dd hh:mm:ss\"), server, recv, sent, modified, redirected\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
 "  /server add freenode chat.freenode.net\n"
 "  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
 "  /server add chatspike irc.chatspike.net/6667,irc.duckspike.net/6667\n"
+"  /server raw\n"
+"  /server raw s:freenode\n"
+"  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo\n"
 "  /server copy freenode freenode-test\n"
 "  /server rename freenode-test freenode2\n"
 "  /server reorder freenode2 freenode\n"
@@ -7695,6 +7712,10 @@ msgstr "numéros para ignores definidos"
 
 msgid "nicks in notify list"
 msgstr "apelidos na lista de notificação"
+
+#, fuzzy
+msgid "filters for irc raw buffer"
+msgstr "cor do texto para nomes de buffer"
 
 #, c-format
 msgid ""
@@ -8390,12 +8411,12 @@ msgid "color for nick modes in bar item \"input_prompt\""
 msgstr ""
 "cor para o sufixo do apelido (string exibida depois do apelido no prefixo)"
 
-msgid "color for text in join messages"
-msgstr ""
-
 #, fuzzy
 msgid "color for text in chghost messages"
 msgstr "cor de texto para valores"
+
+msgid "color for text in join messages"
+msgstr ""
 
 #, fuzzy
 msgid "color for text in kick/kill messages"
@@ -9183,7 +9204,8 @@ msgstr ""
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: \"%s\" comando recebido sem host"
 
-msgid "IRC raw messages"
+#, fuzzy, c-format
+msgid "IRC raw messages | Filter: %s"
 msgstr "mensagens brutas do IRC"
 
 #, c-format
@@ -10717,20 +10739,20 @@ msgstr ""
 msgid "text color for client description"
 msgstr "cor do texto para delimitadores de tempo"
 
-msgid "text color for \"connecting\" status"
-msgstr "cor do texto para o status \"conectando\""
-
-msgid "text color for \"waiting authentication\" status"
-msgstr "cor do texto para o status \"aguardando autenticação\""
-
 msgid "text color for \"connected\" status"
 msgstr "cor do texto para o status \"conectado\""
 
 msgid "text color for \"authentication failed\" status"
 msgstr "cor do texto para o status \"autenticação falhou\""
 
+msgid "text color for \"connecting\" status"
+msgstr "cor do texto para o status \"conectando\""
+
 msgid "text color for \"disconnected\" status"
 msgstr "cor do texto para o status \"desconectado\""
+
+msgid "text color for \"waiting authentication\" status"
+msgstr "cor do texto para o status \"aguardando autenticação\""
 
 #, fuzzy
 msgid "text color in relay buffer"
@@ -11487,6 +11509,11 @@ msgstr ""
 msgid "timeout (in seconds) for download of scripts and list of scripts"
 msgstr "tempo de espera (em segundos) pelo handshake do gnutls"
 
+msgid ""
+"scripts to \"hold\": comma-separated list of scripts which will never been "
+"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
+msgstr ""
+
 #, fuzzy
 msgid ""
 "local cache directory for scripts; \"%h\" at beginning of string is replaced "
@@ -11496,11 +11523,6 @@ msgstr ""
 "diretório para arquivos de registro do WeeChat; \"%h\" no início da string "
 "será substituído pelo diretório do WeeChat (\"~/.weechat\" por padrão); "
 "especificadores de data são permitidos (veja \"man strftime\")"
-
-msgid ""
-"scripts to \"hold\": comma-separated list of scripts which will never been "
-"upgraded and can not be removed, for example: \"go.py,urlserver.py\""
-msgstr ""
 
 #, fuzzy
 msgid "URL for file with list of scripts"
@@ -12468,8 +12490,8 @@ msgstr ""
 "tamanho da barra de progresso, em carateres (se 0, a barra de progresso é "
 "desabilitada)"
 
-msgid "text color for \"waiting\" status"
-msgstr "cor do texto para o status \"esperando\""
+msgid "text color for \"aborted\" status"
+msgstr "cor do texto para o status \"abortado\""
 
 msgid "text color for \"active\" status"
 msgstr "cor do texto para o status \"ativo\""
@@ -12480,8 +12502,8 @@ msgstr "cor do texto para o status \"concluído\""
 msgid "text color for \"failed\" status"
 msgstr "cor do texto para o status \"falhou\""
 
-msgid "text color for \"aborted\" status"
-msgstr "cor do texto para o status \"abortado\""
+msgid "text color for \"waiting\" status"
+msgstr "cor do texto para o status \"esperando\""
 
 #, fuzzy
 msgid "text color in xfer buffer"
@@ -12527,15 +12549,15 @@ msgid ""
 "acks may prevent a freeze if the acks are not sent immediately to the sender"
 msgstr ""
 
+#, fuzzy
 msgid ""
-"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
+"speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
 "taxa máxima de transferência para enviar arquivos, em kilo-bytes por segundo "
 "(0 significa ilimitado)"
 
-#, fuzzy
 msgid ""
-"speed limit for receiving files, in kilo-bytes by second (0 means no limit)"
+"speed limit for sending files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
 "taxa máxima de transferência para enviar arquivos, em kilo-bytes por segundo "
 "(0 significa ilimitado)"
@@ -12678,10 +12700,3 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
-
-#~ msgid "filename"
-#~ msgstr "nome de arquivo"
-
-#, fuzzy
-#~ msgid "color for backlog lines"
-#~ msgstr "cor de texto para valores"

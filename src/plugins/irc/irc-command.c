@@ -5143,7 +5143,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
 
 IRC_COMMAND_CALLBACK(server)
 {
-    int i, detailed_list, one_server_found, length, count;
+    int i, detailed_list, one_server_found, length, count, refresh;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *message;
 
@@ -5520,7 +5520,12 @@ IRC_COMMAND_CALLBACK(server)
 
     if (weechat_strcasecmp (argv[1], "raw") == 0)
     {
+        refresh = irc_raw_buffer && (argc > 2);
+        if (argc > 2)
+            irc_raw_set_filter (argv_eol[2]);
         irc_raw_open (1);
+        if (refresh)
+            irc_raw_refresh (1);
         return WEECHAT_RC_OK;
     }
 
@@ -6974,7 +6979,8 @@ irc_command_init ()
            " || reorder <name> [<name>...]"
            " || open <name>|-all [<name>...]"
            " || del|keep <name>"
-           " || deloutq|jump|raw"),
+           " || deloutq|jump"
+           " || raw [<filter>]"),
         N_("    list: list servers (without argument, this list is displayed)\n"
            "listfull: list servers with detailed info for each server\n"
            "     add: add a new server\n"
@@ -6997,6 +7003,22 @@ irc_command_init ()
            "WeeChat is currently sending)\n"
            "    jump: jump to server buffer\n"
            "     raw: open buffer with raw IRC data\n"
+           "  filter: set a new filter to see only matching messages (this "
+           "filter can be used as input in raw IRC data buffer as well); "
+           "allowed formats are:\n"
+           "            *       show all messages (no filter)\n"
+           "            xxx     show only messages containing \"xxx\"\n"
+           "            s:xxx   show only messages for server \"xxx\"\n"
+           "            f:xxx   show only messages with a flag: recv (message "
+           "received), sent (message sent), modified (message modified by "
+           "a modifier), redirected (message redirected)\n"
+           "            m:xxx   show only IRC command \"xxx\"\n"
+           "            c:xxx   show only options matching the evaluated "
+           "condition \"xxx\", using following variables: output of function "
+           "irc_message_parse (like nick, command, channel, text, etc., see "
+           "function info_get_hashtable in plugin API reference for the list "
+           "of all variables), date (format: \"yyyy-mm-dd hh:mm:ss\"), server, "
+           "recv, sent, modified, redirected\n"
            "\n"
            "Examples:\n"
            "  /server listfull\n"
@@ -7004,6 +7026,9 @@ irc_command_init ()
            "  /server add freenode chat.freenode.net/6697 -ssl -autoconnect\n"
            "  /server add chatspike irc.chatspike.net/6667,"
            "irc.duckspike.net/6667\n"
+           "  /server raw\n"
+           "  /server raw s:freenode\n"
+           "  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo\n"
            "  /server copy freenode freenode-test\n"
            "  /server rename freenode-test freenode2\n"
            "  /server reorder freenode2 freenode\n"
@@ -7020,7 +7045,7 @@ irc_command_init ()
         " || del %(irc_servers)"
         " || deloutq"
         " || jump"
-        " || raw",
+        " || raw %(irc_raw_filters)",
         &irc_command_server, NULL, NULL);
     weechat_hook_command (
         "servlist",

@@ -726,7 +726,8 @@ raison : raison
          reorder <nom> [<nom>...]
          open <nom>|-all [<nom>...]
          del|keep <nom>
-         deloutq|jump|raw
+         deloutq|jump
+         raw [<filtre>]
 
        list : afficher les serveurs (sans paramètre, cette liste est affichée)
    listfull : afficher les serveurs avec de l'info détaillée pour chaque
@@ -744,7 +745,14 @@ nom_machine : nom ou adresse IP du serveur avec port en option (défaut : 6667
         del : supprimer un serveur
     deloutq : supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
        jump : sauter au tampon du serveur
-        raw : ouvre le tampon avec les données brutes IRC
+        raw : ouvrir le tampon avec les données brutes IRC
+     filtre : définir un nouveau filtre pour voir seulement les messages correspondants (ce filtre peut aussi être utilisé en entrée du tampon des données brutes) ; les formats autorisés sont :
+                *      afficher tous les messages (pas de filtre)
+                xxx    afficher seulement les messages contenant "xxx"
+                s:xxx  afficher seulement les messages pour le serveur "xxx"
+                f:xxx  afficher seulement les messages avec un drapeau : recv (message reçu), sent (message envoyé), modified (message modifié par un modificateur), redirected (message redirigé)
+                m:xxx  afficher seulement les messages pour la commande IRC "xxx"
+                c:xxx  afficher seulement les messages qui correspondent à la condition évaluée "xxx", en utilisant les variables suivantes : sortie de la fonction irc_message_parse (comme nick, command, channel, text, etc., voir la fonction info_get_hashtable dans la référence API extension pour la liste de toutes les variables), date (format : "yyyy-mm-dd hh:mm:ss"), server, recv, sent, modified, redirected
 
 Exemples :
   /server listfull
@@ -756,6 +764,9 @@ Exemples :
   /server reorder freenode2 freenode
   /server del freenode
   /server deloutq
+  /server raw
+  /server raw s:freenode
+  /server raw c:${recv} && ${command}==PRIVMSG && ${nick}==foo
 ----
 
 [[command_irc_service]]

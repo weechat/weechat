@@ -29,6 +29,7 @@ New features::
   * core: add support of modifiers in evaluation of expressions with "modifier:name,data,string"
   * api: add modifier "color_encode_ansi" (issue #528)
   * api: add modifier "eval_path_home"
+  * irc: add filters on raw buffer (issue #1000)
   * irc: add option irc.look.display_pv_warning_address to display a warning in private buffer if the remote nick address has changed (issue #892)
   * irc: add server option "ssl_password" (issue #115, issue #1416)
   * irc: add "user" in output of irc_message_parse (issue #136)

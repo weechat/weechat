@@ -812,6 +812,62 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
 }
 
 /*
+ * Adds filters for raw buffer to completion list.
+ */
+
+int
+irc_completion_raw_filters_cb (const void *pointer, void *data,
+                               const char *completion_item,
+                               struct t_gui_buffer *buffer,
+                               struct t_gui_completion *completion)
+{
+    char str_filter[1024];
+
+    IRC_BUFFER_GET_SERVER(buffer);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+
+    /* all messages */
+    weechat_hook_completion_list_add (completion, "*",
+                                      0, WEECHAT_LIST_POS_SORT);
+
+    /* condition */
+    weechat_hook_completion_list_add (completion,
+                                      "c:${recv} && ${command}==PRIVMSG",
+                                      0, WEECHAT_LIST_POS_SORT);
+
+    /* message flag */
+    weechat_hook_completion_list_add (completion, "f:modified",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "f:recv",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "f:redirected",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "f:sent",
+                                      0, WEECHAT_LIST_POS_SORT);
+
+    /* IRC command */
+    weechat_hook_completion_list_add (completion, "m:notice",
+                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_hook_completion_list_add (completion, "m:privmsg",
+                                      0, WEECHAT_LIST_POS_SORT);
+
+    /* server */
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        snprintf (str_filter, sizeof (str_filter), "s:%s", ptr_server->name);
+        weechat_hook_completion_list_add (completion, str_filter,
+                                          0, WEECHAT_LIST_POS_SORT);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Hooks completions.
  */
 
@@ -874,4 +930,7 @@ irc_completion_init ()
     weechat_hook_completion ("irc_notify_nicks",
                              N_("nicks in notify list"),
                              &irc_completion_notify_nicks_cb, NULL, NULL);
+    weechat_hook_completion ("irc_raw_filters",
+                             N_("filters for irc raw buffer"),
+                             &irc_completion_raw_filters_cb, NULL, NULL);
 }
