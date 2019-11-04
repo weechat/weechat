@@ -2242,7 +2242,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 ==== string_eval_expression
 
 // TRANSLATION MISSING
-_WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0 and 2.7._
+_WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3 and 2.7._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.

@@ -2188,7 +2188,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 ==== string_eval_expression
 
-_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0 et 2.7._
+_WeeChat ≥ 0.4.0, mis à jour dans la 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0, 2.2, 2.3 et 2.7._
 
 Évaluer l'expression et retourner le résultat sous forme de chaîne.
 Les variables spéciales avec le format `+${variable}+` sont étendues (voir le
