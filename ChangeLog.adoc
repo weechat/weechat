@@ -20,7 +20,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: fix scrolling up in bare mode when switched to bare mode at the top of the buffer (issue #899, issue #978)
   * core: add file weechat.desktop
   * core: add reverse of string for screen in evaluation of expressions with "revscr:"
   * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
@@ -40,6 +39,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix scrolling up in bare mode when switched to bare mode at the top of the buffer (issue #899, issue #978)
   * core: optimize load of configuration files
   * core: fix window separators not respecting window splits (issue #630)
   * core: fix cursor mode info when prefix_align is none and with words split across lines (issue #610, issue #617, issue #619)
