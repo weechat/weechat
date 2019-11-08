@@ -2830,8 +2830,11 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "display_pv_warning_address", "boolean",
         N_("display a warning in private buffer if the address of remote nick "
-           "has changed"),
-        NULL, 0, 0, "on", NULL, 0,
+           "has changed; this option is disabled by default because servers "
+           "like bitlbee are causing this warning to be displayed when it is "
+           "not expected (the address of remote nick changes multiple times "
+           "on login)"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_channel = weechat_config_new_option (
         irc_config_file, ptr_section,
