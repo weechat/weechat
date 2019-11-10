@@ -477,7 +477,10 @@ if test "x$enable_python" = "xyes" ; then
     if test "x$enable_python2" = "xyes" ; then
         PKG_CHECK_MODULES(PYTHON, [python2], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python2`], [PYTHON_FOUND=no])
     else
-        PKG_CHECK_MODULES(PYTHON, [python3], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python3`], [PYTHON_FOUND=no])
+        PKG_CHECK_MODULES(PYTHON, [python3-embed], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python3-embed`], [PYTHON_FOUND=no])
+        if test "x$PYTHON_FOUND" != "xyes"; then
+            PKG_CHECK_MODULES(PYTHON, [python3], [PYTHON_FOUND=yes; PYTHON_VERSION=`$PKGCONFIG --modversion python3`], [PYTHON_FOUND=no])
+        fi
     fi
     if test "x$PYTHON_FOUND" != "xyes" ; then
         AC_MSG_WARN([
