@@ -1327,6 +1327,9 @@ netbsd*)
 gnu*)
         LDFLAGS="$LDFLAGS -lpthread"
         ;;
+haiku*)
+        LDFLAGS="$LDFLAGS -lnetwork"
+        ;;
 *)
         ;;
 esac
