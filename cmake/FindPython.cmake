@@ -31,7 +31,7 @@
 include(FindPkgConfig)
 
 if(ENABLE_PYTHON2)
-  pkg_check_modules(PYTHON python2)
+  pkg_check_modules(PYTHON python2 IMPORTED_TARGET GLOBAL)
 else()
-  pkg_check_modules(PYTHON python3)
+  pkg_check_modules(PYTHON python3 IMPORTED_TARGET GLOBAL)
 endif()
