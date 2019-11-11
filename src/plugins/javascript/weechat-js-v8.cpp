@@ -49,7 +49,9 @@ using namespace v8;
 
 WeechatJsV8::WeechatJsV8()
 {
-    this->global = ObjectTemplate::New();
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    this->global = ObjectTemplate::New(isolate);
 }
 
 /*
@@ -80,7 +82,9 @@ WeechatJsV8::load(Handle<String> source)
 bool
 WeechatJsV8::load(const char *source)
 {
-    Handle<String> src = String::New(source);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    Handle<String> src = String::NewFromUtf8(isolate, source);
 
     return this->load(src);
 }
@@ -92,7 +96,8 @@ WeechatJsV8::load(const char *source)
 bool
 WeechatJsV8::execScript()
 {
-    v8::TryCatch trycatch;
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::TryCatch trycatch(isolate);
 
     this->context = Context::New(NULL, this->global);
     Context::Scope context_scope(this->context);
@@ -126,7 +131,8 @@ WeechatJsV8::functionExists(const char *function)
     Context::Scope context_scope(this->context);
 
     Handle<Object> global = this->context->Global();
-    Handle<Value> value = global->Get(String::New(function));
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    Handle<Value> value = global->Get(String::NewFromUtf8(isolate, function));
     return value->IsFunction();
 }
 
@@ -137,12 +143,13 @@ WeechatJsV8::functionExists(const char *function)
 Handle<Value>
 WeechatJsV8::execFunction(const char *function, int argc, Handle<Value> *argv)
 {
-    v8::TryCatch trycatch;
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::TryCatch trycatch(isolate);
 
     Context::Scope context_scope(this->context);
 
     Handle<Object> global = this->context->Global();
-    Handle<Value> value = global->Get(String::New(function));
+    Handle<Value> value = global->Get(String::NewFromUtf8(isolate, function));
     Handle<Function> func = Handle<Function>::Cast(value);
 
     Handle<Value> res = func->Call(global, argc, argv);
@@ -170,5 +177,7 @@ WeechatJsV8::addGlobal(Handle<String> key, Handle<Template> val)
 void
 WeechatJsV8::addGlobal(const char *key, Handle<Template> val)
 {
-    this->addGlobal(String::New(key), val);
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
+    this->addGlobal(String::NewFromUtf8(isolate, key), val);
 }

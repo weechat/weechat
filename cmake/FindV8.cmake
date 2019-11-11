@@ -33,6 +33,7 @@ endif()
 
 set(V8_INC_PATHS
   /usr/include
+  /usr/include/v8
   ${CMAKE_INCLUDE_PATH}
 )
 find_path(V8_INCLUDE_DIR v8.h PATHS ${V8_INC_PATHS})

@@ -102,9 +102,11 @@ weechat_js_hashtable_map_cb (void *data,
     /* make C++ compiler happy */
     (void) hashtable;
 
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
     v8::Handle<v8::Object> *obj = (v8::Handle<v8::Object> *)data;
 
-    (*obj)->Set(v8::String::New(key), v8::String::New(value));
+    (*obj)->Set(v8::String::NewFromUtf8(isolate, key),
+                v8::String::NewFromUtf8(isolate, value));
 }
 
 /*
@@ -114,7 +116,8 @@ weechat_js_hashtable_map_cb (void *data,
 v8::Handle<v8::Object>
 weechat_js_hashtable_to_object (struct t_hashtable *hashtable)
 {
-    v8::Handle<v8::Object> obj = v8::Object::New();
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+    v8::Handle<v8::Object> obj = v8::Object::New(isolate);
 
     weechat_hashtable_map_string (hashtable,
                                   &weechat_js_hashtable_map_cb,
@@ -185,6 +188,8 @@ weechat_js_exec (struct t_plugin_script *script,
 
     ret_value = NULL;
 
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
+
     old_js_current_script = js_current_script;
     js_current_script = script;
     js_v8 = (WeechatJsV8 *)(script->interpreter);
@@ -206,10 +211,11 @@ weechat_js_exec (struct t_plugin_script *script,
             switch (format[i])
             {
                 case 's': /* string */
-                    argv2[i] = v8::String::New((const char *)argv[i]);
+                    argv2[i] = v8::String::NewFromUtf8(isolate,
+                                                       (const char *)argv[i]);
                     break;
                 case 'i': /* integer */
-                    argv2[i] = v8::Integer::New(*((int *)argv[i]));
+                    argv2[i] = v8::Integer::New(isolate, *((int *)argv[i]));
                     break;
                 case 'h': /* hash */
                     argv2[i] = weechat_js_hashtable_to_object (

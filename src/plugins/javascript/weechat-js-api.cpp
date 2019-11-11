@@ -41,14 +41,14 @@ extern "C"
 
 #define API_DEF_FUNC(__name)                                            \
     weechat_obj->Set(                                                   \
-        v8::String::New(#__name),                                       \
+        v8::String::NewFromUtf8(isolate, #__name),                      \
         v8::FunctionTemplate::New(weechat_js_api_##__name));
 #define API_DEF_CONST_INT(__name)                                       \
-    weechat_obj->Set(v8::String::New(#__name),                          \
-                     v8::Integer::New(__name));
+    weechat_obj->Set(v8::String::NewFromUtf8(#__name),                  \
+                     v8::Integer::NewFromUtf8(__name));
 #define API_DEF_CONST_STR(__name)                                       \
-    weechat_obj->Set(v8::String::New(#__name),                          \
-                     v8::String::New(__name));
+    weechat_obj->Set(v8::String::NewFromUtf8(#__name),                  \
+                     v8::String::NewFromUtf8(__name));
 #define API_FUNC(__name)                                                \
     static v8::Handle<v8::Value>                                        \
     weechat_js_api_##__name(const v8::Arguments &args)
@@ -98,19 +98,20 @@ extern "C"
 #define API_RETURN_OK return v8::True();
 #define API_RETURN_ERROR return v8::False();
 #define API_RETURN_EMPTY                                                \
-    return v8::String::New("");
+    return v8::String::NewFromUtf8("");
 #define API_RETURN_STRING(__string)                                     \
     if (__string)                                                       \
-        return v8::String::New(__string);                               \
-    return v8::String::New("")
+        return v8::String::NewFromUtf8(__string);                       \
+    return v8::String::NewFromUtf8("")
 #define API_RETURN_STRING_FREE(__string)                                \
     if (__string)                                                       \
     {                                                                   \
-        v8::Handle<v8::Value> return_value = v8::String::New(__string); \
+        v8::Handle<v8::Value> return_value =                            \
+            v8::String::NewFromUtf8(__string);                          \
         free ((void *)__string);                                        \
         return return_value;                                            \
     }                                                                   \
-    return v8::String::New("")
+    return v8::String::NewFromUtf8("")
 #define API_RETURN_INT(__int)                                           \
     return v8::Integer::New(__int)
 #define API_RETURN_LONG(__int)                                          \
@@ -4894,6 +4895,7 @@ void
 WeechatJsV8::loadLibs()
 {
     v8::Local<v8::ObjectTemplate> weechat_obj = v8::ObjectTemplate::New();
+    v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
     /* constants */
     API_DEF_CONST_INT(WEECHAT_RC_OK);
