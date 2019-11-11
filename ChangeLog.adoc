@@ -62,6 +62,7 @@ Build::
   * core: fix build on Alpine
   * core: remove file FindTCL.cmake
   * core: display an error on missing dependency in CMake (issue #916, issue #956)
+  * debian: disable Javascript plugin on Debian Sid and Ubuntu Eoan
   * debian: build with Guile 2.2
   * guile: add support of Guile 2.2, disable /guile eval (issue #1098)
 
