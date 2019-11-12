@@ -65,6 +65,7 @@ Build::
   * debian: disable Javascript plugin on Debian Sid and Ubuntu Eoan
   * debian: build with Guile 2.2
   * guile: add support of Guile 2.2, disable /guile eval (issue #1098)
+  * python: add detection of Python 3.8
 
 [[v2.6]]
 == Version 2.6 (2019-09-08)
