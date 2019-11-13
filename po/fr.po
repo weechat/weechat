@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-11-08 21:26+0100\n"
-"PO-Revision-Date: 2019-11-08 21:26+0100\n"
+"PO-Revision-Date: 2019-11-13 21:14+0100\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -1069,7 +1069,8 @@ msgstr "***** Erreur : exec a échoué (programme : \"%s\"), sortie de WeeChat
 #. TRANSLATORS: "%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr "Uptime WeeChat : %d %s %02d:%02d:%02d, démarré le %s"
+msgstr ""
+"Durée de fonctionnement de WeeChat : %d %s %02d:%02d:%02d, démarré le %s"
 
 msgid "day"
 msgid_plural "days"
@@ -1079,7 +1080,9 @@ msgstr[1] "jours"
 #. TRANSLATORS: "%s%s" after "started on" is a date
 #, c-format
 msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr "Uptime WeeChat : %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, démarré le %s%s"
+msgstr ""
+"Durée de fonctionnement de WeeChat : %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, "
+"démarré le %s%s"
 
 msgid "compiled on"
 msgstr "compilé le"
@@ -3040,15 +3043,16 @@ msgstr ""
 "machine si vous y copiez le contenu du répertoire \"~/.weechat\"."
 
 msgid "show WeeChat uptime"
-msgstr "montrer l'uptime de WeeChat"
+msgstr "montrer la durée de fonctionnement de WeeChat"
 
 msgid ""
 " -o: send uptime to current buffer as input (English string)\n"
 "-ol: send uptime to current buffer as input (translated string)"
 msgstr ""
-" -o : envoyer l'uptime sur le tampon courant comme entrée (chaîne en "
-"anglais)\n"
-"-ol : envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)"
+" -o : envoyer la durée de fonctionnement sur le tampon courant comme entrée "
+"(chaîne en anglais)\n"
+"-ol : envoyer la durée de fonctionnement sur le tampon courant comme entrée "
+"(chaîne traduite)"
 
 msgid "show WeeChat version and compilation date"
 msgstr "afficher la version de WeeChat et la date de compilation"
@@ -6372,7 +6376,7 @@ msgstr ""
 "  /exec -nf -noln links -dump https://weechat.org/files/doc/devel/"
 "weechat_user.en.html\n"
 "  /exec -o uptime\n"
-"  /exec -pipe \"/print Uptime de la machine :\" uptime\n"
+"  /exec -pipe \"/print Durée de fonctionnement de la machine :\" uptime\n"
 "  /exec -n tail -f /var/log/messages\n"
 "  /exec -kill 0"
 
@@ -11800,7 +11804,7 @@ msgid "get nick color name"
 msgstr "retourne le nom de la couleur du pseudo"
 
 msgid "WeeChat uptime (format: \"days:hh:mm:ss\")"
-msgstr "Uptime de WeeChat (format : \"jours:hh:mm:ss\")"
+msgstr "Durée de fonctionnement de WeeChat (format : \"jours:hh:mm:ss\")"
 
 msgid "\"days\" (number of days) or \"seconds\" (number of seconds) (optional)"
 msgstr ""

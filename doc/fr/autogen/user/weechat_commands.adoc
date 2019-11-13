@@ -927,13 +927,13 @@ Il est également possible de restaurer la session WeeChat sur une autre machine
 ----
 
 [[command_weechat_uptime]]
-* `+uptime+`: montrer l'uptime de WeeChat
+* `+uptime+`: montrer la durée de fonctionnement de WeeChat
 
 ----
 /uptime  [-o|-ol]
 
- -o : envoyer l'uptime sur le tampon courant comme entrée (chaîne en anglais)
--ol : envoyer l'uptime sur le tampon courant comme entrée (chaîne traduite)
+ -o : envoyer la durée de fonctionnement sur le tampon courant comme entrée (chaîne en anglais)
+-ol : envoyer la durée de fonctionnement sur le tampon courant comme entrée (chaîne traduite)
 ----
 
 [[command_weechat_version]]
