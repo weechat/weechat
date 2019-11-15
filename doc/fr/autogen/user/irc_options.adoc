@@ -387,7 +387,7 @@
 ** valeur par défaut: `+merge_with_core+`
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** description: pass:none[filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur l'étiquette "irc_smart_filter")]
+** description: pass:none[filtrer les messages join/part/quit/nick pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur l'étiquette "irc_smart_filter", voir /help filter)]
 ** type: booléen
 ** valeurs: on, off
 ** valeur par défaut: `+on+`

@@ -387,7 +387,7 @@
 ** デフォルト値: `+merge_with_core+`
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** 説明: pass:none[チャンネルで何分か会話のないニックネームの参加/退出/終了/ニックネームメッセージをフィルタする ("irc_smart_filter" タグのフィルタを作らなければいけません)]
+** 説明: pass:none[filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter", see /help filter)]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

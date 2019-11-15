@@ -3074,7 +3074,7 @@ irc_config_init ()
         "smart_filter", "boolean",
         N_("filter join/part/quit/nick messages for a nick if not speaking "
            "for some minutes on channel (you must create a filter on tag "
-           "\"irc_smart_filter\")"),
+           "\"irc_smart_filter\", see /help filter)"),
         NULL, 0, 0, "on", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_chghost = weechat_config_new_option (

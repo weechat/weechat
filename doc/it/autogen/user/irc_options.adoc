@@ -387,7 +387,7 @@
 ** valore predefinito: `+merge_with_core+`
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
-** descrizione: pass:none[filtra i messaggi di entrata/uscita/abbandono/utente per un nick se inattivo per alcuni minuti sul canale (è necessario creare un filtro sul tag "irc_smart_filter")]
+** descrizione: pass:none[filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter", see /help filter)]
 ** tipo: bool
 ** valori: on, off
 ** valore predefinito: `+on+`
