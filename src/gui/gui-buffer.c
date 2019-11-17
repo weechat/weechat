@@ -1294,6 +1294,10 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
     if (!buffer || !name || !name[0])
         return;
 
+    /* same name? */
+    if (buffer->name && (strcmp (buffer->name, name) == 0))
+        return;
+
     if (buffer->name)
         free (buffer->name);
     buffer->name = strdup (name);
@@ -1314,6 +1318,14 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 {
     if (!buffer)
         return;
+
+    /* same short name? */
+    if ((!buffer->short_name && !short_name)
+        || (buffer->short_name && short_name
+            && (strcmp (buffer->short_name, short_name) == 0)))
+    {
+        return;
+    }
 
     if (buffer->short_name)
     {
@@ -1338,7 +1350,11 @@ gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
 void
 gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
 {
-    if (!buffer || (buffer->type == type))
+    if (!buffer)
+        return;
+
+    /* same type? */
+    if (buffer->type == type)
         return;
 
     gui_line_free_all (buffer);
@@ -1362,6 +1378,14 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 {
     if (!buffer)
         return;
+
+    /* same title? */
+    if ((!buffer->title && !new_title)
+        || (buffer->title && new_title
+            && (strcmp (buffer->title, new_title) == 0)))
+    {
+        return;
+    }
 
     if (buffer->title)
         free (buffer->title);

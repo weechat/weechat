@@ -39,6 +39,7 @@ New features::
 
 Bug fixes::
 
+  * core: set buffer name, short name and title only if the value has changed
   * core: fix scrolling up in bare mode when switched to bare mode at the top of the buffer (issue #899, issue #978)
   * core: optimize load of configuration files
   * core: fix window separators not respecting window splits (issue #630)
@@ -50,6 +51,7 @@ Bug fixes::
   * irc: use path from option xfer.file.upload_path to complete filename in command "/dcc send" (issue #60)
   * logger: fix write in log file if it has been deleted or renamed (issue #123)
   * python: send "bytes" instead of "str" to callbacks in Python 3 when the string is not UTF-8 valid (issue #1389)
+  * relay: send message "_buffer_title_changed" to clients only when the title is changed
   * xfer: fix memory leak when a xfer is freed and when the plugin is unloaded
 
 Tests::
