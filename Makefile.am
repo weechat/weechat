@@ -29,7 +29,7 @@ if TESTS
 tests_dir = tests
 endif
 
-SUBDIRS = po doc intl src $(tests_dir)
+SUBDIRS = icons po doc intl src $(tests_dir)
 
 EXTRA_DIST = AUTHORS.adoc \
              ChangeLog.adoc \
@@ -67,7 +67,6 @@ EXTRA_DIST = AUTHORS.adoc \
              tools/makedist.sh \
              version.sh \
              weechat.desktop \
-             weechat.png \
              weechat.pc.in \
              weechat.cygport.in
 
@@ -75,9 +74,6 @@ ACLOCAL_AMFLAGS = -I m4
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = weechat.pc
-
-icondir = $(datadir)/icons/hicolor/32x32/apps
-icon_DATA = weechat.png
 
 desktopdir = $(datadir)/applications
 desktop_DATA = weechat.desktop

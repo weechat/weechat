@@ -74,7 +74,12 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/%{name}/plugins/*
 %{_libdir}/pkgconfig/weechat.pc
 %{_includedir}/%{name}/weechat-plugin.h
+%{_prefix}/share/icons/hicolor/16x16/apps/weechat.png
 %{_prefix}/share/icons/hicolor/32x32/apps/weechat.png
+%{_prefix}/share/icons/hicolor/64x64/apps/weechat.png
+%{_prefix}/share/icons/hicolor/128x128/apps/weechat.png
+%{_prefix}/share/icons/hicolor/256x256/apps/weechat.png
+%{_prefix}/share/icons/hicolor/512x512/apps/weechat.png
 
 %changelog
 * Sun Sep 08 2019 Sébastien Helleu <flashcode@flashtux.org> 2.6-1

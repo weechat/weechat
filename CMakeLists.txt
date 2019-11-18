@@ -235,6 +235,8 @@ if(DL_LIBRARY)
   list(APPEND EXTRA_LIBS dl)
 endif()
 
+add_subdirectory(icons)
+
 if(ENABLE_NLS)
   add_subdirectory(po)
 endif()
@@ -298,9 +300,6 @@ if(CYGWIN)
     DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME}
   )
 endif()
-
-# icon
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.png DESTINATION ${SHAREDIR}/icons/hicolor/32x32/apps)
 
 # desktop file
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${SHAREDIR}/applications)

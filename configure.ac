@@ -1375,6 +1375,7 @@ AM_CONDITIONAL(MAN,                     test "$enable_man" = "yes")
 AM_CONDITIONAL(DOC,                     test "$enable_doc" = "yes")
 
 AC_OUTPUT([Makefile
+           icons/Makefile
            doc/Makefile
            doc/en/Makefile
            doc/fr/Makefile
