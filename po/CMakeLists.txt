@@ -52,7 +52,7 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
   foreach(srcfile ${WEECHAT_SOURCES})
     set(SRC_FILES ${SRC_FILES} ${srcfile})
     set(POT_DEPENDS ${POT_DEPENDS} ${CMAKE_SOURCE_DIR}/${srcfile})
-  endforeach(srcfile ${WEECHAT_SOURCES})
+  endforeach()
 
   add_custom_command(
     OUTPUT ${POT_FILE_PATH}
@@ -88,7 +88,7 @@ if(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
 
     install(FILES ${gmofile} DESTINATION ${LOCALEDIR}/${polang}/LC_MESSAGES RENAME ${PROJECT_NAME}.mo)
     set(GMO_FILES ${GMO_FILES} ${gmofile})
-  endforeach(pofile ${PO_FILES})
+  endforeach()
 
   add_custom_target(translations ALL DEPENDS ${GMO_FILES})
 
