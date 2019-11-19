@@ -16,7 +16,8 @@
 
 ABOUT-NLS
 autom4te*
-build*/*
+build/*
+builddir/*
 compile
 config.guess
 config.h
