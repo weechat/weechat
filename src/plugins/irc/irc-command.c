@@ -2636,7 +2636,8 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
                 }
                 if (manual_join
                     && weechat_config_boolean (irc_config_look_buffer_open_before_join)
-                    && !irc_channel_search (server, pos_channel))
+                    && !irc_channel_search (server, pos_channel)
+                    && (strcmp (pos_channel, "0") != 0))
                 {
                     /*
                      * open the channel buffer immediately (do not wait for the
