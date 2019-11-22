@@ -72,7 +72,14 @@ except ImportError:
     IMPORT_OK = False
 
 # list of locales for which we want to build doc files to include
-LOCALE_LIST = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
+LOCALE_LIST = (
+    'de_DE',
+    'en_US',
+    'fr_FR',
+    'it_IT',
+    'ja_JP',
+    'pl_PL',
+)
 
 # all commands/options/.. of following plugins will produce a file
 # non-listed plugins will be ignored
@@ -449,7 +456,7 @@ def docgen_cmd_cb(data, buf, args):
     if args:
         locales = args.split(' ')
     else:
-        locales = LOCALE_LIST
+        locales = sorted(LOCALE_LIST)
     commands = get_commands()
     options = get_options()
     infos = get_infos()
