@@ -120,7 +120,6 @@ IGNORE_OPTIONS = (
     r'irc\.ctcp\..*',
     r'irc\.ignore\..*',
     r'irc\.server\..*',
-    r'jabber\.server\..*',
     r'logger\.level\..*',
     r'logger\.mask\..*',
     r'relay\.port\..*',
@@ -137,8 +136,6 @@ IGNORE_OPTIONS = (
 # completions to ignore
 IGNORE_COMPLETIONS_ITEMS = (
     'docgen.*',
-    'jabber.*',
-    'weeget.*',
 )
 
 
