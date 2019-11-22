@@ -443,6 +443,15 @@ def get_plugins_priority():
     return plugins_priority
 
 
+def print_counters(label, files, updated):
+    """Print a line with counters."""
+    color = weechat.color('*lightred') if updated > 0 else ''
+    weechat.prnt('',
+                 'docgen: {0}: {1} files, {2}{3}{4} updated'
+                 ''.format(label, files, color, updated,
+                           weechat.color('reset')))
+
+
 # pylint: disable=too-many-locals, too-many-branches, too-many-statements
 # pylint: disable=too-many-nested-blocks
 def docgen_cmd_cb(data, buf, args):
@@ -470,6 +479,8 @@ def docgen_cmd_cb(data, buf, args):
     # pylint: disable=undefined-variable
     translate = lambda s: (s and _(s)) or s
     escape = lambda s: s.replace('|', '\\|')
+
+    weechat.prnt('', '-' * 40)
 
     for locale in locales:
         for key in num_files:
@@ -711,7 +722,7 @@ def docgen_cmd_cb(data, buf, args):
         doc.write('|===\n')
         doc.update('completions', num_files, num_files_updated)
 
-        # write url options
+        # write URL options
         doc = AutogenDoc(directory, 'plugin_api', 'url_options')
         doc.write('[width="100%",cols="2,^1,7",options="header"]\n')
         doc.write('|===\n')
@@ -738,14 +749,15 @@ def docgen_cmd_cb(data, buf, args):
         doc.update('plugins_priority', num_files, num_files_updated)
 
         # write counters
-        weechat.prnt('',
-                     'docgen: {0}: {1} files, {2} updated'
-                     ''.format(locale,
-                               num_files['total1'],
-                               num_files_updated['total1']))
-    weechat.prnt('',
-                 'docgen: total: {0} files, {1} updated'
-                 ''.format(num_files['total2'], num_files_updated['total2']))
+        print_counters(locale, num_files['total1'],
+                       num_files_updated['total1'])
+
+    weechat.prnt('', ' -' * 20)
+
+    print_counters('total', num_files['total2'], num_files_updated['total2'])
+
+    weechat.prnt('', '-' * 40)
+
     return weechat.WEECHAT_RC_OK
 
 
