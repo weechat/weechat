@@ -43,7 +43,7 @@ from __future__ import print_function
 
 SCRIPT_NAME = 'docgen'
 SCRIPT_AUTHOR = 'Sébastien Helleu <flashcode@flashtux.org>'
-SCRIPT_VERSION = '0.1'
+SCRIPT_VERSION = '0.2'
 SCRIPT_LICENSE = 'GPL3'
 SCRIPT_DESC = 'Documentation generator for WeeChat'
 
