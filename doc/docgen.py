@@ -17,20 +17,26 @@
 #
 
 """
-Documentation generator for WeeChat: build include files with commands,
-options, infos, infolists, hdata and completions for WeeChat core and
-plugins.
+Documentation generator for WeeChat: build include files with:
 
-Instructions to build config files yourself in WeeChat directories (replace
-all paths with your path to WeeChat):
-    1.  run WeeChat and load this script, with following command:
-          /python load ~/src/weechat/doc/docgen.py
-    2.  change path to build in your doc/ directory:
-          /set plugins.var.python.docgen.path "~/src/weechat/doc"
-    3.  run docgen command:
-          /docgen
-Note: it is recommended to load only this script when building doc.
-Files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language).
+- commands
+- config options
+- default aliases
+- IRC colors
+- infos
+- infos hashtable
+- infolists
+- hdata
+- completions
+- URL options
+- plugins priority.
+
+Instructions to build config files yourself in WeeChat directories
+(replace "path" with the path to the docgen.py script in WeeChat repository):
+
+  weechat -t -r "/python load /path/docgen.py;/docgen;/quit"
+
+Output files are in /path/xx/autogen/ (where xx is language).
 """
 
 from __future__ import print_function
@@ -64,17 +70,6 @@ except ImportError:
     print('This script must be run under WeeChat.')
     print('Get WeeChat now at: https://weechat.org/')
     IMPORT_OK = False
-
-# default path where doc files will be written (should be doc/ in sources
-# package tree)
-# path must have subdirectories with languages and autogen directory:
-#      path
-#       |-- en
-#       |   |-- autogen
-#       |-- fr
-#       |   |-- autogen
-#       ...
-DEFAULT_PATH = '~/src/weechat/doc'
 
 # list of locales for which we want to build doc files to include
 LOCALE_LIST = ('en_US', 'fr_FR', 'it_IT', 'de_DE', 'ja_JP', 'pl_PL')
@@ -467,11 +462,6 @@ def docgen_cmd_cb(data, buf, args):
     irc_colors = get_irc_colors()
     plugins_priority = get_plugins_priority()
 
-    # get path and replace ~ by home if needed
-    path = weechat.config_get_plugin('path')
-    if path.startswith('~'):
-        path = os.environ['HOME'] + path[1:]
-
     # write to doc files, by locale
     num_files = defaultdict(int)
     num_files_updated = defaultdict(int)
@@ -490,7 +480,9 @@ def docgen_cmd_cb(data, buf, args):
                                     languages=[locale + '.UTF-8'],
                                     fallback=True)
         trans.install()
-        directory = path + '/' + locale[0:2] + '/autogen'
+        directory = os.path.join(os.path.dirname(data),
+                                 locale[0:2],
+                                 'autogen')
         if not os.path.isdir(directory):
             weechat.prnt('',
                          '{0}docgen error: directory "{1}" does not exist'
@@ -773,8 +765,6 @@ if __name__ == '__main__' and IMPORT_OK:
                              'locales: list of locales to build (by default '
                              'build all locales)',
                              '%(docgen_locales)|%*',
-                             'docgen_cmd_cb', '')
+                             'docgen_cmd_cb', __file__)
         weechat.hook_completion('docgen_locales', 'locales for docgen',
                                 'docgen_completion_cb', '')
-        if not weechat.config_is_set_plugin('path'):
-            weechat.config_set_plugin('path', DEFAULT_PATH)
