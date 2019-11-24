@@ -2108,8 +2108,16 @@ polecenia `/python`.
 
 Możesz użyć komendy `/plugin` żeby załadować/wyładować wtyczkę, lub wyświetlić
 wszystkie załadowane wtyczki.
-Podczas wyładowywania wtyczki, wszystkie bufory utworzone przez nią zostaną
-automatycznie zamknięte.
+
+// TRANSLATION MISSING
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
 
 Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
 

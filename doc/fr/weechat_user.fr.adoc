@@ -2167,8 +2167,15 @@ extension comme _python_ par la commande `/python`.
 
 Vous pouvez utiliser la commande `/plugin` pour charger/décharger une
 extension, ou afficher les extensions chargées.
-Quand une extension est déchargée, tous les tampons créés par cette
-extension sont automatiquement fermés.
+
+Quand une extension est déchargée, WeeChat supprime :
+
+* les tampons
+* les options de configuration (les options sont écrites dans les fichiers)
+* tous les "hooks" : commandes, modificateurs, processus, etc.
+* les infos et infolists
+* les "hdata"
+* les objets de barre.
 
 Exemples pour charger, décharger et afficher les extensions :
 

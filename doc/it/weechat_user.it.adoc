@@ -2228,8 +2228,16 @@ con il comando `/python`.
 
 È possibile utilizzare il comando `/plugin` per caricare/scaricare un plugin,
 oppure elencare tutti i plugin caricati.
-Quando un plugin viene scaricato, tutti i buffer creati da questo plugin
-sono chiusi automaticamente.
+
+// TRANSLATION MISSING
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
 
 Esempi per caricare, scaricare oppure elencare i plugin:
 

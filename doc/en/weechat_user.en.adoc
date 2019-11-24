@@ -2093,8 +2093,15 @@ a _script_ is a text file loaded with a plugin like _python_ with command
 
 You can use command `/plugin` to load/unload a plugin, or list all loaded
 plugins.
-When a plugin is unloaded, all buffers created by this plugin are
-automatically closed.
+
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
 
 Examples to load, unload or list plugins:
 

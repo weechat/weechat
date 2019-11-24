@@ -2103,7 +2103,17 @@ _スクリプト_ とは `/python` 等のコマンドで _python_
 等のプラグインとともに読み込まれるテキストファイルです。
 
 `/plugin`
-コマンドを使うことで、プラグインのロード/アンロード、ロード済みプラグインの表示を行うことができます。あるプラグインをアンロードした場合、アンロードしたプラグインが作成したバッファはすべて自動的に閉じられます。
+コマンドを使うことで、プラグインのロード/アンロード、ロード済みプラグインの表示を行うことができます。
+
+// TRANSLATION MISSING
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
 
 プラグインをロード、アンロード、ロード済みプラグインを表示する例:
 

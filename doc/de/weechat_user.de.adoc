@@ -2139,9 +2139,17 @@ Dem gegenüber ist ein _Skript_ eine Textdatei die durch eine Erweiterung z.B. _
 mittels dem Befehl `/python` geladen wird.
 
 Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
-mit dem Befehl alle installierten Erweiterungen aufgelistet werden. Wird eine Erweiterung
-entfernt hat dies Einfluss auf die von dieser Erweiterung geöffneten Buffer.
-Diese Buffer werden dann geschlossen.
+mit dem Befehl alle installierten Erweiterungen aufgelistet werden.
+
+// TRANSLATION MISSING
+When a plugin is unloaded, WeeChat removes:
+
+* buffers
+* configuration options (options are written in files)
+* all hooks: commands, modifiers, process, etc.
+* infos and infolists
+* hdata
+* bar items.
 
 Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
 
