@@ -280,7 +280,6 @@ Pour chaque fonction, on donne :
 * un exemple en script Python (la syntaxe pour les autres langages de script est
   similaire).
 
-// TRANSLATION MISSING
 [[registering]]
 === Enregistrement
 
@@ -4202,7 +4201,6 @@ weechat.prnt("", "valeur de l'élément : %s" % weechat.list_string(item))
 
 _WeeChat ≥ 2.6._
 
-// TRANSLATION MISSING
 Retourner le pointeur vers les données utilisateur de l'élément.
 
 Prototype :
@@ -11811,7 +11809,6 @@ utilisés :
   Toute chaîne. |
   Chaîne avec les couleurs WeeChat converties en couleurs ANSI.
 
-// TRANSLATION MISSING
 | [[hook_modifier_eval_path_home]] eval_path_home +
   _(WeeChat ≥ 2.7)_ |
   - |

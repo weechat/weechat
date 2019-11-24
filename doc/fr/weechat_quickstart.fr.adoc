@@ -46,7 +46,6 @@ L'aide est également disponible pour les options :
 un nom d'extension), `section` la section de cette configuration et
 `option` le nom de l'option).
 
-// TRANSLATION MISSING
 [[options]]
 == Modifier les options
 
