@@ -1293,7 +1293,7 @@ Paramètres :
 ** REG_ICASE
 ** REG_NEWLINE
 ** REG_NOSUB
-* _flags_ : la valeur du pointer est alimentée avec les "flags" utilisés dans
+* _flags_ : la valeur du pointeur est alimentée avec les "flags" utilisés dans
   l'expression régulière ("flags" par défaut + "flags" définis dans l'expression
   régulière)
 
@@ -2214,7 +2214,7 @@ Paramètres :
 * _pointers_ : table de hachage avec les pointeurs (les clés doivent être des
   chaînes, les valeurs doivent être des pointeurs) ; les pointeurs "window" et
   "buffer" sont automatiquement ajoutés s'ils ne sont pas dans la table de
-  hachage (avec le pointer vers fenêtre/tampon courants) (peut être NULL) :
+  hachage (avec le pointeur vers fenêtre/tampon courants) (peut être NULL) :
 ** _regex_ : pointeur vers une expression régulière (structure _regex_t_)
    compilée avec la fonction WeeChat
    <<_string_regcomp,string_regcomp>> ou regcomp (voir `man regcomp`) ;
@@ -10837,13 +10837,13 @@ Liste des signaux envoyés par WeeChat et les extensions :
 
 | xfer |
   [[hook_signal_xfer_resume_ready]] xfer_resume_ready |
-  Pointer : infolist avec l'info xfer. |
+  Pointeur : infolist avec l'info xfer. |
   Redémarrage prêt.
 
 | xfer |
   [[hook_signal_xfer_ended]] xfer_ended +
   _(WeeChat ≥ 0.3.2)_ |
-  Pointer : infolist avec l'info xfer. |
+  Pointeur : infolist avec l'info xfer. |
   Le xfer s'est terminé.
 |===
 
@@ -14749,7 +14749,7 @@ void weechat_bar_item_remove (struct t_gui_bar_item *item);
 
 Paramètres :
 
-* _item_ : bar item pointer
+* _item_ : pointeur vers l'objet de barre
 
 Exemple en C :
 
@@ -16326,8 +16326,8 @@ Paramètres :
    tableau (taille dynamique pour le tableau)
 ** entier (sous forme de chaîne) : taille fixe pour le tableau
 ** _*_ : taille automatique : la taille est calculée en examinant les valeurs,
-   lorsque le premier NULL est trouvé (seulement pour le type string, pointer ou
-   hashtable)
+   lorsque le premier NULL est trouvé (seulement pour le type string, pointeur
+   ou hashtable)
 * _hdata_name_ : nom d'un hdata (si c'est un pointeur vers une structure qui a
   un hdata)
 
@@ -16378,7 +16378,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 _WeeChat ≥ 0.3.6, mis à jour dans la 1.0._
 
-Créer un nouveau pointer vers une liste dans le hdata.
+Créer un nouveau pointeur vers une liste dans le hdata.
 
 Prototype :
 
