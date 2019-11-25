@@ -37,6 +37,72 @@
 
 
 /*
+ * Hashes a string with a variant of djb2 hash, using 64-bit integer.
+ *
+ * Number pointed by *color_64 is updated by the function.
+ */
+
+void
+gui_nick_hash_djb2_64 (const char *nickname, uint64_t *color_64)
+{
+    while (nickname && nickname[0])
+    {
+        *color_64 ^= (*color_64 << 5) + (*color_64 >> 2) +
+            utf8_char_int (nickname);
+        nickname = utf8_next_char (nickname);
+    }
+}
+
+/*
+ * Hashes a string with a variant of djb2 hash, using 32-bit integer.
+ *
+ * Number pointed by *color_32 is updated by the function.
+ */
+
+void
+gui_nick_hash_djb2_32 (const char *nickname, uint32_t *color_32)
+{
+    while (nickname && nickname[0])
+    {
+        *color_32 ^= (*color_32 << 5) + (*color_32 >> 2) +
+            utf8_char_int (nickname);
+        nickname = utf8_next_char (nickname);
+    }
+}
+
+/*
+ * Hashes a string with sum of letters, using 64-bit integer.
+ *
+ * Number pointed by *color_64 is updated by the function.
+ */
+
+void
+gui_nick_hash_sum_64 (const char *nickname, uint64_t *color_64)
+{
+    while (nickname && nickname[0])
+    {
+        *color_64 += utf8_char_int (nickname);
+        nickname = utf8_next_char (nickname);
+    }
+}
+
+/*
+ * Hashes a string with sum of letters, using 32-bit integer.
+ *
+ * Number pointed by *color_32 is updated by the function.
+ */
+
+void
+gui_nick_hash_sum_32 (const char *nickname, uint32_t *color_32)
+{
+    while (nickname && nickname[0])
+    {
+        *color_32 += utf8_char_int (nickname);
+        nickname = utf8_next_char (nickname);
+    }
+}
+
+/*
  * Hashes a nickname to find color.
  *
  * Returns a number which is the index of color in the nicks colors of option
@@ -46,9 +112,9 @@
 int
 gui_nick_hash_color (const char *nickname)
 {
-    uint64_t color;
+    const char *ptr_salt;
+    uint64_t color_64;
     uint32_t color_32;
-    const char *ptr_salt, *ptr_nick;
 
     if (!nickname || !nickname[0])
         return 0;
@@ -60,90 +126,40 @@ gui_nick_hash_color (const char *nickname)
         return 0;
 
     ptr_salt = CONFIG_STRING(config_look_nick_color_hash_salt);
-    if (ptr_salt && ptr_salt[0])
-    {
-        ptr_nick = ptr_salt;
-    }
-    else
-    {
-        ptr_salt = NULL;
-        ptr_nick = nickname;
-    }
 
-    color = 0;
+    color_64 = 0;
 
     switch (CONFIG_INTEGER(config_look_nick_color_hash))
     {
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2:
             /* variant of djb2 hash */
-            color = 5381;
-            while (1)
-            {
-                while (ptr_nick && ptr_nick[0])
-                {
-                    color ^= (color << 5) + (color >> 2) + utf8_char_int (ptr_nick);
-                    ptr_nick = utf8_next_char (ptr_nick);
-                }
-                if (!ptr_salt)
-                    break;
-                ptr_salt = NULL;
-                ptr_nick = nickname;
-            }
+            color_64 = 5381;
+            gui_nick_hash_djb2_64 (ptr_salt, &color_64);
+            gui_nick_hash_djb2_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM:
             /* sum of letters */
-            color = 0;
-            while (1)
-            {
-                while (ptr_nick && ptr_nick[0])
-                {
-                    color += utf8_char_int (ptr_nick);
-                    ptr_nick = utf8_next_char (ptr_nick);
-                }
-                if (!ptr_salt)
-                    break;
-                ptr_salt = NULL;
-                ptr_nick = nickname;
-            }
+            color_64 = 0;
+            gui_nick_hash_sum_64 (ptr_salt, &color_64);
+            gui_nick_hash_sum_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2_32:
             /* variant of djb2 hash (using 32-bit integer) */
             color_32 = 5381;
-            while (1)
-            {
-                while (ptr_nick && ptr_nick[0])
-                {
-                    color_32 ^= (color_32 << 5) + (color_32 >> 2)
-                        + utf8_char_int (ptr_nick);
-                    ptr_nick = utf8_next_char (ptr_nick);
-                }
-                if (!ptr_salt)
-                    break;
-                ptr_salt = NULL;
-                ptr_nick = nickname;
-            }
-            color = color_32;
+            gui_nick_hash_djb2_32 (ptr_salt, &color_32);
+            gui_nick_hash_djb2_32 (nickname, &color_32);
+            color_64 = color_32;
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM_32:
             /* sum of letters (using 32-bit integer) */
             color_32 = 0;
-            while (1)
-            {
-                while (ptr_nick && ptr_nick[0])
-                {
-                    color_32 += utf8_char_int (ptr_nick);
-                    ptr_nick = utf8_next_char (ptr_nick);
-                }
-                if (!ptr_salt)
-                    break;
-                ptr_salt = NULL;
-                ptr_nick = nickname;
-            }
-            color = color_32;
+            gui_nick_hash_sum_32 (ptr_salt, &color_32);
+            gui_nick_hash_sum_32 (nickname, &color_32);
+            color_64 = color_32;
             break;
     }
 
-    return (color % config_num_nick_colors);
+    return (color_64 % config_num_nick_colors);
 }
 
 /*
