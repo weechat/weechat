@@ -927,7 +927,7 @@
 ** valeur par défaut: `+djb2+`
 
 * [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
-** description: pass:none[sel pour l'algorithme de hash utilisé pour trouver la couleur des pseudos (le pseudo est ajouté à ce sel et l'algorithme de hash opère sur cette chaîne) ; changer cette valeur permet de mélanger les couleurs de pseudos]
+** description: pass:none[sel pour l'algorithme de hash utilisé pour trouver la couleur des pseudos (le pseudo est ajouté à ce sel et l'algorithme de hash opère sur cette chaîne) ; changer cette valeur permet de mélanger les couleurs des pseudos]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
