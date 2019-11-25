@@ -3250,8 +3250,9 @@ config_weechat_init_options ()
     config_look_nick_color_hash_salt = config_file_new_option (
         weechat_config_file, ptr_section,
         "nick_color_hash_salt", "string",
-        N_("salt to be used with the hash algorithm used for nick colors; "
-           "modifying this shuffles nick colors"),
+        N_("salt for the hash algorithm used to find nick colors "
+           "(the nickname is appended to this salt and the hash algorithm "
+            "operates on this string); modifying this shuffles nick colors"),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nick_color_stop_chars = config_file_new_option (
