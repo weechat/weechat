@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add option weechat.look.nick_color_hash_salt to shuffle nick colors (issue #635)
   * core: add different icons sizes (16x16 to 512x512) (issue #1347)
   * core: add file weechat.desktop
   * core: add reverse of string for screen in evaluation of expressions with "revscr:"
