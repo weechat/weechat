@@ -58,6 +58,8 @@ TEST(GuiNick, NickHashColor)
 {
     config_file_option_set (config_color_chat_nick_colors, NICK_COLORS, 0);
 
+    /* hash without salt */
+
     /* test hash: djb2 */
     config_file_option_set (config_look_nick_color_hash, "djb2", 0);
 
@@ -117,6 +119,28 @@ TEST(GuiNick, NickHashColor)
     LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
                                          "abcdefghijklmnopqrstuvwxyz"));
     LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz"));
+
+    /* hash with salt */
+
+    config_file_option_set (config_look_nick_color_hash_salt, "abc", 0);
+
+    /* test hash: djb2 */
+    config_file_option_set (config_look_nick_color_hash, "djb2", 0);
+    LONGS_EQUAL(146, gui_nick_hash_color ("def"));
+
+    /* test hash: sum */
+    config_file_option_set (config_look_nick_color_hash, "sum", 0);
+    LONGS_EQUAL(85, gui_nick_hash_color ("def"));
+
+    /* test hash: djb2_32 */
+    config_file_option_set (config_look_nick_color_hash, "djb2_32", 0);
+    LONGS_EQUAL(146, gui_nick_hash_color ("def"));
+
+    /* test hash: sum_32 */
+    config_file_option_set (config_look_nick_color_hash, "sum_32", 0);
+    LONGS_EQUAL(85, gui_nick_hash_color ("def"));
+
+    config_file_option_reset (config_look_nick_color_hash_salt, 0);
 
     config_file_option_reset (config_color_chat_nick_colors, 0);
 }
