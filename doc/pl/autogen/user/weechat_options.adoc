@@ -926,6 +926,12 @@
 ** wartości: djb2, sum, djb2_32, sum_32
 ** domyślna wartość: `+djb2+`
 
+* [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
+** opis: pass:none[salt for the hash algorithm used to find nick colors (the nickname is appended to this salt and the hash algorithm operates on this string); modifying this shuffles nick colors]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
+
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** opis: pass:none[znaki używane do zatrzymania odczytywania koloru nicka (przynajmniej jeden znak poza tą listą musi się znajdować przed zatrzymaniem) (przykład: nick "|nick|away" ze znakami "|" zwróci kolor nicka "|nick"); ta opcja ma wpływ na opcję weechat.look.nick_color_force, nick z wymuszonym kolorem nie może zawierać znaków ignorowanych przez tą opcję]
 ** typ: ciąg

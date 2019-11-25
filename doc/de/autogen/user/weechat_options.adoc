@@ -926,6 +926,12 @@
 ** Werte: djb2, sum, djb2_32, sum_32
 ** Standardwert: `+djb2+`
 
+* [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
+** Beschreibung: pass:none[salt for the hash algorithm used to find nick colors (the nickname is appended to this salt and the hash algorithm operates on this string); modifying this shuffles nick colors]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+""+`
+
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** Beschreibung: pass:none[Zeichen die genutzt werden sollen damit bei der Generierung der Farbe für einen Nicknamen abgebrochen wird. Es muss mindestens ein Zeichen im Nicknamen enthalten sein der nicht in dieser Liste aufgeführt wird, damit eine Farbe für den Nicknamen erstellt werden kann (Beispiel: Der Nickname lautet "|nick|abwesend" wobei das Zeichen "|" ignoriert werden soll. Die Farbe für den Nicknamen wird nun für "|nick" anstelle von "|nick|abwesend" erstellt); diese Option hat einen Einfluss auf die Option weechat.look.nick_color_force, dort aufgeführte Nicks sollten keine Zeichen haben, die von dieser Option ignoriert werden]
 ** Typ: Zeichenkette

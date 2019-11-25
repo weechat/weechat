@@ -926,6 +926,12 @@
 ** 値: djb2, sum, djb2_32, sum_32
 ** デフォルト値: `+djb2+`
 
+* [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
+** 説明: pass:none[salt for the hash algorithm used to find nick colors (the nickname is appended to this salt and the hash algorithm operates on this string); modifying this shuffles nick colors]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+""+`
+
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** 説明: pass:none[ニックネームの色計算で以降の文字を無視する目印の文字 (このリストに含まれる文字の前に、少なくとも一つ以上のこのリストに含まれない文字がなければいけません) (例: "|" を設定した場合、"|nick|away" はニックネーム "|nick" と同じ色になります); このオプションの設定値はオプション weechat.look.nick_color_force の結果に影響を与えます。すなわち、ニックネーム色を強制したニックネームに、このオプションによって無視される文字を含めてはいけません]
 ** タイプ: 文字列

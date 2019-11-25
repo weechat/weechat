@@ -926,6 +926,12 @@
 ** valeurs: djb2, sum, djb2_32, sum_32
 ** valeur par défaut: `+djb2+`
 
+* [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
+** description: pass:none[sel pour l'algorithme de hash utilisé pour trouver la couleur des pseudos (le pseudo est ajouté à ce sel et l'algorithme de hash opère sur cette chaîne) ; changer cette valeur permet de mélanger les couleurs de pseudos]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
+
 * [[option_weechat.look.nick_color_stop_chars]] *weechat.look.nick_color_stop_chars*
 ** description: pass:none[caractères utilisés pour l'arrêt dans le pseudo lors du calcul de la couleur avec les lettres du pseudo (au moins un caractère en dehors de cette liste doit être dans la chaîne avant de s'arrêter) (exemple : le pseudo "|nick|away" avec "|" dans les caractères retournera la couleur du pseudo "|nick") ; cette option a un impact sur l'option weechat.look.nick_color_force, donc le pseudo pour la couleur forcée ne doit pas contenir les caractères ignorés par cette option]
 ** type: chaîne
