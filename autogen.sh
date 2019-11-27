@@ -24,8 +24,8 @@
 ### common stuff
 ###
 
-DIR=$(cd $(dirname "$0"); pwd)
-cd $DIR
+DIR=$(cd "$(dirname "$0")" || exit 1; pwd)
+cd "$DIR" || exit 1
 
 AUTOGEN_LOG=autogen.log
 
@@ -41,9 +41,8 @@ err ()
 
 run ()
 {
-    echo -n "Running \"$@\"..."
-    eval $@ >$AUTOGEN_LOG 2>&1
-    if [ $? = 0 ] ; then
+    printf "Running \"%s\"..." "$@"
+    if eval "$@" >$AUTOGEN_LOG 2>&1 ; then
         echo " OK"
     else
         echo " FAILED"
