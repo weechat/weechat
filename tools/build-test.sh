@@ -39,9 +39,8 @@
 
 run ()
 {
-    echo "Running \"$@\"..."
-    eval $@
-    if [ $? -ne 0 ]; then
+    echo "Running \"$*\"..."
+    if ! eval "$@"; then
         echo "ERROR"
         exit 1
     fi

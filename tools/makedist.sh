@@ -41,7 +41,7 @@ if [ -z "${ROOT_DIR}" -o ! -d "${ROOT_DIR}/.git" ]; then
 fi
 
 # default values
-VERSION="$(${ROOT_DIR}/version.sh devel-full)"
+VERSION="$("${ROOT_DIR}/version.sh" devel-full)"
 TREEISH="HEAD"
 OUTPATH="$(pwd)"
 
@@ -61,10 +61,10 @@ PREFIX="weechat-${VERSION}/"
 FILE="${OUTPATH}/weechat-${VERSION}.tar"
 
 echo "Building package ${FILE}.gz"
-git archive --prefix=${PREFIX} ${TREEISH} | gzip -c >${FILE}.gz
+git archive --prefix="${PREFIX}" "${TREEISH}" | gzip -c >"${FILE}.gz"
 
 echo "Building package ${FILE}.bz2"
-git archive --prefix=${PREFIX} ${TREEISH} | bzip2 -c >${FILE}.bz2
+git archive --prefix="${PREFIX}" "${TREEISH}" | bzip2 -c >"${FILE}.bz2"
 
 echo "Building package ${FILE}.xz"
-git archive --prefix=${PREFIX} ${TREEISH} | xz -c >${FILE}.xz
+git archive --prefix="${PREFIX}" "${TREEISH}" | xz -c >"${FILE}.xz"

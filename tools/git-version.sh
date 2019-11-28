@@ -47,7 +47,7 @@ case ${VERSION} in
 *-*)
     # devel/rc version (like 0.4.0-dev or 0.4.0-rc1)
     if [ -d "${ROOTDIR}/.git" ]; then
-        GIT_VERSION=$(cd ${ROOTDIR} && git describe 2>/dev/null)
+        GIT_VERSION=$(cd "${ROOTDIR}" && git describe 2>/dev/null)
     fi
     ;;
 *)
@@ -56,19 +56,18 @@ case ${VERSION} in
 esac
 
 # check if git version has changed
-if [ ! -f ${HEADERFILE} ]; then
+if [ ! -f "${HEADERFILE}" ]; then
     # header does not exist => create it
     echo "Creating file ${HEADERFILE} with git version: \"${GIT_VERSION}\""
-    echo "#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"" >${HEADERFILE}
+    echo "#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"" >"${HEADERFILE}"
 else
-    grep -q "#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"" ${HEADERFILE}
-    if [ $? -eq 0 ]; then
+    if grep -q "#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"" "${HEADERFILE}"; then
         # git version matches the file => NO update
         echo "File ${HEADERFILE} is up-to-date (git version: \"${GIT_VERSION}\")"
     else
         # git version not found in file => update file with this git version
         echo "Updating file ${HEADERFILE} with git version: \"${GIT_VERSION}\""
-        sed "s/#define PACKAGE_VERSION_GIT \".*\"/#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"/" ${HEADERFILE} >${HEADERFILE}.tmp
-        mv -f ${HEADERFILE}.tmp ${HEADERFILE}
+        sed "s/#define PACKAGE_VERSION_GIT \".*\"/#define PACKAGE_VERSION_GIT \"${GIT_VERSION}\"/" "${HEADERFILE}" >"${HEADERFILE}.tmp"
+        mv -f "${HEADERFILE}.tmp" "${HEADERFILE}"
     fi
 fi

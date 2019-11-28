@@ -89,7 +89,7 @@ Examples:
   $0 test-patches
 
 EOF
-    exit ${RC}
+    exit "${RC}"
 }
 
 error ()
@@ -109,7 +109,7 @@ test_patches ()
     set +e
     PATCHES_OK=0
     PATCHES_ERROR=0
-    for file in ${ROOT_DIR}/tools/debian/patches/*.patch; do
+    for file in "${ROOT_DIR}"/tools/debian/patches/*.patch; do
         echo "=== Testing patch ${file} ==="
         git apply --check "${file}"
         if [ $? -eq 0 ]; then
@@ -136,7 +136,7 @@ fi
 
 # check git repository
 ROOT_DIR=$(git rev-parse --show-toplevel)
-if [ -z "${ROOT_DIR}" -o ! -d "${ROOT_DIR}/.git" -o ! -d "${ROOT_DIR}/debian-stable" ]; then
+if [ -z "${ROOT_DIR}" ] || [ ! -d "${ROOT_DIR}/.git" ] || [ ! -d "${ROOT_DIR}/debian-stable" ]; then
     error "this script must be run from WeeChat git repository."
 fi
 cd "${ROOT_DIR}"
@@ -171,7 +171,7 @@ fi
 
 # convert version "stable" to its number
 if [ "${VERSION}" = "stable" ]; then
-    VERSION="$(${ROOT_DIR}/version.sh stable)"
+    VERSION="$("${ROOT_DIR}/version.sh" stable)"
 fi
 
 if [ -z "${VERSION}" ]; then
@@ -205,7 +205,7 @@ if [ "${VERSION}" = "devel" ]; then
     # devel packages: weechat-devel(-xxx)_X.Y-1~dev20150511_arch.deb
     DEB_DIR="debian-devel"
     DEB_NAME="weechat-devel"
-    DEB_VERSION="$(${ROOT_DIR}/version.sh devel)-1~dev$(date '+%Y%m%d')"
+    DEB_VERSION="$("${ROOT_DIR}/version.sh" devel)-1~dev$(date '+%Y%m%d')"
     if [ "${DEB_REVISION}" != "1" ]; then
         DEB_VERSION="${DEB_VERSION}-${DEB_REVISION}"
     fi
