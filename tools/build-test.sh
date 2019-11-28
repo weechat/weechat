@@ -71,8 +71,7 @@ if [ "$BUILDTOOL" = "cmake" ]; then
     run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
     run "make VERBOSE=1 -j$(nproc)"
     run "sudo make install"
-    run "ctest -V"
-    if [ $? -eq 0 ] && [ "$CODECOVERAGE" = "1" ]; then
+    if run "ctest -V" && [ "$CODECOVERAGE" = "1" ]; then
         run "lcov --directory . --capture --output-file coverage.info"
         run "lcov --remove coverage.info '/usr/*' --output-file coverage.info"
         run "lcov --list coverage.info"
