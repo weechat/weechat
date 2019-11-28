@@ -160,7 +160,7 @@ DISTRO="$2"
 # example: devel => devel / 1, stable-2 => stable / 2, 1.9-2 => 1.9 / 2
 TMP_VERSION=$(expr "${VERSION}" : '\([^/]*\)-') || true
 DEB_REVISION=""
-if [ ! -z "${TMP_VERSION}" ]; then
+if [ -n "${TMP_VERSION}" ]; then
     DEB_REVISION=$(expr "${VERSION}" : '[^-]*-\([^-]*\)') || true
     VERSION="${TMP_VERSION}"
 fi
