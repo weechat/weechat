@@ -52,10 +52,10 @@ if [ $# -ge 2 ]; then
     TREEISH=$2
 fi
 if [ $# -ge 3 ]; then
-    OUTPATH=$(cd "$3"; pwd)
+    OUTPATH=$(cd "$3" || exit 1; pwd)
 fi
 
-cd "${ROOT_DIR}"
+cd "${ROOT_DIR}" || exit 1
 
 PREFIX="weechat-${VERSION}/"
 FILE="${OUTPATH}/weechat-${VERSION}.tar"
