@@ -2141,15 +2141,14 @@ mittels dem Befehl `/python` geladen wird.
 Mit dem Befehl `/plugin` kann eine Erweiterung geladen bzw. entfernt werden. Auch können
 mit dem Befehl alle installierten Erweiterungen aufgelistet werden.
 
-// TRANSLATION MISSING
-When a plugin is unloaded, WeeChat removes:
+Sobald eine Erweiterung beendet wird, entfernt WeeChat:
 
-* buffers
-* configuration options (options are written in files)
-* all hooks: commands, modifiers, process, etc.
-* infos and infolists
+* Buffer
+* Konfigurationsoptionen (Optionen die in Datein geschrieben wurden)
+* alle Hooks: commands, modifiers, process, etc.
+* Infos und Infolisten
 * hdata
-* bar items.
+* Bar-Items.
 
 Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
 
