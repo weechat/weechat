@@ -927,7 +927,7 @@
 ** Standardwert: `+djb2+`
 
 * [[option_weechat.look.nick_color_hash_salt]] *weechat.look.nick_color_hash_salt*
-** Beschreibung: pass:none[salt for the hash algorithm used to find nick colors (the nickname is appended to this salt and the hash algorithm operates on this string); modifying this shuffles nick colors]
+** Beschreibung: pass:none[salt für den Hash-Algorithmus, der zum Auffinden von Nickfarben verwendet wird (der Nickname wird an diesen Salt angehängt und der Hash-Algorithmus verarbeitet diesen String); Wenn Sie dies ändern, werden die Nickfarben gemischt]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
