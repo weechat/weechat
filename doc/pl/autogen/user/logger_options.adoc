@@ -9,7 +9,7 @@
 ** domyślna wartość: `+default+`
 
 * [[option_logger.color.backlog_line]] *logger.color.backlog_line*
-** opis: pass:none[color for backlog lines, used only if the option logger.file.color_lines is off]
+** opis: pass:none[kolor linii backloga, używany tylko jeśli opcja logger.file.color_lines jest wyłączona]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
 ** domyślna wartość: `+default+`
@@ -21,7 +21,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_logger.file.color_lines]] *logger.file.color_lines*
-** opis: pass:none[use ANSI color codes in lines written in log files and display backlog lines with these colors]
+** opis: pass:none[użyj kodów kolorów ANSI w liniach zapisywanych do plików z logami oraz wyświetlaj linie backloga z tymi kolorami]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+off+`
