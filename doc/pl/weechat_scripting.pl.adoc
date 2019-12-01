@@ -74,45 +74,41 @@ link:weechat_plugin_api.en.html#_hook_process[Opisu API wtyczek WeeChat] (Angiel
 
 ==== Python
 
-// TRANSLATION MISSING
-===== Module
+===== Moduł
 
-WeeChat defines a `weechat` module which must be imported with `import weechat`.
+WeeChat definiuje moduł `weechat`, który należy zaimportowac poprzez `import weechat`.
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...)`.
 
-Functions `+print*+` are called `+prnt*+` in python (because `print` was a
-reserved keyword in Python 2).
+Funkcje `+print*+` nzwyają się `+prnt*+` (ponieważ `print` był zarezerwowanym
+łowem kluczowym w Pythonie 2).
 
-// TRANSLATION MISSING
-===== Strings received in callbacks
+===== Ciągi otrzymywane w callbackach
 
-In Python 3 and with WeeChat ≥ 2.7, the strings received in callbacks have type
-`str` if the string has valid UTF-8 data (which is the most common case),
-or `bytes` if the string is not UTF-8 valid. So the callback should take care
-about this type if some invalid UTF-8 content can be received.
+W Pythonie 3 i dla wersji WeeChat ≥ 2.7, ciągi te mają typ `str` jeśli ciąg
+zawiera poprawne dane UTF-8 (najrzęstzy przypadek), lub `bytes` w przeciwnym
+razie. Dlatego callback powinien być w stanie obsłużyć również taki typ danych.
 
-Some invalid UTF-8 data may be received in these cases, so the callback can
-receive a string of type `str` or `bytes` (this list is not exhaustive):
+Niektóre niepoprawne dane UTF-8 mogą zostać otrzymane w poniższych przypadkach,
+dlatego callback może otrzymać ciąc typu `str` lub `bytes` (lista nie jest pełna):
 
 [width="100%",cols="3m,3m,3m,8",options="header"]
 |===
-| API function | Arguments | Examples | Description
+| Funkcja API | Argumenty | Przykłady | Opis
 
 | hook_modifier |
   irc_in_yyy |
   pass:[irc_in_privmsg] +
   pass:[irc_in_notice] |
-  A message received in IRC plugin, before it is decoded to UTF-8 (used
-  internally). +
+  Wiadomość otrzymana przez wtyczkę IRC, zanim jest zdekodowana do UTF-8
+  (używana wewnętrznie) +
   +
-  It is recommended to use modifier `irc_in2_yyy` instead, the string received
-  is always UTF-8 valid. +
-  See function `hook_modifier` in the
-  link:weechat_plugin_api.en.html#_hook_modifier[WeeChat plugin API reference].
+  Zalecane jest używanie w zamian modyfikatora `irc_in2_yyy`, otrzymany ciąg
+  jest zawsze poprawnym UTF-8. +
+  Zobacz funkcję `hook_modifier` w
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat].
 
 | hook_signal |
   xxx,irc_out_yyy +
@@ -121,79 +117,73 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   pass:[*,irc_out_notice] +
   pass:[*,irc_outtags_privmsg] +
   pass:[*,irc_outtags_notice] |
-  A message sent by IRC plugin, after it is encoded to the `encode` charset
-  defined by the user (if different from the default `UTF-8`). +
+  Wiadomość wysłana przez serwer IRC po zakodowaniu na kodowanie `encode`
+  zdefiniowane przez użytkownika (jeśli inne niż `UTF-8`). +
   +
-  It is recommended to use signal `xxx,irc_out1_yyy` instead, the string received
-  is always UTF-8 valid. +
-  See function `hook_signal` in the
-  link:weechat_plugin_api.en.html#_hook_signal[WeeChat plugin API reference].
+  Zaleca się użycie w zamian sygnału `xxx,irc_out1_yyy`,otrzymany ciąg jest
+  zawsze poprawnym UTF-8. +
+  Zobacz funkcję `hook_signal` w
+  link:weechat_plugin_api.en.html#_hook_modifier[Opiie API wtyczek WeeChat].
 
 | hook_process +
   hook_process_hashtable |
   - |
   - |
-  Output of the command, sent to the callback, can contain invalid UTF-8 data.
+  Wynik komendy wysyłany do callbacka, może zawierać niepoprawne dane UTF-8.
 
 |===
 
-In Python 2, which is now deprecated and should not be used any more, the
-strings sent to callbacks are always of type `str`, and may contain invalid
-UTF-8 data, in the cases mentioned above.
+W Pytonie 2, który jest już nie wspierany i nie powinien być już używany,
+ciągi wysyłane do callbacków są zawsze typu `str` i mogą zawierać niepoprawne
+dane UTF-8 w przypadkach wspomnianych wyżej.
 
 ==== Perl
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat::xxx(arg1, arg2, ...);`.
+Funkcje są wywoływane za pomocą `weechat::xxx(arg1, arg2, ...);`.
 
 ==== Ruby
 
-// TRANSLATION MISSING
-===== Initialization
+===== Inicjalizacja
 
-You have to define _weechat_init_ and call _register_ inside.
+Musisz zdefiniowac _weechat_init_ i wywołać wewnątrz _register_.
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
+Funkcje wywoływane są za pomocą `Weechat.xxx(arg1, arg2, ...)`.
 
-Due to a limitation of Ruby (15 arguments max by function), the function
-`Weechat.config_new_option` receives the callbacks in an array of 6 strings
-(3 callbacks + 3 data strings), so a call to this function looks like:
+Poprzez limitację Ruby (maksymalnie 15 argumentów dla funkcji), funkcja
+`Weechat.config_new_option` otrzymuje callbacki w tablicy 6 ciągów
+(3 callbacki + 3 ciągi danych), wywołanie tej funkcji wygląda następująco:
 
 [source,ruby]
 ----
-Weechat.config_new_option(config, section, "name", "string", "description of option", "", 0, 0,
-                          "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
+Weechat.config_new_option(config, section, "name", "string", "opis opcji", "", 0, 0,
+                          "value", "wartość", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
 ----
 
 ==== Lua
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...)`.
 
 ==== Tcl
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat::xxx arg1 arg2 ...`.
+Funkcje są wywoływane za pomocą `weechat::xxx arg1 arg2 ...`.
 
 ==== Guile (Scheme)
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `(weechat:xxx arg1 arg2 ...)`.
+Funkcje są wywoływane za pomocą `(weechat:xxx arg1 arg2 ...)`.
 
-The following functions take one list of arguments (instead of many arguments
-for other functions), because number of arguments exceed number of allowed
-arguments in Guile:
+Następujące funkcje przyjmują litę argumentów (zamiast wielu argumentów dla
+innych funkcji), ponieważ ilość argumentów przekracza maksymalną ilość
+argumentów dozwolonych w Guile:
 
 * config_new_section
 * config_new_option
@@ -201,17 +191,15 @@ arguments in Guile:
 
 ==== JavaScript
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat.xxx(arg1, arg2, ...);`.
+Funkcje są wywoływane za pomocą `weechat.xxx(arg1, arg2, ...);`.
 
 ==== PHP
 
-// TRANSLATION MISSING
-===== Functions
+===== Funkcje
 
-Functions are called with `weechat_xxx(arg1, arg2, ...);`.
+Funkcje są wywoływane za pomocą `weechat_xxx(arg1, arg2, ...);`.
 
 [[register_function]]
 === Funkcja rejestrująca
@@ -1178,25 +1166,20 @@ weechat.prnt("", "wartość opcji weechat.color.chat_delimiters to: %s"
 [[irc_catch_messages]]
 ==== Przechwytywanie wiadomości
 
-// TRANSLATION MISSING
-IRC plugin sends four signals for a message received (`xxx` is IRC internal
-server name, `yyy` is IRC command name like JOIN, QUIT, PRIVMSG, 301, ..):
+Wtyczka IRC wysyła cztery sygnały dla otrzymanych wiadomości (`xxx` to wewnętrzna 
+nazwa serwera IRC, `yyy` to komenda IRC jak JOIN, QUIT, PRIVMSG, 301, ..):
 
-// TRANSLATION MISSING
 xxx,irc_in_yyy::
-    signal sent before processing message, only if message is *not* ignored
+    sygnał wysyłany przed przetworzeniem wiadomości, tylko jeśli *nie* jest ignorowana
 
-// TRANSLATION MISSING
 xxx,irc_in2_yyy::
-    signal sent after processing message, only if message is *not* ignored
+    sygnał wysyłany po przetworzeniu wiadomości, tylko jeśli wiadomość *nie* jest ignorowana
 
-// TRANSLATION MISSING
 xxx,irc_raw_in_yyy::
-    signal sent before processing message, even if message is ignored
+    sygnał wysyłany przed przetworzeniem wiadomości, nawet jeśli wiadomość jest ignorowana
 
-// TRANSLATION MISSING
 xxx,irc_raw_in2_yyy::
-    signal sent after processing message, even if message is ignored
+    sygnał wysyłany po przetworzeniu wiadomoci, nawet jeśli wiadomość jest ignorowana
 
 [source,python]
 ----
@@ -1218,19 +1201,17 @@ weechat.hook_signal("*,irc_in2_join", "join_cb", "")
 [[irc_modify_messages]]
 ==== Modyfikowanie wiadomości
 
-// TRANSLATION MISSING
-IRC plugin sends two "modifiers" for a message received ("xxx" is IRC command),
-so that you can modify it:
+Plugin IRC wysyła dwa "modyfikatory" dla odebranych wiadomości ("xxx" to komenda IRC),
+aby umożliwić jej modyfikację:
 
-// TRANSLATION MISSING
 irc_in_xxx::
-    modifier sent before charset decoding: use with caution, the string may
-    contain invalid UTF-8 data; use only for raw operations on a message
+    modyfikator wysyłany przez zmianą kodowania: używaj ostrożnie, ciąg może
+    zawierać niepoprawne dane UTF-8; używaj tylko dla operacji na nieprzetworzonych
+    wiadomościach
 
-// TRANSLATION MISSING
 irc_in2_xxx::
-    modifier sent after charset decoding, so the string received is always
-    UTF-8 valid (*recommended*)
+    modyfikator wysyłany po zmianie kodowania, ciąg jest zawsze poprawnym
+    UTF-8 (*zalecane*)
 
 [source,python]
 ----
@@ -1273,9 +1254,8 @@ Wynik jest tabela hashy z następującymi kluczami
   Nick żródła. |
   `nick`
 
-// TRANSLATION MISSING
 | user | ≥ 2.7 |
-  The origin user. |
+  Oryginalny użytkownik. |
   `user`
 
 | host | ≥ 0.3.4 |

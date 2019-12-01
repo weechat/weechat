@@ -804,8 +804,7 @@ i podkreślonym jasno czerwonym "Alice":
 ^Cc12^Cbhello ^Cb^Cc04^C_Alice^C_^Cc!
 ----
 
-// TRANSLATION MISSING
-Keys:
+Skróty klawiszowe:
 
 kbd:[Ctrl+c] kbd:[c] kbd:[1] kbd:[2] kbd:[Ctrl+c] kbd:[b] +
 kbd:[h] kbd:[e] kbd:[l] kbd:[l] kbd:[o] kbd:[Space] +
@@ -2109,15 +2108,14 @@ polecenia `/python`.
 Możesz użyć komendy `/plugin` żeby załadować/wyładować wtyczkę, lub wyświetlić
 wszystkie załadowane wtyczki.
 
-// TRANSLATION MISSING
-When a plugin is unloaded, WeeChat removes:
+Podcza wyładowywania wtyczki WeeChat usówa:
 
-* buffers
-* configuration options (options are written in files)
-* all hooks: commands, modifiers, process, etc.
-* infos and infolists
+* bufory
+* opcje konfiguracyjne (options są zapisywane w plikach)
+* wszystkie hooki: komendy, modyfikatory, procesy, etc.
+* infos i infolists
 * hdata
-* bar items.
+* elementy pasków.
 
 Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
 
@@ -2996,18 +2994,16 @@ Kilka przykładów:
 [[logger_filenames_masks]]
 ==== Maski dla nazw plików
 
-// TRANSLATION MISSING
 Możliwe jest zdefiniowanie maski dla nazwy pliku z logiem dla każdego bufora i
-użycie do tego zmiennych lokalnych bufora. To see available local variables for
-current buffer:
+użycie do tego zmiennych lokalnych bufora. W celu wyświetlenia listy dostępnych
+zmiennych dla bufora wykonaj:
 
 ----
 /buffer localvar
 ----
 
-// TRANSLATION MISSING
-Masks will be matched on options in descending order of specificity on
-`logger.mask.$plugin.*`, with `logger.file.mask` as fallback option.
+Maski zostaną dopasowane do opcji w kolejności malejącej specyficznie dla
+`logger.mask.$plugin.*`, z `logger.file.mask` jako opcją zapasową.
 
 Na przykład, w buforze "irc.freenode.#weechat", WeeChat będzie szukał maski dla
 nazwy w takiej kolejności:
@@ -4062,8 +4058,7 @@ Callback "line" ustawia następujące zmienne w tablicy hashy:
 | str_time           | ciąg     | Date do wyświetlenia. Może zawierać kody kolorów.
 | tags               | ciąg     | Tagi wiadomości (z przecinkiem dodanym na początku/końcu ciągu).
 | displayed          | ciąg     | "1" jeśli wyświetlono, "0" jeśli nie wyświetlono.
-// TRANSLATION MISSING
-| notify_level       | ciąg     | "-1" = no notify, "0" = poziom niski, "1" = wiadomość, "2" = wiadomość prywatna, "3" = podświetlenie
+| notify_level       | ciąg     | "-1" = brak powiadomienia, "0" = poziom niski, "1" = wiadomość, "2" = wiadomość prywatna, "3" = podświetlenie
 | highlight          | ciąg     | "1" jeśli podświetlenie, inaczej "0".
 | prefix             | ciąg     | Prefiks.
 | tg_prefix_nocolor  | ciag     | Prefiks bez kodów kolorów.
