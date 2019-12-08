@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.7]]
-== Version 2.7 (under dev)
+== Version 2.7 (2019-12-08)
 
 [[v2.7_cmake_errors]]
 === CMake errors on missing dependencies
