@@ -1,3 +1,18 @@
+weechat (2.6-2) unstable; urgency=medium
+
+  * Add a patch from upstream to support Guile 2.2 (Closes: #885235)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Fri, 11 Oct 2019 15:07:22 +0000
+
+weechat (2.6-1) unstable; urgency=medium
+
+  * New upstream release
+  * Build only with Python3 (Closes: #938817)
+  * Bump Standards-Version to 4.4.0
+  * Build Lua plugin against Lua 5.3
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Tue, 17 Sep 2019 13:30:32 +0000
+
 weechat (2.4-1) unstable; urgency=medium
 
   * New upstream release
