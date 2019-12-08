@@ -56,7 +56,6 @@ EXTRA_DIST = AUTHORS.adoc \
              cmake/FindPkgConfig.cmake \
              cmake/FindPython.cmake \
              cmake/FindRuby.cmake \
-             cmake/FindTCL.cmake \
              cmake/FindV8.cmake \
              cmake/FindZLIB.cmake \
              cmake/cmake_uninstall.cmake.in \
