@@ -37,7 +37,7 @@ index a862fdd6c..0b3c016ff 100644
 +    libgcrypt11-dev,
 +    libgnutls-dev,
      zlib1g-dev
- Standards-Version: 4.3.0
+ Standards-Version: 4.4.0
  Homepage: https://weechat.org/
 @@ -47,7 +44,7 @@ Description: Fast, light and extensible chat client (metapackage)
    - 256 colors support
@@ -154,7 +154,7 @@ index c0326b3f5..44206d418 100644
 +    libgcrypt11-dev,
 +    libgnutls-dev,
      zlib1g-dev
- Standards-Version: 4.3.0
+ Standards-Version: 4.4.0
  Homepage: https://weechat.org/
 @@ -46,7 +43,7 @@ Description: Fast, light and extensible chat client (metapackage)
    - 256 colors support
