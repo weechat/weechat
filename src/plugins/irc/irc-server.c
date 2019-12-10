@@ -4710,11 +4710,24 @@ irc_server_gnutls_callback (const void *pointer, void *data,
 
                     /* key */
                     gnutls_x509_privkey_init (&server->tls_cert_key);
+
+/*
+ * gnutls_x509_privkey_import2 has no "Since: ..." in GnuTLS manual but
+ * GnuTLS NEWS file lists it being added in 3.1.0:
+ * https://gitlab.com/gnutls/gnutls/blob/2b715b9564681acb3008a5574dcf25464de8b038/NEWS#L2552
+ */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030100 /* 3.1.0 */
                     ret = gnutls_x509_privkey_import2 (server->tls_cert_key,
                                                        &filedatum,
                                                        GNUTLS_X509_FMT_PEM,
                                                        ssl_password,
                                                        0);
+#else
+                    ret = gnutls_x509_privkey_import (server->tls_cert_key,
+                                                      &filedatum,
+                                                      GNUTLS_X509_FMT_PEM);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x0301000 */
+
                     if (ret < 0)
                     {
                         ret = gnutls_x509_privkey_import_pkcs8 (
