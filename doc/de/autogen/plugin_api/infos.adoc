@@ -130,6 +130,8 @@
 
 | weechat | weechat_dir | WeeChat Verzeichnis | -
 
+| weechat | weechat_headless | 1 if WeeChat is running headless | -
+
 | weechat | weechat_libdir | WeeChat "lib" Verzeichnis | -
 
 | weechat | weechat_localedir | "lokales" Verzeichnis von WeeChat | -

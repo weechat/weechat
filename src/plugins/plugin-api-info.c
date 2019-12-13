@@ -316,6 +316,27 @@ plugin_api_info_weechat_upgrading_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "weechat_headless".
+ */
+
+char *
+plugin_api_info_weechat_headless_cb (const void *pointer, void *data,
+                                     const char *info_name,
+                                     const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", weechat_headless);
+    return strdup (value);
+}
+
+/*
  * Returns WeeChat info "charset_terminal".
  */
 
@@ -1736,6 +1757,9 @@ plugin_api_info_init ()
     hook_info (NULL, "weechat_upgrading",
                N_("1 if WeeChat is upgrading (command `/upgrade`)"),
                NULL, &plugin_api_info_weechat_upgrading_cb, NULL, NULL);
+    hook_info (NULL, "weechat_headless",
+               N_("1 if WeeChat is running headless"),
+               NULL, &plugin_api_info_weechat_headless_cb, NULL, NULL);
     hook_info (NULL, "charset_terminal",
                N_("terminal charset"),
                NULL, &plugin_api_info_charset_terminal_cb, NULL, NULL);
