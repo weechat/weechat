@@ -765,7 +765,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
-** opis: pass:none[hasło do klucza prywatnego certyfikatu SSL (uwaga: zawartość jest przetwarzana zobacz /help eval; opcje serwera mogą zostać użytego w postaci ${irc_server.xxx} oraz ${server} jest zastępowany nazwą serwera)]
+** opis: pass:none[password for SSL certificate's private key; only used with gnutls version >= 3.1.0 (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

@@ -765,7 +765,7 @@
 ** Standardwert: `+""+`
 
 * [[option_irc.server_default.ssl_password]] *irc.server_default.ssl_password*
-** Beschreibung: pass:none[Passwort für SSL Zertifikat des privaten Schlüssels (Hinweis: Inhalt wird evaluiert, siehe /help eval; Serveroptionen sind mittels ${irc_server.xxx} evaluiert und ${server} wird durch den eigentlichen Servernamen ersetzt)]
+** Beschreibung: pass:none[password for SSL certificate's private key; only used with gnutls version >= 3.1.0 (note: content is evaluated, see /help eval; server options are evaluated with ${irc_server.xxx} and ${server} is replaced by the server name)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
