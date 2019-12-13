@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v2.8]]
+== Version 2.7 (under dev)
+
+Build::
+
+  * irc: fix build with GnuTLS < 3.1.0 (issue #1431)
+
 [[v2.7]]
 == Version 2.7 (2019-12-08)
 
