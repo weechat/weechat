@@ -1705,7 +1705,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("password for SSL certificate's private key "
+                N_("password for SSL certificate's private key; "
+                   "only used with gnutls version >= 3.1.0 "
                    "(note: content is evaluated, see /help eval; server "
                    "options are evaluated with ${irc_server.xxx} and "
                    "${server} is replaced by the server name)"),
