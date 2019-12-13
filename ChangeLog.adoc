@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v2.8]]
 == Version 2.8 (under dev)
 
+New features::
+
+  * api: add info "weechat_headless" (issue #1433)
+
 Build::
 
   * irc: fix build with GnuTLS < 3.1.0 (issue #1431)
