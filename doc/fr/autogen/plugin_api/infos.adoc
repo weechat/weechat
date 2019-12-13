@@ -130,7 +130,7 @@
 
 | weechat | weechat_dir | répertoire de WeeChat | -
 
-| weechat | weechat_headless | 1 if WeeChat is running headless | -
+| weechat | weechat_headless | 1 si WeeChat tourne sans interface | -
 
 | weechat | weechat_libdir | répertoire "lib" de WeeChat | -
 

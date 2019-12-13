@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-12-13 21:18+0100\n"
+"POT-Creation-Date: 2019-12-13 21:32+0100\n"
 "PO-Revision-Date: 2019-11-29 09:10+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -12034,6 +12034,10 @@ msgstr "Download-Seite von WeeChat"
 
 msgid "1 if WeeChat is upgrading (command `/upgrade`)"
 msgstr "1 falls WeeChat ein Upgrade durchführt (Befehl `/upgrade`)"
+
+#, fuzzy
+msgid "1 if WeeChat is running headless"
+msgstr "WeeChat läuft im Hintergrundmodus (Ctrl-C zum Beenden)."
 
 msgid "terminal charset"
 msgstr "Terminal Zeichensatz"
