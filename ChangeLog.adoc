@@ -22,6 +22,10 @@ New features::
 
   * api: add info "weechat_headless" (issue #1433)
 
+Bug fixes::
+
+  * irc: fix memory leak when the channel topic is changed
+
 Build::
 
   * irc: fix build with GnuTLS < 3.1.0 (issue #1431)

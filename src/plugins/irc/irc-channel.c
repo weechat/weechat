@@ -557,9 +557,13 @@ irc_channel_set_buffer_title (struct t_irc_channel *channel)
             channel->topic,
             (weechat_config_boolean (irc_config_look_topic_strip_colors)) ? 0 : 1);
         weechat_buffer_set (channel->buffer, "title", title_color);
+        if (title_color)
+            free (title_color);
     }
     else
+    {
         weechat_buffer_set (channel->buffer, "title", "");
+    }
 }
 
 /*
