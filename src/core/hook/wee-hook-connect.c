@@ -386,6 +386,7 @@ hook_connect_print_log (struct t_hook *hook)
 
     log_printf ("  connect data:");
     log_printf ("    callback. . . . . . . : 0x%lx", HOOK_CONNECT(hook, callback));
+    log_printf ("    proxy . . . . . . . . : '%s'", HOOK_CONNECT(hook, proxy));
     log_printf ("    address . . . . . . . : '%s'", HOOK_CONNECT(hook, address));
     log_printf ("    port. . . . . . . . . : %d", HOOK_CONNECT(hook, port));
     log_printf ("    sock. . . . . . . . . : %d", HOOK_CONNECT(hook, sock));
