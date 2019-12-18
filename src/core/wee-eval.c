@@ -102,7 +102,8 @@ eval_is_true (const char *value)
  *
  * If escape is 1, the prefix can be escaped with '\' (and then is ignored).
  *
- * For example: eval_strstr_level ("(x || y) || z", "||")
+ * For example:
+ *   eval_strstr_level ("(x || y) || z", "||", eval_context, "(", ")", 0)
  * will return a pointer on  "|| z" (because the first "||" is
  * in a sub-expression, which is skipped).
  *
@@ -111,36 +112,62 @@ eval_is_true (const char *value)
 
 const char *
 eval_strstr_level (const char *string, const char *search,
-                   const char *prefix, const char *suffix, int escape)
+                   struct t_eval_context *eval_context,
+                   const char *extra_prefix, const char *extra_suffix,
+                   int escape)
 {
     const char *ptr_string;
-    int level, length_search, length_prefix, length_suffix;
+    int level, length_search;
+    int length_prefix, length_prefix2, length_suffix, length_suffix2;
+
+    EVAL_DEBUG("eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
+               string, search, extra_prefix, extra_suffix, escape);
 
     if (!string || !search)
         return NULL;
 
     length_search = strlen (search);
-    length_prefix = strlen (prefix);
-    length_suffix = strlen (suffix);
+
+    length_prefix = strlen (eval_context->prefix);
+    length_suffix = strlen (eval_context->suffix);
+
+    length_prefix2 = (extra_prefix) ? strlen (extra_prefix) : 0;
+    length_suffix2 = (extra_suffix) ? strlen (extra_suffix) : 0;
 
     ptr_string = string;
     level = 0;
     while (ptr_string[0])
     {
-        if (escape && (ptr_string[0] == '\\') && (ptr_string[1] == prefix[0]))
+        if (escape
+            && (ptr_string[0] == '\\')
+            && ((ptr_string[1] == eval_context->prefix[0])
+                || ((length_suffix2 > 0) && ptr_string[1] == extra_prefix[0])))
         {
             ptr_string++;
         }
-        else if (strncmp (ptr_string, prefix, length_prefix) == 0)
+        else if (strncmp (ptr_string, eval_context->prefix, length_prefix) == 0)
         {
             level++;
             ptr_string += length_prefix;
         }
-        else if (strncmp (ptr_string, suffix, length_suffix) == 0)
+        else if ((length_prefix2 > 0)
+                 && (strncmp (ptr_string, extra_prefix, length_prefix2) == 0))
+        {
+            level++;
+            ptr_string += length_prefix2;
+        }
+        else if (strncmp (ptr_string, eval_context->suffix, length_suffix) == 0)
         {
             if (level > 0)
                 level--;
             ptr_string += length_suffix;
+        }
+        else if ((length_suffix2 > 0)
+                 && (strncmp (ptr_string, extra_suffix, length_suffix2) == 0))
+        {
+            if (level > 0)
+                level--;
+            ptr_string += length_suffix2;
         }
         else if ((level == 0)
                  && (strncmp (ptr_string, search, length_search) == 0))
@@ -643,17 +670,11 @@ eval_replace_vars_cb (void *data, const char *text)
     if (strncmp (text, "if:", 3) == 0)
     {
         value = NULL;
-        pos = (char *)eval_strstr_level (text + 3,
-                                         "?",
-                                         eval_context->prefix,
-                                         eval_context->suffix,
-                                         1);
+        pos = (char *)eval_strstr_level (text + 3, "?",
+                                         eval_context, NULL, NULL, 1);
         pos2 = (pos) ?
-            (char *)eval_strstr_level (pos + 1,
-                                       ":",
-                                       eval_context->prefix,
-                                       eval_context->suffix,
-                                       1) : NULL;
+            (char *)eval_strstr_level (pos + 1, ":",
+                                       eval_context, NULL, NULL, 1) : NULL;
         condition = (pos) ?
             strndup (text + 3, pos - (text + 3)) : strdup (text + 3);
         if (!condition)
@@ -1037,7 +1058,8 @@ eval_expression_condition (const char *expr,
      */
     for (logic = 0; logic < EVAL_NUM_LOGICAL_OPS; logic++)
     {
-        pos = eval_strstr_level (expr2, logical_ops[logic], "(", ")", 0);
+        pos = eval_strstr_level (expr2, logical_ops[logic], eval_context,
+                                 "(", ")", 0);
         if (pos > expr2)
         {
             pos_end = pos - 1;
@@ -1086,7 +1108,8 @@ eval_expression_condition (const char *expr,
      */
     for (comp = 0; comp < EVAL_NUM_COMPARISONS; comp++)
     {
-        pos = eval_strstr_level (expr2, comparisons[comp], "(", ")", 0);
+        pos = eval_strstr_level (expr2, comparisons[comp], eval_context,
+                                 "(", ")", 0);
         if (pos >= expr2)
         {
             if (pos > expr2)

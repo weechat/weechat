@@ -147,6 +147,9 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${window.buffer.number} == 2");
     WEE_CHECK_EVAL("0", "${calc:2+3} < 5");
     WEE_CHECK_EVAL("0", "${calc:1.5*3} < 4.5");
+    WEE_CHECK_EVAL("0", "${if:${buffer.number}==2?yes:}");
+    WEE_CHECK_EVAL("0", "${if:${buffer.number}==2?yes:no} == yes");
+    WEE_CHECK_EVAL("0", "yes == ${if:${buffer.number}==2?yes:no}");
 
     /* conditions evaluated as true */
     WEE_CHECK_EVAL("1", "1");
@@ -207,6 +210,9 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "${window.buffer.number} == 1");
     WEE_CHECK_EVAL("1", "${calc:2+3} >= 5");
     WEE_CHECK_EVAL("1", "${calc:1.5*3} >= 4.5");
+    WEE_CHECK_EVAL("1", "${if:${buffer.number}==1?yes:}");
+    WEE_CHECK_EVAL("1", "${if:${buffer.number}==1?yes:no} == yes");
+    WEE_CHECK_EVAL("1", "yes == ${if:${buffer.number}==1?yes:no}");
 
     /* evaluation of extra_vars */
     hashtable_set (options, "extra", "eval");

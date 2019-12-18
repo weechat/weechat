@@ -25,6 +25,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix evaluation of condition with nested "if" (issue #1434)
   * irc: fix memory leak when the channel topic is changed
 
 Build::
