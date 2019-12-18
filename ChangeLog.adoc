@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add debug option "-d" in command /eval (issue #1434)
   * api: add info "weechat_headless" (issue #1433)
 
 Bug fixes::

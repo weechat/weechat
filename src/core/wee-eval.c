@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include <regex.h>
 #include <time.h>
 
@@ -45,6 +46,10 @@
 #include "../plugins/plugin.h"
 
 
+#define EVAL_DEBUG(msg, argz...)                        \
+    if (eval_context->debug)                            \
+        eval_debug_message (eval_context, msg, ##argz);
+
 char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
 { "||", "&&" };
 
@@ -57,6 +62,24 @@ char *eval_replace_vars (const char *expr,
 char *eval_expression_condition (const char *expr,
                                  struct t_eval_context *eval_context);
 
+
+/*
+ * Adds a debug message in the debug output.
+ */
+
+void
+eval_debug_message (struct t_eval_context *eval_context, char *message, ...)
+{
+    weechat_va_format (message);
+    if (!vbuffer)
+        return;
+
+    if (*(eval_context->debug)[0])
+        string_dyn_concat (eval_context->debug, "\n");
+    string_dyn_concat (eval_context->debug, vbuffer);
+
+    free (vbuffer);
+}
 
 /*
  * Checks if a value is true: a value is true if string is non-NULL, non-empty
@@ -140,12 +163,16 @@ eval_strstr_level (const char *string, const char *search,
  */
 
 char *
-eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
+eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
+                      struct t_eval_context *eval_context)
 {
     char *value, *old_value, *var_name, str_value[128], *pos;
     const char *ptr_value, *hdata_name, *ptr_var_name;
     int type;
     struct t_hashtable *hashtable;
+
+    EVAL_DEBUG("eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
+               hdata->name, pointer, path);
 
     value = NULL;
     var_name = NULL;
@@ -274,7 +301,10 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path)
 
         hdata = hook_hdata_get (NULL, hdata_name);
         old_value = value;
-        value = eval_hdata_get_value (hdata, pointer, (pos) ? pos + 1 : NULL);
+        value = eval_hdata_get_value (hdata,
+                                      pointer,
+                                      (pos) ? pos + 1 : NULL,
+                                      eval_context);
         if (old_value)
             free (old_value);
     }
@@ -338,6 +368,8 @@ eval_replace_vars_cb (void *data, const char *text)
     struct tm *date_tmp;
 
     eval_context = (struct t_eval_context *)data;
+
+    EVAL_DEBUG("eval_replace_vars_cb(\"%s\")", text);
 
     /* 1. variable in hashtable "extra_vars" */
     if (eval_context->extra_vars)
@@ -785,7 +817,10 @@ eval_replace_vars_cb (void *data, const char *text)
             goto end;
     }
 
-    value = eval_hdata_get_value (hdata, pointer, (pos) ? pos + 1 : NULL);
+    value = eval_hdata_get_value (hdata,
+                                  pointer,
+                                  (pos) ? pos + 1 : NULL,
+                                  eval_context);
 
 end:
     if (hdata_name)
@@ -807,6 +842,8 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 {
     const char *no_replace_prefix_list[] = { "if:", NULL };
     char *result;
+
+    EVAL_DEBUG("eval_replace_vars(\"%s\")", expr);
 
     eval_context->recursion_count++;
 
@@ -845,12 +882,16 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
  */
 
 char *
-eval_compare (const char *expr1, int comparison, const char *expr2)
+eval_compare (const char *expr1, int comparison, const char *expr2,
+              struct t_eval_context *eval_context)
 {
     int rc, string_compare, length1, length2;
     regex_t regex;
     double value1, value2;
     char *error;
+
+    EVAL_DEBUG("eval_compare(\"%s\", \"%s\", \"%s\")",
+               expr1, comparisons[comparison], expr2);
 
     rc = 0;
     string_compare = 0;
@@ -957,6 +998,8 @@ eval_expression_condition (const char *expr,
     int logic, comp, length, level, rc;
     const char *pos, *pos_end;
     char *expr2, *sub_expr, *value, *tmp_value, *tmp_value2;
+
+    EVAL_DEBUG("eval_expression_condition(\"%s\")", expr);
 
     value = NULL;
 
@@ -1080,7 +1123,7 @@ eval_expression_condition (const char *expr,
                 tmp_value2 = eval_expression_condition (pos, eval_context);
             }
             free (sub_expr);
-            value = eval_compare (tmp_value, comp, tmp_value2);
+            value = eval_compare (tmp_value, comp, tmp_value2, eval_context);
             if (tmp_value)
                 free (tmp_value);
             if (tmp_value2)
@@ -1191,6 +1234,9 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     int length, length_replace, start_offset, i, rc, end;
     int empty_replace_allowed;
     struct t_eval_regex eval_regex;
+
+    EVAL_DEBUG("eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
+               string, regex, replace);
 
     if (!string || !regex || !replace)
         return NULL;
@@ -1334,7 +1380,7 @@ char *
 eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
-    struct t_eval_context eval_context;
+    struct t_eval_context context, *eval_context;
     int condition, rc, pointers_allocated, regex_allocated;
     int ptr_window_added, ptr_buffer_added;
     char *value;
@@ -1372,13 +1418,16 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         pointers_allocated = 1;
     }
 
-    eval_context.pointers = pointers;
-    eval_context.extra_vars = extra_vars;
-    eval_context.extra_vars_eval = 0;
-    eval_context.prefix = default_prefix;
-    eval_context.suffix = default_suffix;
-    eval_context.regex = NULL;
-    eval_context.recursion_count = 0;
+    eval_context = &context;
+
+    eval_context->pointers = pointers;
+    eval_context->extra_vars = extra_vars;
+    eval_context->extra_vars_eval = 0;
+    eval_context->prefix = default_prefix;
+    eval_context->suffix = default_suffix;
+    eval_context->regex = NULL;
+    eval_context->recursion_count = 0;
+    eval_context->debug = NULL;
 
     /*
      * set window/buffer with pointer to current window/buffer
@@ -1413,17 +1462,17 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         /* check if extra vars must be evaluated */
         ptr_value = hashtable_get (options, "extra");
         if (ptr_value && (strcmp (ptr_value, "eval") == 0))
-            eval_context.extra_vars_eval = 1;
+            eval_context->extra_vars_eval = 1;
 
         /* check for custom prefix */
         ptr_value = hashtable_get (options, "prefix");
         if (ptr_value && ptr_value[0])
-            eval_context.prefix = ptr_value;
+            eval_context->prefix = ptr_value;
 
         /* check for custom suffix */
         ptr_value = hashtable_get (options, "suffix");
         if (ptr_value && ptr_value[0])
-            eval_context.suffix = ptr_value;
+            eval_context->suffix = ptr_value;
 
         /* check for regex */
         ptr_value = hashtable_get (options, "regex");
@@ -1448,13 +1497,19 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         {
             regex_replace = ptr_value;
         }
+
+        /* check for debug */
+        if (hashtable_has_key (options, "debug"))
+            eval_context->debug = string_dyn_alloc (256);
     }
+
+    EVAL_DEBUG("eval_expression(\"%s\")", expr);
 
     /* evaluate expression */
     if (condition)
     {
         /* evaluate as condition (return a boolean: "0" or "1") */
-        value = eval_expression_condition (expr, &eval_context);
+        value = eval_expression_condition (expr, eval_context);
         rc = eval_is_true (value);
         if (value)
             free (value);
@@ -1466,12 +1521,12 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         {
             /* replace with regex */
             value = eval_replace_regex (expr, regex, regex_replace,
-                                        &eval_context);
+                                        eval_context);
         }
         else
         {
             /* only replace variables in expression */
-            value = eval_replace_vars (expr, &eval_context);
+            value = eval_replace_vars (expr, eval_context);
         }
     }
 
@@ -1491,6 +1546,11 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         regfree (regex);
         free (regex);
     }
+
+    if (options && eval_context->debug)
+        hashtable_set (options, "debug_output", *(eval_context->debug));
+    if (eval_context->debug)
+        string_dyn_free (eval_context->debug, 1);
 
     return value;
 }

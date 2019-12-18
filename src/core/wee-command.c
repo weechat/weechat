@@ -1936,8 +1936,9 @@ COMMAND_CALLBACK(debug)
 
 COMMAND_CALLBACK(eval)
 {
-    int i, print_only, split_command, condition, error;
+    int i, print_only, split_command, condition, debug, error;
     char *result, *ptr_args, *expr, **commands;
+    const char **debug_output;
     struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
@@ -1948,6 +1949,7 @@ COMMAND_CALLBACK(eval)
     print_only = 0;
     split_command = 0;
     condition = 0;
+    debug = 0;
     error = 0;
 
     COMMAND_MIN_ARGS(2, "");
@@ -1968,6 +1970,11 @@ COMMAND_CALLBACK(eval)
         else if (string_strcasecmp (argv[i], "-c") == 0)
         {
             condition = 1;
+            ptr_args = argv_eol[i + 1];
+        }
+        else if (string_strcasecmp (argv[i], "-d") == 0)
+        {
+            debug = 1;
             ptr_args = argv_eol[i + 1];
         }
         else
@@ -1992,7 +1999,7 @@ COMMAND_CALLBACK(eval)
         }
 
         options = NULL;
-        if (condition)
+        if (condition || debug)
         {
             options = hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
@@ -2000,7 +2007,12 @@ COMMAND_CALLBACK(eval)
                                      NULL,
                                      NULL);
             if (options)
-                hashtable_set (options, "type", "condition");
+            {
+                if (condition)
+                    hashtable_set (options, "type", "condition");
+                if (debug)
+                    hashtable_set (options, "debug", "1");
+            }
         }
 
         if (print_only)
@@ -2028,6 +2040,13 @@ COMMAND_CALLBACK(eval)
                                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                 }
                 free (expr);
+                if (options && debug)
+                {
+                    debug_output = hashtable_get (options,
+                                                  "debug_output");
+                    if (debug_output)
+                        gui_chat_printf (NULL, "%s", debug_output);
+                }
             }
         }
         else
@@ -2050,6 +2069,13 @@ COMMAND_CALLBACK(eval)
                         {
                             error = 1;
                         }
+                        if (options && debug)
+                        {
+                            debug_output = hashtable_get (options,
+                                                          "debug_output");
+                            if (debug_output)
+                                gui_chat_printf (NULL, "%s", debug_output);
+                        }
                     }
                     string_free_split_command (commands);
                 }
@@ -2065,6 +2091,13 @@ COMMAND_CALLBACK(eval)
                 else
                 {
                     error = 1;
+                }
+                if (options && debug)
+                {
+                    debug_output = hashtable_get (options,
+                                                  "debug_output");
+                    if (debug_output)
+                        gui_chat_printf (NULL, "%s", debug_output);
                 }
             }
         }
@@ -7304,12 +7337,13 @@ command_init ()
     hook_command (
         NULL, "eval",
         N_("evaluate expression"),
-        N_("[-n|-s] <expression>"
-           " || [-n] -c <expression1> <operator> <expression2>"),
+        N_("[-n|-s] [-d] <expression>"
+           " || [-n] [-d] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer "
            "(debug mode)\n"
            "        -s: split expression before evaluating it "
            "(many commands can be separated by semicolons)\n"
+           "        -d: display debug output after evaluation\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "

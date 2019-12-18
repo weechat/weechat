@@ -72,6 +72,7 @@ struct t_eval_context
     const char *suffix;
     struct t_eval_regex *regex;
     int recursion_count;
+    char **debug;
 };
 
 extern int eval_is_true (const char *value);
