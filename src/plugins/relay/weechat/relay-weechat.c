@@ -166,46 +166,32 @@ relay_weechat_free_buffers_nicklist (struct t_hashtable *hashtable,
 void
 relay_weechat_alloc (struct t_relay_client *client)
 {
-    char *password, *totp_secret;
-
-    password = weechat_string_eval_expression (
-        weechat_config_string (relay_config_network_password),
-        NULL, NULL, NULL);
-    totp_secret = weechat_string_eval_expression (
-        weechat_config_string (relay_config_network_totp_secret),
-        NULL, NULL, NULL);
-
     client->protocol_data = malloc (sizeof (struct t_relay_weechat_data));
-    if (client->protocol_data)
-    {
-        RELAY_WEECHAT_DATA(client, password_ok) = (password && password[0]) ? 0 : 1;
-        RELAY_WEECHAT_DATA(client, totp_ok) = (totp_secret && totp_secret[0]) ? 0 : 1;
-        RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
-        RELAY_WEECHAT_DATA(client, buffers_sync) =
-            weechat_hashtable_new (32,
-                                   WEECHAT_HASHTABLE_STRING,
-                                   WEECHAT_HASHTABLE_INTEGER,
-                                   NULL, NULL);
-        RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
-        RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
-        RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
-        RELAY_WEECHAT_DATA(client, buffers_nicklist) =
-            weechat_hashtable_new (32,
-                                   WEECHAT_HASHTABLE_POINTER,
-                                   WEECHAT_HASHTABLE_POINTER,
-                                   NULL, NULL);
-        weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
-                                       "callback_free_value",
-                                       &relay_weechat_free_buffers_nicklist);
-        RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
+    if (!client->protocol_data)
+        return;
 
-        relay_weechat_hook_signals (client);
-    }
+    RELAY_WEECHAT_DATA(client, password_ok) = 0;
+    RELAY_WEECHAT_DATA(client, totp_ok) = 0;
+    RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
+    RELAY_WEECHAT_DATA(client, buffers_sync) =
+        weechat_hashtable_new (32,
+                               WEECHAT_HASHTABLE_STRING,
+                               WEECHAT_HASHTABLE_INTEGER,
+                               NULL, NULL);
+    RELAY_WEECHAT_DATA(client, hook_signal_buffer) = NULL;
+    RELAY_WEECHAT_DATA(client, hook_hsignal_nicklist) = NULL;
+    RELAY_WEECHAT_DATA(client, hook_signal_upgrade) = NULL;
+    RELAY_WEECHAT_DATA(client, buffers_nicklist) =
+        weechat_hashtable_new (32,
+                               WEECHAT_HASHTABLE_POINTER,
+                               WEECHAT_HASHTABLE_POINTER,
+                               NULL, NULL);
+    weechat_hashtable_set_pointer (RELAY_WEECHAT_DATA(client, buffers_nicklist),
+                                   "callback_free_value",
+                                   &relay_weechat_free_buffers_nicklist);
+    RELAY_WEECHAT_DATA(client, hook_timer_nicklist) = NULL;
 
-    if (password)
-        free (password);
-    if (totp_secret)
-        free (totp_secret);
+    relay_weechat_hook_signals (client);
 }
 
 /*

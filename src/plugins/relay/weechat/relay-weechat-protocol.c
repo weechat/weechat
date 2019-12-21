@@ -170,11 +170,22 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
     char **options, *pos, *password, *totp_secret, *info_totp_args, *info_totp;
-    int i, compression, length;
+    int i, compression, length, password_received, totp_received;
 
-    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(1);
+    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    options = weechat_string_split_command (argv_eol[0], ',');
+    password = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_password),
+        NULL, NULL, NULL);
+    totp_secret = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_totp_secret),
+        NULL, NULL, NULL);
+
+    password_received = 0;
+    totp_received = 0;
+
+    options = (argc > 0) ?
+        weechat_string_split_command (argv_eol[0], ',') : NULL;
     if (options)
     {
         for (i = 0; options[i]; i++)
@@ -186,21 +197,13 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 pos++;
                 if (strcmp (options[i], "password") == 0)
                 {
-                    password = weechat_string_eval_expression (
-                        weechat_config_string (relay_config_network_password),
-                        NULL, NULL, NULL);
-                    if (password)
-                    {
-                        if (strcmp (password, pos) == 0)
-                            RELAY_WEECHAT_DATA(client, password_ok) = 1;
-                        free (password);
-                    }
+                    password_received = 1;
+                    if (password && (strcmp (password, pos) == 0))
+                        RELAY_WEECHAT_DATA(client, password_ok) = 1;
                 }
                 else if (strcmp (options[i], "totp") == 0)
                 {
-                    totp_secret = weechat_string_eval_expression (
-                        weechat_config_string (relay_config_network_totp_secret),
-                        NULL, NULL, NULL);
+                    totp_received = 1;
                     if (totp_secret)
                     {
                         length = strlen (totp_secret) + strlen (pos) + 16 + 1;
@@ -220,7 +223,6 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                                 free (info_totp);
                             free (info_totp_args);
                         }
-                        free (totp_secret);
                     }
                 }
                 else if (strcmp (options[i], "compression") == 0)
@@ -234,6 +236,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         weechat_string_free_split_command (options);
     }
 
+    /* if no password received and password is empty, it's OK */
+    if (!password_received && (!password || !password[0]))
+        RELAY_WEECHAT_DATA(client, password_ok) = 1;
+
+    /* if no TOTP received and totp_secret is empty, it's OK */
+    if (!totp_received && (!totp_secret || !totp_secret[0]))
+        RELAY_WEECHAT_DATA(client, totp_ok) = 1;
+
     if (RELAY_WEECHAT_DATA(client, password_ok)
         && RELAY_WEECHAT_DATA(client, totp_ok))
     {
@@ -245,6 +255,11 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
     {
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
     }
+
+    if (password)
+        free (password);
+    if (totp_secret)
+        free (totp_secret);
 
     return WEECHAT_RC_OK;
 }
