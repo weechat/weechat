@@ -22,6 +22,7 @@ New features::
 
   * core: add debug option "-d" in command /eval (issue #1434)
   * api: add info "weechat_headless" (issue #1433)
+  * buflist: add pointer "window" in bar item evaluation
   * relay: reject client with weechat protocol if password or totp is received in init command but not set in WeeChat (issue #1435)
 
 Bug fixes::

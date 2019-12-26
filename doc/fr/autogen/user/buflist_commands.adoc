@@ -20,6 +20,9 @@ Les lignes avec les tampons sont affichées en utilisant l'évaluation de chaîn
 Les variables suivantes peuvent être utilisées dans ces options :
   - données de l'objet de barre (voir le hdata "bar_item" dans la doc API pour une liste complète), par exemple :
     - ${bar_item.name}
+  - données de la fenêtre ("window"), où l'objet de barre est affiché (il n'y a pas de fenêtre pour les barres de type "root", voir le hdata "window" dans la doc API pour une liste complète), par exemple :
+    - ${window.number}
+    - ${window.buffer.full_name}
   - données du tampon (voir le hdata "buffer" dans la doc API pour une liste complète), par exemple :
     - ${buffer.number}
     - ${buffer.name}

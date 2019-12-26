@@ -20,6 +20,9 @@ The lines with buffers are displayed using string evaluation (see /help eval for
 The following variables can be used in these options:
   - bar item data (see hdata "bar_item" in API doc for a complete list), for example:
     - ${bar_item.name}
+  - window data, where the bar item is displayed (there's no window in root bars, see hdata "window" in API doc for a complete list), for example:
+    - ${window.number}
+    - ${window.buffer.full_name}
   - buffer data (see hdata "buffer" in API doc for a complete list), for example:
     - ${buffer.number}
     - ${buffer.name}
