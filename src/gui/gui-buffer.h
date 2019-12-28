@@ -84,6 +84,7 @@ struct t_gui_buffer
     int number;                        /* buffer number (first is 1)        */
     int layout_number;                 /* number of buffer stored in layout */
     int layout_number_merge_order;     /* order in merge for layout         */
+    int layout_active;                 /* active status in layout           */
     char *name;                        /* buffer name                       */
     char *full_name;                   /* plugin name + '.' + buffer name   */
     char *short_name;                  /* short buffer name                 */

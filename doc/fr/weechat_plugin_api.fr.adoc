@@ -12931,6 +12931,8 @@ Paramètres :
 ** _number_ : numéro du tampon (commence à 1)
 ** _layout_number_ : numéro du tampon sauvegardé dans le "layout"
 ** _layout_number_merge_order_ : ordre du tampon mélangé pour le "layout"
+// TRANSLATION MISSING
+** _layout_active_: active status in layout
 ** _short_name_is_set_ : 1 si le nom court est défini, 0 si non défini
 ** _type_ : type de tampon (0 : formaté, 1 : contenu libre)
 ** _notify_ : niveau de notification du tampon
