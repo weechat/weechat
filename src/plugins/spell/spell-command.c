@@ -1,7 +1,7 @@
 /*
  * spell-command.c - spell checker commands
  *
- * Copyright (C) 2013-2019 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2013-2020 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
