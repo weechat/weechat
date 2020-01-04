@@ -29,6 +29,7 @@ Bug fixes::
 
   * core: fix evaluation of condition with nested "if" (issue #1434)
   * irc: fix memory leak when the channel topic is changed
+  * xfer: send signal "xfer_ended" after the received file has been renamed (issue #1438)
 
 Build::
 
