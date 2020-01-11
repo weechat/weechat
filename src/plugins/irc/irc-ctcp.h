@@ -37,11 +37,11 @@ extern void irc_ctcp_display_reply_from_nick (struct t_irc_server *server,
                                               const char *command,
                                               const char *nick,
                                               const char *address,
-                                              char *arguments);
+                                              const char *arguments);
 extern void irc_ctcp_recv (struct t_irc_server *server, time_t date,
                            const char *command, struct t_irc_channel *channel,
                            const char *address, const char *nick,
-                           const char *remote_nick, char *arguments,
-                           char *message);
+                           const char *remote_nick, const char *arguments,
+                           const char *message);
 
 #endif /* WEECHAT_PLUGIN_IRC_CTCP_H */
