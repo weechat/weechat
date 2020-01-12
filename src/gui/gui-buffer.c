@@ -1319,6 +1319,12 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 
     (void) hook_signal_send ("buffer_renamed",
                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+
+    if (buffer->old_full_name)
+    {
+        free (buffer->old_full_name);
+        buffer->old_full_name = NULL;
+    }
 }
 
 /*

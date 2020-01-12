@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add variable "old_full_name" in buffer, set before the buffer is renamed (issue #1428)
+  * core: add variable "old_full_name" in buffer, set during buffer renaming (issue #1428)
   * core: add debug option "-d" in command /eval (issue #1434)
   * api: add info "weechat_headless" (issue #1433)
   * buflist: add pointer "window" in bar item evaluation
