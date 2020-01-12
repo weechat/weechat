@@ -446,6 +446,12 @@ upgrade_weechat_read_buffer (struct t_infolist *infolist)
     /* full name */
     gui_buffer_build_full_name (ptr_buffer);
 
+    /* old full name */
+    if (ptr_buffer->old_full_name)
+        free (ptr_buffer->old_full_name);
+    str = infolist_string (infolist, "old_full_name");
+    ptr_buffer->old_full_name = (str) ? strdup (str) : NULL;
+
     /* short name */
     if (ptr_buffer->short_name)
         free (ptr_buffer->short_name);

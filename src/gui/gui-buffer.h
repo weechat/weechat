@@ -86,6 +86,7 @@ struct t_gui_buffer
     int layout_number_merge_order;     /* order in merge for layout         */
     char *name;                        /* buffer name                       */
     char *full_name;                   /* plugin name + '.' + buffer name   */
+    char *old_full_name;               /* old full name (set before rename) */
     char *short_name;                  /* short buffer name                 */
     enum t_gui_buffer_type type;       /* buffer type (formatted, free, ..) */
     int notify;                        /* 0 = never                         */
