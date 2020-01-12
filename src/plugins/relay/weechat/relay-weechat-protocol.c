@@ -501,6 +501,8 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer;
     struct t_relay_weechat_msg *msg;
     char cmd_hdata[64], str_signal[128];
+    const char *ptr_old_full_name;
+    int *ptr_old_flags, flags;
 
     /* make C compiler happy */
     (void) data;
@@ -639,6 +641,27 @@ relay_weechat_protocol_signal_buffer_cb (const void *pointer, void *data,
         ptr_buffer = (struct t_gui_buffer *)signal_data;
         if (!ptr_buffer)
             return WEECHAT_RC_OK;
+
+        /* rename old buffer name if present in hashtable "buffers_sync" */
+        ptr_old_full_name = weechat_buffer_get_string (ptr_buffer,
+                                                       "old_full_name");
+        if (ptr_old_full_name && ptr_old_full_name[0])
+        {
+            ptr_old_flags = weechat_hashtable_get (
+                RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+                ptr_old_full_name);
+            if (ptr_old_flags)
+            {
+                flags = *ptr_old_flags;
+                weechat_hashtable_remove (
+                    RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+                    ptr_old_full_name);
+                weechat_hashtable_set (
+                    RELAY_WEECHAT_DATA(ptr_client, buffers_sync),
+                    weechat_buffer_get_string (ptr_buffer, "full_name"),
+                    &flags);
+            }
+        }
 
         /* send signal only if sync with flag "buffers" or "buffer" */
         if (relay_weechat_protocol_is_sync (ptr_client, ptr_buffer,

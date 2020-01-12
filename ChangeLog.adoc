@@ -31,6 +31,7 @@ Bug fixes::
   * core: fix evaluation of condition with nested "if" (issue #1434)
   * irc: case-insensitive comparison on incoming CTCP command, force upper case on CTCP replies (issue #1439)
   * irc: fix memory leak when the channel topic is changed
+  * relay: update buffers synchronization when buffers are renamed (issue #1428)
   * xfer: send signal "xfer_ended" after the received file has been renamed (issue #1438)
 
 Build::
