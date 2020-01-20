@@ -655,6 +655,10 @@ hook_process_run (struct t_hook *hook_process)
         HOOK_PROCESS(hook_process, child_write[i]) = pipes[i][1];
     }
 
+    /* flush stdout and stderr before forking */
+    fflush (stdout);
+    fflush (stderr);
+
     /* fork */
     switch (pid = fork ())
     {
