@@ -24,6 +24,8 @@
 
 #include <libguile.h>
 #include <time.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "../plugin-script.h"
