@@ -30,6 +30,8 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <libgen.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "../weechat-plugin.h"
 #include "../plugin-script.h"
