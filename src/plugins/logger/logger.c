@@ -552,10 +552,7 @@ logger_create_log_file (struct t_logger_buffer *logger_buffer)
     /* get log level */
     log_level = logger_get_level_for_buffer (logger_buffer->buffer);
     if (log_level == 0)
-    {
-        logger_buffer_free (logger_buffer);
         return 0;
-    }
 
     /* create directory */
     if (!logger_create_directory ())
@@ -566,16 +563,12 @@ logger_create_log_file (struct t_logger_buffer *logger_buffer)
               "(\"%s\")"),
             weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
             weechat_config_string (logger_config_file_path));
-        logger_buffer_free (logger_buffer);
         return 0;
     }
     if (!logger_buffer->log_filename)
         logger_set_log_filename (logger_buffer);
     if (!logger_buffer->log_filename)
-    {
-        logger_buffer_free (logger_buffer);
         return 0;
-    }
 
     /* create or append to log file */
     logger_buffer->log_file =
@@ -587,7 +580,6 @@ logger_create_log_file (struct t_logger_buffer *logger_buffer)
             _("%s%s: unable to write log file \"%s\": %s"),
             weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
             logger_buffer->log_filename, strerror (errno));
-        logger_buffer_free (logger_buffer);
         return 0;
     }
 
@@ -603,7 +595,6 @@ logger_create_log_file (struct t_logger_buffer *logger_buffer)
         fclose (logger_buffer->log_file);
         logger_buffer->log_file = NULL;
         logger_buffer->log_file_inode = 0;
-        logger_buffer_free (logger_buffer);
         return 0;
     }
     logger_buffer->log_file_inode = statbuf.st_ino;
@@ -652,6 +643,9 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     char *charset, *message;
 
     if (!logger_create_log_file (logger_buffer))
+        return;
+
+    if (!logger_buffer->log_file)
         return;
 
     weechat_va_format (format);
@@ -710,10 +704,8 @@ logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
                                _("%s\t****  End of log  ****"),
                                buf_time);
         }
-        fclose (logger_buffer->log_file);
-        logger_buffer->log_file = NULL;
-        logger_buffer->log_file_inode = 0;
     }
+
     logger_buffer_free (logger_buffer);
 }
 
