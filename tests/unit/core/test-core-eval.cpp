@@ -603,6 +603,12 @@ TEST(CoreEval, EvalReplaceRegex)
                    "${re:0} -- ${re:1} ${re:+} (${re:#})");
     WEE_CHECK_EVAL("abc def ghi jkl -- abc jkl (4)", "abc def ghi jkl");
 
+    /* invalid regex group */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "abc");
+    hashtable_set (options, "regex_replace", "${re:z}");
+    WEE_CHECK_EVAL("", "abc");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);
