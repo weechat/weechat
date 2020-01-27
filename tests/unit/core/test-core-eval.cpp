@@ -98,6 +98,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "");
     WEE_CHECK_EVAL("0", "0");
     WEE_CHECK_EVAL("0", "1 == 2");
+    WEE_CHECK_EVAL("0", "  1 == 2  ");
     WEE_CHECK_EVAL("0", "==1");
     WEE_CHECK_EVAL("0", "1 >= 2");
     WEE_CHECK_EVAL("0", "2 <= 1");
@@ -162,6 +163,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "123");
     WEE_CHECK_EVAL("1", "abc");
     WEE_CHECK_EVAL("1", "2 == 2");
+    WEE_CHECK_EVAL("1", "  2 == 2  ");
     WEE_CHECK_EVAL("1", "==0");
     WEE_CHECK_EVAL("1", "2 >= 1");
     WEE_CHECK_EVAL("1", "1 <= 2");
