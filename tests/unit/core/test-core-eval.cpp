@@ -34,6 +34,7 @@ extern "C"
 #include "src/core/wee-string.h"
 #include "src/core/wee-version.h"
 #include "src/gui/gui-buffer.h"
+#include "src/gui/gui-line.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
@@ -526,6 +527,20 @@ TEST(CoreEval, EvalExpression)
     snprintf (str_value, sizeof (str_value),
               "${buffer[0x%lx].full_name}", (long unsigned int)gui_buffers);
     WEE_CHECK_EVAL("core.weechat", str_value);
+    snprintf (str_value, sizeof (str_value), "%c", 1);
+    WEE_CHECK_EVAL(str_value,
+                   "${window.buffer.own_lines.first_line.data.displayed}");
+    WEE_CHECK_EVAL("1", "${window.buffer.num_displayed}");
+    snprintf (str_value, sizeof (str_value),
+              "%lld",
+              (long long)(gui_buffers->own_lines->first_line->data->date));
+    WEE_CHECK_EVAL(str_value,
+                   "${window.buffer.own_lines.first_line.data.date}");
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx", (long unsigned int)(gui_buffers->local_variables));
+    WEE_CHECK_EVAL(str_value, "${window.buffer.local_variables}");
+    WEE_CHECK_EVAL("core", "${window.buffer.local_variables.plugin}");
+    WEE_CHECK_EVAL("weechat", "${window.buffer.local_variables.name}");
 
     /* test with another prefix/suffix */
     options = hashtable_new (32,
