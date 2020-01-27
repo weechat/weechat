@@ -449,6 +449,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
 
     /* test date */
+    WEE_CHECK_EVAL("", "${date:}");
     value = eval_expression ("${date}", pointers, extra_vars, options);
     LONGS_EQUAL(19, strlen (value));
     free (value);
