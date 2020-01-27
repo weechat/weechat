@@ -150,6 +150,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${if:${buffer.number}==2?yes:}");
     WEE_CHECK_EVAL("0", "${if:${buffer.number}==2?yes:no} == yes");
     WEE_CHECK_EVAL("0", "yes == ${if:${buffer.number}==2?yes:no}");
+    WEE_CHECK_EVAL("0", "${if:\\$==A?yes:}");
 
     /* conditions evaluated as true */
     WEE_CHECK_EVAL("1", "1");
@@ -213,6 +214,7 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "${if:${buffer.number}==1?yes:}");
     WEE_CHECK_EVAL("1", "${if:${buffer.number}==1?yes:no} == yes");
     WEE_CHECK_EVAL("1", "yes == ${if:${buffer.number}==1?yes:no}");
+    WEE_CHECK_EVAL("1", "${if:\\$==\\$?yes:}");
 
     /* evaluation of extra_vars */
     hashtable_set (options, "extra", "eval");
