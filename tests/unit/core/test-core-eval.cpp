@@ -277,6 +277,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("\t", "${esc:\t}");
 
     /* test hidden chars */
+    WEE_CHECK_EVAL("", "${hide:invalid}");
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
 
