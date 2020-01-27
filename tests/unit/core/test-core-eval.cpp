@@ -281,6 +281,14 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("********", "${hide:*,password}");
     WEE_CHECK_EVAL("\u2603\u2603\u2603", "${hide:${esc:\u2603},abc}");
 
+    /* test cut of chars (invalid values) */
+    WEE_CHECK_EVAL("", "${cut:}");
+    WEE_CHECK_EVAL("", "${cut:0,}");
+    WEE_CHECK_EVAL("", "${cut:a,,}");
+    WEE_CHECK_EVAL("", "${cutscr:}");
+    WEE_CHECK_EVAL("", "${cutscr:0,}");
+    WEE_CHECK_EVAL("", "${cutscr:a,,}");
+
     /* test cut of chars */
     WEE_CHECK_EVAL("", "${cut:0,,}");
     WEE_CHECK_EVAL("", "${cutscr:0,,}");
