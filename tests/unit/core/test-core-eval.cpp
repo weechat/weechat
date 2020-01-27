@@ -426,6 +426,11 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value, "${color:irc.color.message_join}-test-");
     WEE_CHECK_EVAL("test", "${option.not.found}test");
 
+    /* test modifier (invalid values) */
+    WEE_CHECK_EVAL("test_", "test_${modifier:}");
+    WEE_CHECK_EVAL("test_", "test_${modifier:xxx}");
+    WEE_CHECK_EVAL("test_", "test_${modifier:xxx,data}");
+
     /* test modifier */
     WEE_CHECK_EVAL("test_string", "test_${modifier:xxx,data,string}");
     WEE_CHECK_EVAL("test_no_color",
