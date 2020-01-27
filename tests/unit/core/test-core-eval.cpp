@@ -30,6 +30,7 @@ extern "C"
 #include "src/core/wee-config.h"
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
+#include "src/core/wee-secure.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-version.h"
 #include "src/gui/gui-color.h"
@@ -485,10 +486,17 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("123129", "${calc:${repeat:2,123}+2*3}");
 
     /* test option */
+    hashtable_set (secure_hashtable_data, "sec_option", "sec_value");
+    WEE_CHECK_EVAL("sec_value", "${sec.data.sec_option}");
+    hashtable_remove (secure_hashtable_data, "sec_option");
     snprintf (str_value, sizeof (str_value),
               "%d", CONFIG_INTEGER(config_look_scroll_amount));
     WEE_CHECK_EVAL(str_value, "${weechat.look.scroll_amount}");
     WEE_CHECK_EVAL(str_value, "${${window.buffer.name}.look.scroll_amount}");
+    WEE_CHECK_EVAL("right", "${weechat.look.prefix_align}");
+    WEE_CHECK_EVAL("1", "${weechat.startup.display_logo}");
+    WEE_CHECK_EVAL("=!=", "${weechat.look.prefix_error}");
+    WEE_CHECK_EVAL("lightcyan", "${weechat.color.chat_nick}");
 
     /* test hdata */
     WEE_CHECK_EVAL("x", "x${buffer.number");
