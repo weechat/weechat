@@ -122,6 +122,9 @@ TEST(CoreCalc, Expression)
 
     /* multiple operators */
     WEE_CHECK_CALC("11", "5+2*3");
+    WEE_CHECK_CALC("11", "2*3+5");
+    WEE_CHECK_CALC("7", "5+2*3/3");
+    WEE_CHECK_CALC("7", "2*3/3+5");
 
     /* expressions with decimal numbers */
     WEE_CHECK_CALC("12.5", "10.5+2");
