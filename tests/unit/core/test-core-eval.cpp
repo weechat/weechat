@@ -498,6 +498,10 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("=!=", "${weechat.look.prefix_error}");
     WEE_CHECK_EVAL("lightcyan", "${weechat.color.chat_nick}");
 
+    /* test buffer local variable */
+    WEE_CHECK_EVAL("core", "${plugin}");
+    WEE_CHECK_EVAL("weechat", "${name}");
+
     /* test hdata */
     WEE_CHECK_EVAL("x", "x${buffer.number");
     WEE_CHECK_EVAL("x${buffer.number}1",
