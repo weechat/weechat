@@ -33,6 +33,7 @@ extern "C"
 #include "src/core/wee-secure.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-version.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/plugin.h"
 }
@@ -510,6 +511,11 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "${window.buffer.number}");
     WEE_CHECK_EVAL("core.weechat", "${buffer.full_name}");
     WEE_CHECK_EVAL("core.weechat", "${window.buffer.full_name}");
+    WEE_CHECK_EVAL("", "${buffer[0x0].full_name}");
+    WEE_CHECK_EVAL("core.weechat", "${buffer[gui_buffers].full_name}");
+    snprintf (str_value, sizeof (str_value),
+              "${buffer[0x%lx].full_name}", (long unsigned int)gui_buffers);
+    WEE_CHECK_EVAL("core.weechat", str_value);
 
     /* test with another prefix/suffix */
     options = hashtable_new (32,
