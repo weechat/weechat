@@ -384,6 +384,11 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("Hello, \x19" "F03world!",
                    "${revscr:${revscr:Hello, ${color:red}world!}}");
 
+    /* test repeat of string (invalid values) */
+    WEE_CHECK_EVAL("", "${repeat:}");
+    WEE_CHECK_EVAL("", "${repeat:0}");
+    WEE_CHECK_EVAL("", "${repeat:a,x}");
+
     /* test repeat of string */
     WEE_CHECK_EVAL("", "${repeat:-1,x}");
     WEE_CHECK_EVAL("", "${repeat:0,x}");
