@@ -30,6 +30,7 @@ Bug fixes::
 
   * core: flush stdout/stderr before forking in hook_process function (issue #1441)
   * core: fix evaluation of condition with nested "if" (issue #1434)
+  * irc: add nick changes in the hotlist (except self nick change)
   * irc: case-insensitive comparison on incoming CTCP command, force upper case on CTCP replies (issue #1439)
   * irc: fix memory leak when the channel topic is changed
   * logger: fix crash when logging is disabled on a buffer and the log file was deleted in the meanwhile, when option logger.file.info_lines is on (issue #1444)

@@ -1640,9 +1640,6 @@ IRC_PROTOCOL_CALLBACK(nick)
                 {
                     ptr_nick_found = ptr_nick;
 
-                    /* temporary disable hotlist */
-                    weechat_buffer_set (NULL, "hotlist", "-");
-
                     /* set host in nick if needed */
                     irc_nick_set_host (ptr_nick, address);
 
@@ -1651,6 +1648,9 @@ IRC_PROTOCOL_CALLBACK(nick)
                     irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
                     if (local_nick)
                     {
+                        /* temporary disable hotlist */
+                        weechat_buffer_set (NULL, "hotlist", "-");
+
                         snprintf (str_tags, sizeof (str_tags),
                                   "irc_nick1_%s,irc_nick2_%s",
                                   nick,
@@ -1667,6 +1667,9 @@ IRC_PROTOCOL_CALLBACK(nick)
                                                   IRC_COLOR_CHAT_NICK_SELF,
                                                   new_nick,
                                                   IRC_COLOR_RESET);
+
+                        /* enable hotlist */
+                        weechat_buffer_set (NULL, "hotlist", "+");
                     }
                     else
                     {
@@ -1712,9 +1715,6 @@ IRC_PROTOCOL_CALLBACK(nick)
 
                     if (old_color)
                         free (old_color);
-
-                    /* enable hotlist */
-                    weechat_buffer_set (NULL, "hotlist", "+");
                 }
                 break;
         }
