@@ -27,6 +27,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -694,7 +695,8 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
     {
         /* return uptime with format: "days:hh:mm:ss" */
-        util_get_uptime (NULL, &days, &hours, &minutes, &seconds);
+        util_get_time_diff (weechat_first_start_time, time (NULL),
+                            NULL, &days, &hours, &minutes, &seconds);
         snprintf (value, sizeof (value), "%d:%02d:%02d:%02d",
                   days, hours, minutes, seconds);
         return strdup (value);
@@ -703,7 +705,8 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     if (strcmp (arguments, "days") == 0)
     {
         /* return the number of days */
-        util_get_uptime (NULL, &days, NULL, NULL, NULL);
+        util_get_time_diff (weechat_first_start_time, time (NULL),
+                            NULL, &days, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%d", days);
         return strdup (value);
     }
@@ -711,7 +714,8 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
     if (strcmp (arguments, "seconds") == 0)
     {
         /* return the number of seconds */
-        util_get_uptime (&total_seconds, NULL, NULL, NULL, NULL);
+        util_get_time_diff (weechat_first_start_time, time (NULL),
+                            &total_seconds, NULL, NULL, NULL, NULL);
         snprintf (value, sizeof (value), "%lld", (long long)total_seconds);
         return strdup (value);
     }

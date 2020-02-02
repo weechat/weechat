@@ -48,6 +48,10 @@ extern void util_timeval_add (struct timeval *tv, long long interval);
 
 /* time */
 extern const char *util_get_time_string (const time_t *date);
+extern void util_get_time_diff (time_t time1, time_t time2,
+                                time_t *total_seconds,
+                                int *days, int *hours, int *minutes,
+                                int *seconds);
 
 /* delay */
 
@@ -74,9 +78,5 @@ extern char *util_file_get_content (const char *filename);
 
 /* version */
 extern int util_version_number (const char *version);
-
-/* uptime */
-extern void util_get_uptime (time_t *total_seconds, int *days,
-                             int *hours, int *minutes, int *seconds);
 
 #endif /* WEECHAT_UTIL_H */

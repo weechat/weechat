@@ -339,6 +339,35 @@ util_get_time_string (const time_t *date)
 }
 
 /*
+ * Returns difference between two times.
+ *
+ * The following variables are set, if pointer is not NULL:
+ *   - number of total seconds between the two times (basic subtraction)
+ *   - number of days/hours/minutes/seconds between the two times
+ */
+
+void
+util_get_time_diff (time_t time1, time_t time2,
+                    time_t *total_seconds,
+                    int *days, int *hours, int *minutes, int *seconds)
+{
+    time_t diff;
+
+    diff = time2 - time1;
+
+    if (total_seconds)
+        *total_seconds = diff;
+    if (days)
+        *days = diff / (60 * 60 * 24);
+    if (hours)
+        *hours = (diff % (60 * 60 * 24)) / (60 * 60);
+    if (minutes)
+        *minutes = ((diff % (60 * 60 * 24)) % (60 * 60)) / 60;
+    if (seconds)
+        *seconds = ((diff % (60 * 60 * 24)) % (60 * 60)) % 60;
+}
+
+/*
  * Parses a string with a delay and optional unit, returns the delay in
  * milliseconds.
  *
@@ -981,28 +1010,4 @@ util_version_number (const char *version)
 
     return (version_int[0] << 24) | (version_int[1] << 16)
         | (version_int[2] << 8) | version_int[3];
-}
-
-/*
- * Returns uptime as number of days, hours, minutes, seconds.
- */
-
-void
-util_get_uptime (time_t *total_seconds, int *days,
-                 int *hours, int *minutes, int *seconds)
-{
-    time_t running_time;
-
-    running_time = time (NULL) - weechat_first_start_time;
-
-    if (total_seconds)
-        *total_seconds = running_time;
-    if (days)
-        *days = running_time / (60 * 60 * 24);
-    if (hours)
-        *hours = (running_time % (60 * 60 * 24)) / (60 * 60);
-    if (minutes)
-        *minutes = ((running_time % (60 * 60 * 24)) % (60 * 60)) / 60;
-    if (seconds)
-        *seconds = ((running_time % (60 * 60 * 24)) % (60 * 60)) % 60;
 }

@@ -6369,7 +6369,8 @@ COMMAND_CALLBACK(uptime)
     (void) data;
     (void) argv_eol;
 
-    util_get_uptime (NULL, &days, &hours, &minutes, &seconds);
+    util_get_time_diff (weechat_first_start_time, time (NULL),
+                        NULL, &days, &hours, &minutes, &seconds);
 
     if ((argc >= 2) && (string_strcasecmp (argv[1], "-o") == 0))
     {
