@@ -28,6 +28,7 @@ extern "C"
 #include <string.h>
 #include <signal.h>
 #include <sys/time.h>
+#include "src/core/wee-string.h"
 #include "src/core/wee-util.h"
 }
 
@@ -99,6 +100,75 @@ TEST(CoreUtil, GetTimeString)
     date = 946684800;  /* 2000-01-01 00:00 */
     str_date = util_get_time_string (&date);
     STRCMP_EQUAL("Sat, 01 Jan 2000 00:00:00", str_date);
+}
+
+/*
+ * Tests functions:
+ *   util_get_time_diff
+ */
+
+TEST(CoreUtil, GetTimeDiff)
+{
+    time_t date1, date2, total_seconds;
+    int days, hours, minutes, seconds;
+
+    util_get_time_diff (0, 0, NULL, NULL, NULL, NULL, NULL);
+
+    date1 = 946684800;  /* 2000-01-01 00:00:00 */
+
+    date2 = 946684800;  /* 2000-01-01 00:00:00 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(0, total_seconds);
+    LONGS_EQUAL(0, days);
+    LONGS_EQUAL(0, hours);
+    LONGS_EQUAL(0, minutes);
+    LONGS_EQUAL(0, seconds);
+
+    date2 = 946684801;  /* 2000-01-01 00:00:01 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(1, total_seconds);
+    LONGS_EQUAL(0, days);
+    LONGS_EQUAL(0, hours);
+    LONGS_EQUAL(0, minutes);
+    LONGS_EQUAL(1, seconds);
+
+    date2 = 946684880;  /* 2000-01-01 00:01:20 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(80, total_seconds);
+    LONGS_EQUAL(0, days);
+    LONGS_EQUAL(0, hours);
+    LONGS_EQUAL(1, minutes);
+    LONGS_EQUAL(20, seconds);
+
+    date2 = 946695680;  /* 2000-01-01 03:01:20 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(10880, total_seconds);
+    LONGS_EQUAL(0, days);
+    LONGS_EQUAL(3, hours);
+    LONGS_EQUAL(1, minutes);
+    LONGS_EQUAL(20, seconds);
+
+    date2 = 947127680;  /* 2000-01-06 03:01:20 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(442880, total_seconds);
+    LONGS_EQUAL(5, days);
+    LONGS_EQUAL(3, hours);
+    LONGS_EQUAL(1, minutes);
+    LONGS_EQUAL(20, seconds);
+
+    date2 = 979527680;  /* 2001-01-15 03:01:20 */
+    util_get_time_diff (date1, date2,
+                        &total_seconds, &days, &hours, &minutes, &seconds);
+    LONGS_EQUAL(32842880, total_seconds);
+    LONGS_EQUAL(380, days);
+    LONGS_EQUAL(3, hours);
+    LONGS_EQUAL(1, minutes);
+    LONGS_EQUAL(20, seconds);
 }
 
 /*
