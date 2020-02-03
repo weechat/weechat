@@ -308,7 +308,48 @@ TEST(CoreUtil, LibName)
 
 TEST(CoreUtil, FileGetContent)
 {
-    /* TODO: write tests */
+    char *path, *content, *content_read;
+    const char *content_small = "line 1\nline 2\nend";
+    int length, i;
+    FILE *f;
+
+    /* file not found */
+    POINTERS_EQUAL(NULL, util_file_get_content (NULL));
+    POINTERS_EQUAL(NULL, util_file_get_content (""));
+    POINTERS_EQUAL(NULL, util_file_get_content ("/tmp/does/not/exist.xyz"));
+
+    path = string_eval_path_home ("%h/test_file.txt", NULL, NULL, NULL);
+
+    /* small file */
+    length = strlen (content_small);
+    f = fopen (path, "wb");
+    CHECK(f);
+    LONGS_EQUAL(length, fwrite (content_small, 1, length, f));
+    fclose (f);
+    content_read = util_file_get_content (path);
+    STRCMP_EQUAL(content_small, content_read);
+    free (content_read);
+    unlink (path);
+
+    /* bigger file: 26 lines of 5000 bytes */
+    length = 26 * 5001;
+    content = (char *)malloc (length + 1);
+    CHECK(content);
+    for (i = 0; i < 26; i++)
+    {
+        memset (content + (i * 5001), 'a' + i, 5000);
+        content[(i * 5001) + 5000] = '\n';
+    }
+    content[26 * 5001] = '\0';
+    f = fopen (path, "wb");
+    CHECK(f);
+    LONGS_EQUAL(length, fwrite (content, 1, length, f));
+    fclose (f);
+    content_read = util_file_get_content (path);
+    STRCMP_EQUAL(content, content_read);
+    free (content_read);
+    unlink (path);
+    free (content);
 }
 
 /*
