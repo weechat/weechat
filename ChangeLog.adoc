@@ -37,6 +37,10 @@ Bug fixes::
   * relay: update buffers synchronization when buffers are renamed (issue #1428)
   * xfer: send signal "xfer_ended" after the received file has been renamed (issue #1438)
 
+Tests::
+
+  * unit: add tests on functions util_get_time_diff and util_file_get_content
+
 Build::
 
   * guile: add detection of Guile 3.0.0 (issue #1442)
