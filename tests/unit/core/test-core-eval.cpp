@@ -75,6 +75,7 @@ TEST(CoreEval, Boolean)
 TEST(CoreEval, EvalCondition)
 {
     struct t_hashtable *pointers, *extra_vars, *options;
+    const char *ptr_debug_output;
     char *value;
 
     pointers = NULL;
@@ -241,6 +242,57 @@ TEST(CoreEval, EvalCondition)
     hashtable_set (options, "suffix", ")%");
     WEE_CHECK_EVAL("0", "${buffer.number} == 1");
     WEE_CHECK_EVAL("1", "%(buffer.number)% == 1");
+    hashtable_remove (options, "prefix");
+    hashtable_remove (options, "suffix");
+
+    /* test with debug */
+    hashtable_set (options, "debug", "1");
+    WEE_CHECK_EVAL("1", "abc < def");
+    ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
+    STRCMP_EQUAL("eval_expression(\"abc < def\")\n"
+                 "eval_expression_condition(\"abc < def\")\n"
+                 "eval_strstr_level(\"abc < def\", \"||\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"&&\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"=~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"=*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"==\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"<=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"<\", \"(\", \")\", 0)\n"
+                 "eval_expression_condition(\"abc\")\n"
+                 "eval_strstr_level(\"abc\", \"||\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"&&\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"=~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"=*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"==\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"<=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"<\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \">=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \">\", \"(\", \")\", 0)\n"
+                 "eval_replace_vars(\"abc\")\n"
+                 "eval_expression_condition(\"def\")\n"
+                 "eval_strstr_level(\"def\", \"||\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"&&\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"=~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"=*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"==\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"<=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"<\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \">=\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \">\", \"(\", \")\", 0)\n"
+                 "eval_replace_vars(\"def\")\n"
+                 "eval_compare(\"abc\", \"<\", \"def\")",
+                 ptr_debug_output);
+    hashtable_remove (options, "debug");
+    hashtable_remove (options, "debug_output");
 
     hashtable_free (extra_vars);
     hashtable_free (options);
@@ -256,6 +308,7 @@ TEST(CoreEval, EvalExpression)
     struct t_hashtable *pointers, *extra_vars, *options;
     struct t_config_option *ptr_option;
     char *value, str_value[256];
+    const char *ptr_debug_output;
 
     pointers = NULL;
 
@@ -560,9 +613,24 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("<<info:version>>", "<<info:version>>");
     WEE_CHECK_EVAL(version_get_version (), "<<<info:version>>>");
     WEE_CHECK_EVAL("1", "<<<buffer.number>>>");
+    hashtable_free (options);
+
+    /* test with debug */
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+    CHECK(options);
+    hashtable_set (options, "debug", "1");
+    WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
+    ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
+    STRCMP_EQUAL("eval_expression(\"${rev:abcdef}\")\n"
+                 "eval_replace_vars(\"${rev:abcdef}\")\n"
+                 "eval_replace_vars_cb(\"rev:abcdef\")",
+                 ptr_debug_output);
+    hashtable_free (options);
 
     hashtable_free (extra_vars);
-    hashtable_free (options);
 }
 
 /*
