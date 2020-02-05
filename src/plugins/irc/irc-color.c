@@ -95,23 +95,17 @@ regex_t *irc_color_regex_ansi = NULL;
 char *
 irc_color_decode (const char *string, int keep_colors)
 {
-    unsigned char *out, *out2, *ptr_string;
-    int out_length, length, out_pos, length_to_add;
+    char **out, *result;
     char str_fg[3], str_bg[3], str_color[128], str_key[128], str_to_add[128];
     const char *remapped_color;
-    int fg, bg, bold, reverse, italic, underline, rc;
+    unsigned char *ptr_string;
+    int length, fg, bg, bold, reverse, italic, underline, rc;
 
     if (!string)
         return NULL;
 
-    /*
-     * create output string with size of length*2 (with min 128 bytes),
-     * this string will be realloc() later with a larger size if needed
-     */
-    out_length = (strlen (string) * 2) + 1;
-    if (out_length < 128)
-        out_length = 128;
-    out = malloc (out_length);
+    length = strlen (string);
+    out = weechat_string_dyn_alloc (length + (length / 2) + 1);
     if (!out)
         return NULL;
 
@@ -122,8 +116,6 @@ irc_color_decode (const char *string, int keep_colors)
     underline = 0;
 
     ptr_string = (unsigned char *)string;
-    out[0] = '\0';
-    out_pos = 0;
     while (ptr_string && ptr_string[0])
     {
         str_to_add[0] = '\0';
@@ -274,25 +266,13 @@ irc_color_decode (const char *string, int keep_colors)
         }
         /* add "str_to_add" (if not empty) to "out" */
         if (str_to_add[0])
-        {
-            /* if "out" is too small for adding "str_to_add", do a realloc() */
-            length_to_add = strlen (str_to_add);
-            if (out_pos + length_to_add + 1 > out_length)
-            {
-                /* try to double the size of "out" */
-                out_length *= 2;
-                out2 = realloc (out, out_length);
-                if (!out2)
-                    return (char *)out;
-                out = out2;
-            }
-            /* add "str_to_add" to "out" */
-            memcpy (out + out_pos, str_to_add, length_to_add + 1);
-            out_pos += length_to_add;
-        }
+            weechat_string_dyn_concat (out, str_to_add);
     }
 
-    return (char *)out;
+    result = *out;
+    weechat_string_dyn_free (out, 0);
+
+    return result;
 }
 
 /*
