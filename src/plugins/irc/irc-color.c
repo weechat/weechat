@@ -287,58 +287,74 @@ irc_color_decode (const char *string, int keep_colors)
 char *
 irc_color_encode (const char *string, int keep_colors)
 {
-    unsigned char *out, *ptr_string;
-    int out_length, out_pos, length;
+    char **out, *result, str_to_add[2], utf_char[16];
+    unsigned char *ptr_string;
+    int length;
 
     if (!string)
         return NULL;
 
-    out_length = (strlen (string) * 2) + 1;
-    out = malloc (out_length);
+    length = strlen (string);
+    out = weechat_string_dyn_alloc (length + (length / 2) + 1);
     if (!out)
         return NULL;
 
     ptr_string = (unsigned char *)string;
-    out_pos = 0;
-    while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
+    while (ptr_string && ptr_string[0])
     {
         switch (ptr_string[0])
         {
             case 0x02: /* ^B */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_BOLD_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_BOLD_STR);
                 ptr_string++;
                 break;
             case 0x03: /* ^C */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_COLOR_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_COLOR_STR);
                 ptr_string++;
                 if (isdigit (ptr_string[0]))
                 {
                     if (keep_colors)
-                        out[out_pos++] = ptr_string[0];
+                    {
+                        str_to_add[0] = ptr_string[0];
+                        str_to_add[1] = '\0';
+                        weechat_string_dyn_concat (out, str_to_add);
+                    }
                     ptr_string++;
                     if (isdigit (ptr_string[0]))
                     {
                         if (keep_colors)
-                            out[out_pos++] = ptr_string[0];
+                        {
+                            str_to_add[0] = ptr_string[0];
+                            str_to_add[1] = '\0';
+                            weechat_string_dyn_concat (out, str_to_add);
+                        }
                         ptr_string++;
                     }
                 }
                 if (ptr_string[0] == ',')
                 {
                     if (keep_colors)
-                        out[out_pos++] = ',';
+                        weechat_string_dyn_concat (out, ",");
                     ptr_string++;
                     if (isdigit (ptr_string[0]))
                     {
                         if (keep_colors)
-                            out[out_pos++] = ptr_string[0];
+                        {
+                            str_to_add[0] = ptr_string[0];
+                            str_to_add[1] = '\0';
+                            weechat_string_dyn_concat (out, str_to_add);
+                        }
                         ptr_string++;
                         if (isdigit (ptr_string[0]))
                         {
                             if (keep_colors)
-                                out[out_pos++] = ptr_string[0];
+                            {
+                                str_to_add[0] = ptr_string[0];
+                                str_to_add[1] = '\0';
+                                weechat_string_dyn_concat (out, str_to_add);
+                            }
                             ptr_string++;
                         }
                     }
@@ -346,37 +362,39 @@ irc_color_encode (const char *string, int keep_colors)
                 break;
             case 0x0F: /* ^O */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_RESET_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_RESET_STR);
                 ptr_string++;
                 break;
             case 0x16: /* ^V */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_REVERSE_STR);
                 ptr_string++;
                 break;
             case 0x1D: /* ^] */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_ITALIC_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_ITALIC_STR);
                 ptr_string++;
                 break;
             case 0x1F: /* ^_ */
                 if (keep_colors)
-                    out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
+                    weechat_string_dyn_concat (out, IRC_COLOR_UNDERLINE_STR);
                 ptr_string++;
                 break;
             default:
                 length = weechat_utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, ptr_string, length);
-                out_pos += length;
+                memcpy (utf_char, ptr_string, length);
+                utf_char[length] = '\0';
+                weechat_string_dyn_concat (out, utf_char);
                 ptr_string += length;
         }
     }
 
-    out[out_pos] = '\0';
+    result = *out;
+    weechat_string_dyn_free (out, 0);
 
-    return (char *)out;
+    return result;
 }
 
 /*
