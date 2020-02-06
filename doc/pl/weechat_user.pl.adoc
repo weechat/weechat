@@ -1789,43 +1789,139 @@ Te skróty używane są w kontekście myszy, w momencie wystąpienia zdarzenia m
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| Klawisz/Wheel ^(1)^ | Gest          | Obszar                | Opis | Komenda
-| ◾◽◽                 | -             | chat                  | Przełącz na okno. | `/window ${_window_number}`
-| ◾◽◽                 | lewo          | chat                  | Przełącz na poprzedni bufor. | `/window ${_window_number};/buffer +1`
-| ◾◽◽                 | prawo         | chat                  | Przełącz na następny bufor. | `/window ${_window_number};/buffer +1`
-| ◾◽◽                 | lewo (długo)  | chat                  | Przełącz na pierwszy bufor. | `/window ${_window_number};/buffer 1`
-| ◾◽◽                 | prawo (długo) | chat                  | Przełącz na ostatni bufor. | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽                 | -             | chat (bufor skryptów) | Zaznacz linię w buforze skryptów. | `/script go ${_chat_line_y}`
-| ◽◽◾                 | -             | chat (bufor skryptów) | Zainstaluj/usuń skrypt. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| kbd:[▲]             | -             | chat                  | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up -window ${_window_number}`
-| kbd:[▼]             | -             | chat                  | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down -window ${_window_number}`
-| kbd:[▲]             | -             | chat (bufor skryptów) | Przejdź 5 linii w górę w buforze skryptów. | `/script up 5`
-| kbd:[▼]             | -             | chat (bufor skryptów) | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
-| kbd:[Ctrl+▲]        | -             | chat                  | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+▼]        | -             | chat                  | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽                 | góra / lewo    | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
-| ◾◽◽                 | dół / prawo | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
-| ◾◽◽                 | -            | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
-| ◽◽◾                 | -            | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
-| kbd:[Ctrl+▲]        | -                  | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
-| kbd:[Ctrl+▼]        | -            | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
-| ◾◽◽                 | góra          | lista nicków          | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽                 | dół           | lista nicków          | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽                 | góra (długo)  | lista nicków          | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽                 | dół (długo)   | lista nicków          | Idź na koniec listy nicków. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽                 | -             | lista nicków          | Otwórz prywatną rozmowę z nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾                 | -             | lista nicków          | Wykonaj whois dla nicka. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽                 | lewo          | lista nicków          | Wykop nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽                 | lewo (długo)  | lista nicków          | Wykop i zbanuj nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾                 | lewo          | lista nicków          | Zbanuj nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾                 | -             | linia poleceń         | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń. | `/input grab_mouse_area`
-| kbd:[▲]             | -             | dowolny pasek         | Przewiń pasek o -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| kbd:[▼]             | -             | dowolny pasek         | Przewiń pasek o +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽                 | -             | gdziekolwiek          | Włącz tryb kursora w tym miejscu. | `/cursor go ${_x},${_y}`
+| Klawisz/Wheel ^(1)^ | Gest          | Obszar               | Opis | Komenda
+| ◾◽◽                 | -             | chat                 | Przełącz na okno. | `/window ${_window_number}`
+| ◾◽◽                 | lewo          | chat                 | Przełącz na poprzedni bufor. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                 | prawo         | chat                 | Przełącz na następny bufor. | `/window ${_window_number};/buffer +1`
+| ◾◽◽                 | lewo (długo)  | chat                 | Przełącz na pierwszy bufor. | `/window ${_window_number};/buffer 1`
+| ◾◽◽                 | prawo (długo) | chat                 | Przełącz na ostatni bufor. | `/window ${_window_number};/input jump_last_buffer`
+| kbd:[▲]             | -             | chat                 | Przewiń w górę kilka linii w historii bufora. | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]             | -             | chat                 | Przewiń w dół kilka linii w historii bufora. | `/window scroll_down -window ${_window_number}`
+| kbd:[Ctrl+▲]        | -             | chat                 | Przewiń poziomo w lewo. | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]        | -             | chat                 | Przewiń poziomo w prawo. | `/window scroll_horiz -window ${_window_number} +10%`
+// TRANSLATION MISSING
+| kbd:[▲]             | -             | chat: bufor fset     | Move five lines up in fset buffer. | `/fset -up 5`
+// TRANSLATION MISSING
+| kbd:[▼]             | -             | chat: bufor fset     | Move five lines down in fset buffer. | `/fset -down 5`
+// TRANSLATION MISSING
+| ◾◽◽                 | -             | chat: bufor fset     | Select line in fset buffer. | `/window ${_window_number};/fset -go ${_chat_line_y}`
+// TRANSLATION MISSING
+| ◽◽◾                 | -             | chat: bufor fset     | Toggle boolean (on/off) or edit the option value. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾                 | left          | chat: bufor fset     | Decrease value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾                 | right         | chat: bufor fset     | Increase value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾                 | up / down     | chat: bufor fset     | Mark/unmark multiple options. | `hsignal:fset_mouse`
+| kbd:[▲]             | -             | chat: bufor skryptów | Przejdź 5 linii w górę w buforze skryptów. | `/script up 5`
+| kbd:[▼]             | -             | chat: bufor skryptów | Przejdź 5 linii w dół w buforze skryptów. | `/script down 5`
+| ◾◽◽                 | -             | chat: bufor skryptów | Zaznacz linię w buforze skryptów. | `/script go ${_chat_line_y}`
+| ◽◽◾                 | -             | chat: bufor skryptów | Zainstaluj/usuń skrypt. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ◾◽◽                 | góra / lewo   | buflist              | Przenieś bufor na niższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | dół / prawo   | buflist              | Przenieś bufor na wyższy numer. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | -             | buflist              | Przełącz na bufor (poprzednio odwiedzony bufor, jeśli jest to obecny bufor). | Sygnał `buflist_mouse`.
+| ◽◽◾                 | -             | buflist              | Przełącz na następny odwiedzony bufor, jeśli jest to obecny bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+▲]        | -             | buflist              | Przełącz na poprzedni bufor. | Sygnał `buflist_mouse`.
+| kbd:[Ctrl+▼]        | -             | buflist              | Przełącz na następny bufor. | Sygnał `buflist_mouse`.
+| ◾◽◽                 | góra          | lista nicków         | Przewiń w górę jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽                 | dół           | lista nicków         | Przewiń w dół jedna stronę listy nicków. | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽                 | góra (długo)  | lista nicków         | Idź na początek listy nicków. | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽                 | dół (długo)   | lista nicków         | Idź na koniec listy nicków. | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽                 | -             | lista nicków         | Otwórz prywatną rozmowę z nick. | `/window ${_window_number};/query ${nick}`
+| ◽◽◾                 | -             | lista nicków         | Wykonaj whois dla nicka. | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽                 | lewo          | lista nicków         | Wykop nick. | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽                 | lewo (długo)  | lista nicków         | Wykop i zbanuj nick. | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾                 | lewo          | lista nicków         | Zbanuj nick. | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾                 | -             | linia poleceń        | Przechwyć zdarzenie myszy i wstaw jego kod w linii poleceń. | `/input grab_mouse_area`
+| kbd:[▲]             | -             | dowolny pasek        | Przewiń pasek o -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]             | -             | dowolny pasek        | Przewiń pasek o +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽                 | -             | gdziekolwiek         | Włącz tryb kursora w tym miejscu. | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
 ^(1)^ kbd:[▲] i kbd:[▼] to przewijanie rolką myszy w górę i w dół.
+
+// TRANSLATION MISSING
+[[key_bindings_fset_buffer]]
+==== Keys for fset buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                | Action ^(1)^ | Description | Command
+| kbd:[↑]            |              | Move one line up. | `/fset -up`
+| kbd:[↓]            |              | Move one line down. | `/fset -down`
+| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
+| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
+| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `/fset -go 0`
+| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `/fset -go end`
+| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `/fset -left`
+| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `/fset -right`
+| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `/fset -toggle`
+| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `/fset -add -1`
+| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `/fset -add 1`
+| kbd:[Alt+f],
+  kbd:[Alt+r]        | `r`          | Reset value. | `/fset -reset`
+| kbd:[Alt+f],
+  kbd:[Alt+u]        | `u`          | Unset value. | `/fset -unset`
+| kbd:[Alt+Enter]    | `s`          | Set value. | `/fset -set`
+| kbd:[Alt+f],
+  kbd:[Alt+n]        | `n`          | Set new value. | `/fset -setnew`
+| kbd:[Alt+f],
+  kbd:[Alt+a]        | `a`          | Append to value. | `/fset -append`
+| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `/fset -mark 1`
+| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `/fset -up; /fset -mark`
+| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `/fset -mark; /fset -down`
+|                    | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                    | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `/fset -refresh`
+|                    | `$`          | Refresh options (keep marked options). |
+|                    | `$$`         | Refresh options (unmark all options). |
+| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `/mute /set fset.look.show_plugins_desc toggle`
+| kbd:[Alt+v]        |              | Toggle help bar. | `/bar toggle fset`
+|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /set fset.look.sort x,y`
+|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /unset fset.look.sort`
+|                    | `w:xxx`      | Export options in file "xxx". | `/fset -export xxx`
+|                    | `w-:xxx`     | Export options in file "xxx" without help. | `/fset -export -nohelp xxx`
+|                    | `w+:xxx`     | Export options in file "xxx" with help. | `/fset -export -help xxx`
+| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `/fset -format`
+|                    | `q`          | Close fset buffer. | `/buffer close`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_script_buffer]]
+==== Keys for script buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                | Action ^(1)^ | Description | Command
+| kbd:[↑]            |              | Move one line up. | `/script up`
+| kbd:[↓]            |              | Move one line down. | `/script down`
+| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
+| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
+| kbd:[Alt+i]        | `i`          | Install script. | `/script install`
+| kbd:[Alt+r]        | `r`          | Remove script. | `/script remove`
+| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `/script load`
+| kbd:[Alt+u]        | `u`          | Unload script. | `/script unload`
+| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `/script toggleautoload`
+| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `/script hold`
+| kbd:[Alt+v]        | `v`          | View script. | `/script show`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
 
 [[mouse]]
 === Wsparcie myszy
@@ -3383,7 +3479,7 @@ Opcje:
 include::autogen/user/script_options.adoc[]
 
 [[python_options]]
-==== Opcje dla języka Python 
+==== Opcje dla języka Python
 
 Sekcje w pliku _python.conf_:
 

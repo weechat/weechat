@@ -1789,43 +1789,139 @@ kbd:[Ctrl+r] が押された状態) でのみ有効です。
 
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
-| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                        | 説明 | コマンド
-| ◾◽◽               | -            | チャット                      | ウィンドウに移動 | `/window ${_window_number}`
-| ◾◽◽               | 左           | チャット                      | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽               | 右           | チャット                      | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
-| ◾◽◽               | 左 (長く)    | チャット                      | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
-| ◾◽◽               | 右 (長く)    | チャット                      | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
-| ◾◽◽               | -            | チャット (スクリプトバッファ) | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
-| ◽◽◾               | -            | チャット (スクリプトバッファ) | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
-| kbd:[▲]           | -            | チャット                      | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
-| kbd:[▼]           | -            | チャット                      | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
-| kbd:[▲]           | -            | チャット (スクリプトバッファ) | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
-| kbd:[▼]           | -            | チャット (スクリプトバッファ) | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
-| kbd:[Ctrl+▲]      | -            | チャット                      | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+▼]      | -            | チャット                      | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
-| ◾◽◽               | 上 / 左      | バッファリスト                | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
-| ◾◽◽               | 下 / 右      | バッファリスト                | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
-| ◾◽◽               | -            | バッファリスト                | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
-| ◽◽◾               | -            | バッファリスト                | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
-| kbd:[Ctrl+▲]      | -            | バッファリスト                | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
-| kbd:[Ctrl+▼]      | -            | バッファリスト                | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
-| ◾◽◽               | 上           | ニックネームリスト            | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽               | 下           | ニックネームリスト            | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽               | 上 (長く)    | ニックネームリスト            | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽               | 下 (長く)    | ニックネームリスト            | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽               | -            | ニックネームリスト            | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
-| ◽◽◾               | -            | ニックネームリスト            | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽               | 左           | ニックネームリスト            | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽               | 左 (長く)    | ニックネームリスト            | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾               | 左           | ニックネームリスト            | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾               | -            | 入力                          | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
-| kbd:[▲]           | -            | 任意のバー                    | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| kbd:[▼]           | -            | 任意のバー                    | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽               | -            | 任意の場所                    | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
+| ボタン/ホイール ^(1)^ | ジェスチャー | エリア                       | 説明 | コマンド
+| ◾◽◽               | -            | チャット                     | ウィンドウに移動 | `/window ${_window_number}`
+| ◾◽◽               | 左           | チャット                     | 前のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽               | 右           | チャット                     | 次のバッファに移動 | `/window ${_window_number};/buffer +1`
+| ◾◽◽               | 左 (長く)    | チャット                     | 最初のバッファに移動 | `/window ${_window_number};/buffer 1`
+| ◾◽◽               | 右 (長く)    | チャット                     | 最後のバッファに移動 | `/window ${_window_number};/input jump_last_buffer`
+| kbd:[▲]           | -            | チャット                     | バッファ履歴を上方向にスクロール | `/window scroll_up -window ${_window_number}`
+| kbd:[▼]           | -            | チャット                     | バッファ履歴を下方向にスクロール | `/window scroll_down -window ${_window_number}`
+| kbd:[Ctrl+▲]      | -            | チャット                     | 水平左方向にスクロール | `/window scroll_horiz -window ${_window_number} -10%`
+| kbd:[Ctrl+▼]      | -            | チャット                     | 水平右方向にスクロール | `/window scroll_horiz -window ${_window_number} +10%`
+// TRANSLATION MISSING
+| kbd:[▲]           | -            | chat: fset buffer       | Move five lines up in fset buffer. | `/fset -up 5`
+// TRANSLATION MISSING
+| kbd:[▼]           | -            | chat: fset buffer       | Move five lines down in fset buffer. | `/fset -down 5`
+// TRANSLATION MISSING
+| ◾◽◽               | -            | chat: fset buffer       | Select line in fset buffer. | `/window ${_window_number};/fset -go ${_chat_line_y}`
+// TRANSLATION MISSING
+| ◽◽◾               | -            | chat: fset buffer       | Toggle boolean (on/off) or edit the option value. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾               | left         | chat: fset buffer       | Decrease value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾               | right        | chat: fset buffer       | Increase value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+// TRANSLATION MISSING
+| ◽◽◾               | up / down    | chat: fset buffer       | Mark/unmark multiple options. | `hsignal:fset_mouse`
+| kbd:[▲]           | -            | チャット: スクリプトバッファ | スクリプトバッファを 5 行上方向にスクロール | `/script up 5`
+| kbd:[▼]           | -            | チャット: スクリプトバッファ | スクリプトバッファで 5 行下方向にスクロール | `/script down 5`
+| ◾◽◽               | -            | チャット: スクリプトバッファ | スクリプトバッファで行選択 | `/script go ${_chat_line_y}`
+| ◽◽◾               | -            | チャット: スクリプトバッファ | スクリプトのインストール `/ 削除 | /script go ${_chat_line_y};/script installremove ${script_name_with_extension}`
+| ◾◽◽               | 上 / 左      | バッファリスト               | 指定したバッファを下の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽               | 下 / 右      | バッファリスト               | 指定したバッファを上の番号に移動 | `buflist_mouse` シグナル
+| ◾◽◽               | -            | バッファリスト               | 指定したバッファに切り替える (現在のバッファを指定した場合、バッファ切り替え履歴で前のバッファに切り替える) | `buflist_mouse` シグナル
+| ◽◽◾               | -            | バッファリスト               | 現在のバッファを指定した場合、バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+▲]      | -            | バッファリスト               | バッファ切り替え履歴で前のバッファに切り替える | `buflist_mouse` シグナル
+| kbd:[Ctrl+▼]      | -            | バッファリスト               | バッファ切り替え履歴で次のバッファに切り替える | `buflist_mouse` シグナル
+| ◾◽◽               | 上           | ニックネームリスト           | ニックネームリストを 1 ページ分上方向にスクロール | `/bar scroll nicklist ${_window_number} -100%`
+| ◾◽◽               | 下           | ニックネームリスト           | ニックネームリストを 1 ページ分下方向にスクロール | `/bar scroll nicklist ${_window_number} +100%`
+| ◾◽◽               | 上 (長く)    | ニックネームリスト           | ニックネームリストの最初に移動 | `/bar scroll nicklist ${_window_number} b`
+| ◾◽◽               | 下 (長く)    | ニックネームリスト           | ニックネームリストの最後に移動 | `/bar scroll nicklist ${_window_number} e`
+| ◾◽◽               | -            | ニックネームリスト           | ニックネームに対するクエリを開く | `/window ${_window_number};/query ${nick}`
+| ◽◽◾               | -            | ニックネームリスト           | ニックネームに対する whois を行う | `/window ${_window_number};/whois ${nick}`
+| ◾◽◽               | 左           | ニックネームリスト           | ニックネームをキックする | `/window ${_window_number};/kick ${nick}`
+| ◾◽◽               | 左 (長く)    | ニックネームリスト           | ニックネームをキックとバンする | `/window ${_window_number};/kickban ${nick}`
+| ◽◽◾               | 左           | ニックネームリスト           | ニックネームをバンする | `/window ${_window_number};/ban ${nick}`
+| ◽◽◾               | -            | 入力                         | マウスイベントを奪ってコマンドラインにコードを入力 | `/input grab_mouse_area`
+| kbd:[▲]           | -            | 任意のバー                   | バーを -20% スクロール | `/bar scroll ${_bar_name} ${_window_number} -20%`
+| kbd:[▼]           | -            | 任意のバー                   | バーを +20% スクロール | `/bar scroll ${_bar_name} ${_window_number} +20%`
+| ◽◾◽               | -            | 任意の場所                   | この場所でカーソルモードを開始 | `/cursor go ${_x},${_y}`
 |===
 
 [NOTE]
 ^(1)^ kbd:[▲] と kbd:[▼] はホイールの上方向回転と下方向回転に対応します。
+
+// TRANSLATION MISSING
+[[key_bindings_fset_buffer]]
+==== Keys for fset buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                | Action ^(1)^ | Description | Command
+| kbd:[↑]            |              | Move one line up. | `/fset -up`
+| kbd:[↓]            |              | Move one line down. | `/fset -down`
+| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
+| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
+| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `/fset -go 0`
+| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `/fset -go end`
+| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `/fset -left`
+| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `/fset -right`
+| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `/fset -toggle`
+| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `/fset -add -1`
+| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `/fset -add 1`
+| kbd:[Alt+f],
+  kbd:[Alt+r]        | `r`          | Reset value. | `/fset -reset`
+| kbd:[Alt+f],
+  kbd:[Alt+u]        | `u`          | Unset value. | `/fset -unset`
+| kbd:[Alt+Enter]    | `s`          | Set value. | `/fset -set`
+| kbd:[Alt+f],
+  kbd:[Alt+n]        | `n`          | Set new value. | `/fset -setnew`
+| kbd:[Alt+f],
+  kbd:[Alt+a]        | `a`          | Append to value. | `/fset -append`
+| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `/fset -mark 1`
+| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `/fset -up; /fset -mark`
+| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `/fset -mark; /fset -down`
+|                    | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+|                    | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
+| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `/fset -refresh`
+|                    | `$`          | Refresh options (keep marked options). |
+|                    | `$$`         | Refresh options (unmark all options). |
+| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `/mute /set fset.look.show_plugins_desc toggle`
+| kbd:[Alt+v]        |              | Toggle help bar. | `/bar toggle fset`
+|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /set fset.look.sort x,y`
+|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /unset fset.look.sort`
+|                    | `w:xxx`      | Export options in file "xxx". | `/fset -export xxx`
+|                    | `w-:xxx`     | Export options in file "xxx" without help. | `/fset -export -nohelp xxx`
+|                    | `w+:xxx`     | Export options in file "xxx" with help. | `/fset -export -help xxx`
+| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `/fset -format`
+|                    | `q`          | Close fset buffer. | `/buffer close`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
+
+// TRANSLATION MISSING
+[[key_bindings_script_buffer]]
+==== Keys for script buffer
+
+// TRANSLATION MISSING
+These keys and actions are used on the script buffer (see <<scripts_plugins,Script plugin>>).
+
+// TRANSLATION MISSING
+[width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
+|===
+| Key                | Action ^(1)^ | Description | Command
+| kbd:[↑]            |              | Move one line up. | `/script up`
+| kbd:[↓]            |              | Move one line down. | `/script down`
+| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
+| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
+| kbd:[Alt+i]        | `i`          | Install script. | `/script install`
+| kbd:[Alt+r]        | `r`          | Remove script. | `/script remove`
+| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `/script load`
+| kbd:[Alt+u]        | `u`          | Unload script. | `/script unload`
+| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `/script toggleautoload`
+| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `/script hold`
+| kbd:[Alt+v]        | `v`          | View script. | `/script show`
+|===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ The action must be entered as input on the command line, followed by kbd:[Enter].
 
 [[mouse]]
 === マウスサポート
