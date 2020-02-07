@@ -483,7 +483,7 @@ irc_color_decode_ansi_cb (void *data, const char *text)
 {
     struct t_irc_color_ansi_state *ansi_state;
     char *text2, **items, *output, str_color[128];
-    int i, length, num_items, value, color;
+    int i, length, num_items, value, value2, color;
 
     ansi_state = (struct t_irc_color_ansi_state *)data;
 
@@ -594,41 +594,43 @@ irc_color_decode_ansi_cb (void *data, const char *text)
             case 38: /* text color */
                 if (i + 1 < num_items)
                 {
-                    switch (atoi (items[i + 1]))
+                    value2 = atoi (items[i + 1]);
+                    if (value2 == 2)
                     {
-                        case 2: /* RGB color */
-                            if (i + 4 < num_items)
+                        /* RGB color */
+                        if (i + 4 < num_items)
+                        {
+                            color = irc_color_convert_rgb2irc (
+                                (atoi (items[i + 2]) << 16) |
+                                (atoi (items[i + 3]) << 8) |
+                                atoi (items[i + 4]));
+                            if (color >= 0)
                             {
-                                color = irc_color_convert_rgb2irc (
-                                    (atoi (items[i + 2]) << 16) |
-                                    (atoi (items[i + 3]) << 8) |
-                                    atoi (items[i + 4]));
-                                if (color >= 0)
-                                {
-                                    snprintf (str_color, sizeof (str_color),
-                                              "%c%02d",
-                                              IRC_COLOR_COLOR_CHAR,
-                                              color);
-                                    strcat (output, str_color);
-                                }
-                                i += 4;
+                                snprintf (str_color, sizeof (str_color),
+                                          "%c%02d",
+                                          IRC_COLOR_COLOR_CHAR,
+                                          color);
+                                strcat (output, str_color);
                             }
-                            break;
-                        case 5: /* terminal color (0-255) */
-                            if (i + 2 < num_items)
+                            i += 4;
+                        }
+                    }
+                    else if (value2 == 5)
+                    {
+                        /* terminal color (0-255) */
+                        if (i + 2 < num_items)
+                        {
+                            color = irc_color_convert_term2irc (atoi (items[i + 2]));
+                            if (color >= 0)
                             {
-                                color = irc_color_convert_term2irc (atoi (items[i + 2]));
-                                if (color >= 0)
-                                {
-                                    snprintf (str_color, sizeof (str_color),
-                                              "%c%02d",
-                                              IRC_COLOR_COLOR_CHAR,
-                                              color);
-                                    strcat (output, str_color);
-                                }
-                                i += 2;
+                                snprintf (str_color, sizeof (str_color),
+                                          "%c%02d",
+                                          IRC_COLOR_COLOR_CHAR,
+                                          color);
+                                strcat (output, str_color);
                             }
-                            break;
+                            i += 2;
+                        }
                     }
                 }
                 break;
@@ -655,41 +657,43 @@ irc_color_decode_ansi_cb (void *data, const char *text)
             case 48: /* background color */
                 if (i + 1 < num_items)
                 {
-                    switch (atoi (items[i + 1]))
+                    value2 = atoi (items[i + 1]);
+                    if (value2 == 2)
                     {
-                        case 2: /* RGB color */
-                            if (i + 4 < num_items)
+                        /* RGB color */
+                        if (i + 4 < num_items)
+                        {
+                            color = irc_color_convert_rgb2irc (
+                                (atoi (items[i + 2]) << 16) |
+                                (atoi (items[i + 3]) << 8) |
+                                atoi (items[i + 4]));
+                            if (color >= 0)
                             {
-                                color = irc_color_convert_rgb2irc (
-                                    (atoi (items[i + 2]) << 16) |
-                                    (atoi (items[i + 3]) << 8) |
-                                    atoi (items[i + 4]));
-                                if (color >= 0)
-                                {
-                                    snprintf (str_color, sizeof (str_color),
-                                              "%c,%02d",
-                                              IRC_COLOR_COLOR_CHAR,
-                                              color);
-                                    strcat (output, str_color);
-                                }
-                                i += 4;
+                                snprintf (str_color, sizeof (str_color),
+                                          "%c,%02d",
+                                          IRC_COLOR_COLOR_CHAR,
+                                          color);
+                                strcat (output, str_color);
                             }
-                            break;
-                        case 5: /* terminal color (0-255) */
-                            if (i + 2 < num_items)
+                            i += 4;
+                        }
+                    }
+                    else if (value2 == 5)
+                    {
+                        /* terminal color (0-255) */
+                        if (i + 2 < num_items)
+                        {
+                            color = irc_color_convert_term2irc (atoi (items[i + 2]));
+                            if (color >= 0)
                             {
-                                color = irc_color_convert_term2irc (atoi (items[i + 2]));
-                                if (color >= 0)
-                                {
-                                    snprintf (str_color, sizeof (str_color),
-                                              "%c,%02d",
-                                              IRC_COLOR_COLOR_CHAR,
-                                              color);
-                                    strcat (output, str_color);
-                                }
-                                i += 2;
+                                snprintf (str_color, sizeof (str_color),
+                                          "%c,%02d",
+                                          IRC_COLOR_COLOR_CHAR,
+                                          color);
+                                strcat (output, str_color);
                             }
-                            break;
+                            i += 2;
+                        }
                     }
                 }
                 break;
