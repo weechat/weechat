@@ -406,18 +406,11 @@ Eine weitere Möglichkeit ist, ein Skript zu nutzen:
 [[change_locale_without_quit]]
 === Ich möchte die Meldungen von WeeChat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
 
-Ja, mit WeeChat ≥ 1.0:
+// TRANSLATION MISSING
+Sure it is possible:
 
 ----
 /set env LANG de_DE.UTF-8
-/upgrade
-----
-
-Mit einer älteren Version von WeeChat:
-
-----
-/script install shell.py
-/shell setenv LANG=de_DE.UTF-8
 /upgrade
 ----
 

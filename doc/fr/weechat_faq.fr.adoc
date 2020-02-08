@@ -388,18 +388,10 @@ Une autre solution est d'utiliser un script :
 [[change_locale_without_quit]]
 === Je souhaite changer la langue des messages affichés par WeeChat, mais sans quitter WeeChat, est-ce possible ?
 
-Oui, avec WeeChat ≥ 1.0 :
+Bien sûr, cela est possible :
 
 ----
 /set env LANG fr_FR.UTF-8
-/upgrade
-----
-
-Avec un ancien WeeChat :
-
-----
-/script install shell.py
-/shell setenv LANG=fr_FR.UTF-8
 /upgrade
 ----
 

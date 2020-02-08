@@ -370,18 +370,11 @@ WeeChat バージョン 0.3.6 以上の場合、"eat_newline_glitch"
 [[change_locale_without_quit]]
 === WeeChat が出力するメッセージの言語を、再起動せずに変更したいです。このようなことは可能ですか。
 
-WeeChat バージョン 1.0 以上の場合、再起動せずに変更できます:
+// TRANSLATION MISSING
+Sure it is possible:
 
 ----
 /set env LANG ja_JP.UTF-8
-/upgrade
-----
-
-古い WeeChat をお使いの場合は:
-
-----
-/script install shell.py
-/shell setenv LANG=ja_JP.UTF-8
 /upgrade
 ----
 

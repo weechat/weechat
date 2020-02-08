@@ -376,18 +376,11 @@ Innym rozwiązaniem jest użycie skryptu:
 [[change_locale_without_quit]]
 === Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
 
-Tak, dla wersji WeeChat ≥ 1.0:
+// TRANSLATION MISSING
+Sure it is possible:
 
 ----
 /set env LANG pl_PL.UTF-8
-/upgrade
-----
-
-Dla starszych wersji WeeChat:
-
-----
-/script install shell.py
-/shell setenv LANG=pl_PL.UTF-8
 /upgrade
 ----
 

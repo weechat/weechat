@@ -374,18 +374,10 @@ Other solution is to use a script:
 [[change_locale_without_quit]]
 === I want to change the language used by WeeChat for messages, but without exiting WeeChat, is it possible?
 
-Yes, with WeeChat ≥ 1.0:
+Sure it is possible:
 
 ----
 /set env LANG en_US.UTF-8
-/upgrade
-----
-
-With older WeeChat:
-
-----
-/script install shell.py
-/shell setenv LANG=en_US.UTF-8
 /upgrade
 ----
 

@@ -413,19 +413,10 @@ Una soluzione alternativa è usare uno script:
 === Voglio cambiare la lingua utilizzata da WeeChat per i messaggi, ma senza uscire da WeeChat, è possibile?
 
 // TRANSLATION MISSING
-Yes, with WeeChat ≥ 1.0:
+Sure it is possible:
 
 ----
 /set env LANG it_IT.UTF-8
-/upgrade
-----
-
-// TRANSLATION MISSING
-With older WeeChat:
-
-----
-/script install shell.py
-/shell setenv LANG=it_IT.UTF-8
 /upgrade
 ----
 
