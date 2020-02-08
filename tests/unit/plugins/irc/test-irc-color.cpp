@@ -110,6 +110,10 @@ extern "C"
     "test_\x1B[38;2;255;0;255m\x1B[48;2;0;0;128mcolor13/02"
 #define STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02                       \
     "test_\x1B[38;5;13m\x1B[48;5;4mcolor13/02"
+#define STRING_ANSI_DEFAULT_FG                                          \
+    "test_\x1B[39mdefault_fg"
+#define STRING_ANSI_DEFAULT_BG                                          \
+    "test_\x1B[49mdefault_bg"
 
 #define WEE_CHECK_DECODE(__result, __string, __keep_colors)             \
     decoded = irc_color_decode (__string, __keep_colors);               \
@@ -492,4 +496,18 @@ TEST(IrcColor, DecodeAnsi)
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string,
                           STRING_ANSI_FG_TERM_IRC_13_BG_TERM_IRC_02, 1);
+
+    /* default text color */
+    WEE_CHECK_DECODE_ANSI("test_default_fg", STRING_ANSI_DEFAULT_FG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s15default_fg",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_FG, 1);
+
+    /* default background color */
+    WEE_CHECK_DECODE_ANSI("test_default_bg", STRING_ANSI_DEFAULT_BG, 0);
+    snprintf (string, sizeof (string),
+              "test_%s,01default_bg",
+              IRC_COLOR_COLOR_STR);
+    WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_BG, 1);
 }
