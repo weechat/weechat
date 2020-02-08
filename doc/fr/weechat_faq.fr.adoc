@@ -403,6 +403,25 @@ Avec un ancien WeeChat :
 /upgrade
 ----
 
+[[timezone]]
+=== Comment puis-je changer le fuseau horaire ?
+
+Il n'y a pas d'option pour changer le fuseau horaire dans WeeChat, la variable
+d'environnement `TZ` doit être positionnée à la valeur appropriée.
+
+Dans votre fichier d'initialisation du shell ou sur la ligne de commande, avant
+de démarrer WeeChat :
+
+----
+export TZ=Europe/Paris
+----
+
+Dans WeeChat, la nouvelle valeur est immédiatement utilisée :
+
+----
+/set env TZ Europe/Paris
+----
+
 [[use_256_colors]]
 === Comment puis-je utiliser 256 couleurs sous WeeChat ?
 

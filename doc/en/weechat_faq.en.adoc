@@ -389,6 +389,24 @@ With older WeeChat:
 /upgrade
 ----
 
+[[timezone]]
+=== How can I change the timezone?
+
+There is no option in WeeChat to change the timezone, the environment variable
+`TZ` must be set to the appropriate value.
+
+In your shell initialization file or on command line, before starting WeeChat:
+
+----
+export TZ=America/New_York
+----
+
+In WeeChat, the new value is immediately used:
+
+----
+/set env TZ America/New_York
+----
+
 [[use_256_colors]]
 === How can I use 256 colors in WeeChat?
 

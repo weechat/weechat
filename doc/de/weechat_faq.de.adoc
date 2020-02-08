@@ -421,6 +421,28 @@ Mit einer älteren Version von WeeChat:
 /upgrade
 ----
 
+// TRANSLATION MISSING
+[[timezone]]
+=== How can I change the timezone?
+
+// TRANSLATION MISSING
+There is no option in WeeChat to change the timezone, the environment variable
+`TZ` must be set to the appropriate value.
+
+// TRANSLATION MISSING
+In your shell initialization file or on command line, before starting WeeChat:
+
+----
+export TZ=Europe/Berlin
+----
+
+// TRANSLATION MISSING
+In WeeChat, the new value is immediately used:
+
+----
+/set env TZ Europe/Berlin
+----
+
 [[use_256_colors]]
 === Wie kann ich 256 Farben in WeeChat nutzen?
 
