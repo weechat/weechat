@@ -224,17 +224,20 @@ irc_mode_channel_update (struct t_irc_server *server,
                     current_arg++;
                 if (pos[0] == chanmode)
                 {
-                    chanmode_found = 1;
-                    if (set_flag == '+')
+                    if (!chanmode_found)
                     {
-                        str_mode[0] = pos[0];
-                        str_mode[1] = '\0';
-                        strcat (new_modes, str_mode);
-                        if (argument)
+                        chanmode_found = 1;
+                        if (set_flag == '+')
                         {
-                            if (new_args[0])
-                                strcat (new_args, " ");
-                            strcat (new_args, argument);
+                            str_mode[0] = pos[0];
+                            str_mode[1] = '\0';
+                            strcat (new_modes, str_mode);
+                            if (argument)
+                            {
+                                if (new_args[0])
+                                    strcat (new_args, " ");
+                                strcat (new_args, argument);
+                            }
                         }
                     }
                 }
