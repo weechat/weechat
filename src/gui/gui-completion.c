@@ -1320,6 +1320,8 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
     {
         case GUI_COMPLETION_NULL:
             /* should never be executed */
+            if (old_word_found)
+                free (old_word_found);
             return;
         case GUI_COMPLETION_COMMAND:
             gui_completion_command (completion);

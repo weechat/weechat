@@ -28,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix memory leak in completion
   * core: flush stdout/stderr before forking in hook_process function (issue #1441)
   * core: fix evaluation of condition with nested "if" (issue #1434)
   * irc: fix crash when receiving a malformed message 324 (channel mode)
