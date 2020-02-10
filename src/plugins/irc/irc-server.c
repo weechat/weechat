@@ -994,7 +994,8 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
         return;
 
     old_length_chars = (server->prefix_chars) ?
-        strlen (server->prefix_chars) : 0;
+        strlen (server->prefix_chars) :
+        strlen (irc_server_prefix_chars_default);
 
     /* free previous values */
     if (server->prefix_modes)
@@ -1036,8 +1037,11 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
         }
     }
 
-    length_chars = (server->prefix_chars) ? strlen (server->prefix_chars) : 0;
-    if (server->prefix_chars && (length_chars != old_length_chars))
+    length_chars = (server->prefix_chars) ?
+        strlen (server->prefix_chars) :
+        strlen (irc_server_prefix_chars_default);
+
+    if (length_chars != old_length_chars)
         irc_nick_realloc_prefixes (server, old_length_chars, length_chars);
 }
 
