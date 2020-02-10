@@ -4689,7 +4689,7 @@ IRC_PROTOCOL_CALLBACK(352)
 
     if (argc > 8)
     {
-        arg_start = (strcmp (argv[8], "*") == 0) ? 9 : 8;
+        arg_start = ((argc > 9) && (strcmp (argv[8], "*") == 0)) ? 9 : 8;
         if (argv[arg_start][0] == ':')
         {
             pos_attr = NULL;
