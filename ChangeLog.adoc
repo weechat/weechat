@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * irc: fix crash when a new message 005 is received with longer nick prefixes
   * irc: fix crash when receiving a malformed message 324 (channel mode) (CVE-2020-8955)
 
 [[v2.7]]

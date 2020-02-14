@@ -74,6 +74,8 @@ extern void irc_nick_change (struct t_irc_server *server,
 extern void irc_nick_set_mode (struct t_irc_server *server,
                                struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int set, char mode);
+extern void irc_nick_realloc_prefixes (struct t_irc_server *server,
+                                       int old_length, int new_length);
 extern void irc_nick_free (struct t_irc_server *server,
                            struct t_irc_channel *channel,
                            struct t_irc_nick *nick);

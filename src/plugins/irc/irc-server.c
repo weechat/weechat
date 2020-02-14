@@ -988,10 +988,14 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                    const char *prefix)
 {
     char *pos;
-    int i, length_modes, length_chars;
+    int i, old_length_chars, length_modes, length_chars;
 
     if (!server || !prefix)
         return;
+
+    old_length_chars = (server->prefix_chars) ?
+        strlen (server->prefix_chars) :
+        strlen (irc_server_prefix_chars_default);
 
     /* free previous values */
     if (server->prefix_modes)
@@ -1032,6 +1036,13 @@ irc_server_set_prefix_modes_chars (struct t_irc_server *server,
             }
         }
     }
+
+    length_chars = (server->prefix_chars) ?
+        strlen (server->prefix_chars) :
+        strlen (irc_server_prefix_chars_default);
+
+    if (length_chars != old_length_chars)
+        irc_nick_realloc_prefixes (server, old_length_chars, length_chars);
 }
 
 /*
