@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v2.7.1]]
+== Version 2.7.1 (under dev)
+
+Bug fixes::
+
+  * irc: fix crash when receiving a malformed message 324 (channel mode) (CVE-2020-8955)
+
 [[v2.7]]
 == Version 2.7 (2019-12-08)
 
