@@ -33,7 +33,7 @@ Bug fixes::
   * core: fix evaluation of condition with nested "if" (issue #1434)
   * irc: fix crash when receiving a malformed message 352 (who)
   * irc: fix crash when a new message 005 is received with longer nick prefixes
-  * irc: fix crash when receiving a malformed message 324 (channel mode)
+  * irc: fix crash when receiving a malformed message 324 (channel mode) (CVE-2020-8955)
   * irc: add nick changes in the hotlist (except self nick change)
   * irc: case-insensitive comparison on incoming CTCP command, force upper case on CTCP replies (issue #1439)
   * irc: fix memory leak when the channel topic is changed
