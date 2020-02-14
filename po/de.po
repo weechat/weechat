@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-12-26 22:25+0100\n"
-"PO-Revision-Date: 2019-12-23 19:58+0100\n"
+"PO-Revision-Date: 2020-02-14 18:53+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2.1\n"
+"X-Generator: Poedit 2.2.4\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -216,7 +216,7 @@ msgstr ""
 "weechat)\n"
 
 msgid "Extra options in headless mode:\n"
-msgstr "zusätzliche Optionen für den Hintergrundmodus:\n"
+msgstr "Zusätzliche Optionen für den Hintergrundmodus:\n"
 
 msgid ""
 "      --daemon             run WeeChat as a daemon (fork, new process group, "
@@ -637,7 +637,7 @@ msgstr "%d Tastenbelegungen für Kontext \"%s\":"
 
 #, c-format
 msgid "No default key binding for context \"%s\""
-msgstr "keine Standardtastenbelegungen für Kontext \"%s\" vorhanden"
+msgstr "Keine Standardtastenbelegungen für Kontext \"%s\" vorhanden"
 
 #. TRANSLATORS: first "%d" is number of keys
 #, c-format
@@ -683,13 +683,13 @@ msgstr[0] "(%d) neue Taste hinzugefügt"
 msgstr[1] "(%d) neue Tasten hinzugefügt (Kontext: \"%s\")"
 
 msgid "Stored layouts:"
-msgstr "erstellte Layouts:"
+msgstr "Gespeicherte Layouts:"
 
 msgid " (current layout)"
 msgstr " (aktuelles Layout)"
 
 msgid "No stored layouts"
-msgstr "keine Layouts erstellt"
+msgstr "Keine Layouts erstellt"
 
 #. TRANSLATORS: %s%s%s is "buffers" or "windows" or "buffers+windows"
 #, c-format
@@ -911,10 +911,10 @@ msgid "There is no encrypted data"
 msgstr "Es liegen keine verschlüsselten Daten vor"
 
 msgid "All encrypted data has been deleted"
-msgstr "alle verschlüsselten Daten wurden gelöscht"
+msgstr "Alle verschlüsselten Daten wurden gelöscht"
 
 msgid "Encrypted data has been successfully decrypted"
-msgstr "verschlüsselte Daten wurden erfolgreich entschlüsselt"
+msgstr "Die verschlüsselten Daten wurden erfolgreich entschlüsselt"
 
 #, c-format
 msgid "%sFailed to decrypt data (wrong passphrase?)"
@@ -935,7 +935,7 @@ msgid "Passphrase deleted"
 msgstr "Passphrase gelöscht"
 
 msgid "Passphrase is not set"
-msgstr "keine Passphrase festgelegt"
+msgstr "Passphrase ist nicht gesetzt"
 
 msgid "Passphrase changed"
 msgstr "Passphrase geändert"
@@ -945,11 +945,11 @@ msgstr "Passphrase hinzugefügt"
 
 #, c-format
 msgid "Secured data \"%s\" set"
-msgstr "schutzwürdige Information \"%s\" gesetzt"
+msgstr "Schutzwürdige Information \"%s\" gesetzt"
 
 #, c-format
 msgid "Secured data \"%s\" deleted"
-msgstr "schutzwürdige Information \"%s\" gelöscht"
+msgstr "Schutzwürdige Information \"%s\" gelöscht"
 
 #, c-format
 msgid "%sSecured data \"%s\" not found"
@@ -5016,7 +5016,7 @@ msgstr "FATAL: Fehler bei der Initialisierung der Konfigurationseinstellungen"
 
 #, c-format
 msgid "Writing configuration file %s%s%s"
-msgstr "speichere Konfigurationsdatei %s%s%s"
+msgstr "Konfigurationsdatei %s%s%s wird gesichert"
 
 msgid "(default options)"
 msgstr "(Standardeinstellungen)"
@@ -5044,7 +5044,7 @@ msgstr ""
 
 #, c-format
 msgid "Reading configuration file %s"
-msgstr "lese Konfigurationsdatei %s"
+msgstr "Konfigurationsdatei %s wird geladen"
 
 #, c-format
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
@@ -5182,15 +5182,15 @@ msgid "Passphrase is set"
 msgstr "Passphrase ist festgelegt"
 
 msgid "Secured data:"
-msgstr "schutzwürdige Daten:"
+msgstr "Schutzwürdige Daten:"
 
 msgid "Secured data STILL ENCRYPTED: (use /secure decrypt, see /help secure)"
 msgstr ""
-"schutzwürdige Daten sind WEITERHIN VERSCHLÜSSELT (nutze /secure decrypt, "
-"siehe /help secure)"
+"Die schutzwürdigen Daten sind WEITERHIN VERSCHLÜSSELT (nutze /secure "
+"decrypt, siehe /help secure)"
 
 msgid "No secured data set"
-msgstr "keine schutzwürdigen Daten definiert"
+msgstr "Keine schutzwürdigen Daten definiert"
 
 msgid "Please enter your passphrase to decrypt the data secured by WeeChat:"
 msgstr ""
@@ -5426,7 +5426,7 @@ msgid "Terminal infos:"
 msgstr "Informationen zum Terminal:"
 
 msgid "No color support in terminal."
-msgstr "keine Farbunterstützung durch Terminal."
+msgstr "Keine Farbunterstützung durch Terminal."
 
 msgid "Default colors:"
 msgstr "Standardfarben:"
@@ -5455,7 +5455,7 @@ msgstr ""
 
 #, c-format
 msgid "Last auto reset of pairs: %s"
-msgstr "zuletzt durchgeführter Reset der Farbpaare: %s"
+msgstr "Zuletzt durchgeführter Reset der Farbpaare: %s"
 
 msgid "WeeChat basic colors:"
 msgstr "WeeChat Basisfarben:"
@@ -5677,11 +5677,11 @@ msgstr "Befehl für Taste: \"%s\""
 
 #, c-format
 msgid "Sending hsignal: \"%s\""
-msgstr "sende hsignal: \"%s\""
+msgstr "Sende hsignal: \"%s\""
 
 #, c-format
 msgid "Executing command: \"%s\" on buffer \"%s\""
-msgstr "auszuführender Befehl: \"%s\" in Buffer \"%s\""
+msgstr "Befehl: \"%s\" wird in Buffer \"%s\" ausgeführt"
 
 #, c-format
 msgid "Debug enabled for mouse (%s)"
@@ -5721,7 +5721,7 @@ msgstr "Vervollständigung:"
 
 #, c-format
 msgid "No alias found matching \"%s\""
-msgstr "keinen passenden Alias zu \"%s\" gefunden"
+msgstr "Keinen passenden Alias zu \"%s\" gefunden"
 
 msgid "No alias defined"
 msgstr "Keine Alias definiert"
@@ -5856,7 +5856,6 @@ msgstr ""
 msgid "bar item with list of buffers"
 msgstr "Bar-Item mit der Liste von Buffern"
 
-#, fuzzy
 msgid ""
 "    bar: add the \"buflist\" bar\n"
 "refresh: force the refresh of the bar items (buflist, buflist2 and "
@@ -5947,6 +5946,11 @@ msgstr ""
 "  - bar item data (siehe hdata \"bar_item\" in API Dokumentation für eine "
 "vollständige Liste), zum Beispiel:\n"
 "    - ${bar_item.name}\n"
+"  - window data, wo das Bar-Item dargestellt werden soll (in \"root\" Bars "
+"existieren keine Fenster, siehe hdata \"window\" in API Dokumentation für "
+"eine vollständige Liste), zum Beispiel:\n"
+"    - ${window.number}\n"
+"    - ${window.buffer.full_name}\n"
 "  - buffer data (siehe hdata \"buffer\" in API Dokumentation für eine "
 "vollständige Liste), zum Beispiel:\n"
 "    - ${buffer.number}\n"
@@ -6285,7 +6289,7 @@ msgstr ""
 "  reset: setze im aktuellen Buffer den Zeichensatz zurück"
 
 msgid "Execution of external commands in WeeChat"
-msgstr "externe Befehle aus WeeChat heraus ausführen"
+msgstr "Ausführung externer Befehle in WeeChat"
 
 #, c-format
 msgid "%s: end of command %d (\"%s\"), return code: %d"
@@ -6299,7 +6303,7 @@ msgid "Executed commands"
 msgstr "ausgeführte Befehle"
 
 msgid "No command is running"
-msgstr "es wird im Moment kein Befehl ausgeführt"
+msgstr "Es wird im Moment kein Befehl ausgeführt"
 
 msgid "Commands:"
 msgstr "Befehle:"
@@ -7651,7 +7655,7 @@ msgstr "%s%s: Der Befehl \"%s\" kann nur im Channel-Buffer ausgeführt werden"
 
 #, c-format
 msgid "%s%s: already connected to server \"%s\"!"
-msgstr "%s%s: es besteht bereits eine Verbindung zum Server \"%s\""
+msgstr "%s%s: es besteht bereits eine Verbindung zum Server \"%s\"!"
 
 #, c-format
 msgid "%s%s: currently connecting to server \"%s\"!"
@@ -8366,11 +8370,11 @@ msgid ""
 "-pending: cancel auto-reconnection on servers currently reconnecting\n"
 "  reason: reason for the \"quit\""
 msgstr ""
-"server: interner Name des Servers\n"
-"  -all: Verbindung zu allen Servern trennen\n"
-"-pending: bricht eine automatische Wiederverbindung für Server ab, zu denen "
+"  server: interner Name des Servers\n"
+"    -all: Verbindung zu allen Servern trennen\n"
+"-pending: bricht eine automatische Wiederverbindung zu Servern ab, zu denen "
 "gerade eine erneute Verbindung aufgebaut werden soll\n"
-"reason: Begründung der Trennung"
+"  reason: Begründung für die Trennung"
 
 msgid "give channel half-operator status to nick(s)"
 msgstr "halb-Operator Status an Nick(s) vergeben"
@@ -10818,7 +10822,7 @@ msgid "Notify list for all servers:"
 msgstr "Benachrichtigungen für alle Server:"
 
 msgid "Notify list is empty on all servers"
-msgstr "es liegt für keinen Server eine Benachrichtigung vor"
+msgstr "Es liegt für keinen Server eine Benachrichtigung vor"
 
 #, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
@@ -11162,7 +11166,7 @@ msgid ""
 "connection with server"
 msgstr ""
 "%s%s: alle voreingestellten Nicknamen sind bereits in Verwendung oder "
-"ungültig, Verbindung wird getrennt!"
+"ungültig, Verbindung wird getrennt"
 
 #, c-format
 msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
@@ -11589,7 +11593,7 @@ msgstr "%s%s: Neu verbinden zum Server..."
 
 #, c-format
 msgid "%s%s: disconnected from server"
-msgstr "%s%s: Vom Server getrennt!"
+msgstr "%s%s: vom Server getrennt"
 
 #, c-format
 msgid "%s%s: exception: %s"
@@ -11616,7 +11620,7 @@ msgid "%s===\t%s========== End of backlog (%d lines) =========="
 msgstr "%s===\t%s========== Ende des Verlaufspeichers (%d Zeilen) =========="
 
 msgid "Log buffers to files"
-msgstr "sichert Buffer in eine Datei"
+msgstr "Speichert Buffer in eine Datei"
 
 #, c-format
 msgid ""
@@ -12081,7 +12085,7 @@ msgid "number of color pairs supported in terminal"
 msgstr "Anzahl der Farbpaare die durch das Terminal unterstützt werden"
 
 msgid "POSIX extended regular expression to search ANSI escape codes"
-msgstr "erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen"
+msgstr "Erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen"
 
 msgid "terminal color (0-255) converted to RGB color"
 msgstr "Terminalfarbe (0-255) wurde umgewandelt in RGB Farbe"
@@ -12671,7 +12675,7 @@ msgid "No client for relay"
 msgstr "Keinen Client für Relay"
 
 msgid "No connected client for relay"
-msgstr "keine Verbindung zum Client für Relay"
+msgstr "kein verbundener Client für Relay"
 
 msgid "Listening on:"
 msgstr "Lausche an:"
@@ -12940,7 +12944,7 @@ msgid ""
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
 msgstr ""
-"erweiterter regulärer POSIX Ausdruck für IPs die von relay akzeptiert werden "
+"Erweiterter regulärer POSIX Ausdruck für IPs die von relay akzeptiert werden "
 "(Groß- und Kleinschreibung wird ignoriert. Um zwischen Groß- und "
 "Kleinschreibung zu unterscheiden muss die Zeichenkette mit \"(?-i)\" "
 "eingeleitet werden), Beispiele: \"^(123\\.45\\.67\\.89|192\\.160\\..*)$\""
@@ -13032,7 +13036,7 @@ msgid ""
 "insensitive, use \"(?-i)\" at beginning to make it case sensitive), example: "
 "\"^https?://(www\\.)?example\\.(com|org)\""
 msgstr ""
-"erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und "
+"Erweiterter regulärer POSIX Ausdruck für Origins in WebSockets (Groß- und "
 "Kleinschreibung wird ignoriert. Um Groß- und Kleinschreibung zu "
 "unterscheiden kann \"(?-i)\" vorangestellt werden), Beispiel: ^https?://(www"
 "\\.)?example\\.(com|org)\""
@@ -13411,7 +13415,7 @@ msgid "Date added"
 msgstr "Hinzugefügt am"
 
 msgid "Date updated"
-msgstr "letztes Update"
+msgstr "Datum aktualisiert"
 
 msgid "URL"
 msgstr "URL"
@@ -14951,7 +14955,7 @@ msgid "no"
 msgstr "keine"
 
 msgid "No xfer"
-msgstr "keine Übertragung"
+msgstr "keine Übertragunf"
 
 msgid "send a CTCP action to remote host"
 msgstr "sendet CTCP Aktion an entfernten Host"
