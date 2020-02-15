@@ -243,10 +243,10 @@ target: Servername
 ----
 /disconnect  [<server>|-all|-pending [<reason>]]
 
-server: interner Name des Servers
-  -all: Verbindung zu allen Servern trennen
--pending: bricht eine automatische Wiederverbindung für Server ab, zu denen gerade eine erneute Verbindung aufgebaut werden soll
-reason: Begründung der Trennung
+  server: interner Name des Servers
+    -all: Verbindung zu allen Servern trennen
+-pending: bricht eine automatische Wiederverbindung zu Servern ab, zu denen gerade eine erneute Verbindung aufgebaut werden soll
+  reason: Begründung für die Trennung
 ----
 
 [[command_irc_halfop]]

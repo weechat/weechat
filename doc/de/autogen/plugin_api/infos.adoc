@@ -84,7 +84,7 @@
 
 | weechat | charset_terminal | Terminal Zeichensatz | -
 
-| weechat | color_ansi_regex | erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen | -
+| weechat | color_ansi_regex | Erweiterte reguläre POSIX Ausdrücke um ANSI Escapesequenz zu suchen | -
 
 | weechat | color_rgb2term | RGB Farbe wurde umgewandelt in Terminalfarbe (0-255) | RGB,limit (Obergrenze ist optional und ist Standardmäßig 256)
 

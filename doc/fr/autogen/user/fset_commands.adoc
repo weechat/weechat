@@ -115,7 +115,7 @@ Touches et entrées pour définir les options sur le tampon fset :
   alt+f, alt+r      r       réinitialiser la valeur
   alt+f, alt+u      u       supprimer/réinitialiser la valeur
   alt+entrée        s       définir la valeur
-  alt+f, alt+n      n       définie une nouvelle valeur
+  alt+f, alt+n      n       définir une nouvelle valeur
   alt+f, alt+a      a       ajouter à la valeur
   alt+','           ,       marquer/démarquer l'option
   shift+haut                se déplacer d'une ligne vers le haut et marquer/démarquer l'option

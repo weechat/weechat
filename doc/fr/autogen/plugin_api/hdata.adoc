@@ -546,6 +546,7 @@ _layout_number_   (integer) +
 _layout_number_merge_order_   (integer) +
 _name_   (string) +
 _full_name_   (string) +
+_old_full_name_   (string) +
 _short_name_   (string) +
 _type_   (integer) +
 _notify_   (integer) +
