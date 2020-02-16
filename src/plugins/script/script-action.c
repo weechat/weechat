@@ -111,8 +111,6 @@ script_action_list_input (int send_to_buffer, int translated)
     if (!buf)
         return;
 
-    length = 0;
-
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
         snprintf (hdata_name, sizeof (hdata_name),
