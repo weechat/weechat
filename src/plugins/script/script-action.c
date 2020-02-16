@@ -1265,7 +1265,7 @@ script_action_run ()
                     {
                         if (weechat_strcasecmp (argv[1], "-i") == 0)
                             script_action_list_input (0, 0);
-                        if (weechat_strcasecmp (argv[1], "-il") == 0)
+                        else if (weechat_strcasecmp (argv[1], "-il") == 0)
                             script_action_list_input (0, 1);
                         else if (weechat_strcasecmp (argv[1], "-o") == 0)
                             script_action_list_input (1, 0);
