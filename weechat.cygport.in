@@ -64,7 +64,10 @@ python3-devel ruby tcl-devel libguile2.2-devel php-devel zlib-devel"
 CYGCMAKE_ARGS="-DCMAKE_INSTALL_PREFIX=/usr -DENABLE_MAN=ON -DENABLE_DOC=ON \
 -DENABLE_JAVASCRIPT=OFF"
 
-PKG_IGNORE="etc/postinstall/weechat.sh"
+PKG_IGNORE="
+    etc/postinstall/weechat.sh
+    usr/share/applications/weechat.desktop
+"
 
 #
 # Build 10 Cygwin packages:

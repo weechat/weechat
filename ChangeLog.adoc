@@ -49,6 +49,7 @@ Tests::
 
 Build::
 
+  * core: fix Cygwin build
   * guile: add detection of Guile 3.0.0 (issue #1442)
   * irc: fix build with GnuTLS < 3.1.0 (issue #1431)
   * php: add detection of PHP 7.4
