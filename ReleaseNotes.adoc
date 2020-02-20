@@ -17,6 +17,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.7.1]]
+== Version 2.7.1 (2020-02-20)
+
+Bug fix and maintenance release.
+
 [[v2.7]]
 == Version 2.7 (2019-12-08)
 
