@@ -32,7 +32,7 @@
 #     devel-patch  the patch version of devel (e.g. 2 for version 1.4.2)
 #
 
-WEECHAT_STABLE=2.7
+WEECHAT_STABLE=2.7.1
 WEECHAT_DEVEL=2.8
 WEECHAT_DEVEL_FULL=2.8-dev
 
