@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2019-12-26 22:25+0100\n"
-"PO-Revision-Date: 2020-02-14 18:53+0100\n"
+"PO-Revision-Date: 2020-02-26 15:36+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -6300,7 +6300,7 @@ msgid "%s: unexpected end of command %d (\"%s\")"
 msgstr "%s: unerwartetes Ende von Befehl %d (\"%s\")"
 
 msgid "Executed commands"
-msgstr "ausgeführte Befehle"
+msgstr "Ausgeführte Befehle"
 
 msgid "No command is running"
 msgstr "Es wird im Moment kein Befehl ausgeführt"
@@ -7868,7 +7868,7 @@ msgid "All servers:"
 msgstr "Alle Server:"
 
 msgid "No server"
-msgstr "kein Server"
+msgstr "Kein Server"
 
 #, c-format
 msgid "Servers with \"%s\":"
@@ -12675,7 +12675,7 @@ msgid "No client for relay"
 msgstr "Keinen Client für Relay"
 
 msgid "No connected client for relay"
-msgstr "kein verbundener Client für Relay"
+msgstr "Kein verbundener Client für Relay"
 
 msgid "Listening on:"
 msgstr "Lausche an:"
@@ -13287,7 +13287,7 @@ msgid "Scripts loaded:"
 msgstr "Installierte Skripten:"
 
 msgid "No scripts loaded"
-msgstr "keine Skripten geladen"
+msgstr "Keine Skripten geladen"
 
 #, c-format
 msgid "%s: unknown language for script \"%s\""
@@ -14955,7 +14955,7 @@ msgid "no"
 msgstr "keine"
 
 msgid "No xfer"
-msgstr "keine Übertragunf"
+msgstr "Keine Übertragung"
 
 msgid "send a CTCP action to remote host"
 msgstr "sendet CTCP Aktion an entfernten Host"
