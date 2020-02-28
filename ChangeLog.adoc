@@ -35,6 +35,7 @@ Bug fixes::
   * irc: case-insensitive comparison on incoming CTCP command, force upper case on CTCP replies (issue #1439)
   * irc: fix memory leak when the channel topic is changed
   * logger: fix crash when logging is disabled on a buffer and the log file was deleted in the meanwhile, when option logger.file.info_lines is on (issue #1444)
+  * php: fix crash when loading script with PHP 7.4 (issue #1452)
   * relay: update buffers synchronization when buffers are renamed (issue #1428)
   * script: fix memory leak in read of script repository file if it has invalid content
   * script: fix unexpected display of scripts list in buffer with command /script list -i
