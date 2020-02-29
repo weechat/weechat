@@ -21,6 +21,7 @@
 #define WEECHAT_TEST_UNIT_CORE_H
 
 #define DATA_HASH "this is a test of hash function"
+#define DATA_HASH_CRC32 "ef26fe3e"
 #define DATA_HASH_MD5 "1197d121af621ac6a63cb8ef6b5dfa30"
 #define DATA_HASH_SHA1 "799d818061175b400dc5aaeb14b8d32cdef32ff0"
 #define DATA_HASH_SHA224 "637d21f3ba3f4e9fa9fb889dc990b31a658cb37b4aefb5144" \

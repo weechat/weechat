@@ -2090,6 +2090,7 @@ Supported hash algorithms:
 [width="100%",cols="4,4,4,5,12",options="header"]
 |===
 | Value        | Algorithm | Hash size | Output (binary) | Notes
+| `+crc32+`    | CRC32     | 32 bits   | 4 bytes         | Not a hash algorithm in the cryptographic sense.
 | `+md5+`      | MD5       | 128 bits  | 16 bytes        | *Weak*, not recommended for cryptography usage.
 | `+sha1+`     | SHA-1     | 160 bits  | 20 bytes        | *Weak*, not recommended for cryptography usage.
 | `+sha224+`   | SHA-224   | 224 bits  | 28 bytes        |
@@ -2141,6 +2142,7 @@ Supported hash algorithms:
 [width="100%",cols="4,4,4,5,12",options="header"]
 |===
 | Value        | Algorithm | Hash size | Output (string) | Notes
+| `+crc32+`    | CRC32     | 32 bits   | 8 hex chars     | Not a hash algorithm in the cryptographic sense.
 | `+md5+`      | MD5       | 128 bits  | 32 hex chars    | *Weak*, not recommended for cryptography usage.
 | `+sha1+`     | SHA-1     | 160 bits  | 40 hex chars    | *Weak*, not recommended for cryptography usage.
 | `+sha224+`   | SHA-224   | 224 bits  | 56 hex chars    |

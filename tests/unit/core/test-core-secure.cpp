@@ -120,6 +120,9 @@ TEST(CoreSecure, Hash)
     WEE_CHECK_HASH_BIN(NULL, "test", 0, 0);
     WEE_CHECK_HASH_HEX(NULL, "test", 0, 0);
 
+    WEE_CHECK_HASH_BIN(DATA_HASH_CRC32, data, length, GCRY_MD_CRC32);
+    WEE_CHECK_HASH_HEX(DATA_HASH_CRC32, data, length, GCRY_MD_CRC32);
+
     WEE_CHECK_HASH_BIN(DATA_HASH_MD5, data, length, GCRY_MD_MD5);
     WEE_CHECK_HASH_HEX(DATA_HASH_MD5, data, length, GCRY_MD_MD5);
 

@@ -66,6 +66,7 @@
                     c - '0')
 
 char *string_hash_algo_string[] = {
+    "crc32",
     "md5",
     "sha1",
     "sha224", "sha256", "sha384", "sha512",
@@ -73,6 +74,7 @@ char *string_hash_algo_string[] = {
     NULL,
 };
 int string_hash_algo[] = {
+    GCRY_MD_CRC32,
     GCRY_MD_MD5,
     GCRY_MD_SHA1,
     GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384, GCRY_MD_SHA512,

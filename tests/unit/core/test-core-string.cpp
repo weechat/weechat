@@ -1978,6 +1978,9 @@ TEST(CoreString, Hash)
     WEE_CHECK_HASH_BIN(NULL, DATA_HASH, length, "not_an_algo");
     WEE_CHECK_HASH_HEX(NULL, DATA_HASH, length, "not_an_algo");
 
+    WEE_CHECK_HASH_BIN(DATA_HASH_CRC32, data, length, "crc32");
+    WEE_CHECK_HASH_HEX(DATA_HASH_CRC32, data, length, "crc32");
+
     WEE_CHECK_HASH_BIN(DATA_HASH_MD5, data, length, "md5");
     WEE_CHECK_HASH_HEX(DATA_HASH_MD5, data, length, "md5");
 
