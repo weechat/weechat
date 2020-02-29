@@ -27,7 +27,6 @@ extern "C"
 #include <gcrypt.h>
 #include "src/core/wee-secure.h"
 #include "src/core/wee-string.h"
-}
 
 #define DATA_HASH "this is a test of hash function"
 #define DATA_HASH_MD5 "1197d121af621ac6a63cb8ef6b5dfa30"
@@ -113,6 +112,10 @@ extern "C"
     LONGS_EQUAL(__result, secure_totp_validate (__secret, __time,       \
                                                 __window, __otp));
 
+extern int secure_derive_key (const char *salt, const char *passphrase,
+                              unsigned char *key, int length_key);
+}
+
 TEST_GROUP(CoreSecure)
 {
 };
@@ -166,6 +169,45 @@ TEST(CoreSecure, Hash)
 
     WEE_CHECK_HASH_BIN(DATA_HASH_SHA3_512, data, length, GCRY_MD_SHA3_512);
     WEE_CHECK_HASH_HEX(DATA_HASH_SHA3_512, data, length, GCRY_MD_SHA3_512);
+}
+
+/*
+ * Tests functions:
+ *   secure_derive_key
+ */
+
+TEST(CoreSecure, DeriveKey)
+{
+    char salt[SECURE_SALT_SIZE], zeroes[32];
+    unsigned char *key;
+    const char *passphrase = "this is the passphrase";
+    const char *sha512 = "a81161a80731aa439adff8dfde94540a258b5d912f3579ec7b4"
+        "709968ed0f466e9c63f29d86196aee2c2725f046ef1c074ee790dbabb2ddb09ce85d"
+        "4a12bba0e";
+    unsigned char sha512_bin[64 + 1];
+
+    memset (salt, 'A', SECURE_SALT_SIZE);
+    memset (zeroes, 0, 32);
+    key = (unsigned char *)malloc (64);  /* SHA512 */
+    string_base16_decode (sha512, (char *)sha512_bin);
+
+    LONGS_EQUAL(0, secure_derive_key (NULL, NULL, NULL, 0));
+    LONGS_EQUAL(0, secure_derive_key (salt, NULL, NULL, 0));
+    LONGS_EQUAL(0, secure_derive_key (salt, passphrase, NULL, 0));
+    LONGS_EQUAL(0, secure_derive_key (salt, passphrase, key, 0));
+
+    /* test with key size == 64 (SHA512) */
+    memset (key, 0, 64);
+    LONGS_EQUAL(1, secure_derive_key (salt, passphrase, key, 64));
+    MEMCMP_EQUAL(sha512_bin, key, 64);
+
+    /* test with key size == 32 (too small for SHA512) */
+    memset (key, 0, 64);
+    LONGS_EQUAL(1, secure_derive_key (salt, passphrase, key, 32));
+    MEMCMP_EQUAL(sha512_bin, key, 32);
+    MEMCMP_EQUAL(zeroes, key + 32, 32);
+
+    free (key);
 }
 
 /*
