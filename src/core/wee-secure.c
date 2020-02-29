@@ -175,9 +175,8 @@ int
 secure_derive_key (const char *salt, const char *passphrase,
                    unsigned char *key, int length_key)
 {
-    unsigned char *buffer, *ptr_hash;
+    char *buffer, *hash;
     int length, length_hash;
-    gcry_md_hd_t hd_md;
 
     if (!salt || !passphrase || !key || (length_key < 1))
         return 0;
@@ -194,26 +193,18 @@ secure_derive_key (const char *salt, const char *passphrase,
     memcpy (buffer + SECURE_SALT_SIZE, passphrase, strlen (passphrase));
 
     /* compute hash of buffer */
-    if (gcry_md_open (&hd_md, GCRY_MD_SHA512, 0) != 0)
+    secure_hash_binary (buffer, length, GCRY_MD_SHA512, &hash, &length_hash);
+    if (!hash)
     {
-        free (buffer);
-        return 0;
-    }
-    length_hash = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
-    gcry_md_write (hd_md, buffer, length);
-    ptr_hash = gcry_md_read (hd_md, GCRY_MD_SHA512);
-    if (!ptr_hash)
-    {
-        gcry_md_close (hd_md);
         free (buffer);
         return 0;
     }
 
     /* copy beginning of hash (or full hash) in the key */
-    memcpy (key, ptr_hash,
+    memcpy (key, hash,
             (length_hash > length_key) ? length_key : length_hash);
 
-    gcry_md_close (hd_md);
+    free (hash);
     free (buffer);
 
     return 1;
