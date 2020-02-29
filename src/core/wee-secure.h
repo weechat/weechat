@@ -55,6 +55,9 @@ extern int secure_cipher[];
 extern int secure_data_encrypted;
 extern char *secure_decrypt_error[];
 
+extern void secure_hash_binary (const char *data, int length_data,
+                                int hash_algo, char **hash, int *length_hash);
+extern char *secure_hash (const char *data, int length_data, int hash_algo);
 extern int secure_encrypt_data (const char *data, int length_data,
                                 int hash_algo, int cipher,
                                 const char *passphrase, char **encrypted,

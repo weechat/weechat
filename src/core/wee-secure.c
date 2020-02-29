@@ -66,6 +66,104 @@ int secure_data_encrypted = 0;
 
 
 /*
+ * Computes hash of data, as binary buffer.
+ *
+ * Note: "*hash" must be freed after use.
+ */
+
+void
+secure_hash_binary (const char *data, int length_data, int hash_algo,
+                    char **hash, int *length_hash)
+{
+    gcry_md_hd_t *hd_md;
+    int hd_md_opened;
+    unsigned char *ptr_hash;
+
+    if (!hash || !length_hash)
+        return;
+
+    hd_md = NULL;
+    hd_md_opened = 0;
+    *hash = NULL;
+    *length_hash = 0;
+
+    if (!data || (length_data < 1))
+        goto hash_binary_end;
+
+    hd_md = malloc (sizeof (gcry_md_hd_t));
+    if (!hd_md)
+        goto hash_binary_end;
+
+    if (gcry_md_open (hd_md, hash_algo, 0) != 0)
+        goto hash_binary_end;
+
+    hd_md_opened = 1;
+
+    gcry_md_write (*hd_md, data, length_data);
+    ptr_hash = gcry_md_read (*hd_md, hash_algo);
+    if (!ptr_hash)
+        goto hash_binary_end;
+
+    *length_hash = gcry_md_get_algo_dlen (hash_algo);
+    *hash = malloc (*length_hash);
+    if (!*hash)
+    {
+        *length_hash = 0;
+        goto hash_binary_end;
+    }
+    memcpy (*hash, ptr_hash, *length_hash);
+
+hash_binary_end:
+    if (hd_md)
+    {
+        if (hd_md_opened)
+            gcry_md_close (*hd_md);
+        free (hd_md);
+    }
+}
+
+/*
+ * Computes hash of data, as text (string with hexadecimal).
+ *
+ * Returns a string with the hash as hexadecimal, NULL if error.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+secure_hash (const char *data, int length_data, int hash_algo)
+{
+    char *hash, *result;
+    int length_hash, i;
+    const char *hexa = "0123456789abcdef";
+
+    hash = NULL;
+    length_hash = 0;
+    result = NULL;
+
+    secure_hash_binary (data, length_data, hash_algo, &hash, &length_hash);
+    if (!hash || (length_hash < 1))
+        goto hash_end;
+
+    result = malloc (((length_hash) * 2) + 1);
+    if (!result)
+        goto hash_end;
+
+    for (i = 0; i < length_hash; i++)
+    {
+        result[i * 2] = hexa[(hash[i] & 0xFF) / 16];
+        result[(i * 2) + 1] = hexa[(hash[i] & 0xFF) % 16];
+    }
+    result[(length_hash * 2)] = '\0';
+
+hash_end:
+    if (hash)
+        free (hash);
+
+    return result;
+}
+
+/*
  * Derives a key from salt + passphrase (using a hash).
  *
  * Returns:
@@ -187,7 +285,7 @@ secure_encrypt_data (const char *data, int length_data,
     length_key = gcry_cipher_get_algo_keylen (cipher);
     key = malloc (length_key);
     if (!key)
-        goto encend;
+        goto encrypt_end;
     if (CONFIG_BOOLEAN(secure_config_crypt_salt))
         gcry_randomize (salt, SECURE_SALT_SIZE, GCRY_STRONG_RANDOM);
     else
@@ -202,14 +300,14 @@ secure_encrypt_data (const char *data, int length_data,
     if (!secure_derive_key (salt, passphrase, key, length_key))
     {
         rc = -2;
-        goto encend;
+        goto encrypt_end;
     }
 
     /* compute hash of data */
     if (gcry_md_open (hd_md, hash_algo, 0) != 0)
     {
         rc = -3;
-        goto encend;
+        goto encrypt_end;
     }
     hd_md_opened = 1;
     length_hash = gcry_md_get_algo_dlen (hash_algo);
@@ -218,14 +316,14 @@ secure_encrypt_data (const char *data, int length_data,
     if (!ptr_hash)
     {
         rc = -3;
-        goto encend;
+        goto encrypt_end;
     }
 
     /* build a buffer with hash + data */
     length_hash_data = length_hash + length_data;
     hash_and_data = malloc (length_hash_data);
     if (!hash_and_data)
-        goto encend;
+        goto encrypt_end;
     memcpy (hash_and_data, ptr_hash, length_hash);
     memcpy (hash_and_data + length_hash, data, length_data);
 
@@ -233,32 +331,32 @@ secure_encrypt_data (const char *data, int length_data,
     if (gcry_cipher_open (hd_cipher, cipher, GCRY_CIPHER_MODE_CFB, 0) != 0)
     {
         rc = -4;
-        goto encend;
+        goto encrypt_end;
     }
     hd_cipher_opened = 1;
     if (gcry_cipher_setkey (*hd_cipher, key, length_key) != 0)
     {
         rc = -5;
-        goto encend;
+        goto encrypt_end;
     }
     if (gcry_cipher_encrypt (*hd_cipher, hash_and_data, length_hash_data,
                              NULL, 0) != 0)
     {
         rc = -6;
-        goto encend;
+        goto encrypt_end;
     }
 
     /* create buffer and copy salt + encrypted hash/data into this buffer*/
     *length_encrypted = SECURE_SALT_SIZE + length_hash_data;
     *encrypted = malloc (*length_encrypted);
     if (!*encrypted)
-        goto encend;
+        goto encrypt_end;
     memcpy (*encrypted, salt, SECURE_SALT_SIZE);
     memcpy (*encrypted + SECURE_SALT_SIZE, hash_and_data, length_hash_data);
 
     rc = 0;
 
-encend:
+encrypt_end:
     if (hd_md)
     {
         if (hd_md_opened)
@@ -347,27 +445,27 @@ secure_decrypt_data (const char *buffer, int length_buffer,
     length_key = gcry_cipher_get_algo_keylen (cipher);
     key = malloc (length_key);
     if (!key)
-        goto decend;
+        goto decrypt_end;
     if (!secure_derive_key (buffer, passphrase, key, length_key))
     {
         rc = -3;
-        goto decend;
+        goto decrypt_end;
     }
 
     /* decrypt hash + data */
     decrypted_hash_data = malloc (length_buffer - SECURE_SALT_SIZE);
     if (!decrypted_hash_data)
-        goto decend;
+        goto decrypt_end;
     if (gcry_cipher_open (hd_cipher, cipher, GCRY_CIPHER_MODE_CFB, 0) != 0)
     {
         rc = -4;
-        goto decend;
+        goto decrypt_end;
     }
     hd_cipher_opened = 1;
     if (gcry_cipher_setkey (*hd_cipher, key, length_key) != 0)
     {
         rc = -5;
-        goto decend;
+        goto decrypt_end;
     }
     if (gcry_cipher_decrypt (*hd_cipher,
                              decrypted_hash_data,
@@ -376,14 +474,14 @@ secure_decrypt_data (const char *buffer, int length_buffer,
                              length_buffer - SECURE_SALT_SIZE) != 0)
     {
         rc = -6;
-        goto decend;
+        goto decrypt_end;
     }
 
     /* check if hash is OK for decrypted data */
     if (gcry_md_open (hd_md, hash_algo, 0) != 0)
     {
         rc = -7;
-        goto decend;
+        goto decrypt_end;
     }
     hd_md_opened = 1;
     gcry_md_write (*hd_md, decrypted_hash_data + length_hash,
@@ -392,25 +490,25 @@ secure_decrypt_data (const char *buffer, int length_buffer,
     if (!ptr_hash)
     {
         rc = -7;
-        goto decend;
+        goto decrypt_end;
     }
     if (memcmp (ptr_hash, decrypted_hash_data, length_hash) != 0)
     {
         rc = -8;
-        goto decend;
+        goto decrypt_end;
     }
 
     /* return the decrypted data */
     *length_decrypted = length_buffer - SECURE_SALT_SIZE - length_hash;
     *decrypted = malloc (*length_decrypted);
     if (!*decrypted)
-        goto decend;
+        goto decrypt_end;
 
     memcpy (*decrypted, decrypted_hash_data + length_hash, *length_decrypted);
 
     rc = 0;
 
-decend:
+decrypt_end:
     if (hd_md)
     {
         if (hd_md_opened)
