@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20190810-01"
+#define WEECHAT_PLUGIN_API_VERSION "20200229-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -341,6 +341,11 @@ struct t_weechat_plugin
     char *(*string_hex_dump) (const char *data, int data_size,
                               int bytes_per_line, const char *prefix,
                               const char *suffix);
+    void (*string_hash_binary) (const char *data, int length_data,
+                                const char *hash_algo,
+                                char **hash, int *length_hash);
+    char *(*string_hash) (const char *data, int length_data,
+                          const char *hash_algo);
     int (*string_is_command_char) (const char *string);
     const char *(*string_input_for_buffer) (const char *string);
     char *(*string_eval_expression )(const char *expr,
@@ -1254,6 +1259,13 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     (weechat_plugin->string_hex_dump)(__data, __data_size,              \
                                       __bytes_per_line, __prefix,       \
                                       __suffix)
+#define weechat_string_hash_binary(__data, __length_data, __hash_algo,  \
+                                   __hash, __length_hash)               \
+    (weechat_plugin->string_hash_binary)(__data, __length_data,         \
+                                         __hash_algo,                   \
+                                         __hash, __length_hash)
+#define weechat_string_hash(__data, __length_data, __hash_algo)         \
+    (weechat_plugin->string_hash)(__data, __length_data, __hash_algo)
 #define weechat_string_is_command_char(__string)                        \
     (weechat_plugin->string_is_command_char)(__string)
 #define weechat_string_input_for_buffer(__string)                       \

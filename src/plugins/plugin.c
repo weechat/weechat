@@ -623,6 +623,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_base_encode = &plugin_api_string_base_encode;
         new_plugin->string_base_decode = &plugin_api_string_base_decode;
         new_plugin->string_hex_dump = &string_hex_dump;
+        new_plugin->string_hash_binary = &string_hash_binary;
+        new_plugin->string_hash = &string_hash;
         new_plugin->string_is_command_char = &string_is_command_char;
         new_plugin->string_input_for_buffer = &string_input_for_buffer;
         new_plugin->string_eval_expression = &eval_expression;

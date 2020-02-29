@@ -35,6 +35,7 @@ lib_weechat_unit_tests_core_a_SOURCES = unit/test-plugins.cpp \
                                         unit/core/test-core-url.cpp \
                                         unit/core/test-core-utf8.cpp \
                                         unit/core/test-core-util.cpp \
+                                        unit/core/test-core.h \
                                         unit/gui/test-gui-color.cpp \
                                         unit/gui/test-gui-line.cpp \
                                         unit/gui/test-gui-nick.cpp \
