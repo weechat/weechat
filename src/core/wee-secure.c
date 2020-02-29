@@ -179,6 +179,9 @@ secure_derive_key (const char *salt, const char *passphrase,
     int length, length_hash;
     gcry_md_hd_t hd_md;
 
+    if (!salt || !passphrase || !key || (length_key < 1))
+        return 0;
+
     memset (key, 0, length_key);
 
     length = SECURE_SALT_SIZE + strlen (passphrase);
