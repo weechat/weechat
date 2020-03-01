@@ -188,7 +188,7 @@ relay_websocket_build_handshake (struct t_relay_client *client)
 {
     const char *sec_websocket_key;
     char *key, sec_websocket_accept[128], handshake[1024], hash[160 / 8];
-    int length, length_hash;
+    int length, hash_size;
 
     sec_websocket_key = weechat_hashtable_get (client->http_headers,
                                                "sec-websocket-key");
@@ -207,12 +207,12 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     snprintf (key, length, "%s%s", sec_websocket_key, WEBSOCKET_GUID);
 
     /* compute 160-bit SHA1 on the key and encode it with base64 */
-    if (!weechat_crypto_hash (key, strlen (key), "sha1", hash, &length_hash))
+    if (!weechat_crypto_hash (key, strlen (key), "sha1", hash, &hash_size))
     {
         free (key);
         return NULL;
     }
-    if (weechat_string_base_encode (64, hash, length_hash,
+    if (weechat_string_base_encode (64, hash, hash_size,
                                     sec_websocket_accept) < 0)
     {
         sec_websocket_accept[0] = '\0';
