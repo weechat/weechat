@@ -3415,6 +3415,7 @@ Paramètres :
 * _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
   du résultat du hachage (en octets) (peut être NULL)
 
+[[crypto_hash_algorithms]]
 Algorithmes de hachage supportés :
 
 [width="100%",cols="2,2,3,6",options="header"]
@@ -3447,6 +3448,60 @@ int rc, hash_size;
 rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
 /* rc == 1, hash_size == 32 et hash est un tampon avec :
    71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+----
+
+[NOTE]
+Cette fonction n'est pas disponible dans l'API script.
+
+==== crypto_hash_pbkdf2
+
+_WeeChat ≥ 2.8._
+
+Calculer le hachage PBKDF2 (PKCS#5 Passphrase Based Key Derivation Function number 2)
+des données.
+
+Prototype :
+
+[source,C]
+----
+int weechat_crypto_hash_pbkdf2 (const void *data, int data_size,
+                                const char *hash_algo,
+                                const void *salt, int salt_size,
+                                int iterations,
+                                void *hash, int *hash_size);
+----
+
+Paramètres :
+
+* _data_ : les données à hacher
+* _data_size_ : nombre d'octets à hacher dans _data_
+* _hash_algo_ : algorithme de hachage utilisé dans la fonction de dérivation
+  de clé, voir le tableau dans la fonction <<crypto_hash_algorithms,crypto_hash>>
+* _salt_ : le sel
+* _salt_size_ : nombre d'octets dans _salt_
+* _iterations_ : nombre d'itérations
+* _hash_ : pointeur vers la variable de hachage, qui est utilisée pour stocker
+  le résultat du hachage (le tampon doit être suffisamment grand, selon
+  l'algorithme, voir le tableau dans la fonction <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
+  du résultat du hachage (en octets) (peut être NULL)
+
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
+Exemple en C :
+
+[source,C]
+----
+const char *data = "abcdefghijklmnopqrstuvwxyz";
+const char *salt = "12345678901234567890123456789012";  /* 32 octets */
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (salt), 100000,
+                                 hash, &hash_size);
+/* rc == 1, hash_size == 32 et hash est un tampon avec :
+   99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb */
 ----
 
 [NOTE]

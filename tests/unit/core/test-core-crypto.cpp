@@ -91,7 +91,7 @@ extern "C"
 
 #define WEE_CHECK_HASH_PBKDF2(__result_code, __result_hash,             \
                               __data, __data_size,                      \
-                              __hash_subalgo, __salt, __salt_size,      \
+                              __hash_algo, __salt, __salt_size,         \
                               __iterations)                             \
     if (__result_hash)                                                  \
     {                                                                   \
@@ -105,7 +105,7 @@ extern "C"
     hash_size = -1;                                                     \
     LONGS_EQUAL(__result_code,                                          \
                 weecrypto_hash_pbkdf2 (__data, __data_size,             \
-                                       __hash_subalgo,                  \
+                                       __hash_algo,                     \
                                        __salt, __salt_size,             \
                                        __iterations,                    \
                                        hash, &hash_size));              \

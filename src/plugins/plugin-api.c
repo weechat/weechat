@@ -138,6 +138,10 @@ plugin_api_string_base_decode (int base, const char *from, char *to)
 
 /*
  * Computes hash of data using the given algorithm.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -160,6 +164,41 @@ plugin_api_crypto_hash (const void *data, int data_size, const char *hash_algo,
         return 0;
 
     return weecrypto_hash (data, data_size, algo, hash, hash_size);
+}
+
+/*
+ * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
+ * hash of data.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
+                               const char *hash_algo,
+                               const void *salt, int salt_size,
+                               int iterations,
+                               void *hash, int *hash_size)
+{
+    int algo;
+
+    if (!hash)
+        return 0;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!data || (data_size < 1) || !hash_algo || !salt || (salt_size < 1))
+        return 0;
+
+    algo = weecrypto_get_hash_algo (hash_algo);
+    if (algo == GCRY_MD_NONE)
+        return 0;
+
+    return weecrypto_hash_pbkdf2 (data, data_size, algo, salt, salt_size,
+                                  iterations, hash, hash_size);
 }
 
 /*

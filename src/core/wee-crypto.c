@@ -97,7 +97,9 @@ weecrypto_get_hash_algo (const char *hash_algo)
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns 1 if OK, 0 if error.
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
@@ -167,11 +169,13 @@ hash_end:
  * If hash_size is not NULL, the length of hash is stored in *hash_size
  * (in bytes).
  *
- * Returns 1 if OK, 0 if error.
+ * Returns:
+ *   1: OK
+ *   0: error
  */
 
 int
-weecrypto_hash_pbkdf2 (const void *data, int data_size, int hash_subalgo,
+weecrypto_hash_pbkdf2 (const void *data, int data_size, int hash_algo,
                        const void *salt, int salt_size, int iterations,
                        void *hash, int *hash_size)
 {
@@ -191,8 +195,8 @@ weecrypto_hash_pbkdf2 (const void *data, int data_size, int hash_subalgo,
         goto hash_pbkdf2_end;
     }
 
-    algo_size = gcry_md_get_algo_dlen (hash_subalgo);
-    if (gcry_kdf_derive (data, data_size, GCRY_KDF_PBKDF2, hash_subalgo,
+    algo_size = gcry_md_get_algo_dlen (hash_algo);
+    if (gcry_kdf_derive (data, data_size, GCRY_KDF_PBKDF2, hash_algo,
                          salt, salt_size, iterations,
                          algo_size, hash) != 0)
     {

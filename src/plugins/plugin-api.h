@@ -37,6 +37,11 @@ extern int plugin_api_string_base_decode (int base, const char *from,
 extern int plugin_api_crypto_hash (const void *data, int data_size,
                                    const char *hash_algo,
                                    void *hash, int *hash_size);
+extern int plugin_api_crypto_hash_pbkdf2 (const void *data, int data_size,
+                                          const char *hash_algo,
+                                          const void *salt, int salt_size,
+                                          int iterations,
+                                          void *hash, int *hash_size);
 
 /* config */
 extern void plugin_api_config_file_option_free (struct t_config_option *option);

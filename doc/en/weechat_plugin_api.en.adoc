@@ -3355,6 +3355,7 @@ Arguments:
 * _hash_size_: pointer to a variable used to store the size of the hash computed
   (in bytes) (can be NULL)
 
+[[crypto_hash_algorithms]]
 Supported hash algorithms:
 
 [width="100%",cols="2,2,3,6",options="header"]
@@ -3387,6 +3388,60 @@ int rc, hash_size;
 rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
 /* rc == 1, hash_size == 32 and hash is a buffer with:
    71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
+----
+
+[NOTE]
+This function is not available in scripting API.
+
+==== crypto_hash_pbkdf2
+
+_WeeChat ≥ 2.8._
+
+Compute PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2) hash
+of data.
+
+Prototype:
+
+[source,C]
+----
+int weechat_crypto_hash_pbkdf2 (const void *data, int data_size,
+                                const char *hash_algo,
+                                const void *salt, int salt_size,
+                                int iterations,
+                                void *hash, int *hash_size);
+----
+
+Arguments:
+
+* _data_: the data to hash
+* _data_size_: number of bytes to hash in _data_
+* _hash_algo_: hash algorithm used by the key derivation function, see table
+  in function <<crypto_hash_algorithms,crypto_hash>>
+* _salt_: the salt
+* _salt_size_: number of bytes in _salt_
+* _iterations_: number of iterations
+* _hash_: pointer to the hash variable, which is used to store the resulting hash
+  (the buffer must be large enough, according to the algorithm, see table in
+  function <<crypto_hash_algorithms,crypto_hash>>)
+* _hash_size_: pointer to a variable used to store the size of the hash computed
+  (in bytes) (can be NULL)
+
+Return value:
+
+* 1 if OK, 0 if error
+
+C example:
+
+[source,C]
+----
+const char *data = "abcdefghijklmnopqrstuvwxyz";
+const char *salt = "12345678901234567890123456789012";  /* 32 bytes */
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hash_pbkdf2 (data, strlen (data), "sha256", salt, strlen (salt), 100000,
+                                 hash, &hash_size);
+/* rc == 1, hash_size == 32 and hash is a buffer with:
+   99 b3 5e 42 53 d1 a7 a8 49 c1 dc 2c e2 53 c2 b6 6d a1 8b dc 6e 78 a7 06 e0 ef 34 db 0a 7a a2 bb */
 ----
 
 [NOTE]
