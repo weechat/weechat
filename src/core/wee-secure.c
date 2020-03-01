@@ -66,150 +66,131 @@ int secure_data_encrypted = 0;
 
 
 /*
- * Computes hash of data, as binary buffer.
+ * Computes hash of data using the given algorithm.
  *
- * Note: "*hash" must be freed after use.
+ * The hash size depends on the algorithm, common ones are:
+ *
+ *   GCRY_MD_CRC32      32 bits ==  4 bytes
+ *   GCRY_MD_MD5       128 bits == 16 bytes
+ *   GCRY_MD_SHA1      160 bits == 20 bytes
+ *   GCRY_MD_SHA224    224 bits == 28 bytes
+ *   GCRY_MD_SHA256    256 bits == 32 bytes
+ *   GCRY_MD_SHA384    384 bits == 48 bytes
+ *   GCRY_MD_SHA512    512 bits == 64 bytes
+ *   GCRY_MD_SHA3_224  224 bits == 28 bytes
+ *   GCRY_MD_SHA3_256  256 bits == 32 bytes
+ *   GCRY_MD_SHA3_384  384 bits == 48 bytes
+ *   GCRY_MD_SHA3_512  512 bits == 64 bytes
+ *
+ * The result hash is stored in "hash" (the buffer must be large enough).
+ *
+ * If hash_size is not NULL, the length of hash is stored in *hash_size
+ * (in bytes).
+ *
+ * Returns 1 if OK, 0 if error.
  */
 
-void
-secure_hash_binary (const char *data, int length_data, int hash_algo,
-                    char **hash, int *length_hash)
+int
+secure_hash (const void *data, int data_size, int hash_algo,
+             void *hash, int *hash_size)
 {
     gcry_md_hd_t *hd_md;
-    int hd_md_opened;
+    int rc, hd_md_opened, algo_size;
     unsigned char *ptr_hash;
 
-    if (!hash || !length_hash)
-        return;
-
+    rc = 0;
     hd_md = NULL;
     hd_md_opened = 0;
-    *hash = NULL;
-    *length_hash = 0;
 
-    if (!data || (length_data < 1))
-        goto hash_binary_end;
+    if (!hash)
+        goto hash_end;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!data || (data_size < 1))
+        goto hash_end;
 
     hd_md = malloc (sizeof (gcry_md_hd_t));
     if (!hd_md)
-        goto hash_binary_end;
+        goto hash_end;
 
     if (gcry_md_open (hd_md, hash_algo, 0) != 0)
-        goto hash_binary_end;
+        goto hash_end;
 
     hd_md_opened = 1;
 
-    gcry_md_write (*hd_md, data, length_data);
+    gcry_md_write (*hd_md, data, data_size);
     ptr_hash = gcry_md_read (*hd_md, hash_algo);
     if (!ptr_hash)
-        goto hash_binary_end;
+        goto hash_end;
 
-    *length_hash = gcry_md_get_algo_dlen (hash_algo);
-    *hash = malloc (*length_hash);
-    if (!*hash)
-    {
-        *length_hash = 0;
-        goto hash_binary_end;
-    }
-    memcpy (*hash, ptr_hash, *length_hash);
+    algo_size = gcry_md_get_algo_dlen (hash_algo);
+    memcpy (hash, ptr_hash, algo_size);
+    if (hash_size)
+        *hash_size = algo_size;
 
-hash_binary_end:
+    rc = 1;
+
+hash_end:
     if (hd_md)
     {
         if (hd_md_opened)
             gcry_md_close (*hd_md);
         free (hd_md);
     }
-}
-
-/*
- * Computes hash of data, as text (string with hexadecimal).
- *
- * Returns a string with the hash as hexadecimal, NULL if error.
- *
- * Note: result must be freed after use.
- */
-
-char *
-secure_hash (const char *data, int length_data, int hash_algo)
-{
-    char *hash, *result;
-    int length_hash, i;
-    const char *hexa = "0123456789abcdef";
-
-    hash = NULL;
-    length_hash = 0;
-    result = NULL;
-
-    secure_hash_binary (data, length_data, hash_algo, &hash, &length_hash);
-    if (!hash || (length_hash < 1))
-        goto hash_end;
-
-    result = malloc (((length_hash) * 2) + 1);
-    if (!result)
-        goto hash_end;
-
-    for (i = 0; i < length_hash; i++)
-    {
-        result[i * 2] = hexa[(hash[i] & 0xFF) / 16];
-        result[(i * 2) + 1] = hexa[(hash[i] & 0xFF) % 16];
-    }
-    result[(length_hash * 2)] = '\0';
-
-hash_end:
-    if (hash)
-        free (hash);
-
-    return result;
+    return rc;
 }
 
 /*
  * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
  * hash of data, as binary buffer.
  *
- * Returns 1 if OK, 0 if error.
+ * The hash size depends on the algorithm, common ones are:
  *
- * Note: if OK, "*hash" must be freed after use.
+ *   GCRY_MD_SHA1      160 bits == 20 bytes
+ *   GCRY_MD_SHA256    256 bits == 32 bytes
+ *   GCRY_MD_SHA512    512 bits == 64 bytes
+ *
+ * The result hash is stored in "hash" (the buffer must be large enough).
+ *
+ * If hash_size is not NULL, the length of hash is stored in *hash_size
+ * (in bytes).
+ *
+ * Returns 1 if OK, 0 if error.
  */
 
 int
-secure_hash_pbkdf2 (const char *data, int length_data, int hash_subalgo,
-                    const char *salt, int length_salt, int iterations,
-                    char **hash, int *length_hash)
+secure_hash_pbkdf2 (const void *data, int data_size, int hash_subalgo,
+                    const void *salt, int salt_size, int iterations,
+                    void *hash, int *hash_size)
 {
-    int rc;
+    int rc, algo_size;
 
     rc = 0;
 
-    if (!hash || !length_hash)
+    if (!hash)
         goto hash_pbkdf2_end;
 
-    *hash = NULL;
-    *length_hash = 0;
+    if (hash_size)
+        *hash_size = 0;
 
-    if (!data || (length_data < 1) || !salt || (length_salt < 1)
+    if (!data || (data_size < 1) || !salt || (salt_size < 1)
         || (iterations < 1))
     {
         goto hash_pbkdf2_end;
     }
 
-    *length_hash = gcry_md_get_algo_dlen (hash_subalgo);
-    *hash = malloc (*length_hash);
-    if (!*hash)
+    algo_size = gcry_md_get_algo_dlen (hash_subalgo);
+    if (gcry_kdf_derive (data, data_size, GCRY_KDF_PBKDF2, hash_subalgo,
+                         salt, salt_size, iterations,
+                         algo_size, hash) != 0)
     {
-        *length_hash = 0;
         goto hash_pbkdf2_end;
     }
 
-    if (gcry_kdf_derive (data, length_data, GCRY_KDF_PBKDF2, hash_subalgo,
-                         salt, length_salt, iterations,
-                         *length_hash, *hash) != 0)
-    {
-        free (*hash);
-        *hash = NULL;
-        *length_hash = 0;
-        goto hash_pbkdf2_end;
-    }
+    if (hash_size)
+        *hash_size = algo_size;
 
     rc = 1;
 
@@ -229,7 +210,7 @@ int
 secure_derive_key (const char *salt, const char *passphrase,
                    unsigned char *key, int length_key)
 {
-    char *buffer, *hash;
+    char *buffer, hash[512 / 8];
     int length, length_hash;
 
     if (!salt || !passphrase || !key || (length_key < 1))
@@ -247,8 +228,7 @@ secure_derive_key (const char *salt, const char *passphrase,
     memcpy (buffer + SECURE_SALT_SIZE, passphrase, strlen (passphrase));
 
     /* compute hash of buffer */
-    secure_hash_binary (buffer, length, GCRY_MD_SHA512, &hash, &length_hash);
-    if (!hash)
+    if (!secure_hash (buffer, length, GCRY_MD_SHA512, hash, &length_hash))
     {
         free (buffer);
         return 0;
@@ -258,7 +238,6 @@ secure_derive_key (const char *salt, const char *passphrase,
     memcpy (key, hash,
             (length_hash > length_key) ? length_key : length_hash);
 
-    free (hash);
     free (buffer);
 
     return 1;

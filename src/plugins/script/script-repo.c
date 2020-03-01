@@ -755,7 +755,8 @@ script_repo_sha512sum_file (const char *filename)
 {
     struct stat st;
     FILE *file;
-    char *data, *hash;
+    char *data, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
+    int length_hash;
 
     if (stat (filename, &st) == -1)
         return NULL;
@@ -773,11 +774,17 @@ script_repo_sha512sum_file (const char *filename)
     }
     fclose (file);
 
-    hash = weechat_string_hash (data, st.st_size, "sha512");
+    if (!weechat_string_hash (data, st.st_size, "sha512", hash, &length_hash))
+    {
+        free (data);
+        return NULL;
+    }
+    weechat_string_base_encode (16, hash, length_hash, hash_hexa);
+    weechat_string_tolower (hash_hexa);
 
     free (data);
 
-    return hash;
+    return strdup (hash_hexa);
 }
 
 /*

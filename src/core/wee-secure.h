@@ -55,14 +55,13 @@ extern int secure_cipher[];
 extern int secure_data_encrypted;
 extern char *secure_decrypt_error[];
 
-extern void secure_hash_binary (const char *data, int length_data,
-                                int hash_algo, char **hash, int *length_hash);
-extern char *secure_hash (const char *data, int length_data, int hash_algo);
-extern int secure_hash_pbkdf2 (const char *data, int length_data,
+extern int secure_hash (const void *data, int data_size, int hash_algo,
+                        void *hash, int *hash_size);
+extern int secure_hash_pbkdf2 (const void *data, int data_size,
                                int hash_subalgo,
-                               const char *salt, int length_salt,
+                               const void *salt, int salt_size,
                                int iterations,
-                               char **hash, int *length_hash);
+                               void *hash, int *hash_size);
 extern int secure_encrypt_data (const char *data, int length_data,
                                 int hash_algo, int cipher,
                                 const char *passphrase, char **encrypted,

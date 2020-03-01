@@ -3444,54 +3444,29 @@ string_get_hash_algo (const char *hash_algo)
 }
 
 /*
- * Computes hash data, as binary buffer.
- *
- * Note: "*hash" must be freed after use.
+ * Computes hash data.
  */
 
-void
-string_hash_binary (const char *data, int length_data, const char *hash_algo,
-                    char **hash, int *length_hash)
+int
+string_hash (const void *data, int data_size, const char *hash_algo,
+             void *hash, int *hash_size)
 {
     int algo;
 
-    if (!hash || !length_hash)
-        return;
+    if (!hash)
+        return 0;
 
-    *hash = NULL;
-    *length_hash = 0;
+    if (hash_size)
+        *hash_size = 0;
 
-    if (!data || (length_data < 1) || !hash_algo)
-        return;
-
-    algo = string_get_hash_algo (hash_algo);
-    if (algo == GCRY_MD_NONE)
-        return;
-
-    secure_hash_binary (data, length_data, algo, hash, length_hash);
-}
-
-/*
- * Computes hash of a buffer, as text (string with hexadecimal).
- *
- * Returns a string with the hash as hexadecimal, NULL if error.
- *
- * Note: result must be freed after use.
- */
-
-char *
-string_hash (const char *data, int length_data, const char *hash_algo)
-{
-    int algo;
-
-    if (!data || (length_data < 1) || !hash_algo)
-        return NULL;
+    if (!data || (data_size < 1) || !hash_algo)
+        return 0;
 
     algo = string_get_hash_algo (hash_algo);
     if (algo == GCRY_MD_NONE)
-        return NULL;
+        return 0;
 
-    return secure_hash (data, length_data, algo);
+    return secure_hash (data, data_size, algo, hash, hash_size);
 }
 
 /*

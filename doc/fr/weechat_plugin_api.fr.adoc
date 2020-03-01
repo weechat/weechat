@@ -2099,7 +2099,7 @@ char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
 [NOTE]
 Cette fonction n'est pas disponible dans l'API script.
 
-==== string_hash_binary
+==== string_hash
 
 _WeeChat ≥ 2.8._
 
@@ -2109,103 +2109,52 @@ Prototype :
 
 [source,C]
 ----
-void string_hash_binary (const char *data, int length_data, const char *hash_algo,
-                         char **hash, int *length_hash);
+int string_hash (const void *data, int data_size, const char *hash_algo, void *hash, int *hash_size);
 ----
 
 Paramètres :
 
 * _data_ : les données à hacher
-* _length_data_ : nombre d'octets à hacher dans _data_
+* _data_size_ : nombre d'octets à hacher dans _data_
 * _hash_algo_ : l'algorithme de hachage, voir le tableau ci-dessous
-* _hash_ : pointeur vers la variable de hachage, qui est allouée par la fonction
-  et utilisée pour stocker le résultat du hachage (NULL si erreur)
-* _length_hash_ : pointeur vers une variable utiliser pour stocker la longueur
-  du résultat du hachage (en octets) (0 si erreur)
+* _hash_ : pointeur vers la variable de hachage, qui est utilisée pour stocker
+  le résultat du hachage (le tampon doit être suffisamment grand, selon
+  l'algorithme, voir le tableau ci-dessous)
+* _hash_size_ : pointeur vers une variable utiliser pour stocker la longueur
+  du résultat du hachage (en octets) (peut être NULL)
 
 Algorithmes de hachage supportés :
 
-[width="100%",cols="4,4,4,5,12",options="header"]
+[width="100%",cols="2,2,3,6",options="header"]
 |===
-| Valeur       | Algorithme | Taille du haché | Sortie (binaire) | Notes
-| `+crc32+`    | CRC32      | 32 bits         | 4 octets         | Pas un algorithme de hachage au sens cryptographique.
-| `+md5+`      | MD5        | 128 bits        | 16 octets        | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha1+`     | SHA-1      | 160 bits        | 20 octets        | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha224+`   | SHA-224    | 224 bits        | 28 octets        |
-| `+sha256+`   | SHA-256    | 256 bits        | 32 octets        |
-| `+sha384+`   | SHA-384    | 384 bits        | 48 octets        |
-| `+sha512+`   | SHA-512    | 512 bits        | 64 octets        |
-| `+sha3-224+` | SHA3-224   | 224 bits        | 28 octets        |
-| `+sha3-256+` | SHA3-256   | 256 bits        | 32 octets        |
-| `+sha3-384+` | SHA3-384   | 384 bits        | 48 octets        |
-| `+sha3-512+` | SHA3-512   | 512 bits        | 64 octets        |
-|===
-
-Exemple en C :
-
-[source,C]
-----
-const char *data = "abcdefghijklmnopqrstuvwxyz";
-char *hash;
-int length_hash;
-weechat_string_hash_binary (data, strlen (data), "sha256", &hash, &length_hash);
-/* hash is a binary buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
-----
-
-[NOTE]
-Cette fonction n'est pas disponible dans l'API script.
-
-==== string_hash
-
-_WeeChat ≥ 2.8._
-
-Calculer le hachage des données, sous forme de chaîne hexadécimale.
-
-Prototype :
-
-[source,C]
-----
-char *string_hash (const char *data, int length_data, const char *hash_algo);
-----
-
-Paramètres :
-
-* _data_ : les données à hacher
-* _length_data_ : nombre d'octets à hacher dans _data_
-* _hash_algo_ : l'algorithme de hachage, voir le tableau ci-dessous
-
-Algorithmes de hachage supportés :
-
-[width="100%",cols="4,4,4,5,12",options="header"]
-|===
-| Valeur       | Algorithme | Taille du haché | Sortie (chaîne)     | Notes
-| `+crc32+`    | CRC32      | 32 bits         | 8 caractères hexa   | Pas un algorithme de hachage au sens cryptographique.
-| `+md5+`      | MD5        | 128 bits        | 32 caractères hexa  | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha1+`     | SHA-1      | 160 bits        | 40 caractères hexa  | *Faible*, non recommandé pour un usage cryptographique.
-| `+sha224+`   | SHA-224    | 224 bits        | 56 caractères hexa  |
-| `+sha256+`   | SHA-256    | 256 bits        | 64 caractères hexa  |
-| `+sha384+`   | SHA-384    | 384 bits        | 96 caractères hexa  |
-| `+sha512+`   | SHA-512    | 512 bits        | 128 caractères hexa |
-| `+sha3-224+` | SHA3-224   | 224 bits        | 56 caractères hexa  |
-| `+sha3-256+` | SHA3-256   | 256 bits        | 64 caractères hexa  |
-| `+sha3-384+` | SHA3-384   | 384 bits        | 96 caractères hexa  |
-| `+sha3-512+` | SHA3-512   | 512 bits        | 128 caractères hexa |
+| Valeur       | Algorithme | Taille du haché      | Notes
+| `+crc32+`    | CRC32      | 4 octets (32 bits)   | Pas un algorithme de hachage au sens cryptographique.
+| `+md5+`      | MD5        | 16 octets (128 bits) | *Faible*, non recommandé pour un usage cryptographique.
+| `+sha1+`     | SHA-1      | 20 octets (160 bits) | *Faible*, non recommandé pour un usage cryptographique.
+| `+sha224+`   | SHA-224    | 28 octets (224 bits) |
+| `+sha256+`   | SHA-256    | 32 octets (256 bits) |
+| `+sha384+`   | SHA-384    | 48 octets (384 bits) |
+| `+sha512+`   | SHA-512    | 64 octets (512 bits) |
+| `+sha3-224+` | SHA3-224   | 28 octets (224 bits) |
+| `+sha3-256+` | SHA3-256   | 32 octets (256 bits) |
+| `+sha3-384+` | SHA3-384   | 48 octets (384 bits) |
+| `+sha3-512+` | SHA3-512   | 64 octets (512 bits) |
 |===
 
 Valeur de retour :
 
-* chaîne avec le résultat du hachage en hexadécimal (doit être supprimée par un
-  appel à "free" après utilisation), NULL si erreur
+* 1 si OK, 0 si erreur
 
 Exemple en C :
 
 [source,C]
 ----
 const char *data = "abcdefghijklmnopqrstuvwxyz";
-char *hash;
-hash = weechat_string_hash (data, strlen (data), "sha256");
-/* hash == "71c480df93d6ae2f1efad1447c66c9525e316218cf51fc8d9ed832f2daf18b73"
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_string_hash (data, strlen (data), "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 et hash est un tampon avec :
+   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
 ----
 
 [NOTE]

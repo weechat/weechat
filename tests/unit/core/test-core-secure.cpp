@@ -33,87 +33,52 @@ extern "C"
 #define SECURE_PASSWORD "this_is_a_secret_password"
 #define TOTP_SECRET "secretpasswordbase32"
 
-#define WEE_CHECK_HASH_BIN(__result_hash, __data, __length_data,        \
-                           __hash_algo)                                 \
+#define WEE_CHECK_HASH(__result_code, __result_hash,                    \
+                       __data, __data_size, __hash_algo)                \
     if (__result_hash)                                                  \
     {                                                                   \
-        result_bin = (char *)malloc (4096);                             \
-        length_bin = string_base16_decode (__result_hash,               \
-                                           (char *)result_bin);         \
+        hash_size_expected = string_base16_decode (__result_hash,       \
+                                                   hash_expected);      \
     }                                                                   \
     else                                                                \
     {                                                                   \
-        result_bin = NULL;                                              \
-        length_bin = 0;                                                 \
+        hash_size_expected = 0;                                         \
     }                                                                   \
-    hash_bin = NULL;                                                    \
-    length_hash_bin = -1;                                               \
-    secure_hash_binary (__data, __length_data, __hash_algo,             \
-                        &hash_bin, &length_hash_bin);                   \
-    if (__result_hash == NULL)                                          \
+    hash_size = -1;                                                     \
+    LONGS_EQUAL(__result_code,                                          \
+                secure_hash (__data, __data_size, __hash_algo,          \
+                             hash, &hash_size));                        \
+    if (__result_hash)                                                  \
     {                                                                   \
-        POINTERS_EQUAL(NULL, hash_bin);                                 \
+        MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
     }                                                                   \
-    else                                                                \
-    {                                                                   \
-        MEMCMP_EQUAL(result_bin, hash_bin, length_hash_bin);            \
-    }                                                                   \
-    LONGS_EQUAL(length_bin, length_hash_bin);                           \
-    if (result_bin)                                                     \
-        free (result_bin);                                              \
-    if (hash_bin)                                                       \
-        free (hash_bin);
-
-#define WEE_CHECK_HASH_HEX(__result_hash, __data, __length_data,        \
-                           __hash_algo)                                 \
-    hash = secure_hash (__data, __length_data, __hash_algo);            \
-    if (__result_hash == NULL)                                          \
-    {                                                                   \
-        POINTERS_EQUAL(NULL, hash);                                     \
-    }                                                                   \
-    else                                                                \
-    {                                                                   \
-        STRCMP_EQUAL(__result_hash, hash);                              \
-    }                                                                   \
-    if (hash)                                                           \
-        free (hash);
+    LONGS_EQUAL(hash_size_expected, hash_size);
 
 #define WEE_CHECK_HASH_PBKDF2(__result_code, __result_hash,             \
-                              __data, __length_data,                    \
-                              __hash_subalgo, __salt, __length_salt,    \
+                              __data, __data_size,                      \
+                              __hash_subalgo, __salt, __salt_size,      \
                               __iterations)                             \
     if (__result_hash)                                                  \
     {                                                                   \
-        result_bin = (char *)malloc (4096);                             \
-        length_bin = string_base16_decode (__result_hash,               \
-                                           (char *)result_bin);         \
+        hash_size_expected = string_base16_decode (__result_hash,       \
+                                                   hash_expected);      \
     }                                                                   \
     else                                                                \
     {                                                                   \
-        result_bin = NULL;                                              \
-        length_bin = 0;                                                 \
+        hash_size_expected = 0;                                         \
     }                                                                   \
-    hash_bin = NULL;                                                    \
-    length_hash_bin = -1;                                               \
+    hash_size = -1;                                                     \
     LONGS_EQUAL(__result_code,                                          \
-                secure_hash_pbkdf2 (__data, __length_data,              \
+                secure_hash_pbkdf2 (__data, __data_size,                \
                                     __hash_subalgo,                     \
-                                    __salt, __length_salt,              \
+                                    __salt, __salt_size,                \
                                     __iterations,                       \
-                                    &hash_bin, &length_hash_bin));      \
-    if (__result_hash == NULL)                                          \
+                                    hash, &hash_size));                 \
+    if (__result_hash)                                                  \
     {                                                                   \
-        POINTERS_EQUAL(NULL, hash_bin);                                 \
+        MEMCMP_EQUAL(hash_expected, hash, hash_size);                   \
     }                                                                   \
-    else                                                                \
-    {                                                                   \
-        MEMCMP_EQUAL(result_bin, hash_bin, length_hash_bin);            \
-    }                                                                   \
-    LONGS_EQUAL(length_bin, length_hash_bin);                           \
-    if (result_bin)                                                     \
-        free (result_bin);                                              \
-    if (hash_bin)                                                       \
-        free (hash_bin);
+    LONGS_EQUAL(hash_size_expected, hash_size);
 
 #define WEE_CHECK_TOTP_GENERATE(__result, __secret, __time, __digits)   \
     totp = secure_totp_generate (__secret, __time, __digits);           \
@@ -143,56 +108,31 @@ TEST_GROUP(CoreSecure)
 
 /*
  * Tests functions:
- *   secure_hash_binary
  *   secure_hash
  */
 
 TEST(CoreSecure, Hash)
 {
     const char *data = DATA_HASH;
-    char *result_bin, *hash_bin, *hash;
-    int length, length_bin, length_hash_bin;
+    char hash_expected[4096], hash[4096];
+    int data_size, hash_size_expected, hash_size;
 
-    length = strlen (data);
+    data_size = strlen (data);
 
-    WEE_CHECK_HASH_BIN(NULL, NULL, 0, 0);
-    WEE_CHECK_HASH_HEX(NULL, NULL, 0, 0);
+    WEE_CHECK_HASH(0, NULL, NULL, 0, 0);
+    WEE_CHECK_HASH(0, NULL, "test", 0, 0);
 
-    WEE_CHECK_HASH_BIN(NULL, "test", 0, 0);
-    WEE_CHECK_HASH_HEX(NULL, "test", 0, 0);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_CRC32, data, length, GCRY_MD_CRC32);
-    WEE_CHECK_HASH_HEX(DATA_HASH_CRC32, data, length, GCRY_MD_CRC32);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_MD5, data, length, GCRY_MD_MD5);
-    WEE_CHECK_HASH_HEX(DATA_HASH_MD5, data, length, GCRY_MD_MD5);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA1, data, length, GCRY_MD_SHA1);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA1, data, length, GCRY_MD_SHA1);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA224, data, length, GCRY_MD_SHA224);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA224, data, length, GCRY_MD_SHA224);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA256, data, length, GCRY_MD_SHA256);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA256, data, length, GCRY_MD_SHA256);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA384, data, length, GCRY_MD_SHA384);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA384, data, length, GCRY_MD_SHA384);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA512, data, length, GCRY_MD_SHA512);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA512, data, length, GCRY_MD_SHA512);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA3_224, data, length, GCRY_MD_SHA3_224);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA3_224, data, length, GCRY_MD_SHA3_224);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA3_256, data, length, GCRY_MD_SHA3_256);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA3_256, data, length, GCRY_MD_SHA3_256);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA3_384, data, length, GCRY_MD_SHA3_384);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA3_384, data, length, GCRY_MD_SHA3_384);
-
-    WEE_CHECK_HASH_BIN(DATA_HASH_SHA3_512, data, length, GCRY_MD_SHA3_512);
-    WEE_CHECK_HASH_HEX(DATA_HASH_SHA3_512, data, length, GCRY_MD_SHA3_512);
+    WEE_CHECK_HASH(1, DATA_HASH_CRC32, data, data_size, GCRY_MD_CRC32);
+    WEE_CHECK_HASH(1, DATA_HASH_MD5, data, data_size, GCRY_MD_MD5);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA1, data, data_size, GCRY_MD_SHA1);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA224, data, data_size, GCRY_MD_SHA224);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA256, data, data_size, GCRY_MD_SHA256);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA384, data, data_size, GCRY_MD_SHA384);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA512, data, data_size, GCRY_MD_SHA512);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA3_224, data, data_size, GCRY_MD_SHA3_224);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA3_256, data, data_size, GCRY_MD_SHA3_256);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA3_384, data, data_size, GCRY_MD_SHA3_384);
+    WEE_CHECK_HASH(1, DATA_HASH_SHA3_512, data, data_size, GCRY_MD_SHA3_512);
 }
 
 /*
@@ -203,11 +143,11 @@ TEST(CoreSecure, Hash)
 TEST(CoreSecure, HashPbkdf2)
 {
     const char *data = DATA_HASH, *salt = DATA_HASH_SALT;
-    char *result_bin, *hash_bin;
-    int length, length_salt, length_bin, length_hash_bin;
+    char hash_expected[4096], hash[4096];
+    int data_size, salt_size, hash_size_expected, hash_size;
 
-    length = strlen (data);
-    length_salt = strlen (salt);
+    data_size = strlen (data);
+    salt_size = strlen (salt);
 
     WEE_CHECK_HASH_PBKDF2(0, NULL, NULL, 0, 0, NULL, 0, 0);
     WEE_CHECK_HASH_PBKDF2(0, NULL, "test", 0, 0, NULL, 0, 0);
@@ -215,38 +155,38 @@ TEST(CoreSecure, HashPbkdf2)
 
     /* SHA1 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA1_1000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA1,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           1000);
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA1_100000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA1,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           100000);
 
     /* SHA256 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA256_1000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA256,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           1000);
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA256_100000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA256,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           100000);
 
     /* SHA512 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA512_1000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA512,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           1000);
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA512_100000,
-                          data, length,
+                          data, data_size,
                           GCRY_MD_SHA512,
-                          DATA_HASH_SALT, length_salt,
+                          DATA_HASH_SALT, salt_size,
                           100000);
 }
 
