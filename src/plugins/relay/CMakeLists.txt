@@ -41,7 +41,6 @@ set_target_properties(relay PROPERTIES PREFIX "")
 set(LINK_LIBS)
 
 list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
-list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
 if(GNUTLS_FOUND)
   include_directories(${GNUTLS_INCLUDE_PATH})

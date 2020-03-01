@@ -23,7 +23,6 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <gcrypt.h>
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -188,10 +187,8 @@ char *
 relay_websocket_build_handshake (struct t_relay_client *client)
 {
     const char *sec_websocket_key;
-    char *key, sec_websocket_accept[128], handshake[1024];
-    unsigned char *result;
-    gcry_md_hd_t hd;
-    int length;
+    char *key, sec_websocket_accept[128], handshake[1024], *hash;
+    int length, length_hash;
 
     sec_websocket_key = weechat_hashtable_get (client->http_headers,
                                                "sec-websocket-key");
@@ -210,17 +207,20 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     snprintf (key, length, "%s%s", sec_websocket_key, WEBSOCKET_GUID);
 
     /* compute 160-bit SHA1 on the key and encode it with base64 */
-    gcry_md_open (&hd, GCRY_MD_SHA1, 0);
-    length = gcry_md_get_algo_dlen (GCRY_MD_SHA1);
-    gcry_md_write (hd, key, strlen (key));
-    result = gcry_md_read (hd, GCRY_MD_SHA1);
-    if (weechat_string_base_encode (64, (char *)result, length,
+    weechat_string_hash_binary (key, strlen (key), "sha1",
+                                &hash, &length_hash);
+    if (!hash)
+    {
+        free (key);
+        return NULL;
+    }
+    if (weechat_string_base_encode (64, hash, length_hash,
                                     sec_websocket_accept) < 0)
     {
         sec_websocket_accept[0] = '\0';
     }
-    gcry_md_close (hd);
 
+    free (hash);
     free (key);
 
     /* build the handshake (it will be sent as-is to client) */
