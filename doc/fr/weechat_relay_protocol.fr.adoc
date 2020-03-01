@@ -121,6 +121,9 @@ Paramètres :
 * _option_ : une des options suivantes :
 ** _password_ : mot de passe utilisé pour s'authentifier avec _relay_
    (option _relay.network.password_ dans WeeChat)
+** _password_hash_ : mot de passe haché utilisé pour s'authentifier avec _relay_
+   (option _relay.network.password_ dans WeeChat), voir ci-dessous pour le format
+   _(WeeChat ≥ 2.8)_
 ** _totp_ : mot de passe à usage unique basé sur le temps (TOTP : Time-based
    One-Time Password) utilisé comme second facteur d'authentification, en plus
    du mot de passe (option _relay.network.totp_secret_ dans WeeChat)
@@ -133,6 +136,17 @@ Paramètres :
 [NOTE]
 Avec WeeChat ≥ 1.6, les virgules peuvent être échappées dans la valeur,
 par exemple `init password=foo\,bar` pour envoyer le mot de passe "foo,bar".
+
+Le format du mot de passe haché est l'un des suivants, où _hash_ est le mot
+de passe haché en hexadécimal :
+
+* `+sha256:hash+`
+* `+sha512:hash+`
+* `+pbkdf2:algorithme:sel:itérations:hash+` avec :
+** _algorithme_ : _sha256_ ou _sha512_
+** _sel_ : sel (hexadécimal)
+** _iterations_ : nombre d'itérations
+** _hash_ : le mot de passe haché (hexadécimal)
 
 Exemples :
 
@@ -148,6 +162,15 @@ init password=mypass,totp=123456
 
 # initialiser et désactiver la compression
 init password=mypass,compression=off
+
+# initialiser avec un mot de passe haché (SHA256) (WeeChat ≥ 2.8)
+init password_hash=sha256:b9a4c3393dfac4330736684510378851e581c68add8eca84110c31a33e694676
+
+# initialiser avec un mot de passe haché (SHA512) (WeeChat ≥ 2.8)
+init password_hash=sha512:4469190d4e0d1fdc0afb6f408d9873c89b8ce89cc4db79fe058255c55ad6821fa5e9bb068f9e578c8ae7cc825d85ff99c439d59e439bc589d95620a1e6b8ae6e
+
+# initialiser avec un mot de passe haché (PBKDF2: SHA256, sel="ABCDEFGHIJKLMNOP", 100000 itérations) (WeeChat ≥ 2.8)
+init password_hash=pbkdf2:sha256:4142434445464748494a4b4c4d4e4f50:100000:01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc945a1c
 ----
 
 [[command_hdata]]

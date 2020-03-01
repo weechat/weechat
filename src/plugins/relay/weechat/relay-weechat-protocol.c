@@ -159,12 +159,171 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 }
 
 /*
+ * Parses PBKDF2 parameters from string with format:
+ *
+ *   algorithm:salt:iterations:hash
+ *
+ * where:
+ *
+ *   algorithm is "sha256" or "sha512"
+ *   salt is the salt in hexadecimal
+ *   iterations it the number of iterations (≥ 1)
+ *   hash is the hashed password with the parameters above, in hexadecimal
+ */
+
+void
+relay_weechat_protocol_parse_pbkdf2 (const char *parameters,
+                                     char **algorithm,
+                                     char **salt,
+                                     int *salt_size,
+                                     int *iterations,
+                                     char **hash_pbkdf2)
+{
+    char **argv, *error;
+    int argc;
+
+    *algorithm = NULL;
+    *salt = NULL;
+    *salt_size = 0;
+    *iterations = 0;
+    *hash_pbkdf2 = NULL;
+
+    if (!parameters)
+        return;
+
+    argv = weechat_string_split (parameters, ":", NULL, 0, 0, &argc);
+
+    if (!argv || (argc < 4))
+    {
+        /* not enough parameters */
+        if (argv)
+            weechat_string_free_split (argv);
+        return;
+    }
+
+    /* parameter 1: algorithm */
+    if ((strcmp (argv[0], "sha256") == 0)
+        || (strcmp (argv[0], "sha512") == 0))
+    {
+        *algorithm = strdup (argv[0]);
+    }
+
+    /* parameter 2: salt */
+    *salt = malloc (strlen (argv[1]) + 1);
+    if (*salt)
+        *salt_size = weechat_string_base_decode (16, argv[1], *salt);
+
+    /* parameter 3: iterations */
+    *iterations = (int)strtol (argv[2], &error, 10);
+    if (!error || error[0])
+        *iterations = 0;
+
+    /* parameter 4: the PBKDF2 hash */
+    *hash_pbkdf2 = strdup (argv[3]);
+
+    weechat_string_free_split (argv);
+}
+
+/*
+ * Checks if hashed password received is valid.
+ *
+ * Format of hash_password is: algorithm:hash
+ *
+ * Returns 1 if the hashed password is valid, otherwise 0.
+ */
+
+int
+relay_weechat_protocol_check_hash (const char *hashed_password,
+                                   const char *password)
+{
+    const char *pos_hash;
+    char *hash_algo, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
+    char *hash_pbkdf2_algo, *salt, *hash_pbkdf2;
+    int rc, hash_size, salt_size, iterations;
+
+    rc = 0;
+
+    if (!hashed_password || !password)
+        goto end;
+
+    pos_hash = strchr (hashed_password, ':');
+    if (!pos_hash)
+        goto end;
+
+    hash_algo = weechat_strndup (hashed_password, pos_hash - hashed_password);
+    if (!hash_algo)
+        goto end;
+
+    pos_hash++;
+
+    if ((strcmp (hash_algo, "sha256") == 0)
+        || (strcmp (hash_algo, "sha512") == 0))
+    {
+        if (weechat_crypto_hash (password, strlen (password), hash_algo,
+                                 hash, &hash_size))
+        {
+            weechat_string_base_encode (16, hash, hash_size, hash_hexa);
+            if (weechat_strcasecmp (hash_hexa, pos_hash) == 0)
+                rc = 1;
+        }
+    }
+    else if (strcmp (hash_algo, "pbkdf2") == 0)
+    {
+        relay_weechat_protocol_parse_pbkdf2 (pos_hash,
+                                             &hash_pbkdf2_algo,
+                                             &salt,
+                                             &salt_size,
+                                             &iterations,
+                                             &hash_pbkdf2);
+        if (hash_pbkdf2_algo && salt && (salt_size > 0) && (iterations > 0)
+            && hash_pbkdf2)
+        {
+            if (weechat_crypto_hash_pbkdf2 (password, strlen (password),
+                                            hash_pbkdf2_algo,
+                                            salt, salt_size,
+                                            iterations,
+                                            hash, &hash_size))
+            {
+                weechat_string_base_encode (16, hash, hash_size, hash_hexa);
+                if (weechat_strcasecmp (hash_hexa, hash_pbkdf2) == 0)
+                    rc = 1;
+            }
+        }
+        if (hash_pbkdf2_algo)
+            free (hash_pbkdf2_algo);
+        if (salt)
+            free (salt);
+        if (hash_pbkdf2)
+            free (hash_pbkdf2);
+    }
+
+    free (hash_algo);
+
+end:
+    return rc;
+}
+
+/*
  * Callback for command "init" (from client).
+ *
+ * Format is:  init arg1=value1,arg2=value2
+ *
+ * Allowed arguments:
+ *   password       plain text password (recommended with SSL only)
+ *   password_hash  hashed password, value is: algorithm:[parameters:]hash
+ *                  supported algorithms: sha256, sha512 and pbkdf2
+ *                  for pbkdf2, parameters are: algorithm, salt, iterations
+ *                  hash is given in hexadecimal
+ *   totp           time-based one time password used as secondary
+ *                  authentication factor
+ *   compression    zlib (default) or off
  *
  * Message looks like:
  *   init password=mypass
  *   init password=mypass,compression=zlib
  *   init password=mypass,compression=off
+ *   init password_hash=sha256:71c480df93d6ae2f1efad1447c66c9…,totp=123456
+ *   init password_hash=pbkdf2:sha256:414232…:100000:01757d53157c…,totp=123456
  */
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
@@ -200,6 +359,15 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                     password_received = 1;
                     if (password && (strcmp (password, pos) == 0))
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                }
+                else if (strcmp (options[i], "password_hash") == 0)
+                {
+                    password_received = 1;
+                    if (password
+                        && relay_weechat_protocol_check_hash (pos, password))
+                    {
+                        RELAY_WEECHAT_DATA(client, password_ok) = 1;
+                    }
                 }
                 else if (strcmp (options[i], "totp") == 0)
                 {

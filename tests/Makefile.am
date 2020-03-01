@@ -71,7 +71,8 @@ lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/irc/test-irc-color.cpp 
                                             unit/plugins/irc/test-irc-message.cpp \
                                             unit/plugins/irc/test-irc-mode.cpp \
                                             unit/plugins/irc/test-irc-nick.cpp \
-                                            unit/plugins/irc/test-irc-protocol.cpp
+                                            unit/plugins/irc/test-irc-protocol.cpp \
+                                            unit/plugins/relay/weechat/test-relay-weechat-protocol.cpp
 
 lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 
