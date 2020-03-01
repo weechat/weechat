@@ -25,9 +25,11 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <gcrypt.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-crypto.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
@@ -132,6 +134,32 @@ plugin_api_string_base_decode (int base, const char *from, char *to)
             return string_base64_decode (from, to);
     }
     return -1;
+}
+
+/*
+ * Computes hash of data using the given algorithm.
+ */
+
+int
+plugin_api_crypto_hash (const void *data, int data_size, const char *hash_algo,
+                        void *hash, int *hash_size)
+{
+    int algo;
+
+    if (!hash)
+        return 0;
+
+    if (hash_size)
+        *hash_size = 0;
+
+    if (!data || (data_size < 1) || !hash_algo)
+        return 0;
+
+    algo = weecrypto_get_hash_algo (hash_algo);
+    if (algo == GCRY_MD_NONE)
+        return 0;
+
+    return weecrypto_hash (data, data_size, algo, hash, hash_size);
 }
 
 /*

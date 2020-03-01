@@ -27,6 +27,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/test-plugins.cpp
   unit/core/test-core-arraylist.cpp
   unit/core/test-core-calc.cpp
+  unit/core/test-core-crypto.cpp
   unit/core/test-core-eval.cpp
   unit/core/test-core-hashtable.cpp
   unit/core/test-core-hdata.cpp
@@ -38,7 +39,6 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-url.cpp
   unit/core/test-core-utf8.cpp
   unit/core/test-core-util.cpp
-  unit/core/test-core.h
   unit/gui/test-gui-color.cpp
   unit/gui/test-gui-line.cpp
   unit/gui/test-gui-nick.cpp

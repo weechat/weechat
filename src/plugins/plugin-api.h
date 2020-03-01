@@ -33,6 +33,11 @@ extern int plugin_api_string_base_encode (int base, const char *from,
 extern int plugin_api_string_base_decode (int base, const char *from,
                                           char *to);
 
+/* crypto */
+extern int plugin_api_crypto_hash (const void *data, int data_size,
+                                   const char *hash_algo,
+                                   void *hash, int *hash_size);
+
 /* config */
 extern void plugin_api_config_file_option_free (struct t_config_option *option);
 extern struct t_config_option *plugin_api_config_get (const char *option_name);

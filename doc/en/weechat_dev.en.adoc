@@ -125,6 +125,7 @@ WeeChat "core" is located in following directories:
 |    wee-completion.c             | Default completions.
 |    wee-config-file.c            | Configuration file management.
 |    wee-config.c                 | Configuration options for WeeChat core (file weechat.conf).
+|    wee-crypto.c                 | Cryptographic functions.
 |    wee-debug.c                  | Some debug functions.
 |    wee-eval.c                   | Evaluation of expressions with references to internal vars.
 |    wee-hashtable.c              | Hashtables.
@@ -391,6 +392,7 @@ WeeChat "core" is located in following directories:
 |       core/                       | Root of unit tests for core.
 |          test-core-arraylist.cpp  | Tests: arraylists.
 |          test-core-calc.cpp       | Tests: calculation of expressions.
+|          test-core-crypto.cpp     | Tests: cryptographic functions.
 |          test-core-eval.cpp       | Tests: evaluation of expressions.
 |          test-core-hashtble.cpp   | Tests: hashtables.
 |          test-core-hdata.cpp      | Tests: hdata.

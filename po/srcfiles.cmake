@@ -52,6 +52,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-config-file.c
 ./src/core/wee-config-file.h
 ./src/core/wee-config.h
+./src/core/wee-crypto.c
+./src/core/wee-crypto.h
 ./src/core/wee-debug.c
 ./src/core/wee-debug.h
 ./src/core/wee-eval.c

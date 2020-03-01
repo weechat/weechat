@@ -62,6 +62,7 @@ extern "C"
 IMPORT_TEST_GROUP(Plugins);
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
+IMPORT_TEST_GROUP(CoreCrypto);
 IMPORT_TEST_GROUP(CoreEval);
 IMPORT_TEST_GROUP(CoreHashtable);
 IMPORT_TEST_GROUP(CoreHdata);

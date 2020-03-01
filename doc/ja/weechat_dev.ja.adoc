@@ -132,6 +132,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-completion.c             | デフォルト補完
 |    wee-config-file.c            | 設定ファイル管理
 |    wee-config.c                 | WeeChat コアの設定オプション (weechat.conf ファイル)
+// TRANSLATION MISSING
+|    wee-crypto.c                 | Cryptographic functions.
 |    wee-debug.c                  | デバッグ用関数
 |    wee-eval.c                   | 内部変数へのリファレンスを含む式を評価
 |    wee-hashtable.c              | ハッシュテーブル
@@ -400,6 +402,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-arraylist.cpp  | テスト: 配列リスト
 // TRANSLATION MISSING
 |          test-core-calc.cpp       | Tests: calculation of expressions.
+// TRANSLATION MISSING
+|          test-core-crypto.cpp     | Tests: cryptographic functions.
 |          test-core-eval.cpp       | テスト: 式の評価
 |          test-core-hashtble.cpp   | テスト: ハッシュテーブル
 |          test-core-hdata.cpp      | テスト: hdata

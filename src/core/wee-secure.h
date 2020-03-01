@@ -27,8 +27,6 @@
 #define SECURE_SALT_DEFAULT          "WeeChat!"
 #define SECURE_DATA_PASSPHRASE_FLAG  "__passphrase__"
 #define SECURE_SALT_SIZE             8
-#define SECURE_TOTP_MIN_DIGITS       4
-#define SECURE_TOTP_MAX_DIGITS       10
 
 enum t_secure_config_hash_algo
 {
@@ -55,13 +53,6 @@ extern int secure_cipher[];
 extern int secure_data_encrypted;
 extern char *secure_decrypt_error[];
 
-extern int secure_hash (const void *data, int data_size, int hash_algo,
-                        void *hash, int *hash_size);
-extern int secure_hash_pbkdf2 (const void *data, int data_size,
-                               int hash_subalgo,
-                               const void *salt, int salt_size,
-                               int iterations,
-                               void *hash, int *hash_size);
 extern int secure_encrypt_data (const char *data, int length_data,
                                 int hash_algo, int cipher,
                                 const char *passphrase, char **encrypted,
@@ -71,10 +62,6 @@ extern int secure_decrypt_data (const char *buffer, int length_buffer,
                                 const char *passphrase, char **decrypted,
                                 int *length_decrypted);
 extern int secure_decrypt_data_not_decrypted (const char *passphrase);
-extern char *secure_totp_generate (const char *secret, time_t totp_time,
-                                   int digits);
-extern int secure_totp_validate (const char *secret, time_t totp_time,
-                                 int window, const char *otp);
 extern int secure_init ();
 extern void secure_end ();
 

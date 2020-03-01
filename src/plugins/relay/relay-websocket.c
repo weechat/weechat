@@ -207,7 +207,7 @@ relay_websocket_build_handshake (struct t_relay_client *client)
     snprintf (key, length, "%s%s", sec_websocket_key, WEBSOCKET_GUID);
 
     /* compute 160-bit SHA1 on the key and encode it with base64 */
-    if (!weechat_string_hash (key, strlen (key), "sha1", hash, &length_hash))
+    if (!weechat_crypto_hash (key, strlen (key), "sha1", hash, &length_hash))
     {
         free (key);
         return NULL;

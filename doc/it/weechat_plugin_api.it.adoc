@@ -2152,68 +2152,6 @@ char *dump = weechat_string_hex_dump (string, strlen (string), 8, " >> ", NULL);
 [NOTE]
 Questa funzione non è disponibile nelle API per lo scripting.
 
-// TRANSLATION MISSING
-==== string_hash
-
-_WeeChat ≥ 2.8._
-
-Compute hash of data.
-
-Prototipo:
-
-[source,C]
-----
-int string_hash (const void *data, int data_size, const char *hash_algo, void *hash, int *hash_size);
-----
-
-Argomenti:
-
-* _data_: the data to hash
-* _data_size_: number of bytes to hash in _data_
-* _hash_algo_: the hash algorithm, see table below
-* _hash_: pointer to the hash variable, which is used to store the resulting hash
-  (the buffer must be large enough, according to the algorithm, see table below)
-* _hash_size_: pointer to a variable used to store the length of the hash computed
-  (in bytes) (can be NULL)
-
-Supported hash algorithms:
-
-[width="100%",cols="2,2,3,6",options="header"]
-|===
-| Value        | Algorithm | Hash size           | Notes
-| `+crc32+`    | CRC32     | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
-| `+md5+`      | MD5       | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha1+`     | SHA-1     | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
-| `+sha224+`   | SHA-224   | 28 bytes (224 bits) |
-| `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
-| `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
-| `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
-| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) |
-| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) |
-| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) |
-| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) |
-|===
-
-Valore restituito:
-
-// TRANSLATION MISSING
-* 1 if OK, 0 if error
-
-Esempio in C:
-
-[source,C]
-----
-const char *data = "abcdefghijklmnopqrstuvwxyz";
-char hash[256 / 8];
-int rc, hash_size;
-rc = weechat_string_hash (data, strlen (data), "sha256", hash, &hash_size);
-/* rc == 1, hash_size == 32 and hash is a buffer with:
-   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
-----
-
-[NOTE]
-Questa funzione non è disponibile nelle API per lo scripting.
-
 ==== string_is_command_char
 
 _WeeChat ≥ 0.3.2._
@@ -3523,6 +3461,75 @@ Esempio in C:
 char *string = weechat_utf8_strndup ("chêne", 3);  /* restituisce "chê" */
 /* ... */
 free (string);
+----
+
+[NOTE]
+Questa funzione non è disponibile nelle API per lo scripting.
+
+// TRANSLATION MISSING
+[[crypto]]
+=== Cryptography
+
+Some cryptographic functions.
+
+// TRANSLATION MISSING
+==== crypto_hash
+
+_WeeChat ≥ 2.8._
+
+Compute hash of data.
+
+Prototipo:
+
+[source,C]
+----
+int weechat_crypto_hash (const void *data, int data_size, const char *hash_algo,
+                         void *hash, int *hash_size);
+----
+
+Argomenti:
+
+* _data_: the data to hash
+* _data_size_: number of bytes to hash in _data_
+* _hash_algo_: the hash algorithm, see table below
+* _hash_: pointer to the hash variable, which is used to store the resulting hash
+  (the buffer must be large enough, according to the algorithm, see table below)
+* _hash_size_: pointer to a variable used to store the length of the hash computed
+  (in bytes) (can be NULL)
+
+Supported hash algorithms:
+
+[width="100%",cols="2,2,3,6",options="header"]
+|===
+| Value        | Algorithm | Hash size           | Notes
+| `+crc32+`    | CRC32     | 4 bytes (32 bits)   | Not a hash algorithm in the cryptographic sense.
+| `+md5+`      | MD5       | 16 bytes (128 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha1+`     | SHA-1     | 20 bytes (160 bits) | *Weak*, not recommended for cryptography usage.
+| `+sha224+`   | SHA-224   | 28 bytes (224 bits) |
+| `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
+| `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
+| `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
+| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) |
+| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) |
+| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) |
+| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) |
+|===
+
+Valore restituito:
+
+// TRANSLATION MISSING
+* 1 if OK, 0 if error
+
+Esempio in C:
+
+[source,C]
+----
+const char *data = "abcdefghijklmnopqrstuvwxyz";
+char hash[256 / 8];
+int rc, hash_size;
+rc = weechat_crypto_hash (data, strlen (data), "sha256", hash, &hash_size);
+/* rc == 1, hash_size == 32 and hash is a buffer with:
+   71 c4 80 df 93 d6 ae 2f 1e fa d1 44 7c 66 c9 52 5e 31 62 18 cf 51 fc 8d 9e d8 32 f2 da f1 8b 73 */
 ----
 
 [NOTE]

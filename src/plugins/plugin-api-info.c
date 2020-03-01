@@ -31,10 +31,10 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-crypto.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-proxy.h"
-#include "../core/wee-secure.h"
 #include "../core/wee-string.h"
 #include "../core/wee-url.h"
 #include "../core/wee-util.h"
@@ -780,7 +780,7 @@ plugin_api_info_totp_generate_cb (const void *pointer, void *data,
         digits = number;
     }
 
-    totp = secure_totp_generate (ptr_secret, totp_time, digits);
+    totp = weecrypto_totp_generate (ptr_secret, totp_time, digits);
     if (!totp)
         goto error;
 
@@ -853,7 +853,7 @@ plugin_api_info_totp_validate_cb (const void *pointer, void *data,
         window = number;
     }
 
-    rc = secure_totp_validate (ptr_secret, totp_time, window, ptr_otp);
+    rc = weecrypto_totp_validate (ptr_secret, totp_time, window, ptr_otp);
 
     snprintf (value, sizeof (value), "%d", rc);
 

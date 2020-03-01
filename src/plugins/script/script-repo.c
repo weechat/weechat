@@ -774,7 +774,7 @@ script_repo_sha512sum_file (const char *filename)
     }
     fclose (file);
 
-    if (!weechat_string_hash (data, st.st_size, "sha512", hash, &length_hash))
+    if (!weechat_crypto_hash (data, st.st_size, "sha512", hash, &length_hash))
     {
         free (data);
         return NULL;

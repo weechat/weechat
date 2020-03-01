@@ -127,6 +127,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-completion.c             | Complétions par défaut.
 |    wee-config-file.c            | Gestion des fichiers de configuration.
 |    wee-config.c                 | Options de configuration du cœur de WeeChat (fichier weechat.conf).
+|    wee-crypto.c                 | Fonctions de cryptographie.
 |    wee-debug.c                  | Quelques fonctions de debug.
 |    wee-eval.c                   | Évaluation d'expressions avec des références à des variables internes.
 |    wee-hashtable.c              | Tables de hachage.
@@ -393,6 +394,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       core/                       | Racine des tests unitaires pour le cœur.
 |          test-core-arraylist.cpp  | Tests : listes avec tableau (« arraylists »).
 |          test-core-calc.cpp       | Tests : calcul d'expressions.
+|          test-core-crypto.cpp     | Tests : fonctions cryptographiques.
 |          test-core-eval.cpp       | Tests : évaluation d'expressions.
 |          test-core-hashtble.cpp   | Tests : tables de hachage.
 |          test-core-hdata.cpp      | Tests : hdata.

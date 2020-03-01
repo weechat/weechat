@@ -53,7 +53,6 @@
 #include "wee-config.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
-#include "wee-secure.h"
 #include "wee-utf8.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -64,22 +63,6 @@
 #define HEX2DEC(c) (((c >= 'a') && (c <= 'f')) ? c - 'a' + 10 :         \
                     ((c >= 'A') && (c <= 'F')) ? c - 'A' + 10 :         \
                     c - '0')
-
-char *string_hash_algo_string[] = {
-    "crc32",
-    "md5",
-    "sha1",
-    "sha224", "sha256", "sha384", "sha512",
-    "sha3-224", "sha3-256", "sha3-384", "sha3-512",
-    NULL,
-};
-int string_hash_algo[] = {
-    GCRY_MD_CRC32,
-    GCRY_MD_MD5,
-    GCRY_MD_SHA1,
-    GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384, GCRY_MD_SHA512,
-    GCRY_MD_SHA3_224, GCRY_MD_SHA3_256, GCRY_MD_SHA3_384, GCRY_MD_SHA3_512,
-};
 
 struct t_hashtable *string_hashtable_shared = NULL;
 
@@ -3420,53 +3403,6 @@ end:
         free (str_line);
 
     return buf;
-}
-
-/*
- * Returns the hash algorithm with the name, or GCRY_MD_NONE if not found.
- */
-
-int
-string_get_hash_algo (const char *hash_algo)
-{
-    int i;
-
-    if (!hash_algo)
-        return GCRY_MD_NONE;
-
-    for (i = 0; string_hash_algo_string[i]; i++)
-    {
-        if (strcmp (string_hash_algo_string[i], hash_algo) == 0)
-            return string_hash_algo[i];
-    }
-
-    return GCRY_MD_NONE;
-}
-
-/*
- * Computes hash data.
- */
-
-int
-string_hash (const void *data, int data_size, const char *hash_algo,
-             void *hash, int *hash_size)
-{
-    int algo;
-
-    if (!hash)
-        return 0;
-
-    if (hash_size)
-        *hash_size = 0;
-
-    if (!data || (data_size < 1) || !hash_algo)
-        return 0;
-
-    algo = string_get_hash_algo (hash_algo);
-    if (algo == GCRY_MD_NONE)
-        return 0;
-
-    return secure_hash (data, data_size, algo, hash, hash_size);
 }
 
 /*
