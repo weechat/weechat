@@ -108,7 +108,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | libncursesw5-dev ^(2)^ |               | *ja*     | Ncurses Oberfläche.
 | libcurl4-gnutls-dev    |               | *ja*     | URL Transfer.
 | zlib1g-dev             |               | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
-| libgcrypt20-dev        |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES), Skript-Erweiterung.
+| libgcrypt20-dev        |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES).
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
 | gettext                |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates        |               |          | Zertifikate für SSL Verbindungen.

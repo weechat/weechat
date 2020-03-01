@@ -123,7 +123,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | zlib1g-dev             |               | *sì*      | Compression of packets in relay plugin (weechat protocol), script plugin.
 // TRANSLATION MISSING
-| libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES), script plugin.
+| libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES).
 // TRANSLATION MISSING
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 | gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).

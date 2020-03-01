@@ -107,7 +107,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 | libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェース
 | libcurl4-gnutls-dev    |                  | *必須* | URL 転送
 | zlib1g-dev             |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)、スクリプトプラグイン
+| libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)
 | libgnutls28-dev        | 2.2.0 以上 ^(3)^ |        | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 | gettext                |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート

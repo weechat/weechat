@@ -36,7 +36,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <zlib.h>
-#include <gcrypt.h>
 
 #include "../weechat-plugin.h"
 #include "script.h"
@@ -756,13 +755,7 @@ script_repo_sha512sum_file (const char *filename)
 {
     struct stat st;
     FILE *file;
-    char sha512sum[512];
-    const char *hexa = "0123456789abcdef";
-    unsigned char *data, *result;
-    gcry_md_hd_t hd;
-    int mdlen, i;
-
-    sha512sum[0] = '\0';
+    char *data, *hash;
 
     if (stat (filename, &st) == -1)
         return NULL;
@@ -780,21 +773,11 @@ script_repo_sha512sum_file (const char *filename)
     }
     fclose (file);
 
-    gcry_md_open (&hd, GCRY_MD_SHA512, 0);
-    mdlen = gcry_md_get_algo_dlen (GCRY_MD_SHA512);
-    gcry_md_write (hd, data, st.st_size);
-    result = gcry_md_read (hd, GCRY_MD_SHA512);
-    for (i = 0; i < mdlen; i++)
-    {
-        sha512sum[i * 2] = hexa[(result[i] & 0xFF) / 16];
-        sha512sum[(i * 2) + 1] = hexa[(result[i] & 0xFF) % 16];
-    }
-    sha512sum[((mdlen - 1) * 2) + 2] = '\0';
-    gcry_md_close (hd);
+    hash = weechat_string_hash (data, st.st_size, "sha512");
 
     free (data);
 
-    return strdup (sha512sum);
+    return hash;
 }
 
 /*

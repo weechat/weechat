@@ -33,7 +33,6 @@ set_target_properties(script PROPERTIES PREFIX "")
 set(LINK_LIBS)
 
 list(APPEND LINK_LIBS ${ZLIB_LIBRARY})
-list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 
 target_link_libraries(script ${LINK_LIBS} coverage_config)
 
