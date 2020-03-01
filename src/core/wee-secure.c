@@ -164,6 +164,60 @@ hash_end:
 }
 
 /*
+ * Computes PKCS#5 Passphrase Based Key Derivation Function number 2 (PBKDF2)
+ * hash of data, as binary buffer.
+ *
+ * Returns 1 if OK, 0 if error.
+ *
+ * Note: if OK, "*hash" must be freed after use.
+ */
+
+int
+secure_hash_pbkdf2 (const char *data, int length_data, int hash_subalgo,
+                    const char *salt, int length_salt, int iterations,
+                    char **hash, int *length_hash)
+{
+    int rc;
+
+    rc = 0;
+
+    if (!hash || !length_hash)
+        goto hash_pbkdf2_end;
+
+    *hash = NULL;
+    *length_hash = 0;
+
+    if (!data || (length_data < 1) || !salt || (length_salt < 1)
+        || (iterations < 1))
+    {
+        goto hash_pbkdf2_end;
+    }
+
+    *length_hash = gcry_md_get_algo_dlen (hash_subalgo);
+    *hash = malloc (*length_hash);
+    if (!*hash)
+    {
+        *length_hash = 0;
+        goto hash_pbkdf2_end;
+    }
+
+    if (gcry_kdf_derive (data, length_data, GCRY_KDF_PBKDF2, hash_subalgo,
+                         salt, length_salt, iterations,
+                         *length_hash, *hash) != 0)
+    {
+        free (*hash);
+        *hash = NULL;
+        *length_hash = 0;
+        goto hash_pbkdf2_end;
+    }
+
+    rc = 1;
+
+hash_pbkdf2_end:
+    return rc;
+}
+
+/*
  * Derives a key from salt + passphrase (using a hash).
  *
  * Returns:

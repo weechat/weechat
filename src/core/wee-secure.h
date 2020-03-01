@@ -58,6 +58,11 @@ extern char *secure_decrypt_error[];
 extern void secure_hash_binary (const char *data, int length_data,
                                 int hash_algo, char **hash, int *length_hash);
 extern char *secure_hash (const char *data, int length_data, int hash_algo);
+extern int secure_hash_pbkdf2 (const char *data, int length_data,
+                               int hash_subalgo,
+                               const char *salt, int length_salt,
+                               int iterations,
+                               char **hash, int *length_hash);
 extern int secure_encrypt_data (const char *data, int length_data,
                                 int hash_algo, int cipher,
                                 const char *passphrase, char **encrypted,
