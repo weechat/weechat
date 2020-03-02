@@ -45,6 +45,7 @@ Bug fixes::
 
 Tests::
 
+  * scripts: fix generation of test scripts with Python 3.8
   * unit: add tests on function secure_derive_key
   * unit: add tests on functions util_get_time_diff and util_file_get_content
 

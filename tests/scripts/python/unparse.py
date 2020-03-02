@@ -200,6 +200,10 @@ class UnparsePython(object):
                 comparator,
             )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -267,6 +271,7 @@ class UnparsePython(object):
 
     def _ast_num(self, node):
         """Add an AST Num in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add(repr(node.n))
 
     def _ast_pass(self, node):  # pylint: disable=unused-argument
@@ -281,6 +286,7 @@ class UnparsePython(object):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add(repr(node.s))
 
     def _ast_tuple(self, node):
@@ -378,6 +384,13 @@ class UnparsePerl(UnparsePython):
                 comparator,
             )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
+        else:
+            self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -471,6 +484,7 @@ class UnparsePerl(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$').replace('@', '\\@'))
 
 
@@ -549,6 +563,7 @@ class UnparseRuby(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s)
 
 
@@ -731,6 +746,13 @@ class UnparseTcl(UnparsePython):
             self.add('}]')
         self.prefix(None)
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.value, str):
+            self.add('"%s"' % node.s.replace('$', '\\$'))
+        else:
+            self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -799,6 +821,7 @@ class UnparseTcl(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
 
 
@@ -895,6 +918,13 @@ class UnparseGuile(UnparsePython):
                 ')',
             )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.s, str):
+            self.add('"%s"' % node.s)
+        else:
+            self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -977,6 +1007,7 @@ class UnparseGuile(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s)
 
 
@@ -1099,6 +1130,13 @@ class UnparsePhp(UnparsePython):
             ')',
         )
 
+    def _ast_constant(self, node):
+        """Add an AST Constant in output."""
+        if isinstance(node.s, str):
+            self.add('"%s"' % node.s.replace('$', '\\$'))
+        else:
+            self.add(repr(node.s))
+
     def _ast_dict(self, node):
         """Add an AST Dict in output."""
         self.add(
@@ -1184,6 +1222,7 @@ class UnparsePhp(UnparsePython):
 
     def _ast_str(self, node):
         """Add an AST Str in output."""
+        # note: deprecated since Python 3.8, replaced by ast.Constant
         self.add('"%s"' % node.s.replace('$', '\\$'))
 
 
