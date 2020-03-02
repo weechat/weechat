@@ -60,8 +60,8 @@ Build::
 
 Bug fixes::
 
-  * irc: fix crash when receiving a malformed message 352 (who)
-  * irc: fix crash when a new message 005 is received with longer nick prefixes
+  * irc: fix crash when a new message 005 is received with longer nick prefixes (CVE-2020-9760)
+  * irc: fix crash when receiving a malformed message 352 (who) (CVE-2020-9759)
   * irc: fix crash when receiving a malformed message 324 (channel mode) (CVE-2020-8955)
 
 [[v2.7]]
