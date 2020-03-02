@@ -91,10 +91,10 @@ weecrypto_get_hash_algo (const char *hash_algo)
  *   GCRY_MD_SHA256    256 bits == 32 bytes
  *   GCRY_MD_SHA384    384 bits == 48 bytes
  *   GCRY_MD_SHA512    512 bits == 64 bytes
- *   GCRY_MD_SHA3_224  224 bits == 28 bytes
- *   GCRY_MD_SHA3_256  256 bits == 32 bytes
- *   GCRY_MD_SHA3_384  384 bits == 48 bytes
- *   GCRY_MD_SHA3_512  512 bits == 64 bytes
+ *   GCRY_MD_SHA3_224  224 bits == 28 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_256  256 bits == 32 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_384  384 bits == 48 bytes (libgcrypt ≥ 1.7.0)
+ *   GCRY_MD_SHA3_512  512 bits == 64 bytes (libgcrypt ≥ 1.7.0)
  *
  * The result hash is stored in "hash" (the buffer must be large enough).
  *
@@ -164,9 +164,9 @@ hash_end:
  *
  * The hash size depends on the algorithm, common ones are:
  *
- *   GCRY_MD_SHA1      160 bits == 20 bytes
- *   GCRY_MD_SHA256    256 bits == 32 bytes
- *   GCRY_MD_SHA512    512 bits == 64 bytes
+ *   GCRY_MD_SHA1    160 bits == 20 bytes
+ *   GCRY_MD_SHA256  256 bits == 32 bytes
+ *   GCRY_MD_SHA512  512 bits == 64 bytes
  *
  * The result hash is stored in "hash" (the buffer must be large enough).
  *
