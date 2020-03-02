@@ -3368,10 +3368,10 @@ Supported hash algorithms:
 | `+sha256+`   | SHA-256   | 32 bytes (256 bits) |
 | `+sha384+`   | SHA-384   | 48 bytes (384 bits) |
 | `+sha512+`   | SHA-512   | 64 bytes (512 bits) |
-| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) |
-| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) |
-| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) |
-| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) |
+| `+sha3-224+` | SHA3-224  | 28 bytes (224 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-256+` | SHA3-256  | 32 bytes (256 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-384+` | SHA3-384  | 48 bytes (384 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
+| `+sha3-512+` | SHA3-512  | 64 bytes (512 bits) | Algorithm available with libgcrypt ≥ 1.7.0.
 |===
 
 Return value:

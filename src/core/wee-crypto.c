@@ -42,7 +42,9 @@ char *weecrypto_hash_algo_string[] = {
     "md5",
     "sha1",
     "sha224", "sha256", "sha384", "sha512",
+#if GCRYPT_VERSION_NUMBER >= 0x010700
     "sha3-224", "sha3-256", "sha3-384", "sha3-512",
+#endif
     NULL,
 };
 int weecrypto_hash_algo[] = {
@@ -50,7 +52,9 @@ int weecrypto_hash_algo[] = {
     GCRY_MD_MD5,
     GCRY_MD_SHA1,
     GCRY_MD_SHA224, GCRY_MD_SHA256, GCRY_MD_SHA384, GCRY_MD_SHA512,
+#if GCRYPT_VERSION_NUMBER >= 0x010700
     GCRY_MD_SHA3_224, GCRY_MD_SHA3_256, GCRY_MD_SHA3_384, GCRY_MD_SHA3_512,
+#endif
 };
 
 

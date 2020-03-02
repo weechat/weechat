@@ -3428,10 +3428,10 @@ Algorithmes de hachage supportés :
 | `+sha256+`   | SHA-256    | 32 octets (256 bits) |
 | `+sha384+`   | SHA-384    | 48 octets (384 bits) |
 | `+sha512+`   | SHA-512    | 64 octets (512 bits) |
-| `+sha3-224+` | SHA3-224   | 28 octets (224 bits) |
-| `+sha3-256+` | SHA3-256   | 32 octets (256 bits) |
-| `+sha3-384+` | SHA3-384   | 48 octets (384 bits) |
-| `+sha3-512+` | SHA3-512   | 64 octets (512 bits) |
+| `+sha3-224+` | SHA3-224   | 28 octets (224 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-256+` | SHA3-256   | 32 octets (256 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-384+` | SHA3-384   | 48 octets (384 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
+| `+sha3-512+` | SHA3-512   | 64 octets (512 bits) | Algorithme disponible avec libgcrypt ≥ 1.7.0.
 |===
 
 Valeur de retour :
