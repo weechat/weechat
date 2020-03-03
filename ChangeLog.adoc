@@ -55,6 +55,7 @@ Build::
   * guile: add detection of Guile 3.0.0 (issue #1442)
   * irc: fix build with GnuTLS < 3.1.0 (issue #1431)
   * php: add detection of PHP 7.4
+  * ruby: add detection of Ruby 2.7 (issue #1455)
 
 [[v2.7.1]]
 == Version 2.7.1 (2020-02-20)
