@@ -140,6 +140,32 @@ TEST_GROUP(CoreCrypto)
 
 /*
  * Tests functions:
+ *   weecrypto_get_hash_algo
+ */
+
+TEST(CoreCrypto, GetHashAlgo)
+{
+    LONGS_EQUAL(GCRY_MD_NONE, weecrypto_get_hash_algo (NULL));
+    LONGS_EQUAL(GCRY_MD_NONE, weecrypto_get_hash_algo (""));
+    LONGS_EQUAL(GCRY_MD_NONE, weecrypto_get_hash_algo ("not_an_algorithm"));
+
+    LONGS_EQUAL(GCRY_MD_CRC32, weecrypto_get_hash_algo ("crc32"));
+    LONGS_EQUAL(GCRY_MD_MD5, weecrypto_get_hash_algo ("md5"));
+    LONGS_EQUAL(GCRY_MD_SHA1, weecrypto_get_hash_algo ("sha1"));
+    LONGS_EQUAL(GCRY_MD_SHA224, weecrypto_get_hash_algo ("sha224"));
+    LONGS_EQUAL(GCRY_MD_SHA256, weecrypto_get_hash_algo ("sha256"));
+    LONGS_EQUAL(GCRY_MD_SHA384, weecrypto_get_hash_algo ("sha384"));
+    LONGS_EQUAL(GCRY_MD_SHA512, weecrypto_get_hash_algo ("sha512"));
+#if GCRYPT_VERSION_NUMBER >= 0x010700
+    LONGS_EQUAL(GCRY_MD_SHA3_224, weecrypto_get_hash_algo ("sha3-224"));
+    LONGS_EQUAL(GCRY_MD_SHA3_256, weecrypto_get_hash_algo ("sha3-256"));
+    LONGS_EQUAL(GCRY_MD_SHA3_384, weecrypto_get_hash_algo ("sha3-384"));
+    LONGS_EQUAL(GCRY_MD_SHA3_512, weecrypto_get_hash_algo ("sha3-512"));
+#endif
+}
+
+/*
+ * Tests functions:
  *   weecrypto_hash
  */
 
