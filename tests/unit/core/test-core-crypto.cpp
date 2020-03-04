@@ -180,6 +180,9 @@ TEST(CoreCrypto, Hash)
     WEE_CHECK_HASH(0, NULL, NULL, 0, 0);
     WEE_CHECK_HASH(0, NULL, "test", 0, 0);
 
+    LONGS_EQUAL (0, weecrypto_hash (data, data_size, GCRY_MD_SHA256,
+                                    NULL, NULL));
+
     WEE_CHECK_HASH(1, DATA_HASH_CRC32, data, data_size, GCRY_MD_CRC32);
     WEE_CHECK_HASH(1, DATA_HASH_MD5, data, data_size, GCRY_MD_MD5);
     WEE_CHECK_HASH(1, DATA_HASH_SHA1, data, data_size, GCRY_MD_SHA1);
@@ -212,6 +215,10 @@ TEST(CoreCrypto, HashPbkdf2)
     WEE_CHECK_HASH_PBKDF2(0, NULL, NULL, 0, 0, NULL, 0, 0);
     WEE_CHECK_HASH_PBKDF2(0, NULL, "test", 0, 0, NULL, 0, 0);
     WEE_CHECK_HASH_PBKDF2(0, NULL, "test", 4, GCRY_MD_SHA1, "salt", 4, 0);
+
+    LONGS_EQUAL (0, weecrypto_hash_pbkdf2 (data, data_size, GCRY_MD_SHA256,
+                                           salt, salt_size, 100000,
+                                           NULL, NULL));
 
     /* SHA1 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA1_1000,
