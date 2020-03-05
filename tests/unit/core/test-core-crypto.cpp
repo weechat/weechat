@@ -24,6 +24,7 @@
 extern "C"
 {
 #include <string.h>
+#include <ctype.h>
 #include <gcrypt.h>
 #include "src/core/wee-crypto.h"
 #include "src/core/wee-string.h"
@@ -275,6 +276,14 @@ TEST(CoreCrypto, TotpGenerate)
     WEE_CHECK_TOTP_GENERATE(NULL, TOTP_SECRET, 0, 3);
     WEE_CHECK_TOTP_GENERATE(NULL, TOTP_SECRET, 0, 11);
 
+    /* current time */
+    totp = weecrypto_totp_generate (TOTP_SECRET, 0, 6);
+    CHECK(totp);
+    CHECK(isdigit (totp[0]) && isdigit (totp[1]) && isdigit (totp[2])
+          && isdigit (totp[3]) && isdigit (totp[4]) && isdigit (totp[5]));
+    LONGS_EQUAL(6, strlen (totp));
+    free (totp);
+
     /* TOTP with 6 digits */
     WEE_CHECK_TOTP_GENERATE("065486", TOTP_SECRET, 1540624066, 6);
     WEE_CHECK_TOTP_GENERATE("640073", TOTP_SECRET, 1540624085, 6);
@@ -309,6 +318,18 @@ TEST(CoreCrypto, TotpValidate)
     /* invalid OTP */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 0, 0, NULL);
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 0, 0, "");
+
+    /* not enough digits in OTP (min is 4) */
+    WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "1");
+    WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "12");
+    WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "123");
+
+    /* too many digits (max is 10) */
+    WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "12345678901");
+    WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1234567890, 0, "123456789012");
+
+    /* current time */
+    weecrypto_totp_validate (TOTP_SECRET, 0, 0, "123456");
 
     /* validation error (wrong OTP) */
     WEE_CHECK_TOTP_VALIDATE(0, TOTP_SECRET, 1540624110, 0, "065486");
