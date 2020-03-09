@@ -368,6 +368,8 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                 {
                     irc_upgrade_current_server->temp_server =
                         weechat_infolist_integer (infolist, "temp_server");
+                    irc_upgrade_current_server->fake_server =
+                        weechat_infolist_integer (infolist, "fake_server");
                     irc_upgrade_current_server->buffer = NULL;
                     buffer_name = weechat_infolist_string (infolist, "buffer_name");
                     if (buffer_name && buffer_name[0])

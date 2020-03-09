@@ -25,6 +25,7 @@ New features::
   * api: add functions crypto_hash and crypto_hash_pbkdf2
   * api: add info "weechat_headless" (issue #1433)
   * buflist: add pointer "window" in bar item evaluation
+  * irc: add support of fake servers (no I/O, for testing purposes)
   * relay: accept hash of password in init command of weechat protocol with option "password_hash" (PBKDF2, SHA256, SHA512)
   * relay: reject client with weechat protocol if password or totp is received in init command but not set in WeeChat (issue #1435)
 

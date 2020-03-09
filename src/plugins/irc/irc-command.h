@@ -29,7 +29,9 @@ struct t_irc_channel;
                              struct t_gui_buffer *buffer,               \
                              int argc, char **argv, char **argv_eol)
 
-#define IRC_COMMAND_CHECK_SERVER(__command, __check_connection)         \
+#define IRC_COMMAND_CHECK_SERVER(__command,                             \
+                                 __check_connection,                    \
+                                 __check_socket)                        \
     if (!ptr_server)                                                    \
     {                                                                   \
         weechat_printf (NULL,                                           \
@@ -39,7 +41,9 @@ struct t_irc_channel;
                         __command);                                     \
         return WEECHAT_RC_OK;                                           \
     }                                                                   \
-    if (__check_connection && !ptr_server->is_connected)                \
+    if ((__check_connection && !ptr_server->is_connected)               \
+        || (__check_socket && !ptr_server->fake_server                  \
+            && (ptr_server->sock < 0)))                                 \
     {                                                                   \
         weechat_printf (NULL,                                           \
                         _("%s%s: command \"%s\" must be executed on "   \

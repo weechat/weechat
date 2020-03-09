@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-12-26 22:25+0100\n"
-"PO-Revision-Date: 2019-11-03 08:38+0100\n"
+"POT-Creation-Date: 2020-03-08 14:21+0100\n"
+"PO-Revision-Date: 2020-03-08 14:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -7171,9 +7171,13 @@ msgstr "%s%s: サーバ \"%s\" には接続済み!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: サーバ \"%s\" に接続試行中!"
 
-#, c-format
-msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
-msgstr "%s: サーバ %s%s%s を追加しました (これは一時的で、保存されません!)"
+#, fuzzy, c-format
+msgid "%s: server added: %s%s%s%s%s"
+msgstr "%s: サーバ %s%s%s を追加"
+
+#. TRANSLATORS: "temporary IRC server"
+msgid " (temporary)"
+msgstr " (一時的)"
 
 #, c-format
 msgid ""
@@ -7340,8 +7344,8 @@ msgstr "%s%s: 新しいプライベートバッファ \"%s\" の作成に失敗"
 msgid "nick:"
 msgstr "ニックネーム:"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s"
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
 msgstr "サーバ: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
@@ -7350,8 +7354,9 @@ msgstr "接続済み"
 msgid "not connected"
 msgstr "未接続"
 
-msgid " (temporary)"
-msgstr " (一時的)"
+#. TRANSLATORS: "fake IRC server"
+msgid " (fake)"
+msgstr ""
 
 msgid "minute"
 msgid_plural "minutes"
@@ -7382,10 +7387,6 @@ msgstr "%s%s: サーバ \"%s\" は既に存在しており、追加できませ�
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: サーバの追加に失敗"
-
-#, c-format
-msgid "%s: server %s%s%s added"
-msgstr "%s: サーバ %s%s%s を追加"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"

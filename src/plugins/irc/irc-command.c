@@ -360,7 +360,7 @@ irc_command_mode_masks (struct t_irc_server *server,
 IRC_COMMAND_CALLBACK(admin)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("admin", 1);
+    IRC_COMMAND_CHECK_SERVER("admin", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1182,7 +1182,7 @@ IRC_COMMAND_CALLBACK(ban)
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("ban", 1);
+    IRC_COMMAND_CHECK_SERVER("ban", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1263,7 +1263,7 @@ IRC_COMMAND_CALLBACK(cap)
     char *cap_cmd;
 
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("cap", 1);
+    IRC_COMMAND_CHECK_SERVER("cap", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1494,12 +1494,13 @@ IRC_COMMAND_CALLBACK(connect)
                                 argv[i], 1);
                             weechat_printf (
                                 NULL,
-                                _("%s: server %s%s%s added "
-                                  "(temporary server, NOT SAVED!)"),
+                                _("%s: server added: %s%s%s%s%s"),
                                 IRC_PLUGIN_NAME,
                                 IRC_COLOR_CHAT_SERVER,
                                 ptr_server->name,
-                                IRC_COLOR_RESET);
+                                IRC_COLOR_RESET,
+                                _(" (temporary)"),
+                                "");
                             irc_server_apply_command_line_options (ptr_server,
                                                                    argc, argv);
                             if (!irc_command_connect_one_server (ptr_server, 0, 0))
@@ -1584,7 +1585,7 @@ IRC_COMMAND_CALLBACK(ctcp)
         arg_args = 5;
     }
 
-    IRC_COMMAND_CHECK_SERVER("ctcp", 1);
+    IRC_COMMAND_CHECK_SERVER("ctcp", 1, 1);
 
     targets = weechat_string_split (argv[arg_target], ",", NULL,
                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1683,7 +1684,7 @@ IRC_COMMAND_CALLBACK(cycle)
     int i, num_channels;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("cycle", 1);
+    IRC_COMMAND_CHECK_SERVER("cycle", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1792,7 +1793,7 @@ IRC_COMMAND_CALLBACK(dcc)
     int rc;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("dcc", 1);
+    IRC_COMMAND_CHECK_SERVER("dcc", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1883,7 +1884,7 @@ IRC_COMMAND_CALLBACK(dcc)
 IRC_COMMAND_CALLBACK(dehalfop)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("dehalfop", 1);
+    IRC_COMMAND_CHECK_SERVER("dehalfop", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1922,7 +1923,7 @@ IRC_COMMAND_CALLBACK(dehalfop)
 IRC_COMMAND_CALLBACK(deop)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("deop", 1);
+    IRC_COMMAND_CHECK_SERVER("deop", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -1961,7 +1962,7 @@ IRC_COMMAND_CALLBACK(deop)
 IRC_COMMAND_CALLBACK(devoice)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("devoice", 1);
+    IRC_COMMAND_CHECK_SERVER("devoice", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2000,7 +2001,7 @@ IRC_COMMAND_CALLBACK(devoice)
 IRC_COMMAND_CALLBACK(die)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("die", 1);
+    IRC_COMMAND_CHECK_SERVER("die", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2175,7 +2176,7 @@ IRC_COMMAND_CALLBACK(disconnect)
 IRC_COMMAND_CALLBACK(halfop)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("halfop", 1);
+    IRC_COMMAND_CHECK_SERVER("halfop", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2402,7 +2403,7 @@ IRC_COMMAND_CALLBACK(ignore)
 IRC_COMMAND_CALLBACK(info)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("info", 1);
+    IRC_COMMAND_CHECK_SERVER("info", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2433,7 +2434,7 @@ IRC_COMMAND_CALLBACK(invite)
     char *ptr_channel_name;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("invite", 1);
+    IRC_COMMAND_CHECK_SERVER("invite", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2494,7 +2495,7 @@ error:
 IRC_COMMAND_CALLBACK(ison)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("ison", 1);
+    IRC_COMMAND_CHECK_SERVER("ison", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2523,7 +2524,7 @@ irc_command_join_server (struct t_irc_server *server, const char *arguments,
     time_t time_now;
     struct t_irc_channel *ptr_channel;
 
-    if (server->sock < 0)
+    if ((server->sock < 0) && !server->fake_server)
     {
         weechat_printf (
             NULL,
@@ -2713,7 +2714,7 @@ IRC_COMMAND_CALLBACK(join)
         }
     }
 
-    IRC_COMMAND_CHECK_SERVER("join", 1);
+    IRC_COMMAND_CHECK_SERVER("join", 1, 1);
 
     if (arg_channels < argc)
     {
@@ -2792,7 +2793,7 @@ IRC_COMMAND_CALLBACK(kick)
     char *pos_channel, *pos_nick, *pos_comment;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("kick", 1);
+    IRC_COMMAND_CHECK_SERVER("kick", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2840,7 +2841,7 @@ IRC_COMMAND_CALLBACK(kickban)
     int length;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("kickban", 1);
+    IRC_COMMAND_CHECK_SERVER("kickban", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2931,7 +2932,7 @@ IRC_COMMAND_CALLBACK(kickban)
 IRC_COMMAND_CALLBACK(kill)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("kill", 1);
+    IRC_COMMAND_CHECK_SERVER("kill", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -2961,7 +2962,7 @@ IRC_COMMAND_CALLBACK(kill)
 IRC_COMMAND_CALLBACK(links)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("links", 1);
+    IRC_COMMAND_CHECK_SERVER("links", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3029,7 +3030,7 @@ IRC_COMMAND_CALLBACK(list)
             WEECHAT_COMMAND_ERROR;
     }
 
-    IRC_COMMAND_CHECK_SERVER("list", 1);
+    IRC_COMMAND_CHECK_SERVER("list", 1, 1);
 
     if (ptr_regex)
     {
@@ -3089,7 +3090,7 @@ IRC_COMMAND_CALLBACK(list)
 IRC_COMMAND_CALLBACK(lusers)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("lusers", 1);
+    IRC_COMMAND_CHECK_SERVER("lusers", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3117,7 +3118,7 @@ IRC_COMMAND_CALLBACK(lusers)
 IRC_COMMAND_CALLBACK(map)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("map", 1);
+    IRC_COMMAND_CHECK_SERVER("map", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3145,7 +3146,7 @@ IRC_COMMAND_CALLBACK(map)
 IRC_COMMAND_CALLBACK(me)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("me", 1);
+    IRC_COMMAND_CHECK_SERVER("me", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3203,7 +3204,7 @@ irc_command_mode_server (struct t_irc_server *server,
 IRC_COMMAND_CALLBACK(mode)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("mode", 1);
+    IRC_COMMAND_CHECK_SERVER("mode", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3259,7 +3260,7 @@ IRC_COMMAND_CALLBACK(mode)
 IRC_COMMAND_CALLBACK(motd)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("motd", 1);
+    IRC_COMMAND_CHECK_SERVER("motd", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3310,7 +3311,7 @@ IRC_COMMAND_CALLBACK(msg)
         arg_text = 4;
     }
 
-    IRC_COMMAND_CHECK_SERVER("msg", 1);
+    IRC_COMMAND_CHECK_SERVER("msg", 1, 1);
 
     targets = weechat_string_split (argv[arg_target], ",", NULL,
                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -3501,7 +3502,7 @@ IRC_COMMAND_CALLBACK(msg)
 IRC_COMMAND_CALLBACK(names)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("names", 1);
+    IRC_COMMAND_CHECK_SERVER("names", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3559,7 +3560,7 @@ irc_send_nick_server (struct t_irc_server *server, const char *nickname)
 IRC_COMMAND_CALLBACK(nick)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("nick", 0);
+    IRC_COMMAND_CHECK_SERVER("nick", 0, 0);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3612,7 +3613,7 @@ IRC_COMMAND_CALLBACK(notice)
         arg_text = 4;
     }
 
-    IRC_COMMAND_CHECK_SERVER("notice", 1);
+    IRC_COMMAND_CHECK_SERVER("notice", 1, 1);
     is_channel = 0;
     if (irc_server_prefix_char_statusmsg (ptr_server, argv[arg_target][0])
         && irc_channel_is_channel (ptr_server, argv[arg_target] + 1))
@@ -3863,7 +3864,7 @@ IRC_COMMAND_CALLBACK(notify)
 IRC_COMMAND_CALLBACK(op)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("op", 1);
+    IRC_COMMAND_CHECK_SERVER("op", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3902,7 +3903,7 @@ IRC_COMMAND_CALLBACK(op)
 IRC_COMMAND_CALLBACK(oper)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("oper", 1);
+    IRC_COMMAND_CHECK_SERVER("oper", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -3957,7 +3958,7 @@ IRC_COMMAND_CALLBACK(part)
     char *channel_name, *pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("part", 1);
+    IRC_COMMAND_CHECK_SERVER("part", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4023,7 +4024,7 @@ IRC_COMMAND_CALLBACK(part)
 IRC_COMMAND_CALLBACK(ping)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("ping", 1);
+    IRC_COMMAND_CHECK_SERVER("ping", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4045,7 +4046,7 @@ IRC_COMMAND_CALLBACK(ping)
 IRC_COMMAND_CALLBACK(pong)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("pong", 0);
+    IRC_COMMAND_CHECK_SERVER("pong", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4111,7 +4112,7 @@ IRC_COMMAND_CALLBACK(query)
     if (arg_nick >= argc)
         WEECHAT_COMMAND_ERROR;
 
-    IRC_COMMAND_CHECK_SERVER("query", 1);
+    IRC_COMMAND_CHECK_SERVER("query", 1, 1);
 
     nicks = weechat_string_split (argv[arg_nick], ",", NULL,
                                   WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -4187,7 +4188,7 @@ IRC_COMMAND_CALLBACK(quiet)
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("quiet", 1);
+    IRC_COMMAND_CHECK_SERVER("quiet", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4425,7 +4426,7 @@ IRC_COMMAND_CALLBACK(reconnect)
 IRC_COMMAND_CALLBACK(rehash)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("rehash", 1);
+    IRC_COMMAND_CHECK_SERVER("rehash", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4457,7 +4458,7 @@ IRC_COMMAND_CALLBACK(remove)
     int index_nick;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("remove", 1);
+    IRC_COMMAND_CHECK_SERVER("remove", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4515,7 +4516,7 @@ IRC_COMMAND_CALLBACK(remove)
 IRC_COMMAND_CALLBACK(restart)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("restart", 1);
+    IRC_COMMAND_CHECK_SERVER("restart", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4543,7 +4544,7 @@ IRC_COMMAND_CALLBACK(restart)
 IRC_COMMAND_CALLBACK(sajoin)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("sajoin", 1);
+    IRC_COMMAND_CHECK_SERVER("sajoin", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4565,7 +4566,7 @@ IRC_COMMAND_CALLBACK(sajoin)
 IRC_COMMAND_CALLBACK(samode)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("samode", 1);
+    IRC_COMMAND_CHECK_SERVER("samode", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4624,7 +4625,7 @@ IRC_COMMAND_CALLBACK(samode)
 IRC_COMMAND_CALLBACK(sanick)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("sanick", 1);
+    IRC_COMMAND_CHECK_SERVER("sanick", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4645,7 +4646,7 @@ IRC_COMMAND_CALLBACK(sanick)
 IRC_COMMAND_CALLBACK(sapart)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("sapart", 1);
+    IRC_COMMAND_CHECK_SERVER("sapart", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4666,7 +4667,7 @@ IRC_COMMAND_CALLBACK(sapart)
 IRC_COMMAND_CALLBACK(saquit)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("saquit", 1);
+    IRC_COMMAND_CHECK_SERVER("saquit", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -4702,7 +4703,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
     if (with_detail)
     {
         weechat_printf (NULL, "");
-        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s%s"),
+        weechat_printf (NULL, _("Server: %s%s %s[%s%s%s]%s%s%s%s"),
                         IRC_COLOR_CHAT_SERVER,
                         server->name,
                         IRC_COLOR_CHAT_DELIMITERS,
@@ -4712,7 +4713,10 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                         IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_RESET,
                         str_nick,
-                        (server->temp_server) ? _(" (temporary)") : "");
+                        /* TRANSLATORS: "temporary IRC server" */
+                        (server->temp_server) ? _(" (temporary)") : "",
+                        /* TRANSLATORS: "fake IRC server" */
+                        (server->fake_server) ? _(" (fake)") : "");
         /* addresses */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_ADDRESSES]))
             weechat_printf (NULL, "  addresses. . . . . . :   ('%s')",
@@ -5110,7 +5114,7 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             num_pv = irc_server_get_pv_count (server);
             weechat_printf (
                 NULL,
-                " %s %s%s %s[%s%s%s]%s%s%s, %d %s, %d pv",
+                " %s %s%s %s[%s%s%s]%s%s%s%s, %d %s, %d pv",
                 (server->is_connected) ? "*" : " ",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
@@ -5120,7 +5124,10 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
                 IRC_COLOR_CHAT_DELIMITERS,
                 IRC_COLOR_RESET,
                 str_nick,
+                /* TRANSLATORS: "temporary IRC server" */
                 (server->temp_server) ? _(" (temporary)") : "",
+                /* TRANSLATORS: "fake IRC server" */
+                (server->fake_server) ? _(" (fake)") : "",
                 num_channels,
                 NG_("channel", "channels", num_channels),
                 num_pv);
@@ -5129,11 +5136,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
         {
             weechat_printf (
                 NULL,
-                "   %s%s%s%s",
+                "   %s%s%s%s%s",
                 IRC_COLOR_CHAT_SERVER,
                 server->name,
                 IRC_COLOR_RESET,
-                (server->temp_server) ? _(" (temporary)") : "");
+                /* TRANSLATORS: "temporary IRC server" */
+                (server->temp_server) ? _(" (temporary)") : "",
+                /* TRANSLATORS: "fake IRC server" */
+                (server->fake_server) ? _(" (fake)") : "");
         }
     }
 }
@@ -5147,6 +5157,7 @@ IRC_COMMAND_CALLBACK(server)
     int i, detailed_list, one_server_found, length, count, refresh;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *message;
+    const char *ptr_address;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -5240,20 +5251,32 @@ IRC_COMMAND_CALLBACK(server)
             return WEECHAT_RC_OK;
         }
 
+        ptr_address = argv[3];
+        if (strncmp (ptr_address, "fake:", 5) == 0)
+        {
+            /*
+             * fake server: no data is received/sent to this server,
+             * which is used for testing purposes only
+             */
+            new_server->fake_server = 1;
+            ptr_address += 5;
+        }
+
         weechat_config_option_set (
             new_server->options[IRC_SERVER_OPTION_ADDRESSES], argv[3], 1);
         irc_server_apply_command_line_options (new_server, argc, argv);
 
         weechat_printf (
             NULL,
-            (new_server->temp_server) ?
-            _("%s: server %s%s%s added "
-              "(temporary server, NOT SAVED!)") :
-            _("%s: server %s%s%s added"),
+            _("%s: server added: %s%s%s%s%s"),
             IRC_PLUGIN_NAME,
             IRC_COLOR_CHAT_SERVER,
             new_server->name,
-            IRC_COLOR_RESET);
+            IRC_COLOR_RESET,
+            /* TRANSLATORS: "temporary IRC server" */
+            (new_server->temp_server) ? _(" (temporary)") : "",
+            /* TRANSLATORS: "fake IRC server" */
+            (new_server->fake_server) ? _(" (fake)") : "");
 
         /* do not connect to server after adding it */
         /*
@@ -5540,7 +5563,7 @@ IRC_COMMAND_CALLBACK(server)
     if (weechat_strcasecmp (argv[1], "fakerecv") == 0)
     {
         WEECHAT_COMMAND_MIN_ARGS(3, "fakerecv");
-        IRC_COMMAND_CHECK_SERVER("server fakerecv", 1);
+        IRC_COMMAND_CHECK_SERVER("server fakerecv", 0, 1);
         length = strlen (argv_eol[2]);
         if (length > 0)
         {
@@ -5568,7 +5591,7 @@ IRC_COMMAND_CALLBACK(server)
 IRC_COMMAND_CALLBACK(service)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("service", 1);
+    IRC_COMMAND_CHECK_SERVER("service", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5591,7 +5614,7 @@ IRC_COMMAND_CALLBACK(service)
 IRC_COMMAND_CALLBACK(servlist)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("servlist", 1);
+    IRC_COMMAND_CHECK_SERVER("servlist", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5619,7 +5642,7 @@ IRC_COMMAND_CALLBACK(servlist)
 IRC_COMMAND_CALLBACK(squery)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("squery", 1);
+    IRC_COMMAND_CHECK_SERVER("squery", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5648,7 +5671,7 @@ IRC_COMMAND_CALLBACK(squery)
 IRC_COMMAND_CALLBACK(squit)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("squit", 1);
+    IRC_COMMAND_CHECK_SERVER("squit", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5669,7 +5692,7 @@ IRC_COMMAND_CALLBACK(squit)
 IRC_COMMAND_CALLBACK(stats)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("stats", 1);
+    IRC_COMMAND_CHECK_SERVER("stats", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5698,7 +5721,7 @@ IRC_COMMAND_CALLBACK(stats)
 IRC_COMMAND_CALLBACK(summon)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("summon", 1);
+    IRC_COMMAND_CHECK_SERVER("summon", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5720,7 +5743,7 @@ IRC_COMMAND_CALLBACK(summon)
 IRC_COMMAND_CALLBACK(time)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("time", 1);
+    IRC_COMMAND_CHECK_SERVER("time", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5750,7 +5773,7 @@ IRC_COMMAND_CALLBACK(topic)
     char *channel_name, *new_topic, *new_topic_color;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("topic", 1);
+    IRC_COMMAND_CHECK_SERVER("topic", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5825,7 +5848,7 @@ IRC_COMMAND_CALLBACK(topic)
 IRC_COMMAND_CALLBACK(trace)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("trace", 1);
+    IRC_COMMAND_CHECK_SERVER("trace", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5856,7 +5879,7 @@ IRC_COMMAND_CALLBACK(unban)
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("unban", 1);
+    IRC_COMMAND_CHECK_SERVER("unban", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5909,7 +5932,7 @@ IRC_COMMAND_CALLBACK(unquiet)
     int pos_args;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("unquiet", 1);
+    IRC_COMMAND_CHECK_SERVER("unquiet", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5969,7 +5992,7 @@ IRC_COMMAND_CALLBACK(unquiet)
 IRC_COMMAND_CALLBACK(userhost)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("userhost", 1);
+    IRC_COMMAND_CHECK_SERVER("userhost", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -5991,7 +6014,7 @@ IRC_COMMAND_CALLBACK(userhost)
 IRC_COMMAND_CALLBACK(users)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("users", 1);
+    IRC_COMMAND_CHECK_SERVER("users", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6020,7 +6043,7 @@ IRC_COMMAND_CALLBACK(users)
 IRC_COMMAND_CALLBACK(version)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("version", 1);
+    IRC_COMMAND_CHECK_SERVER("version", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6057,7 +6080,7 @@ IRC_COMMAND_CALLBACK(version)
 IRC_COMMAND_CALLBACK(voice)
 {
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("voice", 1);
+    IRC_COMMAND_CHECK_SERVER("voice", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6101,7 +6124,7 @@ IRC_COMMAND_CALLBACK(wallchops)
     struct t_irc_nick *ptr_nick;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("wallchops", 1);
+    IRC_COMMAND_CHECK_SERVER("wallchops", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6207,7 +6230,7 @@ IRC_COMMAND_CALLBACK(wallchops)
 IRC_COMMAND_CALLBACK(wallops)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("wallops", 1);
+    IRC_COMMAND_CHECK_SERVER("wallops", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6230,7 +6253,7 @@ IRC_COMMAND_CALLBACK(wallops)
 IRC_COMMAND_CALLBACK(who)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("who", 1);
+    IRC_COMMAND_CHECK_SERVER("who", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6261,7 +6284,7 @@ IRC_COMMAND_CALLBACK(whois)
     const char *ptr_nick;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
-    IRC_COMMAND_CHECK_SERVER("whois", 1);
+    IRC_COMMAND_CHECK_SERVER("whois", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;
@@ -6309,7 +6332,7 @@ IRC_COMMAND_CALLBACK(whois)
 IRC_COMMAND_CALLBACK(whowas)
 {
     IRC_BUFFER_GET_SERVER(buffer);
-    IRC_COMMAND_CHECK_SERVER("whowas", 1);
+    IRC_COMMAND_CHECK_SERVER("whowas", 1, 1);
 
     /* make C compiler happy */
     (void) pointer;

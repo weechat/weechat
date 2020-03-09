@@ -213,6 +213,7 @@ _last_irc_server_ +
 | _name_   (string) +
 _options_   (pointer) +
 _temp_server_   (integer) +
+_fake_server_   (integer) +
 _reloading_from_config_   (integer) +
 _reloaded_from_config_   (integer) +
 _addresses_eval_   (string) +

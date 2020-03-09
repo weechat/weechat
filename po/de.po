@@ -24,8 +24,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-12-26 22:25+0100\n"
-"PO-Revision-Date: 2020-02-26 15:36+0100\n"
+"POT-Creation-Date: 2020-03-08 14:21+0100\n"
+"PO-Revision-Date: 2020-03-08 14:22+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -7661,9 +7661,13 @@ msgstr "%s%s: es besteht bereits eine Verbindung zum Server \"%s\"!"
 msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: ein Verbindungsaufbau zum Server \"%s\" läuft bereits!"
 
-#, c-format
-msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
-msgstr "%s: Server %s%s%s angelegt (temporärer Server, WIRD NICHT GESICHERT!)"
+#, fuzzy, c-format
+msgid "%s: server added: %s%s%s%s%s"
+msgstr "%s: Server %s%s%s wurde angelegt"
+
+#. TRANSLATORS: "temporary IRC server"
+msgid " (temporary)"
+msgstr " (temporär)"
 
 #, c-format
 msgid ""
@@ -7841,8 +7845,8 @@ msgstr "%s%s: ein neuer privater Buffer \"%s\" kann nicht erstellt werden"
 msgid "nick:"
 msgstr "Nick:"
 
-#, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s"
+#, fuzzy, c-format
+msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
 msgstr "Server: %s%s %s[%s%s%s]%s%s%s"
 
 msgid "connected"
@@ -7851,8 +7855,9 @@ msgstr "verbunden"
 msgid "not connected"
 msgstr "nicht verbunden"
 
-msgid " (temporary)"
-msgstr " (temporär)"
+#. TRANSLATORS: "fake IRC server"
+msgid " (fake)"
+msgstr ""
 
 msgid "minute"
 msgid_plural "minutes"
@@ -7887,10 +7892,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: Server kann nicht anlegt werden"
-
-#, c-format
-msgid "%s: server %s%s%s added"
-msgstr "%s: Server %s%s%s wurde angelegt"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"

@@ -573,13 +573,25 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 {
     int i;
     char *pos, *error, *addresses_eval;
+    const char *ptr_addresses;
     long number;
 
     addresses_eval = NULL;
 
-    if (addresses && addresses[0])
+    ptr_addresses = addresses;
+    if (ptr_addresses && (strncmp (ptr_addresses, "fake:", 5) == 0))
     {
-        addresses_eval = irc_server_eval_expression (server, addresses);
+        server->fake_server = 1;
+        ptr_addresses += 5;
+    }
+    else
+    {
+        server->fake_server = 0;
+    }
+
+    if (ptr_addresses && ptr_addresses[0])
+    {
+        addresses_eval = irc_server_eval_expression (server, ptr_addresses);
         if (server->addresses_eval
             && (strcmp (server->addresses_eval, addresses_eval) == 0))
         {
@@ -1367,6 +1379,7 @@ irc_server_alloc (const char *name)
 
     /* internal vars */
     new_server->temp_server = 0;
+    new_server->fake_server = 0;
     new_server->reloading_from_config = 0;
     new_server->reloaded_from_config = 0;
     new_server->addresses_eval = NULL;
@@ -2027,8 +2040,9 @@ irc_server_copy (struct t_irc_server *server, const char *new_name)
     if (!new_server)
         return NULL;
 
-    /* duplicate temporary server flag */
+    /* duplicate temporary/fake server flags */
     new_server->temp_server = server->temp_server;
+    new_server->fake_server = server->fake_server;
 
     /* duplicate options */
     length = 32 + strlen (server->name) + 1;
@@ -2274,6 +2288,9 @@ int
 irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 {
     int rc;
+
+    if (server->fake_server)
+        return size_buf;
 
     if (!server)
     {
@@ -2976,8 +2993,12 @@ irc_server_msgq_flush ()
     {
         if (irc_recv_msgq->data)
         {
-            /* read message only if connection was not lost */
-            if (irc_recv_msgq->server->sock != -1)
+            /*
+             * read message only if connection was not lost
+             * (or if we are on a fake server)
+             */
+            if ((irc_recv_msgq->server->sock != -1)
+                || irc_recv_msgq->server->fake_server)
             {
                 ptr_data = irc_recv_msgq->data;
                 while (ptr_data[0] == ' ')
@@ -3204,7 +3225,7 @@ irc_server_recv_cb (const void *pointer, void *data, int fd)
     (void) fd;
 
     server = (struct t_irc_server *)pointer;
-    if (!server)
+    if (!server || server->fake_server)
         return WEECHAT_RC_ERROR;
 
     msgq_flush = 0;
@@ -3907,10 +3928,13 @@ irc_server_connect_cb (const void *pointer, void *data,
                 server->current_address,
                 server->current_port,
                 (server->current_ip) ? server->current_ip : "?");
-            server->hook_fd = weechat_hook_fd (server->sock,
-                                               1, 0, 0,
-                                               &irc_server_recv_cb,
-                                               server, NULL);
+            if (!server->fake_server)
+            {
+                server->hook_fd = weechat_hook_fd (server->sock,
+                                                   1, 0, 0,
+                                                   &irc_server_recv_cb,
+                                                   server, NULL);
+            }
             /* login to server */
             irc_server_login (server);
             break;
@@ -5031,37 +5055,54 @@ irc_server_connect (struct t_irc_server *server)
 #ifdef HAVE_GNUTLS
     if (IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL))
         server->ssl_connected = 1;
-    server->hook_connect = weechat_hook_connect (
-        proxy,
-        server->current_address,
-        server->current_port,
-        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-        server->current_retry,
-        (server->ssl_connected) ? &server->gnutls_sess : NULL,
-        (server->ssl_connected) ? &irc_server_gnutls_callback : NULL,
-        IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
-        &irc_server_connect_cb,
-        server,
-        NULL);
+    if (!server->fake_server)
+    {
+        server->hook_connect = weechat_hook_connect (
+            proxy,
+            server->current_address,
+            server->current_port,
+            proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+            server->current_retry,
+            (server->ssl_connected) ? &server->gnutls_sess : NULL,
+            (server->ssl_connected) ? &irc_server_gnutls_callback : NULL,
+            IRC_SERVER_OPTION_INTEGER(server, IRC_SERVER_OPTION_SSL_DHKEY_SIZE),
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_PRIORITIES),
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+            &irc_server_connect_cb,
+            server,
+            NULL);
+    }
 #else
-    server->hook_connect = weechat_hook_connect (
-        proxy,
-        server->current_address,
-        server->current_port,
-        proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
-        server->current_retry,
-        NULL, NULL, 0, NULL,
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
-        &irc_server_connect_cb,
-        server,
-        NULL);
+    if (!server->fake_recv)
+    {
+        server->hook_connect = weechat_hook_connect (
+            proxy,
+            server->current_address,
+            server->current_port,
+            proxy_type ? weechat_config_integer (proxy_ipv6) : IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_IPV6),
+            server->current_retry,
+            NULL, NULL, 0, NULL,
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_LOCAL_HOSTNAME),
+            &irc_server_connect_cb,
+            server,
+            NULL);
+    }
 #endif /* HAVE_GNUTLS */
 
     /* send signal "irc_server_connecting" with server name */
     (void) weechat_hook_signal_send ("irc_server_connecting",
                                      WEECHAT_HOOK_SIGNAL_STRING, server->name);
+
+    if (server->fake_server)
+    {
+        irc_server_connect_cb (server,
+                               NULL,                     /* data */
+                               WEECHAT_HOOK_CONNECT_OK,  /* status */
+                               0,                        /* gnutls_rc */
+                               -1,                       /* sock */
+                               NULL,                     /* error */
+                               "1.2.3.4");               /* ip_address */
+    }
 
     return 1;
 }
@@ -5726,6 +5767,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, name, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, options, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, temp_server, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, fake_server, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloading_from_config, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, reloaded_from_config, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, addresses_eval, STRING, 0, NULL, NULL);
@@ -5964,6 +6006,8 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                                           IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_MSG_QUIT)))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "fake_server", server->fake_server))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "index_current_address", server->index_current_address))
         return 0;
@@ -6356,6 +6400,7 @@ irc_server_print_log ()
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_MSG_QUIT]));
         /* other server variables */
         weechat_log_printf ("  temp_server. . . . . : %d",    ptr_server->temp_server);
+        weechat_log_printf ("  fake_server. . . . . : %d",    ptr_server->fake_server);
         weechat_log_printf ("  reloading_from_config: %d",    ptr_server->reloaded_from_config);
         weechat_log_printf ("  reloaded_from_config : %d",    ptr_server->reloaded_from_config);
         weechat_log_printf ("  addresses_eval . . . : '%s'",  ptr_server->addresses_eval);

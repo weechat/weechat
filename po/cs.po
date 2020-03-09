@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2019-12-26 22:25+0100\n"
-"PO-Revision-Date: 2019-11-03 08:38+0100\n"
+"POT-Creation-Date: 2020-03-08 14:21+0100\n"
+"PO-Revision-Date: 2020-03-08 14:22+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -6203,8 +6203,12 @@ msgid "%s%s: currently connecting to server \"%s\"!"
 msgstr "%s%s: zrovna připojuji k serveru \"%s\"!"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s added (temporary server, NOT SAVED!)"
-msgstr "%s: server %s%s%s již není dočasným"
+msgid "%s: server added: %s%s%s%s%s"
+msgstr "%s: server %s%s%s přidán"
+
+#. TRANSLATORS: "temporary IRC server"
+msgid " (temporary)"
+msgstr " (dočasný)"
 
 #, fuzzy, c-format
 msgid ""
@@ -6371,7 +6375,7 @@ msgid "nick:"
 msgstr "přezdívka"
 
 #, fuzzy, c-format
-msgid "Server: %s%s %s[%s%s%s]%s%s%s"
+msgid "Server: %s%s %s[%s%s%s]%s%s%s%s"
 msgstr "Server: %s%s %s[%s%s%s]%s%s"
 
 msgid "connected"
@@ -6380,8 +6384,9 @@ msgstr "připojen"
 msgid "not connected"
 msgstr "nepřipojen"
 
-msgid " (temporary)"
-msgstr " (dočasný)"
+#. TRANSLATORS: "fake IRC server"
+msgid " (fake)"
+msgstr ""
 
 msgid "minute"
 msgid_plural "minutes"
@@ -6416,10 +6421,6 @@ msgstr "%s%s: server \"%s\" pro příkaz \"%s\" již existuje"
 #, c-format
 msgid "%s%s: unable to add server"
 msgstr "%s%s: nemohu přidat server"
-
-#, c-format
-msgid "%s: server %s%s%s added"
-msgstr "%s: server %s%s%s přidán"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found for \"%s\" command"
