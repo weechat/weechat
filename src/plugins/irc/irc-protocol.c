@@ -67,16 +67,16 @@
  */
 
 int
-irc_protocol_is_numeric_command (const char *str)
+irc_protocol_is_numeric_command (const char *command)
 {
-    if (!str || !str[0])
+    if (!command || !command[0])
         return 0;
 
-    while (str && str[0])
+    while (command && command[0])
     {
-        if (!isdigit ((unsigned char)str[0]))
+        if (!isdigit ((unsigned char)command[0]))
             return 0;
-        str++;
+        command++;
     }
 
     return 1;
