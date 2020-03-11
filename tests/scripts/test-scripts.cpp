@@ -36,7 +36,7 @@ extern "C"
 #include "src/plugins/plugin.h"
 }
 
-extern void run_cmd (const char *command);
+#include "tests/tests.h"
 
 struct t_hook *api_hook_print = NULL;
 int api_tests_ok = 0;

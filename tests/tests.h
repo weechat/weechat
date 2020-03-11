@@ -32,4 +32,6 @@
     }                                                                   \
     free (str);
 
+extern void run_cmd (const char *command);
+
 #endif /* WEECHAT_TESTS_H */
