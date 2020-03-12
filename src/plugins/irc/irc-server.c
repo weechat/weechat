@@ -5073,7 +5073,7 @@ irc_server_connect (struct t_irc_server *server)
             NULL);
     }
 #else
-    if (!server->fake_recv)
+    if (!server->fake_server)
     {
         server->hook_connect = weechat_hook_connect (
             proxy,
