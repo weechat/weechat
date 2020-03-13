@@ -56,12 +56,12 @@ TEST_GROUP(GuiNick)
 
 TEST(GuiNick, NickHashColor)
 {
-    config_file_option_set (config_color_chat_nick_colors, NICK_COLORS, 0);
+    config_file_option_set (config_color_chat_nick_colors, NICK_COLORS, 1);
 
     /* hash without salt */
 
     /* test hash: djb2 */
-    config_file_option_set (config_look_nick_color_hash, "djb2", 0);
+    config_file_option_set (config_look_nick_color_hash, "djb2", 1);
 
     LONGS_EQUAL(0, gui_nick_hash_color (NULL));
     LONGS_EQUAL(0, gui_nick_hash_color (""));
@@ -76,7 +76,7 @@ TEST(GuiNick, NickHashColor)
     LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz"));
 
     /* test hash: sum */
-    config_file_option_set (config_look_nick_color_hash, "sum", 0);
+    config_file_option_set (config_look_nick_color_hash, "sum", 1);
 
     LONGS_EQUAL(0, gui_nick_hash_color (NULL));
     LONGS_EQUAL(0, gui_nick_hash_color (""));
@@ -91,7 +91,7 @@ TEST(GuiNick, NickHashColor)
     LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz"));
 
     /* test hash: djb2_32 */
-    config_file_option_set (config_look_nick_color_hash, "djb2_32", 0);
+    config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
 
     LONGS_EQUAL(0, gui_nick_hash_color (NULL));
     LONGS_EQUAL(0, gui_nick_hash_color (""));
@@ -106,7 +106,7 @@ TEST(GuiNick, NickHashColor)
     LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz"));
 
     /* test hash: sum_32 */
-    config_file_option_set (config_look_nick_color_hash, "sum_32", 0);
+    config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
 
     LONGS_EQUAL(0, gui_nick_hash_color (NULL));
     LONGS_EQUAL(0, gui_nick_hash_color (""));
@@ -122,22 +122,22 @@ TEST(GuiNick, NickHashColor)
 
     /* hash with salt */
 
-    config_file_option_set (config_look_nick_color_hash_salt, "abc", 0);
+    config_file_option_set (config_look_nick_color_hash_salt, "abc", 1);
 
     /* test hash: djb2 */
-    config_file_option_set (config_look_nick_color_hash, "djb2", 0);
+    config_file_option_set (config_look_nick_color_hash, "djb2", 1);
     LONGS_EQUAL(146, gui_nick_hash_color ("def"));
 
     /* test hash: sum */
-    config_file_option_set (config_look_nick_color_hash, "sum", 0);
+    config_file_option_set (config_look_nick_color_hash, "sum", 1);
     LONGS_EQUAL(85, gui_nick_hash_color ("def"));
 
     /* test hash: djb2_32 */
-    config_file_option_set (config_look_nick_color_hash, "djb2_32", 0);
+    config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
     LONGS_EQUAL(146, gui_nick_hash_color ("def"));
 
     /* test hash: sum_32 */
-    config_file_option_set (config_look_nick_color_hash, "sum_32", 0);
+    config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
     LONGS_EQUAL(85, gui_nick_hash_color ("def"));
 
     config_file_option_reset (config_look_nick_color_hash_salt, 0);

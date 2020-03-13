@@ -1214,7 +1214,7 @@ TEST(IrcMessage, Split)
     /* PRIVMSG with 512 bytes and split_msg_max_length == 0: no split */
     config_file_option_set (
         irc_config_server_default[IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH],
-        "0", 0);
+        "0", 1);
     hashtable = irc_message_split (server,
                                    "PRIVMSG #channel :" LOREM_IPSUM_512);
     CHECK(hashtable);
