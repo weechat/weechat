@@ -406,31 +406,26 @@ Eine weitere Möglichkeit ist, ein Skript zu nutzen:
 [[change_locale_without_quit]]
 === Ich möchte die Meldungen von WeeChat in einer anderen Sprache ausgeben lassen, ohne WeeChat zu beenden. Ist dies möglich?
 
-// TRANSLATION MISSING
-Sure it is possible:
+Natürlich ist das möglich:
 
 ----
 /set env LANG de_DE.UTF-8
 /upgrade
 ----
 
-// TRANSLATION MISSING
 [[timezone]]
-=== How can I change the timezone?
+=== Wie kann ich die Zeitzone ändern?
 
-// TRANSLATION MISSING
-There is no option in WeeChat to change the timezone, the environment variable
-`TZ` must be set to the appropriate value.
-
-// TRANSLATION MISSING
-In your shell initialization file or on command line, before starting WeeChat:
+Es gibt in WeeChat keine Option um die Zeitzone einzustellen. Die 
+Umgebungsvariable `TZ` muss auf einen entsprechenden Wert eingestellt werden.
+Am Besten machen Sie dies in Ihrer Shell-Initialisierungsdatei oder in der
+Befehlszeile, bevor Sie WeeChat starten:
 
 ----
 export TZ=Europe/Berlin
 ----
 
-// TRANSLATION MISSING
-In WeeChat, the new value is immediately used:
+In WeeChat wird der neue Wert umgehend genutzt:
 
 ----
 /set env TZ Europe/Berlin
