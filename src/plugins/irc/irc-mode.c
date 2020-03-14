@@ -162,17 +162,23 @@ irc_mode_channel_update (struct t_irc_server *server,
     if (!channel->modes)
         return;
 
+    new_modes = NULL;
+    new_args = NULL;
+    str_modes = NULL;
     argc = 0;
     argv = NULL;
+
     pos_args = strchr (channel->modes, ' ');
     if (pos_args)
     {
         str_modes = weechat_strndup (channel->modes, pos_args - channel->modes);
         if (!str_modes)
-            return;
+            goto end;
         pos_args++;
         while (pos_args[0] == ' ')
+        {
             pos_args++;
+        }
         argv = weechat_string_split (pos_args, " ", NULL,
                                      WEECHAT_STRING_SPLIT_STRIP_LEFT
                                      | WEECHAT_STRING_SPLIT_STRIP_RIGHT
@@ -183,7 +189,7 @@ irc_mode_channel_update (struct t_irc_server *server,
     {
         str_modes = strdup (channel->modes);
         if (!str_modes)
-            return;
+            goto end;
     }
 
     new_modes = malloc (strlen (channel->modes) + 1 + 1);
@@ -279,7 +285,9 @@ irc_mode_channel_update (struct t_irc_server *server,
                     /* add mode without argument at the beginning of modes */
                     pos = new_modes;
                     while (pos[0] == '+')
+                    {
                         pos++;
+                    }
                     memmove (pos + 1, pos, strlen (pos) + 1);
                     pos[0] = chanmode;
                 }
@@ -305,6 +313,7 @@ irc_mode_channel_update (struct t_irc_server *server,
         }
     }
 
+end:
     if (new_modes)
         free (new_modes);
     if (new_args)
@@ -313,6 +322,11 @@ irc_mode_channel_update (struct t_irc_server *server,
         free (str_modes);
     if (argv)
         weechat_string_free_split (argv);
+    if (channel->modes && (strcmp (channel->modes, "+") == 0))
+    {
+        free (channel->modes);
+        channel->modes = NULL;
+    }
 }
 
 /*
