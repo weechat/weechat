@@ -184,12 +184,13 @@ TEST(IrcProtocol, ParseTime)
 
 TEST_GROUP(IrcProtocolWithServer)
 {
-    void run_cmd_server (const char *command)
+    void server_recv (const char *command)
     {
         char str_command[4096];
 
         snprintf (str_command, sizeof (str_command),
-                  "/command -buffer irc.server." IRC_FAKE_SERVER " irc %s",
+                  "/command -buffer irc.server." IRC_FAKE_SERVER " irc "
+                  "/server fakerecv %s",
                   command);
         run_cmd (str_command);
     }
@@ -228,9 +229,8 @@ TEST(IrcProtocolWithServer, NickAddress)
     struct t_irc_nick *ptr_nick;
     char result[1024];
 
-    run_cmd_server ("/server fakerecv :server 001 alice");
-    run_cmd ("/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-             "/server fakerecv :alice!user@host JOIN #test");
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
 
     ptr_nick = ptr_server->channels->nicks;
 
@@ -299,18 +299,17 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 {
     struct t_irc_nick *ptr_nick;
 
-    run_cmd_server ("/server fakerecv :server 001 alice");
-    run_cmd ("/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-             "/server fakerecv :alice!user@host JOIN #test");
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
 
     ptr_nick = ptr_server->channels->nicks;
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    run_cmd_server ("/server fakerecv :alice!user@host ACCOUNT *");
+    server_recv (":alice!user@host ACCOUNT *");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    run_cmd_server ("/server fakerecv :alice!user@host ACCOUNT new_account");
+    server_recv (":alice!user@host ACCOUNT new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
@@ -326,21 +325,20 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     /* assume "account-notify" capability is enabled in server */
     hashtable_set (ptr_server->cap_list, "account-notify", NULL);
 
-    run_cmd_server ("/server fakerecv :server 001 alice");
-    run_cmd ("/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-             "/server fakerecv :alice!user@host JOIN #test");
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
 
     ptr_nick = ptr_server->channels->nicks;
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
-    run_cmd_server ("/server fakerecv :alice!user@host ACCOUNT new_account");
+    server_recv (":alice!user@host ACCOUNT new_account");
     STRCMP_EQUAL("new_account", ptr_nick->account);
 
-    run_cmd_server ("/server fakerecv :alice!user@host ACCOUNT new_account2");
+    server_recv (":alice!user@host ACCOUNT new_account2");
     STRCMP_EQUAL("new_account2", ptr_nick->account);
 
-    run_cmd_server ("/server fakerecv :alice!user@host ACCOUNT *");
+    server_recv (":alice!user@host ACCOUNT *");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
@@ -353,15 +351,14 @@ TEST(IrcProtocolWithServer, away)
 {
     struct t_irc_nick *ptr_nick;
 
-    run_cmd_server ("/server fakerecv :server 001 alice");
-    run_cmd ("/command -buffer irc.server." IRC_FAKE_SERVER " irc "
-             "/server fakerecv :alice!user@host JOIN #test");
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
 
     ptr_nick = ptr_server->channels->nicks;
 
     LONGS_EQUAL(0, ptr_nick->away);
 
-    run_cmd_server ("/server fakerecv :alice!user@host AWAY :Holidays!");
+    server_recv (":alice!user@host AWAY :Holidays!");
 
     LONGS_EQUAL(1, ptr_nick->away);
 }
@@ -376,7 +373,7 @@ TEST(IrcProtocolWithServer, 001_empty)
     LONGS_EQUAL(0, ptr_server->is_connected);
     STRCMP_EQUAL("nick1", ptr_server->nick);
 
-    run_cmd_server ("/server fakerecv :server 001 alice");
+    server_recv (":server 001 alice");
 
     LONGS_EQUAL(1, ptr_server->is_connected);
     STRCMP_EQUAL("alice", ptr_server->nick);
@@ -395,8 +392,7 @@ TEST(IrcProtocolWithServer, 001_welcome)
     LONGS_EQUAL(0, ptr_server->is_connected);
     STRCMP_EQUAL("nick1", ptr_server->nick);
 
-    run_cmd_server ("/server fakerecv :server 001 alice "
-                    ":Welcome on this server!");
+    server_recv (":server 001 alice :Welcome on this server!");
 
     LONGS_EQUAL(1, ptr_server->is_connected);
     STRCMP_EQUAL("alice", ptr_server->nick);
@@ -411,12 +407,12 @@ TEST(IrcProtocolWithServer, 001_welcome)
 
 TEST(IrcProtocolWithServer, 005_empty)
 {
-    run_cmd_server ("/server fakerecv :server 001 alice");
+    server_recv (":server 001 alice");
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
 
-    run_cmd_server ("/server fakerecv :server 005 alice TEST=A");
+    server_recv (":server 005 alice TEST=A");
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
@@ -429,7 +425,7 @@ TEST(IrcProtocolWithServer, 005_empty)
 
 TEST(IrcProtocolWithServer, 005_full)
 {
-    run_cmd_server ("/server fakerecv :server 001 alice");
+    server_recv (":server 001 alice");
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
@@ -442,8 +438,7 @@ TEST(IrcProtocolWithServer, 005_full)
     LONGS_EQUAL(0, ptr_server->monitor);
     POINTERS_EQUAL(NULL, ptr_server->isupport);
 
-    run_cmd_server ("/server fakerecv :server 005 alice " IRC_MSG_005 " "
-                    ":are supported by this server");
+    server_recv (":server 005 alice " IRC_MSG_005 " :are supported");
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
@@ -465,19 +460,15 @@ TEST(IrcProtocolWithServer, 005_full)
 
 TEST(IrcProtocolWithServer, 005_multiple_messages)
 {
-    run_cmd_server ("/server fakerecv :server 001 alice");
+    server_recv (":server 001 alice");
 
     POINTERS_EQUAL(NULL, ptr_server->prefix_modes);
     POINTERS_EQUAL(NULL, ptr_server->prefix_chars);
     LONGS_EQUAL(0, ptr_server->host_max_length);
     POINTERS_EQUAL(NULL, ptr_server->isupport);
 
-    run_cmd_server ("/server fakerecv :server 005 alice "
-                    "PREFIX=(ohv)@%+ "
-                    ":are supported by this server");
-    run_cmd_server ("/server fakerecv :server 005 alice "
-                    "HOSTLEN=24 "
-                    ":are supported by this server");
+    server_recv (":server 005 alice PREFIX=(ohv)@%+ :are supported");
+    server_recv (":server 005 alice HOSTLEN=24 :are supported");
 
     STRCMP_EQUAL("ohv", ptr_server->prefix_modes);
     STRCMP_EQUAL("@%+", ptr_server->prefix_chars);
