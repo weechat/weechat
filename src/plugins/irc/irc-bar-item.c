@@ -114,7 +114,7 @@ irc_bar_item_buffer_plugin (const void *pointer, void *data,
 char *
 irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
 {
-    char buf[512], buf_name[256], modes[128];
+    char buf[512], buf_name[256];
     const char *name, *localvar_type;
     int part_from_channel, display_server, is_channel;
     struct t_irc_server *server;
@@ -124,7 +124,6 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
         return NULL;
 
     buf_name[0] = '\0';
-    modes[0] = '\0';
 
     display_server = (weechat_config_integer (irc_config_look_item_display_server) == IRC_CONFIG_LOOK_ITEM_DISPLAY_SERVER_NAME);
 
@@ -187,10 +186,10 @@ irc_bar_item_buffer_name_content (struct t_gui_buffer *buffer, int short_name)
         }
     }
 
-    snprintf (buf, sizeof (buf), "%s%s%s",
+    snprintf (buf, sizeof (buf),
+              "%s%s",
               (server && server->ssl_connected) ? IRC_COLOR_STATUS_NAME_SSL : IRC_COLOR_STATUS_NAME,
-              buf_name,
-              modes);
+              buf_name);
 
     return strdup (buf);
 }
