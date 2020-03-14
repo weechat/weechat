@@ -1477,6 +1477,7 @@ IRC_PROTOCOL_CALLBACK(kill)
  * Callback for the IRC message "MODE".
  *
  * Message looks like:
+ *   :nick!user@host MODE #test +nt
  *   :nick!user@host MODE #test +o nick
  *   :nick!user@host MODE #test :+o :nick
  */
