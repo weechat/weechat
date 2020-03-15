@@ -117,7 +117,7 @@ Tasten und Eingaben um Optionen im fset Buffer zu editieren:
   alt+enter         s       Wert setzen
   alt+f, alt+n      n       ein neuer Wert wird gesetzt, der alte Wert wird gelöscht
   alt+f, alt+a      a       dem Wert was hinzufügen
-  alt+','           ,       markieren/demarkieren  einer Option
+  alt+','           ,       markieren/demarkieren einer Option
   shift+hoch                eine Zeile nach oben und markiert/demarkiert Option
   shift+runter              markiert/demarkiert Option und geht eine Zeile nach unten
                     m:xxx   markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe Filterung weiter oben)
@@ -127,7 +127,7 @@ weitere Tasten und Eingaben im fset Buffer:
   ctrl+L                    der Bildschirm wird neu gezeichnet (Befehl: /fset -refresh)
                     $       Optionen neu einlesen (markierte Optionen werden beibehalten)
                     $$      Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht)
-  alt+p             p       umschalten zwischen Beschreibung von Erweiterungen (plugins.desc.*)
+  alt+p             p       Umschalten der Beschreibung von Erweiterungen (plugins.desc.*)
   alt+v             v       Hilfe-Bar Ein-/Ausschalten
                     s:x,y   sortiert Optionen nach Bereichen x,y (siehe /help fset.look.sort)
                     s:      setzt Sortierung wieder auf Standardwerte (siehe /help fset.look.sort)
