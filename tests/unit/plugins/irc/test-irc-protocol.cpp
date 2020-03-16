@@ -365,6 +365,29 @@ TEST(IrcProtocolWithServer, away)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_chghost
+ */
+
+TEST(IrcProtocolWithServer, chghost)
+{
+    struct t_irc_nick *ptr_nick;
+
+    server_recv (":server 001 alice");
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_nick = ptr_server->channels->nicks;
+
+    STRCMP_EQUAL("user@host", ptr_nick->host);
+
+    server_recv (":alice!user@host CHGHOST user2 host2");
+    STRCMP_EQUAL("user2@host2", ptr_nick->host);
+
+    server_recv (":alice!user2@host2 CHGHOST user3 :host3");
+    STRCMP_EQUAL("user3@host3", ptr_nick->host);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_001 (empty)
  */
 
