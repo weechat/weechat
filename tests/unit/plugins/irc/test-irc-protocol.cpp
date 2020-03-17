@@ -388,6 +388,59 @@ TEST(IrcProtocolWithServer, chghost)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_join
+ */
+
+TEST(IrcProtocolWithServer, join)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_channel = ptr_server->channels;
+
+    CHECK(ptr_channel);
+    CHECK(ptr_channel == ptr_server->last_channel);
+
+    LONGS_EQUAL(IRC_CHANNEL_TYPE_CHANNEL, ptr_channel->type);
+    STRCMP_EQUAL("#test", ptr_channel->name);
+    POINTERS_EQUAL(NULL, ptr_channel->topic);
+    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    LONGS_EQUAL(0, ptr_channel->limit);
+    POINTERS_EQUAL(NULL, ptr_channel->key);
+    LONGS_EQUAL(0, ptr_channel->checking_whox);
+    POINTERS_EQUAL(NULL, ptr_channel->away_message);
+    LONGS_EQUAL(0, ptr_channel->has_quit_server);
+    LONGS_EQUAL(0, ptr_channel->cycle);
+    LONGS_EQUAL(0, ptr_channel->part);
+    LONGS_EQUAL(0, ptr_channel->part);
+    POINTERS_EQUAL(NULL, ptr_channel->pv_remote_nick_color);
+    POINTERS_EQUAL(NULL, ptr_channel->hook_autorejoin);
+
+    ptr_nick = ptr_channel->nicks;
+
+    LONGS_EQUAL(1, ptr_channel->nicks_count);
+    CHECK(ptr_nick);
+    CHECK(ptr_nick == ptr_channel->last_nick);
+    STRCMP_EQUAL("alice", ptr_nick->name);
+    STRCMP_EQUAL("user@host", ptr_nick->host);
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+    STRCMP_EQUAL(" ", ptr_nick->prefix);
+    LONGS_EQUAL(0, ptr_nick->away);
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+    POINTERS_EQUAL(NULL, ptr_nick->realname);
+    CHECK(ptr_nick->color);
+
+    CHECK(ptr_channel->buffer);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_001 (empty)
  */
 
