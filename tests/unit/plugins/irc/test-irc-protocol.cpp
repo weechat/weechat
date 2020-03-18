@@ -441,6 +441,66 @@ TEST(IrcProtocolWithServer, join)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_kick
+ */
+
+TEST(IrcProtocolWithServer, kick)
+{
+    struct t_irc_channel *ptr_channel;
+
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+    server_recv (":bob!user@host JOIN #test");
+
+    ptr_channel = ptr_server->channels;
+
+    CHECK(ptr_channel);
+    CHECK(ptr_channel->nicks);
+    STRCMP_EQUAL("alice", ptr_channel->nicks->name);
+    CHECK(ptr_channel->nicks->next_nick);
+    STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
+
+    server_recv (":alice!user@host KICK #test bob :no spam here!");
+
+    STRCMP_EQUAL("alice", ptr_channel->nicks->name);
+    POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_kill
+ */
+
+TEST(IrcProtocolWithServer, kill)
+{
+    struct t_irc_channel *ptr_channel;
+
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+    server_recv (":bob!user@host JOIN #test");
+
+    ptr_channel = ptr_server->channels;
+
+    CHECK(ptr_channel);
+    CHECK(ptr_channel->nicks);
+    STRCMP_EQUAL("alice", ptr_channel->nicks->name);
+    CHECK(ptr_channel->nicks->next_nick);
+    STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
+
+    server_recv (":alice!user@host KILL bob :killed by admin");
+
+    STRCMP_EQUAL("alice", ptr_channel->nicks->name);
+    POINTERS_EQUAL(NULL, ptr_channel->nicks->next_nick);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_001 (empty)
  */
 
