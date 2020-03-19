@@ -501,6 +501,114 @@ TEST(IrcProtocolWithServer, kill)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_mode
+ */
+
+TEST(IrcProtocolWithServer, mode)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
+
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+    POINTERS_EQUAL(NULL, ptr_channel->modes);
+    ptr_nick = ptr_channel->nicks;
+    CHECK(ptr_nick);
+    STRCMP_EQUAL("alice", ptr_nick->name);
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+    STRCMP_EQUAL(" ", ptr_nick->prefix);
+
+    /* missing arguments */
+    server_recv (":admin MODE");
+    server_recv (":admin MODE #test");
+
+    /* channel mode */
+    server_recv (":admin MODE #test +nt");
+    STRCMP_EQUAL("+tn", ptr_channel->modes);
+
+    /* channel mode removed */
+    server_recv (":admin MODE #test -n");
+    STRCMP_EQUAL("+t", ptr_channel->modes);
+
+    /* channel mode removed */
+    server_recv (":admin MODE #test -t");
+    POINTERS_EQUAL(NULL, ptr_channel->modes);
+
+    /* nick mode '@' */
+    server_recv (":admin MODE #test +o alice");
+    STRCMP_EQUAL("@ ", ptr_nick->prefixes);
+    STRCMP_EQUAL("@", ptr_nick->prefix);
+
+    /* another nick mode '+' */
+    server_recv (":admin MODE #test +v alice");
+    STRCMP_EQUAL("@+", ptr_nick->prefixes);
+    STRCMP_EQUAL("@", ptr_nick->prefix);
+
+    /* nick mode '@' removed */
+    server_recv (":admin MODE #test -o alice");
+    STRCMP_EQUAL(" +", ptr_nick->prefixes);
+    STRCMP_EQUAL("+", ptr_nick->prefix);
+
+    /* nick mode '+' removed */
+    server_recv (":admin MODE #test -v alice");
+    STRCMP_EQUAL("  ", ptr_nick->prefixes);
+    STRCMP_EQUAL(" ", ptr_nick->prefix);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_nick
+ */
+
+TEST(IrcProtocolWithServer, nick)
+{
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick1, *ptr_nick2;
+
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+    server_recv (":bob!user@host JOIN #test");
+
+    ptr_channel = ptr_server->channels;
+    CHECK(ptr_channel);
+    ptr_nick1 = ptr_channel->nicks;
+    CHECK(ptr_nick1);
+    ptr_nick2 = ptr_nick1->next_nick;
+    CHECK(ptr_nick2);
+    STRCMP_EQUAL("alice", ptr_nick1->name);
+    STRCMP_EQUAL("bob", ptr_nick2->name);
+
+    /* not enough arguments */
+    server_recv (":alice!user@host NICK");
+
+    /* new nick for alice */
+    server_recv (":alice!user@host NICK alice_away");
+    STRCMP_EQUAL("alice_away", ptr_nick1->name);
+
+    /* new nick for alice_away (with ":") */
+    server_recv (":alice_away!user@host NICK :alice2");
+    STRCMP_EQUAL("alice2", ptr_nick1->name);
+
+    /* new nick for bob */
+    server_recv (":bob!user@host NICK bob_away");
+    STRCMP_EQUAL("bob_away", ptr_nick2->name);
+
+    /* new nick for bob_away (with ":") */
+    server_recv (":bob_away!user@host NICK :bob2");
+    STRCMP_EQUAL("bob2", ptr_nick2->name);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_001 (empty)
  */
 
