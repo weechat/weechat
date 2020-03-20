@@ -116,6 +116,7 @@ extern int weechat_plugin_no_dlclose;
 extern int weechat_no_gnutls;
 extern int weechat_no_gcrypt;
 extern struct t_weelist *weechat_startup_commands;
+extern int weechat_auto_connect;
 
 extern void weechat_term_check ();
 extern void weechat_shutdown (int return_code, int crash);

@@ -114,6 +114,7 @@ int weechat_no_gcrypt = 0;             /* remove init/deinit of gcrypt      */
                                        /* (useful with valgrind)            */
 struct t_weelist *weechat_startup_commands = NULL; /* startup commands      */
                                                    /* (option -r)           */
+int weechat_auto_connect = 1;          /* auto-connect to servers           */
 
 
 /*
@@ -256,7 +257,7 @@ weechat_parse_args (int argc, char *argv[])
         switch (opt)
         {
             case 'a': /* -a / --no-connect */
-                /* option ignored, it will be used by the irc plugin */
+                /* option ignored, it will be used by plugins/scripts */
                 break;
             case 'c': /* -c / --colors */
                 gui_color_display_terminal_colors ();

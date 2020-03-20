@@ -17,6 +17,40 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.8]]
+== Version 2.8 (under dev)
+
+[[v2.8_auto_connection_to_servers]]
+=== Auto connection to servers
+
+The command line option `-a` (or `--no-connect`), which can also be used in the
+`/plugin` command, is now used to set a new info called `auto_connect`
+(see the function "info_get" in the Plugin API reference).
+
+Therefore, the option is not sent any more to the function `weechat_plugin_init`
+of plugins. +
+The plugins using this option must now get the info `auto_connect` and check
+if the value is "1" (a string with just `1`).
+
+The purpose of this change is to allow scripts as well to check this info on
+startup, and connect or not, depending on the value (see issue #1453).
+
+To be compatible with WeeChat ≤ 2.7, the script can do this, for example
+in Python:
+
+[source,python]
+----
+auto_connect = weechat.info_get("auto_connect", "") != "0"
+----
+
+The variable `auto_connect` will be set like that, depending on the WeeChat
+version:
+
+* WeeChat ≤ 2.7: always `True` because the info is an empty string (it does not
+  exist), which is different from "0",
+* WeeChat ≥ 2.8: `True` by default, and `False` if `-a` or `--no-connect` is
+  given by the user (either on command line or when loading the plugin).
+
 [[v2.7.1]]
 == Version 2.7.1 (2020-02-20)
 

@@ -80,6 +80,8 @@
 
 | tcl | tcl_version | version of the interpreter used | -
 
+| weechat | auto_connect | 1 if automatic connection to servers is enabled, 0 if it has been disabled by the user (option "-a" or "--no-connect") | -
+
 | weechat | charset_internal | WeeChat internal charset | -
 
 | weechat | charset_terminal | terminal charset | -

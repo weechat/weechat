@@ -271,13 +271,16 @@ plugin_check_autoload (const char *filename)
 void
 plugin_get_args (struct t_weechat_plugin *plugin,
                  int argc, char **argv,
-                 int *plugin_argc, char ***plugin_argv)
+                 int *plugin_argc, char ***plugin_argv,
+                 int *no_connect)
 {
     int i, temp_argc, length_plugin_name;
     char **temp_argv;
 
     temp_argc = 0;
     temp_argv = NULL;
+
+    *no_connect = 0;
 
     length_plugin_name = strlen (plugin->name);
 
@@ -289,12 +292,15 @@ plugin_get_args (struct t_weechat_plugin *plugin,
             for (i = 0; i < argc; i++)
             {
                 if ((strcmp (argv[i], "-a") == 0)
-                    || (strcmp (argv[i], "--no-connect") == 0)
-                    || (strcmp (argv[i], "-s") == 0)
-                    || (strcmp (argv[i], "--no-script") == 0)
-                    || ((strncmp (argv[i], plugin->name,
-                                  length_plugin_name) == 0)
-                        && (argv[i][length_plugin_name] == ':')))
+                    || (strcmp (argv[i], "--no-connect") == 0))
+                {
+                    *no_connect = 1;
+                }
+                else if ((strcmp (argv[i], "-s") == 0)
+                         || (strcmp (argv[i], "--no-script") == 0)
+                         || ((strncmp (argv[i], plugin->name,
+                                       length_plugin_name) == 0)
+                             && (argv[i][length_plugin_name] == ':')))
                 {
                     temp_argv[temp_argc++] = argv[i];
                 }
@@ -325,7 +331,7 @@ int
 plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
 {
     t_weechat_init_func *init_func;
-    int plugin_argc, rc;
+    int plugin_argc, no_connect, rc, old_auto_connect;
     char **plugin_argv;
 
     if (plugin->initialized)
@@ -337,7 +343,11 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
         return 0;
 
     /* get arguments for the plugin */
-    plugin_get_args (plugin, argc, argv, &plugin_argc, &plugin_argv);
+    plugin_get_args (plugin, argc, argv,
+                     &plugin_argc, &plugin_argv, &no_connect);
+
+    old_auto_connect = weechat_auto_connect;
+    weechat_auto_connect = (no_connect) ? 0 : 1;
 
     /* init plugin */
     if (weechat_debug_core >= 1)
@@ -361,6 +371,8 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          plugin->filename);
     }
+
+    weechat_auto_connect = old_auto_connect;
 
     if (plugin_argv)
         free (plugin_argv);
