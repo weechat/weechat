@@ -15677,6 +15677,7 @@ Argomenti:
 Valore restituito:
 
 * stringa con l'informazione richiesta, NULL in caso di errore
+  (deve essere liberata richiamando "free" dopo l'utilizzo)
 
 // TRANSLATION MISSING
 [NOTE]

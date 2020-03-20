@@ -15070,6 +15070,7 @@ Arguments:
 Return value:
 
 * string with info asked, NULL if an error occurred
+  (must be freed by calling "free" after use)
 
 [NOTE]
 With WeeChat ≥ 2.5, the value returned is an allocated string

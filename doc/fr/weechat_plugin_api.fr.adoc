@@ -15389,6 +15389,7 @@ Paramètres :
 Valeur de retour :
 
 * chaîne avec l'information demandée, NULL en cas d'erreur
+  (doit être supprimée par un appel à "free" après utilisation)
 
 [NOTE]
 Avec WeeChat ≥ 2.5, la valeur retournée est une chaîne allouée
