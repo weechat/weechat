@@ -896,12 +896,14 @@ irc_message_split_join (struct t_hashtable *hashtable,
 
 int
 irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
-                                  char *tags, char *host, char *command,
-                                  char *target, char *arguments,
+                                  const char *tags, const char *host,
+                                  const char *command, const char *target,
+                                  const char *arguments,
                                   int max_length_nick_user_host,
                                   int max_length)
 {
-    char prefix[4096], suffix[2], *pos, saved_char;
+    char *arguments2, prefix[4096], suffix[2], *pos, saved_char;
+    const char *ptr_args;
     int length, rc;
 
     /*
@@ -912,23 +914,29 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
      *   :nick!user@host.com PRIVMSG #channel :hello world!
      */
 
+    arguments2 = strdup (arguments);
+    if (!arguments2)
+        return 0;
+
+    ptr_args = arguments2;
+
     /* for CTCP, prefix will be ":\01xxxx " and suffix "\01" */
     prefix[0] = '\0';
     suffix[0] = '\0';
-    length = strlen (arguments);
-    if ((arguments[0] == '\01')
-        && (arguments[length - 1] == '\01'))
+    length = strlen (arguments2);
+    if ((arguments2[0] == '\01')
+        && (arguments2[length - 1] == '\01'))
     {
-        pos = strchr (arguments, ' ');
+        pos = strchr (arguments2, ' ');
         if (pos)
         {
             pos++;
             saved_char = pos[0];
             pos[0] = '\0';
-            snprintf (prefix, sizeof (prefix), ":%s", arguments);
+            snprintf (prefix, sizeof (prefix), ":%s", arguments2);
             pos[0] = saved_char;
-            arguments[length - 1] = '\0';
-            arguments = pos;
+            arguments2[length - 1] = '\0';
+            ptr_args = pos;
             suffix[0] = '\01';
             suffix[1] = '\0';
         }
@@ -937,8 +945,10 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
         strcpy (prefix, ":");
 
     rc = irc_message_split_string (hashtable, tags, host, command, target,
-                                   prefix, arguments, suffix,
+                                   prefix, ptr_args, suffix,
                                    ' ', max_length_nick_user_host, max_length);
+
+    free (arguments2);
 
     return rc;
 }
@@ -953,8 +963,9 @@ irc_message_split_privmsg_notice (struct t_hashtable *hashtable,
 
 int
 irc_message_split_005 (struct t_hashtable *hashtable,
-                       char *tags, char *host, char *command, char *target,
-                       char *arguments, int max_length)
+                       const char *tags, const char *host, const char *command,
+                       const char *target, const char *arguments,
+                       int max_length)
 {
     char *pos, suffix[4096];
 
