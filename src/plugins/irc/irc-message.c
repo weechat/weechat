@@ -774,7 +774,7 @@ irc_message_split_authenticate (struct t_hashtable *hashtable,
                                 const char *command, const char *arguments)
 {
     int number, length;
-    char message[1024], *args;
+    char message[8192], *args;
     const char *ptr_args;
 
     number = 1;
