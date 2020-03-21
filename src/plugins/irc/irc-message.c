@@ -760,6 +760,62 @@ irc_message_split_string (struct t_hashtable *hashtable,
 }
 
 /*
+ * Splits a AUTHENTICATE message: in 400-byte chunks, and adds an extra
+ * message "AUTHENTICATE +" if the last message has exactly 400 bytes.
+ *
+ * Returns:
+ *   1: OK
+ *   0: error
+ */
+
+int
+irc_message_split_authenticate (struct t_hashtable *hashtable,
+                                const char *tags, const char *host,
+                                const char *command, const char *arguments)
+{
+    int number, length;
+    char message[1024], *args;
+    const char *ptr_args;
+
+    number = 1;
+
+    length = 0;
+    ptr_args = arguments;
+    while (ptr_args && ptr_args[0])
+    {
+        length = strlen (ptr_args);
+        if (length == 0)
+            break;
+        if (length > 400)
+            length = 400;
+        args = weechat_strndup (ptr_args, length);
+        if (!args)
+            return 0;
+        snprintf (message, sizeof (message), "%s%s%s %s",
+                  (host) ? host : "",
+                  (host) ? " " : "",
+                  command,
+                  args);
+        irc_message_split_add (hashtable, number, tags, message, args);
+        free (args);
+        number++;
+        ptr_args += length;
+    }
+
+    if ((length == 0) || (length == 400))
+    {
+        snprintf (message, sizeof (message), "%s%s%s +",
+                  (host) ? host : "",
+                  (host) ? " " : "",
+                  command);
+        irc_message_split_add (hashtable, number, tags, message, "+");
+        number++;
+    }
+
+    return 1;
+}
+
+/*
  * Splits a JOIN message, taking care of keeping channel keys with channel
  * names.
  *
@@ -1125,7 +1181,13 @@ irc_message_split (struct t_irc_server *server, const char *message)
         max_length_host +            /* host */
         1;                           /* " "  */
 
-    if ((weechat_strcasecmp (command, "ison") == 0)
+    if (weechat_strcasecmp (command, "authenticate") == 0)
+    {
+        /* AUTHENTICATE UzXAmVffxuzFy77XWBGwABBQAgdinelBrKZaR3wE7nsIETuTVY= */
+        split_ok = irc_message_split_authenticate (
+            hashtable, tags, host, command, arguments);
+    }
+    else if ((weechat_strcasecmp (command, "ison") == 0)
         || (weechat_strcasecmp (command, "wallops") == 0))
     {
         /*
