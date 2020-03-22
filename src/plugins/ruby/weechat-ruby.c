@@ -178,7 +178,7 @@ weechat_ruby_hashtable_to_hash (struct t_hashtable *hashtable)
  */
 
 int
-weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, void *arg)
+weechat_ruby_hash_foreach_cb (VALUE key, VALUE value, VALUE arg)
 {
     struct t_hashtable *hashtable;
     const char *type_values;
