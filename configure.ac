@@ -47,10 +47,12 @@ AC_CONFIG_FILES([weechat-${VERSION}-1.cygport:weechat.cygport.in])
 case "$host_os" in
 freebsd* | openbsd*)
         CFLAGS="$CFLAGS -I/usr/local/include"
+        CXXFLAGS="$CXXFLAGS -I/usr/local/include"
         LDFLAGS="$LDFLAGS -L/usr/local/lib"
         ;;
 netbsd*)
         CFLAGS="$CFLAGS -I/usr/pkg/include"
+        CXXFLAGS="$CXXFLAGS -I/usr/pkg/include"
         LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
         ;;
 solaris*)
@@ -562,7 +564,7 @@ fi
 LUA_VERSION=
 
 if test "x$enable_lua" = "xyes" ; then
-    ac_save_CPPFLAGS="$CPPFLAGS"
+    ac_save_CXXFLAGS="$CXXFLAGS"
     ac_save_CFLAGS="$CFLAGS"
     ac_save_LDFLAGS="$LDFLAGS"
 
@@ -571,7 +573,7 @@ if test "x$enable_lua" = "xyes" ; then
 
     if test -n "$lua_inc"; then
        CFLAGS="$CFLAGS -I$lua_inc"
-       CPPFLAGS="$CPPFLAGS -I$lua_inc"
+       CXXFLAGS="$CXXFLAGS -I$lua_inc"
     fi
     if test -n "$lua_lib"; then
        LDFLAGS="$LDFLAGS -L$lua_lib"
@@ -668,7 +670,7 @@ if test "x$enable_lua" = "xyes" ; then
     fi
 
     CFLAGS="$ac_save_CFLAGS"
-    CPPFLAGS="$ac_save_CPPFLAGS"
+    CXXFLAGS="$ac_save_CXXFLAGS"
     LDFLAGS="$ac_save_LDFLAGS"
 else
     not_asked="$not_asked lua"
@@ -834,7 +836,7 @@ AC_LANG_POP
 PHP_VERSION=
 
 if test "x$enable_php" = "xyes" ; then
-    ac_save_CPPFLAGS="$CPPFLAGS"
+    ac_save_CXXFLAGS="$CXXFLAGS"
     ac_save_CFLAGS="$CFLAGS"
     ac_save_LDFLAGS="$LDFLAGS"
 
@@ -843,7 +845,7 @@ if test "x$enable_php" = "xyes" ; then
 
     if test -n "$php_inc"; then
        CFLAGS="$CFLAGS -I$php_inc"
-       CPPFLAGS="$CPPFLAGS -I$php_inc"
+       CXXFLAGS="$CXXFLAGS -I$php_inc"
     fi
     if test -n "$php_lib"; then
        LDFLAGS="$LDFLAGS -L$php_lib"
@@ -925,7 +927,7 @@ if test "x$enable_php" = "xyes" ; then
     fi
 
     CFLAGS="$ac_save_CFLAGS"
-    CPPFLAGS="$ac_save_CPPFLAGS"
+    CXXFLAGS="$ac_save_CXXFLAGS"
     LDFLAGS="$ac_save_LDFLAGS"
 else
     not_asked="$not_asked php"
@@ -1109,6 +1111,7 @@ fi
 
 if test "x$enable_largefile" = "xyes" ; then
    CFLAGS="$CFLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES"
+   CXXFLAGS="$CXXFLAGS -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE -D_LARGEFILE_SOURCE -D_LARGE_FILES"
 else
    not_asked="$not_asked largefile"
 fi
@@ -1288,10 +1291,13 @@ weechat_libdir=${libdir}/weechat
 AC_SUBST(weechat_libdir)
 
 COMMON_CFLAGS="-fsigned-char -Wall -Wextra -Werror-implicit-function-declaration"
+COMMON_CXXFLAGS="-fsigned-char -Wall -Wextra"
+
 AC_MSG_CHECKING([whether we have GNU assembler])
 GAS=`as --version < /dev/null 2>/dev/null | grep GNU`
 if test "$GAS"; then
     COMMON_CFLAGS="${COMMON_CFLAGS} -pipe"
+    COMMON_CXXFLAGS="${COMMON_CXXFLAGS} -pipe"
     AC_MSG_RESULT(yes)
 else
     AC_MSG_RESULT(no)
@@ -1301,10 +1307,18 @@ CFLAGS=`echo $CFLAGS | sed 's/ -g / /g'`
 CFLAGS=`echo $CFLAGS | sed 's/^-g //g'`
 CFLAGS=`echo $CFLAGS | sed 's/ -g$//g'`
 CFLAGS=`echo $CFLAGS | sed 's/^-g$//g'`
+
+CXXFLAGS=`echo $CXXFLAGS | sed 's/ -g / /g'`
+CXXFLAGS=`echo $CXXFLAGS | sed 's/^-g //g'`
+CXXFLAGS=`echo $CXXFLAGS | sed 's/ -g$//g'`
+CXXFLAGS=`echo $CXXFLAGS | sed 's/^-g$//g'`
+
 if test "x$debug" = "x0" ; then
     CFLAGS="$COMMON_CFLAGS $CFLAGS"
+    CXXFLAGS="$COMMON_CXXFLAGS $CXXFLAGS"
 else
     CFLAGS="$COMMON_CFLAGS $CFLAGS -g -O0"
+    CXXFLAGS="$COMMON_CXXFLAGS $CXXFLAGS -g -O0"
 fi
 
 LIBS="$LIBS $INTLLIBS"
@@ -1314,7 +1328,7 @@ freebsd*)
         if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
             CFLAGS="$CFLAGS -pthread"
         fi
-        CFLAGS="$CFLAGS $CPPFLAGS"
+        CFLAGS="$CFLAGS $CXXFLAGS"
         ;;
 openbsd*)
         if test "x$enable_python" = "xyes" ; then
@@ -1325,7 +1339,7 @@ netbsd*)
         if test "x$enable_perl" = "xyes" -o "x$enable_python" = "xyes" ; then
             CFLAGS="$CFLAGS -pthread"
         fi
-        CFLAGS="$CFLAGS $CPPFLAGS"
+        CFLAGS="$CFLAGS $CXXFLAGS"
         ;;
 gnu*)
         LDFLAGS="$LDFLAGS -lpthread"
@@ -1338,7 +1352,7 @@ haiku*)
 esac
 
 CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
-CPPFLAGS="$CPPFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
+CXXFLAGS="$CXXFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LICENSE\\\""
 
 # ------------------------------------------------------------------------------
 #                                output Makefiles
