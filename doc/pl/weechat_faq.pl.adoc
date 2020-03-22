@@ -499,6 +499,91 @@ Możesz po prostu wyłączyć tą opcję:
 /set weechat.look.paste_bracketed off
 ----
 
+// TRANSLATION MISSING
+[[small_terminal]]
+=== How can I customize display for very small terminal size (like 80x25), to not waste space?
+
+// TRANSLATION MISSING
+You can remove side bars (buflist and nicklist), change time format to display
+only hours and seconds, disable alignment of messages and set a char for nick
+prefix/suffix:
+
+----
+/set buflist.look.enabled off
+/bar hide nicklist
+/set weechat.look.buffer_time_format "%H:%M"
+/set weechat.look.prefix_align none
+/set weechat.look.align_end_of_lines prefix
+/set weechat.look.nick_suffix ">"
+/set weechat.look.nick_prefix "<"
+----
+
+// TRANSLATION MISSING
+Terminal 80x25, with default configuration:
+
+....
+┌────────────────────────────────────────────────────────────────────────────────┐
+│1.local     │Welcome on WeeChat channel!                                        │
+│  weechat   │16:27:16        --> | FlashCode (~flashcode@localhost)  │@FlashCode│
+│2.  #weechat│                    | has joined #weechat               │ bob      │
+│            │16:27:16         -- | Mode #weechat [+nt] by hades.arpa │          │
+│            │16:27:16         -- | Channel #weechat: 1 nick (1 op, 0 │          │
+│            │                    | voices, 0 normals)                │          │
+│            │16:27:18         -- | Channel created on Sun, 22 Mar    │          │
+│            │                    | 2020 16:27:16                     │          │
+│            │17:02:28        --> | bob (~bob_user@localhost) has     │          │
+│            │                    | joined #weechat                   │          │
+│            │17:03:12 @FlashCode | hi bob, you're the first user     │          │
+│            │                    | here, welcome on the WeeChat      │          │
+│            │                    | support channel!                  │          │
+│            │17:03:33        bob | hi FlashCode                      │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │                                                        │          │
+│            │[17:04] [2] [irc/local] 2:#weechat(+nt){2}                         │
+│            │[@FlashCode(i)] █                                                  │
+└────────────────────────────────────────────────────────────────────────────────┘
+....
+
+// TRANSLATION MISSING
+Terminal 80x25, after changes:
+
+....
+┌────────────────────────────────────────────────────────────────────────────────┐
+│Welcome on WeeChat channel!                                                     │
+│16:27 --> FlashCode (~flashcode@localhost) has joined #weechat                  │
+│16:27 -- Mode #weechat [+nt] by hades.arpa                                      │
+│16:27 -- Channel #weechat: 1 nick (1 op, 0 voices, 0 normals)                   │
+│16:27 -- Channel created on Sun, 22 Mar 2020 16:27:16                           │
+│17:02 --> bob (~bob_user@localhost) has joined #weechat                         │
+│17:03 <@FlashCode> hi bob, you're the first user here, welcome on the WeeChat   │
+│      support channel!                                                          │
+│17:03 <bob> hi FlashCode                                                        │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│                                                                                │
+│[17:04] [2] [irc/local] 2:#weechat(+nt){2}                                      │
+│[@FlashCode(i)] █                                                               │
+└────────────────────────────────────────────────────────────────────────────────┘
+....
+
 [[key_bindings]]
 == Przypisania klawiszy
 
