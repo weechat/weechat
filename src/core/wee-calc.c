@@ -202,7 +202,7 @@ calc_format_result (double value, char *result, int max_size)
     i = strlen (result) - 1;
     while (i >= 0)
     {
-        if (!isdigit (result[i]) && (result[i] != '-'))
+      if (!isdigit ((unsigned char)result[i]) && (result[i] != '-'))
         {
             result[i] = '\0';
             break;
@@ -282,7 +282,7 @@ calc_expression (const char *expr)
             arraylist_add (list_ops, ptr_operator);
             last_symbol = CALC_SYMBOL_PARENTHESIS_OPEN;
         }
-        else if (isdigit (expr[i]) || (expr[i] == '.')
+        else if (isdigit ((unsigned char)expr[i]) || (expr[i] == '.')
                  || ((expr[i] == '-')
                      && ((last_symbol == CALC_SYMBOL_NONE)
                          || (last_symbol == CALC_SYMBOL_PARENTHESIS_OPEN)
@@ -296,7 +296,8 @@ calc_expression (const char *expr)
                 factor = -1;
                 i++;
             }
-            while (expr[i] && (isdigit (expr[i]) || (expr[i] == '.')))
+            while (expr[i]
+                   && (isdigit ((unsigned char)expr[i]) || (expr[i] == '.')))
             {
                 if (expr[i] == '.')
                 {
@@ -347,7 +348,7 @@ calc_expression (const char *expr)
             i2 = i + 1;
             while (expr[i2] && (expr[i2] != ' ') && (expr[i2] != '(')
                    && (expr[i2] != ')') && (expr[i2] != '.')
-                   && (expr[i2] != '-') && !isdigit (expr[i2]))
+                   && (expr[i2] != '-') && !isdigit ((unsigned char)expr[i2]))
             {
                 i2++;
             }
