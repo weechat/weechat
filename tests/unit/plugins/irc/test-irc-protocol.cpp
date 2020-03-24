@@ -306,6 +306,10 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
 
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
+    /* not enough arguments */
+    server_recv (":alice!user@host ACCOUNT");
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+
     server_recv (":alice!user@host ACCOUNT *");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
@@ -379,6 +383,11 @@ TEST(IrcProtocolWithServer, chghost)
 
     STRCMP_EQUAL("user@host", ptr_nick->host);
 
+    /* not enough arguments */
+    server_recv (":alice!user@host CHGHOST");
+    server_recv (":alice!user@host CHGHOST user2");
+    STRCMP_EQUAL("user@host", ptr_nick->host);
+
     server_recv (":alice!user@host CHGHOST user2 host2");
     STRCMP_EQUAL("user2@host2", ptr_nick->host);
 
@@ -398,6 +407,10 @@ TEST(IrcProtocolWithServer, join)
 
     server_recv (":server 001 alice");
 
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    /* not enough arguments */
+    server_recv (":alice!user@host JOIN");
     POINTERS_EQUAL(NULL, ptr_server->channels);
 
     server_recv (":alice!user@host JOIN #test");
@@ -463,6 +476,11 @@ TEST(IrcProtocolWithServer, kick)
     CHECK(ptr_channel->nicks->next_nick);
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
+    /* not enough arguments */
+    server_recv (":alice!user@host KICK");
+    server_recv (":alice!user@host KICK #test");
+    STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
+
     server_recv (":alice!user@host KICK #test bob :no spam here!");
 
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
@@ -491,6 +509,10 @@ TEST(IrcProtocolWithServer, kill)
     CHECK(ptr_channel->nicks);
     STRCMP_EQUAL("alice", ptr_channel->nicks->name);
     CHECK(ptr_channel->nicks->next_nick);
+    STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
+
+    /* not enough arguments */
+    server_recv (":alice!user@host KILL");
     STRCMP_EQUAL("bob", ptr_channel->nicks->next_nick->name);
 
     server_recv (":alice!user@host KILL bob :killed by admin");
@@ -524,9 +546,10 @@ TEST(IrcProtocolWithServer, mode)
     STRCMP_EQUAL("  ", ptr_nick->prefixes);
     STRCMP_EQUAL(" ", ptr_nick->prefix);
 
-    /* missing arguments */
+    /* not enough arguments */
     server_recv (":admin MODE");
     server_recv (":admin MODE #test");
+    POINTERS_EQUAL(NULL, ptr_channel->modes);
 
     /* channel mode */
     server_recv (":admin MODE #test +nt");
@@ -589,6 +612,8 @@ TEST(IrcProtocolWithServer, nick)
 
     /* not enough arguments */
     server_recv (":alice!user@host NICK");
+    STRCMP_EQUAL("alice", ptr_nick1->name);
+    STRCMP_EQUAL("bob", ptr_nick2->name);
 
     /* new nick for alice */
     server_recv (":alice!user@host NICK alice_away");
