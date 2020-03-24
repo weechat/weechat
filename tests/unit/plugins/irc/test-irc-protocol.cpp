@@ -363,8 +363,10 @@ TEST(IrcProtocolWithServer, away)
     LONGS_EQUAL(0, ptr_nick->away);
 
     server_recv (":alice!user@host AWAY :Holidays!");
-
     LONGS_EQUAL(1, ptr_nick->away);
+
+    server_recv (":alice!user@host AWAY");
+    LONGS_EQUAL(0, ptr_nick->away);
 }
 
 /*
