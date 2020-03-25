@@ -636,6 +636,37 @@ TEST(IrcProtocolWithServer, nick)
 
 /*
  * Tests functions:
+ *   irc_protocol_cb_part
+ */
+
+TEST(IrcProtocolWithServer, part)
+{
+    server_recv (":server 001 alice");
+
+    POINTERS_EQUAL(NULL, ptr_server->channels);
+
+    server_recv (":alice!user@host JOIN #test");
+
+    /* not enough arguments */
+    server_recv (":alice!user@host PART");
+    STRCMP_EQUAL("#test", ptr_server->channels->name);
+    CHECK(ptr_server->channels->nicks);
+    LONGS_EQUAL(0, ptr_server->channels->part);
+
+    /* channel not found */
+    server_recv (":alice!user@host PART #xyz");
+    STRCMP_EQUAL("#test", ptr_server->channels->name);
+    CHECK(ptr_server->channels->nicks);
+    LONGS_EQUAL(0, ptr_server->channels->part);
+
+    server_recv (":alice!user@host PART #test");
+    STRCMP_EQUAL("#test", ptr_server->channels->name);
+    POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
+    LONGS_EQUAL(1, ptr_server->channels->part);
+}
+
+/*
+ * Tests functions:
  *   irc_protocol_cb_001 (empty)
  */
 
