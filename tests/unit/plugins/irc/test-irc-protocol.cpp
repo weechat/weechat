@@ -23,9 +23,12 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include "src/core/wee-config-file.h"
 #include "src/core/wee-hashtable.h"
+#include "src/core/wee-hook.h"
 #include "src/gui/gui-color.h"
+#include "src/plugins/plugin.h"
 #include "src/plugins/irc/irc-protocol.h"
 #include "src/plugins/irc/irc-channel.h"
 #include "src/plugins/irc/irc-config.h"
@@ -193,6 +196,65 @@ TEST_GROUP(IrcProtocolWithServer)
                   "/server fakerecv %s",
                   command);
         run_cmd (str_command);
+    }
+
+    static int signal_cb (const void *pointer, void *data, const char *signal,
+                          const char *type_data, void *signal_data)
+    {
+        char *ptr_data;
+
+        /* make C++ compiler happy */
+        (void) signal;
+        (void) type_data;
+
+        if (pointer)
+        {
+            STRCMP_EQUAL((const char *)pointer, (const char *)signal_data);
+        }
+
+        ptr_data = (char *)data;
+        ptr_data[0] = 1;
+
+        return WEECHAT_RC_OK;
+    }
+
+    void server_recv_check_response (const char *command,
+                                     const char *expected_response)
+    {
+        char *data, str_error[4096];
+        int signal_called;
+        struct t_hook *ptr_hook;
+
+        data = (char *)malloc (1);
+        data[0] = 0;
+
+        ptr_hook = hook_signal (NULL, IRC_FAKE_SERVER ",irc_out1_*",
+                                &signal_cb, expected_response, data);
+
+        server_recv (command);
+
+        signal_called = (data[0] == 1);
+
+        unhook (ptr_hook);
+
+        if (expected_response && !signal_called)
+        {
+            snprintf (str_error, sizeof (str_error),
+                      "Message received: \"%s\", expected response was "
+                      "\"%s\", but it has not been sent to the IRC server",
+                      command,
+                      expected_response);
+            FAIL(str_error);
+        }
+
+        if (!expected_response && signal_called)
+        {
+            snprintf (str_error, sizeof (str_error),
+                      "Message received: \"%s\", expected no response, but "
+                      "an unexpected response was sent to the IRC server",
+                      command);
+            FAIL(str_error);
+        }
     }
 
     void setup ()
@@ -663,6 +725,21 @@ TEST(IrcProtocolWithServer, part)
     STRCMP_EQUAL("#test", ptr_server->channels->name);
     POINTERS_EQUAL(NULL, ptr_server->channels->nicks);
     LONGS_EQUAL(1, ptr_server->channels->part);
+}
+
+/*
+ * Tests functions:
+ *   irc_protocol_cb_ping
+ */
+
+TEST(IrcProtocolWithServer, ping)
+{
+    server_recv (":server 001 alice");
+
+    /* not enough arguments, no response */
+    server_recv_check_response ("PING", NULL);
+
+    server_recv_check_response ("PING :123456789", "PONG :123456789");
 }
 
 /*
