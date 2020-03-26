@@ -531,14 +531,12 @@ Der bracketed paste Modus kann wie folgt deaktiviert werden:
 /set weechat.look.paste_bracketed off
 ----
 
-// TRANSLATION MISSING
 [[small_terminal]]
-=== How can I customize display for very small terminal size (like 80x25), to not waste space?
+=== Wie kann ich die Anzeige bei sehr kleinen Terminalgrößen (wie 80 x 25) optimieren, um keinen Platz zu verschwenden?
 
-// TRANSLATION MISSING
-You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
-prefix/suffix:
+Sie können die seitlichen Bars (Buflist und Nicklist) entfernen und das Zeitformat im Buffer anpassen,
+sodass nur Stunden und Sekunden angezeigt werden. Die Ausrichtung von Nachrichten sollte deaktiviert
+und der Präfix/Suffix für Nicks gesetzt werden:
 
 ----
 /set buflist.look.enabled off
@@ -550,8 +548,7 @@ prefix/suffix:
 /set weechat.look.nick_prefix "<"
 ----
 
-// TRANSLATION MISSING
-Terminal 80x25, with default configuration:
+Terminal 80x25, mit Standardkonfiguration:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
@@ -583,8 +580,7 @@ Terminal 80x25, with default configuration:
 └────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
-Terminal 80x25, after changes:
+Terminal 80x25, nach obiger Anpassung:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
