@@ -2808,7 +2808,7 @@ IRC_PROTOCOL_CALLBACK(wallops)
 }
 
 /*
- * Callback for the IRC message "001": connected to irc server.
+ * Callback for the IRC message "001": connected to IRC server.
  *
  * Message looks like:
  *   :server 001 mynick :Welcome to the dancer-ircd Network
