@@ -1742,6 +1742,7 @@ IRC_PROTOCOL_CALLBACK(nick)
  *   NOTICE AUTH :*** Looking up your hostname...
  *   :nick!user@host NOTICE mynick :notice text
  *   :nick!user@host NOTICE #channel :notice text
+ *   :nick!user@host NOTICE @#channel :notice text for channel ops
  */
 
 IRC_PROTOCOL_CALLBACK(notice)
@@ -2227,6 +2228,7 @@ IRC_PROTOCOL_CALLBACK(pong)
  *
  * Message looks like:
  *   :nick!user@host PRIVMSG #channel :message for channel here
+ *   :nick!user@host PRIVMSG @#channel :message for channel ops here
  *   :nick!user@host PRIVMSG mynick :message for private here
  *   :nick!user@host PRIVMSG #channel :\01ACTION is testing action\01
  *   :nick!user@host PRIVMSG mynick :\01ACTION is testing action\01
