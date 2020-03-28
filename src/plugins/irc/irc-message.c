@@ -446,7 +446,6 @@ irc_message_convert_charset (const char *message, int pos_start,
     return msg_result;
 }
 
-
 /*
  * Gets nick from host in an IRC message.
  */

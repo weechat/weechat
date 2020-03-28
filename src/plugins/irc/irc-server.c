@@ -662,7 +662,6 @@ irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
     return 1;
 }
 
-
 /*
  * Sets index of current address for server.
  */
@@ -3059,7 +3058,6 @@ irc_server_msgq_flush ()
                                                &pos_channel, &pos_text);
 
                             msg_decoded = NULL;
-
 
                             switch (IRC_SERVER_OPTION_INTEGER(irc_recv_msgq->server,
                                                               IRC_SERVER_OPTION_CHARSET_MESSAGE))

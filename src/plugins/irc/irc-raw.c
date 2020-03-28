@@ -353,7 +353,6 @@ irc_raw_refresh (int clear)
     irc_raw_set_title ();
 }
 
-
 /*
  * Opens IRC raw buffer.
  */
@@ -423,7 +422,6 @@ irc_raw_filter_options (const char *filter)
     irc_raw_set_localvar_filter ();
     irc_raw_refresh (1);
 }
-
 
 /*
  * Frees a raw message and removes it from list.

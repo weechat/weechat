@@ -5738,7 +5738,6 @@ IRC_PROTOCOL_CALLBACK(470)
             }
         }
 
-
         old_channel_lower = strdup (argv[3]);
         if (old_channel_lower)
         {

@@ -70,7 +70,6 @@ irc_msgbuffer_get_option (struct t_irc_server *server, const char *message)
     return NULL;
 }
 
-
 /*
  * Gets target for IRC message.
  *

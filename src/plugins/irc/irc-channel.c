@@ -1322,7 +1322,6 @@ irc_channel_join_smart_filtered_unmask (struct t_irc_channel *channel,
     weechat_hashtable_remove (channel->join_smart_filtered, nick);
 }
 
-
 /*
  * Rejoins a channel (for example after kick).
  */
