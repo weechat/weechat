@@ -200,6 +200,125 @@ irc_protocol_nick_address (struct t_irc_server *server,
 }
 
 /*
+ * Returns hashtable with tags for an IRC message.
+ *
+ * Example:
+ *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
+ *   hashtable will have following keys/values:
+ *     "aaa" => "bbb"
+ *     "ccc" => NULL
+ *     "example.com/ddd" => "eee"
+ */
+
+struct t_hashtable *
+irc_protocol_get_message_tags (const char *tags)
+{
+    struct t_hashtable *hashtable;
+    char **items, *pos, *key;
+    int num_items, i;
+
+    if (!tags || !tags[0])
+        return NULL;
+
+    hashtable = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    if (!hashtable)
+        return NULL;
+
+    items = weechat_string_split (tags, ";", NULL,
+                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
+                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                                  0, &num_items);
+    if (items)
+    {
+        for (i = 0; i < num_items; i++)
+        {
+            pos = strchr (items[i], '=');
+            if (pos)
+            {
+                /* format: "tag=value" */
+                key = weechat_strndup (items[i], pos - items[i]);
+                if (key)
+                {
+                    weechat_hashtable_set (hashtable, key, pos + 1);
+                    free (key);
+                }
+            }
+            else
+            {
+                /* format: "tag" */
+                weechat_hashtable_set (hashtable, items[i], NULL);
+            }
+        }
+        weechat_string_free_split (items);
+    }
+
+    return hashtable;
+}
+
+/*
+ * Parses date/time received in a "time" tag.
+ *
+ * Returns value of time (timestamp), 0 if error.
+ */
+
+time_t
+irc_protocol_parse_time (const char *time)
+{
+    time_t time_value, time_msg, time_gm, time_local;
+    struct tm tm_date, tm_date_gm, tm_date_local;
+    long value;
+    char *time2, *pos, *error;
+
+    if (!time || !time[0])
+        return 0;
+
+    time_value = 0;
+
+    if (strchr (time, '-'))
+    {
+        /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
+        /* initialize structure, because strptime does not do it */
+        memset (&tm_date, 0, sizeof (struct tm));
+        if (strptime (time, "%Y-%m-%dT%H:%M:%S", &tm_date))
+        {
+            if (tm_date.tm_year > 0)
+            {
+                time_msg = mktime (&tm_date);
+                gmtime_r (&time_msg, &tm_date_gm);
+                localtime_r (&time_msg, &tm_date_local);
+                time_gm = mktime (&tm_date_gm);
+                time_local = mktime (&tm_date_local);
+                time_value = mktime (&tm_date_local) + (time_local - time_gm);
+            }
+        }
+    }
+    else
+    {
+        /* date is with timestamp format: "1353403519.478" */
+        time2 = strdup (time);
+        if (time2)
+        {
+            pos = strchr (time2, '.');
+            if (pos)
+                pos[0] = '\0';
+            pos = strchr (time2, ',');
+            if (pos)
+                pos[0] = '\0';
+            value = strtol (time2, &error, 10);
+            if (error && !error[0] && (value >= 0))
+                time_value = (int)value;
+            free (time2);
+        }
+    }
+
+    return time_value;
+}
+
+/*
  * Callback for the IRC message "ACCOUNT": account info about a nick
  * (with capability "account-notify").
  *
@@ -6186,7 +6305,6 @@ IRC_PROTOCOL_CALLBACK(901)
  *
  * Messages look like:
  *   :server 903 nick :SASL authentication successful
- *   :server 904 nick :SASL authentication failed
  */
 
 IRC_PROTOCOL_CALLBACK(sasl_end_ok)
@@ -6230,125 +6348,6 @@ IRC_PROTOCOL_CALLBACK(sasl_end_fail)
         irc_server_sendf (server, 0, NULL, "CAP END");
 
     return WEECHAT_RC_OK;
-}
-
-/*
- * Returns hashtable with tags for an IRC message.
- *
- * Example:
- *   if tags == "aaa=bbb;ccc;example.com/ddd=eee",
- *   hashtable will have following keys/values:
- *     "aaa" => "bbb"
- *     "ccc" => NULL
- *     "example.com/ddd" => "eee"
- */
-
-struct t_hashtable *
-irc_protocol_get_message_tags (const char *tags)
-{
-    struct t_hashtable *hashtable;
-    char **items, *pos, *key;
-    int num_items, i;
-
-    if (!tags || !tags[0])
-        return NULL;
-
-    hashtable = weechat_hashtable_new (32,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       WEECHAT_HASHTABLE_STRING,
-                                       NULL, NULL);
-    if (!hashtable)
-        return NULL;
-
-    items = weechat_string_split (tags, ";", NULL,
-                                  WEECHAT_STRING_SPLIT_STRIP_LEFT
-                                  | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-                                  | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                                  0, &num_items);
-    if (items)
-    {
-        for (i = 0; i < num_items; i++)
-        {
-            pos = strchr (items[i], '=');
-            if (pos)
-            {
-                /* format: "tag=value" */
-                key = weechat_strndup (items[i], pos - items[i]);
-                if (key)
-                {
-                    weechat_hashtable_set (hashtable, key, pos + 1);
-                    free (key);
-                }
-            }
-            else
-            {
-                /* format: "tag" */
-                weechat_hashtable_set (hashtable, items[i], NULL);
-            }
-        }
-        weechat_string_free_split (items);
-    }
-
-    return hashtable;
-}
-
-/*
- * Parses date/time received in a "time" tag.
- *
- * Returns value of time (timestamp), 0 if error.
- */
-
-time_t
-irc_protocol_parse_time (const char *time)
-{
-    time_t time_value, time_msg, time_gm, time_local;
-    struct tm tm_date, tm_date_gm, tm_date_local;
-    long value;
-    char *time2, *pos, *error;
-
-    if (!time || !time[0])
-        return 0;
-
-    time_value = 0;
-
-    if (strchr (time, '-'))
-    {
-        /* date is with ISO 8601 format: "2012-11-24T07:41:02.018Z" */
-        /* initialize structure, because strptime does not do it */
-        memset (&tm_date, 0, sizeof (struct tm));
-        if (strptime (time, "%Y-%m-%dT%H:%M:%S", &tm_date))
-        {
-            if (tm_date.tm_year > 0)
-            {
-                time_msg = mktime (&tm_date);
-                gmtime_r (&time_msg, &tm_date_gm);
-                localtime_r (&time_msg, &tm_date_local);
-                time_gm = mktime (&tm_date_gm);
-                time_local = mktime (&tm_date_local);
-                time_value = mktime (&tm_date_local) + (time_local - time_gm);
-            }
-        }
-    }
-    else
-    {
-        /* date is with timestamp format: "1353403519.478" */
-        time2 = strdup (time);
-        if (time2)
-        {
-            pos = strchr (time2, '.');
-            if (pos)
-                pos[0] = '\0';
-            pos = strchr (time2, ',');
-            if (pos)
-                pos[0] = '\0';
-            value = strtol (time2, &error, 10);
-            if (error && !error[0] && (value >= 0))
-                time_value = (int)value;
-            free (time2);
-        }
-    }
-
-    return time_value;
 }
 
 /*
