@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.8]]
-== Version 2.8 (under dev)
+== Version 2.8 (2020-03-29)
 
 [[v2.8_auto_connection_to_servers]]
 === Auto connection to servers
