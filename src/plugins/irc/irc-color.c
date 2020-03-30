@@ -791,10 +791,11 @@ irc_color_decode_ansi (const char *string, int keep_colors)
 }
 
 /*
- * Callback for modifiers "irc_color_decode" and "irc_color_encode".
+ * Callback for modifiers "irc_color_decode", "irc_color_encode" and
+ * "irc_color_decode_ansi".
  *
- * This modifier can be used by other plugins to decode/encode IRC colors in
- * messages.
+ * These modifiers can be used by other plugins to decode/encode IRC/ANSI
+ * colors in messages.
  */
 
 char *
