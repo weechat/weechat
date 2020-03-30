@@ -24,8 +24,10 @@
 extern "C"
 {
 #include <stdio.h>
+#include "src/core/wee-config-file.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
+#include "src/plugins/irc/irc-config.h"
 }
 
 /* tests on irc_color_decode(): IRC color -> WeeChat color */
@@ -60,6 +62,9 @@ extern "C"
     IRC_COLOR_COLOR_STR "08,02" "bold_underline_yellow/blue"            \
     IRC_COLOR_BOLD_STR IRC_COLOR_UNDERLINE_STR                          \
     "_normal_yellow/blue"
+#define STRING_IRC_COLOR_REMAPPED                                       \
+    "test_"                                                             \
+    IRC_COLOR_COLOR_STR "03,02" "remapped"
 
 /* tests on irc_color_encode(): command line -> IRC color */
 #define STRING_USER_BOLD                                                \
@@ -250,6 +255,15 @@ TEST(IrcColor, Decode)
               gui_color_get_custom ("-bold"),
               gui_color_get_custom ("-underline"));
     WEE_CHECK_DECODE(string, STRING_IRC_ATTRS_AND_COLORS, 1);
+
+    /* color: 03,02 -> green (remapped via option irc.color.mirc_remap) */
+    config_file_option_set (irc_config_color_mirc_remap, "3,2:green", 1);
+    WEE_CHECK_DECODE("test_remapped", STRING_IRC_COLOR_REMAPPED, 0);
+    snprintf (string, sizeof (string),
+              "test_%sremapped",
+              gui_color_get_custom ("|green"));
+    WEE_CHECK_DECODE(string, STRING_IRC_COLOR_REMAPPED, 1);
+    config_file_option_unset (irc_config_color_mirc_remap);
 }
 
 /*
