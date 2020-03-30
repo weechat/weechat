@@ -25,9 +25,14 @@ extern "C"
 {
 #include <stdio.h>
 #include "src/core/wee-config-file.h"
+#include "src/core/wee-hook.h"
+#include "src/core/wee-infolist.h"
 #include "src/gui/gui-color.h"
 #include "src/plugins/irc/irc-color.h"
 #include "src/plugins/irc/irc-config.h"
+
+extern int irc_color_convert_rgb2irc (int rgb);
+extern int irc_color_convert_term2irc (int color);
 }
 
 /* tests on irc_color_decode(): IRC color -> WeeChat color */
@@ -374,6 +379,32 @@ TEST(IrcColor, Encode)
 
 /*
  * Tests functions:
+ *   irc_color_convert_rgb2irc
+ */
+
+TEST(IrcColor, ConvertRgb2Irc)
+{
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x000000));
+    LONGS_EQUAL(1, irc_color_convert_rgb2irc (0x010203));
+    LONGS_EQUAL(4, irc_color_convert_rgb2irc (0xFF0033));
+    LONGS_EQUAL(15, irc_color_convert_rgb2irc (0xAABBCC));
+}
+
+/*
+ * Tests functions:
+ *   irc_color_convert_term2irc
+ */
+
+TEST(IrcColor, ConvertTerm2Irc)
+{
+    LONGS_EQUAL(1, irc_color_convert_term2irc (0));
+    LONGS_EQUAL(15, irc_color_convert_term2irc (123));
+    LONGS_EQUAL(13, irc_color_convert_term2irc (200));
+    LONGS_EQUAL(0, irc_color_convert_term2irc (255));
+}
+
+/*
+ * Tests functions:
  *   irc_color_decode_ansi
  */
 
@@ -524,4 +555,85 @@ TEST(IrcColor, DecodeAnsi)
               "test_%s,01default_bg",
               IRC_COLOR_COLOR_STR);
     WEE_CHECK_DECODE_ANSI(string, STRING_ANSI_DEFAULT_BG, 1);
+}
+
+/*
+ * Tests functions:
+ *   irc_color_for_tags
+ */
+
+TEST(IrcColor, ForTags)
+{
+    POINTERS_EQUAL(NULL, irc_color_for_tags (NULL));
+
+    STRCMP_EQUAL("", irc_color_for_tags (""));
+    STRCMP_EQUAL("test", irc_color_for_tags ("test"));
+    STRCMP_EQUAL("blue:red", irc_color_for_tags ("blue,red"));
+}
+
+/*
+ * Tests functions:
+ *   irc_color_modifier_cb
+ */
+
+TEST(IrcColor, ModifierCallback)
+{
+    char string[1024], *result;
+
+    /* modifier "irc_color_decode" */
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_end",
+              gui_color_get_custom ("bold"),
+              gui_color_get_custom ("-bold"));
+    result = hook_modifier_exec (NULL, "irc_color_decode",
+                                 "1", STRING_IRC_BOLD);
+    STRCMP_EQUAL(string, result);
+    free (result);
+
+    /* modifier "irc_color_encode" */
+    snprintf (string, sizeof (string),
+              "test_%sbold%s_end",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    result = hook_modifier_exec (NULL, "irc_color_encode",
+                                 "1", STRING_USER_BOLD);
+    STRCMP_EQUAL(string, result);
+    free (result);
+
+    /* modifier "irc_color_encode" */
+    snprintf (string, sizeof (string),
+              "test_%sbold1%s_normal_%sbold2%s_normal_%sbold3%s_normal",
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR,
+              IRC_COLOR_BOLD_STR);
+    result = hook_modifier_exec (NULL, "irc_color_decode_ansi",
+                                 "1", STRING_ANSI_BOLD);
+    STRCMP_EQUAL(string, result);
+    free (result);
+}
+
+/*
+ * Tests functions:
+ *   irc_color_weechat_add_to_infolist
+ */
+
+TEST(IrcColor, WeechatAddToInfolist)
+{
+    struct t_infolist *infolist;
+    struct t_infolist_item *ptr_item;
+    int num_items;
+
+    LONGS_EQUAL(0, irc_color_weechat_add_to_infolist (NULL));
+
+    infolist = infolist_new (NULL);
+    LONGS_EQUAL(1, irc_color_weechat_add_to_infolist (infolist));
+    num_items = 0;
+    for (ptr_item = infolist->items; ptr_item; ptr_item = ptr_item->next_item)
+    {
+        num_items++;
+    }
+    LONGS_EQUAL(IRC_NUM_COLORS, num_items);
 }
