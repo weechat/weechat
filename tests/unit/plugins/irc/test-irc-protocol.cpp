@@ -2164,6 +2164,11 @@ TEST(IrcProtocolWithServer, 353)
     server_recv (":server 353 alice = #test :alice");
     server_recv (":server 353 alice = #test :alice bob @carol +dan!user@host");
 
+    /* with option irc.look.color_nicks_in_names enabled */
+    config_file_option_set (irc_config_look_color_nicks_in_names, "on", 1);
+    server_recv (":server 353 alice = #test :alice bob @carol +dan!user@host");
+    config_file_option_unset (irc_config_look_color_nicks_in_names);
+
     /* channel not found */
     server_recv (":server 353 alice #xyz");
     server_recv (":server 353 alice #xyz :alice");
