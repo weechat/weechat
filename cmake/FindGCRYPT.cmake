@@ -45,7 +45,7 @@ endif()
 
 # handle the QUIETLY and REQUIRED arguments and set GCRYPT_FOUND to TRUE if
 # all listed variables are TRUE
-include(${CMAKE_HOME_DIRECTORY}/cmake/FindPackageHandleStandardArgs.cmake)
+include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(GCRYPT REQUIRED_VARS GCRYPT_LDFLAGS GCRYPT_CFLAGS)
 
 if(GCRYPT_FOUND)
