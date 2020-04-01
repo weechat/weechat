@@ -71,7 +71,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_user.de.html"
   )
   add_custom_target(doc-user-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # scripting guide
   add_custom_command(
@@ -84,7 +84,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_scripting.de.html"
   )
   add_custom_target(doc-scripting-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # FAQ
   add_custom_command(
@@ -97,7 +97,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_faq.de.html"
   )
   add_custom_target(doc-faq-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # quickstart
   add_custom_command(
@@ -110,7 +110,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_quickstart.de.html"
   )
   add_custom_target(doc-quickstart-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # tester's guide
   add_custom_command(
@@ -123,6 +123,6 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_tester.de.html"
   )
   add_custom_target(doc-tester-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.de.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
 endif()

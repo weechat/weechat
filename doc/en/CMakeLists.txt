@@ -72,7 +72,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_user.en.html"
   )
   add_custom_target(doc-user-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_user.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # plugin API reference
   add_custom_command(
@@ -86,7 +86,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_plugin_api.en.html"
   )
   add_custom_target(doc-plugin-api-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_plugin_api.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # scripting guide
   add_custom_command(
@@ -99,7 +99,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_scripting.en.html"
   )
   add_custom_target(doc-scripting-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_scripting.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # FAQ
   add_custom_command(
@@ -112,7 +112,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_faq.en.html"
   )
   add_custom_target(doc-faq-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_faq.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # quickstart
   add_custom_command(
@@ -125,7 +125,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_quickstart.en.html"
   )
   add_custom_target(doc-quickstart-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # tester's guide
   add_custom_command(
@@ -138,7 +138,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_tester.en.html"
   )
   add_custom_target(doc-tester-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_tester.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # relay protocol
   add_custom_command(
@@ -151,7 +151,7 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_relay_protocol.en.html"
   )
   add_custom_target(doc-relay-protocol-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_relay_protocol.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
   # developer's guide
   add_custom_command(
@@ -164,6 +164,6 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_dev.en.html"
   )
   add_custom_target(doc-dev-en ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_dev.en.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
 endif()
