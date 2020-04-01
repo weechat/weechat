@@ -66,16 +66,16 @@ if(NOT DEFINED WEECHAT_LIBDIR)
   set(WEECHAT_LIBDIR ${LIBDIR}/${PROJECT_NAME})
 endif()
 
-if(NOT DEFINED SHAREDIR)
-  set(SHAREDIR ${CMAKE_INSTALL_PREFIX}/share)
+if(NOT DEFINED DATAROOTDIR)
+  set(DATAROOTDIR ${CMAKE_INSTALL_PREFIX}/share)
 endif()
 
 if(NOT DEFINED MANDIR)
-  set(MANDIR ${SHAREDIR}/man)
+  set(MANDIR ${DATAROOTDIR}/man)
 endif()
 
 if(NOT DEFINED LOCALEDIR)
-  set(LOCALEDIR ${SHAREDIR}/locale)
+  set(LOCALEDIR ${DATAROOTDIR}/locale)
 endif()
 
 if(DEFINED INCLUDEDIR)
@@ -297,12 +297,12 @@ if(CYGWIN)
     ${CMAKE_CURRENT_SOURCE_DIR}/Contributing.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/README.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/ReleaseNotes.adoc
-    DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME}
+    DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME}
   )
 endif()
 
 # desktop file
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${SHAREDIR}/applications)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/weechat.desktop DESTINATION ${DATAROOTDIR}/applications)
 
 # packages
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")

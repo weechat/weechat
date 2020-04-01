@@ -30,6 +30,6 @@ if(ENABLE_DOC)
     COMMENT "Building weechat_quickstart.es.html"
   )
   add_custom_target(doc-quickstart-es ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${SHAREDIR}/doc/${PROJECT_NAME})
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat_quickstart.es.html DESTINATION ${DATAROOTDIR}/doc/${PROJECT_NAME})
 
 endif()
