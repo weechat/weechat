@@ -498,8 +498,8 @@ fset_config_init ()
     fset_config_format_option[0] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "option1", "string",
-        N_("first format of each line with an option which is not marked "
-           "nor the selected one "
+        N_("first format of each line, used when option "
+           "fset.look.format_number is set to 1 "
            "(note: content is evaluated, see /help fset); "
            "an empty string uses the default format "
            "(\"${marked} ${name}  ${type}  ${value2}\"), which is without "
@@ -514,8 +514,8 @@ fset_config_init ()
     fset_config_format_option[1] = weechat_config_new_option (
         fset_config_file, ptr_section,
         "option2", "string",
-        N_("second format of each line with an option which is not marked "
-           "nor the selected one "
+        N_("second format of each line, used when option "
+           "fset.look.format_number is set to 2 "
            "(note: content is evaluated, see /help fset); "
            "an empty string uses the default format "
            "(\"${marked} ${name}  ${type}  ${value2}\"), which is without "
