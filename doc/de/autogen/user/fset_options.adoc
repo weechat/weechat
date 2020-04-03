@@ -393,13 +393,13 @@
 ** Standardwert: `+"/unset ${name}"+`
 
 * [[option_fset.format.option1]] *fset.format.option1*
-** Beschreibung: pass:none[first format of each line, used when option fset.look.format_number is set to 1 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** Beschreibung: pass:none[erstes von zwei Formaten um Optionen anzuzeigen, wird genutzt wenn die Option fset.look.format_number auf 1 gesetzt ist (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name} ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_fset.format.option2]] *fset.format.option2*
-** Beschreibung: pass:none[second format of each line, used when option fset.look.format_number is set to 2 (note: content is evaluated, see /help fset); an empty string uses the default format ("${marked} ${name}  ${type}  ${value2}"), which is without evaluation of string and then much faster; formats can be switched with key ctrl+X]
+** Beschreibung: pass:none[zweites von zwei Formaten um Optionen anzuzeigen,wird genutzt wenn die Option fset.look.format_number auf 1 gesetzt ist (Hinweis: der Inhalt ist evaluiert, siehe /help fset); eine leere Zeichenkette nutzt die Standardeinstellung ("${marked} ${name} ${type}  ${value2}"), dies findet ohne eine Evaluierung statt, was wesentlich schneller ist; zwischen den Formaten kann mittels ctrl-X umgeschaltet werden]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
