@@ -234,13 +234,31 @@ weechat_python_hashtable_map_cb (void *data,
 
     dict = (PyObject *)data;
 
-    dict_key = Py_BuildValue ("s", key);
-    dict_value = Py_BuildValue ("s", value);
+#if PY_MAJOR_VERSION >= 3
+    /* key */
+    if (weechat_utf8_is_valid (key, -1, NULL))
+        dict_key = Py_BuildValue ("s", key);  /* Python 3: str */
+    else
+        dict_key = Py_BuildValue ("y", key);  /* Python 3: bytes */
+    /* value */
+    if (weechat_utf8_is_valid (value, -1, NULL))
+        dict_value = Py_BuildValue ("s", value);  /* Python 3: str */
+    else
+        dict_value = Py_BuildValue ("y", value);  /* Python 3: bytes */
+#else
+    /* key */
+    dict_key = Py_BuildValue ("s", key);  /* Python 2: str */
+    /* value */
+    dict_value = Py_BuildValue ("s", value);  /* Python 2: str */
+#endif
 
-    PyDict_SetItem (dict, dict_key, dict_value);
+    if (dict_key && dict_value)
+        PyDict_SetItem (dict, dict_key, dict_value);
 
-    Py_DECREF (dict_key);
-    Py_DECREF (dict_value);
+    if (dict_key)
+        Py_DECREF (dict_key);
+    if (dict_value)
+        Py_DECREF (dict_value);
 }
 
 /*
