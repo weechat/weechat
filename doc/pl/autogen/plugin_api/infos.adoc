@@ -80,7 +80,7 @@
 
 | tcl | tcl_version | wersja użytego interpretera | -
 
-| weechat | auto_connect | 1 if automatic connection to servers is enabled, 0 if it has been disabled by the user (option "-a" or "--no-connect") | -
+| weechat | auto_connect | 1 jeśli automatycznie łączenie z serwerami jest włączone, 0 jeśli zostało wyłączone przez użytkownika (opcja "-a" lub "--no-connect") | -
 
 | weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
 
@@ -132,7 +132,7 @@
 
 | weechat | weechat_dir | katalog WeeChat | -
 
-| weechat | weechat_headless | 1 if WeeChat is running headless | -
+| weechat | weechat_headless | 1 jeśli WeeChat działa w trybie bez interfejsu | -
 
 | weechat | weechat_libdir | katalog "lib" WeeChata | -
 
