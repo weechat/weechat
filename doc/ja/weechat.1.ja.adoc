@@ -2,7 +2,7 @@
 :doctype: manpage
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:lang: ja
+:lang: ja-jp
 :man manual: WeeChat マニュアル
 :man source: WeeChat {revnumber}
 

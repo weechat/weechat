@@ -1,7 +1,7 @@
 = WeeChat クイックスタートガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:lang: ja
+:lang: ja-jp
 :toc: left
 :toc-title: 目次
 :sectnums:

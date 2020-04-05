@@ -1,7 +1,7 @@
 = WeeChat ユーザーズガイド
 :author: Sébastien Helleu
 :email: flashcode@flashtux.org
-:lang: ja
+:lang: ja-jp
 :toc: left
 :toclevels: 4
 :toc-title: 目次

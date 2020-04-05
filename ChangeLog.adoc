@@ -22,6 +22,10 @@ Bug fixes::
 
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
 
+Documentation::
+
+  * fix broken literal blocks in Japanese docs with Firefox (issue #1466)
+
 Tests::
 
   * irc: add tests on IRC color functions
