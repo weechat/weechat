@@ -376,31 +376,26 @@ Innym rozwiązaniem jest użycie skryptu:
 [[change_locale_without_quit]]
 === Chcę zmienić język komunikatów wyświetlanych przez WeeChat, ale bez jego zamykania, czy jest to możliwe?
 
-// TRANSLATION MISSING
-Sure it is possible:
+Oczywiście jest to możliwe:
 
 ----
 /set env LANG pl_PL.UTF-8
 /upgrade
 ----
 
-// TRANSLATION MISSING
 [[timezone]]
-=== How can I change the timezone?
+=== Jak mogę zmienić strefę czasową?
 
-// TRANSLATION MISSING
-There is no option in WeeChat to change the timezone, the environment variable
-`TZ` must be set to the appropriate value.
+Nie ma opcji na zmianę strefy czasowej w WeeChat, zmienna środowiskowa `TZ` musi
+być ustawiona na odpowiednią wartość.
 
-// TRANSLATION MISSING
-In your shell initialization file or on command line, before starting WeeChat:
+W pliku inicjalizującym powłokę lub w linii poleceń, przed uruchomieniem WeeChat wpisz:
 
 ----
 export TZ=Europe/Warsaw
 ----
 
-// TRANSLATION MISSING
-In WeeChat, the new value is immediately used:
+W WeeChat, nowa wartość zostanie natychmiast użyta:
 
 ----
 /set env TZ Europe/Warsaw
@@ -499,14 +494,12 @@ Możesz po prostu wyłączyć tą opcję:
 /set weechat.look.paste_bracketed off
 ----
 
-// TRANSLATION MISSING
 [[small_terminal]]
-=== How can I customize display for very small terminal size (like 80x25), to not waste space?
+=== Jak mogę dostosować wyświetlanie do bardzo małych terminali (jak 80x25), żeby nie tracić przestrzeni?
 
-// TRANSLATION MISSING
-You can remove side bars (buflist and nicklist), change time format to display
-only hours and seconds, disable alignment of messages and set a char for nick
-prefix/suffix:
+Możesz usunąć boczne paski (listy buforów i nicków), zmienić wyświetlany format czasu
+żeby wyświetlane były tylko godziny i minuty, wyłączyć wyrównywanie wiadomości i ustawić
+znak dla prefiksu/sufiksu nicka:
 
 ----
 /set buflist.look.enabled off
@@ -518,8 +511,7 @@ prefix/suffix:
 /set weechat.look.nick_prefix "<"
 ----
 
-// TRANSLATION MISSING
-Terminal 80x25, with default configuration:
+Terminal 80x25, z domyślną konfiguracją:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
@@ -551,8 +543,7 @@ Terminal 80x25, with default configuration:
 └────────────────────────────────────────────────────────────────────────────────┘
 ....
 
-// TRANSLATION MISSING
-Terminal 80x25, after changes:
+Terminal 80x25, po zmianach:
 
 ....
 ┌────────────────────────────────────────────────────────────────────────────────┐
