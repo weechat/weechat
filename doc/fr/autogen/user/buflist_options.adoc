@@ -147,7 +147,7 @@
 ** valeur par défaut: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ("var"), une variable hdata du serveur IRC ("irc_server.var") ou une variable hdata du canal IRC ("irc_channel.var") ; le caractère "-" peut être utilisé pour inverser l'ordre, le caractère "~" peut être utilisé pour effectuer une comparaison insensible à la casse ; exemple : "-~short_name" pour un tri inverse insensible à la casse sur le nom court du tampon]
+** description: pass:none[liste de champs séparés par des virgules pour trier les tampons ; chaque champ est une variable hdata du tampon ("var"), une variable hdata du serveur IRC ("irc_server.var") ou une variable hdata du canal IRC ("irc_channel.var") ; le caractère "-" peut être utilisé pour inverser l'ordre, le caractère "~" peut être utilisé pour effectuer une comparaison insensible à la casse ; exemple : "-~short_name" pour un tri inverse insensible à la casse sur le nom court du tampon (note : le contenu est évalué, seul le pointeur vers bar_item peut être utilisé, par exemple "bar_item.name")]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"number,-active"+`

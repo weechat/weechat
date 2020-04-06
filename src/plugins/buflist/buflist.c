@@ -221,25 +221,30 @@ int
 buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
                          void *pointer1, void *pointer2)
 {
-    int i, reverse, case_sensitive, rc;
+    int i, item_number, reverse, case_sensitive, rc;
     const char *ptr_field;
     struct t_gui_hotlist *ptr_hotlist1, *ptr_hotlist2;
     void *ptr_server1, *ptr_server2, *ptr_channel1, *ptr_channel2;
     struct t_hdata *hdata_irc_server, *hdata_irc_channel;
+    struct t_gui_bar_item *ptr_item;
 
     /* make C compiler happy */
-    (void) data;
     (void) arraylist;
+
+    ptr_item = (struct t_gui_bar_item *)data;
+    item_number = buflist_bar_item_get_index_with_pointer (ptr_item);
+    if (item_number < 0)
+        item_number= 0;
 
     hdata_irc_server = weechat_hdata_get ("irc_server");
     hdata_irc_channel = weechat_hdata_get ("irc_channel");
 
-    for (i = 0; i < buflist_config_sort_fields_count; i++)
+    for (i = 0; i < buflist_config_sort_fields_count[item_number]; i++)
     {
         rc = 0;
         reverse = 1;
         case_sensitive = 1;
-        ptr_field = buflist_config_sort_fields[i];
+        ptr_field = buflist_config_sort_fields[item_number][i];
         while ((ptr_field[0] == '-') || (ptr_field[0] == '~'))
         {
             if (ptr_field[0] == '-')
@@ -337,13 +342,13 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
  */
 
 struct t_arraylist *
-buflist_sort_buffers ()
+buflist_sort_buffers (struct t_gui_bar_item *item)
 {
     struct t_arraylist *buffers;
     struct t_gui_buffer *ptr_buffer;
 
     buffers = weechat_arraylist_new (128, 1, 1,
-                                     &buflist_compare_buffers, NULL,
+                                     &buflist_compare_buffers, item,
                                      NULL, NULL);
 
     ptr_buffer = weechat_hdata_get_list (buflist_hdata_buffer, "gui_buffers");
@@ -453,6 +458,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     if (!buflist_bar_item_init ())
         return WEECHAT_RC_ERROR;
+
+    buflist_config_change_sort (NULL, NULL, NULL);
 
     buflist_command_init ();
 

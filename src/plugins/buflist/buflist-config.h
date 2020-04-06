@@ -20,6 +20,8 @@
 #ifndef WEECHAT_PLUGIN_BUFLIST_CONFIG_H
 #define WEECHAT_PLUGIN_BUFLIST_CONFIG_H
 
+#include "buflist-bar-item.h"
+
 #define BUFLIST_CONFIG_NAME "buflist"
 
 #define BUFLIST_CONFIG_SIGNALS_REFRESH                                  \
@@ -56,12 +58,14 @@ extern struct t_config_option *buflist_config_format_name;
 extern struct t_config_option *buflist_config_format_nick_prefix;
 extern struct t_config_option *buflist_config_format_number;
 
-extern char **buflist_config_sort_fields;
-extern int buflist_config_sort_fields_count;
+extern char **buflist_config_sort_fields[BUFLIST_BAR_NUM_ITEMS];
+extern int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS];
 extern char *buflist_config_format_buffer_eval;
 extern char *buflist_config_format_buffer_current_eval;
 extern char *buflist_config_format_hotlist_eval;
 
+extern void buflist_config_change_sort (const void *pointer, void *data,
+                                        struct t_config_option *option);
 extern int buflist_config_init ();
 extern int buflist_config_read ();
 extern int buflist_config_write ();

@@ -29,13 +29,15 @@
 #include "buflist-config.h"
 
 
-struct t_gui_bar_item *buflist_bar_item_buflist[BUFLIST_BAR_NUM_ITEMS];
+struct t_gui_bar_item *buflist_bar_item_buflist[BUFLIST_BAR_NUM_ITEMS] =
+{ NULL, NULL, NULL };
 struct t_hashtable *buflist_hashtable_pointers = NULL;
 struct t_hashtable *buflist_hashtable_extra_vars = NULL;
 struct t_hashtable *buflist_hashtable_options_conditions = NULL;
-struct t_arraylist *buflist_list_buffers[BUFLIST_BAR_NUM_ITEMS];
+struct t_arraylist *buflist_list_buffers[BUFLIST_BAR_NUM_ITEMS] =
+{ NULL, NULL, NULL };
 
-int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS];
+int old_line_number_current_buffer[BUFLIST_BAR_NUM_ITEMS] = { -1, -1, -1 };
 
 
 /*
@@ -75,6 +77,24 @@ buflist_bar_item_get_index (const char *item_name)
     {
         ptr_item_name = buflist_bar_item_get_name (i);
         if (strcmp (ptr_item_name, item_name) == 0)
+            return i;
+    }
+
+    return -1;
+}
+
+/*
+ * Returns the bar item index with a bar item pointer, -1 if not found.
+ */
+
+int
+buflist_bar_item_get_index_with_pointer (struct t_gui_bar_item *item)
+{
+    int i;
+
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        if (buflist_bar_item_buflist[i] == item)
             return i;
     }
 
@@ -332,7 +352,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         16, 0, 1,
         NULL, NULL, NULL, NULL);
 
-    buffers = buflist_sort_buffers ();
+    buffers = buflist_sort_buffers (item);
 
     num_buffers = weechat_arraylist_size (buffers);
     for (i = 0; i < num_buffers; i++)

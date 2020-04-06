@@ -61,8 +61,8 @@ struct t_config_option *buflist_config_format_number;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
-char **buflist_config_sort_fields = NULL;
-int buflist_config_sort_fields_count = 0;
+char **buflist_config_sort_fields[BUFLIST_BAR_NUM_ITEMS] = { NULL, NULL, NULL };
+int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS] = { 0, 0, 0 };
 char *buflist_config_format_buffer_eval = NULL;
 char *buflist_config_format_buffer_current_eval = NULL;
 char *buflist_config_format_hotlist_eval = NULL;
@@ -246,23 +246,58 @@ void
 buflist_config_change_sort (const void *pointer, void *data,
                             struct t_config_option *option)
 {
+    int i;
+    struct t_hashtable *hashtable_pointers;
+    char *sort;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) option;
 
-    if (buflist_config_sort_fields)
-        weechat_string_free_split (buflist_config_sort_fields);
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        if (buflist_config_sort_fields[i])
+        {
+            weechat_string_free_split (buflist_config_sort_fields[i]);
+            buflist_config_sort_fields[i] = NULL;
+            buflist_config_sort_fields_count[i] = 0;
+        }
+    }
 
-    buflist_config_sort_fields = weechat_string_split (
-        weechat_config_string (buflist_config_look_sort),
-        ",",
+    hashtable_pointers = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_POINTER,
         NULL,
-        WEECHAT_STRING_SPLIT_STRIP_LEFT
-        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
-        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-        0,
-        &buflist_config_sort_fields_count);
+        NULL);
+    if (!hashtable_pointers)
+        return;
+
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+    {
+        weechat_hashtable_set (hashtable_pointers,
+                               "bar_item", buflist_bar_item_buflist[i]);
+
+        sort = weechat_string_eval_expression (
+            weechat_config_string (buflist_config_look_sort),
+            hashtable_pointers,
+            NULL,
+            NULL);
+
+        buflist_config_sort_fields[i] = weechat_string_split (
+            (sort) ? sort : "",
+            ",",
+            NULL,
+            WEECHAT_STRING_SPLIT_STRIP_LEFT
+            | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+            | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+            0,
+            &buflist_config_sort_fields_count[i]);
+
+        if (sort)
+            free (sort);
+    }
 
     buflist_bar_item_update (0);
 }
@@ -522,7 +557,9 @@ buflist_config_init ()
            "char \"-\" can be used before field to reverse order, "
            "char \"~\" can be used to do a case insensitive comparison; "
            "example: \"-~short_name\" for case insensitive and reverse "
-           "sort on buffer short name"),
+           "sort on buffer short name "
+           "(note: content is evaluated, only the pointer to bar_item can be "
+           "used, for example \"bar_item.name\")"),
         NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,
@@ -726,16 +763,21 @@ buflist_config_write ()
 void
 buflist_config_free ()
 {
+    int i;
+
     weechat_config_free (buflist_config_file);
 
     if (buflist_config_signals_refresh)
         buflist_config_free_signals_refresh ();
 
-    if (buflist_config_sort_fields)
+    for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
     {
-        weechat_string_free_split (buflist_config_sort_fields);
-        buflist_config_sort_fields = NULL;
-        buflist_config_sort_fields_count = 0;
+        if (buflist_config_sort_fields[i])
+        {
+            weechat_string_free_split (buflist_config_sort_fields[i]);
+            buflist_config_sort_fields[i] = NULL;
+            buflist_config_sort_fields_count[i] = 0;
+        }
     }
 
     if (buflist_config_format_buffer_eval)
