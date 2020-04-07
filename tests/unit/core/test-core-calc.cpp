@@ -23,6 +23,7 @@
 
 extern "C"
 {
+#include <stdio.h>
 #include "src/core/wee-calc.h"
 
 extern int calc_sanitize_decimal_number (char *string);
