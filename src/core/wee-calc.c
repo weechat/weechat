@@ -33,6 +33,10 @@
 #include "wee-arraylist.h"
 #include "wee-string.h"
 
+/* pull in a non-setlocale dependent snprintf imlementation */
+#define STB_SPRINTF_IMPLEMENTATION
+#include "stb_sprintf.h"
+
 enum t_calc_symbol
 {
     CALC_SYMBOL_NONE = 0,
@@ -190,12 +194,9 @@ calc_format_result (double value, char *result, int max_size)
      * local-independent formatting of value, so that a decimal point is always
      * used (instead of a comma in French for example)
      */
-    setlocale (LC_ALL, "C");
-    snprintf (result, max_size,
-              "%.10f",
-              /* ensure result is not "-0" */
-              (value == -0.0) ? 0.0 : value);
-    setlocale (LC_ALL, "");
+    stbsp_snprintf (result, max_size,
+            "%.10f",
+            (value == -0.0) ? 0.0 : value);
 
     pos_point = strchr (result, '.');
 
