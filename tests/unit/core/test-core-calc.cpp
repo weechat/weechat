@@ -24,7 +24,20 @@
 extern "C"
 {
 #include "src/core/wee-calc.h"
+
+extern int calc_sanitize_decimal_number (char *string);
+extern void calc_format_result (double value, char *result, int max_size);
 }
+
+#define WEE_CHECK_SANITIZE_DECIMAL_NUMBER(__result, __result_string,    \
+                                          __number)                     \
+    snprintf (str_number, sizeof (str_number), "%s", __number);         \
+    LONGS_EQUAL(__result, calc_sanitize_decimal_number (str_number));   \
+    STRCMP_EQUAL(__result_string, str_number);
+
+#define WEE_CHECK_FORMAT_RESULT(__result, __value)                      \
+    calc_format_result (__value, str_result, sizeof (str_result));      \
+    STRCMP_EQUAL(__result, str_result);
 
 #define WEE_CHECK_CALC(__result, __expr)                                \
     value = calc_expression (__expr);                                   \
@@ -34,6 +47,53 @@ extern "C"
 TEST_GROUP(CoreCalc)
 {
 };
+
+/*
+ * Tests functions:
+ *   calc_sanitize_decimal_number
+ */
+
+TEST(CoreCalc, SanitizeDecimalNumber)
+{
+    char str_number[1024];
+
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(0, "0", "0");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "0.0", "0.0");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "0.0", "0,0");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "1.23", "1.23");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "1.23", "1,23");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "1234.56", "1.234,56");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(0, "123456789", "123.456.789");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(0, "123456789", "123,456,789");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "1234567.89", "1.234.567,89");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "1234567.89", "1,234,567.89");
+    WEE_CHECK_SANITIZE_DECIMAL_NUMBER(1, "-2345.67", "-2.345,67");
+}
+
+/*
+ * Tests functions:
+ *   calc_format_result
+ */
+
+TEST(CoreCalc, FormatResult)
+{
+    char str_result[64];
+
+    WEE_CHECK_FORMAT_RESULT("0", 0);
+    WEE_CHECK_FORMAT_RESULT("0", 0.0);
+    WEE_CHECK_FORMAT_RESULT("0", -0.0);
+    WEE_CHECK_FORMAT_RESULT("12.5", 12.5);
+    WEE_CHECK_FORMAT_RESULT("12.005", 12.005000);
+    WEE_CHECK_FORMAT_RESULT("-12.005", -12.005000);
+    WEE_CHECK_FORMAT_RESULT("0.0000000001", 0.0000000001);
+    WEE_CHECK_FORMAT_RESULT("0", 0.00000000001);
+    WEE_CHECK_FORMAT_RESULT("123456789012345", 123456789012345);
+
+    setlocale (LC_ALL, "fr_FR.UTF-8");
+    WEE_CHECK_FORMAT_RESULT("12.5", 12.5);
+    WEE_CHECK_FORMAT_RESULT("-12.5", -12.5);
+    setlocale (LC_ALL, "");
+}
 
 /*
  * Tests functions:
@@ -146,4 +206,10 @@ TEST(CoreCalc, Expression)
     WEE_CHECK_CALC("21", "(5+2)*3");
     WEE_CHECK_CALC("3.15", "(1.5+2)*(1.8/2)");
     WEE_CHECK_CALC("-1.26", "(1.5+2)*(1.8/(2-7))");
+
+    /* with French locale: the result must always have "." instead of "," */
+    setlocale (LC_ALL, "fr_FR.UTF-8");
+    WEE_CHECK_CALC("12.5", "10.5+2");
+    WEE_CHECK_CALC("-12.5", "-10.5-2");
+    setlocale (LC_ALL, "");
 }

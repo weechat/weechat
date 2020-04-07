@@ -176,6 +176,98 @@ calc_operation_stacks (struct t_arraylist *list_values,
 }
 
 /*
+ * Sanitizes a decimal number: removes any thousands separator and replaces
+ * the decimal separator by a dot.
+ *
+ * The string is updated in-place, the result has always a length shorter or
+ * equal to the input string.
+ *
+ * Examples:
+ *   1.23          -->  1.23
+ *   1,23          -->  1,23
+ *   1.234,56      -->  1234.56
+ *   123.456.789   -->  123456789
+ *   123,456,789   -->  123456789
+ *   1.234.567,89  -->  1234567.89
+ *   1,234,567.89  -->  1234567.89
+ *   -2.345,67     -->  -2345.67
+ *
+ * Returns:
+ *   1: the number has decimal part
+ *   0: the number has no decimal part
+ */
+
+int
+calc_sanitize_decimal_number (char *string)
+{
+    int i, j, count_sep, different_sep, index_last_sep;
+
+    count_sep = 0;
+    different_sep = 0;
+    index_last_sep = -1;
+
+    i = strlen (string) - 1;
+    while (i >= 0)
+    {
+        if (!isdigit ((unsigned char)string[i]) && (string[i] != '-'))
+        {
+            count_sep++;
+            if (index_last_sep < 0)
+            {
+                /* last separator found */
+                index_last_sep = i;
+            }
+            else
+            {
+                /* another separator found */
+                if (!different_sep && (string[i] != string[index_last_sep]))
+                {
+                    different_sep = 1;
+                    break;
+                }
+            }
+        }
+        i--;
+    }
+    if ((count_sep > 1) && !different_sep)
+    {
+        /*
+         * case of only thousands separators, like 123.456.789
+         * => we strip all separators
+         */
+        index_last_sep = -1;
+    }
+
+    if (index_last_sep >= 0)
+        string[index_last_sep] = '.';
+
+    i = 0;
+    j = 0;
+    while (1)
+    {
+        if (((index_last_sep < 0) || (i < index_last_sep))
+            && string[i]
+            && !isdigit ((unsigned char)string[i])
+            && (string[i] != '-'))
+        {
+            /* another separator found before the last one: skip it */
+            i++;
+        }
+        else
+        {
+            if (j != i)
+                string[j] = string[i];
+            if (!string[i])
+                break;
+            i++;
+            j++;
+        }
+    }
+
+    return (index_last_sep >= 0) ? 1 : 0;
+}
+
+/*
  * Formats the result as a decimal number (locale independent): remove any
  * extra "0" at the and the decimal point if needed.
  */
@@ -183,31 +275,24 @@ calc_operation_stacks (struct t_arraylist *list_values,
 void
 calc_format_result (double value, char *result, int max_size)
 {
-    char *pos_point;
-    int i;
+    int i, has_decimal;
 
-    /*
-     * local-independent formatting of value, so that a decimal point is always
-     * used (instead of a comma in French for example)
-     */
-    setlocale (LC_ALL, "C");
     snprintf (result, max_size,
               "%.10f",
               /* ensure result is not "-0" */
               (value == -0.0) ? 0.0 : value);
-    setlocale (LC_ALL, "");
 
-    pos_point = strchr (result, '.');
+    has_decimal = calc_sanitize_decimal_number (result);
 
     i = strlen (result) - 1;
     while (i >= 0)
     {
-      if (!isdigit ((unsigned char)result[i]) && (result[i] != '-'))
+        if (!isdigit ((unsigned char)result[i]) && (result[i] != '-'))
         {
             result[i] = '\0';
             break;
         }
-        if (pos_point && (result[i] == '0'))
+        if (has_decimal && (result[i] == '0'))
         {
             result[i] = '\0';
             i--;
