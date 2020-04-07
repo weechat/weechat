@@ -973,7 +973,7 @@ gui_bar_config_check_size (const void *pointer, void *data,
     struct t_gui_bar *ptr_bar;
     long number;
     char *error;
-    int new_value;
+    int new_value, current_size;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1013,14 +1013,16 @@ gui_bar_config_check_size (const void *pointer, void *data,
         if (new_value < 0)
             return 0;
 
-        if ((new_value > 0) &&
-            ((CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0)
-             || (new_value > CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]))))
+        if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN]))
         {
-            if (!CONFIG_BOOLEAN(ptr_bar->options[GUI_BAR_OPTION_HIDDEN])
-                && !gui_bar_check_size_add (ptr_bar,
-                                            new_value - CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE])))
+            current_size = CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]);
+            if ((current_size == 0) && ptr_bar->bar_window)
+                current_size = ptr_bar->bar_window->current_size;
+            if ((new_value > 0) && (new_value > current_size)
+                && !gui_bar_check_size_add (ptr_bar, new_value - current_size))
+            {
                 return 0;
+            }
         }
 
         return 1;
