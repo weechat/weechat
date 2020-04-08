@@ -24,8 +24,17 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
+#include "src/core/wee-arraylist.h"
 #include "src/core/wee-calc.h"
 
+extern void calc_list_free_cb (void *data, struct t_arraylist *arraylist,
+                               void *pointer);
+extern int calc_operator_precedence (const char *oper);
+extern double calc_pop_value (struct t_arraylist *list_values);
+extern double calc_operation (const char *oper, double value1, double value2);
+extern void calc_operation_stacks (struct t_arraylist *list_values,
+                                   struct t_arraylist *list_ops);
 extern int calc_sanitize_decimal_number (char *string);
 extern void calc_format_result (double value, char *result, int max_size);
 }
@@ -48,6 +57,138 @@ extern void calc_format_result (double value, char *result, int max_size);
 TEST_GROUP(CoreCalc)
 {
 };
+
+/*
+ * Tests functions:
+ *   calc_operator_precedence
+ */
+
+TEST(CoreCalc, OperatorPrecedence)
+{
+    LONGS_EQUAL(0, calc_operator_precedence (NULL));
+    LONGS_EQUAL(0, calc_operator_precedence (""));
+    LONGS_EQUAL(0, calc_operator_precedence ("$"));
+
+    LONGS_EQUAL(1, calc_operator_precedence ("+"));
+    LONGS_EQUAL(1, calc_operator_precedence ("-"));
+
+    LONGS_EQUAL(2, calc_operator_precedence ("*"));
+    LONGS_EQUAL(2, calc_operator_precedence ("/"));
+    LONGS_EQUAL(2, calc_operator_precedence ("//"));
+    LONGS_EQUAL(2, calc_operator_precedence ("%"));
+    LONGS_EQUAL(2, calc_operator_precedence ("**"));
+}
+
+/*
+ * Tests functions:
+ *   calc_pop_value
+ *   calc_list_free_cb
+ */
+
+TEST(CoreCalc, PopValue)
+{
+    struct t_arraylist *list_values;
+    double *ptr_value;
+
+    list_values = arraylist_new (32, 0, 1,
+                                 NULL, NULL,
+                                 &calc_list_free_cb, NULL);
+
+    DOUBLES_EQUAL(0, calc_pop_value (NULL), 0.001);
+    DOUBLES_EQUAL(0, calc_pop_value (list_values), 0.001);
+
+    ptr_value = (double *)malloc (sizeof (*ptr_value));
+    *ptr_value = 123.5;
+    arraylist_add (list_values, ptr_value);
+    LONGS_EQUAL(1, list_values->size);
+
+    DOUBLES_EQUAL(123.5, calc_pop_value (list_values), 0.001);
+    LONGS_EQUAL(0, list_values->size);
+
+    ptr_value = (double *)malloc (sizeof (*ptr_value));
+    *ptr_value = 123.5;
+    arraylist_add (list_values, ptr_value);
+    LONGS_EQUAL(1, list_values->size);
+
+    ptr_value = (double *)malloc (sizeof (*ptr_value));
+    *ptr_value = 456.2;
+    arraylist_add (list_values, ptr_value);
+    LONGS_EQUAL(2, list_values->size);
+
+    DOUBLES_EQUAL(456.2, calc_pop_value (list_values), 0.001);
+    LONGS_EQUAL(1, list_values->size);
+
+    DOUBLES_EQUAL(123.5, calc_pop_value (list_values), 0.001);
+    LONGS_EQUAL(0, list_values->size);
+
+    arraylist_free (list_values);
+}
+
+/*
+ * Tests functions:
+ *   calc_operation
+ */
+
+TEST(CoreCalc, CalcOperation)
+{
+    DOUBLES_EQUAL(0, calc_operation (NULL, 2, 3), 0.001);
+    DOUBLES_EQUAL(0, calc_operation ("", 2, 3), 0.001);
+    DOUBLES_EQUAL(0, calc_operation ("", 2, 3), 0.001);
+    DOUBLES_EQUAL(0, calc_operation ("$", 2, 3), 0.001);
+
+    DOUBLES_EQUAL(5.2, calc_operation ("+", 2, 3.2), 0.001);
+    DOUBLES_EQUAL(-1.2, calc_operation ("-", 2, 3.2), 0.001);
+    DOUBLES_EQUAL(6.4, calc_operation ("*", 2, 3.2), 0.001);
+    DOUBLES_EQUAL(0.625, calc_operation ("/", 2, 3.2), 0.001);
+    DOUBLES_EQUAL(2, calc_operation ("//", 7, 3), 0.001);
+    DOUBLES_EQUAL(3.3, calc_operation ("%", 9, 5.7), 0.001);
+    DOUBLES_EQUAL(256, calc_operation ("**", 2, 8), 0.001);
+}
+
+/*
+ * Tests functions:
+ *   calc_operation_stacks
+ */
+
+TEST(CoreCalc, CalcOperationStacks)
+{
+    struct t_arraylist *list_values, *list_ops;
+    double *ptr_value;
+    char *ptr_op;
+
+    calc_operation_stacks (NULL, NULL);
+
+    list_values = arraylist_new (32, 0, 1,
+                                 NULL, NULL,
+                                 &calc_list_free_cb, NULL);
+
+    list_ops = arraylist_new (32, 0, 1,
+                              NULL, NULL,
+                              &calc_list_free_cb, NULL);
+
+    calc_operation_stacks (list_values, list_ops);
+
+    ptr_value = (double *)malloc (sizeof (*ptr_value));
+    *ptr_value = 123.5;
+    arraylist_add (list_values, ptr_value);
+
+    ptr_value = (double *)malloc (sizeof (*ptr_value));
+    *ptr_value = 456.2;
+    arraylist_add (list_values, ptr_value);
+
+    ptr_op = strdup ("+");
+    arraylist_add (list_ops, ptr_op);
+
+    calc_operation_stacks (list_values, list_ops);
+
+    ptr_value = (double *)arraylist_get (list_values, 0);
+    DOUBLES_EQUAL(579.7, *ptr_value, 0.001);
+
+    arraylist_free (list_values);
+    arraylist_free (list_ops);
+}
+
+
 
 /*
  * Tests functions:

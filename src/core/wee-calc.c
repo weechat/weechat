@@ -65,22 +65,22 @@ calc_list_free_cb (void *data, struct t_arraylist *arraylist, void *pointer)
  */
 
 int
-calc_operator_precedence (char *operator)
+calc_operator_precedence (const char *oper)
 {
-    if (!operator)
+    if (!oper)
         return 0;
 
-    if ((strcmp (operator, "*") == 0)
-        || (strcmp (operator, "/") == 0)
-        || (strcmp (operator, "//") == 0)
-        || (strcmp (operator, "%") == 0)
-        || (strcmp (operator, "**") == 0))
+    if ((strcmp (oper, "*") == 0)
+        || (strcmp (oper, "/") == 0)
+        || (strcmp (oper, "//") == 0)
+        || (strcmp (oper, "%") == 0)
+        || (strcmp (oper, "**") == 0))
     {
         return 2;
     }
 
-    if ((strcmp (operator, "+") == 0)
-        || (strcmp (operator, "-") == 0))
+    if ((strcmp (oper, "+") == 0)
+        || (strcmp (oper, "-") == 0))
     {
         return 1;
     }
@@ -97,6 +97,9 @@ calc_pop_value (struct t_arraylist *list_values)
 {
     int size_values;
     double *ptr_value, value;
+
+    if (!list_values)
+        return 0;
 
     size_values = arraylist_size (list_values);
 
@@ -116,27 +119,30 @@ calc_pop_value (struct t_arraylist *list_values)
  */
 
 double
-calc_operation (char *operator, double value1, double value2)
+calc_operation (const char *oper, double value1, double value2)
 {
-    if (strcmp (operator, "+") == 0)
+    if (!oper)
+        return 0;
+
+    if (strcmp (oper, "+") == 0)
         return value1 + value2;
 
-    if (strcmp (operator, "-") == 0)
+    if (strcmp (oper, "-") == 0)
         return value1 - value2;
 
-    if (strcmp (operator, "*") == 0)
+    if (strcmp (oper, "*") == 0)
         return value1 * value2;
 
-    if (strcmp (operator, "/") == 0)
+    if (strcmp (oper, "/") == 0)
         return (value2 != 0) ? value1 / value2 : 0;
 
-    if (strcmp (operator, "//") == 0)
+    if (strcmp (oper, "//") == 0)
         return (value2 != 0) ? floor (value1 / value2) : 0;
 
-    if (strcmp (operator, "%") == 0)
+    if (strcmp (oper, "%") == 0)
         return (value2 != 0) ? fmod (value1, value2) : 0;
 
-    if (strcmp (operator, "**") == 0)
+    if (strcmp (oper, "**") == 0)
         return pow (value1, value2);
 
     return 0;
@@ -156,6 +162,9 @@ calc_operation_stacks (struct t_arraylist *list_values,
     int size_ops;
     double value1, value2, result, *ptr_result;
     char *ptr_operator;
+
+    if (!list_values || !list_ops)
+        return;
 
     size_ops = arraylist_size (list_ops);
     if (size_ops < 1)
