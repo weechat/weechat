@@ -129,7 +129,7 @@ TEST(CoreCalc, PopValue)
  *   calc_operation
  */
 
-TEST(CoreCalc, CalcOperation)
+TEST(CoreCalc, Operation)
 {
     DOUBLES_EQUAL(0, calc_operation (NULL, 2, 3), 0.001);
     DOUBLES_EQUAL(0, calc_operation ("", 2, 3), 0.001);
@@ -150,7 +150,7 @@ TEST(CoreCalc, CalcOperation)
  *   calc_operation_stacks
  */
 
-TEST(CoreCalc, CalcOperationStacks)
+TEST(CoreCalc, OperationStacks)
 {
     struct t_arraylist *list_values, *list_ops;
     double *ptr_value;
