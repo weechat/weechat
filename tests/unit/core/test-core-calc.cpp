@@ -25,6 +25,7 @@ extern "C"
 {
 #include <stdio.h>
 #include <string.h>
+#include <locale.h>
 #include "src/core/wee-arraylist.h"
 #include "src/core/wee-calc.h"
 
