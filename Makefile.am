@@ -51,7 +51,6 @@ EXTRA_DIST = AUTHORS.adoc \
              cmake/FindIconv.cmake \
              cmake/FindLua.cmake \
              cmake/FindNcurses.cmake \
-             cmake/FindPackageHandleStandardArgs.cmake \
              cmake/FindPerl.cmake \
              cmake/FindPkgConfig.cmake \
              cmake/FindPython.cmake \
