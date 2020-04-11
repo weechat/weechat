@@ -31,6 +31,7 @@ Alphabetically:
 * Christian Heinz
 * Christopher O'Neill (deltafire)
 * coypoop
+* Danilo Spinella
 * David Flatz
 * Dmitry Kobylin
 * Dominik Honnef
