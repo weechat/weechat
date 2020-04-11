@@ -38,6 +38,7 @@ Tests::
 
 Build::
 
+  * core: fix build with CMake 3.17.0
   * core: fix build with cygport on Cygwin
 
 [[v2.8]]
