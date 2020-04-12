@@ -35,8 +35,11 @@ enum t_relay_weechat_compression
 
 struct t_relay_weechat_data
 {
+    /* authentication status (init command) */
     int password_ok;                   /* password received and OK?         */
     int totp_ok;                       /* TOTP received and OK?             */
+
+    /* options set by client (init command) */
     enum t_relay_weechat_compression compression; /* compression type       */
 
     /* sync of buffers */
