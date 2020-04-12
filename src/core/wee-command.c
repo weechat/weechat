@@ -5190,6 +5190,22 @@ command_reload_file (struct t_config_file *config_file)
 }
 
 /*
+ * Reloads all configuration files.
+ */
+
+void
+command_reload_files ()
+{
+    struct t_config_file *ptr_config_file;
+    for (ptr_config_file = config_files; ptr_config_file;
+         ptr_config_file = ptr_config_file->next_config)
+    {
+        command_reload_file (ptr_config_file);
+    }
+}
+
+
+/*
  * Callback for command "/reload": reloads a configuration file.
  */
 
@@ -5223,11 +5239,7 @@ COMMAND_CALLBACK(reload)
     }
     else
     {
-        for (ptr_config_file = config_files; ptr_config_file;
-             ptr_config_file = ptr_config_file->next_config)
-        {
-            command_reload_file (ptr_config_file);
-        }
+        command_reload_files ();
     }
 
     return WEECHAT_RC_OK;

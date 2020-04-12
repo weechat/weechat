@@ -320,6 +320,18 @@ gui_main_handle_quit_signals ()
 }
 
 /*
+ * Callback for signals received that will make WeeChat reload.
+ */
+
+void
+gui_main_handle_reload_signal ()
+{
+    log_printf ("Signal SIGHUP received, reloading WeeChat configuration...");
+    command_reload_files ();
+    weechat_reload_signal = 0;
+}
+
+/*
  * Displays infos about ncurses lib.
  */
 
@@ -513,6 +525,9 @@ gui_main_loop ()
         /* handle signals received */
         if (weechat_quit_signal > 0)
             gui_main_handle_quit_signals ();
+
+	if (weechat_reload_signal > 0)
+            gui_main_handle_reload_signal ();
     }
 
     /* remove keyboard hook */

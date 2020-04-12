@@ -89,5 +89,6 @@ extern void command_version_display (struct t_gui_buffer *buffer,
                                      int send_to_buffer_as_input,
                                      int translated_string,
                                      int display_git_version);
+extern void command_reload_files ();
 
 #endif /* WEECHAT_COMMAND_H */

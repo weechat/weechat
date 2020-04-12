@@ -101,6 +101,8 @@ struct timeval weechat_current_start_timeval; /* start time used to display */
 volatile sig_atomic_t weechat_quit = 0;   /* = 1 if quit request from user  */
 volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
+volatile sig_atomic_t weechat_reload_signal = 0; /* signal received,        */
+                                       /* WeeChat must reload confiuration  */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 int weechat_home_temp = 0;             /* 1 if using a temporary home       */
 int weechat_home_delete_on_exit = 0;   /* 1 if home is deleted on exit      */
@@ -686,13 +688,13 @@ weechat_locale_check ()
 }
 
 /*
- * Callback for system signal SIGHUP: quits WeeChat.
+ * Callback for system signal SIGHUP: reloads config.
  */
 
 void
 weechat_sighup ()
 {
-    weechat_quit_signal = SIGHUP;
+    weechat_reload_signal = SIGHUP;
 }
 
 /*

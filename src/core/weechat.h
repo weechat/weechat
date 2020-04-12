@@ -111,6 +111,7 @@ extern struct timeval weechat_current_start_timeval;
 extern int weechat_upgrade_count;
 extern volatile sig_atomic_t weechat_quit;
 extern volatile sig_atomic_t weechat_quit_signal;
+extern volatile sig_atomic_t weechat_reload_signal;
 extern char *weechat_home;
 extern int weechat_home_temp;
 extern char *weechat_local_charset;
