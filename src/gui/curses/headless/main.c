@@ -88,7 +88,7 @@ daemonize ()
 int
 main (int argc, char *argv[])
 {
-    int i, daemon;
+    int i;
 
     weechat_init_gettext ();
 
@@ -104,16 +104,16 @@ main (int argc, char *argv[])
      * If "--daemon" is received in command line arguments,
      * daemonize the process.
      */
-    daemon = 0;
+    weechat_daemon = 0;
     for (i = 1; i < argc; i++)
     {
         if (strcmp (argv[i], "--daemon") == 0)
         {
-            daemon = 1;
+            weechat_daemon = 1;
             break;
         }
     }
-    if (daemon)
+    if (weechat_daemon)
         daemonize ();
 
     /* init, main loop and end */

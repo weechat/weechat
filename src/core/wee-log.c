@@ -68,17 +68,24 @@ log_open (const char *filename, const char *mode)
     if (weechat_log_file)
         return 0;
 
-    if (filename)
+    if (weechat_headless && !weechat_daemon)
+    {
+        weechat_log_file = stdout;
+    }
+    else if (filename)
+    {
         weechat_log_filename = strdup (filename);
+        weechat_log_file = fopen (weechat_log_filename, mode);
+    }
     else
     {
         filename_length = strlen (weechat_home) + 64;
         weechat_log_filename = malloc (filename_length);
         snprintf (weechat_log_filename, filename_length,
                   "%s/%s", weechat_home, WEECHAT_LOG_NAME);
+        weechat_log_file = fopen (weechat_log_filename, mode);
     }
 
-    weechat_log_file = fopen (weechat_log_filename, mode);
     if (!weechat_log_file)
     {
         free (weechat_log_filename);
