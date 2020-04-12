@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-12 08:46+0200\n"
+"POT-Creation-Date: 2020-04-12 17:27+0200\n"
 "PO-Revision-Date: 2020-04-03 20:03+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -12645,17 +12645,21 @@ msgstr ""
 "%s%s: Warnung: kein SSL Zertifikat/Schlüssel gefunden (Einstellung relay."
 "network.ssl_cert_key)"
 
-#, c-format
-msgid "%s: new client on path %s: %s%s%s"
+#, fuzzy, c-format
+msgid "%s: new client on path %s: %s%s%s (%s)"
 msgstr "%s: neuer Client auf Pfad %s: %s%s%s"
 
-#, c-format
-msgid "%s: new client on port %s: %s%s%s"
+#, fuzzy, c-format
+msgid "%s: new client on port %s: %s%s%s (%s)"
 msgstr "%s: neuer Client an Port %s: %s%s%s"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: Nicht genug Speicher für neuen Client"
+
+#, c-format
+msgid "%s: client %s%s%s authenticated"
+msgstr ""
 
 #, c-format
 msgid "%s%s: authentication failed with client %s%s%s"

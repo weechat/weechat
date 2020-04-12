@@ -21,6 +21,7 @@
 #define WEECHAT_PLUGIN_RELAY_IRC_H
 
 struct t_relay_client;
+enum t_relay_status;
 
 #define RELAY_IRC_DATA(client, var)                              \
     (((struct t_relay_irc_data *)client->protocol_data)->var)
@@ -69,6 +70,7 @@ extern void relay_irc_close_connection (struct t_relay_client *client);
 extern void relay_irc_alloc (struct t_relay_client *client);
 extern void relay_irc_alloc_with_infolist (struct t_relay_client *client,
                                            struct t_infolist *infolist);
+extern enum t_relay_status relay_irc_get_initial_status (struct t_relay_client *client);
 extern void relay_irc_free (struct t_relay_client *client);
 extern int relay_irc_add_to_infolist (struct t_infolist_item *item,
                                       struct t_relay_client *client);

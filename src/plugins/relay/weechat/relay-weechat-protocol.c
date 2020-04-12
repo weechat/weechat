@@ -418,6 +418,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         weechat_hook_signal_send ("relay_client_auth_ok",
                                   WEECHAT_HOOK_SIGNAL_POINTER,
                                   client);
+        relay_client_set_status (client, RELAY_STATUS_CONNECTED);
     }
     else
     {

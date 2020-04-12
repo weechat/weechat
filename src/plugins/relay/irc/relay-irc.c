@@ -1430,6 +1430,7 @@ relay_irc_recv (struct t_relay_client *client, const char *data)
                             weechat_hook_signal_send ("relay_client_auth_ok",
                                                       WEECHAT_HOOK_SIGNAL_POINTER,
                                                       client);
+                            relay_client_set_status (client, RELAY_STATUS_CONNECTED);
                         }
                         free (password);
                     }
@@ -1901,6 +1902,18 @@ relay_irc_alloc_with_infolist (struct t_relay_client *client,
             RELAY_IRC_DATA(client, hook_hsignal_irc_redir) = NULL;
         }
     }
+}
+
+/*
+ * Returns the client initial status: it can be "waiting_auth" or "connected",
+ * depending if a password is expected or not.
+ */
+
+enum t_relay_status
+relay_irc_get_initial_status (struct t_relay_client *client)
+{
+    return (RELAY_IRC_DATA(client, password_ok)) ?
+        RELAY_STATUS_CONNECTED : RELAY_STATUS_WAITING_AUTH;
 }
 
 /*

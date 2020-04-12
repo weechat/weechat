@@ -29,6 +29,7 @@ Bug fixes::
   * core: fix memory leak in calculation of expression on FreeBSD (issue #1469)
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
+  * relay: actually use the client status "waiting_auth" in irc and weechat protocols (issue #1358)
 
 Documentation::
 

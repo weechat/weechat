@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-12 08:46+0200\n"
+"POT-Creation-Date: 2020-04-12 17:27+0200\n"
 "PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -10555,16 +10555,20 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s: new client on path %s: %s%s%s"
+msgid "%s: new client on path %s: %s%s%s (%s)"
 msgstr "%s%s: não foi possível aceitar o cliente na porta %d (%s.%s)"
 
 #, fuzzy, c-format
-msgid "%s: new client on port %s: %s%s%s"
+msgid "%s: new client on port %s: %s%s%s (%s)"
 msgstr "%s%s: não foi possível aceitar o cliente na porta %d (%s.%s)"
 
 #, c-format
 msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: memória insuficiente para novo cliente"
+
+#, c-format
+msgid "%s: client %s%s%s authenticated"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: authentication failed with client %s%s%s"

@@ -267,6 +267,21 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
 }
 
 /*
+ * Returns the client initial status: it is always  "waiting_auth" for weechat
+ * protocol because we always expect the "init" command, even without any
+ * password.
+ */
+
+enum t_relay_status
+relay_weechat_get_initial_status (struct t_relay_client *client)
+{
+    /* make C compiler happy */
+    (void) client;
+
+    return RELAY_STATUS_WAITING_AUTH;
+}
+
+/*
  * Frees relay data specific to WeeChat protocol.
  */
 

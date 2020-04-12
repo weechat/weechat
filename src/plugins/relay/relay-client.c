@@ -253,7 +253,21 @@ relay_client_handshake_timer_cb (const void *pointer, void *data,
         weechat_unhook (client->hook_timer_handshake);
         client->hook_timer_handshake = NULL;
         client->gnutls_handshake_ok = 1;
-        relay_client_set_status (client, RELAY_STATUS_CONNECTED);
+        switch (client->protocol)
+        {
+            case RELAY_PROTOCOL_WEECHAT:
+                relay_client_set_status (
+                    client,
+                    relay_weechat_get_initial_status (client));
+                break;
+            case RELAY_PROTOCOL_IRC:
+                relay_client_set_status (
+                    client,
+                    relay_irc_get_initial_status (client));
+                break;
+            case RELAY_NUM_PROTOCOLS:
+                break;
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -577,8 +591,15 @@ relay_client_recv_cb (const void *pointer, void *data, int fd)
 
     client = (struct t_relay_client *)pointer;
 
-    if (client->status != RELAY_STATUS_CONNECTED)
+    /*
+     * data can be received only during authentication
+     * or if connected (authentication was OK)
+     */
+    if ((client->status != RELAY_STATUS_WAITING_AUTH)
+        && (client->status != RELAY_STATUS_CONNECTED))
+    {
         return WEECHAT_RC_OK;
+    }
 
 #ifdef HAVE_GNUTLS
     if (client->ssl)
@@ -1248,7 +1269,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->address = strdup ((address && address[0]) ?
                                       address : "local");
         new_client->real_ip = NULL;
-        new_client->status = RELAY_STATUS_CONNECTED;
+        new_client->status = RELAY_STATUS_CONNECTING;
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
@@ -1336,9 +1357,19 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         {
             case RELAY_PROTOCOL_WEECHAT:
                 relay_weechat_alloc (new_client);
+                if (!new_client->ssl)
+                {
+                    new_client->status =
+                        relay_weechat_get_initial_status (new_client);
+                }
                 break;
             case RELAY_PROTOCOL_IRC:
                 relay_irc_alloc (new_client);
+                if (!new_client->ssl)
+                {
+                    new_client->status =
+                        relay_irc_get_initial_status (new_client);
+                }
                 break;
             case RELAY_NUM_PROTOCOLS:
                 break;
@@ -1357,23 +1388,27 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
 
         if (server->unix_socket)
         {
-            weechat_printf_date_tags (NULL, 0, "relay_client",
-                                      _("%s: new client on path %s: %s%s%s"),
-                                      RELAY_PLUGIN_NAME,
-                                      server->path,
-                                      RELAY_COLOR_CHAT_CLIENT,
-                                      new_client->desc,
-                                      RELAY_COLOR_CHAT);
+            weechat_printf_date_tags (
+                NULL, 0, "relay_client",
+                _("%s: new client on path %s: %s%s%s (%s)"),
+                RELAY_PLUGIN_NAME,
+                server->path,
+                RELAY_COLOR_CHAT_CLIENT,
+                new_client->desc,
+                RELAY_COLOR_CHAT,
+                _(relay_client_status_string[new_client->status]));
         }
         else
         {
-            weechat_printf_date_tags (NULL, 0, "relay_client",
-                                      _("%s: new client on port %s: %s%s%s"),
-                                      RELAY_PLUGIN_NAME,
-                                      server->path,
-                                      RELAY_COLOR_CHAT_CLIENT,
-                                      new_client->desc,
-                                      RELAY_COLOR_CHAT);
+            weechat_printf_date_tags (
+                NULL, 0, "relay_client",
+                _("%s: new client on port %s: %s%s%s (%s)"),
+                RELAY_PLUGIN_NAME,
+                server->path,
+                RELAY_COLOR_CHAT_CLIENT,
+                new_client->desc,
+                RELAY_COLOR_CHAT,
+                _(relay_client_status_string[new_client->status]));
         }
 
         new_client->hook_fd = weechat_hook_fd (new_client->sock,
@@ -1511,7 +1546,17 @@ relay_client_set_status (struct t_relay_client *client,
 
     client->status = status;
 
-    if (RELAY_CLIENT_HAS_ENDED(client))
+    if (client->status == RELAY_STATUS_CONNECTED)
+    {
+        weechat_printf_date_tags (
+                    NULL, 0, "relay_client",
+                    _("%s: client %s%s%s authenticated"),
+                    RELAY_PLUGIN_NAME,
+                    RELAY_COLOR_CHAT_CLIENT,
+                    client->desc,
+                    RELAY_COLOR_CHAT);
+    }
+    else if (RELAY_CLIENT_HAS_ENDED(client))
     {
         client->end_time = time (NULL);
 
