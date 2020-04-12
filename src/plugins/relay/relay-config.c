@@ -937,7 +937,7 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "status_active", "color",
         N_("text color for \"connected\" status"),
-        NULL, 0, 0, "lightblue", NULL, 0,
+        NULL, 0, 0, "green", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -945,7 +945,7 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "status_auth_failed", "color",
         N_("text color for \"authentication failed\" status"),
-        NULL, 0, 0, "lightred", NULL, 0,
+        NULL, 0, 0, "lightmagenta", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -953,7 +953,7 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "status_connecting", "color",
         N_("text color for \"connecting\" status"),
-        NULL, 0, 0, "yellow", NULL, 0,
+        NULL, 0, 0, "white", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
@@ -969,7 +969,7 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "status_waiting_auth", "color",
         N_("text color for \"waiting authentication\" status"),
-        NULL, 0, 0, "brown", NULL, 0,
+        NULL, 0, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_refresh_cb, NULL, NULL,
         NULL, NULL, NULL);
