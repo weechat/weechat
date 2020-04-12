@@ -88,6 +88,7 @@
 #define OPTION_NO_GCRYPT  1002
 
 int weechat_headless = 0;              /* 1 if running headless (no GUI)    */
+int weechat_daemon = 0;                /* 1 if daemonized (no foreground)   */
 int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
