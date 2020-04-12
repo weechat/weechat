@@ -1066,6 +1066,142 @@ relay_client_send (struct t_relay_client *client,
 }
 
 /*
+ * Sends messages in outqueue for a client.
+ */
+
+void
+relay_client_send_outqueue (struct t_relay_client *client)
+{
+    int i, num_sent;
+    char *buf;
+
+    while (client->outqueue)
+    {
+#ifdef HAVE_GNUTLS
+        if (client->ssl)
+        {
+            num_sent = gnutls_record_send (client->gnutls_sess,
+                                           client->outqueue->data,
+                                           client->outqueue->data_size);
+        }
+        else
+#endif /* HAVE_GNUTLS */
+        {
+            num_sent = send (client->sock,
+                             client->outqueue->data,
+                             client->outqueue->data_size, 0);
+        }
+        if (num_sent >= 0)
+        {
+            for (i = 0; i < 2; i++)
+            {
+                if (client->outqueue->raw_message[i])
+                {
+                    /*
+                     * print raw message and remove it from outqueue
+                     * (so that it is displayed only one time, even if
+                     * message is sent in many chunks)
+                     */
+                    relay_raw_print (
+                        client,
+                        client->outqueue->raw_msg_type[i],
+                        client->outqueue->raw_flags[i],
+                        client->outqueue->raw_message[i],
+                        client->outqueue->raw_size[i]);
+                    client->outqueue->raw_flags[i] = 0;
+                    free (client->outqueue->raw_message[i]);
+                    client->outqueue->raw_message[i] = NULL;
+                    client->outqueue->raw_size[i] = 0;
+                }
+            }
+            if (num_sent > 0)
+            {
+                client->bytes_sent += num_sent;
+                relay_buffer_refresh (NULL);
+            }
+            if (num_sent == client->outqueue->data_size)
+            {
+                /* whole data sent, remove outqueue */
+                relay_client_outqueue_free (client, client->outqueue);
+            }
+            else
+            {
+                /*
+                 * some data was not sent, update outqueue and stop
+                 * sending data from outqueue
+                 */
+                if (num_sent > 0)
+                {
+                    buf = malloc (client->outqueue->data_size - num_sent);
+                    if (buf)
+                    {
+                        memcpy (buf,
+                                client->outqueue->data + num_sent,
+                                client->outqueue->data_size - num_sent);
+                        free (client->outqueue->data);
+                        client->outqueue->data = buf;
+                        client->outqueue->data_size = client->outqueue->data_size - num_sent;
+                    }
+                }
+                break;
+            }
+        }
+        else
+        {
+#ifdef HAVE_GNUTLS
+            if (client->ssl)
+            {
+                if ((num_sent == GNUTLS_E_AGAIN)
+                    || (num_sent == GNUTLS_E_INTERRUPTED))
+                {
+                    /* we will retry later this client's queue */
+                    break;
+                }
+                else
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s%s: sending data to client %s%s%s: "
+                          "error %d %s"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        num_sent,
+                        gnutls_strerror (num_sent));
+                    relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                }
+            }
+            else
+#endif /* HAVE_GNUTLS */
+            {
+                if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
+                {
+                    /* we will retry later this client's queue */
+                    break;
+                }
+                else
+                {
+                    weechat_printf_date_tags (
+                        NULL, 0, "relay_client",
+                        _("%s%s: sending data to client %s%s%s: "
+                          "error %d %s"),
+                        weechat_prefix ("error"),
+                        RELAY_PLUGIN_NAME,
+                        RELAY_COLOR_CHAT_CLIENT,
+                        client->desc,
+                        RELAY_COLOR_CHAT,
+                        errno,
+                        strerror (errno));
+                    relay_client_set_status (client, RELAY_STATUS_DISCONNECTED);
+                }
+            }
+        }
+    }
+}
+
+/*
  * Timer callback, called each second.
  */
 
@@ -1073,8 +1209,7 @@ int
 relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_relay_client *ptr_client, *ptr_next_client;
-    int num_sent, i, purge_delay;
-    char *buf;
+    int purge_delay;
     time_t current_time;
 
     /* make C compiler happy */
@@ -1102,133 +1237,7 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
         }
         else if (ptr_client->sock >= 0)
         {
-            while (ptr_client->outqueue)
-            {
-#ifdef HAVE_GNUTLS
-                if (ptr_client->ssl)
-                {
-                    num_sent = gnutls_record_send (ptr_client->gnutls_sess,
-                                                   ptr_client->outqueue->data,
-                                                   ptr_client->outqueue->data_size);
-                }
-                else
-#endif /* HAVE_GNUTLS */
-                {
-                    num_sent = send (ptr_client->sock,
-                                     ptr_client->outqueue->data,
-                                     ptr_client->outqueue->data_size, 0);
-                }
-                if (num_sent >= 0)
-                {
-                    for (i = 0; i < 2; i++)
-                    {
-                        if (ptr_client->outqueue->raw_message[i])
-                        {
-                            /*
-                             * print raw message and remove it from outqueue
-                             * (so that it is displayed only one time, even if
-                             * message is sent in many chunks)
-                             */
-                            relay_raw_print (
-                                ptr_client,
-                                ptr_client->outqueue->raw_msg_type[i],
-                                ptr_client->outqueue->raw_flags[i],
-                                ptr_client->outqueue->raw_message[i],
-                                ptr_client->outqueue->raw_size[i]);
-                            ptr_client->outqueue->raw_flags[i] = 0;
-                            free (ptr_client->outqueue->raw_message[i]);
-                            ptr_client->outqueue->raw_message[i] = NULL;
-                            ptr_client->outqueue->raw_size[i] = 0;
-                        }
-                    }
-                    if (num_sent > 0)
-                    {
-                        ptr_client->bytes_sent += num_sent;
-                        relay_buffer_refresh (NULL);
-                    }
-                    if (num_sent == ptr_client->outqueue->data_size)
-                    {
-                        /* whole data sent, remove outqueue */
-                        relay_client_outqueue_free (ptr_client,
-                                                    ptr_client->outqueue);
-                    }
-                    else
-                    {
-                        /*
-                         * some data was not sent, update outqueue and stop
-                         * sending data from outqueue
-                         */
-                        if (num_sent > 0)
-                        {
-                            buf = malloc (ptr_client->outqueue->data_size - num_sent);
-                            if (buf)
-                            {
-                                memcpy (buf,
-                                        ptr_client->outqueue->data + num_sent,
-                                        ptr_client->outqueue->data_size - num_sent);
-                                free (ptr_client->outqueue->data);
-                                ptr_client->outqueue->data = buf;
-                                ptr_client->outqueue->data_size = ptr_client->outqueue->data_size - num_sent;
-                            }
-                        }
-                        break;
-                    }
-                }
-                else
-                {
-#ifdef HAVE_GNUTLS
-                    if (ptr_client->ssl)
-                    {
-                        if ((num_sent == GNUTLS_E_AGAIN)
-                            || (num_sent == GNUTLS_E_INTERRUPTED))
-                        {
-                            /* we will retry later this client's queue */
-                            break;
-                        }
-                        else
-                        {
-                            weechat_printf_date_tags (
-                                NULL, 0, "relay_client",
-                                _("%s%s: sending data to client %s%s%s: "
-                                  "error %d %s"),
-                                weechat_prefix ("error"),
-                                RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_CLIENT,
-                                ptr_client->desc,
-                                RELAY_COLOR_CHAT,
-                                num_sent,
-                                gnutls_strerror (num_sent));
-                            relay_client_set_status (ptr_client,
-                                                     RELAY_STATUS_DISCONNECTED);
-                        }
-                    }
-                    else
-#endif /* HAVE_GNUTLS */
-                    {
-                        if ((errno == EAGAIN) || (errno == EWOULDBLOCK))
-                        {
-                            /* we will retry later this client's queue */
-                            break;
-                        }
-                        else
-                        {
-                            weechat_printf_date_tags (
-                                NULL, 0, "relay_client",
-                                _("%s%s: sending data to client %s%s%s: "
-                                  "error %d %s"),
-                                weechat_prefix ("error"),
-                                RELAY_PLUGIN_NAME,
-                                RELAY_COLOR_CHAT_CLIENT,
-                                ptr_client->desc,
-                                RELAY_COLOR_CHAT,
-                                errno,
-                                strerror (errno));
-                            relay_client_set_status (ptr_client,
-                                                     RELAY_STATUS_DISCONNECTED);
-                        }
-                    }
-                }
-            }
+            relay_client_send_outqueue (ptr_client);
         }
 
         ptr_client = ptr_next_client;
