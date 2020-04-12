@@ -12,19 +12,19 @@
 ** description: pass:none[couleur du texte pour le statut "connecté"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
-** valeur par défaut: `+lightblue+`
+** valeur par défaut: `+green+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** description: pass:none[couleur du texte pour le statut "échec auth"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
-** valeur par défaut: `+lightred+`
+** valeur par défaut: `+lightmagenta+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** description: pass:none[couleur du texte pour le statut "connexion"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
-** valeur par défaut: `+yellow+`
+** valeur par défaut: `+white+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** description: pass:none[couleur du texte pour le statut "déconnecté"]
@@ -36,7 +36,7 @@
 ** description: pass:none[couleur du texte pour le statut "attente auth"]
 ** type: couleur
 ** valeurs: un nom de couleur WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), un numéro de couleur du terminal ou un alias ; des attributs sont autorisés avant la couleur (seulement pour la couleur du texte, pas le fond) : "*" pour le gras, "!" pour la vidéo inverse, "/" pour l'italique, "_" pour le souligné
-** valeur par défaut: `+brown+`
+** valeur par défaut: `+yellow+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** description: pass:none[couleur du texte dans le tampon relay]
@@ -115,6 +115,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
+
+* [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
+** description: pass:none[temps maximum (en secondes) pour l'authentification du client ; la connexion est fermée si le client n'est toujours pas authentifié après ce délai et le statut est positionné à "échec d'authentification" (0 = attendre sans fin)]
+** type: entier
+** valeurs: 0 .. 2147483647
+** valeur par défaut: `+60+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** description: pass:none[adresse pour le bind (si vide, la connexion est possible sur toutes les interfaces, utiliser "127.0.0.1" pour autoriser les connections depuis la machine locale seulement)]

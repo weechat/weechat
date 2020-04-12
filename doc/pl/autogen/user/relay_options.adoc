@@ -12,19 +12,19 @@
 ** opis: pass:none[kolor statusu "connected"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
-** domyślna wartość: `+lightblue+`
+** domyślna wartość: `+green+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** opis: pass:none[kolor statusu "authentication failed"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
-** domyślna wartość: `+lightred+`
+** domyślna wartość: `+lightmagenta+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** opis: pass:none[kolor statusu "connecting"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
-** domyślna wartość: `+yellow+`
+** domyślna wartość: `+white+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** opis: pass:none[kolor statusu "disconnected"]
@@ -36,7 +36,7 @@
 ** opis: pass:none[kolor statusu "waiting authentication"]
 ** typ: kolor
 ** wartości: nazwa koloru WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), numer koloru terminala albo alias; atrybuty dozwolone przed kolorem (tylko dla kolorów testu, nie tła): "*" pogrubienie, "!" odwrócenie, "/" pochylenie, "_" podkreślenie
-** domyślna wartość: `+brown+`
+** domyślna wartość: `+yellow+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** opis: pass:none[kolor tekstu w buforze pośrednika]
@@ -115,6 +115,12 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
+
+* [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
+** opis: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
+** typ: liczba
+** wartości: 0 .. 2147483647
+** domyślna wartość: `+60+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** opis: pass:none[adres do przypisania (jeśli puste, połączenie jest możliwe na wszystkich interfejsach, użyj "127.0.0.1", aby pozwolić tylko na połączenia z tej maszyny)]

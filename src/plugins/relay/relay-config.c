@@ -60,6 +60,7 @@ struct t_config_option *relay_config_color_text_selected;
 
 struct t_config_option *relay_config_network_allow_empty_password;
 struct t_config_option *relay_config_network_allowed_ips;
+struct t_config_option *relay_config_network_auth_timeout;
 struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_clients_purge_delay;
 struct t_config_option *relay_config_network_compression_level;
@@ -1031,6 +1032,15 @@ relay_config_init ()
         NULL, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL,
         NULL, NULL, NULL);
+    relay_config_network_auth_timeout = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "auth_timeout", "integer",
+        N_("timeout (in seconds) for client authentication: connection is "
+           "closed if the client is still not authenticated after this delay "
+           "and the client status is set to \"authentication failed\" "
+           "(0 = wait forever)"),
+        NULL, 0, INT_MAX, "60", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_bind_address = weechat_config_new_option (
         relay_config_file, ptr_section,
         "bind_address", "string",

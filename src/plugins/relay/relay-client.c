@@ -1209,7 +1209,7 @@ int
 relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
 {
     struct t_relay_client *ptr_client, *ptr_next_client;
-    int purge_delay;
+    int purge_delay, auth_timeout;
     time_t current_time;
 
     /* make C compiler happy */
@@ -1218,6 +1218,7 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
     (void) remaining_calls;
 
     purge_delay = weechat_config_integer (relay_config_network_clients_purge_delay);
+    auth_timeout = weechat_config_integer (relay_config_network_auth_timeout);
 
     current_time = time (NULL);
 
@@ -1237,7 +1238,19 @@ relay_client_timer_cb (const void *pointer, void *data, int remaining_calls)
         }
         else if (ptr_client->sock >= 0)
         {
+            /* send messages in outqueue */
             relay_client_send_outqueue (ptr_client);
+
+            /* disconnect clients not authenticated */
+            if ((auth_timeout > 0)
+                && (ptr_client->status == RELAY_STATUS_WAITING_AUTH))
+            {
+                if (current_time - ptr_client->start_time > auth_timeout)
+                {
+                    relay_client_set_status (ptr_client,
+                                             RELAY_STATUS_AUTH_FAILED);
+                }
+            }
         }
 
         ptr_client = ptr_next_client;

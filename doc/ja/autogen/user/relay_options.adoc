@@ -12,19 +12,19 @@
 ** 説明: pass:none["接続済み" 状態のテキスト色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
-** デフォルト値: `+lightblue+`
+** デフォルト値: `+green+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** 説明: pass:none["認証失敗" 状態のテキスト色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
-** デフォルト値: `+lightred+`
+** デフォルト値: `+lightmagenta+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** 説明: pass:none["接続中" 状態のテキスト色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
-** デフォルト値: `+yellow+`
+** デフォルト値: `+white+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** 説明: pass:none["接続切断" 状態のテキスト色]
@@ -36,7 +36,7 @@
 ** 説明: pass:none["認証待ち" 状態のテキスト色]
 ** タイプ: 色
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
-** デフォルト値: `+brown+`
+** デフォルト値: `+yellow+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** 説明: pass:none[リレーバッファ内のテキスト色]
@@ -115,6 +115,12 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
+
+* [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
+** 説明: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
+** タイプ: 整数
+** 値: 0 .. 2147483647
+** デフォルト値: `+60+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** 説明: pass:none[割り当てるアドレス (空の場合、全てのインターフェースからの接続を受け付ける、"127.0.0.1" を使えばローカルマシンからの接続のみ許可)]

@@ -12,19 +12,19 @@
 ** descrizione: pass:none[colore del testo per lo status "connesso"]
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
-** valore predefinito: `+lightblue+`
+** valore predefinito: `+green+`
 
 * [[option_relay.color.status_auth_failed]] *relay.color.status_auth_failed*
 ** descrizione: pass:none[colore del testo per lo status "autenticazione fallita"]
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
-** valore predefinito: `+lightred+`
+** valore predefinito: `+lightmagenta+`
 
 * [[option_relay.color.status_connecting]] *relay.color.status_connecting*
 ** descrizione: pass:none[colore del testo per lo status "connessione in corso"]
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
-** valore predefinito: `+yellow+`
+** valore predefinito: `+white+`
 
 * [[option_relay.color.status_disconnected]] *relay.color.status_disconnected*
 ** descrizione: pass:none[colore del testo per lo status "disconnesso"]
@@ -36,7 +36,7 @@
 ** descrizione: pass:none[colore del testo per lo status "in attesa dell'autenticazione"]
 ** tipo: colore
 ** valori: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
-** valore predefinito: `+brown+`
+** valore predefinito: `+yellow+`
 
 * [[option_relay.color.text]] *relay.color.text*
 ** descrizione: pass:none[colore del testo nei buffer relay]
@@ -115,6 +115,12 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
+
+* [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
+** descrizione: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
+** tipo: intero
+** valori: 0 .. 2147483647
+** valore predefinito: `+60+`
 
 * [[option_relay.network.bind_address]] *relay.network.bind_address*
 ** descrizione: pass:none[indirizzo per l'associazione (se vuoto, la connessione è possibile su tutte le interfacce, usare "127.0.0.1" per consentire le connessioni solo dalla macchina locale)]

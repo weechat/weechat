@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)
+  * relay: add option relay.network.auth_timeout
   * relay: update default colors for client status
   * trigger: evaluate arguments of command when the trigger is created (issue #1472)
 
