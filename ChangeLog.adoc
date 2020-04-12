@@ -25,6 +25,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix WEECHAT_SHAREDIR with CMake build (issue #1461)
   * core: fix memory leak in calculation of expression on FreeBSD (issue #1469)
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
