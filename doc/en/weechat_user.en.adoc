@@ -3839,12 +3839,13 @@ The arguments depend on the hook used. They are separated by semicolons.
 
 | command |
   1. command name (priority allowed) (required) +
-  2. description +
-  3. arguments +
-  4. description of arguments +
-  5. completion |
+  2. description (evaluated, see command <<command_weechat_eval,/eval>>) +
+  3. arguments (evaluated, see command <<command_weechat_eval,/eval>>) +
+  4. description of arguments (evaluated, see command <<command_weechat_eval,/eval>>) +
+  5. completion (evaluated, see command <<command_weechat_eval,/eval>>) |
   `+test+` +
-  `+5000\|test+` |
+  `+5000\|test+` +
+  `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
   link:weechat_plugin_api.en.html#_hook_command[hook_command]
 
 | command_run |

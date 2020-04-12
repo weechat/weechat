@@ -34,7 +34,7 @@ listdefault: list default triggers
              modifier: name(s) of modifier (required)
              line: buffer type ("formatted", "free" or "*"), list of buffer masks, tags
              print: buffer, tags, message, strip colors
-             command: command (required), description, arguments, description of arguments, completion
+             command: command (required), description, arguments, description of arguments, completion (all arguments except command are evaluated, see /help eval)
              command_run: command(s) (required)
              timer: interval (required), align on second, max calls
              config: name(s) of option (required)

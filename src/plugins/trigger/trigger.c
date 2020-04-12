@@ -265,6 +265,7 @@ trigger_hook (struct t_trigger *trigger)
 {
     char **argv, **argv_eol, *buffer_type, *buffer_name, *tags, *message;
     char *error1, *error2, *error3;
+    char *eval_desc, *eval_args, *eval_desc_args, *eval_completion;
     int i, argc, strip_colors;
     long interval, align_second, max_calls;
 
@@ -400,14 +401,30 @@ trigger_hook (struct t_trigger *trigger)
                 if (trigger->hooks)
                 {
                     trigger->hooks_count = 1;
+                    eval_desc = (argc > 1) ? weechat_string_eval_expression (
+                        argv[1], NULL, NULL, NULL) : NULL;
+                    eval_args = (argc > 2) ? weechat_string_eval_expression (
+                        argv[2], NULL, NULL, NULL) : NULL;
+                    eval_desc_args = (argc > 3) ? weechat_string_eval_expression (
+                        argv[3], NULL, NULL, NULL) : NULL;
+                    eval_completion = (argc > 4) ? weechat_string_eval_expression (
+                        argv[4], NULL, NULL, NULL) : NULL;
                     trigger->hooks[0] = weechat_hook_command (
                         argv[0],  /* command */
-                        (argc > 1) ? argv[1] : "",  /* description */
-                        (argc > 2) ? argv[2] : "",  /* arguments */
-                        (argc > 3) ? argv[3] : "",  /* description of args */
-                        (argc > 4) ? argv[4] : "",  /* completion */
+                        (eval_desc) ? eval_desc : "",
+                        (eval_args) ? eval_args : "",
+                        (eval_desc_args) ? eval_desc_args : "",
+                        (eval_completion) ? eval_completion : "",
                         &trigger_callback_command_cb,
                         trigger, NULL);
+                    if (eval_desc)
+                        free (eval_desc);
+                    if (eval_args)
+                        free (eval_args);
+                    if (eval_desc_args)
+                        free (eval_desc_args);
+                    if (eval_completion)
+                        free (eval_completion);
                 }
             }
             break;

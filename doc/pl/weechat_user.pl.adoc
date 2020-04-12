@@ -3864,14 +3864,16 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+*;;;1+` |
   link:weechat_plugin_api.en.html#_hook_print[hook_print] (Angielski)
 
+// TRANSLATION MISSING
 | command |
   1. nazwa komendy dozwolony priorytet) (wymagane) +
-  2. opis +
-  3. argumenty +
-  4. opis argumentów +
-  5. dopełnienie |
+  2. opis (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
+  3. argumenty (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
+  4. opis argumentów (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
+  5. dopełnienie (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) |
   `+test+` +
-  `+5000\|test+` |
+  `+5000\|test+` +
+  `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
   link:weechat_plugin_api.en.html#_hook_command[hook_command] (Angielski)
 
 | command_run |

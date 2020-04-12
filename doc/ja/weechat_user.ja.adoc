@@ -3866,14 +3866,16 @@ trigger.trigger.beep.post_action = none
   `+*;;;1+` |
   link:weechat_plugin_api.ja.html#_hook_print[hook_print]
 
+// TRANSLATION MISSING
 | command |
   1. コマンド名 (優先度の指定も可) (必須) +
-  2. 説明 +
-  3. 引数 +
-  4. 引数の説明 +
-  5. 補完 |
+  2. 説明 (evaluated, <<command_weechat_eval,/eval>> コマンドを参照) +
+  3. 引数 (evaluated, <<command_weechat_eval,/eval>> コマンドを参照) +
+  4. 引数の説明 (evaluated, <<command_weechat_eval,/eval>> コマンドを参照) +
+  5. 補完 (evaluated, <<command_weechat_eval,/eval>> コマンドを参照) |
   `+test+` +
-  `+5000\|test+` |
+  `+5000\|test+` +
+  `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
   link:weechat_plugin_api.ja.html#_hook_command[hook_command]
 
 | command_run |

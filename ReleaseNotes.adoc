@@ -17,6 +17,31 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v2.9]]
+== Version 2.9 (under dev)
+
+[[v2.9_trigger_command_eval]]
+=== Evaluation of trigger command arguments
+
+The arguments for a trigger command (except the command itself) are now evaluated.
+
+That means you can use for example new lines in the command description, like that:
+
+----
+/trigger add test command "test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2"
+----
+
+The command `/help test` will display this help in WeeChat:
+
+----
+[trigger]  /test  arg1 arg2
+
+test command
+
+arg1: description 1
+arg2: description 2
+----
+
 [[v2.8]]
 == Version 2.8 (2020-03-29)
 

@@ -3965,12 +3965,13 @@ points-virgules.
 
 | command |
   1. nom de commande (priorité autorisée) (obligatoire) +
-  2. description +
-  3. paramètres +
-  4. description des paramètres +
-  5. complétion |
+  2. description (évalué, voir la commande <<command_weechat_eval,/eval>>) +
+  3. paramètres (évalué, voir la commande <<command_weechat_eval,/eval>>) +
+  4. description des paramètres (évalué, voir la commande <<command_weechat_eval,/eval>>) +
+  5. complétion (évalué, voir la commande <<command_weechat_eval,/eval>>) |
   `+test+` +
-  `+5000\|test+` |
+  `+5000\|test+` +
+  `+test;commande de test;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
   link:weechat_plugin_api.fr.html#_hook_command[hook_command]
 
 | command_run |
