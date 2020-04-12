@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-12 19:34+0200\n"
+"POT-Creation-Date: 2020-04-12 20:23+0200\n"
 "PO-Revision-Date: 2020-03-08 14:22+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11894,7 +11894,7 @@ msgid "%s%s: not enough memory for new client"
 msgstr "%s%s: 新しいクライアント用のメモリ不足"
 
 #, c-format
-msgid "%s: client %s%s%s authenticated"
+msgid "%s: client %s%s%s connected/authenticated"
 msgstr ""
 
 #, c-format

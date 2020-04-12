@@ -1572,7 +1572,7 @@ relay_client_set_status (struct t_relay_client *client,
     {
         weechat_printf_date_tags (
                     NULL, 0, "relay_client",
-                    _("%s: client %s%s%s authenticated"),
+                    _("%s: client %s%s%s connected/authenticated"),
                     RELAY_PLUGIN_NAME,
                     RELAY_COLOR_CHAT_CLIENT,
                     client->desc,
