@@ -95,6 +95,7 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
     new_hook_connect->gnutls_priorities = (gnutls_priorities) ?
         strdup (gnutls_priorities) : NULL;
+    new_hook_connect->gnutls_xcred = NULL;
 #endif /* HAVE_GNUTLS */
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
@@ -230,6 +231,11 @@ hook_connect_free_data (struct t_hook *hook)
     {
         free (HOOK_CONNECT(hook, gnutls_priorities));
         HOOK_CONNECT(hook, gnutls_priorities) = NULL;
+    }
+    if (HOOK_CONNECT(hook, gnutls_xcred))
+    {
+        gnutls_certificate_free_credentials (HOOK_CONNECT(hook, gnutls_xcred));
+        HOOK_CONNECT(hook, gnutls_xcred) = NULL;
     }
 #endif /* HAVE_GNUTLS */
     if (HOOK_CONNECT(hook, local_hostname))

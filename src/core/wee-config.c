@@ -1268,23 +1268,6 @@ config_change_completion_partial_completion_templates (const void *pointer,
 }
 
 /*
- * Callback for changes on option "weechat.network.gnutls_ca_file".
- */
-
-void
-config_change_network_gnutls_ca_file (const void *pointer, void *data,
-                                      struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    if (network_init_gnutls_ok)
-        network_set_gnutls_ca_file ();
-}
-
-/*
  * Checks option "weechat.network.proxy_curl".
  */
 
@@ -4478,9 +4461,7 @@ config_weechat_init_options ()
         N_("file containing the certificate authorities (\"%h\" will be "
            "replaced by WeeChat home, \"~/.weechat\" by default)"),
         NULL, 0, 0, CA_FILE, NULL, 0,
-        NULL, NULL, NULL,
-        &config_change_network_gnutls_ca_file, NULL, NULL,
-        NULL, NULL, NULL);
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_network_gnutls_handshake_timeout = config_file_new_option (
         weechat_config_file, ptr_section,
         "gnutls_handshake_timeout", "integer",

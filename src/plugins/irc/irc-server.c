@@ -87,6 +87,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "ssl_priorities",       "NORMAL:-VERS-SSL3.0"     },
   { "ssl_dhkey_size",       "2048"                    },
   { "ssl_fingerprint",      ""                        },
+  { "ssl_ca_file",          ""                        },
   { "ssl_verify",           "on"                      },
   { "password",             ""                        },
   { "capabilities",         ""                        },
@@ -4465,6 +4466,10 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     gnutls_x509_crt_t cert_temp;
     const gnutls_datum_t *cert_list;
     gnutls_datum_t filedatum;
+    gnutls_certificate_credentials_t xcred;
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
+    gnutls_x509_trust_list_t trust_list;
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
     unsigned int i, cert_list_len, status;
     time_t cert_time;
     char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
@@ -4833,6 +4838,47 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                         _("%sgnutls: unable to read certificate \"%s\""),
                         weechat_prefix ("error"), cert_path2);
                 }
+            }
+
+            if (cert_path1)
+                free (cert_path1);
+            if (cert_path2)
+                free (cert_path2);
+        }
+    }
+    else if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_INIT_XCRED)
+    {
+        cert_path0 = (char *) IRC_SERVER_OPTION_STRING(
+            server, IRC_SERVER_OPTION_SSL_CA_FILE);
+        if (cert_path0 && cert_path0[0])
+        {
+            weechat_dir = weechat_info_get ("weechat_dir", "");
+            cert_path1 = weechat_string_replace (cert_path0, "%h", weechat_dir);
+            cert_path2 = (cert_path1) ?
+                         weechat_string_expand_home (cert_path1) : NULL;
+
+            if (cert_path2)
+            {
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030300 /* 3.3.0 */
+                xcred = NULL;
+                gnutls_credentials_get (tls_session, GNUTLS_CRD_CERTIFICATE,
+                                        (void **) &xcred);
+                if (xcred)
+                {
+                    /* create new (empty) trust list */
+                    gnutls_x509_trust_list_init (&trust_list, 0);
+                    /* set deinits existing trust list */
+                    gnutls_certificate_set_trust_list (xcred, trust_list, 0);
+
+                    gnutls_certificate_set_x509_trust_file (xcred, cert_path2,
+                                                            GNUTLS_X509_FMT_PEM);
+                }
+#else
+                weechat_printf (server->buffer,
+                    _("%sgnutls: version >= 3.3.3 is required for "
+                      "\"ssl_ca_file\""),
+                    weechat_prefix ("error"));
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030300 */
             }
 
             if (cert_path1)
@@ -5913,6 +5959,9 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_string (ptr_item, "ssl_fingerprint",
                                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_FINGERPRINT)))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "ssl_ca_file",
+                                          IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CA_FILE)))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ssl_verify",
                                            IRC_SERVER_OPTION_BOOLEAN(server, IRC_SERVER_OPTION_SSL_VERIFY)))
         return 0;
@@ -6182,6 +6231,13 @@ irc_server_print_log ()
         else
             weechat_log_printf ("  ssl_fingerprint. . . : '%s'",
                                 weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
+        /* ssl_ca_file */
+        if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_CA_FILE]))
+            weechat_log_printf ("  ssl_ca_file. . . . . : null ('%s')",
+                                IRC_SERVER_OPTION_STRING(ptr_server, IRC_SERVER_OPTION_SSL_CA_FILE));
+        else
+            weechat_log_printf ("  ssl_ca_file. . . . . : '%s'",
+                                weechat_config_string (ptr_server->options[IRC_SERVER_OPTION_SSL_CA_FILE]));
         /* ssl_verify */
         if (weechat_config_option_is_null (ptr_server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
             weechat_log_printf ("  ssl_verify . . . . . : null (%s)",

@@ -1782,6 +1782,23 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change_data,
                 NULL, NULL, NULL);
             break;
+        case IRC_SERVER_OPTION_SSL_CA_FILE:
+            new_option = weechat_config_new_option (
+                config_file, section,
+                option_name, "string",
+                N_("file containing the certificate authorities (\"%h\" will be "
+                   "replaced by WeeChat home, \"~/.weechat\" by default)"),
+                NULL, 0, 0,
+                default_value, value,
+                null_value_allowed,
+                callback_check_value,
+                callback_check_value_pointer,
+                callback_check_value_data,
+                callback_change,
+                callback_change_pointer,
+                callback_change_data,
+                NULL, NULL, NULL);
+            break;
         case IRC_SERVER_OPTION_SSL_VERIFY:
             new_option = weechat_config_new_option (
                 config_file, section,

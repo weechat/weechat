@@ -68,9 +68,6 @@
 
 int network_init_gnutls_ok = 0;
 
-#ifdef HAVE_GNUTLS
-gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
-#endif /* HAVE_GNUTLS */
 
 
 /*
@@ -88,14 +85,14 @@ network_init_gcrypt ()
     gcry_control (GCRYCTL_INITIALIZATION_FINISHED, 0);
 }
 
+#ifdef HAVE_GNUTLS
 /*
  * Sets trust file with option "gnutls_ca_file".
  */
 
 void
-network_set_gnutls_ca_file ()
+network_set_gnutls_ca_file (gnutls_certificate_credentials_t gnutls_xcred)
 {
-#ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
 
     if (weechat_no_gnutls)
@@ -113,8 +110,8 @@ network_set_gnutls_ca_file ()
         }
         free (ca_path);
     }
-#endif /* HAVE_GNUTLS */
 }
+#endif /* HAVE_GNUTLS */
 
 /*
  * Initializes GnuTLS.
@@ -127,20 +124,6 @@ network_init_gnutls ()
     if (!weechat_no_gnutls)
     {
         gnutls_global_init ();
-        gnutls_certificate_allocate_credentials (&gnutls_xcred);
-
-        network_set_gnutls_ca_file ();
-#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
-        gnutls_certificate_set_verify_function (gnutls_xcred,
-                                                &hook_connect_gnutls_verify_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
-#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
-        gnutls_certificate_set_retrieve_function (gnutls_xcred,
-                                                  &hook_connect_gnutls_set_certificates);
-#else
-        gnutls_certificate_client_set_retrieve_function (gnutls_xcred,
-                                                         &hook_connect_gnutls_set_certificates);
-#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     }
 #endif /* HAVE_GNUTLS */
 
@@ -159,7 +142,6 @@ network_end ()
 #ifdef HAVE_GNUTLS
         if (!weechat_no_gnutls)
         {
-            gnutls_certificate_free_credentials (gnutls_xcred);
             gnutls_global_deinit ();
         }
 #endif /* HAVE_GNUTLS */
@@ -1696,9 +1678,39 @@ network_connect_with_fork (struct t_hook *hook_connect)
             unhook (hook_connect);
             return;
         }
+        gnutls_certificate_allocate_credentials (&HOOK_CONNECT(hook_connect, gnutls_xcred));
         gnutls_credentials_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                 GNUTLS_CRD_CERTIFICATE,
-                                gnutls_xcred);
+                                HOOK_CONNECT(hook_connect, gnutls_xcred));
+        network_set_gnutls_ca_file (HOOK_CONNECT(hook_connect, gnutls_xcred));
+        rc = (int) HOOK_CONNECT(hook_connect, gnutls_cb)
+            (hook_connect->callback_pointer,
+             hook_connect->callback_data,
+             *HOOK_CONNECT(hook_connect, gnutls_sess),
+             NULL, 0, NULL, 0, NULL,
+             WEECHAT_HOOK_CONNECT_GNUTLS_CB_INIT_XCRED);
+        if (rc != GNUTLS_E_SUCCESS)
+        {
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_pointer,
+                 hook_connect->callback_data,
+                 WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                 0, -1, _("initializing client credentials failed"), NULL);
+            unhook (hook_connect);
+            return;
+        }
+#if LIBGNUTLS_VERSION_NUMBER >= 0x02090a /* 2.9.10 */
+        gnutls_certificate_set_verify_function (HOOK_CONNECT(hook_connect, gnutls_xcred),
+                                                &hook_connect_gnutls_verify_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x02090a */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x020b00 /* 2.11.0 */
+        gnutls_certificate_set_retrieve_function (HOOK_CONNECT(hook_connect, gnutls_xcred),
+                                                  &hook_connect_gnutls_set_certificates);
+#else
+        gnutls_certificate_client_set_retrieve_function (HOOK_CONNECT(hook_connect, gnutls_xcred),
+                                                         &hook_connect_gnutls_set_certificates);
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
+
         gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                   (gnutls_transport_ptr_t) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
     }

@@ -4793,6 +4793,14 @@ irc_command_display_server (struct t_irc_server *server, int with_detail)
             weechat_printf (NULL, "  ssl_fingerprint. . . : %s'%s'",
                             IRC_COLOR_CHAT_VALUE,
                             weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_FINGERPRINT]));
+        /* ssl_ca_file */
+        if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_CA_FILE]))
+            weechat_printf (NULL, "  ssl_ca_file. . . . . :   ('%s')",
+                            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_SSL_CA_FILE));
+        else
+            weechat_printf (NULL, "  ssl_ca_file. . . . . : %s'%s'",
+                            IRC_COLOR_CHAT_VALUE,
+                            weechat_config_string (server->options[IRC_SERVER_OPTION_SSL_CA_FILE]));
         /* ssl_verify */
         if (weechat_config_option_is_null (server->options[IRC_SERVER_OPTION_SSL_VERIFY]))
             weechat_printf (NULL, "  ssl_verify . . . . . :   (%s)",
