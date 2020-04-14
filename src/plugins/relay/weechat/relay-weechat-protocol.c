@@ -31,6 +31,7 @@
 #include "relay-weechat-nicklist.h"
 #include "../relay-buffer.h"
 #include "../relay-client.h"
+#include "../relay-auth.h"
 #include "../relay-config.h"
 #include "../relay-raw.h"
 
@@ -159,148 +160,151 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 }
 
 /*
- * Parses PBKDF2 parameters from string with format:
- *
- *   algorithm:salt:iterations:hash
- *
- * where:
- *
- *   algorithm is "sha256" or "sha512"
- *   salt is the salt in hexadecimal
- *   iterations it the number of iterations (≥ 1)
- *   hash is the hashed password with the parameters above, in hexadecimal
+ * Replies to a client handshake command.
  */
 
 void
-relay_weechat_protocol_parse_pbkdf2 (const char *parameters,
-                                     char **algorithm,
-                                     char **salt,
-                                     int *salt_size,
-                                     int *iterations,
-                                     char **hash_pbkdf2)
+relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
+                                        const char *command)
 {
-    char **argv, *error;
-    int argc;
+    struct t_relay_weechat_msg *msg;
+    struct t_hashtable *hashtable;
+    char *totp_secret, string[64];
 
-    *algorithm = NULL;
-    *salt = NULL;
-    *salt_size = 0;
-    *iterations = 0;
-    *hash_pbkdf2 = NULL;
+    totp_secret = weechat_string_eval_expression (
+        weechat_config_string (relay_config_network_totp_secret),
+        NULL, NULL, NULL);
 
-    if (!parameters)
-        return;
-
-    argv = weechat_string_split (parameters, ":", NULL, 0, 0, &argc);
-
-    if (!argv || (argc < 4))
+    hashtable = weechat_hashtable_new (32,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       WEECHAT_HASHTABLE_STRING,
+                                       NULL, NULL);
+    if (hashtable)
     {
-        /* not enough parameters */
-        if (argv)
-            weechat_string_free_split (argv);
-        return;
+        weechat_hashtable_set (
+            hashtable,
+            "auth_password",
+            (client->auth_password >= 0) ?
+            relay_auth_password_name[client->auth_password] : "");
+        snprintf (string, sizeof (string), "%d", client->hash_iterations);
+        weechat_hashtable_set (
+            hashtable,
+            "hash_iterations",
+            string);
+        weechat_hashtable_set (
+            hashtable,
+            "nonce",
+            client->nonce);
+        weechat_hashtable_set (
+            hashtable,
+            "totp",
+            (totp_secret && totp_secret[0]) ? "on" : "off");
+
+        msg = relay_weechat_msg_new (command);
+        if (msg)
+        {
+            relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
+            relay_weechat_msg_add_hashtable (msg, hashtable);
+
+            /* send message */
+            relay_weechat_msg_send (client, msg);
+            relay_weechat_msg_free (msg);
+        }
+
+        weechat_hashtable_free (hashtable);
     }
 
-    /* parameter 1: algorithm */
-    if ((strcmp (argv[0], "sha256") == 0)
-        || (strcmp (argv[0], "sha512") == 0))
-    {
-        *algorithm = strdup (argv[0]);
-    }
-
-    /* parameter 2: salt */
-    *salt = malloc (strlen (argv[1]) + 1);
-    if (*salt)
-        *salt_size = weechat_string_base_decode (16, argv[1], *salt);
-
-    /* parameter 3: iterations */
-    *iterations = (int)strtol (argv[2], &error, 10);
-    if (!error || error[0])
-        *iterations = 0;
-
-    /* parameter 4: the PBKDF2 hash */
-    *hash_pbkdf2 = strdup (argv[3]);
-
-    weechat_string_free_split (argv);
+    if (totp_secret)
+        free (totp_secret);
 }
 
+
 /*
- * Checks if hashed password received is valid.
- *
- * Format of hash_password is: algorithm:hash
- *
- * Returns 1 if the hashed password is valid, otherwise 0.
+ * Callback for command "handshake" (from client).
  */
 
-int
-relay_weechat_protocol_check_hash (const char *hashed_password,
-                                   const char *password)
+RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 {
-    const char *pos_hash;
-    char *hash_algo, hash[512 / 8], hash_hexa[((512 / 8) * 2) + 1];
-    char *hash_pbkdf2_algo, *salt, *hash_pbkdf2;
-    int rc, hash_size, salt_size, iterations;
+    char **options, **auths, *pos;
+    int i, j, index_auth, auth_found, auth_allowed, compression;
+    int password_received, plain_text_password;
 
-    rc = 0;
+    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    if (!hashed_password || !password)
-        goto end;
+    if (client->status != RELAY_STATUS_WAITING_AUTH)
+        return WEECHAT_RC_OK;
 
-    pos_hash = strchr (hashed_password, ':');
-    if (!pos_hash)
-        goto end;
+    auth_found = -1;
+    password_received = 0;
 
-    hash_algo = weechat_strndup (hashed_password, pos_hash - hashed_password);
-    if (!hash_algo)
-        goto end;
-
-    pos_hash++;
-
-    if ((strcmp (hash_algo, "sha256") == 0)
-        || (strcmp (hash_algo, "sha512") == 0))
+    options = (argc > 0) ?
+        weechat_string_split_command (argv_eol[0], ',') : NULL;
+    if (options)
     {
-        if (weechat_crypto_hash (password, strlen (password), hash_algo,
-                                 hash, &hash_size))
+        for (i = 0; options[i]; i++)
         {
-            weechat_string_base_encode (16, hash, hash_size, hash_hexa);
-            if (weechat_strcasecmp (hash_hexa, pos_hash) == 0)
-                rc = 1;
-        }
-    }
-    else if (strcmp (hash_algo, "pbkdf2") == 0)
-    {
-        relay_weechat_protocol_parse_pbkdf2 (pos_hash,
-                                             &hash_pbkdf2_algo,
-                                             &salt,
-                                             &salt_size,
-                                             &iterations,
-                                             &hash_pbkdf2);
-        if (hash_pbkdf2_algo && salt && (salt_size > 0) && (iterations > 0)
-            && hash_pbkdf2)
-        {
-            if (weechat_crypto_hash_pbkdf2 (password, strlen (password),
-                                            hash_pbkdf2_algo,
-                                            salt, salt_size,
-                                            iterations,
-                                            hash, &hash_size))
+            pos = strchr (options[i], '=');
+            if (pos)
             {
-                weechat_string_base_encode (16, hash, hash_size, hash_hexa);
-                if (weechat_strcasecmp (hash_hexa, hash_pbkdf2) == 0)
-                    rc = 1;
+                pos[0] = '\0';
+                pos++;
+                if (strcmp (options[i], "password") == 0)
+                {
+                    password_received = 1;
+                    auths = weechat_string_split (
+                        pos,
+                        ":",
+                        NULL,
+                        WEECHAT_STRING_SPLIT_STRIP_LEFT
+                        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                        0,
+                        NULL);
+                    if (auths)
+                    {
+                        for (j = 0; auths[j]; j++)
+                        {
+                            index_auth = relay_auth_password_search (
+                                auths[j]);
+                            if ((index_auth >= 0) && (index_auth > auth_found))
+                            {
+                                auth_allowed = weechat_string_match_list (
+                                    relay_auth_password_name[index_auth],
+                                    (const char **)relay_config_network_auth_password_list,
+                                    1);
+                                if (auth_allowed)
+                                    auth_found = index_auth;
+                            }
+                        }
+                        weechat_string_free_split (auths);
+                    }
+                }
+                else if (strcmp (options[i], "compression") == 0)
+                {
+                    compression = relay_weechat_compression_search (pos);
+                    if (compression >= 0)
+                        RELAY_WEECHAT_DATA(client, compression) = compression;
+                }
             }
         }
-        if (hash_pbkdf2_algo)
-            free (hash_pbkdf2_algo);
-        if (salt)
-            free (salt);
-        if (hash_pbkdf2)
-            free (hash_pbkdf2);
+        weechat_string_free_split_command (options);
     }
 
-    free (hash_algo);
+    if (!password_received)
+    {
+        plain_text_password = weechat_string_match_list (
+            relay_auth_password_name[0],
+            (const char **)relay_config_network_auth_password_list,
+            1);
+        if (plain_text_password)
+            auth_found = 0;
+    }
 
-end:
-    return rc;
+    client->auth_password = auth_found;
+
+    relay_weechat_protocol_handshake_reply (client, command);
+
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -328,12 +332,12 @@ end:
 
 RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
 {
-    char **options, *pos, *password, *totp_secret, *info_totp_args, *info_totp;
+    char **options, *pos, *relay_password, *totp_secret, *info_totp_args, *info_totp;
     int i, compression, length, password_received, totp_received;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
 
-    password = weechat_string_eval_expression (
+    relay_password = weechat_string_eval_expression (
         weechat_config_string (relay_config_network_password),
         NULL, NULL, NULL);
     totp_secret = weechat_string_eval_expression (
@@ -357,17 +361,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
                 if (strcmp (options[i], "password") == 0)
                 {
                     password_received = 1;
-                    if (password && (strcmp (password, pos) == 0))
+                    if (relay_auth_password (client, pos, relay_password))
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
                 }
                 else if (strcmp (options[i], "password_hash") == 0)
                 {
                     password_received = 1;
-                    if (password
-                        && relay_weechat_protocol_check_hash (pos, password))
-                    {
+                    if (relay_auth_password_hash (client, pos, relay_password))
                         RELAY_WEECHAT_DATA(client, password_ok) = 1;
-                    }
                 }
                 else if (strcmp (options[i], "totp") == 0)
                 {
@@ -405,7 +406,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
     }
 
     /* if no password received and password is empty, it's OK */
-    if (!password_received && (!password || !password[0]))
+    if (!password_received && (!relay_password || !relay_password[0]))
         RELAY_WEECHAT_DATA(client, password_ok) = 1;
 
     /* if no TOTP received and totp_secret is empty, it's OK */
@@ -425,8 +426,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
         relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
     }
 
-    if (password)
-        free (password);
+    if (relay_password)
+        free (relay_password);
     if (totp_secret)
         free (totp_secret);
 
@@ -1547,7 +1548,8 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
     char *pos, *id, *command, **argv, **argv_eol;
     int i, argc, return_code;
     struct t_relay_weechat_protocol_cb protocol_cb[] =
-        { { "init", &relay_weechat_protocol_cb_init },
+        { { "handshake", &relay_weechat_protocol_cb_handshake },
+          { "init", &relay_weechat_protocol_cb_init },
           { "hdata", &relay_weechat_protocol_cb_hdata },
           { "info", &relay_weechat_protocol_cb_info },
           { "infolist", &relay_weechat_protocol_cb_infolist },
@@ -1631,13 +1633,14 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
     {
         if (strcmp (protocol_cb[i].name, command) == 0)
         {
-            if ((strcmp (protocol_cb[i].name, "init") != 0)
+            if ((strcmp (protocol_cb[i].name, "handshake") != 0)
+                && (strcmp (protocol_cb[i].name, "init") != 0)
                 && (!RELAY_WEECHAT_DATA(client, password_ok)
                     || !RELAY_WEECHAT_DATA(client, totp_ok)))
             {
                 /*
-                 * command is not "init" and password or totp are not set?
-                 * then close connection!
+                 * command is not handshake/init and password or totp are not
+                 * set? then close connection!
                  */
                 relay_client_set_status (client,
                                          RELAY_STATUS_AUTH_FAILED);

@@ -55,7 +55,7 @@ set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
   unit/plugins/irc/test-irc-mode.cpp
   unit/plugins/irc/test-irc-nick.cpp
   unit/plugins/irc/test-irc-protocol.cpp
-  unit/plugins/relay/weechat/test-relay-weechat-protocol.cpp
+  unit/plugins/relay/test-relay-auth.cpp
 )
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 

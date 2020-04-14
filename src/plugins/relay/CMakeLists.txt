@@ -19,13 +19,9 @@
 
 add_library(relay MODULE
   relay.c relay.h
+  relay-auth.c relay-auth.h
   relay-buffer.c relay-buffer.h
   relay-client.c relay-client.h
-  irc/relay-irc.c irc/relay-irc.h
-  weechat/relay-weechat.c weechat/relay-weechat.h
-  weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
-  weechat/relay-weechat-nicklist.c weechat/relay-weechat-nicklist.h
-  weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
   relay-command.c relay-command.h
   relay-completion.c relay-completion.h
   relay-config.c relay-config.h
@@ -35,6 +31,13 @@ add_library(relay MODULE
   relay-server.c relay-server.h
   relay-upgrade.c relay-upgrade.h
   relay-websocket.c relay-websocket.h
+  # irc relay
+  irc/relay-irc.c irc/relay-irc.h
+  # weechat relay
+  weechat/relay-weechat.c weechat/relay-weechat.h
+  weechat/relay-weechat-msg.c weechat/relay-weechat-msg.h
+  weechat/relay-weechat-nicklist.c weechat/relay-weechat-nicklist.h
+  weechat/relay-weechat-protocol.c weechat/relay-weechat-protocol.h
 )
 set_target_properties(relay PROPERTIES PREFIX "")
 

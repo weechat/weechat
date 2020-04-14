@@ -116,6 +116,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`
 
+* [[option_relay.network.auth_password]] *relay.network.auth_password*
+** 説明: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"*"+`
+
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** 説明: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
 ** タイプ: 整数
@@ -140,6 +146,12 @@
 ** 値: 0 .. 9
 ** デフォルト値: `+6+`
 
+* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
+** 説明: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
+** タイプ: 整数
+** 値: 1 .. 1000000
+** デフォルト値: `+100000+`
+
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** 説明: pass:none[デフォルトで IPv6 ソケットをリッスン (デフォルトの IPv4 に加えて); 特定のプロトコルでプロトコルに IPv4 と IPv6 (個別または両方) を強制 (/help relay を参照してください)]
 ** タイプ: ブール
@@ -151,6 +163,12 @@
 ** タイプ: 整数
 ** 値: 0 .. 2147483647
 ** デフォルト値: `+5+`
+
+* [[option_relay.network.nonce_size]] *relay.network.nonce_size*
+** 説明: pass:none[size of nonce (in bytes), generated when a client connects; the client must use this nonce, concatenated to the client nonce and the password when hashing the password in the "init" command of the weechat protocol]
+** タイプ: 整数
+** 値: 8 .. 128
+** デフォルト値: `+16+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** 説明: pass:none[このリレーを利用するためにクライアントが必要なパスワード (空の場合パスワードなし、オプション relay.network.allow_empty_password を参照してください) (注意: 値は評価されます、/help eval を参照してください)]

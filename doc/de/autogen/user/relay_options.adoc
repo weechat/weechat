@@ -116,6 +116,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
+* [[option_relay.network.auth_password]] *relay.network.auth_password*
+** Beschreibung: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"*"+`
+
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** Beschreibung: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
 ** Typ: integer
@@ -140,6 +146,12 @@
 ** Werte: 0 .. 9
 ** Standardwert: `+6+`
 
+* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
+** Beschreibung: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
+** Typ: integer
+** Werte: 1 .. 1000000
+** Standardwert: `+100000+`
+
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** Beschreibung: pass:none[lauscht standardmäßig am IPv6 Socket (zusätzlich zu IPv4, welches als Standardprotokoll genutzt wird); mittels des Protokollnamens kann das IPv4 und IPv6 Protokoll, einzeln oder gemeinsam, erzwungen werden (siehe /help relay)]
 ** Typ: boolesch
@@ -151,6 +163,12 @@
 ** Typ: integer
 ** Werte: 0 .. 2147483647
 ** Standardwert: `+5+`
+
+* [[option_relay.network.nonce_size]] *relay.network.nonce_size*
+** Beschreibung: pass:none[size of nonce (in bytes), generated when a client connects; the client must use this nonce, concatenated to the client nonce and the password when hashing the password in the "init" command of the weechat protocol]
+** Typ: integer
+** Werte: 8 .. 128
+** Standardwert: `+16+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** Beschreibung: pass:none[Passwort wird von Clients benötigt um Zugriff auf dieses Relay zu erhalten (kein Eintrag bedeutet, dass kein Passwort benötigt wird, siehe Option relay.network.allow_empty_password) (Hinweis: Inhalt wird evaluiert, siehe /help eval)]

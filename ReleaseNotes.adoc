@@ -20,6 +20,36 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.9]]
 == Version 2.9 (under dev)
 
+[[v2.9_relay_weechat_protocol_handshake_nonce]]
+=== Add of handshake and nonce in weechat relay protocol
+
+==== Handshake
+
+A _handshake_ command has been added in weechat relay protocol. +
+The client should send this command before the _init_ to negotiate the way to
+authenticate with the relay server.
+
+See the link:weechat_relay_protocol.en.html#command_handshake[handshake command]
+in Relay protocol doc for more information.
+
+==== Server "nonce"
+
+Furthermore, a "nonce" is now generated for each client connecting and must be
+used by the client in case of hashed password in the _init_ command. +
+The goal is to prevent replay attacks in case someone manages to read exchanges
+between the client and relay.
+
+When hashing the password, the client must use salt composed by this nonce
+as binary (it is hexadecimal and must be base16-decoded), concatenated with
+a client nonce after this one. +
+So the hash is computed on: (`server nonce` + `client nonce` + `password`).
+
+This salt is now mandatory even for algorithms `SHA256` and `SHA512`; this is
+a breaking change in protocol, needed for security reasons.
+
+See the link:weechat_relay_protocol.en.html#command_init[init command]
+in Relay protocol doc for more information.
+
 [[v2.9_trigger_command_eval]]
 === Evaluation of trigger command arguments
 

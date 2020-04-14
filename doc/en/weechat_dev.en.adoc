@@ -318,6 +318,7 @@ WeeChat "core" is located in following directories:
 |       weechat-python-api.c        | Python scripting API functions.
 |    relay/                         | Relay plugin (IRC proxy and relay for remote interfaces).
 |       relay.c                     | Main relay functions.
+|       relay-auth.c                | Clients authentication.
 |       relay-buffer.c              | Relay buffer.
 |       relay-client.c              | Clients of relay.
 |       relay-command.c             | Relay commands.
@@ -378,48 +379,47 @@ WeeChat "core" is located in following directories:
 
 [width="100%",cols="1m,2",options="header"]
 |===
-| Path/file                                      | Description
-| tests/                                         | Root of tests.
-|    tests.cpp                                   | Program used to run all tests.
-|    scripts/                                    | Root of scripting API tests.
-|       test-scripts.cpp                         | Program used to run the scripting API tests.
-|       python/                                  | Python scripts to generate and run the scripting API tests.
-|          testapigen.py                         | Python script generating scripts in all languages to test the scripting API.
-|          testapi.py                            | Python script with scripting API tests, used by script testapigen.py.
-|          unparse.py                            | Convert Python code to other languages, used by script testapigen.py.
-|    unit/                                       | Root of unit tests.
-|       test-plugins.cpp                         | Tests: plugins.
-|       core/                                    | Root of unit tests for core.
-|          test-core-arraylist.cpp               | Tests: arraylists.
-|          test-core-calc.cpp                    | Tests: calculation of expressions.
-|          test-core-crypto.cpp                  | Tests: cryptographic functions.
-|          test-core-eval.cpp                    | Tests: evaluation of expressions.
-|          test-core-hashtble.cpp                | Tests: hashtables.
-|          test-core-hdata.cpp                   | Tests: hdata.
-|          test-core-hook.cpp                    | Tests: hooks.
-|          test-core-infolist.cpp                | Tests: infolists.
-|          test-core-list.cpp                    | Tests: lists.
-|          test-core-secure.cpp                  | Tests: secured data.
-|          test-core-string.cpp                  | Tests: strings.
-|          test-core-url.cpp                     | Tests: URLs.
-|          test-core-utf8.cpp                    | Tests: UTF-8.
-|          test-core-util.cpp                    | Tests: utility functions.
-|       gui/                                     | Root of unit tests for interfaces.
-|          test-gui-color.cpp                    | Tests: colors.
-|          test-gui-line.cpp                     | Tests: lines.
-|          test-gui-nick.cpp                     | Tests: nicks.
-|       plugins/                                 | Root of unit tests for plugins.
-|          irc/                                  | Root of unit tests for IRC plugin.
-|             test-irc-color.cpp                 | Tests: IRC colors.
-|             test-irc-config.cpp                | Tests: IRC configuration.
-|             test-irc-ignore.cpp                | Tests: IRC ignores.
-|             test-irc-message.cpp               | Tests: IRC messages.
-|             test-irc-mode.cpp                  | Tests: IRC modes.
-|             test-irc-nick.cpp                  | Tests: IRC nicks.
-|             test-irc-protocol.cpp              | Tests: IRC protocol.
-|          relay/                                | Root of unit tests for Relay plugin.
-|             weechat/                           | Root of unit tests for weechat protocol.
-|                test-relay-weechat-protocol.cpp | Tests: weechat protocol.
+| Path/file                         | Description
+| tests/                            | Root of tests.
+|    tests.cpp                      | Program used to run all tests.
+|    scripts/                       | Root of scripting API tests.
+|       test-scripts.cpp            | Program used to run the scripting API tests.
+|       python/                     | Python scripts to generate and run the scripting API tests.
+|          testapigen.py            | Python script generating scripts in all languages to test the scripting API.
+|          testapi.py               | Python script with scripting API tests, used by script testapigen.py.
+|          unparse.py               | Convert Python code to other languages, used by script testapigen.py.
+|    unit/                          | Root of unit tests.
+|       test-plugins.cpp            | Tests: plugins.
+|       core/                       | Root of unit tests for core.
+|          test-core-arraylist.cpp  | Tests: arraylists.
+|          test-core-calc.cpp       | Tests: calculation of expressions.
+|          test-core-crypto.cpp     | Tests: cryptographic functions.
+|          test-core-eval.cpp       | Tests: evaluation of expressions.
+|          test-core-hashtble.cpp   | Tests: hashtables.
+|          test-core-hdata.cpp      | Tests: hdata.
+|          test-core-hook.cpp       | Tests: hooks.
+|          test-core-infolist.cpp   | Tests: infolists.
+|          test-core-list.cpp       | Tests: lists.
+|          test-core-secure.cpp     | Tests: secured data.
+|          test-core-string.cpp     | Tests: strings.
+|          test-core-url.cpp        | Tests: URLs.
+|          test-core-utf8.cpp       | Tests: UTF-8.
+|          test-core-util.cpp       | Tests: utility functions.
+|       gui/                        | Root of unit tests for interfaces.
+|          test-gui-color.cpp       | Tests: colors.
+|          test-gui-line.cpp        | Tests: lines.
+|          test-gui-nick.cpp        | Tests: nicks.
+|       plugins/                    | Root of unit tests for plugins.
+|          irc/                     | Root of unit tests for IRC plugin.
+|             test-irc-color.cpp    | Tests: IRC colors.
+|             test-irc-config.cpp   | Tests: IRC configuration.
+|             test-irc-ignore.cpp   | Tests: IRC ignores.
+|             test-irc-message.cpp  | Tests: IRC messages.
+|             test-irc-mode.cpp     | Tests: IRC modes.
+|             test-irc-nick.cpp     | Tests: IRC nicks.
+|             test-irc-protocol.cpp | Tests: IRC protocol.
+|          relay/                   | Root of unit tests for Relay plugin.
+|             test-relay-auth.cpp   | Tests: clients authentication.
 
 |===
 

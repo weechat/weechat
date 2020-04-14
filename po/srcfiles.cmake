@@ -306,6 +306,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/python/weechat-python.h
 ./src/plugins/relay/irc/relay-irc.c
 ./src/plugins/relay/irc/relay-irc.h
+./src/plugins/relay/relay-auth.c
+./src/plugins/relay/relay-auth.h
 ./src/plugins/relay/relay-buffer.c
 ./src/plugins/relay/relay-buffer.h
 ./src/plugins/relay/relay.c

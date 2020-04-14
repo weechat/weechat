@@ -25,20 +25,12 @@ lib_LTLIBRARIES = relay.la
 
 relay_la_SOURCES = relay.c \
                    relay.h \
+                   relay-auth.c \
+                   relay-auth.h \
                    relay-buffer.c \
                    relay-buffer.h \
                    relay-client.c \
                    relay-client.h \
-                   irc/relay-irc.c \
-                   irc/relay-irc.h \
-                   weechat/relay-weechat.c \
-                   weechat/relay-weechat.h \
-                   weechat/relay-weechat-msg.c \
-                   weechat/relay-weechat-msg.h \
-                   weechat/relay-weechat-nicklist.c \
-                   weechat/relay-weechat-nicklist.h \
-                   weechat/relay-weechat-protocol.c \
-                   weechat/relay-weechat-protocol.h \
                    relay-command.c \
                    relay-command.h \
                    relay-completion.c \
@@ -56,7 +48,17 @@ relay_la_SOURCES = relay.c \
                    relay-upgrade.c \
                    relay-upgrade.h \
                    relay-websocket.c \
-                   relay-websocket.h
+                   relay-websocket.h \
+                   irc/relay-irc.c \
+                   irc/relay-irc.h \
+                   weechat/relay-weechat.c \
+                   weechat/relay-weechat.h \
+                   weechat/relay-weechat-msg.c \
+                   weechat/relay-weechat-msg.h \
+                   weechat/relay-weechat-nicklist.c \
+                   weechat/relay-weechat-nicklist.h \
+                   weechat/relay-weechat-protocol.c \
+                   weechat/relay-weechat-protocol.h
 
 relay_la_LDFLAGS = -module -no-undefined
 relay_la_LIBADD  = $(RELAY_LFLAGS) $(ZLIB_LFLAGS) $(GNUTLS_LFLAGS)

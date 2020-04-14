@@ -116,6 +116,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+""+`
 
+* [[option_relay.network.auth_password]] *relay.network.auth_password*
+** descrizione: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"*"+`
+
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** descrizione: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
 ** tipo: intero
@@ -140,6 +146,12 @@
 ** valori: 0 .. 9
 ** valore predefinito: `+6+`
 
+* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
+** descrizione: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
+** tipo: intero
+** valori: 1 .. 1000000
+** valore predefinito: `+100000+`
+
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** descrizione: pass:none[listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)]
 ** tipo: bool
@@ -151,6 +163,12 @@
 ** tipo: intero
 ** valori: 0 .. 2147483647
 ** valore predefinito: `+5+`
+
+* [[option_relay.network.nonce_size]] *relay.network.nonce_size*
+** descrizione: pass:none[size of nonce (in bytes), generated when a client connects; the client must use this nonce, concatenated to the client nonce and the password when hashing the password in the "init" command of the weechat protocol]
+** tipo: intero
+** valori: 8 .. 128
+** valore predefinito: `+16+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** descrizione: pass:none[password required by clients to access this relay (empty value means no password required, see option relay.network.allow_empty_password) (note: content is evaluated, see /help eval)]

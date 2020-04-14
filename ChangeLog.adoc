@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 New features::
 
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)
+  * relay: add command "handshake" in weechat relay protocol and nonce to prevent replay attacks, add options relay.network.auth_password, relay.network.hash_iterations, relay.network.nonce_size (issue #1474)
   * relay: add option relay.network.auth_timeout
   * relay: update default colors for client status
   * relay: add status "waiting_auth" in irc and weechat protocols (issue #1358)

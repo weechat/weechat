@@ -40,7 +40,7 @@
 #include "../relay-raw.h"
 
 
-char *relay_weechat_compression_string[] = /* strings for compressions      */
+char *relay_weechat_compression_string[] = /* strings for compression       */
 { "off", "zlib" };
 
 

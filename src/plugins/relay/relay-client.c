@@ -36,14 +36,15 @@
 #include "../weechat-plugin.h"
 #include "relay.h"
 #include "relay-client.h"
-#include "irc/relay-irc.h"
-#include "weechat/relay-weechat.h"
+#include "relay-auth.h"
 #include "relay-config.h"
 #include "relay-buffer.h"
 #include "relay-network.h"
 #include "relay-raw.h"
 #include "relay-server.h"
 #include "relay-websocket.h"
+#include "irc/relay-irc.h"
+#include "weechat/relay-weechat.h"
 
 
 char *relay_client_status_string[] =   /* status strings for display        */
@@ -1269,6 +1270,7 @@ struct t_relay_client *
 relay_client_new (int sock, const char *address, struct t_relay_server *server)
 {
     struct t_relay_client *new_client;
+    int plain_text_password;
 #ifdef HAVE_GNUTLS
     int bits;
     struct t_config_option *ptr_option;
@@ -1295,6 +1297,14 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
+        plain_text_password = weechat_string_match_list (
+            relay_auth_password_name[0],
+            (const char **)relay_config_network_auth_password_list,
+            1);
+        new_client->auth_password = (plain_text_password) ? 0 : -1;
+        new_client->hash_iterations = weechat_config_integer (
+            relay_config_network_hash_iterations);
+        new_client->nonce = relay_auth_generate_nonce ();
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
         new_client->end_time = 0;
@@ -1496,6 +1506,22 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->protocol_string = (str) ? strdup (str) : NULL;
         str = weechat_infolist_string (infolist, "protocol_args");
         new_client->protocol_args = (str) ? strdup (str) : NULL;
+        /* "auth_password" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "auth_password"))
+            new_client->auth_password = weechat_infolist_integer (infolist, "auth_password");
+        else
+            new_client->auth_password = RELAY_AUTH_PASSWORD_PLAIN;
+        /* "hash_iterations" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "hash_iterations"))
+            new_client->hash_iterations = weechat_infolist_integer (infolist, "hash_iterations");
+        else
+            new_client->hash_iterations = weechat_config_integer (
+                relay_config_network_hash_iterations);
+        /* "nonce" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "nonce"))
+            new_client->nonce = strdup (weechat_infolist_string (infolist, "nonce"));
+        else
+            new_client->nonce = relay_auth_generate_nonce ();
         new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
         new_client->start_time = weechat_infolist_time (infolist, "start_time");
         new_client->end_time = weechat_infolist_time (infolist, "end_time");
@@ -1693,6 +1719,8 @@ relay_client_free (struct t_relay_client *client)
         free (client->protocol_string);
     if (client->protocol_args)
         free (client->protocol_args);
+    if (client->nonce)
+        free (client->nonce);
 #ifdef HAVE_GNUTLS
     if (client->hook_timer_handshake)
         weechat_unhook (client->hook_timer_handshake);
@@ -1829,6 +1857,12 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", client->protocol_args))
         return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "auth_password", client->auth_password))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "hash_iterations", client->hash_iterations))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nonce", client->nonce))
+        return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "listen_start_time", client->listen_start_time))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "start_time", client->start_time))
@@ -1905,6 +1939,12 @@ relay_client_print_log ()
                             relay_protocol_string[ptr_client->protocol]);
         weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
         weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
+        weechat_log_printf ("  auth_password . . . . : %d (%s)",
+                            ptr_client->auth_password,
+                            (ptr_client->auth_password >= 0) ?
+                            relay_auth_password_name[ptr_client->auth_password] : "");
+        weechat_log_printf ("  hash_iterations . . . : %d",    ptr_client->hash_iterations);
+        weechat_log_printf ("  nonce . . . . . . . . : '%s'",  ptr_client->nonce);
         weechat_log_printf ("  listen_start_time . . : %lld",  (long long)ptr_client->listen_start_time);
         weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_client->start_time);
         weechat_log_printf ("  end_time. . . . . . . : %lld",  (long long)ptr_client->end_time);

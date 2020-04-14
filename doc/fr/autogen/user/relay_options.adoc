@@ -116,6 +116,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
+* [[option_relay.network.auth_password]] *relay.network.auth_password*
+** description: pass:none[liste des algorithmes de hachage pour l'authentification par mot de passe dans le protocole relay, parmi ces valeurs : "plain" (mot de passe en clair, non haché), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" ; "*" signifie tous les algorithmes, un nom commençant par "!" est une valeur négative pour empêcher un algorithme d'être utilisé, le caractère joker "*" est autorisé dans les noms (exemples : "*", "pbkdf2*", "*,!plain")]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"*"+`
+
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** description: pass:none[temps maximum (en secondes) pour l'authentification du client ; la connexion est fermée si le client n'est toujours pas authentifié après ce délai et le statut est positionné à "échec d'authentification" (0 = attendre sans fin)]
 ** type: entier
@@ -140,6 +146,12 @@
 ** valeurs: 0 .. 9
 ** valeur par défaut: `+6+`
 
+* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
+** description: pass:none[nombre d'itérations demandées au client dans le protocole weechat lorsqu'un mot de passe haché avec l'algorithme PBKDF2 est utilisé pour l'authentification ; plus d'itérations est mieux en terme de sécurité mais est plus lent à calculer ; ce nombre ne doit pas être trop élevé si votre micro-processeur est lent]
+** type: entier
+** valeurs: 1 .. 1000000
+** valeur par défaut: `+100000+`
+
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** description: pass:none[écouter en IPv6 sur le socket par défaut (en plus de l'IPv4 qui est par défaut) ; les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)]
 ** type: booléen
@@ -151,6 +163,12 @@
 ** type: entier
 ** valeurs: 0 .. 2147483647
 ** valeur par défaut: `+5+`
+
+* [[option_relay.network.nonce_size]] *relay.network.nonce_size*
+** description: pass:none[taille du nonce (en octets), généré lorsqu'un client se connecte ; le client doit utiliser ce nonce, concaténé au nonce client et au mot de passe pour hacher le mot de passe dans la commande "init" du protocole weechat]
+** type: entier
+** valeurs: 8 .. 128
+** valeur par défaut: `+16+`
 
 * [[option_relay.network.password]] *relay.network.password*
 ** description: pass:none[mot de passe requis par les clients pour accéder à ce relai (une valeur vide indique que le mot de passe n'est pas nécessaire, voir l'option relay.network.allow_empty_password) (note : le contenu est évalué, voir /help eval)]
