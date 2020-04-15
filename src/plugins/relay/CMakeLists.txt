@@ -50,6 +50,8 @@ if(GNUTLS_FOUND)
   list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
 endif()
 
+list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
+
 target_link_libraries(relay ${LINK_LIBS} coverage_config)
 
 install(TARGETS relay LIBRARY DESTINATION ${WEECHAT_LIBDIR}/plugins)
