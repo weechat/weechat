@@ -3923,13 +3923,12 @@ ein Semikolon getrennt.
   `+*;;;1+` |
   link:weechat_plugin_api.en.html#_hook_print[hook_print] (Englisch)
 
-// TRANSLATION MISSING
 | command |
   1. Befehlsname (Priorität erlaubt) (erforderlich) +
-  2. Beschreibung (evaluated, siehe Befehl <<command_weechat_eval,/eval>>) +
-  3. Argumente (evaluated, siehe Befehl <<command_weechat_eval,/eval>>) +
-  4. Beschreibung der Argumente (evaluated, siehe Befehl <<command_weechat_eval,/eval>>) +
-  5. Vervollständigung (evaluated, siehe Befehl <<command_weechat_eval,/eval>>) |
+  2. Beschreibung (evaluiert, siehe Befehl <<command_weechat_eval,/eval>>) +
+  3. Argumente (evaluiert, siehe Befehl <<command_weechat_eval,/eval>>) +
+  4. Beschreibung der Argumente (evaluiert, siehe Befehl <<command_weechat_eval,/eval>>) +
+  5. Vervollständigung (evaluiert, siehe Befehl <<command_weechat_eval,/eval>>) |
   `+test+` +
   `+5000\|test+` +
   `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
@@ -3982,8 +3981,8 @@ ein Semikolon getrennt.
 [[trigger_conditions]]
 ==== Bedingungen
 
-Bedingungen werden benötigt um einen Vorgang am Laufen zu halten oder um
-diesen zu stoppen.
+Bedingungen werden benötigt um eine Ausführung am Laufen zu halten oder um
+diese zu stoppen.
 
 Diese sind evaluiert und die Daten im Callback können verwendet werden
 (siehe <<trigger_callback_data,Daten in Callbacks>> und Befehl
