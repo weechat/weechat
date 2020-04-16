@@ -165,7 +165,7 @@ relay_weechat_protocol_is_sync (struct t_relay_client *ptr_client,
 
 void
 relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
-                                        const char *command)
+                                        const char *id)
 {
     struct t_relay_weechat_msg *msg;
     struct t_hashtable *hashtable;
@@ -200,7 +200,7 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
             "totp",
             (totp_secret && totp_secret[0]) ? "on" : "off");
 
-        msg = relay_weechat_msg_new (command);
+        msg = relay_weechat_msg_new (id);
         if (msg)
         {
             relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HASHTABLE);
@@ -302,7 +302,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 
     client->auth_password = auth_found;
 
-    relay_weechat_protocol_handshake_reply (client, command);
+    relay_weechat_protocol_handshake_reply (client, id);
 
     return WEECHAT_RC_OK;
 }
