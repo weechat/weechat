@@ -108,8 +108,7 @@ Perform an handshake between the client and WeeChat: this is required in most
 cases to know the session settings and prepare the authentication with the
 _init_ command.
 
-The handshake can be performed multiple times before the _init_ command,
-although it is rarely needed.
+Only one handshake is allowed before the _init_ command.
 
 Syntax:
 

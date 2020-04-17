@@ -113,8 +113,7 @@ Effectuer une poignée de main entre le client et WeeChat : cela est obligatoir
 dans la plupart des cas pour connaître les paramètres de la session et préparer
 l'authentification avec la commande _init_.
 
-La poignée de main peut être effectuée plusieurs fois avant la commande _init_,
-même si cela est rarement nécessaire.
+Une seule poignée de main est autorisée avant la commande _init_.
 
 Syntaxe :
 

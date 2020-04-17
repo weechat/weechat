@@ -26,6 +26,10 @@ enum t_relay_status;
 #define RELAY_WEECHAT_DATA(client, var)                          \
     (((struct t_relay_weechat_data *)client->protocol_data)->var)
 
+#define RELAY_WEECHAT_AUTH_OK(client)                            \
+    ((RELAY_WEECHAT_DATA(client, password_ok)                    \
+      && RELAY_WEECHAT_DATA(client, totp_ok)))
+
 enum t_relay_weechat_compression
 {
     RELAY_WEECHAT_COMPRESSION_OFF = 0, /* no compression of binary objects  */
@@ -36,6 +40,9 @@ enum t_relay_weechat_compression
 
 struct t_relay_weechat_data
 {
+    /* handshake status */
+    int handshake_done;                /* 1 if handshake has been done      */
+
     /* authentication status (init command) */
     int password_ok;                   /* password received and OK?         */
     int totp_ok;                       /* TOTP received and OK?             */

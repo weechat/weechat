@@ -170,6 +170,7 @@ relay_weechat_alloc (struct t_relay_client *client)
     if (!client->protocol_data)
         return;
 
+    RELAY_WEECHAT_DATA(client, handshake_done) = 0;
     RELAY_WEECHAT_DATA(client, password_ok) = 0;
     RELAY_WEECHAT_DATA(client, totp_ok) = 0;
     RELAY_WEECHAT_DATA(client, compression) = RELAY_WEECHAT_COMPRESSION_ZLIB;
@@ -212,6 +213,11 @@ relay_weechat_alloc_with_infolist (struct t_relay_client *client,
     if (client->protocol_data)
     {
         /* general stuff */
+        /* "handshake_done" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "handshake_done"))
+            RELAY_WEECHAT_DATA(client, handshake_done) = weechat_infolist_integer (infolist, "handshake_done");
+        else
+            RELAY_WEECHAT_DATA(client, handshake_done) = 0;
         RELAY_WEECHAT_DATA(client, password_ok) = weechat_infolist_integer (
             infolist, "password_ok");
         /* "totp_ok" is new in WeeChat 2.4 */
@@ -325,6 +331,8 @@ relay_weechat_add_to_infolist (struct t_infolist_item *item,
     if (!item || !client)
         return 0;
 
+    if (!weechat_infolist_new_var_integer (item, "handshake_done", RELAY_WEECHAT_DATA(client, handshake_done)))
+        return 0;
     if (!weechat_infolist_new_var_integer (item, "password_ok", RELAY_WEECHAT_DATA(client, password_ok)))
         return 0;
     if (!weechat_infolist_new_var_integer (item, "totp_ok", RELAY_WEECHAT_DATA(client, totp_ok)))
@@ -346,6 +354,7 @@ relay_weechat_print_log (struct t_relay_client *client)
 {
     if (client->protocol_data)
     {
+        weechat_log_printf ("    handshake_done . . . . : %d",   RELAY_WEECHAT_DATA(client, handshake_done));
         weechat_log_printf ("    password_ok. . . . . . : %d",   RELAY_WEECHAT_DATA(client, password_ok));
         weechat_log_printf ("    totp_ok. . . . . . . . : %d",   RELAY_WEECHAT_DATA(client, totp_ok));
         weechat_log_printf ("    compression. . . . . . : %d",   RELAY_WEECHAT_DATA(client, compression));

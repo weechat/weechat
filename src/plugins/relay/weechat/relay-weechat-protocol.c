@@ -234,6 +234,13 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
     if (client->status != RELAY_STATUS_WAITING_AUTH)
         return WEECHAT_RC_OK;
 
+    /* only one handshake is allowed */
+    if (RELAY_WEECHAT_DATA(client, handshake_done))
+    {
+        relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+        return WEECHAT_RC_OK;
+    }
+
     hash_algo_found = -1;
     password_received = 0;
 
@@ -303,6 +310,8 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
     client->password_hash_algo = hash_algo_found;
 
     relay_weechat_protocol_handshake_reply (client, id);
+
+    RELAY_WEECHAT_DATA(client, handshake_done) = 1;
 
     /* if no algo was found, we close the connection immediately */
     if (client->password_hash_algo < 0)
@@ -417,8 +426,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(init)
     if (!totp_received && (!totp_secret || !totp_secret[0]))
         RELAY_WEECHAT_DATA(client, totp_ok) = 1;
 
-    if (RELAY_WEECHAT_DATA(client, password_ok)
-        && RELAY_WEECHAT_DATA(client, totp_ok))
+    if (RELAY_WEECHAT_AUTH_OK(client))
     {
         weechat_hook_signal_send ("relay_client_auth_ok",
                                   WEECHAT_HOOK_SIGNAL_POINTER,
@@ -1639,8 +1647,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
         {
             if ((strcmp (protocol_cb[i].name, "handshake") != 0)
                 && (strcmp (protocol_cb[i].name, "init") != 0)
-                && (!RELAY_WEECHAT_DATA(client, password_ok)
-                    || !RELAY_WEECHAT_DATA(client, totp_ok)))
+                && !RELAY_WEECHAT_AUTH_OK(client))
             {
                 /*
                  * command is not handshake/init and password or totp are not
