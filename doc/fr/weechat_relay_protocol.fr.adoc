@@ -202,10 +202,11 @@ htb: {'auth_password': 'pbkdf2+sha256', 'hash_iterations': '100000', 'totp': 'on
 ----
 
 Le client peut s'authentifier avec cette commande (voir la <<command_init,commande init>>),
-le sel est le nonce _relay_ + "ABCD" ("41424344" en hexadécimal) :
+le sel est le nonce _relay_ + "ABCD" ("41424344" en hexadécimal), le mot de passe
+est "test" dans cet exemple :
 
 ----
-init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0d41424344:100000:01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc945a1c
+init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0d41424344:100000:1d4ed89e177cc7be5a6daf6915588cd07e645cb43bc74fadb16bed8d09943a36
 ----
 
 [TIP]
@@ -295,14 +296,14 @@ init password=mypass,totp=123456
 # initialiser et désactiver la compression
 init password=mypass,compression=off
 
-# initialiser avec un mot de passe haché (SHA256 : sel="nonce:cnonce") (WeeChat ≥ 2.9)
-init password_hash=sha256:6e6f6e63653a636e6f6e6365:b9a4c3393dfac4330736684510378851e581c68add8eca84110c31a33e694676
+# initialiser avec le mot de passe haché "test" (SHA256 : sel="nonce:cnonce") (WeeChat ≥ 2.9)
+init password_hash=sha256:6e6f6e63653a636e6f6e6365:763c9dca0737e1ca57eb9fc2f61f184550d8d5e8e66c0568a202abb23811771d
 
-# initialiser avec un mot de passe haché (SHA512 : sel="nonce:cnonce") (WeeChat ≥ 2.9)
-init password_hash=sha512:6e6f6e63653a636e6f6e6365:4469190d4e0d1fdc0afb6f408d9873c89b8ce89cc4db79fe058255c55ad6821fa5e9bb068f9e578c8ae7cc825d85ff99c439d59e439bc589d95620a1e6b8ae6e
+# initialiser avec le mot de passe haché "test" (SHA512 : sel="nonce:cnonce") (WeeChat ≥ 2.9)
+init password_hash=sha512:6e6f6e63653a636e6f6e6365:1410396afdf3ec393cb21dc654980cb6d4569a938e0543d840f3fe7dbd1ff59a082fd484e9b1f0682564bc89bca7542c5b71e44e5e70ffaedbac011db5859407
 
-# initialiser avec un mot de passe haché (PBKDF2 : SHA256, sel="nonce:cnonce", 100000 itérations) (WeeChat ≥ 2.9)
-init password_hash=pbkdf2:sha256:6e6f6e63653a636e6f6e6365:100000:01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc945a1c
+# initialiser avec le mot de passe haché "test" (PBKDF2 : SHA256, sel="nonce:cnonce", 100000 itérations) (WeeChat ≥ 2.9)
+init password_hash=pbkdf2+sha256:6e6f6e63653a636e6f6e6365:100000:a7433d4425acc40b2ed2c431e9ba084a0b651f7d5549a834ac2024ae5e5f367f
 ----
 
 [[command_hdata]]

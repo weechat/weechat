@@ -196,10 +196,11 @@ htb: {'auth_password': 'pbkdf2+sha256', 'hash_iterations': '100000', 'totp': 'on
 ----
 
 The client can authenticate with this command (see <<command_init,init command>>),
-the salt is the _relay_ nonce + "ABCD" ("41424344" in hexadecimal):
+the salt is the _relay_ nonce + "ABCD" ("41424344" in hexadecimal), the password
+is "test" in this example:
 
 ----
-init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0d41424344:100000:01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc945a1c
+init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0d41424344:100000:1d4ed89e177cc7be5a6daf6915588cd07e645cb43bc74fadb16bed8d09943a36
 ----
 
 [TIP]
@@ -294,14 +295,14 @@ init password=mypass,totp=123456
 # 圧縮を使わない例
 init password=mypass,compression=off
 
-# initialize with hashed password (SHA256: salt="nonce:cnonce") (WeeChat バージョン 2.9 以上の場合)
-init password_hash=sha256:6e6f6e63653a636e6f6e6365:b9a4c3393dfac4330736684510378851e581c68add8eca84110c31a33e694676
+# initialize with hashed password "test" (SHA256: salt="nonce:cnonce") (WeeChat バージョン 2.9 以上の場合)
+init password_hash=sha256:6e6f6e63653a636e6f6e6365:763c9dca0737e1ca57eb9fc2f61f184550d8d5e8e66c0568a202abb23811771d
 
-# initialize with hashed password (SHA512: salt="nonce:cnonce") (WeeChat バージョン 2.9 以上の場合)
-init password_hash=sha512:6e6f6e63653a636e6f6e6365:4469190d4e0d1fdc0afb6f408d9873c89b8ce89cc4db79fe058255c55ad6821fa5e9bb068f9e578c8ae7cc825d85ff99c439d59e439bc589d95620a1e6b8ae6e
+# initialize with hashed password "test" (SHA512: salt="nonce:cnonce") (WeeChat バージョン 2.9 以上の場合)
+init password_hash=sha512:6e6f6e63653a636e6f6e6365:1410396afdf3ec393cb21dc654980cb6d4569a938e0543d840f3fe7dbd1ff59a082fd484e9b1f0682564bc89bca7542c5b71e44e5e70ffaedbac011db5859407
 
-# initialize with hashed password (PBKDF2: SHA256, salt="nonce:cnonce", 100000 iterations) (WeeChat バージョン 2.9 以上の場合)
-init password_hash=pbkdf2+sha256:6e6f6e63653a636e6f6e6365:100000:01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc945a1c
+# initialize with hashed password "test" (PBKDF2: SHA256, salt="nonce:cnonce", 100000 iterations) (WeeChat バージョン 2.9 以上の場合)
+init password_hash=pbkdf2+sha256:6e6f6e63653a636e6f6e6365:100000:a7433d4425acc40b2ed2c431e9ba084a0b651f7d5549a834ac2024ae5e5f367f
 ----
 
 [[command_hdata]]
