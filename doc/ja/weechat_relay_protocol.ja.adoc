@@ -146,8 +146,8 @@ Notes about option _password_:
 * If the option is not given (of if the _handshake_ command is not sent by the
   client), _relay_ uses automatically _plain_ authentication (if allowed on
   _relay_ side).
-* _Relay_ chooses the safest algorithm available on both client and _relay_,
-  by order of priority from first (safest) to last used:
+* _Relay_ chooses the more secure algorithm available on both client and
+  _relay_, by order of priority from first (most secure) to last used:
   . _pbkdf2+sha512_
   . _pbkdf2+sha256_
   . _sha512_

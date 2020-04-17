@@ -32,7 +32,7 @@
 
 
 /*
- * this list is sorted from the least secure to the safest algorithm:
+ * this list is sorted from the least secure to the most secure algorithm:
  * "plain" is plain text password, the other values are hash algorithms;
  * during negotiation with the client, the highest value in this list matching
  * the client supported values is used
