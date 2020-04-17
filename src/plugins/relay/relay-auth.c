@@ -37,29 +37,29 @@
  * during negotiation with the client, the highest value in this list matching
  * the client supported values is used
  */
-char *relay_auth_password_name[] =
+char *relay_auth_password_hash_algo_name[] =
 { "plain", "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" };
 
 
 /*
- * Searches for a password authentication.
+ * Searches for a password hash algorithm.
  *
- * Returns index in enum t_relay_auth_password,
- * -1 if password authentication is not found.
+ * Returns index in enum t_relay_auth_password_hash_algo,
+ * -1 if password hash algorithm is not found.
  */
 
 int
-relay_auth_password_search (const char *name)
+relay_auth_password_hash_algo_search (const char *name)
 {
     int i;
 
-    for (i = 0; i < RELAY_NUM_PASSWORD_AUTHS; i++)
+    for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
     {
-        if (strcmp (relay_auth_password_name[i], name) == 0)
+        if (strcmp (relay_auth_password_hash_algo_name[i], name) == 0)
             return i;
     }
 
-    /* authentication password type found */
+    /* password hash algorithm not found */
     return -1;
 }
 
@@ -126,7 +126,7 @@ int
 relay_auth_password (struct t_relay_client *client,
                      const char *password, const char *relay_password)
 {
-    if (client->auth_password != RELAY_AUTH_PASSWORD_PLAIN)
+    if (client->password_hash_algo != RELAY_AUTH_PASSWORD_HASH_PLAIN)
         return 0;
 
     return relay_auth_check_password_plain (password, relay_password);
@@ -376,14 +376,14 @@ relay_auth_password_hash (struct t_relay_client *client,
     const char *pos_hash;
     char *str_hash_algo;
     char *hash_pbkdf2_algo, *salt_hexa, *salt, *hash_sha, *hash_pbkdf2;
-    int rc, auth_password, salt_size, iterations;
+    int rc, hash_algo, salt_size, iterations;
 
     rc = 0;
 
     str_hash_algo = NULL;
 
     /* no authentication supported at all? */
-    if (client->auth_password < 0)
+    if (client->password_hash_algo < 0)
         goto end;
 
     if (!hashed_password || !relay_password)
@@ -400,15 +400,15 @@ relay_auth_password_hash (struct t_relay_client *client,
 
     pos_hash++;
 
-    auth_password = relay_auth_password_search (str_hash_algo);
+    hash_algo = relay_auth_password_hash_algo_search (str_hash_algo);
 
-    if (auth_password != client->auth_password)
+    if (hash_algo != client->password_hash_algo)
         goto end;
 
-    switch (auth_password)
+    switch (hash_algo)
     {
-        case RELAY_AUTH_PASSWORD_SHA256:
-        case RELAY_AUTH_PASSWORD_SHA512:
+        case RELAY_AUTH_PASSWORD_HASH_SHA256:
+        case RELAY_AUTH_PASSWORD_HASH_SHA512:
             relay_auth_parse_sha (pos_hash, &salt_hexa, &salt, &salt_size,
                                   &hash_sha);
             if (relay_auth_check_salt (client, salt_hexa)
@@ -424,12 +424,12 @@ relay_auth_password_hash (struct t_relay_client *client,
             if (hash_sha)
                 free (hash_sha);
             break;
-        case RELAY_AUTH_PASSWORD_PBKDF2_SHA256:
-        case RELAY_AUTH_PASSWORD_PBKDF2_SHA512:
+        case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA256:
+        case RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512:
             hash_pbkdf2_algo = strdup (str_hash_algo + 7);
             relay_auth_parse_pbkdf2 (pos_hash, &salt_hexa, &salt, &salt_size,
                                      &iterations, &hash_pbkdf2);
-            if ((iterations == client->hash_iterations)
+            if ((iterations == client->password_hash_iterations)
                 && relay_auth_check_salt (client, salt_hexa)
                 && relay_auth_check_hash_pbkdf2 (hash_pbkdf2_algo, salt,
                                                  salt_size, iterations,
@@ -446,7 +446,7 @@ relay_auth_password_hash (struct t_relay_client *client,
             if (hash_pbkdf2)
                 free (hash_pbkdf2);
             break;
-        case RELAY_NUM_PASSWORD_AUTHS:
+        case RELAY_NUM_PASSWORD_HASH_ALGOS:
             break;
     }
 

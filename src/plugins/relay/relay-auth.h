@@ -22,20 +22,20 @@
 
 struct t_relay_client;
 
-enum t_relay_auth_password
+enum t_relay_auth_password_hash_algo
 {
-    RELAY_AUTH_PASSWORD_PLAIN = 0,
-    RELAY_AUTH_PASSWORD_SHA256,
-    RELAY_AUTH_PASSWORD_SHA512,
-    RELAY_AUTH_PASSWORD_PBKDF2_SHA256,
-    RELAY_AUTH_PASSWORD_PBKDF2_SHA512,
-    /* number of password auths */
-    RELAY_NUM_PASSWORD_AUTHS,
+    RELAY_AUTH_PASSWORD_HASH_PLAIN = 0,
+    RELAY_AUTH_PASSWORD_HASH_SHA256,
+    RELAY_AUTH_PASSWORD_HASH_SHA512,
+    RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA256,
+    RELAY_AUTH_PASSWORD_HASH_PBKDF2_SHA512,
+    /* number of password hash algos */
+    RELAY_NUM_PASSWORD_HASH_ALGOS,
 };
 
-extern char *relay_auth_password_name[];
+extern char *relay_auth_password_hash_algo_name[];
 
-extern int relay_auth_password_search (const char *name);
+extern int relay_auth_password_hash_algo_search (const char *name);
 extern char *relay_auth_generate_nonce ();
 extern int relay_auth_check_password_plain (const char *password,
                                             const char *relay_password);

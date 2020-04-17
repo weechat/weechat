@@ -183,13 +183,13 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
     {
         weechat_hashtable_set (
             hashtable,
-            "auth_password",
-            (client->auth_password >= 0) ?
-            relay_auth_password_name[client->auth_password] : "");
-        snprintf (string, sizeof (string), "%d", client->hash_iterations);
+            "password_hash_algo",
+            (client->password_hash_algo >= 0) ?
+            relay_auth_password_hash_algo_name[client->password_hash_algo] : "");
+        snprintf (string, sizeof (string), "%d", client->password_hash_iterations);
         weechat_hashtable_set (
             hashtable,
-            "hash_iterations",
+            "password_hash_iterations",
             string);
         weechat_hashtable_set (
             hashtable,
@@ -226,7 +226,7 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
 RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 {
     char **options, **auths, *pos;
-    int i, j, index_auth, auth_found, auth_allowed, compression;
+    int i, j, index_hash_algo, hash_algo_found, auth_allowed, compression;
     int password_received, plain_text_password;
 
     RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
@@ -234,7 +234,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
     if (client->status != RELAY_STATUS_WAITING_AUTH)
         return WEECHAT_RC_OK;
 
-    auth_found = -1;
+    hash_algo_found = -1;
     password_received = 0;
 
     options = (argc > 0) ?
@@ -248,7 +248,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
             {
                 pos[0] = '\0';
                 pos++;
-                if (strcmp (options[i], "password") == 0)
+                if (strcmp (options[i], "password_hash_algo") == 0)
                 {
                     password_received = 1;
                     auths = weechat_string_split (
@@ -264,16 +264,16 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
                     {
                         for (j = 0; auths[j]; j++)
                         {
-                            index_auth = relay_auth_password_search (
+                            index_hash_algo = relay_auth_password_hash_algo_search (
                                 auths[j]);
-                            if ((index_auth >= 0) && (index_auth > auth_found))
+                            if ((index_hash_algo >= 0) && (index_hash_algo > hash_algo_found))
                             {
                                 auth_allowed = weechat_string_match_list (
-                                    relay_auth_password_name[index_auth],
-                                    (const char **)relay_config_network_auth_password_list,
+                                    relay_auth_password_hash_algo_name[index_hash_algo],
+                                    (const char **)relay_config_network_password_hash_algo_list,
                                     1);
                                 if (auth_allowed)
-                                    auth_found = index_auth;
+                                    hash_algo_found = index_hash_algo;
                             }
                         }
                         weechat_string_free_split (auths);
@@ -293,14 +293,14 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
     if (!password_received)
     {
         plain_text_password = weechat_string_match_list (
-            relay_auth_password_name[0],
-            (const char **)relay_config_network_auth_password_list,
+            relay_auth_password_hash_algo_name[0],
+            (const char **)relay_config_network_password_hash_algo_list,
             1);
         if (plain_text_password)
-            auth_found = 0;
+            hash_algo_found = 0;
     }
 
-    client->auth_password = auth_found;
+    client->password_hash_algo = hash_algo_found;
 
     relay_weechat_protocol_handshake_reply (client, id);
 

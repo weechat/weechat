@@ -1298,12 +1298,12 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
         plain_text_password = weechat_string_match_list (
-            relay_auth_password_name[0],
-            (const char **)relay_config_network_auth_password_list,
+            relay_auth_password_hash_algo_name[0],
+            (const char **)relay_config_network_password_hash_algo_list,
             1);
-        new_client->auth_password = (plain_text_password) ? 0 : -1;
-        new_client->hash_iterations = weechat_config_integer (
-            relay_config_network_hash_iterations);
+        new_client->password_hash_algo = (plain_text_password) ? 0 : -1;
+        new_client->password_hash_iterations = weechat_config_integer (
+            relay_config_network_password_hash_iterations);
         new_client->nonce = relay_auth_generate_nonce ();
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
@@ -1506,17 +1506,17 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->protocol_string = (str) ? strdup (str) : NULL;
         str = weechat_infolist_string (infolist, "protocol_args");
         new_client->protocol_args = (str) ? strdup (str) : NULL;
-        /* "auth_password" is new in WeeChat 2.9 */
-        if (weechat_infolist_search_var (infolist, "auth_password"))
-            new_client->auth_password = weechat_infolist_integer (infolist, "auth_password");
+        /* "password_hash_algo" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "password_hash_algo"))
+            new_client->password_hash_algo = weechat_infolist_integer (infolist, "password_hash_algo");
         else
-            new_client->auth_password = RELAY_AUTH_PASSWORD_PLAIN;
-        /* "hash_iterations" is new in WeeChat 2.9 */
-        if (weechat_infolist_search_var (infolist, "hash_iterations"))
-            new_client->hash_iterations = weechat_infolist_integer (infolist, "hash_iterations");
+            new_client->password_hash_algo = RELAY_AUTH_PASSWORD_HASH_PLAIN;
+        /* "password_hash_iterations" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "password_hash_iterations"))
+            new_client->password_hash_iterations = weechat_infolist_integer (infolist, "password_hash_iterations");
         else
-            new_client->hash_iterations = weechat_config_integer (
-                relay_config_network_hash_iterations);
+            new_client->password_hash_iterations = weechat_config_integer (
+                relay_config_network_password_hash_iterations);
         /* "nonce" is new in WeeChat 2.9 */
         if (weechat_infolist_search_var (infolist, "nonce"))
             new_client->nonce = strdup (weechat_infolist_string (infolist, "nonce"));
@@ -1857,9 +1857,9 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", client->protocol_args))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "auth_password", client->auth_password))
+    if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_algo", client->password_hash_algo))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "hash_iterations", client->hash_iterations))
+    if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_iterations", client->password_hash_iterations))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "nonce", client->nonce))
         return 0;
@@ -1939,11 +1939,11 @@ relay_client_print_log ()
                             relay_protocol_string[ptr_client->protocol]);
         weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
         weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
-        weechat_log_printf ("  auth_password . . . . : %d (%s)",
-                            ptr_client->auth_password,
-                            (ptr_client->auth_password >= 0) ?
-                            relay_auth_password_name[ptr_client->auth_password] : "");
-        weechat_log_printf ("  hash_iterations . . . : %d",    ptr_client->hash_iterations);
+        weechat_log_printf ("  password_hash_algo. . : %d (%s)",
+                            ptr_client->password_hash_algo,
+                            (ptr_client->password_hash_algo >= 0) ?
+                            relay_auth_password_hash_algo_name[ptr_client->password_hash_algo] : "");
+        weechat_log_printf ("  password_hash_iterations: %d",    ptr_client->password_hash_iterations);
         weechat_log_printf ("  nonce . . . . . . . . : '%s'",  ptr_client->nonce);
         weechat_log_printf ("  listen_start_time . . : %lld",  (long long)ptr_client->listen_start_time);
         weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_client->start_time);

@@ -60,16 +60,16 @@ struct t_config_option *relay_config_color_text_selected;
 
 struct t_config_option *relay_config_network_allow_empty_password;
 struct t_config_option *relay_config_network_allowed_ips;
-struct t_config_option *relay_config_network_auth_password;
 struct t_config_option *relay_config_network_auth_timeout;
 struct t_config_option *relay_config_network_bind_address;
 struct t_config_option *relay_config_network_clients_purge_delay;
 struct t_config_option *relay_config_network_compression_level;
-struct t_config_option *relay_config_network_hash_iterations;
 struct t_config_option *relay_config_network_ipv6;
 struct t_config_option *relay_config_network_max_clients;
 struct t_config_option *relay_config_network_nonce_size;
 struct t_config_option *relay_config_network_password;
+struct t_config_option *relay_config_network_password_hash_algo;
+struct t_config_option *relay_config_network_password_hash_iterations;
 struct t_config_option *relay_config_network_ssl_cert_key;
 struct t_config_option *relay_config_network_ssl_priorities;
 struct t_config_option *relay_config_network_totp_secret;
@@ -94,7 +94,7 @@ struct t_config_option *relay_config_weechat_commands;
 regex_t *relay_config_regex_allowed_ips = NULL;
 regex_t *relay_config_regex_websocket_allowed_origins = NULL;
 struct t_hashtable *relay_config_hashtable_irc_backlog_tags = NULL;
-char **relay_config_network_auth_password_list = NULL;
+char **relay_config_network_password_hash_algo_list = NULL;
 
 
 /*
@@ -154,26 +154,27 @@ relay_config_change_network_allowed_ips (const void *pointer, void *data,
 }
 
 /*
- * Callback for changes on option "relay.network.auth_password".
+ * Callback for changes on option "relay.network.password_hash_algo".
  */
 
 void
-relay_config_change_network_auth_password (const void *pointer, void *data,
-                                           struct t_config_option *option)
+relay_config_change_network_password_hash_algo (const void *pointer,
+                                                void *data,
+                                                struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) option;
 
-    if (relay_config_network_auth_password_list)
+    if (relay_config_network_password_hash_algo_list)
     {
-        weechat_string_free_split (relay_config_network_auth_password_list);
-        relay_config_network_auth_password_list = NULL;
+        weechat_string_free_split (relay_config_network_password_hash_algo_list);
+        relay_config_network_password_hash_algo_list = NULL;
     }
 
-    relay_config_network_auth_password_list = weechat_string_split (
-        weechat_config_string (relay_config_network_auth_password),
+    relay_config_network_password_hash_algo_list = weechat_string_split (
+        weechat_config_string (relay_config_network_password_hash_algo),
         ",",
         NULL,
         WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -1066,20 +1067,6 @@ relay_config_init ()
         NULL, NULL, NULL,
         &relay_config_change_network_allowed_ips, NULL, NULL,
         NULL, NULL, NULL);
-    relay_config_network_auth_password = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "auth_password", "string",
-        N_("comma separated list of hash algorithms used for password "
-           "authentication in weechat protocol, among these values: \"plain\" "
-           "(password in plain text, not hashed), \"sha256\", \"sha512\", "
-           "\"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*\" means all algorithms, "
-           "a name beginning with \"!\" is a negative value to prevent an "
-           "algorithm from being used, wildcard \"*\" is allowed in names "
-           "(examples: \"*\", \"pbkdf2*\", \"*,!plain\")"),
-        NULL, 0, 0, "*", NULL, 0,
-        NULL, NULL, NULL,
-        &relay_config_change_network_auth_password, NULL, NULL,
-        NULL, NULL, NULL);
     relay_config_network_auth_timeout = weechat_config_new_option (
         relay_config_file, ptr_section,
         "auth_timeout", "integer",
@@ -1114,16 +1101,6 @@ relay_config_init ()
            "compression)"),
         NULL, 0, 9, "6", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    relay_config_network_hash_iterations = weechat_config_new_option (
-        relay_config_file, ptr_section,
-        "hash_iterations", "integer",
-        N_("number of iterations asked to the client in weechat protocol "
-           "when a hashed password with algorithm PBKDF2 is used for "
-           "authentication; more iterations is better in term of security but "
-           "is slower to compute; this number should not be too high if your "
-           "CPU is slow"),
-        NULL, 1, 1000000, "100000", NULL, 0,
-        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ipv6 = weechat_config_new_option (
         relay_config_file, ptr_section,
         "ipv6", "boolean",
@@ -1157,6 +1134,30 @@ relay_config_init ()
            "relay.network.allow_empty_password) (note: content is evaluated, "
            "see /help eval)"),
         NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    relay_config_network_password_hash_algo = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "password_hash_algo", "string",
+        N_("comma separated list of hash algorithms used for password "
+           "authentication in weechat protocol, among these values: \"plain\" "
+           "(password in plain text, not hashed), \"sha256\", \"sha512\", "
+           "\"pbkdf2+sha256\", \"pbkdf2+sha512\"), \"*\" means all algorithms, "
+           "a name beginning with \"!\" is a negative value to prevent an "
+           "algorithm from being used, wildcard \"*\" is allowed in names "
+           "(examples: \"*\", \"pbkdf2*\", \"*,!plain\")"),
+        NULL, 0, 0, "*", NULL, 0,
+        NULL, NULL, NULL,
+        &relay_config_change_network_password_hash_algo, NULL, NULL,
+        NULL, NULL, NULL);
+    relay_config_network_password_hash_iterations = weechat_config_new_option (
+        relay_config_file, ptr_section,
+        "password_hash_iterations", "integer",
+        N_("number of iterations asked to the client in weechat protocol "
+           "when a hashed password with algorithm PBKDF2 is used for "
+           "authentication; more iterations is better in term of security but "
+           "is slower to compute; this number should not be too high if your "
+           "CPU is slow"),
+        NULL, 1, 1000000, "100000", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_network_ssl_cert_key = weechat_config_new_option (
         relay_config_file, ptr_section,
@@ -1361,7 +1362,7 @@ relay_config_read ()
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         relay_config_change_network_allowed_ips (NULL, NULL, NULL);
-        relay_config_change_network_auth_password (NULL, NULL, NULL);
+        relay_config_change_network_password_hash_algo (NULL, NULL, NULL);
         relay_config_change_irc_backlog_tags (NULL, NULL, NULL);
     }
     return rc;
@@ -1406,9 +1407,9 @@ relay_config_free ()
         relay_config_hashtable_irc_backlog_tags = NULL;
     }
 
-    if (relay_config_network_auth_password_list)
+    if (relay_config_network_password_hash_algo_list)
     {
-        weechat_string_free_split (relay_config_network_auth_password_list);
-        relay_config_network_auth_password_list = NULL;
+        weechat_string_free_split (relay_config_network_password_hash_algo_list);
+        relay_config_network_password_hash_algo_list = NULL;
     }
 }
