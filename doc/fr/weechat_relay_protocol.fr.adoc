@@ -183,13 +183,13 @@ Exemples :
 ----
 # rien d'offert par le client (ou seulement "plain"), l'authentification par mot de passe "plain" sera utilisée si autorisée côté relay
 handshake
-handshake password=plain
+handshake password_hash_algo=plain
 
 # seulement plain, sha256 et pbkdf2+sha256 sont supportés par le client
-handshake password=plain:sha256:pbkdf2+sha256
+handshake password_hash_algo=plain:sha256:pbkdf2+sha256
 
 # seulement sha256 et sha512 sont supportés par le client, désactiver la compression
-handshake password=sha256:sha512,compression=off
+handshake password_hash_algo=sha256:sha512,compression=off
 ----
 
 Exemple de réponse :
@@ -1972,7 +1972,7 @@ Un tableau _NULL_ :
          ║ ouverture socket                ║ ajout du client         ║
          ║                                 ║                         ║
          ╟───────────────────────────────► ║                         ║
-         ║ cmd: handshake password=xxx,... ║ négociation algos       ║
+         ║ cmd: handshake ...              ║ négociation algos       ║
          ║                                 ║ et options              ║
          ║ ◄───────────────────────────────╢                         ║
          ║        msg: id: "handshake" ... ║                         ║

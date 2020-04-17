@@ -173,13 +173,13 @@ Examples:
 ----
 # nothing offered by the client (or only "plain"), authentication password "plain" will be used if allowed on relay side
 handshake
-handshake password=plain
+handshake password_hash_algo=plain
 
 # only plain, sha256 and pbkdf2+sha256 are supported by the client
-handshake password=plain:sha256:pbkdf2+sha256
+handshake password_hash_algo=plain:sha256:pbkdf2+sha256
 
 # only sha256 and sha512 are supported by the client, disable compression
-handshake password=sha256:sha512,compression=off
+handshake password_hash_algo=sha256:sha512,compression=off
 ----
 
 Example of response:
@@ -1929,7 +1929,7 @@ A _NULL_ array:
          ║ open socket                     ║ add client              ║
          ║                                 ║                         ║
          ╟───────────────────────────────► ║                         ║
-         ║ cmd: handshake password=xxx,... ║ negotiate algos         ║
+         ║ cmd: handshake ...              ║ negotiate algos         ║
          ║                                 ║ and options             ║
          ║ ◄───────────────────────────────╢                         ║
          ║        msg: id: "handshake" ... ║                         ║
