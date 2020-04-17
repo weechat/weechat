@@ -119,7 +119,7 @@ même si cela est rarement nécessaire.
 Syntaxe :
 
 ----
-handshake [<option>=<valeur>,[<option>=<valeur>,...]]
+(id) handshake [<option>=<valeur>,[<option>=<valeur>,...]]
 ----
 
 Paramètres :
@@ -232,7 +232,7 @@ reçue, sans avertissement.
 Syntaxe :
 
 ----
-init [<option>=<valeur>,[<option>=<valeur>,...]]
+(id) init [<option>=<valeur>,[<option>=<valeur>,...]]
 ----
 
 Paramètres :

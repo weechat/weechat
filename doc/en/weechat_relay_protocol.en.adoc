@@ -114,7 +114,7 @@ although it is rarely needed.
 Syntax:
 
 ----
-handshake [<option>=<value>,[<option>=<value>,...]]
+(id) handshake [<option>=<value>,[<option>=<value>,...]]
 ----
 
 Arguments:
@@ -217,7 +217,7 @@ _handshake_), without warning.
 Syntax:
 
 ----
-init [<option>=<value>,[<option>=<value>,...]]
+(id) init [<option>=<value>,[<option>=<value>,...]]
 ----
 
 Arguments:
