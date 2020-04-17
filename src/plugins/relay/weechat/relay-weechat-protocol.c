@@ -304,6 +304,10 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(handshake)
 
     relay_weechat_protocol_handshake_reply (client, id);
 
+    /* if no algo was found, we close the connection immediately */
+    if (client->password_hash_algo < 0)
+        relay_client_set_status (client, RELAY_STATUS_AUTH_FAILED);
+
     return WEECHAT_RC_OK;
 }
 

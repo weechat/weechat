@@ -158,7 +158,8 @@ suivantes :
 * _password_hash_algo_ : l'authentification mot de passe négociée : supportée
   par le client et _relay_ :
 ** (valeur vide) : la négociation a échoué, l'authentification par mot de passe
-   n'est *PAS* possible
+   n'est *PAS* possible ; dans ce cas la connexion avec le client est
+   immédiatement fermée
 ** _plain_
 ** _sha256_
 ** _sha512_

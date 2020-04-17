@@ -149,7 +149,8 @@ WeeChat replies with a hashtable containing the following keys and values:
 
 * _password_hash_algo_: the password authentication negotiated: supported by
   both the client and _relay_:
-** (empty value): negotiation failed, password authentication is *NOT* possible
+** (empty value): negotiation failed, password authentication is *NOT* possible;
+   in this case the connection with the client is immediately closed
 ** _plain_
 ** _sha256_
 ** _sha512_
