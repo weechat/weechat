@@ -117,13 +117,13 @@
 ** Standardwert: `+""+`
 
 * [[option_relay.network.auth_password]] *relay.network.auth_password*
-** Beschreibung: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste der Hash-Algorithmen, die für die Kennwortauthentifizierung im Weechat-Protokoll verwendet werden, unter diesen Werten: "plain" (Kennwort im Klartext, nicht gehasht), "sha256", "sha512", "pbkdf2 + sha256", "pbkdf2 + sha512" ), "*" bedeutet alle Algorithmen, ein Name, der mit "!" beginnt ist ein negativer Wert, um die Verwendung eines Algorithmus zu vermeiden. Ein Platzhalter "*" im Namen ist zulässig (Beispiele: "*", "pbkdf2 *", "*,! plain")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"*"+`
 
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
-** Beschreibung: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
+** Beschreibung: pass:none[Zeitüberschreitung (in Sekunden) für die Clientauthentifizierung: Die Verbindung wird geschlossen, falls der Client nach dieser Verzögerung immer noch nicht authentifiziert ist und der Clientstatus auf "Authentifizierung fehlgeschlagen" gesetzt ist (0 = ewig warten)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
 ** Standardwert: `+60+`
@@ -147,7 +147,7 @@
 ** Standardwert: `+6+`
 
 * [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
-** Beschreibung: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
+** Beschreibung: pass:none[Anzahl der Iterationen, die im Weechat-Protokoll an den Client gesendet werden, wenn ein Hash-Passwort mit dem Algorithmus PBKDF2 zur Authentifizierung verwendet wird; Mehr Iterationen sind aus Sicherheitsgründen besser, aber langsamer zu berechnen. Diese Zahl sollte nicht zu hoch sein, wenn Ihre CPU langsam ist]
 ** Typ: integer
 ** Werte: 1 .. 1000000
 ** Standardwert: `+100000+`
@@ -165,7 +165,7 @@
 ** Standardwert: `+5+`
 
 * [[option_relay.network.nonce_size]] *relay.network.nonce_size*
-** Beschreibung: pass:none[size of nonce (in bytes), generated when a client connects; the client must use this nonce, concatenated to the client nonce and the password when hashing the password in the "init" command of the weechat protocol]
+** Beschreibung: pass:none[Größe der Nonce (in Bytes), die generiert wird, wenn ein Client eine Verbindung herstellt; Der Client muss diese Nonce verwenden, die mit der Client-Nonce und dem Kennwort verknüpft ist, wenn das Kennwort im Befehl "init" des Weechat-Protokolls gehasht wird]
 ** Typ: integer
 ** Werte: 8 .. 128
 ** Standardwert: `+16+`
