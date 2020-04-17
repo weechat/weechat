@@ -191,6 +191,9 @@ handshake password=plain
 
 # seulement plain, sha256 et pbkdf2+sha256 sont supportés par le client
 handshake password=plain:sha256:pbkdf2+sha256
+
+# seulement sha256 et sha512 sont supportés par le client, désactiver la compression
+handshake password=sha256:sha512,compression=off
 ----
 
 Exemple de réponse :
