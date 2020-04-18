@@ -104,7 +104,6 @@ AC_CHECK_FUNCS([mallinfo])
 AH_VERBATIM([PREFIX], [#undef PREFIX])
 AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
 AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
-AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([HAVE_EAT_NEWLINE_GLITCH], [#undef HAVE_EAT_NEWLINE_GLITCH])
 AH_VERBATIM([HAVE_ASPELL_VERSION_STRING], [#undef HAVE_ASPELL_VERSION_STRING])
@@ -141,7 +140,6 @@ AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
 AC_ARG_ENABLE(headless,     [  --disable-headless      turn off headless binary (default=compiled), this is required for tests],enable_headless=$enableval,enable_headless=yes)
-AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
 AC_ARG_ENABLE(largefile,    [  --disable-largefile     turn off Large File Support (default=on)],enable_largefile=$enableval,enable_largefile=yes)
 AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
 AC_ARG_ENABLE(buflist,      [  --disable-buflist       turn off Buflist plugin (default=compiled)],enable_buflist=$enableval,enable_buflist=yes)
@@ -1047,8 +1045,8 @@ AC_MSG_CHECKING(for gcrypt headers and libraries)
 if test "x$ac_found_gcrypt_header" = "xno" -o "x$ac_found_gcrypt_lib" = "xno" ; then
     AC_MSG_RESULT(no)
     AC_MSG_ERROR([
-*** libgcrypt was not found. You may want to get it from ftp://ftp.gnupg.org/gcrypt/libgcrypt/
-*** or try to install libgcrypt-dev with your software package manager.])
+*** libgcrypt was not found. You may want to get it from https://www.gnupg.org/ftp/gcrypt/libgcrypt/
+*** or try to install it with your software package manager.])
 else
     AC_MSG_RESULT(yes)
     GCRYPT_CFLAGS=`libgcrypt-config --cflags`
@@ -1061,29 +1059,21 @@ fi
 #                                   gnutls
 # ------------------------------------------------------------------------------
 
-if test "x$enable_gnutls" = "xyes" ; then
-    AC_CHECK_HEADER(gnutls/gnutls.h,ac_found_gnutls_header="yes",ac_found_gnutls_header="no")
-    AC_CHECK_LIB(gnutls,gnutls_global_init,ac_found_gnutls_lib="yes",ac_found_gnutls_lib="no")
+AC_CHECK_HEADER(gnutls/gnutls.h,ac_found_gnutls_header="yes",ac_found_gnutls_header="no")
+AC_CHECK_LIB(gnutls,gnutls_global_init,ac_found_gnutls_lib="yes",ac_found_gnutls_lib="no")
 
-    AC_MSG_CHECKING(for gnutls headers and libraries)
-    if test "x$ac_found_gnutls_header" = "xno" -o "x$ac_found_gnutls_lib" = "xno" ; then
-        AC_MSG_RESULT(no)
-        AC_MSG_WARN([
-*** libgnutls was not found. You may want to get it from ftp://ftp.gnutls.org/pub/gnutls/
-*** WeeChat will be built without GnuTLS support.])
-        enable_gnutls="no"
-        not_found="$not_found gnutls"
-    else
-        AC_MSG_RESULT(yes)
-        GNUTLS_CFLAGS=`pkg-config gnutls --cflags`
-        GNUTLS_LFLAGS=`pkg-config gnutls --libs`
-        AC_SUBST(GNUTLS_CFLAGS)
-        AC_SUBST(GNUTLS_LFLAGS)
-        AC_DEFINE(HAVE_GNUTLS)
-        CFLAGS="$CFLAGS -DHAVE_GNUTLS"
-    fi
+AC_MSG_CHECKING(for gnutls headers and libraries)
+if test "x$ac_found_gnutls_header" = "xno" -o "x$ac_found_gnutls_lib" = "xno" ; then
+    AC_MSG_RESULT(no)
+    AC_MSG_ERROR([
+*** libgnutls was not found. You may want to get it from https://www.gnupg.org/ftp/gcrypt/gnutls/
+*** or try to install it with your software package manager.])
 else
-    not_asked="$not_asked gnutls"
+    AC_MSG_RESULT(yes)
+    GNUTLS_CFLAGS=`pkg-config gnutls --cflags`
+    GNUTLS_LFLAGS=`pkg-config gnutls --libs`
+    AC_SUBST(GNUTLS_CFLAGS)
+    AC_SUBST(GNUTLS_LFLAGS)
 fi
 
 # ------------------------------------------------------------------------------
@@ -1167,7 +1157,7 @@ if test "x$ac_found_zlib_header" = "xno" -o "x$ac_found_zlib_lib" = "xno" ; then
     AC_MSG_RESULT(no)
     AC_MSG_ERROR([
 *** zlib was not found. You may want to get it from https://zlib.net/
-*** or try to install zlib1g-dev with your software package manager.])
+*** or try to install it with your software package manager.])
 else
     AC_MSG_RESULT(yes)
     ZLIB_CFLAGS=`pkg-config zlib --cflags`
@@ -1358,7 +1348,6 @@ CXXFLAGS="$CXXFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\" -DWEECHAT_LICENSE=\\\"$LI
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
-AM_CONDITIONAL(HAVE_GNUTLS,             test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,              test "$enable_flock" = "yes")
 AM_CONDITIONAL(HAVE_EAT_NEWLINE_GLITCH, test "$enable_eatnewlineglitch" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,             test "$enable_ncurses" = "yes")
@@ -1516,9 +1505,6 @@ if test "x$enable_xfer" = "xyes"; then
 fi
 
 listoptional=""
-if test "x$enable_gnutls" = "xyes"; then
-    listoptional="$listoptional gnutls"
-fi
 if test "x$enable_flock" = "xyes"; then
     listoptional="$listoptional flock"
 fi

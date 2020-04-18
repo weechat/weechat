@@ -34,9 +34,7 @@
 #include <curl/curl.h>
 #include <zlib.h>
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
 
 #include "weechat.h"
 #include "wee-backtrace.h"
@@ -538,7 +536,6 @@ debug_libs_cb (const void *pointer, void *data,
 #endif /* GCRYPT_VERSION */
 
     /* display gnutls version */
-#ifdef HAVE_GNUTLS
 #ifdef GNUTLS_VERSION
     gui_chat_printf (NULL, "    gnutls: %s%s",
                      GNUTLS_VERSION,
@@ -547,9 +544,6 @@ debug_libs_cb (const void *pointer, void *data,
     gui_chat_printf (NULL, "    gnutls: (?)%s",
                      (weechat_no_gnutls) ? " (not initialized)" : "");
 #endif /* GNUTLS_VERSION */
-#else
-    gui_chat_printf (NULL, "    gnutls: (not available)");
-#endif /* HAVE_GNUTLS */
 
     /* display curl version */
 #ifdef LIBCURL_VERSION

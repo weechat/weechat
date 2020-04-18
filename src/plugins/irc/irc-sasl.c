@@ -26,12 +26,10 @@
 #include <arpa/inet.h>
 #include <gcrypt.h>
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #if LIBGNUTLS_VERSION_NUMBER >= 0x020a01 /* 2.10.1 */
 #include <gnutls/abstract.h>
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020a01 */
-#endif /* HAVE_GNUTLS */
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -144,7 +142,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                                              const char *sasl_username,
                                              const char *sasl_key)
 {
-#if defined(HAVE_GNUTLS) && (LIBGNUTLS_VERSION_NUMBER >= 0x030015) /* 3.0.21 */
+#if LIBGNUTLS_VERSION_NUMBER >= 0x030015 /* 3.0.21 */
     char *data, *string, *answer_base64;
     int length_data, length_username, length, ret;
     char *str_privkey;
@@ -316,7 +314,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
 
     return answer_base64;
 
-#else /* no gnutls or gnutls < 3.0.21 */
+#else /* GnuTLS < 3.0.21 */
 
     /* make C compiler happy */
     (void) data_base64;
@@ -329,7 +327,7 @@ irc_sasl_mechanism_ecdsa_nist256p_challenge (struct t_irc_server *server,
                     weechat_prefix ("error"));
 
     return NULL;
-#endif /* defined(HAVE_GNUTLS) && (LIBGNUTLS_VERSION_NUMBER >= 0x030015) */
+#endif /* LIBGNUTLS_VERSION_NUMBER >= 0x030015 */
 }
 
 /*

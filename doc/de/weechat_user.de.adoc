@@ -109,7 +109,7 @@ zu kompilieren und welche Pakete optional genutzt werden können.
 | libcurl4-gnutls-dev    |               | *ja*     | URL Transfer.
 | zlib1g-dev             |               | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
 | libgcrypt20-dev        |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES).
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |          | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *ja*     | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
 | gettext                |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
 | ca-certificates        |               |          | Zertifikate für SSL Verbindungen.
 | libaspell-dev
@@ -222,9 +222,6 @@ Liste von häufig verwendeten Optionen:
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
   kompiliert <<fset_plugin,Fset Erweiterung>>.
-
-| ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  kompiliert GnuTLS (für SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   kompiliert <<scripts_plugins,Guile Erweiterung>> (Scheme).

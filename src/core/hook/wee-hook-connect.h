@@ -21,9 +21,7 @@
 #ifndef WEECHAT_HOOK_CONNECT_H
 #define WEECHAT_HOOK_CONNECT_H
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
 
 struct t_weechat_plugin;
 struct t_infolist_item;
@@ -38,7 +36,6 @@ typedef int (t_hook_callback_connect)(const void *pointer, void *data,
                                       const char *error,
                                       const char *ip_address);
 
-#ifdef HAVE_GNUTLS
 typedef int (gnutls_callback_t)(const void *pointer, void *data,
                                 gnutls_session_t tls_session,
                                 const gnutls_datum_t *req_ca, int nreq,
@@ -50,7 +47,6 @@ typedef int (gnutls_callback_t)(const void *pointer, void *data,
                                 gnutls_retr_st *answer,
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
                                 int action);
-#endif /* HAVE_GNUTLS */
 
 struct t_hook_connect
 {
@@ -61,12 +57,10 @@ struct t_hook_connect
     int ipv6;                          /* use IPv6                          */
     int sock;                          /* socket (set when connected)       */
     int retry;                         /* retry count                       */
-#ifdef HAVE_GNUTLS
     gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
     gnutls_callback_t *gnutls_cb;      /* GnuTLS callback during handshake  */
     int gnutls_dhkey_size;             /* Diffie Hellman Key Exchange size  */
     char *gnutls_priorities;           /* GnuTLS priorities                 */
-#endif /* HAVE_GNUTLS */
     char *local_hostname;              /* force local hostname (optional)   */
     int child_read;                    /* to read data in pipe from child   */
     int child_write;                   /* to write data in pipe for child   */
@@ -94,7 +88,6 @@ extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     t_hook_callback_connect *callback,
                                     const void *callback_pointer,
                                     void *callback_data);
-#ifdef HAVE_GNUTLS
 extern int hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session);
 extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                                  const gnutls_datum_t *req_ca, int nreq,
@@ -105,7 +98,6 @@ extern int hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
 #else
                                                  gnutls_retr_st *answer);
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
-#endif /* HAVE_GNUTLS */
 extern void hook_connect_free_data (struct t_hook *hook);
 extern int hook_connect_add_to_infolist (struct t_infolist_item *item,
                                          struct t_hook *hook);

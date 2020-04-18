@@ -108,7 +108,7 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 | libcurl4-gnutls-dev    |                  | *必須* | URL 転送
 | zlib1g-dev             |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
 | libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)
-| libgnutls28-dev        | 2.2.0 以上 ^(3)^ |        | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
+| libgnutls28-dev        | 2.2.0 以上 ^(3)^ | *必須* | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 | gettext                |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
 | ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
 | libaspell-dev
@@ -220,9 +220,6 @@ CMake に対するオプションを指定するには、以下の書式を使�
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
   <<fset_plugin,Fset プラグイン>>のコンパイル。
-
-| ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  GnuTLS の有効化 (SSL 用)。
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   <<scripts_plugins,Guile プラグイン>> (Scheme) のコンパイル。

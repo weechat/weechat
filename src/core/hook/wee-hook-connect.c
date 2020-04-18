@@ -57,14 +57,6 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     struct t_hook_connect *new_hook_connect;
     int i;
 
-#ifndef HAVE_GNUTLS
-    /* make C compiler happy */
-    (void) gnutls_sess;
-    (void) gnutls_cb;
-    (void) gnutls_dhkey_size;
-    (void) gnutls_priorities;
-#endif /* HAVE_GNUTLS */
-
     if (!address || (port <= 0) || !callback)
         return NULL;
 
@@ -89,13 +81,11 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
     new_hook_connect->sock = -1;
     new_hook_connect->ipv6 = ipv6;
     new_hook_connect->retry = retry;
-#ifdef HAVE_GNUTLS
     new_hook_connect->gnutls_sess = gnutls_sess;
     new_hook_connect->gnutls_cb = gnutls_cb;
     new_hook_connect->gnutls_dhkey_size = gnutls_dhkey_size;
     new_hook_connect->gnutls_priorities = (gnutls_priorities) ?
         strdup (gnutls_priorities) : NULL;
-#endif /* HAVE_GNUTLS */
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
     new_hook_connect->child_read = -1;
@@ -129,7 +119,6 @@ hook_connect (struct t_weechat_plugin *plugin, const char *proxy,
  * Verifies certificates.
  */
 
-#ifdef HAVE_GNUTLS
 int
 hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
 {
@@ -158,13 +147,11 @@ hook_connect_gnutls_verify_certificates (gnutls_session_t tls_session)
 
     return rc;
 }
-#endif /* HAVE_GNUTLS */
 
 /*
  * Sets certificates.
  */
 
-#ifdef HAVE_GNUTLS
 int
 hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
                                       const gnutls_datum_t *req_ca, int nreq,
@@ -201,7 +188,6 @@ hook_connect_gnutls_set_certificates (gnutls_session_t tls_session,
 
     return rc;
 }
-#endif /* HAVE_GNUTLS */
 
 /*
  * Frees data in a connect hook.
@@ -225,13 +211,11 @@ hook_connect_free_data (struct t_hook *hook)
         free (HOOK_CONNECT(hook, address));
         HOOK_CONNECT(hook, address) = NULL;
     }
-#ifdef HAVE_GNUTLS
     if (HOOK_CONNECT(hook, gnutls_priorities))
     {
         free (HOOK_CONNECT(hook, gnutls_priorities));
         HOOK_CONNECT(hook, gnutls_priorities) = NULL;
     }
-#endif /* HAVE_GNUTLS */
     if (HOOK_CONNECT(hook, local_hostname))
     {
         free (HOOK_CONNECT(hook, local_hostname));
@@ -336,14 +320,12 @@ hook_connect_add_to_infolist (struct t_infolist_item *item,
         return 0;
     if (!infolist_new_var_integer (item, "retry", HOOK_CONNECT(hook, retry)))
         return 0;
-#ifdef HAVE_GNUTLS
     if (!infolist_new_var_pointer (item, "gnutls_sess", HOOK_CONNECT(hook, gnutls_sess)))
         return 0;
     if (!infolist_new_var_pointer (item, "gnutls_cb", HOOK_CONNECT(hook, gnutls_cb)))
         return 0;
     if (!infolist_new_var_integer (item, "gnutls_dhkey_size", HOOK_CONNECT(hook, gnutls_dhkey_size)))
         return 0;
-#endif /* HAVE_GNUTLS */
     if (!infolist_new_var_string (item, "local_hostname", HOOK_CONNECT(hook, local_hostname)))
         return 0;
     if (!infolist_new_var_integer (item, "child_read", HOOK_CONNECT(hook, child_read)))
@@ -392,12 +374,10 @@ hook_connect_print_log (struct t_hook *hook)
     log_printf ("    sock. . . . . . . . . : %d", HOOK_CONNECT(hook, sock));
     log_printf ("    ipv6. . . . . . . . . : %d", HOOK_CONNECT(hook, ipv6));
     log_printf ("    retry . . . . . . . . : %d", HOOK_CONNECT(hook, retry));
-#ifdef HAVE_GNUTLS
     log_printf ("    gnutls_sess . . . . . : 0x%lx", HOOK_CONNECT(hook, gnutls_sess));
     log_printf ("    gnutls_cb . . . . . . : 0x%lx", HOOK_CONNECT(hook, gnutls_cb));
     log_printf ("    gnutls_dhkey_size . . : %d", HOOK_CONNECT(hook, gnutls_dhkey_size));
     log_printf ("    gnutls_priorities . . : '%s'", HOOK_CONNECT(hook, gnutls_priorities));
-#endif /* HAVE_GNUTLS */
     log_printf ("    local_hostname. . . . : '%s'", HOOK_CONNECT(hook, local_hostname));
     log_printf ("    child_read. . . . . . : %d", HOOK_CONNECT(hook, child_read));
     log_printf ("    child_write . . . . . : %d", HOOK_CONNECT(hook, child_write));

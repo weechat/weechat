@@ -986,7 +986,6 @@ irc_config_server_default_change_cb (const void *pointer, void *data,
 const char *
 irc_config_check_gnutls_priorities (const char *priorities)
 {
-#ifdef HAVE_GNUTLS
     gnutls_priority_t priority_cache;
     const char *pos_error;
     int rc;
@@ -1003,12 +1002,6 @@ irc_config_check_gnutls_priorities (const char *priorities)
     if (pos_error)
         return pos_error;
     return priorities;
-#else
-    /* make C compiler happy */
-    (void) priorities;
-
-    return NULL;
-#endif /* HAVE_GNUTLS */
 }
 
 /*

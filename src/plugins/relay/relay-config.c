@@ -318,7 +318,6 @@ relay_config_check_network_ssl_priorities (const void *pointer, void *data,
                                            struct t_config_option *option,
                                            const char *value)
 {
-#ifdef HAVE_GNUTLS
     gnutls_priority_t priority_cache;
     const char *pos_error;
     int rc;
@@ -347,15 +346,6 @@ relay_config_check_network_ssl_priorities (const void *pointer, void *data,
                     (pos_error) ? pos_error : value);
 
     return 0;
-#else
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-    (void) value;
-
-    return 1;
-#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -371,13 +361,11 @@ relay_config_change_network_ssl_priorities (const void *pointer, void *data,
     (void) data;
     (void) option;
 
-#ifdef HAVE_GNUTLS
     if (relay_network_init_ok && relay_gnutls_priority_cache)
     {
         gnutls_priority_deinit (*relay_gnutls_priority_cache);
         relay_network_set_priority ();
     }
-#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -761,17 +749,6 @@ relay_config_create_option_port_path (const void *pointer, void *data,
 
     relay_server_get_protocol_args (option_name, &ipv4, &ipv6, &ssl,
                                     &unix_socket, &protocol, &protocol_args);
-
-#ifndef HAVE_GNUTLS
-    if (ssl)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: cannot use SSL because WeeChat was not built "
-                          "with GnuTLS support"),
-                        weechat_prefix ("error"), RELAY_PLUGIN_NAME);
-        rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
-    }
-#endif /* HAVE_GNUTLS */
 
     if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {

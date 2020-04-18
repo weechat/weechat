@@ -82,9 +82,7 @@ else()
   check_symbol_exists(backtrace "execinfo.h" HAVE_BACKTRACE)
 endif()
 
-if(GNUTLS_FOUND)
-  include_directories(${GNUTLS_INCLUDE_PATH})
-endif()
+include_directories(${GNUTLS_INCLUDE_PATH})
 
 include_directories(${CURL_INCLUDE_DIRS})
 

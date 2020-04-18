@@ -22,9 +22,7 @@
 
 #include <time.h>
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif /* HAVE_GNUTLS */
 
 struct t_relay_server;
 
@@ -92,11 +90,9 @@ struct t_relay_client
     int sock;                          /* socket for connection             */
     int server_port;                   /* port used for connection          */
     int ssl;                           /* 1 if SSL is enabled               */
-#ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;      /* gnutls session (only if SSL used) */
     struct t_hook *hook_timer_handshake; /* timer for doing gnutls handshake*/
     int gnutls_handshake_ok;           /* 1 if handshake was done and OK    */
-#endif /* HAVE_GNUTLS */
     int websocket;                     /* 0=not a ws, 1=init ws, 2=ws ready */
     struct t_hashtable *http_headers;  /* HTTP headers for websocket        */
     char *address;                     /* string with IP address            */

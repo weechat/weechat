@@ -20,6 +20,18 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.9]]
 == Version 2.9 (under dev)
 
+[[v2.9_remove_gnutls_build_option]]
+=== GnuTLS is not optional any more
+
+The build options `ENABLE_GNUTLS` (in CMake) and `--disable-gnutls` (in autotools)
+have been removed. That means now GnuTLS is always compiled and used in WeeChat.
+
+Motivations:
+
+* communications encryption should be built-in, not optional
+* GnuTLS library should be available everywhere
+* reduce complexity of code and tests of builds.
+
 [[v2.9_relay_weechat_protocol_handshake_nonce]]
 === Add of handshake and nonce in weechat relay protocol
 

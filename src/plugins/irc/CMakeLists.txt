@@ -48,10 +48,8 @@ set_target_properties(irc PROPERTIES PREFIX "")
 
 set(LINK_LIBS)
 
-if(GNUTLS_FOUND)
-  include_directories(${GNUTLS_INCLUDE_PATH})
-  list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
-endif()
+include_directories(${GNUTLS_INCLUDE_PATH})
+list(APPEND LINK_LIBS ${GNUTLS_LIBRARY})
 
 list(APPEND LINK_LIBS ${GCRYPT_LDFLAGS})
 

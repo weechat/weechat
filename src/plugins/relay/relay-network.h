@@ -20,18 +20,14 @@
 #ifndef WEECHAT_PLUGIN_RELAY_NETWORK_H
 #define WEECHAT_PLUGIN_RELAY_NETWORK_H
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif /* HAVE_GNUTLS */
 
 extern int relay_network_init_ok;
 extern int relay_network_init_ssl_cert_key_ok;
 
-#ifdef HAVE_GNUTLS
 extern gnutls_certificate_credentials_t relay_gnutls_x509_cred;
 extern gnutls_priority_t *relay_gnutls_priority_cache;
 extern gnutls_dh_params_t *relay_gnutls_dh_params;
-#endif /* HAVE_GNUTLS */
 
 extern void relay_network_set_ssl_cert_key (int verbose);
 extern void relay_network_set_priority ();

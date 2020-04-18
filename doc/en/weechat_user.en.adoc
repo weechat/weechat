@@ -103,7 +103,7 @@ compile WeeChat.
 | libcurl4-gnutls-dev    |               | *yes*    | URL transfer.
 | zlib1g-dev             |               | *yes*    | Compression of packets in relay plugin (weechat protocol), script plugin.
 | libgcrypt20-dev        |               | *yes*    | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES).
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |          | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *yes*    | SSL connection to IRC server, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 | gettext                |               |          | Internationalization (translation of messages; base language is English).
 | ca-certificates        |               |          | Certificates for SSL connections.
 | libaspell-dev
@@ -214,9 +214,6 @@ List of commonly used options:
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
   Compile <<fset_plugin,Fset plugin>>.
-
-| ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Enable GnuTLS (for SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Guile plugin>> (Scheme).

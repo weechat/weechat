@@ -9,7 +9,6 @@ compiler:
 env:
     - BUILDTOOL="cmake" BUILDARGS=""
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_GNUTLS=OFF"
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
     - BUILDTOOL="autotools" BUILDARGS=""
     - BUILDTOOL="autotools" BUILDARGS="--enable-python2"

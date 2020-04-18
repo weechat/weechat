@@ -125,7 +125,7 @@ compilare WeeChat.
 // TRANSLATION MISSING
 | libgcrypt20-dev        |               | *sì*      | Secured data, IRC SASL authentication (DH-BLOWFISH/DH-AES).
 // TRANSLATION MISSING
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ |           | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *sì*      | Connessione SSL al server IRC, support of SSL in relay plugin, IRC SASL authentication (ECDSA-NIST256P-CHALLENGE).
 | gettext                |               |           | Internazionalizzazione (traduzione dei messaggi; la lingua base è l'inglese).
 | ca-certificates        |               |           | Certificati per le connessioni SSL.
 | libaspell-dev
@@ -249,9 +249,6 @@ List of commonly used options:
 
 | ENABLE_FSET | `ON`, `OFF` | ON |
   Compile <<fset_plugin,Fset plugin>>.
-
-| ENABLE_GNUTLS | `ON`, `OFF` | ON |
-  Enable GnuTLS (for SSL).
 
 | ENABLE_GUILE | `ON`, `OFF` | ON |
   Compile <<scripts_plugins,Guile plugin>> (Scheme).

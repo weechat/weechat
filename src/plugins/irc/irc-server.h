@@ -25,9 +25,7 @@
 #include <sys/time.h>
 #include <regex.h>
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif /* HAVE_GNUTLS */
 
 #ifndef NI_MAXHOST
 #define NI_MAXHOST 256
@@ -188,11 +186,9 @@ struct t_irc_server
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
     int disconnected;               /* 1 if server has been disconnected     */
-#ifdef HAVE_GNUTLS
     gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
     gnutls_x509_crt_t tls_cert;     /* certificate used if ssl_cert is set   */
     gnutls_x509_privkey_t tls_cert_key; /* key used if ssl_cert is set       */
-#endif /* HAVE_GNUTLS */
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */
     char **nicks_array;             /* nicknames (after split)               */
@@ -267,7 +263,6 @@ struct t_irc_message
 
 /* digest algorithms for fingerprint */
 
-#ifdef HAVE_GNUTLS
 enum t_irc_fingerprint_digest_algo
 {
     IRC_FINGERPRINT_ALGO_SHA1 = 0,
@@ -276,13 +271,10 @@ enum t_irc_fingerprint_digest_algo
     /* number of digest algorithms */
     IRC_FINGERPRINT_NUM_ALGOS,
 };
-#endif /* HAVE_GNUTLS */
 
 extern struct t_irc_server *irc_servers;
-#ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
-#endif /* HAVE_GNUTLS */
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 extern char *irc_server_sasl_fail_string[];
 extern char *irc_server_options[][2];
@@ -355,10 +347,8 @@ extern void irc_server_msgq_add_buffer (struct t_irc_server *server,
 extern void irc_server_msgq_flush ();
 extern void irc_server_set_buffer_title (struct t_irc_server *server);
 extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server);
-#ifdef HAVE_GNUTLS
 int irc_server_fingerprint_search_algo_with_size (int size);
 char *irc_server_fingerprint_str_sizes ();
-#endif /* HAVE_GNUTLS */
 extern int irc_server_connect (struct t_irc_server *server);
 extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels (struct t_irc_server *server);

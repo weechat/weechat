@@ -21,9 +21,7 @@
 
 #include <stdlib.h>
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif /* HAVE_GNUTLS */
 
 #include "../weechat-plugin.h"
 #include "relay.h"
@@ -34,11 +32,9 @@
 int relay_network_init_ok = 0;
 int relay_network_init_ssl_cert_key_ok = 0;
 
-#ifdef HAVE_GNUTLS
 gnutls_certificate_credentials_t relay_gnutls_x509_cred;
 gnutls_priority_t *relay_gnutls_priority_cache = NULL;
 gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
-#endif /* HAVE_GNUTLS */
 
 
 /*
@@ -51,7 +47,6 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 void
 relay_network_set_ssl_cert_key (int verbose)
 {
-#ifdef HAVE_GNUTLS
     char *certkey_path, *certkey_path2, *weechat_dir;
     int ret;
 
@@ -99,10 +94,6 @@ relay_network_set_ssl_cert_key (int verbose)
         }
         free (certkey_path);
     }
-#else
-    /* make C compiler happy */
-    (void) verbose;
-#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -112,7 +103,6 @@ relay_network_set_ssl_cert_key (int verbose)
 void
 relay_network_set_priority ()
 {
-#ifdef HAVE_GNUTLS
     if (gnutls_priority_init (relay_gnutls_priority_cache,
                               weechat_config_string (
                                   relay_config_network_ssl_priorities),
@@ -124,7 +114,6 @@ relay_network_set_priority ()
         free (relay_gnutls_priority_cache);
         relay_gnutls_priority_cache = NULL;
     }
-#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -134,8 +123,6 @@ relay_network_set_priority ()
 void
 relay_network_init ()
 {
-#ifdef HAVE_GNUTLS
-
     /* credentials */
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
     relay_network_set_ssl_cert_key (0);
@@ -144,7 +131,7 @@ relay_network_init ()
     relay_gnutls_priority_cache = malloc (sizeof (*relay_gnutls_priority_cache));
     if (relay_gnutls_priority_cache)
         relay_network_set_priority ();
-#endif /* HAVE_GNUTLS */
+
     relay_network_init_ok = 1;
 }
 
@@ -157,7 +144,6 @@ relay_network_end ()
 {
     if (relay_network_init_ok)
     {
-#ifdef HAVE_GNUTLS
         if (relay_gnutls_priority_cache)
         {
             gnutls_priority_deinit (*relay_gnutls_priority_cache);
@@ -171,7 +157,7 @@ relay_network_end ()
             relay_gnutls_dh_params = NULL;
         }
         gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
-#endif /* HAVE_GNUTLS */
+
         relay_network_init_ok = 0;
     }
 }

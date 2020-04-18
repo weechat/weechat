@@ -52,9 +52,7 @@
 #include <sys/uio.h>
 #endif
 
-#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
 
 #include "weechat.h"
 #include "wee-network.h"
@@ -68,9 +66,7 @@
 
 int network_init_gnutls_ok = 0;
 
-#ifdef HAVE_GNUTLS
 gnutls_certificate_credentials_t gnutls_xcred; /* GnuTLS client credentials */
-#endif /* HAVE_GNUTLS */
 
 
 /*
@@ -95,7 +91,6 @@ network_init_gcrypt ()
 void
 network_set_gnutls_ca_file ()
 {
-#ifdef HAVE_GNUTLS
     char *ca_path, *ca_path2;
 
     if (weechat_no_gnutls)
@@ -113,7 +108,6 @@ network_set_gnutls_ca_file ()
         }
         free (ca_path);
     }
-#endif /* HAVE_GNUTLS */
 }
 
 /*
@@ -123,7 +117,6 @@ network_set_gnutls_ca_file ()
 void
 network_init_gnutls ()
 {
-#ifdef HAVE_GNUTLS
     if (!weechat_no_gnutls)
     {
         gnutls_global_init ();
@@ -142,7 +135,6 @@ network_init_gnutls ()
                                                          &hook_connect_gnutls_set_certificates);
 #endif /* LIBGNUTLS_VERSION_NUMBER >= 0x020b00 */
     }
-#endif /* HAVE_GNUTLS */
 
     network_init_gnutls_ok = 1;
 }
@@ -156,13 +148,11 @@ network_end ()
 {
     if (network_init_gnutls_ok)
     {
-#ifdef HAVE_GNUTLS
         if (!weechat_no_gnutls)
         {
             gnutls_certificate_free_credentials (gnutls_xcred);
             gnutls_global_deinit ();
         }
-#endif /* HAVE_GNUTLS */
         network_init_gnutls_ok = 0;
     }
 }
@@ -1278,7 +1268,6 @@ network_connect_child_timer_cb (const void *pointer, void *data,
  * finish).
  */
 
-#ifdef HAVE_GNUTLS
 int
 network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
                                         int fd)
@@ -1355,13 +1344,11 @@ network_connect_gnutls_handshake_fd_cb (const void *pointer, void *data,
 
     return WEECHAT_RC_OK;
 }
-#endif /* HAVE_GNUTLS */
 
 /*
  * Timer callback for timeout of handshake.
  */
 
-#ifdef HAVE_GNUTLS
 int
 network_connect_gnutls_handshake_timer_cb (const void *pointer,
                                            void *data,
@@ -1390,7 +1377,6 @@ network_connect_gnutls_handshake_timer_cb (const void *pointer,
 
     return WEECHAT_RC_OK;
 }
-#endif /* HAVE_GNUTLS */
 
 /*
  * Reads connection progress from child process.
@@ -1403,9 +1389,7 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
     char buffer[1], buf_size[6], *cb_error, *cb_ip_address, *error;
     int num_read;
     long size_msg;
-#ifdef HAVE_GNUTLS
     int rc, direction;
-#endif /* HAVE_GNUTLS */
     int sock, i;
     struct msghdr msg;
     struct cmsghdr *cmsg;
@@ -1502,7 +1486,6 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
 
             HOOK_CONNECT(hook_connect, sock) = sock;
 
-#ifdef HAVE_GNUTLS
             if (HOOK_CONNECT(hook_connect, gnutls_sess))
             {
                 /*
@@ -1586,7 +1569,6 @@ network_connect_child_read_cb (const void *pointer, void *data, int fd)
                 }
 #endif /* LIBGNUTLS_VERSION_NUMBER < 0x02090a */
             }
-#endif /* HAVE_GNUTLS */
         }
         else
         {
@@ -1650,12 +1632,9 @@ network_connect_with_fork (struct t_hook *hook_connect)
 {
     int child_pipe[2], child_socket[2], rc, i;
     char str_error[1024];
-#ifdef HAVE_GNUTLS
     const char *pos_error;
-#endif /* HAVE_GNUTLS */
     pid_t pid;
 
-#ifdef HAVE_GNUTLS
     /* initialize GnuTLS if SSL asked */
     if (HOOK_CONNECT(hook_connect, gnutls_sess))
     {
@@ -1702,7 +1681,6 @@ network_connect_with_fork (struct t_hook *hook_connect)
         gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
                                   (gnutls_transport_ptr_t) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
     }
-#endif /* HAVE_GNUTLS */
 
     /* create pipe for child process */
     if (pipe (child_pipe) < 0)
