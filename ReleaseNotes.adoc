@@ -32,6 +32,77 @@ Motivations:
 * GnuTLS library should be available everywhere
 * reduce complexity of code and tests of builds.
 
+[[v2.9_trigger_cmd_pass_remove_set_command]]
+=== The trigger "cmd_pass" does not hide any more values of /set command
+
+The default trigger "cmd_pass" does not hide any more values of options in `/set`
+command which contain "password" in the name.
+
+The reason is that it was masking values of options that contains the word
+"password" but the value is not a password and does not contain sensitive data,
+for example these options were affected:
+
+* irc.look.nicks_hide_password
+* relay.network.allow_empty_password
+* relay.network.password_hash_algo
+* relay.network.password_hash_iterations
+
+Since all real password options are now evaluated, it is recommended to use
+secure data to store the passwords ciphered in config file. +
+By using secure data, the passwords are never displayed on screen (even with
+`/set` command) nor written in log files.
+
+For example you can do that:
+
+----
+/secure passphrase my_secret_passphrase
+/secure set freenode my_password
+/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+----
+
+This will be displayed like that in WeeChat, using the new regex value of
+_cmd_pass_ trigger:
+
+----
+/secure passphrase ********************
+/secure set freenode ***********
+/set irc.server.freenode.sasl_password "${sec.data.freenode}"
+----
+
+If you want to use the new trigger regex after upgrade, you can do:
+
+----
+/trigger restore cmd_pass
+----
+
+If ever you prefer the old trigger regex, you can change it like that:
+
+----
+/set trigger.trigger.cmd_pass.regex  "==^((/(msg|m|quote) +(-server +[^ ]+ +)?nickserv +(id|identify|set +password|ghost +[^ ]+|release +[^ ]+|regain +[^ ]+|recover +[^ ]+) +)|/oper +[^ ]+ +|/quote +pass +|/set +[^ ]*password[^ ]* +|/secure +(passphrase|decrypt|set +[^ ]+) +)(.*)==${re:1}${hide:*,${re:+}}"
+----
+
+[[v2.9_trigger_command_eval]]
+=== Evaluation of trigger command arguments
+
+The arguments for a trigger command (except the command itself) are now evaluated.
+
+That means you can use for example new lines in the command description, like that:
+
+----
+/trigger add test command "test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2"
+----
+
+The command `/help test` will display this help in WeeChat:
+
+----
+[trigger]  /test  arg1 arg2
+
+test command
+
+arg1: description 1
+arg2: description 2
+----
+
 [[v2.9_relay_weechat_protocol_handshake_nonce]]
 === Add of handshake and nonce in weechat relay protocol
 
@@ -61,28 +132,6 @@ a breaking change in protocol, needed for security reasons.
 
 See the link:weechat_relay_protocol.en.html#command_init[init command]
 in Relay protocol doc for more information.
-
-[[v2.9_trigger_command_eval]]
-=== Evaluation of trigger command arguments
-
-The arguments for a trigger command (except the command itself) are now evaluated.
-
-That means you can use for example new lines in the command description, like that:
-
-----
-/trigger add test command "test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2"
-----
-
-The command `/help test` will display this help in WeeChat:
-
-----
-[trigger]  /test  arg1 arg2
-
-test command
-
-arg1: description 1
-arg2: description 2
-----
 
 [[v2.8]]
 == Version 2.8 (2020-03-29)

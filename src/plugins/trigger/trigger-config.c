@@ -71,7 +71,6 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      *   - /msg nickserv id|identify|ghost|release|regain|recover
      *   - /oper
      *   - /quote pass
-     *   - /set *password*
      *   - /secure passphrase|decrypt|set
      */
     { "cmd_pass", "on",
@@ -84,7 +83,6 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
       "recover +[^ ]+) +)|"
       "/oper +[^ ]+ +|"
       "/quote +pass +|"
-      "/set +[^ ]*password[^ ]* +|"
       "/secure +(passphrase|decrypt|set +[^ ]+) +)"
       "(.*)"
       "==${re:1}${hide:*,${re:+}}",

@@ -33,6 +33,7 @@ Bug fixes::
   * core: fix memory leak in calculation of expression on FreeBSD (issue #1469)
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
+  * trigger: do not hide values of options with /set command in cmd_pass trigger
 
 Documentation::
 
