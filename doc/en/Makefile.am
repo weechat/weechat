@@ -59,41 +59,41 @@ all-local: $(man_targets) $(doc_targets)
 
 # man pages
 weechat.1: weechat.1.en.adoc cmdline_options.en.adoc cmdline_options_debug.en.adoc
-	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/en/weechat.1.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/en/weechat.1.en.adoc
 weechat-headless.1: weechat-headless.1.en.adoc cmdline_options.en.adoc cmdline_options_debug.en.adoc
-	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/en/weechat-headless.1.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/en/weechat-headless.1.en.adoc
 
 # user's guide
 weechat_user.en.html: weechat_user.en.adoc cmdline_options.en.adoc cmdline_options_debug.en.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_user.en.html $(abs_top_srcdir)/doc/en/weechat_user.en.adoc
 
 # plugin API reference
 weechat_plugin_api.en.html: weechat_plugin_api.en.adoc $(wildcard autogen/plugin_api/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_plugin_api.en.html $(abs_top_srcdir)/doc/en/weechat_plugin_api.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_plugin_api.en.html $(abs_top_srcdir)/doc/en/weechat_plugin_api.en.adoc
 
 # scripting guide
 weechat_scripting.en.html: weechat_scripting.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_scripting.en.html $(abs_top_srcdir)/doc/en/weechat_scripting.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_scripting.en.html $(abs_top_srcdir)/doc/en/weechat_scripting.en.adoc
 
 # FAQ
 weechat_faq.en.html: weechat_faq.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_faq.en.html $(abs_top_srcdir)/doc/en/weechat_faq.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_faq.en.html $(abs_top_srcdir)/doc/en/weechat_faq.en.adoc
 
 # quickstart
 weechat_quickstart.en.html: weechat_quickstart.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_quickstart.en.html $(abs_top_srcdir)/doc/en/weechat_quickstart.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_quickstart.en.html $(abs_top_srcdir)/doc/en/weechat_quickstart.en.adoc
 
 # tester's guide
 weechat_tester.en.html: weechat_tester.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_tester.en.html $(abs_top_srcdir)/doc/en/weechat_tester.en.adoc
 
 # relay protocol
 weechat_relay_protocol.en.html: weechat_relay_protocol.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_relay_protocol.en.html $(abs_top_srcdir)/doc/en/weechat_relay_protocol.en.adoc
 
 # developer's guide
 weechat_dev.en.html: weechat_dev.en.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_dev.en.html $(abs_top_srcdir)/doc/en/weechat_dev.en.adoc
 
 # install man/docs
 

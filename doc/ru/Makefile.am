@@ -42,13 +42,13 @@ all-local: $(man_targets) $(doc_targets)
 
 # man pages
 weechat.1: weechat.1.ru.adoc cmdline_options.ru.adoc cmdline_options_debug.ru.adoc
-	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.adoc
 weechat-headless.1: weechat-headless.1.ru.adoc cmdline_options.ru.adoc cmdline_options_debug.ru.adoc
-	$(ASCIIDOCTOR) -a revision="WeeChat $(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/ru/weechat-headless.1.ru.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/ru/weechat-headless.1.ru.adoc
 
 # quickstart
 weechat_quickstart.ru.html: weechat_quickstart.ru.adoc $(abs_top_srcdir)/doc/docinfo.html
-	$(ASCIIDOCTOR) -a revision="$(VERSION)" -a sectanchors -a source-highlighter=prettify -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.adoc
+	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_quickstart.ru.html $(abs_top_srcdir)/doc/ru/weechat_quickstart.ru.adoc
 
 # install man/docs
 
