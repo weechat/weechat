@@ -3724,7 +3724,6 @@ WeeChat はデフォルトで 5
   `pass:[/msg nickserv id\|identify\|set password\|ghost\|release\|regain\|recover]`、
   `pass:[/oper]`、
   `pass:[/quote pass]`、
-  `pass:[/set *password*]`、
   `pass:[/secure passphrase\|decrypt\|set]`。
 
 | cmd_pass_register | modifier |
