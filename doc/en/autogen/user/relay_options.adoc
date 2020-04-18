@@ -116,12 +116,6 @@
 ** values: any string
 ** default value: `+""+`
 
-* [[option_relay.network.auth_password]] *relay.network.auth_password*
-** description: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
-** type: string
-** values: any string
-** default value: `+"*"+`
-
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** description: pass:none[timeout (in seconds) for client authentication: connection is closed if the client is still not authenticated after this delay and the client status is set to "authentication failed" (0 = wait forever)]
 ** type: integer
@@ -146,12 +140,6 @@
 ** values: 0 .. 9
 ** default value: `+6+`
 
-* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
-** description: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
-** type: integer
-** values: 1 .. 1000000
-** default value: `+100000+`
-
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** description: pass:none[listen on IPv6 socket by default (in addition to IPv4 which is default); protocols IPv4 and IPv6 can be forced (individually or together) in the protocol name (see /help relay)]
 ** type: boolean
@@ -175,6 +163,18 @@
 ** type: string
 ** values: any string
 ** default value: `+""+`
+
+* [[option_relay.network.password_hash_algo]] *relay.network.password_hash_algo*
+** description: pass:none[comma separated list of hash algorithms used for password authentication in weechat protocol, among these values: "plain" (password in plain text, not hashed), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512"), "*" means all algorithms, a name beginning with "!" is a negative value to prevent an algorithm from being used, wildcard "*" is allowed in names (examples: "*", "pbkdf2*", "*,!plain")]
+** type: string
+** values: any string
+** default value: `+"*"+`
+
+* [[option_relay.network.password_hash_iterations]] *relay.network.password_hash_iterations*
+** description: pass:none[number of iterations asked to the client in weechat protocol when a hashed password with algorithm PBKDF2 is used for authentication; more iterations is better in term of security but is slower to compute; this number should not be too high if your CPU is slow]
+** type: integer
+** values: 1 .. 1000000
+** default value: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** description: pass:none[file with SSL certificate and private key (for serving clients with SSL)]

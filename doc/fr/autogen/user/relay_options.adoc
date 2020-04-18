@@ -116,12 +116,6 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
 
-* [[option_relay.network.auth_password]] *relay.network.auth_password*
-** description: pass:none[liste des algorithmes de hachage pour l'authentification par mot de passe dans le protocole relay, parmi ces valeurs : "plain" (mot de passe en clair, non haché), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" ; "*" signifie tous les algorithmes, un nom commençant par "!" est une valeur négative pour empêcher un algorithme d'être utilisé, le caractère joker "*" est autorisé dans les noms (exemples : "*", "pbkdf2*", "*,!plain")]
-** type: chaîne
-** valeurs: toute chaîne
-** valeur par défaut: `+"*"+`
-
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** description: pass:none[temps maximum (en secondes) pour l'authentification du client ; la connexion est fermée si le client n'est toujours pas authentifié après ce délai et le statut est positionné à "échec d'authentification" (0 = attendre sans fin)]
 ** type: entier
@@ -146,12 +140,6 @@
 ** valeurs: 0 .. 9
 ** valeur par défaut: `+6+`
 
-* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
-** description: pass:none[nombre d'itérations demandées au client dans le protocole weechat lorsqu'un mot de passe haché avec l'algorithme PBKDF2 est utilisé pour l'authentification ; plus d'itérations est mieux en terme de sécurité mais est plus lent à calculer ; ce nombre ne doit pas être trop élevé si votre micro-processeur est lent]
-** type: entier
-** valeurs: 1 .. 1000000
-** valeur par défaut: `+100000+`
-
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** description: pass:none[écouter en IPv6 sur le socket par défaut (en plus de l'IPv4 qui est par défaut) ; les protocoles IPv4 et IPv6 peuvent être forcés (individuellement ou ensemble) dans le nom du protocole (voir /help relay)]
 ** type: booléen
@@ -175,6 +163,18 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`
+
+* [[option_relay.network.password_hash_algo]] *relay.network.password_hash_algo*
+** description: pass:none[liste des algorithmes de hachage pour l'authentification par mot de passe dans le protocole relay, parmi ces valeurs : "plain" (mot de passe en clair, non haché), "sha256", "sha512", "pbkdf2+sha256", "pbkdf2+sha512" ; "*" signifie tous les algorithmes, un nom commençant par "!" est une valeur négative pour empêcher un algorithme d'être utilisé, le caractère joker "*" est autorisé dans les noms (exemples : "*", "pbkdf2*", "*,!plain")]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"*"+`
+
+* [[option_relay.network.password_hash_iterations]] *relay.network.password_hash_iterations*
+** description: pass:none[nombre d'itérations demandées au client dans le protocole weechat lorsqu'un mot de passe haché avec l'algorithme PBKDF2 est utilisé pour l'authentification ; plus d'itérations est mieux en terme de sécurité mais est plus lent à calculer ; ce nombre ne doit pas être trop élevé si votre micro-processeur est lent]
+** type: entier
+** valeurs: 1 .. 1000000
+** valeur par défaut: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** description: pass:none[fichier avec le certificat et la clé privée SSL (pour servir les clients avec SSL)]

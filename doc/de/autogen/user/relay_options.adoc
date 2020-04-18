@@ -116,12 +116,6 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
-* [[option_relay.network.auth_password]] *relay.network.auth_password*
-** Beschreibung: pass:none[durch Kommata getrennte Liste der Hash-Algorithmen, die für die Kennwortauthentifizierung im Weechat-Protokoll verwendet werden, unter diesen Werten: "plain" (Kennwort im Klartext, nicht gehasht), "sha256", "sha512", "pbkdf2 + sha256", "pbkdf2 + sha512" ), "*" bedeutet alle Algorithmen, ein Name, der mit "!" beginnt ist ein negativer Wert, um die Verwendung eines Algorithmus zu vermeiden. Ein Platzhalter "*" im Namen ist zulässig (Beispiele: "*", "pbkdf2 *", "*,! plain")]
-** Typ: Zeichenkette
-** Werte: beliebige Zeichenkette
-** Standardwert: `+"*"+`
-
 * [[option_relay.network.auth_timeout]] *relay.network.auth_timeout*
 ** Beschreibung: pass:none[Zeitüberschreitung (in Sekunden) für die Clientauthentifizierung: Die Verbindung wird geschlossen, falls der Client nach dieser Verzögerung immer noch nicht authentifiziert ist und der Clientstatus auf "Authentifizierung fehlgeschlagen" gesetzt ist (0 = ewig warten)]
 ** Typ: integer
@@ -146,12 +140,6 @@
 ** Werte: 0 .. 9
 ** Standardwert: `+6+`
 
-* [[option_relay.network.hash_iterations]] *relay.network.hash_iterations*
-** Beschreibung: pass:none[Anzahl der Iterationen, die im Weechat-Protokoll an den Client gesendet werden, wenn ein Hash-Passwort mit dem Algorithmus PBKDF2 zur Authentifizierung verwendet wird; Mehr Iterationen sind aus Sicherheitsgründen besser, aber langsamer zu berechnen. Diese Zahl sollte nicht zu hoch sein, wenn Ihre CPU langsam ist]
-** Typ: integer
-** Werte: 1 .. 1000000
-** Standardwert: `+100000+`
-
 * [[option_relay.network.ipv6]] *relay.network.ipv6*
 ** Beschreibung: pass:none[lauscht standardmäßig am IPv6 Socket (zusätzlich zu IPv4, welches als Standardprotokoll genutzt wird); mittels des Protokollnamens kann das IPv4 und IPv6 Protokoll, einzeln oder gemeinsam, erzwungen werden (siehe /help relay)]
 ** Typ: boolesch
@@ -175,6 +163,18 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
+
+* [[option_relay.network.password_hash_algo]] *relay.network.password_hash_algo*
+** Beschreibung: pass:none[durch Kommata getrennte Liste der Hash-Algorithmen, die für die Kennwortauthentifizierung im Weechat-Protokoll verwendet werden, unter diesen Werten: "plain" (Kennwort im Klartext, nicht gehasht), "sha256", "sha512", "pbkdf2 + sha256", "pbkdf2 + sha512" ), "*" bedeutet alle Algorithmen, ein Name, der mit "!" beginnt ist ein negativer Wert, um die Verwendung eines Algorithmus zu vermeiden. Ein Platzhalter "*" im Namen ist zulässig (Beispiele: "*", "pbkdf2 *", "*,! plain")]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"*"+`
+
+* [[option_relay.network.password_hash_iterations]] *relay.network.password_hash_iterations*
+** Beschreibung: pass:none[Anzahl der Iterationen, die im Weechat-Protokoll an den Client gesendet werden, wenn ein Hash-Passwort mit dem Algorithmus PBKDF2 zur Authentifizierung verwendet wird; Mehr Iterationen sind aus Sicherheitsgründen besser, aber langsamer zu berechnen. Diese Zahl sollte nicht zu hoch sein, wenn Ihre CPU langsam ist]
+** Typ: integer
+** Werte: 1 .. 1000000
+** Standardwert: `+100000+`
 
 * [[option_relay.network.ssl_cert_key]] *relay.network.ssl_cert_key*
 ** Beschreibung: pass:none[Datei mit SSL Zertifikat und privatem Schlüssel (zur Nutzung von Clients mit SSL)]
