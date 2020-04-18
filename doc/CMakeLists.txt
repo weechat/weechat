@@ -21,7 +21,7 @@
 if(ENABLE_MAN OR ENABLE_DOC)
   find_package(Asciidoctor)
   if(ASCIIDOCTOR_FOUND)
-    set(ASCIIDOCTOR_ARGS -a experimental -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=prettify)
+    set(ASCIIDOCTOR_ARGS -a experimental -a "prewrap!" -a icons=font -a revnumber="${VERSION}" -a sectanchors -a source-highlighter=prettify)
     add_subdirectory(cs)
     add_subdirectory(de)
     add_subdirectory(en)
