@@ -7914,7 +7914,7 @@ const char *weechat_prefix (const char *prefix);
 
 List of prefixes:
 
-[width="70%",cols="^2m,^1,^3,5",options="header"]
+[width="100%",cols="^2m,^1,^3,5",options="header"]
 |===
 | プレフィックス    | 値 | 色    | 説明
 | error   | `+=!=+` | yellow     | エラーメッセージ
@@ -12169,7 +12169,7 @@ info を使う前にエリアが一致していることを確認して下さい
 
 バー要素 "buffer_nicklist" の追加情報:
 
-[width="60%",cols="1,1,5",options="header"]
+[width="100%",cols="1,1,5",options="header"]
 |===
 | キー     | プラグイン ^(1)^ | 説明
 | nick     | core             | ニックネーム

@@ -91,7 +91,7 @@ _リレー_ プラグインは _IRC プロキシ_ のように振舞います (�
 
 利用可能なコマンドのリスト (詳しくは次の章を参照):
 
-[width="80%",cols="^3m,14",options="header"]
+[width="100%",cols="^3m,14",options="header"]
 |===
 | コマンド  | 説明
 // TRANSLATION MISSING
@@ -595,7 +595,7 @@ test
 
 返されるオブジェクト (以下の順番):
 
-[width="80%",cols="^3,3m,5m",options="header"]
+[width="100%",cols="^3,3m,5m",options="header"]
 |===
 | 型                | 型 (メッセージ中) | 値
 | char              | chr               | 65 ("A")

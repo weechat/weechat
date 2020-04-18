@@ -8057,7 +8057,7 @@ Valeur de retour :
 
 Liste des préfixes :
 
-[width="70%",cols="^2m,^1,^3,5",options="header"]
+[width="100%",cols="^2m,^1,^3,5",options="header"]
 |===
 | Préfixe | Valeur   | Couleur                   | Description
 | error   | `+=!=+`  | jaune ("yellow")          | Message d'erreur.
@@ -12452,7 +12452,7 @@ relâché). +
 
 Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 
-[width="60%",cols="1,1,5",options="header"]
+[width="100%",cols="1,1,5",options="header"]
 |===
 | Clé      | Extension ^(1)^ | Description
 | nick     | core            | Pseudonyme.

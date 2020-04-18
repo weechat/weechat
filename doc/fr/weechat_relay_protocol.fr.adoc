@@ -89,7 +89,7 @@ Les champs sont :
 
 Liste des commandes disponibles (détail dans les chapitres suivants) :
 
-[width="80%",cols="^3m,14",options="header"]
+[width="100%",cols="^3m,14",options="header"]
 |===
 | Commande  | Description
 | handshake | Poignée de main : préparer l'authentification du client et définir des options, avant la commande _init_.
@@ -601,7 +601,7 @@ test
 
 Objets retournés (dans cet ordre) :
 
-[width="80%",cols="^3,3m,5m",options="header"]
+[width="100%",cols="^3,3m,5m",options="header"]
 |===
 | Type               | Type (dans le message) | Valeur
 | caractère          | chr                    | 65 ("A")

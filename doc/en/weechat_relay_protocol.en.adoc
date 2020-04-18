@@ -84,7 +84,7 @@ Fields are:
 
 List of available commands (detail in next chapters):
 
-[width="80%",cols="^3m,14",options="header"]
+[width="100%",cols="^3m,14",options="header"]
 |===
 | Command   | Description
 | handshake | Handshake: prepare client authentication and set options, before _init_ command.
@@ -580,7 +580,7 @@ test
 
 Returned objects (in this order):
 
-[width="80%",cols="^3,3m,5m",options="header"]
+[width="100%",cols="^3,3m,5m",options="header"]
 |===
 | Type              | Type (in message) | Value
 | char              | chr               | 65 ("A")

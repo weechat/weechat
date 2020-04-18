@@ -58,7 +58,7 @@ This manual documents only _weechat_ repository.
 
 The main WeeChat directories are:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Directory          | Description
 | src/               | Root of sources.
@@ -114,7 +114,7 @@ WeeChat "core" is located in following directories:
 * _src/core/_: core functions (for data manipulation)
 * _src/gui/_: functions about interface (buffers, windows, ...)
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Path/file                       | Description
 | core/                           | Core functions: entry point, internal structures.
@@ -207,7 +207,7 @@ WeeChat "core" is located in following directories:
 [[sources_plugins]]
 ==== Plugins
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Path/file                         | Description
 | plugins/                          | Root of plugins.
@@ -377,7 +377,7 @@ WeeChat "core" is located in following directories:
 [[sources_tests]]
 ==== Tests
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Path/file                         | Description
 | tests/                            | Root of tests.
@@ -428,7 +428,7 @@ WeeChat "core" is located in following directories:
 
 Documentation files:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Path/file                            | Description
 | doc/                                 | Documentation.
@@ -454,7 +454,7 @@ Documentation files:
 Translations for WeeChat and plugins are done with gettext, files are in _po/_
 directory:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Path/file      | Description
 | po/            | Translation files (gettext).
@@ -719,7 +719,7 @@ _irc.c_ in irc plugin.
 
 Examples:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Directory           | Files
 | src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
@@ -932,7 +932,7 @@ could be used at same time in buffers).
 Color codes using options (see _t_gui_color_enum_, in file
 _src/gui/gui-color.h_):
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | Code | Option
 | 00   | weechat.color.separator
@@ -984,7 +984,7 @@ _src/gui/gui-color.h_):
 
 WeeChat colors are:
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | Code | Color
 | 00   | Default (terminal foreground/background)
@@ -1008,7 +1008,7 @@ WeeChat colors are:
 
 Examples of color codes:
 
-[width="70%",cols="1,2",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Code                           | Description
 | [hex]#19# `+01+`               | Color of option "01" (chat text)

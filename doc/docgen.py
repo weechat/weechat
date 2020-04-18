@@ -606,7 +606,7 @@ def docgen_cmd_cb(data, buf, args):
 
         # write IRC colors
         doc = AutogenDoc(directory, 'user', 'irc_colors')
-        doc.write('[width="30%",cols="^2m,3",options="header"]\n')
+        doc.write('[width="50%",cols="^2m,3",options="header"]\n')
         doc.write('|===\n')
         doc.write('| {0} | {1}\n\n'
                   ''.format(_('IRC color'), _('WeeChat color')))

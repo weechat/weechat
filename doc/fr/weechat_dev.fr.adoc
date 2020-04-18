@@ -60,7 +60,7 @@ Ce manuel documente seulement le dépôt _weechat_.
 
 Les répertoires principaux de WeeChat sont :
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Répertoire         | Description
 | src/               | Racine des sources.
@@ -116,7 +116,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 * _src/core/_ : fonctions du cœur (pour manipuler des données)
 * _src/gui/_ : fonctions pour l'interface (tampons, fenêtres, ...)
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Chemin/fichier                  | Description
 | core/                           | Fonctions du cœur : point d'entrée, structures internes.
@@ -209,7 +209,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 [[sources_plugins]]
 ==== Extensions
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Chemin/fichier                    | Description
 | plugins/                          | Racine des extensions.
@@ -379,7 +379,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 [[sources_tests]]
 ==== Tests
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Chemin/fichier                    | Description
 | tests/                            | Racine des tests.
@@ -429,7 +429,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 
 Fichiers de documentation :
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Chemin/fichier                       | Description
 | doc/                                 | Documentation.
@@ -455,7 +455,7 @@ Fichiers de documentation :
 Les traductions pour WeeChat et les extensions sont effectuées avec gettext, les
 fichiers sont dans le répertoire _po/_ :
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Chemin/fichier | Description
 | po/            | Fichiers de traduction (gettext).
@@ -729,7 +729,7 @@ par exemple _irc.c_ pour l'extension irc.
 
 Exemples :
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Répertoire          | Fichiers
 | src/core/           | weechat.c, wee-backtrace.c, wee-command.c, ...
@@ -949,7 +949,7 @@ utilisés au même moment dans les tampons).
 Les codes couleur utilisant des options (voir _t_gui_color_enum_, dans le
 fichier _src/gui/gui-color.h_) :
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | Code | Option
 | 00   | weechat.color.separator
@@ -1001,7 +1001,7 @@ fichier _src/gui/gui-color.h_) :
 
 Les couleurs WeeChat sont :
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | Code | Couleur
 | 00   | Défaut (couleur de texte/fond du terminal)
@@ -1025,7 +1025,7 @@ Les couleurs WeeChat sont :
 
 Exemples de codes couleur :
 
-[width="70%",cols="1,2",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Code                           | Description
 | [hex]#19# `+01+`               | Couleur de l'option "01" (texte de discussion).

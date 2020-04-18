@@ -760,7 +760,7 @@ For example, to send text `/set` on current buffer:
 For some plugins like IRC, you can use color codes and attributes, as
 follow (press kbd:[Ctrl+c] then following letter, with optional value):
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Key                    | Description
 | kbd:[Ctrl+c], kbd:[b]  | Bold text.
@@ -816,7 +816,7 @@ WeeChat can use up to 32767 color pairs to display text in bars and chat area
 According to value of _TERM_ environment variable, you may have following limits
 for colors in WeeChat:
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | Colors | Pairs
 | "rxvt-unicode", "xterm", ...           |     88 | 32767
@@ -859,7 +859,7 @@ you can change it with these two commands:
 
 Basic colors in WeeChat are:
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | Name         | Color
 | default      | Default terminal color (transparent for background)
@@ -1101,7 +1101,7 @@ Tags can be displayed with the command `/debug tags` (same command to hide them)
 
 Tags commonly used (non-exhaustive list):
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Tag              | Description
 | no_filter        | Line can not be filtered.
@@ -1460,7 +1460,7 @@ The default notify level can be set using option
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
 default is _all_.
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | Notify level | Level of messages added to hotlist
 | none         | (none)
@@ -1946,7 +1946,7 @@ Event name consists of a modifier (optional), a button/wheel name and a gesture
 
 List of modifiers:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Modifier | Description
 | ctrl     | Key kbd:[Ctrl]
@@ -1956,7 +1956,7 @@ List of modifiers:
 
 List of buttons/wheel:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Button/wheel        | Description
 | button1             | Click on left button
@@ -1969,7 +1969,7 @@ List of buttons/wheel:
 
 List of gestures (only for buttons, not wheel):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Gesture            | Distance
 | gesture-up         | 3 ... 19
@@ -1984,7 +1984,7 @@ List of gestures (only for buttons, not wheel):
 
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Event      | Description
 | event-down | Button was pressed but not released yet
@@ -2191,7 +2191,7 @@ Examples to load, unload or list plugins:
 
 Default plugins are:
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Plugin     | Description
 | alias      | Define alias for commands.
@@ -2861,7 +2861,7 @@ server or channel buffer.
 
 Non-comprehensive list of IRC messages or alias that you can customize:
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | message | alias         | description
 | error   |               | error

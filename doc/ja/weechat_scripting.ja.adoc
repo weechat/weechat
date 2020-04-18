@@ -531,7 +531,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 
 スクリプト API に含まれる関数のリスト:
 
-[width="75%",cols="1,3",options="header"]
+[width="100%",cols="1,3",options="header"]
 |===
 | カテゴリ | 関数
 
@@ -773,7 +773,7 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 
 スクリプト API に含まれる定数のリスト:
 
-[width="75%",cols="1,3",options="header"]
+[width="100%",cols="1,3",options="header"]
 |===
 | カテゴリ            | 定数
 

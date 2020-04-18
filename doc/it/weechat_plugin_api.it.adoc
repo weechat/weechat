@@ -8197,7 +8197,7 @@ Valore restituito:
 // TRANSLATION MISSING
 List of prefixes:
 
-[width="70%",cols="^2m,^1,^3,5",options="header"]
+[width="100%",cols="^2m,^1,^3,5",options="header"]
 |===
 | Prefisso | Valore   | Colore       | Descrizione
 | error    | `+=!=+`  | giallo       | Messaggio di errore.
@@ -12672,7 +12672,7 @@ per sapere dove il pulsante del mouse è stato rilasciato). +
 
 Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 
-[width="60%",cols="1,1,5",options="header"]
+[width="100%",cols="1,1,5",options="header"]
 |===
 | Chiave   | Plugin ^(1)^ | Descrizione
 | nick     | core         | Nick.

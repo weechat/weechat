@@ -767,7 +767,7 @@ Für einige Erweiterungen wie z.B. der IRC Erweiterung können Farbkodierungen u
 Text gesetzt werden. Dazu muss die Tastenkombination kbd:[Ctrl+c], gefolgt von einem der folgenden
 Zeichen, genutzt werden:
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Taste                  | Beschreibung
 | kbd:[Ctrl+c], kbd:[b]  | Text wird fett dargestellt.
@@ -824,7 +824,7 @@ Chatbereich darzustellen (der Terminal muss natürlich 256 Farben unterstützten
 Gemäß der Einstellung in der _TERM_-Umgebungsvariable bestehen folgende Einschränkungen
 was die Farbdarstellung in WeeChat betrifft:
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | Farben | Paare
 | "rxvt-unicode", "xterm", ...           |     88 | 32767
@@ -870,7 +870,7 @@ geändert werden:
 
 Basisfarben in WeeChat sind:
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | Name         | Farbe
 | default      | Standard Terminalfarbe (transparent für Hintergrund)
@@ -1117,7 +1117,7 @@ Tags kann man sich mit dem Befehl `/debug tags` anzeigen lassen (den Befehl ein 
 
 Tags die häufig verwendet werden (keine vollständige Auflistung):
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Tag              | Beschreibung
 | no_filter        | Zeile kann nicht gefiltert werden.
@@ -1487,7 +1487,7 @@ werden:
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
 Der Standardwert ist _all_.
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | Benachrichtigungsstufe | Welche Nachrichten Berücksichtigung in der Hotlist finden
 | none                   | (keine)
@@ -1984,7 +1984,7 @@ und der Mausgeste (optional). Die unterschiedlichen Elemente werden durch ein `+
 
 Liste der Modifiers:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Modifier | Beschreibung
 | ctrl     | Taste kbd:[Ctrl]
@@ -1994,7 +1994,7 @@ Liste der Modifiers:
 
 Liste der Maustasten/Mausrad:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Maustaste/-rad      | Beschreibung
 | button1             | Linker Mausknopf wird gedrückt
@@ -2007,7 +2007,7 @@ Liste der Maustasten/Mausrad:
 
 Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Mausgeste          | Distanz
 | gesture-up         | 3 ... 19
@@ -2022,7 +2022,7 @@ Liste der Mausgesten (nur für Maustasten, nicht für das Mausrad, anwendbar):
 
 Liste von unvollständigen Ereignissen (nur für Mausknopf, nützlich für Erweiterungen/Skripten):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Ereignis   | Beschreibung
 | event-down | Mausknopf ist gedrückt
@@ -2238,7 +2238,7 @@ Beispiele wie man Erweiterungen lädt, entfernt und auflistet:
 
 Standarderweiterungen:
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Erweiterung | Beschreibung
 | alias       | definiert Alias für Befehle.
@@ -2922,7 +2922,7 @@ Falls die Option nicht gesetzt ist (Standard) wählt WeeChat einen geeigneten Bu
 
 Unvollständige Liste der IRC Nachrichten bzw. Alias die angepasst werden können:
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | Nachricht | Alias         | Beschreibung
 | error     |               | Fehler

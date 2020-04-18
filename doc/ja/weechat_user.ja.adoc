@@ -769,7 +769,7 @@ hello
 IRC 等のプラグインでは、以下の色コードと属性を利用できます
 (kbd:[Ctrl+c] の後に、オプションとともに以下のキーを押してください):
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | キー                   | 説明
 | kbd:[Ctrl+c], kbd:[b]  | テキストを太字に
@@ -829,7 +829,7 @@ WeeChat ではバーやチャットエリアにおけるテキスト表示に 32
 _TERM_ 環境変数の値によって、WeeChat
 で利用できる色と色ペアに以下の制限があります:
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | 色     | ペア
 | "rxvt-unicode", "xterm", ...           |     88 | 32767
@@ -872,7 +872,7 @@ _TERM_ 変数が間違った値に設定された状態で WeeChat が起動完�
 
 WeeChat における基本色とは:
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | 名前         | 色
 | default      | デフォルトの端末色 (背景色を透過色とする)
@@ -1114,7 +1114,7 @@ WeeChat は様々な目的で各行にタグを付けます:
 
 通常使用するタグ (一部抜粋したリスト):
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | タグ             | 説明
 | no_filter        | フィルタできない行
@@ -1472,7 +1472,7 @@ WeeChat が以下のような表示状態の場合:
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>
 オプションで指定し、デフォルトは _all_ です。
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | 通知レベル   | ホットリストに追加されるメッセージのレベル
 | none         | (無効)
@@ -1972,7 +1972,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 修飾キーリスト:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | 修飾キー | 説明
 | ctrl     | kbd:[Ctrl] キー
@@ -1982,7 +1982,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 ボタン/ホイールのリスト:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | ボタン/ホイール     | 説明
 | button1             | 左ボタンクリック
@@ -1995,7 +1995,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 ジェスチャーのリスト (ボタンのみ対応、ホイール未対応):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | ジェスチャー       | 距離
 | gesture-up         | 3 から 19
@@ -2010,7 +2010,7 @@ WeeChat はデフォルトマウスイベントの多くを定義しています
 
 未完了イベントのリスト (ボタンのみ、プラグイン/スクリプトで便利):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | イベント   | 説明
 | event-down | マウスボタンが押され、離されていない状態
@@ -2218,7 +2218,7 @@ When a plugin is unloaded, WeeChat removes:
 
 デフォルトプラグインのリスト:
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | プラグイン | 説明
 | alias      | コマンドの別名を定義
@@ -2887,7 +2887,7 @@ weechat::
 
 カスタマイズできる一部の IRC メッセージ、別名のリストは以下です:
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | メッセージ | 別名       | 説明
 | error   |               | エラー

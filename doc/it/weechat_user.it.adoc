@@ -824,7 +824,7 @@ Per alcuni plugin come IRC, è possibile usare codici colori ed attributi,
 come segue (digitare kbd:[Ctrl+c] poi la lettera che segue, con il valore
 opzionale):
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 // TRANSLATIION MISSING
 | Key                    | Description
@@ -884,7 +884,7 @@ nell'area di chat(il terminale deve supportare 256 colori per essere utilizzati 
 In base al valore della variabile di ambiente _TERM_, potrebbero verificarsi i
 seguenti limiti per i colori in WeeChat:
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | Colori | Coppie
 | "rxvt-unicode", "xterm", ...           |     88 |  32767
@@ -931,7 +931,7 @@ you can change it with these two commands:
 
 I colori base in WeeChat sono:
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | Nome         | Colore
 | default      | Colore predefinito del terminale (trasparente per lo sfondo)
@@ -1179,7 +1179,7 @@ Tags can be displayed with the command `/debug tags` (same command to hide them)
 
 Tag usati di frequente (elenco non esaustivo):
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Tag              | Descrizione
 | no_filter        | La riga non può essere filtrata.
@@ -1551,7 +1551,7 @@ Il livello predefinito di notifica può essere impostato usando l'opzione
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
 il valore predefinito è _all_.
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | Livello di notifica | Livello del messaggio aggiunto alla hotlist
 | none                | (nessuno)
@@ -2089,7 +2089,7 @@ pulsante/rotellina e un'azione (opzionale). Elementi diversi sono separati da `+
 
 Elenco di modificatori
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Modificatore | Descrizione
 | ctrl         | Tasto kbd:[Ctrl]
@@ -2099,7 +2099,7 @@ Elenco di modificatori
 
 Elenco di pulsanti/rotellina:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Pulsante/rotellina  | Descrizione
 | button1             | Click sul tasto sinistro
@@ -2112,7 +2112,7 @@ Elenco di pulsanti/rotellina:
 
 Elenco di azioni (solo per i pulsanti, non la rotellina):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Azione             | Distanza
 | gesture-up         | 3 ... 19
@@ -2128,7 +2128,7 @@ Elenco di azioni (solo per i pulsanti, non la rotellina):
 // TRANSLATION MISSING
 List of incomplete events (only for buttons, useful for plugins/scripts):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Event      | Description
 | event-down | Button was pressed but not released yet
@@ -2346,7 +2346,7 @@ Esempi per caricare, scaricare oppure elencare i plugin:
 
 I plugin predefiniti sono:
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Plugin     | Descrizione
 | alias      | Definisce gli alias per i comandi.
@@ -3078,7 +3078,7 @@ appropriato, di solito quello del server o del canale.
 Ecco una lista incompleta dei messaggi IRC o degli alias che è possibile
 personalizzare:
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | messaggio | alias         | descrizione
 | error     |               | errore

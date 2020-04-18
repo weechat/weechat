@@ -512,7 +512,7 @@ link:weechat_plugin_api.en.html[WeeChat plugin API reference].
 
 List of functions in script API:
 
-[width="75%",cols="1,3",options="header"]
+[width="100%",cols="1,3",options="header"]
 |===
 | Category | Functions
 
@@ -754,7 +754,7 @@ List of functions in script API:
 
 List of constants in script API:
 
-[width="75%",cols="1,3",options="header"]
+[width="100%",cols="1,3",options="header"]
 |===
 | Category | Constants
 

@@ -766,7 +766,7 @@ Na przykład, żeby wysłać tekst `/set` do obecnego buforu:
 Dla niektórych wtyczek jak IRC, można użyć kolorów i atrybutów w następujący sposób
 (wciśnij kbd:[Ctrl+c] następnie literę z opcjonalną wartością):
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Klawisz                | Opis
 | kbd:[Ctrl+c], kbd:[b]  | pogrubiony tekst
@@ -823,7 +823,7 @@ rozmów (twój terminal musi wspierać do 256 par kolorów, aby użyć ich w Wee
 Zgodnie z wartością zmiennej środowiskowej _TERM_, możesz posiadać następujące
 limity dla kolorów w WeeChat:
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | Kolory |  Pary
 | "rxvt-unicode", "xterm", ...           |     88 | 32767
@@ -866,7 +866,7 @@ możesz ją zmienić za pomocą tych dwóch komend:
 
 Podstawowe kolory w WeeChat to:
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | Nazwa        | Kolor
 | default      | Domyślny kolor terminala (przezroczysty dla tła)
@@ -1108,7 +1108,7 @@ Tagi można wyświetlić używając komendy `/debug tags` (tą samą komendą mo
 
 Popularnie używane tagi  (niepełna lista):
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Tag              | Opis
 | no_filter        | Linia nie może być filtrowana.
@@ -1472,7 +1472,7 @@ Domyślny poziom powiadomień można ustawić za pomocą opcji
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
 domyślna wartość to _all_.
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | Poziom powiadomień | Poziom wiadomości dodawanej do hotlisty
 | none               | (brak)
@@ -1959,7 +1959,7 @@ Nazwa zdarzenia zawiera modyfikator (opcjonalny), nazwę klawisza/rolki i gest
 
 Lista modyfikatorów:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Modyfikator | Opis
 | ctrl        | Klawisz kbd:[Ctrl]
@@ -1969,7 +1969,7 @@ Lista modyfikatorów:
 
 Lista klawiszy/rolek:
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Klawisz/rolka       | Opis
 | button1             | Lewy klawisz myszy
@@ -1982,7 +1982,7 @@ Lista klawiszy/rolek:
 
 Lista gestów (tylko dla klawiszy, nie rolki):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Gest               | Odległość
 | gesture-up         | 3 ... 19
@@ -1997,7 +1997,7 @@ Lista gestów (tylko dla klawiszy, nie rolki):
 
 Lista niedkończonych zdarzeń (tylko dla przycisków, użyteczne dla wtyczek/skryptów):
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Zdarzenie  | Opis
 | event-down | Klawisz został wciśnięty ale jeszcze nie puszczony
@@ -2205,7 +2205,7 @@ Przykłady ładowania, wyładowywania i wyświetlania załadowanych wtyczek:
 
 Domyślne wtyczki:
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Wtyczka    | Opis
 | alias      | Definiuje aliasy dla komend.
@@ -2882,7 +2882,7 @@ zazwyczaj bufor serwera albo kanału.
 
 Niepełna lista wiadomości IRC lub aliasów jakie można dostosować:
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | wiadomość | alias         | opis
 | error     |               | błąd

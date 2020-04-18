@@ -778,7 +778,7 @@ Pour certaines extensions comme IRC, il est possible d'utiliser des codes
 couleur et attributs comme suit (appuyer sur kbd:[Ctrl+c] puis sur la lettre qui
 suit et éventuellement une valeur) :
 
-[width="60%",cols="3,5",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | Touche                 | Description
 | kbd:[Ctrl+c], kbd:[b]  | Texte gras.
@@ -836,7 +836,7 @@ pour pouvoir les utiliser dans WeeChat).
 Selon la valeur de la variable d'environnement _TERM_, vous pouvez avoir les
 limites suivantes pour les couleurs dans WeeChat :
 
-[width="50%",cols="8,>2,>2",options="header"]
+[width="75%",cols="8,>3,>3",options="header"]
 |===
 | $TERM                                  | Couleurs | Paires
 | "rxvt-unicode", "xterm", ...           |       88 |  32767
@@ -881,7 +881,7 @@ vous pouvez la changer avec ces deux commandes :
 
 Les couleurs de base dans WeeChat sont :
 
-[width="50%",cols="1m,4",options="header"]
+[width="75%",cols="1m,4",options="header"]
 |===
 | Nom          | Couleur
 | default      | Couleur par défaut du terminal (transparent pour le fond)
@@ -1130,7 +1130,7 @@ Les étiquettes peuvent être affichées avec la commande `/debug tags`
 
 Les étiquettes couramment utilisées (liste non exhaustive) :
 
-[width="70%",cols="1m,4",options="header"]
+[width="100%",cols="1m,4",options="header"]
 |===
 | Étiquette        | Description
 | no_filter        | La ligne ne peut pas être filtrée.
@@ -1505,7 +1505,7 @@ Le niveau de notification par défaut peut être défini avec l'option
 <<option_weechat.look.buffer_notify_default,weechat.look.buffer_notify_default>>,
 la valeur par défaut est _all_.
 
-[width="50%",cols="3m,10",options="header"]
+[width="75%",cols="2m,7",options="header"]
 |===
 | Niveau de notification | Niveau des messages ajoutés à la hotlist
 | none                   | (aucun)
@@ -2010,7 +2010,7 @@ et un geste (facultatif). Les différents éléments sont séparés par `+-+`.
 
 Liste des modificateurs :
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Modificateur | Description
 | ctrl         | Touche kbd:[Ctrl]
@@ -2020,7 +2020,7 @@ Liste des modificateurs :
 
 Liste des boutons/roulette :
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Bouton/roulette     | Description
 | button1             | Clic sur le bouton gauche
@@ -2033,7 +2033,7 @@ Liste des boutons/roulette :
 
 Liste des gestes (seulement pour les boutons, pas la roulette) :
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Geste              | Distance
 | gesture-up         | 3 ... 19
@@ -2049,7 +2049,7 @@ Liste des gestes (seulement pour les boutons, pas la roulette) :
 Liste des évènements incomplets (seulement pour les boutons, pratique pour les
 extensions/scripts) :
 
-[width="50%",cols="3m,4",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | Évènement  | Description
 | event-down | Le bouton a été pressé mais pas encore relâché
@@ -2267,7 +2267,7 @@ Exemples pour charger, décharger et afficher les extensions :
 
 Les extensions par défaut sont :
 
-[width="100%",cols="1,8",options="header"]
+[width="100%",cols="1,5",options="header"]
 |===
 | Extension  | Description
 | alias      | Définition d'alias pour les commandes.
@@ -2960,7 +2960,7 @@ le tampon approprié, généralement le tampon du serveur ou du canal.
 
 Liste non exhaustive des messages ou alias que vous pouvez paramétrer :
 
-[width="60%",cols="^1m,^3m,8",options="header"]
+[width="100%",cols="^1m,^3m,8",options="header"]
 |===
 | message | alias         | description
 | error   |               | erreur

@@ -7935,7 +7935,7 @@ Return value:
 
 List of prefixes:
 
-[width="70%",cols="^2m,^1,^3,5",options="header"]
+[width="100%",cols="^2m,^1,^3,5",options="header"]
 |===
 | Prefix  | Value   | Color      | Description
 | error   | `+=!=+` | yellow     | Error message.
@@ -12185,7 +12185,7 @@ button has been released). +
 
 Extra info for bar item "buffer_nicklist":
 
-[width="60%",cols="1,1,5",options="header"]
+[width="100%",cols="1,1,5",options="header"]
 |===
 | Key      | Plugin ^(1)^ | Description
 | nick     | core         | Nick name.

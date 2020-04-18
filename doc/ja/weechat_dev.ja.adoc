@@ -64,7 +64,7 @@ qweechat::
 
 主な WeeChat ディレクトリは:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | ディレクトリ       | 説明
 | src/               | ソースコードのルートディレクトリ
@@ -120,7 +120,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 * _src/core/_: コア関数 (データ操作用)
 * _src/gui/_: インターフェースの関数 (バッファ、ウィンドウ、...)
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | パス/ファイル名                 | 説明
 | core/                           | コア関数: エントリポイント、内部構造体
@@ -215,7 +215,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 [[sources_plugins]]
 ==== プラグイン
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | パス/ファイル名                   | 説明
 | plugins/                          | プラグインのルートディレクトリ
@@ -387,7 +387,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 [[sources_tests]]
 ==== テスト
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | パス/ファイル名                   | 説明
 | tests/                            | テスト用のルートディレクトリ
@@ -448,7 +448,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 文書ファイル:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | パス/ファイル名                      | 説明
 | doc/                                 | 文書
@@ -473,7 +473,7 @@ WeeChat "core" は以下のディレクトリに配置されています:
 
 WeeChat とプラグインの翻訳は gettext で行います、ファイルは _po/_ ディレクトリに含まれています:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | パス/ファイル名 | 説明
 | po/            | 翻訳ファイル (gettext)
@@ -735,7 +735,7 @@ irc プラグインの _irc.c_ など。
 
 例:
 
-[width="100%",cols="1m,2",options="header"]
+[width="100%",cols="2m,3",options="header"]
 |===
 | ディレクトリ        | ファイル
 | src/core/           | weechat.c、wee-backtrace.c、wee-command.c、...
@@ -948,7 +948,7 @@ could be used at same time in buffers).
 オプションを使う色コード
 (_src/gui/gui-color.h_ ファイルの _t_gui_color_enum_ を参照):
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | コード | オプション
 | 00   | weechat.color.separator
@@ -1000,7 +1000,7 @@ could be used at same time in buffers).
 
 WeeChat 色は:
 
-[width="70%",cols="^1m,10",options="header"]
+[width="80%",cols="^1m,10",options="header"]
 |===
 | コード | 色
 | 00   | デフォルト (端末の文字色/背景色)
@@ -1024,7 +1024,7 @@ WeeChat 色は:
 
 色コードの例:
 
-[width="70%",cols="1,2",options="header"]
+[width="100%",cols="1,2",options="header"]
 |===
 | コード                         | 説明
 | [hex]#19# `+01+`               | オプション "01" の色 (チャットテキスト)
