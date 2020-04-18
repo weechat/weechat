@@ -1297,6 +1297,7 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
+        new_client->nonce = relay_auth_generate_nonce ();
         plain_text_password = weechat_string_match_list (
             relay_auth_password_hash_algo_name[0],
             (const char **)relay_config_network_password_hash_algo_list,
@@ -1304,7 +1305,6 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->password_hash_algo = (plain_text_password) ? 0 : -1;
         new_client->password_hash_iterations = weechat_config_integer (
             relay_config_network_password_hash_iterations);
-        new_client->nonce = relay_auth_generate_nonce ();
         new_client->listen_start_time = server->start_time;
         new_client->start_time = time (NULL);
         new_client->end_time = 0;
@@ -1506,6 +1506,11 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         new_client->protocol_string = (str) ? strdup (str) : NULL;
         str = weechat_infolist_string (infolist, "protocol_args");
         new_client->protocol_args = (str) ? strdup (str) : NULL;
+        /* "nonce" is new in WeeChat 2.9 */
+        if (weechat_infolist_search_var (infolist, "nonce"))
+            new_client->nonce = strdup (weechat_infolist_string (infolist, "nonce"));
+        else
+            new_client->nonce = relay_auth_generate_nonce ();
         /* "password_hash_algo" is new in WeeChat 2.9 */
         if (weechat_infolist_search_var (infolist, "password_hash_algo"))
             new_client->password_hash_algo = weechat_infolist_integer (infolist, "password_hash_algo");
@@ -1517,11 +1522,6 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         else
             new_client->password_hash_iterations = weechat_config_integer (
                 relay_config_network_password_hash_iterations);
-        /* "nonce" is new in WeeChat 2.9 */
-        if (weechat_infolist_search_var (infolist, "nonce"))
-            new_client->nonce = strdup (weechat_infolist_string (infolist, "nonce"));
-        else
-            new_client->nonce = relay_auth_generate_nonce ();
         new_client->listen_start_time = weechat_infolist_time (infolist, "listen_start_time");
         new_client->start_time = weechat_infolist_time (infolist, "start_time");
         new_client->end_time = weechat_infolist_time (infolist, "end_time");
@@ -1857,11 +1857,11 @@ relay_client_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "protocol_args", client->protocol_args))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nonce", client->nonce))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_algo", client->password_hash_algo))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "password_hash_iterations", client->password_hash_iterations))
-        return 0;
-    if (!weechat_infolist_new_var_string (ptr_item, "nonce", client->nonce))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "listen_start_time", client->listen_start_time))
         return 0;
@@ -1915,51 +1915,51 @@ relay_client_print_log ()
     {
         weechat_log_printf ("");
         weechat_log_printf ("[relay client (addr:0x%lx)]", ptr_client);
-        weechat_log_printf ("  id. . . . . . . . . . : %d",   ptr_client->id);
-        weechat_log_printf ("  desc. . . . . . . . . : '%s'", ptr_client->desc);
-        weechat_log_printf ("  sock. . . . . . . . . : %d",   ptr_client->sock);
-        weechat_log_printf ("  server_port . . . . . : %d",   ptr_client->server_port);
-        weechat_log_printf ("  ssl . . . . . . . . . : %d",   ptr_client->ssl);
+        weechat_log_printf ("  id. . . . . . . . . . . . : %d",   ptr_client->id);
+        weechat_log_printf ("  desc. . . . . . . . . . . : '%s'", ptr_client->desc);
+        weechat_log_printf ("  sock. . . . . . . . . . . : %d",   ptr_client->sock);
+        weechat_log_printf ("  server_port . . . . . . . : %d",   ptr_client->server_port);
+        weechat_log_printf ("  ssl . . . . . . . . . . . : %d",   ptr_client->ssl);
 #ifdef HAVE_GNUTLS
-        weechat_log_printf ("  gnutls_sess . . . . . : 0x%lx", ptr_client->gnutls_sess);
-        weechat_log_printf ("  hook_timer_handshake. : 0x%lx", ptr_client->hook_timer_handshake);
-        weechat_log_printf ("  gnutls_handshake_ok . : 0x%lx", ptr_client->gnutls_handshake_ok);
+        weechat_log_printf ("  gnutls_sess . . . . . . . : 0x%lx", ptr_client->gnutls_sess);
+        weechat_log_printf ("  hook_timer_handshake. . . : 0x%lx", ptr_client->hook_timer_handshake);
+        weechat_log_printf ("  gnutls_handshake_ok . . . : 0x%lx", ptr_client->gnutls_handshake_ok);
 #endif /* HAVE_GNUTLS */
-        weechat_log_printf ("  websocket . . . . . . : %d",   ptr_client->websocket);
-        weechat_log_printf ("  http_headers. . . . . : 0x%lx (hashtable: '%s')",
+        weechat_log_printf ("  websocket . . . . . . . . : %d",   ptr_client->websocket);
+        weechat_log_printf ("  http_headers. . . . . . . : 0x%lx (hashtable: '%s')",
                             ptr_client->http_headers,
                             weechat_hashtable_get_string (ptr_client->http_headers, "keys_values"));
-        weechat_log_printf ("  address . . . . . . . : '%s'", ptr_client->address);
-        weechat_log_printf ("  real_ip . . . . . . . : '%s'", ptr_client->real_ip);
-        weechat_log_printf ("  status. . . . . . . . : %d (%s)",
+        weechat_log_printf ("  address . . . . . . . . . : '%s'", ptr_client->address);
+        weechat_log_printf ("  real_ip . . . . . . . . . : '%s'", ptr_client->real_ip);
+        weechat_log_printf ("  status. . . . . . . . . . : %d (%s)",
                             ptr_client->status,
                             relay_client_status_string[ptr_client->status]);
-        weechat_log_printf ("  protocol. . . . . . . : %d (%s)",
+        weechat_log_printf ("  protocol. . . . . . . . . : %d (%s)",
                             ptr_client->protocol,
                             relay_protocol_string[ptr_client->protocol]);
-        weechat_log_printf ("  protocol_string . . . : '%s'",  ptr_client->protocol_string);
-        weechat_log_printf ("  protocol_args . . . . : '%s'",  ptr_client->protocol_args);
-        weechat_log_printf ("  password_hash_algo. . : %d (%s)",
+        weechat_log_printf ("  protocol_string . . . . . : '%s'",  ptr_client->protocol_string);
+        weechat_log_printf ("  protocol_args . . . . . . : '%s'",  ptr_client->protocol_args);
+        weechat_log_printf ("  nonce . . . . . . . . . . : '%s'",  ptr_client->nonce);
+        weechat_log_printf ("  password_hash_algo. . . . : %d (%s)",
                             ptr_client->password_hash_algo,
                             (ptr_client->password_hash_algo >= 0) ?
                             relay_auth_password_hash_algo_name[ptr_client->password_hash_algo] : "");
-        weechat_log_printf ("  password_hash_iterations: %d",    ptr_client->password_hash_iterations);
-        weechat_log_printf ("  nonce . . . . . . . . : '%s'",  ptr_client->nonce);
-        weechat_log_printf ("  listen_start_time . . : %lld",  (long long)ptr_client->listen_start_time);
-        weechat_log_printf ("  start_time. . . . . . : %lld",  (long long)ptr_client->start_time);
-        weechat_log_printf ("  end_time. . . . . . . : %lld",  (long long)ptr_client->end_time);
-        weechat_log_printf ("  hook_fd . . . . . . . : 0x%lx", ptr_client->hook_fd);
-        weechat_log_printf ("  last_activity . . . . : %lld",  (long long)ptr_client->last_activity);
-        weechat_log_printf ("  bytes_recv. . . . . . : %llu",  ptr_client->bytes_recv);
-        weechat_log_printf ("  bytes_sent. . . . . . : %llu",  ptr_client->bytes_sent);
-        weechat_log_printf ("  recv_data_type. . . . : %d (%s)",
+        weechat_log_printf ("  password_hash_iterations. : %d",    ptr_client->password_hash_iterations);
+        weechat_log_printf ("  listen_start_time . . . . : %lld",  (long long)ptr_client->listen_start_time);
+        weechat_log_printf ("  start_time. . . . . . . . : %lld",  (long long)ptr_client->start_time);
+        weechat_log_printf ("  end_time. . . . . . . . . : %lld",  (long long)ptr_client->end_time);
+        weechat_log_printf ("  hook_fd . . . . . . . . . : 0x%lx", ptr_client->hook_fd);
+        weechat_log_printf ("  last_activity . . . . . . : %lld",  (long long)ptr_client->last_activity);
+        weechat_log_printf ("  bytes_recv. . . . . . . . : %llu",  ptr_client->bytes_recv);
+        weechat_log_printf ("  bytes_sent. . . . . . . . : %llu",  ptr_client->bytes_sent);
+        weechat_log_printf ("  recv_data_type. . . . . . : %d (%s)",
                             ptr_client->recv_data_type,
                             relay_client_data_type_string[ptr_client->recv_data_type]);
-        weechat_log_printf ("  send_data_type. . . . : %d (%s)",
+        weechat_log_printf ("  send_data_type. . . . . . : %d (%s)",
                             ptr_client->send_data_type,
                             relay_client_data_type_string[ptr_client->send_data_type]);
-        weechat_log_printf ("  partial_message . . . : '%s'",  ptr_client->partial_message);
-        weechat_log_printf ("  protocol_data . . . . : 0x%lx", ptr_client->protocol_data);
+        weechat_log_printf ("  partial_message . . . . . : '%s'",  ptr_client->partial_message);
+        weechat_log_printf ("  protocol_data . . . . . . : 0x%lx", ptr_client->protocol_data);
         switch (ptr_client->protocol)
         {
             case RELAY_PROTOCOL_WEECHAT:
@@ -1971,9 +1971,9 @@ relay_client_print_log ()
             case RELAY_NUM_PROTOCOLS:
                 break;
         }
-        weechat_log_printf ("  outqueue. . . . . . . : 0x%lx", ptr_client->outqueue);
-        weechat_log_printf ("  last_outqueue . . . . : 0x%lx", ptr_client->last_outqueue);
-        weechat_log_printf ("  prev_client . . . . . : 0x%lx", ptr_client->prev_client);
-        weechat_log_printf ("  next_client . . . . . : 0x%lx", ptr_client->next_client);
+        weechat_log_printf ("  outqueue. . . . . . . . . : 0x%lx", ptr_client->outqueue);
+        weechat_log_printf ("  last_outqueue . . . . . . : 0x%lx", ptr_client->last_outqueue);
+        weechat_log_printf ("  prev_client . . . . . . . : 0x%lx", ptr_client->prev_client);
+        weechat_log_printf ("  next_client . . . . . . . : 0x%lx", ptr_client->next_client);
     }
 }

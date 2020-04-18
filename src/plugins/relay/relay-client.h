@@ -106,9 +106,9 @@ struct t_relay_client
     char *protocol_string;             /* example: "ipv6.ssl.irc.freenode"  */
     char *protocol_args;               /* arguments used for protocol       */
                                        /* example: server for irc protocol  */
+    char *nonce;                       /* nonce used in salt of hashed pwd  */
     int password_hash_algo;            /* password hash algo (negotiated)   */
     int password_hash_iterations;      /* password hash iterations          */
-    char *nonce;                       /* nonce used in salt of hashed pwd  */
     time_t listen_start_time;          /* when listening started            */
     time_t start_time;                 /* time of client connection         */
     time_t end_time;                   /* time of client disconnection      */
