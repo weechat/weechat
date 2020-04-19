@@ -10,6 +10,12 @@
     *weechat-headless*).
 
 // TRANSLATION MISSING
+*--stdout*::
+    Display log messages on standard output instead of writing them in log file
+    (works only with the command *weechat-headless*, not compatible with option
+    "--daemon").
+
+// TRANSLATION MISSING
 *-d*, *--dir* _<path>_::
     Imposta una directory come home per WeeChat (utilizzata per i file di
     configurazione, log, plugin e script dell'utente), il valore predefinito

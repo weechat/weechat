@@ -8,6 +8,12 @@
     startet WeeChat im Hintergrund, als Deamon (funktioniert nur mit
     dem Befehl *weechat-headless*).
 
+// TRANSLATION MISSING
+*--stdout*::
+    Display log messages on standard output instead of writing them in log file
+    (works only with the command *weechat-headless*, not compatible with option
+    "--daemon").
+
 *-d*, *--dir* _<path>_::
     legt den Konfigurationsordner für WeeChat fest in welchem die Erweiterungen,
     Skripten, Protokolldateien etc.pp. gesichert werden (Voreinstellung: "~/.weechat").

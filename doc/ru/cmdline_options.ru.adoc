@@ -9,6 +9,12 @@
     Run WeeChat in background, as a daemon (works only with the command
     *weechat-headless*).
 
+// TRANSLATION MISSING
+*--stdout*::
+    Display log messages on standard output instead of writing them in log file
+    (works only with the command *weechat-headless*, not compatible with option
+    "--daemon").
+
 *-d*, *--dir* _<путь>_::
     Установить <путь> как домашнюю директорию для WeeChat (используется для
     конфигурационных файлов, логов, пользовательских плагинов и скриптов).

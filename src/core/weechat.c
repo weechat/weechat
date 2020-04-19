@@ -89,6 +89,7 @@
 
 int weechat_headless = 0;              /* 1 if running headless (no GUI)    */
 int weechat_daemon = 0;                /* 1 if daemonized (no foreground)   */
+int weechat_log_stdout = 0;            /* 1 to log messages on stdout       */
 int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading = 0;             /* =1 if WeeChat is upgrading        */
@@ -194,6 +195,14 @@ weechat_display_usage ()
             stdout,
             _("                           (by default in headless mode "
               "WeeChat is blocking and does not run in background)\n"));
+        string_fprintf (
+            stdout,
+            _("      --stdout             display log messages on standard "
+              "output instead of writing them in log file\n"));
+        string_fprintf (
+            stdout,
+            _("                           (option ignored if option "
+              "\"--daemon\" is given)\n"));
         string_fprintf (stdout, "\n");
     }
 

@@ -7,6 +7,12 @@
 *--daemon*::
     Uruchamia WeeChat w tle jako demona (działa tylko z komendą *weechat-headless*).
 
+// TRANSLATION MISSING
+*--stdout*::
+    Display log messages on standard output instead of writing them in log file
+    (works only with the command *weechat-headless*, not compatible with option
+    "--daemon").
+
 *-d*, *--dir* _<ścieżka>_::
     Ustawia ścieżkę jako katalog domowy WeeChat (używany dla plików
     konfiguracyjnych, logów, wtyczek użytkownika i skryptów), domyślna wartość

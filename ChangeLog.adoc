@@ -20,7 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: weechat-headless logs to stdout rather than ~/.weechat/weechat.log (issue #1475)
+  * core: add command line option "--stdout" in weechat-headless binary to log to stdout rather than ~/.weechat/weechat.log (issue #1475, issue #1477)
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)
   * relay: add command "handshake" in weechat relay protocol and nonce to prevent replay attacks, add options relay.network.password_hash_algo, relay.network.password_hash_iterations, relay.network.nonce_size (issue #1474)
   * relay: add option relay.network.auth_timeout

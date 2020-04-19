@@ -101,8 +101,9 @@ main (int argc, char *argv[])
     weechat_headless = 1;
 
     /*
-     * If "--daemon" is received in command line arguments,
-     * daemonize the process.
+     * Parse extra options for headless mode:
+     * - "--daemon": daemonize the process
+     * - "--stdout": log messages to stdout (instead of log file)
      */
     weechat_daemon = 0;
     for (i = 1; i < argc; i++)
@@ -110,11 +111,17 @@ main (int argc, char *argv[])
         if (strcmp (argv[i], "--daemon") == 0)
         {
             weechat_daemon = 1;
-            break;
+        }
+        else if (strcmp (argv[i], "--stdout") == 0)
+        {
+            weechat_log_stdout = 1;
         }
     }
     if (weechat_daemon)
+    {
+        weechat_log_stdout = 0;
         daemonize ();
+    }
 
     /* init, main loop and end */
     weechat_init (argc, argv, &gui_main_init);

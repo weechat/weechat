@@ -101,6 +101,7 @@ struct t_weelist;
 /* global variables and functions */
 extern int weechat_headless;
 extern int weechat_daemon;
+extern int weechat_log_stdout;
 extern int weechat_debug_core;
 extern char *weechat_argv0;
 extern int weechat_upgrading;

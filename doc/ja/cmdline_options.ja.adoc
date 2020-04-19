@@ -8,6 +8,12 @@
     WeeChat をデーモン化してバックグラウンド実行
     (*weechat-headless* コマンドで起動した場合のみ有効)
 
+// TRANSLATION MISSING
+*--stdout*::
+    Display log messages on standard output instead of writing them in log file
+    (works only with the command *weechat-headless*, not compatible with option
+    "--daemon").
+
 *-d*, *--dir* _<path>_::
     WeeChat のホームディレクトリを path に設定 (設定ファイル、ログ、
     ユーザプラグイン、スクリプトに利用される)、初期値は "~/.weechat"。

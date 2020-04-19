@@ -8,6 +8,11 @@
     Lancer WeeChat en tâche de fond, comme un daemon (fonctionne seulement avec
     la commande *weechat-headless*).
 
+*--stdout*::
+    Afficher les messages de log sur la sortie standard plutôt que de les écrire
+    dans le fichier de log (fonctionne seulement avec la commande
+    *weechat-headless*, non compatible avec l'option "--daemon").
+
 *-d*, *--dir* _<répertoire>_::
     Définir le répertoire comme étant la base de WeeChat
     (utilisé pour les fichiers de configuration, logs, extensions

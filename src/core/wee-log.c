@@ -68,7 +68,7 @@ log_open (const char *filename, const char *mode)
     if (weechat_log_file)
         return 0;
 
-    if (weechat_headless && !weechat_daemon)
+    if (weechat_log_stdout)
     {
         weechat_log_file = stdout;
     }
@@ -88,8 +88,11 @@ log_open (const char *filename, const char *mode)
 
     if (!weechat_log_file)
     {
-        free (weechat_log_filename);
-        weechat_log_filename = NULL;
+        if (weechat_log_filename)
+        {
+            free (weechat_log_filename);
+            weechat_log_filename = NULL;
+        }
         return 0;
     }
 
