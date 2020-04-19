@@ -8,10 +8,10 @@
     startet WeeChat im Hintergrund, als Deamon (funktioniert nur mit
     dem Befehl *weechat-headless*).
 
-// TRANSLATION MISSING
 *--stdout*::
+    die Programmausgabe findet in der Standardausgabe an, anstatt sie in die Protokolldatei zu schreiben
     Display log messages on standard output instead of writing them in log file
-    (works only with the command *weechat-headless*, not compatible with option
+    (funktioniert ausschließlich mit *weechat-headless* und ist nicht kompatibel mit Option
     "--daemon").
 
 *-d*, *--dir* _<path>_::
