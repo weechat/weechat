@@ -12,7 +12,6 @@ env:
     - BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
     - BUILDTOOL="autotools" BUILDARGS=""
     - BUILDTOOL="autotools" BUILDARGS="--enable-python2"
-    - BUILDTOOL="autotools" BUILDARGS="--disable-gnutls"
 
 matrix:
     fast_finish: true
