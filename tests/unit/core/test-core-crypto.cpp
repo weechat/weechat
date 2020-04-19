@@ -54,18 +54,11 @@ extern "C"
 #define DATA_HASH_SALT "this is a salt of 32 bytes xxxxx"
 #define DATA_HASH_PBKDF2_SHA1_1000 "85ce23c8873830df8f0a96aa82ae7d7635dad12" \
     "7"
-#define DATA_HASH_PBKDF2_SHA1_100000 "f2c2a079007523df3a5a5c7b578073dff06ba" \
-    "49f"
 #define DATA_HASH_PBKDF2_SHA256_1000 "0eb0a795537a8c37a2d7d7e50a076e07c9a8e" \
     "e9aa281669381af99fad198997c"
-#define DATA_HASH_PBKDF2_SHA256_100000 "b243ef60f9d9e7a6315f874053802cfb3b7" \
-    "b5a3502d47cf7fd76b3ee5661fcff"
 #define DATA_HASH_PBKDF2_SHA512_1000 "03d8e9e86f3bbe20b88a600a5aa15f8cfbee0" \
     "a402af301e1714c25467a32489c773c71eddf5aa39f42823ecc54c9e9b015517b5f3c0" \
     "19bae9463a2d8fe527882"
-#define DATA_HASH_PBKDF2_SHA512_100000 "286cca5521b00a7398530fbf11a570401a8" \
-    "0c901f1584cb493fcb75c49e5c30613c331ce318b34615a08be2fdcb9a3b4d3e9a5b62" \
-    "e119db6941010533cdf73d3"
 
 #define TOTP_SECRET "secretpasswordbase32"
 
@@ -218,7 +211,7 @@ TEST(CoreCrypto, HashPbkdf2)
     WEE_CHECK_HASH_PBKDF2(0, NULL, "test", 4, GCRY_MD_SHA1, "salt", 4, 0);
 
     LONGS_EQUAL (0, weecrypto_hash_pbkdf2 (data, data_size, GCRY_MD_SHA256,
-                                           salt, salt_size, 100000,
+                                           salt, salt_size, 1000,
                                            NULL, NULL));
 
     /* SHA1 */
@@ -227,11 +220,6 @@ TEST(CoreCrypto, HashPbkdf2)
                           GCRY_MD_SHA1,
                           DATA_HASH_SALT, salt_size,
                           1000);
-    WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA1_100000,
-                          data, data_size,
-                          GCRY_MD_SHA1,
-                          DATA_HASH_SALT, salt_size,
-                          100000);
 
     /* SHA256 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA256_1000,
@@ -239,11 +227,6 @@ TEST(CoreCrypto, HashPbkdf2)
                           GCRY_MD_SHA256,
                           DATA_HASH_SALT, salt_size,
                           1000);
-    WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA256_100000,
-                          data, data_size,
-                          GCRY_MD_SHA256,
-                          DATA_HASH_SALT, salt_size,
-                          100000);
 
     /* SHA512 */
     WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA512_1000,
@@ -251,11 +234,6 @@ TEST(CoreCrypto, HashPbkdf2)
                           GCRY_MD_SHA512,
                           DATA_HASH_SALT, salt_size,
                           1000);
-    WEE_CHECK_HASH_PBKDF2(1, DATA_HASH_PBKDF2_SHA512_100000,
-                          data, data_size,
-                          GCRY_MD_SHA512,
-                          DATA_HASH_SALT, salt_size,
-                          100000);
 }
 
 /*

@@ -148,7 +148,7 @@ TEST(RelayAuth, ParsePbkdf2)
     POINTERS_EQUAL(NULL, hash_pbkdf2);
 
     /* not enough parameters: 2 (expected: 3) */
-    WEE_CHECK_PARSE_PBKDF2("41424344:100000");
+    WEE_CHECK_PARSE_PBKDF2("41424344:1000");
     POINTERS_EQUAL(NULL, salt_hexa);
     POINTERS_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
@@ -156,40 +156,40 @@ TEST(RelayAuth, ParsePbkdf2)
     POINTERS_EQUAL(NULL, hash_pbkdf2);
 
     /* good parameters */
-    WEE_CHECK_PARSE_PBKDF2("41424344:100000:01757d53157ca14a1419e3a8cc1563536"
-                           "520a60b76d2d48e7f9ac09afc945a1c");
+    WEE_CHECK_PARSE_PBKDF2("41424344:1000:8765936466387f2cfcc47d2617423386684"
+                           "a218d64a57f8213e42b0fe60d8849");
     STRCMP_EQUAL("41424344", salt_hexa);
     MEMCMP_EQUAL(salt_expected, salt, 4);
     LONGS_EQUAL(4, salt_size);
-    LONGS_EQUAL(100000, iterations);
-    STRCMP_EQUAL("01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc9"
-                 "45a1c",
+    LONGS_EQUAL(1000, iterations);
+    STRCMP_EQUAL("8765936466387f2cfcc47d2617423386684a218d64a57f8213e42b0fe60"
+                 "d8849",
                  hash_pbkdf2);
     free (salt_hexa);
     free (salt);
     free (hash_pbkdf2);
 
     /* wrong salt */
-    WEE_CHECK_PARSE_PBKDF2("Z:100000:01757d53157ca14a1419e3a8cc1563536520a60b"
-                           "76d2d48e7f9ac09afc945a1c");
+    WEE_CHECK_PARSE_PBKDF2("Z:1000:8765936466387f2cfcc47d2617423386684a218d64"
+                           "a57f8213e42b0fe60d8849");
     POINTERS_EQUAL(NULL, salt_hexa);
     POINTERS_EQUAL(NULL, salt);
     LONGS_EQUAL(0, salt_size);
-    LONGS_EQUAL(100000, iterations);
-    STRCMP_EQUAL("01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc9"
-                 "45a1c",
+    LONGS_EQUAL(1000, iterations);
+    STRCMP_EQUAL("8765936466387f2cfcc47d2617423386684a218d64a57f8213e42b0fe60"
+                 "d8849",
                  hash_pbkdf2);
     free (hash_pbkdf2);
 
     /* wrong iterations */
-    WEE_CHECK_PARSE_PBKDF2("41424344:abcd:01757d53157ca14a1419e3a8cc156353652"
-                           "0a60b76d2d48e7f9ac09afc945a1c");
+    WEE_CHECK_PARSE_PBKDF2("41424344:abcd:8765936466387f2cfcc47d2617423386684"
+                           "a218d64a57f8213e42b0fe60d8849");
     STRCMP_EQUAL("41424344", salt_hexa);
     MEMCMP_EQUAL(salt_expected, salt, 4);
     LONGS_EQUAL(4, salt_size);
     LONGS_EQUAL(0, iterations);
-    STRCMP_EQUAL("01757d53157ca14a1419e3a8cc1563536520a60b76d2d48e7f9ac09afc9"
-                 "45a1c",
+    STRCMP_EQUAL("8765936466387f2cfcc47d2617423386684a218d64a57f8213e42b0fe60"
+                 "d8849",
                  hash_pbkdf2);
     free (salt_hexa);
     free (salt);
@@ -311,10 +311,10 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "sha256", salt, sizeof (salt), 0, NULL, NULL));
     LONGS_EQUAL(0,
                 relay_auth_check_hash_pbkdf2 (
-                    "sha256", salt, sizeof (salt), 100000, NULL, NULL));
+                    "sha256", salt, sizeof (salt), 1000, NULL, NULL));
     LONGS_EQUAL(0,
                 relay_auth_check_hash_pbkdf2 (
-                    "sha256", salt, sizeof (salt), 100000, "", ""));
+                    "sha256", salt, sizeof (salt), 1000, "", ""));
 
     /* PBKDF2 (SHA256): hash is for password "wrong" */
     LONGS_EQUAL(0,
@@ -322,9 +322,9 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "sha256",
                     salt,
                     sizeof (salt),
-                    100000,
-                    "e8f92a75f5956e9dc3499775221e9ef121bf4d09bdca4391b69aa62c"
-                    "50c2bb6b",
+                    1000,
+                    "59f69895354b82a76d0b3030745c54f961de9da4a80b697b3010d749"
+                    "58f452a1",
                     "password"));
     /* PBKDF2 (SHA256): hash is for password "password" */
     LONGS_EQUAL(1,
@@ -332,9 +332,9 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "sha256",
                     salt,
                     sizeof (salt),
-                    100000,
-                    "323d29f1762dcb5917bc8320c4eb9ea05900fc28e53cbc3e1b7f0980"
-                    "2e35e2d0",
+                    1000,
+                    "1351b6c26ade0de7dc9422e09a0cd44aae9c1e5e9147ad7e91fb117f"
+                    "2f27852d",
                     "password"));
 
     /* PBKDF2 (SHA512): hash is for password "wrong" */
@@ -343,10 +343,10 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "sha512",
                     salt,
                     sizeof (salt),
-                    100000,
-                    "e682a3815a4d1de8d13a223932b6b0467b7d775111aae3794afb9a84"
-                    "ee62bd50755fde725262f75d1211e8497a35c8dca8a6333bcc9f7b53"
-                    "244f6ff567d25cfc",
+                    1000,
+                    "4a7cd751fe20abaf52a92daeb13e571aed2453425a17258b3fa4a536"
+                    "e8b66228f5f44570347aca462ae280de7951b9e90d2ee3d7c3dd455f"
+                    "678e9ec80768d30e",
                     "password"));
     /* PBKDF2 (SHA512): hash is for password "password" */
     LONGS_EQUAL(1,
@@ -354,9 +354,9 @@ TEST(RelayAuth, CheckHashPbkdf2)
                     "sha512",
                     salt,
                     sizeof (salt),
-                    100000,
-                    "db166999c1f415a40570a4bbd3a26d461f87e495da215c75135b77bf"
-                    "910a261d3749f28264d24b546fc898908d4209704700020b8dd2bca6"
-                    "e4698208dd5aa5f2",
+                    1000,
+                    "7b7eca3ea0c75d9218dc5d31cd7a80f752112dc7de86501973ba8723"
+                    "b635d9b1e461273c3a8ad179cb5285b32f0c5ed0360e37b31713977e"
+                    "f53326c3729ffd12",
                     "password"));
 }
