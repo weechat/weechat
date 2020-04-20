@@ -36,7 +36,7 @@ enum t_relay_auth_password_hash_algo
 extern char *relay_auth_password_hash_algo_name[];
 
 extern int relay_auth_password_hash_algo_search (const char *name);
-extern char *relay_auth_generate_nonce ();
+extern char *relay_auth_generate_nonce (int size);
 extern int relay_auth_check_password_plain (const char *password,
                                             const char *relay_password);
 extern int relay_auth_password (struct t_relay_client *client,

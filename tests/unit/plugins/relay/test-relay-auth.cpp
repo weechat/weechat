@@ -24,6 +24,8 @@
 extern "C"
 {
 #include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 #include "src/plugins/relay/relay-auth.h"
 }
 
@@ -54,6 +56,47 @@ extern "C"
 TEST_GROUP(RelayAuth)
 {
 };
+
+/*
+ * Tests functions:
+ *   relay_auth_password_hash_algo_search
+ */
+
+TEST(RelayAuth, PasswordHashAlgoSearch)
+{
+    LONGS_EQUAL(-1, relay_auth_password_hash_algo_search (NULL));
+    LONGS_EQUAL(-1, relay_auth_password_hash_algo_search (""));
+    LONGS_EQUAL(-1, relay_auth_password_hash_algo_search ("zzz"));
+
+    LONGS_EQUAL(0, relay_auth_password_hash_algo_search ("plain"));
+}
+
+/*
+ * Tests functions:
+ *   relay_auth_generate_nonce
+ */
+
+TEST(RelayAuth, GenerateNonce)
+{
+    char *nonce;
+
+    POINTERS_EQUAL(NULL, relay_auth_generate_nonce (-1));
+    POINTERS_EQUAL(NULL, relay_auth_generate_nonce (0));
+
+    nonce = relay_auth_generate_nonce (1);
+    LONGS_EQUAL(2, strlen (nonce));
+    CHECK(isxdigit ((int)nonce[0]));
+    CHECK(isxdigit ((int)nonce[1]));
+    free (nonce);
+
+    nonce = relay_auth_generate_nonce (2);
+    LONGS_EQUAL(4, strlen (nonce));
+    CHECK(isxdigit ((int)nonce[0]));
+    CHECK(isxdigit ((int)nonce[1]));
+    CHECK(isxdigit ((int)nonce[2]));
+    CHECK(isxdigit ((int)nonce[3]));
+    free (nonce);
+}
 
 /*
  * Tests functions:

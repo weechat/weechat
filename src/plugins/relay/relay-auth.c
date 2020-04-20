@@ -53,6 +53,9 @@ relay_auth_password_hash_algo_search (const char *name)
 {
     int i;
 
+    if (!name)
+        return -1;
+
     for (i = 0; i < RELAY_NUM_PASSWORD_HASH_ALGOS; i++)
     {
         if (strcmp (relay_auth_password_hash_algo_name[i], name) == 0)
@@ -70,12 +73,12 @@ relay_auth_password_hash_algo_search (const char *name)
  */
 
 char *
-relay_auth_generate_nonce ()
+relay_auth_generate_nonce (int size)
 {
-    int size;
     char *nonce, *nonce_hexa;
 
-    size = weechat_config_integer (relay_config_network_nonce_size);
+    if (size < 1)
+        return NULL;
 
     nonce = malloc (size);
     if (!nonce)

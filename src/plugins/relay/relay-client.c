@@ -1277,7 +1277,8 @@ relay_client_new (int sock, const char *address, struct t_relay_server *server)
         new_client->protocol = server->protocol;
         new_client->protocol_string = (server->protocol_string) ? strdup (server->protocol_string) : NULL;
         new_client->protocol_args = (server->protocol_args) ? strdup (server->protocol_args) : NULL;
-        new_client->nonce = relay_auth_generate_nonce ();
+        new_client->nonce = relay_auth_generate_nonce (
+            weechat_config_integer (relay_config_network_nonce_size));
         plain_text_password = weechat_string_match_list (
             relay_auth_password_hash_algo_name[0],
             (const char **)relay_config_network_password_hash_algo_list,
@@ -1486,7 +1487,8 @@ relay_client_new_with_infolist (struct t_infolist *infolist)
         if (weechat_infolist_search_var (infolist, "nonce"))
             new_client->nonce = strdup (weechat_infolist_string (infolist, "nonce"));
         else
-            new_client->nonce = relay_auth_generate_nonce ();
+            new_client->nonce = relay_auth_generate_nonce (
+                weechat_config_integer (relay_config_network_nonce_size));
         /* "password_hash_algo" is new in WeeChat 2.9 */
         if (weechat_infolist_search_var (infolist, "password_hash_algo"))
             new_client->password_hash_algo = weechat_infolist_integer (infolist, "password_hash_algo");
