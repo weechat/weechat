@@ -336,7 +336,7 @@ gui_main_handle_reload_signal ()
 
     if (gui_main_handle_signal (signal_name) != WEECHAT_RC_OK_EAT)
     {
-        log_printf ("Signal %s received, reloading WeeChat configuration...",
+        log_printf (_("Signal %s received, reloading configuration..."),
                     signal_name);
         command_reload_files ();
     }

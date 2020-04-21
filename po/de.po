@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-19 11:21+0200\n"
+"POT-Creation-Date: 2020-04-21 22:38+0200\n"
 "PO-Revision-Date: 2020-04-19 12:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5488,6 +5488,10 @@ msgstr "WeeChat Farben (in Benutzung: %d; noch frei verfügbar: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
+
+#, fuzzy, c-format
+msgid "Signal %s received, reloading configuration..."
+msgstr "Signal %s empfangen, beende WeeChat..."
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
