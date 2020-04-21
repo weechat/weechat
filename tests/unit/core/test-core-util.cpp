@@ -261,6 +261,25 @@ TEST(CoreUtil, SignalSearch)
 
 /*
  * Tests functions:
+ *   util_signal_search_number
+ */
+
+TEST(CoreUtil, SignalSearchNumber)
+{
+    POINTERS_EQUAL(NULL, util_signal_search_number (-1));
+    POINTERS_EQUAL(NULL, util_signal_search_number (999999999));
+
+    STRCMP_EQUAL("hup", util_signal_search_number (SIGHUP));
+    STRCMP_EQUAL("int", util_signal_search_number (SIGINT));
+    STRCMP_EQUAL("quit", util_signal_search_number (SIGQUIT));
+    STRCMP_EQUAL("kill", util_signal_search_number (SIGKILL));
+    STRCMP_EQUAL("term", util_signal_search_number (SIGTERM));
+    STRCMP_EQUAL("usr1", util_signal_search_number (SIGUSR1));
+    STRCMP_EQUAL("usr2", util_signal_search_number (SIGUSR2));
+}
+
+/*
+ * Tests functions:
  *   util_catch_signal
  */
 

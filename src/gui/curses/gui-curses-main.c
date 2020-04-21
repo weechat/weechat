@@ -265,6 +265,30 @@ gui_main_init ()
 }
 
 /*
+ * Returns signal name with a signal number.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_main_get_signal_name (int signal_number)
+{
+    const char *signal_name;
+    char str_signal[32];
+
+    signal_name = util_signal_search_number (signal_number);
+    if (!signal_name)
+        return NULL;
+
+    snprintf (str_signal, sizeof (str_signal),
+              "SIG%s",
+              signal_name);
+    string_toupper (str_signal);
+
+    return strdup (str_signal);
+}
+
+/*
  * Callback for system signal SIGWINCH: refreshes screen.
  */
 
@@ -275,62 +299,81 @@ gui_main_signal_sigwinch ()
 }
 
 /*
+ * Sends a WeeChat signal on a system signal received.
+ *
+ * Returns:
+ *   WEECHAT_RC_OK: the WeeChat handler must be executed
+ *   WEECHAT_RC_OK_EAT: signal eaten, the WeeChat handler must NOT be executed
+ */
+
+int
+gui_main_handle_signal (const char *signal_name)
+{
+    int rc;
+    char str_signal[32];
+
+    if (!signal_name)
+        return WEECHAT_RC_OK;
+
+    snprintf (str_signal, sizeof (str_signal), "signal_%s", signal_name);
+    string_tolower (str_signal);
+
+    rc = hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING, NULL);
+
+    return (rc == WEECHAT_RC_OK_EAT) ? WEECHAT_RC_OK_EAT : WEECHAT_RC_OK;
+}
+
+/*
+ * Callback for signals received that will make WeeChat reload configuration.
+ */
+
+void
+gui_main_handle_reload_signal ()
+{
+    char *signal_name;
+
+    signal_name = gui_main_get_signal_name (weechat_reload_signal);
+
+    if (gui_main_handle_signal (signal_name) != WEECHAT_RC_OK_EAT)
+    {
+        log_printf ("Signal %s received, reloading WeeChat configuration...",
+                    signal_name);
+        command_reload_files ();
+    }
+
+    if (signal_name)
+        free (signal_name);
+
+    weechat_reload_signal = 0;
+}
+
+/*
  * Callback for signals received that will make WeeChat quit.
  */
 
 void
 gui_main_handle_quit_signals ()
 {
-    char str_signal[32], str_weechat_signal[64];
-    int rc;
+    char *signal_name;
 
-    switch (weechat_quit_signal)
-    {
-        case SIGHUP:
-            snprintf (str_signal, sizeof (str_signal), "SIGHUP");
-            break;
-        case SIGQUIT:
-            snprintf (str_signal, sizeof (str_signal), "SIGQUIT");
-            break;
-        case SIGTERM:
-            snprintf (str_signal, sizeof (str_signal), "SIGTERM");
-            break;
-        default:
-            str_signal[0] = '\0';
-            break;
-    }
+    signal_name = gui_main_get_signal_name (weechat_quit_signal);
 
-    if (str_signal[0])
+    if (gui_main_handle_signal (signal_name) != WEECHAT_RC_OK_EAT)
     {
-        snprintf (str_weechat_signal, sizeof (str_weechat_signal),
-                  "signal_%s", str_signal);
-        string_tolower (str_weechat_signal);
-        rc = hook_signal_send (str_weechat_signal,
-                               WEECHAT_HOOK_SIGNAL_STRING, NULL);
-        if ((rc != WEECHAT_RC_OK_EAT) && !weechat_quit)
+        if (!weechat_quit)
         {
             log_printf (_("Signal %s received, exiting WeeChat..."),
-                        str_signal);
+                        signal_name);
             (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
             weechat_quit = 1;
         }
     }
 
+    if (signal_name)
+        free (signal_name);
+
     weechat_quit_signal = 0;
 }
-
-/*
- * Callback for signals received that will make WeeChat reload.
- */
-
-void
-gui_main_handle_reload_signal ()
-{
-    log_printf ("Signal SIGHUP received, reloading WeeChat configuration...");
-    command_reload_files ();
-    weechat_reload_signal = 0;
-}
-
 /*
  * Displays infos about ncurses lib.
  */
@@ -523,11 +566,10 @@ gui_main_loop ()
         hook_process_exec ();
 
         /* handle signals received */
+        if (weechat_reload_signal > 0)
+            gui_main_handle_reload_signal ();
         if (weechat_quit_signal > 0)
             gui_main_handle_quit_signals ();
-
-	if (weechat_reload_signal > 0)
-            gui_main_handle_reload_signal ();
     }
 
     /* remove keyboard hook */

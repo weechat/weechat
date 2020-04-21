@@ -5197,13 +5197,13 @@ void
 command_reload_files ()
 {
     struct t_config_file *ptr_config_file;
+
     for (ptr_config_file = config_files; ptr_config_file;
          ptr_config_file = ptr_config_file->next_config)
     {
         command_reload_file (ptr_config_file);
     }
 }
-
 
 /*
  * Callback for command "/reload": reloads a configuration file.

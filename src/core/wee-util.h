@@ -59,6 +59,7 @@ extern long util_parse_delay (const char *string_delay, long default_factor);
 
 /* signal */
 extern int util_signal_search (const char *name);
+extern const char *util_signal_search_number (int signal_number);
 extern void util_catch_signal (int signum, void (*handler)(int));
 
 /* files/directories */

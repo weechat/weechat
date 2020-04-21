@@ -688,7 +688,7 @@ weechat_locale_check ()
 }
 
 /*
- * Callback for system signal SIGHUP: reloads config.
+ * Callback for system signal SIGHUP: reloads configuration.
  */
 
 void

@@ -465,6 +465,28 @@ util_signal_search (const char *name)
 }
 
 /*
+ * Gets a signal name with a signal number; only some commonly used signal
+ * names are supported here (see declaration of util_signals[]).
+ *
+ * Returns the pointer to the signal name, NULL if not found.
+ */
+
+const char *
+util_signal_search_number (int signal_number)
+{
+    int i;
+
+    for (i = 0; util_signals[i].name; i++)
+    {
+        if (util_signals[i].signal == signal_number)
+            return util_signals[i].name;
+    }
+
+    /* signal not found */
+    return NULL;
+}
+
+/*
  * Catches a system signal.
  */
 
