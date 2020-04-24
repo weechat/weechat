@@ -96,7 +96,7 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 Paramètres :
 
 * _plugin_ : pointeur vers la structure d'extension WeeChat, utilisé pour
-  initialiser le pointeur global `weechat_plugin`
+  initialiser le pointeur global `+weechat_plugin+`
 * _argc_ : nombre de paramètres pour l'extension
 * _argv_ : paramètres pour l'extension (voir ci-dessous)
 
@@ -8624,7 +8624,7 @@ La fonction de rappel doit seulement appeler la fonction
 et ne doit *PAS* mettre à jour la ligne de commande. +
 Pour mettre à jour la ligne de commande quand kbd:[Tab] est pressé, vous pouvez
 utiliser la fonction <<_hook_command_run,hook_command_run>>
-avec la commande : `/input complete_next` (et vous devez retourner
+avec la commande : `+/input complete_next+` (et vous devez retourner
 _WEECHAT_RC_OK_EAT_ si votre fonction de rappel a mis à jour la ligne de
 commande, de sorte que WeeChat n'exécute pas la complétion).
 
@@ -9315,7 +9315,7 @@ sont disponibles :
 |===
 
 Pour la commande "url:...", les options suivantes sont disponibles (voir
-`man curl_easy_setopt` pour une description de chaque option) :
+`+man curl_easy_setopt+` pour une description de chaque option) :
 
 include::autogen/plugin_api/url_options.adoc[]
 
@@ -9866,7 +9866,7 @@ valeurs sont des chaînes dans cette table de hachage) :
   Nom d'un tampon avec contenu formaté. |
   Nom d'un tampon avec contenu libre. |
   La ligne est affichée sur ce tampon. +
-  Si `buffer` est également défini, la valeur de `buffer_name` a une priorité
+  Si `buffer` est également défini, la valeur de `+buffer_name+` a une priorité
   plus haute est est utilisée. +
   Si la valeur est vide, la ligne est supprimée (le reste de la table de hachage
   est alors ignoré) ; les "hooks" suivants de type "line" ne sont pas appelés.
@@ -9880,7 +9880,7 @@ valeurs sont des chaînes dans cette table de hachage) :
   Horodatage. |
   N/A. |
   La date est positionnée à cet horodatage. +
-  La valeur de `str_time` est mise à jour en conséquence.
+  La valeur de `+str_time+` est mise à jour en conséquence.
 
 | date_printed |
   Horodatage. |
@@ -9891,7 +9891,7 @@ valeurs sont des chaînes dans cette table de hachage) :
   Chaîne. |
   N/A. |
   Cette chaîne est utilisée pour afficher la date de la ligne. +
-  Si `date` est également défini, la valeur de `str_time` a une priorité plus
+  Si `date` est également défini, la valeur de `+str_time+` a une priorité plus
   haute et est utilisée.
 
 | tags |
@@ -9899,7 +9899,7 @@ valeurs sont des chaînes dans cette table de hachage) :
   N/A. |
   Les étiquettes de la ligne sont remplacées avec cette liste d'étiquettes
   (séparées par des virgules). +
-  Les valeurs de `notify_level` et `highlight` sont mises à jour en conséquence.
+  Les valeurs de `+notify_level+` et `highlight` sont mises à jour en conséquence.
 
 | notify_level |
   Entier ("-1" à "3"). |
@@ -9907,14 +9907,14 @@ valeurs sont des chaînes dans cette table de hachage) :
   Le niveau de notification est positionné à cette valeur. La hotlist sera mise
   à jour en conséquence une fois que la ligne sera ajoutée dans la tampon. +
   La valeur de `highlight` est mise à jours en conséquence. +
-  Si `tags` est également défini, la valeur de `notify_level` a une priorité
+  Si `tags` est également défini, la valeur de `+notify_level+` a une priorité
   plus haute et est utilisée.
 
 | highlight |
   Entier ("0" ou "1"). |
   N/A. |
   "0" désactive le highlight sur la ligne, "1" force un highlight sur la ligne. +
-  Si `tags` ou `notify_level` sont définis, la valeur de `highlight` a une
+  Si `tags` ou `+notify_level+` sont définis, la valeur de `highlight` a une
   priorité plus haute et est utilisée.
 
 | prefix |
@@ -11620,7 +11620,7 @@ struct t_hook *weechat_hook_config (const char *option,
 Paramètres :
 
 * _option_ : option, le format est le nom complet, celui utilisé avec la
-  commande `/set` (par exemple : `weechat.look.item_time_format`), le caractère
+  commande `/set` (par exemple : `+weechat.look.item_time_format+`), le caractère
   joker `+*+` est autorisé (priorité autorisée, voir la note sur la
   <<hook_priority,priorité>>)
 * _callback_ : fonction appelée lorsque l'option de configuration est modifiée,

@@ -93,7 +93,7 @@ int weechat_plugin_init (struct t_weechat_plugin *plugin,
 Arguments:
 
 * _plugin_: pointer to WeeChat plugin structure, used to initialize the
-  convenience global pointer `weechat_plugin`
+  convenience global pointer `+weechat_plugin+`
 * _argc_: number of arguments for plugin
 * _argv_: arguments for plugin (see below)
 
@@ -8479,7 +8479,7 @@ recommended to choose a name with a unique prefix, like "plugin_xxx" (where
 The callback must only call function <<_hook_completion_list_add,hook_completion_list_add>>
 and must *NOT* update the command line. +
 To update the command line when kbd:[Tab] is pressed, you can use the function
-<<_hook_command_run,hook_command_run>> with command: `/input complete_next`
+<<_hook_command_run,hook_command_run>> with command: `+/input complete_next+`
 (and you must return _WEECHAT_RC_OK_EAT_ if your callback has updated the command line,
 so that WeeChat will not perform the completion).
 
@@ -9144,7 +9144,7 @@ available:
 |===
 
 For command "url:...", following options are available (see
-`man curl_easy_setopt` for a description of each option):
+`+man curl_easy_setopt+` for a description of each option):
 
 include::autogen/plugin_api/url_options.adoc[]
 
@@ -9677,7 +9677,7 @@ in this hashtable):
   Name of a buffer with formatted content. |
   Name of a buffer with free content. |
   The line is displayed on this buffer. +
-  If `buffer` is also set, the value of `buffer_name` has higher priority and is used. +
+  If `buffer` is also set, the value of `+buffer_name+` has higher priority and is used. +
   If the value is empty, the line is deleted (anything else in the hashtable
   is then ignored); the next hooks of type "line" are not called.
 
@@ -9690,7 +9690,7 @@ in this hashtable):
   Timestamp. |
   N/A. |
   The date is set to this value. +
-  The value of `str_time` is updated accordingly.
+  The value of `+str_time+` is updated accordingly.
 
 | date_printed |
   Timestamp. |
@@ -9701,13 +9701,13 @@ in this hashtable):
   String. |
   N/A. |
   This string is used to display the date line. +
-  If `date` is also set, the value of `str_time` has higher priority and is used.
+  If `date` is also set, the value of `+str_time+` has higher priority and is used.
 
 | tags |
   String. |
   N/A. |
   The line tags are replaced with this comma-separated list of tags. +
-  The values of `notify_level` and `highlight` are updated accordingly.
+  The values of `+notify_level+` and `highlight` are updated accordingly.
 
 | notify_level |
   Integer ("-1" to "3"). |
@@ -9715,13 +9715,13 @@ in this hashtable):
   The notify level is set to this value. The hotlist will be updated
   accordingly once the line is added in the buffer. +
   The value of `highlight` is updated accordingly. +
-  If `tags` is also set, the value of `notify_level` has higher priority and is used.
+  If `tags` is also set, the value of `+notify_level+` has higher priority and is used.
 
 | highlight |
   Integer ("0" or "1"). |
   N/A. |
   "0" disables highlight on the line, "1" forces a highlight on the line. +
-  If `tags` or `notify_level` are set, the value of `highlight` has higher
+  If `tags` or `+notify_level+` are set, the value of `highlight` has higher
   priority and is used.
 
 | prefix |
@@ -11393,7 +11393,7 @@ struct t_hook *weechat_hook_config (const char *option,
 Arguments:
 
 * _option_: option, format is full name, as used with command `/set` (for
-  example: `weechat.look.item_time_format`), wildcard `+*+` is allowed
+  example: `+weechat.look.item_time_format+`), wildcard `+*+` is allowed
   (priority allowed, see note about <<hook_priority,priority>>)
 * _callback_: function called when configuration option is changed, arguments
   and return value:
