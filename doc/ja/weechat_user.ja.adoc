@@ -1693,6 +1693,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+F11]      | ニックネームリストを一番上にスクロール | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]      | ニックネームリストを一番下にスクロール | `/bar scroll nicklist * e`
 | kbd:[Alt+a]        | 変更のあった次のバッファに移動 (優先順位: ハイライト、新規メッセージ、その他) | `/input jump_smart`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+B]  | Toggle buflist. | `/buflist toggle`
 | kbd:[Alt+h]        | ホットリスト (他のバッファにあった変更通知リスト) を消去 | `/input hotlist_clear`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | 最初のバッファに移動 | `/buffer -`

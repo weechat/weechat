@@ -1692,6 +1692,8 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+F11]      | Idź na początek listy nicków. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]      | Idź na koniec listy nicków. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `/input jump_smart`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+B]  | Toggle buflist. | `/buflist toggle`
 | kbd:[Alt+h]        | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach). | `/input hotlist_clear`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `/buffer -`

@@ -1785,6 +1785,8 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+F11]      | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]      | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]        | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+B]  | Toggle buflist. | `/buflist toggle`
 | kbd:[Alt+h]        | Pulisce hotlist (notifica di attività su altri buffer). | `/input hotlist_clear`
 // TRANSLATION MISSING
 | kbd:[Alt+j],

@@ -421,6 +421,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     int i;
     char str_key[256];
     char *default_keys[][2] = {
+        { /* m-B    */ "meta-B",         "/buflist toggle" },
         { /* <f1>   */ "meta-OP",        "/bar scroll buflist * -100%" },
         { /* <f1>   */ "meta2-11~",      "/bar scroll buflist * -100%" },
         { /* <f2>   */ "meta-OQ",        "/bar scroll buflist * +100%" },

@@ -1737,6 +1737,7 @@ avec `/help buffer_autoset`.
 | kbd:[Alt+F11]      | Aller au début de la liste des pseudos. | `/bar scroll nicklist * b`
 | kbd:[Alt+F12]      | Aller à la fin de la liste des pseudos. | `/bar scroll nicklist * e`
 | kbd:[Alt+a]        | Sauter au prochain tampon avec activité (avec priorité : highlight, message, autre). | `/input jump_smart`
+| kbd:[Alt+Shift+B]  | Activer/désactiver buflist. | `/buflist toggle`
 | kbd:[Alt+h]        | Vider la hotlist (notification d'activité sur les autres tampons). | `/input hotlist_clear`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Sauter au premier tampon. | `/buffer -`
