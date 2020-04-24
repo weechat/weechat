@@ -1753,6 +1753,7 @@ avec `/help buffer_autoset`.
 | kbd:[Alt+l] (`L`)  | Activer/désactiver le mode d'affichage dépouillé. | `/window bare`
 | kbd:[Alt+m]        | Activer/désactiver la souris. | `/mouse toggle`
 | kbd:[Alt+n]        | Se positionner sur le highlight suivant. | `/window scroll_next_highlight`
+| kbd:[Alt+Shift+N]  | Activer/désactiver la barre nicklist. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | Se positionner sur le highlight précédent. | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | Se positionner sur la première ligne non lue du tampon. | `/window scroll_unread`
 | kbd:[Alt+w],

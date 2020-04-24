@@ -176,6 +176,7 @@ gui_key_default_bindings (int context)
         BIND(/* m-<end>       */ "meta2-1;3F",         "/window scroll_bottom");
         BIND(/* m-n           */ "meta-n",             "/window scroll_next_highlight");
         BIND(/* m-p           */ "meta-p",             "/window scroll_previous_highlight");
+        BIND(/* m-N           */ "meta-N",             "/bar toggle nicklist");
         BIND(/* <f9>          */ "meta2-20~",          "/bar scroll title * -30%");
         BIND(/* <f10>         */ "meta2-21~",          "/bar scroll title * +30%");
         BIND(/* <f11>         */ "meta2-23~",          "/bar scroll nicklist * -100%");

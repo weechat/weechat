@@ -1733,6 +1733,8 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 | kbd:[Alt+l] (`L`)  | schaltet einfachen Anzeigemodus an/aus. | `/window bare`
 | kbd:[Alt+m]        | schaltet Mausfunktion ein/aus. | `/mouse toggle`
 | kbd:[Alt+n]        | springt zur nächsten Highlight Nachricht. | `/window scroll_next_highlight`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | springt zur vorherigen Highlight Nachricht. | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | springt zur ersten ungelesenen Zeile im Buffer. | `/window scroll_unread`
 | kbd:[Alt+w],

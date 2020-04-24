@@ -1801,9 +1801,11 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+j],
   kbd:[01...99]      | Passa al buffer numero. | `/buffer *NN`
 // TRANSLATION MISSING
-| kbd:[Alt+l] (`L`)  | Toggle bare display on/off. | `/window bare`
+| kbd:[Alt+l] (`L`)  | Toggle bare display. | `/window bare`
 | kbd:[Alt+m]        | Abilita/disabilita. | `/mouse toggle`
 | kbd:[Alt+n]        | Scorre fino alla notifica successiva. | `/window scroll_next_highlight`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | Scorre fino alla notifica precedente. | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | Scorre fino alla prima riga non letta nel buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
@@ -1824,7 +1826,7 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+/]        | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `/input jump_last_buffer_displayed`
 | kbd:[Alt+=]        | Attiva/disattiva filtri. | `/filter toggle`
 // TRANSLATION MISSING
-| kbd:[Alt+-]        | Toggle filters on/off in current buffer. | `/filter toggle @`
+| kbd:[Alt+-]        | Toggle filters in current buffer. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]

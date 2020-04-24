@@ -1709,6 +1709,8 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+l] (`L`)  | Przełącz tryb niesformatowanego wyświetlania. | `/window bare`
 | kbd:[Alt+m]        | Przełącz obsługę myszy. | `/mouse toggle`
 | kbd:[Alt+n]        | Przewiń do następnego powiadomienia. | `/window scroll_next_highlight`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | Przewiń do poprzedniego powiadomienia. | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `/window scroll_unread`
 | kbd:[Alt+w],

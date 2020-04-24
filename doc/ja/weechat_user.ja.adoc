@@ -1710,6 +1710,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Alt+l] (`L`)  | 最小限表示の有効無効を切り替え | `/window bare`
 | kbd:[Alt+m]        | マウスの有効無効を切り替え | `/mouse toggle`
 | kbd:[Alt+n]        | 次のハイライトまでスクロール | `/window scroll_next_highlight`
+// TRANSLATION MISSING
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | 前のハイライトまでスクロール | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | バッファを最初の未読行までスクロール | `/window scroll_unread`
 | kbd:[Alt+w],

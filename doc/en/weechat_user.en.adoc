@@ -1694,9 +1694,10 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+0...9]    | Switch to buffer by number (0 = 10). | `/buffer *N`
 | kbd:[Alt+j],
   kbd:[01...99]      | Switch to buffer by number. | `/buffer *NN`
-| kbd:[Alt+l] (`L`)  | Toggle bare display on/off. | `/window bare`
+| kbd:[Alt+l] (`L`)  | Toggle bare display. | `/window bare`
 | kbd:[Alt+m]        | Toggle mouse. | `/mouse toggle`
 | kbd:[Alt+n]        | Scroll to next highlight. | `/window scroll_next_highlight`
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
 | kbd:[Alt+p]        | Scroll to previous highlight. | `/window scroll_previous_highlight`
 | kbd:[Alt+u]        | Scroll to first unread line in buffer. | `/window scroll_unread`
 | kbd:[Alt+w],
@@ -1715,8 +1716,8 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 | kbd:[Alt+<]        | Switch to previous buffer in list of visited buffers. | `/input jump_previously_visited_buffer`
 | kbd:[Alt+>]        | Switch to next buffer in list of visited buffers. | `/input jump_next_visited_buffer`
 | kbd:[Alt+/]        | Switch to last buffer displayed (before last jump to a buffer). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]        | Toggle filters on/off. | `/filter toggle`
-| kbd:[Alt+-]        | Toggle filters on/off in current buffer. | `/filter toggle @`
+| kbd:[Alt+=]        | Toggle filters. | `/filter toggle`
+| kbd:[Alt+-]        | Toggle filters in current buffer. | `/filter toggle @`
 |===
 
 [[key_bindings_search_context]]
