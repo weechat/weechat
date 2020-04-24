@@ -108,7 +108,7 @@ attentivement et vérifier *TOUS* les points ci-dessous :
   erronée. +
   Pour corriger votre locale, vérifiez les locales installées avec `locale -a`
   et définissez une valeur appropriée pour $LANG, par exemple :
-  `export LANG=en_US.UTF-8`.
+  `+export LANG=en_US.UTF-8+`.
 * Affectez la valeur pour le décodage global, par exemple :
   `/set charset.default.decode "ISO-8859-15"`.
 * Si vous utilisez la locale UTF-8 :
@@ -459,7 +459,7 @@ plus d'information sur la gestion des couleurs.
 [[search_text]]
 === Comment puis-je chercher du texte dans le tampon (comme /lastlog dans irssi) ?
 
-La touche par défaut est kbd:[Ctrl+r] (la commande est : `/input search_text_here`).
+La touche par défaut est kbd:[Ctrl+r] (la commande est : `+/input search_text_here+`).
 Et sauter aux highlights : kbd:[Alt+p] / kbd:[Alt+n].
 
 Voir le link:weechat_user.fr.html#key_bindings[Guide utilisateur / Raccourcis clavier par défaut]
@@ -888,7 +888,7 @@ Avec un filtre global (pour cacher *tous* les join/part/quit) :
 ----
 
 [NOTE]
-Pour l'aide : `/help filter`, `/help irc.look.smart_filter` et voir
+Pour l'aide : `/help filter`, `+/help irc.look.smart_filter+` et voir
 link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Filtre intelligent pour les messages join/part/quit].
 
 [[filter_irc_join_channel_messages]]
@@ -896,7 +896,7 @@ link:weechat_user.fr.html#irc_smart_filter_join_part_quit[Guide utilisateur / Fi
 
 Avec WeeChat ≥ 0.4.1, vous pouvez choisir les messages affichés lorsque
 vous rejoignez un canal avec l'option _irc.look.display_join_message_ (voir
-`/help irc.look.display_join_message` pour plus d'informations).
+`+/help irc.look.display_join_message+` pour plus d'informations).
 
 Pour cacher des messages (mais les garder dans le tampon), vous pouvez les
 filtrer en utilisant l'étiquette (par exemple _irc_329_ pour la date de création
@@ -1022,13 +1022,13 @@ Pour l'appliquer à l'ensemble du serveur freenode :
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-Pour plus d'exemples, voir `/help buffer_autoset`.
+Pour plus d'exemples, voir `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Comment puis-je changer le serveur cible pour les commandes avec des tampons mélangés (comme le tampon avec les serveurs) ?
 
 La touche par défaut est kbd:[Ctrl+x] (la commande est :
-`/input switch_active_buffer`).
+`+/input switch_active_buffer+`).
 
 [[plugins_scripts]]
 == Extensions / scripts
@@ -1156,9 +1156,9 @@ celles-ci :
 
 * Cacher la barre "nicklist" : `/bar hide nicklist`.
 * Supprimer l'affichage des secondes dans l'heure de la barre de statut :
-  `/set weechat.look.item_time_format "%H:%M"` (ceci est la valeur par défaut).
+  `+/set weechat.look.item_time_format "%H:%M"+` (ceci est la valeur par défaut).
 * Désactiver la vérification en temps réel des mots mal orthographiés dans la
-  ligne de commande (si vous l'avez activée) : `/set spell.check.real_time off`.
+  ligne de commande (si vous l'avez activée) : `+/set spell.check.real_time off+`.
 * Définir la variable _TZ_ (par exemple : `export TZ="Europe/Paris"`), pour
   éviter un accès fréquent au fichier _/etc/localtime_.
 

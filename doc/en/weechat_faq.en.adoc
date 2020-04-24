@@ -100,7 +100,7 @@ It's a common issue with a variety of causes, please read carefully and check
   _ISO-XXXXXX_ or _UTF-8_ for terminal charset. If you see _ANSI_X3.4-1968_ or
   other values, your locale is probably wrong. +
   To fix your locale, check the installed locales with `locale -a` and set
-  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
+  an appropriate value in $LANG, for example: `+export LANG=en_US.UTF-8+`.
 * Setup global decode value, for example:
   `/set charset.default.decode "ISO-8859-15"`.
 * If you are using UTF-8 locale:
@@ -440,7 +440,7 @@ information about colors management.
 [[search_text]]
 === How can I search text in buffer (like /lastlog in irssi)?
 
-The default key is kbd:[Ctrl+r] (command is: `/input search_text_here`).
+The default key is kbd:[Ctrl+r] (command is: `+/input search_text_here+`).
 And jump to highlights: kbd:[Alt+p] / kbd:[Alt+n].
 
 See link:weechat_user.en.html#key_bindings[User's guide / Key bindings] for more
@@ -856,7 +856,7 @@ With a global filter (hide *all* join/part/quit):
 ----
 
 [NOTE]
-For help: `/help filter`, `/help irc.look.smart_filter` and see
+For help: `/help filter`, `+/help irc.look.smart_filter+` and see
 link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart filter for join/part/quit messages].
 
 [[filter_irc_join_channel_messages]]
@@ -864,7 +864,7 @@ link:weechat_user.en.html#irc_smart_filter_join_part_quit[User's guide / Smart f
 
 With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
 joining a channel with the option _irc.look.display_join_message_ (see
-`/help irc.look.display_join_message` for more info).
+`+/help irc.look.display_join_message+` for more info).
 
 To hide messages (but keep them in buffer), you can filter them using the tag
 (for example _irc_329_ for channel creation date). See `/help filter` for help
@@ -986,12 +986,12 @@ To apply it to the entire freenode server instead:
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-For more examples, see `/help buffer_autoset`.
+For more examples, see `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === How can I change target buffer for commands on merged buffers (like buffer with servers)?
 
-The default key is kbd:[Ctrl+x] (command is: `/input switch_active_buffer`).
+The default key is kbd:[Ctrl+x] (command is: `+/input switch_active_buffer+`).
 
 [[plugins_scripts]]
 == Plugins / scripts
@@ -1110,9 +1110,9 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
 * Hide "nicklist" bar: `/bar hide nicklist`.
 * Remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value).
+  `+/set weechat.look.item_time_format "%H:%M"+` (this is the default value).
 * Disable real time check of misspelled words in command line (if you enabled it):
-  `/set spell.check.real_time off`.
+  `+/set spell.check.real_time off+`.
 * Set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file _/etc/localtime_.
 

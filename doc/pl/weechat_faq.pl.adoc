@@ -104,7 +104,7 @@ Jest to częsty problem powodowany przez wiele rzeczy, przeczytaj uważnie i spr
   _ISO-XXXXXX_ lub _UTF-8_ dla kodowania terminala. Jeśli widzisz _ANSI_X3.4-1968_
   lub inne wartości, twoje ustawienie dla locale najprawdopodobniej jest złe. +
   Aby to naprawić, sprawdź zainstalowane w systemie kodowania za pomocą `locale -a`
-  i ustaw odpowiednią wartość zmiennej $LANG, na przykład: `export LANG=en_US.UTF-8`.
+  i ustaw odpowiednią wartość zmiennej $LANG, na przykład: `+export LANG=en_US.UTF-8+`.
 * ustaw globalną wartość dekodowania, na przykład:
   `/set charset.default.decode "ISO-8859-2"`
 * jeśli korzystasz z UTF-8:
@@ -442,7 +442,7 @@ link:weechat_user.pl.html#colors[Poradniku użytkownika / Kolory].
 [[search_text]]
 === Jak mogę wyszukać tekst w buforze (jak za pomocą /lastlog w irssi)?
 
-Domyślny skrót klawiszowy to kbd:[Ctrl+r] (komenda: `/input search_text_here`).
+Domyślny skrót klawiszowy to kbd:[Ctrl+r] (komenda: `+/input search_text_here+`).
 
 Poruszanie się między podświetleniami: kbd:[Alt+p] / kbd:[Alt+n].
 
@@ -861,7 +861,7 @@ Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 ----
 
 [NOTE]
-+For help: `/help filter`, `/help irc.look.smart_filter` and see
++For help: `/help filter`, `+/help irc.look.smart_filter+` and see
 +link:weechat_user.pl.html#irc_smart_filter_join_part_quit[Poradniku użytkownika / Inteligentne filtry dla wiadomości].
 
 [[filter_irc_join_channel_messages]]
@@ -869,7 +869,7 @@ Za pomocą globalnego filtru (ukrywa *wszystkie* wejścia/opuszczenia/wyjścia):
 
 W wersjach WeeChat ≥ 0.4.1, możesz wybrać to, jakie wiadomości są wyświetlane
 a jakie nie podczas wchodzenia na kanał, za pomocą opcji _irc.look.display_join_message_
-(więcej informacji można znaleźć wykonując `/help irc.look.display_join_message`).
+(więcej informacji można znaleźć wykonując `+/help irc.look.display_join_message+`).
 
 W celu ukrycia wiadomości (ale zachowując je w buforze), możesz je filtrować
 używając tagu (na przykład _irc_329_ dla daty utworzenia kanału). zobacz
@@ -991,12 +991,12 @@ Dla całego serwera freenode:
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-Więcej przykładów można znaleźć wykonując komende `/help buffer_autoset`.
+Więcej przykładów można znaleźć wykonując komende `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Jak mogę zmienić docelowy bufor dla komendy w połączonym buforze (jak bufor z serwerami)?
 
-Domyślna kombinacja to kbd:[Ctrl+x] (komenda: `/input switch_active_buffer`).
+Domyślna kombinacja to kbd:[Ctrl+x] (komenda: `+/input switch_active_buffer+`).
 
 [[plugins_scripts]]
 == Pluginy / skrypty
@@ -1116,9 +1116,9 @@ Możesz skorzystać z tych samych porad jak dla  <<memory_usage,memory>>, oraz t
 
 * schowaj pasek "nicklist": `/bar hide nicklist`
 * usuń wyświetlanie sekund w czasie na pasku statusu:
-  `/set weechat.look.item_time_format "%H:%M"` (domyślna wartość)
+  `+/set weechat.look.item_time_format "%H:%M"+` (domyślna wartość)
 * wyłącz automatyczne sprawdzanie poprawności wpisywanych słów w linii poleceń (o ile je włączyłeś):
-  `/set spell.check.real_time off`
+  `+/set spell.check.real_time off+`
 * ustaw zmienną _TZ_ (na przykład: `export TZ="Europe/Warsaw"`), w celu zmniejszenia
   częstotliwości czytania pliku _/etc/localtime_
 

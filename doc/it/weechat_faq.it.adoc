@@ -119,7 +119,7 @@ It's a common issue with a variety of causes, please read carefully and check
   Se invece compaiono _ANSI_X3.4-1968_ o altri valori, il locale probabilmente
   non è esatto. +
   To fix your locale, check the installed locales with `locale -a` and set
-  an appropriate value in $LANG, for example: `export LANG=en_US.UTF-8`.
+  an appropriate value in $LANG, for example: `+export LANG=en_US.UTF-8+`.
 * impostare il valore di decodifica globale, per esempio:
   `/set charset.default.decode = ISO-8859-15`
 * se si usa la localizzazione UTF-8:
@@ -488,7 +488,7 @@ information about colors management.
 [[search_text]]
 === Come posso cercare testo nel buffer (come /lastlog con irssi)?
 
-Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `/input search_text_here`).
+Il tasto predefinito è kbd:[Ctrl+r] (il comando è: `+/input search_text_here+`).
 E per passare alle notifiche: kbd:[Alt+p] / kbd:[Alt+n].
 
 // TRANSLATION MISSING
@@ -932,7 +932,7 @@ Con un filtro globale (nasconde *tutti* entrata/uscita/abbandono):
 ----
 
 [NOTE]
-Per aiuto: `/help filter`, `/help irc.look.smart_filter` e
+Per aiuto: `/help filter`, `+/help irc.look.smart_filter+` e
 link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente / Filtro smart per i messaggi di entrata/uscita/disconnessione].
 
 [[filter_irc_join_channel_messages]]
@@ -941,7 +941,7 @@ link:weechat_user.it.html#irc_smart_filter_join_part_quit[Guida per l’Utente /
 // TRANSLATION MISSING
 With WeeChat ≥ 0.4.1, you can choose which messages are displayed when
 joining a channel with the option _irc.look.display_join_message_ (see
-`/help irc.look.display_join_message` for more info).
+`+/help irc.look.display_join_message+` for more info).
 
 // TRANSLATION MISSING
 To hide messages (but keep them in buffer), you can filter them using the tag
@@ -1070,12 +1070,12 @@ To apply it to the entire freenode server instead:
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-For more examples, see `/help buffer_autoset`.
+For more examples, see `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Come si può modificare il buffer destinazione per i comandi sui buffer uniti (come i buffer con i server)?
 
-Il tasto predefinito è kbd:[Ctrl+x] (il comando è: `/input switch_active_buffer`).
+Il tasto predefinito è kbd:[Ctrl+x] (il comando è: `+/input switch_active_buffer+`).
 
 [[plugins_scripts]]
 == Plugin / script
@@ -1205,10 +1205,10 @@ You can follow same tips as for <<memory_usage,memory>>, and these ones:
 
 * hide "nicklist" bar: `/bar hide nicklist`
 * remove display of seconds in status bar time:
-  `/set weechat.look.item_time_format "%H:%M"` (this is the default value)
+  `+/set weechat.look.item_time_format "%H:%M"+` (this is the default value)
 // TRANSLATION MISSING
 * disable real time check of misspelled words in command line (if you enabled it):
-  `/set spell.check.real_time off`
+  `+/set spell.check.real_time off+`
 * set the _TZ_ variable (for example: `export TZ="Europe/Paris"`), to prevent
   frequent access to file _/etc/localtime_
 

@@ -115,7 +115,7 @@ Es ist deshalb wichtig, *ALLE* der folgenden Lösungsmöglichkeiten zu prüfen:
   Sollte hingegen _ANSI_X3.4-1968_ oder ein anderer Wert angezeigt werden,
   ist deine lokale Einstellung möglicherweise falsch.
   Um die Lokalisation zu reparieren, überprüfe selbige mittels `locale -a` und
-  füge einen entsprechenden Wert in $LANG ein, beispielsweise `export LANG=de_DE.UTF-8`.
+  füge einen entsprechenden Wert in $LANG ein, beispielsweise `+export LANG=de_DE.UTF-8+`.
 * Einstellen des globalen decode Wertes.
   Beispiel: `/set charset.default.decode "ISO-8859-15"`
 * Falls Du UTF-8 lokal nutzt,
@@ -476,7 +476,7 @@ Informationen die das Farbmanagement betreffen.
 === Wie kann ich in einem Buffer nach einem Text suchen (vergleichbar /lastlog in irssi)?
 
 Die Standardtastenbelegung lautet kbd:[Ctrl+r]
-(der dazugehörige Befehl: `/input search_text_here`).
+(der dazugehörige Befehl: `+/input search_text_here+`).
 Um zu Highlight-Nachrichten zu springen:
 kbd:[Alt+p] für vorherige, kbd:[Alt+n] für die nächste Nachricht.
 
@@ -932,7 +932,7 @@ Dabei werden *alle* join/part/quit Nachrichten unterdrückt:
 ----
 
 [NOTE]
-Für weitere Hilfe: `/help filter`, `/help irc.look.smart_filter` und
+Für weitere Hilfe: `/help filter`, `+/help irc.look.smart_filter+` und
 link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / einfacher Filter für join/part/quit Nachrichten].
 
 [[filter_irc_join_channel_messages]]
@@ -941,7 +941,7 @@ link:weechat_user.de.html#irc_smart_filter_join_part_quit[Benutzerhandbuch / ein
 Ab WeeChat ≥ 0.4.1 kann man auswählen, welche Server-Nachrichten beim Betreten
 eines Channels angezeigt und welche verborgen werden sollen. Dazu nutzt man
 die Option _irc.look.display_join_message_ (für weitere Informationen, siehe
-`/help irc.look.display_join_message`).
+`+/help irc.look.display_join_message+`).
 
 Um Nachrichten visuell zu verbergen, können diese gefiltert werden.
 Dazu wird der Befehl `/filter` auf bestimmte Nachrichten-Tags angewandt.
@@ -1076,13 +1076,13 @@ Um dies auf den kompletten freenode Server anzuwenden:
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-Für weitere Beispiele, siehe `/help buffer_autoset`.
+Für weitere Beispiele, siehe `+/help buffer_autoset+`.
 
 [[irc_target_buffer]]
 === Wie kann ich bei zusammengefügten Buffern den Zielbuffer ändern (z.B. bei einem Server-Buffer)?
 
 Die Standardtastenkombination ist kbd:[Ctrl+x]. Der entsprechende Befehl lautet:
-`/input switch_active_buffer`.
+`+/input switch_active_buffer+`.
 
 [[plugins_scripts]]
 == Erweiterungen / Skripten
@@ -1208,9 +1208,9 @@ und zusätzlich diese Tipps beherzigen:
 
 * "nicklist"-Bar sollte versteckt werden: `/bar hide nicklist`
 * die Sekundenanzeigen in der Statusbar sollte deaktiviert werden:
-  `/set weechat.look.item_time_format "%H:%M"` (dies ist die Standardeinstellung)
+  `+/set weechat.look.item_time_format "%H:%M"+` (dies ist die Standardeinstellung)
 * die Echtzeit Rechtschreibkorrektur sollte deaktiviert werden (falls sie aktiviert wurde):
-  `/set spell.check.real_time off`
+  `+/set spell.check.real_time off+`
 * die Umgebungsvariable _TZ_ sollte gesetzt sein (zum Beispiel: `export TZ="Europe/Berlin"`). Dadurch wird
   verhindert, dass auf die Datei _/etc/localtime_ häufig zugegriffen wird.
 

@@ -101,7 +101,7 @@ brew install weechat
 * `/charset` コマンドの出力を確認 (core バッファ上で)。端末の文字セットとして _ISO-XXXXXX_
   または _UTF-8_ があるはずです。その他の値がある場合は、ロケールが間違っている可能性があります。 +
   ロケールを修正するには、`locale -a` を使ってインストール済みのロケールを確認し、$LANG
-  に適切な値を設定してください。これを行うには `export LANG=en_US.UTF-8` のようにします。
+  に適切な値を設定してください。これを行うには `+export LANG=en_US.UTF-8+` のようにします。
 * グローバルデコードを設定、例えば:
   `/set charset.default.decode "ISO-8859-15"`
 * UTF-8 ロケールを使っている場合は:
@@ -440,7 +440,7 @@ WeeChat バージョン 0.3.5 以上の場合、任意の色番号を利用で�
 [[search_text]]
 === どうすればバッファ内の文字列を検索できますか (irssi の /lastlog の様に)。
 
-デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `/input search_text_here`)。
+デフォルトのキーは kbd:[Ctrl+r] です (コマンドは: `+/input search_text_here+`)。
 ハイライト部分へのジャンプは: kbd:[Alt+p] / kbd:[Alt+n]
 
 この機能に関するより詳しい情報はlink:weechat_user.ja.html#key_bindings[ユーザーズガイド / デフォルトのキー割り当て]を参照してください
@@ -858,7 +858,7 @@ WeeChat
 ----
 
 [NOTE]
-ヘルプを見るには `/help filter`、`/help irc.look.smart_filter`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
+ヘルプを見るには `/help filter`、`+/help irc.look.smart_filter+`、link:weechat_user.ja.html#irc_smart_filter_join_part_quit[ユーザーズガイド
 / 参加/退出/終了メッセージに対するスマートフィルタ] を使ってください。
 
 [[filter_irc_join_channel_messages]]
@@ -866,7 +866,7 @@ WeeChat
 
 WeeChat バージョン 0.4.1 以上の場合、_irc.look.display_join_message_
 オプションを使って、チャンネル参加時に表示するメッセージの種類を選択できます
-(より詳しい情報は `/help irc.look.display_join_message` を参照)。
+(より詳しい情報は `+/help irc.look.display_join_message+` を参照)。
 
 メッセージを隠す (ただしバッファに残す) には、タグを使ってメッセージをフィルタしてください
 (たとえばチャンネル作成日時を隠すには _irc_329_ タグを使ってください)。フィルタの書き方に関する情報は
@@ -986,12 +986,12 @@ WeeChat バージョン 0.3.4 以上の場合、link:weechat_user.en.html#max_ho
 /buffer_autoset add irc.freenode hotlist_max_level_nicks_add mike:2
 ----
 
-これ以外の例は `/help buffer_autoset` を参照してください。
+これ以外の例は `+/help buffer_autoset+` を参照してください。
 
 [[irc_target_buffer]]
 === どうすればマージされたバッファ内であるコマンドを発行するターゲットバッファを変更できますか。
 
-デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `/input switch_active_buffer`)。
+デフォルトのキーは kbd:[Ctrl+x] です (コマンドは: `+/input switch_active_buffer+`)。
 
 [[plugins_scripts]]
 == プラグイン / スクリプト
@@ -1112,9 +1112,9 @@ WeeChat バージョン 2.4 以下では "spell" プラグインは "aspell" と
 
 * "nicklist" バーを非表示にする: `/bar hide nicklist`
 * ステータスバー時間に秒の表示を止める:
-  `/set weechat.look.item_time_format "%H:%M"` (これはデフォルト値です)
+  `+/set weechat.look.item_time_format "%H:%M"+` (これはデフォルト値です)
 * コマンドライン内の単語スペルミスのリアルタイムチェックを無効にする (有効にしていた場合):
-  `/set spell.check.real_time off`
+  `+/set spell.check.real_time off+`
 * _TZ_ 変数を設定する (例: `export TZ="Europe/Paris"`)、こうすることで
   _/etc/localtime_ ファイルへ頻繁にアクセスしないようになります。
 
