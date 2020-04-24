@@ -60,14 +60,14 @@ Der Code eines Skripts wird ausgeführt:
 Sobald der Code eines Skripts ausgeführt wird wartet WeeChat bis zum Ende der
 Ausführung, bevor fortgefahren wird. Deshalb dürfen innerhalb des Skripts *KEINE*
 blockierende Operationen ausgeführt werden wie zum Beispiel Netzwerkaufrufe,
-ohne die dafür vorgesehene API-Funktion zu verwenden, `hook_process`.
+ohne die dafür vorgesehene API-Funktion zu verwenden, `+hook_process+`.
 
 [IMPORTANT]
 Ein Skript darf *NIEMALS* einen fork nutzen oder einen eigenen Thread erstellen,
 dafür gibt es explizit eine API Funktion, andernfalls kann WeeChat abstürzen. +
 Wenn etwas in einem Hintergrundprozess ausgeführt werden soll, kann die Funktion
-`hook_process` genutzt werden. Siehe Beispiele im Kapitel <<hook_process,Hintergrundprozesse>>
-und die Dokumentation für die Funktion `hook_process` in link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
+`+hook_process+` genutzt werden. Siehe Beispiele im Kapitel <<hook_process,Hintergrundprozesse>>
+und die Dokumentation für die Funktion `+hook_process+` in link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
 
 [[languages_specificities]]
 === Besonderheiten der einzelnen Skriptsprachen
@@ -81,7 +81,7 @@ importiert werden muss.
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `weechat.xxx(arg1, arg2, ...)`.
+Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
 
 Die Funktionen `+print*+` werden bei python durch `+prnt*+` ersetzt
 (`print` war ein reserviertes Schlüsselwort unter Python 2).
@@ -110,9 +110,9 @@ Liste ist nicht vollständig):
   Eine Nachricht die von der IRC Erweiterung empfangen wurde und bevor sie nach UTF-8 dekodiert wurde (intern
   verwendet). +
   +
-  Es wird empfohlen den Modifier `irc_in2_yyy` zu nutzen, da die empfangene Zeichenkette
+  Es wird empfohlen den Modifier `+irc_in2_yyy+` zu nutzen, da die empfangene Zeichenkette
   immer UTF-8 gültig ist. +
-  siehe Funktion `hook_modifier` in der
+  siehe Funktion `+hook_modifier+` in der
   link:weechat_plugin_api.en.html#_hook_modifier[WeeChat Anleitung für API Erweiterung].
 
 | hook_signal |
@@ -125,9 +125,9 @@ Liste ist nicht vollständig):
   Eine Nachricht welche von der IRC Erweiterung versendet wurde, nachdem diese entsprechend
   der Benutzereinstellung  `encode` Charset kodiert (falls abweichend von der `UTF-8` Standardeinstellung). +
   +
-  Es wird empfohlen das Signal `xxx,irc_out1_yyy` zu nutzen, da die empfangene Zeichenkette
+  Es wird empfohlen das Signal `+xxx,irc_out1_yyy+` zu nutzen, da die empfangene Zeichenkette
   immer UTF-8 gültig ist. +
-  siehe Funktion `hook_signal` in der
+  siehe Funktion `+hook_signal+` in der
   link:weechat_plugin_api.en.html#_hook_signal[WeeChat Anleitung für API Erweiterung].
 
 | hook_process +
@@ -146,7 +146,7 @@ oben genannten Fällen, ungültige UTF-8 Daten enthalten.
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `weechat::xxx(arg1, arg2, ...);`.
+Funktionen werden aufgerufen mittels `+weechat::xxx(arg1, arg2, ...);+`.
 
 ==== Ruby
 
@@ -156,10 +156,10 @@ Es muss _weechat_init_ definiert werden und darin dann _register_ ausgeführt we
 
 ===== Functions
 
-Funktionen werden aufgerufen mittels `Weechat.xxx(arg1, arg2, ...)`.
+Funktionen werden aufgerufen mittels `+Weechat.xxx(arg1, arg2, ...)+`.
 
 Aufgrund einer Beschränkung von Ruby (maximal 15 Argumente pro Funktion), empfängt
-die Funktion `Weechat.config_new_option` ein Callback mit einem Array von 6 Zeichenketten
+die Funktion `+Weechat.config_new_option+` ein Callback mit einem Array von 6 Zeichenketten
 (3 Callbacks + 3 Datenzeichenketten), so sieht ein Aufruf dieser Funktion aus:
 
 [source,ruby]
@@ -172,19 +172,19 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `weechat.xxx(arg1, arg2, ...)`.
+Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...)+`.
 
 ==== Tcl
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `weechat::xxx arg1 arg2 ...`.
+Funktionen werden aufgerufen mittels `+weechat::xxx arg1 arg2 ...+`.
 
 ==== Guile (Scheme)
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `(weechat:xxx arg1 arg2 ...)`.
+Funktionen werden aufgerufen mittels `+(weechat:xxx arg1 arg2 ...)+`.
 
 Die folgenden Funktionen verwenden eine Liste von Argumenten (anstelle vieler Argumente
 für andere Funktionen), da die Anzahl der Argumente die zulässige Anzahl in Guile
@@ -198,13 +198,13 @@ für andere Funktionen), da die Anzahl der Argumente die zulässige Anzahl in Gu
 
 ===== Funktionen
 
-Funktionen werden aufgerufen mittels `weechat.xxx(arg1, arg2, ...);`.
+Funktionen werden aufgerufen mittels `+weechat.xxx(arg1, arg2, ...);+`.
 
 ==== PHP
 
 ===== Functions
 
-Funktionen werden aufgerufen mittels `weechat_xxx(arg1, arg2, ...);`.
+Funktionen werden aufgerufen mittels `+weechat_xxx(arg1, arg2, ...);+`.
 
 [[register_function]]
 === Die "Register" Funktion
@@ -981,7 +981,7 @@ bitte in WeeChat folgenden Befehl aus:
 [[hook_command]]
 ==== neuen Befehl hinzufügen
 
-Erstellt mittels `hook_command` einen benutzerdefinierten Befehl. Dabei kann
+Erstellt mittels `+hook_command+` einen benutzerdefinierten Befehl. Dabei kann
 eine benutzerdefinierte Vervollständigung der Argumente genutzt werden.
 
 Beispiel:
@@ -1015,7 +1015,7 @@ Der Befehl wird dann in WeeChat wie folgt genutzt:
 [[hook_timer]]
 ==== Nutzung des Timers
 
-Mittels `hook_timer` wird eine Zeitfunktion implementiert.
+Mittels `+hook_timer+` wird eine Zeitfunktion implementiert.
 
 Beispiele:
 
@@ -1032,7 +1032,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 [[hook_process]]
 ==== Hintergrundprozesse
 
-Mit der Funktion `hook_process` kann ein Hintergrundprozess gestartet werden.
+Mit der Funktion `+hook_process+` kann ein Hintergrundprozess gestartet werden.
 Der Callback wird aufgerufen sobald der Hintergrundprozess abgearbeitet wurde.
 Dies kann auch mehrfach der Fall sein.
 
@@ -1062,8 +1062,8 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 _Neu seit Version 0.3.7._
 
 Um URLs herunterzuladen (oder um etwas zu einer URL zu senden), muss die Funktion
-`hook_process` genutzt werden. Müssen zusätzliche Optionen gesetzt werden, für
-einen URL Transfer, kommt die Funktion `hook_process_hashtable` zum Einsatz.
+`+hook_process+` genutzt werden. Müssen zusätzliche Optionen gesetzt werden, für
+einen URL Transfer, kommt die Funktion `+hook_process_hashtable+` zum Einsatz.
 
 Beispiel eines URL Transfers, ohne zusätzliche Optionen: Die HTML Seite wird
 dabei in der Callback-Variable "out" gesichert (Standardausgabe des Prozesses):
@@ -1104,7 +1104,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 ----
 
 Für weitere Informationen zum URL Transfer und verfügbare Optionen, siehe Funktionen
-`hook_process` und `hook_process_hashtable` in
+`+hook_process+` und `+hook_process_hashtable+` in
 link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Englisch).
 
 [[config_options]]
@@ -1113,8 +1113,8 @@ link:weechat_plugin_api.en.html#_hook_process[WeeChat plugin API reference] (Eng
 [[config_options_set_script]]
 ==== Optionen von Skripten setzen
 
-Die Funktion `config_is_set_plugin` wird dazu benutzt um zu testen ob eine Option
-gesetzt ist oder nicht. Mit der Funktion `config_set_plugin` wird eine Option gesetzt.
+Die Funktion `+config_is_set_plugin+` wird dazu benutzt um zu testen ob eine Option
+gesetzt ist oder nicht. Mit der Funktion `+config_set_plugin+` wird eine Option gesetzt.
 
 Beispiele:
 
@@ -1133,7 +1133,7 @@ for option, standardwert in skript_optionen.items():
 [[config_options_detect_changes]]
 ==== Veränderungen bemerken
 
-Die Funktion `hook_config` wird dazu benutzt um festzustellen falls ein Anwender
+Die Funktion `+hook_config+` wird dazu benutzt um festzustellen falls ein Anwender
 eine Option des Skripts verändert hat.
 
 Beispiele:
@@ -1159,8 +1159,8 @@ weechat.hook_config("plugins.var.python." + SKRIPT_NAME + ".*", "config_cb", "")
 [[config_options_weechat]]
 ==== WeeChat Optionen lesen
 
-Die Funktion `config_get` gibt einen Pointer zu einer Option zurück. Abhängig vom Typ der Option
-muss entweder `config_string`, `config_boolean`, `config_integer` oder `config_color` genutzt werden.
+Die Funktion `+config_get+` gibt einen Pointer zu einer Option zurück. Abhängig vom Typ der Option
+muss entweder `+config_string+`, `+config_boolean+`, `+config_integer+` oder `+config_color+` genutzt werden.
 
 [source,python]
 ----
@@ -1257,7 +1257,7 @@ Man kann IRC Nachrichten mittels einer info_hashtable mit dem Namen
 
 Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 (das Beispiel bezieht sich auf folgende IRC Nachricht:
-`@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
+`+@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!+`):
 
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
@@ -1265,55 +1265,55 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 
 | Tags | ≥ 0.4.0 |
   Tags in der Nachricht (kann leer sein). |
-  `time=2015-06-27T16:40:35.000Z`
+  `+time=2015-06-27T16:40:35.000Z+`
 
 | message_without_tags | ≥ 0.4.0 |
   Die IRC Nachricht ohne Tags (wie eine Nachricht ohne Tags). |
-  `:nick!user@host PRIVMSG #weechat :hello!`
+  `+:nick!user@host PRIVMSG #weechat :hello!+`
 
 | nick | ≥ 0.3.4 |
   der ursprüngliche Nick. |
-  `nick`
+  `+nick+`
 
 | user | ≥ 2.7 |
   der ursprüngliche Benutzer. |
-  `user`
+  `+user+`
 
 | host | ≥ 0.3.4 |
   der ursprüngliche Host (beinhaltet den Nick). |
-  `nick!user@host`
+  `+nick!user@host+`
 
 | command | ≥ 0.3.4 |
   der Befehl (_PRIVMSG_, _NOTICE_, ...). |
-  `PRIVMSG`
+  `+PRIVMSG+`
 
 | channel | ≥ 0.3.4 |
   der Zielchanne.l|
-  `#weechat`
+  `+#weechat+`
 
 | arguments | ≥ 0.3.4 |
   das Argument des Befehls (beinhaltet den Channel). |
-  `#weechat :hello!`
+  `+#weechat :hello!+`
 
 | text | ≥ 1.3 |
   der Text (zum Beispiel eine Nachricht eines Users). |
-  `hello!`
+  `+hello!+`
 
 | pos_command | ≥ 1.3 |
   Index von _command_ innerhalb einer Nachricht ("-1" falls _command_ nicht gefunden wird). |
-  `47`
+  `+47+`
 
 | pos_arguments | ≥ 1.3 |
   Index von_arguments_ innerhalb einer Nachricht ("-1" falls _arguments_ nicht gefunden wird). |
-  `55`
+  `+55+`
 
 | pos_channel | ≥ 1.3 |
   Index von _channel_ innerhalb einer Nachricht ("-1" falls _channel_ nicht gefunden wird). |
-  `55`
+  `+55+`
 
 | pos_text | ≥ 1.3 |
   Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird). |
-  `65`
+  `+65+`
 |===
 
 [source,python]
@@ -1407,6 +1407,6 @@ if infolist:
 ----
 
 [IMPORTANT]
-Vergewissern Sie sich `infolist_free` aufzurufen um den Speicher wieder
+Vergewissern Sie sich `+infolist_free+` aufzurufen um den Speicher wieder
 frei zu geben der durch die Infoliste belegt wurde. WeeChat gibt diesen Speicher
 nicht automatisch frei.

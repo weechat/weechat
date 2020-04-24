@@ -59,15 +59,15 @@ WeeChat はシングルスレッドで、この点はスクリプトも同じで
 
 スクリプトのコードが実行されると、WeeChat
 は一時停止し、実行の完了を待ってから再開します。このため、スクリプトは操作をブロックしては
-*絶対にいけません*。ネットワークを呼び出す等の場合には、`hook_process` 等の専用 API 関数を使ってください。
+*絶対にいけません*。ネットワークを呼び出す等の場合には、`+hook_process+` 等の専用 API 関数を使ってください。
 
 [IMPORTANT]
 WeeChat がクラッシュするため、スクリプトで fork したりスレッドを作ることは *禁止*
 されています。これが必要な場合には専用 API 関数を使ってください。 +
-どうしてもバックグラウンド実行を避けられない場合には `hook_process`
+どうしてもバックグラウンド実行を避けられない場合には `+hook_process+`
 関数を使ってください。<<hook_process,バックグラウンドプロセスの実行>>の例および
 link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス]内の
-`hook_process` 関数の文書を参照してください。
+`+hook_process+` 関数の文書を参照してください。
 
 [[languages_specificities]]
 === 言語仕様
@@ -82,7 +82,7 @@ WeeChat defines a `weechat` module which must be imported with `import weechat`.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 
 Functions `+print*+` are called `+prnt*+` in python (because `print` was a
 reserved keyword in Python 2).
@@ -109,9 +109,9 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   A message received in IRC plugin, before it is decoded to UTF-8 (used
   internally). +
   +
-  It is recommended to use modifier `irc_in2_yyy` instead, the string received
+  It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
   is always UTF-8 valid. +
-  See function `hook_modifier` in the
+  See function `+hook_modifier+` in the
   link:weechat_plugin_api.ja.html#_hook_modifier[WeeChat plugin API reference].
 
 | hook_signal |
@@ -124,9 +124,9 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   A message sent by IRC plugin, after it is encoded to the `encode` charset
   defined by the user (if different from the default `UTF-8`). +
   +
-  It is recommended to use signal `xxx,irc_out1_yyy` instead, the string received
+  It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
   is always UTF-8 valid. +
-  See function `hook_signal` in the
+  See function `+hook_signal+` in the
   link:weechat_plugin_api.ja.html#_hook_signal[WeeChat plugin API reference].
 
 | hook_process +
@@ -146,7 +146,7 @@ UTF-8 data, in the cases mentioned above.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat::xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat::xxx(arg1, arg2, ...);+`.
 
 ==== Ruby
 
@@ -158,10 +158,10 @@ You have to define _weechat_init_ and call _register_ inside.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+Weechat.xxx(arg1, arg2, ...)+`.
 
 Due to a limitation of Ruby (15 arguments max by function), the function
-`Weechat.config_new_option` receives the callbacks in an array of 6 strings
+`+Weechat.config_new_option+` receives the callbacks in an array of 6 strings
 (3 callbacks + 3 data strings), so a call to this function looks like:
 
 [source,ruby]
@@ -175,21 +175,21 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 
 ==== Tcl
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat::xxx arg1 arg2 ...`.
+Functions are called with `+weechat::xxx arg1 arg2 ...+`.
 
 ==== Guile (Scheme)
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `(weechat:xxx arg1 arg2 ...)`.
+Functions are called with `+(weechat:xxx arg1 arg2 ...)+`.
 
 The following functions take one list of arguments (instead of many arguments
 for other functions), because number of arguments exceed number of allowed
@@ -204,14 +204,14 @@ arguments in Guile:
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...);+`.
 
 ==== PHP
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat_xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat_xxx(arg1, arg2, ...);+`.
 
 [[register_function]]
 === 関数の登録
@@ -976,7 +976,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 [[hook_command]]
 ==== 新しいコマンドの追加
 
-カスタムコマンドを追加するには `hook_command`
+カスタムコマンドを追加するには `+hook_command+`
 を使ってください。追加したコマンドに対してカスタム補完テンプレートを定義できます。
 
 例:
@@ -1010,7 +1010,7 @@ hook = weechat.hook_command("myfilter", "description of myfilter",
 [[hook_timer]]
 ==== タイマーの追加
 
-タイマーを追加するには `hook_timer` を使ってください。
+タイマーを追加するには `+hook_timer+` を使ってください。
 
 例:
 
@@ -1027,7 +1027,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 [[hook_process]]
 ==== バックグラウンドプロセスの実行
 
-バックグラウンドプロセスを実行するには `hook_process`
+バックグラウンドプロセスを実行するには `+hook_process+`
 を使います。コールバックはデータの準備が整った時点で呼び出されます。複数回呼び出されることもあります。
 
 コールバックの最後の呼び出しでは _rc_ が 0
@@ -1055,8 +1055,8 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 
 _WeeChat バージョン 0.3.7 以上で利用可。_
 
-URL をダウンロードする (または URL にポストする) には、関数 `hook_process` または URL
-転送にオプションが必要な場合は `hook_process_hashtable` を使わなければいけません。
+URL をダウンロードする (または URL にポストする) には、関数 `+hook_process+` または URL
+転送にオプションが必要な場合は `+hook_process_hashtable+` を使わなければいけません。
 
 オプション無しの URL 転送の例: HTML ページの内容はコールバックの
 "out" 引数 (プロセスの標準出力) を通して渡されます。
@@ -1098,7 +1098,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 URL 転送に関するより詳しい情報と利用可能なオプションは
 link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リファレンス]の
-`hook_process` と `hook_process_hashtable` を参照してください。
+`+hook_process+` と `+hook_process_hashtable+` を参照してください。
 
 [[config_options]]
 === 設定 / オプション
@@ -1106,8 +1106,8 @@ link:weechat_plugin_api.ja.html#_hook_process[WeeChat プラグイン API リフ
 [[config_options_set_script]]
 ==== スクリプトのオプションを設定
 
-オプションが設定されているかどうかを確認するには `config_is_set_plugin`
-関数、オプションを設定するには `config_set_plugin` 関数を使います。
+オプションが設定されているかどうかを確認するには `+config_is_set_plugin+`
+関数、オプションを設定するには `+config_set_plugin+` 関数を使います。
 
 例:
 
@@ -1126,7 +1126,7 @@ for option, default_value in script_options.items():
 [[config_options_detect_changes]]
 ==== 変更の検出
 
-ユーザがスクリプトオプションを変更したことを検出するには `hook_config` を使わなければいけません。
+ユーザがスクリプトオプションを変更したことを検出するには `+hook_config+` を使わなければいけません。
 
 例:
 
@@ -1151,8 +1151,8 @@ weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
 [[config_options_weechat]]
 ==== WeeChat オプションのロード
 
-`config_get` 関数はオプションへのポインタを返します。オプションの型に従って
-`config_string`、`config_boolean`、`config_integer`、`config_color`
+`+config_get+` 関数はオプションへのポインタを返します。オプションの型に従って
+`+config_string+`、`+config_boolean+`、`+config_integer+`、`+config_color+`
 を呼び出さなければいけません。
 
 [source,python]
@@ -1256,7 +1256,7 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 結果は以下のキーを持つハッシュテーブルです
 (例の値は以下のメッセージから作られました:
-`@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
+`+@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!+`):
 
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
@@ -1264,56 +1264,56 @@ _WeeChat バージョン 0.3.4 以上で利用可。_
 
 | tags | 0.4.0 以上 |
   メッセージに付けられたタグ (空にすることも可) |
-  `time=2015-06-27T16:40:35.000Z`
+  `+time=2015-06-27T16:40:35.000Z+`
 
 | message_without_tags | 0.4.0 以上 |
   タグを除いたメッセージ (タグが付けられていなければメッセージと同じ) |
-  `:nick!user@host PRIVMSG #weechat :hello!`
+  `+:nick!user@host PRIVMSG #weechat :hello!+`
 
 | nick | 0.3.4 以上 |
   発信者のニックネーム |
-  `nick`
+  `+nick+`
 
 // TRANSLATION MISSING
 | user | ≥ 2.7 |
   The origin user. |
-  `user`
+  `+user+`
 
 | host | 0.3.4 以上 |
   発信者のホスト (ニックネームを含む) |
-  `nick!user@host`
+  `+nick!user@host+`
 
 | command | 0.3.4 以上 |
   コマンド (_PRIVMSG_、_NOTICE_、...) |
-  `PRIVMSG`
+  `+PRIVMSG+`
 
 | channel | 0.3.4 以上 |
   送信先チャンネル |
-  `#weechat`
+  `+#weechat+`
 
 | arguments | 0.3.4 以上 |
   コマンド引数 (チャンネルを含む) |
-  `#weechat :hello!`
+  `+#weechat :hello!+`
 
 | text | 1.3 以上 |
   テキスト (ユーザメッセージなど) |
-  `hello!`
+  `+hello!+`
 
 | pos_command | 1.3 以上 |
   メッセージ内における _command_ のインデックス (_command_ が見つからない場合 "-1") |
-  `47`
+  `+47+`
 
 | pos_arguments | 1.3 以上 |
   メッセージ内における _arguments_ のインデックス (_arguments_ が見つからない場合 "-1") |
-  `55`
+  `+55+`
 
 | pos_channel | 1.3 以上 |
   メッセージ内における _channel_ のインデックス (_channel_ が見つからない場合 "-1") |
-  `55`
+  `+55+`
 
 | pos_text | 1.3 以上 |
   メッセージ内における _text_ のインデックス (_text_ が見つからない場合 "-1") |
-  `65`
+  `+65+`
 |===
 
 [source,python]
@@ -1405,5 +1405,5 @@ if infolist:
 ----
 
 [IMPORTANT]
-WeeChat は自動的にメモリを解放しません、インフォリストによって使われたメモリを解放するには、`infolist_free`
+WeeChat は自動的にメモリを解放しません、インフォリストによって使われたメモリを解放するには、`+infolist_free+`
 を呼び出すことを忘れないでください。

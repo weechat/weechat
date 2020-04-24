@@ -62,14 +62,14 @@ The code of a script is executed:
 
 When the code of a script is executed, WeeChat waits for the end of execution
 before going on. Therefore the script must *NOT* do blocking operations like
-network calls without using a dedicated API function like `hook_process`.
+network calls without using a dedicated API function like `+hook_process+`.
 
 [IMPORTANT]
 A script must *NEVER* fork or create threads without using a dedicated API
 function, this can crash WeeChat. +
-If something must be run in background, the function `hook_process` can be used.
+If something must be run in background, the function `+hook_process+` can be used.
 See example in the chapter <<hook_process,Eseguire un processo in background>>
-and the documentation on the function `hook_process` in the
+and the documentation on the function `+hook_process+` in the
 link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference].
 
 [[languages_specificities]]
@@ -85,7 +85,7 @@ WeeChat defines a `weechat` module which must be imported with `import weechat`.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 
 Functions `+print*+` are called `+prnt*+` in python (because `print` was a
 reserved keyword in Python 2).
@@ -112,9 +112,9 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   A message received in IRC plugin, before it is decoded to UTF-8 (used
   internally). +
   +
-  It is recommended to use modifier `irc_in2_yyy` instead, the string received
+  It is recommended to use modifier `+irc_in2_yyy+` instead, the string received
   is always UTF-8 valid. +
-  See function `hook_modifier` in the
+  See function `+hook_modifier+` in the
   link:weechat_plugin_api.it.html#_hook_modifier[WeeChat plugin API reference].
 
 | hook_signal |
@@ -127,9 +127,9 @@ receive a string of type `str` or `bytes` (this list is not exhaustive):
   A message sent by IRC plugin, after it is encoded to the `encode` charset
   defined by the user (if different from the default `UTF-8`). +
   +
-  It is recommended to use signal `xxx,irc_out1_yyy` instead, the string received
+  It is recommended to use signal `+xxx,irc_out1_yyy+` instead, the string received
   is always UTF-8 valid. +
-  See function `hook_signal` in the
+  See function `+hook_signal+` in the
   link:weechat_plugin_api.it.html#_hook_signal[WeeChat plugin API reference].
 
 | hook_process +
@@ -149,7 +149,7 @@ UTF-8 data, in the cases mentioned above.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat::xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat::xxx(arg1, arg2, ...);+`.
 
 ==== Ruby
 
@@ -161,10 +161,10 @@ You have to define _weechat_init_ and call _register_ inside.
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `Weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+Weechat.xxx(arg1, arg2, ...)+`.
 
 Due to a limitation of Ruby (15 arguments max by function), the function
-`Weechat.config_new_option` receives the callbacks in an array of 6 strings
+`+Weechat.config_new_option+` receives the callbacks in an array of 6 strings
 (3 callbacks + 3 data strings), so a call to this function looks like:
 
 [source,ruby]
@@ -178,21 +178,21 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...)`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...)+`.
 
 ==== Tcl
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat::xxx arg1 arg2 ...`.
+Functions are called with `+weechat::xxx arg1 arg2 ...+`.
 
 ==== Guile (Scheme)
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `(weechat:xxx arg1 arg2 ...)`.
+Functions are called with `+(weechat:xxx arg1 arg2 ...)+`.
 
 The following functions take one list of arguments (instead of many arguments
 for other functions), because number of arguments exceed number of allowed
@@ -207,14 +207,14 @@ arguments in Guile:
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat.xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat.xxx(arg1, arg2, ...);+`.
 
 ==== PHP
 
 // TRANSLATION MISSING
 ===== Functions
 
-Functions are called with `weechat_xxx(arg1, arg2, ...);`.
+Functions are called with `+weechat_xxx(arg1, arg2, ...);+`.
 
 [[register_function]]
 === Registrare una funzione
@@ -994,7 +994,7 @@ in WeeChat:
 [[hook_command]]
 ==== Aggiungere un nuovo comando
 
-Aggiunge un comando personalizzato con `hook_command`. Si può fare uso di
+Aggiunge un comando personalizzato con `+hook_command+`. Si può fare uso di
 un template di completamento personalizzato per completare gli argomenti
 del proprio comando.
 
@@ -1029,7 +1029,7 @@ E poi in WeeChat:
 [[hook_timer]]
 ==== Aggiungere un timer
 
-Aggiungere un timer con `hook_timer`.
+Aggiungere un timer con `+hook_timer+`.
 
 Esempio:
 
@@ -1046,7 +1046,7 @@ weechat.hook_timer(60 * 1000, 60, 0, "timer_cb", "")
 [[hook_process]]
 ==== Eseguire un processo in background
 
-È possibile eseguire un processo in background con `hook_process`. La
+È possibile eseguire un processo in background con `+hook_process+`. La
 callback verrà chiamata quando i dati sono pronti. Può essere chiamata
 più volte.
 
@@ -1076,7 +1076,7 @@ weechat.hook_process("/bin/ls -l /etc", 10 * 1000, "my_process_cb", "")
 _Novità nella versione 0.3.7._
 
 Per scaricare un URL (o inviare verso un URL), è necessario usare la funzione
-`hook_process` oppure `hook_process_hashtable` se ci fosse bisogno di impostare
+`+hook_process+` oppure `+hook_process_hashtable+` se ci fosse bisogno di impostare
 delle opzioni per il trasferimento dell'URL.
 
 Esempio di trasferimento di un URL senza opzioni: la pagina HTML verrà
@@ -1120,7 +1120,7 @@ weechat.hook_process_hashtable("url:https://weechat.org/files/src/weechat-devel.
 
 // TRANSLATION MISSING
 For more information about URL transfer and available options, see functions
-`hook_process` and `hook_process_hashtable` in
+`+hook_process+` and `+hook_process_hashtable+` in
 link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference].
 
 [[config_options]]
@@ -1129,8 +1129,8 @@ link:weechat_plugin_api.it.html#_hook_process[WeeChat plugin API reference].
 [[config_options_set_script]]
 ==== Impostare l'opzione per lo script
 
-La funzione `config_is_set_plugin` viene utilizzare per verificare se un'opzione
-è impostata oppure no, e `config_set_plugin` per impostare l'opzione.
+La funzione `+config_is_set_plugin+` viene utilizzare per verificare se un'opzione
+è impostata oppure no, e `+config_set_plugin+` per impostare l'opzione.
 
 Esempio:
 
@@ -1149,7 +1149,7 @@ for option, default_value in script_options.items():
 [[config_options_detect_changes]]
 ==== Rilevare le modifiche
 
-È necessario utilizzare `hook_config` per essere notificati se l'utente dovesse
+È necessario utilizzare `+hook_config+` per essere notificati se l'utente dovesse
 modificare alcune opzioni dello script.
 
 Esempio:
@@ -1175,9 +1175,9 @@ weechat.hook_config("plugins.var.python." + SCRIPT_NAME + ".*", "config_cb", "")
 [[config_options_weechat]]
 ==== Leggere le opzioni di WeeChat
 
-La funzione `config_get` restituisce il puntatore all'opzione. Poi, in base al tipo
-di opzione, è necessario chiamare `config_string`, `config_boolean`,
-`config_integer` oppure `config_color`.
+La funzione `+config_get+` restituisce il puntatore all'opzione. Poi, in base al tipo
+di opzione, è necessario chiamare `+config_string+`, `+config_boolean+`,
+`+config_integer+` oppure `+config_color+`.
 
 [source,python]
 ----
@@ -1283,7 +1283,7 @@ _Novità nella versione 0.3.4._
 // TRANSLATION MISSING
 The result is a hashtable with following keys
 (the example values are built with this message:
-`@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!`):
+`+@time=2015-06-27T16:40:35.000Z :nick!user@host PRIVMSG #weechat :hello!+`):
 
 [width="100%",cols="1,^2,10,8",options="header"]
 |===
@@ -1291,56 +1291,56 @@ The result is a hashtable with following keys
 
 | tags | ≥ 0.4.0 |
   The tags in message (can be empty). |
-  `time=2015-06-27T16:40:35.000Z`
+  `+time=2015-06-27T16:40:35.000Z+`
 
 | message_without_tags | ≥ 0.4.0 |
   The message without the tags (the same as message if there are no tags). |
-  `:nick!user@host PRIVMSG #weechat :hello!`
+  `+:nick!user@host PRIVMSG #weechat :hello!+`
 
 | nick | ≥ 0.3.4 |
   The origin nick. |
-  `nick`
+  `+nick+`
 
 // TRANSLATION MISSING
 | user | ≥ 2.7 |
   The origin user. |
-  `user`
+  `+user+`
 
 | host | ≥ 0.3.4 |
   The origin host (includes the nick). |
-  `nick!user@host`
+  `+nick!user@host+`
 
 | command | ≥ 0.3.4 |
   The command (_PRIVMSG_, _NOTICE_, ...). |
-  `PRIVMSG`
+  `+PRIVMSG+`
 
 | channel | ≥ 0.3.4 |
   The target channel. |
-  `#weechat`
+  `+#weechat+`
 
 | arguments | ≥ 0.3.4 |
   The command arguments (includes the channel). |
-  `#weechat :hello!`
+  `+#weechat :hello!+`
 
 | text | ≥ 1.3 |
   The text (for example user message). |
-  `hello!`
+  `+hello!+`
 
 | pos_command | ≥ 1.3 |
   The index of _command_ in message ("-1" if _command_ was not found). |
-  `47`
+  `+47+`
 
 | pos_arguments | ≥ 1.3 |
   The index of _arguments_ in message ("-1" if _arguments_ was not found). |
-  `55`
+  `+55+`
 
 | pos_channel | ≥ 1.3 |
   The index of _channel_ in message ("-1" if _channel_ was not found). |
-  `55`
+  `+55+`
 
 | pos_text | ≥ 1.3 |
   The index of _text_ in message ("-1" if _text_ was not found). |
-  `65`
+  `+65+`
 |===
 
 [source,python]
@@ -1434,6 +1434,6 @@ if infolist:
 ----
 
 [IMPORTANT]
-Non dimenticare di chiamare `infolist_free` per liberare la memoria
+Non dimenticare di chiamare `+infolist_free+` per liberare la memoria
 utilizzata dalla lista info, perché WeeChat non libererà automaticamente
 la memoria.
