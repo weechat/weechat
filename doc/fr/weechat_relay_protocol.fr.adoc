@@ -252,7 +252,7 @@ Paramètres :
 
 [NOTE]
 Avec WeeChat ≥ 1.6, les virgules peuvent être échappées dans la valeur,
-par exemple `init password=foo\,bar` pour envoyer le mot de passe "foo,bar".
+par exemple `+init password=foo\,bar+` pour envoyer le mot de passe "foo,bar".
 
 Le format du mot de passe haché est l'un des suivants, où _hash_ est le mot
 de passe haché en hexadécimal :

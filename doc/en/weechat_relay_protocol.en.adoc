@@ -242,7 +242,7 @@ Arguments:
 
 [NOTE]
 With WeeChat ≥ 1.6, commas can be escaped in the value, for example
-`init password=foo\,bar` to send the password "foo,bar".
+`+init password=foo\,bar+` to send the password "foo,bar".
 
 Format of hashed password is one of the following, where _hash_ is the hashed
 password as hexadecimal:

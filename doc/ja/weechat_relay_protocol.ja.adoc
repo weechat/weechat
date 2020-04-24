@@ -255,7 +255,7 @@ _handshake_), without warning.
 
 [NOTE]
 WeeChat バージョン 1.6 以上の場合、コンマをエスケープすることで value にコンマを設定可能です。例えば
-"foo,bar" というパスワードを送信するには `init password=foo\,bar` のように設定してください。
+"foo,bar" というパスワードを送信するには `+init password=foo\,bar+` のように設定してください。
 
 // TRANSLATION MISSING
 Format of hashed password is one of the following, where _hash_ is the hashed
