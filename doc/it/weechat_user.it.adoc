@@ -161,7 +161,7 @@ you may experience display bugs with wide chars. +
 ^(3)^ GnuTLS ≥ 3.0.21 is required for IRC SASL authentication with mechanism
 ECDSA-NIST256P-CHALLENGE. +
 // TRANSLATION MISSING
-^(4)^ By default Python 3.x is used. If you enable option `ENABLE_PYTHON2` (see
+^(4)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
 below), only the version 2.7 of Python is recommended.
 
 // TRANSLATION MISSING
@@ -1271,11 +1271,11 @@ List of bar options:
 | items | string |
   A list of _items_ (see <<bar_items,items>> for more info).
 
-| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
   Type of filling for a bar which has position `left` or `right` (see
   <<bar_filling,filling>> for more info).
 
-| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
   Type of filling for a bar which has position `top` or `bottom` (see
   <<bar_filling,filling>> for more info).
 
@@ -1327,14 +1327,14 @@ _bitlist_ and if bitlbee server is called _bitlbee_):
 
 There are four types of filling:
 
-* `horizontal`: the items are displayed horizontally, from left to right. If
+* `+horizontal+`: the items are displayed horizontally, from left to right. If
   there are new lines in items, a space is used to separate lines.
-* `vertical`: the items are displayed from top to bottom. If there are new
+* `+vertical+`: the items are displayed from top to bottom. If there are new
   lines in items, a new line is used to separate lines.
-* `columns_horizontal`: items are displayed using columns, where text is
+* `+columns_horizontal+`: items are displayed using columns, where text is
   aligned on the left. The first item is on top left, the second is on same
   line, on the right.
-* `columns_vertical`: items are displayed using columns, where text is aligned
+* `+columns_vertical+`: items are displayed using columns, where text is aligned
   on the left. The first item is on top left, the second is one line below.
 
 Default bars _title_, _status_ and _input_ have _horizontal_ filling, and
@@ -1604,7 +1604,7 @@ For example to disable highlights from "joe" and "mike" on current buffer:
 [NOTE]
 The buffer property "hotlist_max_level_nicks" is not saved in configuration. +
 You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help buffer_autoset`.
+with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
 
 // TRANSLATION MISSING
 [[highlights]]
@@ -1670,7 +1670,7 @@ For example to force the highlight on all messages in the current buffer:
 [NOTE]
 The buffer property "highlight_regex" is not saved in configuration. +
 You can easily save it with the script _buffer_autoset.py_: you can install it
-with `/script install buffer_autoset.py` and get help with `/help buffer_autoset`.
+with `+/script install buffer_autoset.py+` and get help with `+/help buffer_autoset+`.
 
 [[key_bindings]]
 === Associazione tasti predefinita
@@ -1682,60 +1682,60 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 |===
 | Tasti           | Descrizione | Comando
 | kbd:[←] +
-  kbd:[Ctrl+b]    | Passa al carattere precedente nella riga di comando. | `/input move_previous_char`
+  kbd:[Ctrl+b]    | Passa al carattere precedente nella riga di comando. | `+/input move_previous_char+`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | Passa al carattere successivo nella riga di comando. | `/input move_next_char`
+  kbd:[Ctrl+f]    | Passa al carattere successivo nella riga di comando. | `+/input move_next_char+`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | Passa alla parola precedente nella riga di comando. | `/input move_previous_word`
+  kbd:[Alt+b]     | Passa alla parola precedente nella riga di comando. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | Passa alla parola successiva nella riga di comando. | `/input move_next_word`
+  kbd:[Alt+f]     | Passa alla parola successiva nella riga di comando. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | Si sposta all'inizio della riga di comando. | `/input move_beginning_of_line`
+  kbd:[Ctrl+a]    | Si sposta all'inizio della riga di comando. | `+/input move_beginning_of_line+`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | Si sposta alla fine della riga di comando. | `/input move_end_of_line`
+  kbd:[Ctrl+e]    | Si sposta alla fine della riga di comando. | `+/input move_end_of_line+`
 | kbd:[Ctrl+c],
-  kbd:[b]         | Inserisce il codice per il testo in grassetto. | `/input insert \x02`
+  kbd:[b]         | Inserisce il codice per il testo in grassetto. | `+/input insert \x02+`
 | kbd:[Ctrl+c],
-  kbd:[c]         | Inserisce il codice per il testo colorato. | `/input insert \x03`
+  kbd:[c]         | Inserisce il codice per il testo colorato. | `+/input insert \x03+`
 | kbd:[Ctrl+c],
-  kbd:[i]         | Inserisce il codice per il testo in corsivo. | `/input insert \x1D`
+  kbd:[i]         | Inserisce il codice per il testo in corsivo. | `+/input insert \x1D+`
 | kbd:[Ctrl+c],
-  kbd:[o]         | Inserisce il codice per il reset dei colori. | `/input insert \x0F`
+  kbd:[o]         | Inserisce il codice per il reset dei colori. | `+/input insert \x0F+`
 | kbd:[Ctrl+c],
-  kbd:[v]         | Inserisce il codice per l'inversione dei colori. | `/input insert \x16`
+  kbd:[v]         | Inserisce il codice per l'inversione dei colori. | `+/input insert \x16+`
 | kbd:[Ctrl+c],
-  kbd:[_]         | Inserisce il codice per il testo sottolineato. | `/input insert \x1F`
+  kbd:[_]         | Inserisce il codice per il testo sottolineato. | `+/input insert \x1F+`
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | Elimina il carattere successivo nella riga di comando. | `/input delete_next_char`
+  kbd:[Ctrl+d]    | Elimina il carattere successivo nella riga di comando. | `+/input delete_next_char+`
 | kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | Elimina il carattere precedente nella riga di comando. | `/input delete_previous_char`
+  kbd:[Ctrl+h]    | Elimina il carattere precedente nella riga di comando. | `+/input delete_previous_char+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `/input delete_end_of_line`
-| kbd:[Ctrl+r]      | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `/input search_text_here`
-| kbd:[Ctrl+t]    | Inverti caratteri. | `/input transpose_chars`
+| kbd:[Ctrl+k]    | Elimina dal cursore fino alla fine della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+r]      | Cerca del testo nella cronologia del buffer (consultare <<key_bindings_search_context,tasti per il contesto search>>). | `+/input search_text_here+`
+| kbd:[Ctrl+t]    | Inverti caratteri. | `+/input transpose_chars+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `/input delete_beginning_of_line`
+| kbd:[Ctrl+u]    | Elimina dal cursore fino all'inizio della riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_beginning_of_line+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `/input delete_previous_word`
+| kbd:[Ctrl+w]    | Elimina la parola precedente nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_previous_word+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+y]    | Paste the internal clipboard content. | `/input clipboard_paste`
-| kbd:[Ctrl+_]    | Annulla l'ultima azione sulla riga di comando. | `/input undo`
-| kbd:[Alt+_]     | Ripete l'ultima azione sulla riga di comando. | `/input redo`
-| kbd:[Tab]       | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `/input complete_next`
-| kbd:[Shift+Tab] | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `/input complete_previous`
+| kbd:[Ctrl+y]    | Paste the internal clipboard content. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]    | Annulla l'ultima azione sulla riga di comando. | `+/input undo+`
+| kbd:[Alt+_]     | Ripete l'ultima azione sulla riga di comando. | `+/input redo+`
+| kbd:[Tab]       | Completa comando o nick (kbd:[Tab] di nuovo: trova prossimo completamento). | `+/input complete_next+`
+| kbd:[Shift+Tab] | Senza completamento: effettua un completamento parziale, con completamento in sospeso: completa con il completamento precedente. | `+/input complete_previous+`
 | kbd:[Invio] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `/input return`
-| kbd:[↑]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `/input history_previous`
-| kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `/input history_next`
-| kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `/input history_global_previous`
-| kbd:[Ctrl+↓]    | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer). | `/input history_global_next`
+  kbd:[Ctrl+m]    | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
+| kbd:[↑]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `+/input history_previous+`
+| kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `+/input history_next+`
+| kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓]    | Chiama il comando/messaggio successivo nella cronologia globale (identico per tutti i buffer). | `+/input history_global_next+`
 // TRANSLATION MISSING
-| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `/input delete_next_word`
-| kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `/input grab_key_command`
-| kbd:[Alt+r]     | Elimina l'intera riga di comando. | `/input delete_line`
+| kbd:[Alt+d]     | Elimina la parola successiva nella riga di comando (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
+| kbd:[Alt+k]     | Cattura un tasto ed inserisce il suo codice (e il comando associato se il tasto esiste) nella riga di comando. | `+/input grab_key_command+`
+| kbd:[Alt+r]     | Elimina l'intera riga di comando. | `+/input delete_line+`
 // TRANSLATION MISSING
-| kbd:[Alt+s]     | Toggle spell checker. | `/mute spell toggle`
+| kbd:[Alt+s]     | Toggle spell checker. | `+/mute spell toggle+`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -1744,89 +1744,89 @@ with `/script install buffer_autoset.py` and get help with `/help buffer_autoset
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Tasti              | Descrizione | Comando
-| kbd:[Ctrl+l] (`L`) | Ridisegna l'intera finestra. | `/window refresh`
+| kbd:[Ctrl+l] (`L`) | Ridisegna l'intera finestra. | `+/window refresh+`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `/input set_unread`
-| kbd:[Ctrl+x]       | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `/input switch_active_buffer`
+  kbd:[Ctrl+u]       | Imposta l'evidenziatore dei messaggi non letti su tutti i buffer. | `+/input set_unread+`
+| kbd:[Ctrl+x]       | Passa al buffer attivo se i buffer sono collegati con lo stesso numero. | `+/input switch_active_buffer+`
 // TRANSLATION MISSING
-| kbd:[Alt+x]        | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `/input zoom_merged_buffer`
-| kbd:[PgUp]         | Scorre in alto di una pagina nella cronologia del buffer. | `/window page_up`
-| kbd:[PgDn]         | Scorre di una pagina in basso nella cronologia del buffer. | `/window page_down`
-| kbd:[Alt+PgUp]     | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up`
-| kbd:[Alt+PgDn]     | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down`
-| kbd:[Alt+Home]     | Scorre in cima al buffer. | `/window scroll_top`
-| kbd:[Alt+End]      | Scorre alla fine del del buffer. | `/window scroll_bottom`
+| kbd:[Alt+x]        | Zoom on merged buffer (kbd:[Alt+x] again: display all merged buffers). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]         | Scorre in alto di una pagina nella cronologia del buffer. | `+/window page_up+`
+| kbd:[PgDn]         | Scorre di una pagina in basso nella cronologia del buffer. | `+/window page_down+`
+| kbd:[Alt+PgUp]     | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]     | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down+`
+| kbd:[Alt+Home]     | Scorre in cima al buffer. | `+/window scroll_top+`
+| kbd:[Alt+End]      | Scorre alla fine del del buffer. | `+/window scroll_bottom+`
 // TRANSLATION MISSING
 | kbd:[F1] +
-  kbd:[Ctrl+F1]      | Scroll up one page in buflist. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | Scroll up one page in buflist. | `+/bar scroll buflist * -100%+`
 // TRANSLATION MISSING
 | kbd:[F2] +
-  kbd:[Ctrl+F2]      | Scroll down one page in buflist. | `/bar scroll buflist * +100%`
+  kbd:[Ctrl+F2]      | Scroll down one page in buflist. | `+/bar scroll buflist * +100%+`
 // TRANSLATION MISSING
-| kbd:[Alt+F1]       | Go to the beginning of buflist. | `/bar scroll buflist * b`
+| kbd:[Alt+F1]       | Go to the beginning of buflist. | `+/bar scroll buflist * b+`
 // TRANSLATION MISSING
-| kbd:[Alt+F2]       | Go to the end of buflist. | `/bar scroll buflist * e`
+| kbd:[Alt+F2]       | Go to the end of buflist. | `+/bar scroll buflist * e+`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]           | Passa al buffer precedente. | `/buffer -1`
+  kbd:[F5]           | Passa al buffer precedente. | `+/buffer -1+`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]           | Passa al buffer successivo. | `/buffer +1`
-| kbd:[F7]           | Passa alla finestra precedente. | `/window -1`
-| kbd:[F8]           | Passa alla finestra successiva. | `/window +1`
+  kbd:[F6]           | Passa al buffer successivo. | `+/buffer +1+`
+| kbd:[F7]           | Passa alla finestra precedente. | `+/window -1+`
+| kbd:[F8]           | Passa alla finestra successiva. | `+/window +1+`
 | kbd:[F9]           | Scorre il titolo del buffer sulla sinistra. | `+/bar scroll title * -30%+`
 | kbd:[F10]          | Scorre il titolo del buffer sulla destra. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]     | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist * -100%+`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]     | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]      | Sposta all'inizio della lista nick. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]      | Sposta alla fine della lista nick. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]        | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `/input jump_smart`
+  kbd:[Ctrl+F12]     | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]      | Sposta all'inizio della lista nick. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]      | Sposta alla fine della lista nick. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+a]        | Passa al buffer successivo con attività (con priorità: highligh, messagge, altro). | `+/input jump_smart+`
 // TRANSLATION MISSING
-| kbd:[Alt+Shift+B]  | Toggle buflist. | `/buflist toggle`
-| kbd:[Alt+h]        | Pulisce hotlist (notifica di attività su altri buffer). | `/input hotlist_clear`
+| kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
+| kbd:[Alt+h]        | Pulisce hotlist (notifica di attività su altri buffer). | `+/input hotlist_clear+`
 // TRANSLATION MISSING
 | kbd:[Alt+j],
-  kbd:[Alt+f]        | Switch to first buffer. | `/buffer -`
+  kbd:[Alt+f]        | Switch to first buffer. | `+/buffer -+`
 | kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | Passa all'ultimo buffer. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | Passa all'ultimo buffer. | `+/buffer ++`
 | kbd:[Alt+j],
-  kbd:[Alt+r]        | Passa al buffer raw IRC. | `/server raw`
+  kbd:[Alt+r]        | Passa al buffer raw IRC. | `+/server raw+`
 | kbd:[Alt+j],
-  kbd:[Alt+s]        | Passa al buffer server IRC. | `/server jump`
-| kbd:[Alt+0...9]    | Passa al buffer numero (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | Passa al buffer server IRC. | `+/server jump+`
+| kbd:[Alt+0...9]    | Passa al buffer numero (0 = 10). | `+/buffer *N+`
 | kbd:[Alt+j],
-  kbd:[01...99]      | Passa al buffer numero. | `/buffer *NN`
+  kbd:[01...99]      | Passa al buffer numero. | `+/buffer *NN+`
 // TRANSLATION MISSING
-| kbd:[Alt+l] (`L`)  | Toggle bare display. | `/window bare`
-| kbd:[Alt+m]        | Abilita/disabilita. | `/mouse toggle`
-| kbd:[Alt+n]        | Scorre fino alla notifica successiva. | `/window scroll_next_highlight`
+| kbd:[Alt+l] (`L`)  | Toggle bare display. | `+/window bare+`
+| kbd:[Alt+m]        | Abilita/disabilita. | `+/mouse toggle+`
+| kbd:[Alt+n]        | Scorre fino alla notifica successiva. | `+/window scroll_next_highlight+`
 // TRANSLATION MISSING
-| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
-| kbd:[Alt+p]        | Scorre fino alla notifica precedente. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]        | Scorre fino alla prima riga non letta nel buffer. | `/window scroll_unread`
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `+/bar toggle nicklist+`
+| kbd:[Alt+p]        | Scorre fino alla notifica precedente. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]        | Scorre fino alla prima riga non letta nel buffer. | `+/window scroll_unread+`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]        | Passa alla finestra in alto. | `/window up`
+  kbd:[Alt+↑]        | Passa alla finestra in alto. | `+/window up+`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]        | Passa alla finestra in basso. | `/window down`
+  kbd:[Alt+↓]        | Passa alla finestra in basso. | `+/window down+`
 | kbd:[Alt+w],
-  kbd:[Alt+←]        | Passa alla finestra sulla sinistra. | `/window left`
+  kbd:[Alt+←]        | Passa alla finestra sulla sinistra. | `+/window left+`
 | kbd:[Alt+w],
-  kbd:[Alt+→]        | Passa alla finestrs sulla destra. | `/window right`
+  kbd:[Alt+→]        | Passa alla finestrs sulla destra. | `+/window right+`
 | kbd:[Alt+w],
-  kbd:[Alt+b]        | Bilancia le dimensioni di tutte le finestre. | `/window balance`
+  kbd:[Alt+b]        | Bilancia le dimensioni di tutte le finestre. | `+/window balance+`
 | kbd:[Alt+w],
-  kbd:[Alt+s]        | Scambia i buffer di due finestra. | `/window swap`
-| kbd:[Alt+z]        | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `/window zoom`
-| kbd:[Alt+<]        | Passa al buffer precedente nella lista dei buffer visitati. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]        | Passa al buffer successivo nella lista dei buffer visitati. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]        | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]        | Attiva/disattiva filtri. | `/filter toggle`
+  kbd:[Alt+s]        | Scambia i buffer di due finestra. | `+/window swap+`
+| kbd:[Alt+z]        | Ingrandimento sulla finestra attiva (kbd:[Alt+z] di nuovo: ripristina lo stato iniziale della finestra, prima dell'ingrandimento). | `+/window zoom+`
+| kbd:[Alt+<]        | Passa al buffer precedente nella lista dei buffer visitati. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]        | Passa al buffer successivo nella lista dei buffer visitati. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]        | Passa all'ultimo buffer mostrato (prima dell'ultimo passaggio ad un buffer). | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+=]        | Attiva/disattiva filtri. | `+/filter toggle+`
 // TRANSLATION MISSING
-| kbd:[Alt+-]        | Toggle filters in current buffer. | `/filter toggle @`
+| kbd:[Alt+-]        | Toggle filters in current buffer. | `+/filter toggle @+`
 |===
 
 [[key_bindings_search_context]]
@@ -1839,18 +1839,18 @@ kbd:[Ctrl+r] per cercare del testo nel buffer).
 |===
 | Key            | Descrizione | Comando
 // TRANSLATION MISSING
-| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `/input search_switch_regex`
-| kbd:[Alt+c]    | Passa alla ricerca esatta. | `/input search_switch_case`
+| kbd:[Ctrl+r]   | Switch search type: string (default), regular expression. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | Passa alla ricerca esatta. | `+/input search_switch_case+`
 // TRANSLATION MISSING
-| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `/input search_switch_where`
-| kbd:[↑]        | Cerca riga precedente. | `/input search_previous`
-| kbd:[↓]        | Cerca riga successiva. | `/input search_next`
+| kbd:[Tab]      | Switch search in: messages (default), prefixes, prefixes + messages. | `+/input search_switch_where+`
+| kbd:[↑]        | Cerca riga precedente. | `+/input search_previous+`
+| kbd:[↓]        | Cerca riga successiva. | `+/input search_next+`
 // TRANSLATION MISSING
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | Stop search at current position. | `/input search_stop_here`
+  kbd:[Ctrl+m]   | Stop search at current position. | `+/input search_stop_here+`
 // TRANSLATION MISSING
-| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `/input search_stop`
+| kbd:[Ctrl+q]   | Stop search and scroll to bottom of buffer. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1862,25 +1862,25 @@ sullo schermo.
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
 | Tasto          | Zona       | Descrizione | Comando
-| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `/cursor move up`
-| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `/cursor move down`
-| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `/cursor move left`
-| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `/cursor move right`
-| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `/cursor move area_up`
-| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `/cursor move area_down`
-| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `/cursor move area_left`
-| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `/cursor move area_right`
-| kbd:[m]        | chat       | Cita messaggio. | `hsignal:chat_quote_message;/cursor stop`
-| kbd:[q]        | chat       | Cita prefisso + messaggio. | `hsignal:chat_quote_prefix_message;/cursor stop`
-| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| kbd:[b]        | lista nick | Ban di un nick. | `/window ${_window_number};/ban ${nick}`
-| kbd:[k]        | lista nick | Kick di un nick. | `/window ${_window_number};/kick ${nick}`
-| kbd:[K]        | lista nick | Kick e ban di un nick. | `/window ${_window_number};/kickban ${nick}`
-| kbd:[q]        | lista nick | Apri query con il nick. | `/window ${_window_number};/query ${nick};/cursor stop`
-| kbd:[w]        | lista nick | Effettua un whois sul nick. | `/window ${_window_number};/whois ${nick}`
+| kbd:[↑]        | -          | Sposta il cursore di una riga in alto. | `+/cursor move up+`
+| kbd:[↓]        | -          | Sposta il cursore di una riga in basso. | `+/cursor move down+`
+| kbd:[←]        | -          | Sposta il cursore di una colonna a sinistra. | `+/cursor move left+`
+| kbd:[→]        | -          | Sposta il cursore di una colonna a destra. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -          | Sposta il cursore nell'area in alto. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -          | Sposta il cursore nell'area in basso. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -          | Sposta il cursore nell'area a sinistra. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -          | Sposta il cursore nell'area a destra. | `+/cursor move area_right+`
+| kbd:[m]        | chat       | Cita messaggio. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | chat       | Cita prefisso + messaggio. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | chat       | Cita ora + prefisso + messaggio. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | lista nick | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | lista nick | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | lista nick | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | lista nick | Apri query con il nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | lista nick | Effettua un whois sul nick. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `/cursor stop`
+  kbd:[Ctrl+m]   | -          | Ferma la modalità cursore. | `+/cursor stop+`
 |===
 
 [[key_bindings_mouse_context]]
@@ -1894,62 +1894,62 @@ evento del mouse.
 |===
 // TRANSLATION MISSING
 | Tasto/Wheel ^(1)^ | Azione           | Zona                | Descrizione | Comando
-| ◾◽◽               | -                | chat                | Passa alla finestra. | `/window ${_window_number}`
-| ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `/window ${_window_number};/buffer +1`
-| ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `/window ${_window_number};/buffer +1`
-| ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `/window ${_window_number};/buffer 1`
-| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `/window ${_window_number};/input jump_last_buffer`
-| kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `/window scroll_up -window ${_window_number}`
-| kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `/window scroll_down -window ${_window_number}`
-| kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+▼]      | -                | chat                | Scroll horizontally to the right. | `/window scroll_horiz -window ${_window_number} +10%`
+| ◾◽◽               | -                | chat                | Passa alla finestra. | `+/window ${_window_number}+`
+| ◾◽◽               | sinistra         | chat                | Passa al buffer precedente. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽               | destra           | chat                | Passa al buffer successivo. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽               | sinistra (lungo) | chat                | Switch to first buffer. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽               | destra (lungo)   | chat                | Passa all'ultimo buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]           | -                | chat                | Scorre di qualche riga in alto nella cronologia del buffer. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]           | -                | chat                | Scorre di qualche riga in basso nella cronologia del buffer. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]      | -                | chat                | Scroll horizontally to the left. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]      | -                | chat                | Scroll horizontally to the right. | `+/window scroll_horiz -window ${_window_number} +10%+`
 // TRANSLATION MISSING
-| kbd:[▲]           | -                | chat: fset buffer   | Move five lines up in fset buffer. | `/fset -up 5`
+| kbd:[▲]           | -                | chat: fset buffer   | Move five lines up in fset buffer. | `+/fset -up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `/fset -down 5`
+| kbd:[▼]           | -                | chat: fset buffer   | Move five lines down in fset buffer. | `+/fset -down 5+`
 // TRANSLATION MISSING
-| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `/window ${_window_number};/fset -go ${_chat_line_y}`
+| ◾◽◽               | -                | chat: fset buffer   | Select line in fset buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `hsignal:fset_mouse`
+| ◽◽◾               | -                | chat: fset buffer   | Toggle boolean (on/off) or edit the option value. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+| ◽◽◾               | left             | chat: fset buffer   | Decrease value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `hsignal:fset_mouse`
+| ◽◽◾               | right            | chat: fset buffer   | Increase value for integer/color, set/append to value for other types. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `hsignal:fset_mouse`
+| ◽◽◾               | up / down        | chat: fset buffer   | Mark/unmark multiple options. | `+hsignal:fset_mouse+`
 // TRANSLATION MISSING
-| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `/script up 5`
+| kbd:[▲]           | -                | chat: script buffer | Move 5 lines up in script buffer. | `+/script up 5+`
 // TRANSLATION MISSING
-| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `/script down 5`
+| kbd:[▼]           | -                | chat: script buffer | Move 5 lines down in script buffer. | `+/script down 5+`
 // TRANSLATION MISSING
-| ◾◽◽               | -                | chat: script buffer | Select line in script buffer. | `/script go ${_chat_line_y}`
+| ◾◽◽               | -                | chat: script buffer | Select line in script buffer. | `+/script go ${_chat_line_y}+`
 // TRANSLATION MISSING
-| ◽◽◾               | -                | chat: script buffer | Install/remove script. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
+| ◽◽◾               | -                | chat: script buffer | Install/remove script. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
 // TRANSLATION MISSING
-| ◾◽◽               | up / left        | buflist             | Move buffer to a lower number. | Signal `buflist_mouse`.
+| ◾◽◽               | up / left        | buflist             | Move buffer to a lower number. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◾◽◽               | down / right     | buflist             | Move buffer to a higher number. | Signal `buflist_mouse`.
+| ◾◽◽               | down / right     | buflist             | Move buffer to a higher number. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◾◽◽               | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `buflist_mouse`.
+| ◾◽◽               | -                | buflist             | Switch to buffer (previously visited buffer if the buffer is the current one). | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| ◽◽◾               | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `buflist_mouse`.
+| ◽◽◾               | -                | buflist             | Switch to next visited buffer if the buffer is the current one. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| kbd:[Ctrl+▲]      | -                | buflist             | Switch to previous buffer. | Signal `buflist_mouse`.
+| kbd:[Ctrl+▲]      | -                | buflist             | Switch to previous buffer. | Signal `+buflist_mouse+`.
 // TRANSLATION MISSING
-| kbd:[Ctrl+▼]      | -                | buflist             | Switch to next buffer. | Signal `buflist_mouse`.
-| ◾◽◽               | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽               | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽               | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽               | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽               | -                | lista nick          | Apre una query con un nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾               | -                | lista nick          | Effettua un whois su un nick. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽               | sinistra         | lista nick          | Kick di un nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽               | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾               | sinistra         | lista nick          | Ban di un nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾               | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `/input grab_mouse_area`
-| kbd:[▲]           | -                | ogni barra          | Scorre la barra del -20%. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| kbd:[▼]           | -                | ogni barra          | Scorre la barra del +20%. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽               | -                | ovunque             | Avvia la modalità cursore in questo punto. | `/cursor go ${_x},${_y}`
+| kbd:[Ctrl+▼]      | -                | buflist             | Switch to next buffer. | Signal `+buflist_mouse+`.
+| ◾◽◽               | su               | lista nick          | Scorre di una pagina in alto nella lista nick. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽               | giù              | lista nick          | Scorre di una pagina in basso nella lista nick. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽               | up (lungo)       | lista nick          | Sposta all'inizio della lista nick. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽               | giù (lungo)      | lista nick          | Sposta alla fine della lista nick. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽               | -                | lista nick          | Apre una query con un nick. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾               | -                | lista nick          | Effettua un whois su un nick. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽               | sinistra         | lista nick          | Kick di un nick. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽               | sinistra (lungo) | lista nick          | Kick e ban di un nick. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾               | sinistra         | lista nick          | Ban di un nick. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾               | -                | input               | Cattura un evento del mouse e inserisce il codice nella riga di comando. | `+/input grab_mouse_area+`
+| kbd:[▲]           | -                | ogni barra          | Scorre la barra del -20%. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]           | -                | ogni barra          | Scorre la barra del +20%. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽               | -                | ovunque             | Avvia la modalità cursore in questo punto. | `+/cursor go ${_x},${_y}+`
 |===
 
 // TRANSLATION MISSING
@@ -1967,43 +1967,43 @@ These keys and actions are used on the fset buffer (see <<fset_plugin,Fset plugi
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `/fset -up`
-| kbd:[↓]            |              | Move one line down. | `/fset -down`
-| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
-| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
-| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `/fset -go 0`
-| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `/fset -go end`
-| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `/fset -left`
-| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `/fset -right`
-| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `/fset -toggle`
-| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `/fset -add -1`
-| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `/fset -add 1`
+| kbd:[↑]            |              | Move one line up. | `+/fset -up+`
+| kbd:[↓]            |              | Move one line down. | `+/fset -down+`
+| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+Home]     | `pass:[<<]`  | Move to first line. | `+/fset -go 0+`
+| kbd:[Alt+End]      | `pass:[>>]`  | Move to last line. | `+/fset -go end+`
+| kbd:[F11]          | `pass:[<]`   | Scroll horizontally on the left. | `+/fset -left+`
+| kbd:[F12]          | `pass:[>]`   | Scroll horizontally on the right. | `+/fset -right+`
+| kbd:[Alt+Space]    | `t`          | Toggle boolean value. | `+/fset -toggle+`
+| kbd:[Alt+-]        | `-`          | Subtract 1 from value for integer/color, set value for other types. | `+/fset -add -1+`
+| kbd:[Alt++]        | `+`          | Add 1 to value for integer/color, append to value for other types. | `+/fset -add 1+`
 | kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Reset value. | `/fset -reset`
+  kbd:[Alt+r]        | `r`          | Reset value. | `+/fset -reset+`
 | kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Unset value. | `/fset -unset`
-| kbd:[Alt+Enter]    | `s`          | Set value. | `/fset -set`
+  kbd:[Alt+u]        | `u`          | Unset value. | `+/fset -unset+`
+| kbd:[Alt+Enter]    | `s`          | Set value. | `+/fset -set+`
 | kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | Set new value. | `/fset -setnew`
+  kbd:[Alt+n]        | `n`          | Set new value. | `+/fset -setnew+`
 | kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | Append to value. | `/fset -append`
-| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `/fset -mark 1`
-| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `/fset -up; /fset -mark`
-| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `/fset -mark; /fset -down`
+  kbd:[Alt+a]        | `a`          | Append to value. | `+/fset -append+`
+| kbd:[Alt+,]        | `,`          | Mark/unmark option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]      |              | Move one line up and mark/unmark option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]      |              | Mark/unmark option and move one line down. | `+/fset -mark; /fset -down+`
 |                    | `m:xxx`      | Mark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
 |                    | `u:xxx`      | Unmark options displayed that are matching filter "xxx" (any filter on option or value is allowed, see <<command_fset_fset,fset command>>). |
-| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `/fset -refresh`
+| kbd:[Ctrl+l] (`L`) |              | Refresh options and whole screen. | `+/fset -refresh+`
 |                    | `$`          | Refresh options (keep marked options). |
 |                    | `$$`         | Refresh options (unmark all options). |
-| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `/mute /set fset.look.show_plugins_desc toggle`
-| kbd:[Alt+v]        |              | Toggle help bar. | `/bar toggle fset`
-|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /set fset.look.sort x,y`
-|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `/mute /unset fset.look.sort`
-|                    | `w:xxx`      | Export options in file "xxx". | `/fset -export xxx`
-|                    | `w-:xxx`     | Export options in file "xxx" without help. | `/fset -export -nohelp xxx`
-|                    | `w+:xxx`     | Export options in file "xxx" with help. | `/fset -export -help xxx`
-| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `/fset -format`
-|                    | `q`          | Close fset buffer. | `/buffer close`
+| kbd:[Alt+p]        |              | Toggle plugin description options (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]        |              | Toggle help bar. | `+/bar toggle fset+`
+|                    | `s:x,y`      | Sort options by fields x,y (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                    | `s:`         | Reset sort to its default value (see option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                    | `w:xxx`      | Export options in file "xxx". | `+/fset -export xxx+`
+|                    | `w-:xxx`     | Export options in file "xxx" without help. | `+/fset -export -nohelp xxx+`
+|                    | `w+:xxx`     | Export options in file "xxx" with help. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]       | `x`          | Switch the format used to display options. | `+/fset -format+`
+|                    | `q`          | Close fset buffer. | `+/buffer close+`
 |===
 
 // TRANSLATION MISSING
@@ -2021,17 +2021,17 @@ These keys and actions are used on the script buffer (see <<scripts_plugins,Scri
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Key                | Action ^(1)^ | Description | Command
-| kbd:[↑]            |              | Move one line up. | `/script up`
-| kbd:[↓]            |              | Move one line down. | `/script down`
-| kbd:[PgUp]         |              | Move one page up. | `/window page_up`
-| kbd:[PgDn]         |              | Move one page down. | `/window page_down`
-| kbd:[Alt+i]        | `i`          | Install script. | `/script install`
-| kbd:[Alt+r]        | `r`          | Remove script. | `/script remove`
-| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `/script load`
-| kbd:[Alt+u]        | `u`          | Unload script. | `/script unload`
-| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `/script toggleautoload`
-| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `/script hold`
-| kbd:[Alt+v]        | `v`          | View script. | `/script show`
+| kbd:[↑]            |              | Move one line up. | `+/script up+`
+| kbd:[↓]            |              | Move one line down. | `+/script down+`
+| kbd:[PgUp]         |              | Move one page up. | `+/window page_up+`
+| kbd:[PgDn]         |              | Move one page down. | `+/window page_down+`
+| kbd:[Alt+i]        | `i`          | Install script. | `+/script install+`
+| kbd:[Alt+r]        | `r`          | Remove script. | `+/script remove+`
+| kbd:[Alt+l] (`L`)  | `l`          | Load script. | `+/script load+`
+| kbd:[Alt+u]        | `u`          | Unload script. | `+/script unload+`
+| kbd:[Alt+Shift+A]  | `A`          | Autoload script. | `+/script toggleautoload+`
+| kbd:[Alt+h]        | `h`          | Hold/unhold script. | `+/script hold+`
+| kbd:[Alt+v]        | `v`          | View script. | `+/script show+`
 |===
 
 // TRANSLATION MISSING
@@ -2157,7 +2157,7 @@ più eventi usando `+*+` all'inizio o alla fine del nome, ad esempio
 `+button1-gesture-*+` corrisponderà ad ogni azione compiuta col tasto sinistro.
 
 [TIP]
-È possibile trovare il nome di un evento con il comando `/input grab_mouse`
+È possibile trovare il nome di un evento con il comando `+/input grab_mouse+`
 poi eseguire l'evento col mouse. Il comando inserisce il nome dell'evento
 nella riga di comando.
 
@@ -3020,17 +3020,17 @@ automaticamente da WeeChat quando si risponde alle CTCP
 [width="100%",cols="2l,4,8",options="header"]
 |===
 | Codice       | Descrizione                             | Valore/esempio
-| $clientinfo  | Elenco di CTCP supportate               | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| $version     | Versione di WeeChat                     | `0.4.0-dev`
-| $versiongit  | Versione di WeeChat + git version ^(1)^ | `0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| $git         | Git version ^(1)^                       | `v0.3.9-104-g7eb5cc4`
-| $compilation | Data di compilazione di WeeChat         | `Dec 16 2012`
-| $osinfo      | Informazioni sull'OS                    | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | Sito di WeeChat                         | `https://weechat.org/`
-| $download    | Sito di WeeChat, pagina di download     | `https://weechat.org/download`
-| $time        | Data/ora correnti                       | `Sun, 16 Dec 2012 10:40:48 +0100`
-| $username    | Nome utente sul server IRC              | `name`
-| $realname    | Nome reale sul server IRC               | `John Doe`
+| $clientinfo  | Elenco di CTCP supportate               | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| $version     | Versione di WeeChat                     | `+0.4.0-dev+`
+| $versiongit  | Versione di WeeChat + git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git version ^(1)^                       | `+v0.3.9-104-g7eb5cc4+`
+| $compilation | Data di compilazione di WeeChat         | `+Dec 16 2012+`
+| $osinfo      | Informazioni sull'OS                    | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $site        | Sito di WeeChat                         | `+https://weechat.org/+`
+| $download    | Sito di WeeChat, pagina di download     | `+https://weechat.org/download+`
+| $time        | Data/ora correnti                       | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $username    | Nome utente sul server IRC              | `+name+`
+| $realname    | Nome reale sul server IRC               | `+John Doe+`
 |===
 
 // TRANSLATION MISSING
@@ -3044,13 +3044,13 @@ le risposte CTCP sono:
 // TRANSLATION MISSING ($username (name))
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Formato risposta                     | Esempio
-| CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `https://weechat.org/download`
-| TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
-| USERINFO   | `$username ($realname)`              | `name (John Doe)`
-| VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
+| CTCP       | Formato risposta                       | Esempio
+| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| USERINFO   | `+$username ($realname)+`              | `+name (John Doe)+`
+| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
 |===
 
 [[irc_target_buffer]]
@@ -4018,8 +4018,8 @@ A trigger has the following options (names are
   When option is `off`, the trigger is disabled and actions are not executed
   any more.
 
-| hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
+| hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
+  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+` |
   The hook used in trigger. For more information, see
   link:weechat_plugin_api.it.html#hooks[WeeChat plugin API reference / Hooks].
 
@@ -4039,7 +4039,7 @@ A trigger has the following options (names are
   Command to execute (many commands can be separated by semicolons); it is
   evaluated (see command <<command_weechat_eval,/eval>>).
 
-| return_code | `ok`, `ok_eat`, `error` |
+| return_code | `+ok+`, `+ok_eat+`, `+error+` |
   The return code of callback (default is `ok`, which should be used in almost
   all triggers, the other values are rarely used).
 
@@ -4320,8 +4320,8 @@ is added in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable             | Type    | Description
-| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `${irc_server.name}`).
-| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `${irc_channel.name}`).
+| irc_server           | pointer | Pointer to IRC server (variables in hdata of type "irc_server" can be used, like `+${irc_server.name}+`).
+| irc_channel          | pointer | Pointer to IRC channel (variables in hdata of type "irc_channel" can be used, like `+${irc_channel.name}+`).
 | server               | string  | Name of server (example: "freenode").
 | tags                 | string  | Tags in message (rarely used).
 | message_without_tags | string  | Message without tags.
@@ -4337,7 +4337,7 @@ is added in hashtable:
 | pos_text             | string  | The index of _text_ in message ("-1" if _text_ was not found).
 |===
 
-When the data is a pointer, the variable `tg_signal_data` can be used like this
+When the data is a pointer, the variable `+tg_signal_data+` can be used like this
 to read a hdata property (in this example this is a pointer on a buffer):
 
 ----

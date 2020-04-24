@@ -138,7 +138,7 @@ aber dies wird *NICHT* empfohlen:
 Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen. +
-^(4)^ standardmäßig wird Python 3.x verwendet. Wird die Option `ENABLE_PYTHON2` aktiviert
+^(4)^ standardmäßig wird Python 3.x verwendet. Wird die Option `+ENABLE_PYTHON2+` aktiviert
 (siehe unten), sollte die Version 2.7 von Python genutzt werden.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen
@@ -1205,11 +1205,11 @@ Aufzählung von Bar-Optionen:
 | items | string |
   Eine Aufzählung von _items_ (siehe <<bar_items,items>> für weitere Informationen).
 
-| filling_left_right | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+| filling_left_right | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
   Art, wie der Inhalt der Bar die `links` oder `rechts` gezeichnet wird, dargestellt wird (siehe
   <<bar_filling,filling>> für weitere Informationen).
 
-| filling_top_bottom | `horizontal`, `vertical`, `columns_horizontal`, `columns_vertical` |
+| filling_top_bottom | `+horizontal+`, `+vertical+`, `+columns_horizontal+`, `+columns_vertical+` |
   Art, wie der Inhalt der Bar die `oben` oder `unten` gezeichnet wird, dargestellt wird (siehe
   <<bar_filling,filling>> für weitere Informationen).
 
@@ -1260,15 +1260,15 @@ heißt hierbei _bitlist_ und der Name des bitlbee Servers _bitlbee_):
 
 Es gibt folgende vier Möglichkeiten um Text innerhalb einer Bar darzustellen:
 
-* `horizontal`: die Items werden horizontal, von links nach rechts, dargestellt.
+* `+horizontal+`: die Items werden horizontal, von links nach rechts, dargestellt.
    Sollten neue Zeilen dargestellt werden, dann werden diese durch ein Leerzeichen
    von der vorherigen getrennt.
-* `vertical`: die Items werden von oben nach unten dargestellt. Neue Zeilen werden
+* `+vertical+`: die Items werden von oben nach unten dargestellt. Neue Zeilen werden
   neben der vorherigen dargestellt.
-* `columns_horizontal`: Item werden in Spalten dargestellt, wobei der Text linksbündig
+* `+columns_horizontal+`: Item werden in Spalten dargestellt, wobei der Text linksbündig
   ausgerichtet ist. Das erste Item wird in der linken oberen Ecke angezeigt und das
   zweite Item ist in der selben Zeile, auf der rechten Seite.
-* `columns_vertical`: Item werden in Spalten dargestellt, wobei der Text linksbündig
+* `+columns_vertical+`: Item werden in Spalten dargestellt, wobei der Text linksbündig
   ausgerichtet ist. Das erste Item wird in der linken oben Ecke angezeigt und das
   zweite Item wird eine Zeile darunter angezeigt.
 
@@ -1541,8 +1541,8 @@ Um zum Beispiel Highlights von "joe" und "mike" im aktuellen Buffer zu deaktivie
 [NOTE]
 Die Buffer-Eigenschaft "hotlist_max_level_nicks" ist keine permanente Einstellung und wird nicht
 in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
-und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
+das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
+und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[highlights]]
 === Highlights
@@ -1611,8 +1611,8 @@ Um zum Beispiel jede Nachricht im aktuellen Buffer als Highlight-Nachricht einzu
 [NOTE]
 Die Buffer-Eigenschaft "highlight_regex" ist keine permanente Einstellung und wird nicht
 in der Konfigurationsdatei gesichert. + Um diese Einstellung persistent zu machen benötigt man
-das Skript _buffer_autoset.py_: Um das Skript zu installieren `/script install buffer_autoset.py`
-und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
+das Skript _buffer_autoset.py_: Um das Skript zu installieren `+/script install buffer_autoset.py+`
+und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 
 [[key_bindings]]
 === Standard Tastenbelegung
@@ -1624,54 +1624,54 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 |===
 | Taste           | Beschreibung | Befehl
 | kbd:[←] +
-  kbd:[Ctrl+b]    | setzt den Cursor eine Position nach links. | `/input move_previous_char`
+  kbd:[Ctrl+b]    | setzt den Cursor eine Position nach links. | `+/input move_previous_char+`
 | kbd:[→] +
-  kbd:[Ctrl+f]    | setzt den Cursor eine Position nach rechts. | `/input move_next_char`
+  kbd:[Ctrl+f]    | setzt den Cursor eine Position nach rechts. | `+/input move_next_char+`
 | kbd:[Ctrl+←] +
-  kbd:[Alt+b]     | springt in der Befehlszeile zum Anfang des vorherigen Wortes. | `/input move_previous_word`
+  kbd:[Alt+b]     | springt in der Befehlszeile zum Anfang des vorherigen Wortes. | `+/input move_previous_word+`
 | kbd:[Ctrl+→] +
-  kbd:[Alt+f]     | springt in der Befehlszeile zum Anfang des nächsten Wortes. | `/input move_next_word`
+  kbd:[Alt+f]     | springt in der Befehlszeile zum Anfang des nächsten Wortes. | `+/input move_next_word+`
 | kbd:[Home] +
-  kbd:[Ctrl+a]    | springt zum Anfang der Befehlszeile. | `/input move_beginning_of_line`
+  kbd:[Ctrl+a]    | springt zum Anfang der Befehlszeile. | `+/input move_beginning_of_line+`
 | kbd:[End] +
-  kbd:[Ctrl+e]    | springt ans Ende der Befehlszeile. | `/input move_end_of_line`
+  kbd:[Ctrl+e]    | springt ans Ende der Befehlszeile. | `+/input move_end_of_line+`
 | kbd:[Ctrl+c],
-  kbd:[b]         | fügt Steuerzeichen für fett geschrieben Text ein. | `/input insert \x02`
+  kbd:[b]         | fügt Steuerzeichen für fett geschrieben Text ein. | `+/input insert \x02+`
 | kbd:[Ctrl+c],
-  kbd:[c]         | fügt Steuerzeichen für Textfarbe ein. | `/input insert \x03`
+  kbd:[c]         | fügt Steuerzeichen für Textfarbe ein. | `+/input insert \x03+`
 | kbd:[Ctrl+c],
-  kbd:[i]         | fügt Steuerzeichen für kursiven Text ein. | `/input insert \x1D`
+  kbd:[i]         | fügt Steuerzeichen für kursiven Text ein. | `+/input insert \x1D+`
 | kbd:[Ctrl+c],
-  kbd:[o]         | fügt Steuerzeichen für Standardfarbe ein. | `/input insert \x0F`
+  kbd:[o]         | fügt Steuerzeichen für Standardfarbe ein. | `+/input insert \x0F+`
 | kbd:[Ctrl+c],
-  kbd:[v]         | fügt Steuerzeichen für Hintergrundfarbe ein. | `/input insert \x16`
+  kbd:[v]         | fügt Steuerzeichen für Hintergrundfarbe ein. | `+/input insert \x16+`
 | kbd:[Ctrl+c],
-  kbd:[_]         | fügt Steuerzeichen für unterstrichenen Text ein. | `/input insert \x1F`
+  kbd:[_]         | fügt Steuerzeichen für unterstrichenen Text ein. | `+/input insert \x1F+`
 | kbd:[Del] +
-  kbd:[Ctrl+d]    | entfernt in der Befehlszeile das nächste Zeichen. | `/input delete_next_char`
+  kbd:[Ctrl+d]    | entfernt in der Befehlszeile das nächste Zeichen. | `+/input delete_next_char+`
 | kbd:[Backsp.] +
-  kbd:[Ctrl+h]    | entfernt in der Befehlszeile das vorherige Zeichen. | `/input delete_previous_char`
-| kbd:[Ctrl+k]    | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_end_of_line`
-| kbd:[Ctrl+r]    | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>). | `/input search_text_here`
-| kbd:[Ctrl+t]    | Zeichen austauschen. | `/input transpose_chars`
-| kbd:[Ctrl+u]    | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_beginning_of_line`
-| kbd:[Ctrl+w]    | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_previous_word`
-| kbd:[Ctrl+y]    | fügt den Inhalt der internen Zwischenablage ein. | `/input clipboard_paste`
-| kbd:[Ctrl+_]    | Rückgängig machen der letzten Aktion, in der Befehlszeile. | `/input undo`
-| kbd:[Alt+_]     | Wiederherstellen der letzten Aktion, in der Befehlszeile. | `/input redo`
-| kbd:[Tab]       | Vervollständigung von Befehlen oder Nicks (nochmaliges kbd:[Tab]: findet nächste Vervollständigung). | `/input complete_next`
-| kbd:[Shift+Tab] | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt. | `/input complete_previous`
+  kbd:[Ctrl+h]    | entfernt in der Befehlszeile das vorherige Zeichen. | `+/input delete_previous_char+`
+| kbd:[Ctrl+k]    | entfernt alle Zeichen vom Cursor bis zum Ende der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_end_of_line+`
+| kbd:[Ctrl+r]    | Textsuche im Verlaufsspeicher des Buffers (siehe <<key_bindings_search_context,Tasten für Such-Kontext>>). | `+/input search_text_here+`
+| kbd:[Ctrl+t]    | Zeichen austauschen. | `+/input transpose_chars+`
+| kbd:[Ctrl+u]    | entfernt alle Zeichen vom Cursor bis zum Anfang der Zeile (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_beginning_of_line+`
+| kbd:[Ctrl+w]    | entfernt das Wort links vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_previous_word+`
+| kbd:[Ctrl+y]    | fügt den Inhalt der internen Zwischenablage ein. | `+/input clipboard_paste+`
+| kbd:[Ctrl+_]    | Rückgängig machen der letzten Aktion, in der Befehlszeile. | `+/input undo+`
+| kbd:[Alt+_]     | Wiederherstellen der letzten Aktion, in der Befehlszeile. | `+/input redo+`
+| kbd:[Tab]       | Vervollständigung von Befehlen oder Nicks (nochmaliges kbd:[Tab]: findet nächste Vervollständigung). | `+/input complete_next+`
+| kbd:[Shift+Tab] | ohne Vervollständigung: führt eine teilweise Vervollständigung durch. Bei unerledigter Vervollständigung : wird die vorherige Vervollständigung genutzt. | `+/input complete_previous+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]    | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `/input return`
-| kbd:[↑]         | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen). | `/input history_previous`
-| kbd:[↓]         | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen). | `/input history_next`
-| kbd:[Ctrl+↑]    | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `/input history_global_previous`
-| kbd:[Ctrl+↓]    | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `/input history_global_next`
-| kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `/input delete_next_word`
-| kbd:[Alt+k]     | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `/input grab_key_command`
-| kbd:[Alt+r]     | komplette Eingabezeile lösche.n| `/input delete_line`
-| kbd:[Alt+s]     | Umschalten der Rechtschreibprüfung. | `/mute spell toggle`
+  kbd:[Ctrl+m]    | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `+/input return+`
+| kbd:[↑]         | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen). | `+/input history_previous+`
+| kbd:[↓]         | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen). | `+/input history_next+`
+| kbd:[Ctrl+↑]    | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_previous+`
+| kbd:[Ctrl+↓]    | ruft nächsten Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_next+`
+| kbd:[Alt+d]     | löscht das Wort rechts vom Cursor (die Zeichenkette wird dabei in die interne Zwischenablage kopiert). | `+/input delete_next_word+`
+| kbd:[Alt+k]     | zeigt den Tastencode, einschließlich des eingebundenen Befehls, einer Tastenkombination an und fügt diesen in die Befehlszeile ein. | `+/input grab_key_command+`
+| kbd:[Alt+r]     | komplette Eingabezeile lösche.n| `+/input delete_line+`
+| kbd:[Alt+s]     | Umschalten der Rechtschreibprüfung. | `+/mute spell toggle+`
 |===
 
 [[key_bindings_buffers_windows]]
@@ -1680,81 +1680,81 @@ und um eine Hilfe zu erhalten wie man es nutzt: `/help buffer_autoset`.
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste              | Beschreibung | Befehl
-| kbd:[Ctrl+l] (`L`) | Fenster wird neu gezeichnet. | `/window refresh`
+| kbd:[Ctrl+l] (`L`) | Fenster wird neu gezeichnet. | `+/window refresh+`
 | kbd:[Ctrl+s],
-  kbd:[Ctrl+u]       | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `/input set_unread`
-| kbd:[Ctrl+x]       | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch. | `/input switch_active_buffer`
-| kbd:[Alt+x]        | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `/input zoom_merged_buffer`
-| kbd:[PgUp]         | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `/window page_up`
-| kbd:[PgDn]         | eine Seite im Verlaufsspeicher des Buffer nach unten blättern. | `/window page_down`
-| kbd:[Alt+PgUp]     | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up`
-| kbd:[Alt+PgDn]     | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down`
-| kbd:[Alt+Home]     | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `/window scroll_top`
-| kbd:[Alt+End]      | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `/window scroll_bottom`
+  kbd:[Ctrl+u]       | setzt für alle Buffer die Markierung für ungelesene Nachrichten. | `+/input set_unread+`
+| kbd:[Ctrl+x]       | sind mehrere Buffer zu einem Buffer zusammen gefügt wechselt man diese durch. | `+/input switch_active_buffer+`
+| kbd:[Alt+x]        | Zoom eines zusammengefügten Buffers (kbd:[Alt+x] ein zweites mal: alle zusammengefügten Buffer werden angezeigt). | `+/input zoom_merged_buffer+`
+| kbd:[PgUp]         | eine Seite im Verlaufsspeicher des Buffers nach oben blättern. | `+/window page_up+`
+| kbd:[PgDn]         | eine Seite im Verlaufsspeicher des Buffer nach unten blättern. | `+/window page_down+`
+| kbd:[Alt+PgUp]     | einige Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `+/window scroll_up+`
+| kbd:[Alt+PgDn]     | einige Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `+/window scroll_down+`
+| kbd:[Alt+Home]     | springt zur ersten Zeile des Verlaufsspeichers des aktuellen Buffer.s| `+/window scroll_top+`
+| kbd:[Alt+End]      | springt zur letzten Zeile des Verlaufsspeichers des aktuellen Buffers. | `+/window scroll_bottom+`
 | kbd:[F1] +
-  kbd:[Ctrl+F1]      | blättert eine Seite in der buflist hoch. | `/bar scroll buflist * -100%`
+  kbd:[Ctrl+F1]      | blättert eine Seite in der buflist hoch. | `+/bar scroll buflist * -100%+`
 | kbd:[F2] +
-  kbd:[Ctrl+F2]      | blättert eine Seite in der buflist runter. | `/bar scroll buflist * +100%`
-| kbd:[Alt+F1]       | springt zum Anfang der buflist. | `/bar scroll buflist * b`
-| kbd:[Alt+F2]       | springt zum Ende der buflist. | `/bar scroll buflist * e`
+  kbd:[Ctrl+F2]      | blättert eine Seite in der buflist runter. | `+/bar scroll buflist * +100%+`
+| kbd:[Alt+F1]       | springt zum Anfang der buflist. | `+/bar scroll buflist * b+`
+| kbd:[Alt+F2]       | springt zum Ende der buflist. | `+/bar scroll buflist * e+`
 | kbd:[Alt+←] +
   kbd:[Alt+↑] +
   kbd:[Ctrl+p] +
-  kbd:[F5]           | zum vorherigen Buffer springen. | `/buffer -1`
+  kbd:[F5]           | zum vorherigen Buffer springen. | `+/buffer -1+`
 | kbd:[Alt+→] +
   kbd:[Alt+↓] +
   kbd:[Ctrl+n] +
-  kbd:[F6]           | zum nächsten Buffer springen. | `/buffer +1`
-| kbd:[F7]           | zum vorherigen Fenster wechseln. | `/window -1`
-| kbd:[F8]           | zum nächsten Fenster wechseln. | `/window +1`
+  kbd:[F6]           | zum nächsten Buffer springen. | `+/buffer +1+`
+| kbd:[F7]           | zum vorherigen Fenster wechseln. | `+/window -1+`
+| kbd:[F8]           | zum nächsten Fenster wechseln. | `+/window +1+`
 | kbd:[F9]           | Titel des Buffers nach links verschieben. | `+/bar scroll title * -30%+`
 | kbd:[F10]          | Titel des Buffers nach rechts verschieben. | `+/bar scroll title * +30%+`
 | kbd:[F11] +
-  kbd:[Ctrl+F11]     | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist * -100%`
+  kbd:[Ctrl+F11]     | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist * -100%+`
 | kbd:[F12] +
-  kbd:[Ctrl+F12]     | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist * +100%`
-| kbd:[Alt+F11]      | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist * b`
-| kbd:[Alt+F12]      | springt zum Ende der Benutzerliste. | `/bar scroll nicklist * e`
-| kbd:[Alt+a]        | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `/input jump_smart`
+  kbd:[Ctrl+F12]     | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist * +100%+`
+| kbd:[Alt+F11]      | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist * b+`
+| kbd:[Alt+F12]      | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist * e+`
+| kbd:[Alt+a]        | wechselt zum nächsten Buffer mit Aktivität (nach Priorität: highlight, Nachricht, ...). | `+/input jump_smart+`
 // TRANSLATION MISSING
-| kbd:[Alt+Shift+B]  | Toggle buflist. | `/buflist toggle`
-| kbd:[Alt+h]        | löscht Hotliste (Aktivitätsanzeige für die Buffer). | `/input hotlist_clear`
+| kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
+| kbd:[Alt+h]        | löscht Hotliste (Aktivitätsanzeige für die Buffer). | `+/input hotlist_clear+`
 | kbd:[Alt+j],
-  kbd:[Alt+f]        | wechselt zum ersten Buffer. | `/buffer -`
+  kbd:[Alt+f]        | wechselt zum ersten Buffer. | `+/buffer -+`
 | kbd:[Alt+j],
-  kbd:[Alt+l] (`L`)  | wechselt zum letzten Buffer. | `/buffer +`
+  kbd:[Alt+l] (`L`)  | wechselt zum letzten Buffer. | `+/buffer ++`
 | kbd:[Alt+j],
-  kbd:[Alt+r]        | wechselt zum IRC RAW Buffer. | `/server raw`
+  kbd:[Alt+r]        | wechselt zum IRC RAW Buffer. | `+/server raw+`
 | kbd:[Alt+j],
-  kbd:[Alt+s]        | wechselt zum IRC Server Buffer. | `/server jump`
-| kbd:[Alt+0...9]    | wechselt zum Buffer mit der Nummer (0 = 10). | `/buffer *N`
+  kbd:[Alt+s]        | wechselt zum IRC Server Buffer. | `+/server jump+`
+| kbd:[Alt+0...9]    | wechselt zum Buffer mit der Nummer (0 = 10). | `+/buffer *N+`
 | kbd:[Alt+j],
-  kbd:[01...99]      | wechselt zum Buffer mit der angegeben Nummer. | `/buffer *NN`
-| kbd:[Alt+l] (`L`)  | schaltet einfachen Anzeigemodus an/aus. | `/window bare`
-| kbd:[Alt+m]        | schaltet Mausfunktion ein/aus. | `/mouse toggle`
-| kbd:[Alt+n]        | springt zur nächsten Highlight Nachricht. | `/window scroll_next_highlight`
+  kbd:[01...99]      | wechselt zum Buffer mit der angegeben Nummer. | `+/buffer *NN+`
+| kbd:[Alt+l] (`L`)  | schaltet einfachen Anzeigemodus an/aus. | `+/window bare+`
+| kbd:[Alt+m]        | schaltet Mausfunktion ein/aus. | `+/mouse toggle+`
+| kbd:[Alt+n]        | springt zur nächsten Highlight Nachricht. | `+/window scroll_next_highlight+`
 // TRANSLATION MISSING
-| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `/bar toggle nicklist`
-| kbd:[Alt+p]        | springt zur vorherigen Highlight Nachricht. | `/window scroll_previous_highlight`
-| kbd:[Alt+u]        | springt zur ersten ungelesenen Zeile im Buffer. | `/window scroll_unread`
+| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `+/bar toggle nicklist+`
+| kbd:[Alt+p]        | springt zur vorherigen Highlight Nachricht. | `+/window scroll_previous_highlight+`
+| kbd:[Alt+u]        | springt zur ersten ungelesenen Zeile im Buffer. | `+/window scroll_unread+`
 | kbd:[Alt+w],
-  kbd:[Alt+↑]        | wechselt zum oberen Fenster. | `/window up`
+  kbd:[Alt+↑]        | wechselt zum oberen Fenster. | `+/window up+`
 | kbd:[Alt+w],
-  kbd:[Alt+↓]        | wechselt zum unteren Fenster. | `/window down`
+  kbd:[Alt+↓]        | wechselt zum unteren Fenster. | `+/window down+`
 | kbd:[Alt+w],
-  kbd:[Alt+←]        | wechselt zum linken Fenster. | `/window left`
+  kbd:[Alt+←]        | wechselt zum linken Fenster. | `+/window left+`
 | kbd:[Alt+w],
-  kbd:[Alt+→]        | wechselt zum rechten Fenster. | `/window right`
+  kbd:[Alt+→]        | wechselt zum rechten Fenster. | `+/window right+`
 | kbd:[Alt+w],
-  kbd:[Alt+b]        | passt die Größe aller Fenster an. | `/window balance`
+  kbd:[Alt+b]        | passt die Größe aller Fenster an. | `+/window balance+`
 | kbd:[Alt+w],
-  kbd:[Alt+s]        | Wechselt Buffer von zwei Fenstern. | `/window swap`
-| kbd:[Alt+z]        | Zoom für aktuelles Fenster (nochmals kbd:[Alt+z]: stellt die vorherigen Einstellungen wieder her). | `/window zoom`
-| kbd:[Alt+<]        | springt zum letzten besuchten Buffer. | `/input jump_previously_visited_buffer`
-| kbd:[Alt+>]        | springt zum nächsten besuchten Buffer. | `/input jump_next_visited_buffer`
-| kbd:[Alt+/]        | wechselt zum jeweils zuletzt angezeigten Buffern. | `/input jump_last_buffer_displayed`
-| kbd:[Alt+=]        | schaltet Filterfunktion an/aus. | `/filter toggle`
-| kbd:[Alt+-]        | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `/filter toggle @`
+  kbd:[Alt+s]        | Wechselt Buffer von zwei Fenstern. | `+/window swap+`
+| kbd:[Alt+z]        | Zoom für aktuelles Fenster (nochmals kbd:[Alt+z]: stellt die vorherigen Einstellungen wieder her). | `+/window zoom+`
+| kbd:[Alt+<]        | springt zum letzten besuchten Buffer. | `+/input jump_previously_visited_buffer+`
+| kbd:[Alt+>]        | springt zum nächsten besuchten Buffer. | `+/input jump_next_visited_buffer+`
+| kbd:[Alt+/]        | wechselt zum jeweils zuletzt angezeigten Buffern. | `+/input jump_last_buffer_displayed+`
+| kbd:[Alt+=]        | schaltet Filterfunktion an/aus. | `+/filter toggle+`
+| kbd:[Alt+-]        | schaltet, für den aktuellen Buffer, Filterfunktion an/aus. | `+/filter toggle @+`
 |===
 
 [[key_bindings_search_context]]
@@ -1766,15 +1766,15 @@ in einem Buffer nach einem Text zu suchen).
 [width="100%",cols="^.^3,.^8,.^5",options="header"]
 |===
 | Taste          | Beschreibung | Befehl
-| kbd:[Ctrl+r]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `/input search_switch_regex`
-| kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `/input search_switch_case`
-| kbd:[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht. | `/input search_switch_where`
-| kbd:[↑]        | sucht vorheriger Zeile. | `/input search_previous`
-| kbd:[↓]        | sucht nächste Zeile . | `/input search_next`
+| kbd:[Ctrl+r]   | Wechsel des Suchmodus: einfache Textsuche (Standard), reguläre Ausdrücke. | `+/input search_switch_regex+`
+| kbd:[Alt+c]    | auf Groß-/Kleinschreibung umschalten. | `+/input search_switch_case+`
+| kbd:[Tab]      | wechselt Suche in: Nachricht (Standard), im Präfix, Präfix + Nachricht. | `+/input search_switch_where+`
+| kbd:[↑]        | sucht vorheriger Zeile. | `+/input search_previous+`
+| kbd:[↓]        | sucht nächste Zeile . | `+/input search_next+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `/input search_stop_here`
-| kbd:[Ctrl+q]   | beendet Suche und blättert zum Ende des Buffers. | `/input search_stop`
+  kbd:[Ctrl+m]   | beendet Suche ab aktueller Position. | `+/input search_stop_here+`
+| kbd:[Ctrl+q]   | beendet Suche und blättert zum Ende des Buffers. | `+/input search_stop+`
 |===
 
 [[key_bindings_cursor_context]]
@@ -1785,25 +1785,25 @@ Diese Tasten werden im Kontext "cursor" verwendet (Cursor kann frei auf dem Bild
 [width="100%",cols="^.^3,^.^2,.^7,.^7",options="header"]
 |===
 | Taste          | Bereich       | Beschreibung | Befehl
-| kbd:[↑]        | -             | bewegt Cursor eine Zeile nach oben. | `/cursor move up`
-| kbd:[↓]        | -             | bewegt Cursor eine Zeile nach unten. | `/cursor move down`
-| kbd:[←]        | -             | bewegt Cursor eine Spalte nach links. | `/cursor move left`
-| kbd:[→]        | -             | bewegt Cursor eine Spalte nach rechts. | `/cursor move right`
-| kbd:[Alt+↑]    | -             | bewegt Cursor einen Bereich nach oben. | `/cursor move area_up`
-| kbd:[Alt+↓]    | -             | bewegt Cursor einen Bereich nach unten. | `/cursor move area_down`
-| kbd:[Alt+←]    | -             | bewegt Cursor einen Bereich nach links. | `/cursor move area_left`
-| kbd:[Alt+→]    | -             | bewegt Cursor einen Bereich nach rechts. | `/cursor move area_right`
-| kbd:[m]        | Chat          | quotet Nachricht. | `hsignal:chat_quote_message;/cursor stop`
-| kbd:[q]        | Chat          | quotet prefix + Nachricht. | `hsignal:chat_quote_prefix_message;/cursor stop`
-| kbd:[Q]        | Chat          | quotet Uhrzeit + prefix + Nachricht. | `hsignal:chat_quote_time_prefix_message;/cursor stop`
-| kbd:[b]        | Benutzerliste | verbannt nick (Ban). | `/window ${_window_number};/ban ${nick}`
-| kbd:[k]        | Benutzerliste | kickt nick. | `/window ${_window_number};/kick ${nick}`
-| kbd:[K]        | Benutzerliste | kickt und verbannt nick. | `/window ${_window_number};/kickban ${nick}`
-| kbd:[q]        | Benutzerliste | öffnet privaten Chat mit Nick. | `/window ${_window_number};/query ${nick};/cursor stop`
-| kbd:[w]        | Benutzerliste | führt einen whois für Nick aus. | `/window ${_window_number};/whois ${nick}`
+| kbd:[↑]        | -             | bewegt Cursor eine Zeile nach oben. | `+/cursor move up+`
+| kbd:[↓]        | -             | bewegt Cursor eine Zeile nach unten. | `+/cursor move down+`
+| kbd:[←]        | -             | bewegt Cursor eine Spalte nach links. | `+/cursor move left+`
+| kbd:[→]        | -             | bewegt Cursor eine Spalte nach rechts. | `+/cursor move right+`
+| kbd:[Alt+↑]    | -             | bewegt Cursor einen Bereich nach oben. | `+/cursor move area_up+`
+| kbd:[Alt+↓]    | -             | bewegt Cursor einen Bereich nach unten. | `+/cursor move area_down+`
+| kbd:[Alt+←]    | -             | bewegt Cursor einen Bereich nach links. | `+/cursor move area_left+`
+| kbd:[Alt+→]    | -             | bewegt Cursor einen Bereich nach rechts. | `+/cursor move area_right+`
+| kbd:[m]        | Chat          | quotet Nachricht. | `+hsignal:chat_quote_message;/cursor stop+`
+| kbd:[q]        | Chat          | quotet prefix + Nachricht. | `+hsignal:chat_quote_prefix_message;/cursor stop+`
+| kbd:[Q]        | Chat          | quotet Uhrzeit + prefix + Nachricht. | `+hsignal:chat_quote_time_prefix_message;/cursor stop+`
+| kbd:[b]        | Benutzerliste | verbannt nick (Ban). | `+/window ${_window_number};/ban ${nick}+`
+| kbd:[k]        | Benutzerliste | kickt nick. | `+/window ${_window_number};/kick ${nick}+`
+| kbd:[K]        | Benutzerliste | kickt und verbannt nick. | `+/window ${_window_number};/kickban ${nick}+`
+| kbd:[q]        | Benutzerliste | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick};/cursor stop+`
+| kbd:[w]        | Benutzerliste | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
-  kbd:[Ctrl+m]   | -             | beendet den Cursor-Modus. | `/cursor stop`
+  kbd:[Ctrl+m]   | -             | beendet den Cursor-Modus. | `+/cursor stop+`
 |===
 
 [[key_bindings_mouse_context]]
@@ -1814,45 +1814,45 @@ Diese Tasten werden im Kontext "mouse" verwendet, wenn eine Mausfunktion genutzt
 [width="100%",cols="^.^3,^.^3,^.^3,.^8,.^8",options="header"]
 |===
 | Maustaste/Mausrad ^(1)^ | Mausgeste    | Bereich             | Beschreibung | Befehl
-| ◾◽◽                     | -            | Chat                | wechselt zum Fenster. | `/window ${_window_number}`
-| ◾◽◽                     | links        | Chat                | zum vorherigen Buffer springen. | `/window ${_window_number};/buffer +1`
-| ◾◽◽                     | rechts       | Chat                | zum nächsten Buffer springen. | `/window ${_window_number};/buffer +1`
-| ◾◽◽                     | links(lang)  | Chat                | wechselt zum ersten Buffer. | `/window ${_window_number};/buffer 1`
-| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `/window ${_window_number};/input jump_last_buffer`
-| kbd:[▲]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `/window scroll_up -window ${_window_number}`
-| kbd:[▼]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `/window scroll_down -window ${_window_number}`
-| kbd:[Ctrl+▲]            | -            | chat                | horizontal, nach links scrollen. | `/window scroll_horiz -window ${_window_number} -10%`
-| kbd:[Ctrl+▼]            | -            | chat                | horizontal, nach rechts scrollen. | `/window scroll_horiz -window ${_window_number} +10%`
-| kbd:[▲]                 | -            | chat: fset Buffer   | Auswahl wird fünf Einträge nach oben bewegt, im fset Buffer. | `/fset -up 5`
-| kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `/fset -down 5`
-| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `/window ${_window_number};/fset -go ${_chat_line_y}`
-| ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `hsignal:fset_mouse`
-| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `hsignal:fset_mouse`
-| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `hsignal:fset_mouse`
-| ◽◽◾                     | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `hsignal:fset_mouse`
-| kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `/script up 5`
-| kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `/script down 5`
-| ◾◽◽                     | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `/script go ${_chat_line_y}`
-| ◽◽◾                     | -            | chat: script buffer | installiert/entfernt ein Skript. | `/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}`
-| ◾◽◽                     | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `buflist_mouse`.
-| ◾◽◽                     | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `buflist_mouse`.
-| ◾◽◽                     | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `buflist_mouse`.
-| ◽◽◾                     | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `buflist_mouse`.
-| kbd:[Ctrl+▲]            | -            | buflist             | wechselt zum vorherigen Buffer. | Signal `buflist_mouse`.
-| kbd:[Ctrl+▼]            | -            | buflist             | wechselt zum nächsten Buffer. | Signal `buflist_mouse`.
-| ◾◽◽                     | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `/bar scroll nicklist ${_window_number} -100%`
-| ◾◽◽                     | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `/bar scroll nicklist ${_window_number} +100%`
-| ◾◽◽                     | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `/bar scroll nicklist ${_window_number} b`
-| ◾◽◽                     | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `/bar scroll nicklist ${_window_number} e`
-| ◾◽◽                     | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `/window ${_window_number};/query ${nick}`
-| ◽◽◾                     | -            | Benutzerliste       | führt einen whois für Nick aus. | `/window ${_window_number};/whois ${nick}`
-| ◾◽◽                     | links        | Benutzerliste       | kickt Nick. | `/window ${_window_number};/kick ${nick}`
-| ◾◽◽                     | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `/window ${_window_number};/kickban ${nick}`
-| ◽◽◾                     | links        | Benutzerliste       | verbannt Nick. | `/window ${_window_number};/ban ${nick}`
-| ◽◽◾                     | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `/input grab_mouse_area`
-| kbd:[▲]                 | -            | jede Bar            | blättert Bar um 20% nach oben. | `/bar scroll ${_bar_name} ${_window_number} -20%`
-| kbd:[▼]                 | -            | jede Bar            | blättert Bar um 20% nach unten. | `/bar scroll ${_bar_name} ${_window_number} +20%`
-| ◽◾◽                     | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `/cursor go ${_x},${_y}`
+| ◾◽◽                     | -            | Chat                | wechselt zum Fenster. | `+/window ${_window_number}+`
+| ◾◽◽                     | links        | Chat                | zum vorherigen Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                     | rechts       | Chat                | zum nächsten Buffer springen. | `+/window ${_window_number};/buffer +1+`
+| ◾◽◽                     | links(lang)  | Chat                | wechselt zum ersten Buffer. | `+/window ${_window_number};/buffer 1+`
+| ◾◽◽                     | rechts(lang) | Chat                | wechselt zum letzten Buffer. | `+/window ${_window_number};/input jump_last_buffer+`
+| kbd:[▲]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach oben blättern. | `+/window scroll_up -window ${_window_number}+`
+| kbd:[▼]                 | -            | Chat                | mehrere Zeilen im Verlaufsspeicher des Buffer nach unten blättern. | `+/window scroll_down -window ${_window_number}+`
+| kbd:[Ctrl+▲]            | -            | chat                | horizontal, nach links scrollen. | `+/window scroll_horiz -window ${_window_number} -10%+`
+| kbd:[Ctrl+▼]            | -            | chat                | horizontal, nach rechts scrollen. | `+/window scroll_horiz -window ${_window_number} +10%+`
+| kbd:[▲]                 | -            | chat: fset Buffer   | Auswahl wird fünf Einträge nach oben bewegt, im fset Buffer. | `+/fset -up 5+`
+| kbd:[▼]                 | -            | chat: fset buffer   | Auswahl wird fünf Einträge nach unten bewegt, im fset Buffer. | `+/fset -down 5+`
+| ◾◽◽                     | -            | chat: fset buffer   | springt zu einem Eintrag im fset Buffer. | `+/window ${_window_number};/fset -go ${_chat_line_y}+`
+| ◽◽◾                     | -            | chat: fset buffer   | Boolean-Wert wird umgeschaltet (an/aus) oder editiere den Wert einer Option. | `+hsignal:fset_mouse+`
+| ◽◽◾                     | left         | chat: fset buffer   | Integer/Farbwerte werden verringert, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| ◽◽◾                     | right        | chat: fset buffer   | Integer/Farbwerte werden erhöht, andere Variabletypen werden in die Eingabezeile kopiert. | `+hsignal:fset_mouse+`
+| ◽◽◾                     | up / down    | chat: fset buffer   | markieren/demarkieren von mehreren Optionen. | `+hsignal:fset_mouse+`
+| kbd:[▲]                 | -            | chat: script buffer | fünf Zeilen nach oben blättern, im Script-Buffer. | `+/script up 5+`
+| kbd:[▼]                 | -            | chat: script buffer | fünf Zeilen nach unten blättern, im Script-Buffer. | `+/script down 5+`
+| ◾◽◽                     | -            | chat: script buffer | wählt einen Eintrag im Script-Buffer aus. | `+/script go ${_chat_line_y}+`
+| ◽◽◾                     | -            | chat: script buffer | installiert/entfernt ein Skript. | `+/script go ${_chat_line_y};/script installremove -q ${script_name_with_extension}+`
+| ◾◽◽                     | up / left    | buflist             | verschiebt Buffer in der Reihenfolge nach unten. | Signal `+buflist_mouse+`.
+| ◾◽◽                     | down / right | buflist             | verschiebt Buffer in der Reihenfolge nach oben. | Signal `+buflist_mouse+`.
+| ◾◽◽                     | -            | buflist             | wechselt zum Buffer (oder zum vorherigen Buffer, falls der aktuell genutzte Buffer angewählt wurde). | Signal `+buflist_mouse+`.
+| ◽◽◾                     | -            | buflist             | wechselt zum nächsten Buffer, falls der aktuell genutzte Buffer angewählt wurde. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▲]            | -            | buflist             | wechselt zum vorherigen Buffer. | Signal `+buflist_mouse+`.
+| kbd:[Ctrl+▼]            | -            | buflist             | wechselt zum nächsten Buffer. | Signal `+buflist_mouse+`.
+| ◾◽◽                     | hoch         | Benutzerliste       | Benutzerliste um eine Seite nach oben blättern. | `+/bar scroll nicklist ${_window_number} -100%+`
+| ◾◽◽                     | runter       | Benutzerliste       | Benutzerliste um eine Seite nach unten blättern. | `+/bar scroll nicklist ${_window_number} +100%+`
+| ◾◽◽                     | hoch(lang)   | Benutzerliste       | springt zum Anfang der Benutzerliste. | `+/bar scroll nicklist ${_window_number} b+`
+| ◾◽◽                     | runter(lang) | Benutzerliste       | springt zum Ende der Benutzerliste. | `+/bar scroll nicklist ${_window_number} e+`
+| ◾◽◽                     | -            | Benutzerliste       | öffnet privaten Chat mit Nick. | `+/window ${_window_number};/query ${nick}+`
+| ◽◽◾                     | -            | Benutzerliste       | führt einen whois für Nick aus. | `+/window ${_window_number};/whois ${nick}+`
+| ◾◽◽                     | links        | Benutzerliste       | kickt Nick. | `+/window ${_window_number};/kick ${nick}+`
+| ◾◽◽                     | links(lang)  | Benutzerliste       | kickt und verbannt Nick. | `+/window ${_window_number};/kickban ${nick}+`
+| ◽◽◾                     | links        | Benutzerliste       | verbannt Nick. | `+/window ${_window_number};/ban ${nick}+`
+| ◽◽◾                     | -            | Input               | fängt ein Mausereignis und fügt dieses in die Befehlszeile ein. | `+/input grab_mouse_area+`
+| kbd:[▲]                 | -            | jede Bar            | blättert Bar um 20% nach oben. | `+/bar scroll ${_bar_name} ${_window_number} -20%+`
+| kbd:[▼]                 | -            | jede Bar            | blättert Bar um 20% nach unten. | `+/bar scroll ${_bar_name} ${_window_number} +20%+`
+| ◽◾◽                     | -            | überall             | aktiviert den Cursor-Modus an dieser Position. | `+/cursor go ${_x},${_y}+`
 |===
 
 [NOTE]
@@ -1866,43 +1866,43 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<fset_plugin,F
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Taste              | Action ^(1)^ | Beschreibung | Befehl
-| kbd:[↑]            |              | einen Eintrag nach oben. | `/fset -up`
-| kbd:[↓]            |              | einen Eintrag nach unten. | `/fset -down`
-| kbd:[PgUp]         |              | eine Seite hoch blättern. | `/window page_up`
-| kbd:[PgDn]         |              | eine Seite runter blättern. | `/window page_down`
-| kbd:[Alt+Home]     | `pass:[<<]`  | springt zum ersten Eintrag. | `/fset -go 0`
-| kbd:[Alt+End]      | `pass:[>>]`  | springt zum letzten Eintrag. | `/fset -go end`
-| kbd:[F11]          | `pass:[<]`   | scrollt horizontal nach links. | `/fset -left`
-| kbd:[F12]          | `pass:[>]`   | scrollt horizontal nach rechts. | `/fset -right`
-| kbd:[Alt+Space]    | `t`          | Boolean Wert ein/ausschalten. | `/fset -toggle`
-| kbd:[Alt+-]        | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `/fset -add -1`
-| kbd:[Alt++]        | `+`          | addiert 1 zum Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `/fset -add 1`
+| kbd:[↑]            |              | einen Eintrag nach oben. | `+/fset -up+`
+| kbd:[↓]            |              | einen Eintrag nach unten. | `+/fset -down+`
+| kbd:[PgUp]         |              | eine Seite hoch blättern. | `+/window page_up+`
+| kbd:[PgDn]         |              | eine Seite runter blättern. | `+/window page_down+`
+| kbd:[Alt+Home]     | `pass:[<<]`  | springt zum ersten Eintrag. | `+/fset -go 0+`
+| kbd:[Alt+End]      | `pass:[>>]`  | springt zum letzten Eintrag. | `+/fset -go end+`
+| kbd:[F11]          | `pass:[<]`   | scrollt horizontal nach links. | `+/fset -left+`
+| kbd:[F12]          | `pass:[>]`   | scrollt horizontal nach rechts. | `+/fset -right+`
+| kbd:[Alt+Space]    | `t`          | Boolean Wert ein/ausschalten. | `+/fset -toggle+`
+| kbd:[Alt+-]        | `-`          | subtrahiert 1 vom Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `+/fset -add -1+`
+| kbd:[Alt++]        | `+`          | addiert 1 zum Wert bei Integer/Farboptionen, bei anderen Typen kann der Wert editiert werden. | `+/fset -add 1+`
 | kbd:[Alt+f],
-  kbd:[Alt+r]        | `r`          | Wert resetten. | `/fset -reset`
+  kbd:[Alt+r]        | `r`          | Wert resetten. | `+/fset -reset+`
 | kbd:[Alt+f],
-  kbd:[Alt+u]        | `u`          | Wert zurücksetzen. | `/fset -unset`
-| kbd:[Alt+Enter]    | `s`          | Wert setzen. | `/fset -set`
+  kbd:[Alt+u]        | `u`          | Wert zurücksetzen. | `+/fset -unset+`
+| kbd:[Alt+Enter]    | `s`          | Wert setzen. | `+/fset -set+`
 | kbd:[Alt+f],
-  kbd:[Alt+n]        | `n`          | ein neuer Wert wird gesetzt, der alte Wert wird gelöscht. | `/fset -setnew`
+  kbd:[Alt+n]        | `n`          | ein neuer Wert wird gesetzt, der alte Wert wird gelöscht. | `+/fset -setnew+`
 | kbd:[Alt+f],
-  kbd:[Alt+a]        | `a`          | dem Wert was hinzufügen. | `/fset -append`
-| kbd:[Alt+,]        | `,`          | markieren/demarkieren einer Option. | `/fset -mark 1`
-| kbd:[Shift+↑]      |              | eine Zeile nach oben und markiert/demarkiert Option. | `/fset -up; /fset -mark`
-| kbd:[Shift+↓]      |              | markiert/demarkiert Option und geht eine Zeile nach unten. | `/fset -mark; /fset -down`
+  kbd:[Alt+a]        | `a`          | dem Wert was hinzufügen. | `+/fset -append+`
+| kbd:[Alt+,]        | `,`          | markieren/demarkieren einer Option. | `+/fset -mark 1+`
+| kbd:[Shift+↑]      |              | eine Zeile nach oben und markiert/demarkiert Option. | `+/fset -up; /fset -mark+`
+| kbd:[Shift+↓]      |              | markiert/demarkiert Option und geht eine Zeile nach unten. | `+/fset -mark; /fset -down+`
 |                    | `m:xxx`      | markiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe <<command_fset_fset,fset command>>). |
 |                    | `u:xxx`      | demarkiert Optionen welche angezeigt werden und auf die der Filter "xxx" zutrifft (jeder Filter für Option oder Wert ist erlaubt, siehe <<command_fset_fset,fset command>>). |
-| kbd:[Ctrl+l] (`L`) |              | der Bildschirm wird neu gezeichnet. | `/fset -refresh`
+| kbd:[Ctrl+l] (`L`) |              | der Bildschirm wird neu gezeichnet. | `+/fset -refresh+`
 |                    | `$`          | Optionen neu einlesen (markierte Optionen werden beibehalten). |
 |                    | `$$`         | Optionen neu einlesen (Markierungen von Optionen werden dabei gelöscht). |
-| kbd:[Alt+p]        |              | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `/mute /set fset.look.show_plugins_desc toggle`
-| kbd:[Alt+v]        |              | Hilfe-Bar Ein-/Ausschalten. | `/bar toggle fset`
-|                    | `s:x,y`      | sortiert Optionen nach Bereichen x,y (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `/mute /set fset.look.sort x,y`
-|                    | `s:`         | setzt Sortierung wieder auf Standardwerte (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `/mute /unset fset.look.sort`
-|                    | `w:xxx`      | exportiert Optionen in Datei "xxx". | `/fset -export xxx`
-|                    | `w-:xxx`     | exportiert Optionen in Datei "xxx", ohne Hilfstext. | `/fset -export -nohelp xxx`
-|                    | `w+:xxx`     | exportiert Optionen in Datei "xxx", mit Hilfstext. | `/fset -export -help xxx`
-| kbd:[Ctrl+x]       | `x`          | Umschalten zwischen der Darstellung von Optionen. | `/fset -format`
-|                    | `q`          | fset Buffer schließen. | `/buffer close`
+| kbd:[Alt+p]        |              | Umschalten der Beschreibung von Erweiterungen (`pass:[plugins.desc.*]`). | `+/mute /set fset.look.show_plugins_desc toggle+`
+| kbd:[Alt+v]        |              | Hilfe-Bar Ein-/Ausschalten. | `+/bar toggle fset+`
+|                    | `s:x,y`      | sortiert Optionen nach Bereichen x,y (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /set fset.look.sort x,y+`
+|                    | `s:`         | setzt Sortierung wieder auf Standardwerte (siehe Option <<option_fset.look.sort,fset.look.sort>>). | `+/mute /unset fset.look.sort+`
+|                    | `w:xxx`      | exportiert Optionen in Datei "xxx". | `+/fset -export xxx+`
+|                    | `w-:xxx`     | exportiert Optionen in Datei "xxx", ohne Hilfstext. | `+/fset -export -nohelp xxx+`
+|                    | `w+:xxx`     | exportiert Optionen in Datei "xxx", mit Hilfstext. | `+/fset -export -help xxx+`
+| kbd:[Ctrl+x]       | `x`          | Umschalten zwischen der Darstellung von Optionen. | `+/fset -format+`
+|                    | `q`          | fset Buffer schließen. | `+/buffer close+`
 |===
 
 [NOTE]
@@ -1916,17 +1916,17 @@ Diese Tasten und Aktionen werden im fset-Buffer verwendet (siehe <<scripts_plugi
 [width="100%",cols="^.^3,^.^2,.^8,.^5",options="header"]
 |===
 | Taste              | Action ^(1)^ | Beschreibung | Befehl
-| kbd:[↑]            |              | eine Zeile nach oben. | `/script up`
-| kbd:[↓]            |              | eine Zeile nach unten. | `/script down`
-| kbd:[PgUp]         |              | eine Seite hoch blättern. | `/window page_up`
-| kbd:[PgDn]         |              | eine Seite nach unten blättern. | `/window page_down`
-| kbd:[Alt+i]        | `i`          | Skript installieren. | `/script install`
-| kbd:[Alt+r]        | `r`          | Skript entfernen. | `/script remove`
-| kbd:[Alt+l] (`L`)  | `l`          | Skript laden. | `/script load`
-| kbd:[Alt+u]        | `u`          | Skript wird beendet. | `/script unload`
-| kbd:[Alt+Shift+A]  | `A`          | das Skript wird in das autoload-Verzeichnis eingebunden. | `/script toggleautoload`
-| kbd:[Alt+h]        | `h`          | Skript wird gehalten bzw. freigegeben. | `/script hold`
-| kbd:[Alt+v]        | `v`          | Skript Quelltext anzeigen. | `/script show`
+| kbd:[↑]            |              | eine Zeile nach oben. | `+/script up+`
+| kbd:[↓]            |              | eine Zeile nach unten. | `+/script down+`
+| kbd:[PgUp]         |              | eine Seite hoch blättern. | `+/window page_up+`
+| kbd:[PgDn]         |              | eine Seite nach unten blättern. | `+/window page_down+`
+| kbd:[Alt+i]        | `i`          | Skript installieren. | `+/script install+`
+| kbd:[Alt+r]        | `r`          | Skript entfernen. | `+/script remove+`
+| kbd:[Alt+l] (`L`)  | `l`          | Skript laden. | `+/script load+`
+| kbd:[Alt+u]        | `u`          | Skript wird beendet. | `+/script unload+`
+| kbd:[Alt+Shift+A]  | `A`          | das Skript wird in das autoload-Verzeichnis eingebunden. | `+/script toggleautoload+`
+| kbd:[Alt+h]        | `h`          | Skript wird gehalten bzw. freigegeben. | `+/script hold+`
+| kbd:[Alt+v]        | `v`          | Skript Quelltext anzeigen. | `+/script show+`
 |===
 
 [NOTE]
@@ -2051,7 +2051,7 @@ Mausereignisse mittels `+*+` abzufangen. Zum Beispiel fängt
 eingeleitet werden.
 
 [TIP]
-Den Namen eines Mausereignisses kann man mittels des Befehls `/input grab_mouse` erfragen.
+Den Namen eines Mausereignisses kann man mittels des Befehls `+/input grab_mouse+` erfragen.
 Man führt den Befehl in der Eingabezeile aus und startet das Ereignis. Als Ergebnis erhält
 man in der Eingabezeile den Namen des ausgeführten Mausereignisses.
 
@@ -2869,17 +2869,17 @@ mit dem entsprechenden Wert ersetzt:
 [width="100%",cols="2l,4,8",options="header"]
 |===
 | Platzhalter  | Beschreibung                        | Wert/Beispiel
-| $clientinfo  | Liste der CTCP Antworten            | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| $version     | WeeChat Version                     | `0.4.0-dev`
-| $versiongit  | WeeChat Version + Git version ^(1)^ | `0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| $git         | Git Version ^(1)^                   | `v0.3.9-104-g7eb5cc4`
-| $compilation | Datum der Kompilierung              | `Dec 16 2012`
-| $osinfo      | Info über das genutzte OS           | `Linux 2.6.32-5-amd64 / x86_64`
-| $site        | WeeChat Seite                       | `https://weechat.org/`
-| $download    | WeeChat, Download Seite             | `https://weechat.org/download`
-| $time        | Aktuelle Uhrzeit/Datum              | `Sun, 16 Dec 2012 10:40:48 +0100`
-| $username    | Username beim IRC Server            | `Name`
-| $realname    | Realname beim IRC Server            | `John Doe`
+| $clientinfo  | Liste der CTCP Antworten            | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| $version     | WeeChat Version                     | `+0.4.0-dev+`
+| $versiongit  | WeeChat Version + Git version ^(1)^ | `+0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| $git         | Git Version ^(1)^                   | `+v0.3.9-104-g7eb5cc4+`
+| $compilation | Datum der Kompilierung              | `+Dec 16 2012+`
+| $osinfo      | Info über das genutzte OS           | `+Linux 2.6.32-5-amd64 / x86_64+`
+| $site        | WeeChat Seite                       | `+https://weechat.org/+`
+| $download    | WeeChat, Download Seite             | `+https://weechat.org/download+`
+| $time        | Aktuelle Uhrzeit/Datum              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| $username    | Username beim IRC Server            | `+Name+`
+| $realname    | Realname beim IRC Server            | `+John Doe+`
 |===
 
 [NOTE]
@@ -2891,13 +2891,13 @@ Falls CTCP Optionen nicht festgelegt sind, lauten die CTCP Antworten:
 
 [width="100%",cols="2,4,8",options="header"]
 |===
-| CTCP       | Antwortformat                        | Beispiel
-| CLIENTINFO | `$clientinfo`                        | `ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION`
-| FINGER     | `WeeChat $versiongit`                | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)`
-| SOURCE     | `$download`                          | `https://weechat.org/download`
-| TIME       | `$time`                              | `Sun, 16 Dec 2012 10:40:48 +0100`
-| USERINFO   | `$username ($realname)`              | `Name (John Doe)`
-| VERSION    | `WeeChat $versiongit ($compilation)` | `WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)`
+| CTCP       | Antwortformat                          | Beispiel
+| CLIENTINFO | `+$clientinfo+`                        | `+ACTION DCC CLIENTINFO FINGER PING SOURCE TIME USERINFO VERSION+`
+| FINGER     | `+WeeChat $versiongit+`                | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4)+`
+| SOURCE     | `+$download+`                          | `+https://weechat.org/download+`
+| TIME       | `+$time+`                              | `+Sun, 16 Dec 2012 10:40:48 +0100+`
+| USERINFO   | `+$username ($realname)+`              | `+Name (John Doe)+`
+| VERSION    | `+WeeChat $versiongit ($compilation)+` | `+WeeChat 0.4.0-dev (git: v0.3.9-104-g7eb5cc4) (Dec 16 2012)+`
 |===
 
 [[irc_target_buffer]]
@@ -3809,8 +3809,8 @@ Ein Trigger hat folgende Optionen (Benennung ist
 | enabled | `on`, `off` |
   Wenn die Option auf `off` gesetzt ist, dann ist der Trigger deaktiviert und die Ausführung ist gestoppt.
 
-| hook | `signal`, `hsignal`, `modifier`, `line`, `print`, `command`,
-  `command_run`, `timer`, `config`, `focus`, `info`, `info_hashtable` |
+| hook | `+signal+`, `+hsignal+`, `+modifier+`, `+line+`, `+print+`, `+command+`,
+  `+command_run+`, `+timer+`, `+config+`, `+focus+`, `+info+`, `+info_hashtable+` |
   Der hook welcher durch Trigger genutzt werden soll. Für weitere Informationen siehe
   link:weechat_plugin_api.en.html#hooks[Anleitung für API Erweiterung / Hooks] (Englisch).
 
@@ -3830,7 +3830,7 @@ Ein Trigger hat folgende Optionen (Benennung ist
   Befehl der ausgeführt werden soll (mehrere Befehle können durch Kommata
   voneinander getrennt werden); Inhalt ist evaluiert (siehe Befehl <<command_weechat_eval,/eval>>).
 
-| return_code | `ok`, `ok_eat`, `error` |
+| return_code | `+ok+`, `+ok_eat+`, `+error+` |
   Rückgabewert des Callback (Standardwert: `ok`, sollte für fast jeden Trigger
   genutzt werden. Die anderen Werte werden höchst selten verwendet).
 
@@ -4121,8 +4121,8 @@ und die Daten in einer Hashtable gesichert:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable             | Typ     | Beschreibung
-| irc_server           | pointer | Pointer auf IRC Server (Variable in hdata vom Typ "irc_server" kann verwendet werden, wie `${irc_server.name}`).
-| irc_channel          | pointer | Pointer auf IRC Channel (Variable in hdata vom Typ "irc_channel" kann verwendet werden, wie `${irc_channel.name}`).
+| irc_server           | pointer | Pointer auf IRC Server (Variable in hdata vom Typ "irc_server" kann verwendet werden, wie `+${irc_server.name}+`).
+| irc_channel          | pointer | Pointer auf IRC Channel (Variable in hdata vom Typ "irc_channel" kann verwendet werden, wie `+${irc_channel.name}+`).
 | server               | string  | Name des Server (Beispiel: "freenode").
 | tags                 | string  | Tags in Nachricht (findet selten Verwendung).
 | message_without_tags | string  | Nachricht ohne Tags.
@@ -4138,7 +4138,7 @@ und die Daten in einer Hashtable gesichert:
 | pos_text             | string  | Index von _text_ innerhalb einer Nachricht ("-1" falls _text_ nicht gefunden wird).
 |===
 
-Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `tg_signal_data`
+Sofern es sich bei den Daten um einen Pointer handelt, kann die Variable `+tg_signal_data+`
 wie im folgenden Beispiel genutzt werden um den Inhalt von hdata zu lesen (im Beispiel
 wird der Pointer eines Buffer verwendet):
 
