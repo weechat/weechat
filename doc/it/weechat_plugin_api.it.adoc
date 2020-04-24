@@ -17960,13 +17960,13 @@ Argomenti:
   values for variables (keys and values are string), some special keys are
   allowed:
 // TRANSLATION MISSING
-** key `__create_allowed` (with any value): return 1 if create is allowed for
+** key `+__create_allowed+` (with any value): return 1 if create is allowed for
    structure, otherwise 0 _(WeeChat ≥ 0.4.0)_
-** key `__delete_allowed` (with any value): return 1 if delete is allowed for
+** key `+__delete_allowed+` (with any value): return 1 if delete is allowed for
    structure, otherwise 0
-** key `__update_allowed`, value is name of a variable: return 1 if update is
+** key `+__update_allowed+`, value is name of a variable: return 1 if update is
    allowed for this variable, otherwise 0
-** key `__delete` (with any value): delete structure (if allowed)
+** key `+__delete+` (with any value): delete structure (if allowed)
 
 Valore restituito:
 

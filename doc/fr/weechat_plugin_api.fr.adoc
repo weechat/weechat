@@ -17645,14 +17645,14 @@ Paramètres :
   variables, les valeurs sont les nouvelles valeurs pour les variables (clés et
   valeurs sont des chaînes de caractères), quelques clés spéciales sont
   acceptées :
-** clé `__create_allowed` (avec n'importe quelle valeur) : retourne 1 si la
+** clé `+__create_allowed+` (avec n'importe quelle valeur) : retourne 1 si la
    création est autorisée pour la structure, sinon 0
    _(WeeChat ≥ 0.4.0)_
-** clé `__delete_allowed` (avec n'importe quelle valeur) : retourne 1 si la
+** clé `+__delete_allowed+` (avec n'importe quelle valeur) : retourne 1 si la
    suppression est autorisée pour la structure, sinon 0
-** clé `__update_allowed`, la valeur est le nom d'une variable : retourne 1 si
+** clé `+__update_allowed+`, la valeur est le nom d'une variable : retourne 1 si
    la mise à jour est autorisée pour la variable, sinon 0
-** clé `__delete` (avec n'importe quelle valeur) : supprime la structure
+** clé `+__delete+` (avec n'importe quelle valeur) : supprime la structure
    (si autorisé)
 
 Valeur de retour :
