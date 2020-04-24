@@ -25,6 +25,7 @@
 #include "buflist.h"
 #include "buflist-bar-item.h"
 #include "buflist-command.h"
+#include "buflist-config.h"
 
 
 /*
@@ -44,6 +45,24 @@ buflist_command_buflist (const void *pointer, void *data,
 
     if (argc == 1)
         return WEECHAT_RC_OK;
+
+    if (weechat_strcasecmp (argv[1], "enable") == 0)
+    {
+        weechat_config_option_set (buflist_config_look_enabled, "on", 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "disable") == 0)
+    {
+        weechat_config_option_set (buflist_config_look_enabled, "off", 1);
+        return WEECHAT_RC_OK;
+    }
+
+    if (weechat_strcasecmp (argv[1], "toggle") == 0)
+    {
+        weechat_config_option_set (buflist_config_look_enabled, "toggle", 1);
+        return WEECHAT_RC_OK;
+    }
 
     if (weechat_strcasecmp (argv[1], "bar") == 0)
     {
@@ -70,8 +89,11 @@ buflist_command_init ()
     weechat_hook_command (
         "buflist",
         N_("bar item with list of buffers"),
-        "bar || refresh",
-        N_("    bar: add the \"buflist\" bar\n"
+        "enable|disable|toggle || bar || refresh",
+        N_(" enable: enable buflist\n"
+           "disable: disable buflist\n"
+           " toggle: toggle buflist\n"
+           "    bar: add the \"buflist\" bar\n"
            "refresh: force the refresh of the bar items (buflist, buflist2 "
            "and buflist3)\n"
            "\n"
@@ -147,6 +169,6 @@ buflist_command_init ()
            "\"private\" or \"highlight\"\n"
            "    - ${format_lag}: the lag for an IRC server buffer, empty if "
            "there's no lag (evaluation of option buflist.format.lag)"),
-        "bar || refresh",
+        "enable|disable|toggle || bar || refresh",
         &buflist_command_buflist, NULL, NULL);
 }

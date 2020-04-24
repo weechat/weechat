@@ -6,9 +6,13 @@
 * `+buflist+`: objet de barre avec la liste des tampons
 
 ----
-/buflist  bar
+/buflist  enable|disable|toggle
+          bar
           refresh
 
+ enable : activer buflist
+disable : désactiver buflist
+ toggle : activer/désactiver buflist
     bar : ajouter la barre "buflist"
 refresh : forcer le rafraichissement des objets de barre (buflist, buflist2 et buflist3)
 

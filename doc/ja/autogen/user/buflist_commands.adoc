@@ -6,9 +6,13 @@
 * `+buflist+`: バッファのリストを表示するバー要素
 
 ----
-/buflist  bar
+/buflist  enable|disable|toggle
+          bar
           refresh
 
+ enable: enable buflist
+disable: disable buflist
+ toggle: toggle buflist
     bar: add the "buflist" bar
 refresh: force the refresh of the bar items (buflist, buflist2 and buflist3)
 
