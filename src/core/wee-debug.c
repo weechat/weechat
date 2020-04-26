@@ -52,6 +52,7 @@
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-completion.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-key.h"
@@ -90,6 +91,7 @@ debug_dump (int crash)
 
     gui_window_print_log ();
     gui_buffer_print_log ();
+    gui_completion_print_log ();
     gui_layout_print_log ();
     gui_key_print_log (NULL);
     gui_filter_print_log ();

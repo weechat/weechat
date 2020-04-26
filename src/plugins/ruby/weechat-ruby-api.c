@@ -5151,6 +5151,71 @@ weechat_ruby_api_command_options (VALUE class, VALUE buffer, VALUE command,
 }
 
 static VALUE
+weechat_ruby_api_completion_new (VALUE class, VALUE buffer)
+{
+    char *c_buffer;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (NIL_P (buffer))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (buffer, T_STRING);
+
+    c_buffer = StringValuePtr (buffer);
+
+    result = API_PTR2STR(weechat_completion_new (API_STR2PTR(c_buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_completion_search (VALUE class, VALUE completion, VALUE data,
+                                    VALUE position, VALUE direction)
+{
+    char *c_completion, *c_data;
+    int c_position, c_direction;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (NIL_P (completion) || NIL_P (data) || NIL_P(position)
+        || NIL_P(direction))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (data, T_STRING);
+    CHECK_INTEGER(position);
+    CHECK_INTEGER(direction);
+
+    c_completion = StringValuePtr (completion);
+    c_data = StringValuePtr (data);
+    c_position = NUM2INT (position);
+    c_direction = NUM2INT (direction);
+
+    weechat_completion_search (API_STR2PTR(c_completion), c_data, c_position,
+                               c_direction);
+
+    API_RETURN_OK;
+}
+
+static VALUE
+weechat_ruby_api_completion_free (VALUE class, VALUE completion)
+{
+    char *c_completion;
+
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (NIL_P (completion))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (completion, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+
+    weechat_completion_free (API_STR2PTR(c_completion));
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
 {
     char *c_info_name, *c_arguments, *result;
@@ -6421,6 +6486,9 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(bar_remove, 1);
     API_DEF_FUNC(command, 2);
     API_DEF_FUNC(command_options, 3);
+    API_DEF_FUNC(completion_new, 1);
+    API_DEF_FUNC(completion_search, 4);
+    API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);
     API_DEF_FUNC(infolist_new, 0);

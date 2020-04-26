@@ -15257,6 +15257,127 @@ weechat.command_options(buffer, command, options)
 rc = weechat.command("", "/une_commande paramètres", {"commands": "*,!exec"})
 ----
 
+[[completion]]
+=== Completion
+
+Fonctions pour compléter une ligne de commande.
+
+==== completion_new
+
+_WeeChat ≥ 2.9._
+
+Créer une complétion.
+
+Prototype :
+
+[source,C]
+----
+struct t_gui_completion *weechat_completion_new (struct t_gui_buffer *buffer);
+----
+
+Paramètres :
+
+* _buffer_ : pointeur vers le tampon
+
+Valeur de retour :
+
+* pointer to new completion
+
+Exemple en C :
+
+[source,C]
+----
+struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+completion = weechat.completion_new(buffer)
+
+# exemple
+completion = weechat.completion_new(weechat.buffer_search_main())
+----
+
+==== completion_search
+
+_WeeChat ≥ 2.9._
+
+Chercher les mots possibles à une position donnée d'une chaîne, dans le contexte
+de la complétion.
+
+Prototype :
+
+[source,C]
+----
+void weechat_completion_search (struct t_gui_completion *completion, const char *data,
+                                int position, int direction);
+----
+
+Paramètres :
+
+* _completion_ : pointeur vers la complétion
+* _data_ : la chaîne à compléter
+* _position_ : index du caractère dans la chaîne à compléter (commence à 0)
+* _direction_ : 1 pour la complétion suivante, -1 pour la complétion précédente
+
+Exemple en C :
+
+[source,C]
+----
+struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
+weechat_completion_search (completion, "/help filt", 10, 1);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.completion_search(completion, data, position, direction)
+
+# exemple
+completion = weechat.completion_new(weechat.buffer_search_main())
+weechat.completion_search(completion, "/help filt", 10, 1);
+----
+
+==== completion_free
+
+_WeeChat ≥ 2.9._
+
+Supprimer une complétion.
+
+Prototype :
+
+[source,C]
+----
+void weechat_completion_free (struct t_gui_completion *completion);
+----
+
+Paramètres :
+
+* _completion_ : pointeur vers la complétion
+
+Exemple en C :
+
+[source,C]
+----
+weechat_completion_free (completion);
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.completion_free(completion)
+
+# exemple
+weechat.completion_free(completion)
+----
+
 [[network]]
 === Réseau
 

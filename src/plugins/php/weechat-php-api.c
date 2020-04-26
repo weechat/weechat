@@ -275,6 +275,7 @@ API_FUNC(charset_set)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     charset = ZSTR_VAL(z_charset);
+
     plugin_script_api_charset_set (php_current_script, (const char *)charset);
 
     API_RETURN_OK;
@@ -292,6 +293,7 @@ API_FUNC(iconv_to_internal)
 
     charset = ZSTR_VAL(z_charset);
     string = ZSTR_VAL(z_string);
+
     result = weechat_iconv_to_internal ((const char *)charset,
                                         (const char *)string);
 
@@ -310,6 +312,7 @@ API_FUNC(iconv_from_internal)
 
     charset = ZSTR_VAL(z_charset);
     string = ZSTR_VAL(z_string);
+
     result = weechat_iconv_from_internal ((const char *)charset,
                                           (const char *)string);
 
@@ -327,6 +330,7 @@ API_FUNC(gettext)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     string = ZSTR_VAL(z_string);
+
     result = weechat_gettext ((const char *)string);
 
     API_RETURN_STRING(result);
@@ -348,6 +352,7 @@ API_FUNC(ngettext)
     single = ZSTR_VAL(z_single);
     plural = ZSTR_VAL(z_plural);
     count = (int)z_count;
+
     result = weechat_ngettext ((const char *)single,
                                (const char *)plural,
                                count);
@@ -367,6 +372,7 @@ API_FUNC(strlen_screen)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     string = ZSTR_VAL(z_string);
+
     result = weechat_strlen_screen ((const char *)string);
 
     API_RETURN_INT(result);
@@ -387,6 +393,7 @@ API_FUNC(string_match)
     string = ZSTR_VAL(z_string);
     mask = ZSTR_VAL(z_mask);
     case_sensitive = (int)z_case_sensitive;
+
     result = weechat_string_match ((const char *)string,
                                    (const char *)mask,
                                    case_sensitive);
@@ -409,6 +416,7 @@ API_FUNC(string_match_list)
     string = ZSTR_VAL(z_string);
     masks = ZSTR_VAL(z_masks);
     case_sensitive = (int)z_case_sensitive;
+
     result = plugin_script_api_string_match_list (weechat_php_plugin,
                                                   (const char *)string,
                                                   (const char *)masks,
@@ -431,6 +439,7 @@ API_FUNC(string_has_highlight)
 
     string = ZSTR_VAL(z_string);
     highlight_words = ZSTR_VAL(z_highlight_words);
+
     result = weechat_string_has_highlight ((const char *)string,
                                            (const char *)highlight_words);
 
@@ -450,6 +459,7 @@ API_FUNC(string_has_highlight_regex)
 
     string = ZSTR_VAL(z_string);
     regex = ZSTR_VAL(z_regex);
+
     result = weechat_string_has_highlight_regex ((const char *)string,
                                                  (const char *)regex);
 
@@ -467,6 +477,7 @@ API_FUNC(string_mask_to_regex)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     mask = ZSTR_VAL(z_mask);
+
     result = weechat_string_mask_to_regex ((const char *)mask);
 
     API_RETURN_STRING_FREE(result);
@@ -498,6 +509,7 @@ API_FUNC(string_remove_color)
 
     string = ZSTR_VAL(z_string);
     replacement = ZSTR_VAL(z_replacement);
+
     result = weechat_string_remove_color ((const char *)string,
                                           (const char *)replacement);
 
@@ -515,6 +527,7 @@ API_FUNC(string_is_command_char)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     string = ZSTR_VAL(z_string);
+
     result = weechat_string_is_command_char ((const char *)string);
 
     API_RETURN_INT(result);
@@ -531,6 +544,7 @@ API_FUNC(string_input_for_buffer)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     string = ZSTR_VAL(z_string);
+
     result = weechat_string_input_for_buffer ((const char *)string);
 
     API_RETURN_STRING(result);
@@ -639,6 +653,7 @@ API_FUNC(mkdir_home)
 
     directory = ZSTR_VAL(z_directory);
     mode = (int)z_mode;
+
     if (weechat_mkdir_home ((const char *)directory, mode))
         API_RETURN_OK;
 
@@ -659,6 +674,7 @@ API_FUNC(mkdir)
 
     directory = ZSTR_VAL(z_directory);
     mode = (int)z_mode;
+
     if (weechat_mkdir ((const char *)directory, mode))
         API_RETURN_OK;
 
@@ -679,6 +695,7 @@ API_FUNC(mkdir_parents)
 
     directory = ZSTR_VAL(z_directory);
     mode = (int)z_mode;
+
     if (weechat_mkdir_parents ((const char *)directory, mode))
         API_RETURN_OK;
 
@@ -758,6 +775,7 @@ API_FUNC(list_search_pos)
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
     data = ZSTR_VAL(z_data);
+
     result = weechat_list_search_pos (weelist, (const char *)data);
 
     API_RETURN_INT(result);
@@ -798,6 +816,7 @@ API_FUNC(list_casesearch_pos)
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
     data = ZSTR_VAL(z_data);
+
     result = weechat_list_casesearch_pos (weelist, (const char *)data);
 
     API_RETURN_INT(result);
@@ -837,6 +856,7 @@ API_FUNC(list_set)
 
     item = (struct t_weelist_item *)API_STR2PTR(ZSTR_VAL(z_item));
     value = ZSTR_VAL(z_value);
+
     weechat_list_set (item, (const char *)value);
 
     API_RETURN_OK;
@@ -888,6 +908,7 @@ API_FUNC(list_string)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     item = (struct t_weelist_item *)API_STR2PTR(ZSTR_VAL(z_item));
+
     result = weechat_list_string (item);
 
     API_RETURN_STRING(result);
@@ -904,6 +925,7 @@ API_FUNC(list_size)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
+
     result = weechat_list_size (weelist);
 
     API_RETURN_INT(result);
@@ -922,6 +944,7 @@ API_FUNC(list_remove)
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
     item = (struct t_weelist_item *)API_STR2PTR(ZSTR_VAL(z_item));
+
     weechat_list_remove (weelist, item);
 
     API_RETURN_OK;
@@ -938,6 +961,7 @@ API_FUNC(list_remove_all)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
+
     weechat_list_remove_all (weelist);
 
     API_RETURN_OK;
@@ -953,6 +977,7 @@ API_FUNC(list_free)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     weelist = (struct t_weelist *)API_STR2PTR(ZSTR_VAL(z_weelist));
+
     weechat_list_free (weelist);
 
     API_RETURN_OK;
@@ -1344,6 +1369,7 @@ API_FUNC(config_string_to_boolean)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     text = ZSTR_VAL(z_text);
+
     result = weechat_config_string_to_boolean ((const char *)text);
 
     API_RETURN_INT(result);
@@ -1363,6 +1389,7 @@ API_FUNC(config_option_reset)
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
     run_callback = (int)z_run_callback;
+
     result = weechat_config_option_reset (option, run_callback);
 
     API_RETURN_INT(result);
@@ -1385,6 +1412,7 @@ API_FUNC(config_option_set)
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
     value = ZSTR_VAL(z_value);
     run_callback = (int)z_run_callback;
+
     result = weechat_config_option_set (option, (const char *)value,
                                         run_callback);
 
@@ -1405,6 +1433,7 @@ API_FUNC(config_option_set_null)
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
     run_callback = (int)z_run_callback;
+
     result = weechat_config_option_set_null (option, run_callback);
 
     API_RETURN_INT(result);
@@ -1421,6 +1450,7 @@ API_FUNC(config_option_unset)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_option_unset (option);
 
     API_RETURN_INT(result);
@@ -1439,6 +1469,7 @@ API_FUNC(config_option_rename)
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
     new_name = ZSTR_VAL(z_new_name);
+
     weechat_config_option_rename (option, (const char *)new_name);
 
     API_RETURN_OK;
@@ -1455,6 +1486,7 @@ API_FUNC(config_option_is_null)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_option_is_null (option);
 
     API_RETURN_INT(result);
@@ -1471,6 +1503,7 @@ API_FUNC(config_option_default_is_null)
         API_WRONG_ARGS(API_RETURN_INT(1));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_option_default_is_null (option);
 
     API_RETURN_INT(result);
@@ -1487,6 +1520,7 @@ API_FUNC(config_boolean)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_boolean (option);
 
     API_RETURN_INT(result);
@@ -1503,6 +1537,7 @@ API_FUNC(config_boolean_default)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_boolean_default (option);
 
     API_RETURN_INT(result);
@@ -1519,6 +1554,7 @@ API_FUNC(config_integer)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_integer (option);
 
     API_RETURN_INT(result);
@@ -1535,6 +1571,7 @@ API_FUNC(config_integer_default)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_integer_default (option);
 
     API_RETURN_INT(result);
@@ -1551,6 +1588,7 @@ API_FUNC(config_string)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_string (option);
 
     API_RETURN_STRING(result);
@@ -1567,6 +1605,7 @@ API_FUNC(config_string_default)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_string_default (option);
 
     API_RETURN_STRING(result);
@@ -1583,6 +1622,7 @@ API_FUNC(config_color)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_color (option);
 
     API_RETURN_STRING(result);
@@ -1599,6 +1639,7 @@ API_FUNC(config_color_default)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     result = weechat_config_color_default (option);
 
     API_RETURN_STRING(result);
@@ -1657,6 +1698,7 @@ API_FUNC(config_write)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_WRITE_ERROR));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
+
     result = weechat_config_write (config_file);
 
     API_RETURN_INT(result);
@@ -1674,6 +1716,7 @@ API_FUNC(config_read)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
+
     result = weechat_config_read (config_file);
 
     API_RETURN_INT(result);
@@ -1691,6 +1734,7 @@ API_FUNC(config_reload)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_READ_FILE_NOT_FOUND));
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
+
     result = weechat_config_reload (config_file);
 
     API_RETURN_INT(result);
@@ -1706,6 +1750,7 @@ API_FUNC(config_option_free)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     option = (struct t_config_option *)API_STR2PTR(ZSTR_VAL(z_option));
+
     weechat_config_option_free (option);
 
     API_RETURN_OK;
@@ -1722,6 +1767,7 @@ API_FUNC(config_section_free_options)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     section = (struct t_config_section *)API_STR2PTR(ZSTR_VAL(z_section));
+
     weechat_config_section_free_options (section);
 
     API_RETURN_OK;
@@ -1738,6 +1784,7 @@ API_FUNC(config_section_free)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     section = (struct t_config_section *)API_STR2PTR(ZSTR_VAL(z_section));
+
     weechat_config_section_free (section);
 
     API_RETURN_OK;
@@ -1754,6 +1801,7 @@ API_FUNC(config_free)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     config_file = (struct t_config_file *)API_STR2PTR(ZSTR_VAL(z_config_file));
+
     weechat_config_free (config_file);
 
     API_RETURN_OK;
@@ -1788,6 +1836,7 @@ API_FUNC(config_get_plugin)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     option = ZSTR_VAL(z_option);
+
     result = plugin_script_api_config_get_plugin (weechat_php_plugin,
                                                   php_current_script,
                                                   (const char *)option);
@@ -1806,6 +1855,7 @@ API_FUNC(config_is_set_plugin)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     option = ZSTR_VAL(z_option);
+
     result = plugin_script_api_config_is_set_plugin (weechat_php_plugin,
                                                      php_current_script,
                                                      (const char *)option);
@@ -1826,6 +1876,7 @@ API_FUNC(config_set_plugin)
 
     option = ZSTR_VAL(z_option);
     value = ZSTR_VAL(z_value);
+
     result = plugin_script_api_config_set_plugin (weechat_php_plugin,
                                                   php_current_script,
                                                   (const char *)option,
@@ -1846,6 +1897,7 @@ API_FUNC(config_set_desc_plugin)
 
     option = ZSTR_VAL(z_option);
     description = ZSTR_VAL(z_description);
+
     plugin_script_api_config_set_desc_plugin (weechat_php_plugin,
                                               php_current_script,
                                               (const char *)option,
@@ -1865,6 +1917,7 @@ API_FUNC(config_unset_plugin)
         API_WRONG_ARGS(API_RETURN_INT(WEECHAT_CONFIG_OPTION_UNSET_ERROR));
 
     option = ZSTR_VAL(z_option);
+
     result = plugin_script_api_config_unset_plugin (weechat_php_plugin,
                                                     php_current_script,
                                                     (const char *)option);
@@ -1912,6 +1965,7 @@ API_FUNC(key_unbind)
 
     context = ZSTR_VAL(z_context);
     key = ZSTR_VAL(z_key);
+
     result = weechat_key_unbind ((const char *)context, (const char *)key);
 
     API_RETURN_INT(result);
@@ -1928,6 +1982,7 @@ API_FUNC(prefix)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     prefix = ZSTR_VAL(z_prefix);
+
     result = weechat_prefix ((const char *)prefix);
 
     API_RETURN_STRING(result);
@@ -1944,6 +1999,7 @@ API_FUNC(color)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     color_name = ZSTR_VAL(z_color_name);
+
     result = weechat_color ((const char *)color_name);
 
     API_RETURN_STRING(result);
@@ -1962,6 +2018,7 @@ API_FUNC(print)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     message = ZSTR_VAL(z_message);
+
     plugin_script_api_printf (weechat_php_plugin, php_current_script, buffer,
                               "%s", message);
 
@@ -1985,6 +2042,7 @@ API_FUNC(print_date_tags)
     date = (time_t)z_date;
     tags = ZSTR_VAL(z_tags);
     message = ZSTR_VAL(z_message);
+
     plugin_script_api_printf_date_tags (weechat_php_plugin,
                                         php_current_script,
                                         buffer,
@@ -2012,6 +2070,7 @@ API_FUNC(print_y)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     y = (int)z_y;
     message = ZSTR_VAL(z_message);
+
     plugin_script_api_printf_y (weechat_php_plugin,
                                 php_current_script,
                                 buffer,
@@ -2032,6 +2091,7 @@ API_FUNC(log_print)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     message = ZSTR_VAL(z_message);
+
     plugin_script_api_log_printf (weechat_php_plugin, php_current_script,
                                   "%s", message);
 
@@ -2160,6 +2220,7 @@ API_FUNC(hook_completion_get_string)
 
     completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
     property = ZSTR_VAL(z_property);
+
     result = weechat_hook_completion_get_string (completion,
                                                  (const char *)property);
 
@@ -2183,6 +2244,7 @@ API_FUNC(hook_completion_list_add)
     word = ZSTR_VAL(z_word);
     nick_completion = (int)z_nick_completion;
     where = ZSTR_VAL(z_where);
+
     weechat_hook_completion_list_add (completion,
                                       (const char *)word,
                                       nick_completion,
@@ -2880,6 +2942,7 @@ API_FUNC(hook_modifier_exec)
     modifier = ZSTR_VAL(z_modifier);
     modifier_data = ZSTR_VAL(z_modifier_data);
     string = ZSTR_VAL(z_string);
+
     result = weechat_hook_modifier_exec ((const char *)modifier,
                                          (const char *)modifier_data,
                                          (const char *)string);
@@ -3107,6 +3170,7 @@ API_FUNC(hook_set)
     hook = (struct t_hook *)API_STR2PTR(ZSTR_VAL(z_hook));
     property = ZSTR_VAL(z_property);
     value = ZSTR_VAL(z_value);
+
     weechat_hook_set (hook, (const char *)property, (const char *)value);
 
     API_RETURN_OK;
@@ -3122,6 +3186,7 @@ API_FUNC(unhook)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     hook = (struct t_hook *)API_STR2PTR(ZSTR_VAL(z_hook));
+
     weechat_unhook (hook);
 
     API_RETURN_OK;
@@ -3137,6 +3202,7 @@ API_FUNC(unhook_all)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     subplugin = ZSTR_VAL(z_subplugin);
+
     weechat_unhook_all ((const char *)subplugin);
 
     API_RETURN_OK;
@@ -3264,6 +3330,7 @@ API_FUNC(buffer_clear)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+
     weechat_buffer_clear (buffer);
 
     API_RETURN_OK;
@@ -3279,6 +3346,7 @@ API_FUNC(buffer_close)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+
     weechat_buffer_close (buffer);
 
     API_RETURN_OK;
@@ -3298,6 +3366,7 @@ API_FUNC(buffer_merge)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     target_buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_target_buffer));
+
     weechat_buffer_merge (buffer, target_buffer);
 
     API_RETURN_OK;
@@ -3317,6 +3386,7 @@ API_FUNC(buffer_unmerge)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     number = (int)z_number;
+
     weechat_buffer_unmerge (buffer, number);
 
     API_RETURN_OK;
@@ -3336,6 +3406,7 @@ API_FUNC(buffer_get_integer)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     property = ZSTR_VAL(z_property);
+
     result = weechat_buffer_get_integer (buffer, (const char *)property);
 
     API_RETURN_INT(result);
@@ -3355,6 +3426,7 @@ API_FUNC(buffer_get_string)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     property = ZSTR_VAL(z_property);
+
     result = weechat_buffer_get_string (buffer, (const char *)property);
 
     API_RETURN_STRING(result);
@@ -3395,6 +3467,7 @@ API_FUNC(buffer_set)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     property = ZSTR_VAL(z_property);
     value = ZSTR_VAL(z_value);
+
     weechat_buffer_set (buffer, (const char *)property, (const char *)value);
 
     API_RETURN_OK;
@@ -3413,6 +3486,7 @@ API_FUNC(buffer_string_replace_local_var)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     string = ZSTR_VAL(z_string);
+
     result = weechat_buffer_string_replace_local_var (buffer,
                                                       (const char *)string);
 
@@ -3433,6 +3507,7 @@ API_FUNC(buffer_match_list)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     string = ZSTR_VAL(z_string);
+
     result = weechat_buffer_match_list (buffer, (const char *)string);
 
     API_RETURN_INT(result);
@@ -3482,6 +3557,7 @@ API_FUNC(window_get_integer)
 
     window = (struct t_gui_window *)API_STR2PTR(ZSTR_VAL(z_window));
     property = ZSTR_VAL(z_property);
+
     result = weechat_window_get_integer (window, (const char *)property);
 
     API_RETURN_INT(result);
@@ -3501,6 +3577,7 @@ API_FUNC(window_get_string)
 
     window = (struct t_gui_window *)API_STR2PTR(ZSTR_VAL(z_window));
     property = ZSTR_VAL(z_property);
+
     result = weechat_window_get_string (window, (const char *)property);
 
     API_RETURN_STRING(result);
@@ -3537,6 +3614,7 @@ API_FUNC(window_set_title)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     title = ZSTR_VAL(z_title);
+
     weechat_window_set_title ((const char *)title);
 
     API_RETURN_OK;
@@ -3672,6 +3750,7 @@ API_FUNC(nicklist_remove_group)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     group = (struct t_gui_nick_group *)API_STR2PTR(ZSTR_VAL(z_group));
+
     weechat_nicklist_remove_group (buffer, group);
 
     API_RETURN_OK;
@@ -3690,6 +3769,7 @@ API_FUNC(nicklist_remove_nick)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     nick = (struct t_gui_nick *)API_STR2PTR(ZSTR_VAL(z_nick));
+
     weechat_nicklist_remove_nick (buffer, nick);
 
     API_RETURN_OK;
@@ -3705,6 +3785,7 @@ API_FUNC(nicklist_remove_all)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+
     weechat_nicklist_remove_all (buffer);
 
     API_RETURN_OK;
@@ -3726,6 +3807,7 @@ API_FUNC(nicklist_group_get_integer)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     group = (struct t_gui_nick_group *)API_STR2PTR(ZSTR_VAL(z_group));
     property = ZSTR_VAL(z_property);
+
     result = weechat_nicklist_group_get_integer (buffer,
                                                  group,
                                                  (const char *)property);
@@ -3749,6 +3831,7 @@ API_FUNC(nicklist_group_get_string)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     group = (struct t_gui_nick_group *)API_STR2PTR(ZSTR_VAL(z_group));
     property = ZSTR_VAL(z_property);
+
     result = weechat_nicklist_group_get_string (buffer,
                                                 group,
                                                 (const char *)property);
@@ -3797,6 +3880,7 @@ API_FUNC(nicklist_group_set)
     group = (struct t_gui_nick_group *)API_STR2PTR(ZSTR_VAL(z_group));
     property = ZSTR_VAL(z_property);
     value = ZSTR_VAL(z_value);
+
     weechat_nicklist_group_set (buffer,
                                 group,
                                 (const char *)property,
@@ -3821,6 +3905,7 @@ API_FUNC(nicklist_nick_get_integer)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     nick = (struct t_gui_nick *)API_STR2PTR(ZSTR_VAL(z_nick));
     property = ZSTR_VAL(z_property);
+
     result = weechat_nicklist_nick_get_integer (buffer,
                                                 nick,
                                                 (const char *)property);
@@ -3844,6 +3929,7 @@ API_FUNC(nicklist_nick_get_string)
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     nick = (struct t_gui_nick *)API_STR2PTR(ZSTR_VAL(z_nick));
     property = ZSTR_VAL(z_property);
+
     result = weechat_nicklist_nick_get_string (buffer,
                                                nick,
                                                (const char *)property);
@@ -3892,6 +3978,7 @@ API_FUNC(nicklist_nick_set)
     nick = (struct t_gui_nick *)API_STR2PTR(ZSTR_VAL(z_nick));
     property = ZSTR_VAL(z_property);
     value = ZSTR_VAL(z_value);
+
     weechat_nicklist_nick_set (buffer,
                                nick,
                                (const char *)property,
@@ -3976,6 +4063,7 @@ API_FUNC(bar_item_update)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     name = ZSTR_VAL(z_name);
+
     weechat_bar_item_update ((const char *)name);
 
     API_RETURN_OK;
@@ -3991,6 +4079,7 @@ API_FUNC(bar_item_remove)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     item = (struct t_gui_bar_item *)API_STR2PTR(ZSTR_VAL(z_item));
+
     weechat_bar_item_remove (item);
 
     API_RETURN_OK;
@@ -4085,6 +4174,7 @@ API_FUNC(bar_set)
     bar = (struct t_gui_bar *)API_STR2PTR(ZSTR_VAL(z_bar));
     property = ZSTR_VAL(z_property);
     value = ZSTR_VAL(z_value);
+
     result = weechat_bar_set (bar, (const char *)property, (const char *)value);
 
     API_RETURN_INT(result);
@@ -4115,6 +4205,7 @@ API_FUNC(bar_remove)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     bar = (struct t_gui_bar *)API_STR2PTR(ZSTR_VAL(z_bar));
+
     weechat_bar_remove (bar);
 
     API_RETURN_OK;
@@ -4134,6 +4225,7 @@ API_FUNC(command)
 
     buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
     command = ZSTR_VAL(z_command);
+
     result = plugin_script_api_command (weechat_php_plugin,
                                         php_current_script,
                                         buffer,
@@ -4176,6 +4268,62 @@ API_FUNC(command_options)
     API_RETURN_INT(result);
 }
 
+API_FUNC(completion_new)
+{
+    zend_string *z_buffer;
+    struct t_gui_buffer *buffer;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_buffer) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = (struct t_gui_buffer *)API_STR2PTR(ZSTR_VAL(z_buffer));
+
+    result = API_PTR2STR(weechat_completion_new (buffer));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    zend_string *z_completion, *z_data;
+    zend_long z_position, z_direction;
+    char *data;
+    struct t_gui_completion *completion;
+    int position, direction;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSll", &z_completion, &z_data,
+                               &z_position, &z_direction) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
+    data = ZSTR_VAL(z_data);
+    position = (int)z_position;
+    direction = (int)z_direction;
+
+    weechat_completion_search (completion, data, position, direction);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(completion_free)
+{
+    zend_string *z_completion;
+    struct t_gui_completion *completion;
+
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_completion) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
+
+    weechat_completion_free (completion);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     zend_string *z_info_name, *z_arguments;
@@ -4188,6 +4336,7 @@ API_FUNC(info_get)
 
     info_name = ZSTR_VAL(z_info_name);
     arguments = ZSTR_VAL(z_arguments);
+
     result = weechat_info_get ((const char *)info_name,
                                (const char *)arguments);
 
@@ -4405,6 +4554,7 @@ API_FUNC(infolist_next)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     result = weechat_infolist_next (infolist);
 
     API_RETURN_INT(result);
@@ -4421,6 +4571,7 @@ API_FUNC(infolist_prev)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     result = weechat_infolist_prev (infolist);
 
     API_RETURN_INT(result);
@@ -4436,6 +4587,7 @@ API_FUNC(infolist_reset_item_cursor)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     weechat_infolist_reset_item_cursor (infolist);
 
     API_RETURN_OK;
@@ -4452,6 +4604,7 @@ API_FUNC(infolist_fields)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     result = weechat_infolist_fields (infolist);
 
     API_RETURN_STRING(result);
@@ -4471,6 +4624,7 @@ API_FUNC(infolist_integer)
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
     var = ZSTR_VAL(z_var);
+
     result = weechat_infolist_integer (infolist, (const char *)var);
 
     API_RETURN_INT(result);
@@ -4490,6 +4644,7 @@ API_FUNC(infolist_string)
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
     var = ZSTR_VAL(z_var);
+
     result = weechat_infolist_string (infolist, (const char *)var);
 
     API_RETURN_STRING(result);
@@ -4546,6 +4701,7 @@ API_FUNC(infolist_free)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     weechat_infolist_free (infolist);
 
     API_RETURN_OK;
@@ -4582,6 +4738,7 @@ API_FUNC(hdata_get_var_offset)
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_get_var_offset (hdata, (const char *)name);
 
     API_RETURN_INT(result);
@@ -4601,6 +4758,7 @@ API_FUNC(hdata_get_var_type_string)
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_get_var_type_string (hdata, (const char *)name);
 
     API_RETURN_STRING(result);
@@ -4622,6 +4780,7 @@ API_FUNC(hdata_get_var_array_size)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_get_var_array_size (hdata,
                                                pointer,
                                                (const char *)name);
@@ -4645,6 +4804,7 @@ API_FUNC(hdata_get_var_array_size_string)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_get_var_array_size_string (hdata,
                                                       pointer,
                                                       (const char *)name);
@@ -4666,6 +4826,7 @@ API_FUNC(hdata_get_var_hdata)
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_get_var_hdata (hdata, (const char *)name);
 
     API_RETURN_STRING(result);
@@ -4707,6 +4868,7 @@ API_FUNC(hdata_check_pointer)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     list = (void *)API_STR2PTR(ZSTR_VAL(z_list));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
+
     result = weechat_hdata_check_pointer (hdata, list, pointer);
 
     API_RETURN_INT(result);
@@ -4776,6 +4938,7 @@ API_FUNC(hdata_char)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_char (hdata, pointer, (const char *)name);
 
     API_RETURN_INT((int)result);
@@ -4797,6 +4960,7 @@ API_FUNC(hdata_integer)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_integer (hdata, pointer, (const char *)name);
 
     API_RETURN_INT(result);
@@ -4818,6 +4982,7 @@ API_FUNC(hdata_long)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_long (hdata, pointer, (const char *)name);
 
     API_RETURN_LONG(result);
@@ -4839,6 +5004,7 @@ API_FUNC(hdata_string)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_string (hdata, pointer, (const char *)name);
 
     API_RETURN_STRING(result);
@@ -4883,6 +5049,7 @@ API_FUNC(hdata_time)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_time (hdata, pointer, (const char *)name);
 
     API_RETURN_LONG(result);
@@ -4904,6 +5071,7 @@ API_FUNC(hdata_hashtable)
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     pointer = (void *)API_STR2PTR(ZSTR_VAL(z_pointer));
     name = ZSTR_VAL(z_name);
+
     result = weechat_hdata_hashtable (hdata, pointer, (const char *)name);
 
     weechat_php_hashtable_to_array (result, return_value);
@@ -4929,6 +5097,7 @@ API_FUNC(hdata_compare)
     pointer2 = (void *)API_STR2PTR(ZSTR_VAL(z_pointer2));
     name = (void *)API_STR2PTR(ZSTR_VAL(z_name));
     case_sensitive = (int)z_case_sensitive;
+
     result = weechat_hdata_compare (hdata, pointer1, pointer2, name,
                                     case_sensitive);
 
@@ -4979,6 +5148,7 @@ API_FUNC(hdata_get_string)
 
     hdata = (struct t_hdata *)API_STR2PTR(ZSTR_VAL(z_hdata));
     property = ZSTR_VAL(z_property);
+
     result = weechat_hdata_get_string (hdata, (const char *)property);
 
     API_RETURN_STRING(result);
@@ -5049,6 +5219,7 @@ API_FUNC(upgrade_write_object)
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));
     object_id = (int)z_object_id;
     infolist = (struct t_infolist *)API_STR2PTR(ZSTR_VAL(z_infolist));
+
     result = weechat_upgrade_write_object (upgrade_file, object_id, infolist);
 
     API_RETURN_INT(result);
@@ -5066,6 +5237,7 @@ API_FUNC(upgrade_read)
         API_WRONG_ARGS(API_RETURN_INT(0));
 
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));
+
     result = weechat_upgrade_read (upgrade_file);
 
     API_RETURN_INT(result);
@@ -5082,6 +5254,7 @@ API_FUNC(upgrade_close)
         API_WRONG_ARGS(API_RETURN_ERROR);
 
     upgrade_file = (struct t_upgrade_file *)API_STR2PTR(ZSTR_VAL(z_upgrade_file));
+
     weechat_upgrade_close (upgrade_file);
 
     API_RETURN_OK;

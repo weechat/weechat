@@ -697,6 +697,11 @@ List of functions in script API:
   command +
   command_options
 
+| completion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | infos |
   info_get +
   info_get_hashtable

@@ -4103,6 +4103,51 @@ weechat_guile_api_command_options (SCM buffer, SCM command, SCM options)
 }
 
 SCM
+weechat_guile_api_completion_new (SCM buffer)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (!scm_is_string (buffer))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(
+        weechat_completion_new (API_STR2PTR(API_SCM_TO_STRING(buffer))));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
+weechat_guile_api_completion_search (SCM completion, SCM data, SCM position,
+                                     SCM direction)
+{
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (!scm_is_string (completion) || !scm_is_string (data)
+        || !scm_is_integer (position) || !scm_is_integer (direction))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_search (API_STR2PTR(API_SCM_TO_STRING(completion)),
+                               API_SCM_TO_STRING(data),
+                               scm_to_int (position),
+                               scm_to_int (direction));
+
+    API_RETURN_OK;
+}
+
+SCM
+weechat_guile_api_completion_free (SCM completion)
+{
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (!scm_is_string (completion))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_free (API_STR2PTR(API_SCM_TO_STRING(completion)));
+
+    API_RETURN_OK;
+}
+
+SCM
 weechat_guile_api_info_get (SCM info_name, SCM arguments)
 {
     char *result;
@@ -5054,6 +5099,9 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(bar_remove, 1);
     API_DEF_FUNC(command, 2);
     API_DEF_FUNC(command_options, 3);
+    API_DEF_FUNC(completion_new, 1);
+    API_DEF_FUNC(completion_search, 4);
+    API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);
     API_DEF_FUNC(infolist_new, 0);

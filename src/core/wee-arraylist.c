@@ -703,7 +703,6 @@ arraylist_print_log (struct t_arraylist *arraylist, const char *name)
 {
     int i;
 
-    log_printf ("");
     log_printf ("[arraylist %s (addr:0x%lx)]", name, arraylist);
     log_printf ("  size . . . . . . . . . : %d", arraylist->size);
     log_printf ("  size_alloc . . . . . . : %d", arraylist->size_alloc);

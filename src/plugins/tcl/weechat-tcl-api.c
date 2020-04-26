@@ -4624,6 +4624,47 @@ API_FUNC(command_options)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_new)
+{
+    Tcl_Obj *objp;
+    char *buffer;
+    const char *result;
+    int i;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = Tcl_GetStringFromObj (objv[1], &i);
+
+    result = API_PTR2STR(weechat_completion_new (API_STR2PTR(buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    Tcl_Obj *objp;
+    char *completion, *data;
+    int i, position, direction;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (objc < 5)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = Tcl_GetStringFromObj (objv[1], &i);
+    data = Tcl_GetStringFromObj (objv[2], &i);
+
+    if ((Tcl_GetIntFromObj (interp, objv[3], &position) != TCL_OK)
+        || (Tcl_GetIntFromObj (interp, objv[4], &direction) != TCL_OK))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_search (API_STR2PTR(completion), data, position,
+                               direction);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     Tcl_Obj *objp;
@@ -5780,6 +5821,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
     API_DEF_FUNC(command_options);
+    API_DEF_FUNC(completion_new);
+    API_DEF_FUNC(completion_search);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

@@ -533,11 +533,9 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
     {
         gui_buffer_undo_snap (buffer);
         gui_completion_search (buffer->completion,
-                               1,
                                buffer->input_buffer,
-                               buffer->input_buffer_size,
-                               utf8_real_pos (buffer->input_buffer,
-                                              buffer->input_buffer_pos));
+                               buffer->input_buffer_pos,
+                               1);
         gui_input_complete (buffer);
         gui_input_text_changed_modifier_and_signal (buffer,
                                                     1, /* save undo */
@@ -557,11 +555,9 @@ gui_input_complete_previous (struct t_gui_buffer *buffer)
     {
         gui_buffer_undo_snap (buffer);
         gui_completion_search (buffer->completion,
-                               -1,
                                buffer->input_buffer,
-                               buffer->input_buffer_size,
-                               utf8_real_pos (buffer->input_buffer,
-                                              buffer->input_buffer_pos));
+                               buffer->input_buffer_pos,
+                               -1);
         gui_input_complete (buffer);
         gui_input_text_changed_modifier_and_signal (buffer,
                                                     1, /* save undo */

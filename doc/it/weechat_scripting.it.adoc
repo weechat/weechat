@@ -728,6 +728,12 @@ Elenco di funzioni nelle API per gli script:
   command +
   command_options
 
+// TRANSLATION MISSING
+| completion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | info |
   info_get +
   info_get_hashtable

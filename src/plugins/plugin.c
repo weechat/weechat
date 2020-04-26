@@ -55,6 +55,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-completion.h"
 #include "../gui/gui-key.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -849,6 +850,10 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->command = &plugin_api_command;
         new_plugin->command_options = &plugin_api_command_options;
 
+        new_plugin->completion_new = &gui_completion_new;
+        new_plugin->completion_search = &gui_completion_search;
+        new_plugin->completion_free = &gui_completion_free;
+
         new_plugin->network_pass_proxy = &network_pass_proxy;
         new_plugin->network_connect_to = &network_connect_to;
 
@@ -1132,6 +1137,9 @@ plugin_remove (struct t_weechat_plugin *plugin)
 {
     struct t_weechat_plugin *new_weechat_plugins;
     struct t_gui_buffer *ptr_buffer, *next_buffer;
+
+    /* remove all completions (only those created by API) */
+    gui_completion_free_all_plugin (plugin);
 
     /* close buffers created by this plugin */
     ptr_buffer = gui_buffers;

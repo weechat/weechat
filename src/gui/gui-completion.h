@@ -35,6 +35,13 @@ struct t_gui_completion_word
 
 struct t_gui_completion
 {
+    /* plugin */
+    struct t_weechat_plugin *plugin; /* plugin which created this completion */
+                                     /* with a call to API function          */
+                                     /* "completion_new" (NULL for a buffer  */
+                                     /* internal completion even if the    . */
+                                     /* buffer belongs to a plugin)          */
+
     /* completion context */
     struct t_gui_buffer *buffer;  /* buffer where completion was asked       */
     int context;                  /* context: null, nick, command, cmd arg   */
@@ -61,6 +68,10 @@ struct t_gui_completion
 
     /* partial completion */
     struct t_arraylist *partial_list;
+
+    /* previous/next completions in global list */
+    struct t_gui_completion *prev_completion; /* link to previous completion */
+    struct t_gui_completion *next_completion; /* link to next completion     */
 };
 
 /* completion variables */
@@ -69,21 +80,22 @@ extern int gui_completion_freeze;
 
 /* completion functions */
 
-extern void gui_completion_buffer_init (struct t_gui_completion *completion,
-                                        struct t_gui_buffer *buffer);
+extern struct t_gui_completion *gui_completion_new (struct t_weechat_plugin *plugin,
+                                                    struct t_gui_buffer *buffer);
 extern void gui_completion_free (struct t_gui_completion *completion);
+extern void gui_completion_free_all_plugin (struct t_weechat_plugin *plugin);
 extern void gui_completion_stop (struct t_gui_completion *completion);
 extern void gui_completion_list_add (struct t_gui_completion *completion,
                                      const char *word,
                                      int nick_completion, const char *where);
 extern void gui_completion_search (struct t_gui_completion *completion,
-                                   int direction, const char *data, int size,
-                                   int pos);
+                                   const char *data, int position,
+                                   int direction);
 extern const char *gui_completion_get_string (struct t_gui_completion *completion,
                                               const char *property);
 extern struct t_hdata *gui_completion_hdata_completion_cb (const void *pointer,
                                                            void *data,
                                                            const char *hdata_name);
-extern void gui_completion_print_log (struct t_gui_completion *completion);
+extern void gui_completion_print_log ();
 
 #endif /* WEECHAT_GUI_COMPLETION_H */

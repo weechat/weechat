@@ -714,6 +714,12 @@ Liste der Skript API Funktionen:
   command +
   command_options
 
+// TRANSLATION MISSING
+| completion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | Informationen |
   info_get +
   info_get_hashtable

@@ -3999,6 +3999,51 @@ API_FUNC(command_options)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_new)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_new", "s", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value buffer(args[0]);
+
+    result = API_PTR2STR(
+        weechat_completion_new ((struct t_gui_buffer *)API_STR2PTR(*buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    int position, direction;
+
+    API_INIT_FUNC(1, "completion_search", "ssii", API_RETURN_ERROR);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value data(args[1]);
+    position = args[2]->IntegerValue();
+    direction = args[3]->IntegerValue();
+
+    weechat_completion_search (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        (const char *)(*data),
+        position,
+        direction);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(completion_free)
+{
+    API_INIT_FUNC(1, "completion_free", "s", API_RETURN_ERROR);
+
+    v8::String::Utf8Value completion(args[0]);
+
+    weechat_completion_free ((struct t_gui_completion *)API_STR2PTR(*completion));
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     const char *result;
@@ -4991,6 +5036,9 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
     API_DEF_FUNC(command_options);
+    API_DEF_FUNC(completion_new);
+    API_DEF_FUNC(completion_search);
+    API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

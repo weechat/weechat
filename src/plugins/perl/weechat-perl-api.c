@@ -4258,6 +4258,56 @@ API_FUNC(command_options)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_new)
+{
+    char *buffer;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = SvPV_nolen (ST (0));
+
+    result = API_PTR2STR(weechat_completion_new (API_STR2PTR(buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    char *completion, *data;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = SvPV_nolen (ST (0));
+    data = SvPV_nolen (ST (1));
+
+    weechat_completion_search (API_STR2PTR(completion),
+                               data,
+                               SvIV (ST (2)), /* position */
+                               SvIV (ST (3))); /* direction */
+
+    API_RETURN_OK;
+}
+
+API_FUNC(completion_free)
+{
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (items < 1)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_free (API_STR2PTR(SvPV_nolen (ST (0)))); /* completion */
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     char *info_name, *arguments, *result;
@@ -5302,6 +5352,9 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(bar_remove);
     API_DEF_FUNC(command);
     API_DEF_FUNC(command_options);
+    API_DEF_FUNC(completion_new);
+    API_DEF_FUNC(completion_search);
+    API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

@@ -23,6 +23,7 @@ New features::
   * core: add default key kbd:[Alt+Shift+N] to toggle nicklist bar
   * core: add command line option "--stdout" in weechat-headless binary to log to stdout rather than ~/.weechat/weechat.log (issue #1475, issue #1477)
   * core: reload configuration files on SIGHUP (issue #1476)
+  * api: add functions completion_new, completion_search and completion_free
   * buflist: add default key kbd:[Alt+Shift+B] to toggle buflist
   * buflist: add options enable/disable/toggle in command /buflist
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)

@@ -648,7 +648,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                 void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
-    struct t_gui_completion *new_completion;
     int first_buffer_creation;
 
     if (!name || !name[0])
@@ -757,12 +756,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->input_undo_count = 0;
 
     /* init completion */
-    new_completion = malloc (sizeof (*new_completion));
-    if (new_completion)
-    {
-        new_buffer->completion = new_completion;
-        gui_completion_buffer_init (new_completion, new_buffer);
-    }
+    new_buffer->completion = gui_completion_new (NULL, new_buffer);
 
     /* init history */
     new_buffer->history = NULL;
@@ -4811,12 +4805,6 @@ gui_buffer_print_log ()
                 free (tags);
 
             ptr_line = ptr_line->next_line;
-        }
-
-        if (ptr_buffer->completion)
-        {
-            log_printf ("");
-            gui_completion_print_log (ptr_buffer->completion);
         }
     }
 

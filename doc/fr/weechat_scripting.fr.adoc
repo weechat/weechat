@@ -716,6 +716,11 @@ Liste des fonctions de l'API script :
   command +
   command_options
 
+| complétion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | infos |
   info_get +
   info_get_hashtable

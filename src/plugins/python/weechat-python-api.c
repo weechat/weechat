@@ -4272,6 +4272,56 @@ API_FUNC(command_options)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_new)
+{
+    char *buffer;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    buffer = NULL;
+    if (!PyArg_ParseTuple (args, "s", &buffer))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = API_PTR2STR(weechat_completion_new (API_STR2PTR(buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    char *completion, *data;
+    int position, direction;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    completion = NULL;
+    position = 0;
+    direction = 1;
+    if (!PyArg_ParseTuple (args, "ssii", &completion, &data, &position,
+                           &direction))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_search (API_STR2PTR(completion),
+                               data,
+                               position,
+                               direction);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(completion_free)
+{
+    char *completion;
+
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    completion = NULL;
+    if (!PyArg_ParseTuple (args, "s", &completion))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_free (API_STR2PTR(completion));
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     char *info_name, *arguments, *result;
@@ -5253,6 +5303,9 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(bar_remove),
     API_DEF_FUNC(command),
     API_DEF_FUNC(command_options),
+    API_DEF_FUNC(completion_new),
+    API_DEF_FUNC(completion_search),
+    API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),
     API_DEF_FUNC(info_get_hashtable),
     API_DEF_FUNC(infolist_new),

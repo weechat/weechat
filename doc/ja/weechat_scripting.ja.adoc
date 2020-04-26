@@ -716,6 +716,12 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   command +
   command_options
 
+// TRANSLATION MISSING
+| completion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | インフォ |
   info_get +
   info_get_hashtable

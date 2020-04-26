@@ -702,6 +702,12 @@ Lista funkcji w API skryptów:
   command +
   command_options
 
+// TRANSLATION MISSING
+| completion |
+  completion_new +
+  completion_search +
+  completion_free
+
 | informacje |
   info_get +
   info_get_hashtable

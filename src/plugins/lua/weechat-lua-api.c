@@ -4337,6 +4337,57 @@ API_FUNC(command_options)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_new)
+{
+    const char *buffer;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_new", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    buffer = lua_tostring (L, -1);
+
+    result = API_PTR2STR(weechat_completion_new (API_STR2PTR(buffer)));
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_search)
+{
+    const char *completion, *data;
+    int position, direction;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    if (lua_gettop (L) < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = lua_tostring (L, -4);
+    data = lua_tostring (L, -3);
+    position = lua_tonumber (L, -2);
+    direction = lua_tonumber (L, -1);
+
+    weechat_completion_search (API_STR2PTR(completion), data, position,
+                               direction);
+
+    API_RETURN_OK;
+}
+
+API_FUNC(completion_free)
+{
+    const char *completion;
+
+    API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
+    if (lua_gettop (L) < 1)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = lua_tostring (L, -1);
+
+    weechat_completion_free (API_STR2PTR(completion));
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     const char *info_name, *arguments;
@@ -5345,6 +5396,9 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(bar_remove),
     API_DEF_FUNC(command),
     API_DEF_FUNC(command_options),
+    API_DEF_FUNC(completion_new),
+    API_DEF_FUNC(completion_search),
+    API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),
     API_DEF_FUNC(info_get_hashtable),
     API_DEF_FUNC(infolist_new),

@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20200301-03"
+#define WEECHAT_PLUGIN_API_VERSION "20200426-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1009,6 +1009,13 @@ struct t_weechat_plugin
                             struct t_gui_buffer *buffer, const char *command,
                             struct t_hashtable *options);
 
+    /* completion */
+    struct t_gui_completion *(*completion_new) (struct t_weechat_plugin *plugin,
+                                                struct t_gui_buffer *buffer);
+    void (*completion_search) (struct t_gui_completion *completion,
+                               const char *data, int position, int direction);
+    void (*completion_free) (struct t_gui_completion *completion);
+
     /* network */
     int (*network_pass_proxy) (const char *proxy, int sock,
                                const char *address, int port);
@@ -1941,6 +1948,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_command_options(__buffer, __command, __options)         \
     (weechat_plugin->command_options)(weechat_plugin, __buffer,         \
                                       __command, __options)
+
+/* completion */
+#define weechat_completion_new(__buffer)                                \
+    (weechat_plugin->completion_new)(weechat_plugin, __buffer)
+#define weechat_completion_search(__completion, __data, __position,     \
+                                  __direction)                          \
+    (weechat_plugin->completion_search)(__completion, __data,           \
+                                        __position, __direction)
+#define weechat_completion_free(__completion)                           \
+    (weechat_plugin->completion_free)(__completion)
 
 /* network */
 #define weechat_network_pass_proxy(__proxy, __sock, __address, __port)  \

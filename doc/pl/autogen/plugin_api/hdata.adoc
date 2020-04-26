@@ -643,8 +643,11 @@ _next_buffer_   (pointer, hdata: "buffer_visited") +
 | weechat
 | [[hdata_completion]]<<hdata_completion,completion>>
 | struktura z uzupełnianiem
-| -
-| _buffer_   (pointer, hdata: "buffer") +
+| _weechat_completions_ +
+_last_weechat_completion_ +
+
+| _plugin_   (pointer, hdata: "plugin") +
+_buffer_   (pointer, hdata: "buffer") +
 _context_   (integer) +
 _base_command_   (string) +
 _base_command_arg_index_   (integer) +
@@ -663,6 +666,8 @@ _position_replace_   (integer) +
 _diff_size_   (integer) +
 _diff_length_   (integer) +
 _partial_list_   (pointer) +
+_prev_completion_   (pointer, hdata: "completion") +
+_next_completion_   (pointer, hdata: "completion") +
 
 
 | weechat
