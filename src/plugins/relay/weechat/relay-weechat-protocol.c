@@ -571,8 +571,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(nicklist)
             if (weechat_relay_plugin->debug >= 1)
             {
                 weechat_printf (NULL,
-                                _("%s: invalid buffer pointer in message: "
-                                  "\"%s %s\""),
+                                _("%s: invalid buffer in message: \"%s %s\""),
                                 RELAY_PLUGIN_NAME,
                                 command,
                                 argv_eol[0]);
@@ -616,8 +615,7 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
         if (weechat_relay_plugin->debug >= 1)
         {
             weechat_printf (NULL,
-                            _("%s: invalid buffer pointer in message: "
-                              "\"%s %s\""),
+                            _("%s: invalid buffer in message: \"%s %s\""),
                             RELAY_PLUGIN_NAME,
                             command,
                             argv[0]);

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-24 11:27+0200\n"
+"POT-Creation-Date: 2020-04-26 09:14+0200\n"
 "PO-Revision-Date: 2020-04-19 12:01+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -13313,8 +13313,8 @@ msgstr "%s%s: Nicht genug Speicher um an einem neuen Port zu lauschen"
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s: ungültiger Pointer inm hdata-Pfad: \"%s\""
 
-#, c-format
-msgid "%s: invalid buffer pointer in message: \"%s %s\""
+#, fuzzy, c-format
+msgid "%s: invalid buffer in message: \"%s %s\""
 msgstr "%s: ungültiger Buffer-Pointer in Nachricht: \"%s %s\""
 
 #, c-format

@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-24 11:27+0200\n"
+"POT-Creation-Date: 2020-04-26 09:14+0200\n"
 "PO-Revision-Date: 2020-04-18 11:34+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -12737,8 +12737,8 @@ msgstr "%s%s: za mało pamięci do nasłuchu na nowym porcie"
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s: nieprawidłowy wskaźnik w ścieżce hdata: \"%s\""
 
-#, c-format
-msgid "%s: invalid buffer pointer in message: \"%s %s\""
+#, fuzzy, c-format
+msgid "%s: invalid buffer in message: \"%s %s\""
 msgstr "%s: nieprawidłowy wskaźnik bufora w wiadomości: \"%s %s\""
 
 #, c-format

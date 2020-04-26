@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-24 11:27+0200\n"
+"POT-Creation-Date: 2020-04-26 09:14+0200\n"
 "PO-Revision-Date: 2020-04-18 11:34+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11092,7 +11092,7 @@ msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%sErro: não foi possível desassociar a tecla de atalho \"%s\""
 
 #, fuzzy, c-format
-msgid "%s: invalid buffer pointer in message: \"%s %s\""
+msgid "%s: invalid buffer in message: \"%s %s\""
 msgstr "%s%s: charset inválido: \"%s\""
 
 #, fuzzy, c-format
