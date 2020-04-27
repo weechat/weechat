@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-26 09:14+0200\n"
+"POT-Creation-Date: 2020-04-27 22:15+0200\n"
 "PO-Revision-Date: 2020-04-18 11:34+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9454,6 +9454,10 @@ msgstr "Список сокращений:\n"
 
 #, fuzzy
 msgid "structure with completion"
+msgstr "вставить строку в поле ввода"
+
+#, fuzzy
+msgid "structure with word found for a completion"
 msgstr "вставить строку в поле ввода"
 
 #, fuzzy

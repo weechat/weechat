@@ -671,6 +671,15 @@ _next_completion_   (pointer, hdata: "completion") +
 
 
 | weechat
+| [[hdata_completion_word]]<<hdata_completion_word,completion_word>>
+| structure avec un mot trouvé pour une complétion
+| -
+| _word_   (string) +
+_nick_completion_   (char) +
+_count_   (integer) +
+
+
+| weechat
 | [[hdata_config_file]]<<hdata_config_file,config_file>>
 | fichier de configuration
 | _config_files_ +

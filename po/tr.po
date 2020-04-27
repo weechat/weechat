@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-26 09:14+0200\n"
+"POT-Creation-Date: 2020-04-27 22:15+0200\n"
 "PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8607,6 +8607,9 @@ msgid "visited buffer"
 msgstr ""
 
 msgid "structure with completion"
+msgstr ""
+
+msgid "structure with word found for a completion"
 msgstr ""
 
 msgid "config file"
