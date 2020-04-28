@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: cs\n"
@@ -5431,10 +5431,6 @@ msgstr "%s%s: chyba, nenalezen buffer pro data roury"
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: čtu data ze soketu: chyba %d %s"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s: chyba při otevírání souboru, zavírám ho"
 
 #, fuzzy, c-format
 msgid "%s: pipe is enabled (file: %s)"

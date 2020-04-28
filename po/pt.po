@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
 "Language: pt\n"
@@ -6158,10 +6158,6 @@ msgstr "%s%s: buffer \"%s\" não encontrado"
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: erro ao ler do pipe (%d %s), a fechá-lo"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s: erro ao abrir ficheiro, a fechá-lo"
 
 #, c-format
 msgid "%s: pipe is enabled (file: %s)"

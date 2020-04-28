@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -5004,10 +5004,6 @@ msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
-msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error opening file, closing it"
 msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 
 #, fuzzy, c-format

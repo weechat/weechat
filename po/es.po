@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: es\n"
@@ -5632,10 +5632,6 @@ msgstr "%s%s: servidor \"%s\" no encontrado"
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: error al leer la tubería (%d %s), cerrándolo"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s: error al abrir el archivo, cerrándolo"
 
 #, fuzzy, c-format
 msgid "%s: pipe is enabled (file: %s)"

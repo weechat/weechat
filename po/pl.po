@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
 "Language: pl\n"
@@ -6341,10 +6341,6 @@ msgstr "%s%s: bufor \"%s\" nie został znaleziony"
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: błąd odczytu z kolejki (%d %s), zamykam ją"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s: błąd podczas otwarcia pliku, zamykam go"
 
 #, c-format
 msgid "%s: pipe is enabled (file: %s)"

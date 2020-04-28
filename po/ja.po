@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-18 11:34+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
 "translation/ja_JP>\n"
@@ -6204,10 +6204,6 @@ msgstr "%s%s: バッファ \"%s\" が見つかりません"
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s: パイプ読み取り中にエラー (%d %s)、パイプを閉じています"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s: ファイルを開いている最中にエラー、ファイルを閉じています"
 
 #, c-format
 msgid "%s: pipe is enabled (file: %s)"

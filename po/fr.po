@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-27 22:15+0200\n"
-"PO-Revision-Date: 2020-04-27 22:16+0200\n"
+"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -6504,10 +6504,6 @@ msgstr "%s%s : tampon \"%s\" non trouvé"
 #, c-format
 msgid "%s%s: error reading pipe (%d %s), closing it"
 msgstr "%s%s : erreur en lecture du tube (%d %s), fermeture"
-
-#, c-format
-msgid "%s%s: error opening file, closing it"
-msgstr "%s%s : erreur d'ouverture du fichier, fermeture"
 
 #, c-format
 msgid "%s: pipe is enabled (file: %s)"
