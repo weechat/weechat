@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20200426-01"
+#define WEECHAT_PLUGIN_API_VERSION "20200428-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1012,8 +1012,8 @@ struct t_weechat_plugin
     /* completion */
     struct t_gui_completion *(*completion_new) (struct t_weechat_plugin *plugin,
                                                 struct t_gui_buffer *buffer);
-    void (*completion_search) (struct t_gui_completion *completion,
-                               const char *data, int position, int direction);
+    int (*completion_search) (struct t_gui_completion *completion,
+                              const char *data, int position, int direction);
     void (*completion_free) (struct t_gui_completion *completion);
 
     /* network */

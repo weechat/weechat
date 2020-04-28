@@ -5174,12 +5174,12 @@ weechat_ruby_api_completion_search (VALUE class, VALUE completion, VALUE data,
                                     VALUE position, VALUE direction)
 {
     char *c_completion, *c_data;
-    int c_position, c_direction;
+    int c_position, c_direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (NIL_P (completion) || NIL_P (data) || NIL_P(position)
         || NIL_P(direction))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     Check_Type (completion, T_STRING);
     Check_Type (data, T_STRING);
@@ -5191,10 +5191,10 @@ weechat_ruby_api_completion_search (VALUE class, VALUE completion, VALUE data,
     c_position = NUM2INT (position);
     c_direction = NUM2INT (direction);
 
-    weechat_completion_search (API_STR2PTR(c_completion), c_data, c_position,
-                               c_direction);
+    rc = weechat_completion_search (API_STR2PTR(c_completion), c_data,
+                                    c_position, c_direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 static VALUE

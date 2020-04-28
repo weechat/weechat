@@ -4356,21 +4356,21 @@ API_FUNC(completion_new)
 API_FUNC(completion_search)
 {
     const char *completion, *data;
-    int position, direction;
+    int position, direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (lua_gettop (L) < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     completion = lua_tostring (L, -4);
     data = lua_tostring (L, -3);
     position = lua_tonumber (L, -2);
     direction = lua_tonumber (L, -1);
 
-    weechat_completion_search (API_STR2PTR(completion), data, position,
-                               direction);
+    rc = weechat_completion_search (API_STR2PTR(completion), data, position,
+                                    direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(completion_free)

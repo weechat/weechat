@@ -88,9 +88,9 @@ extern void gui_completion_stop (struct t_gui_completion *completion);
 extern void gui_completion_list_add (struct t_gui_completion *completion,
                                      const char *word,
                                      int nick_completion, const char *where);
-extern void gui_completion_search (struct t_gui_completion *completion,
-                                   const char *data, int position,
-                                   int direction);
+extern int gui_completion_search (struct t_gui_completion *completion,
+                                  const char *data, int position,
+                                  int direction);
 extern const char *gui_completion_get_string (struct t_gui_completion *completion,
                                               const char *property);
 extern struct t_hdata *gui_completion_hdata_completion_cb (const void *pointer,

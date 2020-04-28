@@ -4278,21 +4278,22 @@ API_FUNC(completion_new)
 API_FUNC(completion_search)
 {
     char *completion, *data;
+    int rc;
     dXSARGS;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (items < 4)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     completion = SvPV_nolen (ST (0));
     data = SvPV_nolen (ST (1));
 
-    weechat_completion_search (API_STR2PTR(completion),
-                               data,
-                               SvIV (ST (2)), /* position */
-                               SvIV (ST (3))); /* direction */
+    rc = weechat_completion_search (API_STR2PTR(completion),
+                                    data,
+                                    SvIV (ST (2)), /* position */
+                                    SvIV (ST (3))); /* direction */
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(completion_free)

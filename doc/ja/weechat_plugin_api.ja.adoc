@@ -14978,8 +14978,8 @@ context.
 
 [source,C]
 ----
-void weechat_completion_search (struct t_gui_completion *completion, const char *data,
-                                int position, int direction);
+int weechat_completion_search (struct t_gui_completion *completion, const char *data,
+                               int position, int direction);
 ----
 
 引数:
@@ -14989,12 +14989,19 @@ void weechat_completion_search (struct t_gui_completion *completion, const char 
 * _position_: index of the char in string to complete (starts to 0)
 * _direction_: 1 for next completion, -1 for previous completion
 
+戻り値:
+
+* 成功した場合は 1、失敗した場合は 0
+
 C 言語での使用例:
 
 [source,C]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
-weechat_completion_search (completion, "/help filt", 10, 1);
+if (weechat_completion_search (completion, "/help filt", 10, 1))
+{
+    /* ... */
+}
 ----
 
 スクリプト (Python) での使用例:
@@ -15002,11 +15009,12 @@ weechat_completion_search (completion, "/help filt", 10, 1);
 [source,python]
 ----
 # prototype
-weechat.completion_search(completion, data, position, direction)
+rc = weechat.completion_search(completion, data, position, direction)
 
 # example
 completion = weechat.completion_new(weechat.buffer_search_main())
-weechat.completion_search(completion, "/help filt", 10, 1);
+if weechat.completion_search(completion, "/help filt", 10, 1):
+    # ...
 ----
 
 // TRANSLATION MISSING

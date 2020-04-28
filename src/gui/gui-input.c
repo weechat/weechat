@@ -532,14 +532,17 @@ gui_input_complete_next (struct t_gui_buffer *buffer)
         && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         gui_buffer_undo_snap (buffer);
-        gui_completion_search (buffer->completion,
-                               buffer->input_buffer,
-                               buffer->input_buffer_pos,
-                               1);
-        gui_input_complete (buffer);
-        gui_input_text_changed_modifier_and_signal (buffer,
-                                                    1, /* save undo */
-                                                    0); /* stop completion */
+        if (gui_completion_search (buffer->completion,
+                                   buffer->input_buffer,
+                                   buffer->input_buffer_pos,
+                                   1))
+        {
+            gui_input_complete (buffer);
+            gui_input_text_changed_modifier_and_signal (
+                buffer,
+                1, /* save undo */
+                0); /* stop completion */
+        }
     }
 }
 
@@ -554,14 +557,17 @@ gui_input_complete_previous (struct t_gui_buffer *buffer)
         && (buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         gui_buffer_undo_snap (buffer);
-        gui_completion_search (buffer->completion,
-                               buffer->input_buffer,
-                               buffer->input_buffer_pos,
-                               -1);
-        gui_input_complete (buffer);
-        gui_input_text_changed_modifier_and_signal (buffer,
-                                                    1, /* save undo */
-                                                    0); /* stop completion */
+        if (gui_completion_search (buffer->completion,
+                                   buffer->input_buffer,
+                                   buffer->input_buffer_pos,
+                                   -1))
+        {
+            gui_input_complete (buffer);
+            gui_input_text_changed_modifier_and_signal (
+                buffer,
+                1, /* save undo */
+                0); /* stop completion */
+        }
     }
 }
 

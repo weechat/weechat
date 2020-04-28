@@ -14993,8 +14993,8 @@ Prototype:
 
 [source,C]
 ----
-void weechat_completion_search (struct t_gui_completion *completion, const char *data,
-                                int position, int direction);
+int weechat_completion_search (struct t_gui_completion *completion, const char *data,
+                               int position, int direction);
 ----
 
 Arguments:
@@ -15004,12 +15004,19 @@ Arguments:
 * _position_: index of the char in string to complete (starts to 0)
 * _direction_: 1 for next completion, -1 for previous completion
 
+Return value:
+
+* 1 if OK, 0 if error
+
 C example:
 
 [source,C]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
-weechat_completion_search (completion, "/help filt", 10, 1);
+if (weechat_completion_search (completion, "/help filt", 10, 1))
+{
+    /* ... */
+}
 ----
 
 Script (Python):
@@ -15017,11 +15024,12 @@ Script (Python):
 [source,python]
 ----
 # prototype
-weechat.completion_search(completion, data, position, direction)
+rc = weechat.completion_search(completion, data, position, direction)
 
 # example
 completion = weechat.completion_new(weechat.buffer_search_main())
-weechat.completion_search(completion, "/help filt", 10, 1);
+if weechat.completion_search(completion, "/help filt", 10, 1):
+    # ...
 ----
 
 ==== completion_free

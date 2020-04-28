@@ -4290,22 +4290,22 @@ API_FUNC(completion_new)
 API_FUNC(completion_search)
 {
     char *completion, *data;
-    int position, direction;
+    int position, direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     completion = NULL;
     position = 0;
     direction = 1;
     if (!PyArg_ParseTuple (args, "ssii", &completion, &data, &position,
                            &direction))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
-    weechat_completion_search (API_STR2PTR(completion),
-                               data,
-                               position,
-                               direction);
+    rc = weechat_completion_search (API_STR2PTR(completion),
+                                    data,
+                                    position,
+                                    direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(completion_free)

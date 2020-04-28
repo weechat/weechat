@@ -4646,11 +4646,11 @@ API_FUNC(completion_search)
 {
     Tcl_Obj *objp;
     char *completion, *data;
-    int i, position, direction;
+    int i, position, direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (objc < 5)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     completion = Tcl_GetStringFromObj (objv[1], &i);
     data = Tcl_GetStringFromObj (objv[2], &i);
@@ -4659,10 +4659,10 @@ API_FUNC(completion_search)
         || (Tcl_GetIntFromObj (interp, objv[4], &direction) != TCL_OK))
         API_WRONG_ARGS(API_RETURN_ERROR);
 
-    weechat_completion_search (API_STR2PTR(completion), data, position,
-                               direction);
+    rc = weechat_completion_search (API_STR2PTR(completion), data, position,
+                                    direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(info_get)

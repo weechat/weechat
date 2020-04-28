@@ -4291,21 +4291,21 @@ API_FUNC(completion_search)
     zend_long z_position, z_direction;
     char *data;
     struct t_gui_completion *completion;
-    int position, direction;
+    int position, direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSll", &z_completion, &z_data,
                                &z_position, &z_direction) == FAILURE)
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
     completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
     data = ZSTR_VAL(z_data);
     position = (int)z_position;
     direction = (int)z_direction;
 
-    weechat_completion_search (completion, data, position, direction);
+    rc = weechat_completion_search (completion, data, position, direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(completion_free)

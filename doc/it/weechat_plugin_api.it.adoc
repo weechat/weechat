@@ -15593,8 +15593,8 @@ Prototipo:
 
 [source,C]
 ----
-void weechat_completion_search (struct t_gui_completion *completion, const char *data,
-                                int position, int direction);
+int weechat_completion_search (struct t_gui_completion *completion, const char *data,
+                               int position, int direction);
 ----
 
 Argomenti:
@@ -15604,12 +15604,20 @@ Argomenti:
 * _position_: index of the char in string to complete (starts to 0)
 * _direction_: 1 for next completion, -1 for previous completion
 
+Valore restituito:
+
+// TRANSLATION MISSING
+* 1 if OK, 0 if error
+
 Esempio in C:
 
 [source,C]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
-weechat_completion_search (completion, "/help filt", 10, 1);
+if (weechat_completion_search (completion, "/help filt", 10, 1))
+{
+    /* ... */
+}
 ----
 
 Script (Python):
@@ -15617,11 +15625,12 @@ Script (Python):
 [source,python]
 ----
 # prototipo
-weechat.completion_search(completion, data, position, direction)
+rc = weechat.completion_search(completion, data, position, direction)
 
 # esempio
 completion = weechat.completion_new(weechat.buffer_search_main())
-weechat.completion_search(completion, "/help filt", 10, 1);
+if weechat.completion_search(completion, "/help filt", 10, 1):
+    # ...
 ----
 
 // TRANSLATION MISSING

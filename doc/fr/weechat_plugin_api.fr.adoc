@@ -15312,8 +15312,8 @@ Prototype :
 
 [source,C]
 ----
-void weechat_completion_search (struct t_gui_completion *completion, const char *data,
-                                int position, int direction);
+int weechat_completion_search (struct t_gui_completion *completion, const char *data,
+                               int position, int direction);
 ----
 
 Paramètres :
@@ -15323,12 +15323,19 @@ Paramètres :
 * _position_ : index du caractère dans la chaîne à compléter (commence à 0)
 * _direction_ : 1 pour la complétion suivante, -1 pour la complétion précédente
 
+Valeur de retour :
+
+* 1 si OK, 0 si erreur
+
 Exemple en C :
 
 [source,C]
 ----
 struct t_gui_completion *completion = weechat_completion_new (weechat_buffer_search_main ());
-weechat_completion_search (completion, "/help filt", 10, 1);
+if (weechat_completion_search (completion, "/help filt", 10, 1))
+{
+    /* ... */
+}
 ----
 
 Script (Python) :
@@ -15336,11 +15343,12 @@ Script (Python) :
 [source,python]
 ----
 # prototype
-weechat.completion_search(completion, data, position, direction)
+rc = weechat.completion_search(completion, data, position, direction)
 
 # exemple
 completion = weechat.completion_new(weechat.buffer_search_main())
-weechat.completion_search(completion, "/help filt", 10, 1);
+if weechat.completion_search(completion, "/help filt", 10, 1):
+    # ...
 ----
 
 ==== completion_free

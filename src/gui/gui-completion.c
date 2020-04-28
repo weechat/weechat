@@ -1370,15 +1370,15 @@ gui_completion_auto (struct t_gui_completion *completion)
  * Completes word according to context.
  */
 
-void
+int
 gui_completion_search (struct t_gui_completion *completion, const char *data,
                        int position, int direction)
 {
     char *old_word_found;
     int real_position;
 
-    if (!data)
-        return;
+    if (!completion || !data || (position < 0))
+        return 0;
 
     real_position = utf8_real_pos (data, position);
 
@@ -1404,7 +1404,7 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
             /* should never be executed */
             if (old_word_found)
                 free (old_word_found);
-            return;
+            return 0;
         case GUI_COMPLETION_COMMAND:
             gui_completion_command (completion);
             break;
@@ -1440,6 +1440,8 @@ gui_completion_search (struct t_gui_completion *completion, const char *data,
     }
     if (old_word_found)
         free (old_word_found);
+
+    return 1;
 }
 
 /*

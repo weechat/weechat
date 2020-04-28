@@ -4015,22 +4015,22 @@ API_FUNC(completion_new)
 
 API_FUNC(completion_search)
 {
-    int position, direction;
+    int position, direction, rc;
 
-    API_INIT_FUNC(1, "completion_search", "ssii", API_RETURN_ERROR);
+    API_INIT_FUNC(1, "completion_search", "ssii", API_RETURN_INT(0));
 
     v8::String::Utf8Value completion(args[0]);
     v8::String::Utf8Value data(args[1]);
     position = args[2]->IntegerValue();
     direction = args[3]->IntegerValue();
 
-    weechat_completion_search (
+    rc = weechat_completion_search (
         (struct t_gui_completion *)API_STR2PTR(*completion),
         (const char *)(*data),
         position,
         direction);
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 API_FUNC(completion_free)

@@ -4122,17 +4122,19 @@ SCM
 weechat_guile_api_completion_search (SCM completion, SCM data, SCM position,
                                      SCM direction)
 {
-    API_INIT_FUNC(1, "completion_search", API_RETURN_ERROR);
+    int rc;
+
+    API_INIT_FUNC(1, "completion_search", API_RETURN_INT(0));
     if (!scm_is_string (completion) || !scm_is_string (data)
         || !scm_is_integer (position) || !scm_is_integer (direction))
-        API_WRONG_ARGS(API_RETURN_ERROR);
+        API_WRONG_ARGS(API_RETURN_INT(0));
 
-    weechat_completion_search (API_STR2PTR(API_SCM_TO_STRING(completion)),
-                               API_SCM_TO_STRING(data),
-                               scm_to_int (position),
-                               scm_to_int (direction));
+    rc = weechat_completion_search (API_STR2PTR(API_SCM_TO_STRING(completion)),
+                                    API_SCM_TO_STRING(data),
+                                    scm_to_int (position),
+                                    scm_to_int (direction));
 
-    API_RETURN_OK;
+    API_RETURN_INT(rc);
 }
 
 SCM
