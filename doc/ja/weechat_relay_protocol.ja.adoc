@@ -93,18 +93,20 @@ _リレー_ プラグインは _IRC プロキシ_ のように振舞います (�
 
 [width="100%",cols="^3m,14",options="header"]
 |===
-| コマンド  | 説明
+| コマンド   | 説明
 // TRANSLATION MISSING
-| handshake | Handshake: prepare client authentication and set options, before _init_ command.
-| init      | _リレー_ 接続を初期化
-| hdata     | _hdata_ を要求
-| info      | _インフォ_ を要求
-| infolist  | _インフォリスト_ を要求
-| nicklist  | _ニックネームリスト_ を要求
-| input     | バッファにデータを送信 (テキストまたはコマンド)
-| sync      | バッファを同期: バッファの最新情報を取得
-| desync    | バッファを非同期: バッファの更新を止める
-| quit      | _リレー_ から切断
+| handshake  | Handshake: prepare client authentication and set options, before _init_ command.
+| init       | _リレー_ 接続を初期化
+| hdata      | _hdata_ を要求
+| info       | _インフォ_ を要求
+| infolist   | _インフォリスト_ を要求
+| nicklist   | _ニックネームリスト_ を要求
+| input      | バッファにデータを送信 (テキストまたはコマンド)
+// TRANSLATION MISSING
+| completion | Request completion of a string.
+| sync       | バッファを同期: バッファの最新情報を取得
+| desync     | バッファを非同期: バッファの更新を止める
+| quit       | _リレー_ から切断
 |===
 
 // TRANSLATION MISSING
@@ -460,6 +462,136 @@ input <buffer> <data>
 ----
 input core.weechat /help filter
 input irc.freenode.#weechat hello!
+----
+
+// TRANSLATION MISSING
+[[command_completion]]
+=== completion
+
+_WeeChat ≥ 2.9._
+
+Request completion of a string: list of possible words at a given position in
+a string for a given buffer.
+
+構文:
+
+----
+(id) completion <buffer> <position> [<data>]
+----
+
+引数:
+
+* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+  _core.weechat_ or _irc.freenode.#weechat_)
+* _position_: position for completion in string (starts to 0);
+  if the value is -1, the position is the length of _data_ (so the completion
+  is made at the end of _data_)
+* _data_: the input string; if not given, completion is performed on an empty
+  string
+
+WeeChat replies with a hdata:
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Name      | Type             | Description
+| context   | string           | Completion context: "null" (no completion), "command", "command_arg", "auto".
+| base_word | string           | The base word used for completion.
+| pos_start | integer          | Index of first char to replace (starts to 0).
+| pos_end   | integer          | Index of last char to replace (starts to 0).
+| add_space | integer          | 1 if a space must be added after words, 0 otherwise.
+| list      | array of strings | List of words found; empty if nothing was found to complete at asked position.
+|===
+
+[NOTE]
+In case of error, for example invalid buffer or internal error on WeeChat side,
+an empty hdata is returned.
+
+Example: completion of a command argument:
+
+----
+(test) completion core.weechat -1 /help fi
+----
+
+Response:
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc842c0']
+    context: 'command_arg'
+    base_word: 'fi'
+    pos_start: 6
+    pos_end: 7
+    add_space: 0
+    list: ['fifo', 'fifo.file.enabled', 'fifo.file.path', 'filter']
+----
+
+Example: completion of a command in the middle of a word:
+
+----
+(test) completion core.weechat 5 /quernick
+----
+
+Response:
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc88470']
+    context: 'command'
+    base_word: 'quer'
+    pos_start: 1
+    pos_end: 4
+    add_space: 1
+    list: ['query']
+----
+
+Example: nothing to complete:
+
+----
+(test) completion core.weechat -1 abcdefghijkl
+----
+
+Response:
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc88470']
+    context: 'auto'
+    base_word: 'abcdefghijkl'
+    pos_start: 0
+    pos_end: 11
+    add_space: 1
+    list: []
+----
+
+Example: invalid buffer:
+
+----
+(test) completion buffer.does.not.exist -1 /help fi
+----
+
+Response:
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {}
+  path: ['completion']
 ----
 
 [[command_sync]]

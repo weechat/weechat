@@ -665,6 +665,178 @@ RELAY_WEECHAT_PROTOCOL_CALLBACK(input)
 }
 
 /*
+ * Callback for command "completion" (from client).
+ *
+ * Message looks like:
+ *   completion core.weechat -1 /help fi
+ *   input irc.freenode.#weechat 5 /quernick
+ *   input 0x12345678 -1 nick
+ */
+
+RELAY_WEECHAT_PROTOCOL_CALLBACK(completion)
+{
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_completion *completion;
+    struct t_gui_completion_word *word;
+    struct t_hdata *ptr_hdata_completion, *ptr_hdata_completion_word;
+    struct t_arraylist *ptr_list;
+    struct t_relay_weechat_msg *msg;
+    char *error, *pos_data;
+    int i, position, length_data, context, pos_start, size;
+
+    RELAY_WEECHAT_PROTOCOL_MIN_ARGS(0);
+
+    completion = NULL;
+
+    /* return an empty hdata as error if there are not enough arguments */
+    if (argc < 2)
+        goto error;
+
+    ptr_buffer = relay_weechat_protocol_get_buffer (argv[0]);
+    if (!ptr_buffer)
+    {
+        if (weechat_relay_plugin->debug >= 1)
+        {
+            weechat_printf (NULL,
+                            _("%s: invalid buffer in message: \"%s %s\""),
+                            RELAY_PLUGIN_NAME,
+                            command,
+                            argv[0]);
+        }
+        goto error;
+    }
+
+    error = NULL;
+    position = (int)strtol (argv[1], &error, 10);
+    if (!error || error[0])
+        goto error;
+
+    pos_data = strchr (argv_eol[1], ' ');
+    if (pos_data)
+        pos_data++;
+
+    length_data = strlen ((pos_data) ? pos_data : "");
+    if ((position < 0) || (position > length_data))
+        position = length_data;
+
+    completion = weechat_completion_new (ptr_buffer);
+    if (!completion)
+        goto error;
+
+    if (!weechat_completion_search (completion,
+                                    (pos_data) ? pos_data : "",
+                                    position,
+                                    1))
+    {
+        goto error;
+    }
+
+    ptr_hdata_completion = weechat_hdata_get ("completion");
+    if (!ptr_hdata_completion)
+        goto error;
+
+    ptr_hdata_completion_word = weechat_hdata_get ("completion_word");
+    if (!ptr_hdata_completion_word)
+        goto error;
+
+    ptr_list = weechat_hdata_pointer (ptr_hdata_completion, completion, "list");
+    if (!ptr_list)
+        goto error;
+
+    msg = relay_weechat_msg_new (id);
+    if (msg)
+    {
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
+        relay_weechat_msg_add_string (msg, "completion");
+        relay_weechat_msg_add_string (msg,
+                                      "context:str,"
+                                      "base_word:str,"
+                                      "pos_start:int,"
+                                      "pos_end:int,"
+                                      "add_space:int,"
+                                      "list:arr");
+        relay_weechat_msg_add_int (msg, 1); /* count */
+        relay_weechat_msg_add_pointer (msg, completion);
+        /* context */
+        context = weechat_hdata_integer (ptr_hdata_completion, completion,
+                                         "context");
+        switch (context)
+        {
+            case 0:
+                relay_weechat_msg_add_string (msg, "null");
+                break;
+            case 1:
+                relay_weechat_msg_add_string (msg, "command");
+                break;
+            case 2:
+                relay_weechat_msg_add_string (msg, "command_arg");
+                break;
+            default:
+                relay_weechat_msg_add_string (msg, "auto");
+                break;
+        }
+        /* base_word */
+        relay_weechat_msg_add_string (
+            msg,
+            weechat_hdata_string (ptr_hdata_completion,
+                                  completion, "base_word"));
+        /* pos_start */
+        pos_start = weechat_hdata_integer (ptr_hdata_completion,
+                                           completion, "position_replace");
+        relay_weechat_msg_add_int (msg, pos_start);
+
+        /* pos_end */
+        relay_weechat_msg_add_int (
+            msg,
+            (position > pos_start) ? position - 1 : position);
+        /* add_space */
+        relay_weechat_msg_add_int (
+            msg,
+            weechat_hdata_integer (ptr_hdata_completion,
+                                   completion, "add_space"));
+        /* list */
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_STRING);
+        size = weechat_arraylist_size (ptr_list);
+        relay_weechat_msg_add_int (msg, size);
+        for (i = 0; i < size; i++)
+        {
+            word = (struct t_gui_completion_word *)weechat_arraylist_get (
+                ptr_list, i);
+            relay_weechat_msg_add_string (
+                msg,
+                weechat_hdata_string (ptr_hdata_completion_word, word, "word"));
+        }
+
+        /* send message */
+        relay_weechat_msg_send (client, msg);
+        relay_weechat_msg_free (msg);
+    }
+
+    weechat_completion_free (completion);
+
+    return WEECHAT_RC_OK;
+
+error:
+    if (completion)
+        weechat_completion_free (completion);
+
+    msg = relay_weechat_msg_new (id);
+    if (msg)
+    {
+        relay_weechat_msg_add_type (msg, RELAY_WEECHAT_MSG_OBJ_HDATA);
+        relay_weechat_msg_add_string (msg, "completion");
+        relay_weechat_msg_add_string (msg, NULL);  /* keys */
+        relay_weechat_msg_add_int (msg, 0);  /* count */
+
+        /* send message */
+        relay_weechat_msg_send (client, msg);
+        relay_weechat_msg_free (msg);
+    }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
  * Callback for signals "buffer_*".
  */
 
@@ -1565,6 +1737,7 @@ relay_weechat_protocol_recv (struct t_relay_client *client, const char *data)
           { "infolist", &relay_weechat_protocol_cb_infolist },
           { "nicklist", &relay_weechat_protocol_cb_nicklist },
           { "input", &relay_weechat_protocol_cb_input },
+          { "completion", &relay_weechat_protocol_cb_completion },
           { "sync", &relay_weechat_protocol_cb_sync },
           { "desync", &relay_weechat_protocol_cb_desync },
           { "test", &relay_weechat_protocol_cb_test },

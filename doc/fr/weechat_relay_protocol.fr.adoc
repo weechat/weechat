@@ -91,17 +91,18 @@ Liste des commandes disponibles (détail dans les chapitres suivants) :
 
 [width="100%",cols="^3m,14",options="header"]
 |===
-| Commande  | Description
-| handshake | Poignée de main : préparer l'authentification du client et définir des options, avant la commande _init_.
-| init      | S'authentifier avec _relay_.
-| hdata     | Demander un _hdata_.
-| info      | Demander une _info_.
-| infolist  | Demander une _infolist_.
-| nicklist  | Demander une _nicklist_ (liste de pseudos).
-| input     | Envoyer des données à un tampon (texte ou commande).
-| sync      | Synchroniser un/des tampon(s) : recevoir les mises à jour pour le(s) tampon(s).
-| desync    | Désynchroniser un/des tampon(s) : stopper les mises à jour pour le(s) tampon(s).
-| quit      | Se déconnecter de _relay_.
+| Commande   | Description
+| handshake  | Poignée de main : préparer l'authentification du client et définir des options, avant la commande _init_.
+| init       | S'authentifier avec _relay_.
+| hdata      | Demander un _hdata_.
+| info       | Demander une _info_.
+| infolist   | Demander une _infolist_.
+| nicklist   | Demander une _nicklist_ (liste de pseudos).
+| input      | Envoyer des données à un tampon (texte ou commande).
+| completion | Demander la complétion d'une chaîne.
+| sync       | Synchroniser un/des tampon(s) : recevoir les mises à jour pour le(s) tampon(s).
+| desync     | Désynchroniser un/des tampon(s) : stopper les mises à jour pour le(s) tampon(s).
+| quit       | Se déconnecter de _relay_.
 |===
 
 [[command_handshake]]
@@ -462,6 +463,135 @@ Exemples :
 ----
 input core.weechat /help filter
 input irc.freenode.#weechat bonjour !
+----
+
+[[command_completion]]
+=== completion
+
+_WeeChat ≥ 2.9._
+
+Demander la complétion d'une chaîne : liste des mots possibles à une position
+donnée dans la chaîne et sur un tampon donné.
+
+Syntaxe :
+
+----
+(id) completion <tampon> <position> [<données>]
+----
+
+Paramètres :
+
+* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+  _core.weechat_ ou _irc.freenode.#weechat_)
+* _position_ : position dans la chaîne pour la complétion (démarre à 0) ;
+  si la valeur est -1, la position est la longueur de _données_ (donc la
+  complétion se fait à la fin de _données_)
+* _données_ : la chaîne en entrée ; si non donnée, la complétion est faite sur
+  une chaîne vide
+
+WeeChat répond avec un hdata :
+
+[width="100%",cols="3m,2,10",options="header"]
+|===
+| Nom       | Type               | Description
+| context   | chaîne             | Contexte de complétion : "null" (pas de complétion), "command", "command_arg", "auto".
+| base_word | chaîne             | Le mot de base utilisé pour la complétion.
+| pos_start | entier             | Index du premier caractère à remplacer (démarre à 0).
+| pos_end   | entier             | Index du dernier caractère à remplacer (démarre à 0).
+| add_space | entier             | 1 si un espace doit être ajouté après les mods, 0 sinon.
+| list      | tableau de chaînes | Liste des mots ; vide si rien n'a été trouvé pour compléter à la position demandée.
+|===
+
+[NOTE]
+En cas d'erreur, par exemple un tampon invalide ou une erreur interne du côté
+de WeeChat, un hdata vide est retourné.
+
+Exemple : complétion d'un paramètre de commande :
+
+----
+(test) completion core.weechat -1 /help fi
+----
+
+Réponse :
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc842c0']
+    context: 'command_arg'
+    base_word: 'fi'
+    pos_start: 6
+    pos_end: 7
+    add_space: 0
+    list: ['fifo', 'fifo.file.enabled', 'fifo.file.path', 'filter']
+----
+
+Exemple : complétion d'une commande au milieu d'un mot :
+
+----
+(test) completion core.weechat 5 /quernick
+----
+
+Réponse :
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc88470']
+    context: 'command'
+    base_word: 'quer'
+    pos_start: 1
+    pos_end: 4
+    add_space: 1
+    list: ['query']
+----
+
+Exemple : rien à compléter :
+
+----
+(test) completion core.weechat -1 abcdefghijkl
+----
+
+Réponse :
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
+  path: ['completion']
+  item 1:
+    __path: ['0x55d0ccc88470']
+    context: 'auto'
+    base_word: 'abcdefghijkl'
+    pos_start: 0
+    pos_end: 11
+    add_space: 1
+    list: []
+----
+
+Exemple : tampon invalide :
+
+----
+(test) completion buffer.does.not.exist -1 /help fi
+----
+
+Réponse :
+
+[source,python]
+----
+id: 'test'
+hda:
+  keys: {}
+  path: ['completion']
 ----
 
 [[command_sync]]
