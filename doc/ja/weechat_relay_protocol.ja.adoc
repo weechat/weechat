@@ -198,7 +198,13 @@ Example of response:
 [source,python]
 ----
 id: 'handshake'
-htb: {'password_hash_algo': 'pbkdf2+sha256', 'password_hash_iterations': '100000', 'totp': 'on', 'nonce': '85B1EE00695A5B254E14F4885538DF0D'}
+htb: {
+    'password_hash_algo':
+    'pbkdf2+sha256',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+}
 ----
 
 The client can authenticate with this command (see <<command_init,init command>>),
@@ -518,16 +524,28 @@ Response:
 ----
 id: 'test'
 hda:
-  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
-  path: ['completion']
-  item 1:
-    __path: ['0x55d0ccc842c0']
-    context: 'command_arg'
-    base_word: 'fi'
-    pos_start: 6
-    pos_end: 7
-    add_space: 0
-    list: ['fifo', 'fifo.file.enabled', 'fifo.file.path', 'filter']
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+        __path: ['0x55d0ccc842c0']
+        context: 'command_arg'
+        base_word: 'fi'
+        pos_start: 6
+        pos_end: 7
+        add_space: 0
+        list: [
+            'fifo',
+            'fifo.file.enabled',
+            'fifo.file.path',
+            'filter',
+        ]
 ----
 
 Example: completion of a command in the middle of a word:
@@ -542,16 +560,23 @@ Response:
 ----
 id: 'test'
 hda:
-  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
-  path: ['completion']
-  item 1:
-    __path: ['0x55d0ccc88470']
-    context: 'command'
-    base_word: 'quer'
-    pos_start: 1
-    pos_end: 4
-    add_space: 1
-    list: ['query']
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+        __path: ['0x55d0ccc88470']
+        context: 'command'
+        base_word: 'quer'
+        pos_start: 1
+        pos_end: 4
+        add_space: 1
+        list: ['query']
 ----
 
 Example: nothing to complete:
@@ -566,16 +591,23 @@ Response:
 ----
 id: 'test'
 hda:
-  keys: {'context': 'str', 'base_word': 'str', 'pos_start': 'int', 'pos_end': 'int', 'add_space': 'int', 'list': 'arr'}
-  path: ['completion']
-  item 1:
-    __path: ['0x55d0ccc88470']
-    context: 'auto'
-    base_word: 'abcdefghijkl'
-    pos_start: 0
-    pos_end: 11
-    add_space: 1
-    list: []
+    keys: {
+        'context': 'str',
+        'base_word': 'str',
+        'pos_start': 'int',
+        'pos_end': 'int',
+        'add_space': 'int',
+        'list': 'arr',
+    }
+    path: ['completion']
+    item 1:
+        __path: ['0x55d0ccc88470']
+        context: 'auto'
+        base_word: 'abcdefghijkl'
+        pos_start: 0
+        pos_end: 11
+        add_space: 1
+        list: []
 ----
 
 Example: invalid buffer:
@@ -590,8 +622,8 @@ Response:
 ----
 id: 'test'
 hda:
-  keys: {}
-  path: ['completion']
+    keys: {}
+    path: ['completion']
 ----
 
 [[command_sync]]
@@ -925,19 +957,30 @@ _irc.freenode.#weechat_:
 ----
 id: '_buffer_opened'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'nicklist': 'int',
-         'title': 'str', 'local_variables': 'htb', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x35a8a60']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    short_name: None
-    nicklist: 0
-    title: None
-    local_variables: {'plugin': 'irc', 'name': 'freenode.#weechat'}
-    prev_buffer: '0x34e7400'
-    next_buffer: '0x0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'short_name': 'str',
+        'nicklist': 'int',
+        'title': 'str',
+        'local_variables': 'htb',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x35a8a60']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        short_name: None
+        nicklist: 0
+        title: None
+        local_variables: {
+            'plugin': 'irc',
+            'name': 'freenode.#weechat',
+        }
+        prev_buffer: '0x34e7400'
+        next_buffer: '0x0'
 ----
 
 [[message_buffer_moved]]
@@ -963,14 +1006,19 @@ hdata として送られるデータ:
 ----
 id: '_buffer_moved'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x34588c0']
-    number: 2
-    full_name: 'irc.freenode.#weechat'
-    prev_buffer: '0x347b9f0'
-    next_buffer: '0x3471bc0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x34588c0']
+        number: 2
+        full_name: 'irc.freenode.#weechat'
+        prev_buffer: '0x347b9f0'
+        next_buffer: '0x3471bc0'
 ----
 
 [[message_buffer_merged]]
@@ -996,14 +1044,19 @@ hdata として送られるデータ:
 ----
 id: '_buffer_merged'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4db4c00']
-    number: 2
-    full_name: 'irc.freenode.#weechat'
-    prev_buffer: '0x4cef9b0'
-    next_buffer: '0x0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 2
+        full_name: 'irc.freenode.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
 ----
 
 [[message_buffer_unmerged]]
@@ -1029,14 +1082,19 @@ hdata として送られるデータ:
 ----
 id: '_buffer_unmerged'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4db4c00']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    prev_buffer: '0x4cef9b0'
-    next_buffer: '0x0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
 ----
 
 [[message_buffer_hidden]]
@@ -1064,14 +1122,19 @@ hdata として送られるデータ:
 ----
 id: '_buffer_hidden'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4db4c00']
-    number: 2
-    full_name: 'irc.freenode.#weechat'
-    prev_buffer: '0x4cef9b0'
-    next_buffer: '0x0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 2
+        full_name: 'irc.freenode.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
 ----
 
 [[message_buffer_unhidden]]
@@ -1099,14 +1162,19 @@ hdata として送られるデータ:
 ----
 id: '_buffer_unhidden'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'prev_buffer': 'ptr', 'next_buffer': 'ptr'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4db4c00']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    prev_buffer: '0x4cef9b0'
-    next_buffer: '0x0'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'prev_buffer': 'ptr',
+        'next_buffer': 'ptr',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4db4c00']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        prev_buffer: '0x4cef9b0'
+        next_buffer: '0x0'
 ----
 
 [[message_buffer_renamed]]
@@ -1132,15 +1200,26 @@ hdata として送られるデータ:
 ----
 id: '_buffer_renamed'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'short_name': 'str', 'local_variables': 'htb'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4df7b80']
-    number: 5
-    full_name: 'irc.freenode.Flash2'
-    short_name: 'Flash2'
-    local_variables: {'server': 'freenode', 'plugin': 'irc', 'type': 'private',
-                      'channel': 'FlashCode', 'nick': 'test', 'name': 'local.Flash2'}
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'short_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4df7b80']
+        number: 5
+        full_name: 'irc.freenode.Flash2'
+        short_name: 'Flash2'
+        local_variables: {
+            'server': 'freenode',
+            'plugin': 'irc',
+            'type': 'private',
+            'channel': 'FlashCode',
+            'nick': 'test',
+            'name': 'local.Flash2',
+        }
 ----
 
 [[message_buffer_title_changed]]
@@ -1165,13 +1244,17 @@ hdata として送られるデータ:
 ----
 id: '_buffer_title_changed'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'title': 'str'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a715d0']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    title: 'Welcome on #weechat!  https://weechat.org/'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'title': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        title: 'Welcome on #weechat!  https://weechat.org/'
 ----
 
 [[message_buffer_cleared]]
@@ -1197,12 +1280,15 @@ hdata として送られるデータ:
 ----
 id: '_buffer_cleared'
 hda:
-  keys: {'number': 'int', 'full_name': 'str'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a715d0']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
 ----
 
 [[message_buffer_type_changed]]
@@ -1228,13 +1314,17 @@ hdata として送られるデータ:
 ----
 id: '_buffer_type_changed'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'type': 'int'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x27c9a70']
-    number: 4
-    full_name: 'script.scripts'
-    type: 1
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'type': 'int',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x27c9a70']
+        number: 4
+        full_name: 'script.scripts'
+        type: 1
 ----
 
 [[message_buffer_localvar_added]]
@@ -1259,15 +1349,25 @@ hdata として送られるデータ:
 ----
 id='_buffer_localvar_added', objects:
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a73de0']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    local_variables: {'server': 'freenode', 'test': 'value', 'plugin': 'irc',
-                      'type': 'channel', 'channel': '#weechat', 'nick': 'test',
-                      'name': 'freenode.#weechat'}
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        local_variables: {
+            'server': 'freenode',
+            'test': 'value',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'freenode.#weechat',
+        }
 ----
 
 [[message_buffer_localvar_changed]]
@@ -1292,15 +1392,25 @@ hdata として送られるデータ:
 ----
 id='_buffer_localvar_changed', objects:
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a73de0']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
-    local_variables: {'server': 'local', 'test': 'value2', 'plugin': 'irc',
-                      'type': 'channel', 'channel': '#weechat', 'nick': 'test',
-                      'name': 'freenode.#weechat'}
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
+        local_variables: {
+            'server': 'local',
+            'test': 'value2',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'freenode.#weechat',
+        }
 ----
 
 [[message_buffer_localvar_removed]]
@@ -1325,14 +1435,24 @@ hdata として送られるデータ:
 ----
 id: '_buffer_localvar_removed'
 hda:
-  keys: {'number': 'int', 'full_name': 'str', 'local_variables': 'htb'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a73de0']
-    number: 3
-    full_name: 'irc.freenode.#prout'
-    local_variables: {'server': 'local', 'plugin': 'irc', 'type': 'channel',
-                      'channel': '#weechat', 'nick': 'test', 'name': 'freenode.#weechat'}
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+        'local_variables': 'htb',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a73de0']
+        number: 3
+        full_name: 'irc.freenode.#prout'
+        local_variables: {
+            'server': 'local',
+            'plugin': 'irc',
+            'type': 'channel',
+            'channel': '#weechat',
+            'nick': 'test',
+            'name': 'freenode.#weechat',
+        }
 ----
 
 [[message_buffer_line_added]]
@@ -1362,19 +1482,33 @@ hdata として送られるデータ:
 ----
 id: '_buffer_line_added'
 hda:
-  keys: {'buffer': 'ptr', 'date': 'tim', 'date_printed': 'tim', 'displayed': 'chr',
-         'highlight': 'chr', 'tags_array': 'arr', 'prefix': 'str', 'message': 'str'}
-  path: ['line_data']
-  item 1:
-    __path: ['0x4a49600']
-    buffer: '0x4a715d0'
-    date: 1362728993
-    date_printed: 1362728993
-    displayed: 1
-    highlight: 0
-    tags_array: ['irc_privmsg', 'notify_message', 'prefix_nick_142', 'nick_FlashCode', 'log1']
-    prefix: 'F06@F@00142FlashCode'
-    message: 'hello!'
+    keys: {
+        'buffer': 'ptr',
+        'date': 'tim',
+        'date_printed': 'tim',
+        'displayed': 'chr',
+        'highlight': 'chr',
+        'tags_array': 'arr',
+        'prefix': 'str',
+        'message': 'str',
+    }
+    path: ['line_data']
+    item 1:
+        __path: ['0x4a49600']
+        buffer: '0x4a715d0'
+        date: 1362728993
+        date_printed: 1362728993
+        displayed: 1
+        highlight: 0
+        tags_array: [
+            'irc_privmsg',
+            'notify_message',
+            'prefix_nick_142',
+            'nick_FlashCode',
+            'log1',
+        ]
+        prefix: 'F06@F@00142FlashCode'
+        message: 'hello!'
 ----
 
 [[message_buffer_closing]]
@@ -1398,12 +1532,15 @@ hdata として送られるデータ:
 ----
 id: '_buffer_closing'
 hda:
-  keys: {'number': 'int', 'full_name': 'str'}
-  path: ['buffer']
-  item 1:
-    __path: ['0x4a715d0']
-    number: 3
-    full_name: 'irc.freenode.#weechat'
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x4a715d0']
+        number: 3
+        full_name: 'irc.freenode.#weechat'
 ----
 
 [[message_nicklist]]
@@ -1435,63 +1572,70 @@ hdata として送られるデータ:
 ----
 id: '_nicklist'
 hda:
-  keys: {'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str', 'color': 'str',
-         'prefix': 'str', 'prefix_color': 'str'}
-  path: ['buffer', 'nicklist_item']
-  item 1:
-    __path: ['0x4a75cd0', '0x31e95d0']
-    group: 1
-    visible: 0
-    level: 0
-    name: 'root'
-    color: None
-    prefix: None
-    prefix_color: None
-  item 2:
-    __path: ['0x4a75cd0', '0x41247b0']
-    group: 1
-    visible: 1
-    level: 1
-    name: '000|o'
-    color: 'weechat.color.nicklist_group'
-    prefix: None
-    prefix_color: None
-  item 3:
-    __path: ['0x4a75cd0', '0x4a60d20']
-    group: 0
-    visible: 1
-    level: 0
-    name: 'FlashCode'
-    color: '142'
-    prefix: '@'
-    prefix_color: 'lightgreen'
-  item 4:
-    __path: ['0x4a75cd0', '0x4aafaf0']
-    group: 1
-    visible: 1
-    level: 1
-    name: '001|v'
-    color: 'weechat.color.nicklist_group'
-    prefix: None
-    prefix_color: None
-  item 5:
-    __path: ['0x4a75cd0', '0x4a48d80']
-    group: 1
-    visible: 1
-    level: 1
-    name: '999|...'
-    color: 'weechat.color.nicklist_group'
-    prefix: None
-    prefix_color: None
-  item 6:
-    __path: ['0x4a75cd0', '0x4a5f560']
-    group: 0
-    visible: 1
-    level: 0
-    name: 'test'
-    color: 'weechat.color.chat_nick_self'
-    prefix: ' '
-    prefix_color: ''
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x4a75cd0', '0x31e95d0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x4a75cd0', '0x41247b0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x4a75cd0', '0x4a60d20']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: '142'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 4:
+        __path: ['0x4a75cd0', '0x4aafaf0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x4a75cd0', '0x4a48d80']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 6:
+        __path: ['0x4a75cd0', '0x4a5f560']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'test'
+        color: 'weechat.color.chat_nick_self'
+        prefix: ' '
+        prefix_color: ''
 ----
 
 [[message_nicklist_diff]]
@@ -1534,59 +1678,67 @@ __diff_ のとりうる値:
 ----
 id: '_nicklist_diff'
 hda:
-  keys: {'_diff': 'chr', 'group': 'chr', 'visible': 'chr', 'level': 'int', 'name': 'str',
-         'color': 'str', 'prefix': 'str', 'prefix_color': 'str'}
-  path: ['buffer', 'nicklist_item']
-  item 1:
-    __path: ['0x46f2ee0', '0x343c9b0']
-    _diff: 94 ('^')
-    group: 1
-    visible: 1
-    level: 1
-    name: '000|o'
-    color: 'weechat.color.nicklist_group'
-    prefix: None
-    prefix_color: None
-  item 2:
-    __path: ['0x46f2ee0', '0x47e7f60']
-    _diff: 43 ('+')
-    group: 0
-    visible: 1
-    level: 0
-    name: 'master'
-    color: 'magenta'
-    prefix: '@'
-    prefix_color: 'lightgreen'
-  item 3:
-    __path: ['0x46f2ee0', '0x46b8e70']
-    _diff: 94 ('^')
-    group: 1
-    visible: 1
-    level: 1
-    name: '999|...'
-    color: 'weechat.color.nicklist_group'
-    prefix: None
-    prefix_color: None
-  item 4:
-    __path: ['0x46f2ee0', '0x3dba240']
-    _diff: 43 ('+')
-    group: 0
-    visible: 1
-    level: 0
-    name: 'nick1'
-    color: 'green'
-    prefix: ' '
-    prefix_color: ''
-  item 5:
-    __path: ['0x46f2ee0', '0x3c379d0']
-    _diff: 43 ('+')
-    group: 0
-    visible: 1
-    level: 0
-    name: 'nick2'
-    color: 'lightblue'
-    prefix: ' '
-    prefix_color: ''
+    keys: {
+        '_diff': 'chr',
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x46f2ee0', '0x343c9b0']
+        _diff: 94 ('^')
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x46f2ee0', '0x47e7f60']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'master'
+        color: 'magenta'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 3:
+        __path: ['0x46f2ee0', '0x46b8e70']
+        _diff: 94 ('^')
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 4:
+        __path: ['0x46f2ee0', '0x3dba240']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'nick1'
+        color: 'green'
+        prefix: ' '
+        prefix_color: ''
+    item 5:
+        __path: ['0x46f2ee0', '0x3c379d0']
+        _diff: 43 ('+')
+        group: 0
+        visible: 1
+        level: 0
+        name: 'nick2'
+        color: 'lightblue'
+        prefix: ' '
+        prefix_color: ''
 ----
 
 [[message_pong]]
