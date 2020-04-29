@@ -714,8 +714,7 @@ Liste der Skript API Funktionen:
   command +
   command_options
 
-// TRANSLATION MISSING
-| completion |
+| Vervollständigung |
   completion_new +
   completion_search +
   completion_free

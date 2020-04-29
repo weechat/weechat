@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2020-04-28 16:39+0200\n"
-"PO-Revision-Date: 2020-04-28 16:40+0200\n"
+"PO-Revision-Date: 2020-04-29 09:20+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -5489,9 +5489,9 @@ msgstr "WeeChat Farben (in Benutzung: %d; noch frei verfügbar: %d):"
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
 
-#, fuzzy, c-format
+#, c-format
 msgid "Signal %s received, reloading configuration..."
-msgstr "Signal %s empfangen, beende WeeChat..."
+msgstr "Signal %s empfangen, Konfiguration neu laden..."
 
 #, c-format
 msgid "Signal %s received, exiting WeeChat..."
@@ -5873,7 +5873,6 @@ msgstr ""
 msgid "bar item with list of buffers"
 msgstr "Bar-Item mit der Liste von Buffern"
 
-#, fuzzy
 msgid ""
 " enable: enable buflist\n"
 "disable: disable buflist\n"
@@ -5949,6 +5948,9 @@ msgid ""
 "    - ${format_lag}: the lag for an IRC server buffer, empty if there's no "
 "lag (evaluation of option buflist.format.lag)"
 msgstr ""
+" enable: buflist aktivieren\n"
+"disable: buflist deaktivieren\n"
+" toggle: buflist umschalten\n"
 "    bar: fügt eine \"buflist\" Bar hinzu\n"
 "refresh: erzwingt eine Aktualisierung der Bar-Item (buflist, buflist2 und "
 "buflist3)\n"
@@ -11957,9 +11959,8 @@ msgstr "besuchte Buffer"
 msgid "structure with completion"
 msgstr "Struktur mit Vervollständigung"
 
-#, fuzzy
 msgid "structure with word found for a completion"
-msgstr "Struktur mit Vervollständigung"
+msgstr "Struktur mit Wort für eine Vervollständigung gefunden"
 
 msgid "config file"
 msgstr "Konfigurationsdatei"
@@ -13313,9 +13314,9 @@ msgstr "%s%s: Nicht genug Speicher um an einem neuen Port zu lauschen"
 msgid "%s: invalid pointer in hdata path: \"%s\""
 msgstr "%s: ungültiger Pointer inm hdata-Pfad: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: invalid buffer in message: \"%s %s\""
-msgstr "%s: ungültiger Buffer-Pointer in Nachricht: \"%s %s\""
+msgstr "%s: ungültiger Buffer in Nachricht: \"%s %s\""
 
 #, c-format
 msgid "%s%s: failed to execute command \"%s\" for client %s%s%s"
