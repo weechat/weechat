@@ -216,6 +216,14 @@ endif()
 
 # Check for CURL
 find_package(CURL REQUIRED)
+if(CURL_FOUND)
+  if(NOT DEFINED CURL_INCLUDE_DIRS OR "${CURL_INCLUDE_DIRS}" STREQUAL "")
+    get_target_property(CURL_INCLUDE_DIRS CURL::libcurl INTERFACE_INCLUDE_DIRECTORIES)
+  endif()
+  if(NOT DEFINED CURL_LIBRARIES OR "${CURL_LIBRARIES}" STREQUAL "")
+    get_target_property(CURL_LIBRARIES CURL::libcurl "LOCATION${_curl_current_config}")
+  endif()
+endif()
 
 # weechat_gui_common MUST be the first lib in the list
 set(STATIC_LIBS weechat_gui_common)
