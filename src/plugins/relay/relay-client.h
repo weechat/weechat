@@ -109,6 +109,7 @@ struct t_relay_client
     time_t start_time;                 /* time of client connection         */
     time_t end_time;                   /* time of client disconnection      */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
+    struct t_hook *hook_timer_send;    /* timer to quickly flush outqueue   */
     time_t last_activity;              /* time of last byte received/sent   */
     unsigned long long bytes_recv;     /* bytes received from client        */
     unsigned long long bytes_sent;     /* bytes sent to client              */
