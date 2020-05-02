@@ -510,14 +510,14 @@ w  _~/.weechat_ z domyślnymi opcjami i wartościami
 
 ==== Argumenty linii poleceń
 
-include::cmdline_options.pl.adoc[tag=standard]
+include::includes/cmdline_options.pl.adoc[tag=standard]
 
 ==== Dodatkowe opcje do debugowania
 
 [WARNING]
 Te opcje służą tylko do debugowania błędów, *NIE UŻYWAĆ NA PRODUKCJI!*
 
-include::cmdline_options.pl.adoc[tag=debug]
+include::includes/cmdline_options.pl.adoc[tag=debug]
 
 [[environment_variables]]
 === Zmienne środowiskowe

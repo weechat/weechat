@@ -24,13 +24,12 @@ EXTRA_DIST = CMakeLists.txt \
              docinfo.html \
              weechat.1.de.adoc \
              weechat-headless.1.de.adoc \
-             cmdline_options.de.adoc \
-             man.de.adoc \
              weechat_user.de.adoc \
              weechat_scripting.de.adoc \
              weechat_faq.de.adoc \
              weechat_quickstart.de.adoc \
              weechat_tester.de.adoc \
+             $(wildcard includes/*.adoc) \
              $(wildcard autogen/user/*.adoc)
 
 if MAN
@@ -51,13 +50,13 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man pages
-weechat.1: weechat.1.de.adoc cmdline_options.de.adoc man.de.adoc
+weechat.1: weechat.1.de.adoc includes/cmdline_options.de.adoc includes/man.de.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/de/weechat.1.de.adoc
-weechat-headless.1: weechat-headless.1.de.adoc cmdline_options.de.adoc man.de.adoc
+weechat-headless.1: weechat-headless.1.de.adoc includes/cmdline_options.de.adoc includes/man.de.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/de/weechat-headless.1.de.adoc
 
 # user's guide
-weechat_user.de.html: weechat_user.de.adoc cmdline_options.de.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
+weechat_user.de.html: weechat_user.de.adoc includes/cmdline_options.de.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_user.de.html $(abs_top_srcdir)/doc/de/weechat_user.de.adoc
 
 # scripting guide

@@ -30,21 +30,21 @@ It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == OPTIONS
 
-include::cmdline_options.en.adoc[tag=standard]
+include::includes/cmdline_options.en.adoc[tag=standard]
 
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options.en.adoc[tag=debug]
+include::includes/cmdline_options.en.adoc[tag=debug]
 
 == PLUGIN OPTIONS
 
-include::man.en.adoc[tag=plugin_options]
+include::includes/man.en.adoc[tag=plugin_options]
 
 == FILES
 
-include::man.en.adoc[tag=files]
+include::includes/man.en.adoc[tag=files]
 
 == SEE ALSO
 
@@ -56,7 +56,7 @@ This manpage was written by {author}.
 
 == COPYRIGHT
 
-include::man.en.adoc[tag=copyright]
+include::includes/man.en.adoc[tag=copyright]
 
 == SUPPORT / REPORTING BUGS
 

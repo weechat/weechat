@@ -27,21 +27,21 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 == オプション
 
-include::cmdline_options.ja.adoc[tag=standard]
+include::includes/cmdline_options.ja.adoc[tag=standard]
 
 == デバッグオプション
 
 *警告:* 以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
 
-include::cmdline_options.ja.adoc[tag=debug]
+include::includes/cmdline_options.ja.adoc[tag=debug]
 
 == プラグインオプション
 
-include::man.ja.adoc[tag=plugin_options]
+include::includes/man.ja.adoc[tag=plugin_options]
 
 == ファイル
 
-include::man.ja.adoc[tag=files]
+include::includes/man.ja.adoc[tag=files]
 
 == 関連項目
 
@@ -55,7 +55,7 @@ include::man.ja.adoc[tag=files]
 
 == 著作権
 
-include::man.ja.adoc[tag=copyright]
+include::includes/man.ja.adoc[tag=copyright]
 
 == サポート / バグ報告
 

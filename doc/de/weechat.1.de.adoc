@@ -27,21 +27,21 @@ Durch Skripten ist das Hauptprogramm äußerst flexibel und erweiterbar.
 
 == OPTIONEN
 
-include::cmdline_options.de.adoc[tag=standard]
+include::includes/cmdline_options.de.adoc[tag=standard]
 
 == DEBUG-OPTIONEN
 
 *WARNUNG:* Diese Optionen sind lediglich für Debug-Zwecke *DIESE FUNKTIONEN SOLLTE NICHT IM PRODUKTIVEM EINSATZ GENUTZT WERDEN!*
 
-include::cmdline_options.de.adoc[tag=debug]
+include::includes/cmdline_options.de.adoc[tag=debug]
 
 == OPTIONEN VON ERWEITERUNGEN
 
-include::man.de.adoc[tag=plugin_options]
+include::includes/man.de.adoc[tag=plugin_options]
 
 == DATEIEN
 
-include::man.de.adoc[tag=files]
+include::includes/man.de.adoc[tag=files]
 
 == SIEHE AUCH
 
@@ -55,7 +55,7 @@ Diese manpage wurde von {author} geschrieben.
 
 == COPYRIGHT
 
-include::man.de.adoc[tag=copyright]
+include::includes/man.de.adoc[tag=copyright]
 
 == SUPPORT / FEHLER MELDEN
 

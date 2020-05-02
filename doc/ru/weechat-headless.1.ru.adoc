@@ -34,22 +34,22 @@ It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == ПАРАМЕТРЫ
 
-include::cmdline_options.ru.adoc[tag=standard]
+include::includes/cmdline_options.ru.adoc[tag=standard]
 
 // TRANSLATION MISSING
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options.ru.adoc[tag=debug]
+include::includes/cmdline_options.ru.adoc[tag=debug]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 
-include::man.ru.adoc[tag=plugin_options]
+include::includes/man.ru.adoc[tag=plugin_options]
 
 == ФАЙЛЫ
 
-include::man.ru.adoc[tag=files]
+include::includes/man.ru.adoc[tag=files]
 
 // TRANSLATION MISSING
 == SEE ALSO
@@ -64,7 +64,7 @@ include::man.ru.adoc[tag=files]
 
 == КОПИРАЙТ
 
-include::man.ru.adoc[tag=copyright]
+include::includes/man.ru.adoc[tag=copyright]
 
 == ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
 

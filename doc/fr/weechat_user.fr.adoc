@@ -517,14 +517,14 @@ par défaut sont créés dans _~/.weechat_ avec les options et valeurs par défa
 
 ==== Options de ligne de commande
 
-include::cmdline_options.fr.adoc[tag=standard]
+include::includes/cmdline_options.fr.adoc[tag=standard]
 
 ==== Options supplémentaires de debug
 
 [WARNING]
 Ces options sont pour du debug seulement, *NE PAS UTILISER EN PRODUCTION !*
 
-include::cmdline_options.fr.adoc[tag=debug]
+include::includes/cmdline_options.fr.adoc[tag=debug]
 
 [[environment_variables]]
 === Variables d'environnement

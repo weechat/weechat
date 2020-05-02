@@ -24,8 +24,8 @@ if(ENABLE_MAN)
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man.fr.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat.1 (fr)"
   )
@@ -38,8 +38,8 @@ if(ENABLE_MAN)
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man.fr.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.fr.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat-headless.1 (fr)"
   )
@@ -59,7 +59,7 @@ if(ENABLE_DOC)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/../docinfo.html
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat_user.fr.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.fr.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.fr.adoc
     ${AUTOGEN_USER}
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat_user.fr.html"

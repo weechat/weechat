@@ -24,8 +24,8 @@ if(ENABLE_MAN)
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat.1 (ru)"
   )
@@ -38,8 +38,8 @@ if(ENABLE_MAN)
     COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.ru.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.ru.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.ru.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat-headless.1 (ru)"
   )

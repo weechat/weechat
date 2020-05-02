@@ -511,14 +511,14 @@ die entsprechenden Dateien im Verzeichnis _~/.weechat_ erstellt.
 
 ==== Optionen für Befehlszeile
 
-include::cmdline_options.de.adoc[tag=standard]
+include::includes/cmdline_options.de.adoc[tag=standard]
 
 ==== zusätzliche Debug-Optionen
 
 [WARNING]
 These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options.de.adoc[tag=debug]
+include::includes/cmdline_options.de.adoc[tag=debug]
 
 [[environment_variables]]
 === Umgebungsvariablen

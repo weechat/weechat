@@ -29,22 +29,22 @@ v obvyklých sciptovacích jazycích.
 
 == VOLBY
 
-include::cmdline_options.cs.adoc[tag=standard]
+include::includes/cmdline_options.cs.adoc[tag=standard]
 
 // TRANSLATION MISSING
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options.cs.adoc[tag=debug]
+include::includes/cmdline_options.cs.adoc[tag=debug]
 
 == VOLBY PLUGINŮ
 
-include::man.cs.adoc[tag=plugin_options]
+include::includes/man.cs.adoc[tag=plugin_options]
 
 == SOUBORY
 
-include::man.cs.adoc[tag=files]
+include::includes/man.cs.adoc[tag=files]
 
 // TRANSLATION MISSING
 == SEE ALSO
@@ -58,7 +58,7 @@ Tato manuálová stránka byla přeložena Ondřejem Súkupem.
 
 == COPYRIGHT
 
-include::man.cs.adoc[tag=copyright]
+include::includes/man.cs.adoc[tag=copyright]
 
 == PODPORA / HLÁŠENÍ CHYB
 

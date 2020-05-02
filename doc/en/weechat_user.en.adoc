@@ -502,14 +502,14 @@ created in _~/.weechat_ with default options and values
 
 ==== Command line options
 
-include::cmdline_options.en.adoc[tag=standard]
+include::includes/cmdline_options.en.adoc[tag=standard]
 
 ==== Extra debug options
 
 [WARNING]
 These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options.en.adoc[tag=debug]
+include::includes/cmdline_options.en.adoc[tag=debug]
 
 [[environment_variables]]
 === Environment variables
