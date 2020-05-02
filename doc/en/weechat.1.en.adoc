@@ -27,13 +27,13 @@ It is highly customizable and extensible with scripts.
 
 == OPTIONS
 
-include::cmdline_options.en.adoc[]
+include::cmdline_options.en.adoc[tag=standard]
 
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options_debug.en.adoc[]
+include::cmdline_options.en.adoc[tag=debug]
 
 == PLUGIN OPTIONS
 

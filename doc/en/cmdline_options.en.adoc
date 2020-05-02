@@ -1,3 +1,4 @@
+// tag::standard[]
 *-a*, *--no-connect*::
     Disable auto-connect to servers when WeeChat is starting.
 
@@ -59,3 +60,20 @@
 
 *plugin:option*::
     Option for a plugin.
+// end::standard[]
+
+// tag::debug[]
+*--no-dlclose*::
+    Do not call the function dlclose after plugins are unloaded.
+    This is useful with tools like Valgrind to display stack for unloaded
+    plugins.
+
+*--no-gnutls*::
+    Do not call the init and deinit functions of GnuTLS library.
+    This is useful with tools like Valgrind and electric-fence, to prevent
+    GnuTLS memory errors.
+
+*--no-gcrypt*::
+    Do not call the init and deinit functions of Gcrypt library.
+    This is useful with tools like Valgrind, to prevent Gcrypt memory errors.
+// end::debug[]

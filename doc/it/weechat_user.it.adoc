@@ -550,7 +550,7 @@ created in _~/.weechat_ with default options and values
 // TRANSLATION MISSING
 ==== Command line options
 
-include::cmdline_options.it.adoc[]
+include::cmdline_options.it.adoc[tag=standard]
 
 // TRANSLATION MISSING
 ==== Extra debug options
@@ -558,7 +558,7 @@ include::cmdline_options.it.adoc[]
 [WARNING]
 These options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options_debug.it.adoc[]
+include::cmdline_options.it.adoc[tag=debug]
 
 // TRANSLATION MISSING
 [[environment_variables]]

@@ -27,13 +27,13 @@ Durch Skripten ist das Hauptprogramm äußerst flexibel und erweiterbar.
 
 == OPTIONEN
 
-include::cmdline_options.de.adoc[]
+include::cmdline_options.de.adoc[tag=standard]
 
 == DEBUG-OPTIONEN
 
 *WARNUNG:* Diese Optionen sind lediglich für Debug-Zwecke *DIESE FUNKTIONEN SOLLTE NICHT IM PRODUKTIVEM EINSATZ GENUTZT WERDEN!*
 
-include::cmdline_options_debug.de.adoc[]
+include::cmdline_options.de.adoc[tag=debug]
 
 == OPTIONEN VON ERWEITERUNGEN
 

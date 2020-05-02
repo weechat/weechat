@@ -34,14 +34,14 @@ It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == ПАРАМЕТРЫ
 
-include::cmdline_options.ru.adoc[]
+include::cmdline_options.ru.adoc[tag=standard]
 
 // TRANSLATION MISSING
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options_debug.ru.adoc[]
+include::cmdline_options.ru.adoc[tag=debug]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 

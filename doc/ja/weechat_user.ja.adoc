@@ -508,14 +508,14 @@ _~/.weechat_ ディレクトリの中に作成されます
 
 ==== コマンドラインオプション
 
-include::cmdline_options.ja.adoc[]
+include::cmdline_options.ja.adoc[tag=standard]
 
 ==== デバッグオプション
 
 [WARNING]
 以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
 
-include::cmdline_options_debug.ja.adoc[]
+include::cmdline_options.ja.adoc[tag=debug]
 
 [[environment_variables]]
 === 環境変数

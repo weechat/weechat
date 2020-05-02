@@ -24,7 +24,6 @@ EXTRA_DIST = CMakeLists.txt \
              weechat.1.ru.adoc \
              weechat-headless.1.ru.adoc \
              cmdline_options.ru.adoc \
-             cmdline_options_debug.ru.adoc \
              weechat_quickstart.ru.adoc
 
 if MAN
@@ -41,9 +40,9 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man pages
-weechat.1: weechat.1.ru.adoc cmdline_options.ru.adoc cmdline_options_debug.ru.adoc
+weechat.1: weechat.1.ru.adoc cmdline_options.ru.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/ru/weechat.1.ru.adoc
-weechat-headless.1: weechat-headless.1.ru.adoc cmdline_options.ru.adoc cmdline_options_debug.ru.adoc
+weechat-headless.1: weechat-headless.1.ru.adoc cmdline_options.ru.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/ru/weechat-headless.1.ru.adoc
 
 # quickstart

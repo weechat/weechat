@@ -1,3 +1,4 @@
+// tag::standard[]
 *-a*, *--no-connect*::
     Wyłącza automatyczne łączenie się z serwerami podczas uruchamiania WeeChat.
 
@@ -59,3 +60,21 @@
 
 *wtyczka:opcja*::
     Opcja dla wtyczki.
+// end::standard[]
+
+// tag::debug[]
+*--no-dlclose*::
+    Nie wołaj funkcji dlclose po wyładowaniu wtyczek.
+    Jest to przydatne przy użyciu narzędzi jak Valgrind do wyświetlania
+    stosu wyładowywanych wtyczek.
+
+*--no-gnutls*::
+    Nie wywołuj funkcji (de)inicjijących z biblioteki GnuTLS.
+    Jest to przydatne przy użyciu narzędzi jak Valgrind i electric-fence,
+    aby zapobiec błędą pamięci GnuTLS.
+
+*--no-gcrypt*::
+    Nie wywołuj funkcji (de)inicjijących z biblioteki Gcrypt.
+    Jest to przydatne przy użyciu narzędzi jak Valgrind, aby zapobiec błędą
+    pamięci Gcrypt.
+// end::debug[]

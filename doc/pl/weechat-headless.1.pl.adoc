@@ -31,13 +31,13 @@ opcji "--daemon".
 
 == OPCJE
 
-include::cmdline_options.pl.adoc[]
+include::cmdline_options.pl.adoc[tag=standard]
 
-== OPCJE DEBUGUJĄCE 
+== OPCJE DEBUGUJĄCE
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options_debug.pl.adoc[]
+include::cmdline_options.pl.adoc[tag=debug]
 
 == OPCJE WTYCZEK
 

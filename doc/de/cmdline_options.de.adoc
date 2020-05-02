@@ -1,3 +1,4 @@
+// tag::standard[]
 *-a*, *--no-connect*::
     deaktiviert das automatische Verbinden mit den Servern beim Start von WeeChat.
 
@@ -60,3 +61,20 @@
 
 *plugin:option*::
     Option für Erweiterung.
+// end::standard[]
+
+// tag::debug[]
+*--no-dlclose*::
+    die Funktion dlclose wird nicht ausgeführt, nachdem Erweiterungen beendet wurden
+    Dies ist sinnvoll für Tools wie Valgrind um den Stack für Erweiterungen anzuzeigen,
+    welche beendet wurden.
+
+*--no-gnutls*::
+    Es wird die init und deinit Funktion der GnuTLS Bibliothek nicht verwendet.
+    Dies ist sinnvoll für Tools wie Valgrind und electric-fence, um GnuTLS
+    Speicherfehler zu vermeiden.
+
+*--no-gcrypt*::
+    Es wird die init und deinit Funktion der Gcrypt Bibliothek nicht verwendet.
+    Dies ist sinnvoll für Tools wie Valgrind um Speicherfehler von Gcrypt zu vermeiden.
+// end::debug[]

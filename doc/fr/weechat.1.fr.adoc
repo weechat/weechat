@@ -27,14 +27,14 @@ Il est hautement paramétrable et extensible avec des scripts.
 
 == OPTIONS
 
-include::cmdline_options.fr.adoc[]
+include::cmdline_options.fr.adoc[tag=standard]
 
 == OPTIONS DE DEBUG
 
 *ATTENTION :* ces options sont pour du debug seulement,
 *NE PAS UTILISER EN PRODUCTION !*
 
-include::cmdline_options_debug.fr.adoc[]
+include::cmdline_options.fr.adoc[tag=debug]
 
 == OPTIONS D'EXTENSION
 

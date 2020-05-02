@@ -24,7 +24,6 @@ EXTRA_DIST = CMakeLists.txt \
              weechat.1.cs.adoc \
              weechat-headless.1.cs.adoc \
              cmdline_options.cs.adoc \
-             cmdline_options_debug.cs.adoc \
              weechat_quickstart.cs.adoc \
              $(wildcard autogen/user/*.adoc) \
              $(wildcard autogen/plugin_api/*.adoc)
@@ -43,9 +42,9 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man pages
-weechat.1: weechat.1.cs.adoc cmdline_options.cs.adoc cmdline_options_debug.cs.adoc
+weechat.1: weechat.1.cs.adoc cmdline_options.cs.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/cs/weechat.1.cs.adoc
-weechat-headless.1: weechat-headless.1.cs.adoc cmdline_options.cs.adoc cmdline_options_debug.cs.adoc
+weechat-headless.1: weechat-headless.1.cs.adoc cmdline_options.cs.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/cs/weechat-headless.1.cs.adoc
 
 # quickstart

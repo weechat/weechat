@@ -1,3 +1,4 @@
+// tag::standard[]
 *-a*, *--no-connect*::
     WeeChat の起動時にサーバへの自動接続を行わない
 
@@ -60,3 +61,23 @@
 
 *plugin:option*::
     プラグインに渡すオプション
+// end::standard[]
+
+// tag::debug[]
+*--no-dlclose*::
+    Do not call the function dlclose after plugins are unloaded.
+    This is useful with tools like Valgrind to display stack for unloaded
+    plugins.
+    プラグインがアンロードされた後に関数
+    dlclose を呼び出さない。これは Valgrind
+    などのツールを使ってアンロードされたプラグインのスタックを表示する際に有用です。
+
+*--no-gnutls*::
+    GnuTLS ライブラリの init および deinit
+    関数を呼び出さない。これは Valgrind および electric-fence
+    などのツールを使って GnuTLS メモリエラーを避ける際に有用です。
+
+*--no-gcrypt*::
+    Gcrypt ライブラリの init および deinit 関数を呼び出さない。これは
+    Valgrind などのツールを使って Gcrypt メモリエラーを避ける際に有効です。
+// end::debug[]

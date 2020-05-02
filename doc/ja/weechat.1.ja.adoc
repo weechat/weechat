@@ -27,13 +27,13 @@ WeeChat (Wee Enhanced Environment for Chat) はフリーのチャットクライ
 
 == オプション
 
-include::cmdline_options.ja.adoc[]
+include::cmdline_options.ja.adoc[tag=standard]
 
 == デバッグオプション
 
 *警告:* 以下のオプションはデバッグ用です。*通常利用時には使わないでください!*
 
-include::cmdline_options_debug.ja.adoc[]
+include::cmdline_options.ja.adoc[tag=debug]
 
 == プラグインオプション
 

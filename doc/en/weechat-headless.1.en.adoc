@@ -30,13 +30,13 @@ It can be used for tests or to daemonize WeeChat with the option "--daemon".
 
 == OPTIONS
 
-include::cmdline_options.en.adoc[]
+include::cmdline_options.en.adoc[tag=standard]
 
 == DEBUG OPTIONS
 
 *WARNING:* these options are for debug purposes only, *DO NOT USE IN PRODUCTION!*
 
-include::cmdline_options_debug.en.adoc[]
+include::cmdline_options.en.adoc[tag=debug]
 
 == PLUGIN OPTIONS
 
