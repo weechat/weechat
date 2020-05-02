@@ -1,3 +1,21 @@
+// tag::plugin_options[]
+Pro kompletní dokumentaci nastavení pluginů a jejich volby podívejte se na
+https://weechat.org/doc[WeeChat user's guide].
+
+S irc pluginem se můžete doččasně připojit na server s URL jako:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+K připojení na IRC kanál Weechatu pro podporu s přezdívkou "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 adresa může být uzavřena do hranatých závorek k přidání portu, například:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+// end::plugin_options[]
+
+// tag::files[]
 $HOME/.weechat/weechat.conf::
     hlavní konfigurační soubor WeeChatu
 
@@ -72,3 +90,20 @@ $HOME/.weechat/xfer.conf::
 
 $HOME/.weechat/weechat.log::
     soubor záznamů WeeChatu
+// end::files[]
+
+// tag::copyright[]
+WeeChat je napsán Sébastienem Helleu a přispěvovateli (kompletní seznam je v
+souboru AUTHORS.adoc).
+
+Copyright (C) 2003-2020 {author}
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Prosím přečtěte si soubor COPYING pro více informací.
+
+Web: https://weechat.org/
+// end::copyright[]

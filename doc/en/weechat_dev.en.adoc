@@ -436,6 +436,7 @@ Documentation files:
 |    docgen.py                         | Python script to build files in _autogen/_ directory (see below).
 |    XX/                               | Documentation for language XX (languages: en, fr, de, it, ...).
 |       cmdline_options.XX.adoc        | Command-line options (file included in man pages and user's guide).
+|       man.XX.adoc                    | Part of man pages: plugin options, files and copyright.
 |       weechat.1.XX.adoc              | Man page (`man weechat`).
 |       weechat_dev.XX.adoc            | link:weechat_dev.en.html[Developer's guide] (this document).
 |       weechat_faq.XX.adoc            | link:weechat_faq.en.html[FAQ].

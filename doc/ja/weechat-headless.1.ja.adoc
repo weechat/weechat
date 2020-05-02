@@ -40,11 +40,11 @@ include::cmdline_options.ja.adoc[tag=debug]
 
 == プラグインオプション
 
-include::man_plugin_options.ja.adoc[]
+include::man.ja.adoc[tag=plugin_options]
 
 == ファイル
 
-include::man_files.ja.adoc[]
+include::man.ja.adoc[tag=files]
 
 == 関連項目
 
@@ -58,7 +58,7 @@ include::man_files.ja.adoc[]
 
 == 著作権
 
-include::man_copyright.ja.adoc[]
+include::man.ja.adoc[tag=copyright]
 
 == サポート / バグ報告
 

@@ -25,6 +25,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat.1.pl.adoc \
              weechat-headless.1.pl.adoc \
              cmdline_options.pl.adoc \
+             man.pl.adoc \
              weechat_user.pl.adoc \
              weechat_scripting.pl.adoc \
              weechat_faq.pl.adoc \
@@ -50,9 +51,9 @@ endif
 all-local: $(man_targets) $(doc_targets)
 
 # man pages
-weechat.1: weechat.1.pl.adoc cmdline_options.pl.adoc
+weechat.1: weechat.1.pl.adoc cmdline_options.pl.adoc man.pl.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat.1 $(abs_top_srcdir)/doc/pl/weechat.1.pl.adoc
-weechat-headless.1: weechat-headless.1.pl.adoc cmdline_options.pl.adoc
+weechat-headless.1: weechat-headless.1.pl.adoc cmdline_options.pl.adoc man.pl.adoc
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/pl/weechat-headless.1.pl.adoc
 
 # user's guide

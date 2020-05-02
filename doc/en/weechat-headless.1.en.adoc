@@ -40,11 +40,11 @@ include::cmdline_options.en.adoc[tag=debug]
 
 == PLUGIN OPTIONS
 
-include::man_plugin_options.en.adoc[]
+include::man.en.adoc[tag=plugin_options]
 
 == FILES
 
-include::man_files.en.adoc[]
+include::man.en.adoc[tag=files]
 
 == SEE ALSO
 
@@ -56,7 +56,7 @@ This manpage was written by {author}.
 
 == COPYRIGHT
 
-include::man_copyright.en.adoc[]
+include::man.en.adoc[tag=copyright]
 
 == SUPPORT / REPORTING BUGS
 

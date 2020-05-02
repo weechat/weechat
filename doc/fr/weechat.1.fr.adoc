@@ -38,11 +38,11 @@ include::cmdline_options.fr.adoc[tag=debug]
 
 == OPTIONS D'EXTENSION
 
-include::man_plugin_options.fr.adoc[]
+include::man.fr.adoc[tag=plugin_options]
 
 == FICHIERS
 
-include::man_files.fr.adoc[]
+include::man.fr.adoc[tag=files]
 
 == VOIR AUSSI
 
@@ -54,7 +54,7 @@ Cette page de manuel a été écrite par {author}.
 
 == COPYRIGHT
 
-include::man_copyright.fr.adoc[]
+include::man.fr.adoc[tag=copyright]
 
 == SUPPORT / SIGNALER DES BUGS
 

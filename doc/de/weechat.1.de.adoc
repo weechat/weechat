@@ -37,11 +37,11 @@ include::cmdline_options.de.adoc[tag=debug]
 
 == OPTIONEN VON ERWEITERUNGEN
 
-include::man_plugin_options.de.adoc[]
+include::man.de.adoc[tag=plugin_options]
 
 == DATEIEN
 
-include::man_files.de.adoc[]
+include::man.de.adoc[tag=files]
 
 == SIEHE AUCH
 
@@ -55,7 +55,7 @@ Diese manpage wurde von {author} geschrieben.
 
 == COPYRIGHT
 
-include::man_copyright.de.adoc[]
+include::man.de.adoc[tag=copyright]
 
 == SUPPORT / FEHLER MELDEN
 

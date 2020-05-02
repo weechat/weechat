@@ -37,11 +37,11 @@ include::cmdline_options.pl.adoc[tag=debug]
 
 == OPCJE WTYCZEK
 
-include::man_plugin_options.pl.adoc[]
+include::man.pl.adoc[tag=plugin_options]
 
 == PLIKI
 
-include::man_files.pl.adoc[]
+include::man.pl.adoc[tag=files]
 
 == Zobacz również 
 
@@ -55,7 +55,7 @@ Tłumaczenie Krzysztof Korościk.
 
 == PRAWA AUTORSKIE
 
-include::man_copyright.pl.adoc[]
+include::man.pl.adoc[tag=copyright]
 
 == WSPARCIE / ZGŁASZANIE BŁĘDÓW
 

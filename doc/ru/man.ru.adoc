@@ -1,3 +1,21 @@
+// tag::plugin_options[]
+Полное описание параметров плагинов доступно в документации по плагинам в
+https://weechat.org/doc[Руководстве пользователя WeeChat].
+
+С помощью плагина irc можно присоединиться ко временному серверу, используя URL вроде:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+Присоединиться к IRC-каналу поддержки пользователей WeeChat с псевдонимом "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6-адрес можно заключить в квадратные скобки, чтобы указать порт. Например:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+// end::plugin_options[]
+
+// tag::files[]
 $HOME/.weechat/weechat.conf::
     главный файл конфигурации WeeChat
 
@@ -72,3 +90,20 @@ $HOME/.weechat/xfer.conf::
 
 $HOME/.weechat/weechat.log::
     лог-файл WeeChat
+// end::files[]
+
+// tag::copyright[]
+WeeChat написан Sébastien Helleu и другими участниками (полный список находится
+в файле AUTHORS.adoc).
+
+Copyright (C) 2003-2020 {author}
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Подробную информацию можно найти в файле COPYING.
+
+Веб: https://weechat.org/
+// end::copyright[]

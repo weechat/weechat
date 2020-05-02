@@ -1,4 +1,22 @@
-// TRANSLATION MISSING
+// tag::plugin_options[]
+For complete doc on plugin options, please look at plugins documentation in
+https://weechat.org/doc[WeeChat user's guide].
+
+With irc plugin, you can connect to temporary server with an URL like:
+
+    irc[6][s]://[[nickname][:password]@]server[:port][/#channel1[,#channel2...]]
+
+To join WeeChat IRC channel support with nick "mynick":
+
+    irc://mynick@chat.freenode.net/#weechat
+
+IPv6 address can be enclosed in brackets to add a port after address, for
+example:
+
+    irc://mynick@[2001:db8:0:85a3::ac1f:8001]:6668/#test
+// end::plugin_options[]
+
+// tag::files[]
 $HOME/.weechat/weechat.conf::
     main WeeChat configuration file
 
@@ -73,3 +91,20 @@ $HOME/.weechat/xfer.conf::
 
 $HOME/.weechat/weechat.log::
     WeeChat log file
+// end::files[]
+
+// tag::copyright[]
+WeeChat is written by Sébastien Helleu and contributors (complete list is in
+the AUTHORS.adoc file).
+
+Copyright (C) 2003-2020 {author}
+
+WeeChat is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+Please read the COPYING file for more information.
+
+Web: https://weechat.org/
+// end::copyright[]

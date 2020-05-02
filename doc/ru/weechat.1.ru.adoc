@@ -40,11 +40,11 @@ include::cmdline_options.ru.adoc[tag=debug]
 
 == ПАРАМЕТРЫ ПЛАГИНОВ
 
-include::man_plugin_options.ru.adoc[]
+include::man.ru.adoc[tag=plugin_options]
 
 == ФАЙЛЫ
 
-include::man_files.ru.adoc[]
+include::man.ru.adoc[tag=files]
 
 // TRANSLATION MISSING
 == SEE ALSO
@@ -59,7 +59,7 @@ include::man_files.ru.adoc[]
 
 == КОПИРАЙТ
 
-include::man_copyright.ru.adoc[]
+include::man.ru.adoc[tag=copyright]
 
 == ПОДДЕРЖКА / СООБЩЕНИЯ ОБ ОШИБКАХ
 

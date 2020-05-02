@@ -45,11 +45,11 @@ include::cmdline_options.cs.adoc[tag=debug]
 
 == VOLBY PLUGINŮ
 
-include::man_plugin_options.cs.adoc[]
+include::man.cs.adoc[tag=plugin_options]
 
 == SOUBORY
 
-include::man_files.cs.adoc[]
+include::man.cs.adoc[tag=files]
 
 // TRANSLATION MISSING
 == SEE ALSO
@@ -63,7 +63,7 @@ Tato manuálová stránka byla přeložena Ondřejem Súkupem.
 
 == COPYRIGHT
 
-include::man_copyright.cs.adoc[]
+include::man.cs.adoc[tag=copyright]
 
 == PODPORA / HLÁŠENÍ CHYB
 

@@ -25,9 +25,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat.1.pl.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_files.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.pl.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man.pl.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat.1 (pl)"
   )
@@ -41,9 +39,7 @@ if(ENABLE_MAN)
     DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.pl.adoc
     ${CMAKE_CURRENT_SOURCE_DIR}/cmdline_options.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_plugin_options.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_files.pl.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/man_copyright.pl.adoc
+    ${CMAKE_CURRENT_SOURCE_DIR}/man.pl.adoc
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Building weechat-headless.1 (pl)"
   )

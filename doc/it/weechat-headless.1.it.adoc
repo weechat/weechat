@@ -46,12 +46,12 @@ include::cmdline_options.it.adoc[tag=debug]
 
 == PLUGIN OPTIONS
 
-include::man_plugin_options.it.adoc[]
+include::man.it.adoc[tag=plugin_options]
 
 // TRANSLATION MISSING
 == FILES
 
-include::man_files.it.adoc[]
+include::man.it.adoc[tag=files]
 
 // TRANSLATION MISSING
 == SEE ALSO
@@ -67,7 +67,7 @@ This manpage was written by {author}.
 
 == COPYRIGHT
 
-include::man_copyright.it.adoc[]
+include::man.it.adoc[tag=copyright]
 
 // TRANSLATION MISSING
 == SUPPORT / REPORTING BUGS
