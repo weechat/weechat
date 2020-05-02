@@ -60,6 +60,8 @@ struct t_relay_weechat_data
     struct t_hook *hook_timer_nicklist;   /* timer for sending nicklist     */
 };
 
+extern char *relay_weechat_compression_string[];
+
 extern int relay_weechat_compression_search (const char *compression);
 extern void relay_weechat_hook_signals (struct t_relay_client *client);
 extern void relay_weechat_unhook_signals (struct t_relay_client *client);

@@ -168,6 +168,9 @@ WeeChat replies with a hashtable containing the following keys and values:
   compute the hash of password on this nonce, concatenated with a client nonce
   and the user password (the _relay_ nonce + the client nonce is the salt used
   in the password hash algorithm)
+* _compression_: compression type:
+** _zlib_: messages are compressed with _zlib_
+** _off_: messages are not compressed
 
 [TIP]
 With WeeChat ≤ 2.8, the command _handshake_ is not implemented, WeeChat silently

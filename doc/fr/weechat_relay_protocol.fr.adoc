@@ -177,6 +177,9 @@ suivantes :
   concaténé avec un nonce client et le mot de passe utilisateur (le nonce
   _relay_ + le nonce client constituent le sel utilisé dans l'algorithme de
   hachage du mot de passe)
+* _compression_ : type de compression :
+** _zlib_ : les messages sont compressés avec _zlib_
+** _off_ : les messages ne sont pas compressés
 
 [TIP]
 Avec WeeChat ≤ 2.8, la commande _handshake_ n'est pas implémentée, WeeChat ignore

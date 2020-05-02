@@ -199,6 +199,10 @@ relay_weechat_protocol_handshake_reply (struct t_relay_client *client,
             hashtable,
             "totp",
             (totp_secret && totp_secret[0]) ? "on" : "off");
+        weechat_hashtable_set (
+            hashtable,
+            "compression",
+            relay_weechat_compression_string[RELAY_WEECHAT_DATA(client, compression)]);
 
         msg = relay_weechat_msg_new (id);
         if (msg)
