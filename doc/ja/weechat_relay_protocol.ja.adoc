@@ -14,12 +14,11 @@
 * Ryuunosuke Ayanokouzi <i38w7i3@yahoo.co.jp>, 2014-2019
 
 
-この文書は WeeChat リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat
-データをクライアントに中継するためのもので、多くの場合クライアントはリモートインターフェースを指します。
-
-
 [[introduction]]
 == はじめに
+
+この文書は WeeChat リレープロトコルについて述べたものです: リレープロトコルとは、WeeChat
+データをクライアントに中継するためのもので、多くの場合クライアントはリモートインターフェースを指します。
 
 [[terminology]]
 === 用語
@@ -179,28 +178,65 @@ WeeChat replies with a hashtable containing the following keys and values:
   and the user password (the _relay_ nonce + the client nonce is the salt used
   in the password hash algorithm)
 
+[TIP]
+With WeeChat ≤ 2.8, the command _handshake_ is not implemented, WeeChat silently
+ignores this command, even if it is sent before the _init_ command. +
+So it is safe to send this command to any WeeChat version.
+
 Examples:
 
+* Nothing offered by the client, authentication password "plain" will be used
+if allowed on relay side:
+
 ----
-# nothing offered by the client (or only "plain"), authentication password "plain" will be used if allowed on relay side
-handshake
-handshake password_hash_algo=plain
-
-# only plain, sha256 and pbkdf2+sha256 are supported by the client
-handshake password_hash_algo=plain:sha256:pbkdf2+sha256
-
-# only sha256 and sha512 are supported by the client, disable compression
-handshake password_hash_algo=sha256:sha512,compression=off
+(handshake) handshake
 ----
 
-Example of response:
+Response:
 
 [source,python]
 ----
 id: 'handshake'
 htb: {
-    'password_hash_algo':
-    'pbkdf2+sha256',
+    'password_hash_algo': 'plain',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+}
+----
+
+* Only "plain" is supported by the client:
+
+----
+(handshake) handshake password_hash_algo=plain
+----
+
+Response:
+
+[source,python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'plain',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+}
+----
+
+* Only "plain", "sha256" and "pbkdf2+sha256" are supported by the client:
+
+----
+(handshake) handshake password_hash_algo=plain:sha256:pbkdf2+sha256
+----
+
+Response:
+
+[source,python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'pbkdf2+sha256',
     'password_hash_iterations': '100000',
     'totp': 'on',
     'nonce': '85B1EE00695A5B254E14F4885538DF0D',
@@ -215,10 +251,24 @@ the password is "test" in this example:
 init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:100000:ba7facc3edb89cd06ae810e29ced85980ff36de2bb596fcf513aaab626876440
 ----
 
-[TIP]
-With WeeChat ≤ 2.8, the command _handshake_ is not implemented, WeeChat silently
-ignores this command, even if it is sent before the _init_ command. +
-So it is safe to send this command to any WeeChat version.
+* Only "sha256" and "sha512" are supported by the client, disable compression:
+
+----
+(handshake) handshake password_hash_algo=sha256:sha512,compression=off
+----
+
+Response:
+
+[source,python]
+----
+id: 'handshake'
+htb: {
+    'password_hash_algo': 'sha512',
+    'password_hash_iterations': '100000',
+    'totp': 'on',
+    'nonce': '85B1EE00695A5B254E14F4885538DF0D',
+}
+----
 
 [[command_init]]
 === init
@@ -292,28 +342,44 @@ password as hexadecimal:
 Hexadecimal strings can be lower or upper case, _relay_ can decode both.
 
 // TRANSLATION MISSING
-例:
+Examples:
+
+* Initialize with password:
 
 ----
-# デフォルト設定の zlib を使用する例 (WeeChat がサポートする場合)
 init password=mypass
+----
 
-# パスワードにコンマを含む値を設定する例 (WeeChat バージョン 1.6 以上の場合)
+* Initialize with commas in the password _(WeeChat ≥ 1.6)_:
+
+----
 init password=mypass\,with\,commas
+----
 
-# パスワードと TOTP を初期化する例 (WeeChat バージョン 2.4 以上の場合)
+* Initialize with password and TOTP _(WeeChat ≥ 2.4)_:
+
+----
 init password=mypass,totp=123456
+----
 
-# 圧縮を使わない例
-init password=mypass,compression=off
+* Initialize with hashed password "test" (SHA256: salt=relay nonce + client nonce)
+  _(WeeChat ≥ 2.9)_:
 
-# initialize with hashed password "test" (SHA256: salt=relay nonce + client nonce) (WeeChat バージョン 2.9 以上の場合)
+----
 init password_hash=sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:2c6ed12eb0109fca3aedc03bf03d9b6e804cd60a23e1731fd17794da423e21db
+----
 
-# initialize with hashed password "test" (SHA512: salt=relay nonce + client nonce) (WeeChat バージョン 2.9 以上の場合)
+* Initialize with hashed password "test" (SHA512: salt=relay nonce + client nonce)
+  _(WeeChat ≥ 2.9)_:
+
+----
 init password_hash=sha512:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:0a1f0172a542916bd86e0cbceebc1c38ed791f6be246120452825f0d74ef1078c79e9812de8b0ab3dfaf598b6ca14522374ec6a8653a46df3f96a6b54ac1f0f8
+----
 
-# initialize with hashed password "test" (PBKDF2: SHA256, salt=relay nonce + client nonce, 100000 iterations) (WeeChat バージョン 2.9 以上の場合)
+* Initialize with hashed password "test" (PBKDF2: SHA256, salt=relay nonce + client nonce,
+  100000 iterations) _(WeeChat ≥ 2.9)_:
+
+----
 init password_hash=pbkdf2+sha256:85b1ee00695a5b254e14f4885538df0da4b73207f5aae4:100000:ba7facc3edb89cd06ae810e29ced85980ff36de2bb596fcf513aaab626876440
 ----
 
@@ -352,22 +418,134 @@ WeeChat バージョン 1.6 以上では、hdata へのパスが無効または 
 hdata が返されます (<<object_hdata,hdata オブジェクト>>の例を参照してください)。 +
 1.6 よりも古いバージョンでは、何も返されません。
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Request "number" and "full_name" of all buffers:
 
 ----
-# すべてのバッファを要求、"buffer" 型の hdata が返される
-# それぞれのバッファについて "number" と "name" キーが返される
-hdata buffer:gui_buffers(*) number,name
+(hdata_buffers) hdata buffer:gui_buffers(*) number,full_name
+----
 
-# バッファの全ての行を要求、"line_data" 型の hdata が返される
-# 全てのキーが返される
-hdata buffer:gui_buffers(*)/lines/first_line(*)/data
+Response:
 
-# 最初のバッファの完全な名前を要求
-hdata buffer:gui_buffers full_name
+[source,python]
+----
+id: 'hdata_buffers'
+hda:
+    keys: {
+        'number': 'int',
+        'full_name': 'str',
+    }
+    path: ['buffer']
+    item 1:
+        __path: ['0x558d61ea3e60']
+        number: 1
+        full_name: 'core.weechat'
+    item 2:
+        __path: ['0x558d62840ea0']
+        number: 1
+        full_name: 'irc.server.freenode'
+    item 3:
+        __path: ['0x558d62a9cea0']
+        number: 2
+        full_name: 'irc.freenode.#weechat'
+----
 
-# ホットリストの内容を要求
-hdata hotlist:gui_hotlist(*)
+* Request all lines of first buffer:
+
+----
+(hdata_lines) hdata buffer:gui_buffers/own_lines/first_line(*)/data
+----
+
+Response:
+
+[source,python]
+----
+id: 'hdata_lines'
+hda:
+    keys: {
+        'buffer': 'ptr',
+        'y': 'int',
+        'date': 'tim',
+        'date_printed': 'tim',
+        'str_time': 'str',
+        'tags_count': 'int',
+        'tags_array': 'arr',
+        'displayed': 'chr',
+        'notify_level': 'chr',
+        'highlight': 'chr',
+        'refresh_needed': 'chr',
+        'prefix': 'str',
+        'prefix_length': 'int',
+        'message': 'str',
+    }
+    path: ['buffer', 'lines', 'line', 'line_data']
+    item 1:
+        __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d62920d80', '0x558d62abf040']
+        buffer: '0x558d61ea3e60'
+        y: -1
+        date: 1588404926
+        date_printed: 1588404926
+        str_time: 'F@0025209F@0024535F@0024026'
+        tags_count: 0
+        tags_array: []
+        displayed: 1
+        notify_level: 0
+        highlight: 0
+        refresh_needed: 0
+        prefix: ''
+        prefix_length: 0
+        message: 'this is the first line'
+    item 2:
+        __path: ['0x558d61ea3e60', '0x558d61ea40e0', '0x558d626779f0', '0x558d62af9700']
+        buffer: '0x558d61ea3e60'
+        y: -1
+        date: 1588404930
+        date_printed: 1588404930
+        str_time: 'F@0025209F@0024535F@0024030'
+        tags_count: 0
+        tags_array: []
+        displayed: 1
+        notify_level: 0
+        highlight: 0
+        refresh_needed: 0
+        prefix: ''
+        prefix_length: 0
+        message: 'this is the second line'
+----
+
+* Request the hotlist content:
+
+----
+(hdata_hotlist) hdata hotlist:gui_hotlist(*)
+----
+
+Response:
+
+[source,python]
+----
+id: 'hdata_hotlist'
+hda:
+    keys: {
+        'priority': 'int',
+        'creation_time.tv_sec': 'tim',
+        'creation_time.tv_usec': 'lon',
+        'buffer': 'ptr',
+        'count': 'arr',
+        'prev_hotlist': 'ptr',
+        'next_hotlist': 'ptr',
+    }
+    path: ['hotlist']
+    item 1:
+        __path: ['0x558d629601b0']
+        priority: 3
+        creation_time.tv_sec: 1588405398
+        creation_time.tv_usec: 355383
+        buffer: '0x558d62a9cea0'
+        count: [1, 1, 0, 1]
+        prev_hotlist: '0x0'
+        next_hotlist: '0x0'
 ----
 
 [[command_info]]
@@ -385,10 +563,49 @@ _インフォ_ を要求。
 
 * _name_: 読み出すインフォの名前
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Request WeeChat version:
 
 ----
-info version
+(info_version) info version
+----
+
+Response:
+
+[source,python]
+----
+id: 'info_version'
+inf: ('version', '2.9-dev')
+----
+
+* Request WeeChat version as number:
+
+----
+(info_version_number) info version_number
+----
+
+Response:
+
+[source,python]
+----
+id: 'info_version_number'
+inf: ('version_number', '34144256')
+----
+
+* Request WeeChat directory:
+
+----
+(info_weechat_dir) info weechat_dir
+----
+
+Response:
+
+[source,python]
+----
+id: 'info_weechat_dir'
+inf: ('weechat_dir', '/home/xxx/.weechat')
 ----
 
 [[command_infolist]]
@@ -413,10 +630,116 @@ _インフォリスト_ を要求。
 * _pointer_: ポインタ (任意)
 * _arguments_: 引数 (任意)
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Request infolist "buffer":
 
 ----
-infolist buffer
+(infolist_buffer) infolist buffer
+----
+
+Response:
+
+[source,python]
+----
+id: 'infolist_buffer'
+inl:
+    name: buffer
+    item 1:
+        pointer: '0x558d61ea3e60'
+        current_buffer: 1
+        plugin: '0x0'
+        plugin_name: 'core'
+        number: 1
+        layout_number: 1
+        layout_number_merge_order: 0
+        name: 'weechat'
+        full_name: 'core.weechat'
+        old_full_name: None
+        short_name: 'weechat'
+        type: 0
+        notify: 3
+        num_displayed: 1
+        active: 1
+        hidden: 0
+        zoomed: 0
+        print_hooks_enabled: 1
+        day_change: 1
+        clear: 1
+        filter: 1
+        closing: 0
+        first_line_not_read: 0
+        lines_hidden: 0
+        prefix_max_length: 0
+        time_for_each_line: 1
+        nicklist_case_sensitive: 0
+        nicklist_display_groups: 1
+        nicklist_max_length: 0
+        nicklist_count: 0
+        nicklist_groups_count: 0
+        nicklist_nicks_count: 0
+        nicklist_visible_count: 0
+        title: 'WeeChat 2.9-dev (C) 2003-2020 - https://weechat.org/'
+        input: 1
+        input_get_unknown_commands: 0
+        input_get_empty: 0
+        input_buffer: ''
+        input_buffer_alloc: 256
+        input_buffer_size: 0
+        input_buffer_length: 0
+        input_buffer_pos: 0
+        input_buffer_1st_display: 0
+        num_history: 0
+        text_search: 0
+        text_search_exact: 0
+        text_search_regex: 0
+        text_search_regex_compiled: '0x0'
+        text_search_where: 0
+        text_search_found: 0
+        text_search_input: None
+        highlight_words: None
+        highlight_regex: None
+        highlight_regex_compiled: '0x0'
+        highlight_tags_restrict: None
+        highlight_tags: None
+        hotlist_max_level_nicks: None
+        keys_count: 0
+        localvar_name_00000: 'plugin'
+        localvar_value_00000: 'core'
+        localvar_name_00001: 'name'
+        localvar_value_00001: 'weechat'
+----
+
+* Request infolist "window":
+
+----
+(infolist_window) infolist window
+----
+
+Response:
+
+[source,python]
+----
+id: 'infolist_window'
+inl:
+    name: window
+    item 1:
+        pointer: '0x558d61ddc800'
+        current_window: 1
+        number: 1
+        x: 14
+        y: 0
+        width: 259
+        height: 71
+        width_pct: 100
+        height_pct: 100
+        chat_x: 14
+        chat_y: 1
+        chat_width: 259
+        chat_height: 68
+        buffer: '0x558d61ea3e60'
+        start_line_y: 0
 ----
 
 [[command_nicklist]]
@@ -435,14 +758,190 @@ infolist buffer
 * _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
   _core.weechat_ または _irc.freenode.#weechat_)
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Request nicklist for all buffers:
 
 ----
-# 全てのバッファのニックネームリストを要求
-nicklist
+(nicklist_all) nicklist
+----
 
-# irc.freenode.#weechat のニックネームリストを要求
-nicklist irc.freenode.#weechat
+Response:
+
+[source,python]
+----
+id: 'nicklist_all'
+hda:
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x558d61ea3e60', '0x558d61ea4120']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x558d62840ea0', '0x558d61e75f90']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x558d62a9cea0', '0x558d62abf2e0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 4:
+        __path: ['0x558d62a9cea0', '0x558d62afb9d0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x558d62a9cea0', '0x558d62aff930']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: 'weechat.color.chat_nick_self'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 6:
+        __path: ['0x558d62a9cea0', '0x558d62af9930']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 7:
+        __path: ['0x558d62a9cea0', '0x558d62afc510']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 8:
+        __path: ['0x558d62a9cea0', '0x558d6292c290']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'flashy'
+        color: '142'
+        prefix: ' '
+        prefix_color: 'lightblue'
+    item 9:
+        __path: ['0x558d62914680', '0x558d62afc4b0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+----
+
+* Request nicklist for buffer "irc.freenode.#weechat":
+
+----
+(nicklist_weechat) nicklist irc.freenode.#weechat
+----
+
+Response:
+
+[source,python]
+----
+id: 'nicklist_weechat'
+hda:
+    keys: {
+        'group': 'chr',
+        'visible': 'chr',
+        'level': 'int',
+        'name': 'str',
+        'color': 'str',
+        'prefix': 'str',
+        'prefix_color': 'str',
+    }
+    path: ['buffer', 'nicklist_item']
+    item 1:
+        __path: ['0x558d62a9cea0', '0x558d62abf2e0']
+        group: 1
+        visible: 0
+        level: 0
+        name: 'root'
+        color: None
+        prefix: None
+        prefix_color: None
+    item 2:
+        __path: ['0x558d62a9cea0', '0x558d62afb9d0']
+        group: 1
+        visible: 1
+        level: 1
+        name: '000|o'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 3:
+        __path: ['0x558d62a9cea0', '0x558d62aff930']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'FlashCode'
+        color: 'weechat.color.chat_nick_self'
+        prefix: '@'
+        prefix_color: 'lightgreen'
+    item 4:
+        __path: ['0x558d62a9cea0', '0x558d62af9930']
+        group: 1
+        visible: 1
+        level: 1
+        name: '001|v'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 5:
+        __path: ['0x558d62a9cea0', '0x558d62afc510']
+        group: 1
+        visible: 1
+        level: 1
+        name: '999|...'
+        color: 'weechat.color.nicklist_group'
+        prefix: None
+        prefix_color: None
+    item 6:
+        __path: ['0x558d62a9cea0', '0x558d6292c290']
+        group: 0
+        visible: 1
+        level: 0
+        name: 'flashy'
+        color: '142'
+        prefix: ' '
+        prefix_color: 'lightblue'
 ----
 
 [[command_input]]
@@ -463,10 +962,17 @@ input <buffer> <data>
 * _data_: バッファに送信するデータ: `/`
    で始まる場合、バッファ内でコマンドとして実行されます、それ以外の場合、テキストはバッファの入力として送信されます。
 
-例:
+Examples:
+
+* Send command "/help filter" on WeeChat core bufer:
 
 ----
 input core.weechat /help filter
+----
+
+* Send message "hello!" to #weechat channel:
+
+----
 input irc.freenode.#weechat hello!
 ----
 
@@ -512,17 +1018,19 @@ WeeChat replies with a hdata:
 In case of error, for example invalid buffer or internal error on WeeChat side,
 an empty hdata is returned.
 
-Example: completion of a command argument:
+Examples:
+
+* Completion of a command argument:
 
 ----
-(test) completion core.weechat -1 /help fi
+(completion_help) completion core.weechat -1 /help fi
 ----
 
 Response:
 
 [source,python]
 ----
-id: 'test'
+id: 'completion_help'
 hda:
     keys: {
         'context': 'str',
@@ -534,31 +1042,31 @@ hda:
     }
     path: ['completion']
     item 1:
-        __path: ['0x55d0ccc842c0']
-        context: 'command_arg'
-        base_word: 'fi'
-        pos_start: 6
-        pos_end: 7
-        add_space: 0
-        list: [
-            'fifo',
-            'fifo.file.enabled',
-            'fifo.file.path',
-            'filter',
-        ]
+      __path: ['0x55d0ccc842c0']
+      context: 'command_arg'
+      base_word: 'fi'
+      pos_start: 6
+      pos_end: 7
+      add_space: 0
+      list: [
+          'fifo',
+          'fifo.file.enabled',
+          'fifo.file.path',
+          'filter',
+      ]
 ----
 
-Example: completion of a command in the middle of a word:
+* Completion of a command in the middle of a word:
 
 ----
-(test) completion core.weechat 5 /quernick
+(completion_query) completion core.weechat 5 /quernick
 ----
 
 Response:
 
 [source,python]
 ----
-id: 'test'
+id: 'completion_query'
 hda:
     keys: {
         'context': 'str',
@@ -579,17 +1087,17 @@ hda:
         list: ['query']
 ----
 
-Example: nothing to complete:
+* Nothing to complete:
 
 ----
-(test) completion core.weechat -1 abcdefghijkl
+(completion_abcdefghijkl) completion core.weechat -1 abcdefghijkl
 ----
 
 Response:
 
 [source,python]
 ----
-id: 'test'
+id: 'completion_abcdefghijkl'
 hda:
     keys: {
         'context': 'str',
@@ -610,17 +1118,17 @@ hda:
         list: []
 ----
 
-Example: invalid buffer:
+* Completion on an invalid buffer:
 
 ----
-(test) completion buffer.does.not.exist -1 /help fi
+(completion_help) completion buffer.does.not.exist -1 /help fi
 ----
 
 Response:
 
 [source,python]
 ----
-id: 'test'
+id: 'completion_help'
 hda:
     keys: {}
     path: ['completion']
@@ -662,23 +1170,33 @@ sync [<buffer>[,<buffer>...] <option>[,<option>...]]
    と同じバッファに関するシグナル) _(WeeChat バージョン 0.4.1 で更新)_
 ** _nicklist_: 変更後にニックネームリストを受信
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Synchronize all buffers with nicklist (the 3 commands are equivalent,
+but the first one is recommended for compatibility with future versions):
 
 ----
-# ニックネームリストを持つ全てのバッファを同期
-# (3 つのコマンドは全て等価ですが、
-# 将来のバージョンとの互換性を考慮して 1 つ目のコマンドを推奨します)
 sync
 sync *
 sync * buffers,upgrade,buffer,nicklist
+----
 
-# コアバッファを同期
+* Synchronize WeeChat core buffer:
+
+----
 sync core.buffer
+----
 
-# #weechat チャンネルを同期、ニックネームリストは受信しない
+* Synchronize #weechat channel, without nicklist:
+
+----
 sync irc.freenode.#weechat buffer
+----
 
-# 一般的なシグナル + #weechat チャンネルに対する全てのシグナルを取得
+* Get general signals + all signals for #weechat channel:
+
+----
 sync * buffers,upgrade
 sync irc.freenode.#weechat
 ----
@@ -715,20 +1233,27 @@ buffer に "*" を指定した場合、(名前を使って) 同期されてい�
 は #weechat チャンネルに対するアップデートを送信し続けます
 (アップデートを止めるには、明示してこれを中止しなければいけません)。
 
-例:
+// TRANSLATION MISSING
+Examples:
+
+* Desynchronize all buffers (the 3 commands are equivalent, but the first one
+  is recommended for compatibility with future versions):
 
 ----
-# ニックネームリストを持つ全てのバッファの同期を中止
-# (3 つのコマンドは全て等価ですが、
-# 将来のバージョンとの互換性を考慮して 1 つ目のコマンドを推奨します)
 desync
 desync *
 desync * buffers,upgrade,buffer,nicklist
+----
 
-# #weechat チャンネルのニックネームリストの同期を中止 (バッファは同期する)
+* Desynchronize nicklist for #weechat channel (keep buffer updates):
+
+----
 desync irc.freenode.#weechat nicklist
+----
 
-# #weechat チャンネルの同期を中止
+* Desynchronize #weechat channel:
+
+----
 desync irc.freenode.#weechat
 ----
 
@@ -740,21 +1265,10 @@ desync irc.freenode.#weechat
 このコマンドは WeeChat
 が返すバイナリオブジェクトのデコーディングをテストする際に便利です。
 
-[IMPORTANT]
-このコマンドが返したポインタ値を絶対に使ってはいけません、ポインタ値は無効です。このコマンドを
-WeeChat
-が返すメッセージのデコーディングをテストする場合以外に使わないでください。
-
 構文:
 
 ----
-test
-----
-
-例:
-
-----
-test
+(id) test
 ----
 
 返されるオブジェクト (以下の順番):
@@ -779,6 +1293,39 @@ test
 | integer の配列    | arr int           | [ 123, 456, 789 ]
 |===
 
+[IMPORTANT]
+このコマンドが返したポインタ値を絶対に使ってはいけません、ポインタ値は無効です。このコマンドを
+WeeChat
+が返すメッセージのデコーディングをテストする場合以外に使わないでください。
+
+例:
+
+----
+(test) test
+----
+
+// TRANSLATION MISSING
+Response:
+
+----
+id: 'test'
+chr: 65
+int: 123456
+int: -123456
+lon: 1234567890
+lon: -1234567890
+str: 'a string'
+str: ''
+str: None
+buf: 'buffer'
+buf: None
+ptr: '0x1234abcd'
+ptr: '0x0'
+tim: 1321993456
+arr: ['abc', 'de']
+arr: [123, 456, 789]
+----
+
 [[command_ping]]
 === ping
 
@@ -799,6 +1346,14 @@ ping [<arguments>]
 
 ----
 ping 1370802127000
+----
+
+// TRANSLATION MISSING
+Response:
+
+----
+id:'_pong'
+str: '1370802127000'
 ----
 
 [[command_quit]]
@@ -1218,7 +1773,7 @@ hda:
             'type': 'private',
             'channel': 'FlashCode',
             'nick': 'test',
-            'name': 'local.Flash2',
+            'name': 'freenode.Flash2',
         }
 ----
 
