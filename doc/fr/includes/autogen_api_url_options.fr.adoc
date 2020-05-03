@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== api_url_options ========================================
-
 // tag::url_options[]
 [width="100%",cols="2,^1,7",options="header"]
 |===

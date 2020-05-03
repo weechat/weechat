@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== api_plugins_priority ========================================
-
 // tag::plugins_priority[]
 . charset (15000)
 . logger (14000)

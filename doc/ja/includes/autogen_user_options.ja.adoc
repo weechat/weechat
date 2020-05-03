@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== user_options ========================================
-
 // tag::sec_options[]
 * [[option_sec.crypt.cipher]] *sec.crypt.cipher*
 ** 説明: pass:none[データの暗号化を行う暗号鍵 (アルゴリズムの後ろに書かれた数は鍵のビット数)]

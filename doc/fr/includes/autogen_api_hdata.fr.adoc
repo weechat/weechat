@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== api_hdata ========================================
-
 // tag::hdata[]
 :hdata_update_create: __create
 :hdata_update_delete: __delete

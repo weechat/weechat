@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== user_irc_colors ========================================
-
 // tag::irc_colors[]
 [width="50%",cols="^2m,3",options="header"]
 |===

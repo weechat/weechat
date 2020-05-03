@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== user_default_aliases ========================================
-
 // tag::default_aliases[]
 [width="100%",cols="2m,5m,5",options="header"]
 |===

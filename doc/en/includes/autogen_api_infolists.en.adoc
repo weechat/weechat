@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== api_infolists ========================================
-
 // tag::infolists[]
 [width="100%",cols="^1,^2,5,5,5",options="header"]
 |===

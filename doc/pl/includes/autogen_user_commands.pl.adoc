@@ -3,8 +3,6 @@
 // DO NOT EDIT BY HAND!
 //
 
-// ======================================== user_commands ========================================
-
 // tag::irc_commands[]
 [[command_irc_admin]]
 * `+admin+`: wyszukuje informacje o administratorze serwera
