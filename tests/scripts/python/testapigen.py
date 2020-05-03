@@ -29,6 +29,8 @@ It uses the following scripts:
 - testapi.py: the WeeChat scripting API tests
 """
 
+# pylint: disable=wrong-import-order,wrong-import-position
+
 from __future__ import print_function
 import argparse
 import ast
@@ -46,7 +48,7 @@ sys.dont_write_bytecode = True
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(SCRIPT_DIR)
-from unparse import (  # pylint: disable=wrong-import-position
+from unparse import (
     UnparsePython,
     UnparsePerl,
     UnparseRuby,
@@ -170,7 +172,7 @@ class WeechatScript(object):  # pylint: disable=too-many-instance-attributes
 
     def write_footer(self, output):
         """Write footer (nothing by default)."""
-        pass
+        pass  # pylint: disable=unnecessary-pass
 
 
 class WeechatPythonScript(WeechatScript):

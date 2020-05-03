@@ -22,7 +22,7 @@ Unparse AST tree to generate scripts in all supported languages
 (Python, Perl, Ruby, ...).
 """
 
-# pylint: disable=too-many-lines
+# pylint: disable=too-many-lines,unnecessary-pass
 
 from __future__ import print_function
 import argparse
@@ -228,7 +228,7 @@ class UnparsePython(object):
             self.fill,
             self.fill if self._indent_level == 0 else None,
             'def %s(' % node.name,
-            self.make_list([arg for arg in node.args.args]),
+            self.make_list(node.args.args),
             '):',
             self.indent,
             node.body,
@@ -424,7 +424,7 @@ class UnparsePerl(UnparsePython):
                 self.fill,
                 'my (',
                 (self.prefix, '$'),
-                self.make_list([arg for arg in node.args.args]),
+                self.make_list(node.args.args),
                 (self.prefix, None),
                 ') = @_;',
             )
@@ -525,7 +525,7 @@ class UnparseRuby(UnparsePython):
         if node.args.args:
             self.add(
                 '(',
-                self.make_list([arg for arg in node.args.args]),
+                self.make_list(node.args.args),
                 ')',
             )
         self.add(
@@ -621,7 +621,7 @@ class UnparseLua(UnparsePython):
         )
         self.add(
             '(',
-            self.make_list([arg for arg in node.args.args]),
+            self.make_list(node.args.args),
             ')',
             self.indent,
             node.body,
@@ -713,7 +713,7 @@ class UnparseTcl(UnparsePython):
             node.func,
             ' ' if node.args else None,
             (self.prefix, '$'),
-            self.make_list([arg for arg in node.args], sep=' '),
+            self.make_list(node.args, sep=' '),
             (self.prefix, None),
         )
         self._call -= 1
@@ -769,7 +769,7 @@ class UnparseTcl(UnparsePython):
             self.fill,
             self.fill,
             'proc %s {' % node.name,
-            (self.make_list([arg for arg in node.args.args], sep=' ')
+            (self.make_list(node.args.args, sep=' ')
              if node.args.args else None),
             '} {',
             self.indent,
@@ -894,7 +894,7 @@ class UnparseGuile(UnparsePython):
             '(',
             node.func,
             ' ' if node.args else None,
-            self.make_list([arg for arg in node.args], sep=' '),
+            self.make_list(node.args, sep=' '),
             ')',
         )
         self._call -= 1
@@ -942,7 +942,7 @@ class UnparseGuile(UnparsePython):
             self.fill,
             '(define (%s' % node.name,
             ' ' if node.args.args else None,
-            (self.make_list([arg for arg in node.args.args], sep=' ')
+            (self.make_list(node.args.args, sep=' ')
              if node.args.args else None),
             ')',
             self.indent,
@@ -1036,7 +1036,7 @@ class UnparseJavascript(UnparsePython):
             self.fill,
             self.fill,
             'function %s(' % node.name,
-            self.make_list([arg for arg in node.args.args]),
+            self.make_list(node.args.args),
             ') {',
             self.indent,
             node.body,
@@ -1162,7 +1162,7 @@ class UnparsePhp(UnparsePython):
             self.fill,
             'function %s(' % node.name,
             (self.prefix, '$'),
-            self.make_list([arg for arg in node.args.args]),
+            self.make_list(node.args.args),
             (self.prefix, None),
             ')',
             self.fill,
