@@ -26,7 +26,7 @@ before_script:
     - travis_retry sudo apt-get update -qq
     - travis_retry sudo apt-get -y install devscripts equivs python-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls-dev zlib1g-dev curl libcpputest-dev php7.0-dev libphp7.0-embed
     - travis_retry sudo gem install asciidoctor
-    - travis_retry sudo -H pip install --ignore-installed msgcheck pylint
+    - travis_retry sudo -H pip install --ignore-installed msgcheck pylint3
     - phpenv local system
       # work around broken travis environment variables, see https://github.com/travis-ci/travis-ci/issues/5301
     - unset PYTHON_CFLAGS
@@ -34,11 +34,11 @@ before_script:
 script:
     - ./tools/build-test.sh
     - msgcheck po/*.po
-    - pylint --version
-    - pylint doc/docgen.py
-    - pylint tests/scripts/python/testapigen.py
-    - pylint tests/scripts/python/testapi.py
-    - pylint tests/scripts/python/unparse.py
+    - pylint3 --version
+    - pylint3 doc/docgen.py
+    - pylint3 tests/scripts/python/testapigen.py
+    - pylint3 tests/scripts/python/testapi.py
+    - pylint3 tests/scripts/python/unparse.py
     - ./tools/build-debian.sh test-patches
 
 after_success:
