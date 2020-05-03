@@ -47,6 +47,8 @@ Bug fixes::
 
 Documentation::
 
+  * add includes directory
+  * merge 53 auto-generated files into 11 files
   * fix broken literal blocks in Japanese docs with Firefox (issue #1466)
 
 Tests::
