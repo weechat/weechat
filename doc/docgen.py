@@ -145,7 +145,7 @@ IGNORE_COMPLETIONS_ITEMS = (
 
 def translate(string):
     """Translate a string."""
-    return (string and _(string)) or string
+    return _(string) if string else string
 
 
 def escape(string):
@@ -163,7 +163,7 @@ def sha256_file(filename, default=None):
     return checksum
 
 
-class WeechatDoc():
+class WeechatDoc():  # pylint: disable=too-few-public-methods
     """A class to read documentation from WeeChat API."""
 
     def __init__(self):
@@ -451,16 +451,18 @@ class WeechatDoc():
         return plugins_priority
 
 
-class AutogenDoc(object):
+class AutogenDoc():
     """A class to write auto-generated doc files."""
 
     def __init__(self, weechat_doc, doc_directory, locale):
         """Initialize auto-generated doc file."""
         self.doc_directory = doc_directory
         self.locale = locale
-        self.lang = locale[:2]
         self.count_files = 0
         self.count_updated = 0
+        self.filename = None
+        self.filename_tmp = None
+        self._file = None
         self.install_translations()
         self.write_autogen_files(weechat_doc)
 
@@ -475,11 +477,12 @@ class AutogenDoc(object):
         trans.install()
 
     def open_file(self, name):
+        """Open temporary auto-generated file."""
         self.filename = os.path.join(
             self.doc_directory,
-            self.lang,
+            self.locale[:2],
             'includes',
-            f'autogen_{name}.{self.lang}.adoc',
+            f'autogen_{name}.{self.locale[:2]}.adoc',
         )
         self.filename_tmp = f'{self.filename}.tmp'
         self._file = open(self.filename_tmp, 'w')
@@ -499,12 +502,13 @@ class AutogenDoc(object):
         self.write('//')
         getattr(self, f'_write_{name}')(doc)
 
-    def write(self, string=None, *args):
+    def write(self, *args):
         """Write a line in auto-generated doc file."""
-        if string:
-            if args:
-                string %= args
-            self._file.write(string)
+        if args:
+            if len(args) > 1:
+                self._file.write(args[0] % args[1:])
+            else:
+                self._file.write(args[0])
         self._file.write('\n')
 
     def update_autogen_file(self):
@@ -563,6 +567,7 @@ class AutogenDoc(object):
                 self.write('----')
             self.write(f'// end::{plugin}_commands[]')
 
+    # pylint: disable=too-many-locals,too-many-branches
     def _write_user_options(self, options):
         """Write config options."""
         for config in options:
@@ -797,8 +802,6 @@ class AutogenDoc(object):
         self.write(f'// end::plugins_priority[]')
 
 
-# p: disable=too-many-locals, too-many-branches, too-many-statements
-# p: disable=too-many-nested-blocks
 def docgen_cmd_cb(data, buf, args):
     """Callback for /docgen command."""
     doc_directory = data
