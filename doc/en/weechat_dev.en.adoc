@@ -430,26 +430,34 @@ Documentation files:
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Path/file                            | Description
-| doc/                                 | Documentation.
-|    docinfo.html                      | Asciidoctor style.
-|    docgen.py                         | Python script to build files in _autogen/_ directory (see below).
-|    XX/                               | Documentation for language XX (languages: en, fr, de, it, ...).
-|       weechat.1.XX.adoc              | Man page (`man weechat`).
-|       weechat_dev.XX.adoc            | link:weechat_dev.en.html[Developer's guide] (this document).
-|       weechat_faq.XX.adoc            | link:weechat_faq.en.html[FAQ].
-|       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.en.html[Plugin API reference].
-|       weechat_quickstart.XX.adoc     | link:weechat_quickstart.en.html[Quickstart guide].
-|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.en.html[Relay protocol] (for remote interfaces).
-|       weechat_scripting.XX.adoc      | link:weechat_scripting.en.html[Scripting guide].
-|       weechat_tester.XX.adoc         | link:weechat_tester.en.html[Tester's guide].
-|       weechat_user.XX.adoc           | link:weechat_user.en.html[User's guide].
-|       includes/                      | Files included in documentation.
-|          cmdline_options.XX.adoc     | Command-line options (file included in man pages and user's guide).
-|          man.XX.adoc                 | Part of man pages: plugin options, files and copyright.
-|       autogen/                       | Files auto-built with script docgen.py.
-|          user/                       | Files auto-built for user's guide (do *NEVER* update manually!).
-|          plugin_api/                 | Files auto-built for plugin API (do *NEVER* update manually!).
+| Path/file                                     | Description
+| doc/                                          | Documentation.
+|    docinfo.html                               | Asciidoctor style.
+|    docgen.py                                  | Python script to build auto-generated files in _includes/_ directory (see below).
+|    XX/                                        | Documentation for language XX (languages: en, fr, de, it, ...).
+|       weechat.1.XX.adoc                       | Man page (`man weechat`).
+|       weechat_dev.XX.adoc                     | link:weechat_dev.en.html[Developer's guide] (this document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.en.html[FAQ].
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.en.html[Plugin API reference].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.en.html[Quickstart guide].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.en.html[Relay protocol] (for remote interfaces).
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.en.html[Scripting guide].
+|       weechat_tester.XX.adoc                  | link:weechat_tester.en.html[Tester's guide].
+|       weechat_user.XX.adoc                    | link:weechat_user.en.html[User's guide].
+|       includes/                               | Files included in documentation.
+|          autogen_api_completions.XX.adoc      | Auto-generated file for Plugin API reference: completions (do *NEVER* update manually!).
+|          autogen_api_hdata.XX.adoc            | Auto-generated file for Plugin API reference: hdata (do *NEVER* update manually!).
+|          autogen_api_infolists.XX.adoc        | Auto-generated file for Plugin API reference: infolists (do *NEVER* update manually!).
+|          autogen_api_infos.XX.adoc            | Auto-generated file for Plugin API reference: infos (do *NEVER* update manually!).
+|          autogen_api_infos_hashtable.XX.adoc  | Auto-generated file for Plugin API reference: infos hashtable (do *NEVER* update manually!).
+|          autogen_api_plugins_priority.XX.adoc | Auto-generated file for Plugin API reference: plugins priority (do *NEVER* update manually!).
+|          autogen_api_url_options.XX.adoc      | Auto-generated file for Plugin API reference: URL options (do *NEVER* update manually!).
+|          autogen_user_commands.XX.adoc        | Auto-generated file for User's guide: commands (do *NEVER* update manually!).
+|          autogen_user_default_aliases.XX.adoc | Auto-generated file for User's guide: default aliases (do *NEVER* update manually!).
+|          autogen_user_irc_colors.XX.adoc      | Auto-generated file for User's guide: IRC colors (do *NEVER* update manually!).
+|          autogen_user_options.XX.adoc         | Auto-generated file for User's guide: configuration options (do *NEVER* update manually!).
+|          cmdline_options.XX.adoc              | Command-line options (file included in man pages and user's guide).
+|          man.XX.adoc                          | Part of man pages: plugin options, files and copyright.
 |===
 
 Translations for WeeChat and plugins are done with gettext, files are in _po/_
@@ -1160,27 +1168,15 @@ And then you can recompile WeeChat to use the new translations.
 [[build_autogen_files]]
 ===== Build auto-generated files
 
-Files in directory _doc/XX/autogen/_ are auto-generated by script _doc/docgen.py_.
+Files named `+autogen_*+` in directory _doc/XX/includes/_ are auto-generated by
+script _doc/docgen.py_.
 
-Copy this python script to your python directory (for example _~/.weechat/python_).
-Then you can load this script in your WeeChat, and setup path to your _/doc_ directory:
-
-----
-/python load docgen.py
-/set plugins.var.python.docgen.path "~/src/weechat/doc"
-----
-
-Then create this alias to build files:
+You can rebuild auto-generated files directly in your WeeChat sources by
+running WeeChat in a temporary directory and loading the script:
 
 ----
-/alias add doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
+weechat -t -r "/python load /path/to/weechat/doc/docgen.py;/docgen;/quit"
 ----
-
-And use command `/doc` to build all files, for all languages.
-
-[IMPORTANT]
-When using command `/doc`, be sure all C plugins (irc, charset, ...) are loaded,
-because files are built using data currently in memory.
 
 [[asciidoc]]
 ==== Asciidoc

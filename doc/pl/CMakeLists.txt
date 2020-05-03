@@ -49,7 +49,7 @@ endif()
 
 if(ENABLE_DOC)
 
-  file(GLOB AUTOGEN_USER "${CMAKE_CURRENT_SOURCE_DIR}/autogen/user/*.adoc")
+  file(GLOB AUTOGEN_USER "${CMAKE_CURRENT_SOURCE_DIR}/includes/autogen_user_*.adoc")
 
   # user's guide
   add_custom_command(

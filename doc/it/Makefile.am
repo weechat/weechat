@@ -29,9 +29,7 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.it.adoc \
              weechat_quickstart.it.adoc \
              weechat_tester.it.adoc \
-             $(wildcard includes/*.adoc) \
-             $(wildcard autogen/user/*.adoc) \
-             $(wildcard autogen/plugin_api/*.adoc)
+             $(wildcard includes/*.adoc)
 
 if MAN
   man_targets = weechat.1 \
@@ -58,11 +56,11 @@ weechat-headless.1: weechat-headless.1.it.adoc includes/cmdline_options.it.adoc 
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -b manpage -o weechat-headless.1 $(abs_top_srcdir)/doc/it/weechat-headless.1.it.adoc
 
 # user's guide
-weechat_user.it.html: weechat_user.it.adoc includes/cmdline_options.it.adoc $(wildcard autogen/user/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
+weechat_user.it.html: weechat_user.it.adoc includes/cmdline_options.it.adoc $(wildcard includes/autogen_user_*.adoc) $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_user.it.html $(abs_top_srcdir)/doc/it/weechat_user.it.adoc
 
 # plugin API reference
-weechat_plugin_api.it.html: weechat_plugin_api.it.adoc $(wildcard autogen/plugin_api/*.adoc) $(abs_top_srcdir)/doc/docinfo.html
+weechat_plugin_api.it.html: weechat_plugin_api.it.adoc $(wildcard includes/autogen_api_*.adoc) $(abs_top_srcdir)/doc/docinfo.html
 	$(ASCIIDOCTOR) $(ASCIIDOCTOR_ARGS) -a revnumber="$(VERSION)" -o weechat_plugin_api.it.html $(abs_top_srcdir)/doc/it/weechat_plugin_api.it.adoc
 
 # scripting guide

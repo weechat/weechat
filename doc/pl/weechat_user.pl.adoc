@@ -787,7 +787,7 @@ atrybutu.
 
 Kody kolorów dla kbd:[Ctrl+c], kbd:[c]:
 
-include::autogen/user/irc_colors.adoc[]
+include::includes/autogen_user_irc_colors.pl.adoc[tag=irc_colors]
 
 [NOTE]
 W celu wyświetlenia wszystkich dostępnych kolorów dla terminala możesz wykonać
@@ -2119,7 +2119,7 @@ W celu użycia hasła _freenode_, na przykład z
 [[weechat_commands]]
 ==== Komendy WeeChat
 
-include::autogen/user/weechat_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=weechat_commands]
 
 [[sec_options]]
 ==== Opcje dla bezpiecznych danych
@@ -2135,7 +2135,7 @@ Sekcje w pliku _sec.conf_:
 
 Opcje:
 
-include::autogen/user/sec_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=sec_options]
 
 [[weechat_options]]
 ==== Opcje WeeChat
@@ -2170,7 +2170,7 @@ Sekcje w pliku _weechat.conf_:
 
 Opcje:
 
-include::autogen/user/weechat_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=weechat_options]
 
 [[plugins]]
 == Wtyczki
@@ -2250,12 +2250,12 @@ rozróżniają wielkości znaków dlatego na przykład `/close` wywoła alias `/
 
 Lista domyślnych aliasów:
 
-include::autogen/user/alias_default_aliases.adoc[]
+include::includes/autogen_user_default_aliases.pl.adoc[tag=default_aliases]
 
 [[alias_commands]]
 ==== Komendy
 
-include::autogen/user/alias_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=alias_commands]
 
 [[alias_options]]
 ==== Options
@@ -2281,7 +2281,7 @@ Domyślny pasek "buflist" jest tworzony podczas uruchomieina z włączoną wtycz
 [[buflist_commands]]
 ==== Komendy
 
-include::autogen/user/buflist_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=buflist_commands]
 
 [[buflist_options]]
 ==== Options
@@ -2297,7 +2297,7 @@ Sekcje w pliku _buflist.conf_:
 
 Opcje:
 
-include::autogen/user/buflist_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=buflist_options]
 
 [[charset_plugin]]
 === Charset
@@ -2396,7 +2396,7 @@ W razie jakichś problemów z kodowaniem, zajrzyj do link:weechat_faq.pl.html#ch
 [[charset_commands]]
 ==== Komendy
 
-include::autogen/user/charset_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=charset_commands]
 
 [[charset_options]]
 ==== Opcje
@@ -2415,7 +2415,7 @@ Sekcje w pliku _charset.conf_:
 
 Opcje:
 
-include::autogen/user/charset_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=charset_options]
 
 [[exec_plugin]]
 === Exec
@@ -2426,7 +2426,7 @@ jej wynik lokalnie lub wysłać do bufora.
 [[exec_commands]]
 ==== Komendy
 
-include::autogen/user/exec_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=exec_commands]
 
 [[exec_options]]
 ==== Opcje
@@ -2442,7 +2442,7 @@ Sekcje w pliku _exec.conf_:
 
 Opcje:
 
-include::autogen/user/exec_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=exec_options]
 
 [[fifo_plugin]]
 === Fifo
@@ -2490,7 +2490,7 @@ $ printf '%b' '*/python unload\n*/python autoload\n' >~/.weechat/weechat_fifo
 [[fifo_commands]]
 ==== Komendy
 
-include::autogen/user/fifo_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=fifo_commands]
 
 [[fifo_options]]
 ==== Opcje
@@ -2505,7 +2505,7 @@ Sekcje w pliku _fifo.conf_:
 
 Opcje:
 
-include::autogen/user/fifo_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=fifo_options]
 
 [[fset_plugin]]
 === Fset
@@ -2516,7 +2516,7 @@ WeeChat i wtyczek.
 [[fset_commands]]
 ==== Komendy
 
-include::autogen/user/fset_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=fset_commands]
 
 [[fset_options]]
 ==== Opcje
@@ -2533,7 +2533,7 @@ Sekcje w pliku _fset.conf_:
 
 Opcje:
 
-include::autogen/user/fset_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=fset_options]
 
 [[irc_plugin]]
 === IRC
@@ -2995,7 +2995,7 @@ Kilka przykładów:
 [[irc_commands]]
 ==== Komendy
 
-include::autogen/user/irc_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=irc_commands]
 
 [[irc_options]]
 ==== Opcje
@@ -3018,7 +3018,7 @@ Sekcje w pliku _irc.conf_:
 
 Opcje:
 
-include::autogen/user/irc_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=irc_options]
 
 [[logger_plugin]]
 === Logger
@@ -3161,7 +3161,7 @@ Spowoduje powstanie następującej struktury:
 [[logger_commands]]
 ==== Komendy
 
-include::autogen/user/logger_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=logger_commands]
 
 [[logger_options]]
 ==== Opcje
@@ -3180,7 +3180,7 @@ Sekcje w pliku _logger.conf_:
 
 Opcje:
 
-include::autogen/user/logger_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=logger_options]
 
 [[relay_plugin]]
 === Relay
@@ -3365,7 +3365,7 @@ WeeChat uruchomionej na "hostname".
 [[relay_commands]]
 ==== Komendy
 
-include::autogen/user/relay_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=relay_commands]
 
 [[relay_options]]
 ==== Opcje
@@ -3385,7 +3385,7 @@ Sekcje w pliku _relay.conf_:
 
 Opcje:
 
-include::autogen/user/relay_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=relay_options]
 
 [[scripts_plugins]]
 === Skryptowe
@@ -3405,47 +3405,47 @@ znaleźć w link:weechat_scripting.pl.html[Poradniku pisania skryptów].
 [[script_commands]]
 ==== Komendy wtyczki script
 
-include::autogen/user/script_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=script_commands]
 
 [[python_commands]]
 ==== Komendy wtyczki python
 
-include::autogen/user/python_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=python_commands]
 
 [[perl_commands]]
 ==== Komendy wtyczki perl
 
-include::autogen/user/perl_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=perl_commands]
 
 [[ruby_commands]]
 ==== Komendy wtyczki ruby
 
-include::autogen/user/ruby_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=ruby_commands]
 
 [[lua_commands]]
 ==== Komendy wtyczki lua
 
-include::autogen/user/lua_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=lua_commands]
 
 [[tcl_commands]]
 ==== Komendy wtyczki tcl
 
-include::autogen/user/tcl_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=tcl_commands]
 
 [[guile_commands]]
 ==== Komendy wtyczki guile
 
-include::autogen/user/guile_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=guile_commands]
 
 [[javascript_commands]]
 ==== Komendy wtyczki javascript
 
-include::autogen/user/javascript_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=javascript_commands]
 
 [[php_commands]]
 ==== Komendy wtyczki php
 
-include::autogen/user/php_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=php_commands]
 
 [[script_options]]
 ==== Opcje wtyczki script
@@ -3462,7 +3462,7 @@ Sekcje w pliku _script.conf_:
 
 Opcje:
 
-include::autogen/user/script_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=script_options]
 
 [[python_options]]
 ==== Opcje dla języka Python
@@ -3477,7 +3477,7 @@ Sekcje w pliku _python.conf_:
 
 Opcje:
 
-include::autogen/user/python_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=python_options]
 
 [[perl_options]]
 ==== Opcje dla języka Perl
@@ -3492,7 +3492,7 @@ Sekcje w pliku _perl.conf_:
 
 Opcje:
 
-include::autogen/user/perl_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=perl_options]
 
 [[ruby_options]]
 ==== Opcje dla języka Ruby
@@ -3507,7 +3507,7 @@ Sekcje w pliku _ruby.conf_:
 
 Opcje:
 
-include::autogen/user/ruby_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=ruby_options]
 
 [[lua_options]]
 ==== Opcje dla języka Lua
@@ -3522,7 +3522,7 @@ Sekcje w pliku _lua.conf_:
 
 Opcje:
 
-include::autogen/user/lua_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=lua_options]
 
 [[tcl_options]]
 ==== Opcje dla języka Tcl
@@ -3537,7 +3537,7 @@ Sekcje w pliku _tcl.conf_:
 
 Opcje:
 
-include::autogen/user/tcl_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=tcl_options]
 
 [[guile_options]]
 ==== Opcje dla języka Guile
@@ -3552,7 +3552,7 @@ Sekcje w pliku _guile.conf_:
 
 Opcje:
 
-include::autogen/user/guile_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=guile_options]
 
 [[javascript_options]]
 ==== Opcje dla języka Javascript
@@ -3567,7 +3567,7 @@ Sekcje w pliku _javascript.conf_:
 
 Opcje:
 
-include::autogen/user/javascript_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=javascript_options]
 
 [[php_options]]
 ==== Opcje dla języka PHP
@@ -3582,7 +3582,7 @@ Sekcje w pliku _php.conf_:
 
 Opcje:
 
-include::autogen/user/php_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=php_options]
 
 [[spell_plugin]]
 === Spell
@@ -3670,7 +3670,7 @@ Przykład sugestii ze słownikami angielskim i francuskim (`en,fr`):
 [[spell_commands]]
 ==== Komendy
 
-include::autogen/user/spell_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=spell_commands]
 
 [[spell_options]]
 ==== Opcje
@@ -3690,7 +3690,7 @@ Sekcje w pliku _spell.conf_:
 
 Opcje:
 
-include::autogen/user/spell_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=spell_options]
 
 [[trigger_plugin]]
 === Trigger
@@ -4355,7 +4355,7 @@ wyświetli w buforze rdzenia).
 [[trigger_commands]]
 ==== Komendy
 
-include::autogen/user/trigger_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=trigger_commands]
 
 [[trigger_options]]
 ==== Opcje
@@ -4374,7 +4374,7 @@ Sekcje w pliku _trigger.conf_:
 
 Opcje:
 
-include::autogen/user/trigger_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=trigger_options]
 
 [[xfer_plugin]]
 === Xfer
@@ -4388,7 +4388,7 @@ Wtyczka xfer zapewnia:
 [[xfer_commands]]
 ==== Komendy
 
-include::autogen/user/xfer_commands.adoc[]
+include::includes/autogen_user_commands.pl.adoc[tag=xfer_commands]
 
 [[xfer_options]]
 ==== Opcje
@@ -4406,7 +4406,7 @@ Sekcje w pliku _xfer.conf_:
 
 Opcje:
 
-include::autogen/user/xfer_options.adoc[]
+include::includes/autogen_user_options.pl.adoc[tag=xfer_options]
 
 [[support]]
 == Wsparcie

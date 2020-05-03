@@ -139,7 +139,7 @@ default plugins).
 
 The default WeeChat plugins are initialized in this order:
 
-include::autogen/plugin_api/plugins_priority.adoc[]
+include::includes/autogen_api_plugins_priority.en.adoc[tag=plugins_priority]
 
 ==== weechat_plugin_end
 
@@ -8342,7 +8342,7 @@ will complete with following values in command arguments:
 
 Default completion codes are:
 
-include::autogen/plugin_api/completions.adoc[]
+include::includes/autogen_api_completions.en.adoc[tag=completions]
 
 Special codes:
 
@@ -9146,7 +9146,7 @@ available:
 For command "url:...", following options are available (see
 `+man curl_easy_setopt+` for a description of each option):
 
-include::autogen/plugin_api/url_options.adoc[]
+include::includes/autogen_api_url_options.en.adoc[tag=url_options]
 
 [NOTE]
 ^(1)^ For options with type "mask", format is: "value1+value2+value3";
@@ -15207,7 +15207,7 @@ With WeeChat ≥ 2.5, the value returned is an allocated string
 
 Infos:
 
-include::autogen/plugin_api/infos.adoc[]
+include::includes/autogen_api_infos.en.adoc[tag=infos]
 
 C example:
 
@@ -15267,7 +15267,7 @@ Return value:
 
 Infos:
 
-include::autogen/plugin_api/infos_hashtable.adoc[]
+include::includes/autogen_api_infos_hashtable.en.adoc[tag=infos_hashtable]
 
 C example:
 
@@ -15659,7 +15659,7 @@ Return value:
 
 Infolists:
 
-include::autogen/plugin_api/infolists.adoc[]
+include::includes/autogen_api_infolists.en.adoc[tag=infolists]
 
 C example:
 
@@ -16374,7 +16374,7 @@ Return value:
 
 List of hdata:
 
-include::autogen/plugin_api/hdata.adoc[]
+include::includes/autogen_api_hdata.en.adoc[tag=hdata]
 
 C example:
 

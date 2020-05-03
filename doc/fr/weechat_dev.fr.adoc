@@ -431,26 +431,34 @@ Fichiers de documentation :
 
 [width="100%",cols="2m,3",options="header"]
 |===
-| Chemin/fichier                       | Description
-| doc/                                 | Documentation.
-|    docinfo.html                      | Style Asciidoctor.
-|    docgen.py                         | Script Python pour construire les fichiers dans le répertoire _autogen/_ (voir ci-dessous).
-|    XX/                               | Documentation pour la langue XX (langues : en, fr, de, it, ...).
-|       weechat.1.XX.adoc              | Page de manuel (`man weechat`).
-|       weechat_dev.XX.adoc            | link:weechat_dev.fr.html[Guide du développeur] (ce document).
-|       weechat_faq.XX.adoc            | link:weechat_faq.fr.html[FAQ] (questions fréquemment posées).
-|       weechat_plugin_api.XX.adoc     | link:weechat_plugin_api.fr.html[Référence API extension].
-|       weechat_quickstart.XX.adoc     | link:weechat_quickstart.fr.html[Guide de démarrage].
-|       weechat_relay_protocol.XX.adoc | link:weechat_relay_protocol.fr.html[Protocole Relay (pour les interfaces distantes)].
-|       weechat_scripting.XX.adoc      | link:weechat_scripting.fr.html[Guide pour scripts].
-|       weechat_tester.XX.adoc         | link:weechat_tester.fr.html[Guide du testeur].
-|       weechat_user.XX.adoc           | link:weechat_user.fr.html[Guide utilisateur].
-|       includes/                      | Fichiers inclus dans la documentation.
-|          cmdline_options.XX.adoc     | Options de ligne de commande (fichier inclus dans les pages de manuel et le guide utilisateur).
-|          man.XX.adoc                 | Parties des pages de manuel : options d'extension, fichiers et copyright.
-|       autogen/                       | Fichiers automatiquement générés avec le script docgen.py.
-|          user/                       | Fichiers automatiquement générés pour le guide utilisateur (ne *JAMAIS* les mettre à jour manuellement !).
-|          plugin_api/                 | Fichiers automatiquement générés pour l'API extension (ne *JAMAIS* les mettre à jour manuellement !).
+| Chemin/fichier                                | Description
+| doc/                                          | Documentation.
+|    docinfo.html                               | Style Asciidoctor.
+|    docgen.py                                  | Script Python pour construire les fichiers auto-générés dans le répertoire _includes/_ (voir ci-dessous).
+|    XX/                                        | Documentation pour la langue XX (langues : en, fr, de, it, ...).
+|       weechat.1.XX.adoc                       | Page de manuel (`man weechat`).
+|       weechat_dev.XX.adoc                     | link:weechat_dev.fr.html[Guide du développeur] (ce document).
+|       weechat_faq.XX.adoc                     | link:weechat_faq.fr.html[FAQ] (questions fréquemment posées).
+|       weechat_plugin_api.XX.adoc              | link:weechat_plugin_api.fr.html[Référence API extension].
+|       weechat_quickstart.XX.adoc              | link:weechat_quickstart.fr.html[Guide de démarrage].
+|       weechat_relay_protocol.XX.adoc          | link:weechat_relay_protocol.fr.html[Protocole Relay (pour les interfaces distantes)].
+|       weechat_scripting.XX.adoc               | link:weechat_scripting.fr.html[Guide pour scripts].
+|       weechat_tester.XX.adoc                  | link:weechat_tester.fr.html[Guide du testeur].
+|       weechat_user.XX.adoc                    | link:weechat_user.fr.html[Guide utilisateur].
+|       includes/                               | Fichiers inclus dans la documentation.
+|          autogen_api_completions.XX.adoc      | Fichier auto-généré pour la Référence API extension : complétions (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_hdata.XX.adoc            | Fichier auto-généré pour la Référence API extension : hdata (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_infolists.XX.adoc        | Fichier auto-généré pour la Référence API extension : infolists (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_infos.XX.adoc            | Fichier auto-généré pour la Référence API extension : infos (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_infos_hashtable.XX.adoc  | Fichier auto-généré pour la Référence API extension : infos hashtable (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_plugins_priority.XX.adoc | Fichier auto-généré pour la Référence API extension : priorités des extensions (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_api_url_options.XX.adoc      | Fichier auto-généré pour la Référence API extension : options pour les URLs (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_user_commands.XX.adoc        | Fichier auto-généré pour le Guide utilisateur : commandes (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_user_default_aliases.XX.adoc | Fichier auto-généré pour le Guide utilisateur : alias par défaut (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_user_irc_colors.XX.adoc      | Fichier auto-généré pour le Guide utilisateur : couleurs IRC (ne *JAMAIS* mettre à jour manuellement !).
+|          autogen_user_options.XX.adoc         | Fichier auto-généré pour le Guide utilisateur : options de configuration (ne *JAMAIS* mettre à jour manuellement !).
+|          cmdline_options.XX.adoc              | Options de ligne de commande (fichier inclus dans les pages de manuel et le guide utilisateur).
+|          man.XX.adoc                          | Parties des pages de manuel : options d'extension, fichiers et copyright.
 |===
 
 Les traductions pour WeeChat et les extensions sont effectuées avec gettext, les
@@ -1180,32 +1188,16 @@ Et vous pouvez alors recompiler WeeChat pour utiliser les nouvelles traductions.
 [[build_autogen_files]]
 ===== Construire les fichiers auto-générés
 
-Les fichiers dans le répertoire _doc/XX/autogen/_ sont automatiquement générés
-par le script _doc/docgen.py_.
+Les fichiers nommés `+autogen_*+` dans le répertoire _doc/XX/includes/_ sont
+automatiquement générés par le script _doc/docgen.py_.
 
-Copiez ce script python dans votre répertoire python (par exemple
-_~/.weechat/python_).
-Vous pouvez alors charger le script dans votre WeeChat, et configurer le chemin
-vers votre répertoire _/doc_ :
-
-----
-/python load docgen.py
-/set plugins.var.python.docgen.path "~/src/weechat/doc"
-----
-
-Créez alors cet alias pour construire les fichiers :
+Vous pouvez reconstruire les fichiers automatiquement générés directement dans
+vos sources WeeChat en lançant WeeChat dans un répertoire temporaire et en
+chargeant le script :
 
 ----
-/alias add doc /perl unload; /python unload; /ruby unload; /lua unload; /tcl unload; /guile unload; /javascript unload; /python load docgen.py; /wait 1ms /docgen
+weechat -t -r "/python load /path/to/weechat/doc/docgen.py;/docgen;/quit"
 ----
-
-Et utilisez la commande `/doc` pour construire tous les fichiers, pour toutes
-les langues.
-
-[IMPORTANT]
-En utilisant la commande `/doc`, assurez-vous que toutes les extensions (irc,
-charset, ...) sont chargées, car les fichiers sont construits en utilisant les
-données actuellement en mémoire.
 
 [[asciidoc]]
 ==== Asciidoc
