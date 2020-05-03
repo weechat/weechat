@@ -2,16 +2,16 @@ dist: bionic
 sudo: required
 language: c
 
-compiler:
-    - gcc
-    - clang
-
 env:
-    - BUILDTOOL="cmake" BUILDARGS=""
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
-    - BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
-    - BUILDTOOL="autotools" BUILDARGS=""
-    - BUILDTOOL="autotools" BUILDARGS="--enable-python2"
+    - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS=""
+    - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
+    - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
+    - CC="gcc" CXX="g++" BUILDTOOL="autotools" BUILDARGS=""
+    - CC="gcc" CXX="g++" BUILDTOOL="autotools" BUILDARGS="--enable-python2"
+    - CC="clang" CXX="clang++" BUILDTOOL="cmake" BUILDARGS=""
+    - CC="clang" CXX="clang++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
+    - CC="clang" CXX="clang++" BUILDTOOL="autotools" BUILDARGS=""
+    - CC="clang" CXX="clang++" BUILDTOOL="autotools" BUILDARGS="--enable-python2"
 
 matrix:
     fast_finish: true
