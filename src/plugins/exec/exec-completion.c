@@ -49,7 +49,8 @@ exec_completion_commands_ids_cb (const void *pointer, void *data,
     for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
          ptr_exec_cmd = ptr_exec_cmd->next_cmd)
     {
-        snprintf (str_number, sizeof (str_number), "%d", ptr_exec_cmd->number);
+        snprintf (str_number, sizeof (str_number),
+                  "%ld", ptr_exec_cmd->number);
         weechat_hook_completion_list_add (completion, str_number,
                                           0, WEECHAT_LIST_POS_SORT);
         if (ptr_exec_cmd->name)

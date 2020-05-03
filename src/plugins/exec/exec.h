@@ -43,7 +43,7 @@ enum t_exec_color
 struct t_exec_cmd
 {
     /* command/process */
-    int number;                        /* command number                    */
+    long number;                       /* command number                    */
     char *name;                        /* name of command                   */
     struct t_hook *hook;               /* pointer to process hook           */
     char *command;                     /* command (with arguments)          */

@@ -95,7 +95,7 @@ exec_search_by_id (const char *id)
          ptr_exec_cmd = ptr_exec_cmd->next_cmd)
     {
         /* check if number is matching */
-        if ((number >= 0) && (ptr_exec_cmd->number == (int)number))
+        if ((number >= 0) && (ptr_exec_cmd->number == number))
             return ptr_exec_cmd;
 
         /* check if name is matching */
@@ -114,36 +114,14 @@ exec_search_by_id (const char *id)
 struct t_exec_cmd *
 exec_add ()
 {
-    struct t_exec_cmd *new_exec_cmd, *ptr_exec_cmd;
-    int i, number;
-
-    /* find first available number */
-    number = (last_exec_cmd) ? last_exec_cmd->number + 1 : 0;
-    for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
-         ptr_exec_cmd = ptr_exec_cmd->next_cmd)
-    {
-        if (ptr_exec_cmd->prev_cmd
-            && (ptr_exec_cmd->number > ptr_exec_cmd->prev_cmd->number + 1))
-        {
-            number = ptr_exec_cmd->prev_cmd->number + 1;
-            break;
-        }
-    }
+    struct t_exec_cmd *new_exec_cmd;
+    int i;
 
     new_exec_cmd = malloc (sizeof (*new_exec_cmd));
     if (!new_exec_cmd)
         return NULL;
 
-    new_exec_cmd->prev_cmd = last_exec_cmd;
-    new_exec_cmd->next_cmd = NULL;
-    if (last_exec_cmd)
-        last_exec_cmd->next_cmd = new_exec_cmd;
-    else
-        exec_cmds = new_exec_cmd;
-
-    last_exec_cmd = new_exec_cmd;
-
-    new_exec_cmd->number = number;
+    new_exec_cmd->number = (last_exec_cmd) ? last_exec_cmd->number + 1 : 0;
     new_exec_cmd->name = NULL;
     new_exec_cmd->hook = NULL;
     new_exec_cmd->command = NULL;
@@ -165,6 +143,15 @@ exec_add ()
     new_exec_cmd->return_code = -1;
     new_exec_cmd->pipe_command = NULL;
     new_exec_cmd->hsignal = NULL;
+
+    /* add exec to list */
+    new_exec_cmd->prev_cmd = last_exec_cmd;
+    new_exec_cmd->next_cmd = NULL;
+    if (last_exec_cmd)
+        last_exec_cmd->next_cmd = new_exec_cmd;
+    else
+        exec_cmds = new_exec_cmd;
+    last_exec_cmd = new_exec_cmd;
 
     exec_cmds_count++;
 
@@ -343,7 +330,7 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
     }
     else
     {
-        snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
+        snprintf (str_number, sizeof (str_number), "%ld", exec_cmd->number);
         snprintf (str_tags, sizeof (str_tags),
                   "exec_%s,exec_cmd_%s",
                   (out == EXEC_STDOUT) ? "stdout" : "stderr",
@@ -460,7 +447,8 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
         if (hashtable)
         {
             weechat_hashtable_set (hashtable, "command", exec_cmd->command);
-            snprintf (str_number, sizeof (str_number), "%d", exec_cmd->number);
+            snprintf (str_number, sizeof (str_number),
+                      "%ld", exec_cmd->number);
             weechat_hashtable_set (hashtable, "number", str_number);
             weechat_hashtable_set (hashtable, "name", exec_cmd->name);
             output = exec_decode_color (exec_cmd, exec_cmd->output[EXEC_STDOUT]);
@@ -501,8 +489,8 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
                 if (buffer_type == 1)
                 {
                     weechat_printf_y (ptr_buffer, -1,
-                                      ("%s: end of command %d (\"%s\"), "
-                                       "return code: %d"),
+                                      _("%s: end of command %ld (\"%s\"), "
+                                        "return code: %d"),
                                       EXEC_PLUGIN_NAME, exec_cmd->number,
                                       exec_cmd->command, return_code);
                 }
@@ -510,7 +498,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
                 {
                     weechat_printf_date_tags (
                         ptr_buffer, 0, "exec_rc",
-                        _("%s: end of command %d (\"%s\"), "
+                        _("%s: end of command %ld (\"%s\"), "
                           "return code: %d"),
                         EXEC_PLUGIN_NAME, exec_cmd->number,
                         exec_cmd->command, return_code);
@@ -521,7 +509,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
                 if (buffer_type == 1)
                 {
                     weechat_printf_y (ptr_buffer, -1,
-                                      _("%s: unexpected end of command %d "
+                                      _("%s: unexpected end of command %ld "
                                         "(\"%s\")"),
                                       EXEC_PLUGIN_NAME, exec_cmd->number,
                                       exec_cmd->command);
@@ -530,7 +518,7 @@ exec_end_command (struct t_exec_cmd *exec_cmd, int return_code)
                 {
                     weechat_printf_date_tags (
                         ptr_buffer, 0, "exec_rc",
-                        _("%s: unexpected end of command %d "
+                        _("%s: unexpected end of command %ld "
                           "(\"%s\")"),
                         EXEC_PLUGIN_NAME, exec_cmd->number,
                         exec_cmd->command);
@@ -685,7 +673,7 @@ exec_print_log ()
     {
         weechat_log_printf ("");
         weechat_log_printf ("[exec command (addr:0x%lx)]", ptr_exec_cmd);
-        weechat_log_printf ("  number. . . . . . . . . . : %d",    ptr_exec_cmd->number);
+        weechat_log_printf ("  number. . . . . . . . . . : %ld",   ptr_exec_cmd->number);
         weechat_log_printf ("  name. . . . . . . . . . . : '%s'",  ptr_exec_cmd->name);
         weechat_log_printf ("  hook. . . . . . . . . . . : 0x%lx", ptr_exec_cmd->hook);
         weechat_log_printf ("  command . . . . . . . . . : '%s'",  ptr_exec_cmd->command);

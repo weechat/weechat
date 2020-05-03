@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"POT-Creation-Date: 2020-05-03 16:04+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -6024,12 +6024,12 @@ msgstr ""
 msgid "Execution of external commands in WeeChat"
 msgstr "Wykonywanie zewnętrznych komend w WeeChat"
 
-#, c-format
-msgid "%s: end of command %d (\"%s\"), return code: %d"
+#, fuzzy, c-format
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
 msgstr "%s: koniec komendy %d (\"%s\"), zwrócony kod: %d"
 
-#, c-format
-msgid "%s: unexpected end of command %d (\"%s\")"
+#, fuzzy, c-format
+msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr "%s: nieoczekiwany koniec komendy %d (\"%s\")"
 
 msgid "Executed commands"
@@ -6057,8 +6057,8 @@ msgid "%ds"
 msgstr "%ds"
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
-#, c-format
-msgid "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
+#, fuzzy, c-format
+msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
 msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, uruchomiono %s temu)"
 
 #, c-format

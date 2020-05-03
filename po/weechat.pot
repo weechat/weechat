@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-04-28 16:39+0200\n"
+"POT-Creation-Date: 2020-05-03 16:04+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4318,11 +4318,11 @@ msgid "Execution of external commands in WeeChat"
 msgstr ""
 
 #, c-format
-msgid "%s: end of command %d (\"%s\"), return code: %d"
+msgid "%s: end of command %ld (\"%s\"), return code: %d"
 msgstr ""
 
 #, c-format
-msgid "%s: unexpected end of command %d (\"%s\")"
+msgid "%s: unexpected end of command %ld (\"%s\")"
 msgstr ""
 
 msgid "Executed commands"
@@ -4351,7 +4351,7 @@ msgstr ""
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
 #, c-format
-msgid "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
+msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
 msgstr ""
 
 #, c-format

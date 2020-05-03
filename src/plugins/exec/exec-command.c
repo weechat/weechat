@@ -87,7 +87,7 @@ exec_command_list ()
             /* running command */
             weechat_printf (NULL,
                             /* TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59" */
-                            _("  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, "
+                            _("  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, "
                               "started %s ago)"),
                             weechat_color (weechat_config_string (exec_config_color_flag_running)),
                             ">>",
@@ -116,7 +116,7 @@ exec_command_list ()
                           "%Y-%m-%d %H:%M:%S", local_time) == 0)
                 str_time2[0] = '\0';
             weechat_printf (NULL,
-                            "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (%s -> %s, %s)",
+                            "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (%s -> %s, %s)",
                             weechat_color (weechat_config_string (exec_config_color_flag_finished)),
                             "[]",
                             weechat_color ("reset"),
@@ -553,7 +553,7 @@ exec_command_run (struct t_gui_buffer *buffer,
             else
             {
                 snprintf (str_buffer, sizeof (str_buffer),
-                          "exec.%d", new_exec_cmd->number);
+                          "exec.%ld", new_exec_cmd->number);
             }
             ptr_new_buffer = exec_buffer_new (str_buffer,
                                               (cmd_options.new_buffer == 2),
