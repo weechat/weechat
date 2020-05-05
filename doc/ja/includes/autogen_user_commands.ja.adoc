@@ -1289,19 +1289,25 @@ infolists: インフォリストに関する情報を表示
 expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
   operator: a logical or comparison operator:
             - logical operators:
-                &&  boolean "and"
-                ||  boolean "or"
+                &&   boolean "and"
+                ||   boolean "or"
             - comparison operators:
-                ==  equal
-                !=  not equal
-                <=  less or equal
-                <   less
-                >=  greater or equal
-                >   greater
-                =~  is matching POSIX extended regex
-                !~  is NOT matching POSIX extended regex
-                =*  is matching mask (wildcard "*" is allowed)
-                !*  is NOT matching mask (wildcard "*" is allowed)
+                ==   equal
+                !=   not equal
+                <=   less or equal
+                <    less
+                >=   greater or equal
+                >    greater
+                =~   is matching POSIX extended regex
+                !~   is NOT matching POSIX extended regex
+                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
+                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
+                =*   is matching mask, case insensitive (wildcard "*" is allowed)
+                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
+                ==-  is included, case sensitive
+                !!-  is NOT included, case sensitive
+                =-   is included, case insensitive
+                !-   is NOT included, case insensitive
 
 An expression is considered as "true" if it is not NULL, not empty, and different from "0".
 The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
@@ -1370,6 +1376,7 @@ Examples (conditions):
   /eval -n -c abcd =~ (?-i)^abc           ==> 1
   /eval -n -c abcd !~ abc                 ==> 0
   /eval -n -c abcd =* a*d                 ==> 1
+  /eval -n -c abcd =- bc                  ==> 1
 ----
 
 [[command_weechat_filter]]

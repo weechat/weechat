@@ -54,7 +54,12 @@ char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
 { "||", "&&" };
 
 char *comparisons[EVAL_NUM_COMPARISONS] =
-{ "=~", "!~", "=*", "!*", "==", "!=", "<=", "<", ">=", ">" };
+{ "=~", "!~",                /* regex */
+  "==*", "!!*", "=*", "!*",  /* string match */
+  "==-", "!!-", "=-", "!-",  /* includes */
+  "==", "!=",                /* equal, not equal */
+  "<=", "<", ">=", ">",      /* less than, greater than */
+};
 
 
 char *eval_replace_vars (const char *expr,
@@ -934,11 +939,35 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
             rc ^= 1;
         goto end;
     }
+    else if ((comparison == EVAL_COMPARE_STRING_MATCHING_CASE_SENSITIVE)
+             || (comparison == EVAL_COMPARE_STRING_NOT_MATCHING_CASE_SENSITIVE))
+    {
+        rc = string_match (expr1, expr2, 1);
+        if (comparison == EVAL_COMPARE_STRING_NOT_MATCHING_CASE_SENSITIVE)
+            rc ^= 1;
+        goto end;
+    }
     else if ((comparison == EVAL_COMPARE_STRING_MATCHING)
              || (comparison == EVAL_COMPARE_STRING_NOT_MATCHING))
     {
         rc = string_match (expr1, expr2, 0);
         if (comparison == EVAL_COMPARE_STRING_NOT_MATCHING)
+            rc ^= 1;
+        goto end;
+    }
+    else if ((comparison == EVAL_COMPARE_INCLUDE_CASE_SENSITIVE)
+             || (comparison == EVAL_COMPARE_NOT_INCLUDE_CASE_SENSITIVE))
+    {
+        rc = (strstr (expr1, expr2)) ? 1 : 0;
+        if (comparison == EVAL_COMPARE_NOT_INCLUDE_CASE_SENSITIVE)
+            rc ^= 1;
+        goto end;
+    }
+    else if ((comparison == EVAL_COMPARE_INCLUDE)
+             || (comparison == EVAL_COMPARE_NOT_INCLUDE))
+    {
+        rc = (string_strcasestr (expr1, expr2)) ? 1 : 0;
+        if (comparison == EVAL_COMPARE_NOT_INCLUDE)
             rc ^= 1;
         goto end;
     }

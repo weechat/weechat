@@ -1289,19 +1289,25 @@ infolists : afficher des infos sur les infolists
 expression : expression à évaluer, les variables avec le format ${variable} sont remplacées (voir ci-dessous) ; plusieurs commandes peuvent être séparées par des points-virgules
  opérateur : un opérateur logique ou de comparaison :
              - opérateurs logiques :
-                 &&  "et" booléen
-                 ||  "ou" booléen
+                 &&   "et" booléen
+                 ||   "ou" booléen
              - opérateurs de comparaison :
-                 ==  égal
-                 !=  non égal
-                 <=  inférieur ou égal
-                 <   inférieur
-                 >=  supérieur ou égal
-                 >   supérieur
-                 =~  correspond à l'expression régulière POSIX étendue
-                 !~  ne correspond PAS à l'expression régulière POSIX étendue
-                 =*  correspond au masque (le caractère joker "*" est autorisé)
-                 !=  ne correspond PAS au masque (le caractère joker "*" est autorisé)
+                 ==   égal
+                 !=   non égal
+                 <=   inférieur ou égal
+                 <    inférieur
+                 >=   supérieur ou égal
+                 >    supérieur
+                 =~   correspond à l'expression régulière POSIX étendue
+                 !~   ne correspond PAS à l'expression régulière POSIX étendue
+                 ==*  correspond au masque, sensible à la casse (le caractère joker "*" est autorisé)
+                 !!*  ne correspond PAS au masque, sensible à la casse (le caractère joker "*" est autorisé)
+                 =*   correspond au masque, insensible à la casse (le caractère joker "*" est autorisé)
+                 !=   ne correspond PAS au masque, insensible à la casse (le caractère joker "*" est autorisé)
+                 ==-  est inclus, sensible à la casse
+                 !!-  n'est PAS inclus, sensible à la casse
+                 =-   est inclus, insensible à la casse
+                 !-   n'est PAS inclus, insensible à la casse
 
 Une expression est considérée comme "vraie" si elle est non NULL, non vide, et différente de "0".
 La comparaison est faite en utilisant des nombres à virgule si les deux expressions sont des nombres valides, avec l'un de ces formats :
@@ -1370,6 +1376,7 @@ Exemples (conditions) :
   /eval -n -c abcd =~ (?-i)^abc           ==> 1
   /eval -n -c abcd !~ abc                 ==> 0
   /eval -n -c abcd =* a*d                 ==> 1
+  /eval -n -c abcd =- bc                  ==> 1
 ----
 
 [[command_weechat_filter]]

@@ -146,10 +146,25 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "abcd !~ ^ABC");
     WEE_CHECK_EVAL("0", "abcd !~ (?-i)^abc");
     WEE_CHECK_EVAL("0", "abcd!~abc");
+    WEE_CHECK_EVAL("0", "abcd ==* abce");
+    WEE_CHECK_EVAL("0", "abcd ==* ABCD");
+    WEE_CHECK_EVAL("0", "abcd ==* a*e");
+    WEE_CHECK_EVAL("0", "abcd ==* A*E");
+    WEE_CHECK_EVAL("0", "abcd !!* *bc*");
+    WEE_CHECK_EVAL("0", "abcd !!* *");
     WEE_CHECK_EVAL("0", "abcd =* abce");
     WEE_CHECK_EVAL("0", "abcd =* a*e");
+    WEE_CHECK_EVAL("0", "abcd =* A*E");
     WEE_CHECK_EVAL("0", "abcd !* *bc*");
+    WEE_CHECK_EVAL("0", "abcd !* *BC*");
     WEE_CHECK_EVAL("0", "abcd !* *");
+    WEE_CHECK_EVAL("0", "abcd ==- abce");
+    WEE_CHECK_EVAL("0", "abcd ==- ABCD");
+    WEE_CHECK_EVAL("0", "abcd ==- BC");
+    WEE_CHECK_EVAL("0", "abcd !!- bc");
+    WEE_CHECK_EVAL("0", "abcd =- abce");
+    WEE_CHECK_EVAL("0", "abcd !- bc");
+    WEE_CHECK_EVAL("0", "abcd !- BC");
     WEE_CHECK_EVAL("0", "${test} == test");
     WEE_CHECK_EVAL("0", "${test2} == value2");
     WEE_CHECK_EVAL("0", "${buffer.number} == 2");
@@ -215,10 +230,26 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "abcd !~ (?-i)^ABC");
     WEE_CHECK_EVAL("1", "abcd !~ \\(abcd\\)");
     WEE_CHECK_EVAL("1", "!~abcd");
+    WEE_CHECK_EVAL("1", "abcd !!* abce");
+    WEE_CHECK_EVAL("1", "abcd !!* ABCD");
+    WEE_CHECK_EVAL("1", "abcd !!* a*e");
+    WEE_CHECK_EVAL("1", "abcd !!* A*E");
+    WEE_CHECK_EVAL("1", "abcd !!* *BC*");
+    WEE_CHECK_EVAL("1", "abcd ==* *bc*");
+    WEE_CHECK_EVAL("1", "abcd ==* *");
     WEE_CHECK_EVAL("1", "abcd !* abce");
     WEE_CHECK_EVAL("1", "abcd !* a*e");
+    WEE_CHECK_EVAL("1", "abcd !* A*E");
     WEE_CHECK_EVAL("1", "abcd =* *bc*");
+    WEE_CHECK_EVAL("1", "abcd =* *BC*");
     WEE_CHECK_EVAL("1", "abcd =* *");
+    WEE_CHECK_EVAL("1", "abcd !!- abce");
+    WEE_CHECK_EVAL("1", "abcd !!- ABCD");
+    WEE_CHECK_EVAL("1", "abcd !!- BC");
+    WEE_CHECK_EVAL("1", "abcd ==- bc");
+    WEE_CHECK_EVAL("1", "abcd !- abce");
+    WEE_CHECK_EVAL("1", "abcd =- bc");
+    WEE_CHECK_EVAL("1", "abcd =- BC");
     WEE_CHECK_EVAL("1", "${test} == value");
     WEE_CHECK_EVAL("1", "${test2} ==");
     WEE_CHECK_EVAL("1", "${buffer.number} == 1");
@@ -255,8 +286,14 @@ TEST(CoreEval, EvalCondition)
                  "eval_strstr_level(\"abc < def\", \"&&\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"=~\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"==*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!!*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"=*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"==-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!!-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"=-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc < def\", \"!-\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"==\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"!=\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc < def\", \"<=\", \"(\", \")\", 0)\n"
@@ -266,8 +303,14 @@ TEST(CoreEval, EvalCondition)
                  "eval_strstr_level(\"abc\", \"&&\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"=~\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"==*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!!*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"=*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"==-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!!-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"=-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"abc\", \"!-\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"==\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"!=\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"abc\", \"<=\", \"(\", \")\", 0)\n"
@@ -280,8 +323,14 @@ TEST(CoreEval, EvalCondition)
                  "eval_strstr_level(\"def\", \"&&\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"=~\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"!~\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"==*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!!*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"=*\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"!*\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"==-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!!-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"=-\", \"(\", \")\", 0)\n"
+                 "eval_strstr_level(\"def\", \"!-\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"==\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"!=\", \"(\", \")\", 0)\n"
                  "eval_strstr_level(\"def\", \"<=\", \"(\", \")\", 0)\n"
