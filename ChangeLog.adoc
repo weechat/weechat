@@ -45,6 +45,7 @@ Bug fixes::
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
   * relay: fix slow send of data to clients when SSL is enabled
+  * trigger: fix truncated trigger command with commands /trigger input|output|recreate
   * trigger: do not hide values of options with /set command in cmd_pass trigger
 
 Documentation::

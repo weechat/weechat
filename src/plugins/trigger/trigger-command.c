@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -477,6 +478,19 @@ end:
 }
 
 /*
+ * Builds a string with the command to create the trigger.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+trigger_command_build_string (const char *format, ...)
+{
+    weechat_va_format (format);
+    return vbuffer;
+}
+
+/*
  * Callback for command "/trigger": manage triggers.
  */
 
@@ -487,7 +501,7 @@ trigger_command_trigger (const void *pointer, void *data,
 {
     struct t_trigger *ptr_trigger, *ptr_trigger2;
     struct t_trigger_regex *regex;
-    char *value, **sargv, **items, input[1024], str_pos[16];
+    char *value, **sargv, **items, *input, str_pos[16];
     int rc, i, j, type, count, index_option, enable, sargc, num_items, add_rc;
     int regex_count, regex_rc;
 
@@ -690,18 +704,22 @@ trigger_command_trigger (const void *pointer, void *data,
                                       | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                       0,
                                       &num_items);
-        snprintf (input, sizeof (input),
-                  "/trigger add name %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
-                  trigger_hook_type_string[type],
-                  trigger_hook_default_arguments[type],
-                  TRIGGER_HOOK_DEFAULT_CONDITIONS,
-                  TRIGGER_HOOK_DEFAULT_REGEX,
-                  TRIGGER_HOOK_DEFAULT_COMMAND,
-                  (items && (num_items > 0)) ? " \"" : "",
-                  (items && (num_items > 0)) ? items[0] : "",
-                  (items && (num_items > 0)) ? "\"" : "");
-        weechat_buffer_set (buffer, "input", input);
-        weechat_buffer_set (buffer, "input_pos", "13");
+        input = trigger_command_build_string (
+            "/trigger add name %s \"%s\" \"%s\" \"%s\" \"%s\"%s%s%s",
+            trigger_hook_type_string[type],
+            trigger_hook_default_arguments[type],
+            TRIGGER_HOOK_DEFAULT_CONDITIONS,
+            TRIGGER_HOOK_DEFAULT_REGEX,
+            TRIGGER_HOOK_DEFAULT_COMMAND,
+            (items && (num_items > 0)) ? " \"" : "",
+            (items && (num_items > 0)) ? items[0] : "",
+            (items && (num_items > 0)) ? "\"" : "");
+        if (input)
+        {
+            weechat_buffer_set (buffer, "input", input);
+            weechat_buffer_set (buffer, "input_pos", "13");
+            free (input);
+        }
         goto end;
     }
 
@@ -728,27 +746,31 @@ trigger_command_trigger (const void *pointer, void *data,
             goto end;
         }
         add_rc = trigger_hook_default_rc[weechat_config_integer (ptr_trigger->options[TRIGGER_OPTION_HOOK])][0];
-        snprintf (input, sizeof (input),
-                  "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
-                  (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
-                  ptr_trigger->name,
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
-                  (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
-                  weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
-        if (weechat_strcasecmp (argv[1], "output") == 0)
+        input = trigger_command_build_string (
+            "//trigger %s %s %s \"%s\" \"%s\" \"%s\" \"%s\" \"%s\" \"%s\"",
+            (weechat_strcasecmp (argv[1], "recreate") == 0) ? "addreplace" : "add",
+            ptr_trigger->name,
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_HOOK]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_ARGUMENTS]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_CONDITIONS]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_REGEX]),
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_COMMAND]),
+            (add_rc) ? weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_RETURN_CODE]) : "",
+            weechat_config_string (ptr_trigger->options[TRIGGER_OPTION_POST_ACTION]));
+        if (input)
         {
-            weechat_command (buffer, input);
-        }
-        else
-        {
-            weechat_buffer_set (buffer, "input", input + 1);
-            snprintf (str_pos, sizeof (str_pos),
-                      "%d", weechat_utf8_strlen (input + 1));
-            weechat_buffer_set (buffer, "input_pos", str_pos);
+            if (weechat_strcasecmp (argv[1], "output") == 0)
+            {
+                weechat_command (buffer, input);
+            }
+            else
+            {
+                weechat_buffer_set (buffer, "input", input + 1);
+                snprintf (str_pos, sizeof (str_pos),
+                          "%d", weechat_utf8_strlen (input + 1));
+                weechat_buffer_set (buffer, "input_pos", str_pos);
+            }
+            free (input);
         }
         goto end;
     }
