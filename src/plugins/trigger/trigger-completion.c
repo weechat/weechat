@@ -49,8 +49,8 @@ trigger_completion_triggers_cb (const void *pointer, void *data,
     for (ptr_trigger = triggers; ptr_trigger;
          ptr_trigger = ptr_trigger->next_trigger)
     {
-        weechat_hook_completion_list_add (completion, ptr_trigger->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_trigger->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -77,9 +77,9 @@ trigger_completion_triggers_default_cb (const void *pointer, void *data,
 
     for (i = 0; trigger_config_default_list[i][0]; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          trigger_config_default_list[i][0],
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     trigger_config_default_list[i][0],
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -105,9 +105,9 @@ trigger_completion_options_cb (const void *pointer, void *data,
 
     for (i = 0; i < TRIGGER_NUM_OPTIONS; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          trigger_option_string[i],
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     trigger_option_string[i],
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -134,7 +134,7 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    args = weechat_hook_completion_get_string (completion, "args");
+    args = weechat_completion_get_string (completion, "args");
     if (!args)
         return WEECHAT_RC_OK;
 
@@ -153,20 +153,21 @@ trigger_completion_option_value_cb (const void *pointer, void *data,
         {
             if (weechat_strcasecmp (argv[2], "name") == 0)
             {
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_trigger->name,
-                                                  0,
-                                                  WEECHAT_LIST_POS_BEGINNING);
+                weechat_completion_list_add (completion,
+                                             ptr_trigger->name,
+                                             0,
+                                             WEECHAT_LIST_POS_BEGINNING);
             }
             else
             {
                 index_option = trigger_search_option (argv[2]);
                 if (index_option >= 0)
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      weechat_config_string (ptr_trigger->options[index_option]),
-                                                      0,
-                                                      WEECHAT_LIST_POS_BEGINNING);
+                    weechat_completion_list_add (
+                        completion,
+                        weechat_config_string (ptr_trigger->options[index_option]),
+                        0,
+                        WEECHAT_LIST_POS_BEGINNING);
                 }
             }
         }
@@ -197,9 +198,9 @@ trigger_completion_hooks_cb (const void *pointer, void *data,
 
     for (i = 0; i < TRIGGER_NUM_HOOK_TYPES; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          trigger_hook_type_string[i],
-                                          0, WEECHAT_LIST_POS_END);
+        weechat_completion_list_add (completion,
+                                     trigger_hook_type_string[i],
+                                     0, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
@@ -228,8 +229,8 @@ trigger_completion_hooks_filter_cb (const void *pointer, void *data,
     {
         snprintf (str_hook, sizeof (str_hook),
                   "@%s", trigger_hook_type_string[i]);
-        weechat_hook_completion_list_add (completion, str_hook,
-                                          0, WEECHAT_LIST_POS_END);
+        weechat_completion_list_add (completion, str_hook,
+                                     0, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
@@ -252,8 +253,7 @@ trigger_completion_add_quoted_word (struct t_gui_completion *completion,
         return;
 
     snprintf (temp, length, "\"%s\"", word);
-    weechat_hook_completion_list_add (completion, temp, 0,
-                                      WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion, temp, 0, WEECHAT_LIST_POS_END);
 
     free (temp);
 }
@@ -273,7 +273,7 @@ trigger_completion_add_default_for_hook (struct t_gui_completion *completion,
     char **argv, **items;
     int argc, num_items, type, i;
 
-    args = weechat_hook_completion_get_string (completion, "args");
+    args = weechat_completion_get_string (completion, "args");
     if (!args)
         return;
 
@@ -341,8 +341,7 @@ trigger_completion_hook_arguments_cb (const void *pointer, void *data,
     trigger_completion_add_default_for_hook (completion,
                                              trigger_hook_default_arguments,
                                              NULL);
-    weechat_hook_completion_list_add (completion, "\"\"", 0,
-                                      WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
 
     return WEECHAT_RC_OK;
 }
@@ -363,12 +362,11 @@ trigger_completion_hook_conditions_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    weechat_hook_completion_list_add (completion,
-                                      "\"" TRIGGER_HOOK_DEFAULT_CONDITIONS "\"",
-                                      0,
-                                      WEECHAT_LIST_POS_END);
-    weechat_hook_completion_list_add (completion, "\"\"", 0,
-                                      WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion,
+                                 "\"" TRIGGER_HOOK_DEFAULT_CONDITIONS "\"",
+                                 0,
+                                 WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
 
     return WEECHAT_RC_OK;
 }
@@ -389,12 +387,11 @@ trigger_completion_hook_regex_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    weechat_hook_completion_list_add (completion,
-                                      "\"" TRIGGER_HOOK_DEFAULT_REGEX "\"",
-                                      0,
-                                      WEECHAT_LIST_POS_END);
-    weechat_hook_completion_list_add (completion, "\"\"", 0,
-                                      WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion,
+                                 "\"" TRIGGER_HOOK_DEFAULT_REGEX "\"",
+                                 0,
+                                 WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
 
     return WEECHAT_RC_OK;
 }
@@ -415,12 +412,11 @@ trigger_completion_hook_command_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    weechat_hook_completion_list_add (completion,
-                                      "\"" TRIGGER_HOOK_DEFAULT_COMMAND "\"",
-                                      0,
-                                      WEECHAT_LIST_POS_END);
-    weechat_hook_completion_list_add (completion, "\"\"", 0,
-                                      WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion,
+                                 "\"" TRIGGER_HOOK_DEFAULT_COMMAND "\"",
+                                 0,
+                                 WEECHAT_LIST_POS_END);
+    weechat_completion_list_add (completion, "\"\"", 0, WEECHAT_LIST_POS_END);
 
     return WEECHAT_RC_OK;
 }

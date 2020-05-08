@@ -648,8 +648,6 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
   hook_hsignal_send +
   hook_config +
   hook_completion +
-  hook_completion_get_string +
-  hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
   hook_info +
@@ -720,6 +718,8 @@ link:weechat_plugin_api.ja.html[WeeChat プラグイン API リファレンス]�
 | completion |
   completion_new +
   completion_search +
+  completion_get_string +
+  completion_list_add +
   completion_free
 
 | インフォ |

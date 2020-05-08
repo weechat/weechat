@@ -2081,6 +2081,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     char *completion, *property;
@@ -2099,6 +2104,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4296,6 +4306,46 @@ API_FUNC(completion_search)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (items < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = SvPV_nolen (ST (0));
+    property = SvPV_nolen (ST (1));
+
+    result = weechat_completion_get_string (API_STR2PTR(completion),
+                                            property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    char *completion, *word, *where;
+    dXSARGS;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (items < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = SvPV_nolen (ST (0));
+    word = SvPV_nolen (ST (1));
+    where = SvPV_nolen (ST (3));
+
+    weechat_completion_list_add (API_STR2PTR(completion),
+                                 word,
+                                 SvIV (ST (2)), /* nick_completion */
+                                 where);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_free)
 {
     dXSARGS;
@@ -5355,6 +5405,8 @@ weechat_perl_api_init (pTHX)
     API_DEF_FUNC(command_options);
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
+    API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);

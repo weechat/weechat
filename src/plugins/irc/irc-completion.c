@@ -56,8 +56,8 @@ irc_completion_server_cb (const void *pointer, void *data,
 
     if (ptr_server)
     {
-        weechat_hook_completion_list_add (completion, ptr_server->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_server->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -82,8 +82,8 @@ irc_completion_server_nick_cb (const void *pointer, void *data,
 
     if (ptr_server && ptr_server->nick)
     {
-        weechat_hook_completion_list_add (completion, ptr_server->nick,
-                                          1, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_server->nick,
+                                     1, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -115,16 +115,16 @@ irc_completion_server_channels_cb (const void *pointer, void *data,
         {
             if (ptr_channel2->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
-                weechat_hook_completion_list_add (completion, ptr_channel2->name,
-                                                  0, WEECHAT_LIST_POS_SORT);
+                weechat_completion_list_add (completion, ptr_channel2->name,
+                                             0, WEECHAT_LIST_POS_SORT);
             }
         }
 
         /* add current channel first in list */
         if (ptr_channel)
         {
-            weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                              0, WEECHAT_LIST_POS_BEGINNING);
+            weechat_completion_list_add (completion, ptr_channel->name,
+                                         0, WEECHAT_LIST_POS_BEGINNING);
         }
     }
 
@@ -157,8 +157,8 @@ irc_completion_server_privates_cb (const void *pointer, void *data,
         {
             if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             {
-                weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                                  0, WEECHAT_LIST_POS_SORT);
+                weechat_completion_list_add (completion, ptr_channel->name,
+                                             0, WEECHAT_LIST_POS_SORT);
             }
         }
     }
@@ -196,15 +196,15 @@ irc_completion_server_nicks_cb (const void *pointer, void *data,
                 for (ptr_nick = ptr_channel2->nicks; ptr_nick;
                      ptr_nick = ptr_nick->next_nick)
                 {
-                    weechat_hook_completion_list_add (completion, ptr_nick->name,
-                                                      1, WEECHAT_LIST_POS_SORT);
+                    weechat_completion_list_add (completion, ptr_nick->name,
+                                                 1, WEECHAT_LIST_POS_SORT);
                 }
             }
         }
 
         /* add self nick at the end */
-        weechat_hook_completion_list_add (completion, ptr_server->nick,
-                                          1, WEECHAT_LIST_POS_END);
+        weechat_completion_list_add (completion, ptr_server->nick,
+                                     1, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
@@ -231,8 +231,8 @@ irc_completion_servers_cb (const void *pointer, void *data,
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        weechat_hook_completion_list_add (completion, ptr_server->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_server->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -257,8 +257,8 @@ irc_completion_channel_cb (const void *pointer, void *data,
 
     if (ptr_channel)
     {
-        weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_channel->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -286,10 +286,10 @@ irc_completion_channel_nicks_add_speakers (struct t_gui_completion *completion,
                 weechat_list_get (channel->nicks_speaking[highlight], i));
             if (nick && irc_nick_search (server, channel, nick))
             {
-                weechat_hook_completion_list_add (completion,
-                                                  nick,
-                                                  1,
-                                                  WEECHAT_LIST_POS_BEGINNING);
+                weechat_completion_list_add (completion,
+                                             nick,
+                                             1,
+                                             WEECHAT_LIST_POS_BEGINNING);
             }
         }
     }
@@ -322,10 +322,10 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
                 for (ptr_nick = ptr_channel->nicks; ptr_nick;
                      ptr_nick = ptr_nick->next_nick)
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      ptr_nick->name,
-                                                      1,
-                                                      WEECHAT_LIST_POS_SORT);
+                    weechat_completion_list_add (completion,
+                                                 ptr_nick->name,
+                                                 1,
+                                                 WEECHAT_LIST_POS_SORT);
                 }
                 /* add recent speakers on channel */
                 if (weechat_config_integer (irc_config_look_nick_completion_smart) == IRC_CONFIG_NICK_COMPLETION_SMART_SPEAKERS)
@@ -338,22 +338,22 @@ irc_completion_channel_nicks_cb (const void *pointer, void *data,
                     irc_completion_channel_nicks_add_speakers (completion, ptr_server, ptr_channel, 1);
                 }
                 /* add self nick at the end */
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_server->nick,
-                                                  1,
-                                                  WEECHAT_LIST_POS_END);
+                weechat_completion_list_add (completion,
+                                             ptr_server->nick,
+                                             1,
+                                             WEECHAT_LIST_POS_END);
                 break;
             case IRC_CHANNEL_TYPE_PRIVATE:
                 /* remote nick */
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_channel->name,
-                                                  1,
-                                                  WEECHAT_LIST_POS_SORT);
+                weechat_completion_list_add (completion,
+                                             ptr_channel->name,
+                                             1,
+                                             WEECHAT_LIST_POS_SORT);
                 /* add self nick at the end */
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_server->nick,
-                                                  1,
-                                                  WEECHAT_LIST_POS_END);
+                weechat_completion_list_add (completion,
+                                             ptr_server->nick,
+                                             1,
+                                             WEECHAT_LIST_POS_END);
                 break;
         }
         ptr_channel->nick_completion_reset = 0;
@@ -391,10 +391,10 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
                 for (ptr_nick = ptr_channel->nicks; ptr_nick;
                      ptr_nick = ptr_nick->next_nick)
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      ptr_nick->name,
-                                                      1,
-                                                      WEECHAT_LIST_POS_SORT);
+                    weechat_completion_list_add (completion,
+                                                 ptr_nick->name,
+                                                 1,
+                                                 WEECHAT_LIST_POS_SORT);
                     if (ptr_nick->host)
                     {
                         length = strlen (ptr_nick->name) + 1 +
@@ -404,7 +404,7 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
                         {
                             snprintf (buf, length, "%s!%s",
                                       ptr_nick->name, ptr_nick->host);
-                            weechat_hook_completion_list_add (
+                            weechat_completion_list_add (
                                 completion, buf, 0, WEECHAT_LIST_POS_SORT);
                             free (buf);
                         }
@@ -412,7 +412,7 @@ irc_completion_channel_nicks_hosts_cb (const void *pointer, void *data,
                 }
                 break;
             case IRC_CHANNEL_TYPE_PRIVATE:
-                weechat_hook_completion_list_add (
+                weechat_completion_list_add (
                     completion, ptr_channel->name, 1, WEECHAT_LIST_POS_SORT);
                 break;
         }
@@ -453,9 +453,9 @@ irc_completion_modelist_masks_cb (const void *pointer, void *data,
             for (ptr_item = ptr_modelist->items; ptr_item;
                  ptr_item = ptr_item->next_item)
             {
-                weechat_hook_completion_list_add (completion,
-                                                  ptr_item->mask,
-                                                  0, WEECHAT_LIST_POS_END);
+                weechat_completion_list_add (completion,
+                                             ptr_item->mask,
+                                             0, WEECHAT_LIST_POS_END);
             }
         }
     }
@@ -497,9 +497,9 @@ irc_completion_modelist_numbers_cb (const void *pointer, void *data,
             {
                 snprintf (str_number, sizeof (str_number),
                           "%d", ptr_item->number + 1);
-                weechat_hook_completion_list_add (completion,
-                                                  str_number,
-                                                  0, WEECHAT_LIST_POS_END);
+                weechat_completion_list_add (completion,
+                                             str_number,
+                                             0, WEECHAT_LIST_POS_END);
             }
         }
     }
@@ -551,9 +551,9 @@ irc_completion_channel_topic_cb (const void *pointer, void *data,
         else
             topic = strdup (ptr_channel->topic);
 
-        weechat_hook_completion_list_add (completion,
-                                          (topic) ? topic : ptr_channel->topic,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     (topic) ? topic : ptr_channel->topic,
+                                     0, WEECHAT_LIST_POS_SORT);
         if (topic)
             free (topic);
     }
@@ -603,10 +603,10 @@ irc_completion_channels_cb (const void *pointer, void *data,
                 }
                 else
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      ptr_channel2->name,
-                                                      0,
-                                                      WEECHAT_LIST_POS_SORT);
+                    weechat_completion_list_add (completion,
+                                                 ptr_channel2->name,
+                                                 0,
+                                                 WEECHAT_LIST_POS_SORT);
                 }
             }
         }
@@ -615,7 +615,7 @@ irc_completion_channels_cb (const void *pointer, void *data,
     /* add channels of current server first in list */
     for (i = weechat_list_size (channels_current_server) - 1; i >= 0; i--)
     {
-        weechat_hook_completion_list_add (
+        weechat_completion_list_add (
             completion,
             weechat_list_string (
                 weechat_list_get (channels_current_server, i)),
@@ -627,8 +627,8 @@ irc_completion_channels_cb (const void *pointer, void *data,
     /* add current channel first in list */
     if (ptr_channel)
     {
-        weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                          0, WEECHAT_LIST_POS_BEGINNING);
+        weechat_completion_list_add (completion, ptr_channel->name,
+                                     0, WEECHAT_LIST_POS_BEGINNING);
     }
 
     return WEECHAT_RC_OK;
@@ -661,8 +661,8 @@ irc_completion_privates_cb (const void *pointer, void *data,
         {
             if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             {
-                weechat_hook_completion_list_add (completion, ptr_channel->name,
-                                                  0, WEECHAT_LIST_POS_SORT);
+                weechat_completion_list_add (completion, ptr_channel->name,
+                                             0, WEECHAT_LIST_POS_SORT);
             }
         }
     }
@@ -695,8 +695,8 @@ irc_completion_msg_kick_cb (const void *pointer, void *data,
                                             IRC_SERVER_OPTION_MSG_KICK);
         if (msg_kick && msg_kick[0])
         {
-            weechat_hook_completion_list_add (completion, msg_kick,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, msg_kick,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
     }
 
@@ -728,8 +728,8 @@ irc_completion_msg_part_cb (const void *pointer, void *data,
                                             IRC_SERVER_OPTION_MSG_PART);
         if (msg_part && msg_part[0])
         {
-            weechat_hook_completion_list_add (completion, msg_part,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, msg_part,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
     }
 
@@ -759,8 +759,8 @@ irc_completion_ignores_numbers_cb (const void *pointer, void *data,
          ptr_ignore = ptr_ignore->next_ignore)
     {
         snprintf (str_number, sizeof (str_number), "%d", ptr_ignore->number);
-        weechat_hook_completion_list_add (completion, str_number,
-                                          0, WEECHAT_LIST_POS_END);
+        weechat_completion_list_add (completion, str_number,
+                                     0, WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;
@@ -790,8 +790,8 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
         for (ptr_notify = ptr_server->notify_list; ptr_notify;
              ptr_notify = ptr_notify->next_notify)
         {
-            weechat_hook_completion_list_add (completion, ptr_notify->nick,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, ptr_notify->nick,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
     }
     else
@@ -802,8 +802,8 @@ irc_completion_notify_nicks_cb (const void *pointer, void *data,
             for (ptr_notify = ptr_server->notify_list; ptr_notify;
                  ptr_notify = ptr_notify->next_notify)
             {
-                weechat_hook_completion_list_add (completion, ptr_notify->nick,
-                                                  0, WEECHAT_LIST_POS_SORT);
+                weechat_completion_list_add (completion, ptr_notify->nick,
+                                             0, WEECHAT_LIST_POS_SORT);
             }
         }
     }
@@ -831,37 +831,37 @@ irc_completion_raw_filters_cb (const void *pointer, void *data,
     (void) completion_item;
 
     /* all messages */
-    weechat_hook_completion_list_add (completion, "*",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "*",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     /* condition */
-    weechat_hook_completion_list_add (completion,
-                                      "c:${recv} && ${command}==PRIVMSG",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion,
+                                 "c:${recv} && ${command}==PRIVMSG",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     /* message flag */
-    weechat_hook_completion_list_add (completion, "f:modified",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "f:recv",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "f:redirected",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "f:sent",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "f:modified",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "f:recv",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "f:redirected",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "f:sent",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     /* IRC command */
-    weechat_hook_completion_list_add (completion, "m:notice",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "m:privmsg",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "m:notice",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "m:privmsg",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     /* server */
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
         snprintf (str_filter, sizeof (str_filter), "s:%s", ptr_server->name);
-        weechat_hook_completion_list_add (completion, str_filter,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, str_filter,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;

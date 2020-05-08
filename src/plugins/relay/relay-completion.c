@@ -55,36 +55,36 @@ relay_completion_protocol_name_cb (const void *pointer, void *data,
             /* TCP socket */
             snprintf (protocol_name, sizeof (protocol_name), "irc.%s",
                       weechat_infolist_string (infolist, "name"));
-            weechat_hook_completion_list_add (completion, protocol_name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, protocol_name,
+                                         0, WEECHAT_LIST_POS_SORT);
             snprintf (protocol_name, sizeof (protocol_name), "ssl.irc.%s",
                       weechat_infolist_string (infolist, "name"));
-            weechat_hook_completion_list_add (completion, protocol_name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, protocol_name,
+                                         0, WEECHAT_LIST_POS_SORT);
             /* UNIX domain socket */
             snprintf (protocol_name, sizeof (protocol_name), "unix.irc.%s",
                       weechat_infolist_string (infolist, "name"));
-            weechat_hook_completion_list_add (completion, protocol_name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, protocol_name,
+                                         0, WEECHAT_LIST_POS_SORT);
             snprintf (protocol_name, sizeof (protocol_name), "unix.ssl.irc.%s",
                       weechat_infolist_string (infolist, "name"));
-            weechat_hook_completion_list_add (completion, protocol_name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, protocol_name,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
         weechat_infolist_free (infolist);
     }
 
     /* TCP socket */
-    weechat_hook_completion_list_add (completion, "weechat",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "ssl.weechat",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "weechat",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "ssl.weechat",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     /* UNIX domain socket */
-    weechat_hook_completion_list_add (completion, "unix.weechat",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "unix.ssl.weechat",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "unix.weechat",
+                                 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "unix.ssl.weechat",
+                                 0, WEECHAT_LIST_POS_SORT);
 
     return WEECHAT_RC_OK;
 }
@@ -110,9 +110,9 @@ relay_completion_relays_cb (const void *pointer, void *data,
     for (ptr_server = relay_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        weechat_hook_completion_list_add (completion,
-                                          ptr_server->protocol_string,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     ptr_server->protocol_string,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -149,8 +149,8 @@ relay_completion_free_port_cb (const void *pointer, void *data,
         port_max = 8000 - 1;
 
     snprintf (str_port, sizeof (str_port), "%d", port_max + 1);
-    weechat_hook_completion_list_add (completion, str_port,
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, str_port,
+                                 0, WEECHAT_LIST_POS_SORT);
 
     return WEECHAT_RC_OK;
 }

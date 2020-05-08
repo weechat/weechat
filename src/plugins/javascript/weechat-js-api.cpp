@@ -1948,6 +1948,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     const char *result;
@@ -1963,6 +1968,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4033,6 +4043,42 @@ API_FUNC(completion_search)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_get_string)
+{
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_get_string", "ss", API_RETURN_EMPTY);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value property(args[1]);
+
+    result = weechat_completion_get_string (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    int nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", "ssis", API_RETURN_ERROR);
+
+    v8::String::Utf8Value completion(args[0]);
+    v8::String::Utf8Value word(args[1]);
+    nick_completion = args[2]->IntegerValue();
+    v8::String::Utf8Value where(args[3]);
+
+    weechat_completion_list_add (
+        (struct t_gui_completion *)API_STR2PTR(*completion),
+        *word,
+        nick_completion,
+        *where);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_free)
 {
     API_INIT_FUNC(1, "completion_free", "s", API_RETURN_ERROR);
@@ -5038,6 +5084,8 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(command_options);
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
+    API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(completion_free);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);

@@ -2165,6 +2165,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     const char *completion, *property, *result;
@@ -2181,6 +2186,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4373,6 +4383,45 @@ API_FUNC(completion_search)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_get_string)
+{
+    const char *completion, *property, *result;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (lua_gettop (L) < 2)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = lua_tostring (L, -2);
+    property = lua_tostring (L, -1);
+
+    result = weechat_completion_get_string (API_STR2PTR(completion),
+                                            property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    const char *completion, *word, *where;
+    int nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (lua_gettop (L) < 4)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = lua_tostring (L, -4);
+    word = lua_tostring (L, -3);
+    nick_completion = lua_tonumber (L, -2);
+    where = lua_tostring (L, -1);
+
+    weechat_completion_list_add (API_STR2PTR(completion),
+                                 word,
+                                 nick_completion,
+                                 where);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_free)
 {
     const char *completion;
@@ -5398,6 +5447,8 @@ const struct luaL_Reg weechat_lua_api_funcs[] = {
     API_DEF_FUNC(command_options),
     API_DEF_FUNC(completion_new),
     API_DEF_FUNC(completion_search),
+    API_DEF_FUNC(completion_get_string),
+    API_DEF_FUNC(completion_list_add),
     API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),
     API_DEF_FUNC(info_get_hashtable),

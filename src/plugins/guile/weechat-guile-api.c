@@ -2057,6 +2057,11 @@ weechat_guile_api_hook_completion (SCM completion, SCM description,
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 SCM
 weechat_guile_api_hook_completion_get_string (SCM completion, SCM property)
 {
@@ -2073,6 +2078,11 @@ weechat_guile_api_hook_completion_get_string (SCM completion, SCM property)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 SCM
 weechat_guile_api_hook_completion_list_add (SCM completion, SCM word,
@@ -4138,6 +4148,40 @@ weechat_guile_api_completion_search (SCM completion, SCM data, SCM position,
 }
 
 SCM
+weechat_guile_api_completion_get_string (SCM completion, SCM property)
+{
+    const char *result;
+    SCM return_value;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (!scm_is_string (completion) || !scm_is_string (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_completion_get_string (
+        API_STR2PTR(API_SCM_TO_STRING(completion)),
+        API_SCM_TO_STRING(property));
+
+    API_RETURN_STRING(result);
+}
+
+SCM
+weechat_guile_api_completion_list_add (SCM completion, SCM word,
+                                       SCM nick_completion, SCM where)
+{
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (!scm_is_string (completion) || !scm_is_string (word)
+        || !scm_is_integer (nick_completion) || !scm_is_string (where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_list_add (API_STR2PTR(API_SCM_TO_STRING(completion)),
+                                 API_SCM_TO_STRING(word),
+                                 scm_to_int (nick_completion),
+                                 API_SCM_TO_STRING(where));
+
+    API_RETURN_OK;
+}
+
+SCM
 weechat_guile_api_completion_free (SCM completion)
 {
     API_INIT_FUNC(1, "completion_free", API_RETURN_ERROR);
@@ -5103,6 +5147,8 @@ weechat_guile_api_module_init (void *data)
     API_DEF_FUNC(command_options, 3);
     API_DEF_FUNC(completion_new, 1);
     API_DEF_FUNC(completion_search, 4);
+    API_DEF_FUNC(completion_get_string, 2);
+    API_DEF_FUNC(completion_list_add, 4);
     API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);

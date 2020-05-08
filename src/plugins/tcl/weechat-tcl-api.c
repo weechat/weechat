@@ -2332,6 +2332,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     Tcl_Obj *objp;
@@ -2351,6 +2356,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4665,6 +4675,51 @@ API_FUNC(completion_search)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_get_string)
+{
+    Tcl_Obj *objp;
+    char *completion, *property;
+    const char *result;
+    int i;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (objc < 3)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = Tcl_GetStringFromObj (objv[1], &i);
+    property = Tcl_GetStringFromObj (objv[2], &i);
+
+    result = weechat_completion_get_string (API_STR2PTR(completion),
+                                            property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    Tcl_Obj *objp;
+    char *completion, *word, *where;
+    int i, nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (objc < 5)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    if (Tcl_GetIntFromObj (interp, objv[3], &nick_completion) != TCL_OK)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = Tcl_GetStringFromObj (objv[1], &i);
+    word = Tcl_GetStringFromObj (objv[2], &i);
+    where = Tcl_GetStringFromObj (objv[4], &i);
+
+    weechat_completion_list_add (API_STR2PTR(completion),
+                                 word,
+                                 nick_completion, /* nick_completion */
+                                 where);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(info_get)
 {
     Tcl_Obj *objp;
@@ -5823,6 +5878,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(command_options);
     API_DEF_FUNC(completion_new);
     API_DEF_FUNC(completion_search);
+    API_DEF_FUNC(completion_get_string);
+    API_DEF_FUNC(completion_list_add);
     API_DEF_FUNC(info_get);
     API_DEF_FUNC(info_get_hashtable);
     API_DEF_FUNC(infolist_new);

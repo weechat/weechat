@@ -20,6 +20,22 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.9]]
 == Version 2.9 (under dev)
 
+[[v2.9_api_completion_functions]]
+=== Move of API completion functions
+
+Completion functions have been added in WeeChat 2.9, to allow relay clients or
+plugins/scripts to complete a string, without using the buffer input.
+
+Therefore two functions have been renamed in API and moved to the new
+"completion" category:
+
+* function _hook_completion_get_string_ renamed to _completion_get_string_
+* function _hook_completion_list_add_ renamed to _completion_list_add_
+
+[NOTE]
+The old names are still valid for compatibility reasons, but it is recommended
+to use only the new names as the old ones may be removed in an upcoming release.
+
 [[v2.9_remove_gnutls_build_option]]
 === GnuTLS is not optional any more
 

@@ -253,6 +253,8 @@ const zend_function_entry weechat_functions[] = {
     PHP_FE(weechat_command_options, NULL)
     PHP_FE(weechat_completion_new, NULL)
     PHP_FE(weechat_completion_search, NULL)
+    PHP_FE(weechat_completion_get_string, NULL)
+    PHP_FE(weechat_completion_list_add, NULL)
     PHP_FE(weechat_completion_free, NULL)
     PHP_FE(weechat_info_get, NULL)
     PHP_FE(weechat_info_get_hashtable, NULL)

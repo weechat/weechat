@@ -2206,6 +2206,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     zend_string *z_completion, *z_property;
@@ -2226,6 +2231,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4306,6 +4316,53 @@ API_FUNC(completion_search)
     rc = weechat_completion_search (completion, data, position, direction);
 
     API_RETURN_INT(rc);
+}
+
+API_FUNC(completion_get_string)
+{
+    zend_string *z_completion, *z_property;
+    struct t_gui_completion *completion;
+    char *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SS", &z_completion,
+                               &z_property) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
+    property = ZSTR_VAL(z_property);
+
+    result = weechat_completion_get_string (completion,
+                                            (const char *)property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    zend_string *z_completion, *z_word, *z_where;
+    zend_long z_nick_completion;
+    struct t_gui_completion *completion;
+    char *word, *where;
+    int nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "SSlS", &z_completion,
+                               &z_word, &z_nick_completion, &z_where) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    completion = (struct t_gui_completion *)API_STR2PTR(ZSTR_VAL(z_completion));
+    word = ZSTR_VAL(z_word);
+    nick_completion = (int)z_nick_completion;
+    where = ZSTR_VAL(z_where);
+
+    weechat_completion_list_add (completion,
+                                 (const char *)word,
+                                 nick_completion,
+                                 (const char *)where);
+
+    API_RETURN_OK;
 }
 
 API_FUNC(completion_free)

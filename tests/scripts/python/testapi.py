@@ -160,9 +160,9 @@ def completion_cb(data, completion_item, buf, completion):
     """Completion callback."""
     check(data == 'completion_data')
     check(completion_item == 'SCRIPT_NAME')
-    check(weechat.hook_completion_get_string(completion, 'args') == 'w')
-    weechat.hook_completion_list_add(completion, 'word_completed',
-                                     0, weechat.WEECHAT_LIST_POS_END)
+    check(weechat.completion_get_string(completion, 'args') == 'w')
+    weechat.completion_list_add(completion, 'word_completed',
+                                0, weechat.WEECHAT_LIST_POS_END)
     return weechat.WEECHAT_RC_OK
 
 

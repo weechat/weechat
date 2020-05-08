@@ -49,9 +49,9 @@ script_completion_languages_cb (const void *pointer, void *data,
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          script_language[i],
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     script_language[i],
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -77,9 +77,9 @@ script_completion_extensions_cb (const void *pointer, void *data,
 
     for (i = 0; i < SCRIPT_NUM_LANGUAGES; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          script_extension[i],
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     script_extension[i],
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -106,9 +106,9 @@ script_completion_scripts_cb (const void *pointer, void *data,
     for (ptr_script = scripts_repo; ptr_script;
          ptr_script = ptr_script->next_script)
     {
-        weechat_hook_completion_list_add (completion,
-                                          ptr_script->name_with_extension,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     ptr_script->name_with_extension,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -137,9 +137,9 @@ script_completion_scripts_installed_cb (const void *pointer, void *data,
     {
         if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
         {
-            weechat_hook_completion_list_add (completion,
-                                              ptr_script->name_with_extension,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion,
+                                         ptr_script->name_with_extension,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
     }
 
@@ -172,9 +172,9 @@ script_completion_exec_file_cb (void *data, const char *filename)
     if (filename2)
     {
         ptr_base_name = basename (filename2);
-        weechat_hook_completion_list_add (completion,
-                                          ptr_base_name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     ptr_base_name,
+                                     0, WEECHAT_LIST_POS_SORT);
         free (filename2);
     }
 }
@@ -271,9 +271,9 @@ script_completion_tags_cb (const void *pointer, void *data,
             {
                 for (i = 0; i < num_tags; i++)
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      list_tags[i],
-                                                      0, WEECHAT_LIST_POS_SORT);
+                    weechat_completion_list_add (completion,
+                                                 list_tags[i],
+                                                 0, WEECHAT_LIST_POS_SORT);
                 }
                 weechat_string_free_split (list_tags);
             }

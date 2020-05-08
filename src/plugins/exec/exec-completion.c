@@ -51,12 +51,12 @@ exec_completion_commands_ids_cb (const void *pointer, void *data,
     {
         snprintf (str_number, sizeof (str_number),
                   "%ld", ptr_exec_cmd->number);
-        weechat_hook_completion_list_add (completion, str_number,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, str_number,
+                                     0, WEECHAT_LIST_POS_SORT);
         if (ptr_exec_cmd->name)
         {
-            weechat_hook_completion_list_add (completion, ptr_exec_cmd->name,
-                                              0, WEECHAT_LIST_POS_SORT);
+            weechat_completion_list_add (completion, ptr_exec_cmd->name,
+                                         0, WEECHAT_LIST_POS_SORT);
         }
     }
 

@@ -48,9 +48,9 @@ spell_completion_langs_cb (const void *pointer, void *data,
 
     for (i = 0; spell_langs[i].code; i++)
     {
-        weechat_hook_completion_list_add (completion,
-                                          spell_langs[i].code,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     spell_langs[i].code,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -73,8 +73,8 @@ spell_completion_enchant_add_dict_cb (const char *lang_tag,
     (void) provider_desc;
     (void) provider_file;
 
-    weechat_hook_completion_list_add ((struct t_gui_completion *)user_data,
-                                      lang_tag, 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add ((struct t_gui_completion *)user_data,
+                                 lang_tag, 0, WEECHAT_LIST_POS_SORT);
 }
 #endif /* USE_ENCHANT */
 
@@ -112,8 +112,8 @@ spell_completion_dicts_cb (const void *pointer, void *data,
 
     while ((dict = aspell_dict_info_enumeration_next (elements)) != NULL)
     {
-        weechat_hook_completion_list_add (completion, dict->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, dict->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     delete_aspell_dict_info_enumeration (elements);

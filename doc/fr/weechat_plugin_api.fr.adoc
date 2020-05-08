@@ -8650,8 +8650,7 @@ Paramètres :
    peut inclure des paramètres, avec le format : _nom:paramètres_)
 ** _struct t_gui_buffer *buffer_ : tampon où la complétion est effectuée
 ** _struct t_gui_completion *completion_ : structure utilisée pour ajouter
-   les mots pour la complétion (voir
-   <<_hook_completion_list_add,hook_completion_list_add>>)
+   les mots pour la complétion (voir <<_completion_list_add,completion_list_add>>)
 ** valeur de retour :
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
@@ -8668,9 +8667,9 @@ Il est donc recommandé de choisir un nom avec un préfixe unique, comme
 "monextension_xxx" (où "xxx" est le nom de votre complétion).
 
 [IMPORTANT]
-La fonction de rappel doit seulement appeler la fonction
-<<_hook_completion_list_add,hook_completion_list_add>>
-et ne doit *PAS* mettre à jour la ligne de commande. +
+La fonction de rappel doit seulement appeler des fonction de complétion comme
+<<_completion_list_add,completion_list_add>> et ne doit *PAS* mettre à jour
+la ligne de commande. +
 Pour mettre à jour la ligne de commande quand kbd:[Tab] est pressé, vous pouvez
 utiliser la fonction <<_hook_command_run,hook_command_run>>
 avec la commande : `+/input complete_next+` (et vous devez retourner
@@ -8690,10 +8689,8 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    weechat_hook_completion_list_add (completion, "mot1",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "test_mot2",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "mot1", 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "test_mot2", 0, WEECHAT_LIST_POS_SORT);
     return WEECHAT_RC_OK;
 }
 
@@ -8711,8 +8708,8 @@ hook = weechat.hook_completion(completion_item, description, callback, callback_
 
 # exemple
 def my_completion_cb(data, completion_item, buffer, completion):
-    weechat.hook_completion_list_add(completion, "mot1", 0, weechat.WEECHAT_LIST_POS_SORT)
-    weechat.hook_completion_list_add(completion, "test_mot2", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.completion_list_add(completion, "mot1", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.completion_list_add(completion, "test_mot2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_completion("extension_item", "ma complétion !",
@@ -8723,94 +8720,13 @@ hook = weechat.hook_completion("extension_item", "ma complétion !",
 
 _WeeChat ≥ 0.3.4._
 
-Retourner la valeur d'une propriété de la complétion sous forme de chaîne.
-
-Prototype :
-
-[source,C]
-----
-const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
-                                                const char *property);
-----
-
-Paramètres :
-
-* _completion_ : pointeur vers la complétion
-* _property_ : nom de la propriété :
-** _base_command_ : commande utilisée pour la complétion
-** _base_word_ : le mot qui va être complété
-** _args_ : paramètres de la commande (incluant le mot de base "base_word")
-
-Exemple en C :
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    /* récupère les paramètres de la commande */
-    const char *args = weechat_hook_completion_get_string (completion, "args");
-
-    /* complétion selon les paramètres */
-    /* ... */
-
-    return WEECHAT_RC_OK;
-}
-----
-
-Script (Python) :
-
-[source,python]
-----
-# prototype
-value = weechat.hook_completion_get_string(completion, property)
-
-# exemple
-def my_completion_cb(data, completion_item, buffer, completion):
-    # récupère les paramètres de la commande
-    args = weechat.hook_completion_get_string(completion, "args")
-    # complétion selon les paramètres
-    # ...
-    return weechat.WEECHAT_RC_OK
-----
+*Obsolète depuis WeeChat 2.9* (toujours là pour des raisons de compatibilité). +
+Cette fonction a été remplacée par <<_completion_get_string,completion_get_string>>.
 
 ==== hook_completion_list_add
 
-Ajouter un mot pour une complétion.
-
-Prototype :
-
-[source,C]
-----
-void weechat_hook_completion_list_add (struct t_gui_completion *completion,
-                                       const char *word,
-                                       int nick_completion,
-                                       const char *where);
-----
-
-Paramètres :
-
-* _completion_ : pointeur vers la complétion
-* _word_ : mot à ajouter
-* _nick_completion_ : 1 si le mot est un pseudo, sinon 0
-* _where_ : position où sera inséré le mot dans la liste :
-** _WEECHAT_LIST_POS_SORT_ : n'importe où, pour maintenir la liste triée
-** _WEECHAT_LIST_POS_BEGINNING_ : au début de la liste
-** _WEECHAT_LIST_POS_END_ : à la fin de la liste
-
-Exemple en C : voir <<_hook_completion,hook_completion>>.
-
-Script (Python) :
-
-[source,python]
-----
-# prototype
-weechat.hook_completion_list_add(completion, word, nick_completion, where)
-
-# exemple : voir la fonction hook_completion ci-dessus
-----
+*Obsolète depuis WeeChat 2.9* (toujours là pour des raisons de compatibilité). +
+Cette fonction a été remplacée par <<_completion_list_add,completion_list_add>>.
 
 ==== hook_command_run
 
@@ -15398,6 +15314,101 @@ rc = weechat.completion_search(completion, data, position, direction)
 completion = weechat.completion_new(weechat.buffer_search_main())
 if weechat.completion_search(completion, "/help filt", 10, 1):
     # ...
+----
+
+==== completion_get_string
+
+_WeeChat ≥ 2.9._
+
+Retourner la valeur d'une propriété de la complétion sous forme de chaîne.
+
+Prototype :
+
+[source,C]
+----
+const char *weechat_completion_get_string (struct t_gui_completion *completion,
+                                           const char *property);
+----
+
+Paramètres :
+
+* _completion_ : pointeur vers la complétion
+* _property_ : nom de la propriété :
+** _base_command_ : commande utilisée pour la complétion
+** _base_word_ : le mot qui va être complété
+** _args_ : paramètres de la commande (incluant le mot de base "base_word")
+
+Exemple en C :
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* récupère les paramètres de la commande */
+    const char *args = weechat_completion_get_string (completion, "args");
+
+    /* complétion selon les paramètres */
+    /* ... */
+
+    return WEECHAT_RC_OK;
+}
+----
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+value = weechat.completion_get_string(completion, property)
+
+# exemple
+def my_completion_cb(data, completion_item, buffer, completion):
+    # récupère les paramètres de la commande
+    args = weechat.completion_get_string(completion, "args")
+    # complétion selon les paramètres
+    # ...
+    return weechat.WEECHAT_RC_OK
+----
+
+==== completion_list_add
+
+_WeeChat ≥ 2.9._
+
+Ajouter un mot pour une complétion.
+
+Prototype :
+
+[source,C]
+----
+void weechat_completion_list_add (struct t_gui_completion *completion,
+                                  const char *word,
+                                  int nick_completion,
+                                  const char *where);
+----
+
+Paramètres :
+
+* _completion_ : pointeur vers la complétion
+* _word_ : mot à ajouter
+* _nick_completion_ : 1 si le mot est un pseudo, sinon 0
+* _where_ : position où sera inséré le mot dans la liste :
+** _WEECHAT_LIST_POS_SORT_ : n'importe où, pour maintenir la liste triée
+** _WEECHAT_LIST_POS_BEGINNING_ : au début de la liste
+** _WEECHAT_LIST_POS_END_ : à la fin de la liste
+
+Exemple en C : voir <<_hook_completion,hook_completion>>.
+
+Script (Python) :
+
+[source,python]
+----
+# prototype
+weechat.completion_list_add(completion, word, nick_completion, where)
+
+# exemple : voir la fonction hook_completion
 ----
 
 ==== completion_free

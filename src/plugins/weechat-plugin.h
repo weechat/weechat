@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20200428-01"
+#define WEECHAT_PLUGIN_API_VERSION "20200508-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -1014,6 +1014,12 @@ struct t_weechat_plugin
                                                 struct t_gui_buffer *buffer);
     int (*completion_search) (struct t_gui_completion *completion,
                               const char *data, int position, int direction);
+    const char *(*completion_get_string) (struct t_gui_completion *completion,
+                                          const char *property);
+    void (*completion_list_add) (struct t_gui_completion *completion,
+                                 const char *word,
+                                 int nick_completion,
+                                 const char *where);
     void (*completion_free) (struct t_gui_completion *completion);
 
     /* network */
@@ -1956,6 +1962,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                   __direction)                          \
     (weechat_plugin->completion_search)(__completion, __data,           \
                                         __position, __direction)
+#define weechat_completion_get_string(__completion, __property)         \
+    (weechat_plugin->completion_get_string)(__completion, __property)
+#define weechat_completion_list_add(__completion, __word,               \
+                                    __nick_completion, __where)         \
+    (weechat_plugin->completion_list_add)(__completion, __word,         \
+                                          __nick_completion, __where)
 #define weechat_completion_free(__completion)                           \
     (weechat_plugin->completion_free)(__completion)
 

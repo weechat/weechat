@@ -8495,7 +8495,7 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 ** _struct t_gui_buffer *buffer_: 補完が行われたバッファ
 ** _struct t_gui_completion *completion_:
    補完に際して単語を追加するために使われる構造体
-   (<<_hook_completion_list_add,hook_completion_list_add>> を参照)
+   (<<_completion_list_add,completion_list_add>> を参照)
 ** 戻り値:
 *** _WEECHAT_RC_OK_
 *** _WEECHAT_RC_ERROR_
@@ -8509,10 +8509,10 @@ struct t_hook *weechat_hook_completion (const char *completion_item,
 とプラグインで共有されます)。このため、"plugin_xxx" (ここで "xxx" は要素の名前)
 などの一意的なプレフィックスをつけた名前を使うことをおすすめします。
 
+// TRANSLATION MISSING
 [IMPORTANT]
-コールバックは
-<<_hook_completion_list_add,hook_completion_list_add>>
-関数を呼び出すだけで、コマンドラインをコールバックで絶対に *変更しない* でください。 +
+The callback must only call completion functions like
+<<_completion_list_add,completion_list_add>> and must *NOT* update the command line. +
 kbd:[Tab] が押された時にコマンドラインを更新するためには、関数
 <<_hook_command_run,hook_command_run>> を使ってコマンド
 `+/input complete_next+` をフックしてください (コールバックがコマンドラインを更新する場合は必ず
@@ -8531,10 +8531,8 @@ my_completion_cb (const void *pointer, void *data, const char *completion_item,
                   struct t_gui_buffer *buffer,
                   struct t_gui_completion *completion)
 {
-    weechat_hook_completion_list_add (completion, "word1",
-                                      0, WEECHAT_LIST_POS_SORT);
-    weechat_hook_completion_list_add (completion, "test_word2",
-                                      0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "word1", 0, WEECHAT_LIST_POS_SORT);
+    weechat_completion_list_add (completion, "test_word2", 0, WEECHAT_LIST_POS_SORT);
     return WEECHAT_RC_OK;
 }
 
@@ -8552,106 +8550,27 @@ hook = weechat.hook_completion(completion_item, description, callback, callback_
 
 # 例
 def my_completion_cb(data, completion_item, buffer, completion):
-    weechat.hook_completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
-    weechat.hook_completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.completion_list_add(completion, "word1", 0, weechat.WEECHAT_LIST_POS_SORT)
+    weechat.completion_list_add(completion, "test_word2", 0, weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
 hook = weechat.hook_completion("plugin_item", "my custom completion!",
                                "my_completion_cb", "")
 ----
 
+// TRANSLATION MISSING
 ==== hook_completion_get_string
 
 _WeeChat バージョン 0.3.4 以上で利用可。_
 
-補完プロパティを文字列で取得。
+*Deprecated since WeeChat 2.9* (still there for compatibility). +
+This function has been replaced by <<_completion_get_string,completion_get_string>>.
 
-プロトタイプ:
-
-[source,C]
-----
-const char *weechat_hook_completion_get_string (struct t_gui_completion *completion,
-                                                const char *property);
-----
-
-引数:
-
-* _completion_: 補完へのポインタ
-* _property_: プロパティ名:
-** _base_command_: 補完に使ったコマンド
-** _base_word_: 補完された単語
-** _args_: コマンド引数 (元の単語を含む)
-
-C 言語での使用例:
-
-[source,C]
-----
-int
-my_completion_cb (const void *pointer, void *data, const char *completion_item,
-                  struct t_gui_buffer *buffer,
-                  struct t_gui_completion *completion)
-{
-    /* get arguments of command */
-    const char *args = weechat_hook_completion_get_string (completion, "args");
-
-    /* completion depending on args */
-    /* ... */
-
-    return WEECHAT_RC_OK;
-}
-----
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-value = weechat.hook_completion_get_string(completion, property)
-
-# 例
-def my_completion_cb(data, completion_item, buffer, completion):
-    # get arguments of command
-    args = weechat.hook_completion_get_string(completion, "args")
-    # completion depending on args
-    # ...
-    return weechat.WEECHAT_RC_OK
-----
-
+// TRANSLATION MISSING
 ==== hook_completion_list_add
 
-補完用に単語を追加。
-
-プロトタイプ:
-
-[source,C]
-----
-void weechat_hook_completion_list_add (struct t_gui_completion *completion,
-                                       const char *word,
-                                       int nick_completion,
-                                       const char *where);
-----
-
-引数:
-
-* _completion_: 補完へのポインタ
-* _word_: 追加する単語
-* _nick_completion_: 単語がニックネームの場合は 1、そうでなければ 0
-* _where_: 単語を追加するリスト上での位置:
-** _WEECHAT_LIST_POS_SORT_: リストがソートされた状態になるような位置
-** _WEECHAT_LIST_POS_BEGINNING_: リストの最初
-** _WEECHAT_LIST_POS_END_: リストの最後
-
-C 言語での使用例: <<_hook_completion,hook_completion>> を参照。
-
-スクリプト (Python) での使用例:
-
-[source,python]
-----
-# プロトタイプ
-weechat.hook_completion_list_add(completion, word, nick_completion, where)
-
-# 例: 前の hook_completion 関数を参照
-----
+*Deprecated since WeeChat 2.9* (still there for compatibility). +
+This function has been replaced by <<_completion_list_add,completion_list_add>>.
 
 ==== hook_command_run
 
@@ -15072,6 +14991,102 @@ rc = weechat.completion_search(completion, data, position, direction)
 completion = weechat.completion_new(weechat.buffer_search_main())
 if weechat.completion_search(completion, "/help filt", 10, 1):
     # ...
+----
+
+==== completion_get_string
+
+_WeeChat バージョン 2.9 以上で利用可。_
+
+補完プロパティを文字列で取得。
+
+プロトタイプ:
+
+[source,C]
+----
+const char *weechat_completion_get_string (struct t_gui_completion *completion,
+                                           const char *property);
+----
+
+引数:
+
+* _completion_: 補完へのポインタ
+* _property_: プロパティ名:
+** _base_command_: 補完に使ったコマンド
+** _base_word_: 補完された単語
+** _args_: コマンド引数 (元の単語を含む)
+
+C 言語での使用例:
+
+[source,C]
+----
+int
+my_completion_cb (const void *pointer, void *data, const char *completion_item,
+                  struct t_gui_buffer *buffer,
+                  struct t_gui_completion *completion)
+{
+    /* get arguments of command */
+    const char *args = weechat_completion_get_string (completion, "args");
+
+    /* completion depending on args */
+    /* ... */
+
+    return WEECHAT_RC_OK;
+}
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+value = weechat.completion_get_string(completion, property)
+
+# 例
+def my_completion_cb(data, completion_item, buffer, completion):
+    # get arguments of command
+    args = weechat.completion_get_string(completion, "args")
+    # completion depending on args
+    # ...
+    return weechat.WEECHAT_RC_OK
+----
+
+==== completion_list_add
+
+_WeeChat バージョン 2.9 以上で利用可。_
+
+補完用に単語を追加。
+
+プロトタイプ:
+
+[source,C]
+----
+void weechat_completion_list_add (struct t_gui_completion *completion,
+                                  const char *word,
+                                  int nick_completion,
+                                  const char *where);
+----
+
+引数:
+
+* _completion_: 補完へのポインタ
+* _word_: 追加する単語
+* _nick_completion_: 単語がニックネームの場合は 1、そうでなければ 0
+* _where_: 単語を追加するリスト上での位置:
+** _WEECHAT_LIST_POS_SORT_: リストがソートされた状態になるような位置
+** _WEECHAT_LIST_POS_BEGINNING_: リストの最初
+** _WEECHAT_LIST_POS_END_: リストの最後
+
+C 言語での使用例: <<_hook_completion,hook_completion>> を参照。
+
+スクリプト (Python) での使用例:
+
+// TRANSLATION MISSING
+[source,python]
+----
+# プロトタイプ
+weechat.completion_list_add(completion, word, nick_completion, where)
+
+# 例: see function hook_completion
 ----
 
 // TRANSLATION MISSING

@@ -2071,6 +2071,11 @@ API_FUNC(hook_completion)
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 API_FUNC(hook_completion_get_string)
 {
     char *completion, *property;
@@ -2087,6 +2092,11 @@ API_FUNC(hook_completion_get_string)
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 API_FUNC(hook_completion_list_add)
 {
@@ -4308,6 +4318,45 @@ API_FUNC(completion_search)
     API_RETURN_INT(rc);
 }
 
+API_FUNC(completion_get_string)
+{
+    char *completion, *property;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    completion = NULL;
+    property = NULL;
+    if (!PyArg_ParseTuple (args, "ss", &completion, &property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    result = weechat_completion_get_string (API_STR2PTR(completion),
+                                            property);
+
+    API_RETURN_STRING(result);
+}
+
+API_FUNC(completion_list_add)
+{
+    char *completion, *word, *where;
+    int nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    completion = NULL;
+    word = NULL;
+    nick_completion = 0;
+    where = NULL;
+    if (!PyArg_ParseTuple (args, "ssis", &completion, &word, &nick_completion,
+                           &where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    weechat_completion_list_add (API_STR2PTR(completion),
+                                 word,
+                                 nick_completion,
+                                 where);
+
+    API_RETURN_OK;
+}
+
 API_FUNC(completion_free)
 {
     char *completion;
@@ -5305,6 +5354,8 @@ PyMethodDef weechat_python_funcs[] =
     API_DEF_FUNC(command_options),
     API_DEF_FUNC(completion_new),
     API_DEF_FUNC(completion_search),
+    API_DEF_FUNC(completion_get_string),
+    API_DEF_FUNC(completion_list_add),
     API_DEF_FUNC(completion_free),
     API_DEF_FUNC(info_get),
     API_DEF_FUNC(info_get_hashtable),

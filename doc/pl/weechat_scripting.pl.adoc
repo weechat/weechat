@@ -634,8 +634,6 @@ Lista funkcji w API skryptów:
   hook_hsignal_send +
   hook_config +
   hook_completion +
-  hook_completion_get_string +
-  hook_completion_list_add +
   hook_modifier +
   hook_modifier_exec +
   hook_info +
@@ -706,6 +704,8 @@ Lista funkcji w API skryptów:
 | completion |
   completion_new +
   completion_search +
+  completion_get_string +
+  completion_list_add +
   completion_free
 
 | informacje |

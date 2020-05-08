@@ -823,8 +823,8 @@ def docgen_cmd_cb(data, buf, args):
 def docgen_completion_cb(data, completion_item, buf, completion):
     """Callback for completion."""
     for locale in LOCALE_LIST:
-        weechat.hook_completion_list_add(completion, locale, 0,
-                                         weechat.WEECHAT_LIST_POS_SORT)
+        weechat.completion_list_add(completion, locale, 0,
+                                    weechat.WEECHAT_LIST_POS_SORT)
     return weechat.WEECHAT_RC_OK
 
 

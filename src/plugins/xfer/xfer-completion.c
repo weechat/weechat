@@ -49,15 +49,15 @@ xfer_completion_nick_cb (const void *pointer, void *data,
     if (ptr_xfer)
     {
         /* remote nick */
-        weechat_hook_completion_list_add (completion,
-                                          ptr_xfer->remote_nick,
-                                          0,
-                                          WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion,
+                                     ptr_xfer->remote_nick,
+                                     0,
+                                     WEECHAT_LIST_POS_SORT);
         /* add self nick at the end */
-        weechat_hook_completion_list_add (completion,
-                                          ptr_xfer->local_nick,
-                                          1,
-                                          WEECHAT_LIST_POS_END);
+        weechat_completion_list_add (completion,
+                                     ptr_xfer->local_nick,
+                                     1,
+                                     WEECHAT_LIST_POS_END);
     }
 
     return WEECHAT_RC_OK;

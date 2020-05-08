@@ -786,8 +786,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->hook_hsignal_send = &hook_hsignal_send;
         new_plugin->hook_config = &hook_config;
         new_plugin->hook_completion = &hook_completion;
-        new_plugin->hook_completion_get_string = &hook_completion_get_string;
-        new_plugin->hook_completion_list_add = &hook_completion_list_add;
+        new_plugin->hook_completion_get_string = &gui_completion_get_string;
+        new_plugin->hook_completion_list_add = &gui_completion_list_add;
         new_plugin->hook_modifier = &hook_modifier;
         new_plugin->hook_modifier_exec = &hook_modifier_exec;
         new_plugin->hook_info = &hook_info;
@@ -852,6 +852,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
 
         new_plugin->completion_new = &gui_completion_new;
         new_plugin->completion_search = &gui_completion_search;
+        new_plugin->completion_get_string = &gui_completion_get_string;
+        new_plugin->completion_list_add = &gui_completion_list_add;
         new_plugin->completion_free = &gui_completion_free;
 
         new_plugin->network_pass_proxy = &network_pass_proxy;

@@ -83,29 +83,6 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
 }
 
 /*
- * Gets a completion property as string.
- */
-
-const char *
-hook_completion_get_string (struct t_gui_completion *completion,
-                            const char *property)
-{
-    return gui_completion_get_string (completion, property);
-}
-
-/*
- * Adds a word for a completion.
- */
-
-void
-hook_completion_list_add (struct t_gui_completion *completion,
-                          const char *word, int nick_completion,
-                          const char *where)
-{
-    gui_completion_list_add (completion, word, nick_completion, where);
-}
-
-/*
  * Executes a completion hook.
  */
 

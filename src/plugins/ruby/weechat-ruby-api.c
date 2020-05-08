@@ -2550,6 +2550,11 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
     API_RETURN_STRING(result);
 }
 
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_get_string.
+ */
+
 static VALUE
 weechat_ruby_api_hook_completion_get_string (VALUE class, VALUE completion,
                                              VALUE property)
@@ -2572,6 +2577,11 @@ weechat_ruby_api_hook_completion_get_string (VALUE class, VALUE completion,
 
     API_RETURN_STRING(result);
 }
+
+/*
+ * This function deprecated since WeeChat 2.9, kept for compatibility.
+ * It is replaced by completion_list_add.
+ */
 
 static VALUE
 weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
@@ -5198,6 +5208,60 @@ weechat_ruby_api_completion_search (VALUE class, VALUE completion, VALUE data,
 }
 
 static VALUE
+weechat_ruby_api_completion_get_string (VALUE class, VALUE completion,
+                                        VALUE property)
+{
+    char *c_completion, *c_property;
+    const char *result;
+
+    API_INIT_FUNC(1, "completion_get_string", API_RETURN_EMPTY);
+    if (NIL_P (completion) || NIL_P (property))
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (property, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_property = StringValuePtr (property);
+
+    result = weechat_completion_get_string (API_STR2PTR(c_completion),
+                                            c_property);
+
+    API_RETURN_STRING(result);
+}
+
+static VALUE
+weechat_ruby_api_completion_list_add (VALUE class, VALUE completion,
+                                      VALUE word, VALUE nick_completion,
+                                      VALUE where)
+{
+    char *c_completion, *c_word, *c_where;
+    int c_nick_completion;
+
+    API_INIT_FUNC(1, "completion_list_add", API_RETURN_ERROR);
+    if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
+        || NIL_P (where))
+        API_WRONG_ARGS(API_RETURN_ERROR);
+
+    Check_Type (completion, T_STRING);
+    Check_Type (word, T_STRING);
+    CHECK_INTEGER(nick_completion);
+    Check_Type (where, T_STRING);
+
+    c_completion = StringValuePtr (completion);
+    c_word = StringValuePtr (word);
+    c_nick_completion = NUM2INT (nick_completion);
+    c_where = StringValuePtr (where);
+
+    weechat_completion_list_add (API_STR2PTR(c_completion),
+                                 c_word,
+                                 c_nick_completion,
+                                 c_where);
+
+    API_RETURN_OK;
+}
+
+static VALUE
 weechat_ruby_api_completion_free (VALUE class, VALUE completion)
 {
     char *c_completion;
@@ -6488,6 +6552,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(command_options, 3);
     API_DEF_FUNC(completion_new, 1);
     API_DEF_FUNC(completion_search, 4);
+    API_DEF_FUNC(completion_get_string, 2);
+    API_DEF_FUNC(completion_list_add, 4);
     API_DEF_FUNC(completion_free, 1);
     API_DEF_FUNC(info_get, 2);
     API_DEF_FUNC(info_get_hashtable, 2);

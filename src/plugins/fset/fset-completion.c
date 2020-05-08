@@ -62,19 +62,19 @@ fset_completion_option_cb (const void *pointer, void *data,
             {
                 if (!config_section_added)
                 {
-                    weechat_hook_completion_list_add (
+                    weechat_completion_list_add (
                         completion,
                         weechat_config_option_get_string (ptr_option,
                                                           "config_name"),
                         0, WEECHAT_LIST_POS_SORT);
-                    weechat_hook_completion_list_add (
+                    weechat_completion_list_add (
                         completion,
                         weechat_config_option_get_string (ptr_option,
                                                           "section_name"),
                         0, WEECHAT_LIST_POS_SORT);
                     config_section_added = 1;
                 }
-                weechat_hook_completion_list_add (
+                weechat_completion_list_add (
                     completion,
                     weechat_config_option_get_string (ptr_option, "name"),
                     0,
@@ -92,7 +92,7 @@ fset_completion_option_cb (const void *pointer, void *data,
                 {
                     for (i = 0; i < num_words; i++)
                     {
-                        weechat_hook_completion_list_add (
+                        weechat_completion_list_add (
                             completion, words[i], 0, WEECHAT_LIST_POS_SORT);
                     }
                 }

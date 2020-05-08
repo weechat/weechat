@@ -48,8 +48,8 @@ alias_completion_alias_cb (const void *pointer, void *data,
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        weechat_hook_completion_list_add (completion, ptr_alias->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_alias->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 
     return WEECHAT_RC_OK;
@@ -76,7 +76,7 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    args = weechat_hook_completion_get_string (completion, "args");
+    args = weechat_completion_get_string (completion, "args");
     if (args)
     {
         argv = weechat_string_split (args, " ", NULL,
@@ -96,10 +96,10 @@ alias_completion_alias_value_cb (const void *pointer, void *data,
                 ptr_alias = alias_search (alias_name);
                 if (ptr_alias)
                 {
-                    weechat_hook_completion_list_add (completion,
-                                                      ptr_alias->command,
-                                                      0,
-                                                      WEECHAT_LIST_POS_BEGINNING);
+                    weechat_completion_list_add (completion,
+                                                 ptr_alias->command,
+                                                 0,
+                                                 WEECHAT_LIST_POS_BEGINNING);
                 }
                 free (alias_name);
             }

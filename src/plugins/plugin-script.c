@@ -1087,8 +1087,8 @@ plugin_script_completion (struct t_weechat_plugin *weechat_plugin,
     for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
     {
-        weechat_hook_completion_list_add (completion, ptr_script->name,
-                                          0, WEECHAT_LIST_POS_SORT);
+        weechat_completion_list_add (completion, ptr_script->name,
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 }
 
