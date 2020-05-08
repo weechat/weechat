@@ -247,6 +247,18 @@ irc_channel_create_buffer (struct t_irc_server *server,
 
     ptr_buffer = irc_channel_search_buffer (server, channel_type,
                                             channel_name);
+    if (!ptr_buffer && (channel_type == IRC_CHANNEL_TYPE_PRIVATE))
+    {
+        /*
+         * in case of private buffer, we reuse a buffer which has wrong type
+         * "channel" (opened by a manual /join or autojoin)
+         */
+        ptr_buffer = irc_channel_search_buffer (server,
+                                                IRC_CHANNEL_TYPE_CHANNEL,
+                                                channel_name);
+        if (ptr_buffer)
+            weechat_bar_item_update ("buffer_name");
+    }
     if (ptr_buffer)
     {
         weechat_nicklist_remove_all (ptr_buffer);

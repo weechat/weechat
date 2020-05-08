@@ -44,6 +44,7 @@ Bug fixes::
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
+  * irc: reuse a buffer with wrong type "channel" when a private message is received (issue #869)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
   * relay: fix slow send of data to clients when SSL is enabled
   * trigger: fix truncated trigger command with commands /trigger input|output|recreate
