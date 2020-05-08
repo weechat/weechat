@@ -36,8 +36,8 @@ Therefore two functions have been renamed in API and moved to the new
 The old names are still valid for compatibility reasons, but it is recommended
 to use only the new names as the old ones may be removed in an upcoming release.
 
-[[v2.9_remove_gnutls_build_option]]
-=== GnuTLS is not optional any more
+[[v2.9_gnutls_required_dependency]]
+=== GnuTLS is now a required dependency
 
 The build options `ENABLE_GNUTLS` (in CMake) and `--disable-gnutls` (in autotools)
 have been removed. That means now GnuTLS is always compiled and used in WeeChat.
