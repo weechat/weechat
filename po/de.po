@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2020-05-05 20:43+0200\n"
-"PO-Revision-Date: 2020-04-29 09:20+0200\n"
+"PO-Revision-Date: 2020-05-08 19:34+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -1678,7 +1678,6 @@ msgstr ""
 "[-n|-s] [-d] <expression> || [-n] [-d] -c <expression1> <operator> "
 "<expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -s: split expression before evaluating it (many commands can be "
@@ -1827,6 +1826,17 @@ msgstr ""
 "erlaubt)\n"
 "                !*  stimmt mit Maske NICHT überein (Platzhalter \"*\" ist "
 "erlaubt)\n"
+"                =*   stimmt mit Maske überein, Groß- und Kleinschreibung "
+"wird nicht beachtet (Platzhalter \"*\" ist erlaubt)\n"
+"                !*   stimmt mit Maske NICHT überein, Groß- und "
+"Kleinschreibung wird nicht beachtet (Platzhalter \"*\" ist erlaubt)\n"
+"                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet\n"
+"                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird "
+"beachtet\n"
+"                =-   ist enthalten, Groß- und Kleinschreibung wird nicht "
+"beachtet\n"
+"                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird "
+"nicht beachtet\n"
 "\n"
 "Ein Ausdruck gilt als \"wahr\" sofern das Ergebnis weder NULL, nicht leer "
 "und von \"0\" abweichend ist.\n"
@@ -1918,7 +1928,8 @@ msgstr ""
 "  /eval -n -c abcd =~ (?-i)^ABC            ==> 0\n"
 "  /eval -n -c abcd =~ (?-i)^abc            ==> 1\n"
 "  /eval -n -c abcd !~ abc                  ==> 0\n"
-"  /eval -n -c abcd =* a*d                  ==> 1"
+"  /eval -n -c abcd =* a*d                  ==> 1\n"
+"  /eval -n -c abcd =- bc                  ==> 1"
 
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
@@ -6328,13 +6339,13 @@ msgstr ""
 msgid "Execution of external commands in WeeChat"
 msgstr "Ausführung externer Befehle in WeeChat"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: end of command %ld (\"%s\"), return code: %d"
-msgstr "%s: Befehl %d (\"%s\") wurde beendet, Rückgabewert: %d"
+msgstr "%s: Befehl %ld (\"%s\") wurde beendet, Rückgabewert: %d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s: unexpected end of command %ld (\"%s\")"
-msgstr "%s: unerwartetes Ende von Befehl %d (\"%s\")"
+msgstr "%s: unerwartetes Ende des Befehls %ld (\"%s\")"
 
 msgid "Executed commands"
 msgstr "Ausgeführte Befehle"
@@ -6361,9 +6372,9 @@ msgid "%ds"
 msgstr "%dSek"
 
 #. TRANSLATORS: %s before "ago" is elapsed time, for example: "3m59"
-#, fuzzy, c-format
+#, c-format
 msgid "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, started %s ago)"
-msgstr "  %s%s%s %d%s%s%s: %s\"%s%s%s\"%s (pid: %d, gestartet vor %s)"
+msgstr "  %s%s%s %ld%s%s%s: %s\"%s%s%s\"%s (pid: %d, gestartet vor %s)"
 
 #, c-format
 msgid "%s%s: command id \"%s\" not found"
