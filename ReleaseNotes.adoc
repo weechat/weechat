@@ -26,8 +26,8 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 The modifier "weechat_print" has been fixed and the content of "modifier_data"
 sent to the callback has changed (see issue #42).
 
-This is an incompatible change, therefore all plugins and scripts using this
-modifier and the "modifier_data" argument must be updated.
+This is an incompatible change, therefore all plugins, scripts and triggers
+using this modifier and the "modifier_data" argument must be updated.
 
 The old format contained plugin name + ";" + buffer name + ";" + tags:
 
