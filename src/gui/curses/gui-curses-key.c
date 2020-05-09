@@ -547,29 +547,20 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
 
     for (i = 0; i < ret; i++)
     {
-        /*
-         * add all chars, but ignore a newline ('\r' or '\n') after
-         * another one)
-         */
-        if ((i == 0)
-            || ((buffer[i] != '\r') && (buffer[i] != '\n'))
-            || ((buffer[i - 1] != '\r') && (buffer[i - 1] != '\n')))
+        if (gui_key_paste_pending && (buffer[i] == 25))
         {
-            if (gui_key_paste_pending && (buffer[i] == 25))
-            {
-                /* ctrl-Y: accept paste */
-                accept_paste = 1;
-            }
-            else if (gui_key_paste_pending && (buffer[i] == 14))
-            {
-                /* ctrl-N: cancel paste */
-                cancel_paste = 1;
-            }
-            else
-            {
-                gui_key_buffer_add (buffer[i]);
-                text_added_to_buffer = 1;
-            }
+            /* ctrl-Y: accept paste */
+            accept_paste = 1;
+        }
+        else if (gui_key_paste_pending && (buffer[i] == 14))
+        {
+            /* ctrl-N: cancel paste */
+            cancel_paste = 1;
+        }
+        else
+        {
+            gui_key_buffer_add (buffer[i]);
+            text_added_to_buffer = 1;
         }
     }
 
