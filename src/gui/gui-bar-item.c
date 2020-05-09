@@ -963,6 +963,21 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         }
     }
 
+    /*
+     * if multiline is enabled in buffer, transform '\n' to '\r' to the
+     * newlines are displayed as real new lines instead of spaces
+     */
+    if (buffer->input_multiline)
+    {
+        ptr_input2 = ptr_input;
+        while (ptr_input2 && ptr_input2[0])
+        {
+            if (ptr_input2[0] == '\n')
+                ptr_input2[0] = '\r';
+            ptr_input2 = (char *)utf8_next_char (ptr_input2);
+        }
+    }
+
     return ptr_input;
 }
 
