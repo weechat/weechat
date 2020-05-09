@@ -47,6 +47,7 @@ Bug fixes::
   * api: replace plugin and buffer name by buffer pointer in argument "modifier_data" sent to weechat_print modifier callback (issue #42)
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
+  * irc: fix realname delimiter color in WHO/WHOX response (issue #1497)
   * irc: reuse a buffer with wrong type "channel" when a private message is received (issue #869)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
   * relay: fix slow send of data to clients when SSL is enabled
