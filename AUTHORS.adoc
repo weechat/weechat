@@ -118,6 +118,7 @@ Alphabetically:
 * Sergio Durigan Junior
 * Shane McCarron
 * Shawn Smith
+* Shun Sakai
 * Simmo Saan (sim642)
 * Simon Arlott
 * Simon Kuhnle
