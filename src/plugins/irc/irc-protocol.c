@@ -4878,7 +4878,7 @@ IRC_PROTOCOL_CALLBACK(352)
                 server, NULL, command, "who", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s(%s%s@%s%s)%s %s%s%s%s(%s)",
+            "%s%s[%s%s%s] %s%s %s(%s%s@%s%s)%s %s%s%s%s%s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
@@ -4896,7 +4896,10 @@ IRC_PROTOCOL_CALLBACK(352)
             (pos_attr) ? " " : "",
             (pos_hopcount) ? pos_hopcount : "",
             (pos_hopcount) ? " " : "",
-            (pos_realname) ? pos_realname : "");
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (pos_realname) ? pos_realname : "",
+            IRC_COLOR_CHAT_DELIMITERS);
     }
 
     return WEECHAT_RC_OK;
@@ -5163,7 +5166,7 @@ IRC_PROTOCOL_CALLBACK(354)
                 server, NULL, command, "who", NULL),
             date,
             irc_protocol_tags (command, "irc_numeric", NULL, NULL),
-            "%s%s[%s%s%s] %s%s %s%s%s%s%s%s(%s%s@%s%s)%s %s%s%s%s(%s)",
+            "%s%s[%s%s%s] %s%s %s%s%s%s%s%s(%s%s@%s%s)%s %s%s%s%s%s(%s%s%s)",
             weechat_prefix ("network"),
             IRC_COLOR_CHAT_DELIMITERS,
             IRC_COLOR_CHAT_CHANNEL,
@@ -5186,7 +5189,10 @@ IRC_PROTOCOL_CALLBACK(354)
             (pos_attr) ? " " : "",
             (pos_hopcount) ? pos_hopcount : "",
             (pos_hopcount) ? " " : "",
-            (pos_realname) ? pos_realname : "");
+            IRC_COLOR_CHAT_DELIMITERS,
+            IRC_COLOR_RESET,
+            (pos_realname) ? pos_realname : "",
+            IRC_COLOR_CHAT_DELIMITERS);
     }
 
     return WEECHAT_RC_OK;
