@@ -12777,6 +12777,9 @@ int weechat_buffer_get_integer (struct t_gui_buffer *buffer,
 ** _input_get_unknown_commands_: 未定義のコマンドを入力コールバックに送信する場合は
    1、そうでない場合は 0
 ** _input_get_empty_: 入力コールバックに何も送信されなかった場合は 1、そうでない場合は 0
+// TRANSLATION MISSING
+** _input_multiline_: 1 if multiple lines are sent as one message to input
+   callback, otherwise 0
 ** _input_size_: 入力サイズ (バイト単位)
 ** _input_length_: 入力長 (文字数)
 ** _input_pos_: バッファ入力におけるカーソル位置
@@ -13075,6 +13078,11 @@ void weechat_buffer_set (struct t_gui_buffer *buffer, const char *property,
 
 | input_get_empty | "0" または "1" |
   バッファに対する空入力を受け取らない場合は "0" (デフォルト)、空入力を受け取る場合は "1"
+
+// TRANSLATION MISSING
+| input_multiline | "0" または "1" |
+  "0" to send each line separately to this buffer (default behavior), "1" to
+  send multiple lines as a single message.
 
 | localvar_set_xxx | 任意の文字列 |
   ローカル変数 _xxx_ の新しい値を設定

@@ -13305,6 +13305,9 @@ Argomenti:
    alla callback di input, altrimenti 0
 // TRANSLATION MISSING
 ** _input_get_empty_: 1 if empty input is sent to input callback, otherwise 0
+// TRANSLATION MISSING
+** _input_multiline_: 1 if multiple lines are sent as one message to input
+   callback, otherwise 0
 ** _input_size_: dimensione per l'input (in byte)
 ** _input_length_: lunghezza dell'input (numero di caratteri)
 ** _input_pos_: posizione del cursore nell'input del buffer
@@ -13633,6 +13636,11 @@ Properties:
 // TRANSLATION MISSING
 | input_get_empty | "0" oppure "1" |
   "0" to disable empty input on this buffer (default behavior), "1" to get empty input.
+
+// TRANSLATION MISSING
+| input_multiline | "0" or "1" |
+  "0" to send each line separately to this buffer (default behavior), "1" to
+  send multiple lines as a single message.
 
 | localvar_set_xxx | qualsiasi stringa |
   Imposta il nuovo valore per la variabile locale _xxx_ (la variabile verrà

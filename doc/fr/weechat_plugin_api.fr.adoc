@@ -13055,6 +13055,8 @@ Paramètres :
    à la fonction de rappel "input", sinon 0
 ** _input_get_empty_ : 1 si une entrée vide est envoyée à la fonction de rappel
    "input", sinon 0
+** _input_multiline_ : 1 si plusieurs lignes sont envoyées comme un seul message
+   à la fonction de rappel "input", sinon 0
 ** _input_size_ : taille de la zone de saisie (en octets)
 ** _input_length_ : longueur de la zone de saisie (nombre de caractères)
 ** _input_pos_ : position du curseur dans la zone de saisie
@@ -13369,6 +13371,10 @@ Propriétés :
 | input_get_empty | "0" ou "1" |
   "0" pour désactiver l'entrée vide sur ce tampon (comportement par défaut),
   "1" pour recevoir l'entrée vide.
+
+| input_multiline | "0" ou "1" |
+  "0" pour envoyer chaque ligne séparément au tampon (comportement par défaut),
+  "1" pour envoyer plusieurs lignes comme un seul message.
 
 | localvar_set_xxx | toute chaîne |
   Change la valeur de la variable locale _xxx_ (la variable est créée si elle

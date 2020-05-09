@@ -157,6 +157,8 @@ struct t_gui_buffer
                                        /* input_callback                    */
     int input_get_empty;               /* 1 if empty input is sent to       */
                                        /* input_callback                    */
+    int input_multiline;               /* 1 if multiple lines are sent as   */
+                                       /* one message to input_callback     */
     char *input_buffer;                /* input buffer                      */
     int input_buffer_alloc;            /* input buffer: allocated size      */
     int input_buffer_size;             /* buffer size in bytes              */
