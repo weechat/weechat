@@ -6,177 +6,138 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   id="svg8"
-   version="1.1"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="797.66998"
+   inkscape:export-xdpi="797.66998"
+   inkscape:export-filename="/tmp/weechat512.png"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="weechat2.svg"
+   width="64"
    height="64"
-   width="64">
+   version="1.1"
+   id="svg8">
+  <sodipodi:namedview
+     inkscape:current-layer="svg8"
+     inkscape:window-maximized="1"
+     inkscape:window-y="42"
+     inkscape:window-x="148"
+     inkscape:cy="32"
+     inkscape:cx="11.643564"
+     inkscape:zoom="12.625"
+     showgrid="false"
+     id="namedview1443"
+     inkscape:window-height="968"
+     inkscape:window-width="1638"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
   <defs
      id="defs2">
     <linearGradient
        id="linearGradient891">
       <stop
-         id="stop887"
+         style="stop-color:#0e16be;stop-opacity:1;"
          offset="0"
-         style="stop-color:#0e16be;stop-opacity:1;" />
+         id="stop887" />
       <stop
-         id="stop889"
+         style="stop-color:#63a4e1;stop-opacity:1"
          offset="1"
-         style="stop-color:#63a4e1;stop-opacity:1" />
+         id="stop889" />
     </linearGradient>
     <linearGradient
        id="linearGradient883">
       <stop
-         id="stop879"
+         style="stop-color:#008726;stop-opacity:1;"
          offset="0"
-         style="stop-color:#008726;stop-opacity:1;" />
+         id="stop879" />
       <stop
-         id="stop881"
+         style="stop-color:#7ecc6f;stop-opacity:1"
          offset="1"
-         style="stop-color:#7ecc6f;stop-opacity:1" />
+         id="stop881" />
     </linearGradient>
     <linearGradient
-       gradientUnits="userSpaceOnUse"
-       y2="42.862499"
-       x2="26.987501"
-       y1="42.862499"
-       x1="115.09375"
+       xlink:href="#linearGradient883"
        id="linearGradient885"
-       xlink:href="#linearGradient883" />
+       x1="115.09375"
+       y1="42.862499"
+       x2="26.987501"
+       y2="42.862499"
+       gradientUnits="userSpaceOnUse" />
     <linearGradient
-       gradientUnits="userSpaceOnUse"
-       y2="62.706253"
-       x2="60.854168"
-       y1="97.102089"
-       x1="60.854168"
+       xlink:href="#linearGradient891"
        id="linearGradient893"
-       xlink:href="#linearGradient891" />
+       x1="60.854168"
+       y1="97.102089"
+       x2="60.854168"
+       y2="62.706253"
+       gradientUnits="userSpaceOnUse" />
     <filter
-       id="filter5519"
-       style="color-interpolation-filters:sRGB">
+       style="color-interpolation-filters:sRGB"
+       id="filter5519">
       <feFlood
-         id="feFlood5509"
-         result="flood"
+         flood-opacity="0.60422568746132421"
          flood-color="rgb(0,0,0)"
-         flood-opacity="0.498039" />
-      <feComposite
-         id="feComposite5511"
-         result="composite1"
-         operator="in"
-         in2="SourceGraphic"
-         in="flood" />
-      <feGaussianBlur
-         id="feGaussianBlur5513"
-         result="blur"
-         stdDeviation="0.5"
-         in="composite1" />
-      <feOffset
-         id="feOffset5515"
-         result="offset"
-         dy="1.4"
-         dx="1.9" />
-      <feComposite
-         id="feComposite5517"
-         result="fbSourceGraphic"
-         operator="over"
-         in2="offset"
-         in="SourceGraphic" />
-      <feColorMatrix
-         id="feColorMatrix5941"
-         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
-         in="fbSourceGraphic"
-         result="fbSourceGraphicAlpha" />
-      <feFlood
-         in="fbSourceGraphic"
          result="flood"
-         flood-color="rgb(0,0,0)"
-         flood-opacity="0.498039"
-         id="feFlood5943" />
+         id="feFlood5509" />
       <feComposite
-         result="composite1"
-         operator="in"
          in="flood"
-         id="feComposite5945"
-         in2="fbSourceGraphic" />
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite5511" />
       <feGaussianBlur
-         result="blur"
-         stdDeviation="0.4"
          in="composite1"
-         id="feGaussianBlur5947" />
+         stdDeviation="0.5"
+         result="blur"
+         id="feGaussianBlur5513" />
       <feOffset
+         dx="1.9"
+         dy="1.4"
          result="offset"
-         dy="-0.6"
-         dx="-0.6"
-         id="feOffset5949" />
+         id="feOffset5515" />
       <feComposite
-         result="composite2"
+         in="SourceGraphic"
+         in2="offset"
          operator="over"
-         in="fbSourceGraphic"
-         id="feComposite5951"
-         in2="offset" />
+         result="fbSourceGraphic"
+         id="feComposite5517" />
     </filter>
     <filter
-       id="filter5531"
-       style="color-interpolation-filters:sRGB">
+       style="color-interpolation-filters:sRGB"
+       id="filter5531">
       <feFlood
-         id="feFlood5521"
-         result="flood"
+         flood-opacity="0.60101983098700495"
          flood-color="rgb(0,0,0)"
-         flood-opacity="0.498039" />
-      <feComposite
-         id="feComposite5523"
-         result="composite1"
-         operator="in"
-         in2="SourceGraphic"
-         in="flood" />
-      <feGaussianBlur
-         id="feGaussianBlur5525"
-         result="blur"
-         stdDeviation="0.5"
-         in="composite1" />
-      <feOffset
-         id="feOffset5527"
-         result="offset"
-         dy="1.4"
-         dx="1.9" />
-      <feComposite
-         id="feComposite5529"
-         result="fbSourceGraphic"
-         operator="over"
-         in2="offset"
-         in="SourceGraphic" />
-      <feColorMatrix
-         id="feColorMatrix5953"
-         values="0 0 0 -1 0 0 0 0 -1 0 0 0 0 -1 0 0 0 0 1 0"
-         in="fbSourceGraphic"
-         result="fbSourceGraphicAlpha" />
-      <feFlood
-         in="fbSourceGraphic"
          result="flood"
-         flood-color="rgb(0,0,0)"
-         flood-opacity="0.498039"
-         id="feFlood5955" />
+         id="feFlood5521" />
       <feComposite
-         result="composite1"
-         operator="in"
          in="flood"
-         id="feComposite5957"
-         in2="fbSourceGraphic" />
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite5523" />
       <feGaussianBlur
-         result="blur"
-         stdDeviation="0.4"
          in="composite1"
-         id="feGaussianBlur5959" />
+         stdDeviation="0.5"
+         result="blur"
+         id="feGaussianBlur5525" />
       <feOffset
+         dx="1.9"
+         dy="1.4"
          result="offset"
-         dy="-0.6"
-         dx="-0.6"
-         id="feOffset5961" />
+         id="feOffset5527" />
       <feComposite
-         result="composite2"
+         in="SourceGraphic"
+         in2="offset"
          operator="over"
-         in="fbSourceGraphic"
-         id="feComposite5963"
-         in2="offset" />
+         result="fbSourceGraphic"
+         id="feComposite5529" />
     </filter>
   </defs>
   <metadata
@@ -187,23 +148,23 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-59.26667,-59.26667)"
+     id="layer2"
      style="display:inline"
-     id="layer2">
+     transform="translate(-59.26667,-59.26667)">
     <path
-       transform="matrix(0.47244092,0,0,0.47244092,59.26667,59.26667)"
-       id="path195"
+       style="fill:url(#linearGradient885);fill-opacity:1;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5519)"
        d="m 121.70834,29.368751 -68.262505,1.5875 c -6.711747,0.156087 -13.464507,2.719336 -18.785501,7.005035 -5.124508,4.228038 -8.190215,10.463836 -9.7895,16.807465 l 24.341667,-1.058333 c 0.214884,-2.67862 1.733902,-5.109484 3.689147,-6.885223 1.76299,-1.5286 4.013062,-2.554657 6.365024,-2.639795 l 58.472918,-2.116649 z"
-       style="fill:url(#linearGradient885);fill-opacity:1;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5519)" />
+       id="path195"
+       transform="matrix(0.47244092,0,0,0.47244092,59.26667,59.26667)" />
     <path
-       transform="matrix(0.47244092,0,0,0.47244092,59.26667,59.26667)"
-       id="path32"
+       style="fill:url(#linearGradient893);fill-opacity:1;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5531)"
        d="m 22.489584,61.647918 -10.31875,27.252084 c -1.362514,3.598435 -1.128016,8.11836 1.70141,10.913234 3.337143,3.296424 8.403518,3.779984 12.85067,3.374224 l 72.495838,-6.614541 16.139588,-47.625001 -20.637504,0.79375 -12.435417,35.189584 -11.112501,0.79375 12.435417,-35.454167 -22.225,1.058333 -13.229167,36.512501 -7.408314,0.264613 c -2.145162,0.07662 -3.30664,-2.908063 -2.645853,-4.76253 l 8.202083,-23.01875 z"
-       style="fill:url(#linearGradient893);fill-opacity:1;stroke:none;stroke-width:0.26458335px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter5531)" />
+       id="path32"
+       transform="matrix(0.47244092,0,0,0.47244092,59.26667,59.26667)" />
   </g>
 </svg>
