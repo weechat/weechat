@@ -761,12 +761,7 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
         goto no_print;
 
     /* call modifier for message printed ("weechat_print") */
-    length_data = strlen (gui_buffer_get_plugin_name (new_line->data->buffer)) +
-        1 +
-        strlen (new_line->data->buffer->name) +
-        1 +
-        ((tags) ? strlen (tags) : 0) +
-        1;
+    length_data = 64 + 1 + ((tags) ? strlen (tags) : 0) + 1;
     modifier_data = malloc (length_data);
     length_str = ((new_line->data->prefix && new_line->data->prefix[0]) ? strlen (new_line->data->prefix) : 1) +
         1 +
@@ -776,9 +771,8 @@ gui_chat_printf_date_tags_internal (struct t_gui_buffer *buffer,
     if (modifier_data && string)
     {
         snprintf (modifier_data, length_data,
-                  "%s;%s;%s",
-                  gui_buffer_get_plugin_name (new_line->data->buffer),
-                  new_line->data->buffer->name,
+                  "0x%lx;%s",
+                  (unsigned long)buffer,
                   (tags) ? tags : "");
         if (display_time)
         {

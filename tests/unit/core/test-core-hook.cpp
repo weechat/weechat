@@ -174,32 +174,43 @@ test_modifier_cb (const void *pointer, void *data,
                   const char *string)
 {
     char **items, *new_string;
-    const char *ptr_plugin, *ptr_name, *ptr_tags, *ptr_msg;
-    int num_items, length;
+    const char *ptr_plugin, *ptr_tags, *ptr_msg;
+    int num_items, length, rc;
+    unsigned long value;
+    struct t_gui_buffer *ptr_buffer;
 
     /* make C++ compiler happy */
     (void) pointer;
     (void) data;
     (void) modifier;
 
-    /* split modifier_data, which is: "plugin;name;tags" */
+    new_string = NULL;
+
+    /* split modifier_data, which is: "buffer_pointer;tags" */
     items = string_split (modifier_data, ";", NULL,
                           WEECHAT_STRING_SPLIT_STRIP_LEFT
                           | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                           | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
-                          3, &num_items);
-    if (num_items < 2)
-        return NULL;
+                          2, &num_items);
+    if (!items || (num_items < 1))
+        goto error;
 
-    ptr_plugin = items[0];
-    ptr_name = items[1];
-    ptr_tags = (num_items > 2) ? items[2] : NULL;
+    ptr_tags = (num_items >= 2) ? items[1] : NULL;
+
+    rc = sscanf (items[0], "0x%lx", &value);
+    if ((rc == EOF) || (rc == 0))
+        goto error;
+    ptr_buffer = (struct t_gui_buffer *)value;
+
+    ptr_plugin = gui_buffer_get_plugin_name (ptr_buffer);
+    if (!ptr_plugin)
+        goto error;
 
     /* do nothing on a buffer different from "core.test" */
     if ((strcmp (ptr_plugin, "core") != 0)
-        || (strcmp (ptr_name, TEST_BUFFER_NAME) != 0))
+        || (strcmp (ptr_buffer->name, TEST_BUFFER_NAME) != 0))
     {
-        return NULL;
+        goto error;
     }
 
     if (strncmp (string, "\t\t", 2) == 0)
@@ -210,14 +221,14 @@ test_modifier_cb (const void *pointer, void *data,
     {
         ptr_msg = strchr (string, '\t');
         if (!ptr_msg)
-            return NULL;
+            goto error;
         ptr_msg++;
     }
 
     length = strlen (string) + 128;
     new_string = (char *)malloc (length);
     if (!new_string)
-        return NULL;
+        goto error;
     new_string[0] = '\0';
 
     if (ptr_tags && strstr (ptr_tags, "add_prefix"))
@@ -253,6 +264,13 @@ test_modifier_cb (const void *pointer, void *data,
     }
 
     return new_string;
+
+error:
+    if (items)
+        string_free_split (items);
+    if (new_string)
+        free (new_string);
+    return NULL;
 }
 
 /*

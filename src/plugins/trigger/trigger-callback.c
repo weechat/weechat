@@ -594,10 +594,11 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
 {
     struct t_gui_buffer *buffer;
     const char *ptr_string;
-    char *string_modified, *pos, *pos2, *plugin_name, *buffer_name;
-    char *buffer_full_name, *str_tags, **tags, *prefix, *string_no_color;
-    int length, num_tags;
+    char *string_modified, *pos, *buffer_pointer;
+    char *str_tags, **tags, *prefix, *string_no_color;
+    int length, num_tags, rc;
     void *ptr_irc_server, *ptr_irc_channel;
+    unsigned long value;
 
     TRIGGER_CALLBACK_CB_INIT(NULL);
 
@@ -700,41 +701,32 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
 
         /*
          * extract buffer/tags from modifier data
-         * (format: "plugin;buffer_name;tags")
+         * (format: "buffer_pointer;tags")
          */
         pos = strchr (modifier_data, ';');
         if (pos)
         {
-            plugin_name = weechat_strndup (modifier_data, pos - modifier_data);
-            if (plugin_name)
+            buffer_pointer = weechat_strndup (modifier_data,
+                                              pos - modifier_data);
+            if (buffer_pointer)
             {
-                weechat_hashtable_set (extra_vars, "tg_plugin", plugin_name);
-                pos++;
-                pos2 = strchr (pos, ';');
-                if (pos2)
+                rc = sscanf (buffer_pointer, "0x%lx", &value);
+                if ((rc != EOF) && (rc != 0))
                 {
-                    buffer_name = weechat_strndup (pos, pos2 - pos);
-                    if (buffer_name)
-                    {
-                        buffer = weechat_buffer_search (plugin_name,
-                                                        buffer_name);
-                        length = strlen (plugin_name) + 1 + strlen (buffer_name) + 1;
-                        buffer_full_name = malloc (length);
-                        if (buffer_full_name)
-                        {
-                            snprintf (buffer_full_name, length,
-                                      "%s.%s", plugin_name, buffer_name);
-                            weechat_hashtable_set (extra_vars, "tg_buffer",
-                                                   buffer_full_name);
-                            free (buffer_full_name);
-                        }
-                        free (buffer_name);
-                    }
-                    pos2++;
-                    if (pos2[0])
+                    buffer = (struct t_gui_buffer *)value;
+                    weechat_hashtable_set (
+                        extra_vars,
+                        "tg_plugin",
+                        weechat_buffer_get_string (buffer, "plugin"));
+                    weechat_hashtable_set (
+                        extra_vars,
+                        "tg_buffer",
+                        weechat_buffer_get_string (buffer, "full_name"));
+                    pos++;
+                    if (pos[0])
                     {
                         tags = weechat_string_split (
-                            pos2,
+                            pos,
                             ",",
                             NULL,
                             WEECHAT_STRING_SPLIT_STRIP_LEFT
@@ -742,18 +734,18 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
                             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                             0,
                             &num_tags);
-                        length = 1 + strlen (pos2) + 1 + 1;
+                        length = 1 + strlen (pos) + 1 + 1;
                         str_tags = malloc (length);
                         if (str_tags)
                         {
-                            snprintf (str_tags, length, ",%s,", pos2);
+                            snprintf (str_tags, length, ",%s,", pos);
                             weechat_hashtable_set (extra_vars, "tg_tags",
                                                    str_tags);
                             free (str_tags);
                         }
                     }
                 }
-                free (plugin_name);
+                free (buffer_pointer);
             }
         }
         weechat_hashtable_set (pointers, "buffer", buffer);

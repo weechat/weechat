@@ -42,6 +42,7 @@ Bug fixes::
   * core: fix WEECHAT_SHAREDIR with CMake build (issue #1461)
   * core: fix memory leak in calculation of expression on FreeBSD (issue #1469)
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
+  * api: replace plugin and buffer name by buffer pointer in argument "modifier_data" sent to weechat_print modifier callback (issue #42)
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
   * irc: reuse a buffer with wrong type "channel" when a private message is received (issue #869)

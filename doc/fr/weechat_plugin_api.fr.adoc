@@ -11756,7 +11756,7 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Nouveau contenu de la ligne de commande envoyée au tampon.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-  extension + ";" + nom_tampon + ";" + étiquettes |
+  pointeur vers le tampon ("0x123..") + ";" + étiquettes ^(3)^ |
   Message affiché. |
   Nouveau message affiché. +
   Pour plus d'informations sur les "hooks" appelés lorsqu'une ligne est affichée,
@@ -11765,7 +11765,8 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
 
 [NOTE]
 ^(1)^ _xxx_ est un nom de commande IRC. +
-^(2)^ _yyy_ est le nom de la barre.
+^(2)^ _yyy_ est le nom de la barre. +
+^(3)^ Avec WeeChat ≤ 2.8, le format était : extension + ";" + nom_tampon + ";" + étiquettes.
 
 Exemple en C :
 

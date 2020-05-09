@@ -11511,16 +11511,18 @@ WeeChat とプラグインが使う修飾子のリスト:
   バッファに送信するコマンドラインの新しい内容
 
 | [[hook_modifier_weechat_print]] weechat_print |
-  plugin + ";" + buffer_name + ";" + tags |
+  buffer pointer ("0x123...") + ";" + tags ^(3)^ |
   表示されたメッセージ |
   表示される新しいメッセージ +
   行が表示される際に呼び出されるフックについての詳細は
   <<_hook_line,hook_line>> を参照してください
 |===
 
+// TRANSLATION MISSING
 [NOTE]
 ^(1)^ _xxx_ は IRC コマンド名。 +
-^(2)^ _yyy_ はバーの名前。
+^(2)^ _yyy_ はバーの名前。 +
+^(3)^ With WeeChat ≤ 2.8, the format was: plugin + ";" + buffer_name + ";" + tags.
 
 C 言語での使用例:
 

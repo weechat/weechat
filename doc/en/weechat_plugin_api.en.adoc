@@ -11518,7 +11518,7 @@ List of modifiers used by WeeChat and plugins:
   New content of command line sent to buffer.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-  plugin + ";" + buffer_name + ";" + tags |
+  buffer pointer ("0x123...") + ";" + tags ^(3)^ |
   Message printed. |
   New message printed. +
   For more information on the hooks called when a line is printed, see
@@ -11527,7 +11527,8 @@ List of modifiers used by WeeChat and plugins:
 
 [NOTE]
 ^(1)^ _xxx_ is IRC command name. +
-^(2)^ _yyy_ is bar name.
+^(2)^ _yyy_ is bar name. +
+^(3)^ With WeeChat ≤ 2.8, the format was: plugin + ";" + buffer_name + ";" + tags.
 
 C example:
 

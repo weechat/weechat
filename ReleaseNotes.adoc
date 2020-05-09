@@ -20,6 +20,42 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.9]]
 == Version 2.9 (under dev)
 
+[[v2.9_modifier_weechat_print]]
+=== New modifier_data for modifier "weechat_print"
+
+The modifier "weechat_print" has been fixed and the content of "modifier_data"
+sent to the callback has changed (see issue #42).
+
+This is an incompatible change, therefore all plugins and scripts using this
+modifier and the "modifier_data" argument must be updated.
+
+The old format contained plugin name + ";" + buffer name + ";" + tags:
+
+----
+irc;freenode.#weechat;tag1,tag2,tag3
+----
+
+The new format contains buffer pointer + ";" + tags:
+
+----
+0x123abc;tag1,tag2,tag3
+----
+
+The following scripts are updated consequently to be compatible with all
+WeeChat versions:
+
+* https://weechat.org/scripts/source/colorize_lines.pl.html/[colorize_lines.pl] 3.9
+* https://weechat.org/scripts/source/colorize_nicks.py/[colorize_nicks.py] 27
+* https://weechat.org/scripts/source/colorizer.rb/[colorizer.rb] 0.2
+* https://weechat.org/scripts/source/curiousignore.pl/[curiousignore.pl] 0.4
+* https://weechat.org/scripts/source/format_lines.pl/[format_lines.pl] 1.6
+* https://weechat.org/scripts/source/identica.py/[identica.py] 0.4.3
+* https://weechat.org/scripts/source/mass_hl_blocker.pl/[mass_hl_blocker.pl] 0.2
+* https://weechat.org/scripts/source/noirccolors.py/[noirccolors.py] 0.4
+* https://weechat.org/scripts/source/parse_relayed_msg.pl/[parse_relayed_msg.pl] 1.9.3
+* https://weechat.org/scripts/source/unhighlight.py/[unhighlight.py] 0.1.3
+* https://weechat.org/scripts/source/weemoticons.py/[weemoticons.py] 0.3
+
 [[v2.9_api_completion_functions]]
 === Move of API completion functions
 
