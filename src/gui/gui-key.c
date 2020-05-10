@@ -2802,19 +2802,18 @@ gui_key_buffer_remove (int index, int number)
 }
 
 /*
- * Removes final newline at end of paste if there is only one line to paste.
+ * Removes final newline at end of paste.
  */
 
 void
 gui_key_paste_remove_newline ()
 {
-    if ((gui_key_paste_lines <= 1)
-        && (gui_key_buffer_size > 0)
+    if ((gui_key_buffer_size > 0)
         && ((gui_key_buffer[gui_key_buffer_size - 1] == '\r')
             || (gui_key_buffer[gui_key_buffer_size - 1] == '\n')))
     {
         gui_key_buffer_size--;
-        gui_key_paste_lines = 0;
+        gui_key_paste_lines--;
     }
 }
 
