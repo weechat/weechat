@@ -294,17 +294,27 @@ gui_key_flush (int paste)
     for (i = 0; i < gui_key_buffer_size; i++)
     {
         key = gui_key_buffer[i];
+
+        /*
+         * Many terminal emulators sends \n as \r when pasting, so replace them
+         * back
+         */
+        if (paste && key == '\r')
+        {
+            key = '\n';
+        }
+
         insert_ok = 1;
         utf_partial_char[0] = '\0';
 
-        if (gui_mouse_event_pending)
+        if (!paste && gui_mouse_event_pending)
         {
             insert_ok = 0;
             key_str[0] = (char)key;
             key_str[1] = '\0';
             length_key_str = 1;
         }
-        else if (key < 32)
+        else if (!paste && key < 32)
         {
             insert_ok = 0;
             key_str[0] = '\x01';
@@ -319,7 +329,7 @@ gui_key_flush (int paste)
             key_str[2] = '\0';
             length_key_str = 2;
         }
-        else if (key == 127)
+        else if (!paste && key == 127)
         {
             insert_ok = 0;
             key_str[0] = '\x01';
@@ -379,7 +389,7 @@ gui_key_flush (int paste)
              * or if the mouse code is valid UTF-8 (do not send partial mouse
              * code which is not UTF-8 valid)
              */
-            if (!gui_mouse_event_pending || utf8_is_valid (key_str, -1, NULL))
+            if (!paste && (!gui_mouse_event_pending || utf8_is_valid (key_str, -1, NULL)))
             {
                 (void) hook_signal_send ("key_pressed",
                                          WEECHAT_HOOK_SIGNAL_STRING, key_str);
@@ -392,7 +402,7 @@ gui_key_flush (int paste)
                 input_old = NULL;
             old_buffer = gui_current_window->buffer;
 
-            if ((gui_key_pressed (key_str) != 0) && (insert_ok)
+            if ((paste || gui_key_pressed (key_str) != 0) && (insert_ok)
                 && (!gui_cursor_mode))
             {
                 if (!paste || !undo_done)
