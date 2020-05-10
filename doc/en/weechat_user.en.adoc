@@ -1631,12 +1631,13 @@ with `+/script install buffer_autoset.py+` and get help with
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | Execute command or send message (in search mode: stop search). | `+/input return+`
+| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
 | kbd:[↑]         | Call previous command/message (in search mode: search up). | `+/input history_previous+`
 | kbd:[↓]         | Call next command/message (in search mode: search down). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | Call previous command/message in global history (common for all buffers). | `+/input history_global_previous+`
 | kbd:[Ctrl+↓]    | Call next command/message in global history (common for all buffers). | `+/input history_global_next+`
 | kbd:[Alt+d]     | Delete next word in command line (deleted string is copied to the internal clipboard). | `+/input delete_next_word+`
-| kbd:[Alt+k]     |  Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
+| kbd:[Alt+k]     | Grab a key and insert its code (and command bound if key exists) in command line. | `+/input grab_key_command+`
 | kbd:[Alt+r]     | Delete entire command line. | `+/input delete_line+`
 | kbd:[Alt+s]     | Toggle spell checker. | `+/mute spell toggle+`
 |===

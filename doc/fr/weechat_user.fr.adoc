@@ -1685,6 +1685,7 @@ avec `+/help buffer_autoset+`.
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | Exécuter la commande ou envoyer le message (en mode recherche : arrêter la recherche). | `+/input return+`
+| kbd:[Alt+Enter] | Insérer une nouvelle ligne. | `+/input insert \n+`
 | kbd:[↑]         | Rappeler la commande précédente (en mode recherche : chercher plus haut). | `+/input history_previous+`
 | kbd:[↓]         | Rappeler la commande suivante (en mode recherche : chercher plus bas). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | Rappeler la commande précédente dans l'historique global (commun à tous les tampons). | `+/input history_global_previous+`

@@ -1640,6 +1640,8 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
 | kbd:[↑]         | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę). | `+/input history_previous+`
 | kbd:[↓]         | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_previous+`

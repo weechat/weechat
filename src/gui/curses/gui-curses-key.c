@@ -83,6 +83,7 @@ gui_key_default_bindings (int context)
     {
         BIND(/* <enter>       */ "ctrl-M",             "/input return");
         BIND(/* <enter>       */ "ctrl-J",             "/input return");
+        BIND(/* m-<enter>     */ "meta-ctrl-M",        "/input insert \\n");
         BIND(/* <tab>         */ "ctrl-I",             "/input complete_next");
         BIND(/* s-<tab>       */ "meta2-Z",            "/input complete_previous");
         BIND(/* ^R            */ "ctrl-R",             "/input search_text_here");

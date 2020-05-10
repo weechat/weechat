@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add default key kbd:[Alt+Enter] to insert a newline (issue #1498)
   * core: add flag "input_multiline" in buffer (issue #984, issue #1063)
   * core: add a scalable WeeChat logo (SVG) (issue #1454, issue #1456)
   * core: add case sensitive wildcard matching comparison operator (`+==*+` and `+!!*+`) and case sensitive/insensitive include comparison operators (`+==-+`,  `+!!-+`, `+=-+`, `+!-+`) in evaluation of expressions

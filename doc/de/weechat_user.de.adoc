@@ -1664,6 +1664,8 @@ und um eine Hilfe zu erhalten wie man es nutzt: `+/help buffer_autoset+`.
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | führt einen Befehl aus oder sendet den Text  (im Such-Modus: stoppt Suche). | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
 | kbd:[↑]         | ruft vorherigen Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: rückwärts suchen). | `+/input history_previous+`
 | kbd:[↓]         | ruft nächsten Befehl oder Nachricht aus dem Verlaufsspeicher auf (im Such-Modus: vorwärts suchen). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | ruft vorherigen Befehl/Nachricht aus dem globalen Verlaufsspeicher auf (für alle Buffer). | `+/input history_global_previous+`

@@ -1641,6 +1641,8 @@ irc サーバ "freenode" に含まれる全てのバッファに対して設定�
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | コマンドを実行するか、メッセージを送信する (検索モードの場合: 検索の終了) | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
 | kbd:[↑]         | 前のコマンド/メッセージを呼び出す (検索モードの場合: 上方向に検索) | `+/input history_previous+`
 | kbd:[↓]         | 次のコマンド/メッセージを呼び出す (検索モードの場合: 下方向に検索) | `+/input history_next+`
 | kbd:[Ctrl+↑]    | グローバル履歴から前のコマンド/メッセージを呼び出す (すべてのバッファに対して共通の履歴) | `+/input history_global_previous+`

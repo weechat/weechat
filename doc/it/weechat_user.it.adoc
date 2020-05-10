@@ -1726,6 +1726,8 @@ with `+/script install buffer_autoset.py+` and get help with `+/help buffer_auto
 | kbd:[Invio] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | Esegue comando o invia messaggio (in modalità ricerca: ferma ricerca). | `+/input return+`
+// TRANSLATION MISSING
+| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
 | kbd:[↑]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in alto). | `+/input history_previous+`
 | kbd:[↓]         | Chiama comando/messaggio precedente (in modalità ricerca: cerca in basso). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | Chiama il comando/messaggio precedente nella cronologia globale (identico per tutti i buffer). | `+/input history_global_previous+`
