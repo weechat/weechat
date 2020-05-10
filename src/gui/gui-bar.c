@@ -1873,7 +1873,7 @@ gui_bar_create_default_input ()
                              "bottom",     /* position */
                              "horizontal", /* filling_top_bottom */
                              "vertical",   /* filling_left_right */
-                             "1",          /* size */
+                             "0",          /* size */
                              "0",          /* size_max */
                              "default",    /* color fg */
                              "cyan",       /* color delim */
