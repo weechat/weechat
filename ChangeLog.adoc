@@ -41,6 +41,8 @@ New features::
 
 Bug fixes::
 
+  * core: don't remove consecutive newlines when pasting text (issue #1500)
+  * core: don't collapse consecutive newlines in bar content (issue #1500)
   * core: fix WEECHAT_SHAREDIR with CMake build (issue #1461)
   * core: fix memory leak in calculation of expression on FreeBSD (issue #1469)
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
