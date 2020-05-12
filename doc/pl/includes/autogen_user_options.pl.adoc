@@ -2826,13 +2826,13 @@
 ** opis: pass:none[maksymalna ilość minut w historii każdego bufora dla kanału IRC (0 = bez ograniczeń, przykłady: 1440 = dzień, 10080 = tydzień, 43200 = miesiąc, 525600 = rok)]
 ** typ: liczba
 ** wartości: 0 .. 2147483647
-** domyślna wartość: `+1440+`
+** domyślna wartość: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** opis: pass:none[maksymalna ilość linii w historii każdego bufora dla kanału IRC (0 = bez ograniczeń)]
 ** typ: liczba
 ** wartości: 0 .. 2147483647
-** domyślna wartość: `+256+`
+** domyślna wartość: `+1024+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** opis: pass:none[wyświetlaj backlog zaczynając od ostatniego rozłączenia klienta]

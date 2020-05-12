@@ -2826,13 +2826,13 @@
 ** Beschreibung: pass:none[Zeitangabe, in Minuten, wie lange die Zeilen im Verlaufsspeicher für jeden IRC Channel gehalten werden sollen (0 = unbegrenzt, Beispiele: 1440 = einen Tag, 10080 = eine Woche, 43200 = einen Monat, 525600 = ein Jahr)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
-** Standardwert: `+1440+`
+** Standardwert: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** Beschreibung: pass:none[maximale Anzahl an Zeilen im Verlaufsspeicher. Dies gilt für jeden IRC Channel (0: keine Zeilenbegrenzung)]
 ** Typ: integer
 ** Werte: 0 .. 2147483647
-** Standardwert: `+256+`
+** Standardwert: `+1024+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** Beschreibung: pass:none[Verlaufsspeicher anzeigen, beginnend mit dem Client der zuletzt beendet wurde]

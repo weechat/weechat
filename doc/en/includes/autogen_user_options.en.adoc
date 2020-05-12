@@ -2826,13 +2826,13 @@
 ** description: pass:none[maximum number of minutes in backlog per IRC channel (0 = unlimited, examples: 1440 = one day, 10080 = one week, 43200 = one month, 525600 = one year)]
 ** type: integer
 ** values: 0 .. 2147483647
-** default value: `+1440+`
+** default value: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** description: pass:none[maximum number of lines in backlog per IRC channel (0 = unlimited)]
 ** type: integer
 ** values: 0 .. 2147483647
-** default value: `+256+`
+** default value: `+1024+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** description: pass:none[display backlog starting from last client disconnect]

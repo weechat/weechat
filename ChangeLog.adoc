@@ -34,6 +34,7 @@ New features::
   * buflist: add default key kbd:[Alt+Shift+B] to toggle buflist
   * buflist: add options enable/disable/toggle in command /buflist
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)
+  * relay: increase default limits for IRC backlog options
   * relay: add command "handshake" in weechat relay protocol and nonce to prevent replay attacks, add options relay.network.password_hash_algo, relay.network.password_hash_iterations, relay.network.nonce_size (issue #1474)
   * relay: add command "completion" in weechat relay protocol to perform a completion on a string at a given position (issue #1484)
   * relay: add option relay.network.auth_timeout

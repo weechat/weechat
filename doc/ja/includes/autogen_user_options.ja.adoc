@@ -2826,13 +2826,13 @@
 ** 説明: pass:none[IRC チャンネルごとのバックログの最大時間 (分) (0 = 制限無し、例: 1440 = 1 日、10080 = 1 週間、43200 = 1 ヶ月、525600 = 1 年間)]
 ** タイプ: 整数
 ** 値: 0 .. 2147483647
-** デフォルト値: `+1440+`
+** デフォルト値: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** 説明: pass:none[IRC チャンネルごとのバックログの最大行数 (0 = 制限無し)]
 ** タイプ: 整数
 ** 値: 0 .. 2147483647
-** デフォルト値: `+256+`
+** デフォルト値: `+1024+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** 説明: pass:none[最後にクライアントを切断した以降のバックログを表示]

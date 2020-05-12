@@ -2826,13 +2826,13 @@
 ** descrizione: pass:none[numero massimo di minuti nella cronologia per canale IRC (0 = nessun limite, esempi: 1440 = un giorno, 10000 = una settimana; 43200 = un mese, 525600 = un anno)]
 ** tipo: intero
 ** valori: 0 .. 2147483647
-** valore predefinito: `+1440+`
+** valore predefinito: `+0+`
 
 * [[option_relay.irc.backlog_max_number]] *relay.irc.backlog_max_number*
 ** descrizione: pass:none[numero massimo di righe nella cronologia per canale IRC (0 = nessun limite)]
 ** tipo: intero
 ** valori: 0 .. 2147483647
-** valore predefinito: `+256+`
+** valore predefinito: `+1024+`
 
 * [[option_relay.irc.backlog_since_last_disconnect]] *relay.irc.backlog_since_last_disconnect*
 ** descrizione: pass:none[mostra la cronologia a partire dall'ultima disconnessione del client]

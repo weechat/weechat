@@ -1214,14 +1214,14 @@ relay_config_init ()
         N_("maximum number of minutes in backlog per IRC channel "
            "(0 = unlimited, examples: 1440 = one day, 10080 = one week, "
            "43200 = one month, 525600 = one year)"),
-        NULL, 0, INT_MAX, "1440", NULL, 0,
+        NULL, 0, INT_MAX, "0", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_max_number = weechat_config_new_option (
         relay_config_file, ptr_section,
         "backlog_max_number", "integer",
         N_("maximum number of lines in backlog per IRC channel "
            "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "256", NULL, 0,
+        NULL, 0, INT_MAX, "1024", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     relay_config_irc_backlog_since_last_disconnect = weechat_config_new_option (
         relay_config_file, ptr_section,
