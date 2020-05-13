@@ -1080,16 +1080,29 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
-    /* set notify level */
+    /* display or set notify level */
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
-        COMMAND_MIN_ARGS(3, "notify");
-        if (!config_weechat_notify_set (buffer, argv_eol[2]))
+        if (argc < 3)
         {
             gui_chat_printf (NULL,
-                             _("%sError: unable to set notify level \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv_eol[2]);
+                             _("Notify for \"%s%s%s\": \"%s%s%s\""),
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             buffer->full_name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                             gui_buffer_notify_string[buffer->notify],
+                             GUI_COLOR(GUI_COLOR_CHAT));
+        }
+        else
+        {
+            if (!config_weechat_notify_set (buffer, argv_eol[2]))
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to set notify level \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv_eol[2]);
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -7105,7 +7118,7 @@ command_init ()
            " || unhide [<number>|<name>|-all [<number>|<name>...]]"
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>...]"
-           " || notify <level>"
+           " || notify [<level>]"
            " || localvar [<number>|<name>]"
            " || set <property> [<value>]"
            " || get <property>"
@@ -7130,8 +7143,8 @@ command_init ()
            "renumber: renumber buffers (works only if option weechat.look."
            "buffer_auto_renumber is off)\n"
            "   close: close buffer (number/range or name is optional)\n"
-           "  notify: set notify level for current buffer: this level determines "
-           "whether buffer will be added to hotlist or not:\n"
+           "  notify: display or set notify level for current buffer: this level "
+           "determines whether buffer will be added to hotlist or not:\n"
            "               none: never\n"
            "          highlight: for highlights only\n"
            "            message: for messages from users + highlights\n"
