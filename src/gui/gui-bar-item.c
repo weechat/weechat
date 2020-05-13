@@ -850,9 +850,10 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
                             struct t_hashtable *extra_info)
 {
     char *ptr_input, *ptr_input2, str_buffer[128], str_start_input[16];
-    char str_cursor[16], *buf, str_key_debug[1024];
+    char str_cursor[16], *buf, str_key_debug[1024], *str_lead_linebreak;
     const char *pos_cursor;
-    int length, length_cursor, length_start_input, buf_pos;
+    int length, length_cursor, length_start_input, length_lead_linebreak;
+    int buf_pos, is_multiline;
 
     /* make C compiler happy */
     (void) pointer;
@@ -951,14 +952,34 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         ptr_input = ptr_input2;
     }
 
+    /*
+     * transform '\n' to '\r' so the newlines are displayed as real new lines
+     * instead of spaces
+     */
+    is_multiline = 0;
+    ptr_input2 = ptr_input;
+    while (ptr_input2 && ptr_input2[0])
+    {
+        if (ptr_input2[0] == '\n')
+        {
+            ptr_input2[0] = '\r';
+            is_multiline = 1;
+        }
+        ptr_input2 = (char *)utf8_next_char (ptr_input2);
+    }
+
+    str_lead_linebreak = (is_multiline &&
+        CONFIG_BOOLEAN(config_look_input_multiline_lead_linebreak)) ? "\r" : "";
+    length_lead_linebreak = strlen (str_lead_linebreak);
+
     /* insert "start input" at beginning of string */
     if (ptr_input)
     {
-        length = strlen (ptr_input) + length_start_input + 1;
+        length = strlen (ptr_input) + length_start_input + length_lead_linebreak + 1;
         buf = malloc (length);
         if (buf)
         {
-            snprintf (buf, length, "%s%s", str_start_input, ptr_input);
+            snprintf (buf, length, "%s%s%s", str_start_input, str_lead_linebreak, ptr_input);
             free (ptr_input);
             ptr_input = buf;
         }
@@ -971,18 +992,6 @@ gui_bar_item_input_text_cb (const void *pointer, void *data,
         {
             snprintf (ptr_input, length, "%s%s", str_start_input, str_cursor);
         }
-    }
-
-    /*
-     * transform '\n' to '\r' so the newlines are displayed as real new lines
-     * instead of spaces
-     */
-    ptr_input2 = ptr_input;
-    while (ptr_input2 && ptr_input2[0])
-    {
-        if (ptr_input2[0] == '\n')
-            ptr_input2[0] = '\r';
-        ptr_input2 = (char *)utf8_next_char (ptr_input2);
     }
 
     return ptr_input;
