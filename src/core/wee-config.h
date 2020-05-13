@@ -209,6 +209,7 @@ extern struct t_config_option *config_look_hotlist_suffix;
 extern struct t_config_option *config_look_hotlist_unique_numbers;
 extern struct t_config_option *config_look_hotlist_update_on_buffer_switch;
 extern struct t_config_option *config_look_input_cursor_scroll;
+extern struct t_config_option *config_look_input_multiline_lead_linebreak;
 extern struct t_config_option *config_look_input_share;
 extern struct t_config_option *config_look_input_share_overwrite;
 extern struct t_config_option *config_look_input_undo_max;
