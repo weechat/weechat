@@ -1376,8 +1376,19 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
     gui_line_free_all (buffer);
 
     buffer->type = type;
-    if (type == GUI_BUFFER_TYPE_FREE)
-        buffer->clear = 0;
+
+    switch (type)
+    {
+        case GUI_BUFFER_TYPE_FORMATTED:
+            buffer->time_for_each_line = 1;
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            buffer->clear = 0;
+            buffer->time_for_each_line = 0;
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
+    }
 
     gui_buffer_ask_chat_refresh (buffer, 2);
 

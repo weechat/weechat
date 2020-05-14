@@ -44,6 +44,7 @@ New features::
 
 Bug fixes::
 
+  * core: force buffer property "time_for_each_line" to 0 for buffers with free content (issue #1485)
   * core: don't collapse consecutive newlines in lines displayed before the first buffer is created
   * core: don't remove consecutive newlines when pasting text (issue #1500)
   * core: don't collapse consecutive newlines in bar content (issue #1500)
