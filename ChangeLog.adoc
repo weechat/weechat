@@ -47,6 +47,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix command /window scroll_beyond_end when buffer has fewer lines than chat height (issue #1509)
   * core: force buffer property "time_for_each_line" to 0 for buffers with free content (issue #1485)
   * core: don't collapse consecutive newlines in lines displayed before the first buffer is created
   * core: don't remove consecutive newlines when pasting text (issue #1500)
