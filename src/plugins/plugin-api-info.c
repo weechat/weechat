@@ -46,6 +46,7 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-cursor.h"
 #include "../gui/gui-filter.h"
+#include "../gui/gui-focus.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-key.h"
@@ -1858,6 +1859,15 @@ plugin_api_info_init ()
                   "timestamp (optional, current time by default), number of "
                   "passwords before/after to test (optional, 0 by default)"),
                &plugin_api_info_totp_validate_cb, NULL, NULL);
+
+    /* WeeChat core info_hashtable hooks */
+    hook_info_hashtable (NULL,
+        "gui_focus_info",
+        N_("get focus info"),
+        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
+        N_("\"x\": x coordinate, \"y\": y coordinate"),
+        N_("see hook_focus"),
+        &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */
     hook_infolist (NULL, "bar",

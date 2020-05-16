@@ -316,19 +316,3 @@ gui_focus_info_hashtable_gui_focus_info_cb (const void *pointer, void *data,
 
     return ret_hashtable;
 }
-
-/*
- * Initializes focus hooks.
- */
-
-void
-gui_focus_init ()
-{
-    hook_info_hashtable (NULL,
-        "gui_focus_info",
-        N_("get focus info"),
-        /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
-        N_("\"x\": x coordinate, \"y\": y coordinate"),
-        N_("see hook_focus"),
-        &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
-}

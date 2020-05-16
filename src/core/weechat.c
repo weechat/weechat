@@ -802,7 +802,6 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     command_init ();                    /* initialize WeeChat commands      */
     completion_init ();                 /* add core completion hooks        */
     gui_key_init ();                    /* init keys                        */
-    gui_focus_init ();                  /* initialize focus                 */
     network_init_gcrypt ();             /* init gcrypt                      */
     if (!secure_init ())                /* init secured data                */
         weechat_shutdown (EXIT_FAILURE, 0);
