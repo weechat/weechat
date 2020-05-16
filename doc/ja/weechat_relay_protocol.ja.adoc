@@ -563,12 +563,13 @@ _インフォ_ を要求。
 構文:
 
 ----
-(id) info <name>
+(id) info <name> [<arguments>]
 ----
 
 引数:
 
 * _name_: 読み出すインフォの名前
+* _arguments_: 引数 (任意)
 
 // TRANSLATION MISSING
 Examples:

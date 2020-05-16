@@ -547,12 +547,13 @@ Request an _info_.
 Syntax:
 
 ----
-(id) info <name>
+(id) info <name> [<arguments>]
 ----
 
 Arguments:
 
 * _name_: name of info to retrieve
+* _arguments_: arguments (optional)
 
 Examples:
 
