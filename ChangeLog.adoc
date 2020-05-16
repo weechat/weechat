@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: display notify level for current buffer with command /buffer notify (issue #1505)
   * core: count only visible nicks in bar item "buffer_nicklist_count", add bar items "buffer_nicklist_count_groups" and "buffer_nicklist_count_all" (issue #1506)
   * core: set default size for input bar to 0 (automatic) (issue #1498)
   * core: add default key kbd:[Alt+Enter] to insert a newline (issue #1498)
