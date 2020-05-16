@@ -1648,6 +1648,7 @@ gui_window_scroll_beyond_end (struct t_gui_window *window)
     {
         window->scroll->start_line = window->buffer->lines->last_line;
         window->scroll->start_line_pos = -1;
+        window->scroll->first_line_displayed = 0;
         gui_buffer_ask_chat_refresh (window->buffer, 2);
     }
 }
