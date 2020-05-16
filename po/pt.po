@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-05 20:43+0200\n"
+"POT-Creation-Date: 2020-05-16 13:39+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -411,8 +411,8 @@ msgstr ""
 msgid "Buffers list:"
 msgstr "Lista de buffers:"
 
-#, c-format
-msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)%s%s"
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (notificação: %s)%s%s"
 
 #, c-format
@@ -438,6 +438,10 @@ msgstr ""
 #, c-format
 msgid "%sError: WeeChat main buffer can't be closed"
 msgstr "%sErro: o buffer principal do WeeChat não pode ser fechado"
+
+#, fuzzy, c-format
+msgid "Notify for \"%s%s%s\": \"%s%s%s\""
+msgstr "%sO tópico de %s%s%s é \"%s%s%s\""
 
 #, c-format
 msgid "%sError: unable to set notify level \"%s\""
@@ -1243,8 +1247,8 @@ msgid ""
 "<number>|<name> || unmerge [<number>|-all] || hide [<number>|<name>|-all "
 "[<number>|<name>...]] || unhide [<number>|<name>|-all [<number>|<name>...]] "
 "|| renumber [<number1> [<number2> [<start>]]] || close [<n1>[-<n2>]|"
-"<name>...] || notify <level> || localvar [<number>|<name>] || set <property> "
-"[<value>] || get <property> || <number>|-|+|<name>"
+"<name>...] || notify [<level>] || localvar [<number>|<name>] || set "
+"<property> [<value>] || get <property> || <number>|-|+|<name>"
 msgstr ""
 "list || clear [<número>|<nome>|-merged|-all [<número>|<nome>...]] || move "
 "<número>|-|+ || swap <número1>|<nome1> [<número2>|<nome2>] || cycle <número>|"
@@ -1275,8 +1279,8 @@ msgid ""
 "renumber: renumber buffers (works only if option weechat.look."
 "buffer_auto_renumber is off)\n"
 "   close: close buffer (number/range or name is optional)\n"
-"  notify: set notify level for current buffer: this level determines whether "
-"buffer will be added to hotlist or not:\n"
+"  notify: display or set notify level for current buffer: this level "
+"determines whether buffer will be added to hotlist or not:\n"
 "               none: never\n"
 "          highlight: for highlights only\n"
 "            message: for messages from users + highlights\n"

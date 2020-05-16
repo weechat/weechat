@@ -1096,7 +1096,7 @@ Examples:
          unhide [<number>|<name>|-all [<number>|<name>...]]
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>...]
-         notify <level>
+         notify [<level>]
          localvar [<number>|<name>]
          set <property> [<value>]
          get <property>
@@ -1115,7 +1115,7 @@ Examples:
   unhide: unhide the buffer
 renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
    close: close buffer (number/range or name is optional)
-  notify: set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
+  notify: display or set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
                none: never
           highlight: for highlights only
             message: for messages from users + highlights

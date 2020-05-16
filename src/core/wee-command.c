@@ -567,22 +567,25 @@ COMMAND_CALLBACK(buffer)
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
-            gui_chat_printf (NULL,
-                             _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s)%s%s"),
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             ptr_buffer->number,
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             gui_buffer_get_plugin_name (ptr_buffer),
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                             ptr_buffer->name,
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             gui_buffer_notify_string[ptr_buffer->notify],
-                             (ptr_buffer->hidden) ? " " : "",
-                             /* TRANSLATORS: "hidden" is displayed in list of buffers */
-                             (ptr_buffer->hidden) ? _("(hidden)") : "");
+            gui_chat_printf (
+                NULL,
+                _("  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"),
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT),
+                ptr_buffer->number,
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                gui_buffer_get_plugin_name (ptr_buffer),
+                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                ptr_buffer->name,
+                GUI_COLOR(GUI_COLOR_CHAT),
+                GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                gui_buffer_notify_string[ptr_buffer->notify],
+                GUI_COLOR(GUI_COLOR_CHAT),
+                (ptr_buffer->hidden) ? " " : "",
+                /* TRANSLATORS: "hidden" is displayed in list of buffers */
+                (ptr_buffer->hidden) ? _("(hidden)") : "");
         }
 
         return WEECHAT_RC_OK;

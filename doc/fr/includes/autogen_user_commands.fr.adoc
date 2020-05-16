@@ -1096,7 +1096,7 @@ Exemples :
          unhide [<nombre>|<nom>|-all [<nombre>|<nom>...]]
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>...]
-         notify <niveau>
+         notify [<niveau>]
          localvar [<nombre>|<nom>]
          set <propriété> [<valeur>]
          get <propriété>
@@ -1115,7 +1115,7 @@ Exemples :
   unhide : démasquer le tampon
 renumber : renuméroter des tampons (fonctionne seulement si l'option weechat.look.buffer_auto_renumber est désactivée)
    close : fermer le tampon (nombre/intervalle ou nom optionnel)
-  notify : définir le niveau de notification pour le tampon courant : ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas :
+  notify : afficher ou définir le niveau de notification pour le tampon courant : ce niveau détermine si le tampon doit être ajouté à la hotlist ou pas :
                 none : jamais
            highlight : pour les highlights seulement
              message : pour les messages d'utilisateurs + highlights
