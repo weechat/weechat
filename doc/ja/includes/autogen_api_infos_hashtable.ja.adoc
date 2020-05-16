@@ -12,5 +12,7 @@
 
 | irc | irc_message_split | IRC メッセージを分割 (デフォルトでは 512 バイト内に収まるように分割します) | "message": IRC メッセージ、"server": サーバ名 (任意) | "msg1" ... "msgN": 送信メッセージ (最後の "\r\n" は無し), "args1" ... "argsN": メッセージの引数、"count": メッセージの数
 
+| weechat | focus_info | get focus info | "x": x coordinate (string with integer >= 0), "y": y coordinate (string with integer >= 0) | see function "hook_focus" in Plugin API reference
+
 |===
 // end::infos_hashtable[]

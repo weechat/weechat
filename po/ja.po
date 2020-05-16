@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-16 13:39+0200\n"
+"POT-Creation-Date: 2020-05-16 14:36+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11425,6 +11425,18 @@ msgid ""
 msgstr ""
 "secret (base32)、ワンタイムパスワード、タイムスタンプ (任意、デフォルトで現在"
 "時刻)、テスト前後のパスワードの数 (任意、デフォルトで 0)"
+
+msgid "get focus info"
+msgstr ""
+
+#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+msgid ""
+"\"x\": x coordinate (string with integer >= 0), \"y\": y coordinate (string "
+"with integer >= 0)"
+msgstr ""
+
+msgid "see function \"hook_focus\" in Plugin API reference"
+msgstr ""
 
 msgid "list of bars"
 msgstr "バーのリスト"

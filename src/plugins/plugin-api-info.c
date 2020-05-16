@@ -1865,8 +1865,9 @@ plugin_api_info_init ()
         "focus_info",
         N_("get focus info"),
         /* TRANSLATORS: please do not translate key names (enclosed by quotes) */
-        N_("\"x\": x coordinate, \"y\": y coordinate"),
-        N_("see hook_focus in Plugin API reference"),
+        N_("\"x\": x coordinate (string with integer >= 0), "
+           "\"y\": y coordinate (string with integer >= 0)"),
+        N_("see function \"hook_focus\" in Plugin API reference"),
         &gui_focus_info_hashtable_gui_focus_info_cb, NULL, NULL);
 
     /* WeeChat core infolist hooks */

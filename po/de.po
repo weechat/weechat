@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-16 13:39+0200\n"
+"POT-Creation-Date: 2020-05-16 14:36+0200\n"
 "PO-Revision-Date: 2020-05-08 19:58+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -12192,6 +12192,18 @@ msgstr ""
 "geheim (in base32), einmaliges Passwort, Zeitstempel (optional, "
 "standardmäßig aktuelle Zeit), Anzahl der zu testenden Passwörtern vorher/"
 "nachher (optional, standardmäßig 0)"
+
+msgid "get focus info"
+msgstr ""
+
+#. TRANSLATORS: please do not translate key names (enclosed by quotes)
+msgid ""
+"\"x\": x coordinate (string with integer >= 0), \"y\": y coordinate (string "
+"with integer >= 0)"
+msgstr ""
+
+msgid "see function \"hook_focus\" in Plugin API reference"
+msgstr ""
 
 msgid "list of bars"
 msgstr "Auflistung der Bars"

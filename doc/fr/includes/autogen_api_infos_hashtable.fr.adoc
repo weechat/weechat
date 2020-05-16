@@ -12,5 +12,7 @@
 
 | irc | irc_message_split | découper un message IRC (pour tenir dans les 512 octets par défaut) | "message" : message IRC, "server" : nom du serveur (optionnel) | "msg1" ... "msgN" : messages à envoyer (sans le "\r\n" final), "args1" ... "argsN" : paramètres des messages, "count" : nombre de messages
 
+| weechat | focus_info | obtenir l'information de focus | "x" : coordonnée x (chaîne avec un entier >= 0), "y" : coordonnée y (chaîne avec un entier >= 0) | voir la fonction hook_focus dans la Référence API extension
+
 |===
 // end::infos_hashtable[]

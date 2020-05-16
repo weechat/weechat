@@ -12,5 +12,7 @@
 
 | irc | irc_message_split | split an IRC message (to fit in 512 bytes by default) | "message": messaggio IRC, "server": nome server (opzionale) | "msg1" ... "msgN": messaggio da inviare (senza "\r\n" finale), "args1" ... "argsN": argomenti dei messaggi, "count": numero di messaggi
 
+| weechat | focus_info | get focus info | "x": x coordinate (string with integer >= 0), "y": y coordinate (string with integer >= 0) | see function "hook_focus" in Plugin API reference
+
 |===
 // end::infos_hashtable[]
