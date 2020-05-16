@@ -697,7 +697,7 @@ La barre _status_ contient les objets (items) suivants par défaut :
 | buffer_number         | `2`                     | Numéro du tampon courant.
 | buffer_name           | `#test`                 | Nom du tampon courant.
 | buffer_modes          | `+n`                    | Modes du canal IRC.
-| buffer_nicklist_count | `{4}`                   | Nombre de pseudos dans la liste des pseudos.
+| buffer_nicklist_count | `{4}`                   | Nombre de pseudos affichés dans la liste des pseudos.
 | buffer_zoom           | !                       | `!` signifie que le tampon mélangé est zoomé, une valeur vide signifie que tous les tampons mélangés sont affichés.
 | buffer_filter         | `+*+`                   | Indicateur de filtrage : `+*+` signifie que des lignes sont filtrées (cachées), une valeur vide signifie que toutes les lignes sont affichées.
 | scroll                | `-PLUS(50)-`            | Indicateur de scroll, avec le nombre de lignes sous la dernière ligne affichée.

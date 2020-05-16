@@ -680,7 +680,7 @@ Bar _status_ has following default items:
 | buffer_number         | `2`                     | Current buffer number.
 | buffer_name           | `#test`                 | Current buffer name.
 | buffer_modes          | `+n`                    | IRC channel modes.
-| buffer_nicklist_count | `{4}`                   | Number of nicks in nicklist.
+| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
 | buffer_zoom           | !                       | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
 | buffer_filter         | `+*+`                   | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
 | scroll                | `-MORE(50)-`            | Scroll indicator, with number of lines below last line displayed.

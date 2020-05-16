@@ -91,8 +91,10 @@ char *gui_buffer_properties_get_integer[] =
   "day_change", "clear", "filter", "closing", "lines_hidden",
   "prefix_max_length", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
-  "nicklist_count", "nicklist_groups_count", "nicklist_nicks_count",
-  "nicklist_visible_count", "input", "input_get_unknown_commands",
+  "nicklist_count", "nicklist_visible_count",
+  "nicklist_groups_count", "nicklist_groups_visible_count",
+  "nicklist_nicks_count", "nicklist_nicks_visible_count",
+  "input", "input_get_unknown_commands",
   "input_get_empty", "input_multiline", "input_size", "input_length",
   "input_pos", "input_1st_display", "num_history", "text_search",
   "text_search_exact", "text_search_regex", "text_search_where",
@@ -728,9 +730,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->nicklist_max_length = 0;
     new_buffer->nicklist_display_groups = 1;
     new_buffer->nicklist_count = 0;
-    new_buffer->nicklist_groups_count = 0;
-    new_buffer->nicklist_nicks_count = 0;
     new_buffer->nicklist_visible_count = 0;
+    new_buffer->nicklist_groups_count = 0;
+    new_buffer->nicklist_groups_visible_count = 0;
+    new_buffer->nicklist_nicks_count = 0;
+    new_buffer->nicklist_nicks_visible_count = 0;
     new_buffer->nickcmp_callback = NULL;
     new_buffer->nickcmp_callback_pointer = NULL;
     new_buffer->nickcmp_callback_data = NULL;
@@ -1164,12 +1168,16 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->nicklist_display_groups;
     else if (string_strcasecmp (property, "nicklist_count") == 0)
         return buffer->nicklist_count;
-    else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
-        return buffer->nicklist_groups_count;
-    else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
-        return buffer->nicklist_nicks_count;
     else if (string_strcasecmp (property, "nicklist_visible_count") == 0)
         return buffer->nicklist_visible_count;
+    else if (string_strcasecmp (property, "nicklist_groups_count") == 0)
+        return buffer->nicklist_groups_count;
+    else if (string_strcasecmp (property, "nicklist_groups_visible_count") == 0)
+        return buffer->nicklist_groups_visible_count;
+    else if (string_strcasecmp (property, "nicklist_nicks_count") == 0)
+        return buffer->nicklist_nicks_count;
+    else if (string_strcasecmp (property, "nicklist_nicks_visible_count") == 0)
+        return buffer->nicklist_nicks_visible_count;
     else if (string_strcasecmp (property, "input") == 0)
         return buffer->input;
     else if (string_strcasecmp (property, "input_get_unknown_commands") == 0)
@@ -1478,6 +1486,8 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
 
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
+    buffer->nicklist_groups_visible_count = 0;
+    buffer->nicklist_nicks_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
     gui_window_ask_refresh (1);
 }
@@ -4308,9 +4318,11 @@ gui_buffer_hdata_buffer_cb (const void *pointer, void *data,
         HDATA_VAR(struct t_gui_buffer, nicklist_max_length, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_display_groups, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_buffer, nicklist_groups_count, INTEGER, 0, NULL, NULL);
-        HDATA_VAR(struct t_gui_buffer, nicklist_nicks_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nicklist_visible_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_groups_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_groups_visible_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_nicks_count, INTEGER, 0, NULL, NULL);
+        HDATA_VAR(struct t_gui_buffer, nicklist_nicks_visible_count, INTEGER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback_pointer, POINTER, 0, NULL, NULL);
         HDATA_VAR(struct t_gui_buffer, nickcmp_callback_data, POINTER, 0, NULL, NULL);
@@ -4507,11 +4519,15 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_count", buffer->nicklist_count))
         return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_visible_count", buffer->nicklist_visible_count))
+        return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_groups_count", buffer->nicklist_groups_count))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_groups_visible_count", buffer->nicklist_groups_visible_count))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "nicklist_nicks_count", buffer->nicklist_nicks_count))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "nicklist_visible_count", buffer->nicklist_visible_count))
+    if (!infolist_new_var_integer (ptr_item, "nicklist_nicks_visible_count", buffer->nicklist_nicks_visible_count))
         return 0;
     if (!infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
@@ -4726,9 +4742,11 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_max_length . . : %d",    ptr_buffer->nicklist_max_length);
         log_printf ("  nicklist_display_groups : %d",    ptr_buffer->nicklist_display_groups);
         log_printf ("  nicklist_count. . . . . : %d",    ptr_buffer->nicklist_count);
-        log_printf ("  nicklist_groups_count . : %d",    ptr_buffer->nicklist_groups_count);
-        log_printf ("  nicklist_nicks_count. . : %d",    ptr_buffer->nicklist_nicks_count);
         log_printf ("  nicklist_visible_count. : %d",    ptr_buffer->nicklist_visible_count);
+        log_printf ("  nicklist_groups_count . : %d",    ptr_buffer->nicklist_groups_count);
+        log_printf ("  nicklist_groups_vis_cnt : %d",    ptr_buffer->nicklist_groups_visible_count);
+        log_printf ("  nicklist_nicks_count. . : %d",    ptr_buffer->nicklist_nicks_count);
+        log_printf ("  nicklist_nicks_vis_cnt. : %d",    ptr_buffer->nicklist_nicks_visible_count);
         log_printf ("  nickcmp_callback. . . . : 0x%lx", ptr_buffer->nickcmp_callback);
         log_printf ("  nickcmp_callback_pointer: 0x%lx", ptr_buffer->nickcmp_callback_pointer);
         log_printf ("  nickcmp_callback_data . : 0x%lx", ptr_buffer->nickcmp_callback_data);

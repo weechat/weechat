@@ -686,7 +686,8 @@ Pasek _status_ posiada następujące domyślne elementy:
 | buffer_number         | `2`                     | Numer obecnego buforu.
 | buffer_name           | `#test`                 | Nazwa obecnego buforu.
 | buffer_modes          | `+n`                    | Tryby kanału IRC.
-| buffer_nicklist_count | `{4}`                   | Ilość nicków na liście nicków.
+// TRANSLATION MISSING
+| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
 | buffer_zoom           | !                       | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
 | buffer_filter         | `+*+`                   | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
 | scroll                | `-Więcej(50)-`          | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.

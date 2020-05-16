@@ -294,7 +294,10 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     }
 
     if (buffer->nicklist_display_groups && visible)
+    {
         buffer->nicklist_visible_count++;
+        buffer->nicklist_groups_visible_count++;
+    }
 
     gui_nicklist_send_signal ("nicklist_group_added", buffer, name);
     gui_nicklist_send_hsignal ("nicklist_group_added", buffer, new_group, NULL);
@@ -455,7 +458,10 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     buffer->nicklist_nicks_count++;
 
     if (visible)
+    {
         buffer->nicklist_visible_count++;
+        buffer->nicklist_nicks_visible_count++;
+    }
 
     if (CONFIG_BOOLEAN(config_look_color_nick_offline))
         gui_buffer_ask_chat_refresh (buffer, 1);
@@ -511,6 +517,8 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     {
         if (buffer->nicklist_visible_count > 0)
             buffer->nicklist_visible_count--;
+        if (buffer->nicklist_nicks_visible_count > 0)
+            buffer->nicklist_nicks_visible_count--;
     }
 
     free (nick);
@@ -580,11 +588,12 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     if (group->color)
         string_shared_free (group->color);
 
-    if (group->visible)
+    if (buffer->nicklist_display_groups && group->visible)
     {
-        if (buffer->nicklist_display_groups
-            && (buffer->nicklist_visible_count > 0))
+        if (buffer->nicklist_visible_count > 0)
             buffer->nicklist_visible_count--;
+        if (buffer->nicklist_groups_visible_count > 0)
+            buffer->nicklist_groups_visible_count--;
     }
 
     free (group);
@@ -795,12 +804,19 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
 
     /* count current group */
     if (buffer->nicklist_display_groups && group->visible)
+    {
         buffer->nicklist_visible_count++;
+        buffer->nicklist_groups_visible_count++;
+    }
 
     /* count nicks in group */
     for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        buffer->nicklist_visible_count++;
+        if (ptr_nick->visible)
+        {
+            buffer->nicklist_visible_count++;
+            buffer->nicklist_nicks_visible_count++;
+        }
     }
 }
 

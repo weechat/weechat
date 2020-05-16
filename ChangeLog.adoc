@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: count only visible nicks in bar item "buffer_nicklist_count", add bar items "buffer_nicklist_count_groups" and "buffer_nicklist_count_all" (issue #1506)
   * core: set default size for input bar to 0 (automatic) (issue #1498)
   * core: add default key kbd:[Alt+Enter] to insert a newline (issue #1498)
   * core: add flag "input_multiline" in buffer (issue #984, issue #1063)

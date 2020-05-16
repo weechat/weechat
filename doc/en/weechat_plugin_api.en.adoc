@@ -12775,9 +12775,11 @@ Arguments:
 ** _nicklist_max_length_: max length for a nick
 ** _nicklist_display_groups_: 1 if groups are displayed, otherwise 0
 ** _nicklist_count_: number of nicks and groups in nicklist
-** _nicklist_groups_count_: number of groups in nicklist
-** _nicklist_nicks_count_: number of nicks in nicklist
 ** _nicklist_visible_count_: number of nicks/groups displayed
+** _nicklist_groups_count_: number of groups in nicklist
+** _nicklist_visible_groups_count_: number of groups displayed
+** _nicklist_nicks_count_: number of nicks in nicklist
+** _nicklist_visible_nicks_count_: number of nicks displayed
 ** _input_: 1 if input is enabled, otherwise 0
 ** _input_get_unknown_commands_: 1 if unknown commands are sent to input
    callback, otherwise 0

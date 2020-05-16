@@ -689,7 +689,8 @@ WeeChat を起動した端末の例:
 | buffer_number         | `2`                     | 現在のバッファの番号
 | buffer_name           | `#test`                 | 現在のバッファの名前
 | buffer_modes          | `+n`                    | IRC チャンネルモード
-| buffer_nicklist_count | `{4}`                   | ニックネームリスト中のニックネームの数
+// TRANSLATION MISSING
+| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
 | buffer_zoom           | !                       | `!` はマージされたバッファがズームされている状態 (ズームされたものだけを表示する状態) を示します、空の場合はすべてのマージされたバッファが表示されていることを示します
 | buffer_filter         | `+*+`                   | フィルタ表示: `+*+` の場合いくつかの行がフィルタされ (隠され) ます、空の場合すべての行が表示されます。
 | scroll                | `-MORE(50)-`            | スクロール表示、最後の行が表示されてから追加された行数を含む。

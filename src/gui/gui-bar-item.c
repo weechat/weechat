@@ -61,7 +61,8 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_paste", "input_prompt", "input_search", "input_text", "time",
   "buffer_count", "buffer_last_number", "buffer_plugin", "buffer_number",
   "buffer_name", "buffer_short_name", "buffer_modes", "buffer_filter",
-  "buffer_zoom", "buffer_nicklist_count", "scroll", "hotlist", "completion",
+  "buffer_zoom", "buffer_nicklist_count", "buffer_nicklist_count_groups",
+  "buffer_nicklist_count_all", "scroll", "hotlist", "completion",
   "buffer_title", "buffer_nicklist", "window_number", "mouse_status", "away"
 };
 char *gui_bar_items_default_for_bars[][2] =
@@ -1246,7 +1247,7 @@ gui_bar_item_buffer_filter_cb (const void *pointer, void *data,
 }
 
 /*
- * Bar item with number of nicks in buffer nicklist.
+ * Bar item with number of visible nicks in buffer nicklist.
  */
 
 char *
@@ -1255,6 +1256,68 @@ gui_bar_item_buffer_nicklist_count_cb (const void *pointer, void *data,
                                        struct t_gui_window *window,
                                        struct t_gui_buffer *buffer,
                                        struct t_hashtable *extra_info)
+{
+    char str_count[64];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer || !buffer->nicklist)
+        return NULL;
+
+    snprintf (str_count, sizeof (str_count),
+              "%s%d",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_nicklist_count))),
+              buffer->nicklist_nicks_visible_count);
+
+    return strdup (str_count);
+}
+
+/*
+ * Bar item with number of visible groups in buffer nicklist.
+ */
+
+char *
+gui_bar_item_buffer_nicklist_count_groups_cb (const void *pointer, void *data,
+                                              struct t_gui_bar_item *item,
+                                              struct t_gui_window *window,
+                                              struct t_gui_buffer *buffer,
+                                              struct t_hashtable *extra_info)
+{
+    char str_count[64];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer || !buffer->nicklist)
+        return NULL;
+
+    snprintf (str_count, sizeof (str_count),
+              "%s%d",
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_nicklist_count))),
+              buffer->nicklist_groups_visible_count);
+
+    return strdup (str_count);
+}
+
+/*
+ * Bar item with number of visible groups and nicks in buffer nicklist.
+ */
+
+char *
+gui_bar_item_buffer_nicklist_count_all_cb (const void *pointer, void *data,
+                                           struct t_gui_bar_item *item,
+                                           struct t_gui_window *window,
+                                           struct t_gui_buffer *buffer,
+                                           struct t_hashtable *extra_info)
 {
     char str_count[64];
 
@@ -2258,7 +2321,7 @@ gui_bar_item_init ()
     gui_bar_item_hook_signal ("buffer_switch",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_ZOOM]);
 
-    /* buffer nicklist count */
+    /* buffer nicklist count: nicks displayed */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       &gui_bar_item_buffer_nicklist_count_cb, NULL, NULL);
@@ -2268,6 +2331,28 @@ gui_bar_item_init ()
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     gui_bar_item_hook_signal ("nicklist_*",
                               gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
+
+    /* buffer nicklist count: groups displayed */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS],
+                      &gui_bar_item_buffer_nicklist_count_groups_cb, NULL, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS]);
+    gui_bar_item_hook_signal ("nicklist_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_GROUPS]);
+
+    /* buffer nicklist count: groups + nicks displayed */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL],
+                      &gui_bar_item_buffer_nicklist_count_all_cb, NULL, NULL);
+    gui_bar_item_hook_signal ("window_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL]);
+    gui_bar_item_hook_signal ("nicklist_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT_ALL]);
 
     /* scroll indicator */
     gui_bar_item_new (NULL,

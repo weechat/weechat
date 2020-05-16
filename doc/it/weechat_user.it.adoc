@@ -736,7 +736,8 @@ La barra _status_ ha i seguenti elementi predefiniti:
 | buffer_number         | `2`                     | Numero del buffer corrente.
 | buffer_name           | `#test`                 | Nome del buffer attivo.
 | buffer_modes          | `+n`                    | Modalità canale IRC.
-| buffer_nicklist_count | `{4}`                   | Numero di nick nella lista nick.
+// TRANSLATION MISSING
+| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
 // TRANSLATION MISSING
 | buffer_zoom           | !                       | `!` means the merged buffer is zoomed (only this one is displayed), empty value means all merged buffers are displayed.
 | buffer_filter         | `+*+`                   | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate.
