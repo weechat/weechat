@@ -771,7 +771,8 @@ trigger_callback_modifier_cb (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars, NULL);
+    (void) trigger_callback_execute (trigger, buffer, pointers, extra_vars,
+                                     NULL);
 
 end:
     ptr_string = weechat_hashtable_get (extra_vars, "tg_string");
@@ -868,8 +869,8 @@ trigger_callback_line_cb (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, buffer, pointers, extra_vars,
-                              vars_updated);
+    (void) trigger_callback_execute (trigger, buffer, pointers, extra_vars,
+                                     vars_updated);
 
     hashtable = weechat_hashtable_new (32,
                                        WEECHAT_HASHTABLE_STRING,
@@ -1175,7 +1176,7 @@ trigger_callback_focus_cb (const void *pointer, void *data,
     }
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, info, NULL);
+    (void) trigger_callback_execute (trigger, NULL, pointers, info, NULL);
 
 end:
     TRIGGER_CALLBACK_CB_END(info);
@@ -1202,7 +1203,8 @@ trigger_callback_info_cb (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_info", "");
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars, NULL);
+    (void) trigger_callback_execute (trigger, NULL, pointers, extra_vars,
+                                     NULL);
 
 end:
     ptr_info = weechat_hashtable_get (extra_vars, "tg_info");
@@ -1237,8 +1239,8 @@ trigger_callback_info_hashtable_cb (const void *pointer, void *data,
     weechat_hashtable_set (extra_vars, "tg_info_name", info_name);
 
     /* execute the trigger (conditions, regex, command) */
-    trigger_callback_execute (trigger, NULL, pointers, extra_vars,
-                              vars_updated);
+    (void) trigger_callback_execute (trigger, NULL, pointers, extra_vars,
+                                     vars_updated);
 
     ret_hashtable = weechat_hashtable_new (32,
                                            WEECHAT_HASHTABLE_STRING,
