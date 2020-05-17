@@ -30,6 +30,7 @@ extern "C"
 #include <string.h>
 #include <sys/time.h>
 #include "src/core/weechat.h"
+#include "src/core/wee-hdata.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-util.h"
@@ -121,7 +122,7 @@ TEST(Scripts, API)
 {
     char path_testapigen[PATH_MAX], path_testapi[PATH_MAX];
     char *path_testapi_output_dir, str_command[(PATH_MAX * 2) + 128];
-    char *test_scripts_dir;
+    char *test_scripts_dir, str_condition[128];
     struct timeval time_start, time_end;
     long long diff;
     const char *ptr_test_scripts_dir;
@@ -137,6 +138,9 @@ TEST(Scripts, API)
         { NULL,         NULL  }
     };
     int i, turnoff_memleak;
+    struct t_hdata *hdata;
+    void *plugins;
+
 
     printf ("...\n");
 
@@ -183,9 +187,19 @@ TEST(Scripts, API)
               "/script unload testapigen.py");
     run_cmd (str_command);
 
+    hdata = hook_hdata_get (NULL, "plugin");
+    plugins = hdata_get_list (hdata, "weechat_plugins");
+
     /* test the scripting API */
     for (i = 0; languages[i][0]; i++)
     {
+        /* test if the plugin is loaded; if not, tests are skipped */
+        snprintf (str_condition, sizeof (str_condition),
+                  "${plugin.name} == %s",
+                  languages[i][0]);
+        if (!hdata_search (hdata, plugins, str_condition, 1))
+            continue;
+
         /*
          * TODO: fix memory leaks in javascript plugin
          * and keep memory leak detection enabled

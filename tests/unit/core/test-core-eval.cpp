@@ -530,15 +530,15 @@ TEST(CoreEval, EvalExpression)
               "%s-test-",
               gui_color_from_option (config_color_chat_delimiters));
     WEE_CHECK_EVAL(str_value, "${color:chat_delimiters}-test-");
-    config_file_search_with_string ("irc.color.message_join", NULL, NULL,
+    config_file_search_with_string ("weechat.color.chat_host", NULL, NULL,
                                     &ptr_option, NULL);
     if (!ptr_option)
     {
-        FAIL("ERROR: option irc.color.message_join not found.");
+        FAIL("ERROR: option weechat.color.chat_host not found.");
     }
     snprintf (str_value, sizeof (str_value),
               "%s-test-", gui_color_from_option (ptr_option));
-    WEE_CHECK_EVAL(str_value, "${color:irc.color.message_join}-test-");
+    WEE_CHECK_EVAL(str_value, "${color:weechat.color.chat_host}-test-");
     WEE_CHECK_EVAL("test", "${option.not.found}test");
 
     /* test modifier (invalid values) */

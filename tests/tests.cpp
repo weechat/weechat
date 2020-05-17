@@ -59,7 +59,6 @@ extern "C"
 
 /* import tests from libs */
 /* core */
-IMPORT_TEST_GROUP(Plugins);
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
 IMPORT_TEST_GROUP(CoreCrypto);

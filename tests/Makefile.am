@@ -21,8 +21,7 @@ AM_CPPFLAGS = -DLOCALEDIR=\"$(datadir)/locale\" $(CPPUTEST_CFLAGS) -I$(abs_top_s
 
 noinst_LIBRARIES = lib_weechat_unit_tests_core.a
 
-lib_weechat_unit_tests_core_a_SOURCES = unit/test-plugins.cpp \
-                                        unit/core/test-core-arraylist.cpp \
+lib_weechat_unit_tests_core_a_SOURCES = unit/core/test-core-arraylist.cpp \
                                         unit/core/test-core-calc.cpp \
                                         unit/core/test-core-crypto.cpp \
                                         unit/core/test-core-eval.cpp \
@@ -65,14 +64,23 @@ tests_SOURCES = tests.cpp \
 
 lib_LTLIBRARIES = lib_weechat_unit_tests_plugins.la
 
-lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/irc/test-irc-color.cpp \
-                                            unit/plugins/irc/test-irc-config.cpp \
-                                            unit/plugins/irc/test-irc-ignore.cpp \
-                                            unit/plugins/irc/test-irc-message.cpp \
-                                            unit/plugins/irc/test-irc-mode.cpp \
-                                            unit/plugins/irc/test-irc-nick.cpp \
-                                            unit/plugins/irc/test-irc-protocol.cpp \
-                                            unit/plugins/relay/test-relay-auth.cpp
+if PLUGIN_IRC
+tests_irc = unit/plugins/irc/test-irc-color.cpp \
+            unit/plugins/irc/test-irc-config.cpp \
+            unit/plugins/irc/test-irc-ignore.cpp \
+            unit/plugins/irc/test-irc-message.cpp \
+            unit/plugins/irc/test-irc-mode.cpp \
+            unit/plugins/irc/test-irc-nick.cpp \
+            unit/plugins/irc/test-irc-protocol.cpp
+endif
+
+if PLUGIN_RELAY
+tests_relay = unit/plugins/relay/test-relay-auth.cpp
+endif
+
+lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \
+                                            $(tests_irc) \
+                                            $(tests_relay)
 
 lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 

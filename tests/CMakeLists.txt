@@ -24,7 +24,6 @@ include_directories(${CPPUTEST_INCLUDE_DIRS} ${PROJECT_BINARY_DIR} ${PROJECT_SOU
 
 # unit tests (core)
 set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
-  unit/test-plugins.cpp
   unit/core/test-core-arraylist.cpp
   unit/core/test-core-calc.cpp
   unit/core/test-core-crypto.cpp
@@ -47,16 +46,26 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
 add_library(weechat_unit_tests_core STATIC ${LIB_WEECHAT_UNIT_TESTS_CORE_SRC})
 
 # unit tests (plugins)
-set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
-  unit/plugins/irc/test-irc-color.cpp
-  unit/plugins/irc/test-irc-config.cpp
-  unit/plugins/irc/test-irc-ignore.cpp
-  unit/plugins/irc/test-irc-message.cpp
-  unit/plugins/irc/test-irc-mode.cpp
-  unit/plugins/irc/test-irc-nick.cpp
-  unit/plugins/irc/test-irc-protocol.cpp
-  unit/plugins/relay/test-relay-auth.cpp
-)
+set(LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC unit/plugins/test-plugins.cpp)
+
+if(ENABLE_IRC)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/irc/test-irc-color.cpp
+    unit/plugins/irc/test-irc-config.cpp
+    unit/plugins/irc/test-irc-ignore.cpp
+    unit/plugins/irc/test-irc-message.cpp
+    unit/plugins/irc/test-irc-mode.cpp
+    unit/plugins/irc/test-irc-nick.cpp
+    unit/plugins/irc/test-irc-protocol.cpp
+  )
+endif()
+
+if (ENABLE_RELAY)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/relay/test-relay-auth.cpp
+  )
+endif()
+
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
 if(ICONV_LIBRARY)
