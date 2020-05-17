@@ -62,6 +62,7 @@ Bug fixes::
   * irc: reuse a buffer with wrong type "channel" when a private message is received (issue #869)
   * python: fix crash when invalid UTF-8 string is in a WeeChat hashtable converted to a Python dict (issue #1463)
   * relay: fix slow send of data to clients when SSL is enabled
+  * trigger: only return trigger's return code when condition evaluates to true (issue #592)
   * trigger: fix truncated trigger command with commands /trigger input|output|recreate
   * trigger: do not hide values of options with /set command in cmd_pass trigger
 
