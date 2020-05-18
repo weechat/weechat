@@ -107,7 +107,7 @@ compiler WeeChat.
 | zlib1g-dev             |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
 | libgcrypt20-dev        |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES).
 | libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *oui*  | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |        | Internationalisation (traduction des messages; la langue de base est l'anglais).
+| gettext                |               |        | Internationalisation (traduction des messages ; la langue de base est l'anglais).
 | ca-certificates        |               |        | Certificats pour les connexions SSL.
 | libaspell-dev
   ∥ libenchant-dev       |               |        | Extension spell.
@@ -586,7 +586,7 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 |===
 | Fichier         | Description                                          | Données sensibles
 | weechat.conf    | Fichier de configuration principal de WeeChat        | Possible (par exemple : liste des canaux sauvés dans la disposition des tampons).
-| sec.conf        | Fichier de configuration avec les données sécurisées | *Oui, très sensibles*: ce fichier ne doit jamais être partagé avec quiconque.
+| sec.conf        | Fichier de configuration avec les données sécurisées | *Oui, très sensibles* : ce fichier ne doit jamais être partagé avec quiconque.
 | plugins.conf    | Fichier de configuration des extensions              | Possible, cela dépend des extensions/scripts.
 | alias.conf      | Fichier de configuration de l'extension _alias_      | Possible, cela dépend des alias.
 | buflist.conf    | Fichier de configuration de l'extension _buflist_    | Non.
@@ -595,7 +595,7 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | fifo.conf       | Fichier de configuration de l'extension _fifo_       | Non.
 | fset.conf       | Fichier de configuration de l'extension _fset_       | Non.
 | guile.conf      | Fichier de configuration de l'extension _guile_      | Non.
-| irc.conf        | Fichier de configuration de l'extension _irc_        | *Oui*: il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
+| irc.conf        | Fichier de configuration de l'extension _irc_        | *Oui* : il peut contenir des mots de passes pour les serveurs, nickserv et les canaux (si non stockés dans `sec.conf`).
 | javascript.conf | Fichier de configuration de l'extension _javascript_ | Non.
 | logger.conf     | Fichier de configuration de l'extension _logger_     | Non.
 | lua.conf        | Fichier de configuration de l'extension _lua_        | Non.
@@ -2308,7 +2308,7 @@ L'extension Alias permet de définir des alias pour des commandes (WeeChat ou
 d'autres extensions).
 
 Des alias sont créés par défaut, avec le nom en lettres majuscules (pour les
-différencier des commandes standard); les commandes ne sont pas sensibles à la
+différencier des commandes standard) ; les commandes ne sont pas sensibles à la
 casse dans WeeChat, donc par exemple `/close` lance l'alias `/CLOSE`.
 
 Liste des alias par défaut :
@@ -3865,7 +3865,7 @@ Un trigger a les options suivantes (les noms sont
 
 | command | chaîne |
   Commande à exécuter (plusieurs commandes peuvent être séparées par des
-  points-virgules); elle est évaluée (voir la commande
+  points-virgules) ; elle est évaluée (voir la commande
   <<command_weechat_eval,/eval>>).
 
 | return_code | `+ok+`, `+ok_eat+`, `+error+` |

@@ -995,7 +995,7 @@ link:weechat_user.en.html#max_hotlist_level_nicks[hotlist_max_level_nicks_add]
 pour définir le niveau maximum de hotlist pour certains pseudos, par tampon,
 ou groupe de tampons (comme des serveurs IRC).
 
-Pour désactiver seulement les highlights, vous pouvez positionner la valeur à 2:
+Pour désactiver seulement les highlights, vous pouvez positionner la valeur à 2 :
 
 ----
 /buffer set hotlist_max_level_nicks_add joe:2,mike:2
