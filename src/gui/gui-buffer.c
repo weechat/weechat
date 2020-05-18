@@ -87,8 +87,8 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 
 char *gui_buffer_properties_get_integer[] =
 { "number", "layout_number", "layout_number_merge_order", "type", "notify",
-  "num_displayed", "active", "hidden", "zoomed", "print_hooks_enabled",
-  "day_change", "clear", "filter", "closing", "lines_hidden",
+  "num_displayed", "active", "hidden", "layout_hidden", "zoomed",
+  "print_hooks_enabled", "day_change", "clear", "filter", "closing", "lines_hidden",
   "prefix_max_length", "time_for_each_line", "nicklist",
   "nicklist_case_sensitive", "nicklist_max_length", "nicklist_display_groups",
   "nicklist_count", "nicklist_visible_count",
@@ -690,7 +690,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
                                   plugin_get_name (plugin),
                                   name,
                                   &(new_buffer->layout_number),
-                                  &(new_buffer->layout_number_merge_order));
+                                  &(new_buffer->layout_number_merge_order),
+                                  &(new_buffer->layout_hidden));
     new_buffer->name = strdup (name);
     new_buffer->full_name = NULL;
     new_buffer->old_full_name = NULL;
@@ -700,7 +701,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
     new_buffer->num_displayed = 0;
     new_buffer->active = 1;
-    new_buffer->hidden = 0;
+    new_buffer->hidden = new_buffer->layout_hidden;
     new_buffer->zoomed = 0;
     new_buffer->print_hooks_enabled = 1;
     new_buffer->day_change = 1;
@@ -1140,6 +1141,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
         return buffer->active;
     else if (string_strcasecmp (property, "hidden") == 0)
         return buffer->hidden;
+    else if (string_strcasecmp (property, "layout_hidden") == 0)
+        return buffer->layout_hidden;
     else if (string_strcasecmp (property, "zoomed") == 0)
         return buffer->zoomed;
     else if (string_strcasecmp (property, "print_hooks_enabled") == 0)

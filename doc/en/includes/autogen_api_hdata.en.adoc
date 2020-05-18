@@ -876,6 +876,7 @@ _next_layout_   (pointer, hdata: "layout") +
 | _plugin_name_   (string) +
 _buffer_name_   (string) +
 _number_   (integer) +
+_hidden_   (integer) +
 _prev_layout_   (pointer, hdata: "layout_buffer") +
 _next_layout_   (pointer, hdata: "layout_buffer") +
 
