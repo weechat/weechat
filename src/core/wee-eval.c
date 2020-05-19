@@ -189,6 +189,356 @@ eval_strstr_level (const char *string, const char *search,
 }
 
 /*
+ * Hides chars in a string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_hide (const char *text)
+{
+    const char *ptr_string;
+    char *hidden_string, *hide_char;
+    int i, j, length, length_hide_char;
+
+    hidden_string = NULL;
+
+    ptr_string = strchr (text, (text[0] == ',') ? ';' : ',');
+    if (!ptr_string)
+        return strdup ("");
+
+    hide_char = string_strndup (text, ptr_string - text);
+    if (hide_char)
+    {
+        length_hide_char = strlen (hide_char);
+        length = utf8_strlen (ptr_string + 1);
+        hidden_string = malloc ((length * length_hide_char) + 1);
+        if (hidden_string)
+        {
+            j = 0;
+            for (i = 0; i < length; i++)
+            {
+                memcpy (hidden_string + j, hide_char, length_hide_char);
+                j += length_hide_char;
+            }
+            hidden_string[length * length_hide_char] = '\0';
+        }
+        free (hide_char);
+    }
+
+    return (hidden_string) ? hidden_string : strdup ("");
+}
+
+/*
+ * Cuts string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_cut (const char *text, int screen)
+{
+    const char *pos, *pos2;
+    char *tmp, *error, *value;
+    int count_suffix;
+    long number;
+
+    count_suffix = 0;
+    if (text[0] == '+')
+    {
+        text++;
+        count_suffix = 1;
+    }
+
+    pos = strchr (text, ',');
+    if (!pos)
+        return strdup ("");
+
+    pos2 = strchr (pos + 1, ',');
+    if (!pos2)
+        return strdup ("");
+
+    tmp = strndup (text, pos - text);
+    if (!tmp)
+        return strdup ("");
+
+    number = strtol (tmp, &error, 10);
+    if (!error || error[0] || (number < 0))
+    {
+        free (tmp);
+        return strdup ("");
+    }
+    free (tmp);
+
+    tmp = strndup (pos + 1, pos2 - pos - 1);
+    if (!tmp)
+        return strdup ("");
+
+    value = string_cut (pos2 + 1, number, count_suffix, screen, tmp);
+
+    free (tmp);
+
+    return value;
+}
+
+/*
+ * Repeats string.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_repeat (const char *text)
+{
+    const char *pos;
+    char *tmp, *error;
+    long number;
+
+    pos = strchr (text, ',');
+    if (!pos)
+        return strdup ("");
+
+    tmp = strndup (text, pos - text);
+    if (!tmp)
+        return strdup ("");
+
+    number = strtol (tmp, &error, 10);
+    if (!error || error[0] || (number < 0))
+    {
+        free (tmp);
+        return strdup ("");
+    }
+    free (tmp);
+
+    return string_repeat (pos + 1, number);
+}
+
+/*
+ * Returns a regex group captured.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_regex_group (const char *text, struct t_eval_context *eval_context)
+{
+    char str_value[64], *error;
+    long number;
+
+    if (!eval_context->regex || !eval_context->regex->result)
+        return strdup ("");
+
+    if (strcmp (text, "+") == 0)
+        number = eval_context->regex->last_match;
+    else if (strcmp (text, "#") == 0)
+    {
+        snprintf (str_value, sizeof (str_value),
+                  "%d", eval_context->regex->last_match);
+        return strdup (str_value);
+    }
+    else
+    {
+        number = strtol (text, &error, 10);
+        if (!error || error[0])
+            number = -1;
+    }
+    if ((number >= 0) && (number <= eval_context->regex->last_match))
+    {
+        return string_strndup (
+            eval_context->regex->result +
+            eval_context->regex->match[number].rm_so,
+            eval_context->regex->match[number].rm_eo -
+            eval_context->regex->match[number].rm_so);
+    }
+
+    return strdup ("");
+}
+
+/*
+ * Returns a string with color code.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_color (const char *text)
+{
+    const char *ptr_value;
+
+    ptr_value = gui_color_search_config (text);
+    if (ptr_value)
+        return strdup (ptr_value);
+
+    ptr_value = gui_color_get_custom (text);
+    return strdup ((ptr_value) ? ptr_value : "");
+}
+
+/*
+ * Returns a string modified by a modifier.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_modifier (const char *text)
+{
+    const char *ptr_arguments, *ptr_string;
+    char *value, *modifier_name, *modifier_data;
+
+    value = NULL;
+
+    ptr_arguments = strchr (text, ',');
+    if (!ptr_arguments)
+        return strdup ("");
+
+    ptr_arguments++;
+    ptr_string = strchr (ptr_arguments, ',');
+    if (!ptr_string)
+        return strdup ("");
+
+    ptr_string++;
+    modifier_name = string_strndup (text, ptr_arguments - 1 - text);
+    modifier_data = string_strndup (ptr_arguments,
+                                    ptr_string - 1 - ptr_arguments);
+    value = hook_modifier_exec (NULL, modifier_name, modifier_data,
+                                ptr_string);
+    if (modifier_name)
+        free (modifier_name);
+    if (modifier_data)
+        free (modifier_data);
+
+    return (value) ? value : strdup ("");
+}
+
+/*
+ * Returns an info.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_info (const char *text)
+{
+    const char *ptr_arguments;
+    char *value, *info_name;
+
+    value = NULL;
+    ptr_arguments = strchr (text, ',');
+    if (ptr_arguments)
+    {
+        info_name = string_strndup (text, ptr_arguments - text);
+        ptr_arguments++;
+    }
+    else
+        info_name = strdup (text);
+    if (info_name)
+    {
+        value = hook_info_get (NULL, info_name, ptr_arguments);
+        free (info_name);
+    }
+
+    return (value) ? value : strdup ("");
+}
+
+/*
+ * Returns a date.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_date (const char *text)
+{
+    char str_value[512];
+    time_t date;
+    struct tm *date_tmp;
+    int rc;
+
+    date = time (NULL);
+    date_tmp = localtime (&date);
+    if (!date_tmp)
+        return strdup ("");
+
+    rc = (int) strftime (str_value, sizeof (str_value),
+                         (text[0] == ':') ? text + 1 : "%F %T",
+                         date_tmp);
+
+    return strdup ((rc > 0) ? str_value : "");
+}
+
+/*
+ * Evaluates a condition.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_if (const char *text, struct t_eval_context *eval_context)
+{
+    const char *pos, *pos2;
+    char *value, *condition, *tmp, *tmp2;
+    int rc;
+
+    value = NULL;
+    pos = (char *)eval_strstr_level (text, "?",
+                                     eval_context, NULL, NULL, 1);
+    pos2 = (pos) ?
+        (char *)eval_strstr_level (pos + 1, ":",
+                                   eval_context, NULL, NULL, 1) : NULL;
+    condition = (pos) ?
+        strndup (text, pos - text) : strdup (text);
+    if (!condition)
+        return strdup ("");
+    tmp = eval_replace_vars (condition, eval_context);
+    tmp2 = eval_expression_condition ((tmp) ? tmp : "", eval_context);
+    rc = eval_is_true (tmp2);
+    if (tmp)
+        free (tmp);
+    if (tmp2)
+        free (tmp2);
+    if (rc)
+    {
+        /*
+         * condition is true: return the "value_if_true"
+         * (or EVAL_STR_TRUE if value is missing)
+         */
+        if (pos)
+        {
+            tmp = (pos2) ?
+                strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
+            if (tmp)
+            {
+                value = eval_replace_vars (tmp, eval_context);
+                free (tmp);
+            }
+        }
+        else
+        {
+            value = strdup (EVAL_STR_TRUE);
+        }
+    }
+    else
+    {
+        /*
+         * condition is false: return the "value_if_false"
+         * (or EVAL_STR_FALSE if both values are missing)
+         */
+        if (pos2)
+        {
+            value = eval_replace_vars (pos2 + 1, eval_context);
+        }
+        else
+        {
+            if (!pos)
+                value = strdup (EVAL_STR_FALSE);
+        }
+    }
+    free (condition);
+
+    return (value) ? value : strdup ("");
+}
+
+/*
  * Gets value of hdata using "path" to a variable.
  *
  * Note: result must be freed after use.
@@ -349,441 +699,21 @@ end:
 }
 
 /*
- * Replaces variables, which can be, by order of priority:
- *   1. an extra variable from hashtable "extra_vars"
- *   2. a string to evaluate (format: eval:xxx)
- *   3. a string with escaped chars (format: esc:xxx or \xxx)
- *   4. a string with chars to hide (format: hide:char,string)
- *   5. a string with max chars (format: cut:max,suffix,string or
- *      cut:+max,suffix,string) or max chars on screen
- *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   6. a reversed string (format: rev:xxx) or reversed string for screen,
- *      color codes are not reversed (format: revscr:xxx)
- *   7. a repeated string (format: repeat:count,string)
- *   8. length of a string (format: length:xxx) or length of a string on screen
- *      (format: lengthscr:xxx); color codes are ignored
- *   9. a regex group captured (format: re:N (0.99) or re:+)
- *  10. a color (format: color:xxx)
- *  11. a modifier (format: modifier:name,data,xxx)
- *  12. an info (format: info:name,arguments)
- *  13. current date/time (format: date or date:xxx)
- *  14. an environment variable (format: env:XXX)
- *  15. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  16. calculate result of an expression (format: calc:xxx)
- *  17. an option (format: file.section.option)
- *  18. a buffer local variable
- *  19. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
- *                        or hdata[ptr].var1.var2)
- *
- * See /help in WeeChat for examples.
+ * Returns a string using hdata.
  *
  * Note: result must be freed after use.
  */
 
 char *
-eval_replace_vars_cb (void *data, const char *text)
+eval_string_hdata (const char *text, struct t_eval_context *eval_context)
 {
-    struct t_eval_context *eval_context;
-    struct t_config_option *ptr_option;
-    struct t_gui_buffer *ptr_buffer;
-    char str_value[512], *value, *pos, *pos1, *pos2, *hdata_name, *list_name;
-    char *tmp, *tmp2, *info_name, *hide_char, *hidden_string, *error;
-    char *condition, *modifier_name, *modifier_data;
-    const char *ptr_value, *ptr_arguments, *ptr_string;
-    struct t_hdata *hdata;
+    const char *pos, *pos1, *pos2;
+    char *value, *hdata_name, *list_name, *tmp;
     void *pointer;
-    int i, length_hide_char, length, index, rc, screen;
-    int count_suffix;
-    long number;
+    struct t_hdata *hdata;
+    int rc;
     unsigned long ptr;
-    time_t date;
-    struct tm *date_tmp;
 
-    eval_context = (struct t_eval_context *)data;
-
-    EVAL_DEBUG("eval_replace_vars_cb(\"%s\")", text);
-
-    /* 1. variable in hashtable "extra_vars" */
-    if (eval_context->extra_vars)
-    {
-        ptr_value = hashtable_get (eval_context->extra_vars, text);
-        if (ptr_value)
-        {
-            if (eval_context->extra_vars_eval)
-            {
-                tmp = strdup (ptr_value);
-                if (!tmp)
-                    return NULL;
-                hashtable_remove (eval_context->extra_vars, text);
-                value = eval_replace_vars (tmp, eval_context);
-                hashtable_set (eval_context->extra_vars, text, tmp);
-                free (tmp);
-                return value;
-            }
-            else
-            {
-                return strdup (ptr_value);
-            }
-        }
-    }
-
-    /*
-     * 2. force evaluation of string (recursive call)
-     *    --> use with caution: the text must be safe!
-     */
-    if (strncmp (text, "eval:", 5) == 0)
-    {
-        return eval_replace_vars (text + 5, eval_context);
-    }
-
-    /* 3. convert escaped chars */
-    if (strncmp (text, "esc:", 4) == 0)
-        return string_convert_escaped_chars (text + 4);
-    if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
-        return string_convert_escaped_chars (text);
-
-    /* 4. hide chars: replace all chars by a given char/string */
-    if (strncmp (text, "hide:", 5) == 0)
-    {
-        hidden_string = NULL;
-        ptr_string = strchr (text + 5,
-                             (text[5] == ',') ? ';' : ',');
-        if (!ptr_string)
-            return strdup ("");
-        hide_char = string_strndup (text + 5, ptr_string - text - 5);
-        if (hide_char)
-        {
-            length_hide_char = strlen (hide_char);
-            length = utf8_strlen (ptr_string + 1);
-            hidden_string = malloc ((length * length_hide_char) + 1);
-            if (hidden_string)
-            {
-                index = 0;
-                for (i = 0; i < length; i++)
-                {
-                    memcpy (hidden_string + index, hide_char,
-                            length_hide_char);
-                    index += length_hide_char;
-                }
-                hidden_string[length * length_hide_char] = '\0';
-            }
-            free (hide_char);
-        }
-        return (hidden_string) ? hidden_string : strdup ("");
-    }
-
-    /*
-     * 5. cut chars:
-     *   cut: max number of chars, and add an optional suffix when the
-     *        string is cut
-     *   cutscr: max number of chars displayed on screen, and add an optional
-     *           suffix when the string is cut
-     */
-    if ((strncmp (text, "cut:", 4) == 0)
-        || (strncmp (text, "cutscr:", 7) == 0))
-    {
-        if (strncmp (text, "cut:", 4) == 0)
-        {
-            screen = 0;
-            length = 4;
-        }
-        else
-        {
-            screen = 1;
-            length = 7;
-        }
-        pos = strchr (text + length, ',');
-        if (!pos)
-            return strdup ("");
-        count_suffix = 0;
-        if (text[length] == '+')
-        {
-            length++;
-            count_suffix = 1;
-        }
-        pos2 = strchr (pos + 1, ',');
-        if (!pos2)
-            return strdup ("");
-        tmp = strndup (text + length, pos - text - length);
-        if (!tmp)
-            return strdup ("");
-        number = strtol (tmp, &error, 10);
-        if (!error || error[0] || (number < 0))
-        {
-            free (tmp);
-            return strdup ("");
-        }
-        free (tmp);
-        tmp = strndup (pos + 1, pos2 - pos - 1);
-        if (!tmp)
-            return strdup ("");
-        value = string_cut (pos2 + 1, number, count_suffix, screen, tmp);
-        free (tmp);
-        return value;
-    }
-
-    /* 6. reverse string */
-    if (strncmp (text, "rev:", 4) == 0)
-        return string_reverse (text + 4);
-    if (strncmp (text, "revscr:", 7) == 0)
-        return string_reverse_screen (text + 7);
-
-    /* 7. repeated string */
-    if (strncmp (text, "repeat:", 7) == 0)
-    {
-        pos = strchr (text + 7, ',');
-        if (!pos)
-            return strdup ("");
-        tmp = strndup (text + 7, pos - text - 7);
-        if (!tmp)
-            return strdup ("");
-        number = strtol (tmp, &error, 10);
-        if (!error || error[0] || (number < 0))
-        {
-            free (tmp);
-            return strdup ("");
-        }
-        free (tmp);
-        return string_repeat (pos + 1, number);
-    }
-
-    /*
-     * 8. length of string:
-     *   length: number of chars
-     *   lengthscr: number of chars displayed on screen
-     */
-    if (strncmp (text, "length:", 7) == 0)
-    {
-        length = gui_chat_strlen (text + 7);
-        snprintf (str_value, sizeof (str_value), "%d", length);
-        return strdup (str_value);
-    }
-    if (strncmp (text, "lengthscr:", 10) == 0)
-    {
-        length = gui_chat_strlen_screen (text + 10);
-        snprintf (str_value, sizeof (str_value), "%d", length);
-        return strdup (str_value);
-    }
-
-    /* 9. regex group captured */
-    if (strncmp (text, "re:", 3) == 0)
-    {
-        if (eval_context->regex && eval_context->regex->result)
-        {
-            if (strcmp (text + 3, "+") == 0)
-                number = eval_context->regex->last_match;
-            else if (strcmp (text + 3, "#") == 0)
-            {
-                snprintf (str_value, sizeof (str_value),
-                          "%d", eval_context->regex->last_match);
-                return strdup (str_value);
-            }
-            else
-            {
-                number = strtol (text + 3, &error, 10);
-                if (!error || error[0])
-                    number = -1;
-            }
-            if ((number >= 0) && (number <= eval_context->regex->last_match))
-            {
-                return string_strndup (
-                    eval_context->regex->result +
-                    eval_context->regex->match[number].rm_so,
-                    eval_context->regex->match[number].rm_eo -
-                    eval_context->regex->match[number].rm_so);
-            }
-        }
-        return strdup ("");
-    }
-
-    /* 10. color code */
-    if (strncmp (text, "color:", 6) == 0)
-    {
-        ptr_value = gui_color_search_config (text + 6);
-        if (ptr_value)
-            return strdup (ptr_value);
-        ptr_value = gui_color_get_custom (text + 6);
-        return strdup ((ptr_value) ? ptr_value : "");
-    }
-
-    /* 11. modifier */
-    if (strncmp (text, "modifier:", 9) == 0)
-    {
-        value = NULL;
-        ptr_arguments = strchr (text + 9, ',');
-        if (!ptr_arguments)
-            return strdup ("");
-        ptr_arguments++;
-        ptr_string = strchr (ptr_arguments, ',');
-        if (!ptr_string)
-            return strdup ("");
-        ptr_string++;
-        modifier_name = string_strndup (text + 9, ptr_arguments - 1 - text - 9);
-        modifier_data = string_strndup (ptr_arguments,
-                                        ptr_string - 1 - ptr_arguments);
-        value = hook_modifier_exec (NULL, modifier_name, modifier_data,
-                                    ptr_string);
-        if (modifier_name)
-            free (modifier_name);
-        if (modifier_data)
-            free (modifier_data);
-        return (value) ? value : strdup ("");
-    }
-
-    /* 12. info */
-    if (strncmp (text, "info:", 5) == 0)
-    {
-        value = NULL;
-        ptr_arguments = strchr (text + 5, ',');
-        if (ptr_arguments)
-        {
-            info_name = string_strndup (text + 5, ptr_arguments - text - 5);
-            ptr_arguments++;
-        }
-        else
-            info_name = strdup (text + 5);
-        if (info_name)
-        {
-            value = hook_info_get (NULL, info_name, ptr_arguments);
-            free (info_name);
-        }
-        return (value) ? value : strdup ("");
-    }
-
-    /* 13. current date/time */
-    if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
-    {
-        date = time (NULL);
-        date_tmp = localtime (&date);
-        if (!date_tmp)
-            return strdup ("");
-        rc = (int) strftime (str_value, sizeof (str_value),
-                             (text[4] == ':') ? text + 5 : "%F %T",
-                             date_tmp);
-        return strdup ((rc > 0) ? str_value : "");
-    }
-
-    /* 14. environment variable */
-    if (strncmp (text, "env:", 4) == 0)
-    {
-        ptr_value = getenv (text + 4);
-        if (ptr_value)
-            return strdup (ptr_value);
-    }
-
-    /* 15: ternary operator: if:condition?value_if_true:value_if_false */
-    if (strncmp (text, "if:", 3) == 0)
-    {
-        value = NULL;
-        pos = (char *)eval_strstr_level (text + 3, "?",
-                                         eval_context, NULL, NULL, 1);
-        pos2 = (pos) ?
-            (char *)eval_strstr_level (pos + 1, ":",
-                                       eval_context, NULL, NULL, 1) : NULL;
-        condition = (pos) ?
-            strndup (text + 3, pos - (text + 3)) : strdup (text + 3);
-        if (!condition)
-            return strdup ("");
-        tmp = eval_replace_vars (condition, eval_context);
-        tmp2 = eval_expression_condition ((tmp) ? tmp : "", eval_context);
-        rc = eval_is_true (tmp2);
-        if (tmp)
-            free (tmp);
-        if (tmp2)
-            free (tmp2);
-        if (rc)
-        {
-            /*
-             * condition is true: return the "value_if_true"
-             * (or EVAL_STR_TRUE if value is missing)
-             */
-            if (pos)
-            {
-                tmp = (pos2) ?
-                    strndup (pos + 1, pos2 - pos - 1) : strdup (pos + 1);
-                if (tmp)
-                {
-                    value = eval_replace_vars (tmp, eval_context);
-                    free (tmp);
-                }
-            }
-            else
-            {
-                value = strdup (EVAL_STR_TRUE);
-            }
-        }
-        else
-        {
-            /*
-             * condition is false: return the "value_if_false"
-             * (or EVAL_STR_FALSE if both values are missing)
-             */
-            if (pos2)
-            {
-                value = eval_replace_vars (pos2 + 1, eval_context);
-            }
-            else
-            {
-                if (!pos)
-                    value = strdup (EVAL_STR_FALSE);
-            }
-        }
-        free (condition);
-        return (value) ? value : strdup ("");
-    }
-
-    /*
-     * 16. calculate the result of an expression
-     * (with number, operators and parentheses)
-     */
-    if (strncmp (text, "calc:", 5) == 0)
-    {
-        return calc_expression (text + 5);
-    }
-
-    /* 17. option: if found, return this value */
-    if (strncmp (text, "sec.data.", 9) == 0)
-    {
-        ptr_value = hashtable_get (secure_hashtable_data, text + 9);
-        return strdup ((ptr_value) ? ptr_value : "");
-    }
-    else
-    {
-        config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
-        if (ptr_option)
-        {
-            if (!ptr_option->value)
-                return strdup ("");
-            switch (ptr_option->type)
-            {
-                case CONFIG_OPTION_TYPE_BOOLEAN:
-                    return strdup (CONFIG_BOOLEAN(ptr_option) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
-                case CONFIG_OPTION_TYPE_INTEGER:
-                    if (ptr_option->string_values)
-                        return strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
-                    snprintf (str_value, sizeof (str_value),
-                              "%d", CONFIG_INTEGER(ptr_option));
-                    return strdup (str_value);
-                case CONFIG_OPTION_TYPE_STRING:
-                    return strdup (CONFIG_STRING(ptr_option));
-                case CONFIG_OPTION_TYPE_COLOR:
-                    return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
-                case CONFIG_NUM_OPTION_TYPES:
-                    return strdup ("");
-            }
-        }
-    }
-
-    /* 18. local variable in buffer */
-    ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
-    if (ptr_buffer)
-    {
-        ptr_value = hashtable_get (ptr_buffer->local_variables, text);
-        if (ptr_value)
-            return strdup (ptr_value);
-    }
-
-    /* 19. hdata */
     value = NULL;
     hdata_name = NULL;
     list_name = NULL;
@@ -855,6 +785,216 @@ end:
         free (list_name);
 
     return (value) ? value : strdup ("");
+}
+
+/*
+ * Replaces variables, which can be, by order of priority:
+ *   1. an extra variable from hashtable "extra_vars"
+ *   2. a string to evaluate (format: eval:xxx)
+ *   3. a string with escaped chars (format: esc:xxx or \xxx)
+ *   4. a string with chars to hide (format: hide:char,string)
+ *   5. a string with max chars (format: cut:max,suffix,string or
+ *      cut:+max,suffix,string) or max chars on screen
+ *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
+ *   6. a reversed string (format: rev:xxx) or reversed string for screen,
+ *      color codes are not reversed (format: revscr:xxx)
+ *   7. a repeated string (format: repeat:count,string)
+ *   8. length of a string (format: length:xxx) or length of a string on screen
+ *      (format: lengthscr:xxx); color codes are ignored
+ *   9. a regex group captured (format: re:N (0.99) or re:+)
+ *  10. a color (format: color:xxx)
+ *  11. a modifier (format: modifier:name,data,xxx)
+ *  12. an info (format: info:name,arguments)
+ *  13. current date/time (format: date or date:xxx)
+ *  14. an environment variable (format: env:XXX)
+ *  15. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  16. calculate result of an expression (format: calc:xxx)
+ *  17. an option (format: file.section.option)
+ *  18. a buffer local variable
+ *  19. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *                        or hdata[ptr].var1.var2)
+ *
+ * See /help in WeeChat for examples.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_replace_vars_cb (void *data, const char *text)
+{
+    struct t_eval_context *eval_context;
+    struct t_config_option *ptr_option;
+    struct t_gui_buffer *ptr_buffer;
+    char str_value[512], *value;
+    char *tmp;
+    const char *ptr_value;
+    int length;
+
+    eval_context = (struct t_eval_context *)data;
+
+    EVAL_DEBUG("eval_replace_vars_cb(\"%s\")", text);
+
+    /* 1. variable in hashtable "extra_vars" */
+    if (eval_context->extra_vars)
+    {
+        ptr_value = hashtable_get (eval_context->extra_vars, text);
+        if (ptr_value)
+        {
+            if (eval_context->extra_vars_eval)
+            {
+                tmp = strdup (ptr_value);
+                if (!tmp)
+                    return NULL;
+                hashtable_remove (eval_context->extra_vars, text);
+                value = eval_replace_vars (tmp, eval_context);
+                hashtable_set (eval_context->extra_vars, text, tmp);
+                free (tmp);
+                return value;
+            }
+            else
+            {
+                return strdup (ptr_value);
+            }
+        }
+    }
+
+    /*
+     * 2. force evaluation of string (recursive call)
+     *    --> use with caution: the text must be safe!
+     */
+    if (strncmp (text, "eval:", 5) == 0)
+        return eval_replace_vars (text + 5, eval_context);
+
+    /* 3. convert escaped chars */
+    if (strncmp (text, "esc:", 4) == 0)
+        return string_convert_escaped_chars (text + 4);
+    if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
+        return string_convert_escaped_chars (text);
+
+    /* 4. hide chars: replace all chars by a given char/string */
+    if (strncmp (text, "hide:", 5) == 0)
+        return eval_string_hide (text + 5);
+
+    /*
+     * 5. cut chars:
+     *   cut: max number of chars, and add an optional suffix when the
+     *        string is cut
+     *   cutscr: max number of chars displayed on screen, and add an optional
+     *           suffix when the string is cut
+     */
+    if (strncmp (text, "cut:", 4) == 0)
+        return eval_string_cut (text + 4, 0);
+    if (strncmp (text, "cutscr:", 7) == 0)
+        return eval_string_cut (text + 7, 1);
+
+    /* 6. reverse string */
+    if (strncmp (text, "rev:", 4) == 0)
+        return string_reverse (text + 4);
+    if (strncmp (text, "revscr:", 7) == 0)
+        return string_reverse_screen (text + 7);
+
+    /* 7. repeated string */
+    if (strncmp (text, "repeat:", 7) == 0)
+        return eval_string_repeat (text + 7);
+
+    /*
+     * 8. length of string:
+     *   length: number of chars
+     *   lengthscr: number of chars displayed on screen
+     */
+    if (strncmp (text, "length:", 7) == 0)
+    {
+        length = gui_chat_strlen (text + 7);
+        snprintf (str_value, sizeof (str_value), "%d", length);
+        return strdup (str_value);
+    }
+    if (strncmp (text, "lengthscr:", 10) == 0)
+    {
+        length = gui_chat_strlen_screen (text + 10);
+        snprintf (str_value, sizeof (str_value), "%d", length);
+        return strdup (str_value);
+    }
+
+    /* 9. regex group captured */
+    if (strncmp (text, "re:", 3) == 0)
+        return eval_string_regex_group (text + 3, eval_context);
+
+    /* 10. color code */
+    if (strncmp (text, "color:", 6) == 0)
+        return eval_string_color (text + 6);
+
+    /* 11. modifier */
+    if (strncmp (text, "modifier:", 9) == 0)
+        return eval_string_modifier (text + 9);
+
+    /* 12. info */
+    if (strncmp (text, "info:", 5) == 0)
+        return eval_string_info (text + 5);
+
+    /* 13. current date/time */
+    if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
+        return eval_string_date (text + 4);
+
+    /* 14. environment variable */
+    if (strncmp (text, "env:", 4) == 0)
+    {
+        ptr_value = getenv (text + 4);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+
+    /* 15: ternary operator: if:condition?value_if_true:value_if_false */
+    if (strncmp (text, "if:", 3) == 0)
+        return eval_string_if (text + 3, eval_context);
+
+    /*
+     * 16. calculate the result of an expression
+     * (with number, operators and parentheses)
+     */
+    if (strncmp (text, "calc:", 5) == 0)
+        return calc_expression (text + 5);
+
+    /* 17. option: if found, return this value */
+    if (strncmp (text, "sec.data.", 9) == 0)
+    {
+        ptr_value = hashtable_get (secure_hashtable_data, text + 9);
+        return strdup ((ptr_value) ? ptr_value : "");
+    }
+    config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
+    if (ptr_option)
+    {
+        if (!ptr_option->value)
+            return strdup ("");
+        switch (ptr_option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                return strdup (CONFIG_BOOLEAN(ptr_option) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (ptr_option->string_values)
+                    return strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                snprintf (str_value, sizeof (str_value),
+                          "%d", CONFIG_INTEGER(ptr_option));
+                return strdup (str_value);
+            case CONFIG_OPTION_TYPE_STRING:
+                return strdup (CONFIG_STRING(ptr_option));
+            case CONFIG_OPTION_TYPE_COLOR:
+                return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
+            case CONFIG_NUM_OPTION_TYPES:
+                return strdup ("");
+        }
+    }
+
+    /* 18. local variable in buffer */
+    ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
+    if (ptr_buffer)
+    {
+        ptr_value = hashtable_get (ptr_buffer->local_variables, text);
+        if (ptr_value)
+            return strdup (ptr_value);
+    }
+
+    /* 19. hdata */
+    return eval_string_hdata (text, eval_context);
 }
 
 /*
