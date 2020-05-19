@@ -6691,7 +6691,7 @@ irc_protocol_recv_command (struct t_irc_server *server,
         flags = WEECHAT_STRING_SPLIT_STRIP_LEFT
             | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS
             | WEECHAT_STRING_SPLIT_KEEP_EOL;
-        if (keep_trailing_spaces)
+        if (!keep_trailing_spaces)
             flags |= WEECHAT_STRING_SPLIT_STRIP_RIGHT;
         argv_eol = weechat_string_split (message_colors_decoded, " ", NULL,
                                          flags, 0, NULL);
