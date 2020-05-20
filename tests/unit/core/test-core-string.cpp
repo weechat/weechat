@@ -1705,9 +1705,9 @@ TEST(CoreString, Base16)
     }
 
     /* string_base16_decode */
-    LONGS_EQUAL(0, string_base16_decode (NULL, NULL));
-    LONGS_EQUAL(0, string_base16_decode (NULL, str));
-    LONGS_EQUAL(0, string_base16_decode ("", NULL));
+    LONGS_EQUAL(-1, string_base16_decode (NULL, NULL));
+    LONGS_EQUAL(-1, string_base16_decode (NULL, str));
+    LONGS_EQUAL(-1, string_base16_decode ("", NULL));
     LONGS_EQUAL(0, string_base16_decode ("", str));
     for (i = 0; str_base16[i][0]; i++)
     {
@@ -1828,9 +1828,9 @@ TEST(CoreString, Base64)
     }
 
     /* string_base64_decode */
-    LONGS_EQUAL(0, string_base64_decode (NULL, NULL));
-    LONGS_EQUAL(0, string_base64_decode (NULL, str));
-    LONGS_EQUAL(0, string_base64_decode ("", NULL));
+    LONGS_EQUAL(-1, string_base64_decode (NULL, NULL));
+    LONGS_EQUAL(-1, string_base64_decode (NULL, str));
+    LONGS_EQUAL(-1, string_base64_decode ("", NULL));
     LONGS_EQUAL(0, string_base64_decode ("", str));
     for (i = 0; str_base64[i][0]; i++)
     {

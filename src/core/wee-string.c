@@ -2954,7 +2954,7 @@ string_base16_decode (const char *from, char *to)
     unsigned char value;
 
     if (!from || !to)
-        return 0;
+        return -1;
 
     count = 0;
 
@@ -3251,7 +3251,7 @@ string_base64_decode (const char *from, char *to)
         "@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 
     if (!from || !to)
-        return 0;
+        return -1;
 
     ptr_from = from;
     ptr_to = to;
