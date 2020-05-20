@@ -2917,7 +2917,8 @@ string_format_size (unsigned long long size)
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -2944,7 +2945,8 @@ string_base16_encode (const char *from, int length, char *to)
 /*
  * Decodes a base16 string (hexadecimal).
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -3013,7 +3015,8 @@ string_base16_decode (const char *from, char *to)
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -3090,7 +3093,8 @@ string_base32_encode (const char *from, int length, char *to)
  *   limitations under the License.
  *
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -3166,7 +3170,8 @@ string_convbase64_8x3_to_6x4 (const char *from, char *to)
  * Argument "length" is number of bytes in "from" to convert (commonly
  * strlen(from)).
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -3237,7 +3242,8 @@ string_convbase64_6x4_to_8x3 (const unsigned char *from, unsigned char *to)
 /*
  * Decodes a base64 string.
  *
- * Returns length of string in "*to" (it does not count final \0).
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
  */
 
 int
@@ -3298,6 +3304,50 @@ string_base64_decode (const char *from, char *to)
     ptr_to[0] = '\0';
 
     return to_length;
+}
+
+/*
+ * Encodes a string in base 16, 32, or 64.
+ *
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
+ */
+
+int
+string_base_encode (int base, const char *from, int length, char *to)
+{
+    switch (base)
+    {
+        case 16:
+            return string_base16_encode (from, length, to);
+        case 32:
+            return string_base32_encode (from, length, to);
+        case 64:
+            return string_base64_encode (from, length, to);
+    }
+    return -1;
+}
+
+/*
+ * Decodes a string encoded in base 16, 32, or 64.
+ *
+ * Returns length of string in "*to" (it does not count final \0),
+ * -1 if error.
+ */
+
+int
+string_base_decode (int base, const char *from, char *to)
+{
+    switch (base)
+    {
+        case 16:
+            return string_base16_decode (from, to);
+        case 32:
+            return string_base32_decode (from, to);
+        case 64:
+            return string_base64_decode (from, to);
+    }
+    return -1;
 }
 
 /*

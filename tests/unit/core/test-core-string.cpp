@@ -1842,6 +1842,62 @@ TEST(CoreString, Base64)
 
 /*
  * Tests functions:
+ *    string_base_encode
+ */
+
+TEST(CoreString, BaseEncode)
+{
+    char str[1024];
+
+    LONGS_EQUAL(-1, string_base_encode (0, NULL, 0, NULL));
+    LONGS_EQUAL(-1, string_base_encode (0, "", 0, str));
+    LONGS_EQUAL(-1, string_base_encode (16, NULL, 0, str));
+    LONGS_EQUAL(-1, string_base_encode (32, NULL, 0, str));
+    LONGS_EQUAL(-1, string_base_encode (64, NULL, 0, str));
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(16, string_base_encode (16, "abcdefgh", 8, str));
+    STRCMP_EQUAL("6162636465666768", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(16, string_base_encode (32, "abcdefgh", 8, str));
+    STRCMP_EQUAL("MFRGGZDFMZTWQ===", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(20, string_base_encode (64, "This is a test.", 15, str));
+    STRCMP_EQUAL("VGhpcyBpcyBhIHRlc3Qu", str);
+}
+
+/*
+ * Tests functions:
+ *    string_base_decode
+ */
+
+TEST(CoreString, BaseDecode)
+{
+    char str[1024];
+
+    LONGS_EQUAL(-1, string_base_decode (0, NULL, NULL));
+    LONGS_EQUAL(-1, string_base_decode (0, "", str));
+    LONGS_EQUAL(-1, string_base_decode (16, NULL, str));
+    LONGS_EQUAL(-1, string_base_decode (32, NULL, str));
+    LONGS_EQUAL(-1, string_base_decode (64, NULL, str));
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(8, string_base_decode (16, "6162636465666768", str));
+    STRCMP_EQUAL("abcdefgh", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(8, string_base_decode (32, "MFRGGZDFMZTWQ===", str));
+    STRCMP_EQUAL("abcdefgh", str);
+
+    str[0] = 0xAA;
+    LONGS_EQUAL(15, string_base_decode (64, "VGhpcyBpcyBhIHRlc3Qu", str));
+    STRCMP_EQUAL("This is a test.", str);
+}
+
+/*
+ * Tests functions:
  *    string_hex_dump
  */
 
