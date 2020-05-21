@@ -33,6 +33,7 @@ extern "C"
 #include <regex.h>
 #include "tests/tests.h"
 #include "src/core/weechat.h"
+#include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
 #include "src/core/wee-hashtable.h"
 #include "src/gui/gui-color.h"
@@ -1973,14 +1974,10 @@ TEST(CoreString, Hex_dump)
 /*
  * Tests functions:
  *    string_is_command_char
- *    string_input_for_buffer
  */
 
-TEST(CoreString, Input)
+TEST(CoreString, IsCommandChar)
 {
-    char *str;
-
-    /* string_is_command_char */
     LONGS_EQUAL(0, string_is_command_char (NULL));
     LONGS_EQUAL(0, string_is_command_char (""));
     LONGS_EQUAL(0, string_is_command_char ("abc"));
@@ -1988,7 +1985,33 @@ TEST(CoreString, Input)
     LONGS_EQUAL(1, string_is_command_char ("/abc"));
     LONGS_EQUAL(1, string_is_command_char ("//abc"));
 
-    /* string_input_for_buffer */
+    /* test with custom command chars */
+    config_file_option_set (config_look_command_chars, "öï", 1);
+
+    LONGS_EQUAL(0, string_is_command_char ("abc"));
+    LONGS_EQUAL(0, string_is_command_char ("o_abc"));
+    LONGS_EQUAL(0, string_is_command_char ("i_abc"));
+    LONGS_EQUAL(0, string_is_command_char ("é_abc"));
+    LONGS_EQUAL(1, string_is_command_char ("ö"));
+    LONGS_EQUAL(1, string_is_command_char ("ö_abc"));
+    LONGS_EQUAL(1, string_is_command_char ("ö_öabc"));
+    LONGS_EQUAL(1, string_is_command_char ("ï"));
+    LONGS_EQUAL(1, string_is_command_char ("ï_abc"));
+    LONGS_EQUAL(1, string_is_command_char ("ï_öabc"));
+    LONGS_EQUAL(1, string_is_command_char ("/abc"));
+
+    config_file_option_reset (config_look_command_chars, 0);
+}
+
+/*
+ * Tests functions:
+ *    string_input_for_buffer
+ */
+
+TEST(CoreString, InputForBuffer)
+{
+    char *str;
+
     POINTERS_EQUAL(NULL, string_input_for_buffer (NULL));
     POINTERS_EQUAL(NULL, string_input_for_buffer ("/abc"));
     str = strdup ("");
