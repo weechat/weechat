@@ -2038,6 +2038,33 @@ TEST(CoreString, InputForBuffer)
     str = strdup ("//abc");
     STRCMP_EQUAL(str + 1, string_input_for_buffer (str));
     free (str);
+
+    /* test with custom command chars */
+    config_file_option_set (config_look_command_chars, "öï", 1);
+
+    str = strdup ("o_abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("ö_abc");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("ö abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("öö_abc");
+    STRCMP_EQUAL(str + 2, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("ï_abc");
+    POINTERS_EQUAL(NULL, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("ï abc");
+    STRCMP_EQUAL(str, string_input_for_buffer (str));
+    free (str);
+    str = strdup ("ïï_abc");
+    STRCMP_EQUAL(str + 2, string_input_for_buffer (str));
+    free (str);
+
+    config_file_option_reset (config_look_command_chars, 0);
 }
 
 /*
