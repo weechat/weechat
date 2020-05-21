@@ -1839,6 +1839,9 @@ TEST(CoreString, Base64)
         LONGS_EQUAL(length, string_base64_decode (str_base64[i][1], str));
         STRCMP_EQUAL(str_base64[i][0], str);
     }
+    /* invalid base64 string, missing two "=" at the end */
+    LONGS_EQUAL(4, string_base64_decode ("dGVzdA", str));
+    STRCMP_EQUAL("test", str);
 }
 
 /*
