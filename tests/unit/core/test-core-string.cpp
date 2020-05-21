@@ -1682,6 +1682,7 @@ TEST(CoreString, Base16)
         { { "", "" },
           { "abcdefgh", "6162636465666768" },
           { "this is a *test*", "746869732069732061202A746573742A" },
+          { "this is a *test*\xAA", "746869732069732061202A746573742AAA" },
           { NULL, NULL } };
 
 
