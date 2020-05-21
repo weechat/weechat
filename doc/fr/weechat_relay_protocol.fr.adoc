@@ -954,7 +954,7 @@ Envoyer des données à un tampon.
 Syntaxe :
 
 ----
-input <tampon> <données>
+(id) input <tampon> <données>
 ----
 
 Paramètres :
@@ -1151,7 +1151,7 @@ message (après un caractère de nouvelle ligne : "\n").
 Syntaxe :
 
 ----
-sync [<tampon>[,<tampon>...] <option>[,<option>...]]
+(id) sync [<tampon>[,<tampon>...] <option>[,<option>...]]
 ----
 
 Paramètres :
@@ -1219,7 +1219,7 @@ tampons.
 Syntaxe :
 
 ----
-desync [<tampon>[,<tampon>...] <option>[,<option>...]]
+(id) desync [<tampon>[,<tampon>...] <option>[,<option>...]]
 ----
 
 Paramètres :
@@ -1344,7 +1344,7 @@ toujours active et mesurer le temps de réponse.
 Syntaxe :
 
 ----
-ping [<paramètres>]
+(id) ping [<paramètres>]
 ----
 
 Exemple :
@@ -1368,7 +1368,7 @@ Se déconnecter de _relay_.
 Syntaxe :
 
 ----
-quit
+(id) quit
 ----
 
 Exemple :

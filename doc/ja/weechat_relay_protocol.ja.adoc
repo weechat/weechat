@@ -961,7 +961,7 @@ hda:
 構文:
 
 ----
-input <buffer> <data>
+(id) input <buffer> <data>
 ----
 
 引数:
@@ -1158,7 +1158,7 @@ _WeeChat バージョン 0.4.1 で更新。_
 構文:
 
 ----
-sync [<buffer>[,<buffer>...] <option>[,<option>...]]
+(id) sync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----
 
 引数:
@@ -1224,7 +1224,7 @@ _WeeChat バージョン 0.4.1 で更新。_
 構文:
 
 ----
-desync [<buffer>[,<buffer>...] <option>[,<option>...]]
+(id) desync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----
 
 引数:
@@ -1348,7 +1348,7 @@ WeeChat にメッセージ "_pong" と同じ引数を持つ返信 ping を送信
 構文:
 
 ----
-ping [<arguments>]
+(id) ping [<arguments>]
 ----
 
 例:
@@ -1373,7 +1373,7 @@ _リレー_ から切断。
 構文:
 
 ----
-quit
+(id) quit
 ----
 
 例:

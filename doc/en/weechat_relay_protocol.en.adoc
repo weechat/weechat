@@ -942,7 +942,7 @@ Send data to a buffer.
 Syntax:
 
 ----
-input <buffer> <data>
+(id) input <buffer> <data>
 ----
 
 Arguments:
@@ -1138,7 +1138,7 @@ line char: "\n").
 Syntax:
 
 ----
-sync [<buffer>[,<buffer>...] <option>[,<option>...]]
+(id) sync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----
 
 Arguments:
@@ -1203,7 +1203,7 @@ buffers, the client will still receive updates for these buffers.
 Syntax:
 
 ----
-desync [<buffer>[,<buffer>...] <option>[,<option>...]]
+(id) desync [<buffer>[,<buffer>...] <option>[,<option>...]]
 ----
 
 Arguments:
@@ -1325,7 +1325,7 @@ measure the response time.
 Syntax:
 
 ----
-ping [<arguments>]
+(id) ping [<arguments>]
 ----
 
 Example:
@@ -1349,7 +1349,7 @@ Disconnect from _relay_.
 Syntax:
 
 ----
-quit
+(id) quit
 ----
 
 Example:
