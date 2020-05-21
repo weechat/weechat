@@ -1329,13 +1329,14 @@ Some variables are replaced in expression, using the format ${variable}, variabl
   8. a color (format: "color:xxx", see "Plugin API reference", function "color")
   9. a modifier (format: "modifier:name,data,string")
   10. an info (format: "info:name,arguments", arguments are optional)
-  11. current date/time (format: "date" or "date:format")
-  12. an environment variable (format: "env:XXX")
-  13. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  14. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  15. an option (format: "file.section.option")
-  16. a local variable in buffer
-  17. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  11. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  12. current date/time (format: "date" or "date:format")
+  13. an environment variable (format: "env:XXX")
+  14. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  15. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  16. an option (format: "file.section.option")
+  17. a local variable in buffer
+  18. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list, for example:
@@ -1364,6 +1365,8 @@ Examples (simple strings):
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${base_encode:64,test}                ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}            ==> test
 
 Examples (conditions):
   /eval -n -c ${window.buffer.number} > 2 ==> 0

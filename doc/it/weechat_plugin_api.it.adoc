@@ -2701,6 +2701,28 @@ expanded to last):
   `+1.0+` +
   `+lightblue+`
 
+// TRANSLATION MISSING
+| `+${base_encode:base,xxx}+` +
+  _(WeeChat ≥ 2.9)_ |
+  String encoded in base 16, 32 or 64. |
+  `+${base_encode:16,test string}+` +
+  `+${base_encode:32,test string}+` +
+  `+${base_encode:64,test string}+` |
+  `+7465737420737472696E67+` +
+  `+ORSXG5BAON2HE2LOM4======+` +
+  `+dGVzdCBzdHJpbmc=+`
+
+// TRANSLATION MISSING
+| `+${base_decode:base,xxx}+` +
+  _(WeeChat ≥ 2.9)_ |
+  String decoded from base 16, 32 or 64. |
+  `+${base_decode:16,7465737420737472696E67}+` +
+  `+${base_decode:32,ORSXG5BAON2HE2LOM4======}+` +
+  `+${base_decode:64,dGVzdCBzdHJpbmc=}+` |
+  `+test string+` +
+  `+test string+` +
+  `+test string+`
+
 | `+${date}+` +
   `+${date:xxx}+` +
   _(WeeChat ≥ 1.3)_ |

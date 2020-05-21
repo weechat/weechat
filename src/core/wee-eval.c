@@ -423,6 +423,7 @@ eval_string_info (const char *text)
     char *value, *info_name;
 
     value = NULL;
+
     ptr_arguments = strchr (text, ',');
     if (ptr_arguments)
     {
@@ -430,7 +431,10 @@ eval_string_info (const char *text)
         ptr_arguments++;
     }
     else
+    {
         info_name = strdup (text);
+    }
+
     if (info_name)
     {
         value = hook_info_get (NULL, info_name, ptr_arguments);
@@ -438,6 +442,104 @@ eval_string_info (const char *text)
     }
 
     return (value) ? value : strdup ("");
+}
+
+/*
+ * Encodes a string in base 16, 32, or 64.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_base_encode (const char *text)
+{
+    const char *ptr_string;
+    char *value, *base, *error, *result;
+    long number;
+    int length;
+
+    base = NULL;
+    result = NULL;
+
+    ptr_string = strchr (text, ',');
+    if (!ptr_string)
+        goto end;
+
+    base = string_strndup (text, ptr_string - text);
+    if (!base)
+        goto end;
+
+    number = strtol (base, &error, 10);
+    if (!error || error[0])
+        goto end;
+
+    ptr_string++;
+    length = strlen (ptr_string);
+    result = malloc ((length * 4) + 1);
+    if (!result)
+        goto end;
+
+    if (string_base_encode (number, ptr_string, length, result) < 0)
+    {
+        free (result);
+        result = NULL;
+    }
+
+end:
+    value = strdup ((result) ? result : "");
+    if (base)
+        free (base);
+    if (result)
+        free (result);
+    return value;
+}
+
+/*
+ * Decodes a string encoded in base 16, 32, or 64.
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_base_decode (const char *text)
+{
+    const char *ptr_string;
+    char *value, *base, *error, *result;
+    long number;
+
+    base = NULL;
+    result = NULL;
+
+    ptr_string = strchr (text, ',');
+    if (!ptr_string)
+        goto end;
+
+    base = string_strndup (text, ptr_string - text);
+    if (!base)
+        goto end;
+
+    number = strtol (base, &error, 10);
+    if (!error || error[0])
+        goto end;
+
+    ptr_string++;
+    result = malloc (strlen (ptr_string) + 1);
+    if (!result)
+        goto end;
+
+    if (string_base_decode (number, ptr_string, result) < 0)
+    {
+        free (result);
+        result = NULL;
+    }
+
+end:
+    value = strdup ((result) ? result : "");
+    if (base)
+        free (base);
+    if (result)
+        free (result);
+    return value;
 }
 
 /*
@@ -805,13 +907,15 @@ end:
  *  10. a color (format: color:xxx)
  *  11. a modifier (format: modifier:name,data,xxx)
  *  12. an info (format: info:name,arguments)
- *  13. current date/time (format: date or date:xxx)
- *  14. an environment variable (format: env:XXX)
- *  15. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  16. calculate result of an expression (format: calc:xxx)
- *  17. an option (format: file.section.option)
- *  18. a buffer local variable
- *  19. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  13. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *      or base_decode:base,xxx)
+ *  14. current date/time (format: date or date:xxx)
+ *  15. an environment variable (format: env:XXX)
+ *  16. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  17. calculate result of an expression (format: calc:xxx)
+ *  18. an option (format: file.section.option)
+ *  19. a buffer local variable
+ *  20. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -931,11 +1035,17 @@ eval_replace_vars_cb (void *data, const char *text)
     if (strncmp (text, "info:", 5) == 0)
         return eval_string_info (text + 5);
 
-    /* 13. current date/time */
+    /* 13. base_encode/base_decode */
+    if (strncmp (text, "base_encode:", 12) == 0)
+        return eval_string_base_encode (text + 12);
+    if (strncmp (text, "base_decode:", 12) == 0)
+        return eval_string_base_decode (text + 12);
+
+    /* 14. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
         return eval_string_date (text + 4);
 
-    /* 14. environment variable */
+    /* 15. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -943,18 +1053,18 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 15: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 16: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
         return eval_string_if (text + 3, eval_context);
 
     /*
-     * 16. calculate the result of an expression
+     * 17. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
         return calc_expression (text + 5);
 
-    /* 17. option: if found, return this value */
+    /* 18. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -984,7 +1094,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 18. local variable in buffer */
+    /* 19. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -993,7 +1103,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 19. hdata */
+    /* 20. hdata */
     return eval_string_hdata (text, eval_context);
 }
 

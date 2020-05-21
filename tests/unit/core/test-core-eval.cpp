@@ -563,6 +563,22 @@ TEST(CoreEval, EvalExpression)
     /* test info */
     WEE_CHECK_EVAL(version_get_version (), "${info:version}");
 
+    /* test base_encode */
+    WEE_CHECK_EVAL("", "${base_encode:}");
+    WEE_CHECK_EVAL("", "${base_encode:0,xxx}");
+    WEE_CHECK_EVAL("", "${base_encode:100,test string}");
+    WEE_CHECK_EVAL("7465737420737472696E67", "${base_encode:16,test string}");
+    WEE_CHECK_EVAL("ORSXG5BAON2HE2LOM4======", "${base_encode:32,test string}");
+    WEE_CHECK_EVAL("dGVzdCBzdHJpbmc=", "${base_encode:64,test string}");
+
+    /* test base_decode */
+    WEE_CHECK_EVAL("", "${base_decode:}");
+    WEE_CHECK_EVAL("", "${base_decode:0,xxx}");
+    WEE_CHECK_EVAL("", "${base_decode:100,test string}");
+    WEE_CHECK_EVAL("test string", "${base_decode:16,7465737420737472696E67}");
+    WEE_CHECK_EVAL("test string", "${base_decode:32,ORSXG5BAON2HE2LOM4======}");
+    WEE_CHECK_EVAL("test string", "${base_decode:64,dGVzdCBzdHJpbmc=}");
+
     /* test date */
     WEE_CHECK_EVAL("", "${date:}");
     value = eval_expression ("${date}", pointers, extra_vars, options);

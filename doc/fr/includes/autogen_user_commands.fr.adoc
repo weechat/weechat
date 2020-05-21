@@ -1330,13 +1330,14 @@ Des variables sont remplacées dans l'expression, en utilisant le format ${varia
   8. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
   9. un modificateur (format : "modifier:nom,données,chaîne")
   10. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  11. la date/heure courante (format : "date" ou "date:format")
-  12. une variable d'environnement (format : "env:XXX")
-  13. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  14. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  15. une option (format : "fichier.section.option")
-  16. une variable locale du tampon
-  17. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  11. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
+  12. la date/heure courante (format : "date" ou "date:format")
+  13. une variable d'environnement (format : "env:XXX")
+  14. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  15. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
+  16. une option (format : "fichier.section.option")
+  17. une variable locale du tampon
+  18. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
@@ -1365,6 +1366,8 @@ Exemples (chaînes simples) :
   /eval -n ${repeat:5,-}                         ==> -----
   /eval -n ${length:test}                        ==> 4
   /eval -n ${calc:(5+2)*3}                       ==> 21
+  /eval -n ${base_encode:64,test}                ==> dGVzdA==
+  /eval -n ${base_decode:64,dGVzdA==}            ==> test
 
 Exemples (conditions) :
   /eval -n -c ${window.buffer.number} > 2 ==> 0

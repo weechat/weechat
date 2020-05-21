@@ -26,6 +26,7 @@ New features::
   * core: add default key kbd:[Alt+Enter] to insert a newline (issue #1498)
   * core: add flag "input_multiline" in buffer (issue #984, issue #1063)
   * core: add a scalable WeeChat logo (SVG) (issue #1454, issue #1456)
+  * core: add base 16/32/64 encoding/decoding in evaluation of expressions with "base_encode:base,xxx" and "base_decode:base,xxx"
   * core: add case sensitive wildcard matching comparison operator (`+==*+` and `+!!*+`) and case sensitive/insensitive include comparison operators (`+==-+`,  `+!!-+`, `+=-+`, `+!-+`) in evaluation of expressions
   * core: add default key kbd:[Alt+Shift+N] to toggle nicklist bar
   * core: add command line option "--stdout" in weechat-headless binary to log to stdout rather than ~/.weechat/weechat.log (issue #1475, issue #1477)
