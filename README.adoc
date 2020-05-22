@@ -12,7 +12,7 @@ image:https://img.shields.io/badge/devel%20blog-follow-blue.svg["Devel blog", li
 image:https://img.shields.io/badge/slant-recommend-28acad.svg["Slant", link="https://www.slant.co/topics/1323/~best-irc-clients-for-linux"]
 image:https://img.shields.io/badge/help-donate%20%E2%9D%A4-ff69b4.svg["Donate", link="https://weechat.org/donate/"]
 
-image:https://travis-ci.org/weechat/weechat.svg?branch=master["Build Status", link="https://travis-ci.org/weechat/weechat"]
+image:https://github.com/weechat/weechat/workflows/CI/badge.svg["CI", link="https://github.com/weechat/weechat/actions"]
 image:https://codecov.io/gh/weechat/weechat/branch/master/graph/badge.svg["Code coverage", link="https://codecov.io/gh/weechat/weechat"]
 
 *WeeChat* (Wee Enhanced Environment for Chat) is a free chat client, fast and

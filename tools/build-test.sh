@@ -22,7 +22,6 @@
 # Build WeeChat according to environment variables:
 #   - BUILDTOOL: cmake or autotools
 #   - BUILDARGS: arguments for cmake or configure commands
-#   - CODECOVERAGE: "1" to build with code coverage (works only with cmake)
 #
 # Syntax to run the script with environment variables:
 #   BUILDTOOL=cmake ./build-test.sh
@@ -34,7 +33,7 @@
 #   ./build-test.sh cmake [arguments]
 #   ./build-test.sh autotools [arguments]
 #
-# This script is used to build WeeChat in Travis CI environment.
+# This script is used to build WeeChat in CI environment.
 #
 
 run ()
@@ -71,12 +70,7 @@ if [ "$BUILDTOOL" = "cmake" ]; then
     run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
     run "make VERBOSE=1 -j$(nproc)"
     run "sudo make install"
-    if run "ctest -V" && [ "$CODECOVERAGE" = "1" ]; then
-        run "lcov --directory . --capture --output-file coverage.info"
-        run "lcov --remove coverage.info '/usr/*' --output-file coverage.info"
-        run "lcov --list coverage.info"
-        run "mv coverage.info .."
-    fi
+    run "ctest -V"
 fi
 
 if [ "$BUILDTOOL" = "autotools" ]; then

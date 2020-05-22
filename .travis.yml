@@ -5,7 +5,7 @@ language: c
 env:
     - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS=""
     - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_PYTHON2=ON"
-    - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
+    # - CC="gcc" CXX="g++" BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
     - CC="gcc" CXX="g++" BUILDTOOL="autotools" BUILDARGS=""
     - CC="gcc" CXX="g++" BUILDTOOL="autotools" BUILDARGS="--enable-python2"
     - CC="clang" CXX="clang++" BUILDTOOL="cmake" BUILDARGS=""
@@ -15,9 +15,6 @@ env:
 
 matrix:
     fast_finish: true
-    exclude:
-      - compiler: clang
-        env: BUILDTOOL="cmake" BUILDARGS="-DENABLE_CODE_COVERAGE=ON" CODECOVERAGE="1"
 
 before_script:
     - echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
@@ -46,4 +43,4 @@ after_success:
     - weechat --license
     - weechat --version
     - weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
-    - if [ "$CODECOVERAGE" = "1" ]; then bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov error"; fi
+    # - if [ "$CODECOVERAGE" = "1" ]; then bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov error"; fi

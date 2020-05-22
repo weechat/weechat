@@ -1,0 +1,74 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+
+  build:
+
+    name: ${{ matrix.config.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - { name: "cmake_gcc", cc: "gcc", cxx: "g++", tool: "cmake", args: "" }
+          - { name: "cmake_gcc_py2", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_PYTHON2=ON" }
+          - { name: "cmake_gcc_coverage", cc: "gcc", cxx: "g++", tool: "cmake", args: "-DENABLE_CODE_COVERAGE=ON" }
+          - { name: "cmake_clang", cc: "clang", cxx: "clang++", tool: "cmake", args: "" }
+          - { name: "autotools_gcc", cc: "gcc", cxx: "g++", tool: "autotools", args: "" }
+          - { name: "autotools_clang", cc: "clang", cxx: "clang++", tool: "autotools", args: "" }
+
+    steps:
+
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        echo 'APT::Install-Recommends "false";' | sudo tee -a /etc/apt/apt.conf
+        sudo apt-get update -qq
+        sudo apt-get -y install devscripts equivs python-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php7.4-dev libphp7.4-embed libargon2-0-dev libsodium-dev pylint3 asciidoctor
+        sudo -H pip install --ignore-installed msgcheck
+
+    - name: Test patches
+      run: ./tools/build-debian.sh test-patches
+
+    - name: Check gettext files
+      run: msgcheck po/*.po
+
+    - name: Check Python scripts
+      run: |
+        pylint3 --additional-builtins=_ doc/docgen.py
+        pylint3 tests/scripts/python/testapigen.py
+        pylint3 tests/scripts/python/testapi.py
+        pylint3 tests/scripts/python/unparse.py
+
+    - name: Build and run tests
+      env:
+        CC: ${{ matrix.config.cc }}
+        CXX: ${{ matrix.config.cxx }}
+        BUILDTOOL: ${{ matrix.config.tool }}
+        BUILDARGS: ${{ matrix.config.args }}
+      run: ./tools/build-test.sh
+
+    - name: Run WeeChat
+      env:
+        TERM: xterm-256color
+      run: |
+        weechat --help
+        weechat-curses --help
+        weechat --colors
+        weechat --license
+        weechat --version
+        weechat --temp-dir --run-command "/debug dirs;/debug libs" --run-command "/quit"
+
+    - name: Code coverage
+      if: ${{ matrix.config.name == 'cmake_gcc_coverage' }}
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: |
+        cd build-tmp-*
+        lcov --directory . --capture --output-file coverage.info
+        lcov --remove coverage.info '/usr/*' --output-file coverage.info
+        lcov --list coverage.info
+        bash <(curl -s https://codecov.io/bash) -f coverage.info || echo 'Codecov error'
