@@ -12,7 +12,7 @@
 
 | irc | irc_message_split | trennt eine IRC Nachricht (standardmäßig in 512 Bytes große Nachrichten) | "message": IRC Nachricht, "server": Servername (optional) | "msg1" ... "msgN": Nachrichten die versendet werden sollen (ohne abschließendes "\r\n"), "args1" ... "argsN": Argumente für Nachrichten, "count": Anzahl der Nachrichten
 
-| weechat | focus_info | get focus info | "x": x coordinate (string with integer >= 0), "y": y coordinate (string with integer >= 0) | see function "hook_focus" in Plugin API reference
+| weechat | focus_info | Fokusinformationen abrufen | "x": x-Koordinate (Zeichenfolge mit Ganzzahl >= 0), "y": y-Koordinate (Zeichenfolge mit Ganzzahl >= 0) | siehe Funktion "hook_focus" in API Dokumentation
 
 |===
 // end::infos_hashtable[]
