@@ -1151,11 +1151,10 @@ weechat_guile_port_fill_input (SCM port, SCM dst, size_t start, size_t count)
 {
     /* make C compiler happy */
     (void) port;
-    (void) dst;
-    (void) start;
-    (void) count;
 
-    return ' ';
+    memset (SCM_BYTEVECTOR_CONTENTS (dst) + start, ' ', count);
+
+    return count;
 }
 #else
 /* Guile < 2.2 */
@@ -1184,7 +1183,7 @@ weechat_guile_port_write (SCM port, SCM src, size_t start, size_t count)
     /* make C compiler happy */
     (void) port;
 
-    data = scm_to_locale_string (src);
+    data = SCM_BYTEVECTOR_CONTENTS (src);
 
     data2 = malloc (count + 1);
     if (!data2)

@@ -4974,7 +4974,9 @@ weechat_guile_api_module_init (void *data)
     port_type = scm_make_port_type ("weechat_stdout",
                                     &weechat_guile_port_fill_input,
                                     &weechat_guile_port_write);
-    guile_port = scm_c_make_port (port_type, 0, 0);
+    guile_port = scm_c_make_port (port_type, SCM_WRTNG | SCM_BUF0, 0);
+    scm_set_current_output_port (guile_port);
+    scm_set_current_error_port (guile_port);
 #else
     /* Guile < 2.2 */
     scm_t_bits port_type;
