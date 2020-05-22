@@ -1188,6 +1188,8 @@ weechat_guile_port_write (SCM port, SCM src, size_t start, size_t count)
     }
     weechat_string_dyn_concat (guile_buffer_output, ptr_data);
 
+    free (data2);
+
     return count;
 }
 #else
@@ -1217,6 +1219,8 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
         ptr_data = ++ptr_newline;
     }
     weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+
+    free (data2);
 }
 #endif
 
