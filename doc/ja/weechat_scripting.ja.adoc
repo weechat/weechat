@@ -419,8 +419,10 @@ WeeChat の多くのスクリプト API
 ほとんど全ての WeeChat コールバックは WEECHAT_RC_OK または WEECHAT_RC_ERROR
 を返さなければいけません (modifier コールバックは例外で、これは文字列を返します)。
 
-C 言語コールバックはポインタ型の "data" 引数を利用します。スクリプト API
-では、"data" は文字列型で任意の値を取れます (ポインタ型ではありません)。
+// TRANSLATION MISSING
+C callbacks are using "callback_pointer" and "callback_data" arguments, which
+are pointers. In script API, there is only "callback_data" (or "data"), and it
+is a string instead of a pointer.
 
 各プログラミング言語でコールバックを利用する例:
 

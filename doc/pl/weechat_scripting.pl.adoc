@@ -405,8 +405,10 @@ wypadku możesz zobaczyć ładny raport o błędzie ;)
 Prawie wszystkie callbacki muszą zwrócić WEECHAT_RC_OK lub WEECHAT_RC_ERROR
 (wyjątkiem jest callback modyfikujący, który zwraca ciąg).
 
-Callbacki C używają argumentu "data", który jest wskaźnikiem. W API skryptów,
-"data" jest ciągiem o dowolnej wartości (nie jest wskaźnikiem).
+// TRANSLATION MISSING
+C callbacks are using "callback_pointer" and "callback_data" arguments, which
+are pointers. In script API, there is only "callback_data" (or "data"), and it
+is a string instead of a pointer.
 
 Przykłady callbacków dla każdego języka:
 

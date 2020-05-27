@@ -418,9 +418,10 @@ Toutes les fonction de rappel WeeChat doivent retourner WEECHAT_RC_OK ou
 WEECHAT_RC_ERROR (l'exception est la fonction de rappel du modificateur, qui
 retourne une chaîne de caractères).
 
-Les fonction de rappel C utilisent un paramètre "data", qui est un pointeur.
-Dans l'API script, ce "data" est une chaîne de caractères avec n'importe quelle
-valeur (ce n'est pas un pointeur).
+Les fonctions de rappel C utilisent des paramètres "callback_pointer" et
+"callback_data", qui sont des pointeurs. Dans l'API script, il y a seulement
+"callback_data" (ou "data"), et il s'agit d'une chaîne de caractères au lieu
+d'un pointeur.
 
 Exemple de fonction de rappel, pour chaque langage :
 

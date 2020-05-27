@@ -426,9 +426,10 @@ Quasi tutte le callback di WeeChat devono restituire WEECHAT_RC_OK
 oppure WEECHAT_RC_ERROR (l'eccezione è la callback modifier, che
 restituisce una stringa).
 
-Le callback in C utilizzano un argomento "data", che è un puntatore.
-Nelle API per gli script, questo "data" è una stringa con un qualsiasi
-valore (non è un puntatore).
+// TRANSLATION MISSING
+C callbacks are using "callback_pointer" and "callback_data" arguments, which
+are pointers. In script API, there is only "callback_data" (or "data"), and it
+is a string instead of a pointer.
 
 Esempio di callback, per ogni linguaggio:
 

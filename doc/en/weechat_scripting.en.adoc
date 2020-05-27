@@ -400,8 +400,9 @@ otherwise you may see a nice crash report ;)
 Almost all WeeChat callbacks must return WEECHAT_RC_OK or WEECHAT_RC_ERROR
 (exception is modifier callback, which returns a string).
 
-C callbacks are using a "data" argument, which is a pointer. In script API,
-this "data" is a string with a any value (it's not a pointer).
+C callbacks are using "callback_pointer" and "callback_data" arguments, which
+are pointers. In script API, there is only "callback_data" (or "data"), and it
+is a string instead of a pointer.
 
 Example of callback, for each language:
 
