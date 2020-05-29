@@ -686,10 +686,9 @@ Die _status_-Bar besitzt als Standardeinträge:
 | buffer_number         | `2`                     | Aktuelle Nummer des Buffers.
 | buffer_name           | `#test`                 | Name des aktuellen Buffers.
 | buffer_modes          | `+n`                    | IRC Channel-Modi.
-// TRANSLATION MISSING
-| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
+| buffer_nicklist_count | `{4}`                   | Anzahl der Nicks die in der Nickliste angezeigt werden.
 | buffer_zoom           | !                       | `!` bedeutet, dass ein zusammengefügter Buffer gezoomed (nur dieser Buffer wird angezeigt) wird.
-| buffer_filter         | `+*+`                   | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) wurden. Ein leerer Eintrag zeigt an dass alle Zeilen dargestellt werden.
+| buffer_filter         | `+*+`                   | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
 | scroll                | `-MORE(50)-`            | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `[Lag: 2.5]`            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
 | hotlist               | `[Act: 3:#abc(2,5), 5]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel _#abc_, eine ungelesene Nachricht in Buffer #5).

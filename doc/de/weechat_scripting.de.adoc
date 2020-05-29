@@ -416,10 +416,9 @@ Beinahe alle WeeChat Callbacks müssen entweder WEECHAT_RC_OK oder WEECHAT_RC_ER
 Ergebnis zurück liefern. Eine Ausnahme bildet das modifier Callback, hier wird ein
 String als Rückgabewert erwartet.
 
-// TRANSLATION MISSING
-C callbacks are using "callback_pointer" and "callback_data" arguments, which
-are pointers. In script API, there is only "callback_data" (or "data"), and it
-is a string instead of a pointer.
+C-Callbacks verwenden die Argumente "callback_pointer" und "callback_data", welche Zeiger sind.
+In der Skript-API gibt es nur "callback_data" (oder "data") und es handelt sich dabei um eine Zeichenfolge
+anstelle eines Zeigers.
 
 callback Beispiele, für jede Skriptsprache:
 
