@@ -2530,6 +2530,7 @@ gui_window_set_title (const char *title)
     /* the following terminals support the xterm escape codes */
     else if ((strncmp (envterm, "xterm", 5) == 0)
              || (strncmp (envterm, "rxvt", 4) == 0)
+             || (strncmp (envterm, "alacritty", 9) == 0)
              || (strcmp (envterm, "Eterm") == 0)
              || (strcmp (envterm, "aixterm") == 0)
              || (strcmp (envterm, "iris-ansi") == 0)
