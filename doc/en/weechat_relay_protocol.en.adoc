@@ -2460,10 +2460,10 @@ A _NULL_ pointer has a length of 1 with value 0:
 
 ....
 ┌────╥────┐
-│ 01 ║ 00 │ ────► NULL (0x0)
+│ 01 ║ 30 │ ────► NULL (0x0)
 └────╨────┘
  └──┘ └──┘
-length  0
+length '0'
 ....
 
 [[object_time]]

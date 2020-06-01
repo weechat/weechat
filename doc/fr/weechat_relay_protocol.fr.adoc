@@ -2493,10 +2493,10 @@ Un pointeur _NULL_ a une longueur de 1 avec la valeur 0 :
 
 ....
 ┌────╥────┐
-│ 01 ║ 00 │ ────► NULL (0x0)
+│ 01 ║ 30 │ ────► NULL (0x0)
 └────╨────┘
  └──┘ └──┘
-long.   0
+long.  '0'
 ....
 
 [[object_time]]
