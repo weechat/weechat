@@ -28,6 +28,7 @@ Alphabetically:
 * Bazerka
 * Benoit Papillault (benoit)
 * Chris Hills
+* Christian Duerr
 * Christian Heinz
 * Christopher O'Neill (deltafire)
 * coypoop
