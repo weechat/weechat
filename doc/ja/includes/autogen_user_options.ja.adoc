@@ -2004,6 +2004,12 @@
 ** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
 ** デフォルト値: `+default+`
 
+* [[option_irc.color.message_account]] *irc.color.message_account*
+** 説明: pass:none[color for text in account messages]
+** タイプ: 色
+** 値: WeeChat の色名 (default、black、(dark)gray、white、(light)red、(light)green、brown、yellow、(light)blue、(light)magenta、(light)cyan) 、端末色番号またはその別名; 色の前に属性を置くことができます (テキスト前景色のみ、背景色は出来ません): 太字は "*"、反転は "!"、イタリックは "/"、下線は "_"
+** デフォルト値: `+cyan+`
+
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
 ** 説明: pass:none[chghost メッセージの色]
 ** タイプ: 色
@@ -2360,6 +2366,12 @@
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** 説明: pass:none[filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter", see /help filter)]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
+* [[option_irc.look.smart_filter_account]] *irc.look.smart_filter_account*
+** 説明: pass:none[enable smart filter for "account" messages]
 ** タイプ: ブール
 ** 値: on, off
 ** デフォルト値: `+on+`

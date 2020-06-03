@@ -2004,6 +2004,12 @@
 ** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
 ** default value: `+default+`
 
+* [[option_irc.color.message_account]] *irc.color.message_account*
+** description: pass:none[color for text in account messages]
+** type: color
+** values: a WeeChat color name (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), a terminal color number or an alias; attributes are allowed before color (for text color only, not background): "*" for bold, "!" for reverse, "/" for italic, "_" for underline
+** default value: `+cyan+`
+
 * [[option_irc.color.message_chghost]] *irc.color.message_chghost*
 ** description: pass:none[color for text in chghost messages]
 ** type: color
@@ -2360,6 +2366,12 @@
 
 * [[option_irc.look.smart_filter]] *irc.look.smart_filter*
 ** description: pass:none[filter join/part/quit/nick messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter", see /help filter)]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
+* [[option_irc.look.smart_filter_account]] *irc.look.smart_filter_account*
+** description: pass:none[enable smart filter for "account" messages]
 ** type: boolean
 ** values: on, off
 ** default value: `+on+`
