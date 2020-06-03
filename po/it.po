@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9039,6 +9039,11 @@ msgstr ""
 "per alcuni minuti sul canale (è necessario creare un filtro sul tag "
 "\"irc_smart_filter\")"
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "abilita filtro smart per i messaggi \"join\" (entrata)"
+
 #. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
@@ -9113,6 +9118,10 @@ msgid "color for nick modes in bar item \"input_prompt\""
 msgstr ""
 "colore per il prefisso del nick (stringa visualizzata dopo il nick nel "
 "prefisso)"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "colore per il testo nei messaggi di entrata"
 
 #, fuzzy
 msgid "color for text in chghost messages"
@@ -9562,6 +9571,14 @@ msgstr "%snotifica: %s%s%s è tornato"
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%snotifica: %s%s%s è ancora assente: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s%s ha cacciato %s%s%s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "%s: Il server %s%s%s è stato eliminato"
 
 #, c-format
 msgid ""

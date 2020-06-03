@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
-"PO-Revision-Date: 2020-05-21 09:19+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"PO-Revision-Date: 2020-06-03 07:55+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -10121,6 +10121,10 @@ msgstr ""
 "pendant quelques minutes sur le canal (vous devez créer un filtre sur "
 "l'étiquette \"irc_smart_filter\", voir /help filter)"
 
+#. TRANSLATORS: please do not translate "account"
+msgid "enable smart filter for \"account\" messages"
+msgstr "activer le filtre intelligent pour les messages \"account\""
+
 #. TRANSLATORS: please do not translate "chghost"
 msgid "enable smart filter for \"chghost\" messages"
 msgstr "activer le filtre intelligent pour les messages \"chghost\""
@@ -10203,6 +10207,9 @@ msgstr ""
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr ""
 "couleur pour les modes du pseudo dans l'objet de barre \"input_prompt\""
+
+msgid "color for text in account messages"
+msgstr "couleur pour le texte dans les messages account"
 
 msgid "color for text in chghost messages"
 msgstr "couleur pour le texte dans les messages chghost"
@@ -10660,6 +10667,14 @@ msgstr "%snotify : %s%s%s est de retour"
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%snotify : %s%s%s est toujours absent : \"%s\""
+
+#, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s%s s'est identifié en tant que %s"
+
+#, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "%s%s%s%s n'est plus identifié"
 
 #, c-format
 msgid ""

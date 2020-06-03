@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7096,6 +7096,10 @@ msgid ""
 "see /help filter)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "account"
+msgid "enable smart filter for \"account\" messages"
+msgstr ""
+
 #. TRANSLATORS: please do not translate "chghost"
 msgid "enable smart filter for \"chghost\" messages"
 msgstr ""
@@ -7155,6 +7159,9 @@ msgid "color for lag indicator, when pong has been received from server"
 msgstr ""
 
 msgid "color for nick modes in bar item \"input_prompt\""
+msgstr ""
+
+msgid "color for text in account messages"
 msgstr ""
 
 msgid "color for text in chghost messages"
@@ -7545,6 +7552,14 @@ msgstr ""
 
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s%s has unidentified"
 msgstr ""
 
 #, c-format

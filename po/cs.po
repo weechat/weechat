@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8565,6 +8565,11 @@ msgstr ""
 "filtrovat join/part/quit/nick zprávy pro přezdívky pokud po nějaký čas "
 "nemluví na kanále (musíte vytvořit filter na tag \"irc_smart_filter\")"
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "povolit chytrý filter pro \"join\" zprávy"
+
 #. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
@@ -8634,6 +8639,10 @@ msgstr "barva ukazatele lagu, pokud bylo od serveru obdrženo pong"
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "barva přípony přezdívky (přípona je uživatelský řetězec za přezdívkou)"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "barva textu vezprávách připojení"
 
 #, fuzzy
 msgid "color for text in chghost messages"
@@ -9058,6 +9067,14 @@ msgstr "%snotifikace: %s%s%s je zpět"
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%snotifikace: %s%s%s je stále pryč: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s%s vykopnul %s%s%s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "Limit pro zdroj \"%s\" byl nastaven na  %s"
 
 #, c-format
 msgid ""

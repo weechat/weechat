@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7991,6 +7991,11 @@ msgid ""
 "see /help filter)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "цвет  текущего окна с сообщениями"
+
 #. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
@@ -8057,6 +8062,10 @@ msgstr ""
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "строка, вставляемая после автодополнения ника"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
 msgid "color for text in chghost messages"
@@ -8500,6 +8509,14 @@ msgstr "Тема канала %s%s%s: "
 #, fuzzy, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%s%s%s отсутствует: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s выкинул %s%s%s с канала %s%s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "Сервер %s%s%s удалён\n"
 
 #, c-format
 msgid ""

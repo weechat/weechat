@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-05-22 17:33+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -10343,6 +10343,11 @@ msgstr ""
 "Channel inaktiv gewesen ist (dazu muss ein Filter mit dem Schlagwort "
 "\"irc_smart_filter\" erstellt werden, siehe /help filter)"
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "aktiviert einen intelligenten Filter für \"join\" Nachrichten"
+
 #. TRANSLATORS: please do not translate "chghost"
 msgid "enable smart filter for \"chghost\" messages"
 msgstr "aktiviert einen intelligenten Filter für \"chghost\" Nachrichten"
@@ -10429,6 +10434,12 @@ msgstr ""
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr ""
 "Farbe in der der Nick-Modus in dem Bar-Item \"input_prompt\" angezeigt "
+"werden soll"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr ""
+"Textfarbe in der die Meldungen für das Betreten eines Channels angezeigt "
 "werden soll"
 
 msgid "color for text in chghost messages"
@@ -10910,6 +10921,14 @@ msgstr "%snotify: %s%s%s ist zurück"
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%snotify: %s%s%s ist weiterhin abwesend: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s%s hat %s%s%s gekickt"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "%s: Server %s%s%s wurde gelöscht"
 
 #, c-format
 msgid ""

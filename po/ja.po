@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -9663,6 +9663,11 @@ msgstr ""
 "ジをフィルタする (\"irc_smart_filter\" タグのフィルタを作らなければいけませ"
 "ん)"
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "\"join\" メッセージのスマートフィルタを有効化"
+
 #. TRANSLATORS: please do not translate "chghost"
 msgid "enable smart filter for \"chghost\" messages"
 msgstr "\"chghost\" メッセージのスマートフィルタを有効化"
@@ -9740,6 +9745,10 @@ msgstr "pong がサーバから返った場合の、遅延インジケータの�
 
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "\"input_prompt\" バー要素内のニックネームモードに付ける色"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "参加メッセージの色"
 
 msgid "color for text in chghost messages"
 msgstr "chghost メッセージの色"
@@ -10189,6 +10198,14 @@ msgstr "%s通知: %s%s%s が戻りました"
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%s通知: %s%s%s はまだ離席状態です: \"%s\""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s%s が %s%s%s をキック"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "%s: サーバ %s%s%s を削除しました"
 
 #, c-format
 msgid ""

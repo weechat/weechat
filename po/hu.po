@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7960,6 +7960,11 @@ msgid ""
 "see /help filter)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "account"
+#, fuzzy
+msgid "enable smart filter for \"account\" messages"
+msgstr "új üzenetet tartalmazó ablak színe"
+
 #. TRANSLATORS: please do not translate "chghost"
 #, fuzzy
 msgid "enable smart filter for \"chghost\" messages"
@@ -8026,6 +8031,10 @@ msgstr ""
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "névkiegészítés után beszúrt szöveg"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "új üzenetet tartalmazó ablak színe"
 
 #, fuzzy
 msgid "color for text in chghost messages"
@@ -8464,6 +8473,14 @@ msgstr "A %s%s%s szoba témája: "
 #, fuzzy, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%s%s%s távol: %s\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "A %s%s%s szerver törölve\n"
 
 #, c-format
 msgid ""

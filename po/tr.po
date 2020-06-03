@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-05-21 09:18+0200\n"
+"POT-Creation-Date: 2020-06-03 07:54+0200\n"
 "PO-Revision-Date: 2019-11-03 08:38+0100\n"
 "Last-Translator: Hasan Kiran <sunder67@hotmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -7230,6 +7230,10 @@ msgid ""
 "see /help filter)"
 msgstr ""
 
+#. TRANSLATORS: please do not translate "account"
+msgid "enable smart filter for \"account\" messages"
+msgstr ""
+
 #. TRANSLATORS: please do not translate "chghost"
 msgid "enable smart filter for \"chghost\" messages"
 msgstr ""
@@ -7291,6 +7295,10 @@ msgstr ""
 #, fuzzy
 msgid "color for nick modes in bar item \"input_prompt\""
 msgstr "sohbet penceresindeki rumuzlar için metin rengi"
+
+#, fuzzy
+msgid "color for text in account messages"
+msgstr "Bağlanma iletisi metni için renk"
 
 #, fuzzy
 msgid "color for text in chghost messages"
@@ -7688,6 +7696,14 @@ msgstr ""
 #, c-format
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has identified as %s"
+msgstr "%s%s[%s%s%s]%s uzakta: %s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unidentified"
+msgstr "%s: sunucu %s%s%s oluşturuldu"
 
 #, c-format
 msgid ""
