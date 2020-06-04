@@ -2215,10 +2215,6 @@ IRC_COMMAND_CALLBACK(halfop)
 void
 irc_command_ignore_display (struct t_irc_ignore *ignore)
 {
-    char *mask;
-
-    mask = weechat_strndup (ignore->mask + 1, strlen (ignore->mask) - 2);
-
     weechat_printf (
         NULL,
         _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
@@ -2227,12 +2223,9 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
         ignore->number,
         IRC_COLOR_CHAT_DELIMITERS,
         IRC_COLOR_RESET,
-        (mask) ? mask : ignore->mask,
+        ignore->mask,
         (ignore->server) ? ignore->server : "*",
         (ignore->channel) ? ignore->channel : "*");
-
-    if (mask)
-        free (mask);
 }
 
 /*
@@ -2242,7 +2235,7 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
 IRC_COMMAND_CALLBACK(ignore)
 {
     struct t_irc_ignore *ptr_ignore;
-    char *mask, *regex, *regex2, *ptr_regex, *server, *channel, *error;
+    char *mask, *regex, *regex2, *ptr_regex, *pos, *server, *channel, *error;
     int length;
     long number;
 
@@ -2295,12 +2288,35 @@ IRC_COMMAND_CALLBACK(ignore)
         }
 
         /* add "^" and "$" around regex */
-        length = 1 + strlen (ptr_regex) + 1 + 1;
-        regex2 = malloc (length);
-        if (regex2)
+        if (strncmp (ptr_regex, "(?", 2) == 0)
         {
-            snprintf (regex2, length, "^%s$", ptr_regex);
-            ptr_regex = regex2;
+            /* add chars after the regex flags */
+            pos = strchr (ptr_regex, ')');
+            if (pos)
+            {
+                length = 1 + strlen (ptr_regex) + 1 + 1;
+                regex2 = malloc (length);
+                if (regex2)
+                {
+                    pos++;
+                    memcpy (regex2, ptr_regex, pos - ptr_regex);
+                    regex2[pos - ptr_regex] = '\0';
+                    strcat (regex2, "^");
+                    strcat (regex2, pos);
+                    strcat (regex2, "$");
+                    ptr_regex = regex2;
+                }
+            }
+        }
+        else
+        {
+            length = 1 + strlen (ptr_regex) + 1 + 1;
+            regex2 = malloc (length);
+            if (regex2)
+            {
+                snprintf (regex2, length, "^%s$", ptr_regex);
+                ptr_regex = regex2;
+            }
         }
 
         if (irc_ignore_search (ptr_regex, server, channel))
@@ -2365,8 +2381,7 @@ IRC_COMMAND_CALLBACK(ignore)
                 ptr_ignore = irc_ignore_search_by_number (number);
                 if (ptr_ignore)
                 {
-                    mask = weechat_strndup (ptr_ignore->mask + 1,
-                                            strlen (ptr_ignore->mask) - 2);
+                    mask = strdup (ptr_ignore->mask);
                     irc_ignore_free (ptr_ignore);
                     weechat_printf (NULL, _("%s: ignore \"%s\" deleted"),
                                     IRC_PLUGIN_NAME, mask);
