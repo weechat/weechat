@@ -2650,7 +2650,6 @@ première étendue à la dernière) :
   `+ORSXG5BAON2HE2LOM4======+` +
   `+dGVzdCBzdHJpbmc=+`
 
-// TRANSLATION MISSING
 | `+${base_decode:base,xxx}+` +
   _(WeeChat ≥ 2.9)_ |
   Chaîne décodée depuis base 16, 32 ou 64. |
