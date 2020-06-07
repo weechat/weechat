@@ -921,7 +921,7 @@ gui_key_unbind_plugin (const char *context, const char *key)
 {
     int ctxt, num_keys, area_type;
     char *area_name;
-    struct t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key, *ptr_next_key;
 
     ctxt = gui_key_search_context (context);
     if (ctxt < 0)
@@ -944,8 +944,11 @@ gui_key_unbind_plugin (const char *context, const char *key)
         gui_key_set_area_type_name (key + 5, &area_type, &area_name);
         if (area_name)
         {
-            for (ptr_key = gui_keys[ctxt]; ptr_key; ptr_key = ptr_key->next_key)
+            ptr_key = gui_keys[ctxt];
+            while (ptr_key)
             {
+                ptr_next_key = ptr_key->next_key;
+
                 if (((ptr_key->area_type[0] == area_type)
                      && ptr_key->area_name[0]
                      && (strcmp (ptr_key->area_name[0], area_name) == 0))
@@ -955,6 +958,8 @@ gui_key_unbind_plugin (const char *context, const char *key)
                 {
                     num_keys += gui_key_unbind (NULL, ctxt, ptr_key->key);
                 }
+
+                ptr_key = ptr_next_key;
             }
             free (area_name);
         }
