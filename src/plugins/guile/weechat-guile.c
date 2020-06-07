@@ -1163,7 +1163,7 @@ size_t
 weechat_guile_port_write (SCM port, SCM src, size_t start, size_t count)
 {
     char *data2, *ptr_data, *ptr_newline;
-    const char *data;
+    const signed char *data;
 
     /* make C compiler happy */
     (void) port;
