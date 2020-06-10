@@ -60,6 +60,7 @@ Bug fixes::
   * core: fix resize of a bar when its size is 0 (automatic) (issue #1470)
   * api: fix use of pointer after free in function key_unbind
   * api: replace plugin and buffer name by buffer pointer in argument "modifier_data" sent to weechat_print modifier callback (issue #42)
+  * buflist: add "window" pointer in bar item evaluation only if it's not NULL (if bar type is "window")
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
   * guile: enable again /guile eval (issue #1514)

@@ -327,7 +327,8 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     item_index = (int)((unsigned long)pointer);
 
     weechat_hashtable_set (buflist_hashtable_pointers, "bar_item", item);
-    weechat_hashtable_set (buflist_hashtable_pointers, "window", window);
+    if (window)
+        weechat_hashtable_set (buflist_hashtable_pointers, "window", window);
 
     ptr_format = buflist_config_format_buffer_eval;
     ptr_format_current = buflist_config_format_buffer_current_eval;
