@@ -805,6 +805,12 @@ TEST(CoreEval, EvalReplaceRegex)
     hashtable_set (options, "regex_replace", "${re:z}");
     WEE_CHECK_EVAL("", "abc");
 
+    /* REG_NOTBOL (issue #1521) */
+    hashtable_remove (pointers, "regex");
+    hashtable_set (options, "regex", "^(a|b)");
+    hashtable_set (options, "regex_replace", "c");
+    WEE_CHECK_EVAL("cb", "ab");
+
     hashtable_free (pointers);
     hashtable_free (extra_vars);
     hashtable_free (options);

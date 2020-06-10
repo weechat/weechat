@@ -735,4 +735,17 @@ TEST(GuiColor, ColorEmphasize)
     string_regcomp (&regex, "this.*failed", 0);
     WEE_CHECK_EMPHASIZE(string1, string1, NULL, 0, &regex);
     regfree (&regex);
+
+    /* build strings for tests */
+    snprintf (string1, sizeof (string1),
+              "ab");
+    snprintf (string2, sizeof (string2),
+              "%sa%sb",
+              gui_color_get_custom ("emphasis"),
+              gui_color_get_custom ("emphasis"));
+
+    /* search regex (found) */
+    string_regcomp (&regex, "^(a|b)", REG_EXTENDED);
+    WEE_CHECK_EMPHASIZE(string2, string1, NULL, 0, &regex);
+    regfree (&regex);
 }

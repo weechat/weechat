@@ -947,6 +947,8 @@ TEST(CoreString, Highlight)
     WEE_HAS_HL_REGEX(0, 1, "tested here", "test.*");
     WEE_HAS_HL_REGEX(0, 0, "this is a test", "teste.*");
     WEE_HAS_HL_REGEX(0, 0, "test here", "teste.*");
+    WEE_HAS_HL_REGEX(0, 1, "test here", "^test");
+    WEE_HAS_HL_REGEX(0, 0, "testtest", "^test");
 }
 
 /*
@@ -1019,6 +1021,7 @@ TEST(CoreString, ReplaceRegex)
                       "^(test +)(.*)", "$1/ $.*2", '$', NULL);
     WEE_REPLACE_REGEX(0, "%%%", "test foo",
                       "^(test +)(.*)", "$.%+", '$', NULL);
+    WEE_REPLACE_REGEX(0, "cb", "ab", "^(a|b)", "c", '$', NULL);
 }
 
 /*

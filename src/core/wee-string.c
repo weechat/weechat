@@ -1433,16 +1433,19 @@ string_has_highlight (const char *string, const char *highlight_words)
 int
 string_has_highlight_regex_compiled (const char *string, regex_t *regex)
 {
-    int rc, startswith, endswith;
+    int rc, start_offset, startswith, endswith;
     regmatch_t regex_match;
     const char *match_pre;
 
     if (!string || !regex)
         return 0;
 
+    start_offset = 0;
+
     while (string && string[0])
     {
-        rc = regexec (regex, string,  1, &regex_match, 0);
+        rc = regexec (regex, string,  1, &regex_match,
+                      (start_offset != 0) ? REG_NOTBOL : 0);
 
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
@@ -1468,6 +1471,7 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
             return 1;
 
         string += regex_match.rm_eo;
+        start_offset += regex_match.rm_eo;
     }
 
     /* no highlight found */
@@ -1785,7 +1789,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         }
 
         rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
-                      0);
+                      (start_offset != 0) ? REG_NOTBOL : 0);
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
          * at beginning of string: we consider there is no match, to prevent an

@@ -1563,7 +1563,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
             eval_regex.match[i].rm_so = -1;
         }
 
-        rc = regexec (regex, result + start_offset, 100, eval_regex.match, 0);
+        rc = regexec (regex, result + start_offset, 100, eval_regex.match,
+                      (start_offset != 0) ? REG_NOTBOL : 0);
 
         /* no match found: exit the loop */
         if ((rc != 0) || (eval_regex.match[0].rm_so < 0))
