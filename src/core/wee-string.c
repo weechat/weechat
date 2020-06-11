@@ -1433,19 +1433,19 @@ string_has_highlight (const char *string, const char *highlight_words)
 int
 string_has_highlight_regex_compiled (const char *string, regex_t *regex)
 {
-    int rc, start_offset, startswith, endswith;
+    int rc, startswith, endswith, notbol;
     regmatch_t regex_match;
     const char *match_pre;
 
     if (!string || !regex)
         return 0;
 
-    start_offset = 0;
+    notbol = 0;
 
     while (string && string[0])
     {
         rc = regexec (regex, string,  1, &regex_match,
-                      (start_offset != 0) ? REG_NOTBOL : 0);
+                      (notbol) ? REG_NOTBOL : 0);
 
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
@@ -1471,7 +1471,7 @@ string_has_highlight_regex_compiled (const char *string, regex_t *regex)
             return 1;
 
         string += regex_match.rm_eo;
-        start_offset += regex_match.rm_eo;
+        notbol += regex_match.rm_eo;
     }
 
     /* no highlight found */
@@ -1769,6 +1769,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
 {
     char *result, *result2, *str_replace;
     int length, length_replace, start_offset, i, rc, end, last_match;
+    int notbol;
     regmatch_t regex_match[100];
 
     if (!string || !regex)
@@ -1781,6 +1782,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
     snprintf (result, length, "%s", string);
 
     start_offset = 0;
+    notbol = 0;
     while (result && result[start_offset])
     {
         for (i = 0; i < 100; i++)
@@ -1789,7 +1791,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
         }
 
         rc = regexec ((regex_t *)regex, result + start_offset, 100, regex_match,
-                      (start_offset != 0) ? REG_NOTBOL : 0);
+                      (notbol) ? REG_NOTBOL : 0);
         /*
          * no match found: exit the loop (if rm_eo == 0, it is an empty match
          * at beginning of string: we consider there is no match, to prevent an
@@ -1853,6 +1855,7 @@ string_replace_regex (const char *string, void *regex, const char *replace,
             break;
 
         start_offset = regex_match[0].rm_so + length_replace;
+        notbol += regex_match[0].rm_eo;
     }
 
     return result;

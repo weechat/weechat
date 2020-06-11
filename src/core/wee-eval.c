@@ -1534,7 +1534,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 {
     char *result, *result2, *str_replace;
     int length, length_replace, start_offset, i, rc, end;
-    int empty_replace_allowed;
+    int empty_replace_allowed, notbol;
     struct t_eval_regex eval_regex;
 
     EVAL_DEBUG("eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
@@ -1552,6 +1552,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     eval_context->regex = &eval_regex;
 
     start_offset = 0;
+    notbol = 0;
 
     /* we allow one empty replace if input string is empty */
     empty_replace_allowed = (result[0]) ? 0 : 1;
@@ -1564,7 +1565,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         }
 
         rc = regexec (regex, result + start_offset, 100, eval_regex.match,
-                      (start_offset != 0) ? REG_NOTBOL : 0);
+                      (notbol) ? REG_NOTBOL : 0);
 
         /* no match found: exit the loop */
         if ((rc != 0) || (eval_regex.match[0].rm_so < 0))
@@ -1630,6 +1631,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
             break;
 
         start_offset = eval_regex.match[0].rm_so + length_replace;
+        notbol += eval_regex.match[0].rm_eo;
 
         if (!result[start_offset])
             break;
