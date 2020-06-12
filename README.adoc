@@ -112,6 +112,22 @@ They can be launched after compilation from the build directory:
 $ ctest -V
 ----
 
+=== Docker
+
+To optionally build WeeChat with docker:
+
+Build the container:
+
+----
+$ docker build . -t weechat
+----
+
+Run the container to launch WeeChat:
+
+----
+$ docker run -ti weechat
+----
+
 == Copyright
 
 Copyright (C) 2003-2020 Sébastien Helleu <flashcode@flashtux.org>
