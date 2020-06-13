@@ -6,7 +6,7 @@ index 48082f72f..f599e28b8 100644
 -12
 +10
 diff --git a/debian-devel/control b/debian-devel/control
-index a862fdd6c..82f60bba5 100644
+index bf94a36f1..ae29ae9ec 100644
 --- a/debian-devel/control
 +++ b/debian-devel/control
 @@ -4,7 +4,7 @@ Priority: optional
@@ -18,14 +18,13 @@ index a862fdd6c..82f60bba5 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,9 +13,9 @@ Build-Depends:
+@@ -13,8 +13,8 @@ Build-Depends:
      libaspell-dev,
      liblua5.3-dev,
      tcl8.6-dev,
 -    guile-2.2-dev,
-+    guile-2.0-dev,
-     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    guile-2.0-dev,
 +    php-dev, libphp-embed,
      libxml2-dev,
      libcurl4-gnutls-dev,
@@ -38,7 +37,7 @@ index 48082f72f..f599e28b8 100644
 -12
 +10
 diff --git a/debian-stable/control b/debian-stable/control
-index c0326b3f5..b0abc205a 100644
+index ccf81cac8..3e6563e42 100644
 --- a/debian-stable/control
 +++ b/debian-stable/control
 @@ -4,7 +4,7 @@ Priority: optional
@@ -50,14 +49,13 @@ index c0326b3f5..b0abc205a 100644
      cmake, pkg-config,
      libncursesw5-dev,
      gem2deb,
-@@ -13,9 +13,9 @@ Build-Depends:
+@@ -13,8 +13,8 @@ Build-Depends:
      libaspell-dev,
      liblua5.3-dev,
      tcl8.6-dev,
 -    guile-2.2-dev,
-+    guile-2.0-dev,
-     libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
 -    php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
++    guile-2.0-dev,
 +    php-dev, libphp-embed,
      libxml2-dev,
      libcurl4-gnutls-dev,

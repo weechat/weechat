@@ -229,7 +229,7 @@ CMake に対するオプションを指定するには、以下の書式を使�
 | ENABLE_IRC | `ON`, `OFF` | ON |
   <<irc_plugin,IRC プラグイン>>のコンパイル
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   <<scripts_plugins,JavaScript プラグイン>>のコンパイル。
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |

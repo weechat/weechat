@@ -159,7 +159,7 @@ AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plug
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(guile,        [  --disable-guile         turn off Guile (scheme) script plugin (default=compiled if found)],enable_guile=$enableval,enable_guile=yes)
-AC_ARG_ENABLE(javascript,   [  --disable-javascript    turn off JavaScript script plugin (default=compiled if found)],enable_javascript=$enableval,enable_javascript=yes)
+AC_ARG_ENABLE(javascript,   [  --enable-javascript     turn on JavaScript script plugin (default=off)],enable_javascript=$enableval,enable_javascript=no)
 AC_ARG_ENABLE(php,          [  --disable-php           turn off PHP script plugin (default=compiled if found)],enable_php=$enableval,enable_php=yes)
 AC_ARG_ENABLE(spell,        [  --disable-spell         turn off Spell checker plugin (default=compiled)],enable_spell=$enableval,enable_spell=yes)
 AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for Spell checker plugin (default=off)],enable_enchant=$enableval,enable_enchant=no)

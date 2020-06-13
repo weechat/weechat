@@ -229,7 +229,7 @@ Lista popularnych opcji:
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Kompilacja <<irc_plugin,wtyczki IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   Kompilacja <<scripts_plugins,wtyczki javascript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |

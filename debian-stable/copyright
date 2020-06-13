@@ -78,15 +78,6 @@ Copyright: 2005-2010, Emmanuel Bouthenot <kolter@openics.org>
            2012, Simon Arlott
 License: GPL-3+
 
-Files: src/plugins/javascript/weechat-js-api.cpp
-       src/plugins/javascript/weechat-js-api.h
-       src/plugins/javascript/weechat-js-v8.cpp
-       src/plugins/javascript/weechat-js-v8.h
-       src/plugins/javascript/weechat-js.cpp
-       src/plugins/javascript/weechat-js.h
-Copyright: 2013, Koka El Kiwi <kokakiwi@kokakiwi.net>
-License: GPL-3+
-
 Files: src/plugins/lua/weechat-lua-api.c
 Copyright: 2006-2007, Emmanuel Bouthenot <kolter@openics.org>
            2012, Simon Arlott

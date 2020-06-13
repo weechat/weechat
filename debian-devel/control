@@ -14,7 +14,6 @@ Build-Depends:
     liblua5.3-dev,
     tcl8.6-dev,
     guile-2.2-dev,
-    libv8-dev [amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386],
     php-dev, libphp-embed, libargon2-0-dev, libsodium-dev,
     libxml2-dev,
     libcurl4-gnutls-dev,
@@ -47,7 +46,7 @@ Description: Fast, light and extensible chat client (metapackage)
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
   - script manager
   - spell checking
   - highly customizable and extensible
@@ -77,7 +76,7 @@ Description: Fast, light and extensible chat client - console client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
   - script manager
   - spell checking
   - highly customizable and extensible
@@ -108,7 +107,7 @@ Description: Fast, light and extensible chat client - headless client
   - 256 colors support
   - incremental text search
   - dynamic filtering of buffer content
-  - Perl, Python, Ruby, Lua, Tcl, Scheme, JavaScript and PHP scripting
+  - Perl, Python, Ruby, Lua, Tcl, Scheme and PHP scripting
   - script manager
   - spell checking
   - highly customizable and extensible
@@ -232,19 +231,6 @@ Description: Fast, light and extensible chat client - Guile plugin
  for many operating systems. Everything can be done with a keyboard.
  .
  This package provides the Guile scripting API plugin.
-
-Package: weechat-devel-javascript
-Architecture: amd64 i386 armel armhf mips mipsel hurd-i386 kfreebsd-amd64 kfreebsd-i386
-Depends:
-    ${misc:Depends},
-    ${shlibs:Depends},
-    weechat-devel-curses (= ${binary:Version}) | weechat-devel-headless (= ${binary:Version})
-Conflicts: weechat-javascript
-Description: Fast, light and extensible chat client - JavaScript plugin
- WeeChat (Wee Enhanced Environment for Chat) is a fast and light chat client
- for many operating systems. Everything can be done with a keyboard.
- .
- This package provides the JavaScript scripting API plugin.
 
 Package: weechat-devel-php
 Architecture: any

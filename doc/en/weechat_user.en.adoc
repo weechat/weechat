@@ -222,7 +222,7 @@ List of commonly used options:
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Compile <<irc_plugin,IRC plugin>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   Compile <<scripts_plugins,JavaScript plugin>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |

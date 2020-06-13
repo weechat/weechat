@@ -228,7 +228,7 @@ Liste des options couramment utilisées :
 | ENABLE_IRC | `ON`, `OFF` | ON |
   Compiler <<irc_plugin,l'extension IRC>>.
 
-| ENABLE_JAVASCRIPT | `ON`, `OFF` | ON |
+| ENABLE_JAVASCRIPT | `ON`, `OFF` | OFF |
   Compiler <<scripts_plugins,l'extension JavaScript>>.
 
 | ENABLE_LARGEFILE | `ON`, `OFF` | ON |

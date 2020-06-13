@@ -89,6 +89,7 @@ Tests::
 
 Build::
 
+  * javascript: disable build by default and remove Debian packaging of JavaScript plugin (issue #360)
   * core: make GnuTLS a required dependency
   * core: fix build with CMake 3.17.0
   * core: fix build with cygport on Cygwin
