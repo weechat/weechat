@@ -339,9 +339,9 @@ IRC_PROTOCOL_CALLBACK(account)
 
     local_account = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
-    pos_account = (strcmp (argv[2], "*") != 0) ? argv[2] : NULL;
-    if (pos_account && pos_account[0] == ':')
-        pos_account++;
+    pos_account = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
+    if (strcmp (pos_account, "*") == 0)
+        pos_account = NULL;
 
     str_account[0] = '\0';
     if (pos_account)
