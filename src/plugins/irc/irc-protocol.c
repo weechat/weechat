@@ -324,7 +324,7 @@ irc_protocol_parse_time (const char *time)
  *
  * Message looks like:
  *   :nick!user@host ACCOUNT *
- *   :nick!user@host ACCOUNT accountname
+ *   :nick!user@host ACCOUNT :accountname
  */
 
 IRC_PROTOCOL_CALLBACK(account)
@@ -340,6 +340,8 @@ IRC_PROTOCOL_CALLBACK(account)
     local_account = (irc_server_strcasecmp (server, nick, server->nick) == 0);
 
     pos_account = (strcmp (argv[2], "*") != 0) ? argv[2] : NULL;
+    if (pos_account && pos_account[0] == ':')
+        pos_account++;
 
     str_account[0] = '\0';
     if (pos_account)
