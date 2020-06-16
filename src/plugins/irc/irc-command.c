@@ -3693,7 +3693,8 @@ IRC_COMMAND_CALLBACK(notice)
 IRC_COMMAND_CALLBACK(notify)
 {
     struct t_irc_notify *ptr_notify;
-    int i, check_away;
+    int i, check_away, num_nicks;
+    char **nicks;
 
     IRC_BUFFER_GET_SERVER(buffer);
 
@@ -3749,47 +3750,53 @@ IRC_COMMAND_CALLBACK(notify)
             }
         }
 
-        ptr_notify = irc_notify_search (ptr_server, argv[2]);
-        if (ptr_notify)
+        nicks = weechat_string_split (argv[2], ",", 0, 0, &num_nicks);
+
+        for (i = 0; i < num_nicks; i++)
         {
-            weechat_printf (
-                NULL,
-                _("%s%s: notify already exists"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME);
-            return WEECHAT_RC_OK;
+            ptr_notify = irc_notify_search (ptr_server, nicks[i]);
+            if (ptr_notify)
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: %s: notify already exists"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, nicks[i]);
+                continue;
+            }
+
+            if ((ptr_server->monitor > 0)
+                && (ptr_server->notify_count >= ptr_server->monitor))
+            {
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%sMonitor list is full (%d)"),
+                    weechat_prefix ("error"), ptr_server->monitor);
+                break;
+            }
+
+            ptr_notify = irc_notify_new (ptr_server, nicks[i], check_away);
+            if (ptr_notify)
+            {
+                irc_notify_set_server_option (ptr_server);
+                weechat_printf (
+                    ptr_server->buffer,
+                    _("%s: notification added for %s%s%s"),
+                    IRC_PLUGIN_NAME,
+                    irc_nick_color_for_msg (ptr_server, 1, NULL, ptr_notify->nick),
+                    ptr_notify->nick,
+                    weechat_color ("reset"));
+                irc_notify_check_now (ptr_notify);
+            }
+            else
+            {
+                weechat_printf (
+                    NULL,
+                    _("%s%s: %s: error adding notification"),
+                    weechat_prefix ("error"), IRC_PLUGIN_NAME, nicks[i]);
+            }
         }
 
-        if ((ptr_server->monitor > 0)
-            && (ptr_server->notify_count >= ptr_server->monitor))
-        {
-            weechat_printf (
-                ptr_server->buffer,
-                _("%sMonitor list is full (%d)"),
-                weechat_prefix ("error"), ptr_server->monitor);
-            return WEECHAT_RC_OK;
-        }
-
-        ptr_notify = irc_notify_new (ptr_server, argv[2], check_away);
-        if (ptr_notify)
-        {
-            irc_notify_set_server_option (ptr_server);
-            weechat_printf (
-                ptr_server->buffer,
-                _("%s: notification added for %s%s%s"),
-                IRC_PLUGIN_NAME,
-                irc_nick_color_for_msg (ptr_server, 1, NULL, ptr_notify->nick),
-                ptr_notify->nick,
-                weechat_color ("reset"));
-            irc_notify_check_now (ptr_notify);
-        }
-        else
-        {
-            weechat_printf (
-                NULL,
-                _("%s%s: error adding notification"),
-                weechat_prefix ("error"), IRC_PLUGIN_NAME);
-        }
-
+        weechat_string_free_split (nicks);
         return WEECHAT_RC_OK;
     }
 
@@ -3842,28 +3849,34 @@ IRC_COMMAND_CALLBACK(notify)
         }
         else
         {
-            ptr_notify = irc_notify_search (ptr_server, argv[2]);
-            if (ptr_notify)
+            nicks = weechat_string_split (argv[2], ",", 0, 0, &num_nicks);
+
+            for (i = 0; i < num_nicks; i++)
             {
-                weechat_printf (
-                    ptr_server->buffer,
-                    _("%s: notification deleted for %s%s%s"),
-                    IRC_PLUGIN_NAME,
-                    irc_nick_color_for_msg (ptr_server, 1, NULL,
-                                            ptr_notify->nick),
-                    ptr_notify->nick,
-                    weechat_color ("reset"));
-                irc_notify_free (ptr_server, ptr_notify, 1);
-                irc_notify_set_server_option (ptr_server);
+                ptr_notify = irc_notify_search (ptr_server, nicks[i]);
+                if (ptr_notify)
+                {
+                    weechat_printf (
+                        ptr_server->buffer,
+                        _("%s: notification deleted for %s%s%s"),
+                        IRC_PLUGIN_NAME,
+                        irc_nick_color_for_msg (ptr_server, 1, NULL,
+                                                ptr_notify->nick),
+                        ptr_notify->nick,
+                        weechat_color ("reset"));
+                    irc_notify_free (ptr_server, ptr_notify, 1);
+                    irc_notify_set_server_option (ptr_server);
+                }
+                else
+                {
+                    weechat_printf (
+                        NULL,
+                        _("%s%s: %s: notification not found"),
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, nicks[i]);
+                }
             }
-            else
-            {
-                weechat_printf (
-                    NULL,
-                    _("%s%s: notification not found"),
-                    weechat_prefix ("error"), IRC_PLUGIN_NAME);
-                return WEECHAT_RC_OK;
-            }
+
+            weechat_string_free_split (nicks);
         }
 
         return WEECHAT_RC_OK;
@@ -6847,8 +6860,8 @@ irc_command_init ()
     weechat_hook_command (
         "notify",
         N_("add a notification for presence or away status of nicks on servers"),
-        N_("add <nick> [<server> [-away]]"
-           " || del <nick>|-all [<server>]"),
+        N_("add <nick1>[,<nick2>...] [<server> [-away]]"
+           " || del <nick1>[,<nick2>...]|-all [<server>]"),
         N_("   add: add a notification\n"
            "  nick: nick\n"
            "server: internal server name (by default current server)\n"
@@ -6866,7 +6879,9 @@ irc_command_init ()
            "  notify when \"toto\" joins/quits freenode server:\n"
            "    /notify add toto freenode\n"
            "  notify when \"toto\" is away or back on freenode server:\n"
-           "    /notify add toto freenode -away"),
+           "    /notify add toto freenode -away\n"
+           "  notify when \"toto\" or \"gary\" join/quit current server:\n"
+           "    /notify add toto,gary\n"),
         "add %(irc_channel_nicks) %(irc_servers) -away %-"
         " || del -all|%(irc_notify_nicks) %(irc_servers) %-",
         &irc_command_notify, NULL, NULL);
