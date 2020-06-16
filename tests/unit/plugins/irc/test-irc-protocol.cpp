@@ -443,7 +443,13 @@ TEST(IrcProtocolWithServer, account_without_account_notify_cap)
     server_recv (":alice!user@host ACCOUNT *");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 
+    server_recv (":alice!user@host ACCOUNT :*");
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+
     server_recv (":alice!user@host ACCOUNT new_account");
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+
+    server_recv (":alice!user@host ACCOUNT :new_account");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
@@ -469,10 +475,16 @@ TEST(IrcProtocolWithServer, account_with_account_notify_cap)
     server_recv (":alice!user@host ACCOUNT new_account");
     STRCMP_EQUAL("new_account", ptr_nick->account);
 
-    server_recv (":alice!user@host ACCOUNT new_account2");
+    server_recv (":alice!user@host ACCOUNT :new_account2");
     STRCMP_EQUAL("new_account2", ptr_nick->account);
 
     server_recv (":alice!user@host ACCOUNT *");
+    POINTERS_EQUAL(NULL, ptr_nick->account);
+
+    server_recv (":alice!user@host ACCOUNT :new_account3");
+    STRCMP_EQUAL("new_account3", ptr_nick->account);
+
+    server_recv (":alice!user@host ACCOUNT :*");
     POINTERS_EQUAL(NULL, ptr_nick->account);
 }
 
