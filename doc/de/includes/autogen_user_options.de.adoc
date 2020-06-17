@@ -2005,7 +2005,7 @@
 ** Standardwert: `+default+`
 
 * [[option_irc.color.message_account]] *irc.color.message_account*
-** Beschreibung: pass:none[color for text in account messages]
+** Beschreibung: pass:none[Textfarbe für "account" Nachrichten]
 ** Typ: Farbe
 ** Werte: ein Farbname für WeeChat (default, black, (dark)gray, white, (light)red, (light)green, brown, yellow, (light)blue, (light)magenta, (light)cyan), eine Terminal-Farbnummer oder ein Alias; Attribute können vor eine Farbe gesetzt werden (gilt ausschließlich für die Textfarbe und nicht für den Hintergrund): "*" für fett, "!" für invertiert, "/" für kursiv, "_" für unterstrichen
 ** Standardwert: `+cyan+`
@@ -2371,7 +2371,7 @@
 ** Standardwert: `+on+`
 
 * [[option_irc.look.smart_filter_account]] *irc.look.smart_filter_account*
-** Beschreibung: pass:none[enable smart filter for "account" messages]
+** Beschreibung: pass:none[aktiviert einen intelligenten Filter für "account" Nachrichten]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
