@@ -78,6 +78,9 @@ irc_info_info_irc_is_channel_cb (const void *pointer, void *data,
     (void) data;
     (void) info_name;
 
+    if (!arguments || !arguments[0])
+        return NULL;
+
     ptr_server = NULL;
     pos_channel = arguments;
     pos_comma = strchr (arguments, ',');
