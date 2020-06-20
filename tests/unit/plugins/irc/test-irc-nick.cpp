@@ -108,6 +108,9 @@ TEST(IrcNick, IsNick)
     LONGS_EQUAL(0, irc_nick_is_nick (server, "nick!test"));
     LONGS_EQUAL(0, irc_nick_is_nick (server, "nick@test"));
 
+    /* invalid UTF-8 */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "no\xc3l"));
+
     /* valid nicks: UTF-8 */
     LONGS_EQUAL(1, irc_nick_is_nick (server, "noël"));
     LONGS_EQUAL(1, irc_nick_is_nick (server, "testé"));
