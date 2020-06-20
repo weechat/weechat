@@ -39,6 +39,7 @@ New features::
   * buflist: add default key kbd:[Alt+Shift+B] to toggle buflist
   * buflist: add options enable/disable/toggle in command /buflist
   * buflist: evaluate option buflist.look.sort so that sort can be customized for each of the three buflist bar items (issue #1465)
+  * irc: add support of UTF8MAPPING (issue #1528)
   * irc: display account messages in buffers (issue #1250)
   * relay: increase default limits for IRC backlog options
   * relay: add command "handshake" in weechat relay protocol and nonce to prevent replay attacks, add options relay.network.password_hash_algo, relay.network.password_hash_iterations, relay.network.nonce_size (issue #1474)
@@ -64,6 +65,7 @@ Bug fixes::
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
   * guile: enable again /guile eval (issue #1514)
+  * irc: add support of optional server in info "irc_is_nick", fix check of nick using UTF8MAPPING isupport value (issue #1528)
   * irc: fix add of ignore with flags in regex, display full ignore mask in list of ignores (issue #1518)
   * irc: do not remove spaces at the end of users messages received (issue #1513)
   * irc: fix realname delimiter color in WHO/WHOX response (issue #1497)

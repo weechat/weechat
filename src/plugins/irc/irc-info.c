@@ -108,6 +108,10 @@ irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
                               const char *info_name,
                               const char *arguments)
 {
+    char *pos_comma, *server;
+    const char *pos_nick;
+    struct t_irc_server *ptr_server;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -116,7 +120,21 @@ irc_info_info_irc_is_nick_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         return NULL;
 
-    return (irc_nick_is_nick (arguments)) ? strdup ("1") : NULL;
+    ptr_server = NULL;
+    pos_nick = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (pos_comma)
+    {
+        pos_nick = pos_comma + 1;
+        server = weechat_strndup (arguments, pos_comma - arguments);
+        if (server)
+        {
+            ptr_server = irc_server_search (server);
+            free (server);
+        }
+    }
+
+    return (irc_nick_is_nick (ptr_server, pos_nick)) ? strdup ("1") : NULL;
 }
 
 /*
@@ -1072,7 +1090,7 @@ irc_info_init ()
     weechat_hook_info (
         "irc_is_nick",
         N_("1 if string is a valid IRC nick name"),
-        N_("nickname"),
+        N_("server,nickname (server is optional)"),
         &irc_info_info_irc_is_nick_cb, NULL, NULL);
     weechat_hook_info (
         "irc_nick",

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5172,10 +5172,6 @@ msgstr ""
 msgid "%s%s: script \"%s\" not loaded"
 msgstr ""
 
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr ""
-
 msgid "server"
 msgid_plural "servers"
 msgstr[0] ""
@@ -7330,7 +7326,7 @@ msgstr ""
 msgid "1 if string is a valid IRC nick name"
 msgstr ""
 
-msgid "nickname"
+msgid "server,nickname (server is optional)"
 msgstr ""
 
 msgid "get current nick on a server"
@@ -7348,6 +7344,9 @@ msgstr ""
 msgid ""
 "get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
 "\")"
+msgstr ""
+
+msgid "nickname"
 msgstr ""
 
 msgid ""
@@ -8254,6 +8253,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
 msgstr ""
 
 #, c-format

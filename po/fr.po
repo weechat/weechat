@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
-"PO-Revision-Date: 2020-06-03 07:55+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"PO-Revision-Date: 2020-06-20 17:05+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: fr\n"
@@ -7454,10 +7454,6 @@ msgstr "%s : script \"%s\" déchargé"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s : script \"%s\" non chargé"
 
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sLa commande \"/%s eval\" n'est pas implémentée"
-
 msgid "server"
 msgid_plural "servers"
 msgstr[0] "serveur"
@@ -10425,8 +10421,8 @@ msgstr "serveur,canal (le serveur est optionnel)"
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 si la chaîne est un pseudo IRC valide"
 
-msgid "nickname"
-msgstr "pseudo"
+msgid "server,nickname (server is optional)"
+msgstr "serveur,pseudo (le serveur est optionnel)"
 
 msgid "get current nick on a server"
 msgstr "retourne le pseudo utilisé actuellement sur un serveur"
@@ -10446,6 +10442,9 @@ msgid ""
 msgstr ""
 "retourne le code couleur du pseudo (*obsolète* depuis la version 1.5, "
 "remplacé par \"nick_color\")"
+
+msgid "nickname"
+msgstr "pseudo"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -11410,6 +11409,10 @@ msgstr "%s%s : impossible de charger le fichier \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s : impossible d'exécuter le fichier \"%s\""
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sLa commande \"/%s eval\" n'est pas implémentée"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

@@ -22,6 +22,7 @@
 
 #define IRC_NICK_VALID_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHI"      \
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
+#define IRC_NICK_INVALID_CHARS " ,:\n\r*?.!@"
 
 /* nicklist group for nicks without prefix is "999|..." */
 #define IRC_NICK_GROUP_OTHER_NUMBER 999
@@ -47,7 +48,7 @@ struct t_irc_nick
 
 extern int irc_nick_valid (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
-extern int irc_nick_is_nick (const char *string);
+extern int irc_nick_is_nick (struct t_irc_server *server, const char *string);
 extern char *irc_nick_find_color (const char *nickname);
 extern char *irc_nick_find_color_name (const char *nickname);
 extern void irc_nick_set_host (struct t_irc_nick *nick, const char *host);

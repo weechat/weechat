@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6133,10 +6133,6 @@ msgstr "%s: skript \"%s\" odebrán"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skript \"%s\" nenačten"
 
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sBarva \"%s\" není definovávána v paletě"
-
 msgid "server"
 msgid_plural "servers"
 msgstr[0] "server"
@@ -8836,8 +8832,9 @@ msgstr "server,kanál (kanál je volitelný)"
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 pokud je řetězec validní jméno IRC přezdívky"
 
-msgid "nickname"
-msgstr "přezdívka"
+#, fuzzy
+msgid "server,nickname (server is optional)"
+msgstr "server,kanál (kanál je volitelný)"
 
 msgid "get current nick on a server"
 msgstr "získat aktuální přezdívku na serveru"
@@ -8855,6 +8852,9 @@ msgid ""
 "get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
 "\")"
 msgstr ""
+
+msgid "nickname"
+msgstr "přezdívka"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -9807,6 +9807,10 @@ msgstr "%s%s: nemůžu načíst soubor \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: nemůžu spustit soubor \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sBarva \"%s\" není definovávána v paletě"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

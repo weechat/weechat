@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7107,10 +7107,6 @@ msgstr "%s: スクリプト \"%s\" がアンロードされました"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: スクリプト \"%s\" はロードされていません"
 
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
-
 msgid "server"
 msgid_plural "servers"
 msgstr[0] "サーバ"
@@ -9958,8 +9954,9 @@ msgstr "サーバ、チャンネル (サーバは任意)"
 msgid "1 if string is a valid IRC nick name"
 msgstr "文字列が有効な IRC ニックネームなら 1"
 
-msgid "nickname"
-msgstr "ニックネーム"
+#, fuzzy
+msgid "server,nickname (server is optional)"
+msgstr "サーバ、チャンネル (サーバは任意)"
 
 msgid "get current nick on a server"
 msgstr "あるサーバの現在のニックネームを取得"
@@ -9979,6 +9976,9 @@ msgid ""
 msgstr ""
 "ニックネームの色コードを取得 (バージョン 1.5 で *廃止* されました。代わりに "
 "\"nick_color\" を使ってください)"
+
+msgid "nickname"
+msgstr "ニックネーム"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -10942,6 +10942,10 @@ msgstr "%s%s: ファイル \"%s\" をロードできません"
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: ファイル \"%s\" を実行できません"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sコマンド \"/%s eval\" はまだ実装されていません"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

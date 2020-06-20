@@ -124,6 +124,9 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
 { "rfc1459", "strict-rfc1459", "ascii" };
 
+char *irc_server_utf8mapping_string[IRC_SERVER_NUM_UTF8MAPPING] =
+{ "none", "rfc8265" };
+
 char *irc_server_prefix_modes_default = "ov";
 char *irc_server_prefix_chars_default = "@+";
 char *irc_server_chanmodes_default    = "beI,k,l";
@@ -248,8 +251,8 @@ irc_server_search_option (const char *option_name)
 /*
  * Searches for a casemapping.
  *
- * Returns index of casemapping in array "irc_server_casemapping_string", -1 if
- * not found.
+ * Returns index of casemapping in array "irc_server_casemapping_string",
+ * -1 if not found.
  */
 
 int
@@ -264,6 +267,28 @@ irc_server_search_casemapping (const char *casemapping)
     }
 
     /* casemapping not found */
+    return -1;
+}
+
+/*
+ * Searches for a utf8mapping.
+ *
+ * Returns index of utf8mapping in array "irc_server_utf8mapping_string",
+ * -1 if not found.
+ */
+
+int
+irc_server_search_utf8mapping (const char *utf8mapping)
+{
+    int i;
+
+    for (i = 0; i < IRC_SERVER_NUM_UTF8MAPPING; i++)
+    {
+        if (weechat_strcasecmp (irc_server_utf8mapping_string[i], utf8mapping) == 0)
+            return i;
+    }
+
+    /* utf8mapping not found */
     return -1;
 }
 
@@ -302,8 +327,8 @@ irc_server_strcasecmp (struct t_irc_server *server,
 }
 
 /*
- * Compares two strings on server (case insensitive, depends on casemapping) for
- * max chars.
+ * Compares two strings on server (case insensitive, depends on casemapping)
+ * for max chars.
  *
  * Returns:
  *   < 0: string1 < string2
@@ -1415,6 +1440,7 @@ irc_server_alloc (const char *name)
     new_server->user_max_length = 0;
     new_server->host_max_length = 0;
     new_server->casemapping = IRC_SERVER_CASEMAPPING_RFC1459;
+    new_server->utf8mapping = IRC_SERVER_UTF8MAPPING_NONE;
     new_server->chantypes = NULL;
     new_server->chanmodes = NULL;
     new_server->monitor = 0;
@@ -5743,6 +5769,7 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, user_max_length, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, host_max_length, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, casemapping, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, utf8mapping, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chantypes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, chanmodes, STRING, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, monitor, INTEGER, 0, NULL, NULL);
@@ -5989,6 +6016,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_integer (ptr_item, "casemapping", server->casemapping))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "casemapping_string", irc_server_casemapping_string[server->casemapping]))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "utf8mapping", server->utf8mapping))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "utf8mapping_string", irc_server_utf8mapping_string[server->utf8mapping]))
         return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "chantypes", server->chantypes))
         return 0;
@@ -6378,6 +6409,9 @@ irc_server_print_log ()
         weechat_log_printf ("  casemapping. . . . . : %d (%s)",
                             ptr_server->casemapping,
                             irc_server_casemapping_string[ptr_server->casemapping]);
+        weechat_log_printf ("  utf8mapping. . . . . : %d (%s)",
+                            ptr_server->utf8mapping,
+                            irc_server_utf8mapping_string[ptr_server->utf8mapping]);
         weechat_log_printf ("  chantypes. . . . . . : '%s'",  ptr_server->chantypes);
         weechat_log_printf ("  chanmodes. . . . . . : '%s'",  ptr_server->chanmodes);
         weechat_log_printf ("  monitor. . . . . . . : %d",    ptr_server->monitor);

@@ -62,31 +62,63 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
 }
 
 /*
- * Checks if string is a valid nick string (RFC 1459).
+ * Checks if string is a valid nick string, using server UTF8MAPPING.
  *
  * Returns:
- *   1: string is a valid nick
- *   0: string is not a valid nick
+ *   1: string is a valid nick on this server
+ *   0: string is not a valid nick on this server
  */
 
 int
-irc_nick_is_nick (const char *string)
+irc_nick_is_nick (struct t_irc_server *server, const char *string)
 {
-    const char *ptr;
+    const char *ptr_string;
+    int utf8mapping;
 
     if (!string || !string[0])
         return 0;
 
-    /* first char must not be a number or hyphen */
-    ptr = string;
-    if (strchr ("0123456789-", *ptr))
-        return 0;
+    utf8mapping = (server) ? server->utf8mapping : IRC_SERVER_UTF8MAPPING_NONE;
 
-    while (ptr && ptr[0])
+    /* check length of nick in bytes (if we have a limit in the server) */
+    if (server && (server->nick_max_length > 0)
+        && (int)strlen (string) > server->nick_max_length)
     {
-        if (!strchr (IRC_NICK_VALID_CHARS, *ptr))
+        /* nick is too long */
+        return 0;
+    }
+
+    /* check if nick is UTF-8 valid */
+    if ((utf8mapping == IRC_SERVER_UTF8MAPPING_RFC8265)
+        && !weechat_utf8_is_valid (string, -1, NULL))
+    {
+        /* invalid UTF-8 */
+        return 0;
+    }
+
+    /* check the first char in the nick */
+    if ((utf8mapping == IRC_SERVER_UTF8MAPPING_NONE)
+        && strchr ("0123456789-", string[0]))
+    {
+        /* first char is invalid */
+        return 0;
+    }
+
+    /* check if there are forbidden chars in nick */
+    ptr_string = string;
+    while (ptr_string && ptr_string[0])
+    {
+        if ((utf8mapping == IRC_SERVER_UTF8MAPPING_NONE)
+            && !strchr (IRC_NICK_VALID_CHARS, ptr_string[0]))
+        {
             return 0;
-        ptr++;
+        }
+        if ((utf8mapping == IRC_SERVER_UTF8MAPPING_RFC8265)
+            && strchr (IRC_NICK_INVALID_CHARS, ptr_string[0]))
+        {
+            return 0;
+        }
+        ptr_string = weechat_utf8_next_char (ptr_string);
     }
 
     return 1;

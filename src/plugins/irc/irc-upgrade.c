@@ -339,7 +339,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                      int object_id,
                      struct t_infolist *infolist)
 {
-    int flags, sock, size, i, index, nicks_count, num_items;
+    int flags, sock, size, i, index, nicks_count, num_items, utf8mapping;
     long number;
     time_t join_time;
     char *buf, option_name[64], **nicks, *nick_join, *pos, *error;
@@ -479,7 +479,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         irc_upgrade_current_server->prefix_chars = strdup (str);
                     }
                     irc_upgrade_current_server->nick_max_length = weechat_infolist_integer (infolist, "nick_max_length");
-                    /* "user_max_length" is new in WeeChat 2.6  */
+                    /* "user_max_length" is new in WeeChat 2.6 */
                     if (weechat_infolist_search_var (infolist, "user_max_length"))
                     {
                         irc_upgrade_current_server->user_max_length = weechat_infolist_integer (infolist, "user_max_length");
@@ -497,7 +497,7 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                                 irc_upgrade_current_server->user_max_length = (int)number;
                         }
                     }
-                    /* "host_max_length" is new in WeeChat 2.6  */
+                    /* "host_max_length" is new in WeeChat 2.6 */
                     if (weechat_infolist_search_var (infolist, "host_max_length"))
                     {
                         irc_upgrade_current_server->host_max_length = weechat_infolist_integer (infolist, "host_max_length");
@@ -516,6 +516,23 @@ irc_upgrade_read_cb (const void *pointer, void *data,
                         }
                     }
                     irc_upgrade_current_server->casemapping = weechat_infolist_integer (infolist, "casemapping");
+                    /* "utf8mapping" is new in WeeChat 2.9 */
+                    if (weechat_infolist_search_var (infolist, "utf8mapping"))
+                    {
+                        irc_upgrade_current_server->utf8mapping = weechat_infolist_integer (infolist, "utf8mapping");
+                    }
+                    else
+                    {
+                        /* WeeChat <= 2.8 */
+                        str = irc_server_get_isupport_value (irc_upgrade_current_server,
+                                                             "UTF8MAPPING");
+                        if (str)
+                        {
+                            utf8mapping = irc_server_search_utf8mapping (str);
+                            if (utf8mapping >= 0)
+                                irc_upgrade_current_server->utf8mapping = utf8mapping;
+                        }
+                    }
                     str = weechat_infolist_string (infolist, "chantypes");
                     if (str)
                         irc_upgrade_current_server->chantypes = strdup (str);

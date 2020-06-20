@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2020-04-18 11:34+0200\n"
 "Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6312,10 +6312,6 @@ msgstr "%s: script \"%s\" descarregado"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: script \"%s\" não carregado"
 
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sCor \"%s\" não está definida na palheta"
-
 msgid "server"
 msgid_plural "servers"
 msgstr[0] "servidor"
@@ -8658,8 +8654,9 @@ msgstr "servidor,canal (servidor é opcional)"
 msgid "1 if string is a valid IRC nick name"
 msgstr "1 se string é um apelido IRC válido"
 
-msgid "nickname"
-msgstr "apelido"
+#, fuzzy
+msgid "server,nickname (server is optional)"
+msgstr "servidor,canal (servidor é opcional)"
 
 msgid "get current nick on a server"
 msgstr "obter apelido atual em um servidor"
@@ -8677,6 +8674,9 @@ msgid ""
 "get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
 "\")"
 msgstr ""
+
+msgid "nickname"
+msgstr "apelido"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -9631,6 +9631,10 @@ msgstr "%s%s: não foi possível carregar arquivo \"%s\""
 #, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "%s%s: não foi possível executar arquivo \"%s\""
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sCor \"%s\" não está definida na palheta"
 
 #, fuzzy, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

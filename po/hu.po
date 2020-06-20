@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5665,10 +5665,6 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s a \"%s\" szerver nem található\n"
 
-#, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr ""
-
 #, fuzzy
 msgid "server"
 msgid_plural "servers"
@@ -8224,8 +8220,8 @@ msgid "1 if string is a valid IRC nick name"
 msgstr "felhasználók listája a szobában"
 
 #, fuzzy
-msgid "nickname"
-msgstr "[-all] név"
+msgid "server,nickname (server is optional)"
+msgstr "szoba: szoba neve"
 
 #, fuzzy
 msgid "get current nick on a server"
@@ -8246,6 +8242,10 @@ msgid ""
 "get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
 "\")"
 msgstr ""
+
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] név"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -9188,6 +9188,10 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr ""
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

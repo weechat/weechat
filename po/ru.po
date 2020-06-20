@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-03 07:54+0200\n"
+"POT-Creation-Date: 2020-06-20 17:04+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5702,10 +5702,6 @@ msgstr "Plugin \"%s\" выгружен.\n"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s сервер \"%s\" не найден\n"
 
-#, fuzzy, c-format
-msgid "%sCommand \"/%s eval\" is not yet implemented"
-msgstr "%sЦвет \"%s\" не определён в палитре"
-
 #, fuzzy
 msgid "server"
 msgid_plural "servers"
@@ -8260,8 +8256,8 @@ msgid "1 if string is a valid IRC nick name"
 msgstr "список ников на канале"
 
 #, fuzzy
-msgid "nickname"
-msgstr "[-all] ник"
+msgid "server,nickname (server is optional)"
+msgstr "канал: название канала"
 
 #, fuzzy
 msgid "get current nick on a server"
@@ -8282,6 +8278,10 @@ msgid ""
 "get nick color code (*deprecated* since version 1.5, replaced by \"nick_color"
 "\")"
 msgstr ""
+
+#, fuzzy
+msgid "nickname"
+msgstr "[-all] ник"
 
 msgid ""
 "get nick color name (*deprecated* since version 1.5, replaced by "
@@ -9225,6 +9225,10 @@ msgstr "Не могу записать лог-файл \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to execute file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sCommand \"/%s eval\" is not yet implemented"
+msgstr "%sЦвет \"%s\" не определён в палитре"
 
 #, c-format
 msgid "%s===\t%s========== End of backlog (%d lines) =========="

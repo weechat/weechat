@@ -142,6 +142,15 @@ enum t_irc_server_casemapping
     IRC_SERVER_NUM_CASEMAPPING,
 };
 
+/* utf8mapping (string comparisons for nicks/channels) */
+enum t_irc_server_utf8mapping
+{
+    IRC_SERVER_UTF8MAPPING_NONE = 0,
+    IRC_SERVER_UTF8MAPPING_RFC8265,
+    /* number of utf8mapping */
+    IRC_SERVER_NUM_UTF8MAPPING,
+};
+
 /* output queue of messages to server (for sending slowly to server) */
 
 struct t_irc_outqueue
@@ -210,6 +219,7 @@ struct t_irc_server
     int user_max_length;            /* max length of user (from msg 005)     */
     int host_max_length;            /* max length of host (from msg 005)     */
     int casemapping;                /* casemapping from msg 005              */
+    int utf8mapping;                /* utf8mapping from msg 005              */
     char *chantypes;                /* chantypes from msg 005 (eg "&#")      */
     char *chanmodes;                /* chanmodes from msg 005                */
                                     /* (eg "beI,k,l,imnpstaqr")              */
@@ -284,6 +294,7 @@ extern struct t_irc_server *irc_server_search (const char *server_name);
 extern struct t_irc_server *irc_server_casesearch (const char *server_name);
 extern int irc_server_search_option (const char *option_name);
 extern int irc_server_search_casemapping (const char *casemapping);
+extern int irc_server_search_utf8mapping (const char *utf8mapping);
 extern int irc_server_strcasecmp (struct t_irc_server *server,
                                   const char *string1, const char *string2);
 extern int irc_server_strncasecmp (struct t_irc_server *server,

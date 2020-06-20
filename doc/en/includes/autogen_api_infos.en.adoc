@@ -20,7 +20,7 @@
 
 | irc | irc_is_channel | 1 if string is a valid IRC channel name for server | server,channel (server is optional)
 
-| irc | irc_is_nick | 1 if string is a valid IRC nick name | nickname
+| irc | irc_is_nick | 1 if string is a valid IRC nick name | server,nickname (server is optional)
 
 | irc | irc_nick | get current nick on a server | server name
 

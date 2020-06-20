@@ -24,6 +24,7 @@
 extern "C"
 {
 #include "src/plugins/irc/irc-nick.h"
+#include "src/plugins/irc/irc-server.h"
 }
 
 TEST_GROUP(IrcNick)
@@ -47,24 +48,95 @@ TEST(IrcNick, Valid)
 
 TEST(IrcNick, IsNick)
 {
+    struct t_irc_server *server;
+
+    /* no server, default utf8mapping = none */
+
     /* empty nick */
-    LONGS_EQUAL(0, irc_nick_is_nick (NULL));
-    LONGS_EQUAL(0, irc_nick_is_nick (""));
-    LONGS_EQUAL(0, irc_nick_is_nick (" "));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, NULL));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, ""));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, " "));
 
     /* invalid first char */
-    LONGS_EQUAL(0, irc_nick_is_nick ("0abc"));
-    LONGS_EQUAL(0, irc_nick_is_nick ("9abc"));
-    LONGS_EQUAL(0, irc_nick_is_nick ("-abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "0abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "9abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "-abc"));
 
     /* invalid chars in nick */
-    LONGS_EQUAL(0, irc_nick_is_nick ("noël"));
-    LONGS_EQUAL(0, irc_nick_is_nick ("testé"));
-    LONGS_EQUAL(0, irc_nick_is_nick ("nick space"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick,test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick?test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick!test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick@test"));
+
+    /* UTF-8 wide chars in nick */
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "noël"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "testé"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "\xf0\xa4\xad\xa2"));  /* han char */
 
     /* valid nicks */
-    LONGS_EQUAL(1, irc_nick_is_nick ("tester"));
-    LONGS_EQUAL(1, irc_nick_is_nick ("bob"));
-    LONGS_EQUAL(1, irc_nick_is_nick ("alice"));
-    LONGS_EQUAL(1, irc_nick_is_nick ("very_long_nick_which_is_valid"));
+    LONGS_EQUAL(1, irc_nick_is_nick (NULL, "tester"));
+    LONGS_EQUAL(1, irc_nick_is_nick (NULL, "bob"));
+    LONGS_EQUAL(1, irc_nick_is_nick (NULL, "alice"));
+    LONGS_EQUAL(1, irc_nick_is_nick (NULL, "very_long_nick_which_is_valid"));
+
+    /* server with utf8mapping = rfc8265, nicklen = 20 */
+    server = irc_server_alloc ("my_ircd");
+    CHECK(server);
+    if (server->chantypes)
+        free (server->chantypes);
+    server->utf8mapping =IRC_SERVER_UTF8MAPPING_RFC8265;
+    server->nick_max_length = 20;
+
+    /* empty nick */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, NULL));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, ""));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, " "));
+
+    /* nick too long */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "long_nick___length_21"));
+
+    /* valid nicks: first char allowed with utf8mapping = rfc8265 */
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "0abc"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "9abc"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "-abc"));
+
+    /* invalid chars in nick */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "nick test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "nick,test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "nick?test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "nick!test"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "nick@test"));
+
+    /* valid nicks: UTF-8 */
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "noël"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "testé"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "\xf0\xa4\xad\xa2")); /* han char */
+
+    /* valid nicks with UTF-8 wide chars */
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "noël"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "testé"));
+
+    /* valid nicks */
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "tester"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "bob"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "alice"));
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "long_nick__length_20"));
+
+    /* max length: 4 bytes */
+    server->nick_max_length = 4;
+
+    /* invalid nick: 8 bytes */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "\xf0\xa4\xad\xa2\xf0\xa4\xad\xa2"));
+
+    /* valid nick: 4 bytes */
+    LONGS_EQUAL(1, irc_nick_is_nick (server, "\xf0\xa4\xad\xa2")); /* han char */
+
+    /* max length: 3 bytes */
+    server->nick_max_length = 3;
+
+    /* invalid nick: 4 bytes */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "\xf0\xa4\xad\xa2")); /* han char */
+
+    irc_server_free (server);
 }

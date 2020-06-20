@@ -3096,7 +3096,7 @@ IRC_PROTOCOL_CALLBACK(001)
 IRC_PROTOCOL_CALLBACK(005)
 {
     char *pos, *pos2, *pos_start, *error, *isupport2;
-    int length_isupport, length, casemapping;
+    int length_isupport, length, casemapping, utf8mapping;
     long value;
 
     IRC_PROTOCOL_MIN_ARGS(4);
@@ -3177,6 +3177,21 @@ IRC_PROTOCOL_CALLBACK(005)
         casemapping = irc_server_search_casemapping (pos);
         if (casemapping >= 0)
             server->casemapping = casemapping;
+        if (pos2)
+            pos2[0] = ' ';
+    }
+
+    /* save utf8mapping */
+    pos = strstr (argv_eol[3], "UTF8MAPPING=");
+    if (pos)
+    {
+        pos += 12;
+        pos2 = strchr (pos, ' ');
+        if (pos2)
+            pos2[0] = '\0';
+        utf8mapping = irc_server_search_utf8mapping (pos);
+        if (utf8mapping >= 0)
+            server->utf8mapping = utf8mapping;
         if (pos2)
             pos2[0] = ' ';
     }
