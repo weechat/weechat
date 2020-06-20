@@ -65,7 +65,8 @@ tests_SOURCES = tests.cpp \
 lib_LTLIBRARIES = lib_weechat_unit_tests_plugins.la
 
 if PLUGIN_IRC
-tests_irc = unit/plugins/irc/test-irc-color.cpp \
+tests_irc = unit/plugins/irc/test-irc-channel.cpp \
+            unit/plugins/irc/test-irc-color.cpp \
             unit/plugins/irc/test-irc-config.cpp \
             unit/plugins/irc/test-irc-ignore.cpp \
             unit/plugins/irc/test-irc-message.cpp \

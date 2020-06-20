@@ -85,7 +85,7 @@ Tests::
   * core: add CI with GitHub Actions, move codecov.io upload to GitHub Actions
   * core: switch to Ubuntu Bionic on Travis CI, use pylint3 to lint Python scripts
   * core: run tests on plugins only if the plugins are enabled and compiled
-  * irc: add tests on IRC color functions
+  * irc: add tests on IRC color and channel functions
 
 Build::
 

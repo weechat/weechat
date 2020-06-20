@@ -411,6 +411,7 @@ WeeChat "core" is located in following directories:
 |          test-gui-nick.cpp        | Tests: nicks.
 |       plugins/                    | Root of unit tests for plugins.
 |          irc/                     | Root of unit tests for IRC plugin.
+|             test-irc-channel.cpp  | Tests: IRC channels.
 |             test-irc-color.cpp    | Tests: IRC colors.
 |             test-irc-config.cpp   | Tests: IRC configuration.
 |             test-irc-ignore.cpp   | Tests: IRC ignores.
