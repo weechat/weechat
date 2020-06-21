@@ -3973,12 +3973,12 @@ weechat_guile_api_bar_new (SCM args)
 {
     SCM name, hidden, priority, type, conditions, position, filling_top_bottom;
     SCM filling_left_right, size, size_max, color_fg, color_delim, color_bg;
-    SCM separator, items;
+    SCM color_bg_inactive, separator, items;
     const char *result;
     SCM return_value;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
-    if (!scm_list_p (args) || (scm_to_int (scm_length (args)) != 15))
+    if (!scm_list_p (args) || (scm_to_int (scm_length (args)) != 16))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = scm_list_ref (args, scm_from_int (0));
@@ -3994,8 +3994,9 @@ weechat_guile_api_bar_new (SCM args)
     color_fg = scm_list_ref (args, scm_from_int (10));
     color_delim = scm_list_ref (args, scm_from_int (11));
     color_bg = scm_list_ref (args, scm_from_int (12));
-    separator = scm_list_ref (args, scm_from_int (13));
-    items = scm_list_ref (args, scm_from_int (14));
+    color_bg_inactive = scm_list_ref (args, scm_from_int (13));
+    separator = scm_list_ref (args, scm_from_int (14));
+    items = scm_list_ref (args, scm_from_int (15));
 
     if (!scm_is_string (name) || !scm_is_string (hidden)
         || !scm_is_string (priority) || !scm_is_string (type)
@@ -4003,25 +4004,28 @@ weechat_guile_api_bar_new (SCM args)
         || !scm_is_string (filling_top_bottom) || !scm_is_string (filling_left_right)
         || !scm_is_string (size) || !scm_is_string (size_max)
         || !scm_is_string (color_fg) || !scm_is_string (color_delim)
-        || !scm_is_string (color_bg) || !scm_is_string (separator)
-        || !scm_is_string (items))
+        || !scm_is_string (color_bg) || !scm_is_string (color_bg_inactive)
+        || !scm_is_string (separator) || !scm_is_string (items))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    result = API_PTR2STR(weechat_bar_new (API_SCM_TO_STRING(name),
-                                          API_SCM_TO_STRING(hidden),
-                                          API_SCM_TO_STRING(priority),
-                                          API_SCM_TO_STRING(type),
-                                          API_SCM_TO_STRING(conditions),
-                                          API_SCM_TO_STRING(position),
-                                          API_SCM_TO_STRING(filling_top_bottom),
-                                          API_SCM_TO_STRING(filling_left_right),
-                                          API_SCM_TO_STRING(size),
-                                          API_SCM_TO_STRING(size_max),
-                                          API_SCM_TO_STRING(color_fg),
-                                          API_SCM_TO_STRING(color_delim),
-                                          API_SCM_TO_STRING(color_bg),
-                                          API_SCM_TO_STRING(separator),
-                                          API_SCM_TO_STRING(items)));
+    result = API_PTR2STR(
+        weechat_bar_new (
+            API_SCM_TO_STRING(name),
+            API_SCM_TO_STRING(hidden),
+            API_SCM_TO_STRING(priority),
+            API_SCM_TO_STRING(type),
+            API_SCM_TO_STRING(conditions),
+            API_SCM_TO_STRING(position),
+            API_SCM_TO_STRING(filling_top_bottom),
+            API_SCM_TO_STRING(filling_left_right),
+            API_SCM_TO_STRING(size),
+            API_SCM_TO_STRING(size_max),
+            API_SCM_TO_STRING(color_fg),
+            API_SCM_TO_STRING(color_delim),
+            API_SCM_TO_STRING(color_bg),
+            API_SCM_TO_STRING(color_bg_inactive),
+            API_SCM_TO_STRING(separator),
+            API_SCM_TO_STRING(items)));
 
     API_RETURN_STRING(result);
 }

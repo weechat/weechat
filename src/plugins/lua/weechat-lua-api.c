@@ -4208,26 +4208,28 @@ API_FUNC(bar_new)
 {
     const char *name, *hidden, *priority, *type, *conditions, *position;
     const char *filling_top_bottom, *filling_left_right, *size, *size_max;
-    const char *color_fg, *color_delim, *color_bg, *separator, *items;
+    const char *color_fg, *color_delim, *color_bg, *color_bg_inactive;
+    const char *separator, *items;
     const char *result;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
-    if (lua_gettop (L) < 15)
+    if (lua_gettop (L) < 16)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
-    name = lua_tostring (L, -15);
-    hidden = lua_tostring (L, -14);
-    priority = lua_tostring (L, -13);
-    type = lua_tostring (L, -12);
-    conditions = lua_tostring (L, -11);
-    position = lua_tostring (L, -10);
-    filling_top_bottom = lua_tostring (L, -9);
-    filling_left_right = lua_tostring (L, -8);
-    size = lua_tostring (L, -7);
-    size_max = lua_tostring (L, -6);
-    color_fg = lua_tostring (L, -5);
-    color_delim = lua_tostring (L, -4);
-    color_bg = lua_tostring (L, -3);
+    name = lua_tostring (L, -16);
+    hidden = lua_tostring (L, -15);
+    priority = lua_tostring (L, -14);
+    type = lua_tostring (L, -13);
+    conditions = lua_tostring (L, -12);
+    position = lua_tostring (L, -11);
+    filling_top_bottom = lua_tostring (L, -10);
+    filling_left_right = lua_tostring (L, -9);
+    size = lua_tostring (L, -8);
+    size_max = lua_tostring (L, -7);
+    color_fg = lua_tostring (L, -6);
+    color_delim = lua_tostring (L, -5);
+    color_bg = lua_tostring (L, -4);
+    color_bg_inactive = lua_tostring (L, -3);
     separator = lua_tostring (L, -2);
     items = lua_tostring (L, -1);
 
@@ -4244,6 +4246,7 @@ API_FUNC(bar_new)
                                           color_fg,
                                           color_delim,
                                           color_bg,
+                                          color_bg_inactive,
                                           separator,
                                           items));
 

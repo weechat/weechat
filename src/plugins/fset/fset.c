@@ -93,7 +93,7 @@ fset_add_bar ()
         FSET_BAR_NAME, "off", "0", "window",
         "${buffer.full_name} == " FSET_PLUGIN_NAME "." FSET_BAR_NAME,
         "top", "horizontal", "vertical", "3", "3",
-        "default", "cyan", "default", "on",
+        "default", "cyan", "default", "default", "on",
         FSET_BAR_ITEM_NAME);
 }
 

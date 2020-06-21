@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"POT-Creation-Date: 2020-06-21 18:56+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -351,8 +351,8 @@ msgstr "幅"
 msgid "auto"
 msgstr "自動"
 
-#, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+#, fuzzy, c-format
+msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
 msgstr "    優先順位: %d, fg: %s, bg: %s, 要素: %s%s"
 
 msgid ", with separator"
@@ -5215,6 +5215,11 @@ msgstr "バーのデフォルト区切り色"
 
 msgid "default background color for bar"
 msgstr "バーのデフォルト背景色"
+
+msgid ""
+"background color for a bar with type \"window\" which is not displayed in "
+"the active window"
+msgstr ""
 
 msgid "separator line between bar and other bars/windows"
 msgstr "バーと他のバー/ウィンドウの間の区切り行"

@@ -59,7 +59,7 @@ buflist_add_bar ()
 {
     weechat_bar_new (BUFLIST_BAR_NAME, "off", "0", "root", "", "left",
                      "columns_vertical", "vertical", "0", "0",
-                     "default", "default", "default", "on",
+                     "default", "default", "default", "default", "on",
                      BUFLIST_BAR_ITEM_NAME);
 }
 

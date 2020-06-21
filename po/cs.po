@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"POT-Creation-Date: 2020-06-21 18:56+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -333,8 +333,8 @@ msgstr "šířka"
 msgid "auto"
 msgstr "auto"
 
-#, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+#, fuzzy, c-format
+msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
 msgstr "    priorita: %d, popředí: %s, pozadí: %s, položky: %s%s"
 
 msgid ", with separator"
@@ -4658,6 +4658,11 @@ msgstr "výchozí barva děličů pro pole"
 
 msgid "default background color for bar"
 msgstr "výchozí barva pozadí pro pole"
+
+msgid ""
+"background color for a bar with type \"window\" which is not displayed in "
+"the active window"
+msgstr ""
 
 msgid "separator line between bar and other bars/windows"
 msgstr "oddělovací řádek mezi polem a ostatními poli/okny"

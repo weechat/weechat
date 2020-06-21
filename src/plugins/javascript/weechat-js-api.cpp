@@ -3888,7 +3888,7 @@ API_FUNC(bar_new)
 {
     const char *result;
 
-    API_INIT_FUNC(1, "bar_new", "sssssssssssssss", API_RETURN_EMPTY);
+    API_INIT_FUNC(1, "bar_new", "ssssssssssssssss", API_RETURN_EMPTY);
 
     v8::String::Utf8Value name(args[0]);
     v8::String::Utf8Value hidden(args[1]);
@@ -3903,8 +3903,9 @@ API_FUNC(bar_new)
     v8::String::Utf8Value color_fg(args[10]);
     v8::String::Utf8Value color_delim(args[11]);
     v8::String::Utf8Value color_bg(args[12]);
-    v8::String::Utf8Value separator(args[13]);
-    v8::String::Utf8Value items(args[14]);
+    v8::String::Utf8Value color_bg_inactive(args[13]);
+    v8::String::Utf8Value separator(args[14]);
+    v8::String::Utf8Value items(args[15]);
 
     result = API_PTR2STR(weechat_bar_new (*name,
                                           *hidden,
@@ -3919,6 +3920,7 @@ API_FUNC(bar_new)
                                           *color_fg,
                                           *color_delim,
                                           *color_bg,
+                                          *color_bg_inactive,
                                           *separator,
                                           *items));
 

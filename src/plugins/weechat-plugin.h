@@ -67,7 +67,7 @@ struct timeval;
  * please change the date with current one; for a second change at same
  * date, increment the 01, otherwise please keep 01.
  */
-#define WEECHAT_PLUGIN_API_VERSION "20200508-01"
+#define WEECHAT_PLUGIN_API_VERSION "20200621-01"
 
 /* macros for defining plugin infos */
 #define WEECHAT_PLUGIN_NAME(__name)                                     \
@@ -995,6 +995,7 @@ struct t_weechat_plugin
                                   const char *color_fg,
                                   const char *color_delim,
                                   const char *color_bg,
+                                  const char *color_bg_inactive,
                                   const char *separator,
                                   const char *items);
     int (*bar_set) (struct t_gui_bar *bar, const char *property,
@@ -1933,13 +1934,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                         __condition, __position, __filling_top_bottom,  \
                         __filling_left_right, __size, __size_max,       \
                         __color_fg, __color_delim, __color_bg,          \
-                        __separator, __items)                           \
+                        __color_bg_inactive, __separator, __items)      \
     (weechat_plugin->bar_new)(__name, __hidden, __priority, __type,     \
                               __condition, __position,                  \
                               __filling_top_bottom,                     \
                               __filling_left_right,                     \
                               __size, __size_max, __color_fg,           \
-                              __color_delim, __color_bg, __separator,   \
+                              __color_delim, __color_bg,                \
+                              __color_bg_inactive, __separator,         \
                               __items)
 #define weechat_bar_set(__bar, __property, __value)                     \
     (weechat_plugin->bar_set)(__bar, __property, __value)

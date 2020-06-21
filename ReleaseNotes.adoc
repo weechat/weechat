@@ -20,6 +20,47 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v2.9]]
 == Version 2.9 (under dev)
 
+[[v2.9_bar_color_bg_inactive]]
+=== New background color for inactive bars
+
+A new option has been added in bar: _color_bg_inactive_. It is used for window
+bars, when the window is not the active window.
+
+By default this color is set to "default" for default bars, except for status
+and title: the color is set to "darkgray".
+
+If you upgrade from a previous release, the color will be "default" for all
+bars, so if you want to use the new default settings, you can do:
+
+----
+/set weechat.bar.title.color_bg_inactive darkgray
+/set weechat.bar.status.color_bg_inactive darkgray
+----
+
+If you changed the option _color_bg_ in some bars, you should also adjust
+the new option _color_bg_inactive_, depending on your needs.
+
+The function "bar_new" in API is updated, so this is an incompatible change:
+all plugins and scripts calling this function must be updated.
+
+The following scripts are updated consequently to be compatible with all
+WeeChat versions:
+
+* https://weechat.org/scripts/source/buddylist.pl/[buddylist.pl] 2.0
+* https://weechat.org/scripts/source/buffers.pl/[buffers.pl] 5.7
+* https://weechat.org/scripts/source/chanmon.pl/[chanmon.pl] 2.6
+* https://weechat.org/scripts/source/chanop.py/[chanop.py] 0.3.2
+* https://weechat.org/scripts/source/highmon.pl/[highmon.pl] 2.7
+* https://weechat.org/scripts/source/iset.pl/[iset.pl] 4.4
+* https://weechat.org/scripts/source/menu.pl/[menu.pl] 1.0
+* https://weechat.org/scripts/source/moc_control.py/[moc_control.py] 1.9
+* https://weechat.org/scripts/source/newsbar.pl/[newsbar.pl] 0.19
+* https://weechat.org/scripts/source/pv_info.pl/[pv_info.pl] 0.0.6
+* https://weechat.org/scripts/source/rssagg.pl/[rssagg.pl] 1.2
+* https://weechat.org/scripts/source/urlbar.py/[urlbar.py] 14
+* https://weechat.org/scripts/source/urlselect.lua/[urlselect.lua] 0.5
+* https://weechat.org/scripts/source/vimode.py/[vimode.py] 0.8
+
 [[v2.9_modifier_weechat_print]]
 === New modifier_data for modifier "weechat_print"
 

@@ -4493,12 +4493,12 @@ API_FUNC(bar_new)
     Tcl_Obj *objp;
     char *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
-    char *color_delim, *color_bg, *separator, *bar_items;
+    char *color_delim, *color_bg, *color_bg_inactive, *separator, *bar_items;
     const char *result;
     int i;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
-    if (objc < 16)
+    if (objc < 17)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = Tcl_GetStringFromObj (objv[1], &i);
@@ -4514,8 +4514,9 @@ API_FUNC(bar_new)
     color_fg = Tcl_GetStringFromObj (objv[11], &i);
     color_delim = Tcl_GetStringFromObj (objv[12], &i);
     color_bg = Tcl_GetStringFromObj (objv[13], &i);
-    separator = Tcl_GetStringFromObj (objv[14], &i);
-    bar_items = Tcl_GetStringFromObj (objv[15], &i);
+    color_bg_inactive = Tcl_GetStringFromObj (objv[14], &i);
+    separator = Tcl_GetStringFromObj (objv[15], &i);
+    bar_items = Tcl_GetStringFromObj (objv[16], &i);
 
     result = API_PTR2STR(weechat_bar_new (name,
                                           hidden,
@@ -4530,6 +4531,7 @@ API_FUNC(bar_new)
                                           color_fg,
                                           color_delim,
                                           color_bg,
+                                          color_bg_inactive,
                                           separator,
                                           bar_items));
 

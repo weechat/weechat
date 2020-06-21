@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"POT-Creation-Date: 2020-06-21 18:56+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -284,7 +284,7 @@ msgid "auto"
 msgstr ""
 
 #, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
 msgstr ""
 
 msgid ", with separator"
@@ -3828,6 +3828,11 @@ msgid "default delimiter color for bar"
 msgstr ""
 
 msgid "default background color for bar"
+msgstr ""
+
+msgid ""
+"background color for a bar with type \"window\" which is not displayed in "
+"the active window"
 msgstr ""
 
 msgid "separator line between bar and other bars/windows"

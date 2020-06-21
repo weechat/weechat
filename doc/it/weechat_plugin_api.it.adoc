@@ -15197,6 +15197,9 @@ bar = weechat.bar_search("mybar")
 
 ==== bar_new
 
+// TRANSLATION MISSING
+_Updated in 2.9._
+
 Crea una nuova barra.
 
 Prototipo:
@@ -15216,6 +15219,7 @@ struct t_gui_bar *weechat_bar_new (const char *name,
                                    const char *color_fg,
                                    const char *color_delim,
                                    const char *color_bg,
+                                   const char *color_bg_inactive,
                                    const char *separator,
                                    const char *items);
 ----
@@ -15263,6 +15267,9 @@ Argomenti:
 * _color_fg_: colore per il testo nella barra
 * _color_delim_: colore per i delimitatori nella barra
 * _color_bg_: colore di sfondo per la barra
+// TRANSLATION MISSING
+* _color_bg_inactive_: background color for window bar which is not displayed
+  in active window
 * _separator_:
 ** _on_: la barra ha una riga di separazione con altre finestre/barre
 ** _off_: nessun separatore
@@ -15290,6 +15297,7 @@ struct t_gui_bar *my_bar = weechat_bar_new ("mybar",
                                             "default",
                                             "cyan",
                                             "blue",
+                                            "darkgray",
                                             "off",
                                             "time,buffer_number+buffer_name");
 ----
@@ -15301,12 +15309,19 @@ Script (Python):
 # prototipo
 bar = weechat.bar_new(name, hidden, priority, type, condition, position,
     filling_top_bottom, filling_left_right, size, size_max,
-    color_fg, color_delim, color_bg, separator, items)
+    color_fg, color_delim, color_bg, color_bg_inactive, separator, items)
 
 # esempio
 bar = weechat.bar_new("mybar", "off", "100", "window", "", "top", "horizontal", "vertical",
-    "0", "5", "default", "cyan", "blue", "off", "time,buffer_number+buffer_name")
+    "0", "5", "default", "cyan", "blue", "darkgray", "off", "time,buffer_number+buffer_name")
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+With WeeChat ≥ 2.9, in Ruby, the 4 colors (color_fg, color_delim, color_bg,
+color_bg_inactive) must be given in an array of 4 strings (due to a Ruby
+limitation of 15 arguments by function), see the
+link:++weechat_scripting.en.html#_ruby++[WeeChat scripting guide] for more info.
 
 ==== bar_set
 

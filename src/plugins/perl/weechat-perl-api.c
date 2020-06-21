@@ -4130,12 +4130,12 @@ API_FUNC(bar_new)
 {
     char *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
-    char *color_delim, *color_bg, *separator, *bar_items;
+    char *color_delim, *color_bg, *color_bg_inactive, *separator, *bar_items;
     const char *result;
     dXSARGS;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
-    if (items < 15)
+    if (items < 16)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = SvPV_nolen (ST (0));
@@ -4151,8 +4151,9 @@ API_FUNC(bar_new)
     color_fg = SvPV_nolen (ST (10));
     color_delim = SvPV_nolen (ST (11));
     color_bg = SvPV_nolen (ST (12));
-    separator = SvPV_nolen (ST (13));
-    bar_items = SvPV_nolen (ST (14));
+    color_bg_inactive = SvPV_nolen (ST (13));
+    separator = SvPV_nolen (ST (14));
+    bar_items = SvPV_nolen (ST (15));
 
     result = API_PTR2STR(weechat_bar_new (name,
                                           hidden,
@@ -4167,6 +4168,7 @@ API_FUNC(bar_new)
                                           color_fg,
                                           color_delim,
                                           color_bg,
+                                          color_bg_inactive,
                                           separator,
                                           bar_items));
 

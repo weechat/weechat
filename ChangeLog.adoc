@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add bar option "color_bg_inactive": color for window bars in inactive window (issue #732)
   * core: add Alacritty title escape sequence support (issue #1517)
   * core: display notify level for current buffer with command /buffer notify (issue #1505)
   * core: count only visible nicks in bar item "buffer_nicklist_count", add bar items "buffer_nicklist_count_groups" and "buffer_nicklist_count_all" (issue #1506)

@@ -4145,7 +4145,8 @@ API_FUNC(bar_new)
 {
     char *name, *hidden, *priority, *type, *conditions, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max;
-    char *color_fg, *color_delim, *color_bg, *separator, *items;
+    char *color_fg, *color_delim, *color_bg, *color_bg_inactive, *separator;
+    char *items;
     const char *result;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
@@ -4162,12 +4163,14 @@ API_FUNC(bar_new)
     color_fg = NULL;
     color_delim = NULL;
     color_bg = NULL;
+    color_bg_inactive = NULL;
     separator = NULL;
     items = NULL;
-    if (!PyArg_ParseTuple (args, "sssssssssssssss", &name, &hidden, &priority,
+    if (!PyArg_ParseTuple (args, "ssssssssssssssss", &name, &hidden, &priority,
                            &type, &conditions, &position, &filling_top_bottom,
                            &filling_left_right, &size, &size_max, &color_fg,
-                           &color_delim, &color_bg, &separator, &items))
+                           &color_delim, &color_bg, &color_bg_inactive,
+                           &separator, &items))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     result = API_PTR2STR(weechat_bar_new (name,
@@ -4183,6 +4186,7 @@ API_FUNC(bar_new)
                                           color_fg,
                                           color_delim,
                                           color_bg,
+                                          color_bg_inactive,
                                           separator,
                                           items));
 

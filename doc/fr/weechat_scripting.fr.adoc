@@ -168,6 +168,16 @@ Weechat.config_new_option(config, section, "name", "string", "description of opt
                           "value", "value", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
 ----
 
+Et la fonction `+Weechat.bar_new+` reçoit les couleurs dans un tableau de 4
+chaînes de caractères (color_fg, color_delim, color_bg, color_bg_inactive),
+donc un appel à cette fonction ressemble à ceci :
+
+[source,ruby]
+----
+Weechat.bar_new("name", "off", "0", "window", "", "left", "vertical", "vertical", "0", "0",
+                ["default", "default", "default", "default"], "0", "items")
+----
+
 ==== Lua
 
 ===== Fonctions

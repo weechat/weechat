@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"POT-Creation-Date: 2020-06-21 18:56+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -326,8 +326,8 @@ msgstr "ancho"
 msgid "auto"
 msgstr "auto"
 
-#, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+#, fuzzy, c-format
+msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
 msgstr "    prioridad: %d, color: %s, fondo: %s, elementos: %s%s"
 
 msgid ", with separator"
@@ -4852,6 +4852,11 @@ msgstr "color por defecto para los delimitadores de la barra"
 
 msgid "default background color for bar"
 msgstr "color de fondo por defecto para la barra"
+
+msgid ""
+"background color for a bar with type \"window\" which is not displayed in "
+"the active window"
+msgstr ""
 
 msgid "separator line between bar and other bars/windows"
 msgstr "línea separadora entre la barra y otras barras/ventanas"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-06-20 17:04+0200\n"
+"POT-Creation-Date: 2020-06-21 18:56+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -319,7 +319,7 @@ msgid "auto"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "    priority: %d, fg: %s, bg: %s, items: %s%s"
+msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
 msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
 
 #, fuzzy
@@ -4213,6 +4213,11 @@ msgstr "információs pult szövegének színe"
 #, fuzzy
 msgid "default background color for bar"
 msgstr "információs pult szövegének színe"
+
+msgid ""
+"background color for a bar with type \"window\" which is not displayed in "
+"the active window"
+msgstr ""
 
 #, fuzzy
 msgid "separator line between bar and other bars/windows"

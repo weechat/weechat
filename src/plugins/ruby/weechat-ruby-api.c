@@ -4975,20 +4975,21 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
                           VALUE priority, VALUE type, VALUE conditions,
                           VALUE position, VALUE filling_top_bottom,
                           VALUE filling_left_right, VALUE size,
-                          VALUE size_max, VALUE color_fg, VALUE color_delim,
-                          VALUE color_bg, VALUE separator, VALUE items)
+                          VALUE size_max, VALUE colors, VALUE separator,
+                          VALUE items)
 {
     char *c_name, *c_hidden, *c_priority, *c_type, *c_conditions, *c_position;
     char *c_filling_top_bottom, *c_filling_left_right, *c_size, *c_size_max;
-    char *c_color_fg, *c_color_delim, *c_color_bg, *c_separator, *c_items;
+    char *c_color_fg, *c_color_delim, *c_color_bg, *c_color_bg_inactive;
+    char *c_separator, *c_items;
     const char *result;
+    VALUE color_fg, color_delim, color_bg, color_bg_inactive;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (NIL_P (name) || NIL_P (hidden) || NIL_P (priority) || NIL_P (type)
         || NIL_P (conditions) || NIL_P (position) || NIL_P (filling_top_bottom)
         || NIL_P (filling_left_right) || NIL_P (size) || NIL_P (size_max)
-        || NIL_P (color_fg) || NIL_P (color_delim) || NIL_P (color_bg)
-        || NIL_P (separator) || NIL_P (items))
+        || NIL_P (colors) || NIL_P (separator) || NIL_P (items))
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     Check_Type (name, T_STRING);
@@ -5001,11 +5002,21 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     Check_Type (filling_left_right, T_STRING);
     Check_Type (size, T_STRING);
     Check_Type (size_max, T_STRING);
-    Check_Type (color_fg, T_STRING);
-    Check_Type (color_delim, T_STRING);
-    Check_Type (color_bg, T_STRING);
+    Check_Type (colors, T_ARRAY);
     Check_Type (separator, T_STRING);
     Check_Type (items, T_STRING);
+
+    /*
+     * due to a Ruby limitation (15 arguments max by function), we receive the
+     * colors in an array of 4 strings (fg, delim, bg, bg_inactive)
+     */
+    if (RARRAY_LEN(colors) != 4)
+        API_WRONG_ARGS(API_RETURN_EMPTY);
+
+    color_fg = rb_ary_entry (colors, 0);
+    color_delim = rb_ary_entry (colors, 1);
+    color_bg = rb_ary_entry (colors, 2);
+    color_bg_inactive = rb_ary_entry (colors, 3);
 
     c_name = StringValuePtr (name);
     c_hidden = StringValuePtr (hidden);
@@ -5020,6 +5031,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
     c_color_fg = StringValuePtr (color_fg);
     c_color_delim = StringValuePtr (color_delim);
     c_color_bg = StringValuePtr (color_bg);
+    c_color_bg_inactive = StringValuePtr (color_bg_inactive);
     c_separator = StringValuePtr (separator);
     c_items = StringValuePtr (items);
 
@@ -5036,6 +5048,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
                                           c_color_fg,
                                           c_color_delim,
                                           c_color_bg,
+                                          c_color_bg_inactive,
                                           c_separator,
                                           c_items));
 
@@ -6544,7 +6557,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     API_DEF_FUNC(bar_item_update, 1);
     API_DEF_FUNC(bar_item_remove, 1);
     API_DEF_FUNC(bar_search, 1);
-    API_DEF_FUNC(bar_new, 15);
+    API_DEF_FUNC(bar_new, 13);
     API_DEF_FUNC(bar_set, 3);
     API_DEF_FUNC(bar_update, 1);
     API_DEF_FUNC(bar_remove, 1);

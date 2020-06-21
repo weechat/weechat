@@ -4117,19 +4117,19 @@ API_FUNC(bar_new)
     zend_string *z_name, *z_hidden, *z_priority, *z_type, *z_condition;
     zend_string *z_position, *z_filling_top_bottom, *z_filling_left_right;
     zend_string *z_size, *z_size_max, *z_color_fg, *z_color_delim, *z_color_bg;
-    zend_string *z_separator, *z_items;
+    zend_string *z_color_bg_inactive, *z_separator, *z_items;
     char *name, *hidden, *priority, *type, *condition, *position;
     char *filling_top_bottom, *filling_left_right, *size, *size_max, *color_fg;
-    char *color_delim, *color_bg, *separator, *items;
+    char *color_delim, *color_bg, *color_bg_inactive, *separator, *items;
     const char *result;
 
     API_INIT_FUNC(1, "bar_new", API_RETURN_EMPTY);
     if (zend_parse_parameters (
-            ZEND_NUM_ARGS(), "SSSSSSSSSSSSSSS", &z_name, &z_hidden,
+            ZEND_NUM_ARGS(), "SSSSSSSSSSSSSSSS", &z_name, &z_hidden,
             &z_priority, &z_type, &z_condition, &z_position,
             &z_filling_top_bottom, &z_filling_left_right, &z_size, &z_size_max,
-            &z_color_fg, &z_color_delim, &z_color_bg, &z_separator,
-            &z_items) == FAILURE)
+            &z_color_fg, &z_color_delim, &z_color_bg, &z_color_bg_inactive,
+            &z_separator, &z_items) == FAILURE)
         API_WRONG_ARGS(API_RETURN_EMPTY);
 
     name = ZSTR_VAL(z_name);
@@ -4145,6 +4145,7 @@ API_FUNC(bar_new)
     color_fg = ZSTR_VAL(z_color_fg);
     color_delim = ZSTR_VAL(z_color_delim);
     color_bg = ZSTR_VAL(z_color_bg);
+    color_bg_inactive = ZSTR_VAL(z_color_bg_inactive);
     separator = ZSTR_VAL(z_separator);
     items = ZSTR_VAL(z_items);
 
@@ -4163,6 +4164,7 @@ API_FUNC(bar_new)
             (const char *)color_fg,
             (const char *)color_delim,
             (const char *)color_bg,
+            (const char *)color_bg_inactive,
             (const char *)separator,
             (const char *)items));
 

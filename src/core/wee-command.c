@@ -137,10 +137,11 @@ command_bar_list (int full)
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_SIZE]) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
-                                 _("    priority: %d, fg: %s, bg: %s, items: %s%s"),
+                                 _("    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"),
                                  CONFIG_INTEGER(ptr_bar->options[GUI_BAR_OPTION_PRIORITY]),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_FG])),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG])),
+                                 gui_color_get_name (CONFIG_COLOR(ptr_bar->options[GUI_BAR_OPTION_COLOR_BG_INACTIVE])),
                                  (CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS])
                                   && CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS])[0]) ?
                                  CONFIG_STRING(ptr_bar->options[GUI_BAR_OPTION_ITEMS]) : "-",
@@ -275,12 +276,23 @@ COMMAND_CALLBACK(bar)
         if (error && !error[0])
         {
             /* create bar */
-            if (gui_bar_new (argv[2], "0", "0", str_type,
-                             (pos_condition) ? pos_condition : "",
-                             argv[4],
-                             "horizontal", "vertical",
-                             argv[5], "0", "default", "default", "default",
-                             argv[6], argv_eol[7]))
+            if (gui_bar_new (
+                    argv[2],       /* nane */
+                    "0",           /* hidden */
+                    "0",           /* priority */
+                    str_type,      /* type */
+                    (pos_condition) ? pos_condition : "",  /* conditions */
+                    argv[4],       /* position */
+                    "horizontal",  /* filling_top_bottom */
+                    "vertical",    /* filling_left_right */
+                    argv[5],       /* size */
+                    "0",           /* size_max */
+                    "default",     /* color fg */
+                    "default",     /* color delim */
+                    "default",     /* color bg */
+                    "default",     /* color bg inactive */
+                    argv[6],       /* separators */
+                    argv_eol[7]))  /* items */
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
                                  argv[2]);
