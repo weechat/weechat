@@ -40,6 +40,10 @@
 #include "irc-input.h"
 
 
+/* default CHANTYPES */
+char *irc_channel_default_chantypes = "#&";
+
+
 /*
  * Checks if a channel pointer is valid for a server.
  *
@@ -671,7 +675,7 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
     first_char[1] = '\0';
     return (strpbrk (first_char,
                      (server && server->chantypes) ?
-                     server->chantypes : IRC_CHANNEL_DEFAULT_CHANTYPES)) ?
+                     server->chantypes : irc_channel_default_chantypes)) ?
         1 : 0;
 }
 

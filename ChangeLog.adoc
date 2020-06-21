@@ -65,6 +65,7 @@ Bug fixes::
   * exec: fix use of same task id for different tasks (issue #1491)
   * fifo: fix errors when writing in the FIFO pipe (issue #713)
   * guile: enable again /guile eval (issue #1514)
+  * irc: use new default chantypes "#&" when the server does not send it
   * irc: add support of optional server in info "irc_is_nick", fix check of nick using UTF8MAPPING isupport value (issue #1528)
   * irc: fix add of ignore with flags in regex, display full ignore mask in list of ignores (issue #1518)
   * irc: do not remove spaces at the end of users messages received (issue #1513)

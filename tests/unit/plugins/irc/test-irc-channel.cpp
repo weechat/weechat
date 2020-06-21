@@ -67,10 +67,6 @@ TEST(IrcChannel, IsChannel)
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "##abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "&abc"));
     LONGS_EQUAL(1, irc_channel_is_channel (NULL, "&&abc"));
-    LONGS_EQUAL(1, irc_channel_is_channel (NULL, "+abc"));
-    LONGS_EQUAL(1, irc_channel_is_channel (NULL, "++abc"));
-    LONGS_EQUAL(1, irc_channel_is_channel (NULL, "!abc"));
-    LONGS_EQUAL(1, irc_channel_is_channel (NULL, "!!abc"));
 
     /* server with chantypes = "#" */
     server = irc_server_alloc ("my_ircd");

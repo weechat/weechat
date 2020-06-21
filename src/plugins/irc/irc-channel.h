@@ -22,8 +22,6 @@
 
 #include <time.h>
 
-#define IRC_CHANNEL_DEFAULT_CHANTYPES "#&+!"
-
 /* channel types */
 #define IRC_CHANNEL_TYPE_UNKNOWN  -1
 #define IRC_CHANNEL_TYPE_CHANNEL  0
@@ -80,6 +78,8 @@ struct t_irc_channel
     struct t_irc_channel *prev_channel; /* link to previous channel         */
     struct t_irc_channel *next_channel; /* link to next channel             */
 };
+
+extern char *irc_channel_default_chantypes;
 
 extern int irc_channel_valid (struct t_irc_server *server,
                               struct t_irc_channel *channel);
