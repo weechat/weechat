@@ -282,6 +282,9 @@ enum t_irc_fingerprint_digest_algo
     IRC_FINGERPRINT_NUM_ALGOS,
 };
 
+extern char *irc_server_prefix_modes_default;
+extern char *irc_server_prefix_chars_default;
+extern char *irc_server_chanmodes_default;
 extern struct t_irc_server *irc_servers;
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];

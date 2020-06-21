@@ -72,13 +72,17 @@ irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
 int
 irc_nick_is_nick (struct t_irc_server *server, const char *string)
 {
-    const char *ptr_string;
+    const char *ptr_string, *ptr_prefix_chars, *ptr_chantypes;
     int utf8mapping;
 
     if (!string || !string[0])
         return 0;
 
     utf8mapping = (server) ? server->utf8mapping : IRC_SERVER_UTF8MAPPING_NONE;
+    ptr_prefix_chars = (server && server->prefix_chars) ?
+        server->prefix_chars : irc_server_prefix_chars_default;
+    ptr_chantypes = (server && server->chantypes) ?
+        server->chantypes : irc_channel_default_chantypes;
 
     /* check length of nick in bytes (if we have a limit in the server) */
     if (server && (server->nick_max_length > 0)
@@ -103,18 +107,23 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
         /* first char is invalid */
         return 0;
     }
+    if (strchr (ptr_prefix_chars, string[0])
+        || strchr (ptr_chantypes, string[0]))
+    {
+        return 0;
+    }
 
     /* check if there are forbidden chars in nick */
     ptr_string = string;
     while (ptr_string && ptr_string[0])
     {
         if ((utf8mapping == IRC_SERVER_UTF8MAPPING_NONE)
-            && !strchr (IRC_NICK_VALID_CHARS, ptr_string[0]))
+            && !strchr (IRC_NICK_VALID_CHARS_RFC1459, ptr_string[0]))
         {
             return 0;
         }
         if ((utf8mapping == IRC_SERVER_UTF8MAPPING_RFC8265)
-            && strchr (IRC_NICK_INVALID_CHARS, ptr_string[0]))
+            && strchr (IRC_NICK_INVALID_CHARS_RFC8265, ptr_string[0]))
         {
             return 0;
         }

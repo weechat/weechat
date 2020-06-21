@@ -20,9 +20,9 @@
 #ifndef WEECHAT_PLUGIN_IRC_NICK_H
 #define WEECHAT_PLUGIN_IRC_NICK_H
 
-#define IRC_NICK_VALID_CHARS "abcdefghijklmnopqrstuvwxyzABCDEFGHI"      \
+#define IRC_NICK_VALID_CHARS_RFC1459 "abcdefghijklmnopqrstuvwxyzABCDEFGHI" \
     "JKLMNOPQRSTUVWXYZ0123456789-[]\\`_^{|}"
-#define IRC_NICK_INVALID_CHARS " ,:\n\r*?.!@"
+#define IRC_NICK_INVALID_CHARS_RFC8265 " ,:\n\r*?.!@"
 
 /* nicklist group for nicks without prefix is "999|..." */
 #define IRC_NICK_GROUP_OTHER_NUMBER 999

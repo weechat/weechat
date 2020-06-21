@@ -23,6 +23,7 @@
 
 extern "C"
 {
+#include <string.h>
 #include "src/plugins/irc/irc-nick.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -57,10 +58,18 @@ TEST(IrcNick, IsNick)
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, ""));
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, " "));
 
-    /* invalid first char */
+    /* invalid first char (rfc1459) */
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, "0abc"));
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, "9abc"));
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, "-abc"));
+
+    /* invalid first char: prefix char */
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "@abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "+abc"));
+
+    /* invalid first char: chantypes */
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "#abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (NULL, "&abc"));
 
     /* invalid chars in nick */
     LONGS_EQUAL(0, irc_nick_is_nick (NULL, "nick test"));
@@ -80,13 +89,23 @@ TEST(IrcNick, IsNick)
     LONGS_EQUAL(1, irc_nick_is_nick (NULL, "alice"));
     LONGS_EQUAL(1, irc_nick_is_nick (NULL, "very_long_nick_which_is_valid"));
 
-    /* server with utf8mapping = rfc8265, nicklen = 20 */
+    /*
+     * server with:
+     *   utf8mapping = rfc8265
+     *   nicklen = 20
+     *   prefix = (qaohv)~&@%+
+     *   chantypes = #
+     */
     server = irc_server_alloc ("my_ircd");
     CHECK(server);
     if (server->chantypes)
         free (server->chantypes);
-    server->utf8mapping =IRC_SERVER_UTF8MAPPING_RFC8265;
+    server->utf8mapping = IRC_SERVER_UTF8MAPPING_RFC8265;
     server->nick_max_length = 20;
+    irc_server_set_prefix_modes_chars (server, "(qaohv)~&@%+");
+    if (server->chantypes)
+        free (server->chantypes);
+    server->chantypes = strdup ("#");
 
     /* empty nick */
     LONGS_EQUAL(0, irc_nick_is_nick (server, NULL));
@@ -100,6 +119,16 @@ TEST(IrcNick, IsNick)
     LONGS_EQUAL(1, irc_nick_is_nick (server, "0abc"));
     LONGS_EQUAL(1, irc_nick_is_nick (server, "9abc"));
     LONGS_EQUAL(1, irc_nick_is_nick (server, "-abc"));
+
+    /* invalid first char: prefix char */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "~abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "&abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "@abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "%abc"));
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "+abc"));
+
+    /* invalid first char: chantypes */
+    LONGS_EQUAL(0, irc_nick_is_nick (server, "#abc"));
 
     /* invalid chars in nick */
     LONGS_EQUAL(0, irc_nick_is_nick (server, "nick test"));
