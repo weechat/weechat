@@ -2030,15 +2030,16 @@ Données envoyées dans le hdata :
 
 [width="100%",cols="3m,2,10",options="header"]
 |===
-| Nom             | Type               | Description
-| buffer          | pointeur           | Pointeur vers le tampon.
-| date            | date/heure         | Date du message.
-| date_printed    | date/heure         | Date d'affichage du message.
-| displayed       | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
-| highlight       | caractère          | 1 si la ligne a un highlight, sinon 0.
-| tags_array      | tableau de chaînes | Liste des étiquettes de la ligne.
-| prefix          | chaîne             | Préfixe.
-| message         | chaîne             | Message.
+| Nom          | Type               | Description
+| buffer       | pointeur           | Pointeur vers le tampon.
+| date         | date/heure         | Date du message.
+| date_printed | date/heure         | Date d'affichage du message.
+| displayed    | caractère          | 1 si le message est affiché, 0 si le message est filtré (caché).
+| notify_level | caractère          | Niveau de notification : -1 = notification désactivée, 0 = bas, 1 = message, 2 = privé, 3 = highlight.
+| highlight    | caractère          | 1 si la ligne a un highlight, sinon 0.
+| tags_array   | tableau de chaînes | Liste des étiquettes de la ligne.
+| prefix       | chaîne             | Préfixe.
+| message      | chaîne             | Message.
 |===
 
 Exemple : nouveau message _hello!_ du pseudo _FlashCode_ sur le tampon
@@ -2053,6 +2054,7 @@ hda:
         'date': 'tim',
         'date_printed': 'tim',
         'displayed': 'chr',
+        'notify_level': 'chr',
         'highlight': 'chr',
         'tags_array': 'arr',
         'prefix': 'str',
@@ -2065,6 +2067,7 @@ hda:
         date: 1362728993
         date_printed: 1362728993
         displayed: 1
+        notify_level: 1
         highlight: 0
         tags_array: [
             'irc_privmsg',

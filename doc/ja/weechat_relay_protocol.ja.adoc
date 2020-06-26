@@ -2034,6 +2034,8 @@ hdata として送られるデータ:
 | date         | time             | メッセージの日付
 | date_printed | time             | WeeChat メッセージを表示した日付
 | displayed    | char             | メッセージが表示される場合は 1、メッセージがフィルタされる (隠される) 場合は 0
+// TRANSLATION MISSING
+| notify_level | char             | Notify level: -1 = notify disabled, 0 = low, 1 = message, 2 = private, 3 = highlight.
 | highlight    | char             | 行がハイライト部分を含む場合は 1、それ以外は 0
 | tags_array   | string の配列    | 行に対するタグのリスト
 | prefix       | string           | プレフィックス
@@ -2051,6 +2053,7 @@ hda:
         'date': 'tim',
         'date_printed': 'tim',
         'displayed': 'chr',
+        'notify_level': 'chr',
         'highlight': 'chr',
         'tags_array': 'arr',
         'prefix': 'str',
@@ -2063,6 +2066,7 @@ hda:
         date: 1362728993
         date_printed: 1362728993
         displayed: 1
+        notify_level: 1
         highlight: 0
         tags_array: [
             'irc_privmsg',
