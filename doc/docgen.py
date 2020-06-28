@@ -353,10 +353,10 @@ class WeechatDoc():  # pylint: disable=too-few-public-methods
                 string = weechat.hdata_get_string(ptr_hdata, 'list_keys')
                 if string:
                     list_lists = string.split(',')
-                    lists_std = [l for l in list_lists
-                                 if not l.startswith('last_')]
-                    lists_last = [l for l in list_lists
-                                  if l.startswith('last_')]
+                    lists_std = [lst for lst in list_lists
+                                 if not lst.startswith('last_')]
+                    lists_last = [lst for lst in list_lists
+                                  if lst.startswith('last_')]
                     for item in sorted(lists_std) + sorted(lists_last):
                         lists += f'_{item}_ +\n'
                 hdata[plugin][hdata_name]['lists'] = lists
@@ -635,7 +635,7 @@ class AutogenDoc():
     def _write_user_default_aliases(self, default_aliases):
         """Write default aliases."""
         self.write()
-        self.write(f'// tag::default_aliases[]')
+        self.write('// tag::default_aliases[]')
         self.write('[width="100%",cols="2m,5m,5",options="header"]')
         self.write('|===')
         self.write('| %s | %s | %s\n',
@@ -646,12 +646,12 @@ class AutogenDoc():
                        escape(alias['command']),
                        escape(alias['completion'] or '-'))
         self.write('|===')
-        self.write(f'// end::default_aliases[]')
+        self.write('// end::default_aliases[]')
 
     def _write_user_irc_colors(self, irc_colors):
         """Write IRC colors."""
         self.write()
-        self.write(f'// tag::irc_colors[]')
+        self.write('// tag::irc_colors[]')
         self.write('[width="50%",cols="^2m,3",options="header"]')
         self.write('|===')
         self.write('| %s | %s\n', _('IRC color'), _('WeeChat color'))
@@ -660,12 +660,12 @@ class AutogenDoc():
                        escape(color['color_irc']),
                        escape(color['color_weechat']))
         self.write('|===')
-        self.write(f'// end::irc_colors[]')
+        self.write('// end::irc_colors[]')
 
     def _write_api_infos(self, infos):
         """Write infos."""
         self.write()
-        self.write(f'// tag::infos[]')
+        self.write('// tag::infos[]')
         self.write('[width="100%",cols="^1,^2,6,6",options="header"]')
         self.write('|===')
         self.write('| %s | %s | %s | %s\n',
@@ -679,12 +679,12 @@ class AutogenDoc():
                            escape(plugin), escape(info), escape(desc),
                            escape(args_desc))
         self.write('|===')
-        self.write(f'// end::infos[]')
+        self.write('// end::infos[]')
 
     def _write_api_infos_hashtable(self, infos_hashtable):
         """Write infos hashtable."""
         self.write()
-        self.write(f'// tag::infos_hashtable[]')
+        self.write('// tag::infos_hashtable[]')
         self.write('[width="100%",cols="^1,^2,6,6,8",options="header"]')
         self.write('|===')
         self.write('| %s | %s | %s | %s | %s\n',
@@ -700,12 +700,12 @@ class AutogenDoc():
                            escape(plugin), escape(info), escape(desc),
                            escape(args_desc), escape(output_desc))
         self.write('|===')
-        self.write(f'// end::infos_hashtable[]')
+        self.write('// end::infos_hashtable[]')
 
     def _write_api_infolists(self, infolists):
         """Write infolists."""
         self.write()
-        self.write(f'// tag::infolists[]')
+        self.write('// tag::infolists[]')
         self.write('[width="100%",cols="^1,^2,5,5,5",options="header"]')
         self.write('|===')
         self.write('| %s | %s | %s | %s | %s\n',
@@ -721,12 +721,12 @@ class AutogenDoc():
                            escape(plugin), escape(infolist), escape(desc),
                            escape(pointer_desc), escape(args_desc))
         self.write('|===')
-        self.write(f'// end::infolists[]')
+        self.write('// end::infolists[]')
 
     def _write_api_hdata(self, hdata):
         """Write hdata."""
         self.write()
-        self.write(f'// tag::hdata[]')
+        self.write('// tag::hdata[]')
         self.write(':hdata_update_create: __create')
         self.write(':hdata_update_delete: __delete')
         self.write('[width="100%",cols="^1,^2,2,2,5",options="header"]')
@@ -754,12 +754,12 @@ class AutogenDoc():
                                _('Update allowed:'), escape(vars_update))
                 self.write()
         self.write('|===')
-        self.write(f'// end::hdata[]')
+        self.write('// end::hdata[]')
 
     def _write_api_completions(self, completions):
         """Write completions."""
         self.write()
-        self.write(f'// tag::completions[]')
+        self.write('// tag::completions[]')
         self.write('[width="100%",cols="^1,^2,7",options="header"]')
         self.write('|===')
         self.write('| %s | %s | %s\n',
@@ -772,12 +772,12 @@ class AutogenDoc():
                            escape(plugin), escape(completion_item),
                            escape(desc))
         self.write('|===')
-        self.write(f'// end::completions[]')
+        self.write('// end::completions[]')
 
     def _write_api_url_options(self, url_options):
         """Write URL options."""
         self.write()
-        self.write(f'// tag::url_options[]')
+        self.write('// tag::url_options[]')
         self.write('[width="100%",cols="2,^1,7",options="header"]')
         self.write('|===')
         self.write('| %s | %s ^(1)^ | %s ^(2)^\n',
@@ -790,16 +790,16 @@ class AutogenDoc():
                        escape(option['name']), escape(option['type']),
                        escape(constants))
         self.write('|===')
-        self.write(f'// end::url_options[]')
+        self.write('// end::url_options[]')
 
     def _write_api_plugins_priority(self, plugins_priority):
         """Write plugins priority."""
         self.write()
-        self.write(f'// tag::plugins_priority[]')
+        self.write('// tag::plugins_priority[]')
         for priority in sorted(plugins_priority, reverse=True):
             plugins = ', '.join(sorted(plugins_priority[priority]))
             self.write('. %s (%s)', escape(plugins), priority)
-        self.write(f'// end::plugins_priority[]')
+        self.write('// end::plugins_priority[]')
 
 
 def docgen_cmd_cb(data, buf, args):
