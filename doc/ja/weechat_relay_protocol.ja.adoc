@@ -143,7 +143,7 @@ Arguments:
 
 Notes about option _password_hash_algo_:
 
-* If the option is not given (of if the _handshake_ command is not sent by the
+* If the option is not given (or if the _handshake_ command is not sent by the
   client), _relay_ uses automatically _plain_ authentication (if allowed on
   _relay_ side).
 * _Relay_ chooses the more secure algorithm available on both client and
