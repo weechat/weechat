@@ -12633,10 +12633,12 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 | _chat_word | Parola a (x,y). |
   "Hello" | ""
 
-| _chat_bol | Inizio della riga ⇒ (x-1,y). |
+// TRANSLATION MISSING
+| _chat_bol | Text from beginning of line to (x-1, y). |
   "He" | ""
 
-| _chat_eol | (x,y) ⇒ fine della riga. |
+// TRANSLATION MISSING
+| _chat_eol | Text from (x, y) to the end of line. |
   "llo world!" | ""
 
 | _bar_name | Nome della barra. |

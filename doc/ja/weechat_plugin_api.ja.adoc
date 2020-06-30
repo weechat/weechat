@@ -12143,10 +12143,12 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat_word | (x,y) の位置にある単語 |
   "Hello" | ""
 
-| _chat_bol | 行頭から (x-1,y) まで |
+// TRANSLATION MISSING
+| _chat_bol | Text from beginning of line to (x-1, y). |
   "He" | ""
 
-| _chat_eol | (x,y) から行末まで |
+// TRANSLATION MISSING
+| _chat_eol | Text from (x, y) to the end of line. |
   "llo world!" | ""
 
 | _bar_name | バーの名前 |

@@ -12404,10 +12404,10 @@ valeurs sont de type "string") :
 | _chat_word | Mot à la position (x,y). |
   "Hello" | ""
 
-| _chat_bol | Début de ligne ⇒ (x-1,y). |
+| _chat_bol | Texte du début de ligne jusqu'à (x-1, y). |
   "He" | ""
 
-| _chat_eol | (x,y) ⇒ fin de ligne. |
+| _chat_eol | Texte de (x, y) jusqu'à la fin de la ligne. |
   "llo world!" | ""
 
 | _bar_name | Nom de la barre. |

@@ -12138,10 +12138,10 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat_word | Word at (x,y). |
   "Hello" | ""
 
-| _chat_bol | Beginning of line ⇒ (x-1,y). |
+| _chat_bol | Text from beginning of line to (x-1, y). |
   "He" | ""
 
-| _chat_eol | (x,y) ⇒ end of line. |
+| _chat_eol | Text from (x, y) to the end of line. |
   "llo world!" | ""
 
 | _bar_name | Name of bar. |
