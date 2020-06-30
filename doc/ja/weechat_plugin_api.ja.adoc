@@ -12156,6 +12156,11 @@ info を使う前にエリアが一致していることを確認して下さい
 
 | _bar_item_col | バー要素中の列座標 |
   "0" ... "n" | "-1"
+
+// TRANSLATION MISSING
+| _bar_window | Pointer to bar window +
+  _(WeeChat ≥ 2.9)_. |
+  "0x12345678" | ""
 |===
 
 [NOTE]

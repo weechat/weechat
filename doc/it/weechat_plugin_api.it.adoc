@@ -12647,6 +12647,11 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 
 | _bar_item_col | Colonna nell'elemento barra. |
   "0" ... "n" | "-1"
+
+// TRANSLATION MISSING
+| _bar_window | Pointer to bar window +
+  _(WeeChat ≥ 2.9)_. |
+  "0x12345678" | ""
 |===
 
 [NOTE]

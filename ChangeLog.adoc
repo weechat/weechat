@@ -33,6 +33,7 @@ New features::
   * core: add default key kbd:[Alt+Shift+N] to toggle nicklist bar
   * core: add command line option "--stdout" in weechat-headless binary to log to stdout rather than ~/.weechat/weechat.log (issue #1475, issue #1477)
   * core: reload configuration files on SIGHUP (issue #1476)
+  * api: add pointer "_bar_window" in hashtable sent to hook focus callback (issue #1450)
   * api: add info_hashtable "focus_info" (issue #1245, issue #1257)
   * api: rename function hook_completion_get_string to completion_get_string and hook_completion_list_add to completion_list_add
   * api: add functions completion_new, completion_search and completion_free

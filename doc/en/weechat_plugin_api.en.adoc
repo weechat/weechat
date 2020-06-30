@@ -12158,6 +12158,10 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 
 | _bar_item_col | Column in bar item. |
   "0" ... "n" | "-1"
+
+| _bar_window | Pointer to bar window +
+  _(WeeChat ≥ 2.9)_. |
+  "0x12345678" | ""
 |===
 
 [NOTE]

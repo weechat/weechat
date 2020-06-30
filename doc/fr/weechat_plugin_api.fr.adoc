@@ -12424,6 +12424,10 @@ valeurs sont de type "string") :
 
 | _bar_item_col | Colonne dans l'objet de barre. |
   "0" ... "n" | "-1"
+
+| _bar_window | Pointeur vers la fenêtre de barre +
+  _(WeeChat ≥ 2.9)_. |
+  "0x12345678" | ""
 |===
 
 [NOTE]

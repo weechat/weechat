@@ -241,6 +241,7 @@ gui_focus_to_hashtable (struct t_gui_focus_info *focus_info, const char *key)
     HASHTABLE_SET_STR_NOT_NULL("_chat_eol", focus_info->chat_eol);
 
     /* bar/item */
+    HASHTABLE_SET_POINTER("_bar_window", focus_info->bar_window);
     if (focus_info->bar_window)
     {
         HASHTABLE_SET_STR("_bar_name", ((focus_info->bar_window)->bar)->name);
