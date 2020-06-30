@@ -400,7 +400,7 @@ Paramètres :
 * _chemin_ : chemin vers le hdata, avec le format :
   "hdata:pointeur/var/var/.../var", la dernière variable est le hdata retourné :
 ** _hdata_ : nom du hdata
-** _pointeur_ : pointeur ("0x12345") ou nom de liste (par exemple :
+** _pointeur_ : pointeur (par exemple : "0x1234abcd") ou nom de liste (par exemple :
    "gui_buffers") (nombre autorisé, voir ci-dessous)
 ** _var_ : un nom de variable dans le hdata parent (nom précédent dans le
    chemin) (nombre autorisé, voir ci-dessous)
@@ -758,7 +758,7 @@ Syntaxe :
 
 Paramètres :
 
-* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+* _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
   _core.weechat_ ou _irc.freenode.#weechat_)
 
 Exemples :
@@ -959,7 +959,7 @@ Syntaxe :
 
 Paramètres :
 
-* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+* _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
   _core.weechat_ ou _irc.freenode.#weechat_)
 * _données_ : données à envoyer au tampon : si elles commencent par `/`,
   cela sera exécuté comme une commande sur le tampon, sinon le texte est envoyé
@@ -995,7 +995,7 @@ Syntaxe :
 
 Paramètres :
 
-* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+* _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
   _core.weechat_ ou _irc.freenode.#weechat_)
 * _position_ : position dans la chaîne pour la complétion (démarre à 0) ;
   si la valeur est -1, la position est la longueur de _données_ (donc la
@@ -1156,7 +1156,7 @@ Syntaxe :
 
 Paramètres :
 
-* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+* _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
   _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
 * _options_ : un ou plusieurs mots-clés, séparés par des virgules (par défaut
@@ -1224,7 +1224,7 @@ Syntaxe :
 
 Paramètres :
 
-* _tampon_ : pointeur (_0x12345_) ou nom complet du tampon (par exemple :
+* _tampon_ : pointeur (par exemple : "0x1234abcd") ou nom complet du tampon (par exemple :
   _core.weechat_ ou _irc.freenode.#weechat_); le nom "*" peut être utilisé pour
   spécifier tous les tampons
 * _options_ : un ou plusieurs mots-clés, séparés par des virgules (le défaut est

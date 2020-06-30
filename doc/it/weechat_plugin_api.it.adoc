@@ -9875,7 +9875,7 @@ Line data sent to the callback is a hashtable, with following values
 | buffer |
   Buffer pointer. |
   Buffer pointer. |
-  `+0x12345678+`
+  `+0x1234abcd+`
 
 | buffer_name |
   Buffer name. |
@@ -11965,41 +11965,47 @@ List of modifiers used by WeeChat and plugins:
   (to fit in 512 bytes by default). |
   Nuovo contenuto del messaggio.
 
+// TRANSLATION MISSING
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
-  Stringa con puntatore alla finestra ("0x123..") |
+  Stringa con puntatore alla finestra (eg: "0x1234abcd") |
   Stringa vuota. |
   "1" per visualizzare la barra, "0" per nasconderla.
 
+// TRANSLATION MISSING
 | [[hook_modifier_history_add]] history_add +
   _(WeeChat ≥ 0.3.2)_ |
-  Stringa con puntatore al buffer ("0x123..") |
+  Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando da aggiungere nella cronologia comandi (buffer e globale). |
   Stringa aggiunta alla cronologia comandi.
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_content]] input_text_content |
-  Stringa con puntatore al buffer ("0x123..") |
+  Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando. |
   Nuovo contenuto della riga di comando.
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_display]] input_text_display |
-  Stringa con puntatore al buffer ("0x123..") |
+  Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, senza tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
-  Stringa con puntatore al buffer ("0x123..") |
+  Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando, con tag al cursore. |
   Nuova stringa, solo da mostrare (la riga di comando non viene modificata).
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
-  Stringa con puntatore al buffer ("0x123..") |
+  Stringa con puntatore al buffer (eg: "0x1234abcd") |
   Contenuto della riga di comando inviata al buffer (testo o comando). |
   Nuovo contenuto della riga di comando inviata al buffer.
 
 // TRANSLATION MISSING
 | [[hook_modifier_weechat_print]] weechat_print |
-  buffer pointer ("0x123...") + ";" + tags ^(3)^ |
+  buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   Messaggio stampato. |
   Nuovo messaggio stampato. +
   For more information on the hooks called when a line is printed, see
@@ -12566,13 +12572,13 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
   "button1", "button2-gesture-left", ... |
 
 | _window | Puntatore alla finestra. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _window_number | Numero della finestra. |
   "1" ... "n" | "*"
 
 | _buffer | Puntatore al buffer. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _buffer_number | Numero del buffer. |
   "1" ... "n" | "-1"
@@ -12595,7 +12601,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 // TRANSLATION MISSING
 | _chat_line | Pointer to line +
   _(WeeChat ≥ 1.2)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _chat_line_x | Colonna nella riga ^(3)^. |
   "0" ... "n" | "-1"
@@ -12651,7 +12657,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
 // TRANSLATION MISSING
 | _bar_window | Pointer to bar window +
   _(WeeChat ≥ 2.9)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 |===
 
 [NOTE]

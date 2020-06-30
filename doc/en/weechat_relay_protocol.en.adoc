@@ -391,7 +391,7 @@ Arguments:
 * _path_: path to a hdata, with format: "hdata:pointer/var/var/.../var", the
   last var is the hdata returned:
 ** _hdata_: name of hdata
-** _pointer_: pointer ("0x12345") or list name (for example: "gui_buffers")
+** _pointer_: pointer (eg: "0x1234abcd") or list name (for example: "gui_buffers")
    (count allowed, see below)
 ** _var_: a variable name in parent hdata (previous name in path)
    (count allowed, see below)
@@ -746,7 +746,7 @@ Syntax:
 
 Arguments:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_)
 
 Examples:
@@ -947,7 +947,7 @@ Syntax:
 
 Arguments:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_)
 * _data_: data to send to buffer: if beginning by `/`, this will be executed as
    a command on buffer, otherwise text is sent as input of buffer
@@ -982,7 +982,7 @@ Syntax:
 
 Arguments:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_)
 * _position_: position for completion in string (starts to 0);
   if the value is -1, the position is the length of _data_ (so the completion
@@ -1143,7 +1143,7 @@ Syntax:
 
 Arguments:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_); name "*" can be used to
   specify all buffers
 * _options_: one of following keywords, separated by commas (default is
@@ -1208,7 +1208,7 @@ Syntax:
 
 Arguments:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_); name "*" can be used to
   specify all buffers
 * _options_: one of following keywords, separated by commas (default is

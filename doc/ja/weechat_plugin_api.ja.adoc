@@ -9552,7 +9552,7 @@ struct t_hook *weechat_hook_line (const char *buffer_type,
 | buffer |
   バッファポインタ |
   バッファポインタ |
-  `+0x12345678+`
+  `+0x1234abcd+`
 
 | buffer_name |
   バッファ名 |
@@ -11500,40 +11500,47 @@ WeeChat とプラグインが使う修飾子のリスト:
   (自動分割後、自動分割はデフォルトでメッセージを 512 バイト内に収まるように分割します)。|
   メッセージの新しい内容
 
+// TRANSLATION MISSING
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
-  ウィンドウへのポインタの文字列 ("0x123..") |
+  ウィンドウへのポインタの文字列 (eg: "0x1234abcd") |
   空文字列 |
   バーを表示する場合は "1"、隠す場合は "0"
 
+// TRANSLATION MISSING
 | [[hook_modifier_history_add]] history_add +
   _(WeeChat バージョン 0.3.2 以上で利用可)_ |
-  バッファへのポインタの文字列 ("0x123..") |
+  バッファへのポインタの文字列 (eg: "0x1234abcd") |
   コマンド履歴に追加するコマンドラインの内容 (バッファとグローバル履歴) |
   コマンド履歴に追加した文字列
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_content]] input_text_content |
-  バッファへのポインタの文字列 ("0x123..") |
+  バッファへのポインタの文字列 (eg: "0x1234abcd") |
   コマンドラインの内容 |
   コマンドラインの新しい内容
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_display]] input_text_display |
-  バッファへのポインタの文字列 ("0x123..") |
+  バッファへのポインタの文字列 (eg: "0x1234abcd") |
   カーソルタグを含まないコマンドラインの内容 |
   新しい文字列、表示のみ (コマンドラインは変化しない)
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
-  バッファへのポインタの文字列 ("0x123..") |
+  バッファへのポインタの文字列 (eg: "0x1234abcd") |
   カーソルタグを含むコマンドラインの内容 |
   新しい文字列、表示のみ (コマンドラインは変化しない)
 
+// TRANSLATION MISSING
 | [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat バージョン 0.3.7 以上で利用可)_ |
-  バッファへのポインタの文字列 ("0x123..") |
+  バッファへのポインタの文字列 (eg: "0x1234abcd") |
   バッファに送信するコマンドラインの内容 (テキストまたはコマンド) |
   バッファに送信するコマンドラインの新しい内容
 
+// TRANSLATION MISSING
 | [[hook_modifier_weechat_print]] weechat_print |
-  buffer pointer ("0x123...") + ";" + tags ^(3)^ |
+  buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   表示されたメッセージ |
   表示される新しいメッセージ +
   行が表示される際に呼び出されるフックについての詳細は
@@ -12076,13 +12083,13 @@ info を使う前にエリアが一致していることを確認して下さい
   "button1"、"button2-gesture-left"、... |
 
 | _window | ウィンドウへのポインタ |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _window_number | ウィンドウの番号 |
   "1" ... "n" | "*"
 
 | _buffer | バッファへのポインタ |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _buffer_number | バッファの番号 |
   "1" ... "n" | "-1"
@@ -12104,7 +12111,7 @@ info を使う前にエリアが一致していることを確認して下さい
 
 | _chat_line | 行へのポインタ +
   _(WeeChat バージョン 1.2 以上で利用可)_ |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _chat_line_x | 行中の列番号 ^(3)^ |
   "0" ... "n" | "-1"
@@ -12160,7 +12167,7 @@ info を使う前にエリアが一致していることを確認して下さい
 // TRANSLATION MISSING
 | _bar_window | Pointer to bar window +
   _(WeeChat ≥ 2.9)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 |===
 
 [NOTE]

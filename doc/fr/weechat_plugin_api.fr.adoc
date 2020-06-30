@@ -9748,7 +9748,7 @@ de hachage, avec les valeurs suivantes (les clés et valeurs sont des chaînes)�
 | buffer |
   Pointeur vers le tampon. |
   Pointeur vers le tampon. |
-  `+0x12345678+`
+  `+0x1234abcd+`
 
 | buffer_name |
   Nom du tampon. |
@@ -11741,42 +11741,42 @@ Liste des modificateurs utilisés par WeeChat et les extensions :
   Nouveau contenu du message.
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
-  Chaîne avec un pointeur vers la fenêtre ("0x123..") |
+  Chaîne avec un pointeur vers la fenêtre (par exemple : "0x1234abcd") |
   Chaîne vide. |
   "1" pour afficher la barre, "0" pour la cacher.
 
 | [[hook_modifier_history_add]] history_add +
   _(WeeChat ≥ 0.3.2)_ |
-  Chaîne avec un pointeur vers le tampon ("0x123..") |
+  Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande à ajouter à l'historique des commandes
   (tampon et global). |
   Chaîne ajoutée à l'historique des commandes.
 
 | [[hook_modifier_input_text_content]] input_text_content |
-  Chaîne avec un pointeur vers le tampon ("0x123..") |
+  Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande. |
   Nouvelle chaîne pour la ligne de commande.
 
 | [[hook_modifier_input_text_display]] input_text_display |
-  Chaîne avec un pointeur vers le tampon ("0x123..") |
+  Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, sans le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
 | [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
-  Chaîne avec un pointeur vers le tampon ("0x123..") |
+  Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande, avec le code du curseur dedans. |
   Nouvelle chaîne, pour affichage seulement (la ligne de commande n'est pas
   modifiée).
 
 | [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
-  Chaîne avec un pointeur vers le tampon ("0x123..") |
+  Chaîne avec un pointeur vers le tampon (par exemple : "0x1234abcd") |
   Contenu de la ligne de commande envoyée au tampon (texte ou commande). |
   Nouveau contenu de la ligne de commande envoyée au tampon.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-  pointeur vers le tampon ("0x123..") + ";" + étiquettes ^(3)^ |
+  pointeur vers le tampon (par exemple : "0x1234abcd") + ";" + étiquettes ^(3)^ |
   Message affiché. |
   Nouveau message affiché. +
   Pour plus d'informations sur les "hooks" appelés lorsqu'une ligne est affichée,
@@ -12344,13 +12344,13 @@ valeurs sont de type "string") :
   "button1", "button2-gesture-left", ... |
 
 | _window | Pointeur vers la fenêtre. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _window_number | Numéro de la fenêtre. |
   "1" ... "n" | "*"
 
 | _buffer | Pointeur vers le tampon. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _buffer_number | Numéro du tampon. |
   "1" ... "n" | "-1"
@@ -12372,7 +12372,7 @@ valeurs sont de type "string") :
 
 | _chat_line | Pointeur vers la ligne +
   _(WeeChat ≥ 1.2)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _chat_line_x | Colonne de la ligne ^(3)^. |
   "0" ... "n" | "-1"
@@ -12427,7 +12427,7 @@ valeurs sont de type "string") :
 
 | _bar_window | Pointeur vers la fenêtre de barre +
   _(WeeChat ≥ 2.9)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 |===
 
 [NOTE]

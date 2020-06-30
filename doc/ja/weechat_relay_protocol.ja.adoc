@@ -406,7 +406,8 @@ _hdata_ を要求。
 * _path_: hdata へのパス、書式: "hdata:pointer/var/var/.../var"、最後の
   var に対応する hdata が返されます:
 ** _hdata_: hdata の名前
-** _pointer_: ポインタ ("0x12345") またはリスト名 (例: "gui_buffers")
+// TRANSLATION MISSING
+** _pointer_: ポインタ (eg: "0x1234abcd") またはリスト名 (例: "gui_buffers")
    (番号も可能、以下を参照)
 ** _var_: 親 hdata に含まれる変数名 (パスで言う 1 つ前の名前)
    (番号も可能、以下を参照)
@@ -764,7 +765,8 @@ inl:
 
 引数:
 
-* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+// TRANSLATION MISSING
+* _buffer_: ポインタ (eg: "0x1234abcd") またはバッファの完全な名前 (例:
   _core.weechat_ または _irc.freenode.#weechat_)
 
 // TRANSLATION MISSING
@@ -966,7 +968,8 @@ hda:
 
 引数:
 
-* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+// TRANSLATION MISSING
+* _buffer_: ポインタ (eg: "0x1234abcd") またはバッファの完全な名前 (例:
   _core.weechat_ または _irc.freenode.#weechat_)
 * _data_: バッファに送信するデータ: `/`
    で始まる場合、バッファ内でコマンドとして実行されます、それ以外の場合、テキストはバッファの入力として送信されます。
@@ -1002,7 +1005,8 @@ a string for a given buffer.
 
 引数:
 
-* _buffer_: pointer (_0x12345_) or full name of buffer (for example:
+// TRANSLATION MISSING
+* _buffer_: pointer (eg: "0x1234abcd") or full name of buffer (for example:
   _core.weechat_ or _irc.freenode.#weechat_)
 * _position_: position for completion in string (starts to 0);
   if the value is -1, the position is the length of _data_ (so the completion
@@ -1163,7 +1167,8 @@ _WeeChat バージョン 0.4.1 で更新。_
 
 引数:
 
-* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+// TRANSLATION MISSING
+* _buffer_: ポインタ (eg: "0x1234abcd") またはバッファの完全な名前 (例:
   _core.weechat_ または _irc.freenode.#weechat_);
   全てのバッファを指定するには "*" を使ってください
 * _options_: 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは
@@ -1229,7 +1234,8 @@ _WeeChat バージョン 0.4.1 で更新。_
 
 引数:
 
-* _buffer_: ポインタ (_0x12345_) またはバッファの完全な名前 (例:
+// TRANSLATION MISSING
+* _buffer_: ポインタ (eg: "0x1234abcd") またはバッファの完全な名前 (例:
   _core.weechat_ または _irc.freenode.#weechat_);
   全てのバッファを指定するには "*" を使ってください
 * _options_: 以下に挙げるキーワード、コンマ区切り ("*" に対するデフォルトは

@@ -9560,7 +9560,7 @@ Line data sent to the callback is a hashtable, with following values
 | buffer |
   Buffer pointer. |
   Buffer pointer. |
-  `+0x12345678+`
+  `+0x1234abcd+`
 
 | buffer_name |
   Buffer name. |
@@ -11506,39 +11506,39 @@ List of modifiers used by WeeChat and plugins:
   New content of message.
 
 | [[hook_modifier_bar_condition_yyy]] bar_condition_yyy ^(2)^ |
-  String with window pointer ("0x123..") |
+  String with window pointer (eg: "0x1234abcd") |
   Empty string. |
   "1" to display bar, "0" to hide it.
 
 | [[hook_modifier_history_add]] history_add +
   _(WeeChat ≥ 0.3.2)_ |
-  String with buffer pointer ("0x123..") |
+  String with buffer pointer (eg: "0x1234abcd") |
   Content of command line to add in command history (buffer and global). |
   String added to command history.
 
 | [[hook_modifier_input_text_content]] input_text_content |
-  String with buffer pointer ("0x123..") |
+  String with buffer pointer (eg: "0x1234abcd") |
   Content of command line. |
   New content of command line.
 
 | [[hook_modifier_input_text_display]] input_text_display |
-  String with buffer pointer ("0x123..") |
+  String with buffer pointer (eg: "0x1234abcd") |
   Content of command line, without cursor tag. |
   New string, for display only (command line is not changed).
 
 | [[hook_modifier_input_text_display_with_cursor]] input_text_display_with_cursor |
-  String with buffer pointer ("0x123..") |
+  String with buffer pointer (eg: "0x1234abcd") |
   Content of command line, with cursor tag. |
   New string, for display only (command line is not changed).
 
 | [[hook_modifier_input_text_for_buffer]] input_text_for_buffer +
   _(WeeChat ≥ 0.3.7)_ |
-  String with buffer pointer ("0x123..") |
+  String with buffer pointer (eg: "0x1234abcd") |
   Content of command line sent to buffer (text or command). |
   New content of command line sent to buffer.
 
 | [[hook_modifier_weechat_print]] weechat_print |
-  buffer pointer ("0x123...") + ";" + tags ^(3)^ |
+  buffer pointer (eg: "0x1234abcd") + ";" + tags ^(3)^ |
   Message printed. |
   New message printed. +
   For more information on the hooks called when a line is printed, see
@@ -12078,13 +12078,13 @@ Content of hashtable sent to callback (keys and values are of type "string"):
   "button1", "button2-gesture-left", ... |
 
 | _window | Pointer to window. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _window_number | Number of window . |
   "1" ... "n" | "*"
 
 | _buffer | Pointer to buffer. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _buffer_number | Number of buffer. |
   "1" ... "n" | "-1"
@@ -12106,7 +12106,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 
 | _chat_line | Pointer to line +
   _(WeeChat ≥ 1.2)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 
 | _chat_line_x | Column in line ^(3)^. |
   "0" ... "n" | "-1"
@@ -12161,7 +12161,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 
 | _bar_window | Pointer to bar window +
   _(WeeChat ≥ 2.9)_. |
-  "0x12345678" | ""
+  "0x1234abcd" | ""
 |===
 
 [NOTE]
