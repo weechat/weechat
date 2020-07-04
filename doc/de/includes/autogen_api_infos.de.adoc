@@ -20,7 +20,7 @@
 
 | irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channelname für den Server ist | Server,Channel (Server ist optional)
 
-| irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | server,nickname (server is optional)
+| irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | Server,Nickname (Server ist optional)
 
 | irc | irc_nick | aktuellen Nicknamen für den Server erhalten | Servername
 
