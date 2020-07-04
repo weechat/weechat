@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2020-06-21 18:56+0200\n"
-"PO-Revision-Date: 2020-06-16 18:32+0200\n"
+"PO-Revision-Date: 2020-07-04 14:06+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -371,9 +371,9 @@ msgstr "Breite"
 msgid "auto"
 msgstr "auto"
 
-#, fuzzy, c-format
+#, c-format
 msgid "    priority: %d, fg: %s, bg: %s, bg_inactive: %s, items: %s%s"
-msgstr "    Priorität: %d, fg: %s, bg: %s, Objekte: %s%s"
+msgstr "    Priorität: %d, fg: %s, bg: %s, bg_inactive: %s, Items: %s%s"
 
 msgid ", with separator"
 msgstr ", mit Trenner"
@@ -5627,6 +5627,8 @@ msgid ""
 "background color for a bar with type \"window\" which is not displayed in "
 "the active window"
 msgstr ""
+"Hintergrundfarbe für eine Bar vom Typ \"window\", wenn diese nicht im "
+"aktiven Fenster angezeigt wird"
 
 msgid "separator line between bar and other bars/windows"
 msgstr "Trennzeichen zwischen verschieden Infobars und Fenstern"
@@ -10675,9 +10677,8 @@ msgstr "Server,Channel (Server ist optional)"
 msgid "1 if string is a valid IRC nick name"
 msgstr "1, falls die Zeichenkette ein gültiger IRC Nickname ist"
 
-#, fuzzy
 msgid "server,nickname (server is optional)"
-msgstr "Server,Channel (Server ist optional)"
+msgstr "Server,Nickname (Server ist optional)"
 
 msgid "get current nick on a server"
 msgstr "aktuellen Nicknamen für den Server erhalten"
