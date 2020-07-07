@@ -78,6 +78,7 @@ Alphabetically:
 * Maarten de Vries
 * Mantas Mikulėnas (grawity)
 * Marco Paolone
+* Marco Sirabella
 * Mateusz Poszwa
 * Matt Robinson
 * Matthew Horan
