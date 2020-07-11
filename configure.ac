@@ -68,10 +68,6 @@ ALL_LINGUAS="cs de es fr hu it ja pl pt pt_BR ru tr"
 AM_GNU_GETTEXT
 AM_GNU_GETTEXT_VERSION([0.18])
 
-# Checks for libraries
-AC_CHECK_LIB(ncurses, initscr, LIBNCURSES_FOUND=1, LIBNCURSES_FOUND=0)
-AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
-
 # Checks for header files
 AC_HEADER_STDC
 AC_CHECK_HEADERS([libintl.h sys/resource.h])
@@ -225,24 +221,48 @@ AC_SUBST(PLUGINS_LFLAGS)
 # ------------------------------------------------------------------------------
 
 if test "x$enable_ncurses" = "xyes" ; then
-    if test "$LIBNCURSESW_FOUND" = "0" ; then
-        if test "$LIBNCURSES_FOUND" = "0" ; then
+
+    AC_MSG_CHECKING(for ncurses headers and libraries)
+
+    pkgconfig_ncursesw_found=`$PKGCONFIG --exists ncursesw 2>/dev/null`
+    if test  "x$?" = "x0"; then
+        NCURSES_CFLAGS=`pkg-config --cflags ncursesw`
+        NCURSES_LFLAGS=`pkg-config --libs ncursesw`
+
+        AC_MSG_RESULT(ncursesw)
+    else
+        pkgconfig_ncurses_found=`$PKGCONFIG --exists ncurses 2>/dev/null`
+        if test  "x$?" = "x0"; then
+            NCURSES_CFLAGS=`pkg-config --cflags ncurses`
+            NCURSES_LFLAGS=`pkg-config --libs ncurses`
+
+            AC_MSG_RESULT(ncurses)
+
+            # Checks for ncursesw library
+            AC_CHECK_LIB(ncursesw, initscr, LIBNCURSESW_FOUND=1, LIBNCURSESW_FOUND=0)
+            if test "$LIBNCURSESW_FOUND" = "0" ; then
+                AC_MSG_WARN([
+*** ncursesw library not found! Falling back to "ncurses"
+*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.])
+            fi
+
+        else
+            AC_MSG_RESULT(no)
             AC_MSG_WARN([
 *** ncurses library not found!
 *** WeeChat will be built without ncurses support.])
             enable_ncurses="no"
             not_found="$not_found ncurses"
-        else
-            AC_MSG_WARN([
-*** ncursesw library not found! Falling back to "ncurses"
-*** Be careful, UTF-8 display may not work properly if your locale is UTF-8.])
-            NCURSES_LFLAGS="-lncurses"
         fi
-    else
-        NCURSES_LFLAGS="-lncursesw"
     fi
-    AC_CHECK_HEADERS([ncurses.h ncursesw/curses.h])
+
     AC_SUBST(NCURSES_LFLAGS)
+    AC_SUBST(NCURSES_CFLAGS)
+
+    ac_save_CPPFLAGS="$CPPFLAGS"
+    CPPFLAGS="$CPPFLAGS $NCURSES_CFLAGS"
+    AC_CHECK_HEADERS([ncurses.h ncursesw/curses.h])
+    CPPFLAGS="$ac_save_CPPFLAGS"
 else
     not_asked="$not_asked ncurses"
 fi
