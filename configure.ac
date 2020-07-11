@@ -56,7 +56,7 @@ netbsd*)
         LDFLAGS="$LDFLAGS -L/usr/pkg/lib"
         ;;
 solaris*)
-        LDFLAGS="$LDFLAGS -lsocket -lxnet"
+        LDFLAGS="$LDFLAGS -lsocket -lxnet -lresolv"
         ;;
 darwin*)
         LDFLAGS="$LDFLAGS -lresolv"
