@@ -29,7 +29,19 @@ EXTRA_DIST = CMakeLists.txt \
              weechat_faq.pl.adoc \
              weechat_quickstart.pl.adoc \
              weechat_tester.pl.adoc \
-             $(wildcard includes/*.adoc)
+             includes/autogen_api_completions.pl.adoc \
+             includes/autogen_api_hdata.pl.adoc \
+             includes/autogen_api_infolists.pl.adoc \
+             includes/autogen_api_infos_hashtable.pl.adoc \
+             includes/autogen_api_infos.pl.adoc \
+             includes/autogen_api_plugins_priority.pl.adoc \
+             includes/autogen_api_url_options.pl.adoc \
+             includes/autogen_user_commands.pl.adoc \
+             includes/autogen_user_default_aliases.pl.adoc \
+             includes/autogen_user_irc_colors.pl.adoc \
+             includes/autogen_user_options.pl.adoc \
+             includes/cmdline_options.pl.adoc \
+             includes/man.pl.adoc
 
 if MAN
   man_targets = weechat.1 \

@@ -24,7 +24,8 @@ EXTRA_DIST = CMakeLists.txt \
              weechat.1.ru.adoc \
              weechat-headless.1.ru.adoc \
              weechat_quickstart.ru.adoc \
-             $(wildcard includes/*.adoc)
+             includes/cmdline_options.ru.adoc \
+             includes/man.ru.adoc
 
 if MAN
   man_targets = weechat.1 \
