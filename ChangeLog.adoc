@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[v2.9]]
-== Version 2.9 (under dev)
+== Version 2.9 (2020-07-18)
 
 New features::
 

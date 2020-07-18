@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v2.9]]
-== Version 2.9 (under dev)
+== Version 2.9 (2020-07-18)
 
 [[v2.9_bar_color_bg_inactive]]
 === New background color for inactive bars
