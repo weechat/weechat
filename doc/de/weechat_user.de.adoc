@@ -1124,11 +1124,15 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | no_filter        | Zeile kann nicht gefiltert werden.
 | no_highlight     | die Zeile kann nicht gehiglighted werden.
 | no_log           | Zeile wird nicht in die Log-Datei geschrieben.
-| log0 ... log9    | Grad der Protokollierung (siehe `/help logger`).
-| notify_none      | Buffer welche die Zeile enthält wird nicht zur Hotlist hinzufügt.
-| notify_message   | Buffer welche die Zeile enthält wird mit der Stufe "message" zur Hotlist hinzugefügt.
-| notify_private   | Buffer welche die Zeile enthält wird mit der Stufe "private" zur Hotlist hinzugefügt.
-| notify_highlight | Buffer welche die Zeile enthält wird mit der Stufe "highlight" zur Hotlist hinzugefügt.
+| log0 … log9      | Grad der Protokollierung (siehe `/help logger`).
+// TRANSLATION MISSING
+| notify_none      | The line must not be added to hotlist. ^(1)^
+// TRANSLATION MISSING
+| notify_message   | The line is a user message. ^(1)^
+// TRANSLATION MISSING
+| notify_private   | The line is a private message. ^(1)^
+// TRANSLATION MISSING
+| notify_highlight | The line is a message with highlight. ^(1)^
 | self_msg         | eigene Nachricht.
 | nick_xxx         | Nachricht ist vom Nick "xxx".
 | prefix_nick_ccc  | Präfix für den Nick mit der Farbe "ccc".
@@ -1142,6 +1146,13 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | irc_smart_filter | IRC Nachricht die mittels "smart filter" unterdrückt werden kann.
 | away_info        | Nachricht mit "away" Information.
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
+"notify_xxx" is present, the real notify level can be different, for example
+if a max hotlist level is used for a nick, the notify level can be lower than
+the value in the tag.
 
 [[bars]]
 === Bars

@@ -1117,11 +1117,15 @@ Popularnie używane tagi  (niepełna lista):
 | no_filter        | Linia nie może być filtrowana.
 | no_highlight     | Podświetlenia nie są dozwolone w tej linii.
 | no_log           | Linia nie jest zapisywana w logu.
-| log0 ... log9    | Poziom logowania dla linii (zobacz `/help logger`).
-| notify_none      | Bufor z linią nie dodana do hotlisty.
-| notify_message   | Bufor z linia dodaną do hotlisty z poziomem "message".
-| notify_private   | Bufor z linia dodaną do hotlisty z poziomem "private".
-| notify_highlight | Bufor z linia dodaną do hotlisty z poziomem "highlight".
+| log0 … log9      | Poziom logowania dla linii (zobacz `/help logger`).
+// TRANSLATION MISSING
+| notify_none      | The line must not be added to hotlist. ^(1)^
+// TRANSLATION MISSING
+| notify_message   | The line is a user message. ^(1)^
+// TRANSLATION MISSING
+| notify_private   | The line is a private message. ^(1)^
+// TRANSLATION MISSING
+| notify_highlight | The line is a message with highlight. ^(1)^
 | self_msg         | Własna wiadomość.
 | nick_xxx         | Wiadomość od nicku "xxx".
 | prefix_nick_ccc  | Prefiks to nick o kolorze "ccc".
@@ -1135,6 +1139,13 @@ Popularnie używane tagi  (niepełna lista):
 | irc_smart_filter | Wiadomość IRC, która może być filtrowana przez "inteligentny filtr".
 | away_info        | Wiadomość z powodem nieobecności.
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
+"notify_xxx" is present, the real notify level can be different, for example
+if a max hotlist level is used for a nick, the notify level can be lower than
+the value in the tag.
 
 [[bars]]
 === Paski

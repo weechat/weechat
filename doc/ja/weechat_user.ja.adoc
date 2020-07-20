@@ -1123,11 +1123,15 @@ WeeChat は様々な目的で各行にタグを付けます:
 | no_filter        | フィルタできない行
 | no_highlight     | ハイライトできない行
 | no_log           | ログファイルに書き込まれない行
-| log0 ... log9    | 行に対するログレベル (`/help logger` を参照)
-| notify_none      | この行を含むバッファはホットリストに追加されません
-| notify_message   | この行を含むバッファは "message" レベルでホットリストに追加されます
-| notify_private   | この行を含むバッファは "private" レベルでホットリストに追加されます
-| notify_highlight | この行を含むバッファは "highlight" レベルでホットリストに追加されます
+| log0 … log9      | 行に対するログレベル (`/help logger` を参照)
+// TRANSLATION MISSING
+| notify_none      | The line must not be added to hotlist. ^(1)^
+// TRANSLATION MISSING
+| notify_message   | The line is a user message. ^(1)^
+// TRANSLATION MISSING
+| notify_private   | The line is a private message. ^(1)^
+// TRANSLATION MISSING
+| notify_highlight | The line is a message with highlight. ^(1)^
 | self_msg         | 自分のメッセージ
 | nick_xxx         | ニックネーム "xxx" からのメッセージ
 | prefix_nick_ccc  | プレフィックスを色 "ccc" のニックネームにします
@@ -1141,6 +1145,13 @@ WeeChat は様々な目的で各行にタグを付けます:
 | irc_smart_filter | "smart filter" でフィルタリング可能な IRC メッセージ
 | away_info        | 離席状態のメッセージ
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
+"notify_xxx" is present, the real notify level can be different, for example
+if a max hotlist level is used for a nick, the notify level can be lower than
+the value in the tag.
 
 [[bars]]
 === バー

@@ -1188,11 +1188,15 @@ Tag usati di frequente (elenco non esaustivo):
 | no_filter        | La riga non può essere filtrata.
 | no_highlight     | Evidenziazione non possibile sulla riga.
 | no_log           | La riga non viene scritta nel file di log.
-| log0 ... log9    | Livello di log per la riga (consultare `/help logger`).
-| notify_none      | Il buffer con la riga non viene aggiunto alla hotlist.
-| notify_message   | Il buffer con la riga viene aggiunto alla hotlist con il livello "message".
-| notify_private   | Il buffer con la riga viene aggiunto alla hotlist con il livello "private".
-| notify_highlight | Il buffer con la riga viene aggiunto alla hotlist con il livello "higlight".
+| log0 … log9      | Livello di log per la riga (consultare `/help logger`).
+// TRANSLATION MISSING
+| notify_none      | The line must not be added to hotlist. ^(1)^
+// TRANSLATION MISSING
+| notify_message   | The line is a user message. ^(1)^
+// TRANSLATION MISSING
+| notify_private   | The line is a private message. ^(1)^
+// TRANSLATION MISSING
+| notify_highlight | The line is a message with highlight. ^(1)^
 // TRANSLATION MISSING
 | self_msg         | Self message.
 | nick_xxx         | Il messaggio viene dal nick "xxx".
@@ -1208,6 +1212,13 @@ Tag usati di frequente (elenco non esaustivo):
 | irc_smart_filter | Messaggio IRC filtrabile tramite lo "smart filter" (filtro intelligente).
 | away_info        | Messagio con informazioni sull'assenza.
 |===
+
+// TRANSLATION MISSING
+[NOTE]
+^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
+"notify_xxx" is present, the real notify level can be different, for example
+if a max hotlist level is used for a nick, the notify level can be lower than
+the value in the tag.
 
 // TRANSLATION MISSING
 [[bars]]

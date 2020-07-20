@@ -1138,11 +1138,11 @@ Les étiquettes couramment utilisées (liste non exhaustive) :
 | no_filter        | La ligne ne peut pas être filtrée.
 | no_highlight     | Aucun highlight n'est possible sur cette ligne.
 | no_log           | La ligne n'est pas écrite dans le fichier de log.
-| log0 ... log9    | Niveau de log pour la ligne (voir `/help logger`).
-| notify_none      | Le tampon avec la ligne ne sera pas ajouté à la "hotlist".
-| notify_message   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "message".
-| notify_private   | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "private".
-| notify_highlight | Le tampon avec la ligne sera ajouté à la "hotlist" avec le niveau "highlight".
+| log0 … log9      | Niveau de log pour la ligne (voir `/help logger`).
+| notify_none      | La ligne ne doit pas être ajoutée à la "hotlist". ^(1)^
+| notify_message   | La ligne est un message utilisateur. ^(1)^
+| notify_private   | La ligne est un message privé. ^(1)^
+| notify_highlight | La ligne est un message avec un highlight. ^(1)^
 | self_msg         | Message de soi-même.
 | nick_xxx         | Le message vient du pseudo "xxx".
 | prefix_nick_ccc  | Le préfixe est un pseudo avec la couleur "ccc".
@@ -1156,6 +1156,13 @@ Les étiquettes couramment utilisées (liste non exhaustive) :
 | irc_smart_filter | Message IRC qui peut être filtré avec le "smart filter" (filtre intelligent).
 | away_info        | Message avec une info d'absence.
 |===
+
+[NOTE]
+^(1)^ Lorsque aucune étiquette "notify_xxx" n'est présente, le niveau de
+notification par défaut est "low". Si une étiquette "notify_xxx" est présente,
+le niveau de notification réel peut être différent, par exemple si un niveau
+maximum de hotlist est utilisé pour un pseudo, le niveau de notification peut
+être inférieur à la valeur de l'étiquette.
 
 [[bars]]
 === Barres
