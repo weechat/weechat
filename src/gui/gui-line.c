@@ -1581,7 +1581,8 @@ gui_line_add (struct t_gui_line *line)
     /* update hotlist and/or send signals for line */
     if (line->data->displayed)
     {
-        if (line->data->highlight)
+        if ((line->data->notify_level >= GUI_HOTLIST_MIN)
+            && line->data->highlight)
         {
             (void) gui_hotlist_add (line->data->buffer,
                                     GUI_HOTLIST_HIGHLIGHT, NULL);
