@@ -54,6 +54,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
      * beep on highlight/private message, on following conditions:
      *   - message is displayed (not filtered)
      *     AND:
+     *   - message does not have tag "notify_none"
+     *     AND:
      *       - message is a highlight
      *         OR:
      *       - message is a message in a private buffer
@@ -61,7 +63,8 @@ char *trigger_config_default_list[][1 + TRIGGER_NUM_OPTIONS] =
     { "beep", "on",
       "print",
       "",
-      "${tg_displayed} && (${tg_highlight} || ${tg_msg_pv})",
+      "${tg_displayed} && ${tg_tags} !!- ,notify_none, "
+      "&& (${tg_highlight} || ${tg_msg_pv})",
       "",
       "/print -beep",
       "ok",

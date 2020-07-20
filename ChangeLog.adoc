@@ -21,6 +21,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 Bug fixes::
 
   * core: do not add line with highlight and tag "notify_none" to hotlist (issue #1529)
+  * trigger: add `${tg_tags} !!- ,notify_none,` in conditions of default trigger "beep" (issue #1529)
 
 [[v2.9]]
 == Version 2.9 (2020-07-18)

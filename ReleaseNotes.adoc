@@ -17,6 +17,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.0]]
+== Version 3.0 (under dev)
+
+[[v3.0_trigger_beep]]
+=== Default "beep" trigger
+
+The command of "beep" trigger is now executed only if the message does NOT
+contain the tag "notify_none" (in addition to existing conditions).
+
+You can restore the default "beep" trigger with the following command:
+
+----
+/trigger restore beep
+----
+
 [[v2.9]]
 == Version 2.9 (2020-07-18)
 
