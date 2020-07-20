@@ -382,6 +382,72 @@ IRC_COMMAND_CALLBACK(admin)
 }
 
 /*
+ * Executes a command on a list of IRC buffers.
+ */
+
+void
+irc_command_exec_buffers (struct t_weelist *list_buffers,
+                          const char *command)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_hashtable *pointers;
+    const char *ptr_buffer_name;
+    char *cmd_vars_replaced, *cmd_eval;
+    int i, list_size;
+
+    list_size = weechat_list_size (list_buffers);
+    if (list_size < 1)
+        return;
+
+    pointers = weechat_hashtable_new (32,
+                                      WEECHAT_HASHTABLE_STRING,
+                                      WEECHAT_HASHTABLE_POINTER,
+                                      NULL,
+                                      NULL);
+    if (!pointers)
+        return;
+
+    for (i = 0; i < list_size; i++)
+    {
+        ptr_buffer_name = weechat_list_string (
+            weechat_list_get (list_buffers, i));
+        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
+        if (!ptr_buffer)
+            continue;
+        irc_buffer_get_server_and_channel (ptr_buffer,
+                                           &ptr_server, &ptr_channel);
+        if (!ptr_server)
+            continue;
+        weechat_hashtable_set (pointers, "buffer", ptr_buffer);
+        weechat_hashtable_set (pointers, "irc_server", ptr_server);
+        if (ptr_channel)
+            weechat_hashtable_set (pointers, "irc_channel", ptr_channel);
+        else
+            weechat_hashtable_remove (pointers, "irc_channel");
+        cmd_vars_replaced = irc_message_replace_vars (
+            ptr_server,
+            (ptr_channel) ? ptr_channel->name : NULL,
+            command);
+        cmd_eval = weechat_string_eval_expression (
+            (cmd_vars_replaced) ? cmd_vars_replaced : command,
+            pointers,
+            NULL,
+            NULL);
+        weechat_command (
+            (ptr_channel) ? ptr_channel->buffer : ptr_server->buffer,
+            (cmd_eval) ? cmd_eval : ((cmd_vars_replaced) ? cmd_vars_replaced : command));
+        if (cmd_vars_replaced)
+            free (cmd_vars_replaced);
+        if (cmd_eval)
+            free (cmd_eval);
+    }
+
+    weechat_hashtable_free (pointers);
+}
+
+/*
  * Executes a command on all channels (or queries).
  *
  * If server is NULL, executes command on all channels of all connected servers.
@@ -398,10 +464,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     struct t_irc_server *ptr_server, *next_server;
     struct t_irc_channel *ptr_channel, *next_channel;
     struct t_weelist *list_buffers;
-    struct t_gui_buffer *ptr_buffer;
-    char **channels, *str_command, *cmd_vars_replaced;
-    const char *ptr_buffer_name;
-    int num_channels, length, picked, i, list_size;
+    char **channels, *str_command;
+    int num_channels, length, picked, i;
 
     if (!command || !command[0])
         return;
@@ -477,29 +541,8 @@ irc_command_exec_all_channels (struct t_irc_server *server,
         ptr_server = next_server;
     }
 
-    /* execute the command on all buffers */
-    list_size = weechat_list_size (list_buffers);
-    for (i = 0; i < list_size; i++)
-    {
-        ptr_buffer_name = weechat_list_string (
-            weechat_list_get (list_buffers, i));
-        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-        if (ptr_buffer)
-        {
-            irc_buffer_get_server_and_channel (ptr_buffer,
-                                               &ptr_server, &ptr_channel);
-            if (ptr_server && ptr_channel)
-            {
-                cmd_vars_replaced = irc_message_replace_vars (
-                    ptr_server, ptr_channel->name, str_command);
-                weechat_command (ptr_channel->buffer,
-                                 (cmd_vars_replaced) ?
-                                 cmd_vars_replaced : str_command);
-                if (cmd_vars_replaced)
-                    free (cmd_vars_replaced);
-            }
-        }
-    }
+    /* execute the command on channel/pv buffers */
+    irc_command_exec_buffers (list_buffers, str_command);
 
     weechat_list_free (list_buffers);
     free (str_command);
@@ -655,12 +698,9 @@ void
 irc_command_exec_all_servers (int inclusive, const char *str_servers, const char *command)
 {
     struct t_irc_server *ptr_server, *next_server;
-    struct t_irc_channel *ptr_channel;
     struct t_weelist *list_buffers;
-    struct t_gui_buffer *ptr_buffer;
-    char **servers, *str_command, *cmd_vars_replaced;
-    const char *ptr_buffer_name;
-    int num_servers, length, picked, i, list_size;
+    char **servers, *str_command;
+    int num_servers, length, picked, i;
 
     if (!command || !command[0])
         return;
@@ -722,30 +762,8 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
         ptr_server = next_server;
     }
 
-    /* execute the command on all buffers */
-    list_size = weechat_list_size (list_buffers);
-    for (i = 0; i < list_size; i++)
-    {
-        ptr_buffer_name = weechat_list_string (
-            weechat_list_get (list_buffers, i));
-        ptr_buffer = weechat_buffer_search ("==", ptr_buffer_name);
-        if (ptr_buffer)
-        {
-            irc_buffer_get_server_and_channel (ptr_buffer,
-                                               &ptr_server, &ptr_channel);
-            if (ptr_server && !ptr_channel)
-            {
-                cmd_vars_replaced = irc_message_replace_vars (ptr_server,
-                                                              NULL,
-                                                              str_command);
-                weechat_command (ptr_server->buffer,
-                                 (cmd_vars_replaced) ?
-                                 cmd_vars_replaced : str_command);
-                if (cmd_vars_replaced)
-                    free (cmd_vars_replaced);
-            }
-        }
-    }
+    /* execute the command on server buffers */
+    irc_command_exec_buffers (list_buffers, str_command);
 
     weechat_list_free (list_buffers);
     free (str_command);
@@ -6378,16 +6396,20 @@ irc_command_init ()
     weechat_hook_command (
         "allchan",
         N_("execute a command on all channels of all connected servers"),
-        N_("[-current] [-exclude=<channel>[,<channel>...]] <command> "
-           "[<arguments>]"
-           " || [-current] -include=<channel>[,<channel>...] <command> "
-           "[<arguments>]"),
+        N_("[-current] [-exclude=<channel>[,<channel>...]] <command>"
+           " || [-current] -include=<channel>[,<channel>...] <command>"),
         N_(" -current: execute command for channels of current server only\n"
            " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
            " -include: include only some channels (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
-           "arguments: arguments for command (special variables $nick, $channel "
-           "and $server are replaced by their value)\n"
+           "\n"
+           "Command and arguments are evaluated (see /help eval), the following "
+           "variables are replaced:\n"
+           "  $server             server name\n"
+           "  $channel            channel name\n"
+           "  $nick               nick on server\n"
+           "  ${irc_server.xxx}   variable xxx in server\n"
+           "  ${irc_channel.xxx}  variable xxx in channel\n"
            "\n"
            "Examples:\n"
            "  execute '/me is testing' on all channels:\n"
@@ -6403,17 +6425,21 @@ irc_command_init ()
     weechat_hook_command (
         "allpv",
         N_("execute a command on all private buffers of all connected servers"),
-        N_("[-current] [-exclude=<nick>[,<nick>...]] <command> "
-           "[<arguments>]"
-           " || [-current] -include=<nick>[,<nick>...] <command> "
-           "[<arguments>]"),
+        N_("[-current] [-exclude=<nick>[,<nick>...]] <command>"
+           " || [-current] -include=<nick>[,<nick>...] <command>"),
         N_(" -current: execute command for private buffers of current server "
            "only\n"
            " -exclude: exclude some nicks (wildcard \"*\" is allowed)\n"
            " -include: include only some nicks (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
-           "arguments: arguments for command (special variables $nick, $channel "
-           "and $server are replaced by their value)\n"
+           "\n"
+           "Command and arguments are evaluated (see /help eval), the following "
+           "variables are replaced:\n"
+           "  $server             server name\n"
+           "  $channel            channel name\n"
+           "  $nick               nick on server\n"
+           "  ${irc_server.xxx}   variable xxx in server\n"
+           "  ${irc_channel.xxx}  variable xxx in channel\n"
            "\n"
            "Examples:\n"
            "  execute '/me is testing' on all private buffers:\n"
@@ -6431,15 +6457,18 @@ irc_command_init ()
     weechat_hook_command (
         "allserv",
         N_("execute a command on all connected servers"),
-        N_("[-exclude=<server>[,<server>...]] "
-           "<command> [<arguments>]"
+        N_("[-exclude=<server>[,<server>...]] <command>"
            " || -include=<server>[,<server>...] "
-           "<command> [<arguments>]"),
+           "<command>"),
         N_(" -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
            " -include: include only some servers (wildcard \"*\" is allowed)\n"
            "  command: command to execute\n"
-           "arguments: arguments for command (special variables $nick, $channel "
-           "and $server are replaced by their value)\n"
+           "\n"
+           "Command and arguments are evaluated (see /help eval), the following "
+           "variables are replaced:\n"
+           "  $server             server name\n"
+           "  $nick               nick on server\n"
+           "  ${irc_server.xxx}   variable xxx in server\n"
            "\n"
            "Examples:\n"
            "  change nick on all servers:\n"

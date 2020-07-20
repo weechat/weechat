@@ -17,49 +17,61 @@ cel: nazwa serwera
 * `+allchan+`: wykonuje komendę na wszystkich kanałach na połączonych serwerach
 
 ----
-/allchan  [-current] [-exclude=<kanał>[,<kanał>...]] <komenda> [<argumenty>]
-          [-current] -include=<kanał>[,<kanał>...] <komenda> [<argumenty>]
+/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] -include=<channel>[,<channel>...] <command>
 
- -current: wykonuje komendę tylko na kanałach obecnego serwera
- -exclude: wyklucza niektóre kanały (wildcard "*" jest dozwolony)
- -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
-  komenda: komenda do wykonania
-argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute
 
-Przykłady:
-  wykonuje '/me testuje' na wszystkich kanałach:
-    /allchan me testuje
-  wysyła 'witam' wszędzie tylko nie na #weechat:
-    /allchan -exclude=#weechat msg * witam
-  wysyła 'witam' wszędzie poza #weechat oraz kanałami zaczynającymi się od #linux:
-    /allchan -exclude=#weechat,#linux* msg * witam
-  wysyła 'witam' na wszytkich kanałach zaczynających się od #linux:
-    /allchan -include=#linux* msg * witam
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
+
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat msg * hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* msg * hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
 * `+allpv+`: wykonuje komendę na wszystkich prywatnych buforach wszystkich połączonych serwerów
 
 ----
-/allpv  [-current] [-exclude=<nick>[,<nick>...]] <komenda> [<argumenty>]
-        [-current] -include=<nick>[,<nick>...] <komenda> [<argumenty>]
+/allpv  [-current] [-exclude=<nick>[,<nick>...]] <command>
+        [-current] -include=<nick>[,<nick>...] <command>
 
- -current: wykonuje komendę tylko na prywatnych buforach obecnego serwera
- -exclude: wyklucza niektóre nicki (wildcard "*" jest dozwolony)
- -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
-  komenda: komenda do wykonania
-argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+ -current: execute command for private buffers of current server only
+ -exclude: exclude some nicks (wildcard "*" is allowed)
+ -include: include only some nicks (wildcard "*" is allowed)
+  command: command to execute
 
-Przykłady:
-  wykonuje '/me testuje' we wszystkich prywatnych buforach:
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
+
+Examples:
+  execute '/me is testing' on all private buffers:
     /allpv me is testing
-  wysyła wszędzie 'hello' tylko nie nickowi foo:
+  say 'hello' everywhere but not for nick foo:
     /allpv -exclude=foo msg * hello
-  wysyła wszędzie 'hello' tylko nie nickowi foo i nickom zaczynającym się od bar:
+  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
     /allpv -exclude=foo,bar* msg * hello
-  wysyła 'witam' do wszystkich nicków zaczynających się od bar:
-    /allpv -include=bar* msg * witam
-  zamyka wszystkie prywatne bufory:
+  say 'hello' for all nicks beginning with bar:
+    /allpv -include=bar* msg * hello
+  close all private buffers:
     /allpv close
 ----
 
@@ -67,20 +79,24 @@ Przykłady:
 * `+allserv+`: wykonuje komendę na wszystkich połączonych serwerach
 
 ----
-/allserv  [-exclude=<serwer>[,<serwer>...]] <komenda> [<argumenty>]
-          -include=<serwer>[,<serwer>...] <komenda> [<argumenty>]
+/allserv  [-exclude=<server>[,<server>...]] <command>
+          -include=<server>[,<server>...] <command>
 
- -exclude: wyklucza niektóre serwery (wildcard "*" jest dozwolony)
- -include: uwzględnia tylko niektóre znaki (wildcard "*" est dozwolony)
-  komenda: komenda do wykonania
-argumenty: argumenty dla komendy (specjalne zmienne $nick, $channel i $server są zamieniane na odpowiednie wartości)
+ -exclude: exclude some servers (wildcard "*" is allowed)
+ -include: include only some servers (wildcard "*" is allowed)
+  command: command to execute
 
-Przykłady:
-  zmienia nick na wszystkich serwerach:
-    /allserv nick nowy_nick
-  ustawia stan nieobecności na wszystkich serwerach:
-    /allserv away Jestem nieobecny
-  wykonuje whois na własnym nicku na wszystkich serwerach:
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+
+Examples:
+  change nick on all servers:
+    /allserv nick newnick
+  set away on all servers:
+    /allserv away I'm away
+  do a whois on my nick on all servers:
     /allserv whois $nick
 ----
 

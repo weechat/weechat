@@ -17,49 +17,61 @@ target: Servername
 * `+allchan+`: führt einen Befehl aus der an alle Channels gesendet wird, die mit einem Server verbunden sind
 
 ----
-/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command> [<arguments>]
-          [-current] -include=<channel>[,<channel>...] <command> [<arguments>]
+/allchan  [-current] [-exclude=<channel>[,<channel>...]] <command>
+          [-current] -include=<channel>[,<channel>...] <command>
 
- -current: führt einen Befehl aus der an alle Channels des aktuellen Servers gesendet wird
- -exclude: dient zum Ausschluss ausgewählter Channels (Platzhalter "*" kann verwendet werden)
- -include: findet Anwendung für ausgewählte Channels (Platzhalter "*" kann verwendet werden)\n
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
+ -current: execute command for channels of current server only
+ -exclude: exclude some channels (wildcard "*" is allowed)
+ -include: include only some channels (wildcard "*" is allowed)
+  command: command to execute
 
-Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle Channels aus:
-    /allchan me Ich teste gerade etwas...
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel:
-    /allchan -exclude=#weechat msg * Hallo Welt
-  schicke 'Hallo Welt' an jeden Channel, ausgenommen an den #weechat Channel und Channels die mit #linux beginnen:
-    /allchan -exclude=#weechat,#linux* msg * Hallo Welt
-  schickt den Text 'Hallo' an alle Channels die mit #linux beginnen:
-    /allchan -include=#linux* msg * Hallo
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
+
+Examples:
+  execute '/me is testing' on all channels:
+    /allchan me is testing
+  say 'hello' everywhere but not on #weechat:
+    /allchan -exclude=#weechat msg * hello
+  say 'hello' everywhere but not on #weechat and channels beginning with #linux:
+    /allchan -exclude=#weechat,#linux* msg * hello
+  say 'hello' on all channels beginning with #linux:
+    /allchan -include=#linux* msg * hello
 ----
 
 [[command_irc_allpv]]
 * `+allpv+`: führt einen Befehl aus der an alle privaten Buffer gesendet wird, die mit einem Server verbunden sind
 
 ----
-/allpv  [-current] [-exclude=<nick>[,<nick>...]] <command> [<arguments>]
-        [-current] -include=<nick>[,<nick>...] <command> [<arguments>]
+/allpv  [-current] [-exclude=<nick>[,<nick>...]] <command>
+        [-current] -include=<nick>[,<nick>...] <command>
 
- -current: führt einen Befehl aus der für alle privaten Buffer, des aktuellen Servers, Anwendung findet
- -exclude: dient zum Ausschluss ausgewählter Nicks (Platzhalter "*" kann verwendet werden)
- -include: findet Anwendung für ausgewählte Nicks (Platzhalter "*" kann verwendet werden)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
+ -current: execute command for private buffers of current server only
+ -exclude: exclude some nicks (wildcard "*" is allowed)
+ -include: include only some nicks (wildcard "*" is allowed)
+  command: command to execute
 
-Beispiele:
-  führe den Befehl '/me Ich teste gerade etwas...' für alle privaten Buffer aus:
-    /allpv me Ich teste gerade etwas...
-  schicke 'Hallo' an alle, ausgenommen an Nick foo:
-    /allpv -exclude=foo msg * Hallo
-  schicke den Text 'Hallo' an alle, ausgenommen für Nick foo und Nicks die mit bar beginnen:
-    /allpv -exclude=foo,bar* msg * Hallo
-  schicke den Text 'Hallo' an alle Nicks die mit bar beginnen:
-    /allpv -include=bar* msg * Hallo
-  schließe alle privaten Buffer:
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $channel            channel name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+  ${irc_channel.xxx}  variable xxx in channel
+
+Examples:
+  execute '/me is testing' on all private buffers:
+    /allpv me is testing
+  say 'hello' everywhere but not for nick foo:
+    /allpv -exclude=foo msg * hello
+  say 'hello' everywhere but not for nick foo and nicks beginning with bar:
+    /allpv -exclude=foo,bar* msg * hello
+  say 'hello' for all nicks beginning with bar:
+    /allpv -include=bar* msg * hello
+  close all private buffers:
     /allpv close
 ----
 
@@ -67,20 +79,24 @@ Beispiele:
 * `+allserv+`: führt einen Befehl aus, der zu allen verbundenen Server gesendet wird
 
 ----
-/allserv  [-exclude=<server>[,<server>...]] <command> [<arguments>]
-          -include=<server>[,<server>...] <command> [<arguments>]
+/allserv  [-exclude=<server>[,<server>...]] <command>
+          -include=<server>[,<server>...] <command>
 
- -exclude: dient zum Ausschluss ausgewählter Server (Platzhalter "*" kann verwendet werden)
- -include: findet Anwendung für ausgewählte Server (Platzhalter "*" kann verwendet werden)
-  command: Befehl der ausgeführt werden soll
-arguments: Argumente für Befehl (Variablen die genutzt werden können und durch den entsprechenden Wert ersetzt werden: $nick, $channel und $server)
+ -exclude: exclude some servers (wildcard "*" is allowed)
+ -include: include only some servers (wildcard "*" is allowed)
+  command: command to execute
 
-Beispiele:
-  ändere den Nick auf allen Servern:
+Command and arguments are evaluated (see /help eval), the following variables are replaced:
+  $server             server name
+  $nick               nick on server
+  ${irc_server.xxx}   variable xxx in server
+
+Examples:
+  change nick on all servers:
     /allserv nick newnick
-  setzt den Status, auf allen Servern, auf abwesend:
+  set away on all servers:
     /allserv away I'm away
-  führt ein whois mit meinem nick auf allen Servern aus:
+  do a whois on my nick on all servers:
     /allserv whois $nick
 ----
 

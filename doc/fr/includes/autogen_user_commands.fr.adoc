@@ -17,14 +17,20 @@ cible : nom du serveur
 * `+allchan+`: exécuter une commande sur tous les canaux de tous les serveurs connectés
 
 ----
-/allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande> [<paramètres>]
-          [-current] [-include=<canal>[,<canal>...]] <commande> [<paramètres>]
+/allchan  [-current] [-exclude=<canal>[,<canal>...]] <commande>
+          [-current] [-include=<canal>[,<canal>...]] <commande>
 
   -current : exécuter la commande pour les canaux du serveur courant seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
   -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
   commande : commande à exécuter
-paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+
+La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
+  $server             nom du serveur
+  $channel            nom du canal
+  $nick               pseudo sur le serveur
+  ${irc_server.xxx}   variable xxx dans le serveur
+  ${irc_channel.xxx}  variable xxx dans le canal
 
 Exemples :
   exécuter '/me teste' sur tous les canaux :
@@ -41,14 +47,20 @@ Exemples :
 * `+allpv+`: exécuter une commande sur tous les tampons privés de tous les serveurs connectés
 
 ----
-/allpv  [-current] [-exclude=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
-        [-current] [-include=<pseudo>[,<pseudo>...]] <commande> [<paramètres>]
+/allpv  [-current] [-exclude=<pseudo>[,<pseudo>...]] <commande>
+        [-current] [-include=<pseudo>[,<pseudo>...]] <commande>
 
   -current : exécuter la commande pour les tampons privés du serveur courant seulement
   -exclude : exclure certains pseudos (le caractère joker "*" est autorisé)
   -include : inclure seulement certains pseudos (le caractère joker "*" est autorisé)
   commande : commande à exécuter
-paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+
+La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
+  $server             nom du serveur
+  $channel            nom du canal
+  $nick               pseudo sur le serveur
+  ${irc_server.xxx}   variable xxx dans le serveur
+  ${irc_channel.xxx}  variable xxx dans le canal
 
 Exemples :
   exécuter '/me teste' sur tous les tampons privés :
@@ -67,13 +79,17 @@ Exemples :
 * `+allserv+`: exécuter une commande sur tous les serveurs connectés
 
 ----
-/allserv  [-exclude=<serveur>[,<serveur>...]] <commande> [<paramètres>]
-          [-include=<serveur>[,<serveur>...]] <commande> [<paramètres>]
+/allserv  [-exclude=<serveur>[,<serveur>...]] <commande>
+          [-include=<serveur>[,<serveur>...]] <commande>
 
   -exclude : exclure certains serveurs (le caractère joker "*" est autorisé)
   -include : inclure seulement certains serveurs (le caractère joker "*" est autorisé)
   commande : commande à exécuter
-paramètres : paramètres pour la commande (les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)
+
+La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
+  $server             nom du serveur
+  $nick               pseudo sur le serveur
+  ${irc_server.xxx}   variable xxx dans le serveur
 
 Exemples :
   changer de pseudo sur tous les serveurs :

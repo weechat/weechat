@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.0]]
 == Version 3.0 (under dev)
 
+New features::
+
+  * irc: evaluate command executed by commands /allchan, /allpv and /allserv (issue #1536)
+
 Bug fixes::
 
   * core: do not add line with highlight and tag "notify_none" to hotlist (issue #1529)
