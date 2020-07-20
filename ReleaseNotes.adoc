@@ -20,6 +20,34 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.0]]
 == Version 3.0 (under dev)
 
+[[v3.0_irc_commands_allchan_allpv_allserv]]
+=== IRC commands /allchan, /allpv and /allserv
+
+The command and arguments given to commands `/allchan`, `/allpv` and `/allserv`
+are now evaluated (see /help on the commands for more information).
+
+Additionally, a breaking change has been introduced: the leading `/` is now
+required in these commands, so this allows to send text to buffers without
+using the command `/msg * xxx`.
+
+So with previous releases, to say "hello" on all channels:
+
+----
+/allchan msg * hello
+----
+
+Now it can be done like this:
+
+----
+/allchan hello
+----
+
+If you want to use a command, you must add explicitly the leading `/`:
+
+----
+/allchan /msg * hello
+----
+
 [[v3.0_trigger_beep]]
 === Default "beep" trigger
 

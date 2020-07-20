@@ -464,22 +464,10 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     struct t_irc_server *ptr_server, *next_server;
     struct t_irc_channel *ptr_channel, *next_channel;
     struct t_weelist *list_buffers;
-    char **channels, *str_command;
-    int num_channels, length, picked, i;
+    char **channels;
+    int num_channels, picked, i;
 
     if (!command || !command[0])
-        return;
-
-    if (!weechat_string_is_command_char (command))
-    {
-        length = 1 + strlen (command) + 1;
-        str_command = malloc (length);
-        snprintf (str_command, length, "/%s", command);
-    }
-    else
-        str_command = strdup (command);
-
-    if (!str_command)
         return;
 
     channels = (str_channels && str_channels[0]) ?
@@ -542,10 +530,9 @@ irc_command_exec_all_channels (struct t_irc_server *server,
     }
 
     /* execute the command on channel/pv buffers */
-    irc_command_exec_buffers (list_buffers, str_command);
+    irc_command_exec_buffers (list_buffers, command);
 
     weechat_list_free (list_buffers);
-    free (str_command);
     if (channels)
         weechat_string_free_split (channels);
 }
@@ -699,22 +686,10 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
 {
     struct t_irc_server *ptr_server, *next_server;
     struct t_weelist *list_buffers;
-    char **servers, *str_command;
-    int num_servers, length, picked, i;
+    char **servers;
+    int num_servers, picked, i;
 
     if (!command || !command[0])
-        return;
-
-    if (!weechat_string_is_command_char (command))
-    {
-        length = 1 + strlen (command) + 1;
-        str_command = malloc (length);
-        snprintf (str_command, length, "/%s", command);
-    }
-    else
-        str_command = strdup (command);
-
-    if (!str_command)
         return;
 
     servers = (str_servers && str_servers[0]) ?
@@ -763,10 +738,9 @@ irc_command_exec_all_servers (int inclusive, const char *str_servers, const char
     }
 
     /* execute the command on server buffers */
-    irc_command_exec_buffers (list_buffers, str_command);
+    irc_command_exec_buffers (list_buffers, command);
 
     weechat_list_free (list_buffers);
-    free (str_command);
     if (servers)
         weechat_string_free_split (servers);
 }
@@ -6401,7 +6375,8 @@ irc_command_init ()
         N_(" -current: execute command for channels of current server only\n"
            " -exclude: exclude some channels (wildcard \"*\" is allowed)\n"
            " -include: include only some channels (wildcard \"*\" is allowed)\n"
-           "  command: command to execute\n"
+           "  command: command to execute (or text to send to buffer if "
+           "command does not start with '/')\n"
            "\n"
            "Command and arguments are evaluated (see /help eval), the following "
            "variables are replaced:\n"
@@ -6413,14 +6388,14 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "  execute '/me is testing' on all channels:\n"
-           "    /allchan me is testing\n"
+           "    /allchan /me is testing\n"
            "  say 'hello' everywhere but not on #weechat:\n"
-           "    /allchan -exclude=#weechat msg * hello\n"
+           "    /allchan -exclude=#weechat hello\n"
            "  say 'hello' everywhere but not on #weechat and channels beginning "
            "with #linux:\n"
-           "    /allchan -exclude=#weechat,#linux* msg * hello\n"
+           "    /allchan -exclude=#weechat,#linux* hello\n"
            "  say 'hello' on all channels beginning with #linux:\n"
-           "    /allchan -include=#linux* msg * hello"),
+           "    /allchan -include=#linux* hello"),
         "-current", &irc_command_allchan, NULL, NULL);
     weechat_hook_command (
         "allpv",
@@ -6431,7 +6406,8 @@ irc_command_init ()
            "only\n"
            " -exclude: exclude some nicks (wildcard \"*\" is allowed)\n"
            " -include: include only some nicks (wildcard \"*\" is allowed)\n"
-           "  command: command to execute\n"
+           "  command: command to execute (or text to send to buffer if "
+           "command does not start with '/')\n"
            "\n"
            "Command and arguments are evaluated (see /help eval), the following "
            "variables are replaced:\n"
@@ -6443,16 +6419,16 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "  execute '/me is testing' on all private buffers:\n"
-           "    /allpv me is testing\n"
+           "    /allpv /me is testing\n"
            "  say 'hello' everywhere but not for nick foo:\n"
-           "    /allpv -exclude=foo msg * hello\n"
+           "    /allpv -exclude=foo hello\n"
            "  say 'hello' everywhere but not for nick foo and nicks beginning "
            "with bar:\n"
-           "    /allpv -exclude=foo,bar* msg * hello\n"
+           "    /allpv -exclude=foo,bar* hello\n"
            "  say 'hello' for all nicks beginning with bar:\n"
-           "    /allpv -include=bar* msg * hello\n"
+           "    /allpv -include=bar* hello\n"
            "  close all private buffers:\n"
-           "    /allpv close"),
+           "    /allpv /close"),
         "-current", &irc_command_allpv, NULL, NULL);
     weechat_hook_command (
         "allserv",
@@ -6462,7 +6438,8 @@ irc_command_init ()
            "<command>"),
         N_(" -exclude: exclude some servers (wildcard \"*\" is allowed)\n"
            " -include: include only some servers (wildcard \"*\" is allowed)\n"
-           "  command: command to execute\n"
+           "  command: command to execute (or text to send to buffer if "
+           "command does not start with '/')\n"
            "\n"
            "Command and arguments are evaluated (see /help eval), the following "
            "variables are replaced:\n"
@@ -6472,11 +6449,11 @@ irc_command_init ()
            "\n"
            "Examples:\n"
            "  change nick on all servers:\n"
-           "    /allserv nick newnick\n"
+           "    /allserv /nick newnick\n"
            "  set away on all servers:\n"
-           "    /allserv away I'm away\n"
+           "    /allserv /away I'm away\n"
            "  do a whois on my nick on all servers:\n"
-           "    /allserv whois $nick"),
+           "    /allserv /whois $nick"),
         NULL, &irc_command_allserv, NULL, NULL);
     weechat_hook_command_run ("/away", &irc_command_run_away, NULL, NULL);
     weechat_hook_command (

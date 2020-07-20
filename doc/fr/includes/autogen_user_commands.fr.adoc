@@ -23,7 +23,7 @@ cible : nom du serveur
   -current : exécuter la commande pour les canaux du serveur courant seulement
   -exclude : exclure certains canaux (le caractère joker "*" est autorisé)
   -include : inclure seulement certains canaux (le caractère joker "*" est autorisé)
-  commande : commande à exécuter
+  commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
 La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
   $server             nom du serveur
@@ -34,13 +34,13 @@ La commande et les paramètres sont évalués (voir /help eval), les variables s
 
 Exemples :
   exécuter '/me teste' sur tous les canaux :
-    /allchan me teste
+    /allchan /me teste
   dire 'bonjour' partout sauf sur #weechat :
-    /allchan -exclude=#weechat msg * bonjour
+    /allchan -exclude=#weechat bonjour
   dire 'bonjour' partout sauf sur #weechat et les canaux commençant par #linux :
-    /allchan -exclude=#weechat,#linux* msg * bonjour
+    /allchan -exclude=#weechat,#linux* bonjour
   dire 'bonjour' sur tous les canaux commençant par #linux :
-    /allchan -include=#linux* msg * bonjour
+    /allchan -include=#linux* bonjour
 ----
 
 [[command_irc_allpv]]
@@ -53,7 +53,7 @@ Exemples :
   -current : exécuter la commande pour les tampons privés du serveur courant seulement
   -exclude : exclure certains pseudos (le caractère joker "*" est autorisé)
   -include : inclure seulement certains pseudos (le caractère joker "*" est autorisé)
-  commande : commande à exécuter
+  commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
 La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
   $server             nom du serveur
@@ -64,15 +64,15 @@ La commande et les paramètres sont évalués (voir /help eval), les variables s
 
 Exemples :
   exécuter '/me teste' sur tous les tampons privés :
-    /allpv me teste
+    /allpv /me teste
   dire 'bonjour' partout sauf sur pour le pseudo foo :
-    /allpv -exclude=foo msg * bonjour
+    /allpv -exclude=foo bonjour
   dire 'bonjour' partout sauf pour le pseudo foo et les pseudos commençant par bar :
-    /allpv -exclude=foo,bar* msg * bonjour
+    /allpv -exclude=foo,bar* bonjour
   dire 'bonjour' pour tous les pseudos commençant par bar :
-    /allpv -include=bar* msg * bonjour
+    /allpv -include=bar* bonjour
   fermer tous les tampons privés :
-    /allpv close
+    /allpv /close
 ----
 
 [[command_irc_allserv]]
@@ -84,7 +84,7 @@ Exemples :
 
   -exclude : exclure certains serveurs (le caractère joker "*" est autorisé)
   -include : inclure seulement certains serveurs (le caractère joker "*" est autorisé)
-  commande : commande à exécuter
+  commande : commande à exécuter (ou texte à envoyer au tampon si la commande ne commence pas par '/')
 
 La commande et les paramètres sont évalués (voir /help eval), les variables suivantes sont remplacées :
   $server             nom du serveur
@@ -93,11 +93,11 @@ La commande et les paramètres sont évalués (voir /help eval), les variables s
 
 Exemples :
   changer de pseudo sur tous les serveurs :
-    /allserv nick newnick
+    /allserv /nick newnick
   positionner l'absence sur tous les serveurs :
-    /allserv away Je suis absent
+    /allserv /away Je suis absent
   faire un whois sur mon pseudo sur tous les serveurs :
-    /allserv whois $nick
+    /allserv /whois $nick
 ----
 
 [[command_irc_ban]]
@@ -1027,7 +1027,7 @@ Exemples :
   alias /split pour diviser la fenêtre horizontalement :
     /alias add split /window splith
   alias /hello pour dire "hello" sur tous les canaux mais pas sur #weechat :
-    /alias add hello /allchan -exclude=#weechat msg * hello
+    /alias add hello /allchan -exclude=#weechat hello
   alias /forcejoin pour envoyer la commande IRC "forcejoin" avec la complétion de /sajoin :
     /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----

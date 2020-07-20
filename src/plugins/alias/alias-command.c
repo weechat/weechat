@@ -282,7 +282,7 @@ alias_command_init ()
            "    /alias add split /window splith\n"
            "  alias /hello to say \"hello\" on all channels but not on "
            "#weechat:\n"
-           "    /alias add hello /allchan -exclude=#weechat msg * hello\n"
+           "    /alias add hello /allchan -exclude=#weechat hello\n"
            "  alias /forcejoin to send IRC command \"forcejoin\" with "
            "completion of /sajoin:\n"
            "    /alias addcompletion %%sajoin forcejoin /quote forcejoin"),

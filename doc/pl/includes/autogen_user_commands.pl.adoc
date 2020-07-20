@@ -23,7 +23,7 @@ cel: nazwa serwera
  -current: execute command for channels of current server only
  -exclude: exclude some channels (wildcard "*" is allowed)
  -include: include only some channels (wildcard "*" is allowed)
-  command: command to execute
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
 Command and arguments are evaluated (see /help eval), the following variables are replaced:
   $server             server name
@@ -34,13 +34,13 @@ Command and arguments are evaluated (see /help eval), the following variables ar
 
 Examples:
   execute '/me is testing' on all channels:
-    /allchan me is testing
+    /allchan /me is testing
   say 'hello' everywhere but not on #weechat:
-    /allchan -exclude=#weechat msg * hello
+    /allchan -exclude=#weechat hello
   say 'hello' everywhere but not on #weechat and channels beginning with #linux:
-    /allchan -exclude=#weechat,#linux* msg * hello
+    /allchan -exclude=#weechat,#linux* hello
   say 'hello' on all channels beginning with #linux:
-    /allchan -include=#linux* msg * hello
+    /allchan -include=#linux* hello
 ----
 
 [[command_irc_allpv]]
@@ -53,7 +53,7 @@ Examples:
  -current: execute command for private buffers of current server only
  -exclude: exclude some nicks (wildcard "*" is allowed)
  -include: include only some nicks (wildcard "*" is allowed)
-  command: command to execute
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
 Command and arguments are evaluated (see /help eval), the following variables are replaced:
   $server             server name
@@ -64,15 +64,15 @@ Command and arguments are evaluated (see /help eval), the following variables ar
 
 Examples:
   execute '/me is testing' on all private buffers:
-    /allpv me is testing
+    /allpv /me is testing
   say 'hello' everywhere but not for nick foo:
-    /allpv -exclude=foo msg * hello
+    /allpv -exclude=foo hello
   say 'hello' everywhere but not for nick foo and nicks beginning with bar:
-    /allpv -exclude=foo,bar* msg * hello
+    /allpv -exclude=foo,bar* hello
   say 'hello' for all nicks beginning with bar:
-    /allpv -include=bar* msg * hello
+    /allpv -include=bar* hello
   close all private buffers:
-    /allpv close
+    /allpv /close
 ----
 
 [[command_irc_allserv]]
@@ -84,7 +84,7 @@ Examples:
 
  -exclude: exclude some servers (wildcard "*" is allowed)
  -include: include only some servers (wildcard "*" is allowed)
-  command: command to execute
+  command: command to execute (or text to send to buffer if command does not start with '/')
 
 Command and arguments are evaluated (see /help eval), the following variables are replaced:
   $server             server name
@@ -93,11 +93,11 @@ Command and arguments are evaluated (see /help eval), the following variables ar
 
 Examples:
   change nick on all servers:
-    /allserv nick newnick
+    /allserv /nick newnick
   set away on all servers:
-    /allserv away I'm away
+    /allserv /away I'm away
   do a whois on my nick on all servers:
-    /allserv whois $nick
+    /allserv /whois $nick
 ----
 
 [[command_irc_ban]]
@@ -1003,32 +1003,32 @@ cel: odpowiedź powinna pasować do maski
         addcompletion <dopełnienie> <alias> [<komenda>[;<komenda>...]]
         del <alias> [<alias>...]
 
-         list: lista aliasów (ta lista wyświetlana jest jeśli nie zostanie podany argument)
-          add: dodaje alias
-addcompletion: dodaje alias z niestandardowym dopełnieniem
-          del: usuwa alias
-   completion: dopełnienie dla aliasu: domyślnie dopełnienie wykonuje się z docelową komendą
-            uwaga: można użyć %%komenda w celu użycia dopełnień dla istniejących komend
-     alias: nazwa aliasu
-   komenda: nazwa komendy (wiele komend można oddzielić za pomocą średnika)
+         list: list aliases (without argument, this list is displayed)
+          add: add an alias
+addcompletion: add an alias with a custom completion
+          del: delete an alias
+   completion: completion for alias: by default completion is done with target command
+               note: you can use %%command to use completion of an existing command
+        alias: name of alias
+      command: command name with arguments (many commands can be separated by semicolons)
 
-Ważne: dla komend specjalne zmienne są zastępowane odpowiednimi wartościami:
-        $n: argument 'n' (pomiędzy 1 i 9)
-       $-m: argumenty od 1 do 'm'
-       $n-: argumenty od 'n' do ostatniego
-      $n-m: argumenty od 'n' od 'm'
-        $*: wszystkie argumenty
-        $~: ostatni argument
-      $var: gdzie "var" to zmienna lokalna buforu (zobacz /buffer localvar)
-            przykłady: $nick, $channel, $server, $plugin, $name
+Note: in command, special variables are replaced:
+        $n: argument 'n' (between 1 and 9)
+       $-m: arguments from 1 to 'm'
+       $n-: arguments from 'n' to last
+      $n-m: arguments from 'n' to 'm'
+        $*: all arguments
+        $~: last argument
+      $var: where "var" is a local variable of buffer (see /buffer localvar)
+            examples: $nick, $channel, $server, $plugin, $name
 
-Przykłady:
-  alias /split do poziomego podziału okna:
-    /alias split /window splith
-  alias /hello pisze "hello" na wszystkich kanałach poza #weechat:
-    /alias hello /allchan -exclude=#weechat msg * hello
-  alias /forcejoin wysyłający komende IRC "forcejoin" z dopełnieniem dla /sajoin:
-    /alias -completion %%sajoin forcejoin /quote forcejoin
+Examples:
+  alias /split to split window horizontally:
+    /alias add split /window splith
+  alias /hello to say "hello" on all channels but not on #weechat:
+    /alias add hello /allchan -exclude=#weechat hello
+  alias /forcejoin to send IRC command "forcejoin" with completion of /sajoin:
+    /alias addcompletion %%sajoin forcejoin /quote forcejoin
 ----
 // end::alias_commands[]
 
