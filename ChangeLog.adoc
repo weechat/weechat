@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * irc: add pointer to irc_nick in focus of bar item "buffer_nicklist" (issue #1535, issue #1538)
   * irc: allow to send text on buffers with commands /allchan, /allpv and /allserv
   * irc: evaluate command executed by commands /allchan, /allpv and /allserv (issue #1536)
 
