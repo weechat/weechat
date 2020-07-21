@@ -1125,14 +1125,10 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | no_highlight     | die Zeile kann nicht gehiglighted werden.
 | no_log           | Zeile wird nicht in die Log-Datei geschrieben.
 | log0 … log9      | Grad der Protokollierung (siehe `/help logger`).
-// TRANSLATION MISSING
-| notify_none      | The line must not be added to hotlist. ^(1)^
-// TRANSLATION MISSING
-| notify_message   | The line is a user message. ^(1)^
-// TRANSLATION MISSING
-| notify_private   | The line is a private message. ^(1)^
-// TRANSLATION MISSING
-| notify_highlight | The line is a message with highlight. ^(1)^
+| notify_none      | Diese Zeile wird erzeugt keinen Hotlist-Eintrag. ^(1)^
+| notify_message   | Diese Zeile ist eine User Nachricht. ^(1)^
+| notify_private   | Diese Zeile ist eine private Nachricht. ^(1)^
+| notify_highlight | Diese Zeile beinhaltet eine Highlight Nachricht. ^(1)^
 | self_msg         | eigene Nachricht.
 | nick_xxx         | Nachricht ist vom Nick "xxx".
 | prefix_nick_ccc  | Präfix für den Nick mit der Farbe "ccc".
@@ -1147,12 +1143,11 @@ Tags die häufig verwendet werden (keine vollständige Auflistung):
 | away_info        | Nachricht mit "away" Information.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
-"notify_xxx" is present, the real notify level can be different, for example
-if a max hotlist level is used for a nick, the notify level can be lower than
-the value in the tag.
+^(1)^ Wenn kein "notify_xxx" Tag vorhanden ist, ist die Benachrichtigungsstufe "low".
+Falls ein "notify_xxx" Tag vorhanden ist, kann die tatsächliche Benachrichtigungsstufe
+unterschiedlich sein. Wenn beispielsweise der max hotlist level für einen Nick verwendet
+wird, kann die Benachrichtigungsstufe niedriger sein als der Wert im Tag.
 
 [[bars]]
 === Bars
