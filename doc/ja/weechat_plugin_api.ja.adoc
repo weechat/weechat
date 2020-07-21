@@ -12109,8 +12109,7 @@ info を使う前にエリアが一致していることを確認して下さい
 | _chat | チャットエリアインジケータ |
   "0" または "1" | "0"
 
-| _chat_line | 行へのポインタ +
-  _(WeeChat バージョン 1.2 以上で利用可)_ |
+| _chat_line | 行へのポインタ _(WeeChat バージョン 1.2 以上で利用可)_ |
   "0x1234abcd" | ""
 
 | _chat_line_x | 行中の列番号 ^(3)^ |
@@ -12167,8 +12166,7 @@ info を使う前にエリアが一致していることを確認して下さい
   "0" ... "n" | "-1"
 
 // TRANSLATION MISSING
-| _bar_window | Pointer to bar window +
-  _(WeeChat ≥ 2.9)_. |
+| _bar_window | Pointer to bar window _(WeeChat ≥ 2.9)_. |
   "0x1234abcd" | ""
 |===
 
@@ -12189,6 +12187,8 @@ info を使う前にエリアが一致していることを確認して下さい
 | nick     | core             | ニックネーム
 | prefix   | core             | ニックネームのプレフィックス
 | group    | core             | グループ名
+// TRANSLATION MISSING
+| irc_nick | irc              | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
 | irc_host | irc              | ニックネームのホスト名 (判る場合)
 |===
 

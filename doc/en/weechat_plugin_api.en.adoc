@@ -12104,8 +12104,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _chat | Chat area indicator. |
   "0" or "1" | "0"
 
-| _chat_line | Pointer to line +
-  _(WeeChat ≥ 1.2)_. |
+| _chat_line | Pointer to line _(WeeChat ≥ 1.2)_. |
   "0x1234abcd" | ""
 
 | _chat_line_x | Column in line ^(3)^. |
@@ -12159,8 +12158,7 @@ Content of hashtable sent to callback (keys and values are of type "string"):
 | _bar_item_col | Column in bar item. |
   "0" ... "n" | "-1"
 
-| _bar_window | Pointer to bar window +
-  _(WeeChat ≥ 2.9)_. |
+| _bar_window | Pointer to bar window _(WeeChat ≥ 2.9)_. |
   "0x1234abcd" | ""
 |===
 
@@ -12181,6 +12179,7 @@ Extra info for bar item "buffer_nicklist":
 | nick     | core         | Nick name.
 | prefix   | core         | Prefix for nick.
 | group    | core         | Group name.
+| irc_nick | irc          | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
 | irc_host | irc          | Host for nick (if known).
 |===
 

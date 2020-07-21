@@ -12599,8 +12599,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
   "0" o "1" | "0"
 
 // TRANSLATION MISSING
-| _chat_line | Pointer to line +
-  _(WeeChat ≥ 1.2)_. |
+| _chat_line | Pointer to line _(WeeChat ≥ 1.2)_. |
   "0x1234abcd" | ""
 
 | _chat_line_x | Colonna nella riga ^(3)^. |
@@ -12657,8 +12656,7 @@ Contenuto della tabella hash inviata alla callback (tasti e valori sono di tipo
   "0" ... "n" | "-1"
 
 // TRANSLATION MISSING
-| _bar_window | Pointer to bar window +
-  _(WeeChat ≥ 2.9)_. |
+| _bar_window | Pointer to bar window _(WeeChat ≥ 2.9)_. |
   "0x1234abcd" | ""
 |===
 
@@ -12679,6 +12677,8 @@ Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 | nick     | core         | Nick.
 | prefix   | core         | Prefisso per il nick.
 | group    | core         | Nome gruppo.
+// TRANSLATION MISSING
+| irc_nick | irc          | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
 | irc_host | irc          | Host per il nick (se conosciuto).
 |===
 

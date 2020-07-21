@@ -12370,8 +12370,7 @@ valeurs sont de type "string") :
 | _chat | Indicateur zone "chat". |
   "0" ou "1" | "0"
 
-| _chat_line | Pointeur vers la ligne +
-  _(WeeChat ≥ 1.2)_. |
+| _chat_line | Pointeur vers la ligne _(WeeChat ≥ 1.2)_. |
   "0x1234abcd" | ""
 
 | _chat_line_x | Colonne de la ligne ^(3)^. |
@@ -12425,8 +12424,7 @@ valeurs sont de type "string") :
 | _bar_item_col | Colonne dans l'objet de barre. |
   "0" ... "n" | "-1"
 
-| _bar_window | Pointeur vers la fenêtre de barre +
-  _(WeeChat ≥ 2.9)_. |
+| _bar_window | Pointeur vers la fenêtre de barre _(WeeChat ≥ 2.9)_. |
   "0x1234abcd" | ""
 |===
 
@@ -12448,6 +12446,7 @@ Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 | nick     | core            | Pseudonyme.
 | prefix   | core            | Préfixe du pseudonyme.
 | group    | core            | Nom du groupe.
+| irc_nick | irc             | Pointeur vers le pseudo IRC _(WeeChat ≥ 3.0)_.
 | irc_host | irc             | Nom d'hôte pour le pseudonyme (si connu).
 |===
 
