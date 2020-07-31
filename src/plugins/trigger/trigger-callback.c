@@ -33,9 +33,6 @@
 /* hashtable used to evaluate "conditions" */
 struct t_hashtable *trigger_callback_hashtable_options_conditions = NULL;
 
-/* hashtable used to replace with regex */
-struct t_hashtable *trigger_callback_hashtable_options_regex = NULL;
-
 
 /*
  * Parses an IRC message.
@@ -233,6 +230,7 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
     char *value;
     const char *ptr_key, *ptr_value;
     int i, pointers_allocated;
+    struct t_hashtable *hashtable_options_regex;
 
     pointers_allocated = 0;
 
@@ -283,8 +281,14 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             ptr_value = weechat_hashtable_get (extra_vars, ptr_key);
         }
 
+        hashtable_options_regex = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+
         weechat_hashtable_set (pointers, "regex", trigger->regex[i].regex);
-        weechat_hashtable_set (trigger_callback_hashtable_options_regex,
+        weechat_hashtable_set (hashtable_options_regex,
                                "regex_replace",
                                trigger->regex[i].replace_escaped);
 
@@ -292,7 +296,9 @@ trigger_callback_replace_regex (struct t_trigger *trigger,
             ptr_value,
             pointers,
             extra_vars,
-            trigger_callback_hashtable_options_regex);
+            hashtable_options_regex);
+
+        weechat_hashtable_free (hashtable_options_regex);
 
         if (value)
         {
@@ -1284,12 +1290,6 @@ trigger_callback_init ()
         weechat_hashtable_set (trigger_callback_hashtable_options_conditions,
                                "type", "condition");
     }
-
-    trigger_callback_hashtable_options_regex = weechat_hashtable_new (
-        32,
-        WEECHAT_HASHTABLE_STRING,
-        WEECHAT_HASHTABLE_STRING,
-        NULL, NULL);
 }
 
 /*
@@ -1301,6 +1301,4 @@ trigger_callback_end ()
 {
     if (trigger_callback_hashtable_options_conditions)
         weechat_hashtable_free (trigger_callback_hashtable_options_conditions);
-    if (trigger_callback_hashtable_options_regex)
-        weechat_hashtable_free (trigger_callback_hashtable_options_regex);
 }
