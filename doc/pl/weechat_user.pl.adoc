@@ -396,9 +396,6 @@ Jeśli kompilujesz z użyciem CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-Jeśli kompilujesz z użyciem autotools, debugowanie jest domyślnie włączone
-(`--with-debug=1`).
-
 Jeśli zainstalowałeś pakiet binarny, doinstaluj paczkę _weechat-dbg_.
 
 [[core_files]]

@@ -388,8 +388,6 @@ If you're compiling with CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-If you're compiling with autotools, debug is default (`--with-debug=1`).
-
 If you installed a binary package, then install package _weechat-dbg_.
 
 [[core_files]]

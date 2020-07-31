@@ -395,8 +395,6 @@ Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-Bei der Kompilierung mit autotools ist debug standardmäßig aktiviert (`--with-debug=1`).
-
 Wird ein Binärpaket genutzt dann muss zusätzlich das Paket _weechat-dbg_ installiert werden.
 
 [[core_files]]

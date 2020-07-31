@@ -396,8 +396,6 @@ CMake でコンパイルする場合:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-autotools でコンパイルする場合は、デバックはデフォルトで有効化されています (`--with-debug=1`)。
-
 バイナリパッケージをインストールする場合は、_weechat-dbg_ パッケージをインストールしてください。
 
 [[core_files]]

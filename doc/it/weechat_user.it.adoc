@@ -430,8 +430,6 @@ Se si compila con CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-Se compilato con gli autotools, il debug è attivato automaticamente (`--with-debug=1`).
-
 Se è stato installato il pacchetto binario, installare il pacchetto _weechat-gdb_.
 
 [[core_files]]

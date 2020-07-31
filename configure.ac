@@ -166,7 +166,7 @@ AC_ARG_ENABLE(enchant,      [  --enable-enchant        turn on Enchant lib for S
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled)],enable_trigger=$enableval,enable_trigger=yes)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(tclconfig,      [  --with-tclconfig=DIR    directory containing tcl configuration (tclConfig.sh)],tclconfig=$withval,tclconfig='')
-AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
+AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=0)],debug=$withval,debug=0)
 AC_ARG_ENABLE(tests,        [  --enable-tests          turn on build of tests (default=not built)],enable_tests=$enableval,enable_tests=no)
 AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page (default=not built)],enable_man=$enableval,enable_man=no)
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
