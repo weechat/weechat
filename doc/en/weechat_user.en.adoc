@@ -375,18 +375,31 @@ Then follow instructions for source package (see
 If you experienced crashes, or if you want to report any future WeeChat crash,
 you have to:
 
-* Compile it with debug info (or install binary package with debug info).
+* Compile with:
+** debug info (or install binary package with debug info),
+** address sanitizer (optional).
 * Enable _core_ files on your system.
 * Install gdb.
 
-[[debug_info]]
-==== Debug info
+[[build_debug]]
+==== Build with debug options
 
 If you're compiling with CMake:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
+
+You can additionally enable the address sanitizer, which causes WeeChat to
+crash immediately in case of problem:
+
+----
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+----
+
+[WARNING]
+You should enable address sanitizer only if you're trying to cause a crash,
+this is not recommended in production.
 
 If you installed a binary package, then install package _weechat-dbg_.
 

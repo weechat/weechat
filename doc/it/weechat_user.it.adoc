@@ -416,19 +416,36 @@ Poi seguire le istruzioni per i sorgenti (consultare
 Nel caso in cui si verifichino errori, o si desideri segnalare qualsiasi errore
 futuro di WeeChat, è necessario:
 
-* compilarlo con informazioni di debug (o installare il pacchetto binario con
-  le informazioni di debug)
+// TRANSLATION MISSING
+* compile with:
+** informazioni di debug (o installare il pacchetto binario con le informazioni di debug)
+// TRANSLATION MISSING
+** address sanitizer (optional)
 * abilitare i file _core_ sul proprio sistema
 * installare gdb
 
-[[debug_info]]
-==== Informazioni di debug
+// TRANSLATION MISSING
+[[build_debug]]
+==== Build with debug options
 
 Se si compila con CMake:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
+
+// TRANSLATION MISSING
+You can additionally enable the address sanitizer, which causes WeeChat to
+crash immediately in case of problem:
+
+----
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+----
+
+// TRANSLATION MISSING
+[WARNING]
+You should enable address sanitizer only if you're trying to cause a crash,
+this is not recommended in production.
 
 Se è stato installato il pacchetto binario, installare il pacchetto _weechat-gdb_.
 

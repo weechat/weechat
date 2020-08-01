@@ -386,19 +386,31 @@ Suivez alors les instructions du paquet source (voir
 Si vous avez eu des plantages, ou si vous souhaitez rapporter tout plantage
 futur de WeeChat, vous devez :
 
-* Compiler avec les infos de debug (ou installer un paquet binaire avec les
-  infos de debug).
+* Compiler avec :
+** les infos de debug (ou installer un paquet binaire avec les infos de debug),
+** la vérification des adresses (« address sanitizer ») (facultatif).
 * Activer les fichiers _core_ sur votre système.
 * Installer gdb.
 
-[[debug_info]]
-==== Infos de debug
+[[build_debug]]
+==== Construction avec options de debug
 
 Si vous compilez avec CMake :
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
+
+Vous pouvez aussi activer la vérification des adresses (« address sanitizer »),
+ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :
+
+----
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+----
+
+[WARNING]
+Vous ne devriez activer la vérification des adresses que si vous essayez de
+provoquer un plantage, ceci n'est pas recommandé en production.
 
 Si vous avez installé un paquet binaire, alors installez le paquet
 _weechat-dbg_.

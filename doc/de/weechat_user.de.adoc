@@ -382,18 +382,36 @@ Folgen Sie bitte der Anleitung zur Erstellung aus Quellpaketen (siehe <<source_p
 
 Falls WeeChat abgestürzt sein sollte und Sie diesen Fehler melden möchten:
 
-* kompilieren Sie WeeChat mit Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
+// TRANSLATION MISSING
+* Compile with:
+** Debug-Information (oder installieren Sie das Binärpaket mit Debug-Information)
+// TRANSLATION MISSING
+** compile it with address sanitizer (optional)
 * aktivieren Sie _core_ Dateien auf Ihrem System
 * installieren Sie gdb
 
-[[debug_info]]
-==== Debug info
+// TRANSLATION MISSING
+[[build_debug]]
+==== Build with debug options
 
 Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
+
+// TRANSLATION MISSING
+You can additionally enable the address sanitizer, which causes WeeChat to
+crash immediately in case of problem:
+
+----
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
+----
+
+// TRANSLATION MISSING
+[WARNING]
+You should enable address sanitizer only if you're trying to cause a crash,
+this is not recommended in production.
 
 Wird ein Binärpaket genutzt dann muss zusätzlich das Paket _weechat-dbg_ installiert werden.
 
