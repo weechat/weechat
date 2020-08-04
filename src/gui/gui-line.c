@@ -383,6 +383,9 @@ gui_line_get_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 int
 gui_line_is_displayed (struct t_gui_line *line)
 {
+    if (!line)
+        return 0;
+
     /* line is hidden if filters are enabled and flag "displayed" is not set */
     if (gui_filters_enabled && !line->data->displayed)
         return 0;
@@ -732,6 +735,9 @@ const char *
 gui_line_get_nick_tag (struct t_gui_line *line)
 {
     const char *tag;
+
+    if (!line)
+        return NULL;
 
     tag = gui_line_search_tag_starting_with (line, "nick_");
     if (!tag)
