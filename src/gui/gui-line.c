@@ -96,6 +96,9 @@ gui_line_lines_free (struct t_gui_lines *lines)
 void
 gui_line_tags_alloc (struct t_gui_line_data *line_data, const char *tags)
 {
+    if (!line_data)
+        return;
+
     if (tags)
     {
         line_data->tags_array = string_split_shared (tags, ",", NULL, 0, 0,
@@ -619,6 +622,9 @@ int
 gui_line_has_tag_no_filter (struct t_gui_line_data *line_data)
 {
     int i;
+
+    if (!line_data)
+        return 0;
 
     for (i = 0; i < line_data->tags_count; i++)
     {
