@@ -30,6 +30,10 @@ Bug fixes::
   * trigger: fix recursive calls to triggers using regex (issue #1546)
   * trigger: add `${tg_tags} !!- ,notify_none,` in conditions of default trigger "beep" (issue #1529)
 
+Tests::
+
+  * core: add tests on GUI line functions
+
 Build::
 
   * core: disable debug by default in autotools build
