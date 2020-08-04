@@ -717,7 +717,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     new_buffer->title = NULL;
 
     /* chat content */
-    new_buffer->own_lines = gui_lines_alloc ();
+    new_buffer->own_lines = gui_line_lines_alloc ();
     new_buffer->mixed_lines = NULL;
     new_buffer->lines = new_buffer->own_lines;
     new_buffer->time_for_each_line = 1;
@@ -3659,7 +3659,7 @@ gui_buffer_unmerge (struct t_gui_buffer *buffer, int number)
     {
         /* only one buffer will remain, so it will not be merged any more */
         gui_line_mixed_free_all (buffer);
-        gui_lines_free (buffer->mixed_lines);
+        gui_line_lines_free (buffer->mixed_lines);
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {

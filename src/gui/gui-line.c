@@ -54,7 +54,7 @@
  */
 
 struct t_gui_lines *
-gui_lines_alloc ()
+gui_line_lines_alloc ()
 {
     struct t_gui_lines *new_lines;
 
@@ -81,7 +81,7 @@ gui_lines_alloc ()
  */
 
 void
-gui_lines_free (struct t_gui_lines *lines)
+gui_line_lines_free (struct t_gui_lines *lines)
 {
     if (!lines)
         return;
@@ -1787,7 +1787,7 @@ gui_line_mix_buffers (struct t_gui_buffer *buffer)
         return;
 
     /* mix all lines (sorting by date) to a new structure "new_lines" */
-    new_lines = gui_lines_alloc ();
+    new_lines = gui_line_lines_alloc ();
     if (!new_lines)
         return;
     ptr_line1 = ptr_buffer_found->lines->first_line;
