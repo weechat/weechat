@@ -159,9 +159,9 @@ Bug fixes::
 Tests::
 
   * scripts: fix generation of test scripts with Python 3.8
-  * unit: add tests on IRC protocol functions and callbacks
-  * unit: add tests on function secure_derive_key
-  * unit: add tests on functions util_get_time_diff and util_file_get_content
+  * core: add tests on function secure_derive_key
+  * core: add tests on functions util_get_time_diff and util_file_get_content
+  * irc: add tests on IRC protocol functions and callbacks
 
 Build::
 
@@ -224,7 +224,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on GUI color functions
+  * core: add tests on GUI color functions
 
 Build::
 
@@ -276,7 +276,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on IRC ignore, message and nick functions
+  * irc: add tests on IRC ignore, message and nick functions
 
 Build::
 
@@ -328,7 +328,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on function util_signal_search
+  * core: add tests on function util_signal_search
 
 Build::
 
@@ -373,8 +373,8 @@ Bug fixes::
 
 Tests::
 
-  * unit: fix UTF-8 and evaluation tests on FreeBSD
-  * unit: add tests on IRC configuration and protocol functions
+  * core: fix UTF-8 and evaluation tests on FreeBSD
+  * irc: add tests on IRC configuration and protocol functions
 
 Build::
 
@@ -411,7 +411,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: add tests on line and hook functions
+  * core: add tests on line and hook functions
 
 Build::
 
@@ -476,7 +476,7 @@ Documentation::
 
 Tests::
 
-  * unit, scripts: add tests on infolists
+  * core, scripts: add tests on infolists
 
 Build::
 
@@ -563,8 +563,8 @@ Bug fixes::
 
 Tests::
 
+  * core: display an error if the required locale en_US.UTF-8 is not installed
   * scripts: add scripting API tests (issue #104)
-  * unit: display an error if the required locale en_US.UTF-8 is not installed
 
 Build::
 
@@ -832,8 +832,8 @@ Documentation::
 
 Tests::
 
-  * unit: add a test to check if all plugins are loaded
-  * unit: fix locale used to execute tests (issue #631)
+  * core: add a test to check if all plugins are loaded
+  * core: fix locale used to execute tests (issue #631)
 
 Build::
 
@@ -1057,7 +1057,7 @@ Bug fixes::
 
 Tests::
 
-  * unit: fix memory leak in tests launcher
+  * core: fix memory leak in tests launcher
 
 Build::
 
@@ -1225,7 +1225,7 @@ Build::
 
 Tests::
 
-  * unit: add unit tests using CppUTest (issue #104)
+  * core: add unit tests using CppUTest (issue #104)
 
 [[v0.4.3]]
 == Version 0.4.3 (2014-02-09)
