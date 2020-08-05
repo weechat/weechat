@@ -439,6 +439,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-irc-nick.cpp     | Tests: IRC nicks.
 |             test-irc-protocol.cpp | テスト: IRC プロトコル
 // TRANSLATION MISSING
+|             test-irc-server.cpp   | Tests: IRC server.
+// TRANSLATION MISSING
 |          relay/                   | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING
 |             test-relay-auth.cpp   | Tests: clients authentication.

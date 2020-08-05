@@ -27,6 +27,7 @@ New features::
 Bug fixes::
 
   * core: do not add line with highlight and tag "notify_none" to hotlist (issue #1529)
+  * irc: send all channels in a single JOIN command when reconnecting to the server (issue #1551)
   * trigger: fix recursive calls to triggers using regex (issue #1546)
   * trigger: add `${tg_tags} !!- ,notify_none,` in conditions of default trigger "beep" (issue #1529)
 

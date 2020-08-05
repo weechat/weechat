@@ -58,6 +58,7 @@ if(ENABLE_IRC)
     unit/plugins/irc/test-irc-mode.cpp
     unit/plugins/irc/test-irc-nick.cpp
     unit/plugins/irc/test-irc-protocol.cpp
+    unit/plugins/irc/test-irc-server.cpp
   )
 endif()
 

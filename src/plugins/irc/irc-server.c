@@ -5311,39 +5311,114 @@ irc_server_autojoin_create_buffers (struct t_irc_server *server)
 }
 
 /*
+ * Build the arguments for JOIN command using channels in server, only if the
+ * channel is not in "part" state (/part command issued).
+ *
+ * The arguments have the following format, where keys are optional (this is
+ * the syntax of JOIN command in IRC protocol):
+ *
+ *   #channel1,#channel2,#channel3 key1,key2
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+irc_server_build_autojoin (struct t_irc_server *server)
+{
+    struct t_irc_channel *ptr_channel;
+    char **channels_with_key, **channels_others, **keys;
+
+    channels_with_key = NULL;
+    channels_others = NULL;
+    keys = NULL;
+
+    channels_with_key = weechat_string_dyn_alloc (1024);
+    if (!channels_with_key)
+        goto error;
+    channels_others = weechat_string_dyn_alloc (1024);
+    if (!channels_others)
+        goto error;
+    keys = weechat_string_dyn_alloc (1024);
+    if (!keys)
+        goto error;
+
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            && !ptr_channel->part)
+        {
+            if (ptr_channel->key)
+            {
+                /* add channel with key and the key */
+                if (*channels_with_key[0])
+                    weechat_string_dyn_concat (channels_with_key, ",");
+                weechat_string_dyn_concat (channels_with_key, ptr_channel->name);
+                if (*keys[0])
+                    weechat_string_dyn_concat (keys, ",");
+                weechat_string_dyn_concat (keys, ptr_channel->key);
+            }
+            else
+            {
+                /* add channel without key */
+                if (*channels_others[0])
+                    weechat_string_dyn_concat (channels_others, ",");
+                weechat_string_dyn_concat (channels_others, ptr_channel->name);
+            }
+        }
+    }
+
+    /*
+     * concatenate channels_with_key + channels_others + keys
+     * into channels_with_key
+     */
+    if (*channels_others[0])
+    {
+        if (*channels_with_key[0])
+            weechat_string_dyn_concat (channels_with_key, ",");
+        weechat_string_dyn_concat (channels_with_key, *channels_others);
+    }
+    if (*keys[0])
+    {
+        weechat_string_dyn_concat (channels_with_key, " ");
+        weechat_string_dyn_concat (channels_with_key, *keys);
+    }
+
+    weechat_string_dyn_free (channels_others, 1);
+    weechat_string_dyn_free (keys, 1);
+
+    return weechat_string_dyn_free (channels_with_key, 0);
+
+error:
+    if (channels_with_key)
+        weechat_string_dyn_free (channels_with_key, 1);
+    if (channels_others)
+        weechat_string_dyn_free (channels_others, 1);
+    if (keys)
+        weechat_string_dyn_free (keys, 1);
+    return NULL;
+}
+
+/*
  * Autojoins (or auto-rejoins) channels.
  */
 
 void
 irc_server_autojoin_channels (struct t_irc_server *server)
 {
-    struct t_irc_channel *ptr_channel;
     char *autojoin;
 
     /* auto-join after disconnection (only rejoins opened channels) */
     if (!server->disable_autojoin && server->reconnect_join && server->channels)
     {
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
+        autojoin = irc_server_build_autojoin (server);
+        if (autojoin)
         {
-            if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                && !ptr_channel->part)
-            {
-                if (ptr_channel->key)
-                {
-                    irc_server_sendf (server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                      "JOIN %s %s",
-                                      ptr_channel->name, ptr_channel->key);
-                }
-                else
-                {
-                    irc_server_sendf (server,
-                                      IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
-                                      "JOIN %s",
-                                      ptr_channel->name);
-                }
-            }
+            irc_server_sendf (server,
+                              IRC_SERVER_SEND_OUTQ_PRIO_HIGH, NULL,
+                              "JOIN %s",
+                              autojoin);
+            free (autojoin);
         }
         server->reconnect_join = 0;
     }
