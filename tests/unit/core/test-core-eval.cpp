@@ -53,7 +53,7 @@ TEST_GROUP(CoreEval)
  *   eval_is_true
  */
 
-TEST(CoreEval, Boolean)
+TEST(CoreEval, IsTrue)
 {
     /* false */
     LONGS_EQUAL(0, eval_is_true (NULL));

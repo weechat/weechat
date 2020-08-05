@@ -59,7 +59,7 @@ TEST_GROUP(GuiColor)
  *   gui_color_get_custom
  */
 
-TEST(GuiColor, ColorGetCustom)
+TEST(GuiColor, GetCustom)
 {
     char string[32];
 
@@ -238,7 +238,7 @@ TEST(GuiColor, ColorGetCustom)
  *   gui_color_decode
  */
 
-TEST(GuiColor, ColorDecode)
+TEST(GuiColor, Decode)
 {
     char string[256], *decoded;
 
@@ -409,7 +409,7 @@ TEST(GuiColor, ColorDecode)
  *   gui_color_decode_ansi
  */
 
-TEST(GuiColor, ColorDecodeAnsi)
+TEST(GuiColor, DecodeAnsi)
 {
     char string[256], *decoded;
 
@@ -569,7 +569,7 @@ TEST(GuiColor, ColorDecodeAnsi)
  *   gui_color_encode_ansi
  */
 
-TEST(GuiColor, ColorEncodeAnsi)
+TEST(GuiColor, EncodeAnsi)
 {
     char string[256], *encoded;
 
@@ -695,7 +695,7 @@ TEST(GuiColor, ColorEncodeAnsi)
  *   gui_color_emphasize
  */
 
-TEST(GuiColor, ColorEmphasize)
+TEST(GuiColor, Emphasize)
 {
     char string1[256], string2[256], *emphasized;
     regex_t regex;

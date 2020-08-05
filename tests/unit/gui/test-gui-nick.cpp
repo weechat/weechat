@@ -54,7 +54,7 @@ TEST_GROUP(GuiNick)
  *   gui_nick_hash_color
  */
 
-TEST(GuiNick, NickHashColor)
+TEST(GuiNick, HashColor)
 {
     config_file_option_set (config_color_chat_nick_colors, NICK_COLORS, 1);
 
