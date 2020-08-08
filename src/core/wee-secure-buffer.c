@@ -79,13 +79,37 @@ secure_buffer_display_data (void *data,
 }
 
 /*
+ * Displays a secured data cmd.
+ */
+
+void
+secure_buffer_display_cmd (void *data,
+                            struct t_hashtable *hashtable,
+                            const void *key, const void *value)
+{
+    (void) hashtable;
+    int *line;
+
+    line = (int *)data;
+
+    gui_chat_printf_y (secure_buffer, (*line)++,
+                       "  %s%s = %s\"%s%s%s\"",
+                       key,
+                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                       GUI_COLOR(GUI_COLOR_CHAT),
+                       GUI_COLOR(GUI_COLOR_CHAT_VALUE),
+                       value,
+                       GUI_COLOR(GUI_COLOR_CHAT));
+}
+
+/*
  * Displays content of secured data buffer.
  */
 
 void
 secure_buffer_display ()
 {
-    int line, count, count_encrypted;
+    int line, count, count_encrypted, count_cmds;
 
     if (!secure_buffer)
         return;
@@ -114,6 +138,7 @@ secure_buffer_display ()
     /* display secured data */
     count = secure_hashtable_data->items_count;
     count_encrypted = secure_hashtable_data_encrypted->items_count;
+    count_cmds = secure_hashtable_cmds->items_count;
     if (count > 0)
     {
         line++;
@@ -133,7 +158,16 @@ secure_buffer_display ()
         hashtable_map (secure_hashtable_data_encrypted,
                        &secure_buffer_display_data, &line);
     }
-    if ((count == 0) && (count_encrypted == 0))
+    /* display cmds configured to retrive secured data */
+    if (count_cmds > 0)
+    {
+        line++;
+        gui_chat_printf_y (secure_buffer, line++, _("Secure cmds:"));
+        line++;
+        hashtable_map (secure_hashtable_cmds,
+                       &secure_buffer_display_cmd, &line);
+    }
+    if ((count == 0) && (count_encrypted == 0) && (count_cmds == 0))
     {
         line++;
         gui_chat_printf_y (secure_buffer, line++, _("No secured data set"));

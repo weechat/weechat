@@ -5578,6 +5578,17 @@ COMMAND_CALLBACK(secure)
         return WEECHAT_RC_OK;
     }
 
+    /* set secured data cmd */
+    if (string_strcasecmp (argv[1], "setcmd") == 0)
+    {
+        COMMAND_MIN_ARGS(4, "setcmd");
+        hashtable_set (secure_hashtable_cmds, argv[2], argv_eol[3]);
+        gui_chat_printf (NULL, _("Secured data cmd \"%s\" set"), argv[2]);
+        command_save_file (secure_config_file);
+        secure_buffer_display ();
+        return WEECHAT_RC_OK;
+    }
+
     /* delete a secured data */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
@@ -5593,6 +5604,27 @@ COMMAND_CALLBACK(secure)
         {
             gui_chat_printf (NULL,
                              _("%sSecured data \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete secured data cmd */
+    if (string_strcasecmp (argv[1], "delcmd") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "delcmd");
+        if (hashtable_has_key (secure_hashtable_cmds, argv[2]))
+        {
+            hashtable_remove (secure_hashtable_cmds, argv[2]);
+            gui_chat_printf (NULL, _("Secured data cmd \"%s\" deleted"), argv[2]);
+            command_save_file (secure_config_file);
+            secure_buffer_display ();
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sSecured data cmd \"%s\" not found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[2]);
         }

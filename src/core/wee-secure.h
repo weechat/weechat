@@ -46,6 +46,7 @@ enum t_secure_config_cipher
 extern char *secure_passphrase;
 extern struct t_hashtable *secure_hashtable_data;
 extern struct t_hashtable *secure_hashtable_data_encrypted;
+extern struct t_hashtable *secure_hashtable_cmds;
 extern char *secure_hash_algo_string[];
 extern int secure_hash_algo[];
 extern char *secure_cipher_string[];

@@ -1070,6 +1070,28 @@ eval_replace_vars_cb (void *data, const char *text)
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
         return strdup ((ptr_value) ? ptr_value : "");
     }
+    if (strncmp (text, "sec.cmd.", 8) == 0)
+    {
+        const char *program;
+        char *value, *status;
+        FILE *in;
+
+        status = NULL;
+        if (!(program = hashtable_get (secure_hashtable_cmds, text + 8)))
+        {
+            return strdup("");
+        }
+        if (!(in = popen (program, "r")))
+        {
+            return strdup("");
+        }
+
+        if ((value = alloca(1024))) {
+            status = fgets (value, 1024, in);
+        }
+        pclose (in);
+        return strdup (status ? value : "");
+    }
     config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
     if (ptr_option)
     {

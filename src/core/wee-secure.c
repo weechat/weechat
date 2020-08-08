@@ -45,6 +45,8 @@ struct t_hashtable *secure_hashtable_data = NULL;
 /* data still encrypted (if passphrase not set) */
 struct t_hashtable *secure_hashtable_data_encrypted = NULL;
 
+struct t_hashtable *secure_hashtable_cmds = NULL;
+
 /* hash algorithms */
 char *secure_hash_algo_string[] = { "sha224", "sha256", "sha384", "sha512",
                                     NULL };
@@ -535,6 +537,13 @@ secure_init ()
         return 0;
     }
 
+    secure_hashtable_cmds = hashtable_new (32,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           WEECHAT_HASHTABLE_STRING,
+                                           NULL, NULL);
+    if (!secure_hashtable_cmds)
+        return 0;
+
     return 1;
 }
 
@@ -559,5 +568,10 @@ secure_end ()
     {
         hashtable_free (secure_hashtable_data_encrypted);
         secure_hashtable_data_encrypted = NULL;
+    }
+    if (secure_hashtable_cmds)
+    {
+        hashtable_free (secure_hashtable_cmds);
+        secure_hashtable_cmds = NULL;
     }
 }

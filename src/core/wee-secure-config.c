@@ -468,6 +468,72 @@ secure_config_data_write_cb (const void *pointer, void *data,
     return WEECHAT_CONFIG_WRITE_OK;
 }
 
+
+/*
+ * Reads a "cmds" option in the secured data configuration file.
+ * */
+
+int
+secure_config_cmds_read_cb (const void *pointer, void *data,
+                            struct t_config_file *config_file,
+                            struct t_config_section *section,
+                            const char *option_name, const char *value)
+{
+    (void) pointer;
+    (void) data;
+    (void) config_file;
+    (void) section;
+
+    if (!option_name || !value || !value[0])
+    {
+        return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+    }
+
+    hashtable_set (secure_hashtable_cmds, option_name, value);
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
+ * Writes a cmd in secured data configuration file.
+ */
+
+void
+secure_config_cmds_write_map_cb (void *data,
+                                 struct t_hashtable *hashtable,
+                                 const void *key, const void *value)
+{
+    (void) hashtable;
+    struct t_config_file *config_file;
+
+    config_file = (struct t_config_file *)data;
+
+    config_file_write_line (config_file, key, "\"%s\"", value);
+}
+
+/*
+ * Writes section "cmds" in secured data configuration file.
+ */
+
+int
+secure_config_cmds_write_cb (const void *pointer, void *data,
+                             struct t_config_file *config_file,
+                             const char *section_name)
+{
+    (void) pointer;
+    (void) data;
+    /* write name of section */
+    if (!config_file_write_line (config_file, section_name, NULL))
+        return WEECHAT_CONFIG_WRITE_ERROR;
+
+    if (secure_hashtable_cmds->items_count > 0)
+    {
+       hashtable_map (secure_hashtable_cmds,
+                      &secure_config_cmds_write_map_cb, config_file); 
+    }
+
+    return WEECHAT_CONFIG_WRITE_OK;
+}
+
 /*
  * Creates options in secured data configuration.
  *
@@ -555,6 +621,23 @@ secure_config_init_options ()
         secure_config_file = NULL;
         return 0;
     }
+
+    /* external programs */
+    ptr_section = config_file_new_section (
+        secure_config_file, "cmds",
+        0, 0,
+        &secure_config_cmds_read_cb, NULL, NULL,
+        &secure_config_cmds_write_cb, NULL, NULL,
+        &secure_config_cmds_write_cb, NULL, NULL,
+        NULL, NULL, NULL,
+        NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (secure_config_file);
+        secure_config_file = NULL;
+        return 0;
+    }
+
 
     return 1;
 }
