@@ -34,6 +34,7 @@ struct t_config_file *fset_config_file = NULL;
 
 /* fset config, look section */
 
+struct t_config_option *fset_config_look_auto_refresh;
 struct t_config_option *fset_config_look_auto_unmark;
 struct t_config_option *fset_config_look_condition_catch_set;
 struct t_config_option *fset_config_look_export_help_default;
@@ -93,10 +94,38 @@ struct t_config_option *fset_config_color_value[2];
 struct t_config_option *fset_config_color_value_changed[2];
 struct t_config_option *fset_config_color_value_undef[2];
 
+char **fset_config_auto_refresh = NULL;
 char **fset_config_sort_fields = NULL;
 int fset_config_sort_fields_count = 0;
 int fset_config_format_option_num_lines[2] = { 1, 1 };
 
+
+/*
+ * Callback for changes on option "fset.look.auto_refresh".
+ */
+
+void
+fset_config_change_auto_refresh_cb (const void *pointer, void *data,
+                                    struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    if (fset_config_auto_refresh)
+        weechat_string_free_split (fset_config_auto_refresh);
+
+    fset_config_auto_refresh = weechat_string_split (
+        weechat_config_string (fset_config_look_auto_refresh),
+        ",",
+        NULL,
+        WEECHAT_STRING_SPLIT_STRIP_LEFT
+        | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+        | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+        0,
+        NULL);
+}
 
 /*
  * Callback for changes on option "fset.look.format_number".
@@ -335,6 +364,18 @@ fset_config_init ()
         return 0;
     }
 
+    fset_config_look_auto_refresh = weechat_config_new_option (
+        fset_config_file, ptr_section,
+        "auto_refresh", "string",
+        N_("comma separated list of options to automatically refresh on the "
+           "fset buffer (if opened); \"*\" means all options (recommended), "
+           "a name beginning with \"!\" is a negative value to prevent an "
+           "option to be refreshed, wildcard \"*\" is allowed in names "
+           "(example: \"*,!plugin.section.*\")"),
+        NULL, 0, 0, "*", NULL, 0,
+        NULL, NULL, NULL,
+        &fset_config_change_auto_refresh_cb, NULL, NULL,
+        NULL, NULL, NULL);
     fset_config_look_auto_unmark = weechat_config_new_option (
         fset_config_file, ptr_section,
         "auto_unmark", "boolean",
@@ -1093,6 +1134,11 @@ fset_config_free ()
 {
     weechat_config_free (fset_config_file);
 
+    if (fset_config_auto_refresh)
+    {
+        weechat_string_free_split (fset_config_auto_refresh);
+        fset_config_auto_refresh = NULL;
+    }
     if (fset_config_sort_fields)
     {
         weechat_string_free_split (fset_config_sort_fields);

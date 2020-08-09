@@ -3748,6 +3748,12 @@
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
+* [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
+** description: pass:none[liste des options à rafraichir automatiquement sur le tampon fset (s'il est ouvert) ; "*" signifie toutes les options (recommandé), un nom commençant par "!" est une valeur négative pour empêcher une option d'être rafraichie, le caractère joker "*" est autorisé dans les noms (exemple : "*,!plugin.section.*")]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"*"+`
+
 * [[option_fset.look.auto_unmark]] *fset.look.auto_unmark*
 ** description: pass:none[démarquer automatiquement toutes les options après une action sur les options marquées ou après un rafraichissement]
 ** type: booléen

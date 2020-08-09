@@ -3748,6 +3748,12 @@
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
+* [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
+** opis: pass:none[comma separated list of options to automatically refresh on the fset buffer (if opened); "*" means all options (recommended), a name beginning with "!" is a negative value to prevent an option to be refreshed, wildcard "*" is allowed in names (example: "*,!plugin.section.*")]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"*"+`
+
 * [[option_fset.look.auto_unmark]] *fset.look.auto_unmark*
 ** opis: pass:none[automatycznie odznacza wszystkie opcje po akcji na zaznaczonych opcjach lub po odświerzeniu]
 ** typ: bool

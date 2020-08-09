@@ -3748,6 +3748,12 @@
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
+* [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
+** Beschreibung: pass:none[comma separated list of options to automatically refresh on the fset buffer (if opened); "*" means all options (recommended), a name beginning with "!" is a negative value to prevent an option to be refreshed, wildcard "*" is allowed in names (example: "*,!plugin.section.*")]
+** Typ: Zeichenkette
+** Werte: beliebige Zeichenkette
+** Standardwert: `+"*"+`
+
 * [[option_fset.look.auto_unmark]] *fset.look.auto_unmark*
 ** Beschreibung: pass:none[die Markierung wird automatisch für alle Optionen gelöscht, sobald eine Aktion bei einer markierten Option durchgeführt wird oder die Liste neu eingelesen wird]
 ** Typ: boolesch

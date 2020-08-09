@@ -3748,6 +3748,12 @@
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
+* [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
+** descrizione: pass:none[comma separated list of options to automatically refresh on the fset buffer (if opened); "*" means all options (recommended), a name beginning with "!" is a negative value to prevent an option to be refreshed, wildcard "*" is allowed in names (example: "*,!plugin.section.*")]
+** tipo: stringa
+** valori: qualsiasi stringa
+** valore predefinito: `+"*"+`
+
 * [[option_fset.look.auto_unmark]] *fset.look.auto_unmark*
 ** descrizione: pass:none[automatically unmark all options after an action on marked options or after a refresh]
 ** tipo: bool

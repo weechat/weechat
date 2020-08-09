@@ -1550,6 +1550,12 @@ fset_option_config_cb (const void *pointer,
     if (!fset_buffer)
         return WEECHAT_RC_OK;
 
+    /* do nothing if auto-refresh is disabled for this option */
+    if (!weechat_string_match_list (option,
+                                    (const char **)fset_config_auto_refresh,
+                                    0))
+        return WEECHAT_RC_OK;
+
     /* do nothing if WeeChat is upgrading */
     info = weechat_info_get ("weechat_upgrading", NULL);
     if (info && (strcmp (info, "1") == 0))

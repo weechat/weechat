@@ -3748,6 +3748,12 @@
 ** 値: 未制約文字列
 ** デフォルト値: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
+* [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
+** 説明: pass:none[comma separated list of options to automatically refresh on the fset buffer (if opened); "*" means all options (recommended), a name beginning with "!" is a negative value to prevent an option to be refreshed, wildcard "*" is allowed in names (example: "*,!plugin.section.*")]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"*"+`
+
 * [[option_fset.look.auto_unmark]] *fset.look.auto_unmark*
 ** 説明: pass:none[マーク済みオプションに対する操作の後または再読込の後に自動的にすべてのオプションをアンマーク]
 ** タイプ: ブール
