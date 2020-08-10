@@ -237,6 +237,16 @@ init_pair (short pair, short f, short b)
     return OK;
 }
 
+int
+init_extended_pair (int pair, int f, int b)
+{
+    (void) pair;
+    (void) f;
+    (void) b;
+
+    return OK;
+}
+
 bool
 has_colors ()
 {
