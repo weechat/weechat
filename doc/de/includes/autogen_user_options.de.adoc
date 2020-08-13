@@ -3749,7 +3749,7 @@
 ** Standardwert: `+"${marked} ${name}  ${type}  ${value2}${newline}  ${empty_name}  ${_default_value}${color:darkgray} -- ${min}..${max}${newline}  ${empty_name}  ${description}"+`
 
 * [[option_fset.look.auto_refresh]] *fset.look.auto_refresh*
-** Beschreibung: pass:none[comma separated list of options to automatically refresh on the fset buffer (if opened); "*" means all options (recommended), a name beginning with "!" is a negative value to prevent an option to be refreshed, wildcard "*" is allowed in names (example: "*,!plugin.section.*")]
+** Beschreibung: pass:none[durch Kommata getrennte Liste von Optionen, die eine Aktualisierung des fset Buffers auslösen (falls dieser geöffnet sein sollte); "*" beschreibt alle Optionen (empfohlen). Beginnt der Name einer Option hingegen mit "!" erzeugt diese Option keine Aktualisierung des Buffers. Im Optionsnamen kann der Platzhalter "*" verwendet werden (Beispiel: "*,!plugin.section.*" )]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"*"+`
