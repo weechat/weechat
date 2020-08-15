@@ -1241,77 +1241,80 @@ gui_line_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
- * Gets notify level for a line.
+ * Gets max notify level for a line, according to the nick.
  *
- * Returns notify level of line, -1 if tag "notify_none" is found (meaning no
- * notify at all for line).
+ * Returns max notify level, between -1 and GUI_HOTLIST_HIGHLIGHT.
  */
 
 int
-gui_line_get_notify_level (struct t_gui_line *line)
+gui_line_get_max_notify_level (struct t_gui_line *line)
 {
-    int i, notify_level, *max_notify_level;
+    int max_notify_level, *ptr_max_notify_level;
     const char *nick;
 
-    notify_level = GUI_HOTLIST_LOW;
+    max_notify_level = GUI_HOTLIST_HIGHLIGHT;
+
+    nick = gui_line_get_nick_tag (line);
+    if (nick)
+    {
+        ptr_max_notify_level = hashtable_get (
+            line->data->buffer->hotlist_max_level_nicks,
+            nick);
+        if (ptr_max_notify_level)
+            max_notify_level = *ptr_max_notify_level;
+    }
+
+    return max_notify_level;
+}
+
+/*
+ * Sets the notify level in a line:
+ *   -1: no notify at all
+ *    0: low (GUI_HOTLIST_LOW)
+ *    1: message (GUI_HOTLIST_MESSAGE)
+ *    2: private message (GUI_HOTLIST_PRIVATE)
+ *    3: message with highlight (GUI_HOTLIST_HIGHLIGHT)
+ */
+
+void
+gui_line_set_notify_level (struct t_gui_line *line, int max_notify_level)
+{
+    int i;
+
+    line->data->notify_level = GUI_HOTLIST_LOW;
 
     for (i = 0; i < line->data->tags_count; i++)
     {
         if (string_strcasecmp (line->data->tags_array[i], "notify_none") == 0)
-            notify_level = -1;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
-            notify_level = GUI_HOTLIST_HIGHLIGHT;
-        if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
-            notify_level = GUI_HOTLIST_PRIVATE;
+            line->data->notify_level = -1;
         if (string_strcasecmp (line->data->tags_array[i], "notify_message") == 0)
-            notify_level = GUI_HOTLIST_MESSAGE;
+            line->data->notify_level = GUI_HOTLIST_MESSAGE;
+        if (string_strcasecmp (line->data->tags_array[i], "notify_private") == 0)
+            line->data->notify_level = GUI_HOTLIST_PRIVATE;
+        if (string_strcasecmp (line->data->tags_array[i], "notify_highlight") == 0)
+            line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
     }
 
-    max_notify_level = NULL;
-    nick = gui_line_get_nick_tag (line);
-    if (nick)
-    {
-        max_notify_level = hashtable_get (line->data->buffer->hotlist_max_level_nicks,
-                                          nick);
-    }
-    if (max_notify_level && (*max_notify_level < notify_level))
-        notify_level = *max_notify_level;
-
-    return notify_level;
+    if (line->data->notify_level > max_notify_level)
+        line->data->notify_level = max_notify_level;
 }
 
 /*
- * Gets highlight flag for a line, using the notify level in the line.
- *
- * Returns 1 for highlight otherwise 0.
+ * Sets highlight flag in a line:
+ *   0: no highlight
+ *   1: highlight
  */
 
-int
-gui_line_get_highlight (struct t_gui_line *line)
+void
+gui_line_set_highlight (struct t_gui_line *line, int max_notify_level)
 {
-    int highlight, *max_notify_level;
-    const char *nick;
-
     if (line->data->notify_level == GUI_HOTLIST_HIGHLIGHT)
-    {
-        highlight = 1;
-    }
+        line->data->highlight = 1;
     else
     {
-        max_notify_level = NULL;
-        nick = gui_line_get_nick_tag (line);
-        if (nick)
-        {
-            max_notify_level = hashtable_get (line->data->buffer->hotlist_max_level_nicks,
-                                              nick);
-        }
-        if (max_notify_level && (*max_notify_level < GUI_HOTLIST_HIGHLIGHT))
-            highlight = 0;
-        else
-            highlight = gui_line_has_highlight (line);
+        line->data->highlight = (max_notify_level == GUI_HOTLIST_HIGHLIGHT) ?
+            gui_line_has_highlight (line) : 0;
     }
-
-    return highlight;
 }
 
 /*
@@ -1325,6 +1328,7 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
 {
     struct t_gui_line *new_line;
     struct t_gui_line_data *new_line_data;
+    int max_notify_level;
 
     /* create new line */
     new_line = malloc (sizeof (*new_line));
@@ -1356,8 +1360,11 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
             (char *)string_shared_get (prefix) : ((date != 0) ? (char *)string_shared_get ("") : NULL);
         new_line->data->prefix_length = (prefix) ?
             gui_chat_strlen_screen (prefix) : 0;
-        new_line->data->notify_level = gui_line_get_notify_level (new_line);
-        new_line->data->highlight = gui_line_get_highlight (new_line);
+        max_notify_level = gui_line_get_max_notify_level (new_line);
+        gui_line_set_notify_level (new_line, max_notify_level);
+        gui_line_set_highlight (new_line, max_notify_level);
+        if (new_line->data->highlight)
+            new_line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
     }
     else
     {
@@ -1398,6 +1405,7 @@ gui_line_hook_update (struct t_gui_line *line,
     long value;
     char *error;
     int rc, tags_updated, notify_level_updated, highlight_updated;
+    int max_notify_level;
 
     tags_updated = 0;
     notify_level_updated = 0;
@@ -1543,16 +1551,22 @@ gui_line_hook_update (struct t_gui_line *line,
         line->data->message = (ptr_value2) ? strdup (ptr_value2) : NULL;
     }
 
+    max_notify_level = gui_line_get_max_notify_level (line);
+
     /* if tags were updated but not notify_level, adjust notify level */
     if (tags_updated && !notify_level_updated)
-        line->data->notify_level = gui_line_get_notify_level (line);
+        gui_line_set_notify_level (line, max_notify_level);
 
     /* adjust flag "displayed" if tags were updated */
     if (tags_updated)
         line->data->displayed = gui_filter_check_line (line->data);
 
     if ((tags_updated || notify_level_updated) && !highlight_updated)
-        line->data->highlight = gui_line_get_highlight (line);
+    {
+        gui_line_set_highlight (line, max_notify_level);
+        if (line->data->highlight && !notify_level_updated)
+            line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
+    }
 }
 
 /*

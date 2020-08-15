@@ -24,8 +24,11 @@
 extern "C"
 {
 #include <string.h>
+#include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
+#include "src/gui/gui-buffer.h"
 #include "src/gui/gui-filter.h"
+#include "src/gui/gui-hotlist.h"
 #include "src/gui/gui-line.h"
 }
 
@@ -169,7 +172,7 @@ TEST(GuiLine, IsDisplayed)
     int old_gui_filters_enabled;
 
     memset (&line, 0, sizeof (line));
-    line.data = (struct t_gui_line_data *)malloc (sizeof (struct t_gui_line_data));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
 
     LONGS_EQUAL(0, gui_line_is_displayed (NULL));
 
@@ -332,7 +335,7 @@ TEST(GuiLine, SearchTagStartingWith)
     struct t_gui_line line;
 
     memset (&line, 0, sizeof (line));
-    line.data = (struct t_gui_line_data *)malloc (sizeof (struct t_gui_line_data));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
     gui_line_tags_alloc (line.data, NULL);
 
     POINTERS_EQUAL(NULL, gui_line_search_tag_starting_with (NULL, NULL));
@@ -366,7 +369,7 @@ TEST(GuiLine, GetNickTag)
     struct t_gui_line line;
 
     memset (&line, 0, sizeof (line));
-    line.data = (struct t_gui_line_data *)malloc (sizeof (struct t_gui_line_data));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
     gui_line_tags_alloc (line.data, NULL);
 
     POINTERS_EQUAL(NULL, gui_line_get_nick_tag (NULL));
@@ -506,22 +509,214 @@ TEST(GuiLine, FreeAll)
 
 /*
  * Tests functions:
- *   gui_line_get_notify_level
+ *   gui_line_get_max_notify_level
  */
 
-TEST(GuiLine, GetNotifyLevel)
+TEST(GuiLine, GetMaxNotifyLevel)
 {
-    /* TODO: write tests */
+    struct t_gui_line line;
+
+    memset (&line, 0, sizeof (line));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
+    line.data->buffer = gui_buffers;
+    gui_line_tags_alloc (line.data, NULL);
+
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_line_get_max_notify_level (&line));
+
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "alice:3");
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "alice:2");
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "alice:1");
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "alice:0");
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(GUI_HOTLIST_LOW, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, "alice:-1");
+    gui_line_tags_alloc (line.data, "nick_alice");
+    LONGS_EQUAL(-1, gui_line_get_max_notify_level (&line));
+    gui_line_tags_free (line.data);
+
+    gui_buffer_set_hotlist_max_level_nicks (gui_buffers, NULL);
+
+    free (line.data);
 }
 
 /*
  * Tests functions:
- *   gui_line_get_highlight
+ *   gui_line_set_notify_level
  */
 
-TEST(GuiLine, GetHighlight)
+TEST(GuiLine, SetNotifyLevel)
 {
-    /* TODO: write tests */
+    struct t_gui_line line;
+
+    memset (&line, 0, sizeof (line));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
+    line.data->buffer = gui_buffers;
+    gui_line_tags_alloc (line.data, NULL);
+
+    line.data->notify_level = 99;
+    gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line.data->notify_level);
+
+    /* notify: none */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_none");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(-1, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: message */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_message");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: private */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_private");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: highlight */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_highlight");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(GUI_HOTLIST_HIGHLIGHT, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: highlight, max: private */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_highlight");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_PRIVATE);
+    LONGS_EQUAL(GUI_HOTLIST_PRIVATE, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: highlight, max: message */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_highlight");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_MESSAGE);
+    LONGS_EQUAL(GUI_HOTLIST_MESSAGE, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: highlight, max: low */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_highlight");
+    gui_line_set_notify_level (&line, GUI_HOTLIST_LOW);
+    LONGS_EQUAL(GUI_HOTLIST_LOW, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    /* notify: highlight, max: -1 */
+    line.data->notify_level = 99;
+    gui_line_tags_alloc (line.data, "notify_highlight");
+    gui_line_set_notify_level (&line, -1);
+    LONGS_EQUAL(-1, line.data->notify_level);
+    gui_line_tags_free (line.data);
+
+    free (line.data);
+}
+
+/*
+ * Tests functions:
+ *   gui_line_set_highlight
+ */
+
+TEST(GuiLine, SetHighlight)
+{
+    struct t_gui_line line;
+
+    memset (&line, 0, sizeof (line));
+    line.data = (struct t_gui_line_data *)calloc (1, sizeof (struct t_gui_line_data));
+    line.data->buffer = gui_buffers;
+    //line.data->message = strdup ("test");
+    gui_line_tags_alloc (line.data, NULL);
+
+    /* notify: none */
+    line.data->notify_level = -1;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: low */
+    line.data->notify_level = 0;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: message */
+    line.data->notify_level = 1;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: private */
+    line.data->notify_level = 2;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: highlight */
+    line.data->notify_level = 3;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(1, line.data->highlight);
+
+    /* notify: message, max: private */
+    line.data->notify_level = 2;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_PRIVATE);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: message, max: message */
+    line.data->notify_level = 1;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_MESSAGE);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: low, max: low */
+    line.data->notify_level = 0;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_LOW);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    /* notify: none, max: -1 */
+    line.data->notify_level = -1;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, -1);
+    LONGS_EQUAL(0, line.data->highlight);
+
+    config_file_option_set (config_look_highlight, "test", 1);
+
+    /* notify: message, line with highlight */
+    line.data->message = strdup ("this is a test");
+    line.data->notify_level = 1;
+    line.data->highlight = -1;
+    gui_line_set_highlight (&line, GUI_HOTLIST_HIGHLIGHT);
+    LONGS_EQUAL(1, line.data->highlight);
+    free (line.data->message);
+    line.data->message = NULL;
+
+    config_file_option_reset (config_look_highlight, 0);
+
+    free (line.data);
 }
 
 /*
