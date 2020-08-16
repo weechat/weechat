@@ -1570,6 +1570,12 @@ gui_line_hook_update (struct t_gui_line *line,
             line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
         }
     }
+
+    if (!notify_level_updated && highlight_updated && line->data->highlight
+        && (line->data->notify_level >= 0))
+    {
+        line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
+    }
 }
 
 /*
