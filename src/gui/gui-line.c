@@ -1564,8 +1564,11 @@ gui_line_hook_update (struct t_gui_line *line,
     if ((tags_updated || notify_level_updated) && !highlight_updated)
     {
         gui_line_set_highlight (line, max_notify_level);
-        if (line->data->highlight && !notify_level_updated)
+        if (line->data->highlight && !notify_level_updated
+            && (line->data->notify_level >= 0))
+        {
             line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
+        }
     }
 }
 
