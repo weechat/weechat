@@ -1363,7 +1363,7 @@ gui_line_new (struct t_gui_buffer *buffer, int y, time_t date,
         max_notify_level = gui_line_get_max_notify_level (new_line);
         gui_line_set_notify_level (new_line, max_notify_level);
         gui_line_set_highlight (new_line, max_notify_level);
-        if (new_line->data->highlight)
+        if (new_line->data->highlight && (new_line->data->notify_level >= 0))
             new_line->data->notify_level = GUI_HOTLIST_HIGHLIGHT;
     }
     else
