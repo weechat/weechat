@@ -1440,11 +1440,7 @@ gui_bar_item_hotlist_cb (const void *pointer, void *data,
 
     buffer_without_name_displayed = NULL;
     if (CONFIG_BOOLEAN(config_look_hotlist_unique_numbers) && last_gui_buffer)
-    {
-        buffer_without_name_displayed = malloc (last_gui_buffer->number);
-        if (buffer_without_name_displayed)
-            memset (buffer_without_name_displayed, 0, last_gui_buffer->number);
-    }
+        buffer_without_name_displayed = calloc (last_gui_buffer->number, 1);
 
     numbers_count = 0;
     names_count = 0;

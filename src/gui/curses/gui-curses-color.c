@@ -614,8 +614,6 @@ gui_color_build (int number, int foreground, int background)
 void
 gui_color_init_vars ()
 {
-    int size;
-
     gui_color_term_has_colors = (has_colors ()) ? 1 : 0;
     gui_color_term_colors = 0;
     gui_color_term_color_pairs = 0;
@@ -637,12 +635,9 @@ gui_color_init_vars ()
         /* TODO: ncurses may support 65536, but short type used for pairs supports only 32768? */
         gui_color_num_pairs = (gui_color_term_color_pairs >= 32768) ?
             32767 : gui_color_term_color_pairs - 1;
-        size = (gui_color_term_colors + 2)
-            * (gui_color_term_colors + 2)
-            * sizeof (gui_color_pairs[0]);
-        gui_color_pairs = malloc (size);
-        if (gui_color_pairs)
-            memset (gui_color_pairs, 0, size);
+        gui_color_pairs = calloc (
+            (gui_color_term_colors + 2) * (gui_color_term_colors + 2),
+            sizeof (gui_color_pairs[0]));
         gui_color_pairs_used = 0;
 
         /* reserved for future usage */
@@ -667,10 +662,7 @@ gui_color_init_vars ()
         gui_color_term_color_pairs = 1;
         gui_color_term_can_change_color = 0;
         gui_color_num_pairs = 1;
-        size = sizeof (gui_color_pairs[0]);
-        gui_color_pairs = malloc (size);
-        if (gui_color_pairs)
-            memset (gui_color_pairs, 0, size);
+        gui_color_pairs = calloc (1, sizeof (gui_color_pairs[0]));
         gui_color_pairs_used = 0;
     }
 }
