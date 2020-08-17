@@ -478,10 +478,8 @@ irc_sasl_mechanism_dh_blowfish (const char *data_base64,
     /* create password buffers (clear and crypted) */
     length_password = strlen (sasl_password) +
         ((8 - (strlen (sasl_password) % 8)) % 8);
-    password_clear = malloc (length_password);
-    password_crypted = malloc (length_password);
-    memset (password_clear, 0, length_password);
-    memset (password_crypted, 0, length_password);
+    password_clear = calloc (1, length_password);
+    password_crypted = calloc (1, length_password);
     memcpy (password_clear, sasl_password, strlen (sasl_password));
 
     /* crypt password using blowfish */
@@ -604,10 +602,9 @@ irc_sasl_mechanism_dh_aes (const char *data_base64,
     length_password = strlen (sasl_password) + 1;
     length_userpass = length_username + length_password +
         ((16 - ((length_username + length_password) % 16)) % 16);
-    ptr_userpass = userpass_clear = malloc (length_userpass);
-    userpass_crypted = malloc (length_userpass);
-    memset (userpass_clear, 0, length_password);
-    memset (userpass_crypted, 0, length_password);
+    userpass_clear = calloc (1, length_userpass);
+    ptr_userpass = userpass_clear;
+    userpass_crypted = calloc (1, length_userpass);
     memcpy (ptr_userpass, sasl_username, length_username);
     ptr_userpass += length_username;
     memcpy (ptr_userpass, sasl_password, length_password);
