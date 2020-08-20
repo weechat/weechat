@@ -3574,7 +3574,7 @@ config_weechat_init_options ()
            "(-1 = disable this feature); this option is used only if the bar "
            "item \"input_paste\" is used in at least one bar (by default it "
            "is used in \"input\" bar)"),
-        NULL, -1, INT_MAX, "1", NULL, 0,
+        NULL, -1, INT_MAX, "100", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         weechat_config_file, weechat_config_section_look,
