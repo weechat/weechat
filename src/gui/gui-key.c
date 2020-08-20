@@ -2996,19 +2996,6 @@ gui_key_paste_bracketed_stop ()
 void
 gui_key_paste_accept ()
 {
-    /*
-     * add final newline if there is not in pasted text
-     * (for at least 2 lines pasted)
-     */
-    if (CONFIG_BOOLEAN(config_look_paste_auto_add_newline)
-        && (gui_key_get_paste_lines () > 1)
-        && (gui_key_buffer_size > 0)
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\r')
-        && (gui_key_buffer[gui_key_buffer_size - 1] != '\n'))
-    {
-        gui_key_buffer_add ('\n');
-    }
-
     gui_key_paste_pending = 0;
     gui_input_paste_pending_signal ();
     gui_key_paste_finish ();
