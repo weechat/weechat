@@ -1108,6 +1108,7 @@ fset_config_read ()
 
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
+        fset_config_change_auto_refresh_cb (NULL, NULL, NULL);
         fset_config_change_sort_cb (NULL, NULL, NULL);
         fset_config_change_format_cb (NULL, NULL, NULL);
     }
