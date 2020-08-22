@@ -656,7 +656,7 @@ spell_modifier_cb (const void *pointer, void *data,
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions, *pos_colon;
-    int code_point, char_size;
+    int code_point, char_size, color_code_size;
     int length, index_result, length_word, word_ok;
     int length_color_normal, length_color_error, rc;
     int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
@@ -782,12 +782,33 @@ spell_modifier_cb (const void *pointer, void *data,
         {
             ptr_string_orig = NULL;
 
+            /* skip color codes */
+            while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
+            {
+                memcpy (result + index_result, ptr_string, color_code_size);
+                index_result += color_code_size;
+                ptr_string += color_code_size;
+            }
+            if (!ptr_string[0])
+                break;
+
             /* find start of word: it must start with an alphanumeric char */
             code_point = weechat_utf8_char_int (ptr_string);
             while ((!iswalnum (code_point)) || iswspace (code_point))
             {
+                /* skip color codes */
+                while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
+                {
+                    memcpy (result + index_result, ptr_string, color_code_size);
+                    index_result += color_code_size;
+                    ptr_string += color_code_size;
+                }
+                if (!ptr_string[0])
+                    break;
+
                 if (!ptr_string_orig && !iswspace (code_point))
                     ptr_string_orig = ptr_string;
+
                 char_size = weechat_utf8_char_size (ptr_string);
                 memcpy (result + index_result, ptr_string, char_size);
                 index_result += char_size;
