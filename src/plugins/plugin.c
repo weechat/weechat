@@ -632,6 +632,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->string_split_command = &string_split_command;
         new_plugin->string_free_split_command = &string_free_split_command;
         new_plugin->string_format_size = &string_format_size;
+        new_plugin->string_color_code_size = &gui_color_code_size;
         new_plugin->string_remove_color = &gui_color_decode;
         new_plugin->string_base_encode = &string_base_encode;
         new_plugin->string_base_decode = &string_base_decode;

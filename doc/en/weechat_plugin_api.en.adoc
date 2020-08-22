@@ -1888,6 +1888,55 @@ str = weechat.string_format_size(size)
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
+==== string_color_code_size
+
+_WeeChat ≥ 3.0._
+
+Return the size (in bytes) of the WeeChat color code at the beginning of
+the string.
+
+Prototype:
+
+[source,C]
+----
+int weechat_string_color_code_size (const char *string);
+----
+
+Arguments:
+
+* _string_: string
+
+Return value:
+
+* size (in bytes) of the WeeChat color code at the beginning of the string;
+  if the string is NULL, empty or does not start with a color code, 0 is returned;
+  if the string begins with multiple color codes, only the size of the first one
+  is returned
+
+C examples:
+
+[source,C]
+----
+int size;
+
+size = weechat_string_color_code_size ("test");  /* size == 0 */
+size = weechat_string_color_code_size (weechat_color ("bold"));  /* size == 2 */
+size = weechat_string_color_code_size (weechat_color ("yellow,red"));  /* size == 7 */
+----
+
+Script (Python):
+
+[source,python]
+----
+# prototype
+size = weechat.string_color_code_size(string)
+
+# examples
+size = weechat.string_color_code_size("test")  # size == 0
+size = weechat.string_color_code_size(weechat.color("bold"))  # size == 2
+size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
+----
+
 ==== string_remove_color
 
 Remove WeeChat colors from a string.

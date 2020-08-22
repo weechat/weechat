@@ -235,6 +235,95 @@ TEST(GuiColor, GetCustom)
 
 /*
  * Tests functions:
+ *   gui_color_code_size
+ */
+
+TEST(GuiColor, CodeSize)
+{
+    char string[256];
+
+    /* NULL/empty string */
+    LONGS_EQUAL(0, gui_color_code_size (NULL));
+    LONGS_EQUAL(0, gui_color_code_size (""));
+
+    /* no color code */
+    LONGS_EQUAL(0, gui_color_code_size ("test"));
+
+    /* reset */
+    LONGS_EQUAL(1, gui_color_code_size (gui_color_get_custom ("reset")));
+
+    /* reset (×2) */
+    snprintf (string, sizeof (string),
+              "%s%s",
+              gui_color_get_custom ("reset"),
+              gui_color_get_custom ("reset"));
+    LONGS_EQUAL(1, gui_color_code_size (string));
+
+    /* resetcolor */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("resetcolor")));
+
+    /* emphasis */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("emphasis")));
+
+    /* bold */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("bold")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-bold")));
+
+    /* reverse */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("reverse")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-reverse")));
+
+    /* italic */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("italic")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-italic")));
+
+    /* underline */
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("underline")));
+    LONGS_EQUAL(2, gui_color_code_size (gui_color_get_custom ("-underline")));
+
+    /* bar_fg */
+    LONGS_EQUAL(3, gui_color_code_size (gui_color_get_custom ("bar_fg")));
+
+    /* bar_delim */
+    LONGS_EQUAL(3, gui_color_code_size (gui_color_get_custom ("bar_delim")));
+
+    /* bar_bg */
+    LONGS_EQUAL(3, gui_color_code_size (gui_color_get_custom ("bar_bg")));
+
+    /* fg color */
+    LONGS_EQUAL(4, gui_color_code_size (gui_color_get_custom ("blue")));
+
+    /* bg color */
+    LONGS_EQUAL(4, gui_color_code_size (gui_color_get_custom (",blue")));
+
+    /* fg+bg color */
+    LONGS_EQUAL(7, gui_color_code_size (gui_color_get_custom ("yellow,blue")));
+
+    /* fg+bg color (×2) */
+    snprintf (string, sizeof (string),
+              "%s%s",
+              gui_color_get_custom ("yellow,blue"),
+              gui_color_get_custom ("yellow,blue"));
+    LONGS_EQUAL(7, gui_color_code_size (string));
+
+    /* fg terminal color */
+    LONGS_EQUAL(8, gui_color_code_size (gui_color_get_custom ("214")));
+
+    /* bg terminal color */
+    LONGS_EQUAL(8, gui_color_code_size (gui_color_get_custom (",214")));
+
+    /* fg+bg terminal color */
+    LONGS_EQUAL(15, gui_color_code_size (gui_color_get_custom ("227,240")));
+
+    /* fg terminal color + bg color */
+    LONGS_EQUAL(11, gui_color_code_size (gui_color_get_custom ("227,blue")));
+
+    /* WeeChat color */
+    LONGS_EQUAL(3, gui_color_code_size (GUI_COLOR(GUI_COLOR_CHAT_HOST)));
+}
+
+/*
+ * Tests functions:
  *   gui_color_decode
  */
 

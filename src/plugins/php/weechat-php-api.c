@@ -497,6 +497,23 @@ API_FUNC(string_format_size)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_color_code_size)
+{
+    zend_string *z_string;
+    char *string;
+    int result;
+
+    API_INIT_FUNC(1, "string_color_code_size", API_RETURN_INT(0));
+    if (zend_parse_parameters (ZEND_NUM_ARGS(), "S", &z_string) == FAILURE)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    string = ZSTR_VAL(z_string);
+
+    result = weechat_string_color_code_size ((const char *)string);
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(string_remove_color)
 {
     zend_string *z_string, *z_replacement;

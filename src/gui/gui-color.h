@@ -186,6 +186,7 @@ extern void gui_color_attr_build_string (int color, char *str_attr);
 extern const char *gui_color_get_custom (const char *color_name);
 extern int gui_color_convert_term_to_rgb (int color);
 extern int gui_color_convert_rgb_to_term (int rgb, int limit);
+extern int gui_color_code_size (const char *string);
 extern char *gui_color_decode (const char *string, const char *replacement);
 extern char *gui_color_decode_ansi (const char *string, int keep_colors);
 extern char *gui_color_encode_ansi (const char *string);

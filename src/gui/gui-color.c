@@ -563,6 +563,179 @@ gui_color_convert_rgb_to_term (int rgb, int limit)
 }
 
 /*
+ * Returns the size (in bytes) of the WeeChat color code at the beginning
+ * of "string".
+ *
+ * If "string" is NULL, empty or does not start with a color code,
+ * it returns 0.
+ *
+ * If "string" begins with multiple color codes, only the size of the first
+ * one is returned.
+ */
+
+int
+gui_color_code_size (const char *string)
+{
+    const char *ptr_string;
+
+    if (!string)
+        return 0;
+
+    ptr_string = string;
+
+    switch (ptr_string[0])
+    {
+        case GUI_COLOR_COLOR_CHAR:
+            ptr_string++;
+            switch (ptr_string[0])
+            {
+                case GUI_COLOR_FG_CHAR:
+                    ptr_string++;
+                    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+                    {
+                        ptr_string++;
+                        while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                        {
+                            ptr_string++;
+                        }
+                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                            && ptr_string[3] && ptr_string[4])
+                        {
+                            ptr_string += 5;
+                        }
+                    }
+                    else
+                    {
+                        while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                        {
+                            ptr_string++;
+                        }
+                        if (ptr_string[0] && ptr_string[1])
+                            ptr_string += 2;
+                    }
+                    break;
+                case GUI_COLOR_BG_CHAR:
+                    ptr_string++;
+                    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+                    {
+                        ptr_string++;
+                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                            && ptr_string[3] && ptr_string[4])
+                        {
+                            ptr_string += 5;
+                        }
+                    }
+                    else
+                    {
+                        if (ptr_string[0] && ptr_string[1])
+                            ptr_string += 2;
+                    }
+                    break;
+                case GUI_COLOR_FG_BG_CHAR:
+                    ptr_string++;
+                    if (ptr_string[0] == GUI_COLOR_EXTENDED_CHAR)
+                    {
+                        ptr_string++;
+                        while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                        {
+                            ptr_string++;
+                        }
+                        if (ptr_string[0] && ptr_string[1] && ptr_string[2]
+                            && ptr_string[3] && ptr_string[4])
+                        {
+                            ptr_string += 5;
+                        }
+                    }
+                    else
+                    {
+                        while (gui_color_attr_get_flag (ptr_string[0]) > 0)
+                        {
+                            ptr_string++;
+                        }
+                        if (ptr_string[0] && ptr_string[1])
+                            ptr_string += 2;
+                    }
+                    /*
+                     * note: the comma is an old separator not used any
+                     * more (since WeeChat 2.6), but we still use it here
+                     * so in case of/upgrade this will not break colors in
+                     * old messages
+                     */
+                    if ((ptr_string[0] == ',') || (ptr_string[0] == '~'))
+                    {
+                        if (ptr_string[1] == GUI_COLOR_EXTENDED_CHAR)
+                        {
+                            ptr_string += 2;
+                            if (ptr_string[0] && ptr_string[1]
+                                && ptr_string[2] && ptr_string[3]
+                                && ptr_string[4])
+                            {
+                                ptr_string += 5;
+                            }
+                        }
+                        else
+                        {
+                            ptr_string++;
+                            if (ptr_string[0] && ptr_string[1])
+                                ptr_string += 2;
+                        }
+                    }
+                    break;
+                case GUI_COLOR_EXTENDED_CHAR:
+                    ptr_string++;
+                    if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
+                        && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
+                        && (isdigit (ptr_string[4])))
+                    {
+                        ptr_string += 5;
+                    }
+                    break;
+                case GUI_COLOR_EMPHASIS_CHAR:
+                    ptr_string++;
+                    break;
+                case GUI_COLOR_BAR_CHAR:
+                    ptr_string++;
+                    switch (ptr_string[0])
+                    {
+                        case GUI_COLOR_BAR_FG_CHAR:
+                        case GUI_COLOR_BAR_BG_CHAR:
+                        case GUI_COLOR_BAR_DELIM_CHAR:
+                        case GUI_COLOR_BAR_START_INPUT_CHAR:
+                        case GUI_COLOR_BAR_START_INPUT_HIDDEN_CHAR:
+                        case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                        case GUI_COLOR_BAR_START_ITEM:
+                        case GUI_COLOR_BAR_START_LINE_ITEM:
+                            ptr_string++;
+                            break;
+                    }
+                    break;
+                case GUI_COLOR_RESET_CHAR:
+                    ptr_string++;
+                    break;
+                default:
+                    if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+                        ptr_string += 2;
+                    break;
+            }
+            return ptr_string - string;
+            break;
+        case GUI_COLOR_SET_ATTR_CHAR:
+        case GUI_COLOR_REMOVE_ATTR_CHAR:
+            ptr_string++;
+            if (ptr_string[0])
+                ptr_string++;
+            return ptr_string - string;
+            break;
+        case GUI_COLOR_RESET_CHAR:
+            ptr_string++;
+            return ptr_string - string;
+            break;
+    }
+
+    return 0;
+}
+
+/*
  * Removes WeeChat color codes from a message.
  *
  * If replacement is not NULL and not empty, it is used to replace color codes

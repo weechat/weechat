@@ -1900,6 +1900,57 @@ str = weechat.string_format_size(size)
 str = weechat.string_format_size(15200)  # == "15.2 KB"
 ----
 
+==== string_color_code_size
+
+_WeeChat ≥ 3.0._
+
+// TRANSLATION MISSING
+Return the size (in bytes) of the WeeChat color code at the beginning of
+the string.
+
+プロトタイプ:
+
+[source,C]
+----
+int weechat_string_color_code_size (const char *string);
+----
+
+引数:
+
+* _string_: 文字列
+
+戻り値:
+
+// TRANSLATION MISSING
+* size (in bytes) of the WeeChat color code at the beginning of the string;
+  if the string is NULL, empty or does not start with a color code, 0 is returned;
+  if the string begins with multiple color codes, only the size of the first one
+  is returned
+
+C 言語での使用例:
+
+[source,C]
+----
+int size;
+
+size = weechat_string_color_code_size ("test");  /* size == 0 */
+size = weechat_string_color_code_size (weechat_color ("bold"));  /* size == 2 */
+size = weechat_string_color_code_size (weechat_color ("yellow,red"));  /* size == 7 */
+----
+
+スクリプト (Python) での使用例:
+
+[source,python]
+----
+# プロトタイプ
+size = weechat.string_color_code_size(string)
+
+# 例
+size = weechat.string_color_code_size("test")  # size == 0
+size = weechat.string_color_code_size(weechat.color("bold"))  # size == 2
+size = weechat.string_color_code_size(weechat.color("yellow,red"))  # size == 7
+----
+
 ==== string_remove_color
 
 文字列から WeeChat 色コードを削除。

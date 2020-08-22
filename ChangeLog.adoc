@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * api: add function string_color_code_size (issue #1547)
   * fset: add option fset.look.auto_refresh (issue #1553)
   * irc: add pointer to irc_nick in focus of bar item "buffer_nicklist" (issue #1535, issue #1538)
   * irc: allow to send text on buffers with commands /allchan, /allpv and /allserv

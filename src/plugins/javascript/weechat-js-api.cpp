@@ -376,6 +376,19 @@ API_FUNC(string_format_size)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_color_code_size)
+{
+    int size;
+
+    API_INIT_FUNC(1, "string_color_code_size", "s", API_RETURN_INT(0));
+
+    v8::String::Utf8Value string(args[0]);
+
+    size = weechat_string_color_code_size (*string);
+
+    API_RETURN_INT(size);
+}
+
 API_FUNC(string_remove_color)
 {
     char *result;
@@ -4945,6 +4958,7 @@ WeechatJsV8::loadLibs()
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);
     API_DEF_FUNC(string_format_size);
+    API_DEF_FUNC(string_color_code_size);
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);

@@ -530,6 +530,20 @@ API_FUNC(string_format_size)
     API_RETURN_STRING_FREE(result);
 }
 
+API_FUNC(string_color_code_size)
+{
+    Tcl_Obj *objp;
+    int result, i;
+
+    API_INIT_FUNC(1, "string_color_code_size", API_RETURN_INT(0));
+    if (objc < 2)
+        API_WRONG_ARGS(API_RETURN_INT(0));
+
+    result = weechat_string_color_code_size (Tcl_GetStringFromObj (objv[1], &i)); /* string */
+
+    API_RETURN_INT(result);
+}
+
 API_FUNC(string_remove_color)
 {
     Tcl_Obj *objp;
@@ -5739,6 +5753,7 @@ void weechat_tcl_api_init (Tcl_Interp *interp)
     API_DEF_FUNC(string_has_highlight_regex);
     API_DEF_FUNC(string_mask_to_regex);
     API_DEF_FUNC(string_format_size);
+    API_DEF_FUNC(string_color_code_size);
     API_DEF_FUNC(string_remove_color);
     API_DEF_FUNC(string_is_command_char);
     API_DEF_FUNC(string_input_for_buffer);
