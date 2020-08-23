@@ -2819,7 +2819,7 @@ This function is not available in scripting API.
 
 ==== string_dyn_concat
 
-_WeeChat ≥ 1.8._
+_WeeChat ≥ 1.8, updated in 3.0._
 
 Concatenate a string to a dynamic string.
 
@@ -2830,13 +2830,16 @@ Prototype:
 
 [source,C]
 ----
-int weechat_string_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
 
 Arguments:
 
 * _string_: pointer to dynamic string
 * _add_: the string to add
+* _bytes_: max number of bytes in _add_ to concatenate, must be lower or equal
+  to length of _add_ (-1 = automatic: concatenate whole string _add_)
+  _(WeeChat ≥ 3.0)_
 
 Return value:
 
@@ -2849,7 +2852,7 @@ C example:
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_string_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc", -1))
     {
         /* ... */
     }

@@ -117,11 +117,13 @@ spell_bar_item_suggest (const void *pointer, void *data,
                 str_suggest,
                 weechat_color (
                     weechat_config_string (
-                        spell_config_color_suggestion_delimiter_dict)));
+                        spell_config_color_suggestion_delimiter_dict)),
+                -1);
             weechat_string_dyn_concat (
                 str_suggest,
                 weechat_config_string (
-                    spell_config_look_suggestion_delimiter_dict));
+                    spell_config_look_suggestion_delimiter_dict),
+                -1);
         }
         suggestions2 = weechat_string_split (
             suggestions[i],
@@ -142,18 +144,21 @@ spell_bar_item_suggest (const void *pointer, void *data,
                         str_suggest,
                         weechat_color (
                             weechat_config_string (
-                                spell_config_color_suggestion_delimiter_word)));
+                                spell_config_color_suggestion_delimiter_word)),
+                        -1);
                     weechat_string_dyn_concat (
                         str_suggest,
                         weechat_config_string (
-                            spell_config_look_suggestion_delimiter_word));
+                            spell_config_look_suggestion_delimiter_word),
+                        -1);
                 }
                 weechat_string_dyn_concat (
                     str_suggest,
                     weechat_color (
                         weechat_config_string (
-                            spell_config_color_suggestion)));
-                weechat_string_dyn_concat (str_suggest, suggestions2[j]);
+                            spell_config_color_suggestion)),
+                    -1);
+                weechat_string_dyn_concat (str_suggest, suggestions2[j], -1);
             }
             weechat_string_free_split (suggestions2);
         }

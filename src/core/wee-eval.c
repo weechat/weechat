@@ -80,8 +80,8 @@ eval_debug_message (struct t_eval_context *eval_context, char *message, ...)
         return;
 
     if (*(eval_context->debug)[0])
-        string_dyn_concat (eval_context->debug, "\n");
-    string_dyn_concat (eval_context->debug, vbuffer);
+        string_dyn_concat (eval_context->debug, "\n", -1);
+    string_dyn_concat (eval_context->debug, vbuffer, -1);
 
     free (vbuffer);
 }

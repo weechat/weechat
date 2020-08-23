@@ -515,12 +515,12 @@ irc_protocol_cap_print_cb (void *data,
     str_caps = (char **)data;
 
     if (*str_caps[0])
-        weechat_string_dyn_concat (str_caps, " ");
-    weechat_string_dyn_concat (str_caps, key);
+        weechat_string_dyn_concat (str_caps, " ", -1);
+    weechat_string_dyn_concat (str_caps, key, -1);
     if (value)
     {
-        weechat_string_dyn_concat (str_caps, "=");
-        weechat_string_dyn_concat (str_caps, value);
+        weechat_string_dyn_concat (str_caps, "=", -1);
+        weechat_string_dyn_concat (str_caps, value, -1);
     }
 }
 
@@ -837,9 +837,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     if (caps_supported[i][0] == '-')
                     {
                         if (*str_caps_disabled[0])
-                            weechat_string_dyn_concat (str_caps_disabled, " ");
+                            weechat_string_dyn_concat (str_caps_disabled, " ", -1);
                         weechat_string_dyn_concat (str_caps_disabled,
-                                                   caps_supported[i] + 1);
+                                                   caps_supported[i] + 1,
+                                                   -1);
 
                         weechat_hashtable_remove (server->cap_list,
                                                   caps_supported[i] + 1);
@@ -847,9 +848,10 @@ IRC_PROTOCOL_CALLBACK(cap)
                     else
                     {
                         if (*str_caps_enabled[0])
-                            weechat_string_dyn_concat (str_caps_enabled, " ");
+                            weechat_string_dyn_concat (str_caps_enabled, " ", -1);
                         weechat_string_dyn_concat (str_caps_enabled,
-                                                   caps_supported[i]);
+                                                   caps_supported[i],
+                                                   -1);
 
                         weechat_hashtable_set (server->cap_list,
                                                caps_supported[i], NULL);

@@ -151,18 +151,19 @@ buflist_config_hook_signals_refresh ()
     ptr_signals_refresh = weechat_config_string (
         buflist_config_look_signals_refresh);
 
-    weechat_string_dyn_concat (all_signals, BUFLIST_CONFIG_SIGNALS_REFRESH);
+    weechat_string_dyn_concat (all_signals, BUFLIST_CONFIG_SIGNALS_REFRESH, -1);
     if (ptr_signals_refresh && ptr_signals_refresh[0])
     {
-        weechat_string_dyn_concat (all_signals, ",");
-        weechat_string_dyn_concat (all_signals, ptr_signals_refresh);
+        weechat_string_dyn_concat (all_signals, ",", -1);
+        weechat_string_dyn_concat (all_signals, ptr_signals_refresh, -1);
     }
     if (weechat_config_boolean (buflist_config_look_nick_prefix))
     {
-        weechat_string_dyn_concat (all_signals, ",");
+        weechat_string_dyn_concat (all_signals, ",", -1);
         weechat_string_dyn_concat (
             all_signals,
-            BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX);
+            BUFLIST_CONFIG_SIGNALS_REFRESH_NICK_PREFIX,
+            -1);
     }
 
     signals = weechat_string_split (*all_signals, ",", NULL,

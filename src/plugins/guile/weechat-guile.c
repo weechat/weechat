@@ -1180,13 +1180,13 @@ weechat_guile_port_write (SCM port, SCM src, size_t start, size_t count)
     ptr_data = data2;
     while ((ptr_newline = strchr (ptr_data, '\n')) != NULL)
     {
-        ptr_newline[0] = '\0';
-        weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+        weechat_string_dyn_concat (guile_buffer_output,
+                                   ptr_data,
+                                   ptr_newline - ptr_data);
         weechat_guile_output_flush ();
-        ptr_newline[0] = '\n';
         ptr_data = ++ptr_newline;
     }
-    weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+    weechat_string_dyn_concat (guile_buffer_output, ptr_data, -1);
 
     free (data2);
 
@@ -1212,13 +1212,13 @@ weechat_guile_port_write (SCM port, const void *data, size_t size)
     ptr_data = data2;
     while ((ptr_newline = strchr (ptr_data, '\n')) != NULL)
     {
-        ptr_newline[0] = '\0';
-        weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+        weechat_string_dyn_concat (guile_buffer_output,
+                                   ptr_data,
+                                   ptr_newline - ptr_data);
         weechat_guile_output_flush ();
-        ptr_newline[0] = '\n';
         ptr_data = ++ptr_newline;
     }
-    weechat_string_dyn_concat (guile_buffer_output, ptr_data);
+    weechat_string_dyn_concat (guile_buffer_output, ptr_data, -1);
 
     free (data2);
 }

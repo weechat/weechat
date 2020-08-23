@@ -292,7 +292,7 @@ weechat_perl_output_flush ()
 
 XS (weechat_perl_output)
 {
-    char *msg, *ptr_msg, *ptr_newline, *message;
+    char *msg, *ptr_msg, *ptr_newline;
     dXSARGS;
 
     if (items < 1)
@@ -302,14 +302,13 @@ XS (weechat_perl_output)
     ptr_msg = msg;
     while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
     {
-        message = weechat_strndup (ptr_msg, ptr_newline - ptr_msg);
-        weechat_string_dyn_concat (perl_buffer_output, message);
-        if (message)
-            free (message);
+        weechat_string_dyn_concat (perl_buffer_output,
+                                   ptr_msg,
+                                   ptr_newline - ptr_msg);
         weechat_perl_output_flush ();
         ptr_msg = ++ptr_newline;
     }
-    weechat_string_dyn_concat (perl_buffer_output, ptr_msg);
+    weechat_string_dyn_concat (perl_buffer_output, ptr_msg, -1);
 }
 
 /*

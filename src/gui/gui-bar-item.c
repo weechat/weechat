@@ -1769,7 +1769,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 && ptr_group->visible))
         {
             if (*nicklist[0])
-                string_dyn_concat (nicklist, "\n");
+                string_dyn_concat (nicklist, "\n", -1);
 
             if (ptr_nick)
             {
@@ -1777,7 +1777,7 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                 {
                     for (i = 0; i < ptr_nick->group->level; i++)
                     {
-                        string_dyn_concat (nicklist, " ");
+                        string_dyn_concat (nicklist, " ", -1);
                     }
                 }
                 if (ptr_nick->prefix_color)
@@ -1793,18 +1793,20 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                                 nicklist,
                                 gui_color_get_custom (
                                     gui_color_get_name (
-                                        CONFIG_COLOR(ptr_option))));
+                                        CONFIG_COLOR(ptr_option))),
+                                -1);
                         }
                     }
                     else
                     {
                         string_dyn_concat (nicklist,
                                            gui_color_get_custom (
-                                               ptr_nick->prefix_color));
+                                               ptr_nick->prefix_color),
+                                           -1);
                     }
                 }
                 if (ptr_nick->prefix)
-                    string_dyn_concat (nicklist, ptr_nick->prefix);
+                    string_dyn_concat (nicklist, ptr_nick->prefix, -1);
                 if (ptr_nick->color)
                 {
                     if (strchr (ptr_nick->color, '.'))
@@ -1818,23 +1820,25 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                                 nicklist,
                                 gui_color_get_custom (
                                     gui_color_get_name (
-                                        CONFIG_COLOR(ptr_option))));
+                                        CONFIG_COLOR(ptr_option))),
+                                -1);
                         }
                     }
                     else
                     {
                         string_dyn_concat (nicklist,
                                            gui_color_get_custom (
-                                               ptr_nick->color));
+                                               ptr_nick->color),
+                                           -1);
                     }
                 }
-                string_dyn_concat (nicklist, ptr_nick->name);
+                string_dyn_concat (nicklist, ptr_nick->name, -1);
             }
             else
             {
                 for (i = 0; i < ptr_group->level - 1; i++)
                 {
-                    string_dyn_concat (nicklist, " ");
+                    string_dyn_concat (nicklist, " ", -1);
                 }
                 if (ptr_group->color)
                 {
@@ -1849,19 +1853,22 @@ gui_bar_item_buffer_nicklist_cb (const void *pointer, void *data,
                                 nicklist,
                                 gui_color_get_custom (
                                     gui_color_get_name (
-                                        CONFIG_COLOR(ptr_option))));
+                                        CONFIG_COLOR(ptr_option))),
+                                -1);
                         }
                     }
                     else
                     {
                         string_dyn_concat (nicklist,
                                            gui_color_get_custom (
-                                               ptr_group->color));
+                                               ptr_group->color),
+                                           -1);
                     }
                 }
                 string_dyn_concat (nicklist,
                                    gui_nicklist_get_group_start (
-                                       ptr_group->name));
+                                       ptr_group->name),
+                                   -1);
             }
         }
         gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);

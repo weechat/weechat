@@ -2938,7 +2938,8 @@ Questa funzione non è disponibile nelle API per lo scripting.
 
 ==== string_dyn_concat
 
-_WeeChat ≥ 1.8._
+// TRANSLATION MISSING
+_WeeChat ≥ 1.8, updated in 3.0._
 
 // TRANSLATION MISSING
 Concatenate a string to a dynamic string.
@@ -2951,7 +2952,7 @@ Prototipo:
 
 [source,C]
 ----
-int weechat_string_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
 
 Argomenti:
@@ -2959,6 +2960,9 @@ Argomenti:
 // TRANSLATION MISSING
 * _string_: pointer to dynamic string
 * _add_: the string to add
+* _bytes_: max number of bytes in _add_ to concatenate, must be lower or equal
+  to length of _add_ (-1 = automatic: concatenate whole string _add_)
+  _(WeeChat ≥ 3.0)_
 
 Valore restituito:
 
@@ -2972,7 +2976,7 @@ Esempio in C:
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_string_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc", -1))
     {
         /* ... */
     }

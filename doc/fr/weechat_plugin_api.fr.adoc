@@ -2864,7 +2864,7 @@ Cette fonction n'est pas disponible dans l'API script.
 
 ==== string_dyn_concat
 
-_WeeChat ≥ 1.8._
+_WeeChat ≥ 1.8, mis à jour en 3.0._
 
 Concaténer une chaîne dans une chaîne dynamique.
 
@@ -2875,13 +2875,16 @@ Prototype :
 
 [source,C]
 ----
-int weechat_string_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
 
 Paramètres :
 
 * _string_ : pointeur vers la chaîne dynamique
 * _add_ : la chaîne à ajouter
+* _bytes_ : nombre maximum d'octets de _add_ à concaténer, doit être inférieur
+  ou égal à la longueur de _add_ (-1 = automatique : concaténer la totalité de
+  la chaîne _add_) _(WeeChat ≥ 3.0)_
 
 Valeur de retour :
 
@@ -2894,7 +2897,7 @@ Exemple en C :
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_string_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc", -1))
     {
         /* ... */
     }

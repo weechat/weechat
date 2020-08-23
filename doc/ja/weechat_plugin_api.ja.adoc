@@ -2848,7 +2848,8 @@ else
 
 ==== string_dyn_concat
 
-_WeeChat バージョン 1.8 以上で利用可_
+// TRANSLATION MISSING
+_WeeChat バージョン 1.8 以上で利用可, updated in 3.0_
 
 動的文字列に文字列を連結します。
 
@@ -2859,13 +2860,17 @@ _WeeChat バージョン 1.8 以上で利用可_
 
 [source,C]
 ----
-int weechat_string_dyn_concat (char **string, const char *add);
+int weechat_string_dyn_concat (char **string, const char *add, int bytes);
 ----
 
 引数:
 
 * _string_: 動的文字列へのポインタ
 * _add_: 連結する文字列
+// TRANSLATION MISSING
+* _bytes_: max number of bytes in _add_ to concatenate, must be lower or equal
+  to length of _add_ (-1 = automatic: concatenate whole string _add_)
+  _(WeeChat ≥ 3.0)_
 
 戻り値:
 
@@ -2878,7 +2883,7 @@ C 言語での使用例:
 char **string = weechat_string_dyn_alloc (256);
 if (weechat_string_dyn_copy (string, "test"))
 {
-    if (weechat_string_dyn_concat (string, "abc"))
+    if (weechat_string_dyn_concat (string, "abc", -1))
     {
         /* ... */
     }

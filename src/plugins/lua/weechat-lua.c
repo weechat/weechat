@@ -258,7 +258,6 @@ int
 weechat_lua_output (lua_State *L)
 {
     const char *msg, *ptr_msg, *ptr_newline;
-    char *message;
 
     if (lua_gettop (L) < 1)
         return 0;
@@ -267,14 +266,13 @@ weechat_lua_output (lua_State *L)
     ptr_msg = msg;
     while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
     {
-        message = weechat_strndup (ptr_msg, ptr_newline - ptr_msg);
-        weechat_string_dyn_concat (lua_buffer_output, message);
-        if (message)
-            free (message);
+        weechat_string_dyn_concat (lua_buffer_output,
+                                   ptr_msg,
+                                   ptr_newline - ptr_msg);
         weechat_lua_output_flush ();
         ptr_msg = ++ptr_newline;
     }
-    weechat_string_dyn_concat (lua_buffer_output, ptr_msg);
+    weechat_string_dyn_concat (lua_buffer_output, ptr_msg, -1);
 
     return 0;
 }

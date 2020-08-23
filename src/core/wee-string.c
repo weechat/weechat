@@ -3978,6 +3978,10 @@ string_dyn_copy (char **string, const char *new_string)
 /*
  * Concatenates a string to a dynamic string and adjusts its size accordingly.
  *
+ * The parameter "bytes" is the max number of bytes to concatenate
+ * (a terminating null byte '\0' is automatically added); value -1 means
+ * automatic: whole string "add" is concatenated.
+ *
  * The string pointer (*string) is updated with the new allocated string
  * if the string had to be extended, or the same pointer if there was enough
  * size to concatenate the new string.
@@ -3988,7 +3992,7 @@ string_dyn_copy (char **string, const char *new_string)
  */
 
 int
-string_dyn_concat (char **string, const char *add)
+string_dyn_concat (char **string, const char *add, int bytes)
 {
     struct t_string_dyn *ptr_string_dyn;
     char *string_realloc;
@@ -3997,12 +4001,15 @@ string_dyn_concat (char **string, const char *add)
     if (!string || !*string)
         return 0;
 
-    if (!add || !add[0])
+    if (!add || !add[0] || (bytes == 0))
         return 1;
 
     ptr_string_dyn = (struct t_string_dyn *)string;
 
     length_add = strlen (add);
+    if ((bytes >= 0) && (bytes < (int)length_add))
+        length_add = bytes;
+
     new_size = ptr_string_dyn->size + length_add;
 
     if (new_size > ptr_string_dyn->size_alloc)
@@ -4027,8 +4034,9 @@ string_dyn_concat (char **string, const char *add)
     /* concatenate "add" after "string" */
     memmove (ptr_string_dyn->string + ptr_string_dyn->size - 1,
              add,
-             length_add + 1);
+             length_add);
     ptr_string_dyn->size = new_size;
+    ptr_string_dyn->string[new_size - 1] = '\0';
 
     return 1;
 }

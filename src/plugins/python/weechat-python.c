@@ -444,13 +444,13 @@ weechat_python_output (PyObject *self, PyObject *args)
         ptr_msg = msg;
         while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
         {
-            ptr_newline[0] = '\0';
-            weechat_string_dyn_concat (python_buffer_output, ptr_msg);
+            weechat_string_dyn_concat (python_buffer_output,
+                                       ptr_msg,
+                                       ptr_newline - ptr_msg);
             weechat_python_output_flush ();
-            ptr_newline[0] = '\n';
             ptr_msg = ++ptr_newline;
         }
-        weechat_string_dyn_concat (python_buffer_output, ptr_msg);
+        weechat_string_dyn_concat (python_buffer_output, ptr_msg, -1);
     }
 
     Py_INCREF(Py_None);

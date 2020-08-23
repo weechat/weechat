@@ -2160,7 +2160,7 @@ TEST(CoreString, Dyn)
     ptr_string_dyn = (struct t_string_dyn *)str;
 
     /* check concat with NULL */
-    LONGS_EQUAL(1, string_dyn_concat (str, NULL));
+    LONGS_EQUAL(1, string_dyn_concat (str, NULL, -1));
     LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
@@ -2168,46 +2168,81 @@ TEST(CoreString, Dyn)
     STRCMP_EQUAL("", *str);
 
     /* check concat with an empty string */
-    LONGS_EQUAL(1, string_dyn_concat (str, ""));
+    LONGS_EQUAL(1, string_dyn_concat (str, "", -1));
     LONGS_EQUAL(1, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(1, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("", ptr_string_dyn->string);
     STRCMP_EQUAL("", *str);
 
-    /* check concat with some strings */
-    LONGS_EQUAL(1, string_dyn_concat (str, "a"));
+    /* check concat with some strings and automatic length */
+    LONGS_EQUAL(1, string_dyn_concat (str, "a", -1));
     LONGS_EQUAL(2, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(2, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("a", ptr_string_dyn->string);
     STRCMP_EQUAL("a", *str);
 
-    LONGS_EQUAL(1, string_dyn_concat (str, "bcd"));
+    LONGS_EQUAL(1, string_dyn_concat (str, "bcd", -1));
     LONGS_EQUAL(5, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(5, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("abcd", ptr_string_dyn->string);
     STRCMP_EQUAL("abcd", *str);
 
-    LONGS_EQUAL(1, string_dyn_concat (str, "e"));
+    LONGS_EQUAL(1, string_dyn_concat (str, "e", -1));
     LONGS_EQUAL(7, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(6, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("abcde", ptr_string_dyn->string);
     STRCMP_EQUAL("abcde", *str);
 
-    LONGS_EQUAL(1, string_dyn_concat (str, "fg"));
+    LONGS_EQUAL(1, string_dyn_concat (str, "fg", -1));
     LONGS_EQUAL(10, ptr_string_dyn->size_alloc);
     LONGS_EQUAL(8, ptr_string_dyn->size);
     POINTERS_EQUAL(ptr_string_dyn->string, *str);
     STRCMP_EQUAL("abcdefg", ptr_string_dyn->string);
     STRCMP_EQUAL("abcdefg", *str);
 
+    string_dyn_free (str, 1);
+
+    str = string_dyn_alloc (1);
+    ptr_string_dyn = (struct t_string_dyn *)str;
+
+    /* check concat with some strings and fixed length */
+    LONGS_EQUAL(1, string_dyn_copy (str, "abcd"));
+    LONGS_EQUAL(1, string_dyn_concat (str, "xyz", 0));
+    LONGS_EQUAL(5, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(5, ptr_string_dyn->size);
+    POINTERS_EQUAL(ptr_string_dyn->string, *str);
+    STRCMP_EQUAL("abcd", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcd", *str);
+
+    LONGS_EQUAL(1, string_dyn_concat (str, "xyz", 1));
+    LONGS_EQUAL(7, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(6, ptr_string_dyn->size);
+    POINTERS_EQUAL(ptr_string_dyn->string, *str);
+    STRCMP_EQUAL("abcdx", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcdx", *str);
+
+    LONGS_EQUAL(1, string_dyn_concat (str, "xyz", 2));
+    LONGS_EQUAL(10, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(8, ptr_string_dyn->size);
+    POINTERS_EQUAL(ptr_string_dyn->string, *str);
+    STRCMP_EQUAL("abcdxxy", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcdxxy", *str);
+
+    LONGS_EQUAL(1, string_dyn_concat (str, "xyz", 3));
+    LONGS_EQUAL(15, ptr_string_dyn->size_alloc);
+    LONGS_EQUAL(11, ptr_string_dyn->size);
+    POINTERS_EQUAL(ptr_string_dyn->string, *str);
+    STRCMP_EQUAL("abcdxxyxyz", ptr_string_dyn->string);
+    STRCMP_EQUAL("abcdxxyxyz", *str);
+
     str_ptr = *str;
     string_dyn_free (str, 0);
 
-    STRCMP_EQUAL("abcdefg", str_ptr);
+    STRCMP_EQUAL("abcdxxyxyz", str_ptr);
 
     free (str_ptr);
 }

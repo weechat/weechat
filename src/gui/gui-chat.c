@@ -906,9 +906,9 @@ gui_chat_add_line_waiting_buffer (const char *message)
     }
 
     if (*gui_chat_lines_waiting_buffer[0])
-        string_dyn_concat (gui_chat_lines_waiting_buffer, "\n");
+        string_dyn_concat (gui_chat_lines_waiting_buffer, "\n", -1);
 
-    string_dyn_concat (gui_chat_lines_waiting_buffer, message);
+    string_dyn_concat (gui_chat_lines_waiting_buffer, message, -1);
 }
 
 /*

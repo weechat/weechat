@@ -542,15 +542,19 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                             weechat_string_dyn_concat (
                                 hotlist,
                                 weechat_config_string (
-                                    buflist_config_format_hotlist_separator));
+                                    buflist_config_format_hotlist_separator),
+                                -1);
                         }
                         weechat_string_dyn_concat (
                             hotlist,
                             weechat_config_string (
-                                buflist_config_format_hotlist_level[j]));
+                                buflist_config_format_hotlist_level[j]),
+                            -1);
                         snprintf (str_hotlist_count, sizeof (str_hotlist_count),
                                   "%d", count);
-                        weechat_string_dyn_concat (hotlist, str_hotlist_count);
+                        weechat_string_dyn_concat (hotlist,
+                                                   str_hotlist_count,
+                                                   -1);
                     }
                 }
                 str_hotlist = *hotlist;
@@ -606,7 +610,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
         if (weechat_config_boolean (buflist_config_look_add_newline)
             && *buflist[0])
         {
-            if (!weechat_string_dyn_concat (buflist, "\n"))
+            if (!weechat_string_dyn_concat (buflist, "\n", -1))
                 goto error;
         }
 
@@ -618,7 +622,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             NULL);
 
         /* concatenate string */
-        rc = weechat_string_dyn_concat (buflist, line);
+        rc = weechat_string_dyn_concat (buflist, line, -1);
         free (line);
         if (!rc)
             goto error;

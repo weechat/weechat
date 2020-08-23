@@ -428,24 +428,23 @@ weechat_ruby_output_flush ()
 static VALUE
 weechat_ruby_output (VALUE self, VALUE str)
 {
-    char *msg, *m, *p;
+    char *msg, *ptr_msg, *ptr_newline;
 
     /* make C compiler happy */
     (void) self;
 
     msg = strdup (StringValuePtr (str));
 
-    m = msg;
-    while ((p = strchr (m, '\n')) != NULL)
+    ptr_msg = msg;
+    while ((ptr_newline = strchr (ptr_msg, '\n')) != NULL)
     {
-        *p = '\0';
-        weechat_string_dyn_concat (ruby_buffer_output, m);
+        weechat_string_dyn_concat (ruby_buffer_output,
+                                   ptr_msg,
+                                   ptr_newline - ptr_msg);
         weechat_ruby_output_flush ();
-        *p = '\n';
-        m = ++p;
+        ptr_msg = ++ptr_newline;
     }
-
-    weechat_string_dyn_concat (ruby_buffer_output, m);
+    weechat_string_dyn_concat (ruby_buffer_output, ptr_msg, -1);
 
     if (msg)
         free (msg);

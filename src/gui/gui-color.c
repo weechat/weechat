@@ -1192,16 +1192,16 @@ gui_color_add_ansi_flag (char **output, int flag)
     switch (flag)
     {
         case GUI_COLOR_EXTENDED_BOLD_FLAG:
-            string_dyn_concat (output, "\x1B[1m");
+            string_dyn_concat (output, "\x1B[1m", -1);
             break;
         case GUI_COLOR_EXTENDED_REVERSE_FLAG:
-            string_dyn_concat (output, "\x1B[7m");
+            string_dyn_concat (output, "\x1B[7m", -1);
             break;
         case GUI_COLOR_EXTENDED_ITALIC_FLAG:
-            string_dyn_concat (output, "\x1B[3m");
+            string_dyn_concat (output, "\x1B[3m", -1);
             break;
         case GUI_COLOR_EXTENDED_UNDERLINE_FLAG:
-            string_dyn_concat (output, "\x1B[4m");
+            string_dyn_concat (output, "\x1B[4m", -1);
             break;
         case GUI_COLOR_EXTENDED_KEEPATTR_FLAG:
             /* nothing to do here (really? not sure) */
@@ -1284,7 +1284,7 @@ gui_color_encode_ansi (const char *string)
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[38;5;%dm",
                                               color);
-                                    string_dyn_concat (out, str_concat);
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 5;
                             }
@@ -1311,7 +1311,7 @@ gui_color_encode_ansi (const char *string)
                                                   "\x1B[%dm",
                                                   (ansi_color < 8) ?
                                                   ansi_color + 30 : ansi_color - 8 + 90);
-                                        string_dyn_concat (out, str_concat);
+                                        string_dyn_concat (out, str_concat, -1);
                                     }
                                 }
                                 ptr_string += 2;
@@ -1335,7 +1335,7 @@ gui_color_encode_ansi (const char *string)
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[48;5;%dm",
                                               color);
-                                    string_dyn_concat (out, str_concat);
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 5;
                             }
@@ -1357,7 +1357,7 @@ gui_color_encode_ansi (const char *string)
                                                   "\x1B[%dm",
                                                   (ansi_color < 8) ?
                                                   ansi_color + 40 : ansi_color - 8 + 100);
-                                        string_dyn_concat (out, str_concat);
+                                        string_dyn_concat (out, str_concat, -1);
                                     }
                                 }
                                 ptr_string += 2;
@@ -1386,7 +1386,7 @@ gui_color_encode_ansi (const char *string)
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[38;5;%dm",
                                               color);
-                                    string_dyn_concat (out, str_concat);
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 ptr_string += 5;
                             }
@@ -1413,7 +1413,7 @@ gui_color_encode_ansi (const char *string)
                                                   "\x1B[%dm",
                                                   (ansi_color < 8) ?
                                                   ansi_color + 30 : ansi_color - 8 + 90);
-                                        string_dyn_concat (out, str_concat);
+                                        string_dyn_concat (out, str_concat, -1);
                                     }
                                 }
                                 ptr_string += 2;
@@ -1443,7 +1443,7 @@ gui_color_encode_ansi (const char *string)
                                         snprintf (str_concat, sizeof (str_concat),
                                                   "\x1B[48;5;%dm",
                                                   color);
-                                        string_dyn_concat (out, str_concat);
+                                        string_dyn_concat (out, str_concat, -1);
                                     }
                                     ptr_string += 5;
                                 }
@@ -1466,7 +1466,7 @@ gui_color_encode_ansi (const char *string)
                                                       "\x1B[%dm",
                                                       (ansi_color < 8) ?
                                                       ansi_color + 40 : ansi_color - 8 + 100);
-                                            string_dyn_concat (out, str_concat);
+                                            string_dyn_concat (out, str_concat, -1);
                                         }
                                     }
                                     ptr_string += 2;
@@ -1489,7 +1489,7 @@ gui_color_encode_ansi (const char *string)
                                 snprintf (str_concat, sizeof (str_concat),
                                           "\x1B[38;5;%dm",
                                           color);
-                                string_dyn_concat (out, str_concat);
+                                string_dyn_concat (out, str_concat, -1);
                             }
                             ptr_string += 5;
                         }
@@ -1515,7 +1515,7 @@ gui_color_encode_ansi (const char *string)
                         break;
                     case GUI_COLOR_RESET_CHAR:
                         ptr_string++;
-                        string_dyn_concat (out, "\x1B[39m\x1B[49m");
+                        string_dyn_concat (out, "\x1B[39m\x1B[49m", -1);
                         break;
                     default:
                         if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
@@ -1532,40 +1532,40 @@ gui_color_encode_ansi (const char *string)
                                 bg = gui_color[color]->background;
                                 attrs = gui_color_get_extended_flags (
                                     gui_color[color]->attributes);
-                                string_dyn_concat (out, "\x1B[0m");
+                                string_dyn_concat (out, "\x1B[0m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_BOLD_FLAG)
-                                    string_dyn_concat (out, "\x1B[1m");
+                                    string_dyn_concat (out, "\x1B[1m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_REVERSE_FLAG)
-                                    string_dyn_concat (out, "\x1B[7m");
+                                    string_dyn_concat (out, "\x1B[7m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_ITALIC_FLAG)
-                                    string_dyn_concat (out, "\x1B[3m");
+                                    string_dyn_concat (out, "\x1B[3m", -1);
                                 if (attrs & GUI_COLOR_EXTENDED_UNDERLINE_FLAG)
-                                    string_dyn_concat (out, "\x1B[4m");
+                                    string_dyn_concat (out, "\x1B[4m", -1);
                                 if ((fg > 0) && (fg & GUI_COLOR_EXTENDED_FLAG))
                                     fg &= GUI_COLOR_EXTENDED_MASK;
                                 if ((bg > 0) && (bg & GUI_COLOR_EXTENDED_FLAG))
                                     bg &= GUI_COLOR_EXTENDED_MASK;
                                 if (fg < 0)
                                 {
-                                    string_dyn_concat (out, "\x1B[39m");
+                                    string_dyn_concat (out, "\x1B[39m", -1);
                                 }
                                 else
                                 {
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[38;5;%dm",
                                               fg);
-                                    string_dyn_concat (out, str_concat);
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                                 if (bg < 0)
                                 {
-                                    string_dyn_concat (out, "\x1B[49m");
+                                    string_dyn_concat (out, "\x1B[49m", -1);
                                 }
                                 else
                                 {
                                     snprintf (str_concat, sizeof (str_concat),
                                               "\x1B[48;5;%dm",
                                               bg);
-                                    string_dyn_concat (out, str_concat);
+                                    string_dyn_concat (out, str_concat, -1);
                                 }
                             }
                             ptr_string += 2;
@@ -1580,16 +1580,16 @@ gui_color_encode_ansi (const char *string)
                     switch (ptr_string[0])
                     {
                         case GUI_COLOR_ATTR_BOLD_CHAR:
-                            string_dyn_concat (out, "\x1B[1m");
+                            string_dyn_concat (out, "\x1B[1m", -1);
                             break;
                         case GUI_COLOR_ATTR_REVERSE_CHAR:
-                            string_dyn_concat (out, "\x1B[7m");
+                            string_dyn_concat (out, "\x1B[7m", -1);
                             break;
                         case GUI_COLOR_ATTR_ITALIC_CHAR:
-                            string_dyn_concat (out, "\x1B[3m");
+                            string_dyn_concat (out, "\x1B[3m", -1);
                             break;
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                            string_dyn_concat (out, "\x1B[4m");
+                            string_dyn_concat (out, "\x1B[4m", -1);
                             break;
                     }
                     ptr_string++;
@@ -1602,32 +1602,30 @@ gui_color_encode_ansi (const char *string)
                     switch (ptr_string[0])
                     {
                         case GUI_COLOR_ATTR_BOLD_CHAR:
-                            string_dyn_concat (out, "\x1B[21m");
+                            string_dyn_concat (out, "\x1B[21m", -1);
                             break;
                         case GUI_COLOR_ATTR_REVERSE_CHAR:
-                            string_dyn_concat (out, "\x1B[27m");
+                            string_dyn_concat (out, "\x1B[27m", -1);
                             break;
                         case GUI_COLOR_ATTR_ITALIC_CHAR:
-                            string_dyn_concat (out, "\x1B[23m");
+                            string_dyn_concat (out, "\x1B[23m", -1);
                             break;
                         case GUI_COLOR_ATTR_UNDERLINE_CHAR:
-                            string_dyn_concat (out, "\x1B[24m");
+                            string_dyn_concat (out, "\x1B[24m", -1);
                             break;
                     }
                     ptr_string++;
                 }
                 break;
             case GUI_COLOR_RESET_CHAR:
-                string_dyn_concat (out, "\x1B[0m");
+                string_dyn_concat (out, "\x1B[0m", -1);
                 ptr_string++;
                 break;
             default:
                 length = utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (str_concat, ptr_string, length);
-                str_concat[length] = '\0';
-                string_dyn_concat (out, str_concat);
+                string_dyn_concat (out, (const char *)ptr_string, length);
                 ptr_string += length;
                 break;
         }

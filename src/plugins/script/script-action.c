@@ -121,25 +121,29 @@ script_action_list_input (int send_to_buffer, int translated)
         {
             if (*buf[0])
             {
-                weechat_string_dyn_concat (buf, ", ");
+                weechat_string_dyn_concat (buf, ", ", -1);
             }
             else
             {
                 weechat_string_dyn_concat (
                     buf,
-                    (translated) ? _("Scripts loaded:") : "Scripts loaded:");
-                weechat_string_dyn_concat (buf, " ");
+                    (translated) ? _("Scripts loaded:") : "Scripts loaded:",
+                    -1);
+                weechat_string_dyn_concat (buf, " ", -1);
             }
             weechat_string_dyn_concat (buf,
                                        weechat_hdata_string (hdata,
                                                              ptr_script,
-                                                             "name"));
-            weechat_string_dyn_concat (buf, ".");
-            weechat_string_dyn_concat (buf, script_extension[i]);
-            weechat_string_dyn_concat (buf, " ");
-            weechat_string_dyn_concat (buf, weechat_hdata_string (hdata,
-                                                                  ptr_script,
-                                                                  "version"));
+                                                             "name"),
+                                       -1);
+            weechat_string_dyn_concat (buf, ".", -1);
+            weechat_string_dyn_concat (buf, script_extension[i], -1);
+            weechat_string_dyn_concat (buf, " ", -1);
+            weechat_string_dyn_concat (buf,
+                                       weechat_hdata_string (hdata,
+                                                             ptr_script,
+                                                             "version"),
+                                       -1);
             ptr_script = weechat_hdata_move (hdata, ptr_script, 1);
         }
     }
@@ -148,7 +152,8 @@ script_action_list_input (int send_to_buffer, int translated)
     {
         weechat_string_dyn_concat (
             buf,
-            (translated) ? _("No scripts loaded") : "No scripts loaded");
+            (translated) ? _("No scripts loaded") : "No scripts loaded",
+            -1);
     }
 
     if (send_to_buffer)

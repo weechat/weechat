@@ -5352,18 +5352,22 @@ irc_server_build_autojoin (struct t_irc_server *server)
             {
                 /* add channel with key and the key */
                 if (*channels_with_key[0])
-                    weechat_string_dyn_concat (channels_with_key, ",");
-                weechat_string_dyn_concat (channels_with_key, ptr_channel->name);
+                    weechat_string_dyn_concat (channels_with_key, ",", -1);
+                weechat_string_dyn_concat (channels_with_key,
+                                           ptr_channel->name,
+                                           -1);
                 if (*keys[0])
-                    weechat_string_dyn_concat (keys, ",");
-                weechat_string_dyn_concat (keys, ptr_channel->key);
+                    weechat_string_dyn_concat (keys, ",", -1);
+                weechat_string_dyn_concat (keys, ptr_channel->key, -1);
             }
             else
             {
                 /* add channel without key */
                 if (*channels_others[0])
-                    weechat_string_dyn_concat (channels_others, ",");
-                weechat_string_dyn_concat (channels_others, ptr_channel->name);
+                    weechat_string_dyn_concat (channels_others, ",", -1);
+                weechat_string_dyn_concat (channels_others,
+                                           ptr_channel->name,
+                                           -1);
             }
         }
     }
@@ -5375,13 +5379,13 @@ irc_server_build_autojoin (struct t_irc_server *server)
     if (*channels_others[0])
     {
         if (*channels_with_key[0])
-            weechat_string_dyn_concat (channels_with_key, ",");
-        weechat_string_dyn_concat (channels_with_key, *channels_others);
+            weechat_string_dyn_concat (channels_with_key, ",", -1);
+        weechat_string_dyn_concat (channels_with_key, *channels_others, -1);
     }
     if (*keys[0])
     {
-        weechat_string_dyn_concat (channels_with_key, " ");
-        weechat_string_dyn_concat (channels_with_key, *keys);
+        weechat_string_dyn_concat (channels_with_key, " ", -1);
+        weechat_string_dyn_concat (channels_with_key, *keys, -1);
     }
 
     weechat_string_dyn_free (channels_others, 1);
