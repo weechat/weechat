@@ -651,14 +651,13 @@ spell_modifier_cb (const void *pointer, void *data,
     unsigned long value;
     struct t_gui_buffer *buffer;
     struct t_spell_speller_buffer *ptr_speller_buffer;
-    char *result, *ptr_string, *ptr_string_orig, *pos_space;
+    char **result, *str_result, *ptr_string, *ptr_string_orig, *pos_space;
     char *ptr_end, *ptr_end_valid, save_end;
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions, *pos_colon;
     int code_point, char_size, color_code_size;
-    int length, index_result, length_word, word_ok;
-    int length_color_normal, length_color_error, rc;
+    int length, word_ok, rc;
     int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
 
     /* make C compiler happy */
@@ -728,200 +727,180 @@ spell_modifier_cb (const void *pointer, void *data,
     ptr_speller_buffer->input_pos = input_pos;
 
     color_normal = weechat_color ("bar_fg");
-    length_color_normal = strlen (color_normal);
     color_error = weechat_color (weechat_config_string (spell_config_color_misspelled));
-    length_color_error = strlen (color_error);
 
     length = strlen (string);
-    result = malloc (length + (length * length_color_error) + 1);
+    result = weechat_string_dyn_alloc (length * 2);
+    if (!result)
+        return NULL;
 
-    if (result)
+    ptr_string = ptr_speller_buffer->modifier_string;
+
+    /* check if string is a command */
+    if (!weechat_string_input_for_buffer (ptr_string))
     {
-        result[0] = '\0';
-
-        ptr_string = ptr_speller_buffer->modifier_string;
-        index_result = 0;
-
-        /* check if string is a command */
-        if (!weechat_string_input_for_buffer (ptr_string))
+        char_size = weechat_utf8_char_size (ptr_string);
+        ptr_string += char_size;
+        pos_space = ptr_string;
+        while (pos_space && pos_space[0] && (pos_space[0] != ' '))
         {
-            char_size = weechat_utf8_char_size (ptr_string);
-            ptr_string += char_size;
-            pos_space = ptr_string;
-            while (pos_space && pos_space[0] && (pos_space[0] != ' '))
-            {
-                pos_space = (char *)weechat_utf8_next_char (pos_space);
-            }
-            if (!pos_space || !pos_space[0])
-            {
-                free (result);
-                return NULL;
-            }
-
-            pos_space[0] = '\0';
-
-            /* exit if command is not authorized for spell checking */
-            if (!spell_command_authorized (ptr_string))
-            {
-                free (result);
-                return NULL;
-            }
-            memcpy (result + index_result,
-                    ptr_speller_buffer->modifier_string,
-                    char_size);
-            index_result += char_size;
-            strcpy (result + index_result, ptr_string);
-            index_result += strlen (ptr_string);
-
-            pos_space[0] = ' ';
-            ptr_string = pos_space;
+            pos_space = (char *)weechat_utf8_next_char (pos_space);
+        }
+        if (!pos_space || !pos_space[0])
+        {
+            weechat_string_dyn_free (result, 1);
+            return NULL;
         }
 
-        current_pos = 0;
-        while (ptr_string[0])
-        {
-            ptr_string_orig = NULL;
+        pos_space[0] = '\0';
 
+        /* exit if command is not authorized for spell checking */
+        if (!spell_command_authorized (ptr_string))
+        {
+            weechat_string_dyn_free (result, 1);
+            return NULL;
+        }
+        weechat_string_dyn_concat (result,
+                                   ptr_speller_buffer->modifier_string,
+                                   char_size);
+        weechat_string_dyn_concat (result, ptr_string, -1);
+
+        pos_space[0] = ' ';
+        ptr_string = pos_space;
+    }
+
+    current_pos = 0;
+    while (ptr_string[0])
+    {
+        ptr_string_orig = NULL;
+
+        /* skip color codes */
+        while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
+        {
+            weechat_string_dyn_concat (result, ptr_string, color_code_size);
+            ptr_string += color_code_size;
+        }
+        if (!ptr_string[0])
+            break;
+
+        /* find start of word: it must start with an alphanumeric char */
+        code_point = weechat_utf8_char_int (ptr_string);
+        while ((!iswalnum (code_point)) || iswspace (code_point))
+        {
             /* skip color codes */
             while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
             {
-                memcpy (result + index_result, ptr_string, color_code_size);
-                index_result += color_code_size;
+                weechat_string_dyn_concat (result, ptr_string, color_code_size);
                 ptr_string += color_code_size;
             }
             if (!ptr_string[0])
                 break;
 
-            /* find start of word: it must start with an alphanumeric char */
-            code_point = weechat_utf8_char_int (ptr_string);
-            while ((!iswalnum (code_point)) || iswspace (code_point))
-            {
-                /* skip color codes */
-                while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
-                {
-                    memcpy (result + index_result, ptr_string, color_code_size);
-                    index_result += color_code_size;
-                    ptr_string += color_code_size;
-                }
-                if (!ptr_string[0])
-                    break;
-
-                if (!ptr_string_orig && !iswspace (code_point))
-                    ptr_string_orig = ptr_string;
-
-                char_size = weechat_utf8_char_size (ptr_string);
-                memcpy (result + index_result, ptr_string, char_size);
-                index_result += char_size;
-                ptr_string += char_size;
-                current_pos++;
-                if (!ptr_string[0])
-                    break;
-                code_point = weechat_utf8_char_int (ptr_string);
-            }
-            if (!ptr_string[0])
-                break;
-            if (!ptr_string_orig)
+            if (!ptr_string_orig && !iswspace (code_point))
                 ptr_string_orig = ptr_string;
 
-            word_start_pos = current_pos;
-            word_end_pos = current_pos;
-            word_end_pos_valid = current_pos;
-
-            /* find end of word: ' and - allowed in word, but not at the end */
-            ptr_end_valid = ptr_string;
-            ptr_end = (char *)weechat_utf8_next_char (ptr_string);
-            code_point = weechat_utf8_char_int (ptr_end);
-            while (iswalnum (code_point) || (code_point == '\'')
-                   || (code_point == '-'))
-            {
-                word_end_pos++;
-                if (iswalnum (code_point))
-                {
-                    /* pointer to last alphanumeric char in the word */
-                    ptr_end_valid = ptr_end;
-                    word_end_pos_valid = word_end_pos;
-                }
-                ptr_end = (char *)weechat_utf8_next_char (ptr_end);
-                if (!ptr_end[0])
-                    break;
-                code_point = weechat_utf8_char_int (ptr_end);
-            }
-            ptr_end = (char *)weechat_utf8_next_char (ptr_end_valid);
-            word_end_pos = word_end_pos_valid;
-            word_ok = 0;
-            if (spell_string_is_url (ptr_string)
-                || spell_string_is_nick (buffer, ptr_string_orig))
-            {
-                /*
-                 * word is an URL or a nick, then it is OK: search for next
-                 * space (will be end of word)
-                 */
-                word_ok = 1;
-                if (ptr_end[0])
-                {
-                    code_point = weechat_utf8_char_int (ptr_end);
-                    while (!iswspace (code_point))
-                    {
-                        ptr_end = (char *)weechat_utf8_next_char (ptr_end);
-                        if (!ptr_end[0])
-                            break;
-                        code_point = weechat_utf8_char_int (ptr_end);
-                    }
-                }
-            }
-            save_end = ptr_end[0];
-            ptr_end[0] = '\0';
-            length_word = ptr_end - ptr_string;
-
-            if (!word_ok)
-            {
-                if ((save_end != '\0')
-                    || (weechat_config_integer (spell_config_check_real_time)))
-                {
-                    word_ok = spell_check_word (ptr_speller_buffer,
-                                                        ptr_string);
-                    if (!word_ok && (input_pos >= word_start_pos))
-                    {
-                        /*
-                         * if word is misspelled and that cursor is after
-                         * the beginning of this word, save the word (we will
-                         * look for suggestions after this loop)
-                         */
-                        if (misspelled_word)
-                            free (misspelled_word);
-                        misspelled_word = strdup (ptr_string);
-                    }
-                }
-                else
-                    word_ok = 1;
-            }
-
-            /* add error color */
-            if (!word_ok)
-            {
-                strcpy (result + index_result, color_error);
-                index_result += length_color_error;
-            }
-
-            /* add word */
-            strcpy (result + index_result, ptr_string);
-            index_result += length_word;
-
-            /* add normal color (after misspelled word) */
-            if (!word_ok)
-            {
-                strcpy (result + index_result, color_normal);
-                index_result += length_color_normal;
-            }
-
-            if (save_end == '\0')
+            char_size = weechat_utf8_char_size (ptr_string);
+            weechat_string_dyn_concat (result, ptr_string, char_size);
+            ptr_string += char_size;
+            current_pos++;
+            if (!ptr_string[0])
                 break;
-
-            ptr_end[0] = save_end;
-            ptr_string = ptr_end;
-            current_pos = word_end_pos + 1;
+            code_point = weechat_utf8_char_int (ptr_string);
         }
-        result[index_result] = '\0';
+        if (!ptr_string[0])
+            break;
+        if (!ptr_string_orig)
+            ptr_string_orig = ptr_string;
+
+        word_start_pos = current_pos;
+        word_end_pos = current_pos;
+        word_end_pos_valid = current_pos;
+
+        /* find end of word: ' and - allowed in word, but not at the end */
+        ptr_end_valid = ptr_string;
+        ptr_end = (char *)weechat_utf8_next_char (ptr_string);
+        code_point = weechat_utf8_char_int (ptr_end);
+        while (iswalnum (code_point) || (code_point == '\'')
+               || (code_point == '-'))
+        {
+            word_end_pos++;
+            if (iswalnum (code_point))
+            {
+                /* pointer to last alphanumeric char in the word */
+                ptr_end_valid = ptr_end;
+                word_end_pos_valid = word_end_pos;
+            }
+            ptr_end = (char *)weechat_utf8_next_char (ptr_end);
+            if (!ptr_end[0])
+                break;
+            code_point = weechat_utf8_char_int (ptr_end);
+        }
+        ptr_end = (char *)weechat_utf8_next_char (ptr_end_valid);
+        word_end_pos = word_end_pos_valid;
+        word_ok = 0;
+        if (spell_string_is_url (ptr_string)
+            || spell_string_is_nick (buffer, ptr_string_orig))
+        {
+            /*
+             * word is an URL or a nick, then it is OK: search for next
+             * space (will be end of word)
+             */
+            word_ok = 1;
+            if (ptr_end[0])
+            {
+                code_point = weechat_utf8_char_int (ptr_end);
+                while (!iswspace (code_point))
+                {
+                    ptr_end = (char *)weechat_utf8_next_char (ptr_end);
+                    if (!ptr_end[0])
+                        break;
+                    code_point = weechat_utf8_char_int (ptr_end);
+                }
+            }
+        }
+        save_end = ptr_end[0];
+        ptr_end[0] = '\0';
+
+        if (!word_ok)
+        {
+            if ((save_end != '\0')
+                || (weechat_config_integer (spell_config_check_real_time)))
+            {
+                word_ok = spell_check_word (ptr_speller_buffer,
+                                            ptr_string);
+                if (!word_ok && (input_pos >= word_start_pos))
+                {
+                    /*
+                     * if word is misspelled and that cursor is after
+                     * the beginning of this word, save the word (we will
+                     * look for suggestions after this loop)
+                     */
+                    if (misspelled_word)
+                        free (misspelled_word);
+                    misspelled_word = strdup (ptr_string);
+                }
+            }
+            else
+                word_ok = 1;
+        }
+
+        /* add error color */
+        if (!word_ok)
+            weechat_string_dyn_concat (result, color_error, -1);
+
+        /* add word */
+        weechat_string_dyn_concat (result, ptr_string, -1);
+
+        /* add normal color (after misspelled word) */
+        if (!word_ok)
+            weechat_string_dyn_concat (result, color_normal, -1);
+
+        if (save_end == '\0')
+            break;
+
+        ptr_end[0] = save_end;
+        ptr_string = ptr_end;
+        current_pos = word_end_pos + 1;
     }
 
     /* save old suggestions in buffer */
@@ -1007,12 +986,12 @@ spell_modifier_cb (const void *pointer, void *data,
     if (old_suggestions)
         free (old_suggestions);
 
-    if (!result)
-        return NULL;
+    ptr_speller_buffer->modifier_result = strdup (*result);
 
-    ptr_speller_buffer->modifier_result = strdup (result);
+    str_result = *result;
+    weechat_string_dyn_free (result, 0);
 
-    return result;
+    return str_result;
 }
 
 /*
