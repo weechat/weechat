@@ -31,6 +31,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <wctype.h>
+#include <ctype.h>
 
 #include "../weechat-plugin.h"
 #include "spell.h"
@@ -640,13 +641,67 @@ spell_get_suggestions (struct t_spell_speller_buffer *speller_buffer,
 }
 
 /*
+ * Skips WeeChat and IRC color codes in *string and adds them to "result".
+ */
+
+void
+spell_skip_color_codes (char **string, char **result)
+{
+    int color_code_size;
+
+    while (*string[0])
+    {
+        color_code_size = weechat_string_color_code_size (*string);
+        if (color_code_size > 0)
+        {
+            /* WeeChat color code */
+            weechat_string_dyn_concat (result, *string, color_code_size);
+            (*string) += color_code_size;
+        }
+        else if (*string[0] == '\x03')
+        {
+            /* IRC color code */
+            weechat_string_dyn_concat (result, *string, 1);
+            (*string)++;
+            if (isdigit (*string[0]))
+            {
+                /* foreground */
+                weechat_string_dyn_concat (result, *string, 1);
+                (*string)++;
+                if (isdigit (*string[0]))
+                {
+                    weechat_string_dyn_concat (result, *string, 1);
+                    (*string)++;
+                }
+            }
+            if ((*string[0] == ',') && (isdigit (*string[1])))
+            {
+                /* background */
+                weechat_string_dyn_concat (result, *string, 1);
+                (*string)++;
+                if (isdigit (*string[0]))
+                {
+                    weechat_string_dyn_concat (result, *string, 1);
+                    (*string)++;
+                }
+            }
+        }
+        else
+        {
+            /* not a color code */
+            break;
+        }
+    }
+}
+
+/*
  * Updates input text by adding color for misspelled words.
  */
 
 char *
 spell_modifier_cb (const void *pointer, void *data,
-                           const char *modifier,
-                           const char *modifier_data, const char *string)
+                   const char *modifier,
+                   const char *modifier_data, const char *string)
 {
     unsigned long value;
     struct t_gui_buffer *buffer;
@@ -656,7 +711,7 @@ spell_modifier_cb (const void *pointer, void *data,
     char *misspelled_word, *old_misspelled_word, *old_suggestions, *suggestions;
     char *word_and_suggestions;
     const char *color_normal, *color_error, *ptr_suggestions, *pos_colon;
-    int code_point, char_size, color_code_size;
+    int code_point, char_size;
     int length, word_ok, rc;
     int input_pos, current_pos, word_start_pos, word_end_pos, word_end_pos_valid;
 
@@ -774,12 +829,7 @@ spell_modifier_cb (const void *pointer, void *data,
     {
         ptr_string_orig = NULL;
 
-        /* skip color codes */
-        while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
-        {
-            weechat_string_dyn_concat (result, ptr_string, color_code_size);
-            ptr_string += color_code_size;
-        }
+        spell_skip_color_codes (&ptr_string, result);
         if (!ptr_string[0])
             break;
 
@@ -787,12 +837,7 @@ spell_modifier_cb (const void *pointer, void *data,
         code_point = weechat_utf8_char_int (ptr_string);
         while ((!iswalnum (code_point)) || iswspace (code_point))
         {
-            /* skip color codes */
-            while ((color_code_size = weechat_string_color_code_size (ptr_string)) > 0)
-            {
-                weechat_string_dyn_concat (result, ptr_string, color_code_size);
-                ptr_string += color_code_size;
-            }
+            spell_skip_color_codes (&ptr_string, result);
             if (!ptr_string[0])
                 break;
 
