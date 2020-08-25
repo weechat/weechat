@@ -178,6 +178,7 @@ irc_color_decode (const char *string, int keep_colors)
                 str_bg[0] = '\0';
                 if (isdigit (ptr_string[0]))
                 {
+                    /* foreground */
                     str_fg[0] = ptr_string[0];
                     str_fg[1] = '\0';
                     ptr_string++;
@@ -190,6 +191,7 @@ irc_color_decode (const char *string, int keep_colors)
                 }
                 if ((ptr_string[0] == ',') && (isdigit (ptr_string[1])))
                 {
+                    /* background */
                     ptr_string++;
                     str_bg[0] = ptr_string[0];
                     str_bg[1] = '\0';
@@ -315,6 +317,7 @@ irc_color_encode (const char *string, int keep_colors)
                 ptr_string++;
                 if (isdigit (ptr_string[0]))
                 {
+                    /* foreground */
                     if (keep_colors)
                     {
                         weechat_string_dyn_concat (out,
@@ -336,6 +339,7 @@ irc_color_encode (const char *string, int keep_colors)
                 }
                 if (ptr_string[0] == ',')
                 {
+                    /* background */
                     if (keep_colors)
                         weechat_string_dyn_concat (out, ",", -1);
                     ptr_string++;
