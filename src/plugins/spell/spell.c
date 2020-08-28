@@ -658,6 +658,22 @@ spell_skip_color_codes (char **string, char **result)
             weechat_string_dyn_concat (result, *string, color_code_size);
             (*string) += color_code_size;
         }
+        else if (*string[0] == '\x02' || *string[0] == '\x0F'
+                 || *string[0] == '\x11' || *string[0] == '\x16'
+                 || *string[0] == '\x1D' || *string[0] == '\x1F')
+        {
+            /*
+             * IRC attribute:
+             *   0x02: bold
+             *   0x0F: reset
+             *   0x11: monospaced font
+             *   0x16: reverse video
+             *   0x1D: italic
+             *   0x1F: underlined text
+             */
+            weechat_string_dyn_concat (result, *string, 1);
+            (*string)++;
+        }
         else if (*string[0] == '\x03')
         {
             /* IRC color code */
