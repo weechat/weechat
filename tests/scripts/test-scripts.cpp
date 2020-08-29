@@ -273,7 +273,7 @@ TEST(Scripts, API)
         LONGS_EQUAL(0, api_tests_other);
 
         if (turnoff_memleak)
-            MemoryLeakWarningPlugin::turnOnNewDeleteOverloads();
+            MemoryLeakWarningPlugin::turnOnThreadSafeNewDeleteOverloads();
     }
 
     free (path_testapi_output_dir);

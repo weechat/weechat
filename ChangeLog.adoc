@@ -43,6 +43,7 @@ Tests::
 Build::
 
   * core: disable debug by default in autotools build
+  * tests: fix compilation with CppUTest ≥ 4.0
 
 [[v2.9]]
 == Version 2.9 (2020-07-18)
