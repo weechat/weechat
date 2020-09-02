@@ -362,12 +362,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     script_mouse_init ();
 
     if (script_repo_file_exists ())
-    {
-        if (!script_repo_file_is_uptodate ())
-            script_repo_file_update (0);
-        else
-            script_repo_file_read (0);
-    }
+        script_repo_file_read (0);
 
     if (script_buffer)
         script_buffer_refresh (1);
