@@ -20,10 +20,11 @@
 #ifndef WEECHAT_PLUGIN_SCRIPT_ACTION_H
 #define WEECHAT_PLUGIN_SCRIPT_ACTION_H
 
-extern char *script_actions;
+extern char **script_actions;
 
-extern int script_action_run ();
+extern int script_action_run_all ();
 extern void script_action_schedule (const char *action, int need_repository,
                                     int quiet);
+extern void script_action_end ();
 
 #endif /* WEECHAT_PLUGIN_SCRIPT_ACTION_H */

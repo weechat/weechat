@@ -27,6 +27,7 @@
 
 #include "../weechat-plugin.h"
 #include "script.h"
+#include "script-action.h"
 #include "script-buffer.h"
 #include "script-command.h"
 #include "script-completion.h"
@@ -95,6 +96,29 @@ script_language_search_by_extension (const char *extension)
 
     /* extension not found */
     return -1;
+}
+
+/*
+ * Checks if download of scripts is enabled.
+ *
+ * Returns:
+ *   0: download NOT enabled (an error is displayed)
+ *   1: download enabled
+ */
+
+int
+script_download_enabled ()
+{
+    if (weechat_config_boolean (script_config_scripts_download_enabled))
+        return 1;
+
+    /* download not enabled: display an error */
+    weechat_printf (NULL,
+                    _("%s%s: download of scripts is disabled by default; "
+                      "see /help script.scripts.download_enabled"),
+                    weechat_prefix ("error"),
+                    SCRIPT_PLUGIN_NAME);
+    return 0;
 }
 
 /*
@@ -393,6 +417,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         weechat_hashtable_free (script_loaded);
 
     script_config_free ();
+
+    script_action_end ();
 
     return WEECHAT_RC_OK;
 }

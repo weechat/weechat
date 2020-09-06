@@ -35,10 +35,10 @@
 #include "script-repo.h"
 
 
-char *script_actions = NULL;
+char **script_actions = NULL;
 
 
-void script_action_install (int quiet);
+void script_action_run_install (int quiet);
 
 
 /*
@@ -46,7 +46,7 @@ void script_action_install (int quiet);
  */
 
 void
-script_action_list ()
+script_action_run_list ()
 {
     int i, scripts_loaded;
     char hdata_name[128];
@@ -100,7 +100,7 @@ script_action_list ()
  */
 
 void
-script_action_list_input (int send_to_buffer, int translated)
+script_action_run_list_input (int send_to_buffer, int translated)
 {
     int i, length;
     char hdata_name[128], **buf, str_pos[16];
@@ -176,7 +176,7 @@ script_action_list_input (int send_to_buffer, int translated)
  */
 
 void
-script_action_load (const char *name, int quiet)
+script_action_run_load (const char *name, int quiet)
 {
     char *pos, str_command[1024];
     int language;
@@ -219,7 +219,7 @@ script_action_load (const char *name, int quiet)
  */
 
 void
-script_action_unload (const char *name, int quiet)
+script_action_run_unload (const char *name, int quiet)
 {
     char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
     const char *ptr_filename, *ptr_registered_name;
@@ -324,7 +324,7 @@ script_action_unload (const char *name, int quiet)
  */
 
 void
-script_action_reload (const char *name, int quiet)
+script_action_run_reload (const char *name, int quiet)
 {
     char *pos, hdata_name[128], *filename, *ptr_base_name, str_command[1024];
     const char *ptr_filename, *ptr_registered_name;
@@ -434,7 +434,7 @@ script_action_reload (const char *name, int quiet)
  */
 
 void
-script_action_autoload (const char *name, int quiet, int autoload)
+script_action_run_autoload (const char *name, int quiet, int autoload)
 {
     struct t_script_repo *ptr_script;
     char str_signal[256], *filename;
@@ -509,7 +509,7 @@ script_action_installnext_timer_cb (const void *pointer, void *data,
     (void) data;
     (void) remaining_calls;
 
-    script_action_install ((pointer) ? 1 : 0);
+    script_action_run_install ((pointer) ? 1 : 0);
 
     return WEECHAT_RC_OK;
 }
@@ -630,11 +630,14 @@ script_action_get_next_script_to_install ()
  */
 
 void
-script_action_install (int quiet)
+script_action_run_install (int quiet)
 {
     struct t_script_repo *ptr_script_to_install;
     char *filename, *url;
     struct t_hashtable *options;
+
+    if (!script_download_enabled ())
+        return;
 
     while (1)
     {
@@ -701,7 +704,7 @@ script_action_install (int quiet)
  */
 
 void
-script_action_remove (const char *name, int quiet)
+script_action_run_remove (const char *name, int quiet)
 {
     struct t_script_repo *ptr_script;
     char str_signal[256], *filename;
@@ -783,7 +786,7 @@ script_action_remove (const char *name, int quiet)
  */
 
 int
-script_action_hold (const char *name, int quiet)
+script_action_run_hold (const char *name, int quiet)
 {
     struct t_script_repo *ptr_script;
 
@@ -1071,11 +1074,14 @@ script_action_show_source_process_cb (const void *pointer, void *data,
  */
 
 void
-script_action_show (const char *name, int quiet)
+script_action_run_show (const char *name, int quiet)
 {
     struct t_script_repo *ptr_script;
     char *filename, *url;
     struct t_hashtable *options;
+
+    if (!script_download_enabled ())
+        return;
 
     if (name)
     {
@@ -1148,7 +1154,7 @@ script_action_show (const char *name, int quiet)
  */
 
 void
-script_action_showdiff ()
+script_action_run_showdiff ()
 {
     char str_command[64];
     struct t_gui_window *window;
@@ -1181,6 +1187,40 @@ script_action_showdiff ()
 }
 
 /*
+ * Adds an action to list of actions.
+ */
+
+void
+script_action_add (const char *action)
+{
+    if (!action)
+        return;
+
+    if (!script_actions)
+    {
+        script_actions = weechat_string_dyn_alloc (256);
+        if (!script_actions)
+            return;
+    }
+
+    if (*script_actions[0])
+        weechat_string_dyn_concat (script_actions, "\n", -1);
+
+    weechat_string_dyn_concat (script_actions, action, -1);
+}
+
+/*
+ * Clears list of actions.
+ */
+
+void
+script_action_clear ()
+{
+    if (script_actions)
+        weechat_string_dyn_copy (script_actions, NULL);
+}
+
+/*
  * Runs planned actions.
  *
  * Returns:
@@ -1189,18 +1229,18 @@ script_action_showdiff ()
  */
 
 int
-script_action_run ()
+script_action_run_all ()
 {
     char **actions, **argv, **argv_eol, *ptr_action;
     int num_actions, argc, i, j, quiet, script_found;
     struct t_script_repo *ptr_script;
 
-    if (!script_actions)
+    if (!script_actions || !script_actions[0])
         return 0;
 
     script_get_loaded_plugins ();
 
-    actions = weechat_string_split (script_actions, "\n", NULL,
+    actions = weechat_string_split (*script_actions, "\n", NULL,
                                     WEECHAT_STRING_SPLIT_STRIP_LEFT
                                     | WEECHAT_STRING_SPLIT_STRIP_RIGHT
                                     | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
@@ -1269,59 +1309,59 @@ script_action_run ()
                     if (argc > 1)
                     {
                         if (weechat_strcasecmp (argv[1], "-i") == 0)
-                            script_action_list_input (0, 0);
+                            script_action_run_list_input (0, 0);
                         else if (weechat_strcasecmp (argv[1], "-il") == 0)
-                            script_action_list_input (0, 1);
+                            script_action_run_list_input (0, 1);
                         else if (weechat_strcasecmp (argv[1], "-o") == 0)
-                            script_action_list_input (1, 0);
+                            script_action_run_list_input (1, 0);
                         else if (weechat_strcasecmp (argv[1], "-ol") == 0)
-                            script_action_list_input (1, 1);
+                            script_action_run_list_input (1, 1);
                         else
-                            script_action_list ();
+                            script_action_run_list ();
                     }
                     else
-                        script_action_list ();
+                        script_action_run_list ();
                 }
                 else if (weechat_strcasecmp (argv[0], "load") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_load (argv[j], quiet);
+                        script_action_run_load (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "unload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_unload (argv[j], quiet);
+                        script_action_run_unload (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "reload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_reload (argv[j], quiet);
+                        script_action_run_reload (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "autoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_autoload (argv[j], quiet, 1);
+                        script_action_run_autoload (argv[j], quiet, 1);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "noautoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_autoload (argv[j], quiet, 0);
+                        script_action_run_autoload (argv[j], quiet, 0);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "toggleautoload") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_autoload (argv[j], quiet, -1);
+                        script_action_run_autoload (argv[j], quiet, -1);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "install") == 0)
@@ -1360,13 +1400,13 @@ script_action_run ()
                         }
                     }
                     if (script_found)
-                        script_action_install (quiet);
+                        script_action_run_install (quiet);
                 }
                 else if (weechat_strcasecmp (argv[0], "remove") == 0)
                 {
                     for (j = 1; j < argc; j++)
                     {
-                        script_action_remove (argv[j], quiet);
+                        script_action_run_remove (argv[j], quiet);
                     }
                 }
                 else if (weechat_strcasecmp (argv[0], "installremove") == 0)
@@ -1385,7 +1425,7 @@ script_action_run ()
                             }
                             else if (ptr_script->status & SCRIPT_STATUS_INSTALLED)
                             {
-                                script_action_remove (argv[j], quiet);
+                                script_action_run_remove (argv[j], quiet);
                             }
                             else
                             {
@@ -1401,14 +1441,14 @@ script_action_run ()
                         }
                     }
                     if (script_found)
-                        script_action_install (quiet);
+                        script_action_run_install (quiet);
                 }
                 else if (weechat_strcasecmp (argv[0], "hold") == 0)
                 {
                     script_found = 0;
                     for (j = 1; j < argc; j++)
                     {
-                        if (script_action_hold (argv[j], quiet))
+                        if (script_action_run_hold (argv[j], quiet))
                             script_found = 1;
                     }
                     if (script_found)
@@ -1418,13 +1458,13 @@ script_action_run ()
                 {
                     if (!script_buffer)
                         script_buffer_open ();
-                    script_action_show ((argc >= 2) ? argv[1] : NULL,
-                                        quiet);
+                    script_action_run_show ((argc >= 2) ? argv[1] : NULL,
+                                            quiet);
                     weechat_buffer_set (script_buffer, "display", "1");
                 }
                 else if (weechat_strcasecmp (argv[0], "showdiff") == 0)
                 {
-                    script_action_showdiff ();
+                    script_action_run_showdiff ();
                 }
                 else if (weechat_strcasecmp (argv[0], "upgrade") == 0)
                 {
@@ -1445,7 +1485,7 @@ script_action_run ()
                         }
                     }
                     if (script_found)
-                        script_action_install (quiet);
+                        script_action_run_install (quiet);
                     else
                     {
                         weechat_printf (NULL,
@@ -1462,39 +1502,9 @@ script_action_run ()
         weechat_string_free_split (actions);
     }
 
-    free (script_actions);
-    script_actions = NULL;
+    script_action_clear ();
 
     return 1;
-}
-
-
-/*
- * Adds an action to list of actions.
- */
-
-void
-script_action_add (const char *action)
-{
-    char *new_actions;
-
-    if (!action)
-        return;
-
-    if (script_actions)
-    {
-        new_actions = realloc (script_actions,
-                               strlen (script_actions) + 1 + strlen (action) + 1);
-        if (!new_actions)
-            return;
-        script_actions = new_actions;
-        strcat (script_actions, "\n");
-        strcat (script_actions, action);
-    }
-    else
-    {
-        script_actions = strdup (action);
-    }
 }
 
 /*
@@ -1507,10 +1517,11 @@ script_action_add (const char *action)
 void
 script_action_schedule (const char *action, int need_repository, int quiet)
 {
-    script_action_add (action);
-
     /* create again "script" directory, just in case it has been removed */
-    weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755);
+    if (!weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755))
+        return;
+
+    script_action_add (action);
 
     if (need_repository)
     {
@@ -1518,11 +1529,28 @@ script_action_schedule (const char *action, int need_repository, int quiet)
         {
             if (!scripts_repo)
                 script_repo_file_read (quiet);
-            script_action_run ();
+            script_action_run_all ();
         }
         else
-            script_repo_file_update (quiet);
+        {
+            if (!script_repo_file_update (quiet))
+                script_action_clear ();
+        }
     }
     else
-        script_action_run ();
+        script_action_run_all ();
+}
+
+/*
+ * Ends script action.
+ */
+
+void
+script_action_end ()
+{
+    if (script_actions)
+    {
+        weechat_string_dyn_free (script_actions, 1);
+        script_actions = NULL;
+    }
 }

@@ -79,6 +79,7 @@ struct t_config_option *script_config_color_text_version_selected;
 
 struct t_config_option *script_config_scripts_autoload;
 struct t_config_option *script_config_scripts_cache_expire;
+struct t_config_option *script_config_scripts_download_enabled;
 struct t_config_option *script_config_scripts_download_timeout;
 struct t_config_option *script_config_scripts_hold;
 struct t_config_option *script_config_scripts_path;
@@ -752,6 +753,17 @@ script_config_init ()
         N_("local cache expiration time, in minutes (-1 = never expires, "
            "0 = always expire)"),
         NULL, -1, 525600, "1440", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    script_config_scripts_download_enabled = weechat_config_new_option (
+        script_config_file, ptr_section,
+        "download_enabled", "boolean",
+        N_("enable download of files from the scripts repository when the "
+           "/script command is used (list of scripts and scripts themselves); "
+           "the list of scripts is downloaded from the URL specified in the "
+           "option script.scripts.url; WeeChat will sometimes download again "
+           "the list of scripts when you use the /script command, even if "
+           "you don't install a script"),
+        NULL, 0, 0, "off", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_download_timeout = weechat_config_new_option (
         script_config_file, ptr_section,

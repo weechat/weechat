@@ -80,7 +80,7 @@ extern void script_repo_filter_scripts (const char *search);
 extern int script_repo_file_exists ();
 extern int script_repo_file_is_uptodate ();
 extern int script_repo_file_read (int quiet);
-extern void script_repo_file_update (int quiet);
+extern int script_repo_file_update (int quiet);
 extern struct t_hdata *script_repo_hdata_script_cb (const void *pointer,
                                                     void *data,
                                                     const char *hdata_name);

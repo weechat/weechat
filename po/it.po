@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-08-09 10:51+0200\n"
+"POT-Creation-Date: 2020-09-06 12:40+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -12155,6 +12155,12 @@ msgstr "Script"
 msgid "Script manager"
 msgstr "Gestore script"
 
+#, c-format
+msgid ""
+"%s%s: download of scripts is disabled by default; see /help script.scripts."
+"download_enabled"
+msgstr ""
+
 #, fuzzy
 msgid "WeeChat script manager"
 msgstr "Gestore script di WeeChat"
@@ -12411,6 +12417,14 @@ msgstr ""
 msgid ""
 "local cache expiration time, in minutes (-1 = never expires, 0 = always "
 "expire)"
+msgstr ""
+
+msgid ""
+"enable download of files from the scripts repository when the /script "
+"command is used (list of scripts and scripts themselves); the list of "
+"scripts is downloaded from the URL specified in the option script.scripts."
+"url; WeeChat will sometimes download again the list of scripts when you use "
+"the /script command, even if you don't install a script"
 msgstr ""
 
 #, fuzzy

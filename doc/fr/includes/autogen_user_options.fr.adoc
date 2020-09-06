@@ -3320,6 +3320,12 @@
 ** valeurs: -1 .. 525600
 ** valeur par défaut: `+1440+`
 
+* [[option_script.scripts.download_enabled]] *script.scripts.download_enabled*
+** description: pass:none[activer le téléchargement des fichiers depuis le dépôt des scripts lorsque la commande /script est utilisée (liste des scripts et les scripts eux-mêmes) ; la liste des scripts est téléchargée depuis l'URL spécifiée dans l'option script.scripts.url ; WeeChat téléchargera parfois à nouveau la liste des scripts quand vous utilisez la commande /script, même si vous n'installez pas un script]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+off+`
+
 * [[option_script.scripts.download_timeout]] *script.scripts.download_timeout*
 ** description: pass:none[délai d'attente maximum (en secondes) pour le téléchargement des scripts et de la liste des scripts]
 ** type: entier

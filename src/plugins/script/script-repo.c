@@ -1478,7 +1478,7 @@ script_repo_file_update_process_cb (const void *pointer, void *data,
         {
             if (script_buffer)
                 script_buffer_refresh (1);
-            if (!script_action_run ())
+            if (!script_action_run_all ())
                 script_buffer_refresh (1);
         }
         else
@@ -1490,19 +1490,26 @@ script_repo_file_update_process_cb (const void *pointer, void *data,
 
 /*
  * Updates repository file and reads it.
+ *
+ * Returns:
+ *   0: error
+ *   1: OK
  */
 
-void
+int
 script_repo_file_update (int quiet)
 {
     char *filename, *url;
     struct t_hashtable *options;
 
+    if (!script_download_enabled ())
+        return 0;
+
     script_repo_remove_all ();
 
     filename = script_config_get_xml_filename ();
     if (!filename)
-        return;
+        return 0;
 
     options = weechat_hashtable_new (32,
                                      WEECHAT_HASHTABLE_STRING,
@@ -1534,6 +1541,8 @@ script_repo_file_update (int quiet)
     }
 
     free (filename);
+
+    return 1;
 }
 
 /*

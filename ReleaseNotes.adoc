@@ -20,6 +20,23 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.0]]
 == Version 3.0 (under dev)
 
+[[v3.0_script_option_download_enabled]]
+=== New option to enable download of scripts
+
+A new option has been added to allow the script plugin to download the list of
+scripts and the scripts themselves (on weechat.org by default).
+
+This option is `off` by default, so you must opt in if you want to use the
+`/script` command, even if you upgraded from an old WeeChat version:
+
+----
+/set script.scripts.download_enabled on
+----
+
+[NOTE]
+When this option is enabled, WeeChat can sometimes download again the list of
+scripts when you use the `/script` command, even if you don't install a script.
+
 [[v3.0_irc_commands_allchan_allpv_allserv]]
 === IRC commands /allchan, /allpv and /allserv
 
