@@ -5422,8 +5422,8 @@ IRC_PROTOCOL_CALLBACK(366)
             length = strlen (str_nicks_count);
             snprintf (str_nicks_count + length,
                       sizeof (str_nicks_count) - length,
-                      /* TRANSLATORS: eg: "2 normal" in the sense "2 normal nicks" (ie no op/voice) */
-                      NG_("%s%s%d%s normal", "%s%s%d%s normal", num_normal),
+                      /* TRANSLATORS: number of "normal" nicks on a channel (ie no op/voice), for example: "56 normals" */
+                      NG_("%s%s%d%s normal", "%s%s%d%s normals", num_normal),
                       (str_nicks_count[0]) ? ", " : "",
                       IRC_COLOR_CHAT_CHANNEL,
                       num_normal,
