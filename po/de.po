@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-09-06 12:40+0200\n"
+"POT-Creation-Date: 2020-09-12 18:05+0200\n"
 "PO-Revision-Date: 2020-09-08 13:14+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5689,10 +5689,9 @@ msgstr "Debug-Modus (%s) für Cursor aktiviert"
 msgid "verbose"
 msgstr "ausführlich"
 
+#, fuzzy
 msgid "normal"
-msgid_plural "normals"
-msgstr[0] "normal"
-msgstr[1] "normale"
+msgstr "normal"
 
 msgid "Debug disabled for cursor mode"
 msgstr "Debug für Cursor Modus deaktiviert"
@@ -11264,6 +11263,13 @@ msgid "voice"
 msgid_plural "voices"
 msgstr[0] "ge-voice-ter"
 msgstr[1] "ge-voice-te"
+
+#. TRANSLATORS: eg: "2 normal" in the sense "2 normal nicks" (ie no op/voice)
+#, c-format
+msgid "%s%s%d%s normal"
+msgid_plural "%s%s%d%s normal"
+msgstr[0] ""
+msgstr[1] ""
 
 #, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"

@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-09-06 12:40+0200\n"
+"POT-Creation-Date: 2020-09-12 18:05+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -5275,9 +5275,9 @@ msgstr "カーソルモード (%s) のデバッグを有効化"
 msgid "verbose"
 msgstr "詳細"
 
+#, fuzzy
 msgid "normal"
-msgid_plural "normals"
-msgstr[0] "通常"
+msgstr "通常"
 
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
@@ -10529,6 +10529,12 @@ msgstr[0] "halfops"
 msgid "voice"
 msgid_plural "voices"
 msgstr[0] "発言"
+
+#. TRANSLATORS: eg: "2 normal" in the sense "2 normal nicks" (ie no op/voice)
+#, c-format
+msgid "%s%s%d%s normal"
+msgid_plural "%s%s%d%s normal"
+msgstr[0] ""
 
 #, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"

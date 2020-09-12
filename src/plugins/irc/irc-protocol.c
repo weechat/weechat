@@ -5422,12 +5422,12 @@ IRC_PROTOCOL_CALLBACK(366)
             length = strlen (str_nicks_count);
             snprintf (str_nicks_count + length,
                       sizeof (str_nicks_count) - length,
-                      "%s%s%d%s %s",
+                      /* TRANSLATORS: eg: "2 normal" in the sense "2 normal nicks" (ie no op/voice) */
+                      NG_("%s%s%d%s normal", "%s%s%d%s normal", num_normal),
                       (str_nicks_count[0]) ? ", " : "",
                       IRC_COLOR_CHAT_CHANNEL,
                       num_normal,
-                      IRC_COLOR_RESET,
-                      NG_("normal", "normals", num_normal));
+                      IRC_COLOR_RESET);
             weechat_printf_date_tags (
                 irc_msgbuffer_get_target_buffer (
                     server, NULL, command, "names", ptr_channel->buffer),
