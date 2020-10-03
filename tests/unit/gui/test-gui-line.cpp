@@ -714,7 +714,7 @@ TEST(GuiLine, SetHighlight)
     free (line.data->message);
     line.data->message = NULL;
 
-    config_file_option_reset (config_look_highlight, 0);
+    config_file_option_reset (config_look_highlight, 1);
 
     free (line.data);
 }

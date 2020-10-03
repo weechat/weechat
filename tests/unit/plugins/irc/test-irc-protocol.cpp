@@ -382,7 +382,7 @@ TEST(IrcProtocolWithServer, NickAddress)
               gui_color_get_custom ("reset"));
     STRCMP_EQUAL(result, irc_protocol_nick_address (ptr_server, 1, ptr_nick,
                                                     "alice", "example.com"));
-    config_file_option_reset (irc_config_look_color_nicks_in_server_messages, 0);
+    config_file_option_reset (irc_config_look_color_nicks_in_server_messages, 1);
 }
 
 /*

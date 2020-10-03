@@ -1985,7 +1985,7 @@ TEST(CoreString, IsCommandChar)
     LONGS_EQUAL(1, string_is_command_char ("ï_öabc"));
     LONGS_EQUAL(1, string_is_command_char ("/abc"));
 
-    config_file_option_reset (config_look_command_chars, 0);
+    config_file_option_reset (config_look_command_chars, 1);
 }
 
 /*
@@ -2049,7 +2049,7 @@ TEST(CoreString, InputForBuffer)
     STRCMP_EQUAL(str + 2, string_input_for_buffer (str));
     free (str);
 
-    config_file_option_reset (config_look_command_chars, 0);
+    config_file_option_reset (config_look_command_chars, 1);
 }
 
 /*
