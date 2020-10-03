@@ -25,7 +25,17 @@ extern "C"
 {
 #include "src/core/wee-config.h"
 #include "src/core/wee-string.h"
+#include "src/gui/gui-color.h"
 #include "src/gui/gui-nick.h"
+
+extern void gui_nick_hash_djb2_64 (const char *nickname, uint64_t *color_64);
+extern void gui_nick_hash_djb2_32 (const char *nickname, uint32_t *color_32);
+extern void gui_nick_hash_sum_64 (const char *nickname, uint64_t *color_64);
+extern void gui_nick_hash_sum_32 (const char *nickname, uint32_t *color_32);
+extern uint64_t gui_nick_hash_color (const char *nickname, int num_colors);
+extern const char *gui_nick_get_forced_color (const char *nickname);
+extern char *gui_nick_strdup_for_color (const char *nickname);
+}
 
 #define NICK_COLORS "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,"  \
     "21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,"  \
@@ -42,12 +52,141 @@ extern "C"
     "229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,"   \
     "246,247,248,249,250,251,252,253,254,255"
 
-extern int gui_nick_hash_color (const char *nickname);
-}
+#define WEE_NICK_STRDUP_FOR_COLOR(__result, __nickname)                 \
+    nick = gui_nick_strdup_for_color (__nickname);                      \
+    if (__result)                                                       \
+        STRCMP_EQUAL(__result, nick);                                   \
+    else                                                                \
+        POINTERS_EQUAL(NULL, nick);                                     \
+    if (nick)                                                           \
+        free (nick);
 
 TEST_GROUP(GuiNick)
 {
 };
+
+/*
+ * Tests functions:
+ *   gui_nick_hash_djb2_64
+ */
+
+TEST(GuiNick, HashDbj264)
+{
+    uint64_t hash;
+
+    hash = 0;
+    gui_nick_hash_djb2_64 (NULL, NULL);
+    gui_nick_hash_djb2_64 ("", NULL);
+    gui_nick_hash_djb2_64 ("", &hash);
+    UNSIGNED_LONGS_EQUAL(0, hash);
+
+    gui_nick_hash_djb2_64 ("a", &hash);
+    UNSIGNED_LONGS_EQUAL(97, hash);
+
+    hash = 0;
+    gui_nick_hash_djb2_64 ("abcdef", &hash);
+    UNSIGNED_LONGS_EQUAL(4013083373, hash);
+
+    hash = 0;
+    gui_nick_hash_djb2_64 ("abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(16315903832110220128, hash);
+
+    hash = 0;
+    gui_nick_hash_djb2_64 ("abcdefghijklmnopqrstuvwxyz"
+                           "abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(16109708650384405235, hash);
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_hash_djb2_32
+ */
+
+TEST(GuiNick, HashDbj232)
+{
+    uint32_t hash;
+
+    hash = 0;
+    gui_nick_hash_djb2_32 (NULL, NULL);
+    gui_nick_hash_djb2_32 ("", NULL);
+    gui_nick_hash_djb2_32 ("", &hash);
+    UNSIGNED_LONGS_EQUAL(0, hash);
+
+    gui_nick_hash_djb2_32 ("a", &hash);
+    UNSIGNED_LONGS_EQUAL(97, hash);
+
+    hash = 0;
+    gui_nick_hash_djb2_32 ("abcdef", &hash);
+    UNSIGNED_LONGS_EQUAL(4013083373, hash);
+
+    hash = 0;
+    gui_nick_hash_djb2_32 ("abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(3683976572, hash);
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_hash_sum_64
+ */
+
+TEST(GuiNick, HashSum64)
+{
+    uint64_t hash;
+
+    hash = 0;
+    gui_nick_hash_sum_64 (NULL, NULL);
+    gui_nick_hash_sum_64 ("", NULL);
+    gui_nick_hash_sum_64 ("", &hash);
+    UNSIGNED_LONGS_EQUAL(0, hash);
+
+    gui_nick_hash_sum_64 ("a", &hash);
+    UNSIGNED_LONGS_EQUAL(97, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_64 ("abcdef", &hash);
+    UNSIGNED_LONGS_EQUAL(597, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_64 ("abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(2847, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_64 ("abcdefghijklmnopqrstuvwxyz"
+                          "abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(5694, hash);
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_hash_sum_32
+ */
+
+TEST(GuiNick, HashSum32)
+{
+    uint32_t hash;
+
+    hash = 0;
+    gui_nick_hash_sum_32 (NULL, NULL);
+    gui_nick_hash_sum_32 ("", NULL);
+    gui_nick_hash_sum_32 ("", &hash);
+    UNSIGNED_LONGS_EQUAL(0, hash);
+
+    gui_nick_hash_sum_32 ("a", &hash);
+    UNSIGNED_LONGS_EQUAL(97, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_32 ("abcdef", &hash);
+    UNSIGNED_LONGS_EQUAL(597, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_32 ("abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(2847, hash);
+
+    hash = 0;
+    gui_nick_hash_sum_32 ("abcdefghijklmnopqrstuvwxyz"
+                          "abcdefghijklmnopqrstuvwxyz", &hash);
+    UNSIGNED_LONGS_EQUAL(5694, hash);
+}
 
 /*
  * Tests functions:
@@ -56,69 +195,79 @@ TEST_GROUP(GuiNick)
 
 TEST(GuiNick, HashColor)
 {
-    config_file_option_set (config_color_chat_nick_colors, NICK_COLORS, 1);
-
     /* hash without salt */
 
     /* test hash: djb2 */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
 
-    LONGS_EQUAL(0, gui_nick_hash_color (NULL));
-    LONGS_EQUAL(0, gui_nick_hash_color (""));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
 
-    LONGS_EQUAL(71, gui_nick_hash_color ("a"));
-    LONGS_EQUAL(108, gui_nick_hash_color ("abc"));
-    LONGS_EQUAL(146, gui_nick_hash_color ("abcdef"));
-    LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi"));
-    LONGS_EQUAL(170, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(124, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                          "abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz"));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+
+    UNSIGNED_LONGS_EQUAL(6006552168338, gui_nick_hash_color ("abcdef", -1));
+
+    UNSIGNED_LONGS_EQUAL(71, gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(108, gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(170, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(124, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                   "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: sum */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
 
-    LONGS_EQUAL(0, gui_nick_hash_color (NULL));
-    LONGS_EQUAL(0, gui_nick_hash_color (""));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
 
-    LONGS_EQUAL(97, gui_nick_hash_color ("a"));
-    LONGS_EQUAL(38, gui_nick_hash_color ("abc"));
-    LONGS_EQUAL(85, gui_nick_hash_color ("abcdef"));
-    LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi"));
-    LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                         "abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz"));
+    UNSIGNED_LONGS_EQUAL(97, gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(38, gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                  "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: djb2_32 */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
 
-    LONGS_EQUAL(0, gui_nick_hash_color (NULL));
-    LONGS_EQUAL(0, gui_nick_hash_color (""));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
 
-    LONGS_EQUAL(71, gui_nick_hash_color ("a"));
-    LONGS_EQUAL(108, gui_nick_hash_color ("abc"));
-    LONGS_EQUAL(146, gui_nick_hash_color ("abcdef"));
-    LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi"));
-    LONGS_EQUAL(209, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(116, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                          "abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz"));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+
+    UNSIGNED_LONGS_EQUAL(1382582162, gui_nick_hash_color ("abcdef", -1));
+
+    UNSIGNED_LONGS_EQUAL(71, gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(108, gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(209, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(116, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                   "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: sum_32 */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
 
-    LONGS_EQUAL(0, gui_nick_hash_color (NULL));
-    LONGS_EQUAL(0, gui_nick_hash_color (""));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
 
-    LONGS_EQUAL(97, gui_nick_hash_color ("a"));
-    LONGS_EQUAL(38, gui_nick_hash_color ("abc"));
-    LONGS_EQUAL(85, gui_nick_hash_color ("abcdef"));
-    LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi"));
-    LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                         "abcdefghijklmnopqrstuvwxyz"));
-    LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz"));
+    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+
+    UNSIGNED_LONGS_EQUAL(597, gui_nick_hash_color ("abcdef", -1));
+
+    UNSIGNED_LONGS_EQUAL(97, gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(38, gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                  "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz", 256));
 
     /* hash with salt */
 
@@ -126,21 +275,116 @@ TEST(GuiNick, HashColor)
 
     /* test hash: djb2 */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
-    LONGS_EQUAL(146, gui_nick_hash_color ("def"));
+    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(199603970247853410, gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: sum */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
-    LONGS_EQUAL(85, gui_nick_hash_color ("def"));
+    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(891, gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: djb2_32 */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
-    LONGS_EQUAL(146, gui_nick_hash_color ("def"));
+    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(2988541282, gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: sum_32 */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
-    LONGS_EQUAL(85, gui_nick_hash_color ("def"));
+    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(891, gui_nick_hash_color ("abcdef", -1));
 
-    config_file_option_reset (config_look_nick_color_hash_salt, 0);
+    config_file_option_reset (config_look_nick_color_hash_salt, 1);
+}
 
-    config_file_option_reset (config_color_chat_nick_colors, 0);
+/*
+ * Tests functions:
+ *   gui_nick_get_forced_color
+ */
+
+TEST(GuiNick, GetForcedColor)
+{
+    config_file_option_set (config_look_nick_color_force,
+                            "alice:green;bob:cyan", 1);
+
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color (NULL));
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color (""));
+
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("unknown"));
+
+    STRCMP_EQUAL("green", gui_nick_get_forced_color ("alice"));
+    STRCMP_EQUAL("cyan", gui_nick_get_forced_color ("bob"));
+
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("alice2"));
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("alice_"));
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("bob2"));
+    POINTERS_EQUAL(NULL, gui_nick_get_forced_color ("bob_"));
+
+    config_file_option_reset (config_look_nick_color_force, 1);
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_strdup_for_color
+ */
+
+TEST(GuiNick, StrdupForColor)
+{
+    char *nick;
+
+    WEE_NICK_STRDUP_FOR_COLOR(NULL, NULL);
+    WEE_NICK_STRDUP_FOR_COLOR("", "");
+    WEE_NICK_STRDUP_FOR_COLOR("abcdef", "abcdef");
+    WEE_NICK_STRDUP_FOR_COLOR("abcdef", "abcdef_");
+    WEE_NICK_STRDUP_FOR_COLOR("abcdef", "abcdef[]");
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_find_color
+ */
+
+TEST(GuiNick, FindColor)
+{
+    const char *color_default, *color_lightgreen, *color_brown;
+    const char *color_green, *color_cyan;
+
+    color_default = gui_color_get_custom ("default");
+    color_lightgreen = gui_color_get_custom ("lightgreen");
+    color_brown = gui_color_get_custom ("brown");
+    color_green = gui_color_get_custom ("green");
+    color_cyan = gui_color_get_custom ("cyan");
+
+    STRCMP_EQUAL(color_default, gui_nick_find_color (NULL));
+    STRCMP_EQUAL(color_default, gui_nick_find_color (""));
+
+    STRCMP_EQUAL(color_lightgreen, gui_nick_find_color ("abcdef"));
+    STRCMP_EQUAL(color_brown, gui_nick_find_color ("abcdefghi"));
+
+    /* with forced color */
+    config_file_option_set (config_look_nick_color_force,
+                            "abcdef:green;abcdefghi:cyan", 1);
+    STRCMP_EQUAL(color_green, gui_nick_find_color ("abcdef"));
+    STRCMP_EQUAL(color_cyan, gui_nick_find_color ("abcdefghi"));
+    config_file_option_reset (config_look_nick_color_force, 1);
+}
+
+/*
+ * Tests functions:
+ *   gui_nick_find_color_name
+ */
+
+TEST(GuiNick, FindColorName)
+{
+    STRCMP_EQUAL("default", gui_nick_find_color_name (NULL));
+    STRCMP_EQUAL("default", gui_nick_find_color_name (""));
+
+    STRCMP_EQUAL("lightgreen", gui_nick_find_color_name ("abcdef"));
+    STRCMP_EQUAL("brown", gui_nick_find_color_name ("abcdefghi"));
+
+    /* with forced color */
+    config_file_option_set (config_look_nick_color_force,
+                            "abcdef:green;abcdefghi:cyan", 1);
+    STRCMP_EQUAL("green", gui_nick_find_color_name ("abcdef"));
+    STRCMP_EQUAL("cyan", gui_nick_find_color_name ("abcdefghi"));
+    config_file_option_reset (config_look_nick_color_force, 1);
 }

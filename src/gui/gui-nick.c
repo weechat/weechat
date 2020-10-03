@@ -105,12 +105,15 @@ gui_nick_hash_sum_32 (const char *nickname, uint32_t *color_32)
 /*
  * Hashes a nickname to find color.
  *
- * Returns a number which is the index of color in the nicks colors of option
+ * Returns a number which is between 0 and num_colors - 1 (inclusive).
+ *
+ * num_colors is commonly the number of colors in the option
  * "weechat.color.chat_nick_colors".
+ * If num_colors is < 0, the hash itself is returned (64-bit unsigned number).
  */
 
-int
-gui_nick_hash_color (const char *nickname)
+uint64_t
+gui_nick_hash_color (const char *nickname, int num_colors)
 {
     const char *ptr_salt;
     uint64_t color_64;
@@ -119,10 +122,7 @@ gui_nick_hash_color (const char *nickname)
     if (!nickname || !nickname[0])
         return 0;
 
-    if (!config_nick_colors)
-        config_set_nick_colors ();
-
-    if (config_num_nick_colors == 0)
+    if (num_colors == 0)
         return 0;
 
     ptr_salt = CONFIG_STRING(config_look_nick_color_hash_salt);
@@ -132,26 +132,26 @@ gui_nick_hash_color (const char *nickname)
     switch (CONFIG_INTEGER(config_look_nick_color_hash))
     {
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2:
-            /* variant of djb2 hash */
+            /* variant of djb2 hash, using 64-bit integer */
             color_64 = 5381;
             gui_nick_hash_djb2_64 (ptr_salt, &color_64);
             gui_nick_hash_djb2_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM:
-            /* sum of letters */
+            /* sum of letters, using 64-bit integer  */
             color_64 = 0;
             gui_nick_hash_sum_64 (ptr_salt, &color_64);
             gui_nick_hash_sum_64 (nickname, &color_64);
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_DJB2_32:
-            /* variant of djb2 hash (using 32-bit integer) */
+            /* variant of djb2 hash, using 32-bit integer */
             color_32 = 5381;
             gui_nick_hash_djb2_32 (ptr_salt, &color_32);
             gui_nick_hash_djb2_32 (nickname, &color_32);
             color_64 = color_32;
             break;
         case CONFIG_LOOK_NICK_COLOR_HASH_SUM_32:
-            /* sum of letters (using 32-bit integer) */
+            /* sum of letters, using 32-bit integer */
             color_32 = 0;
             gui_nick_hash_sum_32 (ptr_salt, &color_32);
             gui_nick_hash_sum_32 (nickname, &color_32);
@@ -159,7 +159,7 @@ gui_nick_hash_color (const char *nickname)
             break;
     }
 
-    return (color_64 % config_num_nick_colors);
+    return (num_colors > 0) ? color_64 % num_colors : color_64;
 }
 
 /*
@@ -280,7 +280,8 @@ gui_nick_find_color (const char *nickname)
     }
 
     /* hash nickname to get color */
-    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname);
+    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname,
+                                 config_num_nick_colors);
 
     if (nickname2)
         free (nickname2);
@@ -326,7 +327,8 @@ gui_nick_find_color_name (const char *nickname)
     }
 
     /* hash nickname to get color */
-    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname);
+    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname,
+                                 config_num_nick_colors);
 
     if (nickname2)
         free (nickname2);
