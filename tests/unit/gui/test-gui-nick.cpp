@@ -55,9 +55,13 @@ extern char *gui_nick_strdup_for_color (const char *nickname);
 #define WEE_NICK_STRDUP_FOR_COLOR(__result, __nickname)                 \
     nick = gui_nick_strdup_for_color (__nickname);                      \
     if (__result)                                                       \
+    {                                                                   \
         STRCMP_EQUAL(__result, nick);                                   \
+    }                                                                   \
     else                                                                \
+    {                                                                   \
         POINTERS_EQUAL(NULL, nick);                                     \
+    }                                                                   \
     if (nick)                                                           \
         free (nick);
 
