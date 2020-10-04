@@ -242,97 +242,106 @@ gui_nick_strdup_for_color (const char *nickname)
 }
 
 /*
- * Finds a color code for a nick (according to nick letters).
+ * Finds a color name for a nick (according to nick letters).
  *
- * Returns a WeeChat color code (that can be used for display).
+ * If colors is NULL (most common case), the color returned is either a forced
+ * color (from option "weechat.look.nick_color_force") or a color from option
+ * "weechat.color.chat_nick_colors".
+ *
+ * If colors is set and not empty, a color from this list is returned
+ * (format of argument: comma-separated list of colors, a background is
+ * allowed with format "fg:bg", for example: "blue,yellow:red" for blue and
+ * yellow on red).
+ *
+ * Returns the name of a color (for example: "green").
+ *
+ * Note: result must be freed after use.
  */
 
-const char *
-gui_nick_find_color (const char *nickname)
+char *
+gui_nick_find_color_name (const char *nickname, const char *colors)
 {
-    int color;
-    char *nickname2;
-    const char *forced_color, *str_color;
+    int color, num_colors;
+    char *nickname2, **list_colors, *result;
+    const char *forced_color, *ptr_result;
+    static char *default_color = "default";
+
+    list_colors = NULL;
+    num_colors = 0;
+    nickname2 = NULL;
+    ptr_result = NULL;
 
     if (!nickname || !nickname[0])
-        return gui_color_get_custom ("default");
+        goto end;
 
-    if (!config_nick_colors)
-        config_set_nick_colors ();
-
-    if (config_num_nick_colors == 0)
-        return gui_color_get_custom ("default");
+    if (colors && colors[0])
+    {
+        list_colors = string_split (colors, ",", NULL, 0, 0, &num_colors);
+        if (!list_colors || (num_colors == 0))
+            goto end;
+    }
 
     nickname2 = gui_nick_strdup_for_color (nickname);
 
-    /* look if color is forced */
-    forced_color = gui_nick_get_forced_color (
-        (nickname2) ? nickname2 : nickname);
-    if (forced_color)
+    if (!list_colors)
     {
-        forced_color = gui_color_get_custom (forced_color);
-        if (forced_color && forced_color[0])
+        /* look if color is forced for the nick */
+        forced_color = gui_nick_get_forced_color (
+            (nickname2) ? nickname2 : nickname);
+        if (forced_color)
         {
-            if (nickname2)
-                free (nickname2);
-            return forced_color;
+            ptr_result = forced_color;
+            goto end;
         }
+        /* ensure nick colors are properly set */
+        if (!config_nick_colors)
+            config_set_nick_colors ();
+        if (config_num_nick_colors == 0)
+            goto end;
     }
 
     /* hash nickname to get color */
-    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname,
-                                 config_num_nick_colors);
+    color = gui_nick_hash_color (
+        (nickname2) ? nickname2 : nickname,
+        (list_colors) ? num_colors : config_num_nick_colors);
+    ptr_result = (list_colors) ?
+        list_colors[color] : config_nick_colors[color];
 
+end:
+    result = strdup ((ptr_result) ? ptr_result : default_color);
+    if (list_colors)
+        string_free_split (list_colors);
     if (nickname2)
         free (nickname2);
-
-    /* return color */
-    str_color = gui_color_get_custom (config_nick_colors[color]);
-    return (str_color[0]) ? str_color : gui_color_get_custom ("default");
+    return result;
 }
 
 /*
- * Finds a color name for a nick (according to nick letters).
+ * Finds a color code for a nick (according to nick letters).
  *
- * Returns the name of a color (for example: "green").
+ * If colors is NULL (most common case), the color returned is either a forced
+ * color (from option "weechat.look.nick_color_force") or a color from option
+ * "weechat.color.chat_nick_colors".
+ *
+ * If colors is set and not empty, a color from this list is returned
+ * (format of argument: comma-separated list of colors, a background is
+ * allowed with format "fg:bg", for example: "blue,yellow:red" for blue and
+ * yellow on red).
+ *
+ * Returns a WeeChat color code (that can be used for display).
+ *
+ * Note: result must be freed after use.
  */
 
-const char *
-gui_nick_find_color_name (const char *nickname)
+char *
+gui_nick_find_color (const char *nickname, const char *colors)
 {
-    int color;
-    char *nickname2;
-    const char *forced_color;
-    static char *default_color = "default";
+    char *color;
+    const char *ptr_result;
 
-    if (!nickname || !nickname[0])
-        return default_color;
-
-    if (!config_nick_colors)
-        config_set_nick_colors ();
-
-    if (config_num_nick_colors == 0)
-        return default_color;
-
-    nickname2 = gui_nick_strdup_for_color (nickname);
-
-    /* look if color is forced */
-    forced_color = gui_nick_get_forced_color (
-        (nickname2) ? nickname2 : nickname);
-    if (forced_color)
-    {
-        if (nickname2)
-            free (nickname2);
-        return forced_color;
-    }
-
-    /* hash nickname to get color */
-    color = gui_nick_hash_color ((nickname2) ? nickname2 : nickname,
-                                 config_num_nick_colors);
-
-    if (nickname2)
-        free (nickname2);
-
-    /* return color name */
-    return config_nick_colors[color];
+    color = gui_nick_find_color_name (nickname, colors);
+    ptr_result = gui_color_get_custom (color);
+    if (color)
+        free (color);
+    return (ptr_result) ? strdup (ptr_result) : NULL;
 }

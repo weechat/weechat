@@ -20,7 +20,9 @@
 #ifndef WEECHAT_GUI_NICK_H
 #define WEECHAT_GUI_NICK_H
 
-extern const char *gui_nick_find_color (const char *nickname);
-extern const char *gui_nick_find_color_name (const char *nickname);
+extern char *gui_nick_find_color_name (const char *nickname,
+                                       const char *colors);
+extern char *gui_nick_find_color (const char *nickname,
+                                  const char *colors);
 
 #endif /* WEECHAT_GUI_NICK_H */

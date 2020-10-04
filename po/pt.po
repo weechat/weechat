@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-09-12 18:48+0200\n"
+"POT-Creation-Date: 2020-10-04 08:26+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -11290,6 +11290,16 @@ msgstr "rgb,limite (o limite é opcional e está definido como 256 por omissão)
 
 msgid "get nick color code"
 msgstr "obter código de cor do nick"
+
+#, fuzzy
+msgid ""
+"nickname;colors (colors is an optional comma-separated list of colors to "
+"use; background is allowed for a color with format text:background; if "
+"colors is present, WeeChat options with nick colors and forced nick colors "
+"are ignored)"
+msgstr ""
+"cor do texto dos nicks (lista de cores separadas por vírgula, o fundo pode "
+"ser indicado com o formato: \"texto:fundo\", por exemplo: \"lightred:blue\")"
 
 msgid "get nick color name"
 msgstr "obter nome da cor do nick"

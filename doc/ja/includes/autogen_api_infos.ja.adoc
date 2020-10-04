@@ -106,9 +106,9 @@
 
 | weechat | locale | 翻訳メッセージに利用するロケール | -
 
-| weechat | nick_color | ニックネームの色コードを取得 | ニックネーム
+| weechat | nick_color | ニックネームの色コードを取得 | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
 
-| weechat | nick_color_name | ニックネームの色名を取得 | ニックネーム
+| weechat | nick_color_name | ニックネームの色名を取得 | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
 
 | weechat | pid | WeeChat の PID (プロセス ID) | -
 

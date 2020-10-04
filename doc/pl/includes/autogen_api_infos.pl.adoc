@@ -106,9 +106,9 @@
 
 | weechat | locale | zestaw znaków użyty do tłumaczenia wiadomości | -
 
-| weechat | nick_color | pobiera kod koloru nicka | nazwa użytkownika
+| weechat | nick_color | pobiera kod koloru nicka | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
 
-| weechat | nick_color_name | pobiera nazwę koloru nicka | nazwa użytkownika
+| weechat | nick_color_name | pobiera nazwę koloru nicka | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
 
 | weechat | pid | WeeChat PID (ID procesu) | -
 

@@ -61,6 +61,16 @@ extern char *gui_nick_strdup_for_color (const char *nickname);
     if (nick)                                                           \
         free (nick);
 
+#define WEE_FIND_COLOR(__result, __nickname, __colors)                  \
+    color = gui_nick_find_color_name (__nickname, __colors);            \
+    STRCMP_EQUAL(__result, color);                                      \
+    free (color);                                                       \
+    result_color = gui_color_get_custom (__result);                     \
+    color = gui_nick_find_color (__nickname, __colors);                 \
+    STRCMP_EQUAL(result_color, color);                                  \
+    free (color);
+
+
 TEST_GROUP(GuiNick)
 {
 };
@@ -341,50 +351,35 @@ TEST(GuiNick, StrdupForColor)
 /*
  * Tests functions:
  *   gui_nick_find_color
+ *   gui_nick_find_color_name
  */
 
 TEST(GuiNick, FindColor)
 {
-    const char *color_default, *color_lightgreen, *color_brown;
-    const char *color_green, *color_cyan;
+    const char *result_color;
+    char *color;
 
-    color_default = gui_color_get_custom ("default");
-    color_lightgreen = gui_color_get_custom ("lightgreen");
-    color_brown = gui_color_get_custom ("brown");
-    color_green = gui_color_get_custom ("green");
-    color_cyan = gui_color_get_custom ("cyan");
+    WEE_FIND_COLOR("default", NULL, NULL);
+    WEE_FIND_COLOR("default", "", NULL);
 
-    STRCMP_EQUAL(color_default, gui_nick_find_color (NULL));
-    STRCMP_EQUAL(color_default, gui_nick_find_color (""));
-
-    STRCMP_EQUAL(color_lightgreen, gui_nick_find_color ("abcdef"));
-    STRCMP_EQUAL(color_brown, gui_nick_find_color ("abcdefghi"));
+    WEE_FIND_COLOR("lightgreen", "abcdef", NULL);
+    WEE_FIND_COLOR("brown", "abcdefghi", NULL);
 
     /* with forced color */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:cyan", 1);
-    STRCMP_EQUAL(color_green, gui_nick_find_color ("abcdef"));
-    STRCMP_EQUAL(color_cyan, gui_nick_find_color ("abcdefghi"));
+    WEE_FIND_COLOR("green", "abcdef", NULL);
+    WEE_FIND_COLOR("cyan", "abcdefghi", NULL);
     config_file_option_reset (config_look_nick_color_force, 1);
-}
 
-/*
- * Tests functions:
- *   gui_nick_find_color_name
- */
+    /* with custom colors */
+    WEE_FIND_COLOR("yellow", "abcdef", "red,blue,yellow,magenta");
+    WEE_FIND_COLOR("blue", "abcdefghi", "red,blue,yellow,magenta");
 
-TEST(GuiNick, FindColorName)
-{
-    STRCMP_EQUAL("default", gui_nick_find_color_name (NULL));
-    STRCMP_EQUAL("default", gui_nick_find_color_name (""));
-
-    STRCMP_EQUAL("lightgreen", gui_nick_find_color_name ("abcdef"));
-    STRCMP_EQUAL("brown", gui_nick_find_color_name ("abcdefghi"));
-
-    /* with forced color */
+    /* with forced color and custom colors (forced color is ignored) */
     config_file_option_set (config_look_nick_color_force,
                             "abcdef:green;abcdefghi:cyan", 1);
-    STRCMP_EQUAL("green", gui_nick_find_color_name ("abcdef"));
-    STRCMP_EQUAL("cyan", gui_nick_find_color_name ("abcdefghi"));
+    WEE_FIND_COLOR("yellow", "abcdef", "red,blue,yellow,magenta");
+    WEE_FIND_COLOR("blue", "abcdefghi", "red,blue,yellow,magenta");
     config_file_option_reset (config_look_nick_color_force, 1);
 }

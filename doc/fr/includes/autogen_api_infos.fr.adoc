@@ -106,9 +106,9 @@
 
 | weechat | locale | locale utilisée pour la traduction des messages | -
 
-| weechat | nick_color | retourne le code couleur du pseudo | pseudo
+| weechat | nick_color | retourne le code couleur du pseudo | pseudo;couleurs (couleurs est une liste de couleurs facultative, séparée par des virgules ; un fond est autorisé pour la couleur avec le format texte:fond ; si couleurs est présent, les options WeeChat avec les couleurs de pseudos et couleurs forcées de pseudos sons ignorées)
 
-| weechat | nick_color_name | retourne le nom de la couleur du pseudo | pseudo
+| weechat | nick_color_name | retourne le nom de la couleur du pseudo | pseudo;couleurs (couleurs est une liste de couleurs facultative, séparée par des virgules ; un fond est autorisé pour la couleur avec le format texte:fond ; si couleurs est présent, les options WeeChat avec les couleurs de pseudos et couleurs forcées de pseudos sons ignorées)
 
 | weechat | pid | PID (ID de processus) de WeeChat | -
 

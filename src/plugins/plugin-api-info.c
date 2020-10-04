@@ -665,15 +665,24 @@ plugin_api_info_nick_color_cb (const void *pointer, void *data,
                                const char *info_name,
                                const char *arguments)
 {
-    const char *ptr_color;
+    char **items, *result;
+    int num_items;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    ptr_color = gui_nick_find_color (arguments);
-    return (ptr_color) ? strdup (ptr_color) : NULL;
+    items = string_split (arguments, ";", NULL, 0, 2, &num_items);
+
+    result = gui_nick_find_color (
+        (num_items >= 1) ? items[0] : NULL,
+        (num_items >= 2) ? items[1] : NULL);
+
+    if (items)
+        string_free_split (items);
+
+    return result;
 }
 
 /*
@@ -685,15 +694,24 @@ plugin_api_info_nick_color_name_cb (const void *pointer, void *data,
                                     const char *info_name,
                                     const char *arguments)
 {
-    const char *ptr_color;
+    char **items, *result;
+    int num_items;
 
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
 
-    ptr_color = gui_nick_find_color_name (arguments);
-    return (ptr_color) ? strdup (ptr_color) : NULL;
+    items = string_split (arguments, ";", NULL, 0, 2, &num_items);
+
+    result = gui_nick_find_color_name (
+        (num_items >= 1) ? items[0] : NULL,
+        (num_items >= 2) ? items[1] : NULL);
+
+    if (items)
+        string_free_split (items);
+
+    return result;
 }
 
 /*
@@ -1835,11 +1853,19 @@ plugin_api_info_init ()
                &plugin_api_info_color_rgb2term_cb, NULL, NULL);
     hook_info (NULL, "nick_color",
                N_("get nick color code"),
-               N_("nickname"),
+               N_("nickname;colors (colors is an optional comma-separated "
+                  "list of colors to use; background is allowed for a color "
+                  "with format text:background; if colors is present, WeeChat "
+                  "options with nick colors and forced nick colors are "
+                  "ignored)"),
                &plugin_api_info_nick_color_cb, NULL, NULL);
     hook_info (NULL, "nick_color_name",
                N_("get nick color name"),
-               N_("nickname"),
+               N_("nickname;colors (colors is an optional comma-separated "
+                  "list of colors to use; background is allowed for a color "
+                  "with format text:background; if colors is present, WeeChat "
+                  "options with nick colors and forced nick colors are "
+                  "ignored)"),
                &plugin_api_info_nick_color_name_cb, NULL, NULL);
     hook_info (NULL, "uptime",
                N_("WeeChat uptime (format: \"days:hh:mm:ss\")"),

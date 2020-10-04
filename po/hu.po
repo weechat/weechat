@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-09-12 18:48+0200\n"
+"POT-Creation-Date: 2020-10-04 08:26+0200\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -9685,6 +9685,14 @@ msgstr ""
 #, fuzzy
 msgid "get nick color code"
 msgstr "üzenetek színe"
+
+#, fuzzy
+msgid ""
+"nickname;colors (colors is an optional comma-separated list of colors to "
+"use; background is allowed for a color with format text:background; if "
+"colors is present, WeeChat options with nick colors and forced nick colors "
+"are ignored)"
+msgstr "idő színe a beszédablakban"
 
 #, fuzzy
 msgid "get nick color name"
