@@ -106,9 +106,9 @@
 
 | weechat | locale | Spracheinstellung die für die übersetzten Nachrichten verwendet werden soll | -
 
-| weechat | nick_color | zeigt Farbecode des Nick | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
+| weechat | nick_color | zeigt Farbecode des Nick | Nickname;Farben (Farben ist eine optionale Kommata getrennte Liste von Farben die genutzt werden sollen; wenn eine Hintergrundfarbe genutzt werden muss das Format wie folgt aussehen Text:Hintergrund; sind die Farben schon vorhanden, werden die WeeChat Optionen für Nickfarben und erzwungene Nickfarben ignoriert)
 
-| weechat | nick_color_name | zeigt Farbnamen des Nick | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
+| weechat | nick_color_name | zeigt Farbnamen des Nick | Nickname;Farben (Farben ist eine optionale Kommata getrennte Liste von Farben die genutzt werden sollen; wenn eine Hintergrundfarbe genutzt werden muss das Format wie folgt aussehen Text:Hintergrund; sind die Farben schon vorhanden, werden die WeeChat Optionen für Nickfarben und erzwungene Nickfarben ignoriert)
 
 | weechat | pid | WeeChat PID (Prozess-ID) | -
 
