@@ -4019,7 +4019,7 @@ can be used in following options:
 * _regex_
 * _command_
 
-The content of hashtables depend on the hook type.
+The content of hashtables depends on the hook type.
 
 A convenient way to see data in a trigger is to open trigger monitor buffer,
 using the command:
@@ -4027,6 +4027,14 @@ using the command:
 ----
 /trigger monitor
 ----
+
+All callbacks set following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable        | Type   | Description
+| tg_trigger_name | string | Name of trigger
+|===
 
 [[trigger_data_signal]]
 ===== Signal
