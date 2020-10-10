@@ -28,6 +28,7 @@ New features::
   * irc: allow to send text on buffers with commands /allchan, /allpv and /allserv
   * irc: evaluate command executed by commands /allchan, /allpv and /allserv (issue #1536)
   * script: add option script.scripts.download_enabled (issue #1548)
+  * trigger: add variable "tg_trigger_name" in data set by all triggers (issue #1567, issue #1568)
 
 Bug fixes::
 
