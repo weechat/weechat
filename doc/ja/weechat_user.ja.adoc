@@ -4068,6 +4068,16 @@ WeeChat によって使われる値に影響を及ぼします
 /trigger monitor
 ----
 
+// TRANSLATION MISSING
+All callbacks set following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| 変数            | 型     | 説明
+// TRANSLATION MISSING
+| tg_trigger_name | string | Name of trigger.
+|===
+
 [[trigger_data_signal]]
 ===== Signal
 

@@ -4161,6 +4161,15 @@ moniteur des triggers :
 /trigger monitor
 ----
 
+Toutes les fonctions de rappel définissent les variables suivantes dans la table
+de hachage :
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable        | Type   | Description
+| tg_trigger_name | chaîne | Nom du trigger.
+|===
+
 [[trigger_data_signal]]
 ===== Signal
 

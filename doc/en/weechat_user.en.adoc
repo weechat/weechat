@@ -4033,7 +4033,7 @@ All callbacks set following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable        | Type   | Description
-| tg_trigger_name | string | Name of trigger
+| tg_trigger_name | string | Name of trigger.
 |===
 
 [[trigger_data_signal]]
@@ -4044,8 +4044,8 @@ The "signal" callback sets following variables in hashtable:
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable       | Type   | Description
-| tg_signal      | string | Name of signal
-| tg_signal_data | string | Data sent with the signal
+| tg_signal      | string | Name of signal.
+| tg_signal_data | string | Data sent with the signal.
 |===
 
 If the signal contains an IRC message, the message is parsed and following data

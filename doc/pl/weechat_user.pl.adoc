@@ -4065,6 +4065,16 @@ monitorującego, za pomocą komendy:
 /trigger monitor
 ----
 
+// TRANSLATION MISSING
+All callbacks set following variables in hashtable:
+
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Zmienna         | Typ  | Opis
+// TRANSLATION MISSING
+| tg_trigger_name | ciąg | Name of trigger.
+|===
+
 [[trigger_data_signal]]
 ===== Sygnał
 

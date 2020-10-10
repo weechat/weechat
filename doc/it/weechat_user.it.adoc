@@ -4333,6 +4333,16 @@ using the command:
 /trigger monitor
 ----
 
+// TRANSLATION MISSING
+All callbacks set following variables in hashtable:
+
+// TRANSLATION MISSING
+[width="100%",cols="3m,2,14",options="header"]
+|===
+| Variable        | Type   | Description
+| tg_trigger_name | string | Name of trigger.
+|===
+
 [[trigger_data_signal]]
 ===== Signal
 
