@@ -39,3 +39,5 @@ labels: bug
 
 - WeeChat version: 
 - OS, distribution and version: 
+- Terminal: 
+- Terminal multiplexer (screen/tmux/…/none): 
