@@ -578,19 +578,16 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
             /* remove the code for end of bracketed paste (ESC[201~) */
             gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
 
-            /* remove final newline (if needed) */
-            gui_key_paste_remove_newline ();
-
-            /* replace tabs by spaces */
-            gui_key_paste_replace_tabs ();
-
             /* stop bracketed mode */
             gui_key_paste_bracketed_timer_remove ();
             gui_key_paste_bracketed_stop ();
 
             /* if paste confirmation not displayed, flush buffer now */
             if (!gui_key_paste_pending)
+            {
+                gui_key_paste_finish ();
                 gui_key_flush (1);
+            }
         }
     }
 
