@@ -524,37 +524,37 @@ gui_key_read_cb (const void *pointer, void *data, int fd)
         }
     }
 
-    if (gui_key_paste_pending)
+    if (!gui_key_paste_bracketed)
     {
-        if (accept_paste)
+        pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
+        if (pos >= 0)
         {
-            /* user is OK for pasting text, let's paste! */
-            gui_key_paste_accept ();
-        }
-        else if (cancel_paste)
-        {
-            /* user doesn't want to paste text: clear whole buffer! */
-            gui_key_paste_cancel ();
-        }
-        else if (text_added_to_buffer)
-        {
-            /* new text received while asking for paste, update message */
-            gui_input_paste_pending_signal ();
+            gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
+            gui_key_paste_bracketed_start ();
         }
     }
-    else
+
+    if (!gui_key_paste_bracketed)
     {
-        if (!gui_key_paste_bracketed)
+        if (gui_key_paste_pending)
         {
-            pos = gui_key_buffer_search (0, -1, GUI_KEY_BRACKETED_PASTE_START);
-            if (pos >= 0)
+            if (accept_paste)
             {
-                gui_key_buffer_remove (pos, GUI_KEY_BRACKETED_PASTE_LENGTH);
-                gui_key_paste_bracketed_start ();
+                /* user is OK for pasting text, let's paste! */
+                gui_key_paste_accept ();
+            }
+            else if (cancel_paste)
+            {
+                /* user doesn't want to paste text: clear whole buffer! */
+                gui_key_paste_cancel ();
+            }
+            else if (text_added_to_buffer)
+            {
+                /* new text received while asking for paste, update message */
+                gui_input_paste_pending_signal ();
             }
         }
-
-        if (!gui_key_paste_bracketed)
+        else
             gui_key_paste_check (0);
     }
 
