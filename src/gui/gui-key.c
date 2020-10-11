@@ -2718,9 +2718,7 @@ gui_key_buffer_add (unsigned char key)
     {
         gui_key_buffer[gui_key_buffer_size - 1] = key;
         if (((key == '\r') || (key == '\n'))
-            && (gui_key_buffer_size > 1)
-            && (gui_key_buffer[gui_key_buffer_size - 2] != '\r')
-            && (gui_key_buffer[gui_key_buffer_size - 2] != '\n'))
+            && (gui_key_buffer_size > 1))
         {
             gui_key_paste_lines++;
         }
