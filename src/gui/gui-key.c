@@ -2836,10 +2836,19 @@ gui_key_paste_replace_tabs ()
 void
 gui_key_paste_start ()
 {
-    gui_key_paste_remove_newline ();
-    gui_key_paste_replace_tabs ();
     gui_key_paste_pending = 1;
     gui_input_paste_pending_signal ();
+}
+
+/*
+ * Finishes paste of text. Does necessary modifications before flush of text.
+ */
+
+void
+gui_key_paste_finish ()
+{
+    gui_key_paste_remove_newline ();
+    gui_key_paste_replace_tabs ();
 }
 
 /*
@@ -3003,6 +3012,7 @@ gui_key_paste_accept ()
 
     gui_key_paste_pending = 0;
     gui_input_paste_pending_signal ();
+    gui_key_paste_finish ();
 }
 
 /*
