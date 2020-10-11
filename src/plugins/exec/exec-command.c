@@ -244,6 +244,10 @@ exec_command_parse_options (struct t_exec_cmd_options *cmd_options,
             cmd_options->output_to_buffer_exec_cmd = 1;
             cmd_options->new_buffer = 0;
         }
+        else if (weechat_strcasecmp (argv[i], "-oerr") == 0)
+        {
+            cmd_options->output_to_buffer_stderr = 1;
+        }
         else if (weechat_strcasecmp (argv[i], "-n") == 0)
         {
             cmd_options->output_to_buffer = 0;
@@ -426,6 +430,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     cmd_options.ptr_buffer = buffer;
     cmd_options.output_to_buffer = 0;
     cmd_options.output_to_buffer_exec_cmd = 0;
+    cmd_options.output_to_buffer_stderr = 0;
     cmd_options.new_buffer = 0;
     cmd_options.new_buffer_clear = 0;
     cmd_options.switch_to_buffer = 1;
@@ -585,6 +590,7 @@ exec_command_run (struct t_gui_buffer *buffer,
     }
     new_exec_cmd->output_to_buffer = cmd_options.output_to_buffer;
     new_exec_cmd->output_to_buffer_exec_cmd = cmd_options.output_to_buffer_exec_cmd;
+    new_exec_cmd->output_to_buffer_stderr = cmd_options.output_to_buffer_stderr;
     new_exec_cmd->line_numbers = (cmd_options.line_numbers < 0) ?
         cmd_options.new_buffer : cmd_options.line_numbers;
     new_exec_cmd->color = cmd_options.color;
@@ -831,7 +837,7 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-oc|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
+           "[-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
            "[-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
            "[-timeout <timeout>] [-name <name>] [-pipe <command>] "
            "[-hsignal <name>] <command>"
@@ -870,6 +876,8 @@ exec_command_init ()
            "     -nf: display output of command in a new buffer with free "
            "content (no word-wrap, no limit on number of lines) (not compatible "
            "with options -bg/-pipe/-hsignal)\n"
+           "   -oerr: also send stderr (error output) to the buffer (can be "
+           "used only with options -o and -oc)\n"
            "     -cl: clear the new buffer before displaying output\n"
            "   -nocl: append to the new buffer without clear (default)\n"
            "     -sw: switch to the output buffer (default)\n"

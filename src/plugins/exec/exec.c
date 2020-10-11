@@ -131,6 +131,7 @@ exec_add ()
     new_exec_cmd->end_time = 0;
     new_exec_cmd->output_to_buffer = 0;
     new_exec_cmd->output_to_buffer_exec_cmd = 0;
+    new_exec_cmd->output_to_buffer_stderr = 0;
     new_exec_cmd->buffer_full_name = NULL;
     new_exec_cmd->line_numbers = 0;
     new_exec_cmd->display_rc = 0;
@@ -252,6 +253,13 @@ exec_display_line (struct t_exec_cmd *exec_cmd, struct t_gui_buffer *buffer,
      */
     if (exec_cmd->output_to_buffer && !exec_cmd->pipe_command && !buffer)
         return;
+
+    /* if output is sent to the buffer, we send stderr only if it was asked */
+    if (exec_cmd->output_to_buffer && (out == EXEC_STDERR)
+        && !exec_cmd->output_to_buffer_stderr)
+    {
+        return;
+    }
 
     /* decode colors */
     line_color = exec_decode_color (exec_cmd, line);
@@ -683,6 +691,7 @@ exec_print_log ()
         weechat_log_printf ("  end_time. . . . . . . . . : %lld",  (long long)ptr_exec_cmd->end_time);
         weechat_log_printf ("  output_to_buffer. . . . . : %d",    ptr_exec_cmd->output_to_buffer);
         weechat_log_printf ("  output_to_buffer_exec_cmd : %d",    ptr_exec_cmd->output_to_buffer_exec_cmd);
+        weechat_log_printf ("  output_to_buffer_stderr . : %d",    ptr_exec_cmd->output_to_buffer_stderr);
         weechat_log_printf ("  buffer_full_name. . . . . : '%s'",  ptr_exec_cmd->buffer_full_name);
         weechat_log_printf ("  line_numbers. . . . . . . : %d",    ptr_exec_cmd->line_numbers);
         weechat_log_printf ("  display_rc. . . . . . . . : %d",    ptr_exec_cmd->display_rc);

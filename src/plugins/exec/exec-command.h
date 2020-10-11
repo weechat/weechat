@@ -31,6 +31,7 @@ struct t_exec_cmd_options
     struct t_gui_buffer *ptr_buffer;   /* pointer to buffer                 */
     int output_to_buffer;              /* 1 if output is sent to buffer     */
     int output_to_buffer_exec_cmd;     /* execute commands found            */
+    int output_to_buffer_stderr;       /* 1 if stderr is sent to buffer     */
     int new_buffer;                    /* 1=new buffer, 2=new buf. free cont*/
     int new_buffer_clear;              /* 1 to clear buffer before output   */
     int switch_to_buffer;              /* switch to the output buffer       */

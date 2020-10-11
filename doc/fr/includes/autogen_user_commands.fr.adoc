@@ -2175,7 +2175,7 @@ charset : nouveau charset pour le tampon courant
 
 ----
 /exec  -list
-       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] |-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
+       [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <nom>] [-l|-o|-oc|-n|-nf] [-oerr] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] |-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] [-timeout <délai>] [-name <nom>] [-pipe <commande>] [-hsignal <nom>] <commande>
        -in <id> <texte>
        -inclose <id> [<texte>]
        -signal <id> <signal>
@@ -2197,6 +2197,7 @@ charset : nouveau charset pour le tampon courant
       -oc : envoyer la sortie de la commande au tampon et exécuter les commandes (lignes commençant par "/" ou un caractère personnalisé de commande) (non compatible avec les options -bg/-pipe/-hsignal)
        -n : afficher la sortie de la commande dans un nouveau tampon (non compatible avec les options -bg/-pipe/-hsignal)
       -nf : afficher la sortie de la commande dans un nouveau tampon avec contenu libre (pas de coupure des mots, pas de limite sur le nombre de lignes) (non compatible avec les options -bg/-pipe/-hsignal)
+    -oerr : envoyer aussi stderr (sortie d'erreur) au tampon (peut être utilisé seulement avec les options -o et -oc)
       -cl : effacer le nouveau tampon avant d'afficher la sortie
     -nocl : ajouter au nouveau tampon sans effacer (par défaut)
       -sw : basculer vers le tampon de sortie (par défaut)
