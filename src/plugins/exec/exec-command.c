@@ -831,7 +831,7 @@ exec_command_init ()
         N_("execute external commands"),
         N_("-list"
            " || [-sh|-nosh] [-bg|-nobg] [-stdin|-nostdin] [-buffer <name>] "
-           "[-l|-o|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
+           "[-l|-o|-oc|-n|-nf] [-cl|-nocl] [-sw|-nosw] [-ln|-noln] "
            "[-flush|-noflush] [-color ansi|auto|irc|weechat|strip] [-rc|-norc] "
            "[-timeout <timeout>] [-name <name>] [-pipe <command>] "
            "[-hsignal <name>] <command>"
