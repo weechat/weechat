@@ -646,7 +646,7 @@ Example of terminal with WeeChat:
 │          │                                                                   │       │
 │          │                                                                   │       │
 │          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
 │          │[@Flashy(i)] hi peter!█                                                    │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -697,7 +697,7 @@ Bar _status_ has following default items:
 | buffer_filter         | `+*+`                   | Filtering indicator: `+*+` means some lines are filtered (hidden), empty value means all lines are displayed.
 | scroll                | `-MORE(50)-`            | Scroll indicator, with number of lines below last line displayed.
 | lag                   | `[Lag: 2.5]`            | Lag indicator, in seconds (hidden if lag is low).
-| hotlist               | `[Act: 3:#abc(2,5), 5]` | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
+| hotlist               | `[H: 3:#abc(2,5), 5]`   | List of buffers with activity (unread messages) (in example, 2 highlights and 5 unread messages on _#abc_, one unread message on buffer #5).
 | completion            | `abc(2) def(5)`         | List of words for completion, with number of possible completions for each word.
 |===
 

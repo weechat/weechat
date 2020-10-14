@@ -652,7 +652,7 @@ Beispiel des WeeChat-Terminals:
 │          │                                                                   │       │
 │          │                                                                   │       │
 │          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
 │          │[@Flashy(i)] hi peter!█                                                    │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ Bars "status" und "input"                               Bar "nicklist" ▲
@@ -703,7 +703,7 @@ Die _status_-Bar besitzt als Standardeinträge:
 | buffer_filter         | `+*+`                   | Filteranzeige: `+*+` bedeutet das Zeilen gefiltert (unterdrückt) werden. Ein leerer Eintrag zeigt an, dass alle Zeilen dargestellt werden.
 | scroll                | `-MORE(50)-`            | Scroll Indikator, zeigt an wie viele Zeilen unterhalb der zur Zeit dargestellten Zeile vorhanden sind.
 | lag                   | `[Lag: 2.5]`            | Verzögerungsanzeige, in Sekunden (keine Anzeige falls Verzögerung gering).
-| hotlist               | `[Act: 3:#abc(2,5), 5]` | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel _#abc_, eine ungelesene Nachricht in Buffer #5).
+| hotlist               | `[H: 3:#abc(2,5), 5]`   | Liste der Buffer mit Aktivität (ungelesene Nachrichten) (für das Beispiel: 2 Highlights und 5 ungelesene Nachrichten im Channel _#abc_, eine ungelesene Nachricht in Buffer #5).
 | completion            | `abc(2) def(5)`         | Liste von Wörtern für Vervollständigung, die Zahl zeigt an wie viele Varianten möglich sind.
 |===
 

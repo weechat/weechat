@@ -703,7 +703,7 @@ Esempio di terminale con WeeChat:
 │          │                                                                   │       │
 │          │                                                                   │       │
 │          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
 │          │[@Flashy(i)] hi peter!█                                                    │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -760,7 +760,7 @@ La barra _status_ ha i seguenti elementi predefiniti:
 | buffer_filter         | `+*+`                   | Indicatore filtraggio: `+*+` significa che alcune righe sono filtrate (nascoste), valori vuoti indicano che tutte le righe sono visualizzate.
 | scroll                | `-ANCORA(50)-`          | Indicatore di scorrimento, con il numero di righe sotto l'ultima riga visualizzata.
 | lag                   | `[Ritardo: 2.5]`        | Indicatore ritardo, in secondi (nascosto se il ritardo è basso).
-| hotlist               | `[Act: 3:#abc(2,5), 5]` | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #5).
+| hotlist               | `[H: 3:#abc(2,5), 5]`   | Elenco dei buffer con attività (messaggi non letti) (nell'esempio, 2 notifiche e 5 messaggi non letti su #abc, un messaggio non letto sul buffer #5).
 | completion            | `abc(2) def(5)`         | Elenco di parole per il completamento, con il numero di completamenti possibili per ogni parola.
 |===
 
