@@ -655,7 +655,7 @@ Przykład terminala z WeeChat:
 │          │                                                                   │       │
 │          │                                                                   │       │
 │          │                                                                   │       │
-│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [Act: 3:#abc(2,5), 5]           │
+│          │[12:55] [5] [irc/freenode] 2:#test(+n){4}* [H: 3:#abc(2,5), 5]             │
 │          │[@Flashy(i)] hi peter!█                                                    │
 └──────────────────────────────────────────────────────────────────────────────────────┘
             ▲ bars "status" and "input"                               bar "nicklist" ▲
@@ -707,7 +707,7 @@ Pasek _status_ posiada następujące domyślne elementy:
 | buffer_filter         | `+*+`                   | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
 | scroll                | `-Więcej(50)-`          | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
 | lag                   | `[Lag: 2.5]`            | Wskaźnik opóźnienia, w sekundach (ukryty dla niskich opóźnień).
-| hotlist               | `[Act: 3:#abc(2,5), 5]` | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
+| hotlist               | `[H: 3:#abc(2,5), 5]`   | Lista buforów z aktywnością (nieprzeczytane wiadomości) (w przykładzie, 2 podświetlenia i 5 nieprzeczytanych wiadomości w _#abc_, jedna wiadomość w buforze #5).
 | completion            | `abc(2) def(5)`         | Lista słów do dopełnienia, z ilością możliwych dopełnień dla każdego słowa.
 |===
 
