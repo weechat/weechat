@@ -636,7 +636,7 @@ script_action_run_install (int quiet)
     char *filename, *url;
     struct t_hashtable *options;
 
-    if (!script_download_enabled ())
+    if (!script_download_enabled (1))
         return;
 
     while (1)
@@ -1080,7 +1080,7 @@ script_action_run_show (const char *name, int quiet)
     char *filename, *url;
     struct t_hashtable *options;
 
-    if (!script_download_enabled ())
+    if (!script_download_enabled (1))
         return;
 
     if (name)
@@ -1510,12 +1510,17 @@ script_action_run_all ()
 /*
  * Schedules an action.
  *
- * If "need_repository" is 1, then the action will be executed only when the
- * repository file is up-to-date.
+ * If "need_repository" is 1:
+ *   - if repository is up-to-date: action is executed
+ *   - if "error_repository" is 0: action is executed otherwise the action is
+ *     ignored
+ * else action is executed.
  */
 
 void
-script_action_schedule (const char *action, int need_repository, int quiet)
+script_action_schedule (const char *action,
+                        int need_repository, int error_repository,
+                        int quiet)
 {
     /* create again "script" directory, just in case it has been removed */
     if (!weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755))
@@ -1533,8 +1538,18 @@ script_action_schedule (const char *action, int need_repository, int quiet)
         }
         else
         {
-            if (!script_repo_file_update (quiet))
+            if (!error_repository && !script_download_enabled (0))
+            {
+                /*
+                 * the action can be executed even without repository
+                 * (example: /script list)
+                 */
+                script_action_run_all ();
+            }
+            else if (!script_repo_file_update (quiet))
+            {
                 script_action_clear ();
+            }
         }
     }
     else

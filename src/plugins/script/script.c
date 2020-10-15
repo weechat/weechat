@@ -102,22 +102,25 @@ script_language_search_by_extension (const char *extension)
  * Checks if download of scripts is enabled.
  *
  * Returns:
- *   0: download NOT enabled (an error is displayed)
+ *   0: download NOT enabled (an error is displayed if display_error is 1)
  *   1: download enabled
  */
 
 int
-script_download_enabled ()
+script_download_enabled (int display_error)
 {
     if (weechat_config_boolean (script_config_scripts_download_enabled))
         return 1;
 
-    /* download not enabled: display an error */
-    weechat_printf (NULL,
-                    _("%s%s: download of scripts is disabled by default; "
-                      "see /help script.scripts.download_enabled"),
-                    weechat_prefix ("error"),
-                    SCRIPT_PLUGIN_NAME);
+    if (display_error)
+    {
+        /* download not enabled: display an error */
+        weechat_printf (NULL,
+                        _("%s%s: download of scripts is disabled by default; "
+                          "see /help script.scripts.download_enabled"),
+                        weechat_prefix ("error"),
+                        SCRIPT_PLUGIN_NAME);
+    }
     return 0;
 }
 

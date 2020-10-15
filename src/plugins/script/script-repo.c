@@ -1502,7 +1502,7 @@ script_repo_file_update (int quiet)
     char *filename, *url;
     struct t_hashtable *options;
 
-    if (!script_download_enabled ())
+    if (!script_download_enabled (1))
         return 0;
 
     script_repo_remove_all ();
