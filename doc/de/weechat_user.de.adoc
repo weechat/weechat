@@ -4120,14 +4120,12 @@ Monitor-Buffer zu öffnen:
 /trigger monitor
 ----
 
-// TRANSLATION MISSING
-All callbacks set following variables in hashtable:
+Alle Callbacks setzen folgende Variablen in das hashtable:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Variable        | Typ    | Beschreibung
-// TRANSLATION MISSING
-| tg_trigger_name | string | Name of trigger.
+| tg_trigger_name | string | Name des Trigger.
 |===
 
 [[trigger_data_signal]]
