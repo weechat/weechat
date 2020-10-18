@@ -6372,6 +6372,12 @@ IRC_PROTOCOL_CALLBACK(901)
 
 IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 {
+    if (server->hook_timer_sasl)
+    {
+        weechat_unhook (server->hook_timer_sasl);
+        server->hook_timer_sasl = NULL;
+    }
+
     irc_protocol_cb_numeric (server,
                              date, nick, address, host, command,
                              ignored, argc, argv, argv_eol);
@@ -6392,6 +6398,12 @@ IRC_PROTOCOL_CALLBACK(sasl_end_ok)
 IRC_PROTOCOL_CALLBACK(sasl_end_fail)
 {
     int sasl_fail;
+
+    if (server->hook_timer_sasl)
+    {
+        weechat_unhook (server->hook_timer_sasl);
+        server->hook_timer_sasl = NULL;
+    }
 
     irc_protocol_cb_numeric (server,
                              date, nick, address, host, command,
