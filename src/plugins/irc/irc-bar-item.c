@@ -698,6 +698,65 @@ irc_bar_item_focus_buffer_nicklist (const void *pointer, void *data,
 }
 
 /*
+ * Focus on buflist.
+ */
+
+struct t_hashtable *
+irc_bar_item_focus_buflist (const void *pointer, void *data,
+                            struct t_hashtable *info)
+{
+    unsigned long value;
+    int rc;
+    struct t_gui_buffer *buffer;
+    struct t_hdata *hdata_buffer;
+    const char *str_buffer;
+    char str_value[128];
+
+    /* buffer pointer is set by buflist hook_focus */
+    str_buffer = weechat_hashtable_get (info, "pointer");
+    if (!str_buffer || !str_buffer[0])
+        return NULL;
+
+    rc = sscanf (str_buffer, "%lx", &value);
+    if ((rc == EOF) || (rc == 0))
+        return NULL;
+
+    buffer = (struct t_gui_buffer *)value;
+
+    /* check if buffer pointer is valid */
+    hdata_buffer = weechat_hdata_get ("buffer");
+    if (!weechat_hdata_check_pointer (
+        hdata_buffer,
+        weechat_hdata_get_list (hdata_buffer, "gui_buffers"),
+        buffer))
+        return NULL;
+
+    IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    if (ptr_server)
+    {
+        snprintf (str_value, sizeof (str_value),
+                  "0x%lx", (unsigned long)ptr_server);
+        weechat_hashtable_set (info, "irc_server", str_value);
+
+        if (ptr_channel)
+        {
+            snprintf (str_value, sizeof (str_value),
+                      "0x%lx", (unsigned long)ptr_channel);
+            weechat_hashtable_set (info, "irc_channel", str_value);
+        }
+
+        return info;
+    }
+
+    return NULL;
+}
+
+/*
  * Callback for signal "buffer_switch": refreshes irc bar items (for root bars).
  */
 
@@ -772,6 +831,12 @@ irc_bar_item_init ()
 
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL, NULL);
+    weechat_hook_focus ("buflist",
+                        &irc_bar_item_focus_buflist, NULL, NULL);
+    weechat_hook_focus ("buflist2",
+                        &irc_bar_item_focus_buflist, NULL, NULL);
+    weechat_hook_focus ("buflist3",
+                        &irc_bar_item_focus_buflist, NULL, NULL);
 
     weechat_hook_signal ("buffer_switch",
                          &irc_bar_item_buffer_switch, NULL, NULL);
