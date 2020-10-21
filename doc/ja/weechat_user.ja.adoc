@@ -4248,8 +4248,12 @@ _weechat_print_ 修飾子では、メッセージタグを使う変数 (下の
 |===
 | 変数         | 型      | 説明
 | buffer       | pointer | バッファ
-| tg_argvN     | string  | N 番目の引数
-| tg_argv_eolN | string  | N 番目の引数から最後の引数まで
+// TRANSLATION MISSING
+| tg_argc      | string  | The number of arguments (the command itself counts for one).
+// TRANSLATION MISSING
+| tg_argvN     | string  | N 番目の引数 (`+tg_argv0+` is the command itself, the others are command arguments).
+// TRANSLATION MISSING
+| tg_argv_eolN | string  | N 番目の引数から最後の引数まで (`+tg_argv_eol0+` includes the command itself).
 |===
 
 [[trigger_data_command_run]]

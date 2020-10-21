@@ -1042,7 +1042,7 @@ trigger_callback_command_cb  (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               int argc, char **argv, char **argv_eol)
 {
-    char str_name[32];
+    char str_name[32], str_temp[128];
     int i;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
@@ -1053,6 +1053,8 @@ trigger_callback_command_cb  (const void *pointer, void *data,
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, extra_vars);
     weechat_hashtable_set (pointers, "buffer", buffer);
+    snprintf (str_temp, sizeof (str_temp), "%d", argc);
+    weechat_hashtable_set (extra_vars, "tg_argc", str_temp);
     for (i = 0; i < argc; i++)
     {
         snprintf (str_name, sizeof (str_name), "tg_argv%d", i);
