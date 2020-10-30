@@ -4297,12 +4297,9 @@ Der Callback von "command" legt folgende Variablen in der Hashtable an:
 |===
 | Variable     | Typ     | Beschreibung
 | buffer       | pointer | Buffer.
-// TRANSLATION MISSING
-| tg_argc      | string  | The number of arguments (the command itself counts for one).
-// TRANSLATION MISSING
-| tg_argvN     | string  | Argument #N (`+tg_argv0+` is the command itself, the others are command arguments).
-// TRANSLATION MISSING
-| tg_argv_eolN | string  | von Argument #N bis zum Ende der Argumente (`+tg_argv_eol0+` includes the command itself).
+| tg_argc      | string  | Die Anzahl von Argumenten (der Befehl wird mitgezählt).
+| tg_argvN     | string  | Argument #N (`+tg_argv0+` ist der Befehl selber, die weiteren sind Argumente).
+| tg_argv_eolN | string  | von Argument #N bis zum Ende der Argumente (`+tg_argv_eol0+` enthält den eigentlichen Befehl).
 |===
 
 [[trigger_data_command_run]]
