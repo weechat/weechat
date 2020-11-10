@@ -1,3 +1,38 @@
+weechat (2.9-1) unstable; urgency=medium
+
+  * New upstream release
+  * Refresh ASCII Doctor options patch
+  * Switch debhelper compatibility to 13 and add debian/not-installed
+    accordingly
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 15 Aug 2020 20:31:09 +0000
+
+weechat (2.8-1) unstable; urgency=medium
+
+  * New upstream release
+    - Fix FTBFS with ruby 2.7 (Closes: #954701, #954789)
+    - Remove patch to fix compilation error while testing iconv support
+    - Remove patch to fix a crash when loading script with PHP 7.4
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 04 Apr 2020 09:01:45 +0000
+
+weechat (2.7.1-1) unstable; urgency=medium
+
+  * New upstream release
+    - fix CVE-2020-8955: possible remote DOS via malformed IRC messages
+      (Closes: #951289)
+    - rebuilt against python 3.8 (Closes: #953620)
+  * Remove Guile 2.2 support patch (merged upstream)
+  * Add a patch to fix compilation error while testing iconv support
+  * Add a patch to fix a crash when loading script with PHP 7.4
+  * Bump Standards-Version to 4.5.0
+  * Replace gem2deb build dependency by ruby-dev to facilitate
+    transitions to new versions of ruby (Closes: #951713)
+  * Set Rules-Requires-Root to no
+  * Switch debhelper compatibility to 12
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Mon, 09 Mar 2020 14:59:31 +0000
+
 weechat (2.6-2) unstable; urgency=medium
 
   * Add a patch from upstream to support Guile 2.2 (Closes: #885235)
