@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.0]]
-== Version 3.0 (under dev)
+== Version 3.0 (2020-11-11)
 
 [[v3.0_script_option_download_enabled]]
 === New option to enable download of scripts

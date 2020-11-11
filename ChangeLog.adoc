@@ -16,7 +16,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 
 [[v3.0]]
-== Version 3.0 (under dev)
+== Version 3.0 (2020-11-11)
 
 New features::
 
