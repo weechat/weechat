@@ -801,7 +801,7 @@ spell_modifier_cb (const void *pointer, void *data,
     color_error = weechat_color (weechat_config_string (spell_config_color_misspelled));
 
     length = strlen (string);
-    result = weechat_string_dyn_alloc (length * 2);
+    result = weechat_string_dyn_alloc ((length * 2) + 1);
     if (!result)
         return NULL;
 

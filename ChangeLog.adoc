@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.1]]
+== Version 3.1 (under dev)
+
+Bug fixes::
+
+  * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)
+
 [[v3.0]]
 == Version 3.0 (2020-11-11)
 
