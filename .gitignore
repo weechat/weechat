@@ -14,11 +14,13 @@
 *.so.0.0.0
 *.1
 
+.cache/*
 ABOUT-NLS
 autom4te*
 build/*
 builddir/*
 compile
+compile_commands.json
 config.guess
 config.h
 config.h.in*
