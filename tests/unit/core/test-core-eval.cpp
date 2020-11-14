@@ -384,6 +384,11 @@ TEST(CoreEval, EvalExpression)
     /* test eval of substring */
     WEE_CHECK_EVAL("\t", "${eval:${\\t}}");
 
+    /* test eval of condition */
+    WEE_CHECK_EVAL("0", "${eval_cond:}");
+    WEE_CHECK_EVAL("0", "${eval_cond:${buffer.number} == 2}");
+    WEE_CHECK_EVAL("1", "${eval_cond:${buffer.number} == 1}");
+
     /* test value from extra_vars */
     WEE_CHECK_EVAL("value", "${test}");
 

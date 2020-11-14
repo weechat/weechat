@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.1]]
 == Version 3.1 (under dev)
 
+New features::
+
+  * core: add evaluation of conditions in evaluation of expressions with "eval_cond:" (issue #1582)
+
 Bug fixes::
 
   * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)

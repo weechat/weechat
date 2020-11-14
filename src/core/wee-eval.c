@@ -189,6 +189,27 @@ eval_strstr_level (const char *string, const char *search,
 }
 
 /*
+ * Evaluates a condition and returns boolean result:
+ *   "0" if false
+ *   "1" if true
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+eval_string_eval_cond (const char *text, struct t_eval_context *eval_context)
+{
+    char *tmp;
+    int rc;
+
+    tmp = eval_expression_condition (text, eval_context);
+    rc = eval_is_true (tmp);
+    if (tmp)
+        free (tmp);
+    return strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+}
+
+/*
  * Hides chars in a string.
  *
  * Note: result must be freed after use.
@@ -569,7 +590,7 @@ eval_string_date (const char *text)
 }
 
 /*
- * Evaluates a condition.
+ * Evaluates a condition and returns evaluated if/else clause.
  *
  * Note: result must be freed after use.
  */
@@ -893,29 +914,30 @@ end:
  * Replaces variables, which can be, by order of priority:
  *   1. an extra variable from hashtable "extra_vars"
  *   2. a string to evaluate (format: eval:xxx)
- *   3. a string with escaped chars (format: esc:xxx or \xxx)
- *   4. a string with chars to hide (format: hide:char,string)
- *   5. a string with max chars (format: cut:max,suffix,string or
+ *   3. a condition to evaluate (format: eval_cond:xxx)
+ *   4. a string with escaped chars (format: esc:xxx or \xxx)
+ *   5. a string with chars to hide (format: hide:char,string)
+ *   6. a string with max chars (format: cut:max,suffix,string or
  *      cut:+max,suffix,string) or max chars on screen
  *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   6. a reversed string (format: rev:xxx) or reversed string for screen,
+ *   7. a reversed string (format: rev:xxx) or reversed string for screen,
  *      color codes are not reversed (format: revscr:xxx)
- *   7. a repeated string (format: repeat:count,string)
- *   8. length of a string (format: length:xxx) or length of a string on screen
+ *   8. a repeated string (format: repeat:count,string)
+ *   9. length of a string (format: length:xxx) or length of a string on screen
  *      (format: lengthscr:xxx); color codes are ignored
- *   9. a regex group captured (format: re:N (0.99) or re:+)
- *  10. a color (format: color:xxx)
- *  11. a modifier (format: modifier:name,data,xxx)
- *  12. an info (format: info:name,arguments)
- *  13. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *  10. a regex group captured (format: re:N (0.99) or re:+)
+ *  11. a color (format: color:xxx)
+ *  12. a modifier (format: modifier:name,data,xxx)
+ *  13. an info (format: info:name,arguments)
+ *  14. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
  *      or base_decode:base,xxx)
- *  14. current date/time (format: date or date:xxx)
- *  15. an environment variable (format: env:XXX)
- *  16. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  17. calculate result of an expression (format: calc:xxx)
- *  18. an option (format: file.section.option)
- *  19. a buffer local variable
- *  20. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  15. current date/time (format: date or date:xxx)
+ *  16. an environment variable (format: env:XXX)
+ *  17. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  18. calculate result of an expression (format: calc:xxx)
+ *  19. an option (format: file.section.option)
+ *  20. a buffer local variable
+ *  21. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -969,18 +991,25 @@ eval_replace_vars_cb (void *data, const char *text)
     if (strncmp (text, "eval:", 5) == 0)
         return eval_replace_vars (text + 5, eval_context);
 
-    /* 3. convert escaped chars */
+    /*
+     * 3. force evaluation of condition (recursive call)
+     *    --> use with caution: the text must be safe!
+     */
+    if (strncmp (text, "eval_cond:", 10) == 0)
+        return eval_string_eval_cond (text + 10, eval_context);
+
+    /* 4. convert escaped chars */
     if (strncmp (text, "esc:", 4) == 0)
         return string_convert_escaped_chars (text + 4);
     if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
         return string_convert_escaped_chars (text);
 
-    /* 4. hide chars: replace all chars by a given char/string */
+    /* 5. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
         return eval_string_hide (text + 5);
 
     /*
-     * 5. cut chars:
+     * 6. cut chars:
      *   cut: max number of chars, and add an optional suffix when the
      *        string is cut
      *   cutscr: max number of chars displayed on screen, and add an optional
@@ -991,18 +1020,18 @@ eval_replace_vars_cb (void *data, const char *text)
     if (strncmp (text, "cutscr:", 7) == 0)
         return eval_string_cut (text + 7, 1);
 
-    /* 6. reverse string */
+    /* 7. reverse string */
     if (strncmp (text, "rev:", 4) == 0)
         return string_reverse (text + 4);
     if (strncmp (text, "revscr:", 7) == 0)
         return string_reverse_screen (text + 7);
 
-    /* 7. repeated string */
+    /* 8. repeated string */
     if (strncmp (text, "repeat:", 7) == 0)
         return eval_string_repeat (text + 7);
 
     /*
-     * 8. length of string:
+     * 9. length of string:
      *   length: number of chars
      *   lengthscr: number of chars displayed on screen
      */
@@ -1019,33 +1048,33 @@ eval_replace_vars_cb (void *data, const char *text)
         return strdup (str_value);
     }
 
-    /* 9. regex group captured */
+    /* 10. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
         return eval_string_regex_group (text + 3, eval_context);
 
-    /* 10. color code */
+    /* 11. color code */
     if (strncmp (text, "color:", 6) == 0)
         return eval_string_color (text + 6);
 
-    /* 11. modifier */
+    /* 12. modifier */
     if (strncmp (text, "modifier:", 9) == 0)
         return eval_string_modifier (text + 9);
 
-    /* 12. info */
+    /* 13. info */
     if (strncmp (text, "info:", 5) == 0)
         return eval_string_info (text + 5);
 
-    /* 13. base_encode/base_decode */
+    /* 14. base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
         return eval_string_base_encode (text + 12);
     if (strncmp (text, "base_decode:", 12) == 0)
         return eval_string_base_decode (text + 12);
 
-    /* 14. current date/time */
+    /* 15. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
         return eval_string_date (text + 4);
 
-    /* 15. environment variable */
+    /* 16. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -1053,18 +1082,18 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 16: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 17: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
         return eval_string_if (text + 3, eval_context);
 
     /*
-     * 17. calculate the result of an expression
+     * 18. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
         return calc_expression (text + 5);
 
-    /* 18. option: if found, return this value */
+    /* 19. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1094,7 +1123,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 19. local variable in buffer */
+    /* 20. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1103,7 +1132,7 @@ eval_replace_vars_cb (void *data, const char *text)
             return strdup (ptr_value);
     }
 
-    /* 20. hdata */
+    /* 21. hdata */
     return eval_string_hdata (text, eval_context);
 }
 

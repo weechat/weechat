@@ -1336,24 +1336,25 @@ Pour forcer une comparaison de chaînes, vous pouvez ajouter des guillemets auto
 
 Des variables sont remplacées dans l'expression, en utilisant le format ${variable}, la variable pouvant être, par ordre de priorité :
   1. une sous-chaîne évaluée (format : "eval:xxx")
-  2. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
-  3. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
-  4. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
+  2. une condition évaluée (format : "eval_cond:xxx")
+  3. une chaîne avec les caractères échappés (format : "esc:xxx" ou "\xxx")
+  4. une chaîne avec des caractères à cacher (format : "hide:caractère,chaîne")
+  5. une chaîne avec un maximum de caractères (format : "cut:max,suffixe,chaîne" ou "cut:+max,suffixe,chaîne")
      ou un maximum de caractères affichés à l'écran (format : "cutscr:max,suffixe,chaîne" ou "cutscr:+max,suffixe,chaîne")
-  5. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
-  6. une chaîne répétée (format : "repeat:nombre,chaîne")
-  7. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
-  8. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
-  9. un modificateur (format : "modifier:nom,données,chaîne")
-  10. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
-  11. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
-  12. la date/heure courante (format : "date" ou "date:format")
-  13. une variable d'environnement (format : "env:XXX")
-  14. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
-  15. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
-  16. une option (format : "fichier.section.option")
-  17. une variable locale du tampon
-  18. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
+  6. une chaîne inversée (format : "rev:xxx" ou "revscr:xxx")
+  7. une chaîne répétée (format : "repeat:nombre,chaîne")
+  8. longueur d'une chaîne (format : "length:xxx" ou "lengthscr:xxx")
+  9. une couleur (format : "color:xxx", voir la "Référence API extension", fonction "color")
+  10. un modificateur (format : "modifier:nom,données,chaîne")
+  11. une info (format : "info:nom,paramètres", les paramètres sont optionnels)
+  12. une chaîne encodée/decodée en base 16, 32 ou 64 (format : "base_encode:base,xxx" ou "base_decode:base,xxx")
+  13. la date/heure courante (format : "date" ou "date:format")
+  14. une variable d'environnement (format : "env:XXX")
+  15. un opérateur ternaire (format : "if:condition?valeur_si_vrai:valeur_si_faux")
+  16. le résultat d'une expression avec parenthèses et les opérateurs + - * / // % ** (format: "calc:xxx")
+  17. une option (format : "fichier.section.option")
+  18. une variable locale du tampon
+  19. un hdata/variable (la valeur est automatiquement convertie en chaîne), par défaut "window" et "buffer" pointent vers la fenêtre et le tampon courants.
 Le format du hdata peut être le suivant :
   hdata.var1.var2... : démarrer avec un hdata (le pointeur doit être connu), et demander les variables l'une après l'autre (d'autres hdata peuvent être suivis)
   hdata[liste].var1.var2... : démarrer avec un hdata en utilisant une liste, par exemple :
@@ -1364,6 +1365,7 @@ Le format du hdata peut être le suivant :
 Pour le nom du hdata et des variables, voir la "Référence API extension", fonction "weechat_hdata_get".
 
 Exemples (chaînes simples) :
+  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
