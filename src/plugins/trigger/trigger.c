@@ -268,6 +268,7 @@ trigger_hook (struct t_trigger *trigger)
     char *eval_desc, *eval_args, *eval_desc_args, *eval_completion;
     int i, argc, strip_colors;
     long interval, align_second, max_calls;
+    struct t_hashtable *extra_vars;
 
     if (!weechat_config_boolean (trigger->options[TRIGGER_OPTION_ENABLED]))
         return;
@@ -400,15 +401,24 @@ trigger_hook (struct t_trigger *trigger)
                 trigger->hooks = malloc (sizeof (trigger->hooks[0]));
                 if (trigger->hooks)
                 {
+                    extra_vars = weechat_hashtable_new (32,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        WEECHAT_HASHTABLE_STRING,
+                                                        NULL, NULL);
+                    if (extra_vars)
+                    {
+                        weechat_hashtable_set (extra_vars, "tg_trigger_name",
+                                               trigger->name);
+                    }
                     trigger->hooks_count = 1;
                     eval_desc = (argc > 1) ? weechat_string_eval_expression (
-                        argv[1], NULL, NULL, NULL) : NULL;
+                        argv[1], NULL, extra_vars, NULL) : NULL;
                     eval_args = (argc > 2) ? weechat_string_eval_expression (
-                        argv[2], NULL, NULL, NULL) : NULL;
+                        argv[2], NULL, extra_vars, NULL) : NULL;
                     eval_desc_args = (argc > 3) ? weechat_string_eval_expression (
-                        argv[3], NULL, NULL, NULL) : NULL;
+                        argv[3], NULL, extra_vars, NULL) : NULL;
                     eval_completion = (argc > 4) ? weechat_string_eval_expression (
-                        argv[4], NULL, NULL, NULL) : NULL;
+                        argv[4], NULL, extra_vars, NULL) : NULL;
                     trigger->hooks[0] = weechat_hook_command (
                         argv[0],  /* command */
                         (eval_desc) ? eval_desc : "",
@@ -425,6 +435,8 @@ trigger_hook (struct t_trigger *trigger)
                         free (eval_desc_args);
                     if (eval_completion)
                         free (eval_completion);
+                    if (extra_vars)
+                        weechat_hashtable_free (extra_vars);
                 }
             }
             break;
