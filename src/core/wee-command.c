@@ -1633,7 +1633,12 @@ COMMAND_CALLBACK(command)
     {
         ptr_buffer = gui_buffer_search_by_full_name (argv[2]);
         if (!ptr_buffer)
-            ptr_buffer = buffer;
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: buffer not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_OK;
+        }
         index_args = 3;
     }
 
