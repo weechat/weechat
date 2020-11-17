@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-14 09:30+0100\n"
+"POT-Creation-Date: 2020-11-17 21:33+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -126,12 +126,12 @@ msgstr "Typ"
 msgid "Constants"
 msgstr "Stałe"
 
-#, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sBłąd: istnieje juz inna komenda \"%s\" dla wtyczki \"%s\""
 
-#, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
+#, fuzzy, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sBłąd: zły deskryptor pliku (%d) użyty w hook_fd"
 
 #, c-format
@@ -375,51 +375,51 @@ msgstr "Nie zdefiniowano elementów paska"
 msgid "%sNot enough memory (%s)"
 msgstr "%sZa mało pamięci (%s)"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr "%sBłąd: nieprawidłowy typ \"%s\" dla paska \"%s\""
 
-#, c-format
-msgid "%sError: wrong position \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sBłąd: zła pozycja \"%s\" dla paska \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" created"
 msgstr "Utworzono pasek \"%s\""
 
-#, c-format
-msgid "%sError: failed to create bar \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to create bar \"%s\""
 msgstr "%sBłąd: nie udało sią stworzyć paska \"%s\""
 
-#, c-format
-msgid "%sError: wrong size \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%sBłąd: zły rozmiar \"%s\" dla paska \"%s\""
 
 msgid "All bars have been deleted"
 msgstr "Wszystkie paski zostały usunięte"
 
-#, c-format
-msgid "%sError: unknown bar \"%s\""
-msgstr "%sBłąd: nieznany pasek \"%s\""
+#, fuzzy, c-format
+msgid "%sBar \"%s\" not found"
+msgstr "%sAlias \"%s\" nie został znaleziony"
 
 #, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "Pasek \"%s\" usunięty"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr "%sBłąd: nie można ustawić opcji \"%s\" dla paska \"%s\""
 
-#, c-format
-msgid "%sError: window not found for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sWindow not found for \"%s\" command"
 msgstr "%sBłąd: nie znaleziono okna dla komendy \"%s\""
 
-#, c-format
-msgid "%sError: unable to scroll bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sBłąd: nie można przewinąć paska \"%s\""
 
-#, c-format
-msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+#, fuzzy, c-format
+msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr ""
 "%sBłąd: bufor numer %d jest poza zasięgiem (musi się zawierać między 1 a %d)"
 
@@ -430,36 +430,36 @@ msgstr "Lista buforów:"
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (powiadomienie: %s)%s%s"
 
-#, c-format
-msgid "%sError: name \"%s\" is reserved for WeeChat"
+#, fuzzy, c-format
+msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr "%sBłąd: nazwa \"%s\" jest zarezerwowana dla WeeChat"
 
-#, c-format
-msgid "%sError: incorrect buffer number"
-msgstr "%sBłąd: nieprawidłowy numer buforu"
+#, fuzzy, c-format
+msgid "%sInvalid buffer number: \"%s\""
+msgstr "%s: nieprawidłowy wskaźnik bufora w wiadomości: \"%s %s\""
 
-#, c-format
-msgid "%sError: buffer not found"
-msgstr "%sBłąd: nie odnaleziono buforu"
+#, fuzzy, c-format
+msgid "%sBuffer \"%s\" not found"
+msgstr "%s%s: bufor \"%s\" nie został znaleziony"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: renumbering is allowed only if option weechat.look."
-"buffer_auto_renumber is off"
+"%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
+"off"
 msgstr ""
 "%sBłąd: zmiana numeru jest dozwolona tylko jeśli opcja weechat.look."
 "buffer_auto_renumber jest wyłączona"
 
-#, c-format
-msgid "%sError: WeeChat main buffer can't be closed"
+#, fuzzy, c-format
+msgid "%sWeeChat main buffer can't be closed"
 msgstr "%sBłąd: główny bufor WeeChat nie może zostać zamknięty"
 
 #, fuzzy, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr "%sTemat kanału %s%s%s to \"%s%s%s\""
 
-#, c-format
-msgid "%sError: unable to set notify level \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set notify level \"%s\""
 msgstr "%sBłąd: nie można ustawić poziomu powiadomień \"%s\""
 
 #, c-format
@@ -519,16 +519,16 @@ msgstr "Nie zdefiniowano żadnych filtrów wiadomości"
 msgid "Filter \"%s\" enabled"
 msgstr "Filtr \"%s\" włączony"
 
-#, c-format
-msgid "%sError: filter \"%s\" not found"
-msgstr "%sBłąd: nie odnaleziono filtru \"%s\""
+#, fuzzy, c-format
+msgid "%sFilter \"%s\" not found"
+msgstr "%sTrigger \"%s\" nie został znaleziony"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtr \"%s\" wyłączony"
 
-#, c-format
-msgid "%sError: you must specify at least tags or regex for filter"
+#, fuzzy, c-format
+msgid "%sYou must specify at least tags or regex for filter"
 msgstr ""
 "%sBłąd: musisz podać przynajmniej tag(i) lub wyrażenie regularne dla filtru"
 
@@ -540,8 +540,8 @@ msgstr "Dodano filtr \"%s\":"
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "Zmieniono nazwę filtru z \"%s\" na \"%s\""
 
-#, c-format
-msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%sBłąd: nie można zmienić nazwy filtru z \"%s\" na \"%s\""
 
 msgid "All filters have been deleted"
@@ -600,16 +600,16 @@ msgstr ""
 "Nie dodano, usunięto lub zmieniono żadnego skrótu klawiszowego dla kontekstu "
 "\"%s\""
 
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to bind key \"%s\""
 msgstr "%sBłąd: nie można przypisać klawisza \"%s\""
 
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Klawisz \"%s\" juz ma domyślną wartość"
 
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to unbind key \"%s\""
 msgstr "%sBłąd: nie można od bindować klawisza \"%s\""
 
 #, c-format
@@ -640,27 +640,27 @@ msgstr "Klawisz:"
 msgid "No key found"
 msgstr "Nie znaleziono klawisza"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: it is not safe to bind key \"%s\" because it does not start with a "
-"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
-"this key anyway, turn off option weechat.look.key_bind_safe"
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
 "%sBłąd: nie zaleca się przypisania skrótu \"%s\", ponieważ nie zaczyna się "
 "on od kodu ctrl ani meta (alt) (użyj alt-k żeby znaleźć te kod); jeśli "
 "pomimo tego chcesz utworzyć ten skrót, wyłącz optcję weechat.look."
 "key_bind_safe"
 
-#, c-format
-msgid "%sError: context \"%s\" not found"
+#, fuzzy, c-format
+msgid "%sContext \"%s\" not found"
 msgstr "%sBłąd: nie odnaleziono kontekstu \"%s\""
 
 #, c-format
 msgid "Default key bindings restored for context \"%s\""
 msgstr "Przywrócono domyślne ustawienia klawiszy dla kontekstu \"%s\""
 
-#, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+#, fuzzy, c-format
+msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 "%sBłąd: argument \"-yes\" wymagany do zresetowania ustawień klawiszy "
 "(względy bezpieczeństwa)"
@@ -704,12 +704,12 @@ msgstr "Skasowano układ \"%s\" (obecny układ: %s)"
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "Układ dla %s%s%s zresetowany w \"%s\""
 
-#, c-format
-msgid "%sError: unknown layout \"%s\""
-msgstr "%sBłąd: nieznany układ \"%s\""
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" not found"
+msgstr "%sKlawisz \"%s\" nie znaleziony"
 
-#, c-format
-msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr "%sBłąd: układ \"%s\" już istnieje dla komendy \"%s\""
 
 #, c-format
@@ -837,34 +837,34 @@ msgstr "  %s%s%s: %s, %s/%d (%s), użytkownik: %s, hasło: %s"
 msgid "No proxy defined"
 msgstr "Nie zdefiniowano proxy"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sBłąd: zły typ \"%s\" dla proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" added"
 msgstr "Dodano proxy \"%s\""
 
-#, c-format
-msgid "%sError: failed to add proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to add proxy \"%s\""
 msgstr "%sBłąd: nie udało się dodać proxy \"%s\""
 
-#, c-format
-msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%sBłąd: zły port \"%s\" dla proxy \"%s\""
 
 msgid "All proxies have been deleted"
 msgstr "Usunięto wszystkie proxy"
 
-#, c-format
-msgid "%sError: unknown proxy \"%s\""
-msgstr "%sBłąd: niezdefiniowane proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sProxy \"%s\" not found"
+msgstr "%sKlawisz \"%s\" nie znaleziony"
 
 msgid "Proxy deleted"
 msgstr "Proxy usunięte"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr "%sBłąd: nie można ustawić opcji \"%s\" dla proxy \"%s\""
 
 #, c-format
@@ -878,24 +878,24 @@ msgstr ""
 msgid "Options reloaded from %s"
 msgstr "Ustawienia przeładowane z %s"
 
-#, c-format
-msgid "%sError: failed to reload options from %s"
+#, fuzzy, c-format
+msgid "%sFailed to reload options from %s"
 msgstr "%sBłąd: nie udało się przeładować ustawień z %s"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Nieznany plik konfiguracyjny \"%s\""
 
-#, c-format
-msgid "%sError: incorrect number"
-msgstr "%sBłąd: nieprawidłowy numer"
+#, fuzzy, c-format
+msgid "%sInvalid number: \"%s\""
+msgstr "%s%s: nieprawidłowe nazwa aliasu: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
 msgstr "Ustawienia zapisano do %s"
 
-#, c-format
-msgid "%sError: failed to save options to %s"
+#, fuzzy, c-format
+msgid "%sFailed to save options to %s"
 msgstr "%sBłąd: nie udało się zapisać ustawień do %s"
 
 msgid "There is no encrypted data"
@@ -919,8 +919,8 @@ msgstr ""
 "%sMusisz odszyfrować zaszyfrowane dane przed wykonaniem jakiejś operacji na "
 "zabezpieczonych danych lub haśle"
 
-#, c-format
-msgid "%sError: passphrase is too long (max: %d chars)"
+#, fuzzy, c-format
+msgid "%sPassphrase is too long (max: %d chars)"
 msgstr "%sBłąd: hasło jest za długie (max: %d znaków)"
 
 msgid "Passphrase deleted"
@@ -989,16 +989,16 @@ msgstr[2] "%s%d%s opcji"
 msgid "Environment variable \"%s\" is not defined"
 msgstr "Zmienna środowiskowa \"%s\" nie jest zdefiniowana"
 
-#, c-format
-msgid "%sError: failed to set variable \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sFailed to set variable \"%s\": %s"
 msgstr "%sBłąd: nie udało się ustawić zmiennej \"%s\": %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
 msgstr "Zmienna \"%s\" jest nieustawiona"
 
-#, c-format
-msgid "%sError: failed to unset variable \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sFailed to unset variable \"%s\": %s"
 msgstr "%sBłąd: nie udało się skasować zmiennej \"%s\": %s"
 
 #, c-format
@@ -1008,12 +1008,12 @@ msgstr[0] "%s%d%s opcja z wartością zmieniona"
 msgstr[1] "%s%d%s opcje z wartością zmienione"
 msgstr[2] "%s%d%s opcji z wartością zmienionych"
 
-#, c-format
-msgid "%sError: failed to set option \"%s\""
-msgstr "%sBłąd: nie udało się ustawić opcji \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to set option \"%s\""
+msgstr "%sNie powiodło się wyzerowanie opcji \"%s\""
 
-#, c-format
-msgid "%sError: option \"%s\" not found"
+#, fuzzy, c-format
+msgid "%sOption \"%s\" not found"
 msgstr "%sBłąd: nie znaleziono opcji \"%s\""
 
 msgid "Option changed: "
@@ -1071,8 +1071,8 @@ msgstr "%sNie określono binarki"
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Uaktualniam WeeChat z użyciem pliku: \"%s\"..."
 
-#, c-format
-msgid "%sError: unable to save session in file"
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
 msgstr "%sBłąd: nie można zapisać sesji w pliku"
 
 #, c-format
@@ -1116,22 +1116,22 @@ msgstr[2] "razy"
 msgid "Windows list:"
 msgstr "Lista okien:"
 
-#, c-format
-msgid "%sError: incorrect window number"
-msgstr "%sBłąd: nieprawidłowy numer okna"
+#, fuzzy, c-format
+msgid "%sInvalid window number: \"%s\""
+msgstr "%s%s: nieprawidłowe nazwa aliasu: \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one"
+"%sCan not merge windows, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sBłąd: nie można scalić okien, nie ma innego okna o takim samym rozmiarze w "
 "pobliżu obecnego"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: can not close window, there's no other window with same size near "
-"current one"
+"%sCan not close window, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sBłąd: nie można zamknąć okna, nie ma innego okna o takim samym rozmiarze w "
 "pobliżu obecnego"
@@ -3445,8 +3445,8 @@ msgstr "poziom debugowania dla wtyczki (\"core\" dla rdzenia WeeChat)"
 msgid "alias for color"
 msgstr "alias dla kolorów"
 
-#, c-format
-msgid "%sError: palette option must be numeric"
+#, fuzzy, c-format
+msgid "%sPalette option must be numeric"
 msgstr "%sBłąd: opcja palety musi być numerem"
 
 #, c-format
@@ -4816,8 +4816,8 @@ msgstr "Zapisuję plik konfiguracyjny %s%s%s"
 msgid "(default options)"
 msgstr "(domyślne opcje)"
 
-#, c-format
-msgid "%sError: cannot create file \"%s\""
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
 msgstr "%sBłąd: nie można utworzyć pliku \"%s\""
 
 #, c-format
@@ -4899,26 +4899,25 @@ msgstr ""
 "uwaga: komenda \"%s\" nie jest obecnie dozwolona (komenda: \"%s\", bufor: "
 "\"%s\")"
 
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
+#, fuzzy, c-format
+msgid "%sUnknown command \"%s\" (type /help for help)"
 msgstr "%sBłąd: nieznana komenda \"%s\" (wpisz /help , aby uzyskać pomoc)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
-"\" plugin"
+"%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
+"plugin"
 msgstr ""
 "%sBłąd: niejasna komenda \"%s\": występuje w wielu wtyczkach, ale nie we "
 "wtyczce \"%s\""
 
-#, c-format
-msgid ""
-"%sError: incomplete command \"%s\" and multiple commands start with this name"
+#, fuzzy, c-format
+msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr ""
 "%sBłąd: niekompletna komenda \"%s\", wiele komend zaczyna się od tej nazwy"
 
-#, c-format
-msgid "%sError: too many calls to command \"%s\" (looping)"
+#, fuzzy, c-format
+msgid "%sToo many calls to command \"%s\" (looping)"
 msgstr "%sBłąd: za dużo wywołań komendy \"%s\" (zapętlam)"
 
 msgid ""
@@ -5006,10 +5005,10 @@ msgstr ""
 msgid "%sWarning: unable to read passphrase from file \"%s\""
 msgstr "%sUwaga: niemożna odczytać hasła z pliku \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: not possible to reload file sec.conf because there is still "
-"encrypted data (use /secure decrypt, see /help secure)"
+"%sUnable to reload file sec.conf because there is still encrypted data (use /"
+"secure decrypt, see /help secure)"
 msgstr ""
 "%sBłąd: nie można przeładować pliku sec.conf. ponieważ znajdują się w nim "
 "zaszyfrowane dane (użyj /secure decrypt, zobacz /help secure)"
@@ -5174,21 +5173,20 @@ msgstr ""
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "błąd curl %d (%s) (URL: \"%s\")\n"
 
-#, c-format
-msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
+#, fuzzy, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
 msgstr "%sBłąd: zły limit dla zasobu \"%s\": %s (musi być >= -1)"
 
 #, c-format
 msgid "Limit for resource \"%s\" has been set to %s"
 msgstr "Limit dla zasobu \"%s\" ustawiono na %s"
 
-#, c-format
-msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+#, fuzzy, c-format
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr "%sBłąd: nie można ustawić limitu zasobu \"%s\" na %s: błąd %d %s"
 
-#, c-format
-msgid ""
-"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+#, fuzzy, c-format
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sBłąd: nieznany limit zasobu \"%s\" (zobacz /help weechat.startup."
 "sys_rlimit)"
@@ -5388,16 +5386,16 @@ msgstr "nieobecny"
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr "Zmieniono powiadomienia dla \"%s%s%s\": \"%s%s%s\" na \"%s%s%s\""
 
-#, c-format
-msgid "%sError: a buffer with same name (%s) already exists"
+#, fuzzy, c-format
+msgid "%sA buffer with same name (%s) already exists"
 msgstr "%sBłąd: istnieje już bufor o nazwie (%s)"
 
-#, c-format
-msgid "%sError: maximum number of buffers is reached (%d)"
+#, fuzzy, c-format
+msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sBłąd: osiągnięto maksymalną ilość buforów (%d)"
 
-#, c-format
-msgid "%sError: it is only possible to merge buffers with formatted content"
+#, fuzzy, c-format
+msgid "%sIt is only possible to merge buffers with formatted content"
 msgstr ""
 "%sBłąd: możliwe jest tylko połączenie buforów z sformatowaną zawartością"
 
@@ -5415,8 +5413,8 @@ msgstr "normalny"
 msgid "Debug disabled for cursor mode"
 msgstr "Debugowanie wyłączone dla trybu kursora"
 
-#, c-format
-msgid "%sError adding filter \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sUnable to add filter \"%s\": %s"
 msgstr "%sBłąd podczas dodawania filtru \"%s\": %s"
 
 msgid "not enough arguments"
@@ -11863,12 +11861,12 @@ msgstr "\"current\" dla obecnego okna lub numer okna (opcjonalne)"
 msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr "Inicjalizuję wtyczkę \"%s\" (priorytet: %d)"
 
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
 msgstr "%sBłąd: nie można zainicjować wtyczki \"%s\""
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
 msgstr "%sBłąd: nie można załadować wtyczki \"%s\": %s"
 
 #, c-format
@@ -11879,8 +11877,8 @@ msgstr ""
 "%sJeżeli próbujesz załadować skrypt a nie wtyczkę, spróbuj komend dla "
 "skryptów (/perl, /python, ...)"
 
-#, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sBłąd: symbol \"%s\" nie znaleziony we wtyczce \"%s\", nie udało się "
 "załadować"
@@ -11890,29 +11888,28 @@ msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
 msgstr ""
 "%sJeżeli wtyczka \"%s\" jest stara/przestarzała, możesz usunąć ten plik."
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
 msgstr ""
 "%sBłąd: niedopasowane API \"%s\" (obecne API: \"%s\", API wtyczki: \"%s\"), "
 "nie udało się załadować"
 
-#, c-format
-msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
 "%sBłąd: nie można załadować wtyczki \"%s\": wtyczka o takiej nazwie już "
 "istnieje"
 
-#, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sBłąd: funkcja \"%s\" nie znaleziona we wtyczce \"%s\", nie udało się "
 "załadować"
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
 msgstr "%sBłąd: nie można załadować wtyczki \"%s\" (za mało pamięci)"
 
 #, c-format
@@ -11922,10 +11919,6 @@ msgstr "Wtyczka \"%s\" załadowana"
 #, c-format
 msgid "Plugin \"%s\" unloaded"
 msgstr "Wtyczka \"%s\" wyładowana"
-
-#, c-format
-msgid "%sError: plugin \"%s\" not found"
-msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""
 
 msgid "Plugins unloaded"
 msgstr "Wyładowano wtyczki"
@@ -14751,3 +14744,33 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "%sError: unknown bar \"%s\""
+#~ msgstr "%sBłąd: nieznany pasek \"%s\""
+
+#~ msgid "%sError: incorrect buffer number"
+#~ msgstr "%sBłąd: nieprawidłowy numer buforu"
+
+#~ msgid "%sError: buffer not found"
+#~ msgstr "%sBłąd: nie odnaleziono buforu"
+
+#~ msgid "%sError: filter \"%s\" not found"
+#~ msgstr "%sBłąd: nie odnaleziono filtru \"%s\""
+
+#~ msgid "%sError: unknown layout \"%s\""
+#~ msgstr "%sBłąd: nieznany układ \"%s\""
+
+#~ msgid "%sError: unknown proxy \"%s\""
+#~ msgstr "%sBłąd: niezdefiniowane proxy \"%s\""
+
+#~ msgid "%sError: incorrect number"
+#~ msgstr "%sBłąd: nieprawidłowy numer"
+
+#~ msgid "%sError: failed to set option \"%s\""
+#~ msgstr "%sBłąd: nie udało się ustawić opcji \"%s\""
+
+#~ msgid "%sError: incorrect window number"
+#~ msgstr "%sBłąd: nieprawidłowy numer okna"
+
+#~ msgid "%sError: plugin \"%s\" not found"
+#~ msgstr "%sBłąd: nie znaleziono wtyczki \"%s\""

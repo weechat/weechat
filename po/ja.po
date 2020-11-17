@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-14 09:30+0100\n"
+"POT-Creation-Date: 2020-11-17 21:33+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -122,14 +122,14 @@ msgstr "タイプ"
 msgid "Constants"
 msgstr "定数"
 
-#, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 "%1$sエラー: プラグイン \"%3$s\" で他のコマンド \"%2$s\" は既に定義されていま"
 "す"
 
-#, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
+#, fuzzy, c-format
+msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr "%sエラー: hook_fd で不正なファイルディスクリプタ (%d) が使われました"
 
 #, c-format
@@ -375,51 +375,51 @@ msgstr "バー要素が定義されていません"
 msgid "%sNot enough memory (%s)"
 msgstr "%sメモリ不足 (%s)"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" にタイプ \"%2$s\" は使えません"
 
-#, c-format
-msgid "%sError: wrong position \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" に位置 \"%2$s\" を設定できません"
 
 #, c-format
 msgid "Bar \"%s\" created"
 msgstr "バー \"%s\" が作成されました"
 
-#, c-format
-msgid "%sError: failed to create bar \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to create bar \"%s\""
 msgstr "%sエラー: バー \"%s\" の作成に失敗しました"
 
-#, c-format
-msgid "%sError: wrong size \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" にサイズ \"%2$s\" を設定できません"
 
 msgid "All bars have been deleted"
 msgstr "全てのバーを削除しました"
 
-#, c-format
-msgid "%sError: unknown bar \"%s\""
-msgstr "%sエラー: バー \"%s\" は未定義です"
+#, fuzzy, c-format
+msgid "%sBar \"%s\" not found"
+msgstr "%s別名 \"%s\" が見つかりません"
 
 #, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "バー \"%s\" を削除しました"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr "%1$sエラー: バー \"%3$s\" にオプション \"%2$s\" を設定できません"
 
-#, c-format
-msgid "%sError: window not found for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sWindow not found for \"%s\" command"
 msgstr "%sエラー: \"%s\" コマンドに対するウィンドウが見つかりません"
 
-#, c-format
-msgid "%sError: unable to scroll bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sエラー: バー \"%s\" をスクロールできません"
 
-#, c-format
-msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+#, fuzzy, c-format
+msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr ""
 "%sエラー: %d は範囲外のバッファ番号です (1 から %d の間で指定してください)"
 
@@ -430,36 +430,36 @@ msgstr "バッファリスト:"
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (通知: %s)%s%s"
 
-#, c-format
-msgid "%sError: name \"%s\" is reserved for WeeChat"
+#, fuzzy, c-format
+msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr "%sエラー: \"%s\" は WeeChat の予約名です"
 
-#, c-format
-msgid "%sError: incorrect buffer number"
-msgstr "%sエラー: 不正なバッファ番号"
+#, fuzzy, c-format
+msgid "%sInvalid buffer number: \"%s\""
+msgstr "%s: メッセージに無効なポインタが含まれています: \"%s %s\""
 
-#, c-format
-msgid "%sError: buffer not found"
-msgstr "%sエラー: バッファが見つかりません"
+#, fuzzy, c-format
+msgid "%sBuffer \"%s\" not found"
+msgstr "%s%s: バッファ \"%s\" が見つかりません"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: renumbering is allowed only if option weechat.look."
-"buffer_auto_renumber is off"
+"%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
+"off"
 msgstr ""
 "%sエラー: 番号を振りなおすには、weechat.look.buffer_auto_renumber オプション"
 "をオフにしてください"
 
-#, c-format
-msgid "%sError: WeeChat main buffer can't be closed"
+#, fuzzy, c-format
+msgid "%sWeeChat main buffer can't be closed"
 msgstr "%sエラー: WeeChat メインバッファを閉じることはできません"
 
 #, fuzzy, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr "%s%s%s%s のトピックは \"%s%s%s\" です"
 
-#, c-format
-msgid "%sError: unable to set notify level \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set notify level \"%s\""
 msgstr "%sエラー: 通知レベル \"%s\" を設定できません"
 
 #, c-format
@@ -519,16 +519,16 @@ msgstr "メッセージフィルタが定義されていません"
 msgid "Filter \"%s\" enabled"
 msgstr "フィルタ \"%s\" が有効化されました"
 
-#, c-format
-msgid "%sError: filter \"%s\" not found"
-msgstr "%sエラー: フィルタ \"%s\" が見つかりません"
+#, fuzzy, c-format
+msgid "%sFilter \"%s\" not found"
+msgstr "%sトリガ \"%s\" が見つかりません"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "フィルタ \"%s\" が無効化されました"
 
-#, c-format
-msgid "%sError: you must specify at least tags or regex for filter"
+#, fuzzy, c-format
+msgid "%sYou must specify at least tags or regex for filter"
 msgstr "%sエラー: フィルタ用にタグか正規表現のどちらかを指定してください"
 
 #, c-format
@@ -539,8 +539,8 @@ msgstr "フィルタ \"%s\" が追加されました:"
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "フィルタ \"%s\" の名前を \"%s\" に変更しました"
 
-#, c-format
-msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%sエラー: フィルタ \"%s\" の名前を \"%s\" に変更できません"
 
 msgid "All filters have been deleted"
@@ -600,16 +600,16 @@ msgstr ""
 "コンテキスト \"%s\" に対するキーバインドの追加、変更、削除が行われませんでし"
 "た"
 
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to bind key \"%s\""
 msgstr "%sエラー: キー \"%s\" の割り当てに失敗しました"
 
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "キー \"%s\" は既にデフォルトの値です"
 
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to unbind key \"%s\""
 msgstr "%sエラー: キー \"%s\" の割り当てを解除できません"
 
 #, c-format
@@ -640,27 +640,27 @@ msgstr "キー:"
 msgid "No key found"
 msgstr "キーがありません"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: it is not safe to bind key \"%s\" because it does not start with a "
-"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
-"this key anyway, turn off option weechat.look.key_bind_safe"
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
 "%sエラー: ctrl または meta コードで始まらないキー \"%s\" を割り当てるのは危険"
 "です (ヒント: キーコードを探すには alt-k を使ってください); それでもこのキー"
 "を割り当てたい場合は、weechat.look.key_bind_safe オプションを OFF にしてくだ"
 "さい"
 
-#, c-format
-msgid "%sError: context \"%s\" not found"
+#, fuzzy, c-format
+msgid "%sContext \"%s\" not found"
 msgstr "%sエラー: コンテキスト \"%s\" が見つかりません"
 
 #, c-format
 msgid "Default key bindings restored for context \"%s\""
 msgstr "コンテキスト \"%s\" に対するデフォルトキーバインドに戻しました"
 
-#, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+#, fuzzy, c-format
+msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 "%sエラー: キーをリセットするには \"-yes\" 引数が必要です (セキュリティ上の理"
 "由で)"
@@ -703,12 +703,12 @@ msgstr "レイアウト \"%s\" を削除しました (現在のレイアウト: 
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "%s%s%s のレイアウトを \"%s\" でリセットしました"
 
-#, c-format
-msgid "%sError: unknown layout \"%s\""
-msgstr "%sエラー: レイアウト \"%s\" は未定義です"
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" not found"
+msgstr "%sキー \"%s\" が見つかりません"
 
-#, c-format
-msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr "%sエラー: コマンド \"%s\" 用のレイアウト \"%s\" はすでに存在しています"
 
 #, c-format
@@ -832,34 +832,34 @@ msgstr "  %s%s%s: %s、%s/%d (%s)、ユーザ名: %s、パスワード: %s"
 msgid "No proxy defined"
 msgstr "プロキシが定義されていません"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%1$sエラー: プロキシ \"%3$s\" に対するタイプ \"%2$s\" が間違っています"
 
 #, c-format
 msgid "Proxy \"%s\" added"
 msgstr "プロキシ \"%s\" を追加しました"
 
-#, c-format
-msgid "%sError: failed to add proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to add proxy \"%s\""
 msgstr "%sエラー: プロキシ \"%s\" の追加に失敗しました"
 
-#, c-format
-msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%1$sエラー: プロキシ \"%3$s\" のポート \"%2$s\" が間違っています"
 
 msgid "All proxies have been deleted"
 msgstr "全てのプロキシを削除しました"
 
-#, c-format
-msgid "%sError: unknown proxy \"%s\""
-msgstr "%sエラー: プロキシ \"%s\" が見つかりません"
+#, fuzzy, c-format
+msgid "%sProxy \"%s\" not found"
+msgstr "%sキー \"%s\" が見つかりません"
 
 msgid "Proxy deleted"
 msgstr "プロキシを削除しました"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr ""
 "%1$sエラー: プロキシ \"%3$s\" に対するオプション \"%2$s\" を設定できません"
 
@@ -874,24 +874,24 @@ msgstr ""
 msgid "Options reloaded from %s"
 msgstr "%s からオプションをリロードしました"
 
-#, c-format
-msgid "%sError: failed to reload options from %s"
+#, fuzzy, c-format
+msgid "%sFailed to reload options from %s"
 msgstr "%sエラー: %s からオプションのリロードに失敗しました"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "設定ファイル \"%s\" が見つかりません"
 
-#, c-format
-msgid "%sError: incorrect number"
-msgstr "%sエラー: 不正な番号"
+#, fuzzy, c-format
+msgid "%sInvalid number: \"%s\""
+msgstr "%s%s: 別名が間違っています: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
 msgstr "%s にオプションを保存しました"
 
-#, c-format
-msgid "%sError: failed to save options to %s"
+#, fuzzy, c-format
+msgid "%sFailed to save options to %s"
 msgstr "%sエラー: %s へのオプションの保存に失敗しました"
 
 msgid "There is no encrypted data"
@@ -913,8 +913,8 @@ msgid ""
 "secured data or passphrase"
 msgstr "%s保護データやパスフレーズを操作する前にデータを復号してください"
 
-#, c-format
-msgid "%sError: passphrase is too long (max: %d chars)"
+#, fuzzy, c-format
+msgid "%sPassphrase is too long (max: %d chars)"
 msgstr "%sエラー: パスフレーズが長すぎます (最大: %d 文字)"
 
 msgid "Passphrase deleted"
@@ -977,16 +977,16 @@ msgstr[0] "%s%d%s 個のオプション"
 msgid "Environment variable \"%s\" is not defined"
 msgstr "環境変数 \"%s\" が定義されていません"
 
-#, c-format
-msgid "%sError: failed to set variable \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sFailed to set variable \"%s\": %s"
 msgstr "%sエラー: 変数 \"%s\" の設定に失敗しました: %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
 msgstr "変数 \"%s\" を無効化"
 
-#, c-format
-msgid "%sError: failed to unset variable \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sFailed to unset variable \"%s\": %s"
 msgstr "%sエラー: 変数 \"%s\" の無効化に失敗しました: %s"
 
 #, c-format
@@ -994,12 +994,12 @@ msgid "%s%d%s option with value changed"
 msgid_plural "%s%d%s options with value changed"
 msgstr[0] "%s%d%s 個のオプションで値が変更されました"
 
-#, c-format
-msgid "%sError: failed to set option \"%s\""
-msgstr "%sエラー: オプション \"%s\" の設定に失敗しました"
+#, fuzzy, c-format
+msgid "%sFailed to set option \"%s\""
+msgstr "%sオプション \"%s\" の無効化に失敗しました"
 
-#, c-format
-msgid "%sError: option \"%s\" not found"
+#, fuzzy, c-format
+msgid "%sOption \"%s\" not found"
 msgstr "%sエラー: オプション \"%s\" が見つかりません"
 
 msgid "Option changed: "
@@ -1056,8 +1056,8 @@ msgstr "%sバイナリが指定されていません"
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "バイナリファイル: \"%s\" で WeeChat のアップグレード中..."
 
-#, c-format
-msgid "%sError: unable to save session in file"
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
 msgstr "%sエラー: ファイルにセッションを保存できません"
 
 #, c-format
@@ -1094,22 +1094,22 @@ msgstr[0] "回"
 msgid "Windows list:"
 msgstr "ウィンドウリスト:"
 
-#, c-format
-msgid "%sError: incorrect window number"
-msgstr "%sエラー: ウィンドウ番号に間違いがあります"
+#, fuzzy, c-format
+msgid "%sInvalid window number: \"%s\""
+msgstr "%s%s: 別名が間違っています: \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one"
+"%sCan not merge windows, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sエラー: ウィンドウのマージに失敗、現在のウィンドウの近くには同じサイズの異"
 "なるウィンドウがありません"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: can not close window, there's no other window with same size near "
-"current one"
+"%sCan not close window, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sエラー: ウィンドウのマージに失敗、現在のウィンドウの近くには同じサイズの異"
 "なるウィンドウがありません"
@@ -3379,8 +3379,8 @@ msgstr "プラグイン (\"core\" は WeeChat コア) のデバッグレベル"
 msgid "alias for color"
 msgstr "色の別名"
 
-#, c-format
-msgid "%sError: palette option must be numeric"
+#, fuzzy, c-format
+msgid "%sPalette option must be numeric"
 msgstr "%sエラー: パレットオプションは数字でなければいけません"
 
 #, c-format
@@ -4694,8 +4694,8 @@ msgstr "設定ファイル %s%s%s の書き込み中"
 msgid "(default options)"
 msgstr "(デフォルトオプション)"
 
-#, c-format
-msgid "%sError: cannot create file \"%s\""
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
 msgstr "%sエラー: ファイル \"%s\" の作成に失敗"
 
 #, c-format
@@ -4777,26 +4777,25 @@ msgstr ""
 "警告: コマンド \"%s\" は許可されていません (コマンド: \"%s\"、バッファ: \"%s"
 "\")"
 
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
+#, fuzzy, c-format
+msgid "%sUnknown command \"%s\" (type /help for help)"
 msgstr "%sエラー: 未定義のコマンド \"%s\" (ヘルプを見るには /help を入力)"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
-"\" plugin"
+"%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
+"plugin"
 msgstr ""
 "%sエラー: あいまいなコマンド \"%s\": 多くのプラグインで定義されており、\"%s"
 "\" プラグインでは定義されていません"
 
-#, c-format
-msgid ""
-"%sError: incomplete command \"%s\" and multiple commands start with this name"
+#, fuzzy, c-format
+msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr ""
 "%sエラー: コマンド \"%s\" が不完全でこの名前で始まる別のコマンドが存在します"
 
-#, c-format
-msgid "%sError: too many calls to command \"%s\" (looping)"
+#, fuzzy, c-format
+msgid "%sToo many calls to command \"%s\" (looping)"
 msgstr ""
 "%sエラー: コマンド \"%s\" の呼び出し回数が多すぎます (ループしています)"
 
@@ -4884,10 +4883,10 @@ msgstr ""
 msgid "%sWarning: unable to read passphrase from file \"%s\""
 msgstr "%s警告: ファイル \"%s\" からパスフレーズを読み込めません"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: not possible to reload file sec.conf because there is still "
-"encrypted data (use /secure decrypt, see /help secure)"
+"%sUnable to reload file sec.conf because there is still encrypted data (use /"
+"secure decrypt, see /help secure)"
 msgstr ""
 "%sエラー: 暗号化されたデータがあるため、sec.conf ファイルをリロードできませ"
 "ん (/help secure を参照し、/secure decrypt を利用してください)"
@@ -5049,8 +5048,8 @@ msgstr ""
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl エラー %d (%s) (URL: \"%s\")\n"
 
-#, c-format
-msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
+#, fuzzy, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
 msgstr ""
 "%sエラー: リソース \"%s\" に対する無効な制限値です: %s (-1 以上の値を設定して"
 "ください)"
@@ -5059,13 +5058,12 @@ msgstr ""
 msgid "Limit for resource \"%s\" has been set to %s"
 msgstr "リソース \"%s\" を %s に制限しました"
 
-#, c-format
-msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+#, fuzzy, c-format
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr "%sエラー: リソース \"%s\" を %s に制限できません: エラー %d %s"
 
-#, c-format
-msgid ""
-"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+#, fuzzy, c-format
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 "%sエラー: リソース \"%s\" は定義されていません (/help weechat.startup."
 "sys_rlimit を参照してください)"
@@ -5258,16 +5256,16 @@ msgstr "離席"
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr "\"%s%s%s\" の告知が変更されました: \"%s%s%s\" から \"%s%s%s\" に"
 
-#, c-format
-msgid "%sError: a buffer with same name (%s) already exists"
+#, fuzzy, c-format
+msgid "%sA buffer with same name (%s) already exists"
 msgstr "%sエラー: 同じ名前 (%s) のバッファがあります"
 
-#, c-format
-msgid "%sError: maximum number of buffers is reached (%d)"
+#, fuzzy, c-format
+msgid "%sMaximum number of buffers is reached (%d)"
 msgstr "%sエラー: バッファ数の最大値に達しました (%d)"
 
-#, c-format
-msgid "%sError: it is only possible to merge buffers with formatted content"
+#, fuzzy, c-format
+msgid "%sIt is only possible to merge buffers with formatted content"
 msgstr "%sエラー: 書式ありバッファ以外はマージできません"
 
 #, c-format
@@ -5284,8 +5282,8 @@ msgstr "通常"
 msgid "Debug disabled for cursor mode"
 msgstr "カーソルモードのデバッグを無効化"
 
-#, c-format
-msgid "%sError adding filter \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sUnable to add filter \"%s\": %s"
 msgstr "%sフィルタ \"%s\" の追加エラー: %s"
 
 msgid "not enough arguments"
@@ -11647,12 +11645,12 @@ msgstr "\"current\" は現在のウィンドウまたはウィンドウ番号 (�
 msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr "プラグイン \"%s\" を初期化中 (優先度: %d)"
 
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
 msgstr "%sエラー: プラグイン \"%s\" の初期化に失敗"
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
 msgstr "%sエラー: プラグイン \"%s\" のロードに失敗: %s"
 
 #, c-format
@@ -11663,8 +11661,8 @@ msgstr ""
 "%sスクリプトをロードして、C プラグインをロードしない場合は、スクリプトをロー"
 "ドするコマンド (/perl、/python、...) を使ってください"
 
-#, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sエラー: シンボル \"%s\" がプラグイン \"%s\" の中に見つかりません、ロード失"
 "敗"
@@ -11673,27 +11671,26 @@ msgstr ""
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
 msgstr "%sプラグイン \"%s\" が古い/廃止の場合、このファイルを削除できます。"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
 msgstr ""
 "%sエラー: プラグイン \"%s\" に関する API のミスマッチ (現在の API: \"%s\"、プ"
 "ラグイン API: \"%s\")、ロード失敗"
 
-#, c-format
-msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
 "%sエラー: プラグイン \"%s\" のロード失敗: 同じ名前のプラグインが存在します"
 
-#, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sエラー: 関数 \"%s\" がプラグイン \"%s\" の中に見つかりません、ロード失敗"
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
 msgstr "%sエラー: プラグイン \"%s\" のロードに失敗 (メモリ不足)"
 
 #, c-format
@@ -11703,10 +11700,6 @@ msgstr "プラグイン \"%s\" がロードされました"
 #, c-format
 msgid "Plugin \"%s\" unloaded"
 msgstr "プラグイン \"%s\" がアンロードされました"
-
-#, c-format
-msgid "%sError: plugin \"%s\" not found"
-msgstr "%sエラー: プラグイン \"%s\" が見つかりません"
 
 msgid "Plugins unloaded"
 msgstr "プラグインがアンロードされました"
@@ -14472,3 +14465,33 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#~ msgid "%sError: unknown bar \"%s\""
+#~ msgstr "%sエラー: バー \"%s\" は未定義です"
+
+#~ msgid "%sError: incorrect buffer number"
+#~ msgstr "%sエラー: 不正なバッファ番号"
+
+#~ msgid "%sError: buffer not found"
+#~ msgstr "%sエラー: バッファが見つかりません"
+
+#~ msgid "%sError: filter \"%s\" not found"
+#~ msgstr "%sエラー: フィルタ \"%s\" が見つかりません"
+
+#~ msgid "%sError: unknown layout \"%s\""
+#~ msgstr "%sエラー: レイアウト \"%s\" は未定義です"
+
+#~ msgid "%sError: unknown proxy \"%s\""
+#~ msgstr "%sエラー: プロキシ \"%s\" が見つかりません"
+
+#~ msgid "%sError: incorrect number"
+#~ msgstr "%sエラー: 不正な番号"
+
+#~ msgid "%sError: failed to set option \"%s\""
+#~ msgstr "%sエラー: オプション \"%s\" の設定に失敗しました"
+
+#~ msgid "%sError: incorrect window number"
+#~ msgstr "%sエラー: ウィンドウ番号に間違いがあります"
+
+#~ msgid "%sError: plugin \"%s\" not found"
+#~ msgstr "%sエラー: プラグイン \"%s\" が見つかりません"

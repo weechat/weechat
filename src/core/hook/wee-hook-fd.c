@@ -202,8 +202,8 @@ hook_fd_exec ()
                 {
                     HOOK_FD(ptr_hook, error) = errno;
                     gui_chat_printf (NULL,
-                                     _("%sError: bad file descriptor (%d) "
-                                       "used in hook_fd"),
+                                     _("%sBad file descriptor (%d) used in "
+                                       "hook_fd"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      HOOK_FD(ptr_hook, fd));
                 }

@@ -153,8 +153,8 @@ util_setrlimit_resource (const char *resource_name, long limit)
             if (limit < -1)
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: invalid limit for resource \"%s\": "
-                                   "%s (must be >= -1)"),
+                                 _("%sInvalid limit for resource \"%s\": %s "
+                                   "(must be >= -1)"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  resource_name, str_limit);
                 return;
@@ -176,8 +176,8 @@ util_setrlimit_resource (const char *resource_name, long limit)
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: unable to set resource limit "
-                                   "\"%s\" to %s: error %d %s"),
+                                 _("%sUnable to set resource limit \"%s\" to "
+                                   "%s: error %d %s"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  resource_name, str_limit,
                                  errno, strerror (errno));
@@ -187,7 +187,7 @@ util_setrlimit_resource (const char *resource_name, long limit)
     }
 
     gui_chat_printf (NULL,
-                     _("%sError: unknown resource limit \"%s\" (see /help "
+                     _("%sUnknown resource limit \"%s\" (see /help "
                        "weechat.startup.sys_rlimit)"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      resource_name);
@@ -228,8 +228,8 @@ util_setrlimit ()
                 else
                 {
                     gui_chat_printf (NULL,
-                                     _("%sError: invalid limit for resource "
-                                       "\"%s\": %s (must be >= -1)"),
+                                     _("%sInvalid limit for resource \"%s\": "
+                                       "%s (must be >= -1)"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      items[i], pos + 1);
                 }

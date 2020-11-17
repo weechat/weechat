@@ -194,9 +194,9 @@ secure_config_reload_cb (const void *pointer, void *data,
     if (secure_hashtable_data_encrypted->items_count > 0)
     {
         gui_chat_printf (NULL,
-                         _("%sError: not possible to reload file sec.conf "
-                           "because there is still encrypted data (use /secure "
-                           "decrypt, see /help secure)"),
+                         _("%sUnable to reload file sec.conf because there is "
+                           "still encrypted data (use /secure decrypt, see "
+                           "/help secure)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
     }

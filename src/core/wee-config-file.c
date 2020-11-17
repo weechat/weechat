@@ -589,7 +589,7 @@ config_file_new_option (struct t_config_file *config_file,
     }
     if (var_type < 0)
     {
-        gui_chat_printf (NULL, "%sError: unknown option type \"%s\"",
+        gui_chat_printf (NULL, "%sUnknown option type \"%s\"",
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          type);
         goto error;
@@ -2411,7 +2411,7 @@ config_file_write_internal (struct t_config_file *config_file,
     if (!config_file->file)
     {
         gui_chat_printf (NULL,
-                         _("%sError: cannot create file \"%s\""),
+                         _("%sCannot create file \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename2);
         goto error;

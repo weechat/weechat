@@ -1724,7 +1724,7 @@ config_weechat_palette_create_option_cb (const void *pointer, void *data,
     else
     {
         gui_chat_printf (NULL,
-                         _("%sError: palette option must be numeric"),
+                         _("%sPalette option must be numeric"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     }
 

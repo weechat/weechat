@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-14 09:30+0100\n"
+"POT-Creation-Date: 2020-11-17 21:33+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -118,11 +118,11 @@ msgid "Constants"
 msgstr ""
 
 #, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr ""
 
 #, c-format
@@ -308,11 +308,11 @@ msgid "%sNot enough memory (%s)"
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format
@@ -320,18 +320,18 @@ msgid "Bar \"%s\" created"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to create bar \"%s\""
+msgid "%sFailed to create bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr ""
 
 msgid "All bars have been deleted"
 msgstr ""
 
 #, c-format
-msgid "%sError: unknown bar \"%s\""
+msgid "%sBar \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -339,19 +339,19 @@ msgid "Bar \"%s\" deleted"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: window not found for \"%s\" command"
+msgid "%sWindow not found for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to scroll bar \"%s\""
+msgid "%sUnable to scroll bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr ""
 
 msgid "Buffers list:"
@@ -362,25 +362,25 @@ msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr ""
 
 #, c-format
-msgid "%sError: name \"%s\" is reserved for WeeChat"
+msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr ""
 
 #, c-format
-msgid "%sError: incorrect buffer number"
+msgid "%sInvalid buffer number: \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: buffer not found"
+msgid "%sBuffer \"%s\" not found"
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: renumbering is allowed only if option weechat.look."
-"buffer_auto_renumber is off"
+"%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
+"off"
 msgstr ""
 
 #, c-format
-msgid "%sError: WeeChat main buffer can't be closed"
+msgid "%sWeeChat main buffer can't be closed"
 msgstr ""
 
 #, c-format
@@ -388,7 +388,7 @@ msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to set notify level \"%s\""
+msgid "%sUnable to set notify level \"%s\""
 msgstr ""
 
 #, c-format
@@ -449,7 +449,7 @@ msgid "Filter \"%s\" enabled"
 msgstr ""
 
 #, c-format
-msgid "%sError: filter \"%s\" not found"
+msgid "%sFilter \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -457,7 +457,7 @@ msgid "Filter \"%s\" disabled"
 msgstr ""
 
 #, c-format
-msgid "%sError: you must specify at least tags or regex for filter"
+msgid "%sYou must specify at least tags or regex for filter"
 msgstr ""
 
 #, c-format
@@ -469,7 +469,7 @@ msgid "Filter \"%s\" renamed to \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr ""
 
 msgid "All filters have been deleted"
@@ -526,7 +526,7 @@ msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to bind key \"%s\""
+msgid "%sUnable to bind key \"%s\""
 msgstr ""
 
 #, c-format
@@ -534,7 +534,7 @@ msgid "Key \"%s\" has already default value"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to unbind key \"%s\""
+msgid "%sUnable to unbind key \"%s\""
 msgstr ""
 
 #, c-format
@@ -567,13 +567,13 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: it is not safe to bind key \"%s\" because it does not start with a "
-"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
-"this key anyway, turn off option weechat.look.key_bind_safe"
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
 
 #, c-format
-msgid "%sError: context \"%s\" not found"
+msgid "%sContext \"%s\" not found"
 msgstr ""
 
 #, c-format
@@ -581,7 +581,7 @@ msgid "Default key bindings restored for context \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 
 #, c-format
@@ -623,11 +623,11 @@ msgid "Layout of %s%s%s reset in \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: unknown layout \"%s\""
+msgid "%sLayout \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -754,7 +754,7 @@ msgid "No proxy defined"
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr ""
 
 #, c-format
@@ -762,25 +762,25 @@ msgid "Proxy \"%s\" added"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to add proxy \"%s\""
+msgid "%sFailed to add proxy \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr ""
 
 msgid "All proxies have been deleted"
 msgstr ""
 
 #, c-format
-msgid "%sError: unknown proxy \"%s\""
+msgid "%sProxy \"%s\" not found"
 msgstr ""
 
 msgid "Proxy deleted"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr ""
 
 #, c-format
@@ -793,7 +793,7 @@ msgid "Options reloaded from %s"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to reload options from %s"
+msgid "%sFailed to reload options from %s"
 msgstr ""
 
 #, c-format
@@ -801,7 +801,7 @@ msgid "Unknown configuration file \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: incorrect number"
+msgid "%sInvalid number: \"%s\""
 msgstr ""
 
 #, c-format
@@ -809,7 +809,7 @@ msgid "Options saved to %s"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to save options to %s"
+msgid "%sFailed to save options to %s"
 msgstr ""
 
 msgid "There is no encrypted data"
@@ -832,7 +832,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: passphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max: %d chars)"
 msgstr ""
 
 msgid "Passphrase deleted"
@@ -897,7 +897,7 @@ msgid "Environment variable \"%s\" is not defined"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to set variable \"%s\": %s"
+msgid "%sFailed to set variable \"%s\": %s"
 msgstr ""
 
 #, c-format
@@ -905,7 +905,7 @@ msgid "Variable \"%s\" unset"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to unset variable \"%s\": %s"
+msgid "%sFailed to unset variable \"%s\": %s"
 msgstr ""
 
 #, c-format
@@ -915,11 +915,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
-msgid "%sError: failed to set option \"%s\""
+msgid "%sFailed to set option \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: option \"%s\" not found"
+msgid "%sOption \"%s\" not found"
 msgstr ""
 
 msgid "Option changed: "
@@ -974,7 +974,7 @@ msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to save session in file"
+msgid "%sUnable to save session in file"
 msgstr ""
 
 #, c-format
@@ -1013,19 +1013,19 @@ msgid "Windows list:"
 msgstr ""
 
 #, c-format
-msgid "%sError: incorrect window number"
+msgid "%sInvalid window number: \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one"
+"%sCan not merge windows, there's no other window with same size near current "
+"one"
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: can not close window, there's no other window with same size near "
-"current one"
+"%sCan not close window, there's no other window with same size near current "
+"one"
 msgstr ""
 
 msgid "set or remove away status"
@@ -2373,7 +2373,7 @@ msgid "alias for color"
 msgstr ""
 
 #, c-format
-msgid "%sError: palette option must be numeric"
+msgid "%sPalette option must be numeric"
 msgstr ""
 
 #, c-format
@@ -3365,7 +3365,7 @@ msgid "(default options)"
 msgstr ""
 
 #, c-format
-msgid "%sError: cannot create file \"%s\""
+msgid "%sCannot create file \"%s\""
 msgstr ""
 
 #, c-format
@@ -3444,22 +3444,21 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgid "%sUnknown command \"%s\" (type /help for help)"
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
-"\" plugin"
+"%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
+"plugin"
 msgstr ""
 
 #, c-format
-msgid ""
-"%sError: incomplete command \"%s\" and multiple commands start with this name"
+msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr ""
 
 #, c-format
-msgid "%sError: too many calls to command \"%s\" (looping)"
+msgid "%sToo many calls to command \"%s\" (looping)"
 msgstr ""
 
 msgid ""
@@ -3534,8 +3533,8 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: not possible to reload file sec.conf because there is still "
-"encrypted data (use /secure decrypt, see /help secure)"
+"%sUnable to reload file sec.conf because there is still encrypted data (use /"
+"secure decrypt, see /help secure)"
 msgstr ""
 
 #, c-format
@@ -3682,7 +3681,7 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
 msgstr ""
 
 #, c-format
@@ -3690,12 +3689,11 @@ msgid "Limit for resource \"%s\" has been set to %s"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr ""
 
 #, c-format
-msgid ""
-"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 
 #, c-format
@@ -3871,15 +3869,15 @@ msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: a buffer with same name (%s) already exists"
+msgid "%sA buffer with same name (%s) already exists"
 msgstr ""
 
 #, c-format
-msgid "%sError: maximum number of buffers is reached (%d)"
+msgid "%sMaximum number of buffers is reached (%d)"
 msgstr ""
 
 #, c-format
-msgid "%sError: it is only possible to merge buffers with formatted content"
+msgid "%sIt is only possible to merge buffers with formatted content"
 msgstr ""
 
 #, c-format
@@ -3896,7 +3894,7 @@ msgid "Debug disabled for cursor mode"
 msgstr ""
 
 #, c-format
-msgid "%sError adding filter \"%s\": %s"
+msgid "%sUnable to add filter \"%s\": %s"
 msgstr ""
 
 msgid "not enough arguments"
@@ -8870,11 +8868,11 @@ msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
+msgid "%sUnable to initialize plugin \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to load plugin \"%s\": %s"
+msgid "%sUnable to load plugin \"%s\": %s"
 msgstr ""
 
 #, c-format
@@ -8884,7 +8882,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 
 #, c-format
@@ -8893,21 +8891,20 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
 msgstr ""
 
 #, c-format
-msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
 
 #, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
 msgstr ""
 
 #, c-format
@@ -8916,10 +8913,6 @@ msgstr ""
 
 #, c-format
 msgid "Plugin \"%s\" unloaded"
-msgstr ""
-
-#, c-format
-msgid "%sError: plugin \"%s\" not found"
 msgstr ""
 
 msgid "Plugins unloaded"

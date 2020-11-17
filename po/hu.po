@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-14 09:30+0100\n"
+"POT-Creation-Date: 2020-11-17 21:33+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -134,11 +134,11 @@ msgid "Constants"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%s az ignore már létezik\n"
 
 #, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr ""
 
 #, c-format
@@ -347,11 +347,11 @@ msgid "%sNot enough memory (%s)"
 msgstr "Nincs elég memória az új sorhoz\n"
 
 #, fuzzy, c-format
-msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
@@ -359,11 +359,11 @@ msgid "Bar \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to create bar \"%s\""
+msgid "%sFailed to create bar \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
-msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy
@@ -371,27 +371,27 @@ msgid "All bars have been deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: unknown bar \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+msgid "%sBar \"%s\" not found"
+msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%sError: window not found for \"%s\" command"
+msgid "%sWindow not found for \"%s\" command"
 msgstr "%s a(z) \"%s\". puffer nem található a(z) \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
-msgid "%sError: unable to scroll bar \"%s\""
+msgid "%sUnable to scroll bar \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, c-format
-msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr ""
 
 msgid "Buffers list:"
@@ -402,25 +402,25 @@ msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "%s%s %s(%s%s%s)%s kilépett"
 
 #, c-format
-msgid "%sError: name \"%s\" is reserved for WeeChat"
+msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: incorrect buffer number"
-msgstr "%s helytelen pufferszám\n"
+msgid "%sInvalid buffer number: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%sError: buffer not found"
-msgstr "%s a \"%s\" modul nem található\n"
+msgid "%sBuffer \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, c-format
 msgid ""
-"%sError: renumbering is allowed only if option weechat.look."
-"buffer_auto_renumber is off"
+"%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
+"off"
 msgstr ""
 
 #, c-format
-msgid "%sError: WeeChat main buffer can't be closed"
+msgid "%sWeeChat main buffer can't be closed"
 msgstr ""
 
 #, fuzzy, c-format
@@ -428,7 +428,7 @@ msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr "A %s%s%s szoba témája: "
 
 #, fuzzy, c-format
-msgid "%sError: unable to set notify level \"%s\""
+msgid "%sUnable to set notify level \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
@@ -493,15 +493,15 @@ msgid "Filter \"%s\" enabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: filter \"%s\" not found"
-msgstr "%s a \"%s\" modul nem található\n"
+msgid "%sFilter \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, c-format
-msgid "%sError: you must specify at least tags or regex for filter"
+msgid "%sYou must specify at least tags or regex for filter"
 msgstr ""
 
 #, fuzzy, c-format
@@ -513,7 +513,7 @@ msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy
@@ -577,7 +577,7 @@ msgid "No key binding added, redefined or removed for context \"%s\""
 msgstr "Billentyűparancsok:\n"
 
 #, fuzzy, c-format
-msgid "%sError: unable to bind key \"%s\""
+msgid "%sUnable to bind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, c-format
@@ -585,7 +585,7 @@ msgid "Key \"%s\" has already default value"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to unbind key \"%s\""
+msgid "%sUnable to unbind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
 #, fuzzy, c-format
@@ -620,13 +620,13 @@ msgstr "Nem találtam billentyűt.\n"
 
 #, c-format
 msgid ""
-"%sError: it is not safe to bind key \"%s\" because it does not start with a "
-"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
-"this key anyway, turn off option weechat.look.key_bind_safe"
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: context \"%s\" not found"
+msgid "%sContext \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy, c-format
@@ -634,7 +634,7 @@ msgid "Default key bindings restored for context \"%s\""
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
 #, fuzzy, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
@@ -682,11 +682,11 @@ msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "A %s%s%s szoba témája: "
 
 #, fuzzy, c-format
-msgid "%sError: unknown layout \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+msgid "%sLayout \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
-msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
@@ -835,7 +835,7 @@ msgid "No proxy defined"
 msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy, c-format
-msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
@@ -843,11 +843,11 @@ msgid "Proxy \"%s\" added"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to add proxy \"%s\""
+msgid "%sFailed to add proxy \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
-msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy
@@ -855,15 +855,15 @@ msgid "All proxies have been deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: unknown proxy \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+msgid "%sProxy \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy
 msgid "Proxy deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
-msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
@@ -876,7 +876,7 @@ msgid "Options reloaded from %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to reload options from %s"
+msgid "%sFailed to reload options from %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
@@ -884,15 +884,15 @@ msgid "Unknown configuration file \"%s\""
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect number"
-msgstr "%s helytelen pufferszám\n"
+msgid "%sInvalid number: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid "Options saved to %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to save options to %s"
+msgid "%sFailed to save options to %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 msgid "There is no encrypted data"
@@ -916,7 +916,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: passphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max: %d chars)"
 msgstr ""
 
 #, fuzzy
@@ -985,7 +985,7 @@ msgid "Environment variable \"%s\" is not defined"
 msgstr "  . típus: szám\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to set variable \"%s\": %s"
+msgid "%sFailed to set variable \"%s\": %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, c-format
@@ -993,7 +993,7 @@ msgid "Variable \"%s\" unset"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: failed to unset variable \"%s\": %s"
+msgid "%sFailed to unset variable \"%s\": %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
@@ -1003,11 +1003,11 @@ msgstr[0] "megtalált opciók\n"
 msgstr[1] "megtalált opciók\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to set option \"%s\""
+msgid "%sFailed to set option \"%s\""
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
-msgid "%sError: option \"%s\" not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy
@@ -1066,7 +1066,7 @@ msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "WeeChat frissítése...\n"
 
 #, fuzzy, c-format
-msgid "%sError: unable to save session in file"
+msgid "%sUnable to save session in file"
 msgstr "%s nem sikerült a folyamatot menteni\n"
 
 #, fuzzy, c-format
@@ -1109,21 +1109,21 @@ msgid "Windows list:"
 msgstr "a /who lista vége"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect window number"
-msgstr "%s helytelen pufferszám\n"
+msgid "%sInvalid window number: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one"
+"%sCan not merge windows, there's no other window with same size near current "
+"one"
 msgstr ""
 "%s nem sikerült az ablakokat összefésülni: nincs a közelben azonos méretű "
 "ablak.\n"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: can not close window, there's no other window with same size near "
-"current one"
+"%sCan not close window, there's no other window with same size near current "
+"one"
 msgstr ""
 "%s nem sikerült az ablakokat összefésülni: nincs a közelben azonos méretű "
 "ablak.\n"
@@ -2619,7 +2619,7 @@ msgid "alias for color"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: palette option must be numeric"
+msgid "%sPalette option must be numeric"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
@@ -3726,7 +3726,7 @@ msgid "(default options)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: cannot create file \"%s\""
+msgid "%sCannot create file \"%s\""
 msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
 
 #, fuzzy, c-format
@@ -3806,22 +3806,21 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
+msgid "%sUnknown command \"%s\" (type /help for help)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
-"\" plugin"
+"%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
+"plugin"
 msgstr "%s az ignore már létezik\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: incomplete command \"%s\" and multiple commands start with this name"
+msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
-msgid "%sError: too many calls to command \"%s\" (looping)"
+msgid "%sToo many calls to command \"%s\" (looping)"
 msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
 #, fuzzy
@@ -3901,8 +3900,8 @@ msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, c-format
 msgid ""
-"%sError: not possible to reload file sec.conf because there is still "
-"encrypted data (use /secure decrypt, see /help secure)"
+"%sUnable to reload file sec.conf because there is still encrypted data (use /"
+"secure decrypt, see /help secure)"
 msgstr ""
 
 #, c-format
@@ -4055,7 +4054,7 @@ msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr ""
 
 #, c-format
-msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
 msgstr ""
 
 #, c-format
@@ -4063,12 +4062,11 @@ msgid "Limit for resource \"%s\" has been set to %s"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, c-format
-msgid ""
-"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 
 #, c-format
@@ -4256,15 +4254,16 @@ msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
 
 #, fuzzy, c-format
-msgid "%sError: a buffer with same name (%s) already exists"
+msgid "%sA buffer with same name (%s) already exists"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
-#, c-format
-msgid "%sError: maximum number of buffers is reached (%d)"
+#, fuzzy, c-format
+msgid "%sMaximum number of buffers is reached (%d)"
 msgstr ""
+"felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
 
 #, c-format
-msgid "%sError: it is only possible to merge buffers with formatted content"
+msgid "%sIt is only possible to merge buffers with formatted content"
 msgstr ""
 
 #, c-format
@@ -4282,7 +4281,7 @@ msgid "Debug disabled for cursor mode"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError adding filter \"%s\": %s"
+msgid "%sUnable to add filter \"%s\": %s"
 msgstr "%s helytelen pufferszám\n"
 
 #, fuzzy
@@ -9876,11 +9875,11 @@ msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
+msgid "%sUnable to initialize plugin \"%s\""
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sError: unable to load plugin \"%s\": %s"
+msgid "%sUnable to load plugin \"%s\": %s"
 msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
 
 #, c-format
@@ -9890,7 +9889,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
 "sikertelen\n"
@@ -9901,25 +9900,24 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
 msgstr ""
 "%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
 "sikertelen\n"
 
 #, fuzzy, c-format
-msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
 #, fuzzy, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
 "betöltés sikertelen\n"
 
 #, fuzzy, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
 #, fuzzy, c-format
@@ -9929,10 +9927,6 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 #, fuzzy, c-format
 msgid "Plugin \"%s\" unloaded"
 msgstr "A \"%s\" modul eltávolítva.\n"
-
-#, fuzzy, c-format
-msgid "%sError: plugin \"%s\" not found"
-msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy
 msgid "Plugins unloaded"
@@ -12408,3 +12402,43 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown bar \"%s\""
+#~ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect buffer number"
+#~ msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy
+#~ msgid "%sError: buffer not found"
+#~ msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy
+#~ msgid "%sError: filter \"%s\" not found"
+#~ msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown layout \"%s\""
+#~ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown proxy \"%s\""
+#~ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect number"
+#~ msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to set option \"%s\""
+#~ msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect window number"
+#~ msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy
+#~ msgid "%sError: plugin \"%s\" not found"
+#~ msgstr "%s a \"%s\" modul nem található\n"

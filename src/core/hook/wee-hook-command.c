@@ -278,8 +278,8 @@ hook_command (struct t_weechat_plugin *plugin, const char *command,
     if (hook_command_search (plugin, command))
     {
         gui_chat_printf (NULL,
-                         _("%sError: another command \"%s\" already exists "
-                           "for plugin \"%s\""),
+                         _("%sAnother command \"%s\" already exists for "
+                           "plugin \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          command,
                          plugin_get_name (plugin));

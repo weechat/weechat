@@ -367,8 +367,7 @@ plugin_call_init (struct t_weechat_plugin *plugin, int argc, char **argv)
     else
     {
         gui_chat_printf (NULL,
-                         _("%sError: unable to initialize plugin "
-                           "\"%s\""),
+                         _("%sUnable to initialize plugin \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          plugin->filename);
     }
@@ -416,7 +415,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!handle)
     {
         gui_chat_printf (NULL,
-                         _("%sError: unable to load plugin \"%s\": %s"),
+                         _("%sUnable to load plugin \"%s\": %s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename, dlerror ());
         gui_chat_printf (NULL,
@@ -432,8 +431,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!name)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found in "
-                           "plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_name",
                          filename);
@@ -446,8 +445,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!api_version)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found in "
-                           "plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_api_version",
                          filename);
@@ -462,8 +461,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (strcmp (api_version, WEECHAT_PLUGIN_API_VERSION) != 0)
     {
         gui_chat_printf (NULL,
-                         _("%sError: API mismatch for plugin \"%s\" (current "
-                           "API: \"%s\", plugin API: \"%s\"), failed to load"),
+                         _("%sAPI mismatch for plugin \"%s\" (current API: "
+                           "\"%s\", plugin API: \"%s\"), failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename,
                          WEECHAT_PLUGIN_API_VERSION,
@@ -481,8 +480,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (plugin_search (name))
     {
         gui_chat_printf (NULL,
-                         _("%sError: unable to load plugin \"%s\": a plugin "
-                           "with same name already exists"),
+                         _("%sUnable to load plugin \"%s\": a plugin with "
+                           "same name already exists"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename);
         dlclose (handle);
@@ -494,8 +493,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!description)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found "
-                           "in plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_description",
                          filename);
@@ -508,8 +507,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!author)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found "
-                           "in plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_author",
                          filename);
@@ -522,8 +521,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!version)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found in "
-                           "plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_version",
                          filename);
@@ -536,8 +535,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!license)
     {
         gui_chat_printf (NULL,
-                         _("%sError: symbol \"%s\" not found in "
-                           "plugin \"%s\", failed to load"),
+                         _("%sSymbol \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_license",
                          filename);
@@ -553,8 +552,8 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     if (!init_func)
     {
         gui_chat_printf (NULL,
-                         _("%sError: function \"%s\" not "
-                           "found in plugin \"%s\", failed to load"),
+                         _("%sFunction \"%s\" not found in plugin \"%s\", "
+                           "failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_init",
                          filename);
@@ -943,8 +942,7 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
     else
     {
         gui_chat_printf (NULL,
-                         _("%sError: unable to load plugin \"%s\" "
-                           "(not enough memory)"),
+                         _("%sUnable to load plugin \"%s\" (not enough memory)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename);
         dlclose (handle);
@@ -1257,7 +1255,7 @@ plugin_unload_name (const char *name)
     else
     {
         gui_chat_printf (NULL,
-                         _("%sError: plugin \"%s\" not found"),
+                         _("%sPlugin \"%s\" not found"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          name);
     }
@@ -1311,7 +1309,7 @@ plugin_reload_name (const char *name, int argc, char **argv)
     else
     {
         gui_chat_printf (NULL,
-                         _("%sError: plugin \"%s\" not found"),
+                         _("%sPlugin \"%s\" not found"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          name);
     }

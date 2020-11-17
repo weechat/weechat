@@ -271,7 +271,7 @@ gui_filter_new_error (const char *name, const char *error)
 {
     gui_chat_printf_date_tags (
         NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-        _("%sError adding filter \"%s\": %s"),
+        _("%sUnable to add filter \"%s\": %s"),
         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
         (name) ? name : "",
         error);

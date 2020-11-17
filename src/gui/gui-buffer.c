@@ -659,8 +659,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     if (gui_buffer_search_by_name (plugin_get_name (plugin), name))
     {
         gui_chat_printf (NULL,
-                         _("%sError: a buffer with same name (%s) already "
-                           "exists"),
+                         _("%sA buffer with same name (%s) already exists"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          name);
         return NULL;
@@ -669,8 +668,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     if (gui_buffers_count >= GUI_BUFFERS_MAX)
     {
         gui_chat_printf (NULL,
-                         _("%sError: maximum number of buffers is reached "
-                           "(%d)"),
+                         _("%sMaximum number of buffers is reached (%d)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          GUI_BUFFERS_MAX);
         return NULL;
@@ -3536,8 +3534,8 @@ gui_buffer_merge (struct t_gui_buffer *buffer,
         || (target_buffer->type != GUI_BUFFER_TYPE_FORMATTED))
     {
         gui_chat_printf (NULL,
-                         _("%sError: it is only possible to merge buffers "
-                           "with formatted content"),
+                         _("%sIt is only possible to merge buffers with "
+                           "formatted content"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return;
     }

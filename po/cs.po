@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-14 09:30+0100\n"
+"POT-Creation-Date: 2020-11-17 21:33+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -126,12 +126,12 @@ msgstr "Typ"
 msgid "Constants"
 msgstr "Konstanty"
 
-#, c-format
-msgid "%sError: another command \"%s\" already exists for plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr "%sChyba: příkaz \"%s\" již existuje pro plugin \"%s\""
 
 #, c-format
-msgid "%sError: bad file descriptor (%d) used in hook_fd"
+msgid "%sBad file descriptor (%d) used in hook_fd"
 msgstr ""
 
 #, c-format
@@ -357,52 +357,52 @@ msgstr "Žádné položky pole nejsou definovány"
 msgid "%sNot enough memory (%s)"
 msgstr "%sNedostatek paměti (%s)"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for bar \"%s\""
 msgstr "%sChyba: špatný typ \"%s\" pro pole \"%s\""
 
-#, c-format
-msgid "%sError: wrong position \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid position \"%s\" for bar \"%s\""
 msgstr "%sChyba: špatná pozice \"%s\" pro pole \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" created"
 msgstr "Pole \"%s\" vytvořeno"
 
-#, c-format
-msgid "%sError: failed to create bar \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to create bar \"%s\""
 msgstr "%sChyba: selhalo vytvoření pole \"%s\""
 
-#, c-format
-msgid "%sError: wrong size \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid size \"%s\" for bar \"%s\""
 msgstr "%sChyba: špatná velikost \"%s\" pro pole \"%s\""
 
 msgid "All bars have been deleted"
 msgstr "Všechny pole byly smazány"
 
-#, c-format
-msgid "%sError: unknown bar \"%s\""
-msgstr "%sChyba: neznámé pole \"%s\""
+#, fuzzy, c-format
+msgid "%sBar \"%s\" not found"
+msgstr "%sAlias \"%s\" nenalezen"
 
 # bar = pole - radek ci sloupec
 #, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "Pole \"%s\" smazáno"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for bar \"%s\""
 msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro pole \"%s\""
 
-#, c-format
-msgid "%sError: window not found for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sWindow not found for \"%s\" command"
 msgstr "%sChyba\" pro příkaz \"%s\" nebylo nalezeno okno"
 
-#, c-format
-msgid "%sError: unable to scroll bar \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to scroll bar \"%s\""
 msgstr "%sChyba: nemohu posunout pole \"%s\""
 
-#, c-format
-msgid "%sError: buffer number %d is out of range (it must be between 1 and %d)"
+#, fuzzy, c-format
+msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr "%sChyba: bufer číslo %d je mimo rozsah (musí být mezi 1 a %d)"
 
 msgid "Buffers list:"
@@ -413,35 +413,35 @@ msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (notifikace: %s)%s%s"
 
 #, c-format
-msgid "%sError: name \"%s\" is reserved for WeeChat"
+msgid "%sBuffer name \"%s\" is reserved for WeeChat"
 msgstr ""
 
-#, c-format
-msgid "%sError: incorrect buffer number"
-msgstr "%sChyba: nekorektní číslo bufferu"
+#, fuzzy, c-format
+msgid "%sInvalid buffer number: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
-#, c-format
-msgid "%sError: buffer not found"
-msgstr "%sChyba: bufer nenalezen"
+#, fuzzy, c-format
+msgid "%sBuffer \"%s\" not found"
+msgstr "%s%s: chyba, nenalezen buffer pro data roury"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: renumbering is allowed only if option weechat.look."
-"buffer_auto_renumber is off"
+"%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
+"off"
 msgstr ""
 "%sChyba: přečíslování je povoleno pouze pokud je volba weechat.look."
 "buffer_auto_renumber vypnuta"
 
-#, c-format
-msgid "%sError: WeeChat main buffer can't be closed"
+#, fuzzy, c-format
+msgid "%sWeeChat main buffer can't be closed"
 msgstr "%sChyba: hlavní bufer WeeChat nemůže být zavřen"
 
 #, fuzzy, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr "%sTéma pro %s%s%s nastaveno %s"
 
-#, c-format
-msgid "%sError: unable to set notify level \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set notify level \"%s\""
 msgstr "%sChyba: nemohu nastavit úroveň \"%s\" notifikací"
 
 #, c-format
@@ -501,16 +501,16 @@ msgstr "Filtry zpráv nejsou definovány"
 msgid "Filter \"%s\" enabled"
 msgstr "Filtr \"%s\" povolen"
 
-#, c-format
-msgid "%sError: filter \"%s\" not found"
-msgstr "%sChyba: filtr \"%s\" nenalezen"
+#, fuzzy, c-format
+msgid "%sFilter \"%s\" not found"
+msgstr "%sPlugin \"%s\" nenalezen"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filtr \"%s\" vypnut"
 
-#, c-format
-msgid "%sError: you must specify at least tags or regex for filter"
+#, fuzzy, c-format
+msgid "%sYou must specify at least tags or regex for filter"
 msgstr "%sChyba: musíte specifikovat buď tag(y) nebo regulární výraz pro filtr"
 
 #, c-format
@@ -521,8 +521,8 @@ msgstr "Filtr \"%s\" přidán:"
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "Filtr \"%s\" přejmenován na \"%s\""
 
-#, c-format
-msgid "%sError: unable to rename filter \"%s\" to \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to rename filter \"%s\" to \"%s\""
 msgstr "%sChyba: nemohu přejmenovat filter \"%s\" na \"%s\""
 
 msgid "All filters have been deleted"
@@ -580,16 +580,16 @@ msgstr ""
 "Nebyly přidány, předefinovány nebo smazány žádné klávesové zkratky pro "
 "kontext \"%s\""
 
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to bind key \"%s\""
 msgstr "%sChyba: nemohu napojit nastavit klávesu \"%s\""
 
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Klávesa \"%s\" již má výchozí hodnotu"
 
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to unbind key \"%s\""
 msgstr "%sChyba: nemohu smazat klávesovou zkratku \"%s\""
 
 #, c-format
@@ -620,27 +620,27 @@ msgstr "Klávesa:"
 msgid "No key found"
 msgstr "Žádná klávesa nenalezena"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: it is not safe to bind key \"%s\" because it does not start with a "
-"ctrl or meta code (tip: use alt-k to find key codes); if you want to bind "
-"this key anyway, turn off option weechat.look.key_bind_safe"
+"%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
+"meta code (tip: use alt-k to find key codes); if you want to bind this key "
+"anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
 "%sChyba: není bezpečné požít klávesovou zkratku \"%s\" protože nezačíná s "
 "klávesou CTRL nebo META (tip: požij alt-k k nalezení kódu klávesy); pokud i "
 "přesto chcete použít tuto klávesovou zkratku vypněte volbu  weechat.look."
 "key_bind_safe"
 
-#, c-format
-msgid "%sError: context \"%s\" not found"
+#, fuzzy, c-format
+msgid "%sContext \"%s\" not found"
 msgstr "%sChyba: kontext \"%s\" nenalezen"
 
 #, c-format
 msgid "Default key bindings restored for context \"%s\""
 msgstr "Obnoveno výchozí nastavení kláves pro kontext \"%s\""
 
-#, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+#, fuzzy, c-format
+msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
 "%sChyba: \"-yes\" argument je požadován pro reset kláves (bezpečnostní "
 "opatření)"
@@ -684,12 +684,12 @@ msgstr "Rozvržení \"%s\" smazáno (současné rozvržení: \"%s\")"
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "Rozložení %s%s%s resetnuto v \"%s\""
 
-#, c-format
-msgid "%sError: unknown layout \"%s\""
-msgstr "%sChyba: neznámé rozložení \"%s\""
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" not found"
+msgstr "%sKlávesa \"%s\" nenalezena"
 
-#, c-format
-msgid "%sError: layout \"%s\" already exists for \"%s\" command"
+#, fuzzy, c-format
+msgid "%sLayout \"%s\" already exists for \"%s\" command"
 msgstr "%sChyba: rozložení \"%s\" pro příkaz \"%s\" už existuje"
 
 #, c-format
@@ -817,34 +817,34 @@ msgstr "  %s%s%s: %s, %s/%d (%s), uživatelské jméno: %s, heslo: %s"
 msgid "No proxy defined"
 msgstr "Proxy nejsou definovány"
 
-#, c-format
-msgid "%sError: wrong type \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid type \"%s\" for proxy \"%s\""
 msgstr "%sChyba: špatný typ \"%s\" pro proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" added"
 msgstr "Proxy \"%s\" přidána"
 
-#, c-format
-msgid "%sError: failed to add proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to add proxy \"%s\""
 msgstr "%sChyba: nepovedlo se přidat proxy \"%s\""
 
-#, c-format
-msgid "%sError: wrong port \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sInvalid port \"%s\" for proxy \"%s\""
 msgstr "%sChyba: špatná port \"%s\" pro proxy \"%s\""
 
 msgid "All proxies have been deleted"
 msgstr "Všechny proxy byly smazány"
 
-#, c-format
-msgid "%sError: unknown proxy \"%s\""
-msgstr "%sChyba: neznámá proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sProxy \"%s\" not found"
+msgstr "%sKlávesa \"%s\" nenalezena"
 
 msgid "Proxy deleted"
 msgstr "Proxy byla smazána"
 
-#, c-format
-msgid "%sError: unable to set option \"%s\" for proxy \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to set option \"%s\" for proxy \"%s\""
 msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro proxy \"%s\""
 
 #, c-format
@@ -856,24 +856,24 @@ msgstr "%sMusíte potvrdit příkaz /%s extra argumentem \"-yes\" (viz /help %s)
 msgid "Options reloaded from %s"
 msgstr "Volby načteny z %s"
 
-#, c-format
-msgid "%sError: failed to reload options from %s"
+#, fuzzy, c-format
+msgid "%sFailed to reload options from %s"
 msgstr "%sChyba: selhalo znovunačtení voleb z %s"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Neznámý konfigurační soubor \"%s\""
 
-#, c-format
-msgid "%sError: incorrect number"
-msgstr "%sChyba: nekorektní číslo"
+#, fuzzy, c-format
+msgid "%sInvalid number: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
 msgstr "Volby uloženy do %s"
 
-#, c-format
-msgid "%sError: failed to save options to %s"
+#, fuzzy, c-format
+msgid "%sFailed to save options to %s"
 msgstr "%sChyba: selhalo uložení voleb do %s"
 
 msgid "There is no encrypted data"
@@ -896,7 +896,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError: passphrase is too long (max: %d chars)"
+msgid "%sPassphrase is too long (max: %d chars)"
 msgstr ""
 
 msgid "Passphrase deleted"
@@ -966,7 +966,7 @@ msgid "Environment variable \"%s\" is not defined"
 msgstr "Proměnná prostředí \"%s\" není definována"
 
 #, fuzzy, c-format
-msgid "%sError: failed to set variable \"%s\": %s"
+msgid "%sFailed to set variable \"%s\": %s"
 msgstr "%sChyba: selhalo nastavení volby \"%s\""
 
 #, c-format
@@ -974,7 +974,7 @@ msgid "Variable \"%s\" unset"
 msgstr "Nenastavena proměnná \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: failed to unset variable \"%s\": %s"
+msgid "%sFailed to unset variable \"%s\": %s"
 msgstr "%sChyba: selhalo nastavení volby \"%s\""
 
 #, fuzzy, c-format
@@ -984,12 +984,12 @@ msgstr[0] "%s%d%s volba nastavení nalezena"
 msgstr[1] "%s%d%s volby nastavení nalezeny"
 msgstr[2] "%s%d%s voleb nastavení nalezeno"
 
-#, c-format
-msgid "%sError: failed to set option \"%s\""
-msgstr "%sChyba: selhalo nastavení volby \"%s\""
+#, fuzzy, c-format
+msgid "%sFailed to set option \"%s\""
+msgstr "%sSelhalo odnastavení volby \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError: option \"%s\" not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%sChyba: filtr \"%s\" nenalezen"
 
 msgid "Option changed: "
@@ -1046,8 +1046,8 @@ msgstr "%sNení specifikována binárka"
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualizuji WeeChat s použitím binárního souboru: \"%s\"..."
 
-#, c-format
-msgid "%sError: unable to save session in file"
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
 msgstr "%sChyba: nemohu uložit sezení do souboru"
 
 #, c-format
@@ -1088,21 +1088,21 @@ msgid "Windows list:"
 msgstr "Seznam oken:"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect window number"
-msgstr "%sChyba: nekorektní číslo bufferu"
+msgid "%sInvalid window number: \"%s\""
+msgstr "%s%s: nekorektní znaková sada: \"%s\""
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one"
+"%sCan not merge windows, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sChyba: nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
 "aktuálního okna"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: can not close window, there's no other window with same size near "
-"current one"
+"%sCan not close window, there's no other window with same size near current "
+"one"
 msgstr ""
 "%sChyba: nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
 "aktuálního okna"
@@ -2979,8 +2979,8 @@ msgstr "úroveň ladění pro plugin (\"core\" pro jádro WeeChat)"
 msgid "alias for color"
 msgstr "alias pro barvu"
 
-#, c-format
-msgid "%sError: palette option must be numeric"
+#, fuzzy, c-format
+msgid "%sPalette option must be numeric"
 msgstr "%sChyba: voleba palety musí být číselná"
 
 #, fuzzy, c-format
@@ -4165,8 +4165,8 @@ msgstr "Zapisuji soubor s nastavením %s%s%s"
 msgid "(default options)"
 msgstr "(výchozí volby)"
 
-#, c-format
-msgid "%sError: cannot create file \"%s\""
+#, fuzzy, c-format
+msgid "%sCannot create file \"%s\""
 msgstr "%sChyba: nemohu vytvořit soubor \"%s\""
 
 #, c-format
@@ -4246,25 +4246,24 @@ msgid ""
 "buffer: \"%s\")"
 msgstr ""
 
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)"
+#, fuzzy, c-format
+msgid "%sUnknown command \"%s\" (type /help for help)"
 msgstr "%sChyba: neznámý příkaz \"%s\" (napište /help pro nápovědu)"
 
 #, fuzzy, c-format
 msgid ""
-"%sError: ambiguous command \"%s\": it exists in many plugins and not in \"%s"
-"\" plugin"
+"%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
+"plugin"
 msgstr ""
 "%sChyba: nejednoznačný příkaz \"%s\": již existuje v mnoha pluginech a ne v "
 "pluginu \"%s\""
 
 #, fuzzy, c-format
-msgid ""
-"%sError: incomplete command \"%s\" and multiple commands start with this name"
+msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr "%sChyba s příkazem \"%s\" (zkuste /help %s)"
 
 #, fuzzy, c-format
-msgid "%sError: too many calls to command \"%s\" (looping)"
+msgid "%sToo many calls to command \"%s\" (looping)"
 msgstr "%sChyba: příliš mnoho volání příkazu \"%s\" (cyklení)"
 
 #, fuzzy
@@ -4347,8 +4346,8 @@ msgstr "%s%s: nemůžu parsovat soubor \"%s\""
 
 #, c-format
 msgid ""
-"%sError: not possible to reload file sec.conf because there is still "
-"encrypted data (use /secure decrypt, see /help secure)"
+"%sUnable to reload file sec.conf because there is still encrypted data (use /"
+"secure decrypt, see /help secure)"
 msgstr ""
 
 #, c-format
@@ -4499,21 +4498,20 @@ msgstr ""
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "chyba curlu %d (%s) (URL: \"%s\")\n"
 
-#, c-format
-msgid "%sError: invalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
+msgstr "%sNekorektní číslo barvy \"%s\" (musí být mezi %d a %d)"
 
 #, c-format
 msgid "Limit for resource \"%s\" has been set to %s"
 msgstr "Limit pro zdroj \"%s\" byl nastaven na  %s"
 
 #, fuzzy, c-format
-msgid "%sError: unable to set resource limit \"%s\" to %s: error %d %s"
+msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr "%sChyba: nemohu nastavit volbu \"%s\" pro proxy \"%s\""
 
 #, c-format
-msgid ""
-"%sError: unknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
+msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
 
 #, c-format
@@ -4703,16 +4701,17 @@ msgstr "pryč"
 msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr "%s%s%s%s změnil téma pro %s%s%s na \"%s%s%s\""
 
-#, c-format
-msgid "%sError: a buffer with same name (%s) already exists"
+#, fuzzy, c-format
+msgid "%sA buffer with same name (%s) already exists"
 msgstr "%sChyba: buffer se stejným jménem (%s) už existuje"
 
-#, c-format
-msgid "%sError: maximum number of buffers is reached (%d)"
+#, fuzzy, c-format
+msgid "%sMaximum number of buffers is reached (%d)"
 msgstr ""
+"maximální počet navštívených bufferů uchovaných v paměti (0 = nekonečně)"
 
-#, c-format
-msgid "%sError: it is only possible to merge buffers with formatted content"
+#, fuzzy, c-format
+msgid "%sIt is only possible to merge buffers with formatted content"
 msgstr "%sChyba: je možné spojovat pouze bufferz s formátovaným obsahem"
 
 #, fuzzy, c-format
@@ -4731,7 +4730,7 @@ msgid "Debug disabled for cursor mode"
 msgstr "Ladění vypnuto pro \"%s\""
 
 #, fuzzy, c-format
-msgid "%sError adding filter \"%s\": %s"
+msgid "%sUnable to add filter \"%s\": %s"
 msgstr "%sChyba: filtr \"%s\" nenalezen"
 
 msgid "not enough arguments"
@@ -10516,12 +10515,12 @@ msgstr "\"current\" pro současné okno nebo číslo okna (volitelné)"
 msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr "Inicializuji plugin \"%s\" (priorita: %d)"
 
-#, c-format
-msgid "%sError: unable to initialize plugin \"%s\""
+#, fuzzy, c-format
+msgid "%sUnable to initialize plugin \"%s\""
 msgstr "%sChyba: nemohu inicializovat plugin \"%s\""
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\": %s"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": %s"
 msgstr "%sChyba: nemůžu načist plugin \"%s\": %s"
 
 #, c-format
@@ -10532,35 +10531,34 @@ msgstr ""
 "%sZkuste příkaz pro načtení skriptu (/perl, /python, ...), pokud se snažíte "
 "načíst skript místo C pluginu"
 
-#, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr "%sChyba: symbol \"%s\" nebyl v pluginu \"%s\" nalezen, načtení selhalo"
 
 #, c-format
 msgid "%sIf plugin \"%s\" is old/obsolete, you can delete this file."
 msgstr "%sMůžete smazat tento soubor, pokud je plugin \"%s\" starý/neplatný."
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%sError: API mismatch for plugin \"%s\" (current API: \"%s\", plugin API: "
-"\"%s\"), failed to load"
+"%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
+"failed to load"
 msgstr ""
 "%sChyba: chyba API v pluginu \"%s\" (aktuální API: \"%s\", API pluginu: \"%s"
 "\"), načtení selhalo"
 
-#, c-format
-msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
 "%sChyba: nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje"
 
-#, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+#, fuzzy, c-format
+msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%sChyba: funkce \"%s\" nebyla v pluginu \"%s\" nalezena, načtení selhalo"
 
-#, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+#, fuzzy, c-format
+msgid "%sUnable to load plugin \"%s\" (not enough memory)"
 msgstr "%sChyba: nemohu načíst plugin \"%s\" (nedostatek paměti)"
 
 #, c-format
@@ -10570,10 +10568,6 @@ msgstr "Plugin \"%s\" načten"
 #, c-format
 msgid "Plugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" odebrán"
-
-#, c-format
-msgid "%sError: plugin \"%s\" not found"
-msgstr "%sChyba: plugin \"%s\" nenalezen"
 
 msgid "Plugins unloaded"
 msgstr "Pluginy odebrány"
@@ -13165,3 +13159,34 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#~ msgid "%sError: unknown bar \"%s\""
+#~ msgstr "%sChyba: neznámé pole \"%s\""
+
+#~ msgid "%sError: incorrect buffer number"
+#~ msgstr "%sChyba: nekorektní číslo bufferu"
+
+#~ msgid "%sError: buffer not found"
+#~ msgstr "%sChyba: bufer nenalezen"
+
+#~ msgid "%sError: filter \"%s\" not found"
+#~ msgstr "%sChyba: filtr \"%s\" nenalezen"
+
+#~ msgid "%sError: unknown layout \"%s\""
+#~ msgstr "%sChyba: neznámé rozložení \"%s\""
+
+#~ msgid "%sError: unknown proxy \"%s\""
+#~ msgstr "%sChyba: neznámá proxy \"%s\""
+
+#~ msgid "%sError: incorrect number"
+#~ msgstr "%sChyba: nekorektní číslo"
+
+#~ msgid "%sError: failed to set option \"%s\""
+#~ msgstr "%sChyba: selhalo nastavení volby \"%s\""
+
+#, fuzzy
+#~ msgid "%sError: incorrect window number"
+#~ msgstr "%sChyba: nekorektní číslo bufferu"
+
+#~ msgid "%sError: plugin \"%s\" not found"
+#~ msgstr "%sChyba: plugin \"%s\" nenalezen"
