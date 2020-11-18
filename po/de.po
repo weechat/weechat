@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2020-11-17 21:33+0100\n"
-"PO-Revision-Date: 2020-10-16 16:30+0200\n"
+"PO-Revision-Date: 2020-11-18 09:43+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -33,7 +33,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.4.1\n"
 "X-Poedit-Bookmarks: -1,-1,180,-1,-1,-1,-1,-1,-1,-1\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
@@ -130,16 +130,14 @@ msgstr "Type"
 msgid "Constants"
 msgstr "Konstanten"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
 msgstr ""
-"%sFehler: ein anderer Befehl \"%s\" existiert bereits für die Erweiterung "
-"\"%s\""
+"%sEin anderer Befehl \"%s\" existiert bereits für die Erweiterung \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr ""
-"%sFehler: bad file descriptor (%d) wurde in Funktion \"hook_fd\" genutzt"
+msgstr "%sBad file descriptor (%d) wurde in Funktion \"hook_fd\" genutzt"
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
@@ -395,55 +393,54 @@ msgstr "Es wurde kein Bar-Item festgelegt"
 msgid "%sNot enough memory (%s)"
 msgstr "%sNicht ausreichend Speicher (%s)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for bar \"%s\""
-msgstr "%sFehler: falscher Typ \"%s\" für Bar \"%s\""
+msgstr "%sFalscher Typ \"%s\" für Bar \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid position \"%s\" for bar \"%s\""
-msgstr "%sFehler: ungültige Position \"%s\" für Bar \"%s\""
+msgstr "%sUngültige Position \"%s\" für Bar \"%s\""
 
 #, c-format
 msgid "Bar \"%s\" created"
 msgstr "Infobar \"%s\" erstellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to create bar \"%s\""
-msgstr "%sFehler: Infobar \"%s\" konnte nicht erstellt werden"
+msgstr "%sBar \"%s\" konnte nicht erstellt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid size \"%s\" for bar \"%s\""
-msgstr "%sFehler: fehlerhafte Größe \"%s\" für Infobar \"%s\""
+msgstr "%sFehlerhafte Größe \"%s\" für die Bar \"%s\""
 
 msgid "All bars have been deleted"
 msgstr "Alle Infobars wurden entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBar \"%s\" not found"
-msgstr "%sAlias \"%s\" nicht gefunden"
+msgstr "%sBar \"%s\" nicht gefunden"
 
 #, c-format
 msgid "Bar \"%s\" deleted"
 msgstr "Bar \"%s\" gelöscht"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for bar \"%s\""
-msgstr ""
-"%sFehler: Die Einstellung \"%s\" kann für Infobar \"%s\" nicht gesetzt werden"
+msgstr "%sDie Option \"%s\" kann für die Bar \"%s\" nicht gesetzt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWindow not found for \"%s\" command"
-msgstr "%sFehler: Fenster für den Befehl \"%s\" nicht gefunden"
+msgstr "%sFenster für den Befehl \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to scroll bar \"%s\""
-msgstr "%sFehler: Infobar \"%s\" kann nicht gescrollt werden"
+msgstr "%sBar \"%s\" kann nicht gescrollt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer number \"%d\" is out of range (it must be between 1 and %d)"
 msgstr ""
-"%sFehler: Buffernummer %d ist außerhalb des gültigen Bereiches (es muss eine "
-"Zahl zwischen 1 und %d sein)"
+"%sBuffernummer %d ist außerhalb des gültigen Bereiches (es muss eine Zahl "
+"zwischen 1 und %d sein)"
 
 msgid "Buffers list:"
 msgstr "Liste der vorhandenen Buffer:"
@@ -452,37 +449,37 @@ msgstr "Liste der vorhandenen Buffer:"
 msgid "  %s[%s%d%s]%s %s%s.%s%s%s (notify: %s%s%s)%s%s"
 msgstr "  %s[%s%d%s]%s %s%s.%s%s%s (Benachrichtigung: %s%s%s)%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer name \"%s\" is reserved for WeeChat"
-msgstr "%sFehler: der Name \"%s\" ist für WeeChat reserviert"
+msgstr "%sDer Buffer-Name \"%s\" ist für WeeChat reserviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid buffer number: \"%s\""
-msgstr "%s: ungültiger Buffer in Nachricht: \"%s %s\""
+msgstr "%s: ungültige Buffer-Nummer: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBuffer \"%s\" not found"
-msgstr "%s%s: Buffer \"%s\" nicht gefunden"
+msgstr "%s Buffer \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sRenumbering is allowed only if option weechat.look.buffer_auto_renumber is "
 "off"
 msgstr ""
-"%sFehler: Umnummerierung ist nur erlaubt, wenn die Einstellung weechat.look."
+"%sUmnummerierung ist nur erlaubt, wenn die Einstellung weechat.look."
 "buffer_auto_renumber deaktiviert ist"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sWeeChat main buffer can't be closed"
-msgstr "%sFehler: Der Hauptbuffer von WeeChat kann nicht geschlossen werden"
+msgstr "%sDer Hauptbuffer von WeeChat kann nicht geschlossen werden"
 
 #, c-format
 msgid "Notify for \"%s%s%s\": \"%s%s%s\""
 msgstr "Benachrichtigung für \"%s%s%s\": \"%s%s%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set notify level \"%s\""
-msgstr "%sFehler: Benachrichtigungsstufe, \"%s\", kann nicht gesetzt werden"
+msgstr "%sBenachrichtigungsstufe, \"%s\", kann nicht gesetzt werden"
 
 #, c-format
 msgid "Local variables for buffer \"%s\":"
@@ -543,19 +540,19 @@ msgstr "Kein Nachrichtenfilter definiert"
 msgid "Filter \"%s\" enabled"
 msgstr "Filter \"%s\" aktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFilter \"%s\" not found"
-msgstr "%sTrigger, \"%s\", nicht gefunden"
+msgstr "%sFilter, \"%s\", nicht gefunden"
 
 #, c-format
 msgid "Filter \"%s\" disabled"
 msgstr "Filter \"%s\" deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sYou must specify at least tags or regex for filter"
 msgstr ""
-"%sFehler: Für Filter muss ein Schlagwort oder ein regulärer Ausdruck "
-"spezifiziert werden"
+"%sFür Filter muss ein Schlagwort oder ein regulärer Ausdruck spezifiziert "
+"werden"
 
 #, c-format
 msgid "Filter \"%s\" added:"
@@ -565,9 +562,9 @@ msgstr "Filter \"%s\" hinzugefügt:"
 msgid "Filter \"%s\" renamed to \"%s\""
 msgstr "Filter \"%s\" wurde umbenannt. Der neue Name lautet \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to rename filter \"%s\" to \"%s\""
-msgstr "%sFehler: Umbenennung des Filters von \"%s\" in \"%s\" nicht möglich"
+msgstr "%sUmbenennung des Filters von \"%s\" in \"%s\" nicht möglich"
 
 msgid "All filters have been deleted"
 msgstr "Alle Filter wurden gelöscht"
@@ -627,17 +624,17 @@ msgstr ""
 "Es sind für Kontext \"%s\" weder Tastenbelegungen hinzugefügt, verändert "
 "noch gelöscht worden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to bind key \"%s\""
-msgstr "%sFehler: Tastenbelegung \"%s\" kann nicht zugeordnet werden"
+msgstr "%sTastenbelegung \"%s\" kann nicht zugeordnet werden"
 
 #, c-format
 msgid "Key \"%s\" has already default value"
 msgstr "Die Taste \"%s\" ist schon mit einem Standardbefehl belegt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to unbind key \"%s\""
-msgstr "%sFehler: Tastenbelegung \"%s\" kann nicht entfernt werden"
+msgstr "%sTastenbelegung \"%s\" kann nicht entfernt werden"
 
 #, c-format
 msgid "%sKey \"%s\" not found"
@@ -667,31 +664,31 @@ msgstr "Taste:"
 msgid "No key found"
 msgstr "Keine Taste gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sIt is not safe to bind key \"%s\" because it does not start with a ctrl or "
 "meta code (tip: use alt-k to find key codes); if you want to bind this key "
 "anyway, turn off option weechat.look.key_bind_safe"
 msgstr ""
-"%sFehler: Es ist nicht ratsam, die \"%s\"-Taste mit einer Funktion zu "
-"belegen, da diese Taste weder mit Strg noch Meta zusammen genutzt wird "
-"(Tipp: nutze Alt+k, um einen Tastencode anzeigen zu lassen); soll diese "
-"Taste wirklich genutzt werden, so muss die Einstellung weechat.look."
-"key_bind_safe deaktiviert werden"
+"%sEs ist nicht ratsam, die \"%s\"-Taste mit einer Funktion zu belegen, da "
+"diese Taste weder mit Strg noch Meta zusammen genutzt wird (Tipp: nutze Alt"
+"+k, um einen Tastencode anzeigen zu lassen); soll diese Taste wirklich "
+"genutzt werden, so muss die Einstellung weechat.look.key_bind_safe "
+"deaktiviert werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sContext \"%s\" not found"
-msgstr "%sFehler: Kontext\"%s\" nicht gefunden"
+msgstr "%sKontext\"%s\" nicht gefunden"
 
 #, c-format
 msgid "Default key bindings restored for context \"%s\""
 msgstr "Standardtastenbelegungen für Kontext \"%s\" wiederhergestellt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sArgument \"-yes\" is required for keys reset (security reason)"
 msgstr ""
-"%sFehler: Das Argument \"-yes\" ist, aus Sicherheitsgründen, zum "
-"Zurücksetzen der Tastenbelegung notwendig"
+"%sDas Argument \"-yes\" ist, aus Sicherheitsgründen, zum Zurücksetzen der "
+"Tastenbelegung notwendig"
 
 #, c-format
 msgid "%d new key added"
@@ -731,13 +728,13 @@ msgstr "Layout \"%s\" gelöscht (aktuelles Layout: %s)"
 msgid "Layout of %s%s%s reset in \"%s\""
 msgstr "Layout von %s%s%s wird für \"%s\" zurückgesetzt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sLayout \"%s\" not found"
-msgstr "%sTastenbelegung \"%s\" nicht gefunden"
+msgstr "%sLayout \"%s\" nicht gefunden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sLayout \"%s\" already exists for \"%s\" command"
-msgstr "%sFehler: Layout \"%s\" existiert bereits für den Befehl \"%s\""
+msgstr "%sLayout \"%s\" existiert bereits für den Befehl \"%s\""
 
 #, c-format
 msgid "Layout \"%s\" has been renamed to \"%s\""
@@ -862,36 +859,35 @@ msgstr "  %s%s%s: %s, %s/%d (%s), Username: %s, Passwort: %s"
 msgid "No proxy defined"
 msgstr "Kein Proxy definiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid type \"%s\" for proxy \"%s\""
-msgstr "%sFehler: falscher Typ \"%s\" für Proxy \"%s\""
+msgstr "%sFalscher Typ \"%s\" für Proxy \"%s\""
 
 #, c-format
 msgid "Proxy \"%s\" added"
 msgstr "Proxy \"%s\" hinzugefügt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to add proxy \"%s\""
-msgstr "%sFehler: konnte den Proxy \"%s\" nicht hinzufügen"
+msgstr "%sProxy \"%s\" konnte nicht hinzugefügt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid port \"%s\" for proxy \"%s\""
-msgstr "%sFehler: falscher Port \"%s\" für den Proxy \"%s\""
+msgstr "%sFalscher Port \"%s\" für den Proxy \"%s\""
 
 msgid "All proxies have been deleted"
 msgstr "Alle Proxys wurden gelöscht"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sProxy \"%s\" not found"
-msgstr "%sTastenbelegung \"%s\" nicht gefunden"
+msgstr "%sProxy \"%s\" nicht gefunden"
 
 msgid "Proxy deleted"
 msgstr "Proxy gelöscht"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set option \"%s\" for proxy \"%s\""
-msgstr ""
-"%sFehler: Einstellung \"%s\" kann für den Proxy \"%s\" nicht gesetzt werden"
+msgstr "%sEinstellung \"%s\" kann für den Proxy \"%s\" nicht gesetzt werden"
 
 #, c-format
 msgid ""
@@ -904,25 +900,25 @@ msgstr ""
 msgid "Options reloaded from %s"
 msgstr "Konfiguration, %s, wurde neu geladen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to reload options from %s"
-msgstr "%sFehler: Einstellungen von %s konnten nicht neu geladen werden"
+msgstr "%sEinstellungen von %s konnten nicht neu geladen werden"
 
 #, c-format
 msgid "Unknown configuration file \"%s\""
 msgstr "Unbekannte Konfigurationsdatei \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid number: \"%s\""
-msgstr "%s%s: ungültiger Alias-Name: \"%s\""
+msgstr "%sUngültige Nummer: \"%s\""
 
 #, c-format
 msgid "Options saved to %s"
 msgstr "Einstellungen unter %s gesichert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to save options to %s"
-msgstr "%sFehler: Einstellungen konnten nicht unter %s gesichert werden"
+msgstr "%sEinstellungen konnten nicht unter %s gesichert werden"
 
 msgid "There is no encrypted data"
 msgstr "Es liegen keine verschlüsselten Daten vor"
@@ -944,9 +940,9 @@ msgid ""
 msgstr ""
 "%sDie Daten müssen zuerst entschlüsselt werden, bevor man diese nutzen kann"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sPassphrase is too long (max: %d chars)"
-msgstr "%sFehler: Die Passphrase ist zu lang (Max: %d Zeichen)"
+msgstr "%sDie Passphrase ist zu lang (Max: %d Zeichen)"
 
 msgid "Passphrase deleted"
 msgstr "Passphrase gelöscht"
@@ -1013,17 +1009,17 @@ msgstr[1] "%s%d%s Einstellungen"
 msgid "Environment variable \"%s\" is not defined"
 msgstr "Umgebungsvariable \"%s\" ist nicht definiert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set variable \"%s\": %s"
-msgstr "%sFehler: Variable \"%s\" konnte nicht gesetzt werden: %s"
+msgstr "%sVariable \"%s\" konnte nicht gesetzt werden: %s"
 
 #, c-format
 msgid "Variable \"%s\" unset"
 msgstr "Variable \"%s\" entfernt"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to unset variable \"%s\": %s"
-msgstr "%sFehler: Variable \"%s\" konnte nicht entfernt werden: %s"
+msgstr "%sVariable \"%s\" konnte nicht entfernt werden: %s"
 
 #, c-format
 msgid "%s%d%s option with value changed"
@@ -1031,13 +1027,13 @@ msgid_plural "%s%d%s options with value changed"
 msgstr[0] "%s%d%s Einstellung, mit abweichendem Wert"
 msgstr[1] "%s%d%s Einstellungen, bei denen die Werte abweichend sind"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFailed to set option \"%s\""
-msgstr "%sEinstellung \"%s\" konnte nicht zurück gesetzt werden"
+msgstr "%sEinstellung \"%s\" konnte nicht gesetzt werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sOption \"%s\" not found"
-msgstr "%sFehler: Einstellung \"%s\" wurde nicht gefunden"
+msgstr "%sEinstellung \"%s\" wurde nicht gefunden"
 
 msgid "Option changed: "
 msgstr "Einstellung geändert: "
@@ -1094,9 +1090,9 @@ msgstr "%skeine Binärdatei angegeben"
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"...."
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to save session in file"
-msgstr "%sFehler: Sitzung kann nicht in eine Datei gespeichert werden"
+msgstr "%sSitzung kann nicht in eine Datei gespeichert werden"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -1137,25 +1133,25 @@ msgstr[1] "mal"
 msgid "Windows list:"
 msgstr "Fensterliste:"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid window number: \"%s\""
-msgstr "%s%s: ungültiger Alias-Name: \"%s\""
+msgstr "%sUngültige Fensternummer: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sCan not merge windows, there's no other window with same size near current "
 "one"
 msgstr ""
-"%sFehler: Fenster können nicht nicht zusammengefügt werden. Es existiert "
-"kein Fenster mit derselben Größe neben dem aktuellen Fenster"
+"%sFenster können nicht nicht zusammengefügt werden. Es existiert kein "
+"Fenster mit derselben Größe, neben dem aktuellen Fenster"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sCan not close window, there's no other window with same size near current "
 "one"
 msgstr ""
-"%sFehler: Fenster kann nicht geschlossen werden. Es existiert kein weiteres "
-"Fenster mit derselben Größe"
+"%sFenster kann nicht geschlossen werden. Es existiert kein weiteres Fenster "
+"mit derselben Größe"
 
 msgid "set or remove away status"
 msgstr "Abwesenheitsstatus setzen oder entfernen"
@@ -1682,7 +1678,6 @@ msgstr ""
 "[-n|-s] [-d] <expression> || [-n] [-d] -c <expression1> <operator> "
 "<expression2>"
 
-#, fuzzy
 msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -s: split expression before evaluating it (many commands can be "
@@ -1865,35 +1860,36 @@ msgstr ""
 "Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} "
 "ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:\n"
 "  1. eine evaluierte Teilzeichenkette (Format: \"eval:xxx\")\n"
-"  2. eine Zeichenkette mit Escapesequenzen (Format: \"esc:xxx\" oder \"\\xxx"
+"  2. eine evaluierte Bedingung (Format: \"eval_cond:xxx\")\n"
+"  3. eine Zeichenkette mit Escapesequenzen (Format: \"esc:xxx\" oder \"\\xxx"
 "\")\n"
-"  3. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen "
+"  4. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen "
 "(Format: \"hide:Zeichen,Zeichenkette\")\n"
-"  4. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: \"cut:"
+"  5. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: \"cut:"
 "+Max,Suffix,Zeichenkette\")\n"
 "     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden "
 "sollen (Format: \"cutscr:Max,Suffix,Zeichenkette oder \"cutscr:+Max,Suffix,"
 "Zeichenkette\")\n"
-"  5. eine Zeichenkette umkehren (Format: \"rev:xxx\" oder \"revscr:xxx\")\n"
-"  6. eine Zeichenkette wiederholen (Format: \"repeat:Anzahl,Zeichenkette\")\n"
-"  7. Länge einer Zeichenkette (Format: \"length:xxx\" oder \"lengthscr:xxx"
+"  6. eine Zeichenkette umkehren (Format: \"rev:xxx\" oder \"revscr:xxx\")\n"
+"  7. eine Zeichenkette wiederholen (Format: \"repeat:Anzahl,Zeichenkette\")\n"
+"  8. Länge einer Zeichenkette (Format: \"length:xxx\" oder \"lengthscr:xxx"
 "\")\n"
-"  8. eine Farbe (Format: \"color:xxx\", siehe \"Anleitung für API Erweiterung"
+"  9. eine Farbe (Format: \"color:xxx\", siehe \"Anleitung für API Erweiterung"
 "\", Funktion \"color\")\n"
-"  9. ein Modifizierer (Format: \"info:Name,Argumente\", Argumente sind "
+"  10. ein Modifizierer (Format: \"info:Name,Argumente\", Argumente sind "
 "optional)\n"
-"  10. eine Info (Format: \"Info:Name,Argumente\", Argumente sind optional)\n"
-"  11. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "
+"  11. eine Info (Format: \"Info:Name,Argumente\", Argumente sind optional)\n"
+"  12. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "
 "\"base_encode:base,xxx\" oder \"base_decode:base,xxx\")\n"
-"  12. aktuelles Datum/Uhrzeit (Format: \"date\" oder \"date:format\")\n"
-"  13. eine Umgebungsvariable (Format: \"env:XXX\")\n"
-"  14. ein Dreifachoperand (Format: \"if:Bedingung?Wert_falls_wahr:"
+"  13. aktuelles Datum/Uhrzeit (Format: \"date\" oder \"date:format\")\n"
+"  14. eine Umgebungsvariable (Format: \"env:XXX\")\n"
+"  15. ein Dreifachoperand (Format: \"if:Bedingung?Wert_falls_wahr:"
 "Wert_falls_unwahr\")\n"
-"  15. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** "
+"  16. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** "
 "(Format: \"calc:xxx\")\n"
-"  16. eine Option (Format: \"file.section.option\")\n"
-"  17. eine lokale Variable eines Buffers\n"
-"  18. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine "
+"  17. eine Option (Format: \"file.section.option\")\n"
+"  18. eine lokale Variable eines Buffers\n"
+"  19. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine "
 "Zeichenkette konvertiert), standardmäßig wird für \"window\" und \"buffer\" "
 "das aktuelle Fenster/Buffer verwendet.\n"
 "Das Format für hdata kann wie folgt aufgebaut sein:\n"
@@ -1913,6 +1909,7 @@ msgstr ""
 "API Erweiterung\", Bereich \"weechat_hdata_get\". beschrieben\n"
 "\n"
 "Beispiele (einfache Zeichenketten):\n"
+"  /eval -n ${eval_cond:${window.win_width}>100}  ==> 1\n"
 "  /eval -n ${info:version}                       ==> 0.4.3\n"
 "  /eval -n ${env:HOME}                           ==> /home/user\n"
 "  /eval -n ${weechat.look.scroll_amount}         ==> 3\n"
@@ -3595,9 +3592,9 @@ msgstr "Debug-Level für Erweiterung (\"core\" für den WeeChat Core)"
 msgid "alias for color"
 msgstr "Alternativname für Farbe"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sPalette option must be numeric"
-msgstr "%sFehler: Wert bei Einstellung für Palette muss numerisch sein"
+msgstr "%sWert für Palette-Option muss numerisch sein"
 
 #, c-format
 msgid "%sWarning: unknown option for section \"%s\": %s (value: \"%s\")"
@@ -5072,9 +5069,9 @@ msgstr "Konfigurationsdatei %s%s%s wird gesichert"
 msgid "(default options)"
 msgstr "(Standardeinstellungen)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sCannot create file \"%s\""
-msgstr "%sFehler: die Datei \"%s\" kann nicht erstellt werden"
+msgstr "%sDie Datei \"%s\" kann nicht erstellt werden"
 
 #, c-format
 msgid "%sError writing configuration file \"%s\""
@@ -5156,28 +5153,26 @@ msgstr ""
 "Warnung: momentan ist der Befehl \"%s\" nicht ausführbar (Befehl: \"%s\", "
 "Buffer: \"%s\")"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnknown command \"%s\" (type /help for help)"
-msgstr ""
-"%sFehler: Der Befehl \"%s\" ist nicht bekannt. Für eine Hilfe nutze /help"
+msgstr "%sDer Befehl \"%s\" ist nicht bekannt (für eine Hilfe nutze /help)"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sAmbiguous command \"%s\": it exists in many plugins and not in \"%s\" "
 "plugin"
 msgstr ""
-"%sFehler: Der Befehl \"%s\" ist nicht eindeutig: Er existiert für mehrere "
+"%sDer Befehl \"%s\" ist nicht eindeutig: Der Befehl existiert für andere "
 "Erweiterungen, aber nicht für die Erweiterung \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sIncomplete command \"%s\" and multiple commands start with this name"
 msgstr ""
-"%sFehler: für den unvollständiger Befehl \"%s\" existieren mehrere mögliche "
-"Befehle"
+"%sFür den unvollständiger Befehl \"%s\" existieren mehrere mögliche Befehle"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sToo many calls to command \"%s\" (looping)"
-msgstr "%sFehler: zu viele Aufrufe des Programms \"%s\" (Wiederholungen)"
+msgstr "%sZu viele Aufrufe des Programms \"%s\" (Wiederholungen)"
 
 msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
@@ -5267,12 +5262,12 @@ msgstr ""
 msgid "%sWarning: unable to read passphrase from file \"%s\""
 msgstr "%sWarnung: Passphrase kann nicht aus Datei \"%s\" gelesen werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sUnable to reload file sec.conf because there is still encrypted data (use /"
 "secure decrypt, see /help secure)"
 msgstr ""
-"%sFehler: die Datei sec.conf kann nicht erneut geladen werden, da noch "
+"%sDie Datei sec.conf kann nicht erneut geladen werden, da noch "
 "verschlüsselte Daten vorliegen (nutze /secure decrypt, siehe /help secure)"
 
 #, c-format
@@ -5441,27 +5436,26 @@ msgstr ""
 msgid "curl error %d (%s) (URL: \"%s\")\n"
 msgstr "curl Fehler %d (%s) (URL: \"%s\")\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sInvalid limit for resource \"%s\": %s (must be >= -1)"
-msgstr ""
-"%sFehler: ungültiges Limit für Ressource \"%s\": %s (Wert muss >= -1 sein)"
+msgstr "%sUngültiges Limit für Ressource \"%s\": %s (Wert muss >= -1 sein)"
 
 #, c-format
 msgid "Limit for resource \"%s\" has been set to %s"
 msgstr ""
 "Beschränkung für den Ressourcenbedarf von \"%s\" wurde eingestellt auf %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to set resource limit \"%s\" to %s: error %d %s"
 msgstr ""
-"%sFehler: das Resource-Limit kann nicht von \"%s\" nach %s verändert werden: "
-"Fehler %d %s"
+"%sDas Resource-Limit kann nicht von \"%s\" nach %s verändert werden: Fehler "
+"%d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnknown resource limit \"%s\" (see /help weechat.startup.sys_rlimit)"
 msgstr ""
-"%sFehler: unbekannte Beschränkung für den Ressourcenbedarf \"%s\" (siehe /"
-"help weechat.startup.sys_rlimit)"
+"%sUnbekannte Beschränkung für den Ressourcenbedarf \"%s\" (siehe /help "
+"weechat.startup.sys_rlimit)"
 
 #, c-format
 msgid ""
@@ -5670,18 +5664,17 @@ msgid "Notify changed for \"%s%s%s\": \"%s%s%s\" to \"%s%s%s\""
 msgstr ""
 "Benachrichtigung wurde für \"%s%s%s\": von \"%s%s%s\" auf \"%s%s%s\" geändert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sA buffer with same name (%s) already exists"
-msgstr "%sFehler: Ein Buffer mit dem selben Namen (%s) existiert bereits"
+msgstr "%sEin Buffer mit dem selben Namen (%s) existiert bereits"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sMaximum number of buffers is reached (%d)"
-msgstr "%sFehler: maximale Anzahl an Buffern erreicht (%d)"
+msgstr "%sMaximale Anzahl an Buffern erreicht (%d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sIt is only possible to merge buffers with formatted content"
-msgstr ""
-"%sFehler: Es ist nur möglich Buffer mit formatiertem Inhalt zusammenzufügen"
+msgstr "%sEs ist nur möglich Buffer mit formatiertem Inhalt zusammenzufügen"
 
 #, c-format
 msgid "Debug enabled for cursor mode (%s)"
@@ -5696,9 +5689,9 @@ msgstr "normal"
 msgid "Debug disabled for cursor mode"
 msgstr "Debug für Cursor Modus deaktiviert"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to add filter \"%s\": %s"
-msgstr "%sFehler beim Hinzufügen des Filters \"%s\": %s"
+msgstr "%sFilter \"%s\" kann nicht hinzugefügt werden: %s"
 
 msgid "not enough arguments"
 msgstr "nicht genügend Argumente"
@@ -12433,13 +12426,13 @@ msgstr ""
 msgid "Initializing plugin \"%s\" (priority: %d)"
 msgstr "Initialisiere Erweiterung \"%s\" (Priorität: %d)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to initialize plugin \"%s\""
-msgstr "%sFehler: Erweiterung \"%s\" kann nicht initialisiert werden"
+msgstr "%sErweiterung \"%s\" kann nicht initialisiert werden"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to load plugin \"%s\": %s"
-msgstr "%sFehler: kann Erweiterung \"%s\" nicht installieren: %s"
+msgstr "%sErweiterung \"%s\" kann nicht installiert werden: %s"
 
 #, c-format
 msgid ""
@@ -12450,10 +12443,10 @@ msgstr ""
 "muss der entsprechende Befehl zum Installieren von Skripten genutzt werden (/"
 "perl, /python, ...)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sSymbol \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
-"%sFehler: Symbol \"%s\" in Erweiterung \"%s\" nicht gefunden, Installation "
+"%sSymbol \"%s\" in Erweiterung \"%s\" nicht gefunden, Installation "
 "fehlgeschlagen"
 
 #, c-format
@@ -12462,30 +12455,29 @@ msgstr ""
 "%sFalls die Erweiterung \"%s\" veraltet oder obsolet ist sollte diese "
 "gelöscht werden."
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%sAPI mismatch for plugin \"%s\" (current API: \"%s\", plugin API: \"%s\"), "
 "failed to load"
 msgstr ""
-"%sFehler: Inkompatibilität mit der API Erweiterung \"%s\" (aktuelle API: \"%s"
-"\", API der Erweiterung: \"%s\"), Installation fehlgeschlagen"
+"%sInkompatibilität mit der API Erweiterung \"%s\" (aktuelle API: \"%s\", API "
+"der Erweiterung: \"%s\"), Installation fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to load plugin \"%s\": a plugin with same name already exists"
 msgstr ""
-"%sFehler: Erweiterung \"%s\" kann nicht geladen werden: eine Erweiterung mit "
-"dem selben Namen existiert bereits"
+"%sErweiterung \"%s\" kann nicht geladen werden: eine Erweiterung mit dem "
+"selben Namen existiert bereits"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sFunction \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
-"%sFehler: Funktion \"%s\" nicht in Erweiterung \"%s\" gefunden. Installation "
+"%sFunktion \"%s\" nicht in Erweiterung \"%s\" gefunden. Installation "
 "fehlgeschlagen"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sUnable to load plugin \"%s\" (not enough memory)"
-msgstr ""
-"%sFehler: Erweiterung \"%s\" kann nicht installiert werden (Speichermangel)"
+msgstr "%sErweiterung \"%s\" kann nicht installiert werden (Speichermangel)"
 
 #, c-format
 msgid "Plugin \"%s\" loaded"
@@ -14627,7 +14619,6 @@ msgstr ""
 "<name>|-all [<name>...] || show <name> || del <name>|-all [<name>...] || "
 "restore <name> [<name>...] || default -yes || monitor [<filter>]"
 
-#, fuzzy
 msgid ""
 "       list: list triggers (without argument, this list is displayed)\n"
 "   listfull: list triggers with detailed info for each trigger\n"
@@ -14743,8 +14734,9 @@ msgstr ""
 "Buffermasken, Tags\n"
 "             print: Buffer, Tags, Nachricht, Farben entfernen\n"
 "             command: Befehl (erforderlich), Beschreibung, Argumente, "
-"Beschreibung der Argumente, Vervollständigung (Alle Argumente, außer dem "
-"Befehl werden ausgewertet, siehe /help eval)\n"
+"Beschreibung der Argumente, Vervollständigung (alle Argumente, außer dem "
+"Befehl werden ausgewertet, \"${tg_trigger_name}\" wird durch den "
+"Triggernamen ersetzt, siehe /help eval)\n"
 "             command_run: Befehl(e) (erforderlich)\n"
 "             timer: Intervall (erforderlich), Anpassung an Sekunden "
 "(erforderlich), maximale Anzahl an Aufrufen\n"
@@ -14790,10 +14782,10 @@ msgstr ""
 "    default: stellt die standardmäßigen Trigger wieder her\n"
 "    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler "
 "Filterfunktion:\n"
-"     Filter: zeigt Hooks/Trigger an (ein Hook muss mit \"@\" beginnen, zum "
-"Beispiel \"@signal\"), mehrere Filter können durch Kommata voneinander "
-"getrennt werden; Platzhalter \"*\" kann im Namen des Trigger verwendet "
-"werden\n"
+"     filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit \"@\" "
+"beginnen, zum Beispiel \"@signal\"), mehrere Filter können durch Kommata "
+"voneinander getrennt werden; Platzhalter \"*\" kann im Namen des Trigger "
+"verwendet werden\n"
 "\n"
 "Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette "
 "ausgeführt:\n"
