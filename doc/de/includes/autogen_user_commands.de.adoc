@@ -1298,78 +1298,78 @@ infolists: zeigt Information über die Infolists an
 /eval  [-n|-s] [-d] <expression>
        [-n] [-d] -c <expression1> <operator> <expression2>
 
-        -n: display result without sending it to buffer (debug mode)
-        -s: split expression before evaluating it (many commands can be separated by semicolons)
-        -d: display debug output after evaluation
-        -c: evaluate as condition: use operators and parentheses, return a boolean value ("0" or "1")
-expression: expression to evaluate, variables with format ${variable} are replaced (see below); many commands can be separated by semicolons
-  operator: a logical or comparison operator:
-            - logical operators:
-                &&   boolean "and"
-                ||   boolean "or"
-            - comparison operators:
-                ==   equal
-                !=   not equal
-                <=   less or equal
-                <    less
-                >=   greater or equal
-                >    greater
-                =~   is matching POSIX extended regex
-                !~   is NOT matching POSIX extended regex
-                ==*  is matching mask, case sensitive (wildcard "*" is allowed)
-                !!*  is NOT matching mask, case sensitive (wildcard "*" is allowed)
-                =*   is matching mask, case insensitive (wildcard "*" is allowed)
-                !*   is NOT matching mask, case insensitive (wildcard "*" is allowed)
-                ==-  is included, case sensitive
-                !!-  is NOT included, case sensitive
-                =-   is included, case insensitive
-                !-   is NOT included, case insensitive
+        -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
+        -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
+        -d: eine Debug-Ausgabe nach Auswertung anzeigen
+        -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
+expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
+  operator: ein logischer oder vergleichender Operand:
+            - logische Operanden:
+                &&  boolean "und"
+                ||  boolean "oder"
+            - vergleichende Operanden:
+                ==  gleich
+                !=  ungleich
+                <=  kleiner oder gleich
+                <   kleiner
+                >=  größer oder gleich
+                >   größer
+                =~  stimmt mit regulärem POSIX Ausdruck überein
+                !~  stimmt NICHT mit regulärem POSIX Ausdruck überein
+                ==*  stimmt mit Maske überein (Platzhalter "*" ist erlaubt)
+                !!*  stimmt mit Maske NICHT überein (Platzhalter "*" ist erlaubt)
+                =*   stimmt mit Maske überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                !*   stimmt mit Maske NICHT überein, Groß- und Kleinschreibung wird nicht beachtet (Platzhalter "*" ist erlaubt)
+                ==-  ist enthalten, Groß- und Kleinschreibung wird beachtet
+                !!-  ist NICHT enthalten, Groß- und Kleinschreibung wird beachtet
+                =-   ist enthalten, Groß- und Kleinschreibung wird nicht beachtet
+                !-   ist NICHT enthalten, Groß- und Kleinschreibung wird nicht beachtet
 
-An expression is considered as "true" if it is not NULL, not empty, and different from "0".
-The comparison is made using floating point numbers if the two expressions are valid numbers, with one of the following formats:
-  - integer (examples: 5, -7)
-  - floating point number (examples: 5.2, -7.5, 2.83e-2)
-  - hexadecimal number (examples: 0xA3, -0xA3)
-To force a string comparison, you can add double quotes around each expression, for example:
+Ein Ausdruck gilt als "wahr" sofern das Ergebnis weder NULL, nicht leer und von "0" abweichend ist.
+Für einen Vergleich werden Fließkommazahlen genutzt, insofern es sich bei beiden Ausdrücken um gültige Zahlen handelt, folgende Formate werden unterstützt:
+  - Integer (Beispiele: 5, -7)
+  - Fließkommazahl (Beispiele: 5.2, -7.5, 2.83e-2)
+  - hexadezimale Zahl (Beispiele: 0xA3, -0xA3)
+Um einen Vergleich zwischen zwei Zeichenketten zu erzwingen, müssen die Ausdrücke in Anführungszeichen gesetzt werden, zum Beispiel:
   50 > 100      ==> 0
   "50" > "100"  ==> 1
 
-Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. an evaluated sub-string (format: "eval:xxx")
-  2. an evaluated condition (format: "eval_cond:xxx")
-  3. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  4. a string with chars to hide (format: "hide:char,string")
-  5. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
-     or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  6. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  7. a repeated string (format: "repeat:count,string")
-  8. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  9. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  10. a modifier (format: "modifier:name,data,string")
-  11. an info (format: "info:name,arguments", arguments are optional)
-  12. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  13. current date/time (format: "date" or "date:format")
-  14. an environment variable (format: "env:XXX")
-  15. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  16. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  17. an option (format: "file.section.option")
-  18. a local variable in buffer
-  19. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
-Format for hdata can be one of following:
-  hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
-  hdata[list].var1.var2...: start with a hdata using a list, for example:
-    ${buffer[gui_buffers].full_name}: full name of first buffer in linked list of buffers
-    ${plugin[weechat_plugins].name}: name of first plugin in linked list of plugins
-  hdata[pointer].var1.var2...: start with a hdata using a pointer, for example:
-    ${buffer[0x1234abcd].full_name}: full name of the buffer with this pointer (can be used in triggers)
-For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
+Einige Variablen werden im Ausdruck mittels der Formatierung ${variable} ersetzt. Mögliche Variablen sind, nach Reihenfolge ihrer Priorität:
+  1. eine evaluierte Teilzeichenkette (Format: "eval:xxx")
+  2. eine evaluierte Bedingung (Format: "eval_cond:xxx")
+  3. eine Zeichenkette mit Escapesequenzen (Format: "esc:xxx" oder "\xxx")
+  4. Zeichen, die in einer Zeichenkette nicht dargestellt werden sollen (Format: "hide:Zeichen,Zeichenkette")
+  5. eine Zeichenkette mit einer maximalen Anzahl an Zeichen (Format: "cut:+Max,Suffix,Zeichenkette")
+     oder maximale Anzahl an Zeichen die auf dem Bildschirm angezeigt werden sollen (Format: "cutscr:Max,Suffix,Zeichenkette oder "cutscr:+Max,Suffix,Zeichenkette")
+  6. eine Zeichenkette umkehren (Format: "rev:xxx" oder "revscr:xxx")
+  7. eine Zeichenkette wiederholen (Format: "repeat:Anzahl,Zeichenkette")
+  8. Länge einer Zeichenkette (Format: "length:xxx" oder "lengthscr:xxx")
+  9. eine Farbe (Format: "color:xxx", siehe "Anleitung für API Erweiterung", Funktion "color")
+  10. ein Modifizierer (Format: "info:Name,Argumente", Argumente sind optional)
+  11. eine Info (Format: "Info:Name,Argumente", Argumente sind optional)
+  12. eine Basis 16/32/64 kodierte / dekodierte Zeichenfolge (Format: "base_encode:base,xxx" oder "base_decode:base,xxx")
+  13. aktuelles Datum/Uhrzeit (Format: "date" oder "date:format")
+  14. eine Umgebungsvariable (Format: "env:XXX")
+  15. ein Dreifachoperand (Format: "if:Bedingung?Wert_falls_wahr:Wert_falls_unwahr")
+  16. Ergebnis eines Ausdrucks mit Klammern und Operatoren + - * / // % ** (Format: "calc:xxx")
+  17. eine Option (Format: "file.section.option")
+  18. eine lokale Variable eines Buffers
+  19. ein(e) hdata - Name/Variable (der Wert wird automatisch in eine Zeichenkette konvertiert), standardmäßig wird für "window" und "buffer" das aktuelle Fenster/Buffer verwendet.
+Das Format für hdata kann wie folgt aufgebaut sein:
+  hdata.var1.var2...: startet mit hdata (der Pointer muss bekannt sein) und fragt eine Variable nach der anderen ab (weitere hdata können folgen)
+  hdata[list].var1.var2...: startet hdata mittels einer Liste, zum Beispiel:
+    ${buffer[gui_buffers].full_name}: der vollständige Name des ersten Buffers, in der verknüpften Liste aller Buffer
+    ${plugin[weechat_plugins].name}: Name der ersten Erweiterung, in der verknüpften Liste aller Erweiterungen
+  hdata[pointer].var1.var2...: startet hdata mittels einem Pointer, zum Beispiel:
+    ${buffer[0x1234abcd].full_name}: vollständiger Name eines Buffers und des dazugehörigen Pointers (kann in triggern benutzt werden)
+Die vorhandenen Namen für hdata und Variablen sind in der "Anleitung für API Erweiterung", Bereich "weechat_hdata_get". beschrieben
 
-Examples (simple strings):
+Beispiele (einfache Zeichenketten):
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
   /eval -n ${weechat.look.scroll_amount}         ==> 3
-  /eval -n ${sec.data.freenode_password}         ==> secret
+  /eval -n ${sec.data.freenode_password}         ==> geheim
   /eval -n ${window}                             ==> 0x2549aa0
   /eval -n ${window.buffer}                      ==> 0x2549320
   /eval -n ${window.buffer.full_name}            ==> core.weechat
@@ -1387,17 +1387,17 @@ Examples (simple strings):
   /eval -n ${base_encode:64,test}                ==> dGVzdA==
   /eval -n ${base_decode:64,dGVzdA==}            ==> test
 
-Examples (conditions):
-  /eval -n -c ${window.buffer.number} > 2 ==> 0
-  /eval -n -c ${window.win_width} > 100   ==> 1
-  /eval -n -c (8 > 12) || (5 > 2)         ==> 1
-  /eval -n -c (8 > 12) && (5 > 2)         ==> 0
-  /eval -n -c abcd =~ ^ABC                ==> 1
-  /eval -n -c abcd =~ (?-i)^ABC           ==> 0
-  /eval -n -c abcd =~ (?-i)^abc           ==> 1
-  /eval -n -c abcd !~ abc                 ==> 0
-  /eval -n -c abcd =* a*d                 ==> 1
-  /eval -n -c abcd =- bc                  ==> 1
+Beispiele (Bedingungen):
+  /eval -n -c ${window.buffer.number} > 2  ==> 0
+  /eval -n -c ${window.win_width} > 100    ==> 1
+  /eval -n -c (8 > 12) || (5 > 2)          ==> 1
+  /eval -n -c (8 > 12) && (5 > 2)          ==> 0
+  /eval -n -c abcd =~ ^ABC                 ==> 1
+  /eval -n -c abcd =~ (?-i)^ABC            ==> 0
+  /eval -n -c abcd =~ (?-i)^abc            ==> 1
+  /eval -n -c abcd !~ abc                  ==> 0
+  /eval -n -c abcd =* a*d                  ==> 1
+  /eval -n -c abcd =- bc                   ==> 1
 ----
 
 [[command_weechat_filter]]
@@ -2936,70 +2936,70 @@ Ohne Angabe eines Argumentes listet dieser Befehl alle geladenen Skripten auf.
           default -yes
           monitor [<filter>]
 
-       list: list triggers (without argument, this list is displayed)
-   listfull: list triggers with detailed info for each trigger
-listdefault: list default triggers
-        add: add a trigger
-     addoff: add a trigger (disabled)
- addreplace: add or replace an existing trigger
-       name: name of trigger
+       list: zeigt eine Liste aller Trigger (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+   listfull: zeigt eine detaillierte Liste, mit zusätzlichen Informationen, aller Trigger an
+listdefault: zeigt die standardmäßig genutzten Trigger an
+        add: fügt einen Trigger hinzu
+     addoff: fügt einen Trigger hinzu (deaktiviert)
+ addreplace: erzeugt neuen Trigger oder ersetzt einen schon existierenden Trigger
+       name: Name des Trigger
        hook: signal, hsignal, modifier, line, print, command, command_run, timer, config, focus, info, info_hashtable
-  arguments: arguments for the hook, depending on hook (separated by semicolons):
-             signal: name(s) of signal (required)
-             hsignal: name(s) of hsignal (required)
-             modifier: name(s) of modifier (required)
-             line: buffer type ("formatted", "free" or "*"), list of buffer masks, tags
-             print: buffer, tags, message, strip colors
-             command: command (required), description, arguments, description of arguments, completion (all arguments except command are evaluated, "${tg_trigger_name}" is replaced by the trigger name, see /help eval)
-             command_run: command(s) (required)
-             timer: interval (required), align on second, max calls
-             config: name(s) of option (required)
-             focus: name(s) of area (required)
-             info: name(s) of info (required)
-             info_hashtable: name(s) of info (required)
- conditions: evaluated conditions for the trigger
-      regex: one or more regular expressions to replace strings in variables
-    command: command to execute (many commands can be separated by ";")
-return_code: return code in callback (ok (default), ok_eat, error)
-post_action: action to take after execution (none (default), disable, delete)
-   addinput: set input with default arguments to create a trigger
-      input: set input with the command used to create the trigger
-     output: send the command to create the trigger on the buffer
-   recreate: same as "input", with option "addreplace" instead of "add"
-        set: set an option in a trigger
-     option: name of option: name, hook, arguments, conditions, regex, command, return_code
-             (for help on option, you can type: /help trigger.trigger.<name>.<option>)
-      value: new value for the option
-     rename: rename a trigger
-       copy: copy a trigger
-     enable: enable trigger(s) (without arguments: enable triggers globally)
-    disable: disable trigger(s) (without arguments: disable triggers globally)
-     toggle: toggle trigger(s) (without arguments: toggle triggers globally)
-    restart: restart trigger(s) (recreate the hooks)
-       show: show detailed info on a trigger (with some stats)
-        del: delete a trigger
-       -all: do action on all triggers
-    restore: restore trigger(s) with the default values (works only for default triggers)
-    default: delete all triggers and restore default ones
-    monitor: open the trigger monitor buffer, with optional filter:
-     filter: filter hooks/triggers to display (a hook must start with "@", for example "@signal"), many filters can be separated by commas; wildcard "*" is allowed in each trigger name
+  arguments: Argumente für den Hook, abhängig vom genutzten Hook (getrennt durch Semikolon):
+             signal: Name(en) des signals (erforderlich)
+             hsignal: Name(en) des hsignal (erforderlich)
+             modifier: Name(en) des modifier (erforderlich)
+             line: Buffertyp ("formatted", "free" oder "*"), Liste von Buffermasken, Tags
+             print: Buffer, Tags, Nachricht, Farben entfernen
+             command: Befehl (erforderlich), Beschreibung, Argumente, Beschreibung der Argumente, Vervollständigung (alle Argumente, außer dem Befehl werden ausgewertet, "${tg_trigger_name}" wird durch den Triggernamen ersetzt, siehe /help eval)
+             command_run: Befehl(e) (erforderlich)
+             timer: Intervall (erforderlich), Anpassung an Sekunden (erforderlich), maximale Anzahl an Aufrufen
+             config: Name der Einstellung (erforderlich)
+             focus: Name(n) für sichtbaren Bereich (erforderlich) (z.B. "chat" für Chatbereich)
+             info: Name(n) der Information (erforderlich)
+             info_hashtable: Name(n) der Information (erforderlich)
+ conditions: evaluierte Bedingungen für den Trigger
+      regex: einer oder mehrere reguläre Ausdrücke um Zeichenketten in Variablen zu ersetzen
+    command: Befehl welcher ausgeführt werden soll (mehrere Befehle müssen durch ";" voneinander getrennt werden)
+return_code: Rückgabewert für Callback (ok (standard), ok_eat, error)
+post_action: Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll (none (Standardwert), disable, delete)
+   addinput: erstellt einen Trigger mit einer standardmäßigen Mustervorlage
+      input: kopiert den kompletten Trigger-Befehl in die Eingabezeile
+     output: schickt den Trigger-Befehl als Text in den Buffer
+   recreate: wie "input", allerdings wird die Einstellung "addreplace" anstelle von "add" genutzt
+        set: definiert, innerhalb eines Triggers, eine Einstellung neu
+     option: Name einer Einstellung: name, hook, arguments, conditions, regex, command, return_code
+             (um Hilfe über eine Einstellung zu erhalten: /help trigger.trigger.<name>.<option>)
+      value: neuer Wert für Einstellung
+     rename: benennt einen Trigger um
+       copy: kopiert einen Trigger
+     enable: aktiviert Trigger (ohne Angabe von Argumenten: aktiviert alle Trigger)
+    disable: deaktiviert Trigger (ohne Angabe von Argumenten: deaktiviert alle Trigger)
+     toggle: de-/aktiviert Trigger (ohne Angabe von Argumenten: de-/aktiviert alle Trigger)
+    restart: startet Trigger neu (Hook(s) werden neu erstellt)
+       show: zeigt detaillierte Informationen zu einem Trigger (inklusive einer kleinen Statistik)
+        del: entfernt einen Trigger
+       -all: führt eine Aktion aus, die alle Trigger beinhaltet
+    restore: stellt Trigger mit Standardwerten wieder her (funktioniert nur bei vorgegebenen Triggern)
+    default: stellt die standardmäßigen Trigger wieder her
+    monitor: öffnet den Trigger Monitor-Buffer, mit optionaler Filterfunktion:
+     filter: filtert Hooks/Trigger zum Anzeigen (ein Hook muss mit "@" beginnen, zum Beispiel "@signal"), mehrere Filter können durch Kommata voneinander getrennt werden; Platzhalter "*" kann im Namen des Trigger verwendet werden
 
-When a trigger callback is called, following actions are performed, in this order:
-  1. check conditions; if false, exit
-  2. replace text using POSIX extended regular expression(s) (if defined in trigger)
-  3. execute command(s) (if defined in trigger)
-  4. exit with a return code (except for modifier, line, focus, info and info_hashtable)
-  5. perform post action
+Wenn ein Trigger-Callback aufgerufen wird, dann wird folgende Befehlskette ausgeführt:
+  1. Überprüfung von Bedingungen; falls unwahr, beenden
+  2. ersetze Text mittels einem oder mehreren erweiterten regulären POSIX Ausdrücken (sofern im Trigger definiert)
+  3. ein oder mehrere Befehle werden ausgeführt (sofern im Trigger definiert)
+  4. Beendigung mit einem Rückgabewert (ausgenommen sind modifiers, line, focus, info und info_hashtable)
+  5. Aktion welche nach der Abarbeitung des Triggers ausgeführt werden soll
 
-Examples (you can also look at default triggers with /trigger listdefault):
-  add text attributes *bold*, _underline_ and /italic/ (only in user messages):
+Beispiele (die standardmäßig verfügbaren Trigger kann man sich mit "/trigger listdefault" anzeigen lassen):
+  fügt einer Nachricht die Textattribute *fett*, _unterstrichen_ und /kursiv/ hinzu:
     /trigger add effects modifier weechat_print "${tg_tag_nick}" "==\*([^ ]+)\*==*${color:bold}${re:1}${color:-bold}*== ==_([^ ]+)_==_${color:underline}${re:1}${color:-underline}_== ==/([^ ]+)/==/${color:italic}${re:1}${color:-italic}/"
-  hide nicklist bar on small terminals:
+  verbirgt die Nicklist auf kleineren Terminals:
     /trigger add resize_small signal signal_sigwinch "${info:term_width} < 100" "" "/bar hide nicklist"
     /trigger add resize_big signal signal_sigwinch "${info:term_width} >= 100" "" "/bar show nicklist"
-  silently save config each hour:
+  speichert die Konfiguration jede Stunde ab:
     /trigger add cfgsave timer 3600000;0;0 "" "" "/mute /save"
-  open trigger monitor and show only modifiers and triggers whose name starts with "resize":
+  öffnet den Trigger Monitor und zeigt ausschließlich modifier und Trigger an, die mit "resize" im Namen beginnen:
     /trigger monitor @modifier,resize*
 ----
 // end::trigger_commands[]
