@@ -679,23 +679,23 @@ spell_skip_color_codes (char **string, char **result)
             /* IRC color code */
             weechat_string_dyn_concat (result, *string, 1);
             (*string)++;
-            if (isdigit (*string[0]))
+            if (isdigit ((unsigned char)*string[0]))
             {
                 /* foreground */
                 weechat_string_dyn_concat (result, *string, 1);
                 (*string)++;
-                if (isdigit (*string[0]))
+                if (isdigit ((unsigned char)*string[0]))
                 {
                     weechat_string_dyn_concat (result, *string, 1);
                     (*string)++;
                 }
             }
-            if ((*string[0] == ',') && (isdigit (*string[1])))
+            if ((*string[0] == ',') && (isdigit ((unsigned char)*string[1])))
             {
                 /* background */
                 weechat_string_dyn_concat (result, *string, 1);
                 (*string)++;
-                if (isdigit (*string[0]))
+                if (isdigit ((unsigned char)*string[0]))
                 {
                     weechat_string_dyn_concat (result, *string, 1);
                     (*string)++;

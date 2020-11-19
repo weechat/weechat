@@ -683,9 +683,11 @@ gui_color_code_size (const char *string)
                     break;
                 case GUI_COLOR_EXTENDED_CHAR:
                     ptr_string++;
-                    if ((isdigit (ptr_string[0])) && (isdigit (ptr_string[1]))
-                        && (isdigit (ptr_string[2])) && (isdigit (ptr_string[3]))
-                        && (isdigit (ptr_string[4])))
+                    if ((isdigit ((unsigned char)ptr_string[0]))
+                        && (isdigit ((unsigned char)ptr_string[1]))
+                        && (isdigit ((unsigned char)ptr_string[2]))
+                        && (isdigit ((unsigned char)ptr_string[3]))
+                        && (isdigit ((unsigned char)ptr_string[4])))
                     {
                         ptr_string += 5;
                     }
@@ -713,8 +715,11 @@ gui_color_code_size (const char *string)
                     ptr_string++;
                     break;
                 default:
-                    if (isdigit (ptr_string[0]) && isdigit (ptr_string[1]))
+                    if (isdigit ((unsigned char)ptr_string[0])
+                        && isdigit ((unsigned char)ptr_string[1]))
+                    {
                         ptr_string += 2;
+                    }
                     break;
             }
             return ptr_string - string;
