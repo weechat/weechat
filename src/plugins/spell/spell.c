@@ -649,7 +649,7 @@ spell_skip_color_codes (char **string, char **result)
 {
     int color_code_size;
 
-    while (*string[0])
+    while ((*string)[0])
     {
         color_code_size = weechat_string_color_code_size (*string);
         if (color_code_size > 0)
@@ -658,9 +658,9 @@ spell_skip_color_codes (char **string, char **result)
             weechat_string_dyn_concat (result, *string, color_code_size);
             (*string) += color_code_size;
         }
-        else if (*string[0] == '\x02' || *string[0] == '\x0F'
-                 || *string[0] == '\x11' || *string[0] == '\x16'
-                 || *string[0] == '\x1D' || *string[0] == '\x1F')
+        else if ((*string)[0] == '\x02' || (*string)[0] == '\x0F'
+                 || (*string)[0] == '\x11' || (*string)[0] == '\x16'
+                 || (*string)[0] == '\x1D' || (*string)[0] == '\x1F')
         {
             /*
              * IRC attribute:
@@ -674,28 +674,29 @@ spell_skip_color_codes (char **string, char **result)
             weechat_string_dyn_concat (result, *string, 1);
             (*string)++;
         }
-        else if (*string[0] == '\x03')
+        else if ((*string)[0] == '\x03')
         {
             /* IRC color code */
             weechat_string_dyn_concat (result, *string, 1);
             (*string)++;
-            if (isdigit (*string[0]))
+            if (isdigit ((unsigned char)((*string)[0])))
             {
                 /* foreground */
                 weechat_string_dyn_concat (result, *string, 1);
                 (*string)++;
-                if (isdigit (*string[0]))
+                if (isdigit ((unsigned char)((*string)[0])))
                 {
                     weechat_string_dyn_concat (result, *string, 1);
                     (*string)++;
                 }
             }
-            if ((*string[0] == ',') && (isdigit (*string[1])))
+            if (((*string)[0] == ',')
+                && (isdigit ((unsigned char)((*string)[1]))))
             {
                 /* background */
                 weechat_string_dyn_concat (result, *string, 1);
                 (*string)++;
-                if (isdigit (*string[0]))
+                if (isdigit ((unsigned char)((*string)[0])))
                 {
                     weechat_string_dyn_concat (result, *string, 1);
                     (*string)++;

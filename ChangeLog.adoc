@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.0.1]]
+== Version 3.0.1 (under dev)
+
+Bug fixes::
+
+  * spell: fix crash with IRC color codes in command line (issue #1589)
+
 [[v3.0]]
 == Version 3.0 (2020-11-11)
 
