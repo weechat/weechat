@@ -1659,7 +1659,7 @@ gui_color_emphasize (const char *string,
     char *result, *result2, *string_no_color;
     const char *ptr_string, *ptr_no_color, *color_emphasis, *pos;
     int rc, length_search, length_emphasis, length_result;
-    int pos1, pos2, real_pos1, real_pos2, count_emphasis;
+    int pos1, pos2, real_pos1, real_pos2, count_emphasis, notbol;
 
     /* string is required */
     if (!string)
@@ -1702,6 +1702,7 @@ gui_color_emphasize (const char *string,
     ptr_string = string;
     ptr_no_color = string_no_color;
 
+    notbol = 0;
     count_emphasis = 0;
 
     while (ptr_no_color && ptr_no_color[0])
@@ -1710,7 +1711,8 @@ gui_color_emphasize (const char *string,
         {
             /* search next match using the regex */
             regex_match.rm_so = -1;
-            rc = regexec (regex, ptr_no_color, 1, &regex_match, 0);
+            rc = regexec (regex, ptr_no_color, 1, &regex_match,
+                          (notbol) ? REG_NOTBOL : 0);
 
             /*
              * no match found: exit the loop (if rm_no == 0, it is an empty
@@ -1773,6 +1775,7 @@ gui_color_emphasize (const char *string,
         /* restart next loop after the matching string */
         ptr_string += real_pos2;
         ptr_no_color += pos2;
+        notbol += pos2;
 
         /* check if we should allocate more space for emphasis color codes */
         count_emphasis++;
