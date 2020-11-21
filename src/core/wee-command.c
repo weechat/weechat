@@ -1437,7 +1437,7 @@ COMMAND_CALLBACK(buffer)
 COMMAND_CALLBACK(color)
 {
     char *str_alias, *str_rgb, *pos, *error;
-    char str_color[1024], str_command[1024];
+    char str_color[1024], str_command[2048];
     long number, limit;
     unsigned int rgb;
     int i;
