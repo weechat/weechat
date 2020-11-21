@@ -236,7 +236,7 @@ int
 network_pass_httpproxy (struct t_proxy *proxy, int sock, const char *address,
                         int port)
 {
-    char buffer[256], authbuf[128], authbuf_base64[512], *username, *password;
+    char buffer[4096], authbuf[128], authbuf_base64[512], *username, *password;
     int length;
 
     if (CONFIG_STRING(proxy->options[PROXY_OPTION_USERNAME])
