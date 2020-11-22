@@ -990,7 +990,7 @@ gui_bar_item_time_cb (const void *pointer, void *data,
                       struct t_gui_buffer *buffer,
                       struct t_hashtable *extra_info)
 {
-    char text_time[128], text_time2[128];
+    char text_time[128], text_time2[256];
 
     /* make C compiler happy */
     (void) pointer;
