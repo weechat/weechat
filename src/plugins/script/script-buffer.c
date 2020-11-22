@@ -341,7 +341,7 @@ script_buffer_display_line_script (int line, struct t_script_repo *script)
 const char *
 script_buffer_detail_label (const char *text, int max_length)
 {
-    char str_format[16];
+    char str_format[128];
     static char result[1024];
     int num_spaces;
 
