@@ -723,7 +723,7 @@ plugin_api_info_uptime_cb (const void *pointer, void *data,
                            const char *info_name,
                            const char *arguments)
 {
-    char value[32];
+    char value[128];
     time_t total_seconds;
     int days, hours, minutes, seconds;
 
