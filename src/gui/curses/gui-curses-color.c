@@ -565,6 +565,8 @@ gui_color_get_name (int num_color)
 void
 gui_color_build (int number, int foreground, int background)
 {
+    char str_color[128];
+
     if (foreground < 0)
         foreground = 0;
     if (background < 0)
@@ -576,7 +578,6 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number] = malloc (sizeof (*gui_color[number]));
         if (!gui_color[number])
             return;
-        gui_color[number]->string = malloc (4);
     }
 
     /* set foreground and attributes */
@@ -599,12 +600,10 @@ gui_color_build (int number, int foreground, int background)
         gui_color[number]->background = gui_weechat_colors[background & GUI_COLOR_EXTENDED_MASK].background;
 
     /* set string */
-    if (gui_color[number]->string)
-    {
-        snprintf (gui_color[number]->string, 4,
-                  "%c%02d",
-                  GUI_COLOR_COLOR_CHAR, number);
-    }
+    snprintf (str_color, sizeof (str_color),
+              "%c%02d",
+              GUI_COLOR_COLOR_CHAR, number);
+    gui_color[number]->string = strdup (str_color);
 }
 
 /*
