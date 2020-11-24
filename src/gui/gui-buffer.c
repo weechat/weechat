@@ -4257,6 +4257,7 @@ int
 gui_buffer_visited_get_index_next ()
 {
     if ((gui_buffers_visited_count < 2)
+        || (gui_buffers_visited_index < 0)
         || (gui_buffers_visited_index >= gui_buffers_visited_count - 1))
         return -1;
 
