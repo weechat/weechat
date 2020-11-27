@@ -103,7 +103,7 @@ volatile sig_atomic_t weechat_quit = 0;   /* = 1 if quit request from user  */
 volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
 volatile sig_atomic_t weechat_reload_signal = 0; /* signal received,        */
-                                       /* WeeChat must reload confiuration  */
+                                       /* WeeChat must reload configuration  */
 char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 int weechat_home_temp = 0;             /* 1 if using a temporary home       */
 int weechat_home_delete_on_exit = 0;   /* 1 if home is deleted on exit      */
