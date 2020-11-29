@@ -1282,8 +1282,8 @@ AC_DEFINE_UNQUOTED(WEECHAT_SHAREDIR, "$WEECHAT_SHAREDIR")
 weechat_libdir=${libdir}/weechat
 AC_SUBST(weechat_libdir)
 
-COMMON_CFLAGS="-fsigned-char -Wall -Wextra -Werror-implicit-function-declaration -Wformat-overflow=2 -Wformat-truncation=2"
-COMMON_CXXFLAGS="-fsigned-char -Wall -Wextra -Wformat-overflow=2 -Wformat-truncation=2"
+COMMON_CFLAGS="-fsigned-char -Wall -Wextra -Werror-implicit-function-declaration"
+COMMON_CXXFLAGS="-fsigned-char -Wall -Wextra"
 
 AC_MSG_CHECKING([whether we have GNU assembler])
 GAS=`as --version < /dev/null 2>/dev/null | grep GNU`
