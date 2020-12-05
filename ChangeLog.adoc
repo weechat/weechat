@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 Bug fixes::
 
+  * exec: fix search of command by identifier
   * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)
   * spell: fix crash with IRC color codes in command line (issue #1589)
 

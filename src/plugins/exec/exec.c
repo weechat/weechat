@@ -89,7 +89,7 @@ exec_search_by_id (const char *id)
     error = NULL;
     number = strtol (id, &error, 10);
     if (!error || error[0])
-        return NULL;
+        number = -1;
 
     for (ptr_exec_cmd = exec_cmds; ptr_exec_cmd;
          ptr_exec_cmd = ptr_exec_cmd->next_cmd)
