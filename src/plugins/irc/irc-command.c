@@ -6583,7 +6583,7 @@ irc_command_init ()
         N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: remove channel half-operator status from everybody on channel "
            "except yourself"),
-        "%(nicks)", &irc_command_dehalfop, NULL, NULL);
+        "%(nicks)|%*", &irc_command_dehalfop, NULL, NULL);
     weechat_hook_command (
         "deop",
         N_("remove channel operator status from nick(s)"),
@@ -6622,7 +6622,7 @@ irc_command_init ()
         N_("<nick> [<nick>...] || * -yes"),
         N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: give channel half-operator status to everybody on channel"),
-        "%(nicks)", &irc_command_halfop, NULL, NULL);
+        "%(nicks)|%*", &irc_command_halfop, NULL, NULL);
     weechat_hook_command (
         "ignore",
         N_("ignore nicks/hosts from servers or channels"),

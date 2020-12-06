@@ -27,6 +27,7 @@ Bug fixes::
 
   * core: display an error when the buffer is not found with command /command -buffer
   * exec: fix search of command by identifier
+  * irc: fix completion of commands /halfop and /dehalfop
   * spell: fix crash with IRC color codes in command line (issue #1589)
   * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)
 
