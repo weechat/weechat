@@ -7190,7 +7190,7 @@ irc_command_init ()
     weechat_hook_command (
         "voice",
         N_("give voice to nick(s)"),
-        N_("<nick> [<nick>...]"),
+        N_("<nick> [<nick>...] || * -yes"),
         N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: give voice to everybody on channel"),
         "%(nicks)|%*", &irc_command_voice, NULL, NULL);
