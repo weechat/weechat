@@ -37,6 +37,7 @@ Alphabetically:
 * Dmitry Kobylin
 * Dominik Honnef
 * Dominique Martinet
+* dotflac
 * Eduardo Elias
 * Eli Schwartz
 * Elizabeth Myers (Elizacat)
