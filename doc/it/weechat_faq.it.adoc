@@ -256,6 +256,35 @@ For example to use kbd:[F1], kbd:[F2], kbd:[Alt+F1] and kbd:[Alt+F2]:
 I tasti "meta-OP" e "meta-OQ" possono essere differenti nel proprio terminale.
 Per trovare il codice tasto digitare kbd:[Alt+k] poi il tast.
 
+// TRANSLATION MISSING
+[[customize_buflist]]
+=== How can I customize the list of buffers list, like the color of the active buffer?
+
+You can browse all buflist options with the command:
+
+----
+/fset buflist
+----
+
+The background of the active buffer is blue by default, you can change it
+like this, for example to `red`:
+
+----
+/set buflist.format.buffer_current "${color:,red}${format_buffer}"
+----
+
+[NOTE]
+There's a comma before the color name "red" because it is used as the background,
+not the text color. +
+You can also use any numeric color instead of `red`,
+like `237` for dark gray.
+
+The buflist plugin provides lot of options that you can customize, please read
+the help on each option.
+
+There's also a wiki page with examples of advanced buflist configuration:
+https://github.com/weechat/weechat/wiki/buflist
+
 [[customize_prefix]]
 === Come si può ridurre la lunghezza dei nick o rimuovere l'allineamento nella finestra di chat?
 
