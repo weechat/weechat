@@ -6579,7 +6579,7 @@ irc_command_init ()
     weechat_hook_command (
         "dehalfop",
         N_("remove channel half-operator status from nick(s)"),
-        N_("<nick> [<nick>...]"),
+        N_("<nick> [<nick>...] || * -yes"),
         N_("nick: nick or mask (wildcard \"*\" is allowed)\n"
            "   *: remove channel half-operator status from everybody on channel "
            "except yourself"),
