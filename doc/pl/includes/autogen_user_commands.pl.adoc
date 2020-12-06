@@ -219,6 +219,7 @@ Przykłady:
 
 ----
 /dehalfop  <nick> [<nick>...]
+           * -yes
 
 nick: nick lub maska (wildcard "*" jest dozwolony)
    *: zabiera status pół-operatora kanału wszystkim na kanale poza tobą
@@ -931,6 +932,7 @@ cel: nazwa serwera
 
 ----
 /voice  <nick> [<nick>...]
+        * -yes
 
 nick: nick lub maska (wildcard "*" jest dozwolony)
    *: daje głos każdemu na kanale

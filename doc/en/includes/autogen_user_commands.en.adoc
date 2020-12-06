@@ -219,6 +219,7 @@ Examples:
 
 ----
 /dehalfop  <nick> [<nick>...]
+           * -yes
 
 nick: nick or mask (wildcard "*" is allowed)
    *: remove channel half-operator status from everybody on channel except yourself
@@ -932,6 +933,7 @@ target: server name
 
 ----
 /voice  <nick> [<nick>...]
+        * -yes
 
 nick: nick or mask (wildcard "*" is allowed)
    *: give voice to everybody on channel

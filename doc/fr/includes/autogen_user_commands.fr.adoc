@@ -219,6 +219,7 @@ Exemples :
 
 ----
 /dehalfop  <pseudo> [<pseudo>...]
+           * -yes
 
 pseudo : pseudo ou masque (le caractère joker "*" est autorisé)
      * : retirer le statut de demi-opérateur de tout le monde sur le canal excepté vous-même
@@ -932,6 +933,7 @@ pseudo : pseudo
 
 ----
 /voice  <pseudo> [<pseudo>...]
+        * -yes
 
 pseudo : pseudo ou masque (le caractère joker "*" est autorisé)
      * : donner la voix à tout le monde sur le canal

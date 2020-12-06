@@ -219,6 +219,7 @@ Beispiel:
 
 ----
 /dehalfop  <nick> [<nick>...]
+           * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
    *: entzieht allen Nicks im Channel den half-operator-Status, ausgenommen sich selber
@@ -932,6 +933,7 @@ target: Servername
 
 ----
 /voice  <nick> [<nick>...]
+        * -yes
 
 nick: Nick oder Maske (Platzhalter "*" kann verwendet werden)
    *: vergibt an alle Nicks im Channel den voice-Status
