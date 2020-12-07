@@ -249,33 +249,29 @@ Die Tasten "meta-OP" und "meta-OQ" können im Hinblick auf das jeweils genutzte 
 Um die korrekten Tasten zu finden, sollte man mit kbd:[Alt+k] die gewünschte Tastenkombination einfangen.
 Siehe auch: link:weechat_user.de.html#key_bindings_command_line[Benutzerhandbuch / Tastenbelegung].
 
-// TRANSLATION MISSING
 [[customize_buflist]]
-=== How can I customize the list of buffers list, like the color of the active buffer?
+=== Wie kann ich die Darstellung der Bufferliste anpassen, z.B. die Farbe des aktiven Buffers?
 
-You can browse all buflist options with the command:
+Mit folgendem Befehl können alle Optionen der Buflist angezeigt werden:
 
 ----
 /fset buflist
 ----
 
-The background of the active buffer is blue by default, you can change it
-like this, for example to `red`:
+Die Hintergrundfarbe des aktiven Buffers ist standardmäßig blau. Sie können diese
+Farbe folgendermaßen ändern, z.B. in "red":
 
 ----
 /set buflist.format.buffer_current "${color:,red}${format_buffer}"
 ----
 
 [NOTE]
-There's a comma before the color name "red" because it is used as the background,
-not the text color. +
-You can also use any numeric color instead of `red`,
-like `237` for dark gray.
+Vor dem Farbnamen "red" steht ein Komma, da die Farbe als Hintergrund und nicht als Textfarbe verwendet wird. +
+Es kann auch eine beliebige numerische Farbe anstelle von "Rot" verwendet werden, z. B. "237" für Dunkelgrau.
 
-The buflist plugin provides lot of options that you can customize, please read
-the help on each option.
+Die Buflist-Erweiterung bietet viele Optionen, zum individualisieren. Bitte lesen Sie dazu die Hilfe von jeder Option.
 
-There's also a wiki page with examples of advanced buflist configuration:
+Es gibt auch eine Wiki-Seite mit Beispielen, wie eine erweiterte Konfiguration aussehen kann:
 https://github.com/weechat/weechat/wiki/buflist
 
 [[customize_prefix]]
