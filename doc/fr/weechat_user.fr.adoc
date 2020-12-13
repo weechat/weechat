@@ -401,6 +401,9 @@ Si vous compilez avec CMake :
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
+[[build_debug_address_sanitizer]]
+==== Construction avec options de debug et la vérification des adresses
+
 Vous pouvez aussi activer la vérification des adresses (« address sanitizer »),
 ce qui provoquera immédiatement un plantage de WeeChat en cas de problème :
 
@@ -412,8 +415,13 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 Vous ne devriez activer la vérification des adresses que si vous essayez de
 provoquer un plantage, ceci n'est pas recommandé en production.
 
-Si vous avez installé un paquet binaire, alors installez le paquet
-_weechat-dbg_.
+Une fois compilé et installé, vous devez lancer WeeChat comme ceci :
+
+----
+$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+----
+
+En cas de plantage, la trace est dans le fichier `asan.log`.
 
 [[core_files]]
 ==== Fichiers core

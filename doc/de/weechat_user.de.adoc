@@ -397,6 +397,10 @@ Bei der Kompilierung mit CMake muss folgende Option gesetzt werden:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
+// TRANSLATION MISSING
+[[build_debug_address_sanitizer]]
+==== Build with debug options and address sanitizer
+
 Sie können zusätzlich den Adressbereiniger aktivieren, der bei Problemen sofort
 zum Absturz von WeeChat führt:
 
@@ -408,7 +412,15 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 Sie sollten die Adressbereinigung nur aktivieren, wenn Sie versuchen, einen
 Absturz zu provozieren. Dies wird im produktivem Einsatz nicht empfohlen.
 
-Wird ein Binärpaket genutzt dann muss zusätzlich das Paket _weechat-dbg_ installiert werden.
+// TRANSLATION MISSING
+Then once compiled and installed, you must run WeeChat like this:
+
+----
+$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+----
+
+// TRANSLATION MISSING
+In case of crash, the backtrace is in file `asan.log`.
 
 [[core_files]]
 ==== Core Dateien

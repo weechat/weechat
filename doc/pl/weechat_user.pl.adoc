@@ -400,6 +400,10 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
 // TRANSLATION MISSING
+[[build_debug_address_sanitizer]]
+==== Build with debug options
+
+// TRANSLATION MISSING
 You can additionally enable the address sanitizer, which causes WeeChat to
 crash immediately in case of problem:
 
@@ -412,7 +416,15 @@ $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_C
 You should enable address sanitizer only if you're trying to cause a crash,
 this is not recommended in production.
 
-Jeśli zainstalowałeś pakiet binarny, doinstaluj paczkę _weechat-dbg_.
+// TRANSLATION MISSING
+Then once compiled and installed, you must run WeeChat like this:
+
+----
+$ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
+----
+
+// TRANSLATION MISSING
+In case of crash, the backtrace is in file `asan.log`.
 
 [[core_files]]
 ==== CPliki core
