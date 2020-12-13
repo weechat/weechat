@@ -1246,8 +1246,18 @@ php_weechat_sapi_error (int type, const char *format, ...)
     }
 }
 
-#if PHP_VERSION_ID >= 70100
-/* PHP >= 7.1 */
+#if PHP_VERSION_ID >= 80000
+/* PHP >= 8.0 */
+void
+php_weechat_log_message (const char *message, int syslog_type_int)
+{
+    /* make C compiler happy */
+    (void) syslog_type_int;
+
+    php_weechat_ub_write (message, strlen (message));
+}
+#elif PHP_VERSION_ID >= 70100
+/* 7.1 <= PHP < 8.0 */
 void
 php_weechat_log_message (char *message, int syslog_type_int)
 {
