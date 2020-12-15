@@ -2823,6 +2823,16 @@ Sur le tampon des scripts, les statuts pour chaque script sont :
   | installé
   script populaire
 
+Dans la sortie de /script list, les statuts pour chaque script sont :
+  * ? i a H N
+  | | | | | |
+  | | | | | obsolète (nouvelle version disponible)
+  | | | | figé
+  | | | chargé auto
+  | | installé
+  | script inconnu (ne peut pas être téléchargé/mis à jour)
+  script populaire
+
 Les touches sur le tampon des scripts :
   alt+i  installer le script
   alt+r  supprimer le script

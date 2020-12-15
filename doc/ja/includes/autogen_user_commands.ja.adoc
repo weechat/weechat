@@ -2823,6 +2823,16 @@ On script buffer, the possible status for each script are:
   | installed
   popular script
 
+In output of /script list, the possible status for each script are:
+  * ? i a H N
+  | | | | | |
+  | | | | | obsolete (new version available)
+  | | | | held
+  | | | autoloaded
+  | | installed
+  | unknown script (can not be downloaded/updated)
+  popular script
+
 Keys on script buffer:
   alt+i  install script
   alt+r  remove script

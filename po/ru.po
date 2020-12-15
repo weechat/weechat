@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-11-17 21:33+0100\n"
+"POT-Creation-Date: 2020-12-15 20:37+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6358,7 +6358,7 @@ msgid "remove channel half-operator status from nick(s)"
 msgstr "снимает статус оператора с ника(-ов)"
 
 #, fuzzy
-msgid "<nick> [<nick>...]"
+msgid "<nick> [<nick>...] || * -yes"
 msgstr "ник [ник ...]"
 
 msgid ""
@@ -6370,10 +6370,6 @@ msgstr ""
 #, fuzzy
 msgid "remove channel operator status from nick(s)"
 msgstr "снимает статус оператора с ника(-ов)"
-
-#, fuzzy
-msgid "<nick> [<nick>...] || * -yes"
-msgstr "ник [ник ...]"
 
 msgid ""
 "nick: nick or mask (wildcard \"*\" is allowed)\n"
@@ -6471,6 +6467,10 @@ msgstr ""
 #, fuzzy
 msgid "check if a nick is currently on IRC"
 msgstr "проверить, есть ли ник в IRC"
+
+#, fuzzy
+msgid "<nick> [<nick>...]"
+msgstr "ник [ник ...]"
 
 #, fuzzy
 msgid "nick: nick"
@@ -11038,6 +11038,16 @@ msgid ""
 "  | | | held\n"
 "  | | autoloaded\n"
 "  | installed\n"
+"  popular script\n"
+"\n"
+"In output of /script list, the possible status for each script are:\n"
+"  * ? i a H N\n"
+"  | | | | | |\n"
+"  | | | | | obsolete (new version available)\n"
+"  | | | | held\n"
+"  | | | autoloaded\n"
+"  | | installed\n"
+"  | unknown script (can not be downloaded/updated)\n"
 "  popular script\n"
 "\n"
 "Keys on script buffer:\n"
