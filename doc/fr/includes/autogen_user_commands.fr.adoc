@@ -1410,6 +1410,7 @@ Exemples (conditions) :
          enable|disable|toggle [<nom>|@]
          add|addreplace <nom> <tampon>[,<tampon>...] <étiquettes> <regex>
          rename <nom> <nouveau_nom>
+         recreate <nom>
          del <nom>|-all
 
       list : lister tous les filtres
@@ -1420,6 +1421,7 @@ Exemples (conditions) :
        add : ajouter un filtre
 addreplace : ajouter ou remplacer un filtre existant
     rename : renommer un filtre
+  recreate : définir la ligne de commande utilisée pour modifier le filtre
        del : supprimer un filtre
       -all : supprimer tous les filtres
     tampon : liste des tampons, séparés par des virgules, où le filtre est actif :

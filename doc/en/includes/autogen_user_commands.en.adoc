@@ -1410,6 +1410,7 @@ Examples (conditions):
          enable|disable|toggle [<name>|@]
          add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>
          rename <name> <new_name>
+         recreate <name>
          del <name>|-all
 
       list: list all filters
@@ -1420,6 +1421,7 @@ Examples (conditions):
        add: add a filter
 addreplace: add or replace an existing filter
     rename: rename a filter
+  recreate: set input with the command used to edit the filter
        del: delete a filter
       -all: delete all filters
     buffer: comma separated list of buffers where filter is active:

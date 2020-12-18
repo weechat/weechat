@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-15 20:37+0100\n"
+"POT-Creation-Date: 2020-12-18 20:22+0100\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -458,6 +458,10 @@ msgstr ""
 
 #, c-format
 msgid "%sYou must specify at least tags or regex for filter"
+msgstr ""
+
+#, c-format
+msgid "Filter \"%s\" updated:"
 msgstr ""
 
 #, c-format
@@ -1448,7 +1452,8 @@ msgstr ""
 
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
-"<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
+"<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
+"|| del <name>|-all"
 msgstr ""
 
 msgid ""
@@ -1461,6 +1466,7 @@ msgid ""
 "       add: add a filter\n"
 "addreplace: add or replace an existing filter\n"
 "    rename: rename a filter\n"
+"  recreate: set input with the command used to edit the filter\n"
 "       del: delete a filter\n"
 "      -all: delete all filters\n"
 "    buffer: comma separated list of buffers where filter is active:\n"

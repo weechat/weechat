@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-15 20:37+0100\n"
+"POT-Creation-Date: 2020-12-18 20:22+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -530,6 +530,10 @@ msgstr "フィルタ \"%s\" が無効化されました"
 #, fuzzy, c-format
 msgid "%sYou must specify at least tags or regex for filter"
 msgstr "%sエラー: フィルタ用にタグか正規表現のどちらかを指定してください"
+
+#, fuzzy, c-format
+msgid "Filter \"%s\" updated:"
+msgstr "フィルタ \"%s\" が追加されました:"
 
 #, c-format
 msgid "Filter \"%s\" added:"
@@ -1839,13 +1843,16 @@ msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr "タグか正規表現に基づくバッファメッセージの非表示/表示"
 
+#, fuzzy
 msgid ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
-"<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
+"<buffer>...] <tags> <regex> || rename <name> <new_name> || recreate <name> "
+"|| del <name>|-all"
 msgstr ""
 "list || enable|disable|toggle [<name>|@] || add|addreplace <name> <buffer>[,"
 "<buffer>...] <tags> <regex> || rename <name> <new_name> || del <name>|-all"
 
+#, fuzzy
 msgid ""
 "      list: list all filters\n"
 "    enable: enable filters (filters are enabled by default)\n"
@@ -1856,6 +1863,7 @@ msgid ""
 "       add: add a filter\n"
 "addreplace: add or replace an existing filter\n"
 "    rename: rename a filter\n"
+"  recreate: set input with the command used to edit the filter\n"
 "       del: delete a filter\n"
 "      -all: delete all filters\n"
 "    buffer: comma separated list of buffers where filter is active:\n"

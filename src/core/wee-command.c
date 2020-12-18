@@ -2200,6 +2200,8 @@ command_filter_display (struct t_gui_filter *filter)
 COMMAND_CALLBACK(filter)
 {
     struct t_gui_filter *ptr_filter;
+    char str_command[4096], str_pos[16];
+    int update;
 
     /* make C compiler happy */
     (void) pointer;
@@ -2409,6 +2411,7 @@ COMMAND_CALLBACK(filter)
             return WEECHAT_RC_OK;
         }
 
+        update = 0;
         if (string_strcasecmp (argv[1], "addreplace") == 0)
         {
             ptr_filter = gui_filter_search_by_name (argv[2]);
@@ -2418,6 +2421,7 @@ COMMAND_CALLBACK(filter)
                 ptr_filter->enabled = 0;
                 gui_filter_all_buffers (ptr_filter);
                 gui_filter_free (ptr_filter);
+                update = 1;
             }
         }
 
@@ -2427,12 +2431,42 @@ COMMAND_CALLBACK(filter)
         {
             gui_filter_all_buffers (ptr_filter);
             gui_chat_printf (NULL, "");
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("Filter \"%s\" added:"),
-                                       argv[2]);
+            gui_chat_printf_date_tags (
+                NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                (update) ? _("Filter \"%s\" updated:") : _("Filter \"%s\" added:"),
+                argv[2]);
             command_filter_display (ptr_filter);
         }
 
+        return WEECHAT_RC_OK;
+    }
+
+    /* recreate a filter */
+    if (string_strcasecmp (argv[1], "recreate") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "recreate");
+        ptr_filter = gui_filter_search_by_name (argv[2]);
+        if (ptr_filter)
+        {
+            snprintf (str_command, sizeof (str_command),
+                      "/filter addreplace %s %s %s %s",
+                      ptr_filter->name,
+                      ptr_filter->buffer_name,
+                      ptr_filter->tags,
+                      ptr_filter->regex);
+            gui_buffer_set (buffer, "input", str_command);
+            snprintf (str_pos, sizeof (str_pos),
+                      "%d", utf8_strlen (str_command));
+            gui_buffer_set (buffer, "input_pos", str_pos);
+        }
+        else
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sFilter \"%s\" not found"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       argv[2]);
+            return WEECHAT_RC_OK;
+        }
         return WEECHAT_RC_OK;
     }
 
@@ -2465,7 +2499,6 @@ COMMAND_CALLBACK(filter)
                                        _("%sFilter \"%s\" not found"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        argv[2]);
-            return WEECHAT_RC_OK;
         }
         return WEECHAT_RC_OK;
     }
@@ -7534,6 +7567,7 @@ command_init ()
            " || enable|disable|toggle [<name>|@]"
            " || add|addreplace <name> <buffer>[,<buffer>...] <tags> <regex>"
            " || rename <name> <new_name>"
+           " || recreate <name>"
            " || del <name>|-all"),
         N_("      list: list all filters\n"
            "    enable: enable filters (filters are enabled by default)\n"
@@ -7544,6 +7578,7 @@ command_init ()
            "       add: add a filter\n"
            "addreplace: add or replace an existing filter\n"
            "    rename: rename a filter\n"
+           "  recreate: set input with the command used to edit the filter\n"
            "       del: delete a filter\n"
            "      -all: delete all filters\n"
            "    buffer: comma separated list of buffers where filter "
@@ -7611,6 +7646,7 @@ command_init ()
         " || toggle %(filters_names)|@"
         " || add|addreplace %(filters_names) %(buffers_plugins_names)|*"
         " || rename %(filters_names) %(filters_names)"
+        " || recreate %(filters_names)"
         " || del %(filters_names)|-all",
         &command_filter, NULL, NULL);
     hook_command (
