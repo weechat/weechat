@@ -2465,7 +2465,6 @@ COMMAND_CALLBACK(filter)
                                        _("%sFilter \"%s\" not found"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                        argv[2]);
-            return WEECHAT_RC_OK;
         }
         return WEECHAT_RC_OK;
     }
@@ -2490,7 +2489,6 @@ COMMAND_CALLBACK(filter)
                                              "\"%s\" to \"%s\""),
                                            gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                            argv[2], argv[3]);
-                return WEECHAT_RC_OK;
             }
         }
         else
