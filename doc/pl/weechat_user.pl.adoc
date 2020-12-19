@@ -1099,8 +1099,8 @@ Przykład podziałów pionowego i poziomego:
                  ▲ window #1 (buffer #3)               ▲ window #2 (buffer #4)
 ....
 
-[[buffers_lines]]
-=== Linie buforów
+[[buffers]]
+=== Buforów
 
 [[lines_format]]
 ==== Format linii
@@ -1171,6 +1171,142 @@ Popularnie używane tagi  (niepełna lista):
 "notify_xxx" is present, the real notify level can be different, for example
 if a max hotlist level is used for a nick, the notify level can be lower than
 the value in the tag.
+
+// TRANSLATION MISSING
+[[local_variables]]
+==== Local variables
+
+Local variables can be defined in all buffers.
+
+A local variable has:
+
+* a name (string)
+* a value (string, can be empty).
+
+Local variables can be set by WeeChat, plugins, scripts, or manually on the
+command line in the buffer.
+
+For example to add the local variable "completion_default_template":
+
+----
+/buffer setvar completion_default_template %(my_completion)
+----
+
+To list local variables in the current buffer:
+
+----
+/buffer listvar
+----
+
+To remove the local variable "completion_default_template":
+
+----
+/buffer delvar completion_default_template
+----
+
+By default WeeChat and its default plugins interpret these variables:
+
+[width="100%",cols="^2m,2,5",options="header"]
+|===
+| Name | Value | Description
+
+| away |
+  any string |
+  Away message on the server, set by irc plugin.
+
+| channel |
+  any string |
+  Channel name, set by irc/xfer plugins and debug buffer of relay/trigger plugins.
+
+| charset_modifier |
+  any string |
+  Charset modifier for the server buffer, set by irc plugin.
+
+| completion_default_template |
+  any string |
+  Default completion template for the buffer, overriding the option
+  `weechat.completion.default_template`.
+
+| filter |
+  any string |
+  Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+
+| host |
+  any string |
+  Self host (if known), set by irc plugin.
+
+| lag |
+  any string |
+  Lag on the server, set by irc plugin.
+
+| name |
+  any string |
+  Buffer name (be careful, this is not the full name and this name is not
+  enough to identify or search a buffer.
+
+| nick |
+  any string |
+  Self nick, set by irc and xfer plugins.
+
+| no_log |
+  `1` (or any non-empty string) |
+  If set, the logger plugin does not log anything for the buffer.
+
+| plugin |
+  any string |
+  Name of plugin which created the buffer (`core` for WeeChat buffers).
+
+| script_close_cb |
+  any string |
+  Close callback defined by a script for a buffer.
+
+| script_close_cb_data |
+  any string |
+  Data for close callback defined by a script for a buffer.
+
+| script_input_cb |
+  any string |
+  Input callback defined by a script for a buffer.
+
+| script_input_cb_data |
+  any string |
+  Data for input callback defined by a script for a buffer.
+
+| script_name |
+  any string |
+  Name of the script which created the buffer.
+
+| server |
+  any string |
+  Server name, set by irc plugin and debug buffer of relay/trigger plugins.
+
+| spell_suggest |
+  any string |
+  Misspelled word and suggestions (format: "misspelled:suggestions"), set by
+  spell plugin.
+
+| trigger_filter |
+  any string |
+  Trigger filter, set by trigger plugin.
+
+| type |
+  any string, for example:
+  `channel`,
+  `debug`,
+  `exec`,
+  `option`,
+  `private`,
+  `relay`,
+  `script`,
+  `server`,
+  `user`,
+  `xfer` |
+  Type of buffer, set by WeeChat and many plugins.
+
+|===
+
+[NOTE]
+External plugins and scripts can define and use other local variables.
 
 [[bars]]
 === Paski

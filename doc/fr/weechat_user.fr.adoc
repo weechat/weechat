@@ -1112,8 +1112,8 @@ Exemple de découpage vertical + horizontal :
                  ▲ fenêtre n°1 (tampon n°3)            ▲ fenêtre n°2 (tampon n°4)
 ....
 
-[[buffers_lines]]
-=== Lignes des tampons
+[[buffers]]
+=== Tampons
 
 [[lines_format]]
 ==== Format des lignes
@@ -1181,6 +1181,149 @@ notification par défaut est "low". Si une étiquette "notify_xxx" est présente
 le niveau de notification réel peut être différent, par exemple si un niveau
 maximum de hotlist est utilisé pour un pseudo, le niveau de notification peut
 être inférieur à la valeur de l'étiquette.
+
+[[local_variables]]
+==== Variables locales
+
+Des variables locales peuvent être définies dans les tampons.
+
+Une variable locale a :
+
+* un nom (chaîne)
+* une valeur (chaîne, peut être vide).
+
+Les variables locales peuvent être définies par WeeChat, les extensions, les
+scripts, ou manuellement sur la ligne de commande, dans le tampon.
+
+Par exemple pour ajouter la variable locale "completion_default_template" :
+
+----
+/buffer setvar completion_default_template %(my_completion)
+----
+
+Pour afficher les variables locales du tampon courant :
+
+----
+/buffer listvar
+----
+
+Pour supprimer la variable locale "completion_default_template" :
+
+----
+/buffer delvar completion_default_template
+----
+
+Par défaut WeeChat et ses extensions par défaut interprètent ces variables :
+
+[width="100%",cols="^2m,2,5",options="header"]
+|===
+| Nom | Valeur | Description
+
+| away |
+  toute chaîne |
+  Message d'absence sur le serveur, défini par l'extension irc.
+
+| channel |
+  toute chaîne |
+  Nom du canal, défini par les extensions irc/xfer et le tampon de debug des
+  extensions relay/trigger.
+
+| charset_modifier |
+  toute chaîne |
+  Modificateur de charset du tampon serveur, défini par l'extension irc.
+
+| completion_default_template |
+  toute chaîne |
+  Modèle de complétion par défaut pour le tampon, qui remplace l'option
+  `weechat.completion.default_template`.
+
+| filter |
+  toute chaîne |
+  Filtre défini sur certains tampons comme `/fset`, `/server raw` (irc) et
+  `/script`.
+
+| host |
+  toute chaîne |
+  Nom d'hôte personnel (si connu), défini par l'extension irc.
+
+| lag |
+  toute chaîne |
+  Lag sur le serveur, défini par l'extension irc.
+
+| name |
+  toute chaîne |
+  Nom du tampon (attention, ce n'est pas le nom complet du tampon et ce nom
+  n'est pas suffisant pour identifier ou chercher un tampon).
+
+| nick |
+  toute chaîne |
+  Pseudo personnel, défini par les extensions irc et xfer.
+
+| no_log |
+  `1` (or any non-empty string) |
+  Si défini, l'extension logger n'écrira pas le "log" du tampon sur disque.
+
+| plugin |
+  toute chaîne |
+  Nom de l'extension qui a créé le tampon (`core` pour les tampons WeeChat).
+
+| script_close_cb |
+  toute chaîne |
+  Nom de la fonction de rappel pour la fermeture,
+  défini par un script pour le tampon.
+
+| script_close_cb_data |
+  toute chaîne |
+  Données pour la fonction de rappel pour la fermeture,
+  définies par un script pour le tampon.
+
+| script_input_cb |
+  toute chaîne |
+  Nom de la fonction de rappel d'entrée,
+  défini par un script pour le tampon.
+
+| script_input_cb_data |
+  toute chaîne |
+  Données pour la fonction de rappel d'entrée,
+  définies par un script pour le tampon.
+
+| script_name |
+  toute chaîne |
+  Nom du script qui a créé le tampon.
+
+| server |
+  toute chaîne |
+  Nom du serveur, défini par l'extension irc et le tampon de debug des extensions
+  relay/trigger.
+
+| spell_suggest |
+  toute chaîne |
+  Mot mal orthographié et ses suggestions (format : "mot:suggestions"), défini
+  par l'extension spell.
+
+| trigger_filter |
+  toute chaîne |
+  Filtre trigger, défini par l'extension trigger.
+
+| type |
+  toute chaîne, par exemple :
+  `channel`,
+  `debug`,
+  `exec`,
+  `option`,
+  `private`,
+  `relay`,
+  `script`,
+  `server`,
+  `user`,
+  `xfer` |
+  Type de tampon, défini par WeeChat et plusieurs extensions.
+
+|===
+
+[NOTE]
+Les extensions et script externes peuvent définir et utiliser d'autres
+variables locales.
 
 [[bars]]
 === Barres
