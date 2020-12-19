@@ -992,7 +992,7 @@ Pour voir les variables locales d'un tampon, exécutez cette commande dans
 WeeChat :
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 [[hooks]]

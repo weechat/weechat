@@ -1,4 +1,3 @@
-
 /*
  * wee-completion.c - completion for WeeChat commands
  *
@@ -197,6 +196,97 @@ completion_list_add_buffers_plugins_names_cb (const void *pointer, void *data,
         gui_completion_list_add (completion, ptr_buffer->full_name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds a buffer local variable to completions list.
+ */
+
+void
+completion_list_map_buffer_local_variable_cb (void *data,
+                                              struct t_hashtable *hashtable,
+                                              const void *key, const void *value)
+{
+    /* make C compiler happy */
+    (void) hashtable;
+    (void) value;
+
+    gui_completion_list_add ((struct t_gui_completion *)data,
+                             (const char *)key,
+                             0, WEECHAT_LIST_POS_SORT);
+}
+
+/*
+ * Adds buffer local variables to completion list.
+ */
+
+int
+completion_list_add_buffer_local_variables_cb (const void *pointer, void *data,
+                                               const char *completion_item,
+                                               struct t_gui_buffer *buffer,
+                                               struct t_gui_completion *completion)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    hashtable_map (completion->buffer->local_variables,
+                   &completion_list_map_buffer_local_variable_cb,
+                   completion);
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * Adds buffer local variable value to completion list.
+ */
+
+int
+completion_list_add_buffer_local_variable_value_cb (const void *pointer, void *data,
+                                                    const char *completion_item,
+                                                    struct t_gui_buffer *buffer,
+                                                    struct t_gui_completion *completion)
+{
+    char **argv;
+    int argc, arg_index;
+    const char *ptr_value;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) completion_item;
+    (void) buffer;
+
+    if (!completion->args)
+        return WEECHAT_RC_OK;
+
+    argv = string_split (completion->args, " ", NULL,
+                         WEECHAT_STRING_SPLIT_STRIP_LEFT
+                         | WEECHAT_STRING_SPLIT_STRIP_RIGHT
+                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
+                         0, &argc);
+    if (!argv)
+        return WEECHAT_RC_OK;
+
+    if (argc > 0)
+    {
+        arg_index = completion->base_command_arg_index - 2;
+        if ((arg_index < 1) || (arg_index > argc - 1))
+            arg_index = argc - 1;
+        ptr_value = hashtable_get (completion->buffer->local_variables,
+                                   argv[arg_index]);
+        if (ptr_value)
+        {
+            gui_completion_list_add (completion,
+                                     ptr_value,
+                                     0, WEECHAT_LIST_POS_SORT);
+        }
+    }
+    string_free_split (argv);
 
     return WEECHAT_RC_OK;
 }
@@ -1712,6 +1802,12 @@ completion_init ()
     hook_completion (NULL, "buffers_plugins_names", /* formerly "%B" */
                      N_("names of buffers (including plugins names)"),
                      &completion_list_add_buffers_plugins_names_cb, NULL, NULL);
+    hook_completion (NULL, "buffer_local_variables",
+                     N_("buffer local variables"),
+                     &completion_list_add_buffer_local_variables_cb, NULL, NULL);
+    hook_completion (NULL, "buffer_local_variable_value",
+                     N_("value of a buffer local variable"),
+                     &completion_list_add_buffer_local_variable_value_cb, NULL, NULL);
     hook_completion (NULL, "buffer_properties_set",
                      N_("properties that can be set on a buffer"),
                      &completion_list_add_buffer_properties_set_cb, NULL, NULL);

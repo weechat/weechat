@@ -988,7 +988,7 @@ Um zu sehen welche lokalen Variablen für einen Buffer gesetzt sind führen Sie
 bitte in WeeChat folgenden Befehl aus:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 [[hooks]]

@@ -987,7 +987,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 バッファに対するローカル変数を見るには、WeeChat で以下のコマンドを実行してください:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 [[hooks]]

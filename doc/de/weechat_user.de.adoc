@@ -3150,7 +3150,7 @@ mit lokalen Buffervariablen zu füllen. Um sich die verfügbaren lokalen Variabl
 für den aktuellen Buffer anzeigen zu lassen:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 Masken werden in absteigender Reihenfolge abgeglichen, beginnend mit

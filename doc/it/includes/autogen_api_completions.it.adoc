@@ -120,6 +120,10 @@
 
 | weechat | bars_options | opzioni per le barre
 
+| weechat | buffer_local_variable_value | value of a buffer local variable
+
+| weechat | buffer_local_variables | buffer local variables
+
 | weechat | buffer_properties_get | proprietà che possono essere lette su un buffer
 
 | weechat | buffer_properties_set | proprietà che possono essere impostate su un buffer

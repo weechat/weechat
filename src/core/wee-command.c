@@ -1136,8 +1136,15 @@ COMMAND_CALLBACK(buffer)
         return WEECHAT_RC_OK;
     }
 
-    /* display local variables on buffer */
-    if (string_strcasecmp (argv[1], "localvar") == 0)
+    /*
+     * display buffer local variables
+     *
+     * (note: option "localvar" has been replaced by "listvar" in WeeChat 3.1
+     * but is still accepted for compatibility with WeeChat ≤ 3.0;
+     * it is now deprecated and will be removed in a future version)
+     */
+    if ((string_strcasecmp (argv[1], "listvar") == 0)
+        || (string_strcasecmp (argv[1], "localvar") == 0))
     {
         if (argc > 2)
             ptr_buffer = gui_buffer_search_by_number_or_name (argv[2]);
@@ -1165,6 +1172,34 @@ COMMAND_CALLBACK(buffer)
             }
         }
 
+        return WEECHAT_RC_OK;
+    }
+
+    /* set a local variable in buffer */
+    if (string_strcasecmp (argv[1], "setvar") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "setvar");
+        if (argc == 3)
+        {
+            gui_buffer_local_var_add (buffer, argv[2], "");
+        }
+        else
+        {
+            value = string_remove_quotes (argv_eol[3], "'\"");
+            gui_buffer_local_var_add (buffer,
+                                      argv[2],
+                                      (value) ? value : argv_eol[3]);
+            if (value)
+                free (value);
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* delete a local variable from a buffer */
+    if (string_strcasecmp (argv[1], "delvar") == 0)
+    {
+        COMMAND_MIN_ARGS(3, "delvar");
+        gui_buffer_local_var_remove (buffer, argv[2]);
         return WEECHAT_RC_OK;
     }
 
@@ -7178,7 +7213,9 @@ command_init ()
            " || renumber [<number1> [<number2> [<start>]]]"
            " || close [<n1>[-<n2>]|<name>...]"
            " || notify [<level>]"
-           " || localvar [<number>|<name>]"
+           " || listvar [<number>|<name>]"
+           " || setvar <name> [<value>]"
+           " || delvar <name>"
            " || set <property> [<value>]"
            " || get <property>"
            " || <number>|-|+|<name>"),
@@ -7209,8 +7246,10 @@ command_init ()
            "            message: for messages from users + highlights\n"
            "                all: all messages\n"
            "              reset: reset to default value (all)\n"
-           "localvar: display local variables for the buffer\n"
-           "     set: set a property for current buffer\n"
+           " listvar: display local variables in a buffer\n"
+           "  setvar: set a local variable in the current buffer\n"
+           "  delvar: delete a local variable from the current buffer\n"
+           "     set: set a property in the current buffer\n"
            "     get: display a property of current buffer\n"
            "  number: jump to buffer by number, possible prefix:\n"
            "          '+': relative jump, add number to current\n"
@@ -7265,7 +7304,9 @@ command_init ()
         " || close %(buffers_plugins_names)|%*"
         " || list"
         " || notify reset|none|highlight|message|all"
-        " || localvar %(buffers_numbers)|%(buffers_plugins_names)"
+        " || listvar %(buffers_numbers)|%(buffers_plugins_names)"
+        " || setvar %(buffer_local_variables) %(buffer_local_variable_value)"
+        " || delvar %(buffer_local_variables)"
         " || set %(buffer_properties_set)"
         " || get %(buffer_properties_get)"
         " || %(buffers_plugins_names)|%(buffers_names)|%(irc_channels)|"

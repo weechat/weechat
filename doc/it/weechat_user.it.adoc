@@ -3330,7 +3330,7 @@ le variabili buffer locali per costruire il nome del file. To see available
 local variables for current buffer:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 // TRANSLATION MISSING

@@ -973,7 +973,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 Aby zobaczyć lokalne zmienne danego bufora, należy wykonać tą komendę w WeeChat:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 [[hooks]]

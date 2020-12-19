@@ -120,6 +120,10 @@
 
 | weechat | bars_options | options pour les barres
 
+| weechat | buffer_local_variable_value | valeur d'une variable locale du tampon
+
+| weechat | buffer_local_variables | variables locales du tampon
+
 | weechat | buffer_properties_get | propriétés qui peuvent être lues sur un tampon
 
 | weechat | buffer_properties_set | propriétés qui peuvent être changées sur un tampon

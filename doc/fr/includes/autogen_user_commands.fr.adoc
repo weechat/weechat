@@ -1022,7 +1022,7 @@ Note : dans la commande, les variables spéciales sont remplacées :
       $n-m : paramètres de 'n' à 'm'
         $* : tous les paramètres
         $~ : le dernier paramètre
-      $var : où "var" est une variable locale du tampon (voir /buffer localvar)
+      $var : où "var" est une variable locale du tampon (voir /buffer listvar)
              exemples : $nick, $channel, $server, $plugin, $name
 
 Exemples :
@@ -1115,7 +1115,9 @@ Exemples :
          renumber <nombre1> [<nombre2> [<départ>]]
          close [<n1>[-<n2>]|<nom>...]
          notify [<niveau>]
-         localvar [<nombre>|<nom>]
+         listvar [<nombre>|<nom>]
+         setvar <nom> [<valeur>]
+         delvar <nom>
          set <propriété> [<valeur>]
          get <propriété>
          <nombre>|<nom>
@@ -1139,7 +1141,9 @@ renumber : renuméroter des tampons (fonctionne seulement si l'option weechat.l
              message : pour les messages d'utilisateurs + highlights
                  all : pour tous les messages
                reset : réinitialise à valeur par défaut (all)
-localvar : afficher la liste des variables locales pour le tampon
+ listvar : afficher la liste des variables locales d'un tampon
+  setvar : modifier une variable locale du tampon courant
+  delvar : supprimer une variable locale du tampon courant
      set : modifier une propriété du tampon courant
      get : afficher une propriété du tampon courant
   nombre : sauter au tampon qui a ce numéro, préfixe possible :

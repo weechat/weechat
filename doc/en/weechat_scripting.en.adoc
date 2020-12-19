@@ -965,7 +965,7 @@ weechat.buffer_set(buffer, "localvar_del_myvar", "")
 To see local variables of a buffer, do this command in WeeChat:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 [[hooks]]

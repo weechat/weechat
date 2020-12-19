@@ -3087,7 +3087,7 @@ It is possible to define a filename mask for each buffer, and use local buffer
 variables to build filename. To see available local variables for current buffer:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 Masks will be matched on options in descending order of specificity on

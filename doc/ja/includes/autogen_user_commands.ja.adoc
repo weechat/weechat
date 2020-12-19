@@ -1022,7 +1022,7 @@ Note: in command, special variables are replaced:
       $n-m: arguments from 'n' to 'm'
         $*: all arguments
         $~: last argument
-      $var: where "var" is a local variable of buffer (see /buffer localvar)
+      $var: where "var" is a local variable of buffer (see /buffer listvar)
             examples: $nick, $channel, $server, $plugin, $name
 
 Examples:
@@ -1115,7 +1115,9 @@ message: 離席メッセージ (メッセージが無い場合は、離席状態
          renumber [<number1> [<number2> [<start>]]]
          close [<n1>[-<n2>]|<name>...]
          notify [<level>]
-         localvar [<number>|<name>]
+         listvar [<number>|<name>]
+         setvar <name> [<value>]
+         delvar <name>
          set <property> [<value>]
          get <property>
          <number>|-|+|<name>
@@ -1139,8 +1141,10 @@ renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumb
             message: for messages from users + highlights
                 all: all messages
               reset: reset to default value (all)
-localvar: display local variables for the buffer
-     set: set a property for current buffer
+ listvar: display local variables in a buffer
+  setvar: set a local variable in the current buffer
+  delvar: delete a local variable from the current buffer
+     set: set a property in the current buffer
      get: display a property of current buffer
   number: jump to buffer by number, possible prefix:
           '+': relative jump, add number to current

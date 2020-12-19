@@ -274,7 +274,7 @@ alias_command_init ()
            "        $*: all arguments\n"
            "        $~: last argument\n"
            "      $var: where \"var\" is a local variable of buffer (see "
-           "/buffer localvar)\n"
+           "/buffer listvar)\n"
            "            examples: $nick, $channel, $server, $plugin, $name\n"
            "\n"
            "Examples:\n"

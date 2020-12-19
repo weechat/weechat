@@ -3186,7 +3186,7 @@ d'utiliser les variables locales du tampon pour construire le nom de fichier.
 Pour voir les variables disponibles sur le tampon courant :
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 Les masques seront utilisés par ordre de priorité descendante sur

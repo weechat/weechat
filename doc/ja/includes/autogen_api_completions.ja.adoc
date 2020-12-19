@@ -120,6 +120,10 @@
 
 | weechat | bars_options | バーのオプション
 
+| weechat | buffer_local_variable_value | value of a buffer local variable
+
+| weechat | buffer_local_variables | buffer local variables
+
 | weechat | buffer_properties_get | バッファから読み取り可能なプロパティ
 
 | weechat | buffer_properties_set | バッファに指定可能なプロパティ

@@ -3129,7 +3129,7 @@ It is possible to define a filename mask for each buffer, and use local buffer
 variables to build filename. To see available local variables for current buffer:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 // TRANSLATION MISSING

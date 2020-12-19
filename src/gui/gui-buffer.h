@@ -255,6 +255,11 @@ extern int gui_buffer_search_notify (const char *notify);
 extern const char *gui_buffer_get_plugin_name (struct t_gui_buffer *buffer);
 extern const char *gui_buffer_get_short_name (struct t_gui_buffer *buffer);
 extern void gui_buffer_build_full_name (struct t_gui_buffer *buffer);
+extern void gui_buffer_local_var_add (struct t_gui_buffer *buffer,
+                                      const char *name,
+                                      const char *value);
+extern void gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
+                                         const char *name);
 extern void gui_buffer_notify_set_all ();
 extern void gui_buffer_input_buffer_init (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_reserved_name (const char *name);

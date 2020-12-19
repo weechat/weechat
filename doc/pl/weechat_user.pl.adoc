@@ -3122,7 +3122,7 @@ użycie do tego zmiennych lokalnych bufora. W celu wyświetlenia listy dostępny
 zmiennych dla bufora wykonaj:
 
 ----
-/buffer localvar
+/buffer listvar
 ----
 
 Maski zostaną dopasowane do opcji w kolejności malejącej specyficznie dla
