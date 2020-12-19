@@ -12496,14 +12496,14 @@ relâché). +
 
 Informations additionnelles pour l'objet de barre "buffer_nicklist" :
 
-[width="100%",cols="1,1,5",options="header"]
+[width="100%",cols="^1,^1,5",options="header"]
 |===
-| Clé      | Extension ^(1)^ | Description
-| nick     | core            | Pseudonyme.
-| prefix   | core            | Préfixe du pseudonyme.
-| group    | core            | Nom du groupe.
-| irc_nick | irc             | Pointeur vers le pseudo IRC _(WeeChat ≥ 3.0)_.
-| irc_host | irc             | Nom d'hôte pour le pseudonyme (si connu).
+| Extension ^(1)^ | Clé      | Description
+| irc             | irc_nick | Pointeur vers le pseudo IRC _(WeeChat ≥ 3.0)_.
+| irc             | irc_host | Nom d'hôte pour le pseudonyme (si connu).
+| weechat         | nick     | Pseudonyme.
+| weechat         | prefix   | Préfixe du pseudonyme.
+| weechat         | group    | Nom du groupe.
 |===
 
 [NOTE]

@@ -12244,15 +12244,15 @@ info を使う前にエリアが一致していることを確認して下さい
 
 バー要素 "buffer_nicklist" の追加情報:
 
-[width="100%",cols="1,1,5",options="header"]
+[width="100%",cols="^1,^1,5",options="header"]
 |===
-| キー     | プラグイン ^(1)^ | 説明
-| nick     | core             | ニックネーム
-| prefix   | core             | ニックネームのプレフィックス
-| group    | core             | グループ名
+| プラグイン ^(1)^ | キー     | 説明
+| weechat          | nick     | ニックネーム
+| weechat          | prefix   | ニックネームのプレフィックス
+| weechat          | group    | グループ名
 // TRANSLATION MISSING
-| irc_nick | irc              | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
-| irc_host | irc              | ニックネームのホスト名 (判る場合)
+| irc              | irc_nick | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
+| irc              | irc_host | ニックネームのホスト名 (判る場合)
 |===
 
 [NOTE]

@@ -12732,15 +12732,15 @@ per sapere dove il pulsante del mouse è stato rilasciato). +
 
 Informazioni aggiuntive per l'elemento barra "buffer_nicklist":
 
-[width="100%",cols="1,1,5",options="header"]
+[width="100%",cols="^1,^1,5",options="header"]
 |===
-| Chiave   | Plugin ^(1)^ | Descrizione
-| nick     | core         | Nick.
-| prefix   | core         | Prefisso per il nick.
-| group    | core         | Nome gruppo.
+| Plugin ^(1)^ | Chiave   | Descrizione
 // TRANSLATION MISSING
-| irc_nick | irc          | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
-| irc_host | irc          | Host per il nick (se conosciuto).
+| irc          | irc_nick | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
+| irc          | irc_host | Host per il nick (se conosciuto).
+| weechat      | nick     | Nick.
+| weechat      | prefix   | Prefisso per il nick.
+| weechat      | group    | Nome gruppo.
 |===
 
 [NOTE]

@@ -12231,14 +12231,14 @@ button has been released). +
 
 Extra info for bar item "buffer_nicklist":
 
-[width="100%",cols="1,1,5",options="header"]
+[width="100%",cols="^1,^1,5",options="header"]
 |===
-| Key      | Plugin ^(1)^ | Description
-| nick     | core         | Nick name.
-| prefix   | core         | Prefix for nick.
-| group    | core         | Group name.
-| irc_nick | irc          | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
-| irc_host | irc          | Host for nick (if known).
+| Plugin ^(1)^ | Key      | Description
+| irc          | irc_nick | Pointer to IRC nick _(WeeChat ≥ 3.0)_.
+| irc          | irc_host | Host for nick (if known).
+| weechat      | nick     | Nick name.
+| weechat      | prefix   | Prefix for nick.
+| weechat      | group    | Group name.
 |===
 
 [NOTE]
