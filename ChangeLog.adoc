@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add buffer local variable "completion_default_template" (evaluated) to override the value of option "weechat.completion.default_template" (issue #1600)
   * core: add option "recreate" in command /filter
   * core: add evaluation of conditions in evaluation of expressions with "eval_cond:" (issue #1582)
   * trigger: add variable "${tg_trigger_name}" in command trigger evaluated strings (issue #1580)

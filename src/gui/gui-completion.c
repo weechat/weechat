@@ -36,6 +36,7 @@
 #include "../core/wee-arraylist.h"
 #include "../core/wee-completion.h"
 #include "../core/wee-config.h"
+#include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
 #include "../core/wee-hook.h"
@@ -1338,12 +1339,54 @@ gui_completion_command (struct t_gui_completion *completion)
 }
 
 /*
+ * Gets default completion template: from buffer local variable
+ * "completion_default_template" if defined, or the value of option
+ * "weechat.completion.default_template".
+ *
+ * Note: result must be freed after use.
+ */
+
+char *
+gui_completion_get_default_template(struct t_gui_completion *completion)
+{
+    const char *ptr_default_template;
+    char *value;
+    struct t_hashtable *pointers;
+
+    /* search buffer local variable "completion_default_template" */
+    ptr_default_template = hashtable_get (
+        completion->buffer->local_variables,
+        "completion_default_template");
+
+    if (!ptr_default_template)
+    {
+        /* return the global default completion template */
+        ptr_default_template = CONFIG_STRING(config_completion_default_template);
+        return strdup ((ptr_default_template) ? ptr_default_template : "");
+    }
+
+    /* evaluate the buffer local variable */
+    pointers = hashtable_new (32,
+                              WEECHAT_HASHTABLE_STRING,
+                              WEECHAT_HASHTABLE_POINTER,
+                              NULL, NULL);
+    hashtable_set (pointers, "buffer", completion->buffer);
+    value = eval_expression (ptr_default_template, pointers, NULL, NULL);
+    if (pointers)
+        hashtable_free (pointers);
+
+    return (value) ? value : strdup ("");
+}
+
+/*
  * Auto-completes: nick, filename or channel.
  */
 
 void
 gui_completion_auto (struct t_gui_completion *completion)
 {
+    char *default_completion;
+
     /* filename completion */
     if ((completion->base_word[0] == '/')
         || (completion->base_word[0] == '~'))
@@ -1358,10 +1401,13 @@ gui_completion_auto (struct t_gui_completion *completion)
     /* use default template completion */
     if (completion->list->size == 0)
     {
+        default_completion = gui_completion_get_default_template (completion);
         gui_completion_build_list_template (
             completion,
-            CONFIG_STRING(config_completion_default_template),
+            (default_completion) ? default_completion : "",
             NULL);
+        if (default_completion)
+            free (default_completion);
     }
     gui_completion_complete (completion);
 }
