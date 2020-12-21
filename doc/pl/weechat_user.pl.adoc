@@ -1242,7 +1242,7 @@ By default WeeChat and its default plugins interpret these variables:
 | name |
   any string |
   Buffer name (be careful, this is not the full name and this name is not
-  enough to identify or search a buffer.
+  enough to identify or search a buffer).
 
 | nick |
   any string |
