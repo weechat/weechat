@@ -1169,125 +1169,123 @@ Falls ein "notify_xxx" Tag vorhanden ist, kann die tatsächliche Benachrichtigun
 unterschiedlich sein. Wenn beispielsweise der max hotlist level für einen Nick verwendet
 wird, kann die Benachrichtigungsstufe niedriger sein als der Wert im Tag.
 
-// TRANSLATION MISSING
 [[local_variables]]
-==== Local variables
+==== lokale Variablen
 
-Local variables can be defined in all buffers.
+Lokale Variablen können für alle Buffer definiert werden.
 
-A local variable has:
+Eine lokale Variable besteht:
 
-* a name (string)
-* a value (string, can be empty).
+* aus einem Namen (Zeichenkette)
+* und aus einem Wert (Zeichenkette, kann leer sein).
 
-Local variables can be set by WeeChat, plugins, scripts, or manually on the
-command line in the buffer.
+Lokale Variablen können von WeeChat, Erweiterungen, Skripten oder manuell,
+in der Befehlszeile eines Buffers, festgelegt werden.
 
-For example to add the local variable "completion_default_template":
+So fügen Sie beispielsweise die lokale Variable "completion_default_template" hinzu:
 
 ----
 /buffer setvar completion_default_template %(my_completion)
 ----
 
-To list local variables in the current buffer:
+um sich alle lokalen Variablen des aktuellen Buffers anzeigen zu lassen:
 
 ----
 /buffer listvar
 ----
 
-To remove the local variable "completion_default_template":
+So entfernen Sie die lokale Variable "completion_default_template":
 
 ----
 /buffer delvar completion_default_template
 ----
 
-By default WeeChat and its default plugins interpret these variables:
+Standardmäßig interpretieren WeeChat und seine Standard-Erweitertungen diese Variablen:
 
 [width="100%",cols="^2m,2,5",options="header"]
 |===
-| Name | Value | Description
+| Name | Wert | Beschreibung
 
 | away |
-  any string |
-  Away message on the server, set by irc plugin.
+  beliebige Zeichenkette |
+  Abwesenheitsnotiz auf dem Server, wird durch IRC Erweiterung genutzt.
 
 | channel |
-  any string |
-  Channel name, set by irc/xfer plugins and debug buffer of relay/trigger plugins.
+  beliebige Zeichenkette |
+  Channel-Name, wird durch irc/xfer Erweiterung und dem Debug-Buffer von relay/trigger Erweiterung genutzt.
 
 | charset_modifier |
-  any string |
-  Charset modifier for the server buffer, set by irc plugin.
+  beliebige Zeichenkette |
+  Charset modifier für den Server-Buffer, wird durch IRC Erweiterung genutzt.
 
 | completion_default_template |
-  any string |
-  Default completion template for the buffer, overriding the option
+  beliebige Zeichenkette |
+  Vorlage für die standardmäßige Vervollständigung innerhalb eines Buffers, überschreibt die Option
   `weechat.completion.default_template`.
 
 | filter |
-  any string |
-  Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+  beliebige Zeichenkette |
+  Filter definiert für einige Buffer `/fset`, `/server raw` (irc) und `/script`.
 
 | host |
-  any string |
-  Self host (if known), set by irc plugin.
+  beliebige Zeichenkette |
+  eigener Host (sofern bekannt), wird durch IRC Erweiterung genutzt.
 
 | lag |
-  any string |
-  Lag on the server, set by irc plugin.
+  beliebige Zeichenkette |
+  Verzögerung auf dem Server, wird durch IRC Erweiterung genutzt.
 
 | name |
-  any string |
-  Buffer name (be careful, this is not the full name and this name is not
-  enough to identify or search a buffer.
+  beliebige Zeichenkette |
+  Buffername (Vorsicht, dies ist nicht der vollständige Name des Buffers und reicht nicht aus, um einen Buffer zu identifizieren oder zu suchen).
 
 | nick |
-  any string |
-  Self nick, set by irc and xfer plugins.
+  beliebige Zeichenkette |
+  eigener Nick, wird durch IRC und xfer Erweiterung genutzt.
 
 | no_log |
-  `1` (or any non-empty string) |
-  If set, the logger plugin does not log anything for the buffer.
+  `1` (oder jede andere nicht leere Zeichenkette) |
+  Wenn festgelegt, protokolliert die Logger-Erweiterung nichts für den Buffer.
 
 | plugin |
-  any string |
-  Name of plugin which created the buffer (`core` for WeeChat buffers).
+  beliebige Zeichenkette |
+  Name der Erweiterung welche den Buffer erstellt hat (`core` für WeeChat-Buffer).
 
 | script_close_cb |
-  any string |
-  Close callback defined by a script for a buffer.
+  beliebige Zeichenkette |
+  Close callback, für diesen Buffer durch ein Skript definiert.
 
 | script_close_cb_data |
-  any string |
-  Data for close callback defined by a script for a buffer.
+  beliebige Zeichenkette |
+  Daten für ein Close callback, welches durch ein Skript für diesen Buffer definiert wurde.
 
 | script_input_cb |
-  any string |
-  Input callback defined by a script for a buffer.
+  beliebige Zeichenkette |
+  Input callback, für diesen Buffer durch ein Skript definiert.
 
 | script_input_cb_data |
-  any string |
-  Data for input callback defined by a script for a buffer.
+  beliebige Zeichenkette |
+  Daten für ein Input callback, welches durch ein Skript für diesen Buffer definiert wurde.
 
 | script_name |
-  any string |
-  Name of the script which created the buffer.
+  beliebige Zeichenkette |
+  Name des Skriptes welches den Buffer erstellt hat.
 
 | server |
-  any string |
-  Server name, set by irc plugin and debug buffer of relay/trigger plugins.
+  beliebige Zeichenkette |
+  Servername, wird durch IRC Erweiterung genutzt und durch den Debug-Buffer von relay/trigger Erweiterung.
 
 | spell_suggest |
-  any string |
-  Misspelled word and suggestions (format: "misspelled:suggestions"), set by
-  spell plugin.
+  beliebige Zeichenkette |
+  falsch geschriebenes Wort und Korrekturvorschläge (Format: "fehlerhaftes Wort:Korrekturvorschläge"), wird durch
+  spell-Erweiterung definiert.
 
 | trigger_filter |
-  any string |
-  Trigger filter, set by trigger plugin.
+  beliebige Zeichenkette |
+  Trigger-Filter, wird durch Trigger-Erweiterung definiert.
 
 | type |
-  any string, for example:
+  beliebige Zeichenkette, zum Beispiel:
   `channel`,
   `debug`,
   `exec`,
@@ -1298,12 +1296,12 @@ By default WeeChat and its default plugins interpret these variables:
   `server`,
   `user`,
   `xfer` |
-  Type of buffer, set by WeeChat and many plugins.
+  Buffertyp, festgelegt von WeeChat und vielen Erweiterungen.
 
 |===
 
 [NOTE]
-External plugins and scripts can define and use other local variables.
+Externe Erweitertungen und Skripte können andere lokale Variablen definieren und verwenden.
 
 [[bars]]
 === Bars
