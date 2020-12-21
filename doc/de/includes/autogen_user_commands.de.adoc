@@ -1122,64 +1122,64 @@ Beispiele:
          get <property>
          <number>|-|+|<name>
 
-    list: list buffers (without argument, this list is displayed)
-     add: add a new buffer (it can be closed with "/buffer close" or input "q")
-   clear: clear buffer content (number for a buffer, -merged for merged buffers, -all for all buffers, or nothing for current buffer)
-    move: move buffer in the list (may be relative, for example -1); "-" = move to first buffer number, "+" = move to last buffer number + 1
-    swap: swap two buffers (swap with current buffer if only one number/name given)
-   cycle: jump loop between a list of buffers
-   merge: merge current buffer to another buffer (chat area will be mix of both buffers)
-          (by default ctrl-x switches between merged buffers)
- unmerge: unmerge buffer from other buffers which have same number
-    hide: hide the buffer
-  unhide: unhide the buffer
-renumber: renumber buffers (works only if option weechat.look.buffer_auto_renumber is off)
-   close: close buffer (number/range or name is optional)
-  notify: display or set notify level for current buffer: this level determines whether buffer will be added to hotlist or not:
-               none: never
-          highlight: for highlights only
-            message: for messages from users + highlights
-                all: all messages
-              reset: reset to default value (all)
- listvar: display local variables in a buffer
-  setvar: set a local variable in the current buffer
-  delvar: delete a local variable from the current buffer
-     set: set a property in the current buffer
-     get: display a property of current buffer
-  number: jump to buffer by number, possible prefix:
-          '+': relative jump, add number to current
-          '-': relative jump, sub number to current
-          '*': jump to number, using option "weechat.look.jump_current_to_previous_buffer"
-       -: jump to first buffer number
-       +: jump to last buffer number
-    name: jump to buffer by (partial) name
+    list: alle geöffneten Buffer werden aufgelistet (ohne Angabe von Argumente wird diese Liste standardmäßig ausgegeben)
+     add: öffnet einen neuen Buffer (dieser kann mit "/buffer close" oder "q" in der Eingabezeile, beendet werden)
+   clear: leert den Inhalt des Buffers (entweder durch Angabe der entsprechenden Nummer des Buffers oder "-merged " für zusammengefügte Buffer oder "-all" für alle Buffer. Ohne Angabe eines Arguments wird der aktuelle Buffer gelöscht)
+    move: Buffer in der Liste verschieben (kann auch relativ sein, z.B. -1); "-" = auf erste Position verschieben, "+" = auf letzte Position + 1 verschieben
+    swap: tauscht zwei Buffer miteinander aus (bei Angabe von nur einem Buffer (Buffernummer/-name), wird der aktuelle Buffer mit dem angegebenen Buffer getauscht)
+   cycle: springt in einer Schleife von einem Buffer zum nächsten, die in einer Liste angegeben werden
+   merge: fügt den aktuellen Buffer mit einem anderen Buffer zusammen (bei einem Chat-Buffer werden zwei Buffer zusammengefügt
+         (Bei der Standardtastenbelegung wird mittels "CTRL-x" zwischen zusammengefügten Buffern umgeschaltet)
+ unmerge: trennt Buffer wieder voneinander, falls zwei Buffer die selbe Nummer teilen
+    hide: versteckt einen Buffer
+  unhide: macht Buffer wieder sichtbar
+renumber: Buffer werden umnummeriert (Einstellung weechat.look.buffer_auto_renumber muss deaktiviert sein)
+   close: Buffer schließen (Nummer oder Bereich ist optional)
+  notify: Benachrichtigungsstufe für den aktuellen Buffer anzeigen oder einstellen. Folgende Möglichkeiten bestimmen den Grad der Benachrichtigung und ob der Buffer in der Hotlist angezeigt wird:
+            none: keine Benachrichtigung
+       highlight: Benachrichtigung bei hervorgehobenen Nachrichten (Highlights)
+         message: Benachrichtigung bei Nachrichten von Usern + Highlights
+             all: Benachrichtigung bei allen Nachrichten
+           reset: Benachrichtigung auf Standardwert zurück setzen (all)
+ listvar: zeigt die lokalen Variablen für den aktuellen Buffer an
+  setvar: legt eine lokale Variable für den aktuellen Buffer an
+  delvar: löscht eine lokale Variable des aktuellen Buffers
+     set: setzt eine Eigenschaft für den aktuellen Buffer
+     get: zeigt eine Eigenschaft für den aktuellen Buffer an
+  number: wechselt von einem Buffer zu einem anderen, mögliche Optionen:
+          '+': relativer Sprung um 'n'-Buffer
+          '-': relativer Sprung, um 'n'-Buffer
+          '*': wechselt zum Buffer mit der Nummer 'n'; nutzt die interne Einstellung "weechat.look.jump_current_to_previous_buffer"
+       -: springt zum ersten Buffer
+       +: springt zum letzten Buffer
+    name: wechselt zum Buffer mit dem angegebenen Namen (Name muss nicht vollständig sein!)
 
-Examples:
-  clear current buffer:
+Beispiele:
+  leert den aktuellen Buffer:
     /buffer clear
-  move buffer to number 5:
+  verschiebt Buffer auf Position 5:
     /buffer move 5
-  swap buffer 1 with 3:
+  tauscht Buffer 1 und 3:
     /buffer swap 1 3
-  swap buffer #weechat with current buffer:
+  tauscht Buffer #weechat und den aktuellen Buffer:
     /buffer swap #weechat
-  jump on #chan1, #chan2, #chan3 and loop:
+  springt in einer Schleife zu den Buffern #chan1, #chan2, #chan3:
     /buffer cycle #chan1 #chan2 #chan3
-  merge with core buffer:
+  verbindet Buffer mit dem Core-Buffer:
     /buffer merge 1
-  merge with #weechat buffer:
+  verbindet Buffer mit #weechat buffer:
     /buffer merge #weechat
-  unmerge buffer:
+  trennt Buffer voneinander:
     /buffer unmerge
-  close current buffer:
+  schließt aktuellen Buffer:
     /buffer close
-  close buffers 5 to 7:
+  schließt Buffer 5 bis 7:
     /buffer close 5-7
-  jump to #weechat:
+  springt zum Buffer: #weechat:
     /buffer #weechat
-  jump to next buffer:
+  springt zum nächsten Buffer:
     /buffer +1
-  jump to last buffer number:
+  springt zum letzten Buffer:
     /buffer +
 ----
 
@@ -1417,59 +1417,59 @@ Beispiele (Bedingungen):
          recreate <name>
          del <name>|-all
 
-      list: list all filters
-    enable: enable filters (filters are enabled by default)
-   disable: disable filters
-    toggle: toggle filters
-      name: filter name ("@" = enable/disable all filters in current buffer)
-       add: add a filter
-addreplace: add or replace an existing filter
-    rename: rename a filter
-  recreate: set input with the command used to edit the filter
-       del: delete a filter
-      -all: delete all filters
-    buffer: comma separated list of buffers where filter is active:
-            - this is full name including plugin (example: "irc.freenode.#weechat" or "irc.server.freenode")
-            - "*" means all buffers
-            - a name starting with '!' is excluded
-            - wildcard "*" is allowed
-   tags: comma separated list of tags, for example "irc_join,irc_part,irc_quit"
-            - logical "and": use "+" between tags (for example: "nick_toto+irc_action")
-            - wildcard "*" is allowed
-            - if tag starts with '!', then it is excluded and must NOT be in message
-  regex: POSIX extended regular expression to search in line
-            - use '\t' to separate prefix from message, special chars like '|' must be escaped: '\|'
-            - if regex starts with '!', then matching result is reversed (use '\!' to start with '!')
-            - two regular expressions are created: one for prefix and one for message
-            - regex are case insensitive, they can start by "(?-i)" to become case sensitive
+      list: alle Filter auflisten
+    enable: Filter wird aktiviert (Filter werden standardmäßig aktiviert)
+   disable: Filter deaktivieren
+    toggle: Filter umschalten
+      name: Name des Filters ("@" = aktiviert/deaktiviert alle Filter im aktuellen Buffer)
+       add: Filter hinzufügen
+addreplace: erzeugt neuen Filter oder ersetzt einen schon existierenden Filter
+    rename: benennt einen Filter um
+  recreate: in die Eingabezeile wird die entsprechende Filtereinstellung übernommen, um diese dann editieren zu können
+       del: Filter entfernen
+      -all: entfernt alle Filter
+    buffer: durch Kommata getrennte Liste von Buffer in denen der Filter aktiv sein soll:
+            - ist der vollständige Name eines Buffer inklusive seiner Erweiterung (Beispiel: "irc.freenode.#weechat" oder "irc.server.freenode")
+            - "*" bedeutet, alle Buffer
+            - beginnt ein Name mit '!' wird für diesen Buffer kein Filter genutzt
+            - Platzhalter "*" kann verwendet werden
+      tags: durch Kommata getrennte Liste von Schlagwörtern. Zum Beispiel: "irc_join,irc_part,irc_quit"
+            - logisch "und": mittels "+" zwischen den Tags (zum Beispiel: "nick_toto+irc_action")
+            - Platzhalter "*" kann verwendet werden
+            - wird ein Tag mit '!' eingeleitet, dann muss dieser Tag NICHT in der Nachricht enthalten sein
+     regex: erweiterter regulärer POSIX Ausdruck, um in einer Zeile zu suchen
+            - das Präfix (z.B. Nick) wird mittels '\t' von der Nachricht getrennt. Sonderzeichen wie '|' müssen mit einer Escapesequenz : '\|' eingebunden werden)
+            - wird ein regulärer Ausdruck mit '!' eingeleitet dann wird das übereinstimmende Ergebnis umgekehrt (nutze '\!' um mit '!' zu beginnen)
+            - es werden zwei reguläre Ausdrücke erstellt: Der erste für den Präfix und der zweite für die eigentliche Nachricht
+            - reguläre Ausdrücke unterscheiden nicht zwischen Groß- und Kleinschreibung. Um zwischen Groß- und Kleinschreibung zu unterscheiden müssen diese mit "(?-i)" eingeleitet werden.
 
-The default key alt+'=' toggles filtering on/off globally and alt+'-' toggles filtering on/off in the current buffer.
+Mit der Tastenvoreinstellung alt+'=' kann die globale Filterfunktion (de-)aktiviert werden und alt+'-' (de-)aktiviert die Filterfunktion für den aktuellen Buffer.
 
-Tags most commonly used:
-  no_filter, no_highlight, no_log, log0..log9 (log level),
+Die am häufigsten gebrauchten Schlagwörter lauten:
+  no_filter, no_highlight, no_log, log0..log9 (log Level),
   notify_none, notify_message, notify_private, notify_highlight,
-  self_msg, nick_xxx (xxx is nick in message), prefix_nick_ccc (ccc is color of nick),
-  host_xxx (xxx is username + host in message),
-  irc_xxx (xxx is command name or number, see /server raw or /debug tags),
+  self_msg, nick_xxx (xxx ist der Nickname), prefix_nick_ccc (ccc ist die Farbe mit der der Nick dargestellt wird),
+  host_xxx (xxx ist der Username + Host in Nachricht),
+  irc_xxx (xxx ist durch einen IRC-Befehl/-Nummer zu ersetzen, siehe /server raw oder /debug tags)
   irc_numeric, irc_error, irc_action, irc_ctcp, irc_ctcp_reply, irc_smart_filter, away_info.
-To see tags for lines in buffers: /debug tags
+Mittels "/debug tags" kann man sich die Schlagwörter jeder einzelnen Zeile darstellen lassen.
 
-Examples:
-  use IRC smart filter on all buffers:
+Beispiele:
+  aktiviert den intelligenten IRC Filter für alle Buffer:
     /filter add irc_smart * irc_smart_filter *
-  use IRC smart filter on all buffers except those with "#weechat" in name:
+  aktiviert den intelligenten IRC Filter für alle Buffer, außer Buffer die "#weechat" im Namen tragen:
     /filter add irc_smart *,!*#weechat* irc_smart_filter *
-  filter all IRC join/part/quit messages:
+  filtert alle IRC join/part/quit Nachrichten:
     /filter add joinquit * irc_join,irc_part,irc_quit *
-  filter nicks displayed when joining channels or with /names:
+  filtert Nicks wenn diese den Channel betreten oder durch den Befehl "/names" angezeigt werden:
     /filter add nicks * irc_366 *
-  filter nick "toto" on IRC channel #weechat:
+  filtert Nick "toto" im IRC Channel #weechat:
     /filter add toto irc.freenode.#weechat nick_toto *
-  filter IRC join/action messages from nick "toto":
+  filtert IRC join/action Nachrichten von Nick "toto":
     /filter add toto * nick_toto+irc_join,nick_toto+irc_action *
-  filter lines containing "weechat sucks" on IRC channel #weechat:
+  filtert Zeilen die "weechat sucks" im IRC Channel #weechat enthalten:
     /filter add sucks irc.freenode.#weechat * weechat sucks
-  filter lines that are strictly equal to "WeeChat sucks" on all buffers:
+  filter Zeilen die exakt "WeeChat sucks" lauten und das in allen Buffern:
     /filter add sucks2 * * (?-i)^WeeChat sucks$
 ----
 

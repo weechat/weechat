@@ -120,9 +120,9 @@
 
 | weechat | bars_options | Einstellungen für Infobars
 
-| weechat | buffer_local_variable_value | value of a buffer local variable
+| weechat | buffer_local_variable_value | Wert einer lokalen Buffervariablen
 
-| weechat | buffer_local_variables | buffer local variables
+| weechat | buffer_local_variables | lokale Buffervariablen
 
 | weechat | buffer_properties_get | Eigenschaften die für den Buffer gelesen werden können
 
