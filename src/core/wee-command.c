@@ -2023,7 +2023,7 @@ COMMAND_CALLBACK(debug)
 COMMAND_CALLBACK(eval)
 {
     int i, print_only, split_command, condition, debug, error;
-    char *result, *ptr_args, *expr, **commands;
+    char *result, *ptr_args, **commands;
     const char **debug_output;
     struct t_hashtable *pointers, *options;
 
@@ -2103,36 +2103,31 @@ COMMAND_CALLBACK(eval)
 
         if (print_only)
         {
-            expr = string_remove_quotes (ptr_args, "\"");
-            if (expr)
+            result = eval_expression (ptr_args, pointers, NULL, options);
+            gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
+            if (result)
             {
-                result = eval_expression (expr, pointers, NULL, options);
-                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t>> %s", ptr_args);
-                if (result)
-                {
-                    gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s[%s%s%s]",
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                               GUI_COLOR(GUI_COLOR_CHAT),
-                                               result,
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                    free (result);
-                }
-                else
-                {
-                    gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s<%s%s%s>",
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                               GUI_COLOR(GUI_COLOR_CHAT),
-                                               _("error"),
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                }
-                free (expr);
-                if (options && debug)
-                {
-                    debug_output = hashtable_get (options,
-                                                  "debug_output");
-                    if (debug_output)
-                        gui_chat_printf (NULL, "%s", debug_output);
-                }
+                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s[%s%s%s]",
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           result,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                free (result);
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, "no_log", "\t== %s<%s%s%s>",
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           _("error"),
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            }
+            if (options && debug)
+            {
+                debug_output = hashtable_get (options,
+                                              "debug_output");
+                if (debug_output)
+                    gui_chat_printf (NULL, "%s", debug_output);
             }
         }
         else

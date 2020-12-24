@@ -203,6 +203,8 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "-0xA3 < 2");
     WEE_CHECK_EVAL("1", "1 == 18 > 5");
     WEE_CHECK_EVAL("1", "abc == abc");
+    WEE_CHECK_EVAL("1", "'abc' == 'abc'");
+    WEE_CHECK_EVAL("1", "\"abc\" == \"abc\"");
     WEE_CHECK_EVAL("1", "(26 > 5)");
     WEE_CHECK_EVAL("1", "((26 > 5))");
     WEE_CHECK_EVAL("1", "(5 < 26)");

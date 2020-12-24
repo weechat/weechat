@@ -28,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: do not remove quotes in arguments of command /eval as they can be part of the evaluated expression/condition (issue #1601)
   * core: display an error when the buffer is not found with command /command -buffer
   * exec: fix search of command by identifier
   * irc: fix completion of commands /halfop and /dehalfop
