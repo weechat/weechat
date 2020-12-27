@@ -18,9 +18,9 @@
 
 | irc | irc_buffer | pobiera wskaźnik dla serwera/kanału/nicku IRC | serwer,kanał,nick (kanał oraz nick są opcjonalne)
 
-| irc | irc_is_channel | 1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera | serwer,kanał (serWer jest opcjonalny)
+| irc | irc_is_channel | 1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera | serwer,kanał (serwer jest opcjonalny)
 
-| irc | irc_is_nick | 1 jeśli ciąg jest poprawną nazwą użytkownika IRC | server,nickname (server is optional)
+| irc | irc_is_nick | 1 jeśli ciąg jest poprawną nazwą użytkownika IRC | serwer,nick (serwer jest opcjonalny)
 
 | irc | irc_nick | pobiera aktualny nick z serwera | nazwa serwera
 
@@ -106,9 +106,9 @@
 
 | weechat | locale | zestaw znaków użyty do tłumaczenia wiadomości | -
 
-| weechat | nick_color | pobiera kod koloru nicka | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
+| weechat | nick_color | pobiera kod koloru nicka | nick;kolory (kolory są opcjonalną oddzieloną przecinkami listą kolorów do użycia; tło dla koloru można ustawić używając formatu text:tło; jeśli kolory są zdefiniowane, opcje WeeChat dla kolorów nicków i wymuszonych kolorów nicków są ignorowane)
 
-| weechat | nick_color_name | pobiera nazwę koloru nicka | nickname;colors (colors is an optional comma-separated list of colors to use; background is allowed for a color with format text:background; if colors is present, WeeChat options with nick colors and forced nick colors are ignored)
+| weechat | nick_color_name | pobiera nazwę koloru nicka | nick;kolory (kolory są opcjonalną oddzieloną przecinkami listą kolorów do użycia; tło dla koloru można ustawić używając formatu text:tło; jeśli kolory są zdefiniowane, opcje WeeChat dla kolorów nicków i wymuszonych kolorów nicków są ignorowane)
 
 | weechat | pid | WeeChat PID (ID procesu) | -
 

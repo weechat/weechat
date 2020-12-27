@@ -678,7 +678,7 @@ _next_completion_   (pointer, hdata: "completion") +
 
 | weechat
 | [[hdata_completion_word]]<<hdata_completion_word,completion_word>>
-| structure with word found for a completion
+| struktura z ze słowem znalezionym dla dopełnienia
 | -
 | _word_   (string) +
 _nick_completion_   (char) +

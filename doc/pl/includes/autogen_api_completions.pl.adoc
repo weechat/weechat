@@ -120,9 +120,9 @@
 
 | weechat | bars_options | opcje pasków
 
-| weechat | buffer_local_variable_value | value of a buffer local variable
+| weechat | buffer_local_variable_value | wartość zmiennej lokalnej bufora
 
-| weechat | buffer_local_variables | buffer local variables
+| weechat | buffer_local_variables | zmienne lokalne bufora
 
 | weechat | buffer_properties_get | właściwości, jakie mogą być przeczytane w buforze
 
