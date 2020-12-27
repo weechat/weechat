@@ -622,7 +622,7 @@ Les fichiers dans le répertoire principal de WeeChat sont :
 | perl.conf       | Fichier de configuration de l'extension _perl_       | Non.
 | php.conf        | Fichier de configuration de l'extension _php_        | Non.
 | python.conf     | Fichier de configuration de l'extension _python_     | Non.
-| relay.conf      | Fichier de configuration de l'extension _relay_      | Non.
+| relay.conf      | Fichier de configuration de l'extension _relay_      | *Oui* : il peut contenir le mot de passe relay et le secret TOTP (si non stockés dans `sec.conf`), les adresses IP/origines websocket autorisées et les ports ouverts.
 | ruby.conf       | Fichier de configuration de l'extension _ruby_       | Non.
 | script.conf     | Fichier de configuration de l'extension _script_     | Non.
 | tcl.conf        | Fichier de configuration de l'extension _tcl_        | Non.

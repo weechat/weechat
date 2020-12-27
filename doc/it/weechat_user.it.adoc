@@ -666,7 +666,8 @@ The files in the WeeChat home directory are:
 | perl.conf       | Configuration file for _perl_ plugin       | No.
 | php.conf        | Configuration file for _php_ plugin        | No.
 | python.conf     | Configuration file for _python_ plugin     | No.
-| relay.conf      | Configuration file for _relay_ plugin      | No.
+// TRANSLATION MISSING
+| relay.conf      | Configuration file for _relay_ plugin      | *Yes*: it can contain relay password and TOTP secret (if not stored in `sec.conf`), allowed IP addresses/websocket origins and opened ports.
 | ruby.conf       | Configuration file for _ruby_ plugin       | No.
 | script.conf     | Configuration file for _script_ plugin     | No.
 | spell.conf      | Configuration file for _spell_ plugin      | No.

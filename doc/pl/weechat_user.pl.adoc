@@ -620,7 +620,8 @@ Pliki tworzone w katalogu domowym WeeChat:
 | perl.conf       | Plik konfiguracyjny wtyczki _perl_           | Nie.
 | php.conf        | Plik konfiguracyjny wtyczki _php_            | Nie.
 | python.conf     | Plik konfiguracyjny wtyczki _python_         | Nie.
-| relay.conf      | Plik konfiguracyjny wtyczki _relay_          | Nie.
+// TRANSLATION MISSING
+| relay.conf      | Plik konfiguracyjny wtyczki _relay_          | *Yes*: it can contain relay password and TOTP secret (if not stored in `sec.conf`), allowed IP addresses/websocket origins and opened ports.
 | ruby.conf       | Plik konfiguracyjny wtyczki _ruby_           | Nie.
 | script.conf     | Plik konfiguracyjny wtyczki _script_         | Nie.
 | spell.conf      | Plik konfiguracyjny wtyczki _spell_          | Nie.

@@ -624,7 +624,8 @@ WeeChat ホームディレクトリには以下のファイルが含まれます
 | perl.conf       | _perl_ プラグイン用の設定ファイル       | 保護されません
 | php.conf        | _php_ プラグイン用の設定ファイル        | 保護されません
 | python.conf     | _python_ プラグイン用の設定ファイル     | 保護されません
-| relay.conf      | _relay_ プラグイン用の設定ファイル      | 保護されません
+// TRANSLATION MISSING
+| relay.conf      | _relay_ プラグイン用の設定ファイル      | *Yes*: it can contain relay password and TOTP secret (if not stored in `sec.conf`), allowed IP addresses/websocket origins and opened ports.
 | ruby.conf       | _ruby_ プラグイン用の設定ファイル       | 保護されません
 | script.conf     | _script_ プラグイン用の設定ファイル     | 保護されません
 | spell.conf      | _spell_ プラグイン用の設定ファイル      | 保護されません
