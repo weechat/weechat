@@ -1291,9 +1291,9 @@ Es können alle _~/.weechat/*.conf_ Dateien geteilt werden.
 Hiervon ausgenommen ist die Datei _sec.conf_,
 die durch eine Passphrase verschlüsselte sensible Daten enthalten kann.
 
-In einigen Dateien wie _irc.conf_ können sensible Daten,
-z.B. Passwörter für Server oder Channels im Klartext hinterlegt sein.
-(Das heißt, insofern diese nicht mit Hilfe des Befehls `/secure` verschlüsselt in der Datei _sec.conf_ gesichert wurden).
+// TRANSLATION MISSING
+Some other files may contain sensitive info like passwords (if they are not
+stored in _sec.conf_ with the `/secure` command).
 
 Siehe link:weechat_user.de.html#files_and_directories[Benutzerhandbuch / Dateien und Verzeichnisse]
 für weitere Informationen über Konfigurationsdateien.

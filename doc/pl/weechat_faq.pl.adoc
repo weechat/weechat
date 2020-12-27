@@ -1200,8 +1200,9 @@ Na przykład:
 Możesz pokazywać pliki z _~/.weechat/*.conf_ poza plikiem _sec.conf_, który
 zawiera Twoje hasla zaszywrowane Twoim kluczem.
 
-Niektóre pliki jak _irc.conf_ mogą zawierać wrażliwe dane jak hasła do
-serwerów/kanałów (jeśli nie zostały dodane do _sec.conf_ za pomocą komendy `/secure`).
+// TRANSLATION MISSING
+Some other files may contain sensitive info like passwords (if they are not
+stored in _sec.conf_ with the `/secure` command).
 
 Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery],
 gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.

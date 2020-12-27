@@ -1197,9 +1197,9 @@ link:weechat_user.ja.html#secured_data[ユーザーズガイド / 暗号化デ�
 _~/.weechat/*.conf_ ファイルは公開しても問題ありませんが、
 パスフレーズで暗号化されたパスワードが含まれる _sec.conf_ ファイルは秘密にしてください。
 
-サーバおよびチャンネルパスワード等の機密情報を `/secure` コマンドで
-_sec.conf_ に保存していない場合、これらの情報は _irc.conf_
-などのファイルに保存されます。
+// TRANSLATION MISSING
+Some other files may contain sensitive info like passwords (if they are not
+stored in _sec.conf_ with the `/secure` command).
 
 設定ファイルに関する詳しい情報はlink:weechat_user.ja.html#files_and_directories[ユーザーズガイド / ファイルとディレクトリ]を参照してください。
 
