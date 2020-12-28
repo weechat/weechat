@@ -1289,11 +1289,10 @@ Beispiel:
 
 Es können alle _~/.weechat/*.conf_ Dateien geteilt werden.
 Hiervon ausgenommen ist die Datei _sec.conf_,
-die durch eine Passphrase verschlüsselte sensible Daten enthalten kann.
+die durch eine Passphrase verschlüsselte, sensible, Daten enthalten kann.
 
-// TRANSLATION MISSING
-Some other files may contain sensitive info like passwords (if they are not
-stored in _sec.conf_ with the `/secure` command).
+Einige andere Dateien enthalten möglicherweise vertrauliche Informationen wie
+Kennwörter (sofern sie nicht mit dem Befehl `/secure` in _sec.conf_ gesichert werden).
 
 Siehe link:weechat_user.de.html#files_and_directories[Benutzerhandbuch / Dateien und Verzeichnisse]
 für weitere Informationen über Konfigurationsdateien.

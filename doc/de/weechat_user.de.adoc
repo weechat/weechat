@@ -616,8 +616,7 @@ Folgende Dateien befinden sich im WeeChat-Heimatverzeichnis:
 | perl.conf       | Konfiguration für _perl_-Erweiterung       | Nein.
 | php.conf        | Konfiguration für _php_-Erweiterung        | Nein.
 | python.conf     | Konfiguration für _python_-Erweiterung     | Nein.
-// TRANSLATION MISSING
-| relay.conf      | Konfiguration für _relay_-Erweiterung      | *Yes*: it can contain relay password and TOTP secret (if not stored in `sec.conf`), allowed IP addresses/websocket origins and opened ports.
+| relay.conf      | Konfiguration für _relay_-Erweiterung      | *Ja*: es kann das Relay-Passwort und das TOTP (Einmalkennwort) enthalten (sofern nicht in `sec.conf` gesichert), erlaubt OP Adressen/Websocket und geöffnete Ports.
 | ruby.conf       | Konfiguration für _ruby_-Erweiterung       | Nein.
 | script.conf     | Konfiguration für _script_-Erweiterung     | Nein.
 | spell.conf      | Konfiguration für _spell_-Erweiterung      | Nein.
