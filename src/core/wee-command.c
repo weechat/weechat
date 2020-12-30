@@ -275,7 +275,7 @@ COMMAND_CALLBACK(bar)
         {
             /* create bar */
             if (gui_bar_new (
-                    argv[2],       /* nane */
+                    argv[2],       /* name */
                     "0",           /* hidden */
                     "0",           /* priority */
                     str_type,      /* type */
