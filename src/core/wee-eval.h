@@ -71,14 +71,15 @@ struct t_eval_regex
 
 struct t_eval_context
 {
-    struct t_hashtable *pointers;
-    struct t_hashtable *extra_vars;
-    int extra_vars_eval;
-    const char *prefix;
-    const char *suffix;
-    struct t_eval_regex *regex;
-    int recursion_count;
-    char **debug;
+    struct t_hashtable *pointers;      /* pointers used in eval             */
+    struct t_hashtable *extra_vars;    /* extra variables used in eval      */
+    int extra_vars_eval;               /* 1 if extra vars must be evaluated */
+    const char *prefix;                /* prefix (default is "${")          */
+    const char *suffix;                /* suffix (default is "}")           */
+    struct t_eval_regex *regex;        /* in case of replace with regex     */
+    int recursion_count;               /* to prevent infinite recursion     */
+    int debug_level;                   /* 0: no debug, 1: debug, 2: extra   */
+    char **debug;                      /* not NULL if debug_level >= 1      */
 };
 
 extern int eval_is_true (const char *value);

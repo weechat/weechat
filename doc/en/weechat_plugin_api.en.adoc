@@ -2246,6 +2246,10 @@ Arguments:
 ** _regex_replace_: the replacement text to use with _regex_, to replace
    text in _expr_ (the _regex_replace_ is evaluated on each match of _regex_
    against _expr_, until no match is found)
+** _debug_: debug level (string with integer number ≥ 1), if enabled, a key
+   "debug_output" is added in hashtable _options_:
+*** _1_: enable debug
+*** _2_: enable more verbose debug
 
 Return value:
 

@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: display more verbose debug with two "-d" in command /eval
   * core: add options "setvar" and "delvar" in command /buffer, rename option "localvar" to "listvar"
   * core: add buffer local variable "completion_default_template" (evaluated) to override the value of option "weechat.completion.default_template" (issue #1600)
   * core: add option "recreate" in command /filter

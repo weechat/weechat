@@ -278,8 +278,23 @@ TEST(CoreEval, EvalCondition)
     hashtable_remove (options, "prefix");
     hashtable_remove (options, "suffix");
 
-    /* test with debug */
+    /* test with debug level 1 */
     hashtable_set (options, "debug", "1");
+    WEE_CHECK_EVAL("1", "abc < def");
+    ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
+    STRCMP_EQUAL("eval_expression(\"abc < def\")\n"
+                 "eval_expression_condition(\"abc < def\")\n"
+                 "eval_expression_condition(\"abc\")\n"
+                 "eval_replace_vars(\"abc\")\n"
+                 "eval_expression_condition(\"def\")\n"
+                 "eval_replace_vars(\"def\")\n"
+                 "eval_compare(\"abc\", \"<\", \"def\")",
+                 ptr_debug_output);
+    hashtable_remove (options, "debug");
+    hashtable_remove (options, "debug_output");
+
+    /* test with debug level 2 */
+    hashtable_set (options, "debug", "2");
     WEE_CHECK_EVAL("1", "abc < def");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
     STRCMP_EQUAL("eval_expression(\"abc < def\")\n"

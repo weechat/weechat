@@ -2023,7 +2023,7 @@ COMMAND_CALLBACK(debug)
 COMMAND_CALLBACK(eval)
 {
     int i, print_only, split_command, condition, debug, error;
-    char *result, *ptr_args, **commands;
+    char *result, *ptr_args, **commands, str_debug[32];
     const char **debug_output;
     struct t_hashtable *pointers, *options;
 
@@ -2060,7 +2060,7 @@ COMMAND_CALLBACK(eval)
         }
         else if (string_strcasecmp (argv[i], "-d") == 0)
         {
-            debug = 1;
+            debug++;
             ptr_args = argv_eol[i + 1];
         }
         else
@@ -2096,8 +2096,11 @@ COMMAND_CALLBACK(eval)
             {
                 if (condition)
                     hashtable_set (options, "type", "condition");
-                if (debug)
-                    hashtable_set (options, "debug", "1");
+                if (debug > 0)
+                {
+                    snprintf (str_debug, sizeof (str_debug), "%d", debug);
+                    hashtable_set (options, "debug", str_debug);
+                }
             }
         }
 
@@ -7459,12 +7462,13 @@ command_init ()
         NULL, "eval",
         N_("evaluate expression"),
         N_("[-n|-s] [-d] <expression>"
-           " || [-n] [-d] -c <expression1> <operator> <expression2>"),
+           " || [-n] [-d [-d]] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer "
            "(debug mode)\n"
            "        -s: split expression before evaluating it "
            "(many commands can be separated by semicolons)\n"
-           "        -d: display debug output after evaluation\n"
+           "        -d: display debug output after evaluation "
+           "(with two -d: more verbose debug)\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "

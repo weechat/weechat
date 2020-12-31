@@ -2262,6 +2262,11 @@ char *weechat_string_eval_expression (const char *expr,
 ** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
    に含まれるテキストを置換する (_regex_replace_ は、_expr_ 内で
    _regex_ 引数にマッチする部分が見つからなくなるまで、毎回評価されます)
+// TRANSLATION MISSING
+** _debug_: debug level (string with integer number ≥ 1), if enabled, a key
+   "debug_output" is added in hashtable _options_:
+*** _1_: enable debug
+*** _2_: enable more verbose debug
 
 戻り値:
 

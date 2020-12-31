@@ -46,8 +46,8 @@
 #include "../plugins/plugin.h"
 
 
-#define EVAL_DEBUG(msg, argz...)                        \
-    if (eval_context->debug)                            \
+#define EVAL_DEBUG(level, msg, argz...)                 \
+    if (eval_context->debug_level >= level)             \
         eval_debug_message (eval_context, msg, ##argz);
 
 char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
@@ -125,7 +125,7 @@ eval_strstr_level (const char *string, const char *search,
     int level, length_search;
     int length_prefix, length_prefix2, length_suffix, length_suffix2;
 
-    EVAL_DEBUG("eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
+    EVAL_DEBUG(2, "eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
                string, search, extra_prefix, extra_suffix, escape);
 
     if (!string || !search)
@@ -676,7 +676,7 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     int type;
     struct t_hashtable *hashtable;
 
-    EVAL_DEBUG("eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
+    EVAL_DEBUG(1, "eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
                hdata->name, pointer, path);
 
     value = NULL;
@@ -958,7 +958,7 @@ eval_replace_vars_cb (void *data, const char *text)
 
     eval_context = (struct t_eval_context *)data;
 
-    EVAL_DEBUG("eval_replace_vars_cb(\"%s\")", text);
+    EVAL_DEBUG(1, "eval_replace_vars_cb(\"%s\")", text);
 
     /* 1. variable in hashtable "extra_vars" */
     if (eval_context->extra_vars)
@@ -1148,7 +1148,7 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
     const char *no_replace_prefix_list[] = { "if:", NULL };
     char *result;
 
-    EVAL_DEBUG("eval_replace_vars(\"%s\")", expr);
+    EVAL_DEBUG(1, "eval_replace_vars(\"%s\")", expr);
 
     eval_context->recursion_count++;
 
@@ -1195,7 +1195,7 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
     double value1, value2;
     char *error;
 
-    EVAL_DEBUG("eval_compare(\"%s\", \"%s\", \"%s\")",
+    EVAL_DEBUG(1, "eval_compare(\"%s\", \"%s\", \"%s\")",
                expr1, comparisons[comparison], expr2);
 
     rc = 0;
@@ -1328,7 +1328,7 @@ eval_expression_condition (const char *expr,
     const char *pos, *pos_end;
     char *expr2, *sub_expr, *value, *tmp_value, *tmp_value2;
 
-    EVAL_DEBUG("eval_expression_condition(\"%s\")", expr);
+    EVAL_DEBUG(1, "eval_expression_condition(\"%s\")", expr);
 
     value = NULL;
 
@@ -1566,7 +1566,7 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
     int empty_replace_allowed;
     struct t_eval_regex eval_regex;
 
-    EVAL_DEBUG("eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
+    EVAL_DEBUG(1, "eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
                string, regex, replace);
 
     if (!string || !regex || !replace)
@@ -1714,7 +1714,8 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     struct t_eval_context context, *eval_context;
     int condition, rc, pointers_allocated, regex_allocated;
     int ptr_window_added, ptr_buffer_added;
-    char *value;
+    long number;
+    char *value, *error;
     const char *default_prefix = EVAL_DEFAULT_PREFIX;
     const char *default_suffix = EVAL_DEFAULT_SUFFIX;
     const char *ptr_value, *regex_replace;
@@ -1758,6 +1759,7 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context->suffix = default_suffix;
     eval_context->regex = NULL;
     eval_context->recursion_count = 0;
+    eval_context->debug_level = 0;
     eval_context->debug = NULL;
 
     /*
@@ -1830,11 +1832,19 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         }
 
         /* check for debug */
-        if (hashtable_has_key (options, "debug"))
-            eval_context->debug = string_dyn_alloc (256);
+        ptr_value = hashtable_get (options, "debug");
+        if (ptr_value && ptr_value[0])
+        {
+            number = strtol (ptr_value, &error, 10);
+            if (error && !error[0] && (number >= 1))
+            {
+                eval_context->debug_level = (int)number;
+                eval_context->debug = string_dyn_alloc (256);
+            }
+        }
     }
 
-    EVAL_DEBUG("eval_expression(\"%s\")", expr);
+    EVAL_DEBUG(1, "eval_expression(\"%s\")", expr);
 
     /* evaluate expression */
     if (condition)

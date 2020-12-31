@@ -2288,6 +2288,10 @@ Paramètres :
    remplacer du texte dans _expr_ (_regex_replace_ est évalué sur chaque
    correspondance de _regex_ sur _expr_, jusqu'à ce que plus aucune
    correspondance ne soit trouvée)
+** _debug_ : niveau de debug (chaîne avec un nombre entier ≥ 1), si activé,
+   une clé "debug_output" est ajoutée dans la table de hachage _options_ :
+*** _1_ : activer le debug
+*** _2_ : activer le debug plus verbeux
 
 Valeur de retour :
 
