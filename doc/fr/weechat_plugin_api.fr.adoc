@@ -1355,14 +1355,25 @@ Valeur de retour :
 * même code retour que la fonction `regcomp` (0 si ok, autre valeur pour une
   erreur, voir `man regcomp`)
 
+[NOTE]
+L'expression régulière _preg_ doit être nettoyée par un appel à "regfree" après
+utilisation, si la fonction a retourné 0 (OK).
+
 Exemple en C :
 
 [source,C]
 ----
 regex_t my_regex;
-if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
+if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
+{
+    /* OK */
+    /* ... */
+    regfree (&my_regex);
+}
+else
 {
     /* erreur */
+    /* ... */
 }
 ----
 
