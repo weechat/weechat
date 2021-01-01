@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <regex.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -2016,6 +2017,36 @@ COMMAND_CALLBACK(debug)
 }
 
 /*
+ * Prints eval debug output.
+ */
+
+void
+command_eval_print_debug (const char *debug)
+{
+    regex_t regex;
+    char str_replace[1024], *string;
+
+    string = NULL;
+
+    if (string_regcomp (&regex, "(^|\n)( *)([0-9]+:)", REG_EXTENDED) == 0)
+    {
+        /* colorize debug ids and the following colon with delimiter color */
+        snprintf (str_replace, sizeof (str_replace),
+                  "$1$2%s$3%s",
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                  GUI_COLOR(GUI_COLOR_CHAT));
+        string = string_replace_regex (debug, &regex, str_replace, '$',
+                                       NULL, NULL);
+        regfree (&regex);
+    }
+
+    gui_chat_printf (NULL, "%s", (string) ? string : debug);
+
+    if (string)
+        free (string);
+}
+
+/*
  * Callback for command "/eval": evaluates an expression and sends result to
  * buffer.
  */
@@ -2024,7 +2055,7 @@ COMMAND_CALLBACK(eval)
 {
     int i, print_only, split_command, condition, debug, error;
     char *result, *ptr_args, **commands, str_debug[32];
-    const char **debug_output;
+    const char *debug_output;
     struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
@@ -2130,7 +2161,7 @@ COMMAND_CALLBACK(eval)
                 debug_output = hashtable_get (options,
                                               "debug_output");
                 if (debug_output)
-                    gui_chat_printf (NULL, "%s", debug_output);
+                    command_eval_print_debug (debug_output);
             }
         }
         else
@@ -2158,7 +2189,7 @@ COMMAND_CALLBACK(eval)
                             debug_output = hashtable_get (options,
                                                           "debug_output");
                             if (debug_output)
-                                gui_chat_printf (NULL, "%s", debug_output);
+                                command_eval_print_debug (debug_output);
                         }
                     }
                     string_free_split_command (commands);
@@ -2181,7 +2212,7 @@ COMMAND_CALLBACK(eval)
                     debug_output = hashtable_get (options,
                                                   "debug_output");
                     if (debug_output)
-                        gui_chat_printf (NULL, "%s", debug_output);
+                        command_eval_print_debug (debug_output);
                 }
             }
         }

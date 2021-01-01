@@ -79,7 +79,9 @@ struct t_eval_context
     struct t_eval_regex *regex;        /* in case of replace with regex     */
     int recursion_count;               /* to prevent infinite recursion     */
     int debug_level;                   /* 0: no debug, 1: debug, 2: extra   */
-    char **debug;                      /* not NULL if debug_level >= 1      */
+    int debug_depth;                   /* used for debug indentation        */
+    int debug_id;                      /* operation id in debug output      */
+    char **debug_output;               /* string with debug output          */
 };
 
 extern int eval_is_true (const char *value);
