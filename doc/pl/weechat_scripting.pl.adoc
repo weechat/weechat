@@ -163,10 +163,9 @@ Weechat.config_new_option(config, section, "name", "string", "opis opcji", "", 0
                           "value", "wartość", 0, ["check_cb", "", "change_cb", "", "delete_cb", ""])
 ----
 
-// TRANSLATION MISSING
-And the function `+Weechat.bar_new+` receives the colors in an array of 4 strings
-(color_fg, color_delim, color_bg, color_bg_inactive), so a call to this function
-looks like:
+Funkcja `+Weechat.bar_new+` przyjmuje kolory w tablicy składającej się z 4 ciągów
+(color_fg, color_delim, color_bg, color_bg_inactive), wywołaine tej funkcji wygląda
+następująco:
 
 [source,ruby]
 ----
@@ -191,7 +190,7 @@ Funkcje są wywoływane za pomocą `+weechat::xxx arg1 arg2 ...+`.
 ===== Funkcje
 
 Funkcje są wywoływane za pomocą `+(weechat:xxx arg1 arg2 ...)+`.
-
+/
 Następujące funkcje przyjmują litę argumentów (zamiast wielu argumentów dla
 innych funkcji), ponieważ ilość argumentów przekracza maksymalną ilość
 argumentów dozwolonych w Guile:
@@ -416,10 +415,9 @@ wypadku możesz zobaczyć ładny raport o błędzie ;)
 Prawie wszystkie callbacki muszą zwrócić WEECHAT_RC_OK lub WEECHAT_RC_ERROR
 (wyjątkiem jest callback modyfikujący, który zwraca ciąg).
 
-// TRANSLATION MISSING
-C callbacks are using "callback_pointer" and "callback_data" arguments, which
-are pointers. In script API, there is only "callback_data" (or "data"), and it
-is a string instead of a pointer.
+Callbacki w języku C używają akgumentów "callback_pointer" i "callback_data", które
+są wskaźnikami. W API skryptów, obecny jest tylko "callback_data" (lub "data") i jest
+to ciąg a nie wskaźnik.
 
 Przykłady callbacków dla każdego języka:
 
@@ -714,8 +712,7 @@ Lista funkcji w API skryptów:
   command +
   command_options
 
-// TRANSLATION MISSING
-| completion |
+| dopełnienia |
   completion_new +
   completion_search +
   completion_get_string +
