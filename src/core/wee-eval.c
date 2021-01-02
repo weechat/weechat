@@ -46,7 +46,8 @@
 #include "../plugins/plugin.h"
 
 
-#define EVAL_DEBUG_MSG(level, msg, argz...)                           \
+#define EVAL_DEBUG_MSG(level, msg, argz...)                             \
+    debug_id = -1;                                                      \
     if (eval_context->debug_level >= level)                             \
     {                                                                   \
         debug_id = ++(eval_context->debug_id);                          \
@@ -184,7 +185,6 @@ eval_strstr_level (const char *string, const char *search,
 
     ptr_string = NULL;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(2, "eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
                    string, search, extra_prefix, extra_suffix, escape);
 
@@ -743,7 +743,6 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     int type, debug_id;
     struct t_hashtable *hashtable;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
                    hdata->name, pointer, path);
 
@@ -1033,7 +1032,6 @@ eval_replace_vars_cb (void *data, const char *text)
 
     eval_context = (struct t_eval_context *)data;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
     /* 1. variable in hashtable "extra_vars" */
@@ -1306,7 +1304,6 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
     char *result;
     int debug_id;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_replace_vars(\"%s\")", expr);
 
     eval_context->recursion_count++;
@@ -1356,7 +1353,6 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
     double value1, value2;
     char *error, *value;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_compare(\"%s\", \"%s\", \"%s\")",
                    expr1, comparisons[comparison], expr2);
 
@@ -1494,7 +1490,6 @@ eval_expression_condition (const char *expr,
     const char *pos, *pos_end;
     char *expr2, *sub_expr, *value, *tmp_value, *tmp_value2;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_expression_condition(\"%s\")", expr);
 
     value = NULL;
@@ -1744,7 +1739,6 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
 
     result = NULL;
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
                    string, regex, replace);
 
@@ -2029,7 +2023,6 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         }
     }
 
-    debug_id = -1;
     EVAL_DEBUG_MSG(1, "eval_expression(\"%s\")", expr);
 
     /* evaluate expression */
