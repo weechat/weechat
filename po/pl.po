@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-31 18:53+0100\n"
+"POT-Creation-Date: 2021-01-02 15:16+0100\n"
 "PO-Revision-Date: 2020-12-27 19:05+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -7305,11 +7305,9 @@ msgstr "%s: skrypt \"%s\" wyładowano"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skrypt \"%s\" nie załadowany"
 
+#, fuzzy
 msgid "server"
-msgid_plural "servers"
-msgstr[0] "serwer"
-msgstr[1] "serwery"
-msgstr[2] "serwery"
+msgstr "serwer"
 
 msgid "Lag"
 msgstr "Lag"
@@ -7326,11 +7324,17 @@ msgstr ""
 "serwerów połączonych po SSL"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
+"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (SSL connection not supported with "
+"upgrade)"
+msgstr[0] ""
+"%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
+msgstr[1] ""
+"%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
+msgstr[2] ""
 "%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
 
 #, c-format
@@ -12205,6 +12209,13 @@ msgid ""
 msgstr ""
 "%s%s: rozłączam się z klientem %s%s%s, ponieważ uaktualnienie nie zadziała "
 "dla klientów połączonych po SSL"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgstr ""
+"%s%s: rozłączono z %d %s (połączenie SSL nie wspierane z uaktualnianiem)"
 
 msgid "client"
 msgid_plural "clients"

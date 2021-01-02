@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-31 18:53+0100\n"
+"POT-Creation-Date: 2021-01-02 15:16+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -6169,11 +6169,9 @@ msgstr "%s: skript \"%s\" odebrán"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: skript \"%s\" nenačten"
 
+#, fuzzy
 msgid "server"
-msgid_plural "servers"
-msgstr[0] "server"
-msgstr[1] "servery"
-msgstr[2] "serverů"
+msgstr "server"
 
 msgid "Lag"
 msgstr "Lag"
@@ -6190,11 +6188,17 @@ msgstr ""
 "připojené přes SSL"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
+"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (SSL connection not supported with "
+"upgrade)"
+msgstr[0] ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+msgstr[1] ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
+msgstr[2] ""
 "%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
 
 #, fuzzy, c-format
@@ -10811,6 +10815,13 @@ msgid ""
 msgstr ""
 "%s%s: odpojuji se od serveru, protože aktualizace nefunguje pro servery "
 "připojené přes SSL"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgstr ""
+"%s%s: odpojuji se od %d %s (SSL připojení není podporováno pro aktualizaci)"
 
 msgid "client"
 msgid_plural "clients"

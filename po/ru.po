@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-31 18:53+0100\n"
+"POT-Creation-Date: 2021-01-02 15:16+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -5737,10 +5737,7 @@ msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy
 msgid "server"
-msgid_plural "servers"
-msgstr[0] "сервер"
-msgstr[1] "сервер"
-msgstr[2] "сервер"
+msgstr "сервер"
 
 msgid "Lag"
 msgstr ""
@@ -5755,11 +5752,15 @@ msgid ""
 msgstr ""
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
 #, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
+"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (SSL connection not supported with "
+"upgrade)"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #, c-format
 msgid ""
@@ -10202,6 +10203,12 @@ msgstr ""
 msgid ""
 "%s%s: disconnecting from client %s%s%s because upgrade can't work for "
 "clients connected via SSL"
+msgstr ""
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
 msgstr ""
 
 msgid "client"

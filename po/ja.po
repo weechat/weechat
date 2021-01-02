@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-31 18:53+0100\n"
+"POT-Creation-Date: 2021-01-02 15:16+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -7147,9 +7147,9 @@ msgstr "%s: スクリプト \"%s\" がアンロードされました"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: スクリプト \"%s\" はロードされていません"
 
+#, fuzzy
 msgid "server"
-msgid_plural "servers"
-msgstr[0] "サーバ"
+msgstr "サーバ"
 
 msgid "Lag"
 msgstr "遅延時間"
@@ -7165,11 +7165,13 @@ msgstr ""
 "%s%s: SSL 接続サーバでは upgrade が利かないため、サーバとの接続を切断中"
 
 #. TRANSLATORS: "%s" after "%d" is "server" or "servers"
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
+"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (SSL connection not supported with "
+"upgrade)"
+msgstr[0] ""
 "%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
 #, c-format
@@ -11957,6 +11959,13 @@ msgid ""
 msgstr ""
 "%s%s: SSL 接続中のクライアントに対しては upgrade が利かないため、クライアン"
 "ト %s%s%s との接続を切断中"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgstr ""
+"%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
 msgid "client"
 msgid_plural "clients"
