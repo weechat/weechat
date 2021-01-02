@@ -145,7 +145,6 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
     {
         weechat_printf (
             NULL,
-            /* TRANSLATORS: "%s" after "%d" is "server" or "servers" */
             NG_("%s%s: disconnected from %d server "
                 "(SSL connection not supported with upgrade)",
                 "%s%s: disconnected from %d servers "
