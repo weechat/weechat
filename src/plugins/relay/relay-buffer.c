@@ -1,7 +1,7 @@
 /*
  * relay-buffer.c - display clients list on relay buffer
  *
- * Copyright (C) 2003-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
