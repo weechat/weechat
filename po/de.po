@@ -25,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-01-02 15:21+0100\n"
-"PO-Revision-Date: 2021-01-01 11:19+0100\n"
+"PO-Revision-Date: 2021-01-05 09:14+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
 "Language: de\n"
@@ -7652,7 +7652,6 @@ msgstr "%s: Skript \"%s\" wurde beendet"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: Das Skript \"%s\" wurde nicht installiert"
 
-#, fuzzy
 msgid "server"
 msgstr "Server"
 
@@ -7670,18 +7669,18 @@ msgstr ""
 "%s%s: Verbindung zum Server wird getrennt. Ein Upgrade ist über eine SSL-"
 "Verbindung nicht möglich"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
 msgid_plural ""
 "%s%s: disconnected from %d servers (SSL connection not supported with "
 "upgrade)"
 msgstr[0] ""
-"%s%s: Verbindung mit %d %s getrennt (Upgrade über eine SSL Verbindung nicht "
-"möglich)"
+"%s%s: Verbindung zu %d Server getrennt (SSL Verbindung kann während Upgrade "
+"nicht gehalten werden)"
 msgstr[1] ""
-"%s%s: Verbindung mit %d %s getrennt (Upgrade über eine SSL Verbindung nicht "
-"möglich)"
+"%s%s: Verbindungen zu %d Servern getrennt (SSL Verbindung kann während "
+"Upgrade nicht gehalten werden)"
 
 #, c-format
 msgid ""
