@@ -238,7 +238,7 @@ Les touches "meta-OP" et "meta-OQ" peuvent être différentes dans votre termina
 Pour trouver le code de la touche appuyez sur kbd:[Alt+k] puis la touche.
 
 [[customize_buflist]]
-=== Comment puis-je configurer la liste des tampons, comme la couleur du tampon actif ?
+=== Comment puis-je configurer la liste des tampons, comme la couleur du tampon actif ?
 
 Vous pouvez afficher toutes les options buflist avec la commande :
 
@@ -1121,7 +1121,7 @@ $ curl -O https://weechat.org/files/plugins.xml.gz
 ----
 
 [[spell_dictionaries]]
-=== J'ai installé des dictionnaires aspell sur mon système, comment les utiliser sans redémarrer WeeChat ?
+=== J'ai installé des dictionnaires aspell sur mon système, comment les utiliser sans redémarrer WeeChat ?
 
 Vous devez recharger l'extension spell :
 
@@ -1237,7 +1237,7 @@ Par exemple :
 ----
 
 [[sharing_config_files]]
-=== Je souhaite partager ma configuration de WeeChat, quels fichiers dois-je partager et que dois-je garder privé ?
+=== Je souhaite partager ma configuration de WeeChat, quels fichiers dois-je partager et que dois-je garder privé ?
 
 Vous pouvez partager les fichiers _~/.weechat/*.conf_ sauf le fichier
 _sec.conf_ qui contient vos mots de passes chiffrés avec votre phrase
