@@ -32,19 +32,21 @@ if(ENABLE_MAN)
   add_custom_target(doc-man-weechat-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat.1)
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat.1 DESTINATION ${MANDIR}/de/man1)
 
-  # man page: weechat-headless
-  add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
-    COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.de.adoc
-    DEPENDS
-    ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.de.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.de.adoc
-    ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.de.adoc
-    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-    COMMENT "Building weechat-headless.1 (de)"
-  )
-  add_custom_target(doc-man-weechat-headless-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
-  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/de/man1)
+  if(ENABLE_HEADLESS)
+    # man page: weechat-headless
+    add_custom_command(
+      OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1
+      COMMAND ${ASCIIDOCTOR_EXECUTABLE} ARGS ${ASCIIDOCTOR_ARGS} -b manpage -o weechat-headless.1 ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.de.adoc
+      DEPENDS
+      ${CMAKE_CURRENT_SOURCE_DIR}/weechat-headless.1.de.adoc
+      ${CMAKE_CURRENT_SOURCE_DIR}/includes/cmdline_options.de.adoc
+      ${CMAKE_CURRENT_SOURCE_DIR}/includes/man.de.adoc
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+      COMMENT "Building weechat-headless.1 (de)"
+    )
+    add_custom_target(doc-man-weechat-headless-de ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1)
+    install(FILES ${CMAKE_CURRENT_BINARY_DIR}/weechat-headless.1 DESTINATION ${MANDIR}/de/man1)
+  endif()
 endif()
 
 if(ENABLE_DOC)
