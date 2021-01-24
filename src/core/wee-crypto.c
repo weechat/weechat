@@ -1,7 +1,7 @@
 /*
  * wee-crypto.c - cryptographic functions
  *
- * Copyright (C) 2018-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2018-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

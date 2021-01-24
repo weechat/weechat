@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2020-12-19 18:17+0100\n"
+"POT-Creation-Date: 2021-01-02 15:21+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -1613,7 +1613,7 @@ msgstr "式を評価"
 
 #, fuzzy
 msgid ""
-"[-n|-s] [-d] <expression> || [-n] [-d] -c <expression1> <operator> "
+"[-n|-s] [-d] <expression> || [-n] [-d [-d]] -c <expression1> <operator> "
 "<expression2>"
 msgstr "[-n|-s] <expression> || [-n] -c <expression1> <operator> <expression2>"
 
@@ -1622,7 +1622,8 @@ msgid ""
 "        -n: display result without sending it to buffer (debug mode)\n"
 "        -s: split expression before evaluating it (many commands can be "
 "separated by semicolons)\n"
-"        -d: display debug output after evaluation\n"
+"        -d: display debug output after evaluation (with two -d: more verbose "
+"debug)\n"
 "        -c: evaluate as condition: use operators and parentheses, return a "
 "boolean value (\"0\" or \"1\")\n"
 "expression: expression to evaluate, variables with format ${variable} are "
@@ -7146,9 +7147,9 @@ msgstr "%s: スクリプト \"%s\" がアンロードされました"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: スクリプト \"%s\" はロードされていません"
 
+#, fuzzy
 msgid "server"
-msgid_plural "servers"
-msgstr[0] "サーバ"
+msgstr "サーバ"
 
 msgid "Lag"
 msgstr "遅延時間"
@@ -7163,12 +7164,13 @@ msgid ""
 msgstr ""
 "%s%s: SSL 接続サーバでは upgrade が利かないため、サーバとの接続を切断中"
 
-#. TRANSLATORS: "%s" after "%d" is "server" or "servers"
-#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
-msgstr ""
+"%s%s: disconnected from %d server (SSL connection not supported with upgrade)"
+msgid_plural ""
+"%s%s: disconnected from %d servers (SSL connection not supported with "
+"upgrade)"
+msgstr[0] ""
 "%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
 #, c-format
@@ -11956,6 +11958,13 @@ msgid ""
 msgstr ""
 "%s%s: SSL 接続中のクライアントに対しては upgrade が利かないため、クライアン"
 "ト %s%s%s との接続を切断中"
+
+#. TRANSLATORS: "%s" after "%d" is "client" or "clients"
+#, c-format
+msgid ""
+"%s%s: disconnected from %d %s (SSL connection not supported with upgrade)"
+msgstr ""
+"%s%s: %d 個の %s との切断を完了 (SSL 接続は upgrade でサポートされていません)"
 
 msgid "client"
 msgid_plural "clients"

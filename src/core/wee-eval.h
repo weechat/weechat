@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -71,14 +71,17 @@ struct t_eval_regex
 
 struct t_eval_context
 {
-    struct t_hashtable *pointers;
-    struct t_hashtable *extra_vars;
-    int extra_vars_eval;
-    const char *prefix;
-    const char *suffix;
-    struct t_eval_regex *regex;
-    int recursion_count;
-    char **debug;
+    struct t_hashtable *pointers;      /* pointers used in eval             */
+    struct t_hashtable *extra_vars;    /* extra variables used in eval      */
+    int extra_vars_eval;               /* 1 if extra vars must be evaluated */
+    const char *prefix;                /* prefix (default is "${")          */
+    const char *suffix;                /* suffix (default is "}")           */
+    struct t_eval_regex *regex;        /* in case of replace with regex     */
+    int recursion_count;               /* to prevent infinite recursion     */
+    int debug_level;                   /* 0: no debug, 1: debug, 2: extra   */
+    int debug_depth;                   /* used for debug indentation        */
+    int debug_id;                      /* operation id in debug output      */
+    char **debug_output;               /* string with debug output          */
 };
 
 extern int eval_is_true (const char *value);

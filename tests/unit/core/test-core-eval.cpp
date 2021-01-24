@@ -1,7 +1,7 @@
 /*
  * test-core-eval.cpp - test evaluation functions
  *
- * Copyright (C) 2014-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2014-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -278,70 +278,152 @@ TEST(CoreEval, EvalCondition)
     hashtable_remove (options, "prefix");
     hashtable_remove (options, "suffix");
 
-    /* test with debug */
+    /* test with debug level 1 */
     hashtable_set (options, "debug", "1");
     WEE_CHECK_EVAL("1", "abc < def");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
-    STRCMP_EQUAL("eval_expression(\"abc < def\")\n"
-                 "eval_expression_condition(\"abc < def\")\n"
-                 "eval_strstr_level(\"abc < def\", \"||\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"&&\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"=~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"==*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"=*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"==-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"=-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"==\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"!=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"<=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc < def\", \"<\", \"(\", \")\", 0)\n"
-                 "eval_expression_condition(\"abc\")\n"
-                 "eval_strstr_level(\"abc\", \"||\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"&&\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"=~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"==*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"=*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"==-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"=-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"==\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"!=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"<=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \"<\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \">=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"abc\", \">\", \"(\", \")\", 0)\n"
-                 "eval_replace_vars(\"abc\")\n"
-                 "eval_expression_condition(\"def\")\n"
-                 "eval_strstr_level(\"def\", \"||\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"&&\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"=~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!~\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"==*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"=*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!*\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"==-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"=-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!-\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"==\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"!=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"<=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \"<\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \">=\", \"(\", \")\", 0)\n"
-                 "eval_strstr_level(\"def\", \">\", \"(\", \")\", 0)\n"
-                 "eval_replace_vars(\"def\")\n"
-                 "eval_compare(\"abc\", \"<\", \"def\")",
+    STRCMP_EQUAL("1:eval_expression(\"abc < def\")\n"
+                 "  2:eval_expression_condition(\"abc < def\")\n"
+                 "    3:eval_expression_condition(\"abc\")\n"
+                 "      4:eval_replace_vars(\"abc\")\n"
+                 "      4:== \"abc\"\n"
+                 "    3:== \"abc\"\n"
+                 "    5:eval_expression_condition(\"def\")\n"
+                 "      6:eval_replace_vars(\"def\")\n"
+                 "      6:== \"def\"\n"
+                 "    5:== \"def\"\n"
+                 "    7:eval_compare(\"abc\", \"<\", \"def\")\n"
+                 "    7:== \"1\"\n"
+                 "  2:== \"1\"\n"
+                 "1:== \"1\"",
                  ptr_debug_output);
+    hashtable_remove (options, "debug");
+    hashtable_remove (options, "debug_output");
+
+    /* test with debug level 2 */
+    hashtable_set (options, "debug", "2");
+    WEE_CHECK_EVAL("1", "abc < def");
+    ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
+    STRCMP_EQUAL(
+        "1:eval_expression(\"abc < def\")\n"
+        "  2:eval_expression_condition(\"abc < def\")\n"
+        "    3:eval_strstr_level(\"abc < def\", \"||\", \"(\", \")\", 0)\n"
+        "    3:== null\n"
+        "    4:eval_strstr_level(\"abc < def\", \"&&\", \"(\", \")\", 0)\n"
+        "    4:== null\n"
+        "    5:eval_strstr_level(\"abc < def\", \"=~\", \"(\", \")\", 0)\n"
+        "    5:== null\n"
+        "    6:eval_strstr_level(\"abc < def\", \"!~\", \"(\", \")\", 0)\n"
+        "    6:== null\n"
+        "    7:eval_strstr_level(\"abc < def\", \"==*\", \"(\", \")\", 0)\n"
+        "    7:== null\n"
+        "    8:eval_strstr_level(\"abc < def\", \"!!*\", \"(\", \")\", 0)\n"
+        "    8:== null\n"
+        "    9:eval_strstr_level(\"abc < def\", \"=*\", \"(\", \")\", 0)\n"
+        "    9:== null\n"
+        "    10:eval_strstr_level(\"abc < def\", \"!*\", \"(\", \")\", 0)\n"
+        "    10:== null\n"
+        "    11:eval_strstr_level(\"abc < def\", \"==-\", \"(\", \")\", 0)\n"
+        "    11:== null\n"
+        "    12:eval_strstr_level(\"abc < def\", \"!!-\", \"(\", \")\", 0)\n"
+        "    12:== null\n"
+        "    13:eval_strstr_level(\"abc < def\", \"=-\", \"(\", \")\", 0)\n"
+        "    13:== null\n"
+        "    14:eval_strstr_level(\"abc < def\", \"!-\", \"(\", \")\", 0)\n"
+        "    14:== null\n"
+        "    15:eval_strstr_level(\"abc < def\", \"==\", \"(\", \")\", 0)\n"
+        "    15:== null\n"
+        "    16:eval_strstr_level(\"abc < def\", \"!=\", \"(\", \")\", 0)\n"
+        "    16:== null\n"
+        "    17:eval_strstr_level(\"abc < def\", \"<=\", \"(\", \")\", 0)\n"
+        "    17:== null\n"
+        "    18:eval_strstr_level(\"abc < def\", \"<\", \"(\", \")\", 0)\n"
+        "    18:== \"< def\"\n"
+        "    19:eval_expression_condition(\"abc\")\n"
+        "      20:eval_strstr_level(\"abc\", \"||\", \"(\", \")\", 0)\n"
+        "      20:== null\n"
+        "      21:eval_strstr_level(\"abc\", \"&&\", \"(\", \")\", 0)\n"
+        "      21:== null\n"
+        "      22:eval_strstr_level(\"abc\", \"=~\", \"(\", \")\", 0)\n"
+        "      22:== null\n"
+        "      23:eval_strstr_level(\"abc\", \"!~\", \"(\", \")\", 0)\n"
+        "      23:== null\n"
+        "      24:eval_strstr_level(\"abc\", \"==*\", \"(\", \")\", 0)\n"
+        "      24:== null\n"
+        "      25:eval_strstr_level(\"abc\", \"!!*\", \"(\", \")\", 0)\n"
+        "      25:== null\n"
+        "      26:eval_strstr_level(\"abc\", \"=*\", \"(\", \")\", 0)\n"
+        "      26:== null\n"
+        "      27:eval_strstr_level(\"abc\", \"!*\", \"(\", \")\", 0)\n"
+        "      27:== null\n"
+        "      28:eval_strstr_level(\"abc\", \"==-\", \"(\", \")\", 0)\n"
+        "      28:== null\n"
+        "      29:eval_strstr_level(\"abc\", \"!!-\", \"(\", \")\", 0)\n"
+        "      29:== null\n"
+        "      30:eval_strstr_level(\"abc\", \"=-\", \"(\", \")\", 0)\n"
+        "      30:== null\n"
+        "      31:eval_strstr_level(\"abc\", \"!-\", \"(\", \")\", 0)\n"
+        "      31:== null\n"
+        "      32:eval_strstr_level(\"abc\", \"==\", \"(\", \")\", 0)\n"
+        "      32:== null\n"
+        "      33:eval_strstr_level(\"abc\", \"!=\", \"(\", \")\", 0)\n"
+        "      33:== null\n"
+        "      34:eval_strstr_level(\"abc\", \"<=\", \"(\", \")\", 0)\n"
+        "      34:== null\n"
+        "      35:eval_strstr_level(\"abc\", \"<\", \"(\", \")\", 0)\n"
+        "      35:== null\n"
+        "      36:eval_strstr_level(\"abc\", \">=\", \"(\", \")\", 0)\n"
+        "      36:== null\n"
+        "      37:eval_strstr_level(\"abc\", \">\", \"(\", \")\", 0)\n"
+        "      37:== null\n"
+        "      38:eval_replace_vars(\"abc\")\n"
+        "      38:== \"abc\"\n"
+        "    19:== \"abc\"\n"
+        "    39:eval_expression_condition(\"def\")\n"
+        "      40:eval_strstr_level(\"def\", \"||\", \"(\", \")\", 0)\n"
+        "      40:== null\n"
+        "      41:eval_strstr_level(\"def\", \"&&\", \"(\", \")\", 0)\n"
+        "      41:== null\n"
+        "      42:eval_strstr_level(\"def\", \"=~\", \"(\", \")\", 0)\n"
+        "      42:== null\n"
+        "      43:eval_strstr_level(\"def\", \"!~\", \"(\", \")\", 0)\n"
+        "      43:== null\n"
+        "      44:eval_strstr_level(\"def\", \"==*\", \"(\", \")\", 0)\n"
+        "      44:== null\n"
+        "      45:eval_strstr_level(\"def\", \"!!*\", \"(\", \")\", 0)\n"
+        "      45:== null\n"
+        "      46:eval_strstr_level(\"def\", \"=*\", \"(\", \")\", 0)\n"
+        "      46:== null\n"
+        "      47:eval_strstr_level(\"def\", \"!*\", \"(\", \")\", 0)\n"
+        "      47:== null\n"
+        "      48:eval_strstr_level(\"def\", \"==-\", \"(\", \")\", 0)\n"
+        "      48:== null\n"
+        "      49:eval_strstr_level(\"def\", \"!!-\", \"(\", \")\", 0)\n"
+        "      49:== null\n"
+        "      50:eval_strstr_level(\"def\", \"=-\", \"(\", \")\", 0)\n"
+        "      50:== null\n"
+        "      51:eval_strstr_level(\"def\", \"!-\", \"(\", \")\", 0)\n"
+        "      51:== null\n"
+        "      52:eval_strstr_level(\"def\", \"==\", \"(\", \")\", 0)\n"
+        "      52:== null\n"
+        "      53:eval_strstr_level(\"def\", \"!=\", \"(\", \")\", 0)\n"
+        "      53:== null\n"
+        "      54:eval_strstr_level(\"def\", \"<=\", \"(\", \")\", 0)\n"
+        "      54:== null\n"
+        "      55:eval_strstr_level(\"def\", \"<\", \"(\", \")\", 0)\n"
+        "      55:== null\n"
+        "      56:eval_strstr_level(\"def\", \">=\", \"(\", \")\", 0)\n"
+        "      56:== null\n"
+        "      57:eval_strstr_level(\"def\", \">\", \"(\", \")\", 0)\n"
+        "      57:== null\n"
+        "      58:eval_replace_vars(\"def\")\n"
+        "      58:== \"def\"\n"
+        "    39:== \"def\"\n"
+        "    59:eval_compare(\"abc\", \"<\", \"def\")\n"
+        "    59:== \"1\"\n"
+        "  2:== \"1\"\n"
+        "1:== \"1\"",
+        ptr_debug_output);
     hashtable_remove (options, "debug");
     hashtable_remove (options, "debug_output");
 
@@ -687,7 +769,7 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "<<<buffer.number>>>");
     hashtable_free (options);
 
-    /* test with debug */
+    /* test with debug level 1 */
     options = hashtable_new (32,
                              WEECHAT_HASHTABLE_STRING,
                              WEECHAT_HASHTABLE_STRING,
@@ -696,9 +778,30 @@ TEST(CoreEval, EvalExpression)
     hashtable_set (options, "debug", "1");
     WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
-    STRCMP_EQUAL("eval_expression(\"${rev:abcdef}\")\n"
-                 "eval_replace_vars(\"${rev:abcdef}\")\n"
-                 "eval_replace_vars_cb(\"rev:abcdef\")",
+    STRCMP_EQUAL("1:eval_expression(\"${rev:abcdef}\")\n"
+                 "  2:eval_replace_vars(\"${rev:abcdef}\")\n"
+                 "    3:eval_replace_vars_cb(\"rev:abcdef\")\n"
+                 "    3:== \"fedcba\"\n"
+                 "  2:== \"fedcba\"\n"
+                 "1:== \"fedcba\"",
+                 ptr_debug_output);
+    hashtable_free (options);
+
+    /* test with debug level 2 */
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+    CHECK(options);
+    hashtable_set (options, "debug", "2");
+    WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
+    ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
+    STRCMP_EQUAL("1:eval_expression(\"${rev:abcdef}\")\n"
+                 "  2:eval_replace_vars(\"${rev:abcdef}\")\n"
+                 "    3:eval_replace_vars_cb(\"rev:abcdef\")\n"
+                 "    3:== \"fedcba\"\n"
+                 "  2:== \"fedcba\"\n"
+                 "1:== \"fedcba\"",
                  ptr_debug_output);
     hashtable_free (options);
 

@@ -1,7 +1,7 @@
 /*
  * wee-eval.c - evaluate expressions with references to internal vars
  *
- * Copyright (C) 2012-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2012-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -46,9 +46,22 @@
 #include "../plugins/plugin.h"
 
 
-#define EVAL_DEBUG(msg, argz...)                        \
-    if (eval_context->debug)                            \
-        eval_debug_message (eval_context, msg, ##argz);
+#define EVAL_DEBUG_MSG(level, msg, argz...)                             \
+    debug_id = -1;                                                      \
+    if (eval_context->debug_level >= level)                             \
+    {                                                                   \
+        debug_id = ++(eval_context->debug_id);                          \
+        (eval_context->debug_depth)++;                                  \
+        eval_debug_message_vargs (eval_context, debug_id, msg, ##argz); \
+    }
+
+#define EVAL_DEBUG_RESULT(level, result)                                \
+    if (eval_context->debug_level >= level)                             \
+    {                                                                   \
+        eval_debug_message (eval_context, debug_id, 1, result);         \
+        (eval_context->debug_depth)--;                                  \
+    }
+
 
 char *logical_ops[EVAL_NUM_LOGICAL_OPS] =
 { "||", "&&" };
@@ -73,17 +86,62 @@ char *eval_expression_condition (const char *expr,
  */
 
 void
-eval_debug_message (struct t_eval_context *eval_context, char *message, ...)
+eval_debug_message (struct t_eval_context *eval_context, int debug_id,
+                    int result, const char *message)
+{
+    int i;
+    char str_id[64];
+
+    if (*(eval_context->debug_output)[0])
+        string_dyn_concat (eval_context->debug_output, "\n", -1);
+
+    /* indentation */
+    for (i = 1; i < eval_context->debug_depth; i++)
+    {
+        string_dyn_concat (eval_context->debug_output, "  ", -1);
+    }
+
+    /* debug id */
+    if (debug_id >= 0)
+    {
+        snprintf (str_id, sizeof (str_id), "%d:", debug_id);
+        string_dyn_concat (eval_context->debug_output, str_id, -1);
+    }
+
+    /* debug message */
+    if (result)
+    {
+        string_dyn_concat (eval_context->debug_output, "== ", -1);
+        if (message)
+            string_dyn_concat (eval_context->debug_output, "\"", -1);
+        string_dyn_concat (eval_context->debug_output,
+                           (message) ? message : "null",
+                           -1);
+        if (message)
+            string_dyn_concat (eval_context->debug_output, "\"", -1);
+    }
+    else
+    {
+        string_dyn_concat (eval_context->debug_output, message, -1);
+    }
+}
+
+
+/*
+ * Adds a debug message in the debug output, with variable arguments.
+ */
+
+void
+eval_debug_message_vargs (struct t_eval_context *eval_context, int debug_id,
+                          const char *message, ...)
 {
     weechat_va_format (message);
-    if (!vbuffer)
-        return;
-
-    if (*(eval_context->debug)[0])
-        string_dyn_concat (eval_context->debug, "\n", -1);
-    string_dyn_concat (eval_context->debug, vbuffer, -1);
-
-    free (vbuffer);
+    if (vbuffer)
+    {
+        eval_debug_message (eval_context, debug_id, 0,
+                            vbuffer);
+        free (vbuffer);
+    }
 }
 
 /*
@@ -122,14 +180,19 @@ eval_strstr_level (const char *string, const char *search,
                    int escape)
 {
     const char *ptr_string;
-    int level, length_search;
+    int level, length_search, debug_id;
     int length_prefix, length_prefix2, length_suffix, length_suffix2;
 
-    EVAL_DEBUG("eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
-               string, search, extra_prefix, extra_suffix, escape);
+    ptr_string = NULL;
+
+    EVAL_DEBUG_MSG(2, "eval_strstr_level(\"%s\", \"%s\", \"%s\", \"%s\", %d)",
+                   string, search, extra_prefix, extra_suffix, escape);
 
     if (!string || !search)
-        return NULL;
+    {
+        ptr_string = NULL;
+        goto end;
+    }
 
     length_search = strlen (search);
 
@@ -177,15 +240,19 @@ eval_strstr_level (const char *string, const char *search,
         else if ((level == 0)
                  && (strncmp (ptr_string, search, length_search) == 0))
         {
-            return ptr_string;
+            goto end;
         }
         else
         {
             ptr_string++;
         }
     }
+    ptr_string = NULL;
 
-    return NULL;
+end:
+    EVAL_DEBUG_RESULT(2, ptr_string);
+
+    return ptr_string;
 }
 
 /*
@@ -673,25 +740,29 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
 {
     char *value, *old_value, *var_name, str_value[128], *pos;
     const char *ptr_value, *hdata_name, *ptr_var_name;
-    int type;
+    int type, debug_id;
     struct t_hashtable *hashtable;
 
-    EVAL_DEBUG("eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
-               hdata->name, pointer, path);
+    EVAL_DEBUG_MSG(1, "eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
+                   hdata->name, pointer, path);
 
     value = NULL;
     var_name = NULL;
 
     /* NULL pointer? return empty string */
     if (!pointer)
-        return strdup ("");
+    {
+        value = strdup ("");
+        goto end;
+    }
 
     /* no path? just return current pointer as string */
     if (!path || !path[0])
     {
         snprintf (str_value, sizeof (str_value),
                   "0x%lx", (unsigned long)pointer);
-        return strdup (str_value);
+        value = strdup (str_value);
+        goto end;
     }
 
     /*
@@ -817,6 +888,8 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
 end:
     if (var_name)
         free (var_name);
+
+    EVAL_DEBUG_RESULT(1, value);
 
     return value;
 }
@@ -951,14 +1024,15 @@ eval_replace_vars_cb (void *data, const char *text)
     struct t_eval_context *eval_context;
     struct t_config_option *ptr_option;
     struct t_gui_buffer *ptr_buffer;
-    char str_value[512], *value;
-    char *tmp;
+    char str_value[512], *value, *tmp;
     const char *ptr_value;
-    int length;
+    int length, debug_id;
+
+    value = NULL;
 
     eval_context = (struct t_eval_context *)data;
 
-    EVAL_DEBUG("eval_replace_vars_cb(\"%s\")", text);
+    EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
     /* 1. variable in hashtable "extra_vars" */
     if (eval_context->extra_vars)
@@ -970,16 +1044,17 @@ eval_replace_vars_cb (void *data, const char *text)
             {
                 tmp = strdup (ptr_value);
                 if (!tmp)
-                    return NULL;
+                    goto end;
                 hashtable_remove (eval_context->extra_vars, text);
                 value = eval_replace_vars (tmp, eval_context);
                 hashtable_set (eval_context->extra_vars, text, tmp);
                 free (tmp);
-                return value;
+                goto end;
             }
             else
             {
-                return strdup (ptr_value);
+                value = strdup (ptr_value);
+                goto end;
             }
         }
     }
@@ -989,24 +1064,39 @@ eval_replace_vars_cb (void *data, const char *text)
      *    --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval:", 5) == 0)
-        return eval_replace_vars (text + 5, eval_context);
+    {
+        value = eval_replace_vars (text + 5, eval_context);
+        goto end;
+    }
 
     /*
      * 3. force evaluation of condition (recursive call)
      *    --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval_cond:", 10) == 0)
-        return eval_string_eval_cond (text + 10, eval_context);
+    {
+        value = eval_string_eval_cond (text + 10, eval_context);
+        goto end;
+    }
 
     /* 4. convert escaped chars */
     if (strncmp (text, "esc:", 4) == 0)
-        return string_convert_escaped_chars (text + 4);
+    {
+        value = string_convert_escaped_chars (text + 4);
+        goto end;
+    }
     if ((text[0] == '\\') && text[1] && (text[1] != '\\'))
-        return string_convert_escaped_chars (text);
+    {
+        value = string_convert_escaped_chars (text);
+        goto end;
+    }
 
     /* 5. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
-        return eval_string_hide (text + 5);
+    {
+        value = eval_string_hide (text + 5);
+        goto end;
+    }
 
     /*
      * 6. cut chars:
@@ -1016,19 +1106,34 @@ eval_replace_vars_cb (void *data, const char *text)
      *           suffix when the string is cut
      */
     if (strncmp (text, "cut:", 4) == 0)
-        return eval_string_cut (text + 4, 0);
+    {
+        value = eval_string_cut (text + 4, 0);
+        goto end;
+    }
     if (strncmp (text, "cutscr:", 7) == 0)
-        return eval_string_cut (text + 7, 1);
+    {
+        value = eval_string_cut (text + 7, 1);
+        goto end;
+    }
 
     /* 7. reverse string */
     if (strncmp (text, "rev:", 4) == 0)
-        return string_reverse (text + 4);
+    {
+        value = string_reverse (text + 4);
+        goto end;
+    }
     if (strncmp (text, "revscr:", 7) == 0)
-        return string_reverse_screen (text + 7);
+    {
+        value = string_reverse_screen (text + 7);
+        goto end;
+    }
 
     /* 8. repeated string */
     if (strncmp (text, "repeat:", 7) == 0)
-        return eval_string_repeat (text + 7);
+    {
+        value = eval_string_repeat (text + 7);
+        goto end;
+    }
 
     /*
      * 9. length of string:
@@ -1039,87 +1144,129 @@ eval_replace_vars_cb (void *data, const char *text)
     {
         length = gui_chat_strlen (text + 7);
         snprintf (str_value, sizeof (str_value), "%d", length);
-        return strdup (str_value);
+        value = strdup (str_value);
+        goto end;
     }
     if (strncmp (text, "lengthscr:", 10) == 0)
     {
         length = gui_chat_strlen_screen (text + 10);
         snprintf (str_value, sizeof (str_value), "%d", length);
-        return strdup (str_value);
+        value = strdup (str_value);
+        goto end;
     }
 
     /* 10. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
-        return eval_string_regex_group (text + 3, eval_context);
+    {
+        value = eval_string_regex_group (text + 3, eval_context);
+        goto end;
+    }
 
     /* 11. color code */
     if (strncmp (text, "color:", 6) == 0)
-        return eval_string_color (text + 6);
+    {
+        value = eval_string_color (text + 6);
+        goto end;
+    }
 
     /* 12. modifier */
     if (strncmp (text, "modifier:", 9) == 0)
-        return eval_string_modifier (text + 9);
+    {
+        value = eval_string_modifier (text + 9);
+        goto end;
+    }
 
     /* 13. info */
     if (strncmp (text, "info:", 5) == 0)
-        return eval_string_info (text + 5);
+    {
+        value = eval_string_info (text + 5);
+        goto end;
+    }
 
     /* 14. base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
-        return eval_string_base_encode (text + 12);
+    {
+        value = eval_string_base_encode (text + 12);
+        goto end;
+    }
     if (strncmp (text, "base_decode:", 12) == 0)
-        return eval_string_base_decode (text + 12);
+    {
+        value = eval_string_base_decode (text + 12);
+        goto end;
+    }
 
     /* 15. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
-        return eval_string_date (text + 4);
+    {
+        value = eval_string_date (text + 4);
+        goto end;
+    }
 
     /* 16. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
-        if (ptr_value)
-            return strdup (ptr_value);
+        value = strdup ((ptr_value) ? ptr_value : "");
+        goto end;
     }
 
     /* 17: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
-        return eval_string_if (text + 3, eval_context);
+    {
+        value = eval_string_if (text + 3, eval_context);
+        goto end;
+    }
 
     /*
      * 18. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
-        return calc_expression (text + 5);
+    {
+        value = calc_expression (text + 5);
+        goto end;
+    }
 
     /* 19. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
-        return strdup ((ptr_value) ? ptr_value : "");
+        value = strdup ((ptr_value) ? ptr_value : "");
+        goto end;
     }
     config_file_search_with_string (text, NULL, NULL, &ptr_option, NULL);
     if (ptr_option)
     {
         if (!ptr_option->value)
-            return strdup ("");
+        {
+            value = strdup ("");
+            goto end;
+        }
         switch (ptr_option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                return strdup (CONFIG_BOOLEAN(ptr_option) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+                value = strdup (CONFIG_BOOLEAN(ptr_option) ?
+                                EVAL_STR_TRUE : EVAL_STR_FALSE);
+                goto end;
             case CONFIG_OPTION_TYPE_INTEGER:
                 if (ptr_option->string_values)
-                    return strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                {
+                    value = strdup (ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                    goto end;
+                }
                 snprintf (str_value, sizeof (str_value),
                           "%d", CONFIG_INTEGER(ptr_option));
-                return strdup (str_value);
+                value = strdup (str_value);
+                goto end;
             case CONFIG_OPTION_TYPE_STRING:
-                return strdup (CONFIG_STRING(ptr_option));
+                value = strdup (CONFIG_STRING(ptr_option));
+                goto end;
             case CONFIG_OPTION_TYPE_COLOR:
-                return strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                value = strdup (gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                goto end;
             case CONFIG_NUM_OPTION_TYPES:
-                return strdup ("");
+                value = strdup ("");
+                goto end;
         }
     }
 
@@ -1129,11 +1276,19 @@ eval_replace_vars_cb (void *data, const char *text)
     {
         ptr_value = hashtable_get (ptr_buffer->local_variables, text);
         if (ptr_value)
-            return strdup (ptr_value);
+        {
+            value = strdup (ptr_value);
+            goto end;
+        }
     }
 
     /* 21. hdata */
-    return eval_string_hdata (text, eval_context);
+    value = eval_string_hdata (text, eval_context);
+
+end:
+    EVAL_DEBUG_RESULT(1, value);
+
+    return value;
 }
 
 /*
@@ -1147,8 +1302,9 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 {
     const char *no_replace_prefix_list[] = { "if:", NULL };
     char *result;
+    int debug_id;
 
-    EVAL_DEBUG("eval_replace_vars(\"%s\")", expr);
+    EVAL_DEBUG_MSG(1, "eval_replace_vars(\"%s\")", expr);
 
     eval_context->recursion_count++;
 
@@ -1168,6 +1324,8 @@ eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
     }
 
     eval_context->recursion_count--;
+
+    EVAL_DEBUG_RESULT(1, result);
 
     return result;
 }
@@ -1190,13 +1348,13 @@ char *
 eval_compare (const char *expr1, int comparison, const char *expr2,
               struct t_eval_context *eval_context)
 {
-    int rc, string_compare, length1, length2;
+    int rc, string_compare, length1, length2, debug_id;
     regex_t regex;
     double value1, value2;
-    char *error;
+    char *error, *value;
 
-    EVAL_DEBUG("eval_compare(\"%s\", \"%s\", \"%s\")",
-               expr1, comparisons[comparison], expr2);
+    EVAL_DEBUG_MSG(1, "eval_compare(\"%s\", \"%s\", \"%s\")",
+                   expr1, comparisons[comparison], expr2);
 
     rc = 0;
     string_compare = 0;
@@ -1309,7 +1467,11 @@ eval_compare (const char *expr1, int comparison, const char *expr2,
     }
 
 end:
-    return strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+    value = strdup ((rc) ? EVAL_STR_TRUE : EVAL_STR_FALSE);
+
+    EVAL_DEBUG_RESULT(1, value);
+
+    return value;
 }
 
 /*
@@ -1324,19 +1486,23 @@ char *
 eval_expression_condition (const char *expr,
                            struct t_eval_context *eval_context)
 {
-    int logic, comp, length, level, rc;
+    int logic, comp, length, level, rc, debug_id;
     const char *pos, *pos_end;
     char *expr2, *sub_expr, *value, *tmp_value, *tmp_value2;
 
-    EVAL_DEBUG("eval_expression_condition(\"%s\")", expr);
+    EVAL_DEBUG_MSG(1, "eval_expression_condition(\"%s\")", expr);
 
     value = NULL;
+    expr2 = NULL;
 
     if (!expr)
-        return NULL;
+        goto end;
 
     if (!expr[0])
-        return strdup (expr);
+    {
+        value = strdup (expr);
+        goto end;
+    }
 
     /* skip spaces at beginning of string */
     while (expr[0] == ' ')
@@ -1344,7 +1510,10 @@ eval_expression_condition (const char *expr,
         expr++;
     }
     if (!expr[0])
-        return strdup (expr);
+    {
+        value = strdup (expr);
+        goto end;
+    }
 
     /* skip spaces at end of string */
     pos_end = expr + strlen (expr) - 1;
@@ -1355,7 +1524,7 @@ eval_expression_condition (const char *expr,
 
     expr2 = string_strndup (expr, pos_end + 1 - expr);
     if (!expr2)
-        return NULL;
+        goto end;
 
     /*
      * search for a logical operator, and if one is found:
@@ -1530,6 +1699,8 @@ end:
     if (expr2)
         free (expr2);
 
+    EVAL_DEBUG_RESULT(1, value);
+
     return value;
 }
 
@@ -1562,20 +1733,22 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
                     struct t_eval_context *eval_context)
 {
     char *result, *result2, *str_replace;
-    int length, length_replace, start_offset, i, rc, end;
+    int length, length_replace, start_offset, i, rc, end, debug_id;
     int empty_replace_allowed;
     struct t_eval_regex eval_regex;
 
-    EVAL_DEBUG("eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
-               string, regex, replace);
+    result = NULL;
+
+    EVAL_DEBUG_MSG(1, "eval_replace_regex(\"%s\", 0x%lx, \"%s\")",
+                   string, regex, replace);
 
     if (!string || !regex || !replace)
-        return NULL;
+        goto end;
 
     length = strlen (string) + 1;
     result = malloc (length);
     if (!result)
-        return NULL;
+        goto end;
     snprintf (result, length, "%s", string);
 
     eval_context->regex = &eval_regex;
@@ -1636,7 +1809,8 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         if (!result2)
         {
             free (result);
-            return NULL;
+            result = NULL;
+            goto end;
         }
         result2[0] = '\0';
         if (eval_regex.match[0].rm_so > 0)
@@ -1662,6 +1836,9 @@ eval_replace_regex (const char *string, regex_t *regex, const char *replace,
         if (!result[start_offset])
             break;
     }
+
+end:
+    EVAL_DEBUG_RESULT(1, result);
 
     return result;
 }
@@ -1712,9 +1889,10 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
                  struct t_hashtable *extra_vars, struct t_hashtable *options)
 {
     struct t_eval_context context, *eval_context;
-    int condition, rc, pointers_allocated, regex_allocated;
+    int condition, rc, pointers_allocated, regex_allocated, debug_id;
     int ptr_window_added, ptr_buffer_added;
-    char *value;
+    long number;
+    char *value, *error;
     const char *default_prefix = EVAL_DEFAULT_PREFIX;
     const char *default_suffix = EVAL_DEFAULT_SUFFIX;
     const char *ptr_value, *regex_replace;
@@ -1758,7 +1936,10 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
     eval_context->suffix = default_suffix;
     eval_context->regex = NULL;
     eval_context->recursion_count = 0;
-    eval_context->debug = NULL;
+    eval_context->debug_level = 0;
+    eval_context->debug_depth = 0;
+    eval_context->debug_id = 0;
+    eval_context->debug_output = NULL;
 
     /*
      * set window/buffer with pointer to current window/buffer
@@ -1830,11 +2011,19 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         }
 
         /* check for debug */
-        if (hashtable_has_key (options, "debug"))
-            eval_context->debug = string_dyn_alloc (256);
+        ptr_value = hashtable_get (options, "debug");
+        if (ptr_value && ptr_value[0])
+        {
+            number = strtol (ptr_value, &error, 10);
+            if (error && !error[0] && (number >= 1))
+            {
+                eval_context->debug_level = (int)number;
+                eval_context->debug_output = string_dyn_alloc (256);
+            }
+        }
     }
 
-    EVAL_DEBUG("eval_expression(\"%s\")", expr);
+    EVAL_DEBUG_MSG(1, "eval_expression(\"%s\")", expr);
 
     /* evaluate expression */
     if (condition)
@@ -1878,10 +2067,13 @@ eval_expression (const char *expr, struct t_hashtable *pointers,
         free (regex);
     }
 
-    if (options && eval_context->debug)
-        hashtable_set (options, "debug_output", *(eval_context->debug));
-    if (eval_context->debug)
-        string_dyn_free (eval_context->debug, 1);
+    EVAL_DEBUG_RESULT(1, value);
+
+    /* set debug in options hashtable */
+    if (options && eval_context->debug_output)
+        hashtable_set (options, "debug_output", *(eval_context->debug_output));
+    if (eval_context->debug_output)
+        string_dyn_free (eval_context->debug_output, 1);
 
     return value;
 }

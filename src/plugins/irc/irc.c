@@ -1,7 +1,7 @@
 /*
  * irc.c - IRC (Internet Relay Chat) plugin for WeeChat
  *
- * Copyright (C) 2003-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -145,13 +145,14 @@ irc_signal_upgrade_cb (const void *pointer, void *data,
     {
         weechat_printf (
             NULL,
-            /* TRANSLATORS: "%s" after "%d" is "server" or "servers" */
-            _("%s%s: disconnected from %d %s (SSL connection not supported "
-              "with upgrade)"),
+            NG_("%s%s: disconnected from %d server "
+                "(SSL connection not supported with upgrade)",
+                "%s%s: disconnected from %d servers "
+                "(SSL connection not supported with upgrade)",
+                ssl_disconnected),
             weechat_prefix ("error"),
             IRC_PLUGIN_NAME,
-            ssl_disconnected,
-            NG_("server", "servers", ssl_disconnected));
+            ssl_disconnected);
     }
 
     return WEECHAT_RC_OK;

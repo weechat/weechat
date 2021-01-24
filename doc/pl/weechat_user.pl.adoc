@@ -68,10 +68,9 @@ Pakiety binarne dostępne są dla wielu dystrybucji, wliczając:
 
 * Arch Linuxa: `pacman -S weechat`
 * Cygwin (Windows): wybierz pakiet WeeChat w setup.exe
-// TRANSLATION MISSING
 * Debiana/Ubuntu (lub dowolna kompatybilna):
   `apt-get install weechat-curses weechat-plugins` +
-  For latest versions and nightly builds: https://weechat.org/download/debian
+  Najnowsze wersje i nocne buildy można znaleźć na stonie: https://weechat.org/download/debian
 * Fedora Core: `dnf install weechat`
 * Gentoo: `emerge weechat`
 * Mandrive/RedHata (lub dowolna kompatybilna):
@@ -382,16 +381,14 @@ Następnie postępuj zgodnie z instrukcjami dla pakietów źródłowych (zobacz
 
 Jeśli doświadczyłeś awarii, lub chcesz zgłosić przyszłą awarię WeeChat, należy:
 
-// TRANSLATION MISSING
-* compile with:
-** debug info (or install binary package with debug info)
-** address sanitizer (optional)
+* skompilować WeeChat z:
+** informacjami dla debuggera (albo zainstalować stosowną paczkę w systemie)
+** weryfikacją adresów (opcjonalnie)
 * włączyć obsługę plików _core_ w systemie
 * zainstalować gdb
 
-// TRANSLATION MISSING
 [[build_debug]]
-==== Build with debug options
+==== Kompilowanie z informacjami dla debuggera
 
 Jeśli kompilujesz z użyciem CMake:
 
@@ -399,32 +396,27 @@ Jeśli kompilujesz z użyciem CMake:
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug
 ----
 
-// TRANSLATION MISSING
 [[build_debug_address_sanitizer]]
-==== Build with debug options
+==== Kompilowanie z weryfikowaniem adresów
 
-// TRANSLATION MISSING
-You can additionally enable the address sanitizer, which causes WeeChat to
-crash immediately in case of problem:
+Możesz dodatowo włączyć weryfikację adresów, co spowoduje natychmiastową awarię
+WeeChat w przypadku wystąpienia problemu:
 
 ----
 $ cmake .. -DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS=-fsanitize=address -DCMAKE_CXX_FLAGS=-fsanitize=address -DCMAKE_EXE_LINKER_FLAGS=-fsanitize=address
 ----
 
-// TRANSLATION MISSING
 [WARNING]
-You should enable address sanitizer only if you're trying to cause a crash,
-this is not recommended in production.
+Powinieneś włączyć tą opcję tylko jeśli chcesz wymusić awarię aplikacji,
+nie powinno się tego używać do codziennej pracy.
 
-// TRANSLATION MISSING
-Then once compiled and installed, you must run WeeChat like this:
+Po skompilowaniu i zainstalowaniu należy uruchamiać WeeChat w taki sposób:
 
 ----
 $ ASAN_OPTIONS="detect_odr_violation=0 log_path=asan.log" weechat
 ----
 
-// TRANSLATION MISSING
-In case of crash, the backtrace is in file `asan.log`.
+W przypadku awarii plik logi znajdą się w pliku `asan.log`.
 
 [[core_files]]
 ==== CPliki core
@@ -613,15 +605,14 @@ Pliki tworzone w katalogu domowym WeeChat:
 | fifo.conf       | Plik konfiguracyjny wtyczki _fifo_           | Nie.
 | fset.conf       | Plik konfiguracyjny wtyczki _fset_           | Nie.
 | guile.conf      | Plik konfiguracyjny wtyczki _guile_          | Nie.
-| irc.conf        | Plik konfiguracyjny wtyczki _irc_            | *Tak*: Może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
+| irc.conf        | Plik konfiguracyjny wtyczki _irc_            | *Tak*: może zawierać hasła dla serwerów, nickserva i kanałów (jeśli nie zostały zapisane w `sec.conf`).
 | javascript.conf | Plik konfiguracyjny wtyczki _javascript_     | Nie.
 | logger.conf     | Plik konfiguracyjny wtyczki _logger_         | Nie.
 | lua.conf        | Plik konfiguracyjny wtyczki _lua_            | Nie.
 | perl.conf       | Plik konfiguracyjny wtyczki _perl_           | Nie.
 | php.conf        | Plik konfiguracyjny wtyczki _php_            | Nie.
 | python.conf     | Plik konfiguracyjny wtyczki _python_         | Nie.
-// TRANSLATION MISSING
-| relay.conf      | Plik konfiguracyjny wtyczki _relay_          | *Yes*: it can contain relay password and TOTP secret (if not stored in `sec.conf`), allowed IP addresses/websocket origins and opened ports.
+| relay.conf      | Plik konfiguracyjny wtyczki _relay_          | *Tak*: może on zawierać hasła pośredników i sekrety TOTP (jeśli nie zostały zapisane w `sec.conf`), dozwolone adresy IP/websockety oraz otwarte porty.
 | ruby.conf       | Plik konfiguracyjny wtyczki _ruby_           | Nie.
 | script.conf     | Plik konfiguracyjny wtyczki _script_         | Nie.
 | spell.conf      | Plik konfiguracyjny wtyczki _spell_          | Nie.
@@ -714,8 +705,7 @@ Pasek _status_ posiada następujące domyślne elementy:
 | buffer_number         | `2`                     | Numer obecnego buforu.
 | buffer_name           | `#test`                 | Nazwa obecnego buforu.
 | buffer_modes          | `+n`                    | Tryby kanału IRC.
-// TRANSLATION MISSING
-| buffer_nicklist_count | `{4}`                   | Number of nicks displayed in nicklist.
+| buffer_nicklist_count | `{4}`                   | Ilość nicków wyświetlanych na liście nicków.
 | buffer_zoom           | !                       | `!` oznacza, że połączony bufor jest przybliżony (tylko ten jest wyświetlany), pusta wartość oznacza, że wszystkie połączone bufory są wyświetlane.
 | buffer_filter         | `+*+`                   | Wskaźnik filtrowania: `+*+` oznacza, że niektóre linie zostały odfiltrowywane (ukryte), pusta wartość oznacza, że wszystkie linie są wyświetlane.
 | scroll                | `-Więcej(50)-`          | Wskaźnik przewijania, z numerem linii poniżej ostatniej wyświetlanej.
@@ -1135,7 +1125,7 @@ WeeChat używa tagów w liniach dla różnych celów:
 
 Tagi można wyświetlić używając komendy `/debug tags` (tą samą komendą można je ukryć).
 
-Popularnie używane tagi  (niepełna lista):
+Popularnie używane tagi (niepełna lista):
 
 [width="100%",cols="1m,4",options="header"]
 |===
@@ -1144,14 +1134,10 @@ Popularnie używane tagi  (niepełna lista):
 | no_highlight     | Podświetlenia nie są dozwolone w tej linii.
 | no_log           | Linia nie jest zapisywana w logu.
 | log0 … log9      | Poziom logowania dla linii (zobacz `/help logger`).
-// TRANSLATION MISSING
-| notify_none      | The line must not be added to hotlist. ^(1)^
-// TRANSLATION MISSING
-| notify_message   | The line is a user message. ^(1)^
-// TRANSLATION MISSING
-| notify_private   | The line is a private message. ^(1)^
-// TRANSLATION MISSING
-| notify_highlight | The line is a message with highlight. ^(1)^
+| notify_none      | Linia nie może być dodana do hotlisty. ^(1)^
+| notify_message   | Linia jest wiasomością użytkownika. ^(1)^
+| notify_private   | Linia jest wiadomością prywatną. ^(1)^
+| notify_highlight | Linia jest wiadomością z podświetleniem. ^(1)^
 | self_msg         | Własna wiadomość.
 | nick_xxx         | Wiadomość od nicku "xxx".
 | prefix_nick_ccc  | Prefiks to nick o kolorze "ccc".
@@ -1166,132 +1152,133 @@ Popularnie używane tagi  (niepełna lista):
 | away_info        | Wiadomość z powodem nieobecności.
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ When no tag "notify_xxx" is present, the default level is "low". If a tag
-"notify_xxx" is present, the real notify level can be different, for example
-if a max hotlist level is used for a nick, the notify level can be lower than
-the value in the tag.
+^(1)^ Kiedy brak jest taga "notify_xxx", poziom jest ustawiony domyślnie na "low".
+Jeśli tag "notify_xxx" jest obecny, można zdefiniować odpowiedni poziom powiadomień,
+na przykład jeśli maksymalna hotlista jest używana dla nicku, poziom powiadomień może
+być niższy niż wartość dla tagu.
 
-// TRANSLATION MISSING
 [[local_variables]]
-==== Local variables
+==== Zmienne lokalne
 
-Local variables can be defined in all buffers.
+Zmienne lokalne mogą być definiowane dla wsystkich buforów.
 
-A local variable has:
+Zmienna lokalna posiada:
 
-* a name (string)
-* a value (string, can be empty).
+* nazwę (ciąg)
+* wartość (ciąg, może być pusty).
 
-Local variables can be set by WeeChat, plugins, scripts, or manually on the
-command line in the buffer.
+Zmienne lokalne mogą być tworzone przez WeeChat, wtyczki, skrypty lub ręcznie
+w linii poleceń bufora.
 
-For example to add the local variable "completion_default_template":
+Na przykład, żeby dodać zmienna lokalną „completion_default_template” wystarczy
+polecenie:
 
 ----
 /buffer setvar completion_default_template %(my_completion)
 ----
 
-To list local variables in the current buffer:
+Żeby wyświetlić zmienne lokalne dla obecnego bufora:
 
 ----
 /buffer listvar
 ----
 
-To remove the local variable "completion_default_template":
+Usunięcie zmiennej lokalnej „completion_default_template”:
 
 ----
 /buffer delvar completion_default_template
 ----
 
-By default WeeChat and its default plugins interpret these variables:
+WeeChat i jego wtyczki domyślnie tworzą następujące zmienne:
 
 [width="100%",cols="^2m,2,5",options="header"]
 |===
-| Name | Value | Description
+| Nazwa | Wartość | Opis
 
 | away |
-  any string |
-  Away message on the server, set by irc plugin.
+  dowolny ciąg |
+  Powód nieobecności na serwerze, ustawiane przez wtyczkę irc.
 
 | channel |
-  any string |
-  Channel name, set by irc/xfer plugins and debug buffer of relay/trigger plugins.
+  dowolny ciąg |
+  Nazwa kanału, ustawiana przez wtyczki irc/xfer i bufory z
+  informacjami do debugowania wtyczek relay/trigger.
 
 | charset_modifier |
-  any string |
-  Charset modifier for the server buffer, set by irc plugin.
+  dowolny ciąg |
+  Modyfikacja kodowania używanego na kanale, ustawiane przez wtyczkę irc.
 
 | completion_default_template |
-  any string |
-  Default completion template for the buffer, overriding the option
+  dowolny ciąg |
+  Domyślny szablon dopełnień dla bufora, nadpisuje zmienną
   `weechat.completion.default_template`.
 
 | filter |
-  any string |
-  Filter defined on some buffers like `/fset`, `/server raw` (irc) and `/script`.
+  dowolny ciąg |
+  Filtry zdefiniowane dla buforów jak `/fset`, `/server raw` (irc) i `/script`.
 
 | host |
-  any string |
-  Self host (if known), set by irc plugin.
+  dowolny ciąg |
+  Własny host (jeśli jest znany), ustawiane przez wtyczkę irc.
 
 | lag |
-  any string |
-  Lag on the server, set by irc plugin.
+  dowolny ciąg |
+  Opóźnienie serwera, ustawiane przez wtyczkę irc.
 
 | name |
-  any string |
-  Buffer name (be careful, this is not the full name and this name is not
-  enough to identify or search a buffer).
+  dowolny ciąg |
+  Nazwa bufora (uważaj, nie jest to pełna nazwa i nie wystarczy ona do
+  zidentyfikowania i wyszukania bufora).
 
 | nick |
-  any string |
-  Self nick, set by irc and xfer plugins.
+  dowolny ciąg |
+  Nazwa użytkownika, ustawiane przez wtyczki irc i xfer.
 
 | no_log |
-  `1` (or any non-empty string) |
-  If set, the logger plugin does not log anything for the buffer.
+  `1` (lub dowolny niepusty ciąg) |
+  Jeśli jest ustawiona, wiadomości z bufora nie są logowane.
 
 | plugin |
-  any string |
-  Name of plugin which created the buffer (`core` for WeeChat buffers).
+  dowolny ciąg |
+  Nazwa wtyczki, która stworzyła bufor (`core` dla buforów WeeChat).
 
 | script_close_cb |
-  any string |
-  Close callback defined by a script for a buffer.
+  dowolny ciąg |
+  Callback zamykania bufora zdefiniowany przez skrypt.
 
 | script_close_cb_data |
-  any string |
-  Data for close callback defined by a script for a buffer.
+  dowolny ciąg |
+  Dane dla callbacka zamykania bufora zdefiniowane przez skrypt.
 
 | script_input_cb |
-  any string |
-  Input callback defined by a script for a buffer.
+  dowolny ciąg |
+  Callback wprowadzania danych w buforze zdefiniowany przez skrypt.
 
 | script_input_cb_data |
-  any string |
-  Data for input callback defined by a script for a buffer.
+  dowolny ciąg |
+  Dane dla callbacka wprowadzania danych w buforze zdefiniowane przez skrypt.
 
 | script_name |
-  any string |
-  Name of the script which created the buffer.
+  dowolny ciąg |
+  Nazwa skryptu, który stworzył bufor.
 
 | server |
-  any string |
-  Server name, set by irc plugin and debug buffer of relay/trigger plugins.
+  dowolny ciąg |
+  Nazwa serwera ustawiana przez wtyczkę irc albo bufor z informacjami do
+  debugowania wtyczki relay/trigger.
 
 | spell_suggest |
-  any string |
-  Misspelled word and suggestions (format: "misspelled:suggestions"), set by
-  spell plugin.
+  dowolny ciąg |
+  Źle napisane słowo i sugestie (format: "słowo:sugestie"), ustawiane przez
+  wtyczkę spell.
 
 | trigger_filter |
-  any string |
-  Trigger filter, set by trigger plugin.
+  dowolny ciąg |
+  Filtr triggerów, ustawiany przez wtyczkę trigger.
 
 | type |
-  any string, for example:
+  dowolny ciąg, na przykład:
   `channel`,
   `debug`,
   `exec`,
@@ -1302,7 +1289,7 @@ By default WeeChat and its default plugins interpret these variables:
   `server`,
   `user`,
   `xfer` |
-  Type of buffer, set by WeeChat and many plugins.
+  Typ bufora ustawiany przez WeeChat i wiele wtyczek.
 
 |===
 
@@ -1816,8 +1803,7 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Enter] +
   kbd:[Ctrl+j] +
   kbd:[Ctrl+m]    | Wykonaj komendę lub wyślij wiadomość (w trybie wyszukiwania: przerwij wyszukiwanie). | `+/input return+`
-// TRANSLATION MISSING
-| kbd:[Alt+Enter] | Insert a newline. | `+/input insert \n+`
+| kbd:[Alt+Enter] | Wstawia nową linię. | `+/input insert \n+`
 | kbd:[↑]         | Pokaż poprzednią komendę/wiadomość (w trybie wyszukiwania: szukaj w górę). | `+/input history_previous+`
 | kbd:[↓]         | Pokaż następną komendę/wiadomość (w trybie wyszukiwania: szukaj w dół). | `+/input history_next+`
 | kbd:[Ctrl+↑]    | Pokaż poprzednią komendę/wiadomość w historii globalnej (wspólnej dla wszystkich buforów). | `+/input history_global_previous+`
@@ -1870,8 +1856,7 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+F11]      | Idź na początek listy nicków. | `+/bar scroll nicklist * b+`
 | kbd:[Alt+F12]      | Idź na koniec listy nicków. | `+/bar scroll nicklist * e+`
 | kbd:[Alt+a]        | Przełącz na następny bufor z aktywnością (z priorytetem: powiadomienie, wiadomość, inne). | `+/input jump_smart+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+B]  | Toggle buflist. | `+/buflist toggle+`
+| kbd:[Alt+Shift+B]  | Przełącza widoczność listy buforów. | `+/buflist toggle+`
 | kbd:[Alt+h]        | Wyczyść hotlistę (powiadomienia o aktywności w innych buforach). | `+/input hotlist_clear+`
 | kbd:[Alt+j],
   kbd:[Alt+f]        | Przełącz na pierwszy bufor. | `+/buffer -+`
@@ -1887,8 +1872,7 @@ Można ją zapisać za pomocą skryptu _buffer_autoset.py_: można go zaintalowa
 | kbd:[Alt+l] (`L`)  | Przełącz tryb niesformatowanego wyświetlania. | `+/window bare+`
 | kbd:[Alt+m]        | Przełącz obsługę myszy. | `+/mouse toggle+`
 | kbd:[Alt+n]        | Przewiń do następnego powiadomienia. | `+/window scroll_next_highlight+`
-// TRANSLATION MISSING
-| kbd:[Alt+Shift+N]  | Toggle nicklist bar. | `+/bar toggle nicklist+`
+| kbd:[Alt+Shift+N]  | Przełącza widoczność paska z listą nicków. | `+/bar toggle nicklist+`
 | kbd:[Alt+p]        | Przewiń do poprzedniego powiadomienia. | `+/window scroll_previous_highlight+`
 | kbd:[Alt+u]        | Przewiń do pierwszej nieprzeczytanej linii w buforze. | `+/window scroll_unread+`
 | kbd:[Alt+w],
@@ -4042,13 +4026,12 @@ Argumenty zależą od rodzaju uchwytu. Są oddzielane średnikami.
   `+*;;;1+` |
   link:weechat_plugin_api.en.html#_hook_print[hook_print] (Angielski)
 
-// TRANSLATION MISSING
 | command |
   1. nazwa komendy dozwolony priorytet) (wymagane) +
-  2. opis (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
-  3. argumenty (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
-  4. opis argumentów (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) +
-  5. dopełnienie (evaluated, zobacz komendę <<command_weechat_eval,/eval>>) |
+  2. opis (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
+  3. argumenty (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
+  4. opis argumentów (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) +
+  5. dopełnienie (przetwarzane, zobacz komendę <<command_weechat_eval,/eval>>) |
   `+test+` +
   `+5000\|test+` +
   `+test;test command;arg1 arg2;arg1: description 1${\n}arg2: description 2+` |
@@ -4214,14 +4197,12 @@ monitorującego, za pomocą komendy:
 /trigger monitor
 ----
 
-// TRANSLATION MISSING
-All callbacks set following variables in hashtable:
+Wszystkie callbacki ustawiają następujące zmienne w tablicy hashy:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
 | Zmienna         | Typ  | Opis
-// TRANSLATION MISSING
-| tg_trigger_name | ciąg | Name of trigger.
+| tg_trigger_name | ciąg | Nazwa triggera.
 |===
 
 [[trigger_data_signal]]
@@ -4393,12 +4374,9 @@ Callback "command" ustawia następujące zmienne w tablicy hashy:
 |===
 | Zmienna      | Typ      | Opis
 | buffer       | wskaźnik | Bufor.
-// TRANSLATION MISSING
-| tg_argc      | ciąg     | The number of arguments (the command itself counts for one).
-// TRANSLATION MISSING
-| tg_argvN     | ciąg     | Argument #N (`+tg_argv0+` is the command itself, the others are command arguments).
-// TRANSLATION MISSING
-| tg_argv_eolN | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` includes the command itself).
+| tg_argc      | ciąg     | Ilość argumentów (komenda liczy się za jeden).
+| tg_argvN     | ciąg     | Argument #N (`+tg_argv0+` to komenda, pozostałe to jej argumenty).
+| tg_argv_eolN | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` zawiera komendę).
 |===
 
 [[trigger_data_command_run]]

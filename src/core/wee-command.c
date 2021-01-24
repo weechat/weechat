@@ -1,7 +1,7 @@
 /*
  * wee-command.c - WeeChat core commands
  *
- * Copyright (C) 2003-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
  * Copyright (C) 2005-2006 Emmanuel Bouthenot <kolter@openics.org>
  *
  * This file is part of WeeChat, the extensible chat client.
@@ -34,6 +34,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <regex.h>
 #include <time.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -275,7 +276,7 @@ COMMAND_CALLBACK(bar)
         {
             /* create bar */
             if (gui_bar_new (
-                    argv[2],       /* nane */
+                    argv[2],       /* name */
                     "0",           /* hidden */
                     "0",           /* priority */
                     str_type,      /* type */
@@ -2016,6 +2017,36 @@ COMMAND_CALLBACK(debug)
 }
 
 /*
+ * Prints eval debug output.
+ */
+
+void
+command_eval_print_debug (const char *debug)
+{
+    regex_t regex;
+    char str_replace[1024], *string;
+
+    string = NULL;
+
+    if (string_regcomp (&regex, "(^|\n)( *)([0-9]+:)", REG_EXTENDED) == 0)
+    {
+        /* colorize debug ids and the following colon with delimiter color */
+        snprintf (str_replace, sizeof (str_replace),
+                  "$1$2%s$3%s",
+                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                  GUI_COLOR(GUI_COLOR_CHAT));
+        string = string_replace_regex (debug, &regex, str_replace, '$',
+                                       NULL, NULL);
+        regfree (&regex);
+    }
+
+    gui_chat_printf (NULL, "%s", (string) ? string : debug);
+
+    if (string)
+        free (string);
+}
+
+/*
  * Callback for command "/eval": evaluates an expression and sends result to
  * buffer.
  */
@@ -2023,8 +2054,8 @@ COMMAND_CALLBACK(debug)
 COMMAND_CALLBACK(eval)
 {
     int i, print_only, split_command, condition, debug, error;
-    char *result, *ptr_args, **commands;
-    const char **debug_output;
+    char *result, *ptr_args, **commands, str_debug[32];
+    const char *debug_output;
     struct t_hashtable *pointers, *options;
 
     /* make C compiler happy */
@@ -2060,7 +2091,7 @@ COMMAND_CALLBACK(eval)
         }
         else if (string_strcasecmp (argv[i], "-d") == 0)
         {
-            debug = 1;
+            debug++;
             ptr_args = argv_eol[i + 1];
         }
         else
@@ -2096,8 +2127,11 @@ COMMAND_CALLBACK(eval)
             {
                 if (condition)
                     hashtable_set (options, "type", "condition");
-                if (debug)
-                    hashtable_set (options, "debug", "1");
+                if (debug > 0)
+                {
+                    snprintf (str_debug, sizeof (str_debug), "%d", debug);
+                    hashtable_set (options, "debug", str_debug);
+                }
             }
         }
 
@@ -2127,7 +2161,7 @@ COMMAND_CALLBACK(eval)
                 debug_output = hashtable_get (options,
                                               "debug_output");
                 if (debug_output)
-                    gui_chat_printf (NULL, "%s", debug_output);
+                    command_eval_print_debug (debug_output);
             }
         }
         else
@@ -2155,7 +2189,7 @@ COMMAND_CALLBACK(eval)
                             debug_output = hashtable_get (options,
                                                           "debug_output");
                             if (debug_output)
-                                gui_chat_printf (NULL, "%s", debug_output);
+                                command_eval_print_debug (debug_output);
                         }
                     }
                     string_free_split_command (commands);
@@ -2178,7 +2212,7 @@ COMMAND_CALLBACK(eval)
                     debug_output = hashtable_get (options,
                                                   "debug_output");
                     if (debug_output)
-                        gui_chat_printf (NULL, "%s", debug_output);
+                        command_eval_print_debug (debug_output);
                 }
             }
         }
@@ -7459,12 +7493,13 @@ command_init ()
         NULL, "eval",
         N_("evaluate expression"),
         N_("[-n|-s] [-d] <expression>"
-           " || [-n] [-d] -c <expression1> <operator> <expression2>"),
+           " || [-n] [-d [-d]] -c <expression1> <operator> <expression2>"),
         N_("        -n: display result without sending it to buffer "
            "(debug mode)\n"
            "        -s: split expression before evaluating it "
            "(many commands can be separated by semicolons)\n"
-           "        -d: display debug output after evaluation\n"
+           "        -d: display debug output after evaluation "
+           "(with two -d: more verbose debug)\n"
            "        -c: evaluate as condition: use operators and parentheses, "
            "return a boolean value (\"0\" or \"1\")\n"
            "expression: expression to evaluate, variables with format "

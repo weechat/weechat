@@ -1344,14 +1344,26 @@ int weechat_string_regcomp (void *preg, const char *regex, int default_flags)
 * `regcomp` 関数と同じ戻り値
   (成功の場合は 0、エラーが起きた場合は 0 以外、`man regcomp` を参照)
 
+[NOTE]
+// TRANSLATION MISSING
+Regular expression _preg_ must be cleaned by calling "regfree" after use,
+if the function returned 0 (OK).
+
 C 言語での使用例:
 
 [source,C]
 ----
 regex_t my_regex;
-if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) != 0)
+if (weechat_string_regcomp (&my_regex, "(?i)test", REG_EXTENDED) == 0)
+{
+    /* OK */
+    /* ... */
+    regfree (&my_regex);
+}
+else
 {
     /* error */
+    /* ... */
 }
 ----
 
@@ -2262,6 +2274,11 @@ char *weechat_string_eval_expression (const char *expr,
 ** _regex_replace_: _regex_ と一緒に使われる置換テキスト、_expr_
    に含まれるテキストを置換する (_regex_replace_ は、_expr_ 内で
    _regex_ 引数にマッチする部分が見つからなくなるまで、毎回評価されます)
+// TRANSLATION MISSING
+** _debug_: debug level (string with integer number ≥ 1), if enabled, a key
+   "debug_output" is added in hashtable _options_:
+*** _1_: enable debug
+*** _2_: enable more verbose debug
 
 戻り値:
 

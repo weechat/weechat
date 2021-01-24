@@ -68,7 +68,7 @@ Les répertoires principaux de WeeChat sont :
 |       hook/        | Fonctions sur les "hooks".
 |    gui/            | Fonctions pour les tampons, fenêtres, ... (utilisées par toutes les interfaces).
 |       curses/      | Interface Curses.
-|          headless/ | Mode sans interface (« headless »).
+|          headless/ | Mode sans interface (« headless »).
 |          normal/   | Interface Curses.
 |    plugins/        | API extension/script.
 |       alias/       | Extension Alias.
@@ -199,7 +199,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |       gui-curses-mouse.c        | Souris.
 |       gui-curses-term.c         | Fonctions pour le terminal.
 |       gui-curses-window.c       | Fenêtres.
-|       headless/                 | Mode sans interface (« headless »).
+|       headless/                 | Mode sans interface (« headless »).
 |          main.c                 | Point d'entrée pour le mode sans interface.
 |          ncurses-fake.c         | Fausse bibliothèque ncurses.
 |       normal/                   | Interface Curses.
@@ -496,7 +496,7 @@ Exemple en C :
 /*
  * weechat.c - core functions for WeeChat
  *
- * Copyright (C) 2020 Your Name <your@email.com>
+ * Copyright (C) 2021 Your Name <your@email.com>
  *
  * This file is part of WeeChat, the extensible chat client.
  *

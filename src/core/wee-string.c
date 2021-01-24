@@ -1,7 +1,7 @@
 /*
  * wee-string.c - string functions
  *
- * Copyright (C) 2003-2020 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -1300,6 +1300,8 @@ string_regex_flags (const char *regex, int default_flags, int *flags)
  * Returns:
  *   0: successful compilation
  *   other value: compilation failed
+ *
+ * Note: regex must be freed with regfree after use.
  */
 
 int

@@ -230,33 +230,32 @@ Na przykład kbd:[F1], kbd:[F2], kbd:[Alt+F1] oraz kbd:[Alt+F2]:
 Klawisze "meta-OP" i "meta-OQ" mogą być inne dla twojego terminala. W celu
 znalezienia ich kodów wciśnij kbd:[Alt+k] następnie przycisk.
 
-// TRANSLATION MISSING
 [[customize_buflist]]
-=== How can I customize the list of buffers list, like the color of the active buffer?
+=== Jak mogę spersonalizować lisę buforów, na przykład kolor aktywnego budora?
 
-You can browse all buflist options with the command:
+Możesz sprawdzić wszystkie opcję listy buforów za pomocą polecenia:
 
 ----
 /fset buflist
 ----
 
-The background of the active buffer is blue by default, you can change it
-like this, for example to `red`:
+Tło dla aktywnego bufora jest niebieskie, możesz to zmienić na przykład na
+`czerwone` w ten sposób:
 
 ----
 /set buflist.format.buffer_current "${color:,red}${format_buffer}"
 ----
 
 [NOTE]
-There's a comma before the color name "red" because it is used as the background,
-not the text color. +
-You can also use any numeric color instead of `red`,
-like `237` for dark gray.
+Przecinek przed nazwą koloru „red” jest wymagany, ponieważ zostanie on użyty jako
+kolor tła, a nie kolor tekstu. +
+Możesz także używać numerów kolorów zamiast ich nazwy,
+jak `237` dla ciemnego szarego.
 
-The buflist plugin provides lot of options that you can customize, please read
-the help on each option.
+Wtyczka buflist posiada wiele opcji, które można personalizować, zapoznaj się
+z opisem dla każdej z nich.
 
-There's also a wiki page with examples of advanced buflist configuration:
+Istnieje również strona wiki z przykładami zaawansowanej konfiguracji:
 https://github.com/weechat/weechat/wiki/buflist
 
 [[customize_prefix]]
@@ -1200,9 +1199,8 @@ Na przykład:
 Możesz pokazywać pliki z _~/.weechat/*.conf_ poza plikiem _sec.conf_, który
 zawiera Twoje hasla zaszywrowane Twoim kluczem.
 
-// TRANSLATION MISSING
-Some other files may contain sensitive info like passwords (if they are not
-stored in _sec.conf_ with the `/secure` command).
+Niektóre inne pliki mogą zawierać poufne informacje jak hasła (jeśli nie są przetrzymywane
+w _sec.conf_ za pomocą komendy `/secure`).
 
 Przejrzyj link:weechat_user.pl.html#files_and_directories[Poradnik użytkownika / Pliki i foldery],
 gdzie znajdziesz więcej informacji o plikach konfiguracyjnych.

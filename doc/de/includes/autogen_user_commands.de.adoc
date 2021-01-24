@@ -1302,11 +1302,11 @@ infolists: zeigt Information über die Infolists an
 
 ----
 /eval  [-n|-s] [-d] <expression>
-       [-n] [-d] -c <expression1> <operator> <expression2>
+       [-n] [-d [-d]] -c <expression1> <operator> <expression2>
 
         -n: gibt das Ergebnis aus, ohne dass dieses in den Buffer gesendet wird (debug Modus)
         -s: teilt Ausdrücke, bevor sie evaluiert werden (mehrere Befehle können durch Semikolon getrennt werden)
-        -d: eine Debug-Ausgabe nach Auswertung anzeigen
+        -d: eine Debug-Ausgabe nach Auswertung anzeigen (Nutzung von zwei -d: ausführliche Debug-Ausgabe)
         -c: Auswertung als Bedingung: nutzt Operatoren und runde Klammern, Rückgabewert als Boolean-Wert ("0" oder "1")
 expression: Ausdruck welcher verarbeitet werden soll. Variablen im Format ${variable} werden ersetzt (siehe unten); mehrere Befehle werden durch ein Semikolon voneinander getrennt
   operator: ein logischer oder vergleichender Operand:
