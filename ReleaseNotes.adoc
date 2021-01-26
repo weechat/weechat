@@ -17,6 +17,21 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.1]]
+== Version 3.1 (under dev)
+
+[[v3.1_command_buffer_listvar]]
+=== List of buffer local variables
+
+The command `/buffer localvar` has been renamed to `/buffer listvar`.
+
+The option `localvar` is still supported to stay compatible with scripts
+calling it or referencing it in the documentation. +
+It is deprecated and will be removed in a future release.
+
+New options `setvar` and `delvar` were also added in command `/buffer`,
+see `/help buffer`.
+
 [[v3.0]]
 == Version 3.0 (2020-11-11)
 
