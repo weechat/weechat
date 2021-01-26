@@ -52,7 +52,7 @@
 
 | irc | irc_server_privates | rozmowy prywatne na obecnym serwerze IRC
 
-| irc | irc_servers | serwery IRC (nazwy wewnętrzne)
+| irc | irc_servers | Serwery IRC (nazwy wewnętrzne)
 
 | irc | nick | użytkownicy obecnego kanału IRC
 

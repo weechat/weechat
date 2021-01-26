@@ -28,7 +28,7 @@
 
 | irc | irc_nick_color_name | pobierz nazwę koloru nicka (*przestarzałe* od wersji 1.5, zamienione przez "nick_color_name") | nazwa użytkownika
 
-| irc | irc_nick_from_host | pobiera nick z hosta IRC | host IRC (jak `:nick!nazwa@serwer.com`)
+| irc | irc_nick_from_host | pobiera nick z hosta IRC | Host IRC (jak `:nick!nazwa@serwer.com`)
 
 | irc | irc_server_isupport | 1 jeśli serwer wspiera tę opcję (z wiadomości IRC 005) | serwer,właściwość
 
@@ -84,19 +84,19 @@
 
 | weechat | auto_connect | 1 jeśli automatycznie łączenie z serwerami jest włączone, 0 jeśli zostało wyłączone przez użytkownika (opcja "-a" lub "--no-connect") | -
 
-| weechat | charset_internal | wewnętrzne kodowanie WeeChat | -
+| weechat | charset_internal | Wewnętrzne kodowanie WeeChat | -
 
 | weechat | charset_terminal | kodowanie terminala | -
 
 | weechat | color_ansi_regex | Rozszerzone wyrażenia regularne POSIX do wyszukiwania kodów escapującyhc ANSI | -
 
-| weechat | color_rgb2term | kolor RGB skonwertowany na kolor terminala (0-255) | rgb,limit (limit jest opcjonalny i ustawiony domyślnie na 256)
+| weechat | color_rgb2term | Kolor RGB skonwertowany na kolor terminala (0-255) | rgb,limit (limit jest opcjonalny i ustawiony domyślnie na 256)
 
 | weechat | color_term2rgb | kolor terminala (0-255) skonwertowany na kolor RGB | kolor (kolor terminala: 0-255)
 
 | weechat | cursor_mode | 1 jeśli tryb kursora jest aktywny | -
 
-| weechat | date | data kompilacji WeeChat | -
+| weechat | date | Data kompilacji WeeChat | -
 
 | weechat | dir_separator | separator katalogów | -
 
@@ -124,23 +124,23 @@
 
 | weechat | totp_validate | walidacja haseł jednorazowych (TOTP): 1 jeśli poprawne, w przeciwnym wypadku 0 | sekret (w base32), jednorazowe hasło, czas (opcjonalne, domyślnie używany jest obecny czas), ilość starszych/nowszych haseł do sprawdzenia (opcjonalne, domyślnie 0)
 
-| weechat | uptime | uptime WeeChat (format: "dni:hh:mm:ss") | "dni" (ilość dni) lub "sekundy" (ilość sekund) (opcjonalne)
+| weechat | uptime | Uptime WeeChat (format: "dni:hh:mm:ss") | "dni" (ilość dni) lub "sekundy" (ilość sekund) (opcjonalne)
 
-| weechat | version | wersja WeeChat | -
+| weechat | version | Wersja WeeChat | -
 
-| weechat | version_git | wersja git WeeChat (wyjście komendy "git describe" dla tylko dla wersji rozwojowej, puste dla wersji stabilnej) | -
+| weechat | version_git | Wersja git WeeChat (wyjście komendy "git describe" dla tylko dla wersji rozwojowej, puste dla wersji stabilnej) | -
 
-| weechat | version_number | wersja WeeChat (jako liczba) | -
+| weechat | version_number | Wersja WeeChat (jako liczba) | -
 
-| weechat | weechat_dir | katalog WeeChat | -
+| weechat | weechat_dir | Katalog WeeChat | -
 
 | weechat | weechat_headless | 1 jeśli WeeChat działa w trybie bez interfejsu | -
 
-| weechat | weechat_libdir | katalog "lib" WeeChata | -
+| weechat | weechat_libdir | Katalog "lib" WeeChata | -
 
-| weechat | weechat_localedir | katalog "locale" WeeChata | -
+| weechat | weechat_localedir | Katalog "locale" WeeChata | -
 
-| weechat | weechat_sharedir | katalog "share" WeeChata | -
+| weechat | weechat_sharedir | Katalog "share" WeeChata | -
 
 | weechat | weechat_site | Strona WeeChat | -
 
