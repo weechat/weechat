@@ -563,7 +563,9 @@ include::includes/cmdline_options.ja.adoc[tag=debug]
 === ファイルとディレクトリ
 
 デフォルト状態の WeeChat は `~/.weechat`
-ディレクトリ内に設定ファイルおよびその他のデータを書き込みます。
+ディレクトリ内に設定ファイルおよびその他のデータを書き込みます。 +
+// TRANSLATION MISSING
+These files are created with default values the first time you run WeeChat.
 
 // TRANSLATION MISSING
 [[weechat_directories]]
