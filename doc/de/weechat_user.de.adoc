@@ -559,8 +559,7 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 
 WeeChat schreibt standardmäßig seine Konfiguration und andere
 Daten in folgendes Verzeichnis: `~/.weechat` +
-// TRANSLATION MISSING
-These files are created with default values the first time you run WeeChat.
+Diese Dateien werden, mit Standardwerten, beim ersten Ausführen von WeeChat automatisch erstellt.
 
 [[weechat_directories]]
 ==== WeeChat Verzeichnisse
