@@ -119,6 +119,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "notify",               ""                        },
   { "split_msg_max_length", "512"                     },
   { "charset_message",      "message"                 },
+  { "default_chantypes",    "#&"                      },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =

@@ -673,10 +673,13 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
 
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return (strpbrk (first_char,
-                     (server && server->chantypes) ?
-                     server->chantypes : irc_channel_default_chantypes)) ?
-        1 : 0;
+    return strpbrk(
+        first_char,
+        (server ?
+            (server->chantypes ?
+                server->chantypes :
+                IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES))
+            : irc_channel_default_chantypes)) ? 1 : 0;
 }
 
 /*

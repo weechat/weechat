@@ -92,6 +92,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
+    IRC_SERVER_OPTION_DEFAULT_CHANTYPES,  /* chantypes if server doesn't say */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
