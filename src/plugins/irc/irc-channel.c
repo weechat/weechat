@@ -699,21 +699,27 @@ irc_channel_get_auto_chantype (struct t_irc_server *server,
                                const char *channel_name)
 {
     static char chantype[2];
+    const char *ptr_chantypes;
 
     chantype[0] = '\0';
     chantype[1] = '\0';
 
     if (weechat_config_boolean (irc_config_look_join_auto_add_chantype)
-        && !irc_channel_is_channel (server, channel_name)
-        && server->chantypes
-        && server->chantypes[0])
+        && !irc_channel_is_channel (server, channel_name))
     {
-        /*
-         * use '#' if it's in chantypes (anywhere in the string), because it is
-         * the most common channel type, and fallback on first channel type
-         */
-        chantype[0] = (strchr (server->chantypes, '#')) ?
-            '#' : server->chantypes[0];
+        ptr_chantypes = (server->chantypes) ?
+            server->chantypes :
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
+        if (ptr_chantypes && ptr_chantypes[0])
+        {
+            /*
+             * use '#' if it's in chantypes (anywhere in the string), because
+             * it is the most common channel type, and fallback on first
+             * channel type
+             */
+            chantype[0] = (strchr (ptr_chantypes, '#')) ?
+                '#' : ptr_chantypes[0];
+        }
     }
 
     return chantype;
