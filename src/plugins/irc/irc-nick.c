@@ -81,8 +81,16 @@ irc_nick_is_nick (struct t_irc_server *server, const char *string)
     utf8mapping = (server) ? server->utf8mapping : IRC_SERVER_UTF8MAPPING_NONE;
     ptr_prefix_chars = (server && server->prefix_chars) ?
         server->prefix_chars : irc_server_prefix_chars_default;
-    ptr_chantypes = (server && server->chantypes) ?
-        server->chantypes : irc_channel_default_chantypes;
+    if (server)
+    {
+        ptr_chantypes = (server->chantypes) ?
+            server->chantypes :
+            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
+    }
+    else
+    {
+        ptr_chantypes = irc_channel_default_chantypes;
+    }
 
     /* check length of nick in bytes (if we have a limit in the server) */
     if (server && (server->nick_max_length > 0)
