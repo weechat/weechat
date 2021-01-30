@@ -319,6 +319,7 @@ extern void irc_server_set_host (struct t_irc_server *server,
 extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
 extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
                                                   const char *feature);
+extern const char *irc_server_get_chantypes (struct t_irc_server *server);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                                const char *prefix);
 extern void irc_server_set_lag (struct t_irc_server *server);

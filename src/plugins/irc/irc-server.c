@@ -1001,6 +1001,25 @@ irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 }
 
 /*
+ * Gets "chantypes" for the server:
+ *   - if server is NULL, returns pointer to irc_channel_default_chantypes
+ *   - if server is not NULL, returns either chantypes in the server or
+ *     server option "default_chantypes"
+ */
+
+const char *
+irc_server_get_chantypes (struct t_irc_server *server)
+{
+    if (!server)
+        return irc_channel_default_chantypes;
+
+    if (server->chantypes)
+        return server->chantypes;
+
+    return IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
+}
+
+/*
  * Sets "prefix_modes" and "prefix_chars" in server using value of PREFIX in IRC
  * message 005.
  *

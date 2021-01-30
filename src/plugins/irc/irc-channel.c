@@ -675,14 +675,8 @@ irc_channel_is_channel (struct t_irc_server *server, const char *string)
     first_char[0] = string[0];
     first_char[1] = '\0';
 
-    /* default global chantypes if no server received */
-    if (!server)
-        return (strpbrk (first_char, irc_channel_default_chantypes)) ? 1 : 0;
+    ptr_chantypes = irc_server_get_chantypes (server);
 
-    /* server chantypes, or option "default_chantypes" as fallback */
-    ptr_chantypes = (server->chantypes) ?
-        server->chantypes :
-        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
     return (strpbrk (first_char, ptr_chantypes)) ? 1 : 0;
 }
 
@@ -707,9 +701,7 @@ irc_channel_get_auto_chantype (struct t_irc_server *server,
     if (weechat_config_boolean (irc_config_look_join_auto_add_chantype)
         && !irc_channel_is_channel (server, channel_name))
     {
-        ptr_chantypes = (server->chantypes) ?
-            server->chantypes :
-            IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
+        ptr_chantypes = irc_server_get_chantypes (server);
         if (ptr_chantypes && ptr_chantypes[0])
         {
             /*
