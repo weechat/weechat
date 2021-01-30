@@ -2439,7 +2439,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("channel type prefixes to use if the server does not "
-                   "specify them (default is #&)"),
+                   "send them in message 005 (default is \"#&\")"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
