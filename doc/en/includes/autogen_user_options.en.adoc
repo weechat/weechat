@@ -2616,6 +2616,12 @@
 ** values: 1 .. 3600
 ** default value: `+60+`
 
+* [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
+** description: pass:none[channel type prefixes to use if the server does not send them in message 005 (default is "#&")]
+** type: string
+** values: any string
+** default value: `+"#&"+`
+
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** description: pass:none[use IPv6 protocol for server communication (try IPv6 then fallback to IPv4); if disabled, only IPv4 is used]
 ** type: boolean
