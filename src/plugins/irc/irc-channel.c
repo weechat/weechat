@@ -667,19 +667,23 @@ int
 irc_channel_is_channel (struct t_irc_server *server, const char *string)
 {
     char first_char[2];
+    const char *ptr_chantypes;
 
     if (!string)
         return 0;
 
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return strpbrk(
-        first_char,
-        (server ?
-            (server->chantypes ?
-                server->chantypes :
-                IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES))
-            : irc_channel_default_chantypes)) ? 1 : 0;
+
+    /* default global chantypes if no server received */
+    if (!server)
+        return (strpbrk (first_char, irc_channel_default_chantypes)) ? 1 : 0;
+
+    /* server chantypes, or option "default_chantypes" as fallback */
+    ptr_chantypes = (server->chantypes) ?
+        server->chantypes :
+        IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
+    return (strpbrk (first_char, ptr_chantypes)) ? 1 : 0;
 }
 
 /*
