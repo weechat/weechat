@@ -2616,6 +2616,12 @@
 ** 値: 1 .. 3600
 ** デフォルト値: `+60+`
 
+* [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
+** 説明: pass:none[channel type prefixes to use if the server does not send them in message 005 (default is "#&")]
+** タイプ: 文字列
+** 値: 未制約文字列
+** デフォルト値: `+"#&"+`
+
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** 説明: pass:none[サーバ接続に IPv6 プロトコルを利用 (IPv6 の利用に失敗したら IPv4 を利用); 無効の場合には IPv4 を利用]
 ** タイプ: ブール

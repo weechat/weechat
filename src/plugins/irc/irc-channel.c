@@ -667,16 +667,17 @@ int
 irc_channel_is_channel (struct t_irc_server *server, const char *string)
 {
     char first_char[2];
+    const char *ptr_chantypes;
 
     if (!string)
         return 0;
 
     first_char[0] = string[0];
     first_char[1] = '\0';
-    return (strpbrk (first_char,
-                     (server && server->chantypes) ?
-                     server->chantypes : irc_channel_default_chantypes)) ?
-        1 : 0;
+
+    ptr_chantypes = irc_server_get_chantypes (server);
+
+    return (strpbrk (first_char, ptr_chantypes)) ? 1 : 0;
 }
 
 /*
@@ -692,21 +693,25 @@ irc_channel_get_auto_chantype (struct t_irc_server *server,
                                const char *channel_name)
 {
     static char chantype[2];
+    const char *ptr_chantypes;
 
     chantype[0] = '\0';
     chantype[1] = '\0';
 
     if (weechat_config_boolean (irc_config_look_join_auto_add_chantype)
-        && !irc_channel_is_channel (server, channel_name)
-        && server->chantypes
-        && server->chantypes[0])
+        && !irc_channel_is_channel (server, channel_name))
     {
-        /*
-         * use '#' if it's in chantypes (anywhere in the string), because it is
-         * the most common channel type, and fallback on first channel type
-         */
-        chantype[0] = (strchr (server->chantypes, '#')) ?
-            '#' : server->chantypes[0];
+        ptr_chantypes = irc_server_get_chantypes (server);
+        if (ptr_chantypes && ptr_chantypes[0])
+        {
+            /*
+             * use '#' if it's in chantypes (anywhere in the string), because
+             * it is the most common channel type, and fallback on first
+             * channel type
+             */
+            chantype[0] = (strchr (ptr_chantypes, '#')) ?
+                '#' : ptr_chantypes[0];
+        }
     }
 
     return chantype;

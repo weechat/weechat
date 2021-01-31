@@ -92,6 +92,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_NOTIFY,               /* notify list                   */
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
+    IRC_SERVER_OPTION_DEFAULT_CHANTYPES,    /* chantypes if not received     */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -318,6 +319,7 @@ extern void irc_server_set_host (struct t_irc_server *server,
 extern const char *irc_server_get_alternate_nick (struct t_irc_server *server);
 extern const char *irc_server_get_isupport_value (struct t_irc_server *server,
                                                   const char *feature);
+extern const char *irc_server_get_chantypes (struct t_irc_server *server);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                                const char *prefix);
 extern void irc_server_set_lag (struct t_irc_server *server);

@@ -7426,7 +7426,12 @@ msgid ""
 "with the channel name encoding)"
 msgstr ""
 
-#, c-format
+msgid ""
+"channel type prefixes to use if the server does not send them in message 005 "
+"(default is \"#&\")"
+msgstr ""
+
+#, fuzzy, c-format
 msgid "%s%s: error adding server \"%s\""
 msgstr "%s%s: \"%s\" sunucusu eklenirken hata"
 

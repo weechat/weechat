@@ -549,7 +549,8 @@ Some environment variables are used by WeeChat if they are defined:
 === Files and directories
 
 WeeChat writes configuration files and other data in directory `~/.weechat`
-by default.
+by default. +
+These files are created with default values the first time you run WeeChat.
 
 [[weechat_directories]]
 ==== WeeChat directories

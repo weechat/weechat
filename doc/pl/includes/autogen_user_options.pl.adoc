@@ -751,7 +751,7 @@
 ** domyślna wartość: `+""+`
 
 * [[option_weechat.look.highlight_regex]] *weechat.look.highlight_regex*
-** opis: pass:none[rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi być otoczone separatorami (znaki inne niż: alfanumeryczne, "-", "_" lub "|"), wielkość znaków nie ma wpływu na wyrażenie (użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie), przykłady: "flashcode|flashy", "(?-i)FlashCode|flashy"]
+** opis: pass:none[Rozszerzone wyrażenie regularne POSIX używane do sprawdzenia, czy wiadomość posiada podświetlenie czy nie, przynajmniej jedno dopasowanie w ciąg musi być otoczone separatorami (znaki inne niż: alfanumeryczne, "-", "_" lub "|"), wielkość znaków nie ma wpływu na wyrażenie (użyj "(?-i)" na początku, aby wielkość znaków miała znaczenie), przykłady: "flashcode|flashy", "(?-i)FlashCode|flashy"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -1937,7 +1937,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_xfer.network.own_ip]] *xfer.network.own_ip*
-** opis: pass:none[adres IP lub DNS użyty do wysłania pliku/rozmowy (jeśli pusty zostanie użyty adres IP lokalnego interfejsu)]
+** opis: pass:none[Adres IP lub DNS użyty do wysłania pliku/rozmowy (jeśli pusty zostanie użyty adres IP lokalnego interfejsu)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -2616,6 +2616,12 @@
 ** wartości: 1 .. 3600
 ** domyślna wartość: `+60+`
 
+* [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
+** opis: pass:none[channel type prefixes to use if the server does not send them in message 005 (default is "#&")]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"#&"+`
+
 * [[option_irc.server_default.ipv6]] *irc.server_default.ipv6*
 ** opis: pass:none[używaj protokołu IPv6 do komunikacji z serwerem (próbuj IPv6 później wróć do IPv4); jeśli wyłączone używane jest tylko IPv4]
 ** typ: bool
@@ -2731,7 +2737,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_irc.server_default.ssl_cert]] *irc.server_default.ssl_cert*
-** opis: pass:none[plik certyfikatu SSL używany do automatycznego uwierzytelnienia nicka ("%h" zostanie zastąpione katalogiem domowym WeeChat, domyślnie "~/.weechat")]
+** opis: pass:none[Plik certyfikatu SSL używany do automatycznego uwierzytelnienia nicka ("%h" zostanie zastąpione katalogiem domowym WeeChat, domyślnie "~/.weechat")]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -2889,7 +2895,7 @@
 ** domyślna wartość: `+off+`
 
 * [[option_relay.network.allowed_ips]] *relay.network.allowed_ips*
-** opis: pass:none[rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123\.45\.67\.89|192\.160\..*)$"]
+** opis: pass:none[Rozszerzone wyrażenia regularne POSIX z adresami IP dozwolonymi dla pośrednika (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^(123\.45\.67\.89|192\.160\..*)$"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -2979,7 +2985,7 @@
 ** domyślna wartość: `+0+`
 
 * [[option_relay.network.websocket_allowed_origins]] *relay.network.websocket_allowed_origins*
-** opis: pass:none[rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"]
+** opis: pass:none[Rozszerzone wyrażenia regularne POSIX ze źródłami dozwolonymi dla gniazd webowych (nie wrażliwe na wielkość znaków, umieszczenie "(?-i)" na początku sprawi, że wielość znaków będzie miała znaczenie), przykład: "^http://(www\.)?przykład\.(com|org)"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -3345,7 +3351,7 @@
 ** domyślna wartość: `+"%h/script"+`
 
 * [[option_script.scripts.url]] *script.scripts.url*
-** opis: pass:none[adres URL pliku z listą skryptów]
+** opis: pass:none[Adres URL pliku z listą skryptów]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"https://weechat.org/files/plugins.xml.gz"+`

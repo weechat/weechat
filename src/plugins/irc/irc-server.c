@@ -119,6 +119,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "notify",               ""                        },
   { "split_msg_max_length", "512"                     },
   { "charset_message",      "message"                 },
+  { "default_chantypes",    "#&"                      },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -997,6 +998,25 @@ irc_server_get_isupport_value (struct t_irc_server *server, const char *feature)
 
     /* feature not found in isupport */
     return NULL;
+}
+
+/*
+ * Gets "chantypes" for the server:
+ *   - if server is NULL, returns pointer to irc_channel_default_chantypes
+ *   - if server is not NULL, returns either chantypes in the server or
+ *     server option "default_chantypes"
+ */
+
+const char *
+irc_server_get_chantypes (struct t_irc_server *server)
+{
+    if (!server)
+        return irc_channel_default_chantypes;
+
+    if (server->chantypes)
+        return server->chantypes;
+
+    return IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_DEFAULT_CHANTYPES);
 }
 
 /*
