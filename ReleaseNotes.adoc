@@ -17,6 +17,11 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 (file _ChangeLog.adoc_ in sources).
 
 
+[[v3.0.1]]
+== Version 3.0.1 (2021-01-31)
+
+Bug fix and maintenance release.
+
 [[v3.0]]
 == Version 3.0 (2020-11-11)
 
