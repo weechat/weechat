@@ -32,6 +32,11 @@ It is deprecated and will be removed in a future release.
 New options `setvar` and `delvar` were also added in command `/buffer`,
 see `/help buffer`.
 
+[[v3.0.1]]
+== Version 3.0.1 (2021-01-31)
+
+Bug fix and maintenance release.
+
 [[v3.0]]
 == Version 3.0 (2020-11-11)
 

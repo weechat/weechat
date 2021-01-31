@@ -32,14 +32,20 @@ Bug fixes::
 
   * core: do not remove quotes in arguments of command /eval as they can be part of the evaluated expression/condition (issue #1601)
   * core: display an error when the buffer is not found with command /command -buffer
-  * exec: fix search of command by identifier
   * irc: fix completion of commands /halfop and /dehalfop
-  * spell: fix crash with IRC color codes in command line (issue #1589)
-  * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)
 
 Documentation::
 
   * do not build weechat-headless man page if headless binary is disabled (issue #1607)
+
+[[v3.0.1]]
+== Version 3.0.1 (2021-01-31)
+
+Bug fixes::
+
+  * exec: fix search of command by identifier
+  * spell: fix refresh of bar item "spell_suggest" when the input becomes empty (issue #1586)
+  * spell: fix crash with IRC color codes in command line (issue #1589)
 
 [[v3.0]]
 == Version 3.0 (2020-11-11)
