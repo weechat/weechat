@@ -1265,7 +1265,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     gui_buffer_compute_num_displayed ();
 
     if (!weechat_upgrading
-        && CONFIG_BOOLEAN(config_look_read_marker_update_on_buffer_switch)
+        && CONFIG_BOOLEAN(config_look_hotlist_update_on_buffer_switch)
         && (old_buffer != buffer))
     {
         gui_hotlist_remove_buffer (buffer, 0);
