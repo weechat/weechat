@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-01-30 09:32+0100\n"
+"POT-Creation-Date: 2021-02-03 18:29+0100\n"
 "PO-Revision-Date: 2021-01-15 21:34+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -10309,6 +10309,12 @@ msgstr "serwer,właściwość"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr "wartość opcji, jeśli jest wpierana przez serwer (z wiadomości IRC 005)"
+
+msgid "1 if the nick is ignored (message is not displayed)"
+msgstr ""
+
+msgid "server,message (message is the raw IRC message)"
+msgstr ""
 
 msgid "parse an IRC message"
 msgstr "przetwarza wiadomość IRC"

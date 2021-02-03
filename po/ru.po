@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-01-30 09:32+0100\n"
+"POT-Creation-Date: 2021-02-03 18:29+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -8360,6 +8360,12 @@ msgid "server,feature"
 msgstr "цель: название сервера"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
+msgstr ""
+
+msgid "1 if the nick is ignored (message is not displayed)"
+msgstr ""
+
+msgid "server,message (message is the raw IRC message)"
 msgstr ""
 
 #, fuzzy

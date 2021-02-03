@@ -20,6 +20,8 @@
 
 | irc | irc_is_channel | 1 jeśli ciąg jest poprawną nazwą kanału IRC dla serwera | serwer,kanał (serwer jest opcjonalny)
 
+| irc | irc_is_message_ignored | 1 if the nick is ignored (message is not displayed) | server,message (message is the raw IRC message)
+
 | irc | irc_is_nick | 1 jeśli ciąg jest poprawną nazwą użytkownika IRC | serwer,nick (serwer jest opcjonalny)
 
 | irc | irc_nick | pobiera aktualny nick z serwera | nazwa serwera

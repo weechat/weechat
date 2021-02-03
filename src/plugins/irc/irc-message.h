@@ -38,6 +38,8 @@ extern char *irc_message_convert_charset (const char *message,
                                           const char *modifier_data);
 extern const char *irc_message_get_nick_from_host (const char *host);
 extern const char *irc_message_get_address_from_host (const char *host);
+extern int irc_message_ignored (struct t_irc_server *server,
+                                const char *message);
 extern char *irc_message_replace_vars (struct t_irc_server *server,
                                        const char *channel_name,
                                        const char *string);

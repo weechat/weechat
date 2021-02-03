@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-01-30 09:32+0100\n"
+"POT-Creation-Date: 2021-02-03 18:29+0100\n"
 "PO-Revision-Date: 2020-04-28 16:40+0200\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -10072,6 +10072,12 @@ msgstr "サーバ、機能"
 
 msgid "value of feature, if supported by server (from IRC message 005)"
 msgstr "サーバがサポートする場合、機能の値 (IRC メッセージ 005 を使う)"
+
+msgid "1 if the nick is ignored (message is not displayed)"
+msgstr ""
+
+msgid "server,message (message is the raw IRC message)"
+msgstr ""
 
 msgid "parse an IRC message"
 msgstr "IRC メッセージを解析"

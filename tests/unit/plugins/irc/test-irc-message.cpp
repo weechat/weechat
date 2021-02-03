@@ -29,6 +29,7 @@ extern "C"
 #include "src/core/wee-hashtable.h"
 #include "src/core/wee-hook.h"
 #include "src/plugins/irc/irc-config.h"
+#include "src/plugins/irc/irc-ignore.h"
 #include "src/plugins/irc/irc-message.h"
 #include "src/plugins/irc/irc-server.h"
 }
@@ -645,6 +646,46 @@ TEST(IrcMessage, GetAddressFromHost)
                  "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                  "xxxxxxxxxxxx_25",
                  irc_message_get_address_from_host (NICK_256_WITH_SPACE));
+}
+
+/*
+ * Tests functions:
+ *   irc_message_ignored
+ */
+
+TEST(IrcMessage, Ignored)
+{
+    struct t_irc_server *server;
+    struct t_irc_ignore *ignore1, *ignore2;
+
+    server = irc_server_alloc ("test_ignore");
+    CHECK(server);
+
+    ignore1 = irc_ignore_new ("^alice@host1$", "test_ignore", "#test1");
+    ignore2 = irc_ignore_new ("^bob@host2$", "test_ignore", "#test2");
+
+    LONGS_EQUAL(0, irc_message_ignored (NULL, NULL));
+    LONGS_EQUAL(0, irc_message_ignored (NULL, ""));
+    LONGS_EQUAL(0, irc_message_ignored (NULL,
+                                        ":alice@host1 PRIVMSG #test1 :hi!"));
+
+    LONGS_EQUAL(1, irc_message_ignored (server,
+                                        ":alice@host1 PRIVMSG #test1 :hi!"));
+    LONGS_EQUAL(0, irc_message_ignored (server,
+                                        ":alice@host1 PRIVMSG #test :hi!"));
+    LONGS_EQUAL(0, irc_message_ignored (server,
+                                        ":alice@host2 PRIVMSG #test1 :hi!"));
+
+    LONGS_EQUAL(1, irc_message_ignored (server,
+                                        ":bob@host2 PRIVMSG #test2 :hi!"));
+    LONGS_EQUAL(0, irc_message_ignored (server,
+                                        ":bob@host2 PRIVMSG #test :hi!"));
+    LONGS_EQUAL(0, irc_message_ignored (server,
+                                        ":bob2@host2 PRIVMSG #test2 :hi!"));
+
+    irc_ignore_free (ignore1);
+    irc_ignore_free (ignore2);
+    irc_server_free (server);
 }
 
 /*
