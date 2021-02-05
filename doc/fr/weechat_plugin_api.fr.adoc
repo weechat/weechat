@@ -2567,6 +2567,12 @@ première étendue à la dernière) :
 |===
 | Format | Description | Exemples | Résultats
 
+| `+${raw:xxx}+` +
+  _(WeeChat ≥ 3.1)_ |
+  Chaîne brute (non évaluée). |
+  `+${raw:${info:version}}+` |
+  `+${info:version}+`
+
 | `+${nom}+` |
   Variable `nom` de la table de hachage _extra_vars_. |
   `+${nom}+` |

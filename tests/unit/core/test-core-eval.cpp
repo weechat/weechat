@@ -465,6 +465,12 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("", "${}");
     WEE_CHECK_EVAL("", "${xyz}");
 
+    /* test raw string */
+    WEE_CHECK_EVAL("${info:version}", "${raw:${info:version}}");
+    WEE_CHECK_EVAL("yes", "${if:${raw:test?}==${raw:test?}?yes:no}");
+    WEE_CHECK_EVAL("no", "${if:${raw:test?}==${raw:test}?yes:no}");
+    WEE_CHECK_EVAL("16", "${length:${raw:${buffer.number}}}");
+
     /* test eval of substring */
     WEE_CHECK_EVAL("\t", "${eval:${\\t}}");
 

@@ -985,32 +985,33 @@ end:
 
 /*
  * Replaces variables, which can be, by order of priority:
- *   1. an extra variable from hashtable "extra_vars"
- *   2. a string to evaluate (format: eval:xxx)
- *   3. a condition to evaluate (format: eval_cond:xxx)
- *   4. a string with escaped chars (format: esc:xxx or \xxx)
- *   5. a string with chars to hide (format: hide:char,string)
- *   6. a string with max chars (format: cut:max,suffix,string or
+ *   1. the string itself without evaluation (format: raw:xxx)
+ *   2. an extra variable from hashtable "extra_vars"
+ *   3. a string to evaluate (format: eval:xxx)
+ *   4. a condition to evaluate (format: eval_cond:xxx)
+ *   5. a string with escaped chars (format: esc:xxx or \xxx)
+ *   6. a string with chars to hide (format: hide:char,string)
+ *   7. a string with max chars (format: cut:max,suffix,string or
  *      cut:+max,suffix,string) or max chars on screen
  *      (format: cutscr:max,suffix,string or cutscr:+max,suffix,string)
- *   7. a reversed string (format: rev:xxx) or reversed string for screen,
+ *   8. a reversed string (format: rev:xxx) or reversed string for screen,
  *      color codes are not reversed (format: revscr:xxx)
- *   8. a repeated string (format: repeat:count,string)
- *   9. length of a string (format: length:xxx) or length of a string on screen
+ *   9. a repeated string (format: repeat:count,string)
+ *  10. length of a string (format: length:xxx) or length of a string on screen
  *      (format: lengthscr:xxx); color codes are ignored
- *  10. a regex group captured (format: re:N (0.99) or re:+)
- *  11. a color (format: color:xxx)
- *  12. a modifier (format: modifier:name,data,xxx)
- *  13. an info (format: info:name,arguments)
- *  14. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
+ *  11. a regex group captured (format: re:N (0.99) or re:+)
+ *  12. a color (format: color:xxx)
+ *  13. a modifier (format: modifier:name,data,xxx)
+ *  14. an info (format: info:name,arguments)
+ *  15. a base 16/32/64 encoded/decoded string (format: base_encode:base,xxx
  *      or base_decode:base,xxx)
- *  15. current date/time (format: date or date:xxx)
- *  16. an environment variable (format: env:XXX)
- *  17. a ternary operator (format: if:condition?value_if_true:value_if_false)
- *  18. calculate result of an expression (format: calc:xxx)
- *  19. an option (format: file.section.option)
- *  20. a buffer local variable
- *  21. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  16. current date/time (format: date or date:xxx)
+ *  17. an environment variable (format: env:XXX)
+ *  18. a ternary operator (format: if:condition?value_if_true:value_if_false)
+ *  19. calculate result of an expression (format: calc:xxx)
+ *  20. an option (format: file.section.option)
+ *  21. a buffer local variable
+ *  22. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2)
  *
  * See /help in WeeChat for examples.
@@ -1034,7 +1035,16 @@ eval_replace_vars_cb (void *data, const char *text)
 
     EVAL_DEBUG_MSG(1, "eval_replace_vars_cb(\"%s\")", text);
 
-    /* 1. variable in hashtable "extra_vars" */
+    /*
+     * 1. raw text (no evaluation at all)
+     */
+    if (strncmp (text, "raw:", 4) == 0)
+    {
+        value = strdup (text + 4);
+        goto end;
+    }
+
+    /* 2. variable in hashtable "extra_vars" */
     if (eval_context->extra_vars)
     {
         ptr_value = hashtable_get (eval_context->extra_vars, text);
@@ -1060,7 +1070,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 2. force evaluation of string (recursive call)
+     * 3. force evaluation of string (recursive call)
      *    --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval:", 5) == 0)
@@ -1070,7 +1080,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 3. force evaluation of condition (recursive call)
+     * 4. force evaluation of condition (recursive call)
      *    --> use with caution: the text must be safe!
      */
     if (strncmp (text, "eval_cond:", 10) == 0)
@@ -1079,7 +1089,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 4. convert escaped chars */
+    /* 5. convert escaped chars */
     if (strncmp (text, "esc:", 4) == 0)
     {
         value = string_convert_escaped_chars (text + 4);
@@ -1091,7 +1101,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 5. hide chars: replace all chars by a given char/string */
+    /* 6. hide chars: replace all chars by a given char/string */
     if (strncmp (text, "hide:", 5) == 0)
     {
         value = eval_string_hide (text + 5);
@@ -1099,7 +1109,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 6. cut chars:
+     * 7. cut chars:
      *   cut: max number of chars, and add an optional suffix when the
      *        string is cut
      *   cutscr: max number of chars displayed on screen, and add an optional
@@ -1116,7 +1126,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 7. reverse string */
+    /* 8. reverse string */
     if (strncmp (text, "rev:", 4) == 0)
     {
         value = string_reverse (text + 4);
@@ -1128,7 +1138,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 8. repeated string */
+    /* 9. repeated string */
     if (strncmp (text, "repeat:", 7) == 0)
     {
         value = eval_string_repeat (text + 7);
@@ -1136,7 +1146,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 9. length of string:
+     * 10. length of string:
      *   length: number of chars
      *   lengthscr: number of chars displayed on screen
      */
@@ -1155,35 +1165,35 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 10. regex group captured */
+    /* 11. regex group captured */
     if (strncmp (text, "re:", 3) == 0)
     {
         value = eval_string_regex_group (text + 3, eval_context);
         goto end;
     }
 
-    /* 11. color code */
+    /* 12. color code */
     if (strncmp (text, "color:", 6) == 0)
     {
         value = eval_string_color (text + 6);
         goto end;
     }
 
-    /* 12. modifier */
+    /* 13. modifier */
     if (strncmp (text, "modifier:", 9) == 0)
     {
         value = eval_string_modifier (text + 9);
         goto end;
     }
 
-    /* 13. info */
+    /* 14. info */
     if (strncmp (text, "info:", 5) == 0)
     {
         value = eval_string_info (text + 5);
         goto end;
     }
 
-    /* 14. base_encode/base_decode */
+    /* 15. base_encode/base_decode */
     if (strncmp (text, "base_encode:", 12) == 0)
     {
         value = eval_string_base_encode (text + 12);
@@ -1195,14 +1205,14 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 15. current date/time */
+    /* 16. current date/time */
     if ((strncmp (text, "date", 4) == 0) && (!text[4] || (text[4] == ':')))
     {
         value = eval_string_date (text + 4);
         goto end;
     }
 
-    /* 16. environment variable */
+    /* 17. environment variable */
     if (strncmp (text, "env:", 4) == 0)
     {
         ptr_value = getenv (text + 4);
@@ -1210,7 +1220,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 17: ternary operator: if:condition?value_if_true:value_if_false */
+    /* 18: ternary operator: if:condition?value_if_true:value_if_false */
     if (strncmp (text, "if:", 3) == 0)
     {
         value = eval_string_if (text + 3, eval_context);
@@ -1218,7 +1228,7 @@ eval_replace_vars_cb (void *data, const char *text)
     }
 
     /*
-     * 18. calculate the result of an expression
+     * 19. calculate the result of an expression
      * (with number, operators and parentheses)
      */
     if (strncmp (text, "calc:", 5) == 0)
@@ -1227,7 +1237,7 @@ eval_replace_vars_cb (void *data, const char *text)
         goto end;
     }
 
-    /* 19. option: if found, return this value */
+    /* 20. option: if found, return this value */
     if (strncmp (text, "sec.data.", 9) == 0)
     {
         ptr_value = hashtable_get (secure_hashtable_data, text + 9);
@@ -1270,7 +1280,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 20. local variable in buffer */
+    /* 21. local variable in buffer */
     ptr_buffer = hashtable_get (eval_context->pointers, "buffer");
     if (ptr_buffer)
     {
@@ -1282,7 +1292,7 @@ eval_replace_vars_cb (void *data, const char *text)
         }
     }
 
-    /* 21. hdata */
+    /* 22. hdata */
     value = eval_string_hdata (text, eval_context);
 
 end:
@@ -1300,7 +1310,7 @@ end:
 char *
 eval_replace_vars (const char *expr, struct t_eval_context *eval_context)
 {
-    const char *no_replace_prefix_list[] = { "if:", NULL };
+    const char *no_replace_prefix_list[] = { "if:", "raw:", NULL };
     char *result;
     int debug_id;
 

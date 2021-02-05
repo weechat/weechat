@@ -1341,26 +1341,27 @@ To force a string comparison, you can add double quotes around each expression, 
   "50" > "100"  ==> 1
 
 Some variables are replaced in expression, using the format ${variable}, variable can be, by order of priority:
-  1. an evaluated sub-string (format: "eval:xxx")
-  2. an evaluated condition (format: "eval_cond:xxx")
-  3. a string with escaped chars (format: "esc:xxx" or "\xxx")
-  4. a string with chars to hide (format: "hide:char,string")
-  5. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
+  1. the string itself without evaluation (format: "raw:xxx")
+  2. an evaluated sub-string (format: "eval:xxx")
+  3. an evaluated condition (format: "eval_cond:xxx")
+  4. a string with escaped chars (format: "esc:xxx" or "\xxx")
+  5. a string with chars to hide (format: "hide:char,string")
+  6. a string with max chars (format: "cut:max,suffix,string" or "cut:+max,suffix,string")
      or max chars displayed on screen (format: "cutscr:max,suffix,string" or "cutscr:+max,suffix,string")
-  6. a reversed string (format: "rev:xxx" or "revscr:xxx")
-  7. a repeated string (format: "repeat:count,string")
-  8. length of a string (format: "length:xxx" or "lengthscr:xxx")
-  9. a color (format: "color:xxx", see "Plugin API reference", function "color")
-  10. a modifier (format: "modifier:name,data,string")
-  11. an info (format: "info:name,arguments", arguments are optional)
-  12. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
-  13. current date/time (format: "date" or "date:format")
-  14. an environment variable (format: "env:XXX")
-  15. a ternary operator (format: "if:condition?value_if_true:value_if_false")
-  16. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
-  17. an option (format: "file.section.option")
-  18. a local variable in buffer
-  19. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
+  7. a reversed string (format: "rev:xxx" or "revscr:xxx")
+  8. a repeated string (format: "repeat:count,string")
+  9. length of a string (format: "length:xxx" or "lengthscr:xxx")
+  10. a color (format: "color:xxx", see "Plugin API reference", function "color")
+  11. a modifier (format: "modifier:name,data,string")
+  12. an info (format: "info:name,arguments", arguments are optional)
+  13. a base 16/32/64 encoded/decoded string (format: "base_encode:base,xxx" or "base_decode:base,xxx")
+  14. current date/time (format: "date" or "date:format")
+  15. an environment variable (format: "env:XXX")
+  16. a ternary operator (format: "if:condition?value_if_true:value_if_false")
+  17. result of an expression with parentheses and operators + - * / // % ** (format: "calc:xxx")
+  18. an option (format: "file.section.option")
+  19. a local variable in buffer
+  20. a hdata name/variable (the value is automatically converted to string), by default "window" and "buffer" point to current window/buffer.
 Format for hdata can be one of following:
   hdata.var1.var2...: start with a hdata (pointer must be known), and ask variables one after one (other hdata can be followed)
   hdata[list].var1.var2...: start with a hdata using a list, for example:
@@ -1371,6 +1372,7 @@ Format for hdata can be one of following:
 For name of hdata and variables, please look at "Plugin API reference", function "weechat_hdata_get".
 
 Examples (simple strings):
+  /eval -n ${raw:${info:version}}                ==> ${info:version}
   /eval -n ${eval_cond:${window.win_width}>100}  ==> 1
   /eval -n ${info:version}                       ==> 0.4.3
   /eval -n ${env:HOME}                           ==> /home/user
