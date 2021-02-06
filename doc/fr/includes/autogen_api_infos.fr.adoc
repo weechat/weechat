@@ -20,6 +20,8 @@
 
 | irc | irc_is_channel | 1 si la chaîne est un nom de canal IRC valide pour le serveur | serveur,canal (le serveur est optionnel)
 
+| irc | irc_is_message_ignored | 1 si le pseudo est ignoré (le message n'est pas affiché) | serveur,message (message est le message brut IRC)
+
 | irc | irc_is_nick | 1 si la chaîne est un pseudo IRC valide | serveur,pseudo (le serveur est optionnel)
 
 | irc | irc_nick | retourne le pseudo utilisé actuellement sur un serveur | nom de serveur

@@ -20,6 +20,8 @@
 
 | irc | irc_is_channel | 文字列がサーバの有効な IRC チャンネル名なら 1 | サーバ、チャンネル (サーバは任意)
 
+| irc | irc_is_message_ignored | 1 if the nick is ignored (message is not displayed) | server,message (message is the raw IRC message)
+
 | irc | irc_is_nick | 文字列が有効な IRC ニックネームなら 1 | server,nickname (server is optional)
 
 | irc | irc_nick | あるサーバの現在のニックネームを取得 | サーバ名

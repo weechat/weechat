@@ -401,6 +401,47 @@ irc_info_info_irc_server_isupport_value_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns IRC info "irc_is_message_ignored".
+ */
+
+char *
+irc_info_info_irc_is_message_ignored_cb (const void *pointer, void *data,
+                                         const char *info_name,
+                                         const char *arguments)
+{
+    char *pos_comma, *server;
+    const char *pos_message;
+    struct t_irc_server *ptr_server;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+
+    if (!arguments || !arguments[0])
+        return NULL;
+
+    ptr_server = NULL;
+    pos_message = arguments;
+    pos_comma = strchr (arguments, ',');
+    if (!pos_comma)
+        return NULL;
+
+    pos_message = pos_comma + 1;
+    server = weechat_strndup (arguments, pos_comma - arguments);
+    if (server)
+    {
+        ptr_server = irc_server_search (server);
+        free (server);
+    }
+    if (!ptr_server)
+        return NULL;
+
+    return (irc_message_ignored (ptr_server, pos_message)) ?
+        strdup ("1") : NULL;
+}
+
+/*
  * Returns IRC info with hashtable "irc_message_parse".
  */
 
@@ -1129,6 +1170,11 @@ irc_info_init ()
         N_("value of feature, if supported by server (from IRC message 005)"),
         N_("server,feature"),
         &irc_info_info_irc_server_isupport_value_cb, NULL, NULL);
+    weechat_hook_info (
+        "irc_is_message_ignored",
+        N_("1 if the nick is ignored (message is not displayed)"),
+        N_("server,message (message is the raw IRC message)"),
+        &irc_info_info_irc_is_channel_cb, NULL, NULL);
 
     /* info_hashtable hooks */
     weechat_hook_info_hashtable (

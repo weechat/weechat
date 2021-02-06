@@ -2617,7 +2617,7 @@
 ** Standardwert: `+60+`
 
 * [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
-** Beschreibung: pass:none[channel type prefixes to use if the server does not send them in message 005 (default is "#&")]
+** Beschreibung: pass:none[Channel-Typ-Präfix, die verwendet werden sollen, wenn der Server diese nicht in Nachricht 005 sendet (Standard ist "#&")]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"#&"+`

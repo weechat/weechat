@@ -20,6 +20,8 @@
 
 | irc | irc_is_channel | 1, falls die Zeichenkette ein gültiger IRC-Channelname für den Server ist | Server,Channel (Server ist optional)
 
+| irc | irc_is_message_ignored | 1, wenn der Nick ignoriert wird (Meldung wird nicht angezeigt) | Server,Nachricht (Nachricht ist die unverarbeitete IRC Nachricht)
+
 | irc | irc_is_nick | 1, falls die Zeichenkette ein gültiger IRC Nickname ist | Server,Nickname (Server ist optional)
 
 | irc | irc_nick | aktuellen Nicknamen für den Server erhalten | Servername

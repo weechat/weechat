@@ -27,7 +27,9 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-channel.h"
+#include "irc-color.h"
 #include "irc-config.h"
+#include "irc-ignore.h"
 #include "irc-server.h"
 
 
@@ -536,6 +538,56 @@ irc_message_get_address_from_host (const char *host)
     }
 
     return address;
+}
+
+/*
+ * Checks if a raw message is ignored (nick ignored on this server/channel).
+ *
+ * Returns:
+ *   0: message not ignored (displayed)
+ *   1: message ignored (not displayed)
+ */
+
+int
+irc_message_ignored (struct t_irc_server *server, const char *message)
+{
+    char *nick, *host, *host_no_color, *channel;
+    struct t_irc_channel *ptr_channel;
+    int ignored;
+
+    if (!server || !message)
+        return 0;
+
+    /* parse raw message */
+    irc_message_parse (server, message,
+                       NULL, NULL, &nick, NULL, &host,
+                       NULL, &channel, NULL,
+                       NULL, NULL, NULL,
+                       NULL, NULL);
+
+    /* remove colors from host */
+    host_no_color = (host) ? irc_color_decode (host, 0) : NULL;
+
+    /* search channel */
+    ptr_channel = (channel) ? irc_channel_search (server, channel) : NULL;
+
+    /* check if message is ignored or not */
+    ignored = irc_ignore_check (
+        server,
+        (ptr_channel) ? ptr_channel->name : channel,
+        nick,
+        host_no_color);
+
+    if (nick)
+        free (nick);
+    if (host)
+        free (host);
+    if (host_no_color)
+        free (host_no_color);
+    if (channel)
+        free (channel);
+
+    return ignored;
 }
 
 /*

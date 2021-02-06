@@ -2548,6 +2548,13 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
 |===
 | 書式 | 説明 | 例 | 結果
 
+// TRANSLATION MISSING
+| `+${raw:xxx}+` +
+  _(WeeChat ≥ 3.1)_ |
+  Raw string (not evaluated). |
+  `+${raw:${info:version}}+` |
+  `+${info:version}+`
+
 | `+${name}+` |
   _extra_vars_ の変数 `name` の値に展開 |
   `+${name}+` |

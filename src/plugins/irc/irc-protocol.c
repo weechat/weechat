@@ -6679,7 +6679,8 @@ irc_protocol_recv_command (struct t_irc_server *server,
     message_ignored = irc_ignore_check (
         server,
         (ptr_channel) ? ptr_channel->name : msg_channel,
-        nick, host_no_color);
+        nick,
+        host_no_color);
 
     /* send signal with received command, even if command is ignored */
     irc_server_send_signal (server, "irc_raw_in", msg_command,

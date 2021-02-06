@@ -2636,6 +2636,13 @@ expanded to last):
 |===
 | Format | Description | Examples | Results
 
+// TRANSLATION MISSING
+| `+${raw:xxx}+` +
+  _(WeeChat ≥ 3.1)_ |
+  Raw string (not evaluated). |
+  `+${raw:${info:version}}+` |
+  `+${info:version}+`
+
 | `+${name}+` |
   Variable `name` from hashtable _extra_vars_. |
   `+${name}+` |
