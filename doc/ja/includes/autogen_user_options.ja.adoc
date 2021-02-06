@@ -16,8 +16,8 @@
 ** 値: sha224, sha256, sha384, sha512
 ** デフォルト値: `+sha256+`
 
-* [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** 説明: pass:none[保護データを暗号化/複合化するためのパスフレーズを保存したファイルパス; このオプションは sec.conf ファイルを読むときだけに利用されます; ファイルの 1 行目だけが利用されます; このファイルは環境変数 "WEECHAT_PASSPHRASE" が設定されていないときだけに利用されます (環境変数のほうが優先順位が高いです); セキュリティ上の注意: このファイルを自分だけが読み込める状態にし、WeeChat ホームの外 (例えば自分のホームディレクトリ) に保存しておくことを推奨します; 例: "~/.weechat-passphrase"]
+* [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
+** 説明: pass:none[read the passphrase from the output of this command (only the first line is used and it must not contain any extra character); this option is used only when reading file sec.conf and if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); example with password-store: "pass show weechat/passphrase"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

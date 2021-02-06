@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-02-05 19:50+0100\n"
-"PO-Revision-Date: 2020-04-28 16:40+0200\n"
+"POT-Creation-Date: 2021-02-06 15:52+0100\n"
+"PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: ru\n"
@@ -949,6 +949,12 @@ msgid "Passphrase changed"
 msgstr ""
 
 msgid "Passphrase added"
+msgstr ""
+
+msgid ""
+"Important: an external program is configured to read the passphrase on "
+"startup (option sec.crypt.passphrase_command); you must ensure this program "
+"returns the new passphrase you just defined"
 msgstr ""
 
 #, c-format
@@ -2190,8 +2196,9 @@ msgid ""
 "startup.\n"
 "It is possible to set environment variable \"WEECHAT_PASSPHRASE\" to prevent "
 "the prompt (this same variable is used by WeeChat on /upgrade), or to set "
-"option sec.crypt.passphrase_file to read the passphrase from a file (see /"
-"help sec.crypt.passphrase_file).\n"
+"option sec.crypt.passphrase_command to read the passphrase from the output "
+"of an external command like a password manager (see /help sec.crypt."
+"passphrase_command).\n"
 "\n"
 "Secured data with format ${sec.data.xxx} can be used in:\n"
 "  - command /eval\n"
@@ -2204,6 +2211,8 @@ msgid ""
 "Examples:\n"
 "  set a passphrase:\n"
 "    /secure passphrase this is my passphrase\n"
+"  use program \"pass\" to read the passphrase on startup:\n"
+"    /set sec.crypt.passphrase_command \"pass show weechat/passphrase\"\n"
 "  encrypt freenode SASL password:\n"
 "    /secure set freenode mypassword\n"
 "    /set irc.server.freenode.sasl_password \"${sec.data.freenode}\"\n"
@@ -3946,10 +3955,6 @@ msgid ""
 "To recover your secured data, you can use /secure decrypt (see /help secure)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%sWarning: unable to read passphrase from file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
 #, c-format
 msgid ""
 "%sUnable to reload file sec.conf because there is still encrypted data (use /"
@@ -3981,13 +3986,11 @@ msgid "hash algorithm used to check the decrypted data"
 msgstr ""
 
 msgid ""
-"path to a file containing the passphrase to encrypt/decrypt secured data; "
-"this option is used only when reading file sec.conf; only first line of file "
-"is used; this file is used only if the environment variable "
+"read the passphrase from the output of this command (only the first line is "
+"used and it must not contain any extra character); this option is used only "
+"when reading file sec.conf and if the environment variable "
 "\"WEECHAT_PASSPHRASE\" is not set (the environment variable has higher "
-"priority); security note: it is recommended to keep this file readable only "
-"by you and store it outside WeeChat home (for example in your home); "
-"example: \"~/.weechat-passphrase\""
+"priority); example with password-store: \"pass show weechat/passphrase\""
 msgstr ""
 
 msgid ""
@@ -12480,43 +12483,3 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, fuzzy
-#~ msgid "%sError: unknown bar \"%s\""
-#~ msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect buffer number"
-#~ msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy
-#~ msgid "%sError: buffer not found"
-#~ msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy
-#~ msgid "%sError: filter \"%s\" not found"
-#~ msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy
-#~ msgid "%sError: unknown layout \"%s\""
-#~ msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: unknown proxy \"%s\""
-#~ msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect number"
-#~ msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy
-#~ msgid "%sError: failed to set option \"%s\""
-#~ msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
-
-#, fuzzy
-#~ msgid "%sError: incorrect window number"
-#~ msgstr "%s неправильный номер буфера\n"
-
-#, fuzzy
-#~ msgid "%sError: plugin \"%s\" not found"
-#~ msgstr "%s plugin \"%s\" не найден\n"

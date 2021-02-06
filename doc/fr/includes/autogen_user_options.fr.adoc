@@ -16,8 +16,8 @@
 ** valeurs: sha224, sha256, sha384, sha512
 ** valeur par défaut: `+sha256+`
 
-* [[option_sec.crypt.passphrase_file]] *sec.crypt.passphrase_file*
-** description: pass:none[chemin vers un fichier contenant la phrase de chiffrement pour (dé)chiffrer les données sécurisées ; cette option est utilisée seulement lors de la lecture du fichier sec.conf ; seulement la première ligne du fichier est utilisée ; ce fichier est utilisé seulement si la variable d'environnement "WEECHAT_PASSPHRASE" n'est pas définie (la variable d'environnement a une priorité plus haute) ; note de sécurité : il est recommandé de garder ce fichier en lecture seulement par vous et de le stocker en dehors du "home" WeeChat (par exemple dans votre "home") ; exemple : "~/.weechat-passphrase"]
+* [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
+** description: pass:none[lire la phrase de chiffrement depuis la sortie de cette commande (seule la première ligne est utilisée et elle ne doit contenir aucun autre caractère) ; cette option est utilisée seulement pour lire le fichier sec.conf et si la variable d'environnement "WEECHAT_PASSPHRASE" n'est pas définie (la variable d'environnement a une priorité plus haute) ; exemple avec password-store : "pass show weechat/passphrase"]
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+""+`

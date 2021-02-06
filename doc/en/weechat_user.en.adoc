@@ -2199,11 +2199,25 @@ but highly recommended, otherwise data is stored as plain text in file.
 /secure passphrase this is my passphrase
 ----
 
-When a passphrase is set, WeeChat will ask you to enter it on startup (but not
-on `/upgrade`).
+===== Passphrase on startup
 
-You can change this behavior and use a file with the passphrase (see option
-<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
+When a passphrase is set, WeeChat will ask you to enter it on startup
+(but not on `/upgrade`).
+
+If you are using a password manager, you can run an external program to read
+the passphrase instead of having to type it manually on WeeChat startup. +
+For example with password-store (command `pass`):
+
+----
+/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+----
+
+The program may ask you unlock your GPG key or enter another passphrase to
+read the secret. WeeChat will wait for the end of the command to read the
+passphrase on the standard output (it must be on the first line without any
+extra character). +
+If the output contains no passphrase or if it is wrong, WeeChat will then ask
+you to enter it.
 
 [[secured_data_encryption]]
 ===== Encryption

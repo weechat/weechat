@@ -2244,11 +2244,26 @@ _sec.conf_
 /secure passphrase this is my passphrase
 ----
 
-パスフレーズを設定した場合、WeeChat
-の起動時にパスフレーズの入力が求められるようになります (`/upgrade` 時には求められません)。
+// TRANSLATION MISSING
+===== Passphrase on startup
 
-この挙動を変更し、パスフレーズを保存したファイルを使うことも可能です
-(<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>> オプションを参照してください)。
+When a passphrase is set, WeeChat will ask you to enter it on startup
+(but not on `/upgrade`).
+
+If you are using a password manager, you can run an external program to read
+the passphrase instead of having to type it manually on WeeChat startup. +
+For example with password-store (command `pass`):
+
+----
+/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+----
+
+The program may ask you unlock your GPG key or enter another passphrase to
+read the secret. WeeChat will wait for the end of the command to read the
+passphrase on the standard output (it must be on the first line without any
+extra character). +
+If the output contains no passphrase or if it is wrong, WeeChat will then ask
+you to enter it.
 
 [[secured_data_encryption]]
 ===== 暗号化

@@ -42,7 +42,7 @@ struct t_config_file *secure_config_file = NULL;
 
 struct t_config_option *secure_config_crypt_cipher = NULL;
 struct t_config_option *secure_config_crypt_hash_algo = NULL;
-struct t_config_option *secure_config_crypt_passphrase_file = NULL;
+struct t_config_option *secure_config_crypt_passphrase_command = NULL;
 struct t_config_option *secure_config_crypt_salt = NULL;
 
 
@@ -94,84 +94,44 @@ secure_config_get_passphrase_from_user (const char *error)
 }
 
 /*
- * Gets passphrase from a file.
+ * Gets passphrase from a command.
  *
- * Returns passphrase read in file (only the first line with max length of
- * 1024 chars), or NULL if error.
+ * Returns passphrase from command output (only the first line with max length
+ * of SECURE_PASSPHRASE_MAX_LENGTH chars), or NULL if error.
  *
  * Note: result must be freed after use.
  */
 
 char *
-secure_config_get_passphrase_from_file (const char *filename)
+secure_config_get_passphrase_from_command (const char *command)
 {
     FILE *file;
-    char *passphrase, *filename2, buffer[1024+1], *pos;
+    char *passphrase, *pos, buffer[SECURE_PASSPHRASE_MAX_LENGTH + 1];
     size_t num_read;
 
     passphrase = NULL;
 
-    filename2 = string_expand_home (filename);
-    if (!filename2)
+    file = popen (command, "r");
+    if (!file)
         return NULL;
 
-    file = fopen (filename2, "r");
-    if (file)
+    num_read = fread (buffer, 1, sizeof (buffer) - 1, file);
+    if (num_read > 0)
     {
-        num_read = fread (buffer, 1, sizeof (buffer) - 1, file);
-        if (num_read > 0)
-        {
-            buffer[num_read] = '\0';
-            pos = strchr (buffer, '\r');
-            if (pos)
-                pos[0] = '\0';
-            pos = strchr (buffer, '\n');
-            if (pos)
-                pos[0] = '\0';
-            if (buffer[0])
-                passphrase = strdup (buffer);
-        }
-        fclose (file);
+        buffer[num_read] = '\0';
+        pos = strchr (buffer, '\r');
+        if (pos)
+            pos[0] = '\0';
+        pos = strchr (buffer, '\n');
+        if (pos)
+            pos[0] = '\0';
+        if (buffer[0])
+            passphrase = strdup (buffer);
     }
 
-    free (filename2);
+    pclose (file);
 
     return passphrase;
-}
-
-/*
- * Checks option "sec.crypt.passphrase_file".
- */
-
-int
-secure_config_check_crypt_passphrase_file (const void *pointer, void *data,
-                                           struct t_config_option *option,
-                                           const char *value)
-{
-    char *passphrase;
-
-    /* make C compiler happy */
-    (void) pointer;
-    (void) data;
-    (void) option;
-
-    /* empty value is OK in option (no file used for passphrase) */
-    if (!value || !value[0])
-        return 1;
-
-    passphrase = secure_config_get_passphrase_from_file (value);
-    if (passphrase)
-        free (passphrase);
-    else
-    {
-        gui_chat_printf (NULL,
-                         _("%sWarning: unable to read passphrase from file "
-                           "\"%s\""),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         value);
-    }
-
-    return 1;
 }
 
 /*
@@ -239,10 +199,15 @@ secure_config_data_read_cb (const void *pointer, void *data,
         secure_data_encrypted = config_file_string_to_boolean (value);
         if (secure_data_encrypted && !secure_passphrase && !gui_init_ok)
         {
-            /* if a passphrase file is set, use it */
-            if (CONFIG_STRING(secure_config_crypt_passphrase_file)[0])
-                secure_passphrase = secure_config_get_passphrase_from_file (
-                    CONFIG_STRING(secure_config_crypt_passphrase_file));
+            /*
+             * if a passphrase command is set, read passphrase from the output
+             * of the command
+             */
+            if (CONFIG_STRING(secure_config_crypt_passphrase_command)[0])
+            {
+                secure_passphrase = secure_config_get_passphrase_from_command (
+                    CONFIG_STRING(secure_config_crypt_passphrase_command));
+            }
 
             /* ask passphrase to the user (if no file, or file not found) */
             if (!secure_passphrase)
@@ -514,19 +479,17 @@ secure_config_init_options ()
         N_("hash algorithm used to check the decrypted data"),
         "sha224|sha256|sha384|sha512", 0, 0, "sha256", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-    secure_config_crypt_passphrase_file = config_file_new_option (
+    secure_config_crypt_passphrase_command = config_file_new_option (
         secure_config_file, ptr_section,
-        "passphrase_file", "string",
-        N_("path to a file containing the passphrase to encrypt/decrypt secured "
-           "data; this option is used only when reading file sec.conf; only "
-           "first line of file is used; this file is used only if the "
-           "environment variable \"WEECHAT_PASSPHRASE\" is not set (the "
-           "environment variable has higher priority); security note: it is "
-           "recommended to keep this file readable only by you and store it "
-           "outside WeeChat home (for example in your home); example: "
-           "\"~/.weechat-passphrase\""),
+        "passphrase_command", "string",
+        N_("read the passphrase from the output of this command (only the "
+           "first line is used and it must not contain any extra character); "
+           "this option is used only when reading file sec.conf and if "
+           "the environment variable \"WEECHAT_PASSPHRASE\" is not set "
+           "(the environment variable has higher priority); "
+           "example with password-store: \"pass show weechat/passphrase\""),
         NULL, 0, 0, "", NULL, 0,
-        &secure_config_check_crypt_passphrase_file, NULL, NULL,
+        NULL, NULL, NULL,
         NULL, NULL, NULL,
         NULL, NULL, NULL);
     secure_config_crypt_salt = config_file_new_option (

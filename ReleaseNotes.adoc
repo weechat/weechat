@@ -20,6 +20,29 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.1]]
 == Version 3.1 (under dev)
 
+[[v3.1_secure_data_passphrase_command]]
+=== External program to read secured data passphrase
+
+A new option `sec.crypt.passphrase_command` has been added to read the passphrase
+from the output of an external program (like a password manager).
+
+The option `sec.crypt.passphrase_file` has been removed, because the command
+can now read a file as well. If you used a file to read the passphrase, you
+must now setup the command like this:
+
+----
+/set sec.crypt.passphrase_command "cat ~/.weechat-passphrase"
+----
+
+For security reasons, it is of course highly recommended to use a password manager
+or a program to decrypt a file with your passphrase rather than using a file with
+the clear password. +
+For example with password-store (command `pass`):
+
+----
+/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+----
+
 [[v3.1_command_buffer_listvar]]
 === List of buffer local variables
 

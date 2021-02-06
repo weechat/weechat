@@ -5674,6 +5674,16 @@ COMMAND_CALLBACK(secure)
             if (secure_hashtable_data->items_count > 0)
                 command_save_file (secure_config_file);
             secure_buffer_display ();
+            if (CONFIG_STRING(secure_config_crypt_passphrase_command)[0])
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("Important: an external program is configured to read "
+                      "the passphrase on startup "
+                      "(option sec.crypt.passphrase_command); "
+                      "you must ensure this program returns the new "
+                      "passphrase you just defined"));
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -8200,8 +8210,9 @@ command_init ()
            "on startup.\n"
            "It is possible to set environment variable \"WEECHAT_PASSPHRASE\" "
            "to prevent the prompt (this same variable is used by WeeChat on "
-           "/upgrade), or to set option sec.crypt.passphrase_file to read "
-           "the passphrase from a file (see /help sec.crypt.passphrase_file).\n"
+           "/upgrade), or to set option sec.crypt.passphrase_command to read "
+           "the passphrase from the output of an external command like a "
+           "password manager (see /help sec.crypt.passphrase_command).\n"
            "\n"
            "Secured data with format ${sec.data.xxx} can be used in:\n"
            "  - command /eval\n"
@@ -8214,6 +8225,8 @@ command_init ()
            "Examples:\n"
            "  set a passphrase:\n"
            "    /secure passphrase this is my passphrase\n"
+           "  use program \"pass\" to read the passphrase on startup:\n"
+           "    /set sec.crypt.passphrase_command \"pass show weechat/passphrase\"\n"
            "  encrypt freenode SASL password:\n"
            "    /secure set freenode mypassword\n"
            "    /set irc.server.freenode.sasl_password \"${sec.data.freenode}\"\n"

@@ -2275,12 +2275,27 @@ données sont stockées sous forme de texte en clair dans le fichier.
 /secure passphrase ceci est ma phrase secrète
 ----
 
+// TRANSLATION MISSING
+===== Passphrase on startup
+
 Lorsqu'une phrase secrète est définie, WeeChat vous demandera de la saisir lors
 du démarrage (mais pas sur `/upgrade`).
 
-Vous pouvez modifier ce comportement et utiliser un fichier avec la phrase
-secrète (voir l'option
-<<option_sec.crypt.passphrase_file,sec.crypt.passphrase_file>>).
+Si vous utilisez un gestionnaire de mots de passe, vous pouvez lancer
+un programme externe pour lire la phrase de chiffrement au lieu d'avoir
+à l'entrer manuellement au démarrage de WeeChat. +
+Par exemple avec password-store (command `pass`) :
+
+----
+/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+----
+
+Le programme peut vous demander de déverrouiller votre clé GPG ou d'entrer une
+autre phrase de chiffrement. WeeChat attendra la fin de la commande pour lire
+la phrase de chiffrement sur la sortie standard (elle doit être sur la première
+ligne et sans caractère supplémentaire). +
+Si la sortie ne contient pas de phrase de chiffrement ou si celle-ci est
+erronée, WeeChat vous demandera alors de la saisir.
 
 [[secured_data_encryption]]
 ===== Chiffrement

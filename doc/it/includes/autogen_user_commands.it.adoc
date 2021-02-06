@@ -1873,7 +1873,7 @@ Keys on secure buffer:
   alt+v  toggle values
 
 When a passphrase is used (data encrypted), it is asked by WeeChat on startup.
-It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade), or to set option sec.crypt.passphrase_file to read the passphrase from a file (see /help sec.crypt.passphrase_file).
+It is possible to set environment variable "WEECHAT_PASSPHRASE" to prevent the prompt (this same variable is used by WeeChat on /upgrade), or to set option sec.crypt.passphrase_command to read the passphrase from the output of an external command like a password manager (see /help sec.crypt.passphrase_command).
 
 Secured data with format ${sec.data.xxx} can be used in:
   - command /eval
@@ -1884,6 +1884,8 @@ Secured data with format ${sec.data.xxx} can be used in:
 Examples:
   set a passphrase:
     /secure passphrase this is my passphrase
+  use program "pass" to read the passphrase on startup:
+    /set sec.crypt.passphrase_command "pass show weechat/passphrase"
   encrypt freenode SASL password:
     /secure set freenode mypassword
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
