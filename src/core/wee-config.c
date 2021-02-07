@@ -135,6 +135,7 @@ struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_hotlist_suffix;
 struct t_config_option *config_look_hotlist_unique_numbers;
+struct t_config_option *config_look_hotlist_update_on_buffer_switch;
 struct t_config_option *config_look_input_cursor_scroll;
 struct t_config_option *config_look_input_share;
 struct t_config_option *config_look_input_share_overwrite;
@@ -180,6 +181,7 @@ struct t_config_option *config_look_quote_time_format;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_read_marker_always_show;
 struct t_config_option *config_look_read_marker_string;
+struct t_config_option *config_look_read_marker_update_on_buffer_switch;
 struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_config_with_fsync;
 struct t_config_option *config_look_save_layout_on_exit;
@@ -3099,6 +3101,12 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_change_buffer_content, NULL, NULL,
         NULL, NULL, NULL);
+    config_look_hotlist_update_on_buffer_switch = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_update_on_buffer_switch", "boolean",
+        N_("update the hotlist when switching buffers"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_input_cursor_scroll = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_cursor_scroll", "integer",
@@ -3524,6 +3532,12 @@ config_weechat_init_options ()
         NULL, NULL, NULL,
         &config_change_read_marker, NULL, NULL,
         NULL, NULL, NULL);
+    config_look_read_marker_update_on_buffer_switch = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "read_marker_update_on_buffer_switch", "boolean",
+        N_("update the read marker when switching buffers"),
+        NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_save_config_on_exit = config_file_new_option (
         weechat_config_file, ptr_section,
         "save_config_on_exit", "boolean",

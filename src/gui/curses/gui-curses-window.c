@@ -1235,13 +1235,17 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
             gui_buffer_visited_add (window->buffer);
             gui_buffer_visited_add (buffer);
         }
-        if (set_last_read)
+        if (set_last_read
+            && CONFIG_BOOLEAN(config_look_read_marker_update_on_buffer_switch))
         {
             if (window->buffer->num_displayed == 0)
             {
                 window->buffer->lines->last_read_line = window->buffer->lines->last_line;
                 window->buffer->lines->first_line_not_read = 0;
             }
+        }
+        if (set_last_read)
+        {
             /*
              * if there is no line displayed after last read line,
              * then remove the read marker
@@ -1260,8 +1264,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     gui_buffer_set_active_buffer (buffer);
     gui_buffer_compute_num_displayed ();
 
-    if (!weechat_upgrading && (old_buffer != buffer))
+    if (!weechat_upgrading
+        && (old_buffer != buffer)
+        && CONFIG_BOOLEAN(config_look_hotlist_update_on_buffer_switch))
+    {
         gui_hotlist_remove_buffer (buffer, 0);
+    }
 
     /* remove unused bars and add missing bars in window */
     gui_bar_window_remove_unused_bars (window);
