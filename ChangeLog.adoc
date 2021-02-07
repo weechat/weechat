@@ -20,6 +20,7 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
+  * core: add options weechat.look.hotlist_update_on_buffer_switch and weechat.look.read_marker_update_on_buffer_switch (issue #992, issue #993)
   * core: add option sec.crypt.passphrase_command to read passphrase from an external program on startup, remove option sec.crypt.passphrase_file (issue #141)
   * core: improve debug in command /eval: display more verbose debug with two "-d", add indentation and colors
   * core: add options "setvar" and "delvar" in command /buffer, rename option "localvar" to "listvar"
