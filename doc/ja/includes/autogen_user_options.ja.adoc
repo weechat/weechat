@@ -846,6 +846,12 @@
 ** 値: on, off
 ** デフォルト値: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** 説明: pass:none[update the hotlist when switching buffers]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** 説明: pass:none[行の最後までスクロールする際に入力行の最後に続けて表示される文字の数]
 ** タイプ: 整数
@@ -1139,6 +1145,12 @@
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** 説明: pass:none[update the read marker when switching buffers]
+** タイプ: ブール
+** 値: on, off
+** デフォルト値: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** 説明: pass:none[終了時に設定ファイルを保存]

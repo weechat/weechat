@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-02-06 15:52+0100\n"
+"POT-Creation-Date: 2021-02-07 09:39+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Aleksey V Zapparov AKA ixti <ixti@member.fsf.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3019,6 +3019,9 @@ msgstr ""
 "максимальное количество имён в хотлисте (0 = имена не показываются, только "
 "номера буферов)"
 
+msgid "update the hotlist when switching buffers"
+msgstr ""
+
 msgid ""
 "number of chars displayed after end of input line when scrolling to display "
 "end of line"
@@ -3256,6 +3259,9 @@ msgstr ""
 
 msgid ""
 "string used to draw read marker line (string is repeated until end of line)"
+msgstr ""
+
+msgid "update the read marker when switching buffers"
 msgstr ""
 
 #, fuzzy

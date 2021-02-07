@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-02-06 15:52+0100\n"
+"POT-Creation-Date: 2021-02-07 09:39+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -3866,6 +3866,9 @@ msgstr ""
 "ホットリストには一意の番号だけを保持 (これは番号の後ろに名前が表示されていな"
 "いホットリスト要素だけに適用されます)"
 
+msgid "update the hotlist when switching buffers"
+msgstr ""
+
 msgid ""
 "number of chars displayed after end of input line when scrolling to display "
 "end of line"
@@ -4171,6 +4174,9 @@ msgstr "バッファの最終行であっても、常にリードマーカーを
 msgid ""
 "string used to draw read marker line (string is repeated until end of line)"
 msgstr "リードマーカー行の表示に使われる文字列 (行末まで文字列が繰り返される)"
+
+msgid "update the read marker when switching buffers"
+msgstr ""
 
 msgid "save configuration file on exit"
 msgstr "終了時に設定ファイルを保存"

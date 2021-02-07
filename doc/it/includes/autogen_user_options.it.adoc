@@ -846,6 +846,12 @@
 ** valori: on, off
 ** valore predefinito: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** descrizione: pass:none[update the hotlist when switching buffers]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** descrizione: pass:none[numero di caratteri mostrati dopo la fine della riga di input quando si scorre per mostrare la fine riga]
 ** tipo: intero
@@ -1139,6 +1145,12 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** descrizione: pass:none[update the read marker when switching buffers]
+** tipo: bool
+** valori: on, off
+** valore predefinito: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** descrizione: pass:none[salva file di configurazione all'uscita]

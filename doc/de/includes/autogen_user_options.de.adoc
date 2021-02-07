@@ -846,6 +846,12 @@
 ** Werte: on, off
 ** Standardwert: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** Beschreibung: pass:none[update the hotlist when switching buffers]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** Beschreibung: pass:none[Anzahl an Zeichen die nach links verschoben werden sollen, falls das Ende der Eingabezeile erreicht wird]
 ** Typ: integer
@@ -1139,6 +1145,12 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** Beschreibung: pass:none[update the read marker when switching buffers]
+** Typ: boolesch
+** Werte: on, off
+** Standardwert: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** Beschreibung: pass:none[die aktuelle Konfiguration wird beim Beenden automatisch gesichert]

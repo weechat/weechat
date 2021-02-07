@@ -846,6 +846,12 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** description: pass:none[mettre à jour la hotlist lors du changement de tampon]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** description: pass:none[nombre de caractères affichés après la fin de la ligne de saisie lors d'un défilement pour afficher la fin de la ligne]
 ** type: entier
@@ -1139,6 +1145,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** description: pass:none[mettre à jour le marqueur de données non lues lors du changement de tampon]
+** type: booléen
+** valeurs: on, off
+** valeur par défaut: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** description: pass:none[sauvegarder la configuration en quittant]

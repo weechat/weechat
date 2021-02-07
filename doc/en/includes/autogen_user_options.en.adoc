@@ -846,6 +846,12 @@
 ** values: on, off
 ** default value: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** description: pass:none[update the hotlist when switching buffers]
+** type: boolean
+** values: on, off
+** default value: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** description: pass:none[number of chars displayed after end of input line when scrolling to display end of line]
 ** type: integer
@@ -1139,6 +1145,12 @@
 ** type: string
 ** values: any string
 ** default value: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** description: pass:none[update the read marker when switching buffers]
+** type: boolean
+** values: on, off
+** default value: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** description: pass:none[save configuration file on exit]

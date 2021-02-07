@@ -846,6 +846,12 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
+** opis: pass:none[update the hotlist when switching buffers]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
+
 * [[option_weechat.look.input_cursor_scroll]] *weechat.look.input_cursor_scroll*
 ** opis: pass:none[ilość znaków wyświetlanych po końcu linii wejściowej, kiedy przewijamy do wyświetlenia końca linii]
 ** typ: liczba
@@ -1139,6 +1145,12 @@
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"- "+`
+
+* [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
+** opis: pass:none[update the read marker when switching buffers]
+** typ: bool
+** wartości: on, off
+** domyślna wartość: `+on+`
 
 * [[option_weechat.look.save_config_on_exit]] *weechat.look.save_config_on_exit*
 ** opis: pass:none[zapisz plik konfiguracyjny przy wyjściu]
