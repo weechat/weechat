@@ -2237,26 +2237,24 @@ da ansonsten die Daten in Klartext gesichert werden.
 /secure passphrase Dies ist meine Passphrase
 ----
 
-// TRANSLATION MISSING
-===== Passphrase on startup
+===== Passphrase beim Programmstart
 
-When a passphrase is set, WeeChat will ask you to enter it on startup
-(but not on `/upgrade`).
+Wenn eine Passphrase festgelegt ist, werden Sie von WeeChat aufgefordert, diese beim Start einzugeben
+(aber nicht bei `/upgrade`).
 
-If you are using a password manager, you can run an external program to read
-the passphrase instead of having to type it manually on WeeChat startup. +
-For example with password-store (command `pass`):
+Wenn Sie einen Passwortmanager verwenden, können Sie ein externes Programm ausführen, um die Passphrase zu lesen,
+anstatt sie beim Start von WeeChat manuell eingeben zu müssen. Zum Beispiel mit Passwortspeicher (Befehl `pass`):
 
 ----
 /set sec.crypt.passphrase_command "pass show weechat/passphrase"
 ----
 
-The program may ask you unlock your GPG key or enter another passphrase to
-read the secret. WeeChat will wait for the end of the command to read the
-passphrase on the standard output (it must be on the first line without any
-extra character). +
-If the output contains no passphrase or if it is wrong, WeeChat will then ask
-you to enter it.
+Das Programm fordert Sie möglicherweise auf, Ihren GPG-Schlüssel zu entsperren oder eine andere Passphrase
+einzugeben, um das Passwort lesen zu können. WeeChat wartet auf das Ende des Befehls, um die Passphrase in
+der Standardausgabe auszuwerten (die Passphrase muss in der ersten Zeile, ohne zusätzliches Zeichen, stehen). +
+
+Wenn die Ausgabe keine Passphrase enthält oder falsch ist, werden Sie von WeeChat aufgefordert,
+diese manuell einzugeben.
 
 [[secured_data_encryption]]
 ===== Verschlüsselung
