@@ -1706,7 +1706,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
                     else
                     {
                         tree->window->win_width_pct = (tree == parent->child1) ?
-                            parent->split_pct : 100 - parent->split_pct;
+                            100 - parent->split_pct : parent->split_pct;
                         tree->window->win_height_pct = 100;
                     }
                 }
@@ -1729,8 +1729,8 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
             else
             {
                 separator = (CONFIG_BOOLEAN(config_look_window_separator_vertical)) ? 1 : 0;
-                size1 = (width * tree->split_pct) / 100;
-                size2 = width - size1 - separator;
+                size2 = (width * tree->split_pct) / 100;
+                size1 = width - size2 - separator;
                 if (gui_window_auto_resize (tree->child1, x, y,
                                             size1, height, simulate) < 0)
                     return -1;
@@ -1885,8 +1885,8 @@ gui_window_split_vertical (struct t_gui_window *window, int percentage)
 
     separator = (CONFIG_BOOLEAN(config_look_window_separator_vertical)) ? 1 : 0;
 
-    width1 = (window->win_width * percentage) / 100;
-    width2 = window->win_width - width1 - separator;
+    width2 = (window->win_width * percentage) / 100;
+    width1 = window->win_width - width2 - separator;
 
     if ((width1 >= 1) && (width2 >= 1)
         && (percentage > 0) && (percentage < 100))
@@ -1935,15 +1935,10 @@ gui_window_resize (struct t_gui_window_tree *tree, int percentage)
     if (parent)
     {
         old_split_pct = parent->split_pct;
-        if (((parent->split_horizontal) && (tree == parent->child2))
-            || ((!(parent->split_horizontal)) && (tree == parent->child1)))
-        {
+        if (tree == parent->child2)
             parent->split_pct = percentage;
-        }
         else
-        {
             parent->split_pct = 100 - percentage;
-        }
 
         add_bottom = gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM);
         add_top = gui_bar_root_get_size (NULL, GUI_BAR_POSITION_TOP);
@@ -1977,15 +1972,10 @@ gui_window_resize_delta (struct t_gui_window_tree *tree, int delta_percentage)
     if (parent)
     {
         old_split_pct = parent->split_pct;
-        if (((parent->split_horizontal) && (tree == parent->child2))
-            || ((!(parent->split_horizontal)) && (tree == parent->child1)))
-        {
+        if (tree == parent->child2)
             parent->split_pct += delta_percentage;
-        }
         else
-        {
             parent->split_pct -= delta_percentage;
-        }
         if (parent->split_pct < 1)
             parent->split_pct = 1;
         else if (parent->split_pct > 99)
