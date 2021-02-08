@@ -1873,7 +1873,7 @@ Les touches sur le tampon des données sécurisées :
   alt+v  afficher/cacher les valeurs
 
 Lorsqu'une phrase de chiffrement est utilisée (données chiffrées), elle est demandée au démarrage de WeeChat.
-Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour éviter la demande (cette même variable est utilisée par WeeChat sur le /upgrade) ou de définir l'option sec.crypt.passphrase_command pour lire la phrase de chiffrement depuis la sortie d'une commande externe comme un gestionnaire de mots de passe (voir /help sec.crypt.passphrase_command).
+Il est possible de définir la variable d'environnement WEECHAT_PASSPHRASE pour éviter la demande (cette même variable est utilisée par WeeChat sur le /upgrade) ou de définir l'option sec.crypt.passphrase_command pour lire la phrase de chiffrement depuis la sortie d'une commande externe comme un coffre-fort à mots de passe (voir /help sec.crypt.passphrase_command).
 
 Les données sécurisées avec le format ${sec.data.xxx} peuvent être utilisées dans :
   - la commande /eval

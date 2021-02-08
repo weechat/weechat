@@ -482,10 +482,10 @@ secure_config_init_options ()
     secure_config_crypt_passphrase_command = config_file_new_option (
         secure_config_file, ptr_section,
         "passphrase_command", "string",
-        N_("read the passphrase from the output of this command (only the "
-           "first line is used and it must not contain any extra character); "
-           "this option is used only when reading file sec.conf and if "
-           "the environment variable \"WEECHAT_PASSPHRASE\" is not set "
+        N_("read the passphrase from the output of this system command "
+           "(only the first line is used and it must not contain any extra "
+           "character); this option is used only when reading file sec.conf "
+           "and if the environment variable \"WEECHAT_PASSPHRASE\" is not set "
            "(the environment variable has higher priority); "
            "example with password-store: \"pass show weechat/passphrase\""),
         NULL, 0, 0, "", NULL, 0,
