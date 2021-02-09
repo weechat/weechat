@@ -45,6 +45,7 @@ extern struct t_config_option *buflist_config_look_nick_prefix;
 extern struct t_config_option *buflist_config_look_nick_prefix_empty;
 extern struct t_config_option *buflist_config_look_signals_refresh;
 extern struct t_config_option *buflist_config_look_sort;
+extern struct t_config_option *buflist_config_look_use_items;
 
 extern struct t_config_option *buflist_config_format_buffer;
 extern struct t_config_option *buflist_config_format_buffer_current;

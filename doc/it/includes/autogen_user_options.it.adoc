@@ -1781,6 +1781,12 @@
 ** tipo: stringa
 ** valori: qualsiasi stringa
 ** valore predefinito: `+"number,-active"+`
+
+* [[option_buflist.look.use_items]] *buflist.look.use_items*
+** descrizione: pass:none[number of buflist bar items that can be used; the item names are: "buflist", "buflist2", "buflist3"; be careful, using more than one bar item slows down the display of buffers list]
+** tipo: intero
+** valori: 1 .. 3
+** valore predefinito: `+1+`
 // end::buflist_options[]
 
 // tag::fifo_options[]

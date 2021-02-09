@@ -44,6 +44,7 @@ struct t_config_option *buflist_config_look_nick_prefix;
 struct t_config_option *buflist_config_look_nick_prefix_empty;
 struct t_config_option *buflist_config_look_signals_refresh;
 struct t_config_option *buflist_config_look_sort;
+struct t_config_option *buflist_config_look_use_items;
 
 /* buflist config, format section */
 
@@ -338,6 +339,22 @@ buflist_config_change_nick_prefix (const void *pointer, void *data,
 }
 
 /*
+ * Callback for changes on option "buflist.look.use_items".
+ */
+
+void
+buflist_config_change_use_items (const void *pointer, void *data,
+                                 struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) option;
+
+    buflist_bar_item_update (2);
+}
+
+/*
  * Callback for changes on options needing bar item refresh.
  */
 
@@ -564,6 +581,16 @@ buflist_config_init ()
         NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_look_use_items = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "use_items", "integer",
+        N_("number of buflist bar items that can be used; the item names are: "
+           "\"buflist\", \"buflist2\", \"buflist3\"; be careful, using more "
+           "than one bar item slows down the display of buffers list"),
+        NULL, 1, BUFLIST_BAR_NUM_ITEMS, "1", NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_use_items, NULL, NULL,
         NULL, NULL, NULL);
 
     /* format */

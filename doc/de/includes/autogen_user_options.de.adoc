@@ -1781,6 +1781,12 @@
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"number,-active"+`
+
+* [[option_buflist.look.use_items]] *buflist.look.use_items*
+** Beschreibung: pass:none[number of buflist bar items that can be used; the item names are: "buflist", "buflist2", "buflist3"; be careful, using more than one bar item slows down the display of buffers list]
+** Typ: integer
+** Werte: 1 .. 3
+** Standardwert: `+1+`
 // end::buflist_options[]
 
 // tag::fifo_options[]

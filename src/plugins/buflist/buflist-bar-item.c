@@ -103,16 +103,23 @@ buflist_bar_item_get_index_with_pointer (struct t_gui_bar_item *item)
 
 /*
  * Updates buflist bar item if buflist is enabled (or if force argument is 1).
+ *
+ * If force == 1, all used items are refreshed
+ *   (according to option buflist.look.use_items).
+ * If force == 2, all items are refreshed.
  */
 
 void
 buflist_bar_item_update (int force)
 {
-    int i;
+    int i, num_items;
 
     if (force || weechat_config_boolean (buflist_config_look_enabled))
     {
-        for (i = 0; i < BUFLIST_BAR_NUM_ITEMS; i++)
+        num_items = (force == 2) ?
+            BUFLIST_BAR_NUM_ITEMS :
+            weechat_config_integer (buflist_config_look_use_items);
+        for (i = 0; i < num_items; i++)
         {
             weechat_bar_item_update (buflist_bar_item_get_name (i));
         }
@@ -318,13 +325,16 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     if (!weechat_config_boolean (buflist_config_look_enabled))
         return NULL;
 
+    item_index = (int)((unsigned long)pointer);
+
+    if (item_index + 1 > weechat_config_integer (buflist_config_look_use_items))
+        return NULL;
+
     prev_number = -1;
     line_number = 0;
     line_number_current_buffer = 0;
 
     buflist = weechat_string_dyn_alloc (256);
-
-    item_index = (int)((unsigned long)pointer);
 
     weechat_hashtable_set (buflist_hashtable_pointers, "bar_item", item);
     if (window)

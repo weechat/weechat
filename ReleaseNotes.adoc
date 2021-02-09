@@ -20,6 +20,19 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.1]]
 == Version 3.1 (under dev)
 
+[[v3.1_buflist_option_use_items]]
+=== Buflist option buflist.look.use_items
+
+A new buflist option `buflist.look.use_items` has been added to speed up
+display of buflist, in case you use a single buflist item (the most common use case).
+
+If ever you use more than one item (item "buflist2" or even "buflist3"), you
+must adjust the value of the new option, which defaults to 1:
+
+----
+/set buflist.look.use_items 2
+----
+
 [[v3.1_window_splitv]]
 === Vertical split of windows
 

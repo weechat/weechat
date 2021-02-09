@@ -1781,6 +1781,12 @@
 ** type: chaîne
 ** valeurs: toute chaîne
 ** valeur par défaut: `+"number,-active"+`
+
+* [[option_buflist.look.use_items]] *buflist.look.use_items*
+** description: pass:none[nombre d'objets de barre buflist qui peuvent être utilisés ; les objets de barre sont : "buflist", "buflist2", "buflist3" ; attention, utiliser plus d'un objet de barre ralentit l'affichage de la liste des tampons]
+** type: entier
+** valeurs: 1 .. 3
+** valeur par défaut: `+1+`
 // end::buflist_options[]
 
 // tag::fifo_options[]
