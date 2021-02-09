@@ -20,6 +20,18 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.1]]
 == Version 3.1 (under dev)
 
+[[v3.1_window_splitv]]
+=== Vertical split of windows
+
+The vertical split of windows has been fixed (see issue #1612): now the new
+window has the asked size, instead of the original window. +
+For example with this command the new window (on the right) has size 80% instead
+of 20% in previous releases:
+
+----
+/window splitv 80
+----
+
 [[v3.1_secure_data_passphrase_command]]
 === External program to read secured data passphrase
 
