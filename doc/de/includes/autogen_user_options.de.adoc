@@ -17,7 +17,7 @@
 ** Standardwert: `+sha256+`
 
 * [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
-** Beschreibung: pass:none[read the passphrase from the output of this system command (only the first line is used and it must not contain any extra character); this option is used only when reading file sec.conf and if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); example with password-store: "pass show weechat/passphrase"]
+** Beschreibung: pass:none[Auslesen der Passphrase aus der Ausgabe des angegebenen Befehls (nur die erste Zeile wird verwendet und darf kein zusätzliches Zeichen enthalten); Diese Option wird nur verwendet, wenn die Datei sec.conf gelesen wird und wenn die Umgebungsvariable "WEECHAT_PASSPHRASE" nicht festgelegt ist (die Umgebungsvariable hat eine höhere Priorität); Beispiel mit Passwortspeicher: "pass show weechat / passphrase"]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
@@ -847,7 +847,7 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
-** Beschreibung: pass:none[update the hotlist when switching buffers]
+** Beschreibung: pass:none[Aktualisiert die Hotlist, wenn der Buffer gewechselt wird]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
@@ -1147,7 +1147,7 @@
 ** Standardwert: `+"- "+`
 
 * [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
-** Beschreibung: pass:none[update the read marker when switching buffers]
+** Beschreibung: pass:none[Aktualisiert das Lesezeichen, wenn der Buffer gewechselt wird]
 ** Typ: boolesch
 ** Werte: on, off
 ** Standardwert: `+on+`
