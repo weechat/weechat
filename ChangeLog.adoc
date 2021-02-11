@@ -20,7 +20,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: fix wrong size of the new window after vertical split (issue #1612)
   * core: add options weechat.look.hotlist_update_on_buffer_switch and weechat.look.read_marker_update_on_buffer_switch (issue #992, issue #993)
   * core: add option sec.crypt.passphrase_command to read passphrase from an external program on startup, remove option sec.crypt.passphrase_file (issue #141)
   * core: improve debug in command /eval: display more verbose debug with two "-d", add indentation and colors
@@ -35,6 +34,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix wrong size of the new window after vertical split (issue #1612)
   * core: do not remove quotes in arguments of command /eval as they can be part of the evaluated expression/condition (issue #1601)
   * core: display an error when the buffer is not found with command /command -buffer
   * buflist: add option buflist.look.use_items to speed up display of buflist (issue #1613)
