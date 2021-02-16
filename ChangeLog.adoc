@@ -189,7 +189,7 @@ New features::
   * buflist: add pointer "window" in bar item evaluation
   * irc: add support of fake servers (no I/O, for testing purposes)
   * relay: accept hash of password in init command of weechat protocol with option "password_hash" (PBKDF2, SHA256, SHA512)
-  * relay: reject client with weechat protocol if password or totp is received in init command but not set in WeeChat (issue #1435)
+  * relay: reject client with weechat protocol if password or TOTP is received in init command but not set in WeeChat (issue #1435)
 
 Bug fixes::
 
