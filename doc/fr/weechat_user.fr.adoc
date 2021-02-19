@@ -93,39 +93,20 @@ Sous macOS, vous pouvez utiliser https://brew.sh/[Homebrew] :
 [[dependencies]]
 ==== Dépendances
 
-Le tableau suivant liste les paquets qui sont requis ou optionnels pour
-compiler WeeChat.
+Le tableau suivant liste les paquets qui sont *requis* pour compiler WeeChat :
 
-[width="100%",cols="6,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paquet ^(1)^           | Version       | Requis | Fonctionnalité
+| Paquet ^(1)^           | Version       | Fonctionnalité
 | compilateur C
-  (gcc, clang, ...)      |               | *oui*  | Construction.
-| compilateur C++        |               |        | Construction et lancement des tests, extension JavaScript.
-| cmake                  | ≥ 3.0         | *oui*  | Construction (autotools toujours possible, mais CMake est recommandé).
-| pkg-config             |               | *oui*  | Détection des bibliothèques installées.
-| libncursesw5-dev ^(2)^ |               | *oui*  | Interface ncurses.
-| libcurl4-gnutls-dev    |               | *oui*  | Transfert d'URL.
-| zlib1g-dev             |               | *oui*  | Compression des paquets dans l'extension relay (protocole weechat), extension script.
-| libgcrypt20-dev        |               | *oui*  | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES).
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *oui*  | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |        | Internationalisation (traduction des messages ; la langue de base est l'anglais).
-| ca-certificates        |               |        | Certificats pour les connexions SSL.
-| libaspell-dev
-  ∥ libenchant-dev       |               |        | Extension spell.
-| python3-dev            | ^(4)^         |        | Extension python.
-| libperl-dev            |               |        | Extension perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |        | Extension ruby.
-| liblua5.3-dev          |               |        | Extension lua.
-| tcl-dev                | ≥ 8.5         |        | Extension tcl.
-| guile-2.0-dev          | ≥ 2.0         |        | Extension guile (scheme).
-| libv8-dev              | ≤ 3.24.3      |        | Extension javascript.
-| php-dev, libphp-embed  | ≥ 7.0         |        | Extension PHP.
-| libxml2-dev            |               |        | Extension PHP.
-| libargon2-0-dev        |               |        | Extension PHP (si PHP ≥ 7.2).
-| libsodium-dev          |               |        | Extension PHP (si PHP ≥ 7.2).
-| asciidoctor            | ≥ 1.5.4       |        | Construction de la page man et de la documentation.
-| libcpputest-dev        | ≥ 3.4         |        | Construction et lancement des tests.
+  (gcc, clang, ...)      |               | Construction.
+| cmake                  | ≥ 3.0         | Construction (autotools toujours possible, mais CMake est recommandé).
+| pkg-config             |               | Détection des bibliothèques installées.
+| libncursesw5-dev ^(2)^ |               | Interface ncurses.
+| libcurl4-gnutls-dev    |               | Transfert d'URL.
+| zlib1g-dev             |               | Compression des paquets dans l'extension relay (protocole weechat), extension script.
+| libgcrypt20-dev        |               | Données sécurisées, authentification IRC SASL (DH-BLOWFISH/DH-AES).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Connexion SSL au serveur IRC, support SSL dans l'extension relay, authentification IRC SASL (ECDSA-NIST256P-CHALLENGE).
 |===
 
 [NOTE]
@@ -136,8 +117,35 @@ important). WeeChat peut compiler avec libncurses5-dev, but ce n'est *PAS*
 recommandé : vous pourriez avoir des bugs d'affichage avec les caractères
 larges. +
 ^(3)^ GnuTLS ≥ 3.0.21 est requis pour l'authentification SASL avec le mécanisme
-ECDSA-NIST256P-CHALLENGE. +
-^(4)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
+ECDSA-NIST256P-CHALLENGE.
+
+Le tableau suivant liste les paquets qui sont optionnels pour compiler WeeChat :
+
+[width="100%",cols="5,^3,.^15",options="header"]
+|===
+| Paquet                 | Version  | Fonctionnalité
+| compilateur C++        |          | Construction et lancement des tests, extension JavaScript.
+| gettext                |          | Internationalisation (traduction des messages ; la langue de base est l'anglais).
+| ca-certificates        |          | Certificats pour les connexions SSL.
+| libaspell-dev
+  ∥ libenchant-dev       |          | Extension spell.
+| python3-dev ^(1)^      |          | Extension python.
+| libperl-dev            |          | Extension perl.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Extension ruby.
+| liblua5.3-dev          |          | Extension lua.
+| tcl-dev                | ≥ 8.5    | Extension tcl.
+| guile-2.0-dev          | ≥ 2.0    | Extension guile (scheme).
+| libv8-dev              | ≤ 3.24.3 | Extension javascript.
+| php-dev, libphp-embed  | ≥ 7.0    | Extension PHP.
+| libxml2-dev            |          | Extension PHP.
+| libargon2-0-dev        |          | Extension PHP (si PHP ≥ 7.2).
+| libsodium-dev          |          | Extension PHP (si PHP ≥ 7.2).
+| asciidoctor            | ≥ 1.5.4  | Construction de la page man et de la documentation.
+| libcpputest-dev        | ≥ 3.4    | Construction et lancement des tests.
+|===
+
+[NOTE]
+^(1)^ Par défaut Python 3.x est utilisé. Si vous activez l'option
 `+ENABLE_PYTHON2+` (voir ci-dessous), seule la version 2.7 de Python est
 recommandée.
 

@@ -95,39 +95,22 @@ Na macOS możesz użyć https://brew.sh/[Homebrew]:
 [[dependencies]]
 ==== Zależności
 
-Poniższa tabela przedstawia pakiety wymagane i opcjonalne do skompilowania
-WeeChat.
+// TRANSLATION MISSING
+The following table shows the list of packages that are *required* to compile
+WeeChat:
 
-[width="100%",cols="6,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Pakiet ^(1)^           | Wersja        | Wymagany | Opis
+| Pakiet ^(1)^           | Wersja        | Opis
 | kompilator C
-  (gcc, clang, ...)      |               | *tak*    | Kompilacja.
-| kompilator C++         |               |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
-| cmake                  | ≥ 3.0         | *tak*    | Kompilacja (możliwe jest użycie autotools, jednak CMake jest zalecany).
-| pkg-config             |               | *tak*    | Wykrywa zainstalowane biblioteki.
-| libncursesw5-dev ^(2)^ |               | *tak*    | Interfejs ncurses.
-| libcurl4-gnutls-dev    |               | *tak*    | Transfer URL.
-| zlib1g-dev             |               | *tak*    | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script.
-| libgcrypt20-dev        |               | *tak*    | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES).
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *tak*    | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
-| ca-certificates        |               |          | Certyfikaty dla połączeń SSL.
-| libaspell-dev
-  ∥ libenchant-dev       |               |          | Wtyczka spell.
-| python3-dev            | ^(4)^         |          | Wtyczka python.
-| libperl-dev            |               |          | Wtyczka perl.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |          | Wtyczka ruby.
-| liblua5.3-dev          |               |          | Wtyczka lua.
-| tcl-dev                | ≥ 8.5         |          | Wtyczka tcl.
-| guile-2.0-dev          | ≥ 2.0         |          | Wtyczka guile (scheme).
-| libv8-dev              | ≤ 3.24.3      |          | Wtyczka javascript.
-| php-dev, libphp-embed  | ≥ 7.0         |          | Wtyczka PHP.
-| libxml2-dev            |               |          | Wtyczka PHP.
-| libargon2-0-dev        |               |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
-| libsodium-dev          |               |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
-| asciidoctor            | ≥ 1.5.4       |          | Tworzenie strony man i dokumentacji.
-| libcpputest-dev        | ≥ 3.4         |          | Kompilacja i uruchamianie testów.
+  (gcc, clang, ...)      |               | Kompilacja.
+| cmake                  | ≥ 3.0         | Kompilacja (możliwe jest użycie autotools, jednak CMake jest zalecany).
+| pkg-config             |               | Wykrywa zainstalowane biblioteki.
+| libncursesw5-dev ^(2)^ |               | Interfejs ncurses.
+| libcurl4-gnutls-dev    |               | Transfer URL.
+| zlib1g-dev             |               | Kompresja pakietów we wtyczce relay (protokół weechat), wtyczka script.
+| libgcrypt20-dev        |               | Zabezpieczone dane, uwierzytelnianie IRC SASL (DH-BLOWFISH/DH-AES).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | Połączenia SSL z serwerami IRC, wsparcie dla SSL we wtyczce relay, uwierzytelnianie IRC SASL (ECDSA-NIST256P-CHALLENGE).
 |===
 
 [NOTE]
@@ -137,8 +120,36 @@ mogą być inne w innych dystrybucjach. +
 WeeChat można skompilowac używając libncurses5-dev, ale *NIE* jest to zalecane:
 możesz doświadczyć błędów wyświetlania. +
 ^(3)^ GnuTLS ≥ 3.0.21 jest wymagany dla uwierzytelnienia IRC SASL za pomocą
-mechanizmu ECDSA-NIST256P-CHALLENGE. +
-^(4)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `+ENABLE_PYTHON2+`
+mechanizmu ECDSA-NIST256P-CHALLENGE.
+
+The following table shows the list of packages that are optional to compile
+WeeChat:
+
+[width="100%",cols="5,^3,.^15",options="header"]
+|===
+| Pakiet                 | Wersja   | Opis
+| kompilator C++         |          | Kompilacja i uruchamianie testów, wtyczka JavaScript.
+| gettext                |          | Internacjonalizacja (tłumaczenie wiadomości; język bazowy to Angielski).
+| ca-certificates        |          | Certyfikaty dla połączeń SSL.
+| libaspell-dev
+  ∥ libenchant-dev       |          | Wtyczka spell.
+| python3-dev ^(1)^      |          | Wtyczka python.
+| libperl-dev            |          | Wtyczka perl.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Wtyczka ruby.
+| liblua5.3-dev          |          | Wtyczka lua.
+| tcl-dev                | ≥ 8.5    | Wtyczka tcl.
+| guile-2.0-dev          | ≥ 2.0    | Wtyczka guile (scheme).
+| libv8-dev              | ≤ 3.24.3 | Wtyczka javascript.
+| php-dev, libphp-embed  | ≥ 7.0    | Wtyczka PHP.
+| libxml2-dev            |          | Wtyczka PHP.
+| libargon2-0-dev        |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
+| libsodium-dev          |          | Wtyczka PHP (jeśli PHP ≥ 7.2).
+| asciidoctor            | ≥ 1.5.4  | Tworzenie strony man i dokumentacji.
+| libcpputest-dev        | ≥ 3.4    | Kompilacja i uruchamianie testów.
+|===
+
+[NOTE]
+^(1)^ Domyślnie używany jest Pythin 3.x. Chyba że włączysz opcję `+ENABLE_PYTHON2+`
 (zobacz niżej), zaleca się uzywania wersji 2.7 Pythona.
 
 Jeśli używasz dystrybujci bazującej na Debianie/Ubuntu, oraz jeśli posiadasz wpisy

@@ -95,39 +95,22 @@ Unter macOS kann https://brew.sh/[Homebrew] verwendet werden:
 [[dependencies]]
 ==== Abhängigkeiten
 
-folgende Tabelle beschreibt, welche Pakete zwingend notwendig sind um WeeChat
-zu kompilieren und welche Pakete optional genutzt werden können.
+// TRANSLATION MISSING
+The following table shows the list of packages that are *required* to compile
+WeeChat:
 
-[width="100%",cols="6,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,.^15",options="header"]
 |===
-| Paket ^(1)^            | Version       | benötigt | Funktion
+| Paket ^(1)^            | Version       | Funktion
 | C compiler
-  (gcc, clang, ...)      |               | *ja*     | zum Erstellen der Binärdatei.
-| C++ compiler           |               |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
-| cmake                  | ≥ 3.0         | *ja*     | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
-| pkg-config             |               | *ja*     | entdeckt installierte Bibliotheken.
-| libncursesw5-dev ^(2)^ |               | *ja*     | Ncurses Oberfläche.
-| libcurl4-gnutls-dev    |               | *ja*     | URL Transfer.
-| zlib1g-dev             |               | *ja*     | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
-| libgcrypt20-dev        |               | *ja*     | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES).
-| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | *ja*     | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
-| gettext                |               |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
-| ca-certificates        |               |          | Zertifikate für SSL Verbindungen.
-| libaspell-dev
-  ∥ libenchant-dev       |               |          | Spell Erweiterung.
-| python3-dev            | ^(4)^         |          | Python Erweiterung.
-| libperl-dev            |               |          | Perl Erweiterung.
-| ruby2.5, ruby2.5-dev   | ≥ 1.9.1       |          | Ruby Erweiterung.
-| liblua5.3-dev          |               |          | Lua Erweiterung.
-| tcl-dev                | ≥ 8.5         |          | Tcl Erweiterung.
-| guile-2.0-dev          | ≥ 2.0         |          | Guile (scheme) Erweiterung.
-| libv8-dev              | ≤ 3.24.3      |          | JavaScript Erweiterung.
-| php-dev, libphp-embed  | ≥ 7.0         |          | PHP Erweiterung.
-| libxml2-dev            |               |          | PHP Erweiterung.
-| libargon2-0-dev        |               |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| libsodium-dev          |               |          | PHP Erweiterung (wenn PHP ≥ 7.2).
-| asciidoctor            | ≥ 1.5.4       |          | zum Erstellen der man page und der Dokumentation.
-| libcpputest-dev        | ≥ 3.4         |          | zum Erstellen und um Test auszuführen.
+  (gcc, clang, ...)      |               | zum Erstellen der Binärdatei.
+| cmake                  | ≥ 3.0         | zum kompilieren (autotools ist möglich. CMake wird aber empfohlen).
+| pkg-config             |               | entdeckt installierte Bibliotheken.
+| libncursesw5-dev ^(2)^ |               | Ncurses Oberfläche.
+| libcurl4-gnutls-dev    |               | URL Transfer.
+| zlib1g-dev             |               | Kompression für Pakete, die mittels Relay- (WeeChat Protokoll), Script-Erweiterung übertragen werden.
+| libgcrypt20-dev        |               | Geschützte Daten, IRC SASL Authentifikation (DH-BLOWFISH/DH-AES).
+| libgnutls28-dev        | ≥ 2.2.0 ^(3)^ | SSL Verbindung zu einem IRC Server, Unterstützung von SSL in der Relay-Erweiterung, IRC SASL Authentifikation (ECDSA-NIST256P-CHALLENGE).
 |===
 
 [NOTE]
@@ -138,8 +121,37 @@ entscheidend) zu kompilieren. Eine Kompilierung kann auch mit libncurses5-dev er
 aber dies wird *NICHT* empfohlen:
 Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
-ECDSA-NIST256P-CHALLENGE durchzuführen. +
-^(4)^ standardmäßig wird Python 3.x verwendet. Wird die Option `+ENABLE_PYTHON2+` aktiviert
+ECDSA-NIST256P-CHALLENGE durchzuführen.
+
+// TRANSLATION MISSING
+The following table shows the list of packages that are optional to compile
+WeeChat:
+
+[width="100%",cols="5,^3,.^15",options="header"]
+|===
+| Paket                  | Version  | Funktion
+| C++ compiler           |          | zum Erstellen der Binärdatei und um Test auszuführen, JavaScript Erweiterung.
+| gettext                |          | Internationalisierung (Übersetzung der Mitteilungen; Hauptsprache ist englisch).
+| ca-certificates        |          | Zertifikate für SSL Verbindungen.
+| libaspell-dev
+  ∥ libenchant-dev       |          | Spell Erweiterung.
+| python3-dev ^(1)^      |          | Python Erweiterung.
+| libperl-dev            |          | Perl Erweiterung.
+| ruby2.5, ruby2.5-dev   | ≥ 1.9.1  | Ruby Erweiterung.
+| liblua5.3-dev          |          | Lua Erweiterung.
+| tcl-dev                | ≥ 8.5    | Tcl Erweiterung.
+| guile-2.0-dev          | ≥ 2.0    | Guile (scheme) Erweiterung.
+| libv8-dev              | ≤ 3.24.3 | JavaScript Erweiterung.
+| php-dev, libphp-embed  | ≥ 7.0    | PHP Erweiterung.
+| libxml2-dev            |          | PHP Erweiterung.
+| libargon2-0-dev        |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| libsodium-dev          |          | PHP Erweiterung (wenn PHP ≥ 7.2).
+| asciidoctor            | ≥ 1.5.4  | zum Erstellen der man page und der Dokumentation.
+| libcpputest-dev        | ≥ 3.4    | zum Erstellen und um Test auszuführen.
+|===
+
+[NOTE]
+^(1)^ standardmäßig wird Python 3.x verwendet. Wird die Option `+ENABLE_PYTHON2+` aktiviert
 (siehe unten), sollte die Version 2.7 von Python genutzt werden.
 
 Falls eine Debian/Ubuntu basierte Distribution genutzt wird und man einen

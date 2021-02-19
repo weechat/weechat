@@ -95,39 +95,22 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 [[dependencies]]
 ==== 依存関係
 
-以下の表は WeeChat
-のコンパイルに必須または任意で必要なパッケージのリストです。
+// TRANSLATION MISSING
+The following table shows the list of packages that are *required* to compile
+WeeChat:
 
-[width="100%",cols="6,^3,^3,.^13",options="header"]
+[width="100%",cols="5,^3,.^15",options="header"]
 |===
-| パッケージ ^(1)^       | バージョン       | 要件   | 機能
+| パッケージ ^(1)^       | バージョン       | 機能
 | C コンパイラ
-  (gcc, clang, ...)      |                  | *必須* | ビルド
-| C++ コンパイラ         |                  |        | ビルドとテストの実行、JavaScript プラグイン
-| cmake                  | ≥ 3.0            | *必須* | ビルド (autotools でも可能ですが、CMake を推奨します)
-| pkg-config             |                  | *必須* | インストール済みライブラリを検出
-| libncursesw5-dev ^(2)^ |                  | *必須* | ncurses インターフェース
-| libcurl4-gnutls-dev    |                  | *必須* | URL 転送
-| zlib1g-dev             |                  | *必須* | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
-| libgcrypt20-dev        |                  | *必須* | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)
-| libgnutls28-dev        | 2.2.0 以上 ^(3)^ | *必須* | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
-| gettext                |                  |        | 国際化 (メッセージの翻訳; ベース言語は英語です)
-| ca-certificates        |                  |        | SSL 接続に必要な証明書、relay プラグインで SSL サポート
-| libaspell-dev
-  ∥ libenchant-dev       |                  |        | spell プラグイン
-| python3-dev            | ^(4)^            |        | python プラグイン
-| libperl-dev            |                  |        | perl プラグイン
-| ruby2.5, ruby2.5-dev   | 1.9.1 以上       |        | ruby プラグイン
-| liblua5.3-dev          |                  |        | lua プラグイン
-| tcl-dev                | 8.5 以上         |        | tcl プラグイン
-| guile-2.0-dev          | 2.0 以上         |        | guile (scheme) プラグイン
-| libv8-dev              | 3.24.3 以下      |        | javascript プラグイン
-| php-dev, libphp-embed  | 7.0 以上         |        | PHP プラグイン
-| libxml2-dev            |                  |        | PHP プラグイン
-| libargon2-0-dev        |                  |        | PHP プラグイン (PHP 7.2 以上の場合)
-| libsodium-dev          |                  |        | PHP プラグイン (PHP 7.2 以上の場合)
-| asciidoctor            | 1.5.4 以上       |        | man ページと文書のビルド
-| libcpputest-dev        | 3.4 以上         |        | ビルドとテストの実行
+  (gcc, clang, ...)      |                  | ビルド
+| cmake                  | ≥ 3.0            | ビルド (autotools でも可能ですが、CMake を推奨します)
+| pkg-config             |                  | インストール済みライブラリを検出
+| libncursesw5-dev ^(2)^ |                  | ncurses インターフェース
+| libcurl4-gnutls-dev    |                  | URL 転送
+| zlib1g-dev             |                  | relay プラグインでパケットを圧縮 (weechat プロトコル)、スクリプトプラグイン
+| libgcrypt20-dev        |                  | 保護データ、IRC SASL 認証 (DH-BLOWFISH/DH-AES)
+| libgnutls28-dev        | 2.2.0 以上 ^(3)^ | IRC サーバへの SSL 接続、IRC SASL 認証 (ECDSA-NIST256P-CHALLENGE)
 |===
 
 [NOTE]
@@ -137,9 +120,38 @@ macOS では https://brew.sh/[Homebrew] を使ってください:
 (*w* が重要です)。libncurses5-dev でもコンパイル可能ですが、これは推奨
 *されません* (ワイドキャラクタの表示にバグを生じるでしょう)。 +
 ^(3)^ IRC SASL 認証で ECDSA-NIST256P-CHALLENGE を使うには、GnuTLS
-バージョン 3.0.21 以上が必要です。 +
+バージョン 3.0.21 以上が必要です。
+
 // TRANSLATION MISSING
-^(4)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
+The following table shows the list of packages that are optional to compile
+WeeChat:
+
+[width="100%",cols="5,^3,.^15",options="header"]
+|===
+| パッケージ             | バージョン  | 機能
+| C++ コンパイラ         |             | ビルドとテストの実行、JavaScript プラグイン
+| gettext                |             | 国際化 (メッセージの翻訳; ベース言語は英語です)
+| ca-certificates        |             | SSL 接続に必要な証明書、relay プラグインで SSL サポート
+| libaspell-dev
+  ∥ libenchant-dev       |             | spell プラグイン
+| python3-dev ^(1)^      |             | python プラグイン
+| libperl-dev            |             | perl プラグイン
+| ruby2.5, ruby2.5-dev   | 1.9.1 以上  | ruby プラグイン
+| liblua5.3-dev          |             | lua プラグイン
+| tcl-dev                | 8.5 以上    | tcl プラグイン
+| guile-2.0-dev          | 2.0 以上    | guile (scheme) プラグイン
+| libv8-dev              | 3.24.3 以下 | javascript プラグイン
+| php-dev, libphp-embed  | 7.0 以上    | PHP プラグイン
+| libxml2-dev            |             | PHP プラグイン
+| libargon2-0-dev        |             | PHP プラグイン (PHP 7.2 以上の場合)
+| libsodium-dev          |             | PHP プラグイン (PHP 7.2 以上の場合)
+| asciidoctor            | 1.5.4 以上  | man ページと文書のビルド
+| libcpputest-dev        | 3.4 以上    | ビルドとテストの実行
+|===
+
+[NOTE]
+// TRANSLATION MISSING
+^(1)^ By default Python 3.x is used. If you enable option `+ENABLE_PYTHON2+` (see
 below), only the version 2.7 of Python is recommended.
 
 Debian および Ubuntu
