@@ -1108,16 +1108,11 @@ Tout patch pour un bug ou une nouvelle fonctionnalité doit être effectué sur 
 branche master, le format préféré étant une "pull request" sur GitHub. Un patch
 peut aussi être envoyé par e-mail (fait avec `git diff` ou `git format-patch`).
 
-Le format du message de commit est le suivant (pour fermer un bug GitHub) :
+Le format du message de commit est le suivant (avec fermeture automatique
+du bug GitHub) :
 
 ----
 component: fix a problem (closes #123)
-----
-
-Pour un bug Savannah :
-
-----
-component: fix a problem (bug #12345)
 ----
 
 Où _component_ est :
@@ -1132,20 +1127,17 @@ Quelques règles à suivre :
 
 * Utilisez seulement l'anglais.
 * Utilisez des verbes à l'infinitif.
-* Si le commit est relatif au tracker, écrivez-le entre parenthèses après le
-  message, avec ce format :
-** GitHub : closes #123
-** Savannah : bug #12345, task #12345, patch #12345
+* Si le commit est relatif à un bug GitHub, écrivez-le entre parenthèses après
+  le message, avec ce format : `(issue #123)` ou `(closes #123)` pour le fermer.
 
 Exemples de messages de commit :
 
 ----
-irc: add command /unquiet (closes #36)
 core: add callback "nickcmp" for nick comparison in buffers
-irc: fix freeze when reading on socket with SSL enabled (bug #35097)
-ruby: add detection of ruby version 1.9.3 in CMake
+core: update Japanese translations
+irc: add command /unquiet (closes #36)
 python: fix crash when unloading a script without pointer to interpreter
-core: update Japanese translations (patch #7783)
+ruby: add detection of ruby version 1.9.3 in CMake
 ----
 
 [[translations]]
