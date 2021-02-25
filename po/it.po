@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-02-09 20:31+0100\n"
+"POT-Creation-Date: 2021-02-25 18:40+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4649,6 +4649,15 @@ msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 "password per il server proxy (nota: il contenuto viene valutato, consultare /"
 "help eval)"
+
+#, fuzzy
+msgid "secured data"
+msgstr "Dati sicuri:"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
 
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr ""
@@ -13728,3 +13737,7 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#, fuzzy
+#~ msgid "secured data: names and values"
+#~ msgstr "Dati sicuri \"%s\" eliminati"

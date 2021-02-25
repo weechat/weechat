@@ -14,5 +14,7 @@
 
 | weechat | focus_info | obtenir l'information de focus | "x" : coordonnée x (chaîne avec un entier >= 0), "y" : coordonnée y (chaîne avec un entier >= 0) | voir la fonction hook_focus dans la Référence API extension
 
+| weechat | secured_data | données sécurisées | - | données sécurisées : noms et valeurs (attention : les valeurs sont des données sensibles : il ne faut PAS les afficher/logger)
+
 |===
 // end::infos_hashtable[]

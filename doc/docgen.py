@@ -674,7 +674,7 @@ class AutogenDoc():
             for info in sorted(infos[plugin]):
                 _inf = infos[plugin][info]
                 desc = translate(_inf['description'])
-                args_desc = translate(_inf['args_description'] or '-')
+                args_desc = translate(_inf['args_description']) or '-'
                 self.write('| %s | %s | %s | %s\n',
                            escape(plugin), escape(info), escape(desc),
                            escape(args_desc))
@@ -694,7 +694,7 @@ class AutogenDoc():
             for info in sorted(infos_hashtable[plugin]):
                 _inh = infos_hashtable[plugin][info]
                 desc = translate(_inh['description'])
-                args_desc = translate(_inh['args_description'])
+                args_desc = translate(_inh['args_description']) or '-'
                 output_desc = translate(_inh['output_description']) or '-'
                 self.write('| %s | %s | %s | %s | %s\n',
                            escape(plugin), escape(info), escape(desc),

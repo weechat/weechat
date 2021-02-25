@@ -14,5 +14,7 @@
 
 | weechat | focus_info | get focus info | "x": x coordinate (string with integer >= 0), "y": y coordinate (string with integer >= 0) | see function "hook_focus" in Plugin API reference
 
+| weechat | secured_data | secured data | - | secured data: names and values (be careful: the values are sensitive data: do NOT print/log them anywhere)
+
 |===
 // end::infos_hashtable[]

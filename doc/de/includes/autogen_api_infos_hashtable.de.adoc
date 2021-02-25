@@ -14,5 +14,7 @@
 
 | weechat | focus_info | Fokusinformationen abrufen | "x": x-Koordinate (Zeichenfolge mit Ganzzahl >= 0), "y": y-Koordinate (Zeichenfolge mit Ganzzahl >= 0) | siehe Funktion "hook_focus" in API Dokumentation
 
+| weechat | secured_data | secured data | - | secured data: names and values (be careful: the values are sensitive data: do NOT print/log them anywhere)
+
 |===
 // end::infos_hashtable[]

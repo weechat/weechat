@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-02-09 20:31+0100\n"
+"POT-Creation-Date: 2021-02-25 18:40+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4873,6 +4873,15 @@ msgid "password for proxy server (note: content is evaluated, see /help eval)"
 msgstr ""
 "プロキシサーバのパスワード (注意: 値は評価されます、/help eval を参照してくだ"
 "さい)"
+
+#, fuzzy
+msgid "secured data"
+msgstr "保護データ:"
+
+msgid ""
+"secured data: names and values (be careful: the values are sensitive data: "
+"do NOT print/log them anywhere)"
+msgstr ""
 
 msgid "WeeChat secured data (sec.conf) | Keys: [alt-v] Toggle values"
 msgstr "WeeChat の保護データ (sec.conf) | キー: [alt-v] 値のトグル"
@@ -14525,3 +14534,7 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy
+#~ msgid "secured data: names and values"
+#~ msgstr "保護データ \"%s\" を削除しました"

@@ -28,6 +28,7 @@ New features::
   * core: add option "recreate" in command /filter
   * core: add raw string in evaluation of expressions with "raw:xxx" (issue #1611)
   * core: add evaluation of conditions in evaluation of expressions with "eval_cond:" (issue #1582)
+  * api: add info_hashtable "secured_data"
   * irc: add info "irc_is_message_ignored"
   * irc: add server option "default_chantypes", used when the server does not send them in message 005 (issue #1610)
   * trigger: add variable "${tg_trigger_name}" in command trigger evaluated strings (issue #1580)

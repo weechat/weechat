@@ -31,6 +31,7 @@
 #include "wee-config-file.h"
 #include "wee-crypto.h"
 #include "wee-hashtable.h"
+#include "wee-hook.h"
 #include "wee-secure.h"
 #include "wee-secure-config.h"
 #include "wee-string.h"
@@ -494,6 +495,24 @@ secure_decrypt_data_not_decrypted (const char *passphrase)
 }
 
 /*
+ * Returns secured data hashtable.
+ */
+
+struct t_hashtable *
+secure_info_hashtable_secured_data_cb (const void *pointer, void *data,
+                                       const char *info_name,
+                                       struct t_hashtable *hashtable)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) hashtable;
+
+    return hashtable_dup (secure_hashtable_data);
+}
+
+/*
  * Initializes secured data.
  *
  * Returns:
@@ -534,6 +553,16 @@ secure_init ()
         hashtable_free (secure_hashtable_data);
         return 0;
     }
+
+    /* info (hashtable) with the secured data */
+    hook_info_hashtable (
+        NULL,
+        "secured_data",
+        N_("secured data"),
+        NULL,
+        N_("secured data: names and values (be careful: the values are "
+           "sensitive data: do NOT print/log them anywhere)"),
+        &secure_info_hashtable_secured_data_cb, NULL, NULL);
 
     return 1;
 }
