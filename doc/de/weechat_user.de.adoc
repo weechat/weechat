@@ -757,7 +757,7 @@ andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar ak
 | buffer_count      | `10`                | absolute Anzahl an geöffneten Buffern.
 | buffer_short_name | `#test`             | Kurzname des aktuellen Buffers.
 | irc_channel       | `#test`             | aktueller IRC Channelname.
-| irc_nick_modes    | `@`                 | IRC Modi für den eigenen Nick.
+| irc_nick_modes    | `i`                 | IRC Modi für den eigenen Nick.
 | mouse_status      | `M`                 | Status der Maus (keine Anzeige, falls Maus deaktiviert).
 | window_number     | `2`                 | Nummer des aktuellen Fensters.
 |===

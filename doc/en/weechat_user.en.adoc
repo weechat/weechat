@@ -751,7 +751,7 @@ Other items available (not used in bars by default):
 | buffer_count      | `10`                | Total number of buffers opened.
 | buffer_short_name | `#test`             | Current buffer short name.
 | irc_channel       | `#test`             | Current IRC channel name.
-| irc_nick_modes    | `@`                 | IRC modes for self nick.
+| irc_nick_modes    | `i`                 | IRC modes for self nick.
 | mouse_status      | `M`                 | Mouse status (empty if mouse is disabled).
 | window_number     | `2`                 | Current window number.
 |===

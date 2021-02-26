@@ -773,7 +773,7 @@ WeeChat を起動した端末の例:
 | buffer_count      | `10`                | 開いているバッファの総数
 | buffer_short_name | `#test`             | 現在のバッファの短い名前
 | irc_channel       | `#test`             | 現在の IRC チャンネル名
-| irc_nick_modes    | `@`                 | 自分のニックネームに対する IRC モード
+| irc_nick_modes    | `i`                 | 自分のニックネームに対する IRC モード
 | mouse_status      | `M`                 | マウスの状態 (マウスが無効化されている場合は空文字列)
 | window_number     | `2`                 | 現在のウィンドウ番号
 |===

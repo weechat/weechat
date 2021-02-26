@@ -757,7 +757,7 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 | buffer_count      | `10`                | Liczba otwartych buforów.
 | buffer_short_name | `#test`             | Skrócona nazwa obecnego buforu.
 | irc_channel       | `#test`             | Nazwa bieżącego kanału IRC.
-| irc_nick_modes    | `@`                 | Atrybuty IRC dla własnego nicka.
+| irc_nick_modes    | `i`                 | Atrybuty IRC dla własnego nicka.
 | mouse_status      | `M`                 | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | window_number     | `2`                 | Numer obecnego okna.
 |===
