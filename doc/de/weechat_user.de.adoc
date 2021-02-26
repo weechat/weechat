@@ -95,9 +95,8 @@ Unter macOS kann https://brew.sh/[Homebrew] verwendet werden:
 [[dependencies]]
 ==== Abhängigkeiten
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are *required* to compile
-WeeChat:
+Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von
+WeeChat *erforderlich* sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
@@ -123,9 +122,8 @@ Es können Darstellungsfehler mit breiten Zeichen auftreten. +
 ^(3)^ GnuTLS ≥ 3.0.21 wird benötigt um eine IRC SASL Authentifizierung mittels
 ECDSA-NIST256P-CHALLENGE durchzuführen.
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are optional to compile
-WeeChat:
+Die folgende Tabelle zeigt die Liste der Pakete, die zum Kompilieren von
+WeeChat optional sind:
 
 [width="100%",cols="5,^3,.^15",options="header"]
 |===
