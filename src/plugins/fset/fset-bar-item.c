@@ -45,7 +45,7 @@ fset_bar_item_update ()
 }
 
 /*
- * Returns content of bar item "buffer_plugin": bar item with buffer plugin.
+ * Returns content of bar item "fset": help on currently selected option.
  */
 
 char *
