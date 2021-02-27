@@ -472,7 +472,7 @@ irc_bar_item_nick_host (const void *pointer, void *data,
 
     snprintf (buf, sizeof (buf), "%s%s%s",
               server->nick,
-              (server->host) ? "@" : "",
+              (server->host) ? "!" : "",
               (server->host) ? server->host : "");
 
     return strdup (buf);

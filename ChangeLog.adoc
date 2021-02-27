@@ -39,6 +39,7 @@ Bug fixes::
   * core: do not remove quotes in arguments of command /eval as they can be part of the evaluated expression/condition (issue #1601)
   * core: display an error when the buffer is not found with command /command -buffer
   * buflist: add option buflist.look.use_items to speed up display of buflist (issue #1613)
+  * irc: fix separator between nick and host in bar item "irc_nick_host"
   * irc: fix completion of commands /halfop and /dehalfop
 
 Documentation::
