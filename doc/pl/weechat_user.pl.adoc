@@ -774,6 +774,8 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 // TRANSLATION MISSING
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | Atrybuty IRC dla własnego nicka.
+// TRANSLATION MISSING
+| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
 | mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).

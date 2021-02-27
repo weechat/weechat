@@ -774,6 +774,8 @@ andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar ak
 // TRANSLATION MISSING
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
+// TRANSLATION MISSING
+| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
 | mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.

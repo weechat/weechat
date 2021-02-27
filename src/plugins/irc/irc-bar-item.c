@@ -644,6 +644,57 @@ irc_bar_item_nick_modes (const void *pointer, void *data,
 }
 
 /*
+ * Returns content of bar item "nick_prefix": bar item with nick prefix.
+ */
+
+char *
+irc_bar_item_nick_prefix (const void *pointer, void *data,
+                          struct t_gui_bar_item *item,
+                          struct t_gui_window *window,
+                          struct t_gui_buffer *buffer,
+                          struct t_hashtable *extra_info)
+{
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
+    struct t_irc_nick *ptr_nick;
+    char str_prefix[64];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, &channel);
+    if (!server || !server->nick)
+        return NULL;
+
+    str_prefix[0] = '\0';
+    if (channel && (channel->type == IRC_CHANNEL_TYPE_CHANNEL))
+    {
+        ptr_nick = irc_nick_search (server, channel, server->nick);
+        if (ptr_nick)
+        {
+            if (weechat_config_boolean (irc_config_look_nick_mode_empty)
+                || (ptr_nick->prefix[0] != ' '))
+            {
+                snprintf (str_prefix, sizeof (str_prefix), "%s%s",
+                          weechat_color (
+                              irc_nick_get_prefix_color_name (
+                                  server, ptr_nick->prefix[0])),
+                          ptr_nick->prefix);
+            }
+        }
+    }
+
+    return (str_prefix[0]) ? strdup (str_prefix) : NULL;
+}
+
+/*
  * Focus on nicklist.
  */
 
@@ -769,6 +820,8 @@ irc_bar_item_init ()
                           &irc_bar_item_input_prompt, NULL, NULL);
     weechat_bar_item_new ("irc_nick_modes",
                           &irc_bar_item_nick_modes, NULL, NULL);
+    weechat_bar_item_new ("irc_nick_prefix",
+                          &irc_bar_item_nick_prefix, NULL, NULL);
 
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL, NULL);

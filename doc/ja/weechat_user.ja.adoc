@@ -790,6 +790,8 @@ WeeChat を起動した端末の例:
 // TRANSLATION MISSING
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | 自分のニックネームに対する IRC モード
+// TRANSLATION MISSING
+| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
 | mouse_status                 | `M`                      | マウスの状態 (マウスが無効化されている場合は空文字列)
 | spell_dict                   | `fr,en`                  | 現在のバッファにおけるスペリング辞書
 | spell_suggest                | `print,prone,prune`      | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)

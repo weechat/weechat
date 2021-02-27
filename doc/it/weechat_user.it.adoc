@@ -832,6 +832,7 @@ Other items available (not used in bars by default):
 | irc_nick                     | `+Flashy+`               | Current IRC nick.
 | irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
 | irc_nick_modes               | `i`                      | IRC modes for self nick.
+| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
 | mouse_status                 | `M`                      | Mouse status (empty if mouse is disabled).
 | spell_dict                   | `fr,en`                  | Spelling dictionaries used on current buffer.
 | spell_suggest                | `print,prone,prune`      | Spelling suggestions for word under cursor (if misspelled).

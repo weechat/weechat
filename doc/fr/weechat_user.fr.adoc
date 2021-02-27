@@ -774,6 +774,7 @@ Autres objets (non utilisés dans des barres par défaut) :
 | irc_nick                     | `+Flashy+`               | Pseudo IRC.
 | irc_nick_host                | `+Flashy!user@host.com+` | Pseudo et hôte IRC.
 | irc_nick_modes               | `i`                      | Modes IRC pour le pseudo.
+| irc_nick_prefix              | `@`                      | Préfixe de pseudo IRC sur le canal.
 | mouse_status                 | `M`                      | Statut de la souris (vide si la souris est désactivée).
 | spell_dict                   | `fr,en`                  | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
 | spell_suggest                | `print,prone,prune`      | Suggestions pour le mot sous le curseur (si mal orthographié).
