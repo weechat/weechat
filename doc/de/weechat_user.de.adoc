@@ -747,35 +747,25 @@ In der _nicklist_ Bar lautet die Standardeinstellung:
 | buffer_nicklist | `@Flashy` | Liste der Nicks für den aktuellen Buffer.
 |===
 
-andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar aktiviert sind):
+andere Items die zur Verfügung stehen (die aber nicht standardmäßig in einer Bar aktiviert sind):
 
 [width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                         | Beispiel                 | Beschreibung
 | buffer_count                 | `10`                     | absolute Anzahl an geöffneten Buffern.
-// TRANSLATION MISSING
-| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
-// TRANSLATION MISSING
-| buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
-// TRANSLATION MISSING
-| buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
+| buffer_last_number           | `10`                     | Nummer des letzten Buffers (kann sich unterscheiden von `buffer_count` wenn Option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> deaktiviert (`off`) ist).
+| buffer_nicklist_count_all    | `4`                      | Anzahl der sichtbaren Gruppen und Nicks in der Nickliste.
+| buffer_nicklist_count_groups | `0`                      | Anzahl der sichtbaren Gruppen in der Nickliste.
 | buffer_short_name            | `#test`                  | Kurzname des aktuellen Buffers.
-// TRANSLATION MISSING
-| buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
+| buflist2                     | `1.weechat`              | List der Buffer, zweites Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | List der Buffer, drittes Bar-Item (siehe Option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| fset                         | `+buflist.look.sort: …+` | Hilfstext zur aktuell ausgewählten Option im Fset-Buffer.
 | irc_channel                  | `#test`                  | aktueller IRC Channelname.
-// TRANSLATION MISSING
-| irc_host                     | `+user@host.com+`        | Current IRC host.
-// TRANSLATION MISSING
-| irc_nick                     | `+Flashy+`               | Current IRC nick.
-// TRANSLATION MISSING
-| irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
+| irc_host                     | `+user@host.com+`        | aktueller IRC Host.
+| irc_nick                     | `+Flashy+`               | aktueller IRC Nick.
+| irc_nick_host                | `+Flashy!user@host.com+` | aktueller IRC Nick und Host.
 | irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
-// TRANSLATION MISSING
-| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
+| irc_nick_prefix              | `@`                      | IRC Nick-Präfix für den Channel.
 | mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
 | spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
 | spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
