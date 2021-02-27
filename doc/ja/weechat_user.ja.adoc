@@ -708,7 +708,7 @@ WeeChat を起動した端末の例:
 
 バッファリスト (_buflist_) バーは以下の初期要素を持っています:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素    | 例          | 説明
 | buflist | `1.weechat` | バッファ一覧
@@ -716,7 +716,7 @@ WeeChat を起動した端末の例:
 
 状態 (_title_) バーは以下の初期要素を持っています:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素         | 例                 | 説明
 | buffer_title | `Welcome to #test` | バッファタイトル
@@ -724,7 +724,7 @@ WeeChat を起動した端末の例:
 
 状態 (_status_) バーは以下の初期要素を持っています:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素                  | 例                      | 説明
 | time                  | `[12:55]`               | 時刻
@@ -745,7 +745,7 @@ WeeChat を起動した端末の例:
 
 入力 (_input_) バーは以下の初期要素を持っています:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素         | 例                                           | 説明
 | input_prompt | `[@Flashy]`                                  | 入力プロンプト、irc の場合: ニックネームとモード (freenode では "+i" モードは不可視状態を意味します)
@@ -757,7 +757,7 @@ WeeChat を起動した端末の例:
 
 ニックネームリスト (_nicklist_) バーは以下の初期要素を持っています:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | 要素            | 例        | 説明
 | buffer_nicklist | `@Flashy` | 現在のバッファのニックネーム一覧
@@ -765,17 +765,35 @@ WeeChat を起動した端末の例:
 
 その他の利用可能な要素 (初期状態のバーはこれらの要素を持ちません):
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
-| 要素              | 例                  | 説明
-| spell_dict        | `fr,en`             | 現在のバッファにおけるスペリング辞書
-| spell_suggest     | `print,prone,prune` | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
-| buffer_count      | `10`                | 開いているバッファの総数
-| buffer_short_name | `#test`             | 現在のバッファの短い名前
-| irc_channel       | `#test`             | 現在の IRC チャンネル名
-| irc_nick_modes    | `i`                 | 自分のニックネームに対する IRC モード
-| mouse_status      | `M`                 | マウスの状態 (マウスが無効化されている場合は空文字列)
-| window_number     | `2`                 | 現在のウィンドウ番号
+| 要素                         | 例                       | 説明
+| buffer_count                 | `10`                     | 開いているバッファの総数
+// TRANSLATION MISSING
+| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+// TRANSLATION MISSING
+| buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
+// TRANSLATION MISSING
+| buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
+| buffer_short_name            | `#test`                  | 現在のバッファの短い名前
+// TRANSLATION MISSING
+| buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
+| irc_channel                  | `#test`                  | 現在の IRC チャンネル名
+// TRANSLATION MISSING
+| irc_host                     | `+user@host.com+`        | Current IRC host.
+// TRANSLATION MISSING
+| irc_nick                     | `+Flashy+`               | Current IRC nick.
+// TRANSLATION MISSING
+| irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
+| irc_nick_modes               | `i`                      | 自分のニックネームに対する IRC モード
+| mouse_status                 | `M`                      | マウスの状態 (マウスが無効化されている場合は空文字列)
+| spell_dict                   | `fr,en`                  | 現在のバッファにおけるスペリング辞書
+| spell_suggest                | `print,prone,prune`      | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
+| window_number                | `2`                      | 現在のウィンドウ番号
 |===
 
 [[command_line]]

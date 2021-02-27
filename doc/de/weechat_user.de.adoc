@@ -693,7 +693,7 @@ Der Bildschirm setzt sich aus folgenden Bereichen zusammen:
 
 Die _buflist_-Bar besitzt als Standardeinträge:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item    | Beispiel    | Beschreibung
 | buflist | `1.weechat` | Auflistung der Buffer.
@@ -701,7 +701,7 @@ Die _buflist_-Bar besitzt als Standardeinträge:
 
 Die _title_-Bar besitzt als Standardeinträge:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item         | Beispiel           | Beschreibung
 | buffer_title | `Willkommen in #test` | Buffer-Titel.
@@ -709,7 +709,7 @@ Die _title_-Bar besitzt als Standardeinträge:
 
 Die _status_-Bar besitzt als Standardeinträge:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                  | Beispiel                | Beschreibung
 | time                  | `[12:55]`               | Uhrzeit.
@@ -729,7 +729,7 @@ Die _status_-Bar besitzt als Standardeinträge:
 
 In der _input_ Bar lautet die Standardeinstellung:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item         | Beispiel                                      | Beschreibung
 | input_prompt | `[@Flashy(i)]`                                | Input prompt, für irc: Nick und Modi (Modus "+i" bedeutet auf freenode, unsichtbar).
@@ -741,7 +741,7 @@ In der _input_ Bar lautet die Standardeinstellung:
 
 In der _nicklist_ Bar lautet die Standardeinstellung:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item            | Beispiel  | Beschreibung
 | buffer_nicklist | `@Flashy` | Liste der Nicks für den aktuellen Buffer.
@@ -749,17 +749,35 @@ In der _nicklist_ Bar lautet die Standardeinstellung:
 
 andere Items die man nutzen kann (die aber nicht standardmäßig in einer Bar aktiviert sind):
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item              | Beispiel            | Beschreibung
-| spell_dict        | `de,en`             | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
-| spell_suggest     | `Glück,Glocke,Block`| Vorschläge für ein falsch geschriebenes Wort.
-| buffer_count      | `10`                | absolute Anzahl an geöffneten Buffern.
-| buffer_short_name | `#test`             | Kurzname des aktuellen Buffers.
-| irc_channel       | `#test`             | aktueller IRC Channelname.
-| irc_nick_modes    | `i`                 | IRC Modi für den eigenen Nick.
-| mouse_status      | `M`                 | Status der Maus (keine Anzeige, falls Maus deaktiviert).
-| window_number     | `2`                 | Nummer des aktuellen Fensters.
+| Item                         | Beispiel                 | Beschreibung
+| buffer_count                 | `10`                     | absolute Anzahl an geöffneten Buffern.
+// TRANSLATION MISSING
+| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+// TRANSLATION MISSING
+| buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
+// TRANSLATION MISSING
+| buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
+| buffer_short_name            | `#test`                  | Kurzname des aktuellen Buffers.
+// TRANSLATION MISSING
+| buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+// TRANSLATION MISSING
+| fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
+| irc_channel                  | `#test`                  | aktueller IRC Channelname.
+// TRANSLATION MISSING
+| irc_host                     | `+user@host.com+`        | Current IRC host.
+// TRANSLATION MISSING
+| irc_nick                     | `+Flashy+`               | Current IRC nick.
+// TRANSLATION MISSING
+| irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
+| irc_nick_modes               | `i`                      | IRC Modi für den eigenen Nick.
+| mouse_status                 | `M`                      | Status der Maus (keine Anzeige, falls Maus deaktiviert).
+| spell_dict                   | `de,en`                  | zeigt an welche Wörterbücher für die Rechtschreibung im aktuellen Buffer genutzt werden.
+| spell_suggest                | `Glück,Glocke,Block`     | Vorschläge für ein falsch geschriebenes Wort.
+| window_number                | `2`                      | Nummer des aktuellen Fensters.
 |===
 
 [[command_line]]

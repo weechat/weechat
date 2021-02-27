@@ -702,7 +702,7 @@ L'écran est composé des zones suivantes :
 
 La barre _buflist_ contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item) | Exemple     | Description
 | buflist      | `1.weechat` | Liste des tampons.
@@ -710,7 +710,7 @@ La barre _buflist_ contient les objets (items) suivants par défaut :
 
 La barre _title_ contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item) | Exemple               | Description
 | buffer_title | `Bienvenue sur #test` | Titre du tampon.
@@ -718,7 +718,7 @@ La barre _title_ contient les objets (items) suivants par défaut :
 
 La barre _status_ contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item)          | Exemple                 | Description
 | time                  | `[12:55]`               | Heure.
@@ -738,7 +738,7 @@ La barre _status_ contient les objets (items) suivants par défaut :
 
 La barre _input_ contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item) | Exemple                                         | Description
 | input_prompt | `[@Flashy(i)]`                                  | Prompt, pour irc : pseudo et modes (le mode "+i" signifie invisible sur freenode).
@@ -750,7 +750,7 @@ La barre _input_ contient les objets (items) suivants par défaut :
 
 La barre _nicklist_ contient les objets (items) suivants par défaut :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Objet (item)    | Exemple   | Description
 | buffer_nicklist | `@Flashy` | Liste des pseudos sur le tampon courant.
@@ -758,17 +758,26 @@ La barre _nicklist_ contient les objets (items) suivants par défaut :
 
 Autres objets (non utilisés dans des barres par défaut) :
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
-| Objet (item)      | Exemple             | Description
-| spell_dict        | `fr,en`             | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
-| spell_suggest     | `print,prone,prune` | Suggestions pour le mot sous le curseur (si mal orthographié).
-| buffer_count      | `10`                | Nombre total de tampons ouverts.
-| buffer_short_name | `#test`             | Nom court du tampon courant.
-| irc_channel       | `#test`             | Nom de canal IRC courant.
-| irc_nick_modes    | `i`                 | Modes IRC pour le pseudo.
-| mouse_status      | `M`                 | Statut de la souris (vide si la souris est désactivée).
-| window_number     | `2`                 | Numéro de la fenêtre courante.
+| Objet (item)                 | Exemple                  | Description
+| buffer_count                 | `10`                     | Nombre total de tampons ouverts.
+| buffer_last_number           | `10`                     | Numéro du dernier tampon (peut être différent de `buffer_count` si l'option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> est `off`).
+| buffer_nicklist_count_all    | `4`                      | Nombre de groupes et pseudos visibles dans la liste de pseudos.
+| buffer_nicklist_count_groups | `0`                      | Nombre de groupes visibles dans la liste de pseudos.
+| buffer_short_name            | `#test`                  | Nom court du tampon courant.
+| buflist2                     | `1.weechat`              | Liste des tampons, deuxième objet de barre (voir l'option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | Liste des tampons, troisième objet de barre (voir l'option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| fset                         | `+buflist.look.sort: …+` | Aide sur l'option sélectionnée dans le tampon fset.
+| irc_channel                  | `#test`                  | Nom de canal IRC courant.
+| irc_host                     | `+user@host.com+`        | Hôte sur IRC.
+| irc_nick                     | `+Flashy+`               | Pseudo IRC.
+| irc_nick_host                | `+Flashy!user@host.com+` | Pseudo et hôte IRC.
+| irc_nick_modes               | `i`                      | Modes IRC pour le pseudo.
+| mouse_status                 | `M`                      | Statut de la souris (vide si la souris est désactivée).
+| spell_dict                   | `fr,en`                  | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
+| spell_suggest                | `print,prone,prune`      | Suggestions pour le mot sous le curseur (si mal orthographié).
+| window_number                | `2`                      | Numéro de la fenêtre courante.
 |===
 
 [[command_line]]

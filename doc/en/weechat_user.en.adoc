@@ -687,7 +687,7 @@ The screen is divided up into the following areas:
 
 Bar _buflist_ has following default items:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item    | Example     | Description
 | buflist | `1.weechat` | List of buffers.
@@ -695,7 +695,7 @@ Bar _buflist_ has following default items:
 
 Bar _title_ has following default items:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item         | Example            | Description
 | buffer_title | `Welcome to #test` | Buffer title.
@@ -703,7 +703,7 @@ Bar _title_ has following default items:
 
 Bar _status_ has following default items:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item                  | Example                 | Description
 | time                  | `[12:55]`               | Time.
@@ -723,7 +723,7 @@ Bar _status_ has following default items:
 
 Bar _input_ has following default items:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item         | Example                                      | Description
 | input_prompt | `[@Flashy(i)]`                               | Input prompt, for irc: nick and modes (mode "+i" means invisible on freenode).
@@ -735,7 +735,7 @@ Bar _input_ has following default items:
 
 Bar _nicklist_ has following default items:
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
 | Item            | Example   | Description
 | buffer_nicklist | `@Flashy` | List of nicks on current buffer.
@@ -743,17 +743,26 @@ Bar _nicklist_ has following default items:
 
 Other items available (not used in bars by default):
 
-[width="100%",cols="^3,^4,10",options="header"]
+[width="100%",cols="^3,^3,9",options="header"]
 |===
-| Item              | Example             | Description
-| spell_dict        | `fr,en`             | Spelling dictionaries used on current buffer.
-| spell_suggest     | `print,prone,prune` | Spelling suggestions for word under cursor (if misspelled).
-| buffer_count      | `10`                | Total number of buffers opened.
-| buffer_short_name | `#test`             | Current buffer short name.
-| irc_channel       | `#test`             | Current IRC channel name.
-| irc_nick_modes    | `i`                 | IRC modes for self nick.
-| mouse_status      | `M`                 | Mouse status (empty if mouse is disabled).
-| window_number     | `2`                 | Current window number.
+| Item                         | Example                  | Description
+| buffer_count                 | `10`                     | Total number of buffers opened.
+| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
+| buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
+| buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
+| buffer_short_name            | `#test`                  | Current buffer short name.
+| buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
+| fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
+| irc_channel                  | `#test`                  | Current IRC channel name.
+| irc_host                     | `+user@host.com+`        | Current IRC host.
+| irc_nick                     | `+Flashy+`               | Current IRC nick.
+| irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
+| irc_nick_modes               | `i`                      | IRC modes for self nick.
+| mouse_status                 | `M`                      | Mouse status (empty if mouse is disabled).
+| spell_dict                   | `fr,en`                  | Spelling dictionaries used on current buffer.
+| spell_suggest                | `print,prone,prune`      | Spelling suggestions for word under cursor (if misspelled).
+| window_number                | `2`                      | Current window number.
 |===
 
 [[command_line]]
