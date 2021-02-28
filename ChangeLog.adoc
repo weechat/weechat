@@ -35,6 +35,7 @@ New features::
 
 Bug fixes::
 
+  * core: fix quoted line in cursor mode (issue #1602)
   * core: fix wrong size of the new window after vertical split (issue #1612)
   * core: do not remove quotes in arguments of command /eval as they can be part of the evaluated expression/condition (issue #1601)
   * core: display an error when the buffer is not found with command /command -buffer
