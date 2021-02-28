@@ -27,7 +27,7 @@ New features::
   * core: add buffer local variable "completion_default_template" (evaluated) to override the value of option "weechat.completion.default_template" (issue #1600)
   * core: add option "recreate" in command /filter
   * core: add raw string in evaluation of expressions with "raw:xxx" (issue #1611)
-  * core: add evaluation of conditions in evaluation of expressions with "eval_cond:" (issue #1582)
+  * core: add evaluation of conditions in evaluation of expressions with "eval_cond:xxx" (issue #1582)
   * api: add info_hashtable "secured_data"
   * irc: add info "irc_is_message_ignored"
   * irc: add server option "default_chantypes", used when the server does not send them in message 005 (issue #1610)
@@ -243,7 +243,7 @@ New features::
   * core: add option weechat.look.nick_color_hash_salt to shuffle nick colors (issue #635)
   * core: add different icons sizes (16x16 to 512x512) (issue #1347)
   * core: add file weechat.desktop
-  * core: add reverse of string for screen in evaluation of expressions with "revscr:"
+  * core: add reverse of string for screen in evaluation of expressions with "revscr:xxx"
   * core: add length of string (number of chars and on screen) in evaluation of expressions with "length:xxx" and "lengthscr:xxx"
   * core: add calculation of expression in evaluation of expressions with "calc:xxx" (issue #997)
   * core: add optional default path (evaluated) in completion "filename"
@@ -478,7 +478,7 @@ Build::
 New features::
 
   * core: change default value of option weechat.look.hotlist_add_conditions to check connected relay clients via weechat protocol (issue #1206)
-  * core: add reverse of string in evaluation of expressions with "rev:" (issue #1200)
+  * core: add reverse of string in evaluation of expressions with "rev:xxx" (issue #1200)
   * core: send buffer pointer (when possible) in signal "hotlist_changed" (issue #1133)
   * core: add support of list options in curl (issue #826, issue #219)
   * core: allow merge of buffers by name in command /buffer (issue #1108, issue #1159)
@@ -673,7 +673,7 @@ New features::
 
   * core: add option weechat.completion.nick_case_sensitive (issue #981)
   * core: add wildcard matching operator (`+=*+` and `+!*+`) in evaluation of expressions (issue #611)
-  * core: add cut of string in evaluation of expressions with "cut:" (number of chars) and "cutscr:" (number of chars displayed on screen)
+  * core: add cut of string in evaluation of expressions with "cut:xxx" (number of chars) and "cutscr:xxx" (number of chars displayed on screen)
   * core: add ternary operator (condition) in evaluation of expressions (`${if:condition?value_if_true:value_if_false}`)
   * core: add resize of window parents with /window resize [h/v]size (task #11461, issue #893)
   * core: add hotlist pointer in buffer structure
