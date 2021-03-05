@@ -23,7 +23,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-02-25 18:40+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
-"Last-Translator: Eduardo Elias <camponez@gmail.com>\n"
+"Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -78,21 +78,17 @@ msgstr "valor indefinido permitido (null)"
 msgid "Alias"
 msgstr ""
 
-#, fuzzy
 msgid "Command"
-msgstr "Comandos:"
+msgstr "Comando"
 
-#, fuzzy
 msgid "Completion"
-msgstr "compilado em"
+msgstr "Completação"
 
-#, fuzzy
 msgid "IRC color"
-msgstr "cor"
+msgstr "Cor do IRC"
 
-#, fuzzy
 msgid "WeeChat color"
-msgstr "Cores básicas do WeeChat"
+msgstr "Cor do WeeChat"
 
 msgid "Plugin"
 msgstr "Plugin"
@@ -115,34 +111,31 @@ msgstr "Tabela de Hash (saída)"
 msgid "Pointer"
 msgstr "Ponteiro"
 
-#, fuzzy
 msgid "Lists"
 msgstr "Listas"
 
-#, fuzzy
 msgid "Variables"
 msgstr "Variáveis"
 
 msgid "Update allowed:"
-msgstr ""
+msgstr "Atualização permitida:"
 
-#, fuzzy
 msgid "Option"
-msgstr "<opção>"
+msgstr "Opção"
 
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 msgid "Constants"
-msgstr ""
+msgstr "Constantes"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sAnother command \"%s\" already exists for plugin \"%s\""
-msgstr "%sErro: outro comando \"%s\" já existe para o plugin \"%s\""
+msgstr "%sOutro comando \"%s\" já existe para o plugin \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sBad file descriptor (%d) used in hook_fd"
-msgstr "%sErro: descritor de arquivo ruim (%d) usado em hook_fd"
+msgstr "%sDescritor de arquivo ruim (%d) usado em hook_fd"
 
 #, c-format
 msgid "End of command '%s', timeout reached (%.1fs)"
@@ -189,7 +182,6 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opção...] [plugin:opção...]\n"
 
-#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -218,13 +210,19 @@ msgstr ""
 "  -c, --colors             exibe as cores padrões no terminal\n"
 "  -d, --dir <path>         configura diretório do WeeChat (padrão: ~/."
 "weechat)\n"
+"                           (a variável de ambiente WEECHAT_HOME é lida se"
+"essa opção não for dada)\n"
+"  -t, --temp-dir           cria um diretório temporário para o WeeChat e o"
+"deleta na saída\n"
 "  -h, --help               mostra esta ajuda\n"
 "  -l, --license            mostra a licença do WeeChat\n"
 "  -p, --no-plugin          não carrega nenhum plugin durante a "
 "inicialização\n"
-"  -r, --run-command <cmd>  executa comandos após a inicialização\n"
-"                           (vários comandos são separados por ponto-e-"
-"vírgula)\n"
+"  -P, --plugins <plugins>  carregue apenas esses plugins na inicialização\n"
+"                           (veja /help weechat.plugin.autoload)\n"
+"  -r, --run-command <cmd>  executa comandos após a inicialização;\n"
+"                           vários comandos podem ser separados por ponto-e-vírgula,\n"
+"                           essa opção pode ser utilizada mais de uma vez\n"
 "  -s, --no-script          não carrega nenhum script durante a "
 "inicialização\n"
 "      --upgrade            atualiza o WeeChat através dos arquivos de sessão "
@@ -8967,25 +8965,25 @@ msgstr "Lista de notificação para todos os servidores:"
 msgid "Notify list is empty on all servers"
 msgstr "Lista de notificação está vazia em todos os servidores"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is connected"
-msgstr "%snotificação: %s%s%s entrou %s%s"
+msgstr "%snotificação: %s%s%s%s%s%s%s%s%s está conectado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s is offline"
-msgstr "%snotificação: %s%s%s entrou %s%s"
+msgstr "%snotificação: %s%s%s%s%s%s%s%s%s está desconectado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has connected"
-msgstr "%snotificação: %s%s%s entrou %s%s"
+msgstr "%snotificação: %s%s%s%s%s%s%s%s%s se conectou"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%snotify: %s%s%s%s%s%s%s%s%s has quit"
-msgstr "%snotificação: %s%s%s saiu %s%s"
+msgstr "%snotificação: %s%s%s%s%s%s%s%s%s saiu"
 
 #, c-format
 msgid "%snotify: %s%s%s is now away: \"%s\""
-msgstr ""
+msgstr "%snotificação: %s%s%s está ausent agora: \"%s\""
 
 #, c-format
 msgid "%snotify: %s%s%s is back"
@@ -8995,13 +8993,13 @@ msgstr "%snotificação: %s%s%s está de volta"
 msgid "%snotify: %s%s%s is still away: \"%s\""
 msgstr "%snotificação: %s%s%s ainda está ausente: \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has identified as %s"
-msgstr "%s%s%s%s foi chutado %s%s%s"
+msgstr "%s%s%s%s se identificou como %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s has unidentified"
-msgstr "Todos os filtros foram excluídos"
+msgstr "%s%s%s%s removeu sua identificação"
 
 #, c-format
 msgid ""
@@ -9066,17 +9064,17 @@ msgstr "%s%s%s%s convidou %s%s%s para o canal %s%s%s"
 msgid "%s%s: cannot create new channel \"%s\""
 msgstr "%s%s: não foi possível criar novo canal \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s%s%s%s%s%s%s%s%s%s%s has joined %s%s%s"
-msgstr "%s%s%s%s%s%s%s%s%s%s entrou %s%s%s"
+msgstr "%s%s%s%s%s%s%s%s%s%s%s%s entrou em %s%s%s"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s %s(%s%s%s)"
-msgstr "%s%s%s%s foi chutado %s%s%s %s(%s%s%s)"
+msgstr "%s%s%s%s chutou %s%s%s %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s%s%s has kicked %s%s%s"
-msgstr "%s%s%s%s foi chutado %s%s%s"
+msgstr "%s%s%s%s chutou %s%s%s"
 
 #, c-format
 msgid "%s%sYou were killed by %s%s%s %s(%s%s%s)"
@@ -9142,9 +9140,9 @@ msgstr "%s%s%s%s limpou o tópico do canal %s%s%s"
 msgid "%sWallops from %s: %s"
 msgstr ""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sServer notice mask for %s%s%s: %s"
-msgstr "%sTópico para o canal %s%s%s é \"%s%s\""
+msgstr "%sMáscara de aviso do servidor para %s%s%s: %s"
 
 #, c-format
 msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
@@ -9200,9 +9198,9 @@ msgstr "%sCanal %s%s%s criado em %s"
 msgid "%sNo topic set for channel %s%s"
 msgstr "%sNenhum tópico definido para o canal %s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sTopic for %s%s%s is \"%s%s%s\""
-msgstr "%sTópico para o canal %s%s%s é \"%s%s\""
+msgstr "%sTopic para %s%s%s é \"%s%s%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, c-format
@@ -9290,7 +9288,7 @@ msgstr[1] ""
 
 #, fuzzy, c-format
 msgid "%sChannel %s%s%s: %s%d%s %s %s(%s%s)"
-msgstr "%sresposta CTCP para %s%s%s: %s%s%s%s%s"
+msgstr "%sCanal %s%s%s: %s%d%s %s %s(%s%s)"
 
 msgid "nick"
 msgid_plural "nicks"
@@ -9298,17 +9296,17 @@ msgstr[0] "apelido"
 msgstr[1] "apelidos"
 
 #. TRANSLATORS: "%s" after "on" is a date
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s on %s"
-msgstr "%s%s[%s%s%s] %s%s%s banido por %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s%s banido por %s em %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned by %s"
-msgstr "%s%s[%s%s%s] %s%s%s banido por %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s%s banido por %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s[%s%s%s] %s%s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s convidado por %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s%s banido"
 
 #, c-format
 msgid ""
@@ -9318,9 +9316,9 @@ msgstr ""
 "%s%s: todos os apelidos declarados já estão em uso ou são inválidos, "
 "fechando conexão com o servidor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
-msgstr "%s%s: apelido \"%s\" é inválido, tentando apelido #%d (\"%s\")"
+msgid "%s%s: apelido \"%s\" é inválido, tentando apelido \"%s\""
 
 #, c-format
 msgid ""
@@ -9330,13 +9328,13 @@ msgstr ""
 "%s%s: todos os apelidos declarados já estão em uso, fechando conexão com o "
 "servidor"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is already in use, trying nickname \"%s\""
-msgstr "%s: apelido \"%s\" já está em uso, tentando apelido #%d (\"%s\")"
+msgstr "%s%s: apelido \"%s\" já está em uso, tentando apelido \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: nickname \"%s\" is unavailable, trying nickname \"%s\""
-msgstr "%s%s: apelido \"%s\" está indisponível, tentando apelido #%d (\"%s\")"
+msgstr "%s%s: apelido \"%s\" está indisponível, tentando apelido \"%s\""
 
 #. TRANSLATORS: "%s" after "on" is a date
 #, fuzzy, c-format
@@ -9373,9 +9371,9 @@ msgstr ""
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: \"%s\" comando recebido sem host"
 
-#, fuzzy, c-format
+#, c-format
 msgid "IRC raw messages | Filter: %s"
-msgstr "mensagens brutas do IRC"
+msgstr "mensagens brutas do IRC | Filtro: %s"
 
 #, c-format
 msgid "%s%s: missing argument \"%s\" for redirect pattern"
@@ -9409,13 +9407,13 @@ msgstr ""
 msgid "%s%s: server \"%s\" not found for redirect"
 msgstr "%s%s: servidor \"%s\" não encontrado para redirecionamento"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: unable to read private key in file \"%s\""
-msgstr "%s%s: não foi possível ler arquivo \"%s\""
+msgstr "%s%s: não foi possível ler a chave privada no arquivo \"%s\""
 
-#, fuzzy, c-format
+#, c-format
 msgid "%sgnutls: invalid private key file: error %d %s"
-msgstr "%sgnutls: certificado \"%s\" inválido, erro: %s"
+msgstr "%sgnutls: arquivo de chave privada inválido: erro %d %s"
 
 #, c-format
 msgid "%s%s: signing the challenge with ECC public key: %s"
@@ -9470,9 +9468,9 @@ msgstr ""
 "%s%s: enviando dados ao servidor: buffer vazio (por favor, reporte o "
 "problema aos desenvolvedores)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: sending data to server: error %d %s"
-msgstr "%s%s: enviando dados ao servidor: %d %s"
+msgstr "%s%s: enviando dados ao servidor: erro %d %s"
 
 msgid "(message dropped)"
 msgstr "(mensagem descartada)"
@@ -9488,7 +9486,7 @@ msgstr "%s%s: lendo dados no socket: erro %d %s"
 msgid "(connection closed by peer)"
 msgstr "(conexão fechada pelo parceiro)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: disconnecting from server..."
 msgstr "%s%s: desconectando do servidor..."
 
@@ -9496,27 +9494,27 @@ msgstr "%s%s: desconectando do servidor..."
 msgid "%s%s: connection timeout (message 001 not received)"
 msgstr "%s%s: tempo de conexão esgotado (mensagem 001 não recebida)"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: SASL authentication timeout"
-msgstr "%s%s: tempo de autenticação sasl esgotado"
+msgstr "%s%s: tempo de autenticação SASL esgotado"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: lag is high, reconnecting to server %s%s%s"
-msgstr "%s%s: lag está alto, reconectando no servidor %s%s%s"
+msgstr "%s%s: lag está alto, reconectando ao servidor %s%s%s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reconnecting to server in %d %s, %d %s"
 msgstr "%s%s: reconectando ao servidor em %d %s, %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s%s: reconectando ao servidor em %d %s"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: switching address to %s/%d"
 msgstr "%s%s: alterando endereço para %s/%d"
 
-#, fuzzy, c-format
+#, c-format
 msgid "%s%s: connected to %s/%d (%s)"
 msgstr "%s%s: conectado a %s/%d (%s)"
 
@@ -9579,7 +9577,7 @@ msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: timeout"
-msgstr "%s%s: tempo esgotado para \"%s\" com %s"
+msgstr "%s%s: tempo esgotado"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create socket"
@@ -12764,17 +12762,14 @@ msgstr "cor do texto para o status \"falhou\""
 msgid "text color for \"waiting\" status"
 msgstr "cor do texto para o status \"esperando\""
 
-#, fuzzy
 msgid "text color in xfer buffer"
-msgstr "cor do texto para nomes de buffer"
+msgstr "cor do texto para buffer de transferência"
 
-#, fuzzy
 msgid "background color in xfer buffer"
-msgstr "cor de fundo para conversa"
+msgstr "cor de fundo para buffer de transferência"
 
-#, fuzzy
 msgid "text color of selected line in xfer buffer"
-msgstr "cor do texto da linha do cliente selecionada"
+msgstr "cor do texto para linha selecionada no buffer de transferência"
 
 msgid "block size for sending packets, in bytes"
 msgstr "tamanho do bloco de dado para enviar pacotes, em bytes"
