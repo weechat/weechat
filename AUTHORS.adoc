@@ -44,6 +44,7 @@ Alphabetically:
 * Elián Hanisch (m4v)
 * Emanuele Giaquinta
 * emk
+* Érico Nogueira
 * Esteban I. Ruiz Moreno (Exio)
 * Evgeny Shmarnev
 * Felix Eckhofer
