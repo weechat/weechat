@@ -22,7 +22,7 @@ msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
 "POT-Creation-Date: 2021-02-25 18:40+0100\n"
-"PO-Revision-Date: 2021-02-06 15:55+0100\n"
+"PO-Revision-Date: 2021-03-05 20:43+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "Language: pt_BR\n"
@@ -182,6 +182,7 @@ msgstr ""
 msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr "Uso: %s [opção...] [plugin:opção...]\n"
 
+#, fuzzy
 msgid ""
 "  -a, --no-connect         disable auto-connect to servers at startup\n"
 "  -c, --colors             display default colors in terminal\n"
@@ -9318,7 +9319,7 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: nickname \"%s\" is invalid, trying nickname \"%s\""
-msgid "%s%s: apelido \"%s\" é inválido, tentando apelido \"%s\""
+msgstr "%s%s: apelido \"%s\" é inválido, tentando apelido \"%s\""
 
 #, c-format
 msgid ""
