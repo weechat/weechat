@@ -14,7 +14,7 @@
 
 | weechat | focus_info | pobierz informacje o focusie | "x": współrzędne w osi x (ciąg z liczbą >= 0), "y": y współrzędne w osi y (ciąg z liczbą >= 0) | zobacz funkcję „hook_focus” w opisie API wtyczek
 
-| weechat | secured_data | secured data | - | secured data: names and values (be careful: the values are sensitive data: do NOT print/log them anywhere)
+| weechat | secured_data | zabezpieczone dane | - | zabezpieczone dane: nazwy i wartości (uważaj: to są wrażliwe dane: NIE wyświetlaj/zapisuj ich nigdzie)
 
 |===
 // end::infos_hashtable[]

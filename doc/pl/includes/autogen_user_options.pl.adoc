@@ -17,7 +17,7 @@
 ** domyślna wartość: `+sha256+`
 
 * [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
-** opis: pass:none[read the passphrase from the output of this system command (only the first line is used and it must not contain any extra character); this option is used only when reading file sec.conf and if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); example with password-store: "pass show weechat/passphrase"]
+** opis: pass:none[czyta hasło z wyjścia komendy systemowej (tylko pierwsza linia jest używana i nie może zawierać żadnych dodatkowych znaków); ta opcja jest używana tylko podczas odczytu pliku sec.conf i jeśli zmienna środowiskowa "WEECHAT_PASSPHRASE" nie jest ustawiona (zmienna środowiskowa ma wyższy priorytet); przykład z magazynem haseł: "pass show weechat/passphrase"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`
@@ -847,7 +847,7 @@
 ** domyślna wartość: `+on+`
 
 * [[option_weechat.look.hotlist_update_on_buffer_switch]] *weechat.look.hotlist_update_on_buffer_switch*
-** opis: pass:none[update the hotlist when switching buffers]
+** opis: pass:none[aktualizuj hotlistę podczas przełączania buforów]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -1147,7 +1147,7 @@
 ** domyślna wartość: `+"- "+`
 
 * [[option_weechat.look.read_marker_update_on_buffer_switch]] *weechat.look.read_marker_update_on_buffer_switch*
-** opis: pass:none[update the read marker when switching buffers]
+** opis: pass:none[aktualizuj wskaźnik przeczytania podczas przełączania buforów]
 ** typ: bool
 ** wartości: on, off
 ** domyślna wartość: `+on+`
@@ -1783,7 +1783,7 @@
 ** domyślna wartość: `+"number,-active"+`
 
 * [[option_buflist.look.use_items]] *buflist.look.use_items*
-** opis: pass:none[number of buflist bar items that can be used; the item names are: "buflist", "buflist2", "buflist3"; be careful, using more than one bar item slows down the display of buffers list]
+** opis: pass:none[ilość elementów „buflist” na pasku, które mogą zostać użyte; nazwy tych elementów to: "buflist", "buflist2", "buflist3"; używanie więcej niż jednego elementu paska spowalnia wyświetlanie listy buforów]
 ** typ: liczba
 ** wartości: 1 .. 3
 ** domyślna wartość: `+1+`
@@ -2635,7 +2635,7 @@
 ** domyślna wartość: `+60+`
 
 * [[option_irc.server_default.default_chantypes]] *irc.server_default.default_chantypes*
-** opis: pass:none[channel type prefixes to use if the server does not send them in message 005 (default is "#&")]
+** opis: pass:none[prefiks typu kanału jeśli serwer nie wyśle jego w wiadomości 005 (domyślnie „#&”)]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+"#&"+`
