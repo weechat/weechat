@@ -95,8 +95,7 @@ Na macOS możesz użyć https://brew.sh/[Homebrew]:
 [[dependencies]]
 ==== Zależności
 
-// TRANSLATION MISSING
-The following table shows the list of packages that are *required* to compile
+Poniższa tabela zawiera listę *wymaganych* zależności do skompilowania
 WeeChat:
 
 [width="100%",cols="5,^3,.^15",options="header"]
@@ -566,8 +565,7 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 === Pliki i foldery
 
 WeeChat zapisuje pliki konfiguracyjne i inne rzeczy domyślnie w folderze `~/.weechat`. +
-// TRANSLATION MISSING
-These files are created with default values the first time you run WeeChat.
+Pliki te są tworzone z domyślnymi wartościami przy pierwszym uruchomieniu WeeChat.
 
 [[weechat_directories]]
 ==== Katalogi WeeChat
@@ -753,29 +751,19 @@ Inne dostępne elementy (nie używane domyślnie w paskach):
 |===
 | Element                      | Przykład                 | Opis
 | buffer_count                 | `10`                     | Liczba otwartych buforów.
-// TRANSLATION MISSING
-| buffer_last_number           | `10`                     | Number of the latest buffer (can be different from `buffer_count` if option <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> is `off`).
-// TRANSLATION MISSING
-| buffer_nicklist_count_all    | `4`                      | Number of visible groups and nicks in nicklist.
-// TRANSLATION MISSING
-| buffer_nicklist_count_groups | `0`                      | Number of visible groups in nicklist.
+| buffer_last_number           | `10`                     | Liczba najnowszych buforów (może się różnić od `buffer_count` jeśli opcja <<option_weechat.look.buffer_auto_renumber,weechat.look.buffer_auto_renumber>> jest ustawiona na `off`).
+| buffer_nicklist_count_all    | `4`                      | Liczba widocznych grup i nicków na nickliście.
+| buffer_nicklist_count_groups | `0`                      | Liczba widocznych grup na nickliście.
 | buffer_short_name            | `#test`                  | Skrócona nazwa obecnego buforu.
-// TRANSLATION MISSING
-| buflist2                     | `1.weechat`              | List of buffers, second bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| buflist3                     | `1.weechat`              | List of buffers, third bar item (see option <<option_buflist.look.use_items,buflist.look.use_items>>).
-// TRANSLATION MISSING
-| fset                         | `+buflist.look.sort: …+` | Help on currently selected option on fset buffer.
+| buflist2                     | `1.weechat`              | Lista buforów, drugi element paska (zobacz opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
+| buflist3                     | `1.weechat`              | Lista buforów, trzeci element paska (zobac opcję <<option_buflist.look.use_items,buflist.look.use_items>>).
+| fset                         | `+buflist.look.sort: …+` | Pomoc dla obecnie wybranej opcji w buforze fset.
 | irc_channel                  | `#test`                  | Nazwa bieżącego kanału IRC.
-// TRANSLATION MISSING
-| irc_host                     | `+user@host.com+`        | Current IRC host.
-// TRANSLATION MISSING
-| irc_nick                     | `+Flashy+`               | Current IRC nick.
-// TRANSLATION MISSING
-| irc_nick_host                | `+Flashy!user@host.com+` | Current IRC nick and host.
+| irc_host                     | `+user@host.com+`        | Aktualny host IRC.
+| irc_nick                     | `+Flashy+`               | Aktualny nick IRC.
+| irc_nick_host                | `+Flashy!user@host.com+` | Aktualny nick i host IRC.
 | irc_nick_modes               | `i`                      | Atrybuty IRC dla własnego nicka.
-// TRANSLATION MISSING
-| irc_nick_prefix              | `@`                      | IRC nick prefix on channel.
+| irc_nick_prefix              | `@`                      | Prefiks nicku na kanale IRC.
 | mouse_status                 | `M`                      | Status obsługi myszy (pusty jeśli obsługa myszy jest wyłączona).
 | spell_dict                   | `fr,en`                  | Słowniki używane w obecnym buforze.
 | spell_suggest                | `print,prone,prune`      | Sugestie dla słowa pod kursorem (jeśli zawiera błąd).
@@ -2244,26 +2232,25 @@ zwykły tekst.
 /secure passphrase to jest moje hasło
 ----
 
-// TRANSLATION MISSING
-===== Passphrase on startup
+===== Hasło przy uruchomieniu
 
-When a passphrase is set, WeeChat will ask you to enter it on startup
-(but not on `/upgrade`).
+Kiedy ustawione jest hasło WeeChat poprosi o nie podczas uruchomieina
+(ale nie podczas `/upgrade`).
 
-If you are using a password manager, you can run an external program to read
-the passphrase instead of having to type it manually on WeeChat startup. +
-For example with password-store (command `pass`):
+Jeśli używasz managera haseł, możesz uruchomić zewnętrzny program do
+odczytania hasła bez konieczności wprowadzania go ręcznie przy utuchomieniu WeeChat. +
+Na przykład dla password-store (komenda `pass`):
 
 ----
 /set sec.crypt.passphrase_command "pass show weechat/passphrase"
 ----
 
-The program may ask you unlock your GPG key or enter another passphrase to
-read the secret. WeeChat will wait for the end of the command to read the
-passphrase on the standard output (it must be on the first line without any
-extra character). +
-If the output contains no passphrase or if it is wrong, WeeChat will then ask
-you to enter it.
+Program może poprosić o odblokowanie klucza GPG lub wprowadzenie innego hasła,
+aby odczytać sekret. WeeChat poczeka do zakończenia komendy i odczyta hasło
+ze standardowego wyjścia (musi to być w pierwszej linii bez żadnych dodatkowych
+znaków). +
+Jeśli wyjście programu nie zawiera hasla lub jest ono błęde, WeeChat poprosi
+i jego wprowadzenie.
 
 [[secured_data_encryption]]
 ===== Szyfrowanie
