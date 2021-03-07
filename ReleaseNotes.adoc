@@ -20,32 +20,6 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 [[v3.1]]
 == Version 3.1 (under dev)
 
-[[v3.1_buflist_option_use_items]]
-=== Buflist option buflist.look.use_items
-
-A new buflist option `buflist.look.use_items` has been added to speed up
-display of buflist, in case you use a single buflist item (the most common use case).
-
-If ever you use more than one item (item "buflist2" or even "buflist3"), you
-must adjust the value of the new option, which defaults to 1:
-
-----
-/set buflist.look.use_items 2
-----
-
-[[v3.1_window_splitv]]
-=== Vertical split of windows
-
-The vertical split of windows has been fixed (see issue #1612): now the new
-window has the asked size, instead of the original window.
-
-For example with this command the new window (on the right) has size 80% instead
-of 20% in previous releases:
-
-----
-/window splitv 80
-----
-
 [[v3.1_secure_data_passphrase_command]]
 === External program to read secured data passphrase
 
@@ -69,6 +43,19 @@ For example with password-store (command `pass`):
 /set sec.crypt.passphrase_command "pass show weechat/passphrase"
 ----
 
+[[v3.1_window_splitv]]
+=== Vertical split of windows
+
+The vertical split of windows has been fixed (see issue #1612): now the new
+window has the asked size, instead of the original window.
+
+For example with this command the new window (on the right) has size 80% instead
+of 20% in previous releases:
+
+----
+/window splitv 80
+----
+
 [[v3.1_command_buffer_listvar]]
 === List of buffer local variables
 
@@ -80,6 +67,19 @@ It is deprecated and will be removed in a future release.
 
 New options `setvar` and `delvar` were also added in command `/buffer`,
 see `/help buffer`.
+
+[[v3.1_buflist_option_use_items]]
+=== Buflist option buflist.look.use_items
+
+A new buflist option `buflist.look.use_items` has been added to speed up
+display of buflist, in case you use a single buflist item (the most common use case).
+
+If ever you use more than one item (item "buflist2" or even "buflist3"), you
+must adjust the value of the new option, which defaults to 1:
+
+----
+/set buflist.look.use_items 2
+----
 
 [[v3.0.1]]
 == Version 3.0.1 (2021-01-31)
