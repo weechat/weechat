@@ -1,3 +1,17 @@
+weechat (3.0.1-1) unstable; urgency=medium
+
+  * New upstream release
+  * Bump Standards-Version to 4.5.1
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Wed, 03 Mar 2021 05:30:44 +0000
+
+weechat (3.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Build against Guile 3.0 (instead of 2.2) (Closes: #969680)
+
+ -- Emmanuel Bouthenot <kolter@debian.org>  Sat, 21 Nov 2020 07:34:12 +0000
+
 weechat (2.9-1) unstable; urgency=medium
 
   * New upstream release
