@@ -21,6 +21,7 @@
 #define WEECHAT_UTIL_H
 
 #include <time.h>
+#include <sys/time.h>
 
 #ifdef HAVE_SYS_RESOURCE_H
 struct t_rlimit_resource

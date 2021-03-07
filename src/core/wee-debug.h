@@ -20,6 +20,8 @@
 #ifndef WEECHAT_DEBUG_H
 #define WEECHAT_DEBUG_H
 
+#include <sys/time.h>
+
 struct t_gui_window_tree;
 
 extern void debug_sigsegv ();
