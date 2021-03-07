@@ -18,7 +18,7 @@ https://weechat.org/files/changelog/ChangeLog-devel.html[ChangeLog]
 
 
 [[v3.1]]
-== Version 3.1 (under dev)
+== Version 3.1 (2021-03-07)
 
 [[v3.1_secure_data_passphrase_command]]
 === External program to read secured data passphrase
