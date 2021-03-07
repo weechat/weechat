@@ -20,6 +20,8 @@
 #ifndef WEECHAT_GUI_HOTLIST_H
 #define WEECHAT_GUI_HOTLIST_H
 
+#include <sys/time.h>
+
 enum t_gui_hotlist_priority
 {
     GUI_HOTLIST_LOW = 0,
