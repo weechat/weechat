@@ -524,77 +524,75 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 (gdb) bt full
 ----
 
-// TRANSLATION MISSING
 [[upgrade]]
 === Upgrade
 
-If a new stable version of WeeChat is released, this is time for you to
-switch to this version.
+Wenn eine neue stabile Version von WeeChat veröffentlicht wird, ist es Zeit
+auf diese neue Version zu wechseln.
 
-First of all, you must install the new version of WeeChat, either with your
-package manager or by compiling yourself, so that the `weechat` binary and all
-required files are in the same paths. +
-This can be done while WeeChat is running.
+Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren,
+entweder mittels Ihrem Paketmanager  oder Sie kompilieren diese selber,
+damit sich die `weechat`-Binärdatei und alle erforderlichen Dateien sich in
+den selben Pfaden befinden. +
+Dies kann durchgeführt werden, während WeeChat ausgeführt wird.
 
-// TRANSLATION MISSING
 [[upgrade_command]]
-==== Upgrade command
+==== Upgrade Befehl
 
-WeeChat can restart the new binary, in place, using the
-<<command_weechat_upgrade,/upgrade>> command: the buffer contents and non-SSL
-connections are preserved. +
-The SSL connections are lost during upgrade and you are automatically
-reconnected after the upgrade (reload of SSL sessions is currently not possible
-with GnuTLS).
+WeeChat kann die neue Binärdatei mithilfe des  <<command_weechat_upgrade,/upgrade>>
+Befehls nutzen: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten.+
 
-The command can also be used if you have to restart the machine, for example
-to upgrade the kernel or to move your WeeChat to another machine:
+SSL-Verbindungen gehen während des Upgrades verloren und werden nach dem Upgrade
+automatisch wieder verbunden (ein erneutes Laden von SSL-Sitzungen ist mit GnuTLS
+derzeit nicht möglich).
+
+Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
+z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
 
 ----
 /upgrade -quit
 ----
 
-This saves the current state in `*.upgrade` files. You can then either reboot
-or move the whole directory `~/.weechat` to another machine, and restart
-WeeChat later with this command:
+Dies speichert den aktuellen Status in `*.upgrade`-Dateien. Sie können dann entweder das
+gesamte `~/.weechat` Verzeichnis auf einen anderen Computer verschieben oder diesen
+gespeicherten Status neu starten, mit folgendem Befehl:
 
 ----
 $ weechat --upgrade
 ----
 
-// TRANSLATION MISSING
 [[restart_after_upgrade]]
-==== Restart after upgrade
+==== Neustart nach Upgrade
 
-===== Release notes
+===== Versionshinweise
 
-After an upgrade, it is *strongly recommended* to read the
+Nach einem Upgrade wird *dringend empfohlen*,
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
-which contain important information about breaking changes and some
-manual actions that could be required.
+zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
+eventuell ein manuelles Eingreifen erforderlich sein könnte.
 
-You must read the release notes of all versions between your old (excluded) and
-your new version (included). +
-For example if you switch from version 3.0 to 3.2, you must read release notes
-of versions 3.1 and 3.2.
+Sie müssen die Versionshinweise aller Versionen zwischen Ihrer alten (abgelaufenen)
+und Ihrer neuen Version (enthalten) lesen.+
+Wenn Sie beispielsweise von Version 3.0 auf 3.2 wechseln, müssen Sie die Versionshinweise
+der Versionen 3.1 und 3.2 lesen.
 
-===== Configuration upgrade
+===== Konfigurations-Upgrade
 
-WeeChat has an automatic upgrade of configuration files (`*.conf`):
+WeeChat hat ein automatisches Upgrade der Konfigurationsdateien (`*.conf`):
 
-* new options are silently added with default value
-* obsolete options are automatically discarded and WeeChat displays a warning
-  with the value read from file.
+* Neue Optionen werden stillschweigend mit dem Standardwert hinzugefügt
+* Veraltete Optionen werden automatisch verworfen und WeeChat zeigt eine Warnung,
+  mit dem Wert der eingestellt war, an.
 
-Example of warning when an option has been removed:
+Beispiel für eine Warnung, wenn eine Option entfernt wurde:
 
 ----
 =!= Warnung: /home/xxx/.weechat/sec.conf, Zeile 15: unbekannte Einstellung für Sektion "crypt": passphrase_file = ""
 ----
 
-That means the option `sec.crypt.passphrase_file` has been removed, and you
-had value set to empty string, which was the default value in the previous version
-(in this case no manual action is required).
+Das bedeutet, dass die Option "sec.crypt.passphrase_file" entfernt wurde und der
+Wert für diese Option eine leere Zeichenkette war. Dies war der Standardwert in
+der vorherigen Version (in diesem Fall ist kein manuelles Eingreifen erforderlich).
 
 [[usage]]
 == Nutzung
