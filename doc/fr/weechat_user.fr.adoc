@@ -527,6 +527,77 @@ Ensuite comme pour un crash, utilisez la commande `bt full` :
 (gdb) bt full
 ----
 
+[[upgrade]]
+=== Mise à jour
+
+Si une nouvelle version stable de WeeChat est disponible, il est temps pour vous
+de passer à cette version.
+
+Avant toute chose, vous devez installer la nouvelle version de WeeChat, soit
+via votre gestionnaire de paquets ou en le compilant vous-même, de telle sorte
+que le nouveau binaire `weechat` et tous les fichiers requis sont dans les mêmes
+répertoires. +
+Cela peut être fait pendant que WeeChat tourne.
+
+[[upgrade_command]]
+==== Commande de mise à jour
+
+WeeChat peut redémarrer le nouveau binaire avec la commande
+<<command_weechat_upgrade,/upgrade>> : le contenu des tampons et les connexions
+non SSL sont préservées. +
+Les connexions SSL sont perdues pendant la mise à jour et vous êtres automatiquement
+reconnectés après la mise à jour (le rechargement des sessions SSL n'est pas
+possible actuellement avec GnuTLS).
+
+La commande peut aussi être utilisée si vous devez redémarrer la machine, par
+exemple pour mettre à jour le noyau ou déplacer WeeChat vers une autre machine :
+
+----
+/upgrade -quit
+----
+
+Cela sauvegarde l'état actuel dans des fichiers `*.upgrade`. Vous pouvez soit
+rebooter ou déplacer le répertoire entier `~/.weechat` vers une autre machine,
+et redémarrer WeeChat plus tard avec cette commande :
+
+----
+$ weechat --upgrade
+----
+
+[[restart_after_upgrade]]
+==== Redémarrage après mise à jour
+
+===== Notes de version
+
+Après une mise à jour, il est *fortement recommandé* de lire les
+https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[notes de version]
+qui contiennent des informations importantes sur les changements majeurs et
+quelques actions manuelles qui pourraient être nécessaires.
+
+Vous devez lire les notes des versions entre votre version ancienne (exclue)
+et votre nouvelle version (incluse). +
+Par exemple si vous passez de la version 3.0 à 3.2, vous devez lire les notes
+des versions 3.1 et 3.2.
+
+===== Mise à jour de la configuration
+
+WeeChat a un système de mise à jour automatique des fichiers de configuration
+(`*.conf`) :
+
+* les nouvelles options sont silencieusement ajoutées avec la valeur par défaut
+* les options obsolètes sont automatiquement supprimées et WeeChat affiche un
+  avertissement avec la valeur lue dans le fichier.
+
+Exemple d'avertissement lorsqu'une option a été supprimée :
+
+----
+=!= Attention : /home/xxx/.weechat/sec.conf, ligne 15 : option inconnue pour la section "crypt" : passphrase_file = ""
+----
+
+Cela signifie que l'option `sec.crypt.passphrase_file` a été supprimée, et vous
+aviez la valeur définie à une chaîne vide, ce qui était la valeur par défaut
+dans la version précédente (dans ce cas aucune action manuelle n'est nécessaire).
+
 [[usage]]
 == Utilisation
 
