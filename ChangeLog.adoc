@@ -15,6 +15,13 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 (file _ReleaseNotes.adoc_ in sources).
 
 
+[[v3.2]]
+== Version 3.2 (under dev)
+
+Bug fixes::
+
+  * core: recreate buflist and fset bars on /reload when WeeChat is started without configuration files (issue #1618)
+
 [[v3.1]]
 == Version 3.1 (2021-03-07)
 
