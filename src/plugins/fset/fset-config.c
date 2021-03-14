@@ -101,6 +101,27 @@ int fset_config_format_option_num_lines[2] = { 1, 1 };
 
 
 /*
+ * Reloads fset configuration file.
+ */
+
+int
+fset_config_reload (const void *pointer, void *data,
+                    struct t_config_file *config_file)
+{
+    int rc;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+
+    rc = weechat_config_reload (config_file);
+
+    fset_add_bar ();
+
+    return rc;
+}
+
+/*
  * Callback for changes on option "fset.look.auto_refresh".
  */
 
@@ -345,7 +366,7 @@ fset_config_init ()
     struct t_config_section *ptr_section;
 
     fset_config_file = weechat_config_new (FSET_CONFIG_NAME,
-                                           NULL, NULL, NULL);
+                                           &fset_config_reload, NULL, NULL);
     if (!fset_config_file)
         return 0;
 
