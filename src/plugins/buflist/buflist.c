@@ -57,10 +57,13 @@ struct t_hdata *buflist_hdata_bar_window = NULL;
 void
 buflist_add_bar ()
 {
-    weechat_bar_new (BUFLIST_BAR_NAME, "off", "0", "root", "", "left",
-                     "columns_vertical", "vertical", "0", "0",
-                     "default", "default", "default", "default", "on",
-                     BUFLIST_BAR_ITEM_NAME);
+    weechat_bar_new (
+        BUFLIST_BAR_NAME,
+        (weechat_config_boolean (buflist_config_look_enabled)) ? "off" : "on",
+        "0", "root", "", "left",
+        "columns_vertical", "vertical", "0", "0",
+        "default", "default", "default", "default", "on",
+        BUFLIST_BAR_ITEM_NAME);
 }
 
 /*
@@ -464,8 +467,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     buflist_command_init ();
 
-    if (weechat_config_boolean (buflist_config_look_enabled))
-        buflist_add_bar ();
+    buflist_add_bar ();
 
     buflist_bar_item_update (0);
 
