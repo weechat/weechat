@@ -689,13 +689,20 @@ weechat_locale_check ()
 }
 
 /*
- * Callback for system signal SIGHUP: reloads configuration.
+ * Callback for system signal SIGHUP: reload configuration if running as headless or daemon, quit otherwise.
  */
 
 void
 weechat_sighup ()
 {
-    weechat_reload_signal = SIGHUP;
+    if (weechat_headless || weechat_daemon)
+    {
+        weechat_reload_signal = SIGHUP;
+    }
+    else
+    {
+        weechat_quit_signal = SIGHUP;
+    }
 }
 
 /*
