@@ -2426,7 +2426,7 @@ config_file_write_internal (struct t_config_file *config_file,
             "# WARNING: It is NOT recommended to edit this file by hand,\n"
             "# especially if WeeChat is running.\n"
             "#\n"
-            "# Use /set or similar command to change settings in WeeChat.\n"
+            "# Use commands like /set or /fset to change settings in WeeChat.\n"
             "#\n"
             "# For more info, see: https://weechat.org/doc/quickstart\n"
             "#\n",
