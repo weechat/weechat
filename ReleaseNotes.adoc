@@ -40,7 +40,7 @@ the clear password. +
 For example with password-store (command `pass`):
 
 ----
-/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+/set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
 ----
 
 [[v3.1_window_splitv]]

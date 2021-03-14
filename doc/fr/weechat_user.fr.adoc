@@ -2376,7 +2376,7 @@ un programme externe pour lire la phrase de chiffrement au lieu d'avoir
 Par exemple avec password-store (command `pass`) :
 
 ----
-/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+/set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
 ----
 
 Le programme peut vous demander de déverrouiller votre clé GPG ou d'entrer une

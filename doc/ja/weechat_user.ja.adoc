@@ -2359,7 +2359,7 @@ the passphrase instead of having to type it manually on WeeChat startup. +
 For example with password-store (command `pass`):
 
 ----
-/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+/set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
 ----
 
 The program may ask you unlock your GPG key or enter another passphrase to

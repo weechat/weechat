@@ -1885,7 +1885,7 @@ Exemples :
   définir une phrase de chiffrement :
     /secure passphrase ceci est ma phrase de chiffrement
   utiliser le programme "pass" pour lire la phrase de chiffrement au démarrage :
-    /set sec.crypt.passphrase_command "pass show weechat/passphrase"
+    /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
   chiffrer le mot de passe freenode SASL :
     /secure set freenode motdepasse
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"

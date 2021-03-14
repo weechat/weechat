@@ -487,7 +487,8 @@ secure_config_init_options ()
            "character); this option is used only when reading file sec.conf "
            "and if the environment variable \"WEECHAT_PASSPHRASE\" is not set "
            "(the environment variable has higher priority); "
-           "example with password-store: \"pass show weechat/passphrase\""),
+           "example with password-store: "
+           "\"/usr/bin/pass show weechat/passphrase\""),
         NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL,
         NULL, NULL, NULL,

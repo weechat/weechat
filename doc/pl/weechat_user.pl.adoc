@@ -2314,7 +2314,7 @@ odczytania hasła bez konieczności wprowadzania go ręcznie przy utuchomieniu W
 Na przykład dla password-store (komenda `pass`):
 
 ----
-/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+/set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
 ----
 
 Program może poprosić o odblokowanie klucza GPG lub wprowadzenie innego hasła,

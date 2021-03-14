@@ -17,7 +17,7 @@
 ** デフォルト値: `+sha256+`
 
 * [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
-** 説明: pass:none[read the passphrase from the output of this system command (only the first line is used and it must not contain any extra character); this option is used only when reading file sec.conf and if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); example with password-store: "pass show weechat/passphrase"]
+** 説明: pass:none[read the passphrase from the output of this system command (only the first line is used and it must not contain any extra character); this option is used only when reading file sec.conf and if the environment variable "WEECHAT_PASSPHRASE" is not set (the environment variable has higher priority); example with password-store: "/usr/bin/pass show weechat/passphrase"]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+""+`

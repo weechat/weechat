@@ -17,7 +17,7 @@
 ** domyślna wartość: `+sha256+`
 
 * [[option_sec.crypt.passphrase_command]] *sec.crypt.passphrase_command*
-** opis: pass:none[czyta hasło z wyjścia komendy systemowej (tylko pierwsza linia jest używana i nie może zawierać żadnych dodatkowych znaków); ta opcja jest używana tylko podczas odczytu pliku sec.conf i jeśli zmienna środowiskowa "WEECHAT_PASSPHRASE" nie jest ustawiona (zmienna środowiskowa ma wyższy priorytet); przykład z magazynem haseł: "pass show weechat/passphrase"]
+** opis: pass:none[czyta hasło z wyjścia komendy systemowej (tylko pierwsza linia jest używana i nie może zawierać żadnych dodatkowych znaków); ta opcja jest używana tylko podczas odczytu pliku sec.conf i jeśli zmienna środowiskowa "WEECHAT_PASSPHRASE" nie jest ustawiona (zmienna środowiskowa ma wyższy priorytet); przykład z magazynem haseł: "/usr/bin/pass show weechat/passphrase"]
 ** typ: ciąg
 ** wartości: dowolny ciąg
 ** domyślna wartość: `+""+`

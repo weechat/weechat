@@ -2336,7 +2336,7 @@ Wenn Sie einen Passwortmanager verwenden, können Sie ein externes Programm ausf
 anstatt sie beim Start von WeeChat manuell eingeben zu müssen. Zum Beispiel mit Passwortspeicher (Befehl `pass`):
 
 ----
-/set sec.crypt.passphrase_command "pass show weechat/passphrase"
+/set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
 ----
 
 Das Programm fordert Sie möglicherweise auf, Ihren GPG-Schlüssel zu entsperren oder eine andere Passphrase

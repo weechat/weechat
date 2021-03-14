@@ -1885,7 +1885,7 @@ Beispiele:
   festlegen eine Passphrase:
     /secure passphrase Dies ist meine Passphrase
   nutze Programm "pass" um die Passphrase beim Start auszulesen:
-    /set sec.crypt.passphrase_command "pass show weechat/passphrase"
+    /set sec.crypt.passphrase_command "/usr/bin/pass show weechat/passphrase"
   verschlüsselt freenode SASL Passwort:
     /secure set freenode meinPasswort
     /set irc.server.freenode.sasl_password "${sec.data.freenode}"
