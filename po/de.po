@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 13:34+0100\n"
+"POT-Creation-Date: 2021-03-14 14:00+0100\n"
 "PO-Revision-Date: 2021-03-14 13:36+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -12258,6 +12258,10 @@ msgid "1 if WeeChat is upgrading (command `/upgrade`)"
 msgstr "1 falls WeeChat ein Upgrade durchführt (Befehl `/upgrade`)"
 
 msgid "1 if WeeChat is running headless"
+msgstr "1, falls WeeChat im Hintergrundmodus ausgeführt wird"
+
+#, fuzzy
+msgid "1 if WeeChat is running in daemon mode (headless, in background)"
 msgstr "1, falls WeeChat im Hintergrundmodus ausgeführt wird"
 
 msgid ""

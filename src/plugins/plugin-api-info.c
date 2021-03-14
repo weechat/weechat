@@ -339,6 +339,27 @@ plugin_api_info_weechat_headless_cb (const void *pointer, void *data,
 }
 
 /*
+ * Returns WeeChat info "weechat_daemon".
+ */
+
+char *
+plugin_api_info_weechat_daemon_cb (const void *pointer, void *data,
+                                   const char *info_name,
+                                   const char *arguments)
+{
+    char value[32];
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    snprintf (value, sizeof (value), "%d", weechat_daemon);
+    return strdup (value);
+}
+
+/*
  * Returns WeeChat info "auto_connect".
  */
 
@@ -1804,6 +1825,10 @@ plugin_api_info_init ()
     hook_info (NULL, "weechat_headless",
                N_("1 if WeeChat is running headless"),
                NULL, &plugin_api_info_weechat_headless_cb, NULL, NULL);
+    hook_info (NULL, "weechat_daemon",
+               N_("1 if WeeChat is running in daemon mode "
+                  "(headless, in background)"),
+               NULL, &plugin_api_info_weechat_daemon_cb, NULL, NULL);
     hook_info (NULL, "auto_connect",
                N_("1 if automatic connection to servers is enabled, "
                   "0 if it has been disabled by the user (option \"-a\" or "

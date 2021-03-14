@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 13:34+0100\n"
+"POT-Creation-Date: 2021-03-14 14:00+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -11466,6 +11466,10 @@ msgstr "WeeChat がアップグレード中は 1 (コマンド `/upgrade`)"
 
 #, fuzzy
 msgid "1 if WeeChat is running headless"
+msgstr "WeeChat をヘッドレスモードで実行中 (Ctrl-C で終了します)。"
+
+#, fuzzy
+msgid "1 if WeeChat is running in daemon mode (headless, in background)"
 msgstr "WeeChat をヘッドレスモードで実行中 (Ctrl-C で終了します)。"
 
 msgid ""

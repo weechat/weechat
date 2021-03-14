@@ -18,6 +18,10 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 [[v3.2]]
 == Version 3.2 (under dev)
 
+New features::
+
+  * api: add info "weechat_daemon"
+
 Bug fixes::
 
   * core: recreate buflist and fset bars on /reload when WeeChat is started without configuration files (issue #1618)

@@ -134,6 +134,8 @@
 
 | weechat | version_number | versione di WeeChat (come numero) | -
 
+| weechat | weechat_daemon | 1 if WeeChat is running in daemon mode (headless, in background) | -
+
 | weechat | weechat_dir | directory WeeChat | -
 
 | weechat | weechat_headless | 1 if WeeChat is running headless | -
