@@ -28,6 +28,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
+        sudo apt-get purge php7.4-common
         sudo apt-get --yes --no-install-recommends install devscripts equivs python3-pip libenchant-dev autopoint cmake lcov pkg-config libncursesw5-dev gem2deb libperl-dev python2-dev python3-dev libaspell-dev liblua5.3-dev tcl8.6-dev guile-2.0-dev libv8-dev libcurl4-gnutls-dev libgcrypt20-dev libgnutls28-dev zlib1g-dev curl libcpputest-dev php7.4-dev libphp7.4-embed libargon2-0-dev libsodium-dev pylint3 asciidoctor
         sudo -H pip3 install --ignore-installed msgcheck
 
