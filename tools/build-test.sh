@@ -67,7 +67,7 @@ run "cd $BUILDDIR"
 
 if [ "$BUILDTOOL" = "cmake" ]; then
     # build with CMake
-    run "cmake .. -DENABLE_JAVASCRIPT=ON -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
+    run "cmake .. -DENABLE_MAN=ON -DENABLE_DOC=ON -DENABLE_TESTS=ON ${BUILDARGS}"
     run "make VERBOSE=1 -j$(nproc)"
     run "sudo make install"
     run "ctest -V"
@@ -76,7 +76,7 @@ fi
 if [ "$BUILDTOOL" = "autotools" ]; then
     # build with autotools
     run "../autogen.sh"
-    run "../configure --enable-javascript --enable-man --enable-doc --enable-tests ${BUILDARGS}"
+    run "../configure --enable-man --enable-doc --enable-tests ${BUILDARGS}"
     run "make -j$(nproc)"
     run "sudo make install"
     run "./tests/tests -v"
