@@ -2410,7 +2410,8 @@ Sections in file _weechat.conf_:
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | Proxy options.
 | network    | /set weechat.network.*                    | Network/SSL options.
-| signal     | /set weechat.signal.*                     | Signal options.
+| plugin     | /set weechat.plugin.*                     | Options on plugins.
+| signal     | /set weechat.signal.*                     | Options on signals.
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | Bar options.
 | layout     | <<command_weechat_layout,/layout>>        | Layouts.

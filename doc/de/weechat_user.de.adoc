@@ -2454,7 +2454,9 @@ Sektion in Datei _weechat.conf_:
                /set weechat.proxy.*                      | Proxy Optionen.
 | network    | /set weechat.network.*                    | Netzwerk/SSL Optionen.
 // TRANSLATION MISSING
-| signal     | /set weechat.signal.*                     | Signal options.
+| plugin     | /set weechat.plugin.*                     | Options on plugins.
+// TRANSLATION MISSING
+| signal     | /set weechat.signal.*                     | Options on signals.
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | Optionen für die Bars.
 | layout     | <<command_weechat_layout,/layout>>        | Layouts.
