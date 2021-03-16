@@ -22,7 +22,7 @@ Unparse AST tree to generate scripts in all supported languages
 (Python, Perl, Ruby, ...).
 """
 
-# pylint: disable=too-many-lines,unnecessary-pass
+# pylint: disable=too-many-lines,unnecessary-pass,useless-object-inheritance
 
 from __future__ import print_function
 import argparse

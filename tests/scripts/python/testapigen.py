@@ -30,6 +30,7 @@ It uses the following scripts:
 """
 
 # pylint: disable=wrong-import-order,wrong-import-position
+# pylint: disable=useless-object-inheritance
 
 from __future__ import print_function
 import argparse
