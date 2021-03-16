@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-03-14 13:36+0100\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5110,6 +5110,15 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "speichert Konfigurationen, falls Erweiterungen beendet werden"
 
+#, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr ""
+"Nach dem Start von WeeChat wird dieser Befehl aufgerufen. Dies geschieht "
+"nachdem die Erweiterungen geladen worden sind (mehrere Befehle sind durch \";"
+"\" zu trennen) (Hinweis: Inhalt wird evaluiert, siehe /help eval)"
+
 msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: Fehler bei der Initialisierung der Konfigurationseinstellungen"
 
@@ -5571,14 +5580,6 @@ msgstr "WeeChat Farben (in Benutzung: %d; noch frei verfügbar: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal verloren, beende WeeChat..."
-
-#, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr "Signal %s empfangen, Konfiguration neu laden..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Signal %s empfangen, beende WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Maus ist aktiv"
@@ -15554,6 +15555,14 @@ msgstr "%s%s: Zeitüberschreitung für \"%s\" mit %s"
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr ""
 "%s%s: Verbindung konnte nicht hergestellt werden: unerwarteter Fehler (%d)"
+
+#, c-format
+#~ msgid "Signal %s received, reloading configuration..."
+#~ msgstr "Signal %s empfangen, Konfiguration neu laden..."
+
+#, c-format
+#~ msgid "Signal %s received, exiting WeeChat..."
+#~ msgstr "Signal %s empfangen, beende WeeChat..."
 
 #, fuzzy
 #~ msgid "secured data: names and values"

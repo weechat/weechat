@@ -32,7 +32,6 @@
 #include "../wee-hook.h"
 #include "../wee-infolist.h"
 #include "../wee-log.h"
-#include "../wee-util.h"
 #include "../../gui/gui-chat.h"
 
 

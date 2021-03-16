@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3751,6 +3751,12 @@ msgid "save configuration files when unloading plugins"
 msgstr "beállítások mentése kilépéskor"
 
 #, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr "felhasználónév az IRC szerveren"
+
+#, fuzzy
 msgid "FATAL: error initializing configuration options"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
@@ -4164,14 +4170,6 @@ msgid "WeeChat colors (in use: %d, left: %d):"
 msgstr ""
 
 msgid "Terminal lost, exiting WeeChat..."
-msgstr ""
-
-#, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr ""
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 #, fuzzy

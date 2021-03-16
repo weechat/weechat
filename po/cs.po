@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Ondřej Súkup <mimi.vx@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4191,6 +4191,12 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "uložit soubory s nastavením při ukončení pluginů"
 
+#, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr "příkaz spuštěný při startu WeeChat, po načtení pluginů"
+
 msgid "FATAL: error initializing configuration options"
 msgstr "FATÁLNÍ: chyba při inicializaci konfiguračních nastavení"
 
@@ -4611,14 +4617,6 @@ msgstr "Barvy WeeChat (použité: %d, zbývá: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
-
-#, fuzzy, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr "Obdržen signál %s, ukončuji WeeChat..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Myš je zapnuta"
@@ -13240,6 +13238,14 @@ msgstr "%s%s: vypršel časový limit \"%s\" pro %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nemohu se připojit\" neočekávaná chyba (%d)"
+
+#, fuzzy, c-format
+#~ msgid "Signal %s received, reloading configuration..."
+#~ msgstr "Obdržen signál %s, ukončuji WeeChat..."
+
+#, c-format
+#~ msgid "Signal %s received, exiting WeeChat..."
+#~ msgstr "Obdržen signál %s, ukončuji WeeChat..."
 
 #, fuzzy
 #~ msgid "secured data: names and values"

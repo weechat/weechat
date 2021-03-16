@@ -31,14 +31,6 @@ struct t_rlimit_resource
 };
 #endif /* HAVE_SYS_RESOURCE_H */
 
-struct t_util_signal
-{
-    char *name;                        /* name of signal                    */
-    int signal;                        /* signal number                     */
-};
-
-extern struct t_util_signal util_signals[];
-
 /* limits */
 extern void util_setrlimit ();
 
@@ -57,11 +49,6 @@ extern void util_get_time_diff (time_t time1, time_t time2,
 /* delay */
 
 extern long util_parse_delay (const char *string_delay, long default_factor);
-
-/* signal */
-extern int util_signal_search (const char *name);
-extern const char *util_signal_search_number (int signal_number);
-extern void util_catch_signal (int signum, void (*handler)(int));
 
 /* files/directories */
 extern char *util_get_temp_dir();

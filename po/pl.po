@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-03-14 13:37+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -4870,6 +4870,14 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "zapisuj pliki konfiguracyjne przy wyładowywaniu wtyczek"
 
+#, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr ""
+"komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek "
+"(uwaga: zawartość jest przetwarzana, zobacz /help eval)"
+
 msgid "FATAL: error initializing configuration options"
 msgstr "KRYTYCZNE: błąd podczas inicjacji zmiennych konfiguracyjnych"
 
@@ -5314,14 +5322,6 @@ msgstr "Kolory WeeChat (w użyciu: %d, zostało: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Utracono terminal, wychodzę z WeeChat..."
-
-#, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr "Otrzymano sygnał %s, przeładowywuje konfigurację..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Otrzymano sygnał %s, wychodzę z WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Obsługa myszy włączona"
@@ -14896,6 +14896,14 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#, c-format
+#~ msgid "Signal %s received, reloading configuration..."
+#~ msgstr "Otrzymano sygnał %s, przeładowywuje konfigurację..."
+
+#, c-format
+#~ msgid "Signal %s received, exiting WeeChat..."
+#~ msgstr "Otrzymano sygnał %s, wychodzę z WeeChat..."
 
 #, fuzzy
 #~ msgid "secured data: names and values"

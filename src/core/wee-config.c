@@ -303,6 +303,14 @@ struct t_config_option *config_plugin_extension;
 struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_save_config_on_unload;
 
+/* config, signal section */
+
+struct t_config_option *config_signal_sighup;
+struct t_config_option *config_signal_sigquit;
+struct t_config_option *config_signal_sigterm;
+struct t_config_option *config_signal_sigusr1;
+struct t_config_option *config_signal_sigusr2;
+
 /* other */
 
 int config_length_nick_prefix_suffix = 0;
@@ -4564,6 +4572,63 @@ config_weechat_init_options ()
         "save_config_on_unload", "boolean",
         N_("save configuration files when unloading plugins"),
         NULL, 0, 0, "on", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+    /* signal */
+    ptr_section = config_file_new_section (weechat_config_file, "signal",
+                                           0, 0,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL,
+                                           NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        weechat_config_file = NULL;
+        return 0;
+    }
+
+    config_signal_sighup = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sighup", "string",
+        N_("command to execute when the signal is received, "
+           "multiple commands can be separated by semicolons "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0,
+        "${if:${info:weechat_headless}?/reload:/quit -yes}", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_signal_sigquit = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sigquit", "string",
+        N_("command to execute when the signal is received, "
+           "multiple commands can be separated by semicolons "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "/quit -yes", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_signal_sigterm = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sigterm", "string",
+        N_("command to execute when the signal is received, "
+           "multiple commands can be separated by semicolons "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "/quit -yes", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_signal_sigusr1 = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sigusr1", "string",
+        N_("command to execute when the signal is received, "
+           "multiple commands can be separated by semicolons "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "", NULL, 0,
+        NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    config_signal_sigusr2 = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "sigusr2", "string",
+        N_("command to execute when the signal is received, "
+           "multiple commands can be separated by semicolons "
+           "(note: content is evaluated, see /help eval)"),
+        NULL, 0, 0, "", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
     /* bars */

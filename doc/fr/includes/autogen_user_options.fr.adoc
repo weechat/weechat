@@ -1308,6 +1308,36 @@
 ** valeurs: on, off
 ** valeur par défaut: `+on+`
 
+* [[option_weechat.signal.sighup]] *weechat.signal.sighup*
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
+
+* [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"/quit -yes"+`
+
+* [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+"/quit -yes"+`
+
+* [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
+
+* [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
+** description: pass:none[commande à exécuter lorsque le signal est reçu, plusieurs commandes peuvent être séparées par des point-virgules (note : le contenu est évalué, voir /help eval)]
+** type: chaîne
+** valeurs: toute chaîne
+** valeur par défaut: `+""+`
+
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
 ** description: pass:none[commande exécutée quand WeeChat démarre, après le chargement des extensions (note : le contenu est évalué, voir /help eval)]
 ** type: chaîne

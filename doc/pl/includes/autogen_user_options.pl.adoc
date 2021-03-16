@@ -1308,6 +1308,36 @@
 ** wartości: on, off
 ** domyślna wartość: `+on+`
 
+* [[option_weechat.signal.sighup]] *weechat.signal.sighup*
+** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
+
+* [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
+** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"/quit -yes"+`
+
+* [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
+** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+"/quit -yes"+`
+
+* [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
+** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
+
+* [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
+** opis: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** typ: ciąg
+** wartości: dowolny ciąg
+** domyślna wartość: `+""+`
+
 * [[option_weechat.startup.command_after_plugins]] *weechat.startup.command_after_plugins*
 ** opis: pass:none[komenda wykonana kiedy WeeChat jest uruchamiany, po załadowaniu wtyczek (uwaga: zawartość jest przetwarzana, zobacz /help eval)]
 ** typ: ciąg

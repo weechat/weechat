@@ -68,6 +68,7 @@
 #include "wee-proxy.h"
 #include "wee-secure.h"
 #include "wee-secure-config.h"
+#include "wee-signal.h"
 #include "wee-string.h"
 #include "wee-upgrade.h"
 #include "wee-utf8.h"
@@ -99,7 +100,7 @@ time_t weechat_first_start_time = 0;   /* start time (used by /uptime cmd)  */
 int weechat_upgrade_count = 0;         /* number of /upgrade done           */
 struct timeval weechat_current_start_timeval; /* start time used to display */
                                        /* duration of /upgrade              */
-volatile sig_atomic_t weechat_quit = 0;   /* = 1 if quit request from user  */
+int weechat_quit = 0;                  /* = 1 if quit request from user     */
 volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
 volatile sig_atomic_t weechat_reload_signal = 0; /* signal received,        */
@@ -689,36 +690,6 @@ weechat_locale_check ()
 }
 
 /*
- * Callback for system signal SIGHUP: reloads configuration.
- */
-
-void
-weechat_sighup ()
-{
-    weechat_reload_signal = SIGHUP;
-}
-
-/*
- * Callback for system signal SIGQUIT: quits WeeChat.
- */
-
-void
-weechat_sigquit ()
-{
-    weechat_quit_signal = SIGQUIT;
-}
-
-/*
- * Callback for system signal SIGTERM: quits WeeChat.
- */
-
-void
-weechat_sigterm ()
-{
-    weechat_quit_signal = SIGTERM;
-}
-
-/*
  * Shutdowns WeeChat.
  */
 
@@ -786,14 +757,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     weechat_first_start_time = time (NULL); /* initialize start time        */
     gettimeofday (&weechat_current_start_timeval, NULL);
 
-    /* catch signals */
-    util_catch_signal (SIGINT, SIG_IGN);           /* signal ignored        */
-    util_catch_signal (SIGPIPE, SIG_IGN);          /* signal ignored        */
-    util_catch_signal (SIGSEGV, &debug_sigsegv);   /* crash dump            */
-    util_catch_signal (SIGHUP, &weechat_sighup);   /* exit WeeChat          */
-    util_catch_signal (SIGQUIT, &weechat_sigquit); /* exit WeeChat          */
-    util_catch_signal (SIGTERM, &weechat_sigterm); /* exit WeeChat          */
-
+    signal_init ();                     /* initialize signals               */
     hdata_init ();                      /* initialize hdata                 */
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */

@@ -142,6 +142,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-secure.c                 | Fonctions pour les données sécurisées.
 |    wee-secure-buffer.c          | Tampon pour les données sécurisées.
 |    wee-secure-config.c          | Options des données sécurisées (fichier sec.conf).
+|    wee-signal.c                 | Fonctions sur les signaux.
 |    wee-string.c                 | Fonctions sur les chaînes de caractères.
 |    wee-upgrade-file.c           | Système de mise à jour interne.
 |    wee-upgrade.c                | Mise à jour du cœur de WeeChat (tampons, lignes, historique, ...).
@@ -403,6 +404,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |          test-core-infolist.cpp   | Tests : infolists.
 |          test-core-list.cpp       | Tests : listes.
 |          test-core-secure.cpp     | Tests : données sécurisées.
+|          test-core-signal.cpp     | Tests : signaux.
 |          test-core-string.cpp     | Tests : chaînes.
 |          test-core-url.cpp        | Tests : URLs.
 |          test-core-utf8.cpp       | Tests : UTF-8.

@@ -26,7 +26,6 @@ extern "C"
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <signal.h>
 #include <sys/time.h>
 #include "src/core/wee-string.h"
 #include "src/core/wee-util.h"
@@ -221,71 +220,6 @@ TEST(CoreUtil, ParseDelay)
     LONGS_EQUAL(123 * 1000, util_parse_delay ("123s", 1000));
     LONGS_EQUAL(123 * 1000 * 60, util_parse_delay ("123m", 1000));
     LONGS_EQUAL(123 * 1000 * 60 * 60, util_parse_delay ("123h", 1000));
-}
-
-/*
- * Tests functions:
- *   util_signal_search
- */
-
-TEST(CoreUtil, SignalSearch)
-{
-    int count;
-
-    /* make tests fail if the util_signals structure is changed */
-    for (count = 0; util_signals[count].name; count++)
-    {
-    }
-    LONGS_EQUAL(7, count);
-
-    LONGS_EQUAL(-1, util_signal_search (NULL));
-    LONGS_EQUAL(-1, util_signal_search (""));
-    LONGS_EQUAL(-1, util_signal_search ("signal_does_not_exist"));
-
-    LONGS_EQUAL(SIGHUP, util_signal_search ("hup"));
-    LONGS_EQUAL(SIGINT, util_signal_search ("int"));
-    LONGS_EQUAL(SIGQUIT, util_signal_search ("quit"));
-    LONGS_EQUAL(SIGKILL, util_signal_search ("kill"));
-    LONGS_EQUAL(SIGTERM, util_signal_search ("term"));
-    LONGS_EQUAL(SIGUSR1, util_signal_search ("usr1"));
-    LONGS_EQUAL(SIGUSR2, util_signal_search ("usr2"));
-
-    LONGS_EQUAL(SIGHUP, util_signal_search ("HUP"));
-    LONGS_EQUAL(SIGINT, util_signal_search ("INT"));
-    LONGS_EQUAL(SIGQUIT, util_signal_search ("QUIT"));
-    LONGS_EQUAL(SIGKILL, util_signal_search ("KILL"));
-    LONGS_EQUAL(SIGTERM, util_signal_search ("TERM"));
-    LONGS_EQUAL(SIGUSR1, util_signal_search ("USR1"));
-    LONGS_EQUAL(SIGUSR2, util_signal_search ("USR2"));
-}
-
-/*
- * Tests functions:
- *   util_signal_search_number
- */
-
-TEST(CoreUtil, SignalSearchNumber)
-{
-    POINTERS_EQUAL(NULL, util_signal_search_number (-1));
-    POINTERS_EQUAL(NULL, util_signal_search_number (999999999));
-
-    STRCMP_EQUAL("hup", util_signal_search_number (SIGHUP));
-    STRCMP_EQUAL("int", util_signal_search_number (SIGINT));
-    STRCMP_EQUAL("quit", util_signal_search_number (SIGQUIT));
-    STRCMP_EQUAL("kill", util_signal_search_number (SIGKILL));
-    STRCMP_EQUAL("term", util_signal_search_number (SIGTERM));
-    STRCMP_EQUAL("usr1", util_signal_search_number (SIGUSR1));
-    STRCMP_EQUAL("usr2", util_signal_search_number (SIGUSR2));
-}
-
-/*
- * Tests functions:
- *   util_catch_signal
- */
-
-TEST(CoreUtil, CatchSignal)
-{
-    /* TODO: write tests */
 }
 
 /*

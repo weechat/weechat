@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-03-05 20:43+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4382,6 +4382,14 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "salvar arquivos de configurações quando descarregar plugins"
 
+#, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr ""
+"comando executado quando o WeeChat inicia, após o carregamento dos plugins "
+"(nota: o conteúdo é avaliado, veja /help eval)"
+
 msgid "FATAL: error initializing configuration options"
 msgstr "FATAL: erro inicializando opções de configuração"
 
@@ -4782,14 +4790,6 @@ msgstr "Cores do WeeChat (em uso: %d, sobram: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal perdido, saindo do WeeChat..."
-
-#, fuzzy, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr "Sinal %s recebido, saindo do WeeChat..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "Sinal %s recebido, saindo do WeeChat..."
 
 msgid "Mouse is enabled"
 msgstr "Mouse está habilitado"
@@ -12962,6 +12962,14 @@ msgstr "%s%s: tempo esgotado para \"%s\" com %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: não foi possível conectar ao remetente"
+
+#, fuzzy, c-format
+#~ msgid "Signal %s received, reloading configuration..."
+#~ msgstr "Sinal %s recebido, saindo do WeeChat..."
+
+#, c-format
+#~ msgid "Signal %s received, exiting WeeChat..."
+#~ msgstr "Sinal %s recebido, saindo do WeeChat..."
 
 #, fuzzy
 #~ msgid "secured data: names and values"

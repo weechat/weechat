@@ -2471,6 +2471,8 @@ _weechat.conf_ ファイル内のセクション:
 | proxy      | <<command_weechat_proxy,/proxy>>          +
                /set weechat.proxy.*                      | プロキシオプション
 | network    | /set weechat.network.*                    | ネットワーク/SSL オプション
+// TRANSLATION MISSING
+| signal     | /set weechat.signal.*                     | Signal options.
 | bar        | <<command_weechat_bar,/bar>>              +
                /set weechat.bar.*                        | バーオプション
 | layout     | <<command_weechat_layout,/layout>>        | レイアウト

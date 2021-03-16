@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2003-2021 Sébastien Helleu <flashcode@flashtux.org>
+ * Copyright (C) 2021 Sébastien Helleu <flashcode@flashtux.org>
  *
  * This file is part of WeeChat, the extensible chat client.
  *
@@ -17,25 +17,21 @@
  * along with WeeChat.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef WEECHAT_DEBUG_H
-#define WEECHAT_DEBUG_H
+#ifndef WEECHAT_SIGNAL_H
+#define WEECHAT_SIGNAL_H
 
-#include <sys/time.h>
+struct t_signal
+{
+    int signal;                        /* signal number                     */
+    char *name;                        /* signal name, eg "hup" for SIGHUP  */
+};
 
-struct t_gui_window_tree;
+extern struct t_signal signal_list[];
 
-extern void debug_sigsegv_cb ();
-extern void debug_windows_tree ();
-extern void debug_memory ();
-extern void debug_hdata ();
-extern void debug_hooks ();
-extern void debug_infolists ();
-extern void debug_directories ();
-extern void debug_display_time_elapsed (struct timeval *time1,
-                                        struct timeval *time2,
-                                        const char *message,
-                                        int display);
-extern void debug_init ();
-extern void debug_end ();
+extern int signal_search_number (int signal_number);
+extern int signal_search_name (const char *name);
+extern void signal_catch (int signum, void (*handler)(int));
+extern void signal_handle ();
+extern void signal_init ();
 
-#endif /* WEECHAT_DEBUG_H */
+#endif /* WEECHAT_SIGNAL_H */

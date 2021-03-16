@@ -77,6 +77,8 @@
 ./src/core/wee-secure-buffer.h
 ./src/core/wee-secure-config.c
 ./src/core/wee-secure-config.h
+./src/core/wee-signal.c
+./src/core/wee-signal.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
 ./src/core/wee-upgrade.c

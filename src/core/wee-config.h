@@ -346,6 +346,12 @@ extern struct t_config_option *config_plugin_extension;
 extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
+extern struct t_config_option *config_signal_sighup;
+extern struct t_config_option *config_signal_sigquit;
+extern struct t_config_option *config_signal_sigterm;
+extern struct t_config_option *config_signal_sigusr1;
+extern struct t_config_option *config_signal_sigusr2;
+
 extern int config_length_nick_prefix_suffix;
 extern int config_length_prefix_same_nick;
 extern int config_length_prefix_same_nick_middle;

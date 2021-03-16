@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-14 14:00+0100\n"
+"POT-Creation-Date: 2021-03-16 18:31+0100\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4723,6 +4723,14 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "プラグインをアンロードする際に設定ファイルをセーブ"
 
+#, fuzzy
+msgid ""
+"command to execute when the signal is received, multiple commands can be "
+"separated by semicolons (note: content is evaluated, see /help eval)"
+msgstr ""
+"WeeChat が実行され、プラグインのロード後に実行されるコマンド (注意: 値は評価"
+"されます、/help eval を参照してください)"
+
 msgid "FATAL: error initializing configuration options"
 msgstr "致命的: 設定オプションの初期化中にエラー"
 
@@ -5160,14 +5168,6 @@ msgstr "WeeChat 色 (使用中: %d、残り: %d):"
 
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "端末が見つかりません、WeeChat の終了中..."
-
-#, fuzzy, c-format
-msgid "Signal %s received, reloading configuration..."
-msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
-
-#, c-format
-msgid "Signal %s received, exiting WeeChat..."
-msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
 
 msgid "Mouse is enabled"
 msgstr "マウスを有効化しました"
@@ -14540,6 +14540,14 @@ msgstr "%s%s: \"%s\" のタイムアウト %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: 接続できません: 未定義のエラー (%d)"
+
+#, fuzzy, c-format
+#~ msgid "Signal %s received, reloading configuration..."
+#~ msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
+
+#, c-format
+#~ msgid "Signal %s received, exiting WeeChat..."
+#~ msgstr "シグナル %s を受け取りました、WeeChat の終了中..."
 
 #, fuzzy
 #~ msgid "secured data: names and values"

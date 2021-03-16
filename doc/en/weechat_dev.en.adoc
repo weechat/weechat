@@ -140,6 +140,7 @@ WeeChat "core" is located in following directories:
 |    wee-secure.c                 | Secured data functions.
 |    wee-secure-buffer.c          | Secured data buffer.
 |    wee-secure-config.c          | Secured data options (file sec.conf).
+|    wee-signal.c                 | Signal functions.
 |    wee-string.c                 | Functions on strings.
 |    wee-upgrade-file.c           | Internal upgrade system.
 |    wee-upgrade.c                | Upgrade for WeeChat core (buffers, lines, history, ...).
@@ -401,6 +402,7 @@ WeeChat "core" is located in following directories:
 |          test-core-infolist.cpp   | Tests: infolists.
 |          test-core-list.cpp       | Tests: lists.
 |          test-core-secure.cpp     | Tests: secured data.
+|          test-core-signal.cpp     | Tests: signals.
 |          test-core-string.cpp     | Tests: strings.
 |          test-core-url.cpp        | Tests: URLs.
 |          test-core-utf8.cpp       | Tests: UTF-8.

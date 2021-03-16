@@ -148,6 +148,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |    wee-secure.c                 | データ保護用の関数
 |    wee-secure-buffer.c          | データ保護用のバッファ
 |    wee-secure-config.c          | 安全なデータオプション (sec.conf ファイル)
+// TRANSLATION MISSING
+|    wee-signal.c                 | Signal functions.
 |    wee-string.c                 | 文字列関数
 |    wee-upgrade-file.c           | 内部アップグレードシステム
 |    wee-upgrade.c                | WeeChat コアのアップグレード (バッファ、行、履歴、...)
@@ -413,6 +415,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |          test-core-infolist.cpp   | テスト: インフォリスト
 |          test-core-list.cpp       | テスト: リスト
 |          test-core-secure.cpp     | テスト: データ保護
+// TRANSLATION MISSING
+|          test-core-signal.cpp     | テスト: signals.
 |          test-core-string.cpp     | テスト: 文字列
 |          test-core-url.cpp        | テスト: URL
 |          test-core-utf8.cpp       | テスト: UTF-8

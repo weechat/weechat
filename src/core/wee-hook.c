@@ -35,8 +35,8 @@
 #include "wee-hashtable.h"
 #include "wee-infolist.h"
 #include "wee-log.h"
+#include "wee-signal.h"
 #include "wee-string.h"
-#include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
@@ -514,7 +514,7 @@ hook_set (struct t_hook *hook, const char *property, const char *value)
             if (!error || error[0])
             {
                 /* not a number? look for signal by name */
-                number = util_signal_search (value);
+                number = signal_search_name (value);
             }
             if (number >= 0)
             {

@@ -35,9 +35,9 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
+#include "../../core/wee-signal.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
-#include "../../core/wee-util.h"
 #include "../../core/wee-version.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
@@ -164,10 +164,9 @@ gui_main_init ()
     struct t_gui_bar_window *ptr_bar_win;
     char title[256];
 
-#ifdef WEECHAT_HEADLESS
     /* allow Ctrl-C to quit WeeChat in headless mode */
-    util_catch_signal (SIGINT, &gui_main_signal_sigint);
-#endif /* WEECHAT_HEADLESS */
+    if (weechat_headless)
+        signal_catch (SIGINT, &gui_main_signal_sigint);
 
     initscr ();
 
@@ -265,30 +264,6 @@ gui_main_init ()
 }
 
 /*
- * Returns signal name with a signal number.
- *
- * Note: result must be freed after use.
- */
-
-char *
-gui_main_get_signal_name (int signal_number)
-{
-    const char *signal_name;
-    char str_signal[32];
-
-    signal_name = util_signal_search_number (signal_number);
-    if (!signal_name)
-        return NULL;
-
-    snprintf (str_signal, sizeof (str_signal),
-              "SIG%s",
-              signal_name);
-    string_toupper (str_signal);
-
-    return strdup (str_signal);
-}
-
-/*
  * Callback for system signal SIGWINCH: refreshes screen.
  */
 
@@ -298,82 +273,6 @@ gui_main_signal_sigwinch ()
     gui_signal_sigwinch_received = 1;
 }
 
-/*
- * Sends a WeeChat signal on a system signal received.
- *
- * Returns:
- *   WEECHAT_RC_OK: the WeeChat handler must be executed
- *   WEECHAT_RC_OK_EAT: signal eaten, the WeeChat handler must NOT be executed
- */
-
-int
-gui_main_handle_signal (const char *signal_name)
-{
-    int rc;
-    char str_signal[32];
-
-    if (!signal_name)
-        return WEECHAT_RC_OK;
-
-    snprintf (str_signal, sizeof (str_signal), "signal_%s", signal_name);
-    string_tolower (str_signal);
-
-    rc = hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING, NULL);
-
-    return (rc == WEECHAT_RC_OK_EAT) ? WEECHAT_RC_OK_EAT : WEECHAT_RC_OK;
-}
-
-/*
- * Callback for signals received that will make WeeChat reload configuration.
- */
-
-void
-gui_main_handle_reload_signal ()
-{
-    char *signal_name;
-
-    signal_name = gui_main_get_signal_name (weechat_reload_signal);
-
-    if (gui_main_handle_signal (signal_name) != WEECHAT_RC_OK_EAT)
-    {
-        log_printf (_("Signal %s received, reloading configuration..."),
-                    signal_name);
-        command_reload_files ();
-    }
-
-    if (signal_name)
-        free (signal_name);
-
-    weechat_reload_signal = 0;
-}
-
-/*
- * Callback for signals received that will make WeeChat quit.
- */
-
-void
-gui_main_handle_quit_signals ()
-{
-    char *signal_name;
-
-    signal_name = gui_main_get_signal_name (weechat_quit_signal);
-
-    if (gui_main_handle_signal (signal_name) != WEECHAT_RC_OK_EAT)
-    {
-        if (!weechat_quit)
-        {
-            log_printf (_("Signal %s received, exiting WeeChat..."),
-                        signal_name);
-            (void) hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            weechat_quit = 1;
-        }
-    }
-
-    if (signal_name)
-        free (signal_name);
-
-    weechat_quit_signal = 0;
-}
 /*
  * Displays infos about ncurses lib.
  */
@@ -510,7 +409,7 @@ gui_main_loop ()
 
     /* catch SIGWINCH signal: redraw screen */
     if (!weechat_headless)
-        util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
+        signal_catch (SIGWINCH, &gui_main_signal_sigwinch);
 
     /* hook stdin (read keyboard) */
     if (weechat_headless)
@@ -566,10 +465,7 @@ gui_main_loop ()
         hook_process_exec ();
 
         /* handle signals received */
-        if (weechat_reload_signal > 0)
-            gui_main_handle_reload_signal ();
-        if (weechat_quit_signal > 0)
-            gui_main_handle_quit_signals ();
+        signal_handle ();
     }
 
     /* remove keyboard hook */
