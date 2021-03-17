@@ -1309,31 +1309,31 @@
 ** Standardwert: `+on+`
 
 * [[option_weechat.signal.sighup]] *weechat.signal.sighup*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"${if:${info:weechat_headless}?/reload:/quit -yes}"+`
 
 * [[option_weechat.signal.sigquit]] *weechat.signal.sigquit*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigterm]] *weechat.signal.sigterm*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+"/quit -yes"+`
 
 * [[option_weechat.signal.sigusr1]] *weechat.signal.sigusr1*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
 
 * [[option_weechat.signal.sigusr2]] *weechat.signal.sigusr2*
-** Beschreibung: pass:none[command to execute when the signal is received, multiple commands can be separated by semicolons (note: content is evaluated, see /help eval)]
+** Beschreibung: pass:none[Befehl zum Ausführen, wenn das Signal empfangen wird. Mehrere Befehle können durch Semikolons getrennt werden (Hinweis: Inhalt wird ausgewertet, siehe / help eval)]
 ** Typ: Zeichenkette
 ** Werte: beliebige Zeichenkette
 ** Standardwert: `+""+`
