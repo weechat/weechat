@@ -92,23 +92,23 @@ TEST(GuiNick, HashDbj264)
     gui_nick_hash_djb2_64 (NULL, NULL);
     gui_nick_hash_djb2_64 ("", NULL);
     gui_nick_hash_djb2_64 ("", &hash);
-    UNSIGNED_LONGS_EQUAL(0, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), hash);
 
     gui_nick_hash_djb2_64 ("a", &hash);
-    UNSIGNED_LONGS_EQUAL(97, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(97), hash);
 
     hash = 0;
     gui_nick_hash_djb2_64 ("abcdef", &hash);
-    UNSIGNED_LONGS_EQUAL(4013083373, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(4013083373), hash);
 
     hash = 0;
     gui_nick_hash_djb2_64 ("abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(16315903832110220128, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(16315903832110220128), hash);
 
     hash = 0;
     gui_nick_hash_djb2_64 ("abcdefghijklmnopqrstuvwxyz"
                            "abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(16109708650384405235, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(16109708650384405235), hash);
 }
 
 /*
@@ -124,18 +124,18 @@ TEST(GuiNick, HashDbj232)
     gui_nick_hash_djb2_32 (NULL, NULL);
     gui_nick_hash_djb2_32 ("", NULL);
     gui_nick_hash_djb2_32 ("", &hash);
-    UNSIGNED_LONGS_EQUAL(0, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(0), hash);
 
     gui_nick_hash_djb2_32 ("a", &hash);
-    UNSIGNED_LONGS_EQUAL(97, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(97), hash);
 
     hash = 0;
     gui_nick_hash_djb2_32 ("abcdef", &hash);
-    UNSIGNED_LONGS_EQUAL(4013083373, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(4013083373), hash);
 
     hash = 0;
     gui_nick_hash_djb2_32 ("abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(3683976572, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(3683976572), hash);
 }
 
 /*
@@ -151,23 +151,23 @@ TEST(GuiNick, HashSum64)
     gui_nick_hash_sum_64 (NULL, NULL);
     gui_nick_hash_sum_64 ("", NULL);
     gui_nick_hash_sum_64 ("", &hash);
-    UNSIGNED_LONGS_EQUAL(0, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), hash);
 
     gui_nick_hash_sum_64 ("a", &hash);
-    UNSIGNED_LONGS_EQUAL(97, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(97), hash);
 
     hash = 0;
     gui_nick_hash_sum_64 ("abcdef", &hash);
-    UNSIGNED_LONGS_EQUAL(597, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(597), hash);
 
     hash = 0;
     gui_nick_hash_sum_64 ("abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(2847, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(2847), hash);
 
     hash = 0;
     gui_nick_hash_sum_64 ("abcdefghijklmnopqrstuvwxyz"
                           "abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(5694, hash);
+    UNSIGNED_LONGS_EQUAL(UINT64_C(5694), hash);
 }
 
 /*
@@ -183,23 +183,23 @@ TEST(GuiNick, HashSum32)
     gui_nick_hash_sum_32 (NULL, NULL);
     gui_nick_hash_sum_32 ("", NULL);
     gui_nick_hash_sum_32 ("", &hash);
-    UNSIGNED_LONGS_EQUAL(0, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(0), hash);
 
     gui_nick_hash_sum_32 ("a", &hash);
-    UNSIGNED_LONGS_EQUAL(97, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(97), hash);
 
     hash = 0;
     gui_nick_hash_sum_32 ("abcdef", &hash);
-    UNSIGNED_LONGS_EQUAL(597, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(597), hash);
 
     hash = 0;
     gui_nick_hash_sum_32 ("abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(2847, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(2847), hash);
 
     hash = 0;
     gui_nick_hash_sum_32 ("abcdefghijklmnopqrstuvwxyz"
                           "abcdefghijklmnopqrstuvwxyz", &hash);
-    UNSIGNED_LONGS_EQUAL(5694, hash);
+    UNSIGNED_LONGS_EQUAL(UINT32_C(5694), hash);
 }
 
 /*
@@ -214,74 +214,74 @@ TEST(GuiNick, HashColor)
     /* test hash: djb2 */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("", 256));
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("abcdef", 0));
 
-    UNSIGNED_LONGS_EQUAL(6006552168338, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(6006552168338), gui_nick_hash_color ("abcdef", -1));
 
-    UNSIGNED_LONGS_EQUAL(71, gui_nick_hash_color ("a", 256));
-    UNSIGNED_LONGS_EQUAL(108, gui_nick_hash_color ("abc", 256));
-    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("abcdef", 256));
-    UNSIGNED_LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi", 256));
-    UNSIGNED_LONGS_EQUAL(170, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(124, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                                   "abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(71), gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(108), gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(73), gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(170), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(124), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                             "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(94), gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: sum */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("", 256));
 
-    UNSIGNED_LONGS_EQUAL(97, gui_nick_hash_color ("a", 256));
-    UNSIGNED_LONGS_EQUAL(38, gui_nick_hash_color ("abc", 256));
-    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("abcdef", 256));
-    UNSIGNED_LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi", 256));
-    UNSIGNED_LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                                  "abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(97), gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(38), gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(141), gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(31), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(62), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                            "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(220), gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: djb2_32 */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("", 256));
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("abcdef", 0));
 
-    UNSIGNED_LONGS_EQUAL(1382582162, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(1382582162), gui_nick_hash_color ("abcdef", -1));
 
-    UNSIGNED_LONGS_EQUAL(71, gui_nick_hash_color ("a", 256));
-    UNSIGNED_LONGS_EQUAL(108, gui_nick_hash_color ("abc", 256));
-    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("abcdef", 256));
-    UNSIGNED_LONGS_EQUAL(73, gui_nick_hash_color ("abcdefghi", 256));
-    UNSIGNED_LONGS_EQUAL(209, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(116, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                                   "abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(94, gui_nick_hash_color ("zzzzzz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(71), gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(108), gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(73), gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(209), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(116), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                             "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(94), gui_nick_hash_color ("zzzzzz", 256));
 
     /* test hash: sum_32 */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color (NULL, 256));
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color (NULL, 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("", 256));
 
-    UNSIGNED_LONGS_EQUAL(0, gui_nick_hash_color ("abcdef", 0));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(0), gui_nick_hash_color ("abcdef", 0));
 
-    UNSIGNED_LONGS_EQUAL(597, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(597), gui_nick_hash_color ("abcdef", -1));
 
-    UNSIGNED_LONGS_EQUAL(97, gui_nick_hash_color ("a", 256));
-    UNSIGNED_LONGS_EQUAL(38, gui_nick_hash_color ("abc", 256));
-    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("abcdef", 256));
-    UNSIGNED_LONGS_EQUAL(141, gui_nick_hash_color ("abcdefghi", 256));
-    UNSIGNED_LONGS_EQUAL(31, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(62, gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
-                                                  "abcdefghijklmnopqrstuvwxyz", 256));
-    UNSIGNED_LONGS_EQUAL(220, gui_nick_hash_color ("zzzzzz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(97), gui_nick_hash_color ("a", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(38), gui_nick_hash_color ("abc", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("abcdef", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(141), gui_nick_hash_color ("abcdefghi", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(31), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(62), gui_nick_hash_color ("abcdefghijklmnopqrstuvwxyz"
+                                                            "abcdefghijklmnopqrstuvwxyz", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(220), gui_nick_hash_color ("zzzzzz", 256));
 
     /* hash with salt */
 
@@ -289,23 +289,23 @@ TEST(GuiNick, HashColor)
 
     /* test hash: djb2 */
     config_file_option_set (config_look_nick_color_hash, "djb2", 1);
-    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("def", 256));
-    UNSIGNED_LONGS_EQUAL(199603970247853410, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(199603970247853410), gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: sum */
     config_file_option_set (config_look_nick_color_hash, "sum", 1);
-    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("def", 256));
-    UNSIGNED_LONGS_EQUAL(891, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(891), gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: djb2_32 */
     config_file_option_set (config_look_nick_color_hash, "djb2_32", 1);
-    UNSIGNED_LONGS_EQUAL(146, gui_nick_hash_color ("def", 256));
-    UNSIGNED_LONGS_EQUAL(2988541282, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(146), gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(2988541282), gui_nick_hash_color ("abcdef", -1));
 
     /* test hash: sum_32 */
     config_file_option_set (config_look_nick_color_hash, "sum_32", 1);
-    UNSIGNED_LONGS_EQUAL(85, gui_nick_hash_color ("def", 256));
-    UNSIGNED_LONGS_EQUAL(891, gui_nick_hash_color ("abcdef", -1));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(85), gui_nick_hash_color ("def", 256));
+    UNSIGNED_LONGS_EQUAL(UINT64_C(891), gui_nick_hash_color ("abcdef", -1));
 
     config_file_option_reset (config_look_nick_color_hash_salt, 1);
 }
