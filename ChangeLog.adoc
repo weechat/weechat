@@ -22,6 +22,7 @@ New features::
 
   * core: add options to customize commands executed on system signals received (SIGHUP, SIGQUIT, SIGTERM, SIGUSR1, SIGUSR2) (issue #1595)
   * core: quit WeeChat by default when signal SIGHUP is received in normal run, reload configuration in weechat-headless (issue #1595)
+  * api: add support of pointer names in function string_eval_expression (direct and in hdata)
   * api: add info "weechat_daemon"
 
 Bug fixes::

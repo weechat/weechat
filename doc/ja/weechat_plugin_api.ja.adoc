@@ -2226,7 +2226,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9 and 3.1._
+2.2, 2.3, 2.7, 2.9, 3.1 and 3.2._
 
 式を評価して文字列として返す。`+${variable}+`
 という書式で書かれた特殊変数は展開されます (以下の表を参照)。
@@ -2789,11 +2789,20 @@ str5 = weechat.string_eval_expression("password=abc password=def", {}, {}, optio
   `+${nick}+` |
   `+FlashCode+`
 
+| `+${pointer}+` |
+  _pointers_ の変数 `pointer` の値に展開 |
+  `+${my_pointer}+` |
+  `+0x1234abcd+`
+
+// TRANSLATION MISSING
 | `+${hdata.var1.var2...}+` +
   `+${hdata[list].var1.var2...}+` |
   hdata の値 (`window` と `buffer`
-  ポインタはデフォルトで現在のウィンドウ/バッファに設定されます) |
+  ポインタはデフォルトで現在のウィンドウ/バッファに設定されます),
+  `list` can be a list name (example: "gui_buffers"), a pointer
+  (example: "0x1234abcd") or a pointer name (example: "my_pointer"). |
   `+${buffer[gui_buffers].full_name}+` +
+  `+${buffer[my_buffer_pointer].full_name}+` +
   `+${window.buffer.number}+` |
   `+core.weechat+` +
   `+1+`

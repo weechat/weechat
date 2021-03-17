@@ -2306,7 +2306,7 @@ str3 = weechat.string_input_for_buffer("//test")  # "/test"
 
 // TRANSLATION MISSING
 _WeeChat ≥ 0.4.0, updated in 0.4.2, 0.4.3, 1.0, 1.1, 1.2, 1.3, 1.6, 1.8, 2.0,
-2.2, 2.3, 2.7, 2.9 and 3.1._
+2.2, 2.3, 2.7, 2.9, 3.1 and 3.2._
 
 // TRANSLATION MISSING
 Evaluate an expression and return result as a string.
@@ -2869,11 +2869,18 @@ expanded to last):
   `+${nick}+` |
   `+FlashCode+`
 
+| `+${pointer}+` |
+  Variable `pointer` from hashtable _pointers_. |
+  `+${my_pointer}+` |
+  `+0x1234abcd+`
+
 | `+${hdata.var1.var2...}+` +
   `+${hdata[list].var1.var2...}+` |
   Hdata value (pointers `window` and `buffer` are set by default with current
-  window/buffer). |
+  window/buffer), `list` can be a list name (example: "gui_buffers"), a pointer
+  (example: "0x1234abcd") or a pointer name (example: "my_pointer"). |
   `+${buffer[gui_buffers].full_name}+` +
+  `+${buffer[my_buffer_pointer].full_name}+` +
   `+${window.buffer.number}+` |
   `+core.weechat+` +
   `+1+`

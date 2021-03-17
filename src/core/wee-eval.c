@@ -744,7 +744,9 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
     struct t_hashtable *hashtable;
 
     EVAL_DEBUG_MSG(1, "eval_hdata_get_value(\"%s\", 0x%lx, \"%s\")",
-                   hdata->name, pointer, path);
+                   (hdata) ? hdata->name : "(null)",
+                   pointer,
+                   path);
 
     value = NULL;
     var_name = NULL;
@@ -764,6 +766,9 @@ eval_hdata_get_value (struct t_hdata *hdata, void *pointer, const char *path,
         value = strdup (str_value);
         goto end;
     }
+
+    if (!hdata)
+        goto end;
 
     /*
      * look for name of hdata, for example in "window.buffer.full_name", the
@@ -903,8 +908,8 @@ end:
 char *
 eval_string_hdata (const char *text, struct t_eval_context *eval_context)
 {
-    const char *pos, *pos1, *pos2;
-    char *value, *hdata_name, *list_name, *tmp;
+    const char *pos_vars, *pos1, *pos2;
+    char *value, *hdata_name, *pointer_name, *tmp;
     void *pointer;
     struct t_hdata *hdata;
     int rc;
@@ -912,14 +917,16 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
 
     value = NULL;
     hdata_name = NULL;
-    list_name = NULL;
+    pointer_name = NULL;
     pointer = NULL;
 
-    pos = strchr (text, '.');
-    if (pos > text)
-        hdata_name = string_strndup (text, pos - text);
+    pos_vars = strchr (text, '.');
+    if (pos_vars > text)
+        hdata_name = string_strndup (text, pos_vars - text);
     else
         hdata_name = strdup (text);
+    if (pos_vars)
+        pos_vars++;
 
     if (!hdata_name)
         goto end;
@@ -928,9 +935,12 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
     if (pos1 > hdata_name)
     {
         pos2 = strchr (pos1 + 1, ']');
-        if (pos2 > pos1 + 1)
+        if (pos2)
         {
-            list_name = string_strndup (pos1 + 1, pos2 - pos1 - 1);
+            if (pos2 > pos1 + 1)
+                pointer_name = string_strndup (pos1 + 1, pos2 - pos1 - 1);
+            else
+                goto end;
         }
         tmp = string_strndup (hdata_name, pos1 - hdata_name);
         if (tmp)
@@ -942,13 +952,20 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
 
     hdata = hook_hdata_get (NULL, hdata_name);
     if (!hdata)
-        goto end;
-
-    if (list_name)
     {
-        if (strncmp (list_name, "0x", 2) == 0)
+        if (pos_vars || pointer_name)
+            goto end;
+        /* case of a single pointer which is not hdata, eg: ${my_pointer} */
+        pointer = hashtable_get (eval_context->pointers, hdata_name);
+        value = eval_hdata_get_value (NULL, pointer, pos_vars, eval_context);
+        goto end;
+    }
+
+    if (pointer_name)
+    {
+        if (strncmp (pointer_name, "0x", 2) == 0)
         {
-            rc = sscanf (list_name, "%lx", &ptr);
+            rc = sscanf (pointer_name, "%lx", &ptr);
             if ((rc != EOF) && (rc != 0))
             {
                 pointer = (void *)ptr;
@@ -959,7 +976,17 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
                 goto end;
         }
         else
-            pointer = hdata_get_list (hdata, list_name);
+        {
+            pointer = hdata_get_list (hdata, pointer_name);
+            if (!pointer)
+            {
+                pointer = hashtable_get (eval_context->pointers, pointer_name);
+                if (!pointer)
+                    goto end;
+                if (!hdata_check_pointer (hdata, NULL, pointer))
+                    goto end;
+            }
+        }
     }
 
     if (!pointer)
@@ -967,18 +994,17 @@ eval_string_hdata (const char *text, struct t_eval_context *eval_context)
         pointer = hashtable_get (eval_context->pointers, hdata_name);
         if (!pointer)
             goto end;
+        if (!hdata_check_pointer (hdata, NULL, pointer))
+            goto end;
     }
 
-    value = eval_hdata_get_value (hdata,
-                                  pointer,
-                                  (pos) ? pos + 1 : NULL,
-                                  eval_context);
+    value = eval_hdata_get_value (hdata, pointer, pos_vars, eval_context);
 
 end:
     if (hdata_name)
         free (hdata_name);
-    if (list_name)
-        free (list_name);
+    if (pointer_name)
+        free (pointer_name);
 
     return (value) ? value : strdup ("");
 }
@@ -1012,7 +1038,7 @@ end:
  *  20. an option (format: file.section.option)
  *  21. a buffer local variable
  *  22. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
- *                        or hdata[ptr].var1.var2)
+ *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
  *

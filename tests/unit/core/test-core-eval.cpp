@@ -443,7 +443,11 @@ TEST(CoreEval, EvalExpression)
     char *value, str_value[256];
     const char *ptr_debug_output;
 
-    pointers = NULL;
+    pointers = hashtable_new (32,
+                              WEECHAT_HASHTABLE_STRING,
+                              WEECHAT_HASHTABLE_POINTER,
+                              NULL, NULL);
+    CHECK(pointers);
 
     extra_vars = hashtable_new (32,
                                 WEECHAT_HASHTABLE_STRING,
@@ -452,7 +456,11 @@ TEST(CoreEval, EvalExpression)
     CHECK(extra_vars);
     hashtable_set (extra_vars, "test", "value");
 
-    options = NULL;
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+    CHECK(options);
 
     POINTERS_EQUAL(NULL, eval_expression (NULL, NULL, NULL, NULL));
 
@@ -728,6 +736,9 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("weechat", "${name}");
 
     /* test hdata */
+    hashtable_set (pointers, "my_null_pointer", (const void *)0x0);
+    hashtable_set (pointers, "my_buffer_pointer", gui_buffers);
+    hashtable_set (pointers, "my_other_pointer", (const void *)0x1234abcd);
     WEE_CHECK_EVAL("x", "x${buffer.number");
     WEE_CHECK_EVAL("x${buffer.number}1",
                    "x\\${buffer.number}${buffer.number}");
@@ -735,7 +746,20 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("1", "${window.buffer.number}");
     WEE_CHECK_EVAL("core.weechat", "${buffer.full_name}");
     WEE_CHECK_EVAL("core.weechat", "${window.buffer.full_name}");
+    WEE_CHECK_EVAL("", "${buffer[].full_name}");
     WEE_CHECK_EVAL("", "${buffer[0x0].full_name}");
+    WEE_CHECK_EVAL("", "${buffer[0x1].full_name}");
+    WEE_CHECK_EVAL("", "${buffer[unknown_list].full_name}");
+    WEE_CHECK_EVAL("", "${unknown_pointer}");
+    WEE_CHECK_EVAL("", "${my_null_pointer}");
+    snprintf (str_value, sizeof (str_value),
+              "0x%lx", (long unsigned int)gui_buffers);
+    WEE_CHECK_EVAL(str_value, "${my_buffer_pointer}");
+    WEE_CHECK_EVAL("0x1234abcd", "${my_other_pointer}");
+    WEE_CHECK_EVAL("", "${buffer[unknown_pointer].full_name}");
+    WEE_CHECK_EVAL("", "${buffer[my_null_pointer].full_name}");
+    WEE_CHECK_EVAL("core.weechat", "${buffer[my_buffer_pointer].full_name}");
+    WEE_CHECK_EVAL("", "${buffer[my_other_pointer].full_name}");
     WEE_CHECK_EVAL("core.weechat", "${buffer[gui_buffers].full_name}");
     snprintf (str_value, sizeof (str_value),
               "${buffer[0x%lx].full_name}", (long unsigned int)gui_buffers);
@@ -754,13 +778,9 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL(str_value, "${window.buffer.local_variables}");
     WEE_CHECK_EVAL("core", "${window.buffer.local_variables.plugin}");
     WEE_CHECK_EVAL("weechat", "${window.buffer.local_variables.name}");
+    hashtable_remove_all (pointers);
 
     /* test with another prefix/suffix */
-    options = hashtable_new (32,
-                             WEECHAT_HASHTABLE_STRING,
-                             WEECHAT_HASHTABLE_STRING,
-                             NULL, NULL);
-    CHECK(options);
     hashtable_set (options, "prefix", "<<<");
     WEE_CHECK_EVAL("${info:version}", "${info:version}");
     WEE_CHECK_EVAL("<info:version}", "<info:version}");
@@ -773,14 +793,9 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("<<info:version>>", "<<info:version>>");
     WEE_CHECK_EVAL(version_get_version (), "<<<info:version>>>");
     WEE_CHECK_EVAL("1", "<<<buffer.number>>>");
-    hashtable_free (options);
+    hashtable_remove_all (options);
 
     /* test with debug level 1 */
-    options = hashtable_new (32,
-                             WEECHAT_HASHTABLE_STRING,
-                             WEECHAT_HASHTABLE_STRING,
-                             NULL, NULL);
-    CHECK(options);
     hashtable_set (options, "debug", "1");
     WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -791,14 +806,9 @@ TEST(CoreEval, EvalExpression)
                  "  2:== \"fedcba\"\n"
                  "1:== \"fedcba\"",
                  ptr_debug_output);
-    hashtable_free (options);
+    hashtable_remove_all (options);
 
     /* test with debug level 2 */
-    options = hashtable_new (32,
-                             WEECHAT_HASHTABLE_STRING,
-                             WEECHAT_HASHTABLE_STRING,
-                             NULL, NULL);
-    CHECK(options);
     hashtable_set (options, "debug", "2");
     WEE_CHECK_EVAL("fedcba", "${rev:abcdef}");
     ptr_debug_output = (const char *)hashtable_get (options, "debug_output");
@@ -809,9 +819,11 @@ TEST(CoreEval, EvalExpression)
                  "  2:== \"fedcba\"\n"
                  "1:== \"fedcba\"",
                  ptr_debug_output);
-    hashtable_free (options);
+    hashtable_remove_all (options);
 
+    hashtable_free (pointers);
     hashtable_free (extra_vars);
+    hashtable_free (options);
 }
 
 /*
