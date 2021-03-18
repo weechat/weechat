@@ -1037,7 +1037,8 @@ end:
  *  19. calculate result of an expression (format: calc:xxx)
  *  20. an option (format: file.section.option)
  *  21. a buffer local variable
- *  22. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
+ *  22. a pointer name from hashtable "pointers"
+ *  23. a hdata variable (format: hdata.var1.var2 or hdata[list].var1.var2
  *                        or hdata[ptr].var1.var2 or hdata[ptr_name].var1.var2)
  *
  * See /help in WeeChat for examples.
