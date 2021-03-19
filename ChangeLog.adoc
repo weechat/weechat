@@ -29,6 +29,10 @@ Bug fixes::
 
   * core: recreate buflist and fset bars on /reload when WeeChat is started without configuration files (issue #1618)
 
+Tests::
+
+  * core: switch from Ubuntu 18.04 to 20.04 in CI
+
 [[v3.1]]
 == Version 3.1 (2021-03-07)
 
