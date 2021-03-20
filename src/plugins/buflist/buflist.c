@@ -271,7 +271,7 @@ buflist_compare_buffers (void *data, struct t_arraylist *arraylist,
             else
             {
                 rc = weechat_hdata_compare (buflist_hdata_hotlist,
-                                            pointer1, pointer2,
+                                            ptr_hotlist1, ptr_hotlist2,
                                             ptr_field + 8,
                                             case_sensitive);
             }
