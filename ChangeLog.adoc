@@ -27,6 +27,7 @@ New features::
 
 Bug fixes::
 
+  * core: prevent switching to start of visited buffers when jumping to next (issue #1591, issue #1592)
   * core: recreate buflist and fset bars on /reload when WeeChat is started without configuration files (issue #1618)
 
 Tests::
