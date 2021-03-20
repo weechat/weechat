@@ -530,21 +530,20 @@ Sollte WeeChat abgestürzt sein, muss der Befehl `bt full` genutzt werden:
 Wenn eine neue stabile Version von WeeChat veröffentlicht wird, ist es Zeit
 auf diese neue Version zu wechseln.
 
-Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren,
-entweder mittels Ihrem Paketmanager  oder Sie kompilieren diese selber,
-damit sich die `weechat`-Binärdatei und alle erforderlichen Dateien sich in
-den selben Pfaden befinden. +
-Dies kann durchgeführt werden, während WeeChat ausgeführt wird.
+Zunächst müssen Sie die neue WeeChat Version als Binärdatei installieren.
+Entweder installieren Sie WeeChat mittels Ihrem Paketmanager oder Sie
+kompilieren WeeChat selber. Dadurch befindet sich die `weechat`-Binärdatei
+und alle erforderlichen Dateien in den selben Pfaden. +
+Diese Installation kann durchgeführt werden, während WeeChat ausgeführt wird.
 
 [[upgrade_command]]
 ==== Upgrade Befehl
 
-WeeChat kann die neue Binärdatei mithilfe des  <<command_weechat_upgrade,/upgrade>>
-Befehls nutzen: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten.+
-
+WeeChat kann die neue Binärdatei mit Hilfe des  <<command_weechat_upgrade,/upgrade>>
+Befehls starten: der Bufferinhalt und nicht-SSL Verbindungen bleiben dabei erhalten. +
 SSL-Verbindungen gehen während des Upgrades verloren und werden nach dem Upgrade
-automatisch wieder verbunden (ein erneutes Laden von SSL-Sitzungen ist mit GnuTLS
-derzeit nicht möglich).
+automatisch wieder verbunden (ein Halten von SSL-Sitzungen ist mit GnuTLS derzeit
+nicht möglich).
 
 Der Befehl kann auch verwendet werden, wenn Sie den Computer neu starten müssen,
 z.B. um den Kernel zu aktualisieren oder WeeChat auf einen anderen Computer zu verschieben:
@@ -566,23 +565,23 @@ $ weechat --upgrade
 
 ===== Versionshinweise
 
-Nach einem Upgrade wird *dringend empfohlen*,
+Nach einem Upgrade wird *dringend empfohlen* die,
 https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 zu lesen, denn dort sind wichtige Informationen zu Änderungen enthalten und ob
 eventuell ein manuelles Eingreifen erforderlich sein könnte.
 
 Sie müssen die Versionshinweise aller Versionen zwischen Ihrer alten (abgelaufenen)
-und Ihrer neuen Version (enthalten) lesen.+
+und Ihrer neuen Version (enthalten) lesen. +
 Wenn Sie beispielsweise von Version 3.0 auf 3.2 wechseln, müssen Sie die Versionshinweise
 der Versionen 3.1 und 3.2 lesen.
 
 ===== Konfigurations-Upgrade
 
-WeeChat hat ein automatisches Upgrade der Konfigurationsdateien (`*.conf`):
+WeeChat hat ein automatisches Upgrade für Konfigurationsdateien (`*.conf`):
 
 * Neue Optionen werden stillschweigend mit dem Standardwert hinzugefügt
-* Veraltete Optionen werden automatisch verworfen und WeeChat zeigt eine Warnung,
-  mit dem Wert der eingestellt war, an.
+* Veraltete Optionen werden automatisch verworfen. WeeChat zeigt eine Warnung,
+  mit dem Wert der eingestellt war, im Core-Buffer, an.
 
 Beispiel für eine Warnung, wenn eine Option entfernt wurde:
 
