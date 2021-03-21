@@ -1807,7 +1807,7 @@
 ** デフォルト値: `+""+`
 
 * [[option_buflist.look.sort]] *buflist.look.sort*
-** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name (note: content is evaluated, only the pointer to bar_item can be used, for example "bar_item.name")]
+** 説明: pass:none[comma-separated list of fields to sort buffers; each field is a hdata variable of buffer ("var"), a hdata variable of IRC server ("irc_server.var") or a hdata variable of IRC channel ("irc_channel.var"); char "-" can be used before field to reverse order, char "~" can be used to do a case insensitive comparison; example: "-~short_name" for case insensitive and reverse sort on buffer short name (note: the content is evaluated, before being split into fields, but at that time "bar_item" is the only variable that can be used, to distinguish between different buflist items, for example "${bar_item.name}")]
 ** タイプ: 文字列
 ** 値: 未制約文字列
 ** デフォルト値: `+"number,-active"+`

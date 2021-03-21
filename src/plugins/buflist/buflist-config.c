@@ -598,8 +598,10 @@ buflist_config_init ()
            "char \"~\" can be used to do a case insensitive comparison; "
            "example: \"-~short_name\" for case insensitive and reverse "
            "sort on buffer short name "
-           "(note: content is evaluated, only the pointer to bar_item can be "
-           "used, for example \"bar_item.name\")"),
+           "(note: the content is evaluated, before being split into fields, "
+           "but at that time \"bar_item\" is the only variable that can be "
+           "used, to distinguish between different buflist items, for example "
+           "\"${bar_item.name}\")"),
         NULL, 0, 0, "number,-active", NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_sort, NULL, NULL,
