@@ -20,6 +20,7 @@
  */
 
 #include <stdlib.h>
+#include <unistd.h>
 
 #include <gnutls/gnutls.h>
 
@@ -63,7 +64,7 @@ relay_network_set_ssl_cert_key (int verbose)
                                                 weechat_dir);
         if (weechat_dir)
             free (weechat_dir);
-        if (certkey_path2)
+        if ((certkey_path2) && (access (certkey_path2, R_OK) != -1))
         {
             ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,
                                                         certkey_path2,
@@ -85,12 +86,21 @@ relay_network_set_ssl_cert_key (int verbose)
                 if (verbose)
                 {
                     weechat_printf (NULL,
-                                    _("%s%s: warning: no SSL certificate/key "
-                                      "found (option relay.network.ssl_cert_key)"),
-                                    weechat_prefix ("error"), RELAY_PLUGIN_NAME);
+                                    _("%s%s: GnuTLS error: %s: %s"),
+                                    weechat_prefix ("error"), RELAY_PLUGIN_NAME,
+                                    gnutls_strerror_name(ret),
+                                    gnutls_strerror(ret));
                 }
             }
             free (certkey_path2);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("%s%s: warning: SSL certificate/key "
+                              "not defined or file not readable. "
+                              "(option relay.network.ssl_cert_key)"),
+                            weechat_prefix ("error"), RELAY_PLUGIN_NAME);
         }
         free (certkey_path);
     }
