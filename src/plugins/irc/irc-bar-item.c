@@ -547,30 +547,33 @@ irc_bar_item_tls_version (const void *pointer, void *data,
         return NULL;
 
     irc_buffer_get_server_and_channel (buffer, &server, NULL);
-    if (server && server->ssl_connected)
+    if (server && server->is_connected)
     {
-        version = gnutls_protocol_get_version (server->gnutls_sess);
-        switch (version)
+        if (server->ssl_connected)
         {
-            case GNUTLS_TLS_VERSION_MAX:
-                color = IRC_COLOR_ITEM_TLS_VERSION_OK;
-                break;
-            case GNUTLS_TLS1_2:
-                color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
-                break;
-            default:
-                color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+            version = gnutls_protocol_get_version (server->gnutls_sess);
+            switch (version)
+            {
+                case GNUTLS_TLS_VERSION_MAX:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_OK;
+                    break;
+                case GNUTLS_TLS1_2:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
+                    break;
+                default:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+            }
+            snprintf (buf, sizeof (buf), "%s%s", color,
+                      gnutls_protocol_get_name (version));
+            return strdup (buf);
         }
-        snprintf (buf, sizeof (buf), "%s%s", color,
-                 gnutls_protocol_get_name (version));
-        return strdup (buf);
-    }
-    else if (server && server->is_connected)
-    {
-        snprintf (buf, sizeof (buf), "%s%s",
-                  IRC_COLOR_ITEM_TLS_VERSION_INSECURE,
-                  _("cleartext"));
-        return strdup (buf);
+        else
+        {
+            snprintf (buf, sizeof (buf), "%s%s",
+                      IRC_COLOR_ITEM_TLS_VERSION_INSECURE,
+                      _("cleartext"));
+            return strdup (buf);
+        }
     }
 
     return NULL;
