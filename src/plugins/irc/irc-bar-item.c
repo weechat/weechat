@@ -564,6 +564,13 @@ irc_bar_item_tls_version (const void *pointer, void *data,
                  gnutls_protocol_get_name (version));
         return strdup (buf);
     }
+    else if (server && server->is_connected)
+    {
+        snprintf (buf, sizeof (buf), "%s%s",
+                  IRC_COLOR_ITEM_TLS_VERSION_OTHER,
+                  "cleartext");
+        return strdup (buf);
+    }
 
     return NULL;
 }

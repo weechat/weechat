@@ -59,6 +59,7 @@ extern struct t_config_option *buflist_config_format_name;
 extern struct t_config_option *buflist_config_format_nick_prefix;
 extern struct t_config_option *buflist_config_format_number;
 extern struct t_config_option *buflist_config_format_tls_version;
+extern struct t_config_option *buflist_config_format_cleartext;
 
 extern char **buflist_config_sort_fields[BUFLIST_BAR_NUM_ITEMS];
 extern int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS];
