@@ -833,6 +833,7 @@ Other items available (not used in bars by default):
 | spell_dict                   | `fr,en`                  | Spelling dictionaries used on current buffer.
 | spell_suggest                | `print,prone,prune`      | Spelling suggestions for word under cursor (if misspelled).
 | window_number                | `2`                      | Current window number.
+| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 |===
 
 [[command_line]]

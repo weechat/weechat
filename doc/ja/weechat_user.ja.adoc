@@ -868,6 +868,8 @@ WeeChat を起動した端末の例:
 | spell_dict                   | `fr,en`                  | 現在のバッファにおけるスペリング辞書
 | spell_suggest                | `print,prone,prune`      | カーソル下の単語に対するスペリング候補 (スペルが間違っている場合)
 | window_number                | `2`                      | 現在のウィンドウ番号
+// TRANSLATION MISSING
+| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 |===
 
 [[command_line]]

@@ -535,6 +535,7 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     struct t_irc_server *server;
     gnutls_protocol_t version;
     const char *color;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
@@ -552,13 +553,13 @@ irc_bar_item_tls_version (const void *pointer, void *data,
         switch (version)
         {
             case GNUTLS_TLS_VERSION_MAX:
-                color = IRC_COLOR_ITEM_TLS_VERSION_MAX;
+                color = IRC_COLOR_ITEM_TLS_VERSION_OK;
                 break;
             case GNUTLS_TLS1_2:
-                color = IRC_COLOR_ITEM_TLS_VERSION_1_2;
+                color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
                 break;
             default:
-                color = IRC_COLOR_ITEM_TLS_VERSION_OTHER;
+                color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
         }
         snprintf (buf, sizeof (buf), "%s%s", color,
                  gnutls_protocol_get_name (version));
@@ -567,8 +568,8 @@ irc_bar_item_tls_version (const void *pointer, void *data,
     else if (server && server->is_connected)
     {
         snprintf (buf, sizeof (buf), "%s%s",
-                  IRC_COLOR_ITEM_TLS_VERSION_OTHER,
-                  "cleartext");
+                  IRC_COLOR_ITEM_TLS_VERSION_INSECURE,
+                  _("cleartext"));
         return strdup (buf);
     }
 

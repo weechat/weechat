@@ -116,9 +116,9 @@ struct t_config_option *irc_config_color_item_channel_modes;
 struct t_config_option *irc_config_color_item_lag_counting;
 struct t_config_option *irc_config_color_item_lag_finished;
 struct t_config_option *irc_config_color_item_nick_modes;
-struct t_config_option *irc_config_color_item_tls_version_max;
-struct t_config_option *irc_config_color_item_tls_version_1_2;
-struct t_config_option *irc_config_color_item_tls_version_other;
+struct t_config_option *irc_config_color_item_tls_version_ok;
+struct t_config_option *irc_config_color_item_tls_version_deprecated;
+struct t_config_option *irc_config_color_item_tls_version_insecure;
 struct t_config_option *irc_config_color_message_account;
 struct t_config_option *irc_config_color_message_join;
 struct t_config_option *irc_config_color_message_chghost;
@@ -3246,26 +3246,26 @@ irc_config_init ()
         NULL, NULL, NULL,
         &irc_config_change_color_item_nick_modes, NULL, NULL,
         NULL, NULL, NULL);
-    irc_config_color_item_tls_version_max = weechat_config_new_option (
+    irc_config_color_item_tls_version_ok = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "item_tls_version_max", "color",
+        "item_tls_version_ok", "color",
         N_("color for max supported tls version in bar item \"tls_version\""),
         NULL, -1, 0, "green", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,
         NULL, NULL, NULL);
-    irc_config_color_item_tls_version_1_2 = weechat_config_new_option (
+    irc_config_color_item_tls_version_deprecated = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "item_tls_version_1_2", "color",
-        N_("color for TLS1.2 in bar item \"tls_version\""),
+        "item_tls_version_deprecated", "color",
+        N_("color for deprecated tls versions in bar item \"tls_version\""),
         NULL, -1, 0, "yellow", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,
         NULL, NULL, NULL);
-    irc_config_color_item_tls_version_other = weechat_config_new_option (
+    irc_config_color_item_tls_version_insecure = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "item_tls_version_other", "color",
-        N_("color for other tls versions in bar item \"tls_version\""),
+        "item_tls_version_insecure", "color",
+        N_("color for insecure tls versions in bar item \"tls_version\""),
         NULL, -1, 0, "red", NULL, 0,
         NULL, NULL, NULL,
         &irc_config_change_color_item_tls_version, NULL, NULL,

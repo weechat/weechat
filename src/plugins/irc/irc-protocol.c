@@ -2994,6 +2994,7 @@ IRC_PROTOCOL_CALLBACK(001)
     server->is_connected = 1;
     server->reconnect_delay = 0;
     server->monitor_time = time (NULL) + 5;
+    irc_server_set_tls_version (server);
 
     if (server->hook_timer_connection)
     {

@@ -60,7 +60,6 @@ struct t_config_option *buflist_config_format_name;
 struct t_config_option *buflist_config_format_nick_prefix;
 struct t_config_option *buflist_config_format_number;
 struct t_config_option *buflist_config_format_tls_version;
-struct t_config_option *buflist_config_format_cleartext;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
@@ -69,7 +68,7 @@ int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS] = { 0, 0, 0 };
 char *buflist_config_format_buffer_eval = NULL;
 char *buflist_config_format_buffer_current_eval = NULL;
 char *buflist_config_format_hotlist_eval = NULL;
-
+char buflist_config_format_tls_format_default[256];
 
 /*
  * Reloads buflist configuration file.
@@ -405,8 +404,7 @@ buflist_config_add_eval_for_formats (const char *string)
     char *formats[] = { "format_buffer", "format_number", "indent",
                         "format_nick_prefix", "format_name",
                         "format_hotlist", "hotlist", "format_lag",
-                        "color_hotlist", "format_tls_version",
-                        "format_cleartext", NULL };
+                        "color_hotlist", "format_tls_version", NULL };
     char *result, *tmp, format[512], format_eval[512];
     int i;
 
@@ -648,7 +646,7 @@ buflist_config_init ()
            "[${number}]}\""),
         NULL, 0, 0,
         "${format_number}${indent}${format_nick_prefix}${color_hotlist}"
-        "${format_name}${format_tls_version}",
+        "${format_name}",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_format, NULL, NULL,
@@ -776,26 +774,21 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
+
+    /* tls version, need to translate cleartext */
+    snprintf(buflist_config_format_tls_format_default,
+             sizeof(buflist_config_format_tls_format_default),
+             " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
+             "${if:${tls_version}==TLS1.2?${color:yellow}:"
+             "${if:${tls_version}==%s?${color:!red}:${color:red}}}}"
+             "${tls_version}${color:default})", _("cleartext"));
     buflist_config_format_tls_version = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "tls_version", "string",
         N_("format for tls_version on an IRC server buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
-        "${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}"
-        "${tls_version}${color:default})",
-        NULL, 0,
-        NULL, NULL, NULL,
-        &buflist_config_change_buflist, NULL, NULL,
-        NULL, NULL, NULL);
-    buflist_config_format_cleartext = weechat_config_new_option (
-        buflist_config_file, ptr_section,
-        "format_cleartext", "string",
-        N_("format for indicating an unencrypted connection on an IRC "
-           "server buffer (note: content is evaluated, see /help buflist)"),
-        NULL, 0, 0,
-        " ${color:default}(${color:red}cleartext${color:default})",
+        buflist_config_format_tls_format_default,
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

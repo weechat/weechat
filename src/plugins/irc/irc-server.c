@@ -1126,11 +1126,23 @@ irc_server_set_lag (struct t_irc_server *server)
 void
 irc_server_set_tls_version (struct t_irc_server *server)
 {
-    if (server->ssl_connected)
+    const char *cleartext;
+    gnutls_protocol_t version;
+
+    if (server->is_connected)
     {
-        gnutls_protocol_t ver = gnutls_protocol_get_version (server->gnutls_sess);
-        weechat_buffer_set (server->buffer, "localvar_set_tls_version",
-                            gnutls_protocol_get_name (ver));
+        if (server->ssl_connected)
+        {
+            version = gnutls_protocol_get_version (server->gnutls_sess);
+            weechat_buffer_set (server->buffer, "localvar_set_tls_version",
+                                gnutls_protocol_get_name (version));
+        }
+        else
+        {
+            cleartext = _("cleartext");
+            weechat_buffer_set (server->buffer, "localvar_set_tls_version",
+                                cleartext);
+        }
     }
     else
     {
@@ -3754,7 +3766,7 @@ irc_server_close_connection (struct t_irc_server *server)
     server->is_connected = 0;
     server->ssl_connected = 0;
 
-    irc_server_set_tls_version(server);
+    irc_server_set_tls_version (server);
 }
 
 /*
@@ -3964,7 +3976,6 @@ irc_server_connect_cb (const void *pointer, void *data,
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
-            irc_server_set_tls_version(server);
             weechat_printf (
                 server->buffer,
                 _("%s%s: connected to %s/%d (%s)"),

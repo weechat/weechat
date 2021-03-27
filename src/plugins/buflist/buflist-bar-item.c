@@ -299,7 +299,6 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     struct t_gui_buffer *ptr_buffer_prev, *ptr_buffer_next;
     struct t_gui_nick *ptr_gui_nick;
     struct t_gui_hotlist *ptr_hotlist;
-    struct t_hdata *hdata_irc_server;
     void *ptr_server, *ptr_channel;
     char **buflist, *str_buflist, *condition;
     char str_format_number[32], str_format_number_empty[32];
@@ -597,27 +596,14 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
                                    "format_lag", "");
         }
 
-        /* tls protocol */
-        hdata_irc_server = weechat_hdata_get ("irc_server");
-        if (!is_channel && ptr_server && weechat_hdata_integer (hdata_irc_server,
-                                                                ptr_server,
-                                                                "is_connected"))
+        /* tls version */
+        ptr_tls_version = weechat_buffer_get_string (ptr_buffer, "localvar_tls_version");
+        if (ptr_tls_version && ptr_tls_version[0])
         {
-            if (weechat_hdata_integer (hdata_irc_server,
-                                       ptr_server,
-                                       "ssl_connected"))
-            {
-                weechat_hashtable_set (
-                    buflist_hashtable_extra_vars,
-                    "format_tls_version",
-                    weechat_config_string (buflist_config_format_tls_version));
-            }
-            else
-            {
-                weechat_hashtable_set (buflist_hashtable_extra_vars,
-                                       "format_tls_version",
-                                       weechat_config_string (buflist_config_format_cleartext));
-            }
+            weechat_hashtable_set (
+                buflist_hashtable_extra_vars,
+                "format_tls_version",
+                weechat_config_string (buflist_config_format_tls_version));
         }
         else
         {

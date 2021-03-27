@@ -850,6 +850,8 @@ Autres objets (non utilisés dans des barres par défaut) :
 | spell_dict                   | `fr,en`                  | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
 | spell_suggest                | `print,prone,prune`      | Suggestions pour le mot sous le curseur (si mal orthographié).
 | window_number                | `2`                      | Numéro de la fenêtre courante.
+// TRANSLATION MISSING
+| tls_version                  | `TLS1.3`                 | TLS version in use for current IRC server.
 |===
 
 [[command_line]]
