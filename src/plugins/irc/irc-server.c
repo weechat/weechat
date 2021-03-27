@@ -1119,6 +1119,27 @@ irc_server_set_lag (struct t_irc_server *server)
 }
 
 /*
+ * Sets tls_version in server buffer (local variable), update bar item
+ * "tls_version".
+ */
+
+void
+irc_server_set_tls_version (struct t_irc_server *server)
+{
+    if (server->ssl_connected)
+    {
+        gnutls_protocol_t ver = gnutls_protocol_get_version (server->gnutls_sess);
+        weechat_buffer_set (server->buffer, "localvar_set_tls_version",
+                            gnutls_protocol_get_name (ver));
+    }
+    else
+    {
+        weechat_buffer_set (server->buffer, "localvar_del_tls_version", "");
+    }
+    weechat_bar_item_update ("tls_version");
+}
+
+/*
  * Gets prefix_modes for server (for example: "ohv").
  *
  * Returns default modes if prefix_modes is not set in server.
@@ -3732,6 +3753,8 @@ irc_server_close_connection (struct t_irc_server *server)
     /* server is now disconnected */
     server->is_connected = 0;
     server->ssl_connected = 0;
+
+    irc_server_set_tls_version(server);
 }
 
 /*
@@ -3941,6 +3964,7 @@ irc_server_connect_cb (const void *pointer, void *data,
             if (server->current_ip)
                 free (server->current_ip);
             server->current_ip = (ip_address) ? strdup (ip_address) : NULL;
+            irc_server_set_tls_version(server);
             weechat_printf (
                 server->buffer,
                 _("%s%s: connected to %s/%d (%s)"),

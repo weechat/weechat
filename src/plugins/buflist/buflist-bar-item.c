@@ -312,7 +312,7 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
     const char *hotlist_priority[4] = { "low", "message", "private",
                                         "highlight" };
     const char indent_empty[1] = { '\0' };
-    const char *ptr_lag, *ptr_item_name;
+    const char *ptr_lag, *ptr_item_name, *ptr_tls_version;
     int item_index, num_buffers, is_channel, is_private;
     int i, j, length_max_number, current_buffer, number, prev_number, priority;
     int rc, count, line_number, line_number_current_buffer;
@@ -595,6 +595,22 @@ buflist_bar_item_buflist_cb (const void *pointer, void *data,
             weechat_hashtable_set (buflist_hashtable_extra_vars,
                                    "format_lag", "");
         }
+
+        /* tls protocol */
+        ptr_tls_version = weechat_buffer_get_string (ptr_buffer, "localvar_tls_version");
+        if (ptr_tls_version && ptr_tls_version[0])
+        {
+            weechat_hashtable_set (
+                buflist_hashtable_extra_vars,
+                "format_tls_version",
+                weechat_config_string (buflist_config_format_tls_version));
+        }
+        else
+        {
+            weechat_hashtable_set (buflist_hashtable_extra_vars,
+                                   "format_tls_version", "");
+        }
+
 
         /* check condition: if false, the buffer is not displayed */
         condition = weechat_string_eval_expression (
