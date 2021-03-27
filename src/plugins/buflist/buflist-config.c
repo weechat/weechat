@@ -59,6 +59,7 @@ struct t_config_option *buflist_config_format_lag;
 struct t_config_option *buflist_config_format_name;
 struct t_config_option *buflist_config_format_nick_prefix;
 struct t_config_option *buflist_config_format_number;
+struct t_config_option *buflist_config_format_tls_version;
 
 struct t_hook **buflist_config_signals_refresh = NULL;
 int buflist_config_num_signals_refresh = 0;
@@ -403,7 +404,7 @@ buflist_config_add_eval_for_formats (const char *string)
     char *formats[] = { "format_buffer", "format_number", "indent",
                         "format_nick_prefix", "format_name",
                         "format_hotlist", "hotlist", "format_lag",
-                        "color_hotlist", NULL };
+                        "color_hotlist", "format_tls_version", NULL };
     char *result, *tmp, format[512], format_eval[512];
     int i;
 
@@ -769,6 +770,19 @@ buflist_config_init ()
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
         "${color:green}${number}${if:${number_displayed}?.: }",
+        NULL, 0,
+        NULL, NULL, NULL,
+        &buflist_config_change_buflist, NULL, NULL,
+        NULL, NULL, NULL);
+    buflist_config_format_tls_version = weechat_config_new_option (
+        buflist_config_file, ptr_section,
+        "tls_version", "string",
+        N_("format for tls_version on an IRC server buffer "
+           "(note: content is evaluated, see /help buflist)"),
+        NULL, 0, 0,
+        " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
+        "${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}"
+        "${tls_version}${color:default})",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,

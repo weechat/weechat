@@ -882,6 +882,7 @@ Autres objets (non utilisés dans des barres par défaut) :
 | mouse_status                 | `M`                      | Statut de la souris (vide si la souris est désactivée).
 | spell_dict                   | `fr,en`                  | Dictionnaires utilisés pour la vérification de l'orthographe sur le tampon courant.
 | spell_suggest                | `print,prone,prune`      | Suggestions pour le mot sous le curseur (si mal orthographié).
+| tls_version                  | `TLS1.3`                 | Version de TLS utilisée sur le serveur IRC courant.
 | window_number                | `2`                      | Numéro de la fenêtre courante.
 |===
 

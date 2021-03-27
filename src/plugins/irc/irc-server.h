@@ -323,6 +323,7 @@ extern const char *irc_server_get_chantypes (struct t_irc_server *server);
 extern void irc_server_set_prefix_modes_chars (struct t_irc_server *server,
                                                const char *prefix);
 extern void irc_server_set_lag (struct t_irc_server *server);
+extern void irc_server_set_tls_version (struct t_irc_server *server);
 extern const char *irc_server_get_prefix_modes (struct t_irc_server *server);
 extern const char *irc_server_get_prefix_chars (struct t_irc_server *server);
 extern int irc_server_get_prefix_mode_index (struct t_irc_server *server,

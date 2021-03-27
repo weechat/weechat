@@ -23,6 +23,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <gnutls/gnutls.h>
+
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-buffer.h"
@@ -520,6 +522,65 @@ irc_bar_item_lag (const void *pointer, void *data,
 }
 
 /*
+ * Returns content of bar item "tls_version": bar item with TLS version value.
+ */
+
+char *
+irc_bar_item_tls_version (const void *pointer, void *data,
+                          struct t_gui_bar_item *item,
+                          struct t_gui_window *window, struct t_gui_buffer *buffer,
+                          struct t_hashtable *extra_info)
+{
+    char buf[128];
+    struct t_irc_server *server;
+    gnutls_protocol_t version;
+    const char *color;
+
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) extra_info;
+
+    if (!buffer)
+        return NULL;
+
+    irc_buffer_get_server_and_channel (buffer, &server, NULL);
+    if (server && server->is_connected)
+    {
+        if (server->ssl_connected)
+        {
+            version = gnutls_protocol_get_version (server->gnutls_sess);
+            switch (version)
+            {
+                case GNUTLS_TLS1_3:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_OK;
+                    break;
+                case GNUTLS_TLS1_2:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_DEPRECATED;
+                    break;
+                default:
+                    color = IRC_COLOR_ITEM_TLS_VERSION_INSECURE;
+            }
+            snprintf (buf, sizeof (buf), "%s%s", color,
+                      gnutls_protocol_get_name (version));
+            return strdup (buf);
+        }
+        else
+        {
+            snprintf (buf, sizeof (buf), "%s%s",
+                      IRC_COLOR_ITEM_TLS_VERSION_INSECURE,
+                      _("cleartext"));
+            return strdup (buf);
+        }
+    }
+
+    return NULL;
+}
+
+
+/*
  * Returns content of bar item "input_prompt": bar item with input prompt.
  */
 
@@ -775,6 +836,7 @@ irc_bar_item_buffer_switch (const void *pointer, void *data,
     weechat_bar_item_update ("irc_nick");
     weechat_bar_item_update ("irc_host");
     weechat_bar_item_update ("irc_nick_host");
+    weechat_bar_item_update ("tls_version");
 
     return WEECHAT_RC_OK;
 }
@@ -822,6 +884,8 @@ irc_bar_item_init ()
                           &irc_bar_item_nick_modes, NULL, NULL);
     weechat_bar_item_new ("irc_nick_prefix",
                           &irc_bar_item_nick_prefix, NULL, NULL);
+    weechat_bar_item_new ("tls_version",
+                          &irc_bar_item_tls_version, NULL, NULL);
 
     weechat_hook_focus ("buffer_nicklist",
                         &irc_bar_item_focus_buffer_nicklist, NULL, NULL);
