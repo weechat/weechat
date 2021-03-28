@@ -68,7 +68,6 @@ int buflist_config_sort_fields_count[BUFLIST_BAR_NUM_ITEMS] = { 0, 0, 0 };
 char *buflist_config_format_buffer_eval = NULL;
 char *buflist_config_format_buffer_current_eval = NULL;
 char *buflist_config_format_hotlist_eval = NULL;
-char buflist_config_format_tls_format_default[256];
 
 /*
  * Reloads buflist configuration file.
@@ -774,21 +773,15 @@ buflist_config_init ()
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
         NULL, NULL, NULL);
-
-    /* tls version, need to translate cleartext */
-    snprintf(buflist_config_format_tls_format_default,
-             sizeof(buflist_config_format_tls_format_default),
-             " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
-             "${if:${tls_version}==TLS1.2?${color:yellow}:"
-             "${if:${tls_version}==%s?${color:!red}:${color:red}}}}"
-             "${tls_version}${color:default})", _("cleartext"));
     buflist_config_format_tls_version = weechat_config_new_option (
         buflist_config_file, ptr_section,
         "tls_version", "string",
         N_("format for tls_version on an IRC server buffer "
            "(note: content is evaluated, see /help buflist)"),
         NULL, 0, 0,
-        buflist_config_format_tls_format_default,
+        " ${color:default}(${if:${tls_version}==TLS1.3?${color:green}:"
+        "${if:${tls_version}==TLS1.2?${color:yellow}:${color:red}}}"
+        "${tls_version}${color:default})",
         NULL, 0,
         NULL, NULL, NULL,
         &buflist_config_change_buflist, NULL, NULL,
