@@ -585,6 +585,7 @@ void
 irc_mode_user_add (struct t_irc_server *server, char mode)
 {
     char str_mode[2], *nick_modes2;
+    const char *registered_mode;
 
     str_mode[0] = mode;
     str_mode[1] = '\0';
@@ -617,6 +618,13 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
         weechat_bar_item_update ("input_prompt");
         weechat_bar_item_update ("irc_nick_modes");
     }
+
+    registered_mode = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REGISTERED_MODE);
+    if (registered_mode && *registered_mode && *registered_mode == mode &&
+        server->authentication_method == IRC_SERVER_AUTH_METHOD_NONE)
+    {
+        server->authentication_method = IRC_SERVER_AUTH_METHOD_OTHER;
+    }
 }
 
 /*
@@ -628,6 +636,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
 {
     char *pos, *nick_modes2;
     int new_size;
+    const char *registered_mode;
 
     if (server->nick_modes)
     {
@@ -642,6 +651,13 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
             weechat_bar_item_update ("input_prompt");
             weechat_bar_item_update ("irc_nick_modes");
         }
+    }
+
+    registered_mode = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REGISTERED_MODE);
+    if (registered_mode && *registered_mode && *registered_mode == mode &&
+        server->authentication_method == IRC_SERVER_AUTH_METHOD_OTHER)
+    {
+        server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     }
 }
 

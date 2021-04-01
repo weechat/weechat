@@ -122,6 +122,7 @@ char *irc_server_options[IRC_SERVER_NUM_OPTIONS][2] =
   { "split_msg_max_length", "512"                     },
   { "charset_message",      "message"                 },
   { "default_chantypes",    "#&"                      },
+  { "registered_mode",      "r"                       },
 };
 
 char *irc_server_casemapping_string[IRC_SERVER_NUM_CASEMAPPING] =
@@ -1631,6 +1632,8 @@ irc_server_alloc (const char *name)
     new_server->last_user_message = 0;
     new_server->last_away_check = 0;
     new_server->last_data_purge = 0;
+    new_server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    new_server->sasl_mechanism_used = -1;
     for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
     {
         new_server->outqueue[i] = NULL;
@@ -3997,6 +4000,8 @@ irc_server_close_connection (struct t_irc_server *server)
     server->ssl_connected = 0;
 
     irc_server_set_tls_version (server);
+    server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
+    server->sasl_mechanism_used = -1;
 }
 
 /*
@@ -6182,6 +6187,8 @@ irc_server_hdata_server_cb (const void *pointer, void *data,
         WEECHAT_HDATA_VAR(struct t_irc_server, last_user_message, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_away_check, TIME, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_data_purge, TIME, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, authentication_method, INTEGER, 0, NULL, NULL);
+        WEECHAT_HDATA_VAR(struct t_irc_server, sasl_mechanism_used, INTEGER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, outqueue, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, last_outqueue, POINTER, 0, NULL, NULL);
         WEECHAT_HDATA_VAR(struct t_irc_server, redirects, POINTER, 0, NULL, "irc_redirect");
@@ -6540,6 +6547,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_time (ptr_item, "last_away_check", server->last_away_check))
         return 0;
     if (!weechat_infolist_new_var_time (ptr_item, "last_data_purge", server->last_data_purge))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "authentication_method", server->authentication_method))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sasl_mechanism_used", server->sasl_mechanism_used))
         return 0;
 
     return 1;
@@ -6934,6 +6945,8 @@ irc_server_print_log ()
         weechat_log_printf ("  last_user_message . . . . : %lld",  (long long)ptr_server->last_user_message);
         weechat_log_printf ("  last_away_check . . . . . : %lld",  (long long)ptr_server->last_away_check);
         weechat_log_printf ("  last_data_purge . . . . . : %lld",  (long long)ptr_server->last_data_purge);
+        weechat_log_printf ("  authentication_method . . : %lld",  (long long)ptr_server->authentication_method);
+        weechat_log_printf ("  sasl_mechanism_used . . . : %lld",  (long long)ptr_server->sasl_mechanism_used);
         for (i = 0; i < IRC_SERVER_NUM_OUTQUEUES_PRIO; i++)
         {
             weechat_log_printf ("  outqueue[%02d]. . . . . . . : 0x%lx", i, ptr_server->outqueue[i]);

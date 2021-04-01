@@ -94,6 +94,7 @@ enum t_irc_server_option
     IRC_SERVER_OPTION_SPLIT_MSG_MAX_LENGTH, /* max length of messages        */
     IRC_SERVER_OPTION_CHARSET_MESSAGE,      /* what to decode/encode in msg  */
     IRC_SERVER_OPTION_DEFAULT_CHANTYPES,    /* chantypes if not received     */
+    IRC_SERVER_OPTION_REGISTERED_MODE,      /* mode set on registered user   */
     /* number of server options */
     IRC_SERVER_NUM_OPTIONS,
 };
@@ -151,6 +152,14 @@ enum t_irc_server_utf8mapping
     IRC_SERVER_UTF8MAPPING_RFC8265,
     /* number of utf8mapping */
     IRC_SERVER_NUM_UTF8MAPPING,
+};
+
+/* authentication method */
+enum t_irc_server_auth_method
+{
+    IRC_SERVER_AUTH_METHOD_NONE = 0,
+    IRC_SERVER_AUTH_METHOD_SASL,
+    IRC_SERVER_AUTH_METHOD_OTHER,
 };
 
 /* output queue of messages to server (for sending slowly to server) */
@@ -255,6 +264,8 @@ struct t_irc_server
     time_t last_user_message;       /* time of last user message (anti flood)*/
     time_t last_away_check;         /* time of last away check on server     */
     time_t last_data_purge;         /* time of last purge (some hashtables)  */
+    int authentication_method;      /* authentication method used to login   */
+    int sasl_mechanism_used;        /* SASL method used at login time        */
     struct t_irc_outqueue *outqueue[2];      /* queue for outgoing messages  */
                                              /* with 2 priorities (high/low) */
     struct t_irc_outqueue *last_outqueue[2]; /* last outgoing message        */
