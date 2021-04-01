@@ -620,7 +620,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
     }
 
     registered_mode = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REGISTERED_MODE);
-    if (registered_mode && *registered_mode && *registered_mode == mode &&
+    if (registered_mode && *registered_mode == mode &&
         server->authentication_method == IRC_SERVER_AUTH_METHOD_NONE)
     {
         server->authentication_method = IRC_SERVER_AUTH_METHOD_OTHER;
@@ -654,8 +654,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
     }
 
     registered_mode = IRC_SERVER_OPTION_STRING(server, IRC_SERVER_OPTION_REGISTERED_MODE);
-    if (registered_mode && *registered_mode && *registered_mode == mode &&
-        server->authentication_method == IRC_SERVER_AUTH_METHOD_OTHER)
+    if (registered_mode && *registered_mode && *registered_mode == mode)
     {
         server->authentication_method = IRC_SERVER_AUTH_METHOD_NONE;
     }
