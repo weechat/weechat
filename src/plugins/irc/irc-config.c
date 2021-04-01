@@ -2506,7 +2506,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("mode type that is set on regeistered users (default is "
+                N_("mode type that is set on registered users (default is "
                    "\"r\")"),
                 NULL, 0, 0,
                 default_value, value,
