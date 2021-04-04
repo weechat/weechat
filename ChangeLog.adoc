@@ -27,6 +27,7 @@ New features::
 
 Bug fixes::
 
+  * core: evaluate left/right part of comparison after split on the comparison operator in ${if:xxx} (issue #1627)
   * core: prevent switching to start of visited buffers when jumping to next (issue #1591, issue #1592)
   * core: recreate buflist and fset bars on /reload when WeeChat is started without configuration files (issue #1618)
   * buflist: fix comparison of hotlists in option buflist.look.sort (issue #1621)

@@ -666,7 +666,7 @@ char *
 eval_string_if (const char *text, struct t_eval_context *eval_context)
 {
     const char *pos, *pos2;
-    char *value, *condition, *tmp, *tmp2;
+    char *value, *condition, *tmp;
     int rc;
 
     value = NULL;
@@ -679,13 +679,10 @@ eval_string_if (const char *text, struct t_eval_context *eval_context)
         strndup (text, pos - text) : strdup (text);
     if (!condition)
         return strdup ("");
-    tmp = eval_replace_vars (condition, eval_context);
-    tmp2 = eval_expression_condition ((tmp) ? tmp : "", eval_context);
-    rc = eval_is_true (tmp2);
+    tmp = eval_expression_condition (condition, eval_context);
+    rc = eval_is_true (tmp);
     if (tmp)
         free (tmp);
-    if (tmp2)
-        free (tmp2);
     if (rc)
     {
         /*

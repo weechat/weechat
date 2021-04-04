@@ -86,6 +86,9 @@ TEST(CoreEval, EvalCondition)
                                 NULL, NULL);
     CHECK(extra_vars);
     hashtable_set (extra_vars, "test", "value");
+    hashtable_set (extra_vars, "var_abc", "abc");
+    hashtable_set (extra_vars, "var_cond_true", "a==a");
+    hashtable_set (extra_vars, "var_cond_false", "a==b");
 
     options = hashtable_new (32,
                              WEECHAT_HASHTABLE_STRING,
@@ -175,6 +178,8 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("0", "${if:${buffer.number}==2?yes:no} == yes");
     WEE_CHECK_EVAL("0", "yes == ${if:${buffer.number}==2?yes:no}");
     WEE_CHECK_EVAL("0", "${if:\\$==A?yes:}");
+    WEE_CHECK_EVAL("0", "${var_does_not_exist}");
+    WEE_CHECK_EVAL("0", "${var_abc} == def");
 
     /* conditions evaluated as true */
     WEE_CHECK_EVAL("1", "1");
@@ -262,6 +267,14 @@ TEST(CoreEval, EvalCondition)
     WEE_CHECK_EVAL("1", "${if:${buffer.number}==1?yes:no} == yes");
     WEE_CHECK_EVAL("1", "yes == ${if:${buffer.number}==1?yes:no}");
     WEE_CHECK_EVAL("1", "${if:\\$==\\$?yes:}");
+    WEE_CHECK_EVAL("1", "${var_abc}");
+    WEE_CHECK_EVAL("1", "${var_abc} == abc");
+    WEE_CHECK_EVAL("1", "${var_cond_true}");
+    WEE_CHECK_EVAL("0", "${var_cond_true} == zzz");
+    WEE_CHECK_EVAL("1", "${var_cond_true} != zzz");
+    WEE_CHECK_EVAL("1", "${var_cond_false}");
+    WEE_CHECK_EVAL("0", "${var_cond_false} == zzz");
+    WEE_CHECK_EVAL("1", "${var_cond_false} != zzz");
 
     /* evaluation of extra_vars */
     hashtable_set (options, "extra", "eval");
@@ -455,6 +468,9 @@ TEST(CoreEval, EvalExpression)
                                 NULL, NULL);
     CHECK(extra_vars);
     hashtable_set (extra_vars, "test", "value");
+    hashtable_set (extra_vars, "var_abc", "abc");
+    hashtable_set (extra_vars, "var_cond_true", "a==a");
+    hashtable_set (extra_vars, "var_cond_false", "a==b");
 
     options = hashtable_new (32,
                              WEECHAT_HASHTABLE_STRING,
@@ -486,6 +502,12 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("0", "${eval_cond:}");
     WEE_CHECK_EVAL("0", "${eval_cond:${buffer.number} == 2}");
     WEE_CHECK_EVAL("1", "${eval_cond:${buffer.number} == 1}");
+    WEE_CHECK_EVAL("1", "${eval_cond:${var_abc}}");
+    WEE_CHECK_EVAL("1", "${eval_cond:${var_abc} == abc}");
+    WEE_CHECK_EVAL("0", "${eval_cond:${var_abc} == def}");
+    WEE_CHECK_EVAL("1", "${eval_cond:${var_cond_true}}");
+    WEE_CHECK_EVAL("1", "${eval_cond:${var_cond_true}}");
+    WEE_CHECK_EVAL("0", "${eval_cond:${var_cond_false}}");
 
     /* test value from extra_vars */
     WEE_CHECK_EVAL("value", "${test}");
@@ -702,13 +724,24 @@ TEST(CoreEval, EvalExpression)
     WEE_CHECK_EVAL("yes-no", "${if:5>2?${if:1>7?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("no-yes", "${if:1>7?${if:6>3?yes-yes:yes-no}:${if:9>4?no-yes:no-no}}");
     WEE_CHECK_EVAL("no-no", "${if:1>7?${if:1>7?yes-yes:yes-no}:${if:1>7?no-yes:no-no}}");
+    WEE_CHECK_EVAL("0", "${if:}");
     WEE_CHECK_EVAL("0", "${if:0}");
     WEE_CHECK_EVAL("1", "${if:1}");
+    WEE_CHECK_EVAL("1", "${if:abc}");
     WEE_CHECK_EVAL("0", "${if:abc!=abc}");
     WEE_CHECK_EVAL("1", "${if:abc==abc}");
     WEE_CHECK_EVAL("1", "${if:${if:abc==abc}}");
     WEE_CHECK_EVAL("0", "${if:${rev:${if:42==42?hello:bye}}==eyb}");
     WEE_CHECK_EVAL("1", "${if:${rev:${if:42==42?hello:bye}}==olleh}");
+    WEE_CHECK_EVAL("1", "${if:${var_abc}}");
+    WEE_CHECK_EVAL("1", "${if:${var_abc} == abc}");
+    WEE_CHECK_EVAL("0", "${if:${var_abc} == def}");
+    WEE_CHECK_EVAL("1", "${if:${var_cond_true}}");
+    WEE_CHECK_EVAL("0", "${if:${var_cond_true} == zzz}");
+    WEE_CHECK_EVAL("1", "${if:${var_cond_true} != zzz}");
+    WEE_CHECK_EVAL("1", "${if:${var_cond_false}}");
+    WEE_CHECK_EVAL("0", "${if:${var_cond_false} == zzz}");
+    WEE_CHECK_EVAL("1", "${if:${var_cond_false} != zzz}");
 
     /* test calc */
     WEE_CHECK_EVAL("0", "${calc:}");
