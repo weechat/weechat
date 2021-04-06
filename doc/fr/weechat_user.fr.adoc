@@ -4605,11 +4605,13 @@ de hachage :
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable     | Type     | Description
-| buffer       | pointeur | Tampon.
-| tg_argc      | chaîne   | Nombre de paramètres (la commande elle-même compte pour un).
-| tg_argvN     | chaîne   | Paramètre n°N (`+tg_argv0+` est la commande elle-même, les autres sont les paramètres de la commande).
-| tg_argv_eolN | chaîne   | Depuis le paramètre n°N jusqu'à la fin des paramètres (`+tg_argv_eol0+` inclut la commande elle-même).
+| Variable       | Type     | Description
+| buffer         | pointeur | Tampon.
+| tg_argc        | chaîne   | Nombre de paramètres (la commande elle-même compte pour un).
+| tg_argvN       | chaîne   | Paramètre n°N (`+tg_argv0+` est la commande elle-même, les autres sont les paramètres de la commande).
+| tg_argv_eolN   | chaîne   | Depuis le paramètre n°N jusqu'à la fin des paramètres (`+tg_argv_eol0+` inclut la commande elle-même).
+| tg_shell_argc  | chaîne   | Nombre de paramètres avec un découpage comme le fait le shell (la commande elle-même compte pour un).
+| tg_shell_argvN | chaîne   | Paramètre n°N avec un découpage comme le fait le shell (`+tg_shell_argv0+` est la commande elle-même, les autres sont les paramètres de la commande).
 |===
 
 [[trigger_data_command_run]]

@@ -1042,8 +1042,8 @@ trigger_callback_command_cb  (const void *pointer, void *data,
                               struct t_gui_buffer *buffer,
                               int argc, char **argv, char **argv_eol)
 {
-    char str_name[32], str_temp[128];
-    int i;
+    char str_name[64], str_value[128], **shell_argv;
+    int i, shell_argc;
 
     TRIGGER_CALLBACK_CB_INIT(WEECHAT_RC_OK);
 
@@ -1053,14 +1053,30 @@ trigger_callback_command_cb  (const void *pointer, void *data,
     /* add data in hashtables used for conditions/replace/command */
     trigger_callback_set_common_vars (trigger, extra_vars);
     weechat_hashtable_set (pointers, "buffer", buffer);
-    snprintf (str_temp, sizeof (str_temp), "%d", argc);
-    weechat_hashtable_set (extra_vars, "tg_argc", str_temp);
+    snprintf (str_value, sizeof (str_value), "%d", argc);
+    weechat_hashtable_set (extra_vars, "tg_argc", str_value);
     for (i = 0; i < argc; i++)
     {
         snprintf (str_name, sizeof (str_name), "tg_argv%d", i);
         weechat_hashtable_set (extra_vars, str_name, argv[i]);
         snprintf (str_name, sizeof (str_name), "tg_argv_eol%d", i);
         weechat_hashtable_set (extra_vars, str_name, argv_eol[i]);
+    }
+    shell_argv = weechat_string_split_shell (argv_eol[0], &shell_argc);
+    if (shell_argv)
+    {
+        snprintf (str_value, sizeof (str_value), "%d", shell_argc);
+        weechat_hashtable_set (extra_vars, "tg_shell_argc", str_value);
+        for (i = 0; i < shell_argc; i++)
+        {
+            snprintf (str_name, sizeof (str_name), "tg_shell_argv%d", i);
+            weechat_hashtable_set (extra_vars, str_name, shell_argv[i]);
+        }
+        weechat_string_free_split (shell_argv);
+    }
+    else
+    {
+        weechat_hashtable_set (extra_vars, "tg_shell_argc", "0");
     }
 
     /* execute the trigger (conditions, regex, command) */

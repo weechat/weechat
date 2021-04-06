@@ -4773,11 +4773,15 @@ The "command" callback sets following variables in hashtable:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Variable     | Type    | Description
-| buffer       | pointer | Buffer.
-| tg_argc      | string  | The number of arguments (the command itself counts for one).
-| tg_argvN     | string  | Argument #N (`+tg_argv0+` is the command itself, the others are command arguments).
-| tg_argv_eolN | string  | From argument #N until end of arguments (`+tg_argv_eol0+` includes the command itself).
+| Variable       | Type    | Description
+| buffer         | pointer | Buffer.
+| tg_argc        | string  | The number of arguments (the command itself counts for one).
+| tg_argvN       | string  | Argument #N (`+tg_argv0+` is the command itself, the others are command arguments).
+| tg_argv_eolN   | string  | From argument #N until end of arguments (`+tg_argv_eol0+` includes the command itself).
+// TRANSLATION MISSING
+| tg_shell_argc  | string  | The number of arguments with a split like the shell does (the command itself counts for one).
+// TRANSLATION MISSING
+| tg_shell_argvN | string  | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
 |===
 
 [[trigger_data_command_run]]

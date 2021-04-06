@@ -4483,11 +4483,15 @@ Callback "command" ustawia następujące zmienne w tablicy hashy:
 
 [width="100%",cols="3m,2,14",options="header"]
 |===
-| Zmienna      | Typ      | Opis
-| buffer       | wskaźnik | Bufor.
-| tg_argc      | ciąg     | Ilość argumentów (komenda liczy się za jeden).
-| tg_argvN     | ciąg     | Argument #N (`+tg_argv0+` to komenda, pozostałe to jej argumenty).
-| tg_argv_eolN | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` zawiera komendę).
+| Zmienna        | Typ      | Opis
+| buffer         | wskaźnik | Bufor.
+| tg_argc        | ciąg     | Ilość argumentów (komenda liczy się za jeden).
+| tg_argvN       | ciąg     | Argument #N (`+tg_argv0+` to komenda, pozostałe to jej argumenty).
+| tg_argv_eolN   | ciąg     | Od argumentu #N do końca argumentów (`+tg_argv_eol0+` zawiera komendę).
+// TRANSLATION MISSING
+| tg_shell_argc  | ciąg     | The number of arguments with a split like the shell does (the command itself counts for one).
+// TRANSLATION MISSING
+| tg_shell_argvN | ciąg     | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
 |===
 
 [[trigger_data_command_run]]
