@@ -4548,10 +4548,8 @@ Der Callback von "command" legt folgende Variablen in der Hashtable an:
 | tg_argc        | string  | Die Anzahl von Argumenten (der Befehl wird mitgezählt).
 | tg_argvN       | string  | Argument #N (`+tg_argv0+` ist der Befehl selber, die weiteren sind Argumente).
 | tg_argv_eolN   | string  | von Argument #N bis zum Ende der Argumente (`+tg_argv_eol0+` enthält den eigentlichen Befehl).
-// TRANSLATION MISSING
-| tg_shell_argc  | string  | The number of arguments with a split like the shell does (the command itself counts for one).
-// TRANSLATION MISSING
-| tg_shell_argvN | string  | Argument #N with a split like the shell does (`+tg_shell_argv0+` is the command itself, the others are command arguments).
+| tg_shell_argc  | string  | Die Anzahl der Argumente mit einer Aufteilung wie bei der Shell (der Befehl selbst zählt als eins).
+| tg_shell_argvN | string  | #N Argumente mit einer Aufteilung wie bei der Shell (`+tg_shell_argv0+` ist der eigentliche Befehl, alle weiteren sind die Argumente, des Befehls).
 |===
 
 [[trigger_data_command_run]]
