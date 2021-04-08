@@ -1092,7 +1092,7 @@ trigger_rename (struct t_trigger *trigger, const char *name)
     int length, i;
     char *option_name;
 
-    if (!name || !name[0] || !trigger_name_valid (name)
+    if (!trigger || !name || !name[0] || !trigger_name_valid (name)
         || trigger_search (name))
     {
         return 0;
@@ -1144,7 +1144,7 @@ trigger_rename (struct t_trigger *trigger, const char *name)
 struct t_trigger *
 trigger_copy (struct t_trigger *trigger, const char *name)
 {
-    if (!name || !name[0] || !trigger_name_valid (name)
+    if (!trigger || !name || !name[0] || !trigger_name_valid (name)
         || trigger_search (name))
     {
         return NULL;
