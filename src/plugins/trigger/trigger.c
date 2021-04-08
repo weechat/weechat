@@ -826,8 +826,9 @@ trigger_split_command (const char *command,
 }
 
 /*
- * Checks if a trigger name is valid: it must not start with "-" and not have
- * any spaces.
+ * Checks if a trigger name is valid:
+ *   - it must not start with "-"
+ *   - it must not have any space/period.
  *
  * Returns:
  *   1: name is valid
