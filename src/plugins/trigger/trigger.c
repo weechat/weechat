@@ -208,6 +208,9 @@ trigger_search_with_option (struct t_config_option *option)
     char *pos_option;
     struct t_trigger *ptr_trigger;
 
+    if (!option)
+        return NULL;
+
     ptr_name = weechat_hdata_string (weechat_hdata_get ("config_option"),
                                      option, "name");
     if (!ptr_name)
