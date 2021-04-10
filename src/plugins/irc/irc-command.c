@@ -5172,7 +5172,6 @@ IRC_COMMAND_CALLBACK(server)
     int i, detailed_list, one_server_found, length, count, refresh;
     struct t_irc_server *ptr_server2, *server_found, *new_server;
     char *server_name, *message;
-    const char *ptr_address;
 
     IRC_BUFFER_GET_SERVER_CHANNEL(buffer);
 
@@ -5264,17 +5263,6 @@ IRC_COMMAND_CALLBACK(server)
                 _("%s%s: unable to add server"),
                 weechat_prefix ("error"), IRC_PLUGIN_NAME);
             return WEECHAT_RC_OK;
-        }
-
-        ptr_address = argv[3];
-        if (strncmp (ptr_address, "fake:", 5) == 0)
-        {
-            /*
-             * fake server: no data is received/sent to this server,
-             * which is used for testing purposes only
-             */
-            new_server->fake_server = 1;
-            ptr_address += 5;
         }
 
         weechat_config_option_set (
