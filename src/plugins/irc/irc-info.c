@@ -421,13 +421,13 @@ irc_info_info_irc_is_message_ignored_cb (const void *pointer, void *data,
     if (!arguments || !arguments[0])
         return NULL;
 
-    ptr_server = NULL;
-    pos_message = arguments;
     pos_comma = strchr (arguments, ',');
     if (!pos_comma)
         return NULL;
 
     pos_message = pos_comma + 1;
+
+    ptr_server = NULL;
     server = weechat_strndup (arguments, pos_comma - arguments);
     if (server)
     {
