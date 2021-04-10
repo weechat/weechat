@@ -678,8 +678,6 @@ trigger_regex_split (const char *str_regex,
         length_delimiter = strlen (delimiter);
 
         ptr_regex = pos;
-        if (!ptr_regex[0])
-            goto format_error;
 
         /* search the start of replacement string */
         pos_replace = strstr (ptr_regex, delimiter);
