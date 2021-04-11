@@ -416,9 +416,13 @@ TEST(Trigger, New)
             LONGS_EQUAL(0, trigger->hook_count_cmd);
             LONGS_EQUAL(0, trigger->hook_running);
             if (enabled && (hook_type == TRIGGER_HOOK_PRINT))
+            {
                 STRCMP_EQUAL("args", trigger->hook_print_buffers);
+            }
             else
+            {
                 POINTERS_EQUAL(NULL, trigger->hook_print_buffers);
+            }
             LONGS_EQUAL(1, trigger->regex_count);
             CHECK(trigger->regex);
             POINTERS_EQUAL(NULL, trigger->regex[0].variable);
