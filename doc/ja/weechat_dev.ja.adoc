@@ -104,6 +104,8 @@ qweechat::
 |       gui/         | インターフェース関数の単体テスト
 |       plugins/     | プラグインの単体テスト
 |          irc/      | IRC プラグインの単体テスト
+// TRANSLATION MISSING
+|          trigger/  | Unit tests for trigger plugin.
 | doc/               | 文書
 | po/                | 翻訳ファイル (gettext)
 | debian/            | Debian パッケージ用
@@ -444,6 +446,10 @@ WeeChat "core" は以下のディレクトリに配置されています:
 |             test-irc-protocol.cpp | テスト: IRC プロトコル
 // TRANSLATION MISSING
 |             test-irc-server.cpp   | Tests: IRC server.
+// TRANSLATION MISSING
+|          trigger/                 | Root of unit tests for trigger plugin.
+// TRANSLATION MISSING
+|             test-trigger.cpp      | Tests: triggers.
 // TRANSLATION MISSING
 |          relay/                   | Root of unit tests for Relay plugin.
 // TRANSLATION MISSING

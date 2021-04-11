@@ -100,6 +100,7 @@ Les répertoires principaux de WeeChat sont :
 |       gui/         | Tests unitaires pour les fonctions de l'interface.
 |       plugins/     | Tests unitaires pour les extensions.
 |          irc/      | Tests unitaires pour l'extension IRC.
+|          trigger/  | Tests unitaires pour l'extension trigger.
 | doc/               | Documentation.
 | po/                | Fichiers de traductions (gettext).
 | debian/            | Empaquetage Debian.
@@ -424,6 +425,8 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |             test-irc-nick.cpp     | Tests : pseudos IRC.
 |             test-irc-protocol.cpp | Tests : protocole IRC.
 |             test-irc-server.cpp   | Tests : serveur IRC.
+|          trigger/                 | Racine des tests unitaires pour l'extension trigger.
+|             test-trigger.cpp      | Tests : triggers.
 |          relay/                   | Racine des tests unitaires pour l'extension Relay.
 |             test-relay-auth.cpp   | Tests : authentification des clients.
 |===

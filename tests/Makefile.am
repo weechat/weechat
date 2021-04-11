@@ -81,9 +81,14 @@ if PLUGIN_RELAY
 tests_relay = unit/plugins/relay/test-relay-auth.cpp
 endif
 
+if PLUGIN_TRIGGER
+tests_trigger = unit/plugins/trigger/test-trigger.cpp
+endif
+
 lib_weechat_unit_tests_plugins_la_SOURCES = unit/plugins/test-plugins.cpp \
                                             $(tests_irc) \
-                                            $(tests_relay)
+                                            $(tests_relay) \
+                                            $(tests_trigger)
 
 lib_weechat_unit_tests_plugins_la_LDFLAGS = -module -no-undefined
 

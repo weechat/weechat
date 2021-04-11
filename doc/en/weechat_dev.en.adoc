@@ -98,6 +98,7 @@ The main WeeChat directories are:
 |       gui/         | Unit tests for interfaces functions.
 |       plugins/     | Unit tests for plugins.
 |          irc/      | Unit tests for IRC plugin.
+|          trigger/  | Unit tests for trigger plugin.
 | doc/               | Documentation.
 | po/                | Translations files (gettext).
 | debian/            | Debian packaging.
@@ -422,6 +423,8 @@ WeeChat "core" is located in following directories:
 |             test-irc-nick.cpp     | Tests: IRC nicks.
 |             test-irc-protocol.cpp | Tests: IRC protocol.
 |             test-irc-server.cpp   | Tests: IRC server.
+|          trigger/                 | Root of unit tests for trigger plugin.
+|             test-trigger.cpp      | Tests: triggers.
 |          relay/                   | Root of unit tests for Relay plugin.
 |             test-relay-auth.cpp   | Tests: clients authentication.
 

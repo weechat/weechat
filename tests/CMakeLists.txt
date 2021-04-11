@@ -69,6 +69,12 @@ if (ENABLE_RELAY)
   )
 endif()
 
+if(ENABLE_TRIGGER)
+  list(APPEND LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC
+    unit/plugins/trigger/test-trigger.cpp
+  )
+endif()
+
 add_library(weechat_unit_tests_plugins MODULE ${LIB_WEECHAT_UNIT_TESTS_PLUGINS_SRC})
 
 if(ICONV_LIBRARY)
