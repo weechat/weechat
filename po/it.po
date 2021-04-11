@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-21 09:32+0100\n"
+"POT-Creation-Date: 2021-04-11 09:28+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -11328,8 +11328,10 @@ msgstr "%s%s: impossibile reindirizzare stdout"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: impossibile reindirizzare stderr"
 
-msgid "path to python 2.x interpreter"
-msgstr "path per l'interprete python 2.x"
+msgid ""
+"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
+"use Python 3 only)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -13748,6 +13750,9 @@ msgstr "%s%s: timeout per \"%s\" con %s"
 #, fuzzy, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: impossibile connettersi al mittente"
+
+#~ msgid "path to python 2.x interpreter"
+#~ msgstr "path per l'interprete python 2.x"
 
 #, fuzzy, c-format
 #~ msgid "Signal %s received, reloading configuration..."

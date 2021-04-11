@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-03-21 09:32+0100\n"
+"POT-Creation-Date: 2021-04-11 09:28+0200\n"
 "PO-Revision-Date: 2021-03-14 13:37+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -12213,8 +12213,10 @@ msgstr "%s%s: nie można przekierować wyjścia"
 msgid "%s%s: unable to redirect stderr"
 msgstr "%s%s: nie można przekierować wyjścia błędu"
 
-msgid "path to python 2.x interpreter"
-msgstr "ścieżka do interpretera pythona 2.x"
+msgid ""
+"path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must "
+"use Python 3 only)"
+msgstr ""
 
 #, c-format
 msgid "%s%s: unable to launch global interpreter"
@@ -14903,6 +14905,9 @@ msgstr "%s%s: przekroczono czas na \"%s\" z %s"
 #, c-format
 msgid "%s%s: unable to connect: unexpected error (%d)"
 msgstr "%s%s: nie można połączyć: niespodziewany błąd (%d)"
+
+#~ msgid "path to python 2.x interpreter"
+#~ msgstr "ścieżka do interpretera pythona 2.x"
 
 #, c-format
 #~ msgid "Signal %s received, reloading configuration..."

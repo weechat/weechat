@@ -60,7 +60,7 @@
 
 | php | php_version | 使用中のインタプリタのバージョン | -
 
-| python | python2_bin | python 2.x インタプリタへのパス | -
+| python | python2_bin | path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must use Python 3 only) | -
 
 | python | python_eval | ソースコードの評価 | 実行するソースコード
 

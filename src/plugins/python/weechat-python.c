@@ -1623,7 +1623,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
      */
     python2_bin = weechat_python_get_python2_bin ();
     weechat_hook_info ("python2_bin",
-                       N_("path to python 2.x interpreter"),
+                       N_("path to Python 2.x interpreter "
+                          "(*deprecated* since version 2.6, scripts must use "
+                          "Python 3 only)"),
                        NULL,
                        &weechat_python_info_python2_bin_cb, NULL, NULL);
 

@@ -60,7 +60,7 @@
 
 | php | php_version | version de l'interpréteur utilisé | -
 
-| python | python2_bin | chemin vers l'interpréteur python 2.x | -
+| python | python2_bin | chemin vers l'interpréteur Python 2.x (*obsolète* depuis la version 2.6, les scripts doivent utiliser seulement Python 3) | -
 
 | python | python_eval | évaluation de code source | code source à exécuter
 
