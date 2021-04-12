@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-04-12 20:29+0200\n"
 "PO-Revision-Date: 2021-03-05 20:43+0100\n"
 "Last-Translator: Érico Nogueira <ericonr@disroot.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1043,6 +1043,10 @@ msgstr "%sRestauração de todas as opções não é permitida"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d opção(ões) restaurada(s), %d opção(ões) removidas"
 
+#, fuzzy, c-format
+msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgstr "%sErro: incapaz de salvar a sessão em arquivo"
+
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1069,10 +1073,6 @@ msgstr "Nenhuma barra definida"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Atualizando WeeChat com o arquivo binário: \"%s\"..."
-
-#, fuzzy, c-format
-msgid "%sUnable to save session in file"
-msgstr "%sErro: incapaz de salvar a sessão em arquivo"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -2713,11 +2713,13 @@ msgstr ""
 "    /unset weechat.color.*"
 
 #, fuzzy
-msgid "reload the WeeChat binary without disconnecting from servers"
+msgid ""
+"save WeeChat session and reload the WeeChat binary without disconnecting "
+"from servers"
 msgstr "atualiza o WeeChat sem desconectar dos servidores"
 
 #, fuzzy
-msgid "[-yes] [<path_to_binary>|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgstr "[<caminho_para_o_binário>|-quit]"
 
 #, fuzzy
@@ -2727,6 +2729,7 @@ msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
+"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"

@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-04-12 20:29+0200\n"
 "PO-Revision-Date: 2021-03-29 09:21+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -1077,6 +1077,10 @@ msgstr "%sDas Zurücksetzen aller Einstellungen ist nicht zulässig"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d Einstellung(en) wieder hergestellt, %d Einstellung(en) entfernt"
 
+#, fuzzy, c-format
+msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgstr "%sSitzung kann nicht in eine Datei gespeichert werden"
+
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1103,10 +1107,6 @@ msgstr "%skeine Binärdatei angegeben"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aktualisiere WeeChat mit Binärdatei \"%s\"...."
-
-#, c-format
-msgid "%sUnable to save session in file"
-msgstr "%sSitzung kann nicht in eine Datei gespeichert werden"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -3134,19 +3134,25 @@ msgstr ""
 "  Alle Farbeinstellungen zurücksetzen:\n"
 "    /unset -mask weechat.color.*"
 
-msgid "reload the WeeChat binary without disconnecting from servers"
+#, fuzzy
+msgid ""
+"save WeeChat session and reload the WeeChat binary without disconnecting "
+"from servers"
 msgstr ""
 "WeeChat Binärdatei neu laden, ohne die Verbindung zum Server zu trennen"
 
-msgid "[-yes] [<path_to_binary>|-quit]"
+#, fuzzy
+msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgstr "[-yes] [<path_to_binary>|-quit]"
 
+#, fuzzy
 msgid ""
 "          -yes: required if option \"weechat.look.confirm_upgrade\" is "
 "enabled\n"
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
+"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"

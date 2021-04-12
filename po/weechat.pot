@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-04-12 20:29+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -961,6 +961,10 @@ msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
 #, c-format
+msgid "%sUnable to save WeeChat session (files *.upgrade)"
+msgstr ""
+
+#, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
 "'process' or 'connect')"
@@ -981,10 +985,6 @@ msgstr ""
 
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
-msgstr ""
-
-#, c-format
-msgid "%sUnable to save session in file"
 msgstr ""
 
 #, c-format
@@ -2080,10 +2080,12 @@ msgid ""
 "    /unset -mask weechat.color.*"
 msgstr ""
 
-msgid "reload the WeeChat binary without disconnecting from servers"
+msgid ""
+"save WeeChat session and reload the WeeChat binary without disconnecting "
+"from servers"
 msgstr ""
 
-msgid "[-yes] [<path_to_binary>|-quit]"
+msgid "[-yes] [<path_to_binary>|-save|-quit]"
 msgstr ""
 
 msgid ""
@@ -2092,6 +2094,7 @@ msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
+"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"
