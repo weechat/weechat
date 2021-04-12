@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-12 20:29+0200\n"
+"POT-Creation-Date: 2021-04-11 09:28+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -1031,10 +1031,6 @@ msgstr "%sNão é permitido repor todas as opções"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d opções repostas, %d opções removidas"
 
-#, fuzzy, c-format
-msgid "%sUnable to save WeeChat session (files *.upgrade)"
-msgstr "%sErro: não foi possível guardar a sessão no ficheiro"
-
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1061,6 +1057,10 @@ msgstr "%sNenhum binário especificado"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "A atualizar o WeeChat com o ficheiro binário: \"%s\"..."
+
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
+msgstr "%sErro: não foi possível guardar a sessão no ficheiro"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -2930,23 +2930,18 @@ msgstr ""
 "    /unset -mask weechat.color.*"
 
 #, fuzzy
-msgid ""
-"save WeeChat session and reload the WeeChat binary without disconnecting "
-"from servers"
+msgid "reload the WeeChat binary without disconnecting from servers"
 msgstr "atualizar o WeeChat sem desconectar dos servidores"
 
-#, fuzzy
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[-yes] [<binário>|-quit]"
 
-#, fuzzy
 msgid ""
 "          -yes: required if option \"weechat.look.confirm_upgrade\" is "
 "enabled\n"
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
-"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"

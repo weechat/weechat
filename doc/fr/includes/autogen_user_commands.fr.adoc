@@ -1953,15 +1953,14 @@ Exemples :
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: sauvegarder la session WeeChat et relancer le binaire WeeChat sans se déconnecter des serveurs
+* `+upgrade+`: relancer le binaire WeeChat sans se déconnecter des serveurs
 
 ----
-/upgrade  [-yes] [<chemin_vers_binaire>|-save|-quit]
+/upgrade  [-yes] [<chemin_vers_binaire>|-quit]
 
                -yes : requis si l'option "weechat.look.confirm_upgrade" est activée
 chemin_vers_binaire : chemin vers le binaire WeeChat (par défaut le binaire courant)
              -dummy : ne rien faire (option utilisée pour éviter une complétion accidentelle avec "-quit")
-              -save : sauvegarder seulement la session (ne pas quitter ni relancer WeeChat)
               -quit : fermer *TOUTES* les connexions, sauver la session et quitter, ce qui rend possible une restauration différée (voir ci-dessous)
 
 Cette commande met à jour et recharge une session de WeeChat qui tourne. Le nouveau binaire WeeChat doit avoir été compilé ou installé via un gestionnaire de paquet avant de lancer cette commande.

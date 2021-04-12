@@ -6363,19 +6363,6 @@ COMMAND_CALLBACK(upgrade)
         return WEECHAT_RC_OK;
     }
 
-    if ((argc > index_args)
-        && (string_strcasecmp (argv[index_args], "-save") == 0))
-    {
-        if (!upgrade_weechat_save ())
-        {
-            gui_chat_printf (NULL,
-                             _("%sUnable to save WeeChat session "
-                               "(files *.upgrade)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-        }
-        return WEECHAT_RC_OK;
-    }
-
     /*
      * it is forbidden to upgrade while there are some background process
      * (hook type "process" or "connect")
@@ -6462,8 +6449,7 @@ COMMAND_CALLBACK(upgrade)
     if (!upgrade_weechat_save ())
     {
         gui_chat_printf (NULL,
-                         _("%sUnable to save WeeChat session "
-                           "(files *.upgrade)"),
+                         _("%sUnable to save session in file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         if (ptr_binary)
             free (ptr_binary);
@@ -8309,16 +8295,13 @@ command_init ()
         &command_unset, NULL, NULL);
     hook_command (
         NULL, "upgrade",
-        N_("save WeeChat session and reload the WeeChat binary without "
-           "disconnecting from servers"),
-        N_("[-yes] [<path_to_binary>|-save|-quit]"),
+        N_("reload the WeeChat binary without disconnecting from servers"),
+        N_("[-yes] [<path_to_binary>|-quit]"),
         N_("          -yes: required if option \"weechat.look.confirm_upgrade\" "
            "is enabled\n"
            "path_to_binary: path to WeeChat binary (default is current binary)\n"
            "        -dummy: do nothing (option used to prevent accidental "
            "completion with \"-quit\")\n"
-           "         -save: only save the session (do not quit not "
-           "reload WeeChat)\n"
            "         -quit: close *ALL* connections, save session and quit "
            "WeeChat, which makes possible a delayed restoration (see below)\n"
            "\n"
@@ -8349,7 +8332,7 @@ command_init ()
            "configuration (files *.conf).\n"
            "It is possible to restore WeeChat session on another machine if you "
            "copy the content of directory \"~/.weechat\"."),
-        "%(filename)|-dummy|-save|-quit",
+        "%(filename)|-dummy|-quit",
         &command_upgrade, NULL, NULL);
     hook_command (
         NULL, "uptime",

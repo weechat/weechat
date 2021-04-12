@@ -20,7 +20,6 @@ https://weechat.org/files/releasenotes/ReleaseNotes-devel.html[release notes]
 
 New features::
 
-  * core: add option "-save" in command /upgrade (issue #1630)
   * core: add options to customize commands executed on system signals received (SIGHUP, SIGQUIT, SIGTERM, SIGUSR1, SIGUSR2) (issue #1595)
   * core: quit WeeChat by default when signal SIGHUP is received in normal run, reload configuration in weechat-headless (issue #1595)
   * api: add support of pointer names in function string_eval_expression (direct and in hdata)

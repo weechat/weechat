@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-12 20:29+0200\n"
+"POT-Creation-Date: 2021-04-11 09:28+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Elián Hanisch <lambdae2@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1022,10 +1022,6 @@ msgstr "%sNo esta permitido reiniciar todas las opciones"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d opción(es) reiniciada(s), %d opción(es) removida(s)"
 
-#, fuzzy, c-format
-msgid "%sUnable to save WeeChat session (files *.upgrade)"
-msgstr "%sError: no se pudo guardar la sesión"
-
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1052,6 +1048,10 @@ msgstr "Ninguna barra definida"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Actualizando WeeChat con el archivo binario: \"%s\"..."
+
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
+msgstr "%sError: no se pudo guardar la sesión"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -2681,13 +2681,11 @@ msgstr ""
 "    /unset weechat.color.*"
 
 #, fuzzy
-msgid ""
-"save WeeChat session and reload the WeeChat binary without disconnecting "
-"from servers"
+msgid "reload the WeeChat binary without disconnecting from servers"
 msgstr "actualizar WeeChat sin desconectarse de los servidores"
 
 #, fuzzy
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[<ruta_al_ejecutable>|-quit]"
 
 #, fuzzy
@@ -2697,7 +2695,6 @@ msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
-"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"

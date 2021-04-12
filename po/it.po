@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-12 20:29+0200\n"
+"POT-Creation-Date: 2021-04-11 09:28+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Esteban I. Ruiz Moreno <exio4.com@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1008,10 +1008,6 @@ msgstr "%sIl ripristino di tutte le opzioni non è consentito"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d opzione(i) ripristinata(e), %d opzione(i) rimossa(e)"
 
-#, fuzzy, c-format
-msgid "%sUnable to save WeeChat session (files *.upgrade)"
-msgstr "%sErrore: impossibile salvare la sessione su file"
-
 #, c-format
 msgid ""
 "%sCan't upgrade: there is one or more background process (hook type "
@@ -1038,6 +1034,10 @@ msgstr "Nessuna barra definita"
 #, c-format
 msgid "Upgrading WeeChat with binary file: \"%s\"..."
 msgstr "Aggiornamento di WeeChat con il file binario: \"%s\"..."
+
+#, fuzzy, c-format
+msgid "%sUnable to save session in file"
+msgstr "%sErrore: impossibile salvare la sessione su file"
 
 #, c-format
 msgid "***** Error: exec failed (program: \"%s\"), exiting WeeChat"
@@ -2769,13 +2769,11 @@ msgstr ""
 "    /unset weechat.color.*"
 
 #, fuzzy
-msgid ""
-"save WeeChat session and reload the WeeChat binary without disconnecting "
-"from servers"
+msgid "reload the WeeChat binary without disconnecting from servers"
 msgstr "aggiorna WeeChat senza disconnettere dai server"
 
 #, fuzzy
-msgid "[-yes] [<path_to_binary>|-save|-quit]"
+msgid "[-yes] [<path_to_binary>|-quit]"
 msgstr "[<path_del_binario>|-quit]"
 
 #, fuzzy
@@ -2785,7 +2783,6 @@ msgid ""
 "path_to_binary: path to WeeChat binary (default is current binary)\n"
 "        -dummy: do nothing (option used to prevent accidental completion "
 "with \"-quit\")\n"
-"         -save: only save the session (do not quit not reload WeeChat)\n"
 "         -quit: close *ALL* connections, save session and quit WeeChat, "
 "which makes possible a delayed restoration (see below)\n"
 "\n"

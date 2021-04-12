@@ -1953,15 +1953,14 @@ Examples:
 ----
 
 [[command_weechat_upgrade]]
-* `+upgrade+`: save WeeChat session and reload the WeeChat binary without disconnecting from servers
+* `+upgrade+`: reload the WeeChat binary without disconnecting from servers
 
 ----
-/upgrade  [-yes] [<path_to_binary>|-save|-quit]
+/upgrade  [-yes] [<path_to_binary>|-quit]
 
           -yes: required if option "weechat.look.confirm_upgrade" is enabled
 path_to_binary: path to WeeChat binary (default is current binary)
         -dummy: do nothing (option used to prevent accidental completion with "-quit")
-         -save: only save the session (do not quit not reload WeeChat)
          -quit: close *ALL* connections, save session and quit WeeChat, which makes possible a delayed restoration (see below)
 
 This command upgrades and reloads a running WeeChat session. The new WeeChat binary must have been compiled or installed with a package manager before running this command.
