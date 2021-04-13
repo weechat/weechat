@@ -1277,8 +1277,7 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
 
 [width="100%",cols="3,^2,10,7",options="header"]
 |===
-// TRANSLATION MISSING
-| Schlüssel | Since WeeChat ^(1)^ | Beschreibung | Beispiel
+| Schlüssel | Seit WeeChat ^(1)^ | Beschreibung | Beispiel
 
 | Tags | 0.4.0 |
   Tags in der Nachricht (kann leer sein). |
@@ -1333,9 +1332,8 @@ Das Ergebnis ist eine Hashtabelle mit folgenden Schlüsseln
   `+65+`
 |===
 
-// TRANSLATION MISSING
 [NOTE]
-^(1)^ The key has been introduced in this WeeChat version.
+^(1)^ Der Schlüssel wurde mit dieser WeeChat Version eingeführt.
 
 [source,python]
 ----
