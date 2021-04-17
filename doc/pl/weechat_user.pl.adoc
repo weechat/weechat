@@ -461,6 +461,12 @@ Kiedy WeeChat ulegnie awarii, Twój system stworzy plik _core_ lub _core.12345_
 Plik ten zostanie utworzony w katalogu, z którego uruchomiono WeeChat (*nie*
 jest to katalog, gdzie zainstalowano WeeChat!).
 
+// TRANSLATION MISSING
+[NOTE]
+On some systems like Archlinux, core dumps could be in another directory like
+_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
+For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+
 Na przykład jeśli _weechat_ jest zainstalowany w _/usr/bin/_ i plik _core_
 znajduje się w _/home/xxx/_, uruchom gdb za pomocą tej komendy:
 

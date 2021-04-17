@@ -472,6 +472,12 @@ _core_ または _core.12345_ ファイルを作ります (_12345_
 はプロセス番号です)。このファイルは WeeChat を起動したディレクトリに作られます (これは
 WeeChat がインストールされているディレクトリでは *ありません*!)。
 
+// TRANSLATION MISSING
+[NOTE]
+On some systems like Archlinux, core dumps could be in another directory like
+_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
+For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+
 例えば、_weechat_ が _/usr/bin/_ にインストールされ、_core_ ファイルが
 _/home/xxx/_ にある場合、以下のコマンドで gdb を起動してください:
 

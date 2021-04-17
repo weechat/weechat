@@ -455,6 +455,11 @@ When WeeChat crashes, your system will create a file _core_ or _core.12345_
 This file is created in directory where you have run WeeChat (this is *not*
 directory where WeeChat is installed!).
 
+[NOTE]
+On some systems like Archlinux, core dumps could be in another directory like
+_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
+For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+
 For example if _weechat_ is installed in _/usr/bin/_ and _core_ file is
 in _/home/xxx/_, then run gdb with this command:
 

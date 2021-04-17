@@ -464,6 +464,12 @@ entprechende <<core_files,Option aktiviert sein>>.
 Diese Core-Datei wird in dem Verzeichnis erzeugt aus welchem WeeChat gestartet wurde
 (dies ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
+// TRANSLATION MISSING
+[NOTE]
+On some systems like Archlinux, core dumps could be in another directory like
+_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
+For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
 in _/home/xxx/_. Nun wird gdb mit folgendem Befehl aufgerufen:
 

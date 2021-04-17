@@ -466,6 +466,12 @@ si <<core_files,l'option est activée>>.
 Ce fichier est créé dans le répertoire où vous avez lancé WeeChat (ce n'est
 *pas* le répertoire où WeeChat est installé !).
 
+[NOTE]
+Sur certains systèmes comme Archlinux, les fichiers _core_ sont dans un autre
+répertoire tel que _/var/lib/systemd/coredump_ et vous devez utiliser la commande
+`coredumpctl` pour le lire. +
+Pour plus d'informations, voir cette page wiki : https://wiki.archlinux.org/index.php/Core_dump
+
 Par exemple si _weechat_ est installé dans _/usr/bin/_ et que le fichier
 _core_ est dans _/home/xxx/_, alors lancez gdb avec cette commande :
 
