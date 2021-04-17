@@ -94,20 +94,17 @@ irc_sasl_mechanism_plain (const char *sasl_username, const char *sasl_password)
 char *
 irc_sasl_get_key_content (struct t_irc_server *server, const char *sasl_key)
 {
-    char *weechat_dir, *key_path1, *key_path2, *content;
+    char *key_path, *content;
 
     if (!sasl_key)
         return NULL;
 
     content = NULL;
 
-    weechat_dir = weechat_info_get ("weechat_dir", "");
-    key_path1 = weechat_string_replace (sasl_key, "%h", weechat_dir);
-    key_path2 = (key_path1) ?
-        weechat_string_expand_home (key_path1) : NULL;
+    key_path = weechat_string_eval_path_home (sasl_key, NULL, NULL, NULL);
 
-    if (key_path2)
-        content = weechat_file_get_content (key_path2);
+    if (key_path)
+        content = weechat_file_get_content (key_path);
 
     if (!content)
     {
@@ -116,15 +113,11 @@ irc_sasl_get_key_content (struct t_irc_server *server, const char *sasl_key)
             _("%s%s: unable to read private key in file \"%s\""),
             weechat_prefix ("error"),
             IRC_PLUGIN_NAME,
-            (key_path2) ? key_path2 : ((key_path1) ? key_path1 : sasl_key));
+            key_path);
     }
 
-    if (weechat_dir)
-        free (weechat_dir);
-    if (key_path1)
-        free (key_path1);
-    if (key_path2)
-        free (key_path2);
+    if (key_path)
+        free (key_path);
 
     return content;
 }

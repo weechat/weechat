@@ -1906,8 +1906,8 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 option_name, "string",
                 N_("file with ECC private key for mechanism "
                    "\"ecdsa-nist256p-challenge\" "
-                   "(\"%h\" will be replaced by WeeChat home, "
-                   "\"~/.weechat\" by default)"),
+                   "(path is evaluated, see function string_eval_path_home in "
+                   "plugin API reference)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,
