@@ -1597,17 +1597,17 @@ Following pointers are available:
 * `+${buffer}+`: the buffer of window where condition is evaluated
 
 Example to display nicklist bar in all buffers with a nicklist, and only if
-width of window is > 100:
+width of terminal is > 100:
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+/set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-Same condition, but always display nicklist on buffer _&bitlbee_ (even if window
+Same condition, but always display nicklist on buffer _&bitlbee_ (even if terminal
 is small):
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+/set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
 [[bare_display]]
