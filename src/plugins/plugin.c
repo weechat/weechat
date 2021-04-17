@@ -1011,7 +1011,7 @@ plugin_auto_load (char *force_plugin_autoload,
                   int load_from_lib_dir,
                   int argc, char **argv)
 {
-    char *dir_name, *plugin_path, *plugin_path2, *extra_libdir;
+    char *dir_name, *plugin_path, *extra_libdir;
     const char *ptr_plugin_autoload;
     struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
@@ -1045,20 +1045,14 @@ plugin_auto_load (char *force_plugin_autoload,
         && CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
-        plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
-        plugin_path2 = string_replace ((plugin_path) ?
-                                       plugin_path : CONFIG_STRING(config_plugin_path),
-                                       "%h", weechat_home);
-        util_exec_on_files ((plugin_path2) ?
-                            plugin_path2 : ((plugin_path) ?
-                                            plugin_path : CONFIG_STRING(config_plugin_path)),
-                            1,
-                            0,
-                            &plugin_auto_load_file, &plugin_args);
+        plugin_path = string_eval_path_home (CONFIG_STRING(config_plugin_path),
+                                             NULL, NULL, NULL);
         if (plugin_path)
+        {
+            util_exec_on_files (plugin_path, 1, 0,
+                                &plugin_auto_load_file, &plugin_args);
             free (plugin_path);
-        if (plugin_path2)
-            free (plugin_path2);
+        }
     }
 
     /* auto-load plugins in WEECHAT_EXTRA_LIBDIR environment variable */

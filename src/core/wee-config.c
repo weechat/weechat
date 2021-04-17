@@ -4564,8 +4564,9 @@ config_weechat_init_options ()
     config_plugin_path = config_file_new_option (
         weechat_config_file, ptr_section,
         "path", "string",
-        N_("path for searching plugins (\"%h\" will be replaced by "
-           "WeeChat home, \"~/.weechat\" by default)"),
+        N_("path for searching plugins "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
         NULL, 0, 0, "%h/plugins", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_save_config_on_unload = config_file_new_option (

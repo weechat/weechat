@@ -982,7 +982,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
                                           struct t_gui_buffer *buffer,
                                           struct t_gui_completion *completion)
 {
-    char *plugin_path, *plugin_path2, *dir_name, *extra_libdir;
+    char *plugin_path, *dir_name, *extra_libdir;
     int length;
 
     /* make C compiler happy */
@@ -1011,23 +1011,15 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     if (CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
-        plugin_path = string_expand_home (CONFIG_STRING(config_plugin_path));
-        plugin_path2 = string_replace (
-            (plugin_path) ?
-            plugin_path : CONFIG_STRING(config_plugin_path),
-            "%h", weechat_home);
-        util_exec_on_files (
-            (plugin_path2) ?
-            plugin_path2 : ((plugin_path) ?
-                            plugin_path : CONFIG_STRING(config_plugin_path)),
-            1,
-            0,
-            &completion_list_add_plugins_installed_exec_cb,
-            completion);
+        plugin_path = string_eval_path_home (CONFIG_STRING(config_plugin_path),
+                                             NULL, NULL, NULL);
         if (plugin_path)
+        {
+            util_exec_on_files (plugin_path, 1, 0,
+                                &completion_list_add_plugins_installed_exec_cb,
+                                completion);
             free (plugin_path);
-        if (plugin_path2)
-            free (plugin_path2);
+        }
     }
 
     /* plugins in WeeChat global lib dir */
