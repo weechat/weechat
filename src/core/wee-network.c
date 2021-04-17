@@ -92,40 +92,37 @@ network_init_gcrypt ()
 void
 network_set_gnutls_ca_file ()
 {
-    char *ca_path, *ca_path2;
+    char *ca_path;
 
     if (weechat_no_gnutls)
         return;
 
-    ca_path = string_expand_home (CONFIG_STRING(config_network_gnutls_ca_file));
+    ca_path = string_eval_path_home (
+        CONFIG_STRING(config_network_gnutls_ca_file),
+        NULL, NULL, NULL);
     if (ca_path)
     {
-        ca_path2 = string_replace (ca_path, "%h", weechat_home);
-        if (ca_path2)
+        if (access (ca_path, R_OK) == 0)
         {
-            if (access (ca_path2, R_OK) == 0)
-            {
-                if (gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path2,
-                                                            GNUTLS_X509_FMT_PEM) < 0)
-                {
-                    gui_chat_printf (
-                        NULL,
-                        _("%sWarning: failed to load certificate authorities "
-                          "from file %s"),
-                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                          ca_path2);
-                }
-            }
-            else
+            if (gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path,
+                                                        GNUTLS_X509_FMT_PEM) < 0)
             {
                 gui_chat_printf (
                     NULL,
-                    _("%sWarning: no certificate authorities loaded "
-                      "(file not found: %s)"),
+                    _("%sWarning: failed to load certificate authorities "
+                      "from file %s"),
                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                    ca_path2);
+                    ca_path);
             }
-            free (ca_path2);
+        }
+        else
+        {
+            gui_chat_printf (
+                NULL,
+                _("%sWarning: no certificate authorities loaded "
+                  "(file not found: %s)"),
+                gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                ca_path);
         }
         free (ca_path);
     }

@@ -4497,8 +4497,9 @@ config_weechat_init_options ()
     config_network_gnutls_ca_file = config_file_new_option (
         weechat_config_file, ptr_section,
         "gnutls_ca_file", "string",
-        N_("file containing the certificate authorities (\"%h\" will be "
-           "replaced by WeeChat home, \"~/.weechat\" by default)"),
+        N_("file containing the certificate authorities "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
         NULL, 0, 0, CA_FILE, NULL, 0,
         NULL, NULL, NULL,
         &config_change_network_gnutls_ca_file, NULL, NULL,
