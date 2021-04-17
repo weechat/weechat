@@ -1140,7 +1140,9 @@ relay_config_init ()
         relay_config_file, ptr_section,
         "ssl_cert_key", "string",
         N_("file with SSL certificate and private key (for serving clients "
-           "with SSL)"),
+           "with SSL) "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
         NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_change_network_ssl_cert_key, NULL, NULL,

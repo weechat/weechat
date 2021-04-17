@@ -47,7 +47,7 @@ gnutls_dh_params_t *relay_gnutls_dh_params = NULL;
 void
 relay_network_set_ssl_cert_key (int verbose)
 {
-    char *certkey_path, *certkey_path2, *weechat_dir;
+    char *certkey_path;
     int ret;
 
     gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
@@ -55,42 +55,35 @@ relay_network_set_ssl_cert_key (int verbose)
 
     relay_network_init_ssl_cert_key_ok = 0;
 
-    certkey_path = weechat_string_expand_home (weechat_config_string (relay_config_network_ssl_cert_key));
+    certkey_path = weechat_string_eval_path_home (
+        weechat_config_string (relay_config_network_ssl_cert_key),
+        NULL, NULL, NULL);
     if (certkey_path)
     {
-        weechat_dir = weechat_info_get ("weechat_dir", NULL);
-        certkey_path2 = weechat_string_replace (certkey_path, "%h",
-                                                weechat_dir);
-        if (weechat_dir)
-            free (weechat_dir);
-        if (certkey_path2)
+        ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,
+                                                    certkey_path,
+                                                    certkey_path,
+                                                    GNUTLS_X509_FMT_PEM);
+        if (ret >= 0)
         {
-            ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,
-                                                        certkey_path2,
-                                                        certkey_path2,
-                                                        GNUTLS_X509_FMT_PEM);
-            if (ret >= 0)
+            relay_network_init_ssl_cert_key_ok = 1;
+            if (verbose)
             {
-                relay_network_init_ssl_cert_key_ok = 1;
-                if (verbose)
-                {
-                    weechat_printf (NULL,
-                                    _("%s: SSL certificate and key have been "
-                                      "set"),
-                                    RELAY_PLUGIN_NAME);
-                }
+                weechat_printf (NULL,
+                                _("%s: SSL certificate and key have been "
+                                  "set"),
+                                RELAY_PLUGIN_NAME);
             }
-            else
+        }
+        else
+        {
+            if (verbose)
             {
-                if (verbose)
-                {
-                    weechat_printf (NULL,
-                                    _("%s%s: warning: no SSL certificate/key "
-                                      "found (option relay.network.ssl_cert_key)"),
-                                    weechat_prefix ("error"), RELAY_PLUGIN_NAME);
-                }
+                weechat_printf (NULL,
+                                _("%s%s: warning: no SSL certificate/key "
+                                  "found (option relay.network.ssl_cert_key)"),
+                                weechat_prefix ("error"), RELAY_PLUGIN_NAME);
             }
-            free (certkey_path2);
         }
         free (certkey_path);
     }
