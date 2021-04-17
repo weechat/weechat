@@ -1684,8 +1684,9 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 config_file, section,
                 option_name, "string",
                 N_("SSL certificate file used to automatically identify your "
-                   "nick (\"%h\" will be replaced by WeeChat home, "
-                   "\"~/.weechat\" by default)"),
+                   "nick "
+                   "(path is evaluated, see function string_eval_path_home in "
+                   "plugin API reference)"),
                 NULL, 0, 0,
                 default_value, value,
                 null_value_allowed,

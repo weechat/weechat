@@ -4477,9 +4477,9 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     gnutls_datum_t filedatum;
     unsigned int i, cert_list_len, status;
     time_t cert_time;
-    char *cert_path0, *cert_path1, *cert_path2, *cert_str, *fingerprint_eval;
-    char *weechat_dir, *ssl_password;
-    const char *ptr_fingerprint;
+    char *cert_path, *cert_str, *fingerprint_eval;
+    char *ssl_password;
+    const char *ptr_cert_path, *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
@@ -4503,7 +4503,6 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     cert_list = NULL;
     cert_list_len = 0;
     fingerprint_eval = NULL;
-    weechat_dir = NULL;
 
     if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_VERIFY_CERT)
     {
@@ -4721,18 +4720,15 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     else if (action == WEECHAT_HOOK_CONNECT_GNUTLS_CB_SET_CERT)
     {
         /* using client certificate if it exists */
-        cert_path0 = (char *) IRC_SERVER_OPTION_STRING(
-            server, IRC_SERVER_OPTION_SSL_CERT);
-        if (cert_path0 && cert_path0[0])
+        ptr_cert_path = IRC_SERVER_OPTION_STRING(server,
+                                                 IRC_SERVER_OPTION_SSL_CERT);
+        if (ptr_cert_path && ptr_cert_path[0])
         {
-            weechat_dir = weechat_info_get ("weechat_dir", "");
-            cert_path1 = weechat_string_replace (cert_path0, "%h", weechat_dir);
-            cert_path2 = (cert_path1) ?
-                weechat_string_expand_home (cert_path1) : NULL;
-
-            if (cert_path2)
+            cert_path = weechat_string_eval_path_home (ptr_cert_path,
+                                                       NULL, NULL, NULL);
+            if (cert_path)
             {
-                cert_str = weechat_file_get_content (cert_path2);
+                cert_str = weechat_file_get_content (cert_path);
                 if (cert_str)
                 {
                     weechat_printf (
@@ -4789,7 +4785,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                             server->buffer,
                             _("%sgnutls: invalid certificate \"%s\", error: "
                               "%s"),
-                            weechat_prefix ("error"), cert_path2,
+                            weechat_prefix ("error"), cert_path,
                             gnutls_strerror (ret));
                         rc = -1;
                     }
@@ -4822,7 +4818,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                             weechat_printf (
                                 server->buffer,
                                 _("%s - client certificate info (%s):"),
-                                weechat_prefix ("network"), cert_path2);
+                                weechat_prefix ("network"), cert_path);
                             weechat_printf (
                                 server->buffer, "%s  - %s",
                                 weechat_prefix ("network"), cinfo.data);
@@ -4841,14 +4837,10 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                     weechat_printf (
                         server->buffer,
                         _("%sgnutls: unable to read certificate \"%s\""),
-                        weechat_prefix ("error"), cert_path2);
+                        weechat_prefix ("error"), cert_path);
                 }
             }
-
-            if (cert_path1)
-                free (cert_path1);
-            if (cert_path2)
-                free (cert_path2);
+            free (cert_path);
         }
     }
 
@@ -4862,8 +4854,6 @@ end:
 
     if (cert_temp_init)
         gnutls_x509_crt_deinit (cert_temp);
-    if (weechat_dir)
-        free (weechat_dir);
     if (fingerprint_eval)
         free (fingerprint_eval);
 
