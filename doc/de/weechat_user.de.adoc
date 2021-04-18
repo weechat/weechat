@@ -458,17 +458,17 @@ ulimit -c 200000
 [[gdb_backtrace]]
 ==== Rückverfolgung mit gdb
 
-Sollte WeeChat abstürzen wird durch das System eine _core_ oder _core.12345_
+Sollte WeeChat abstürzen, wird durch das System eine _core_ oder _core.12345_
 Datei erstellt (_12345_ ist dabei die Prozess-ID). Dazu muss aber die
 entprechende <<core_files,Option aktiviert sein>>.
 Diese Core-Datei wird in dem Verzeichnis erzeugt aus welchem WeeChat gestartet wurde
 (dies ist *nicht* das Verzeichnis in welchem sich WeeChat befindet!).
 
-// TRANSLATION MISSING
 [NOTE]
-On some systems like Archlinux, core dumps could be in another directory like
-_/var/lib/systemd/coredump_ and you must use the command `coredumpctl` to read it. +
-For more information, see this wiki page: https://wiki.archlinux.org/index.php/Core_dump
+Auf einigen Systemen wie Archlinux, kann sich die Core-Datei in einem anderen Verzeichnis
+befinden, z.B. _/var/lib/systemd/coredump_ und es muss der `coredumpctl` Befehl genutzt
+werden um die Datei zu lesen. +
+Weitere Informationen finden Sie auf dieser Wiki-Seite: https://wiki.archlinux.org/index.php/Core_dump
 
 Beispiel: _weechat_ ist in _/usr/bin/_ installiert und die _core_ Datei befindet sich
 in _/home/xxx/_. Nun wird gdb mit folgendem Befehl aufgerufen:
