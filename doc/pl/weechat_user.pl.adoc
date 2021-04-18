@@ -1611,18 +1611,20 @@ Następujące wskaźniki są dostępne:
 * `+${window}+`: okno, dla którego warunek jest sprawdzany
 * `+${buffer}+`: bufor okna, dla którego warunek jest sprawdzany
 
-Przykład wyświetlania paska z listą nicków w każdym oknie z taką listą i tylko
-jeśli szerokość okna > 100:
+// TRANSLATION MISSING
+Example to display nicklist bar in all buffers with a nicklist, and only if
+width of terminal is > 100:
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+/set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-Taki sam warunek ale lista nicków będzie wyświetlana zawsze w buforze _&bitlbee_
-(nawet jeśli okno jest małe):
+// TRANSLATION MISSING
+Same condition, but always display nicklist on buffer _&bitlbee_
+(even if terminal is small):
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+/set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
 [[bare_display]]

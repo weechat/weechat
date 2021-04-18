@@ -1618,18 +1618,20 @@ Folgende Zeiger sind verfügbar:
 * `+${window}+`: das Fenster in dem der Zustand ausgewertet wird
 * `+${buffer}+`: der Buffer eines Fensters in dem der Zustand ausgewertet wird
 
-Beispiel wie man die Bar-Nicklist in allen Buffer, die eine Nicklist besitzen,
-darstellt, aber nur wenn das Fenster eine Mindestbreite von > 100 Pixeln aufweist:
+// TRANSLATION MISSING
+Example to display nicklist bar in all buffers with a nicklist, and only if
+width of terminal is > 100:
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+/set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-Gleiche Bedingungen, aber die Benutzerliste wird im Buffer _&bitlbee_ immer angezeigt
-(auch wenn das Fenster kleiner als 100 Pixel ist):
+// TRANSLATION MISSING
+Same condition, but always display nicklist on buffer _&bitlbee_
+(even if terminal is small):
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+/set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
 [[bare_display]]

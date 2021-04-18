@@ -1643,18 +1643,20 @@ _conditions_
 * `+${window}+`: 状態が評価されたウィンドウ
 * `+${buffer}+`: 状態が評価されたウィンドウのバッファ
 
-ニックネームリストを持ち、ウィンドウ幅が 100
-より大きい全てのバッファにニックネームリストバーを表示する例:
+// TRANSLATION MISSING
+Example to display nicklist bar in all buffers with a nicklist, and only if
+width of terminal is > 100:
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+/set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-上と同じだが、_&bitlbee_ バッファでは常にニックネームリストを表示
-(ウィンドウ幅が狭くても):
+// TRANSLATION MISSING
+Same condition, but always display nicklist on buffer _&bitlbee_
+(even if terminal is small):
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+/set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
 [[bare_display]]

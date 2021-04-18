@@ -1648,17 +1648,17 @@ Les pointeurs suivants sont disponibles :
 * `+${buffer}+` : le tampon de la fenêtre où la condition est évaluée
 
 Exemple pour afficher la liste de pseudos dans tous les tampons possédant une
-liste de pseudos, et seulement si la largeur de fenêtre est supérieurs à 100 :
+liste de pseudos, et seulement si la largeur du terminal est supérieure à 100 :
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && ${window.win_width} > 100"
+/set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
 Même condition, mais afficher toujours la liste de pseudos sur le tampon
-_&bitlbee_ (même si la fenêtre est petite) :
+_&bitlbee_ (même si le terminal est petit) :
 
 ----
-/set weechat.bar.nicklist.conditions "${nicklist} && (${window.win_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
+/set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
 ----
 
 [[bare_display]]
