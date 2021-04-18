@@ -496,16 +496,8 @@ weechat_create_home_dir ()
     if (!weechat_home)
     {
         config_weechat_home = WEECHAT_HOME;
-        if (!config_weechat_home[0])
-        {
-            string_fprintf (stderr,
-                            _("Error: WEECHAT_HOME is undefined, check build "
-                              "options\n"));
-            weechat_shutdown (EXIT_FAILURE, 0);
-            /* make C static analyzer happy (never executed) */
-            return;
-        }
-        weechat_set_home_path (config_weechat_home);
+        weechat_set_home_path (
+            (config_weechat_home[0] ? config_weechat_home : "~/.weechat"));
     }
 
     /* if home already exists, it has to be a directory */

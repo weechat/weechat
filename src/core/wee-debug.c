@@ -591,6 +591,7 @@ void
 debug_directories ()
 {
     char *extra_libdir;
+    const char *ptr_home = WEECHAT_HOME;
 
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
 
@@ -601,7 +602,7 @@ debug_directories ()
                      (weechat_home_temp) ? " " : "",
                      (weechat_home_temp) ? _("(TEMPORARY, deleted on exit)") : "");
     gui_chat_printf (NULL, _("        (default: %s)"),
-                     WEECHAT_HOME);
+                     (ptr_home && ptr_home[0]) ? ptr_home : "~/.weechat");
     gui_chat_printf (NULL, "  lib: %s", WEECHAT_LIBDIR);
     gui_chat_printf (NULL, "  lib (extra): %s",
                      (extra_libdir && extra_libdir[0]) ? extra_libdir : "-");

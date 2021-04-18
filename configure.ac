@@ -134,7 +134,7 @@ AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([TESTS], [#undef TESTS])
 AH_VERBATIM([MAN], [#undef MAN])
 AH_VERBATIM([DOC], [#undef DOC])
-AH_VERBATIM([WEECHAT_HOME], [#define WEECHAT_HOME "~/.weechat"])
+AH_VERBATIM([WEECHAT_HOME], [#define WEECHAT_HOME ""])
 AH_VERBATIM([CA_FILE], [#define CA_FILE "/etc/ssl/certs/ca-certificates.crt"])
 
 # Arguments for ./configure
@@ -172,12 +172,9 @@ AC_ARG_ENABLE(tests,        [  --enable-tests          turn on build of tests (d
 AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page (default=not built)],enable_man=$enableval,enable_man=no)
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
 
-AC_ARG_VAR(WEECHAT_HOME, [WeeChat home directory for config, logs, scripts.. (default is "~/.weechat")])
+AC_ARG_VAR(WEECHAT_HOME, [Force a single WeeChat home directory for config, logs, scripts, etc.])
 AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file".])
 
-if test "x$WEECHAT_HOME" = "x" ; then
-    WEECHAT_HOME="~/.weechat"
-fi
 AC_DEFINE_UNQUOTED(WEECHAT_HOME, "$WEECHAT_HOME")
 
 if test "x$CA_FILE" = "x" ; then
@@ -1562,8 +1559,10 @@ if test "x$not_asked" != "x" || test "x$not_found" != "x"; then
 fi
 
 echo ""
-echo "WeeChat home directory is ${WEECHAT_HOME}"
-echo ""
+if test "x$WEECHAT_HOME" != "x" ; then
+    echo "WeeChat home directory is forced by default to: ${WEECHAT_HOME}"
+    echo ""
+fi
 eval echo "WeeChat will be installed in $bindir"
 echo ""
 echo "configure complete, now type 'make' to build WeeChat $VERSION"

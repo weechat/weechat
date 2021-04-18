@@ -134,11 +134,8 @@ if(ENABLE_TESTS AND NOT ENABLE_HEADLESS)
 endif()
 
 # option WEECHAT_HOME
-if(NOT DEFINED WEECHAT_HOME OR "${WEECHAT_HOME}" STREQUAL "")
-  set(WEECHAT_HOME "~/.weechat")
-endif()
 set(WEECHAT_HOME "${WEECHAT_HOME}" CACHE
-  STRING "WeeChat home directory for config, logs, scripts.. (default is \"~/.weechat\")"
+  STRING "Force a single WeeChat home directory for config, logs, scripts, etc."
   FORCE)
 mark_as_advanced(CLEAR WEECHAT_HOME)
 
