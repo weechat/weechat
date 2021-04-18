@@ -117,3 +117,21 @@ TEST(CoreDir, FileGetContent)
     unlink (path);
     free (content);
 }
+
+/*
+ * Tests functions:
+ *   dir_set_home_path
+ */
+
+TEST(CoreDir, SetHomePath)
+{
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_dir
+ */
+
+TEST(CoreDir, CreateHomeDir)
+{
+}

@@ -33,5 +33,6 @@ extern void dir_exec_on_files (const char *directory, int recurse_subdirs,
 extern char *dir_search_full_lib_name (const char *filename,
                                        const char *sys_directory);
 extern char *dir_file_get_content (const char *filename);
+extern void dir_create_home_dir ();
 
 #endif /* WEECHAT_DIR_H */

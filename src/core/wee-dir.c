@@ -512,3 +512,156 @@ error:
 	fclose (f);
     return NULL;
 }
+
+/*
+ * Expands and assigns given path to "weechat_home".
+ */
+
+void
+dir_set_home_path (char *home_path)
+{
+    char *ptr_home;
+    int dir_length;
+
+    if (home_path[0] == '~')
+    {
+        /* replace leading '~' by $HOME */
+        ptr_home = getenv ("HOME");
+        if (!ptr_home)
+        {
+            string_fprintf (stderr, _("Error: unable to get HOME directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        dir_length = strlen (ptr_home) + strlen (home_path + 1) + 1;
+        weechat_home = malloc (dir_length);
+        if (weechat_home)
+        {
+            snprintf (weechat_home, dir_length,
+                      "%s%s", ptr_home, home_path + 1);
+        }
+    }
+    else
+    {
+        weechat_home = strdup (home_path);
+    }
+
+    if (!weechat_home)
+    {
+        string_fprintf (stderr,
+                        _("Error: not enough memory for home directory\n"));
+        weechat_shutdown (EXIT_FAILURE, 0);
+        /* make C static analyzer happy (never executed) */
+        return;
+    }
+}
+
+/*
+ * Creates WeeChat home directory (by default ~/.weechat).
+ *
+ * Any error in this function is fatal: WeeChat can not run without a home
+ * directory.
+ */
+
+void
+dir_create_home_dir ()
+{
+    char *temp_dir, *temp_home_template, *ptr_weechat_home;
+    char *config_weechat_home;
+    int length, add_separator;
+    struct stat statinfo;
+
+    /* temporary WeeChat home */
+    if (weechat_home_temp)
+    {
+        temp_dir = dir_get_temp_dir ();
+        if (!temp_dir || !temp_dir[0])
+        {
+            string_fprintf (stderr,
+                            _("Error: not enough memory for home "
+                              "directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        length = strlen (temp_dir) + 32 + 1;
+        temp_home_template = malloc (length);
+        if (!temp_home_template)
+        {
+            free (temp_dir);
+            string_fprintf (stderr,
+                            _("Error: not enough memory for home "
+                              "directory\n"));
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        add_separator = (temp_dir[strlen (temp_dir) - 1] != DIR_SEPARATOR_CHAR);
+        snprintf (temp_home_template, length,
+                  "%s%sweechat_temp_XXXXXX",
+                  temp_dir,
+                  add_separator ? DIR_SEPARATOR : "");
+        free (temp_dir);
+        ptr_weechat_home = mkdtemp (temp_home_template);
+        if (!ptr_weechat_home)
+        {
+            string_fprintf (stderr,
+                            _("Error: unable to create a temporary "
+                              "home directory (using template: \"%s\")\n"),
+                            temp_home_template);
+            free (temp_home_template);
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+        weechat_home = strdup (ptr_weechat_home);
+        free (temp_home_template);
+        weechat_home_delete_on_exit = 1;
+        return;
+    }
+
+    /*
+     * weechat_home is not set yet: look for environment variable
+     * "WEECHAT_HOME"
+     */
+    if (!weechat_home)
+    {
+        ptr_weechat_home = getenv ("WEECHAT_HOME");
+        if (ptr_weechat_home && ptr_weechat_home[0])
+            dir_set_home_path (ptr_weechat_home);
+    }
+
+    /* weechat_home is still not set: try to use compile time default */
+    if (!weechat_home)
+    {
+        config_weechat_home = WEECHAT_HOME;
+        dir_set_home_path (
+            (config_weechat_home[0] ? config_weechat_home : "~/.weechat"));
+    }
+
+    /* if home already exists, it has to be a directory */
+    if (stat (weechat_home, &statinfo) == 0)
+    {
+        if (!S_ISDIR (statinfo.st_mode))
+        {
+            string_fprintf (stderr,
+                            _("Error: home (%s) is not a directory\n"),
+                            weechat_home);
+            weechat_shutdown (EXIT_FAILURE, 0);
+            /* make C static analyzer happy (never executed) */
+            return;
+        }
+    }
+
+    /* create home directory; error is fatal */
+    if (!dir_mkdir (weechat_home, 0755))
+    {
+        string_fprintf (stderr,
+                        _("Error: cannot create directory \"%s\"\n"),
+                        weechat_home);
+        weechat_shutdown (EXIT_FAILURE, 0);
+        /* make C static analyzer happy (never executed) */
+        return;
+    }
+}
