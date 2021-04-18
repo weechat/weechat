@@ -34,10 +34,10 @@ extern "C"
 #define HAVE_CONFIG_H
 #endif
 #include "src/core/weechat.h"
+#include "src/core/wee-dir.h"
 #include "src/core/wee-hook.h"
 #include "src/core/wee-input.h"
 #include "src/core/wee-string.h"
-#include "src/core/wee-util.h"
 #include "src/plugins/plugin.h"
 #include "src/gui/gui-main.h"
 #include "src/gui/gui-buffer.h"
@@ -62,6 +62,7 @@ extern "C"
 IMPORT_TEST_GROUP(CoreArraylist);
 IMPORT_TEST_GROUP(CoreCalc);
 IMPORT_TEST_GROUP(CoreCrypto);
+IMPORT_TEST_GROUP(CoreDir);
 IMPORT_TEST_GROUP(CoreEval);
 IMPORT_TEST_GROUP(CoreHashtable);
 IMPORT_TEST_GROUP(CoreHdata);
@@ -197,7 +198,7 @@ main (int argc, char *argv[])
     }
 
     /* clean WeeChat home */
-    util_exec_on_files (WEECHAT_TESTS_HOME, 1, 1, &exec_on_files_cb, NULL);
+    dir_exec_on_files (WEECHAT_TESTS_HOME, 1, 1, &exec_on_files_cb, NULL);
 
     /* build arguments for WeeChat */
     weechat_tests_args = getenv ("WEECHAT_TESTS_ARGS");

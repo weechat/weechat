@@ -41,6 +41,8 @@ lib_weechat_core_a_SOURCES = weechat.c \
                              wee-crypto.h \
                              wee-debug.c \
                              wee-debug.h \
+                             wee-dir.c \
+                             wee-dir.h \
                              wee-eval.c \
                              wee-eval.h \
                              wee-hashtable.c \

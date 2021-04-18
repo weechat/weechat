@@ -46,6 +46,7 @@
 #include "wee-config.h"
 #include "wee-config-file.h"
 #include "wee-debug.h"
+#include "wee-dir.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hdata.h"
@@ -4755,7 +4756,7 @@ COMMAND_CALLBACK(plugin)
                                         | WEECHAT_STRING_SPLIT_COLLAPSE_SEPS,
                                         0, &plugin_argc);
         }
-        full_name = util_search_full_lib_name (argv[2], "plugins");
+        full_name = dir_search_full_lib_name (argv[2], "plugins");
         plugin_load (full_name, 1, plugin_argc, plugin_argv);
         if (full_name)
             free (full_name);

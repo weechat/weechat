@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <signal.h>
 
 #include "weechat.h"
 #include "wee-signal.h"

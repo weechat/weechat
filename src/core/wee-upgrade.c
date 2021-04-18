@@ -30,6 +30,7 @@
 
 #include "weechat.h"
 #include "wee-upgrade.h"
+#include "wee-dir.h"
 #include "wee-hook.h"
 #include "wee-infolist.h"
 #include "wee-secure-buffer.h"
@@ -924,9 +925,9 @@ upgrade_weechat_end ()
     long long time_diff;
 
     /* remove .upgrade files */
-    util_exec_on_files (weechat_home,
-                        0, 0,
-                        &upgrade_weechat_remove_file_cb, NULL);
+    dir_exec_on_files (weechat_home,
+                       0, 0,
+                       &upgrade_weechat_remove_file_cb, NULL);
 
     /* display message for end of /upgrade with duration */
     gettimeofday (&tv_now, NULL);

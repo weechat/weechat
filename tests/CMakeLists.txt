@@ -27,6 +27,7 @@ set(LIB_WEECHAT_UNIT_TESTS_CORE_SRC
   unit/core/test-core-arraylist.cpp
   unit/core/test-core-calc.cpp
   unit/core/test-core-crypto.cpp
+  unit/core/test-core-dir.cpp
   unit/core/test-core-eval.cpp
   unit/core/test-core-hashtable.cpp
   unit/core/test-core-hdata.cpp

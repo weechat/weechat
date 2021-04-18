@@ -38,6 +38,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-arraylist.h"
 #include "../core/wee-config.h"
+#include "../core/wee-dir.h"
 #include "../core/wee-eval.h"
 #include "../core/wee-hashtable.h"
 #include "../core/wee-hdata.h"
@@ -665,11 +666,11 @@ plugin_load (const char *filename, int init_plugin, int argc, char **argv)
         new_plugin->crypto_hash = &plugin_api_crypto_hash;
         new_plugin->crypto_hash_pbkdf2 = &plugin_api_crypto_hash_pbkdf2;
 
-        new_plugin->mkdir_home = &util_mkdir_home;
-        new_plugin->mkdir = &util_mkdir;
-        new_plugin->mkdir_parents = &util_mkdir_parents;
-        new_plugin->exec_on_files = &util_exec_on_files;
-        new_plugin->file_get_content = &util_file_get_content;
+        new_plugin->mkdir_home = &dir_mkdir_home;
+        new_plugin->mkdir = &dir_mkdir;
+        new_plugin->mkdir_parents = &dir_mkdir_parents;
+        new_plugin->exec_on_files = &dir_exec_on_files;
+        new_plugin->file_get_content = &dir_file_get_content;
 
         new_plugin->util_timeval_cmp = &util_timeval_cmp;
         new_plugin->util_timeval_diff = &util_timeval_diff;
@@ -1049,8 +1050,8 @@ plugin_auto_load (char *force_plugin_autoload,
                                              NULL, NULL, NULL);
         if (plugin_path)
         {
-            util_exec_on_files (plugin_path, 1, 0,
-                                &plugin_auto_load_file, &plugin_args);
+            dir_exec_on_files (plugin_path, 1, 0,
+                               &plugin_auto_load_file, &plugin_args);
             free (plugin_path);
         }
     }
@@ -1064,8 +1065,8 @@ plugin_auto_load (char *force_plugin_autoload,
             length = strlen (extra_libdir) + 16 + 1;
             dir_name = malloc (length);
             snprintf (dir_name, length, "%s/plugins", extra_libdir);
-            util_exec_on_files (dir_name, 1, 0,
-                                &plugin_auto_load_file, &plugin_args);
+            dir_exec_on_files (dir_name, 1, 0,
+                               &plugin_auto_load_file, &plugin_args);
             free (dir_name);
         }
     }
@@ -1078,8 +1079,8 @@ plugin_auto_load (char *force_plugin_autoload,
         if (dir_name)
         {
             snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-            util_exec_on_files (dir_name, 1, 0,
-                                &plugin_auto_load_file, &plugin_args);
+            dir_exec_on_files (dir_name, 1, 0,
+                               &plugin_auto_load_file, &plugin_args);
             free (dir_name);
         }
     }

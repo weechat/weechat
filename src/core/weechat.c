@@ -59,6 +59,7 @@
 #include "wee-completion.h"
 #include "wee-config.h"
 #include "wee-debug.h"
+#include "wee-dir.h"
 #include "wee-eval.h"
 #include "wee-hdata.h"
 #include "wee-hook.h"
@@ -435,7 +436,7 @@ weechat_create_home_dir ()
     /* temporary WeeChat home */
     if (weechat_home_temp)
     {
-        temp_dir = util_get_temp_dir ();
+        temp_dir = dir_get_temp_dir ();
         if (!temp_dir || !temp_dir[0])
         {
             string_fprintf (stderr,
@@ -515,7 +516,7 @@ weechat_create_home_dir ()
     }
 
     /* create home directory; error is fatal */
-    if (!util_mkdir (weechat_home, 0755))
+    if (!dir_mkdir (weechat_home, 0755))
     {
         string_fprintf (stderr,
                         _("Error: cannot create directory \"%s\"\n"),
@@ -697,7 +698,7 @@ weechat_shutdown (int return_code, int crash)
     if (!crash && weechat_home_delete_on_exit)
     {
         /* remove temporary home (only if not crashing) */
-        util_rmtree (weechat_home);
+        dir_rmtree (weechat_home);
     }
 
     if (weechat_argv0)

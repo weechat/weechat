@@ -50,21 +50,6 @@ extern void util_get_time_diff (time_t time1, time_t time2,
 
 extern long util_parse_delay (const char *string_delay, long default_factor);
 
-/* files/directories */
-extern char *util_get_temp_dir();
-extern int util_mkdir_home (const char *directory, int mode);
-extern int util_mkdir (const char *directory, int mode);
-extern int util_mkdir_parents (const char *directory, int mode);
-extern int util_rmtree (const char *directory);
-extern void util_exec_on_files (const char *directory, int recurse_subdirs,
-                                int hidden_files,
-                                void (*callback)(void *data,
-                                                 const char *filename),
-                                void *callback_data);
-extern char *util_search_full_lib_name (const char *filename,
-                                        const char *sys_directory);
-extern char *util_file_get_content (const char *filename);
-
 /* version */
 extern int util_version_number (const char *version);
 

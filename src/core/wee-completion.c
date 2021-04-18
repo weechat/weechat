@@ -36,6 +36,7 @@
 #include "weechat.h"
 #include "wee-arraylist.h"
 #include "wee-config.h"
+#include "wee-dir.h"
 #include "wee-eval.h"
 #include "wee-hashtable.h"
 #include "wee-hook.h"
@@ -43,7 +44,6 @@
 #include "wee-proxy.h"
 #include "wee-secure.h"
 #include "wee-string.h"
-#include "wee-util.h"
 #include "../gui/gui-completion.h"
 #include "../gui/gui-bar.h"
 #include "../gui/gui-bar-window.h"
@@ -1000,9 +1000,9 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
         if (dir_name)
         {
             snprintf (dir_name, length, "%s/plugins", extra_libdir);
-            util_exec_on_files (dir_name, 1, 0,
-                                &completion_list_add_plugins_installed_exec_cb,
-                                completion);
+            dir_exec_on_files (dir_name, 1, 0,
+                               &completion_list_add_plugins_installed_exec_cb,
+                               completion);
             free (dir_name);
         }
     }
@@ -1015,9 +1015,9 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
                                              NULL, NULL, NULL);
         if (plugin_path)
         {
-            util_exec_on_files (plugin_path, 1, 0,
-                                &completion_list_add_plugins_installed_exec_cb,
-                                completion);
+            dir_exec_on_files (plugin_path, 1, 0,
+                               &completion_list_add_plugins_installed_exec_cb,
+                               completion);
             free (plugin_path);
         }
     }
@@ -1028,9 +1028,9 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     if (dir_name)
     {
         snprintf (dir_name, length, "%s/plugins", WEECHAT_LIBDIR);
-        util_exec_on_files (dir_name, 1, 0,
-                            &completion_list_add_plugins_installed_exec_cb,
-                            completion);
+        dir_exec_on_files (dir_name, 1, 0,
+                           &completion_list_add_plugins_installed_exec_cb,
+                           completion);
         free (dir_name);
     }
 
