@@ -394,7 +394,7 @@ end:
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    char *res, *mask_expanded, *file_path, *dir_separator, *weechat_dir;
+    char *res, *mask_expanded, *file_path, *dir_separator;
     const char *mask;
     int length;
 
@@ -405,12 +405,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
     dir_separator = weechat_info_get ("dir_separator", "");
     if (!dir_separator)
         return NULL;
-    weechat_dir = weechat_info_get ("weechat_dir", "");
-    if (!weechat_dir)
-    {
-        free (dir_separator);
-        return NULL;
-    }
 
     /* get filename mask for buffer */
     mask = logger_get_mask_for_buffer (buffer);
@@ -423,7 +417,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
             weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
             weechat_buffer_get_string (buffer, "name"));
         free (dir_separator);
-        free (weechat_dir);
         return NULL;
     }
 
@@ -449,7 +442,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
 
 end:
     free (dir_separator);
-    free (weechat_dir);
     if (mask_expanded)
         free (mask_expanded);
     if (file_path)
