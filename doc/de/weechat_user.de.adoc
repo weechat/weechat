@@ -1601,7 +1601,7 @@ Bar angezeigt werden soll oder nicht.
 Folgende Zeichenketten sind möglich:
 
 * _active_  : das Fenster muss das aktive Fenster sein
-* _inactive_: das Fenster muss das inaktive Fenster sein
+* _inactive_: das Fenster muss ein inaktives Fenster sein
 * _nicklist_: der Buffer der in einem Fenster dargestellt wird, muss eine
               Benutzerliste anzeigen.
 * ein Ausdruck: wird als boolescher Wert ausgewertet (siehe Befehl
@@ -1618,17 +1618,16 @@ Folgende Zeiger sind verfügbar:
 * `+${window}+`: das Fenster in dem der Zustand ausgewertet wird
 * `+${buffer}+`: der Buffer eines Fensters in dem der Zustand ausgewertet wird
 
-// TRANSLATION MISSING
-Example to display nicklist bar in all buffers with a nicklist, and only if
-width of terminal is > 100:
+Beispiel für die Anzeige der Nicklist-Bar in allen Buffern mit einer Benutzerliste,
+allerdings nur dann, wenn die Breite des Terminals größer >100 ist:
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && ${info:term_width} > 100"
 ----
 
-// TRANSLATION MISSING
-Same condition, but always display nicklist on buffer _&bitlbee_
-(even if terminal is small):
+Die selben Bedingungen wie oben, aber diesmal wird die Benutzerliste immer für
+den Buffer _&bitlbee_ angezeit (auch dann, wenn das Terminal kleiner ist, als
+der angegebene Wert):
 
 ----
 /set weechat.bar.nicklist.conditions "${nicklist} && (${info:term_width} > 100 || ${buffer.full_name} == irc.bitlbee.&bitlbee)"
