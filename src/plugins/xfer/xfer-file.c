@@ -185,7 +185,7 @@ xfer_file_find_suffix (struct t_xfer *xfer)
         return;
 
     /* if auto rename is not set, then abort xfer */
-    if (!xfer_config_file_auto_rename)
+    if (!weechat_config_boolean (xfer_config_file_auto_rename))
     {
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
