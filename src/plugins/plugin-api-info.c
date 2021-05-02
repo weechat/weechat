@@ -183,27 +183,91 @@ plugin_api_info_dir_separator_cb (const void *pointer, void *data,
 }
 
 /*
- * Returns WeeChat info "weechat_dir".
+ * Returns an absolute path to directory.
+ *
+ * Note: result must be freed after use.
  */
 
 char *
-plugin_api_info_weechat_dir_cb (const void *pointer, void *data,
-                                const char *info_name,
-                                const char *arguments)
+plugin_api_info_absolute_path (const char *directory)
 {
-    char weechat_dir_absolute_path[PATH_MAX];
+    char absolute_path[PATH_MAX];
 
+    if (!realpath (directory, absolute_path))
+        return NULL;
+    return strdup ((absolute_path[0]) ? absolute_path : directory);
+}
+
+/*
+ * Returns WeeChat info "weechat_config_dir".
+ */
+
+char *
+plugin_api_info_weechat_config_dir_cb (const void *pointer, void *data,
+                                       const char *info_name,
+                                       const char *arguments)
+{
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) info_name;
     (void) arguments;
 
-    if (!realpath (weechat_home, weechat_dir_absolute_path))
-        return NULL;
+    return plugin_api_info_absolute_path (weechat_config_dir);
+}
 
-    return strdup ((weechat_dir_absolute_path[0]) ?
-                   weechat_dir_absolute_path : weechat_home);
+/*
+ * Returns WeeChat info "weechat_data_dir".
+ */
+
+char *
+plugin_api_info_weechat_data_dir_cb (const void *pointer, void *data,
+                                     const char *info_name,
+                                     const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return plugin_api_info_absolute_path (weechat_data_dir);
+}
+
+/*
+ * Returns WeeChat info "weechat_cache_dir".
+ */
+
+char *
+plugin_api_info_weechat_cache_dir_cb (const void *pointer, void *data,
+                                      const char *info_name,
+                                      const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return plugin_api_info_absolute_path (weechat_cache_dir);
+}
+
+/*
+ * Returns WeeChat info "weechat_runtime_dir".
+ */
+
+char *
+plugin_api_info_weechat_runtime_dir_cb (const void *pointer, void *data,
+                                        const char *info_name,
+                                        const char *arguments)
+{
+    /* make C compiler happy */
+    (void) pointer;
+    (void) data;
+    (void) info_name;
+    (void) arguments;
+
+    return plugin_api_info_absolute_path (weechat_runtime_dir);
 }
 
 /*
@@ -1802,8 +1866,23 @@ plugin_api_info_init ()
                N_("directory separator"),
                NULL, &plugin_api_info_dir_separator_cb, NULL, NULL);
     hook_info (NULL, "weechat_dir",
-               N_("WeeChat directory"),
-               NULL, &plugin_api_info_weechat_dir_cb, NULL, NULL);
+               N_("WeeChat directory "
+                  "(*deprecated* since version 3.2, replaced by "
+                  "\"weechat_config_dir\", \"weechat_data_dir\", "
+                  "\"weechat_cache_dir\" and \"weechat_runtime_dir\")"),
+               NULL, &plugin_api_info_weechat_data_dir_cb, NULL, NULL);
+    hook_info (NULL, "weechat_config_dir",
+               N_("WeeChat config directory"),
+               NULL, &plugin_api_info_weechat_config_dir_cb, NULL, NULL);
+    hook_info (NULL, "weechat_data_dir",
+               N_("WeeChat data directory"),
+               NULL, &plugin_api_info_weechat_data_dir_cb, NULL, NULL);
+    hook_info (NULL, "weechat_cache_dir",
+               N_("WeeChat cache directory"),
+               NULL, &plugin_api_info_weechat_cache_dir_cb, NULL, NULL);
+    hook_info (NULL, "weechat_runtime_dir",
+               N_("WeeChat runtime directory"),
+               NULL, &plugin_api_info_weechat_runtime_dir_cb, NULL, NULL);
     hook_info (NULL, "weechat_libdir",
                N_("WeeChat \"lib\" directory"),
                NULL, &plugin_api_info_weechat_libdir_cb, NULL, NULL);

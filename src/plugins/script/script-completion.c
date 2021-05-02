@@ -189,7 +189,7 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
                                     struct t_gui_buffer *buffer,
                                     struct t_gui_completion *completion)
 {
-    char *weechat_home, *directory;
+    char *weechat_data_dir, *directory;
     int length, i;
     void *pointers[2];
 
@@ -199,9 +199,9 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
     (void) completion_item;
     (void) buffer;
 
-    weechat_home = weechat_info_get ("weechat_dir", NULL);
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
 
-    length = strlen (weechat_home) + 128 + 1;
+    length = strlen (weechat_data_dir) + 128 + 1;
     directory = malloc (length);
     if (directory)
     {
@@ -210,16 +210,16 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
             pointers[0] = completion;
             pointers[1] = script_extension[i];
 
-            /* look for files in "~/.weechat/<language>/" */
+            /* look for files in <weechat_data_dir>/<language> */
             snprintf (directory, length,
-                      "%s/%s", weechat_home, script_language[i]);
+                      "%s/%s", weechat_data_dir, script_language[i]);
             weechat_exec_on_files (directory, 0, 0,
                                    &script_completion_exec_file_cb,
                                    pointers);
 
-            /* look for files in "~/.weechat/<language>/autoload/" */
+            /* look for files in <weechat_data_dir>/<language>/autoload */
             snprintf (directory, length,
-                      "%s/%s/autoload", weechat_home, script_language[i]);
+                      "%s/%s/autoload", weechat_data_dir, script_language[i]);
             weechat_exec_on_files (directory, 0, 0,
                                    &script_completion_exec_file_cb,
                                    pointers);
@@ -227,8 +227,8 @@ script_completion_scripts_files_cb (const void *pointer, void *data,
         free (directory);
     }
 
-    if (weechat_home)
-        free (weechat_home);
+    if (weechat_data_dir)
+        free (weechat_data_dir);
 
     return WEECHAT_RC_OK;
 }

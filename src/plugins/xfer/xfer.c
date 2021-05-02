@@ -145,11 +145,20 @@ void
 xfer_create_directories ()
 {
     char *path;
+    struct t_hashtable *options;
+
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "data");
 
     /* create download directory */
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_download_path),
-        NULL, NULL, NULL);
+        NULL, NULL, options);
     if (path)
     {
         (void) weechat_mkdir_parents (path, 0700);
@@ -159,12 +168,15 @@ xfer_create_directories ()
     /* create upload directory */
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_upload_path),
-        NULL, NULL, NULL);
+        NULL, NULL, options);
     if (path)
     {
         (void) weechat_mkdir_parents (path, 0700);
         free (path);
     }
+
+    if (options)
+        weechat_hashtable_free (options);
 }
 
 /*
@@ -1072,6 +1084,7 @@ xfer_add_cb (const void *pointer, void *data,
     socklen_t length, bind_addr_len;
     unsigned long long file_size;
     struct t_xfer *ptr_xfer;
+    struct t_hashtable *options;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1170,9 +1183,18 @@ xfer_add_cb (const void *pointer, void *data,
             filename2 = weechat_string_expand_home (filename);
         else
         {
+            options = weechat_hashtable_new (
+                32,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_STRING,
+                NULL, NULL);
+            if (options)
+                weechat_hashtable_set (options, "directory", "data");
             path = weechat_string_eval_path_home (
                 weechat_config_string (xfer_config_file_upload_path),
-                NULL, NULL, NULL);
+                NULL, NULL, options);
+            if (options)
+                weechat_hashtable_free (options);
             if (!path)
             {
                 weechat_printf (NULL,

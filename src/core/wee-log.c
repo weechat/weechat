@@ -45,7 +45,7 @@
 #include "../plugins/plugin.h"
 
 
-char *weechat_log_filename = NULL; /* log name (~/.weechat/weechat.log)     */
+char *weechat_log_filename = NULL; /* WeeChat log filename (weechat.log)    */
 FILE *weechat_log_file = NULL;     /* WeeChat log file                      */
 int weechat_log_use_time = 1;      /* 0 to temporary disable time in log,   */
                                    /* for example when dumping data         */
@@ -79,10 +79,10 @@ log_open (const char *filename, const char *mode)
     }
     else
     {
-        filename_length = strlen (weechat_home) + 64;
+        filename_length = strlen (weechat_data_dir) + 64;
         weechat_log_filename = malloc (filename_length);
         snprintf (weechat_log_filename, filename_length,
-                  "%s/%s", weechat_home, WEECHAT_LOG_NAME);
+                  "%s/%s", weechat_data_dir, WEECHAT_LOG_NAME);
         weechat_log_file = fopen (weechat_log_filename, mode);
     }
 
@@ -122,10 +122,12 @@ log_init ()
 {
     if (!log_open (NULL, "w"))
     {
-        string_fprintf (stderr,
-                        _("Error: unable to create/append to log file (weechat.log)\n"
-                          "If another WeeChat process is using this file, try to run WeeChat\n"
-                          "with another home using the \"--dir\" command line option.\n"));
+        string_fprintf (
+            stderr,
+            _("Error: unable to create/append to log file (weechat.log)\n"
+              "If another WeeChat process is using this file, try to run "
+              "WeeChat with a specific home directory using the \"--dir\" "
+              "command line option.\n"));
         exit (1);
     }
     log_printf ("WeeChat %s (%s %s %s)",
@@ -271,7 +273,7 @@ log_crash_rename ()
 
     log_close ();
 
-    length = strlen (weechat_home) + 128;
+    length = strlen (weechat_data_dir) + 128;
     new_name = malloc (length);
     if (new_name)
     {
@@ -279,7 +281,7 @@ log_crash_rename ()
         local_time = localtime (&time_now);
         snprintf (new_name, length,
                   "%s/weechat_crash_%04d%02d%02d_%d.log",
-                  weechat_home,
+                  weechat_data_dir,
                   local_time->tm_year + 1900,
                   local_time->tm_mon + 1,
                   local_time->tm_mday,

@@ -797,7 +797,7 @@ weechat_python_load (const char *filename, const char *code)
 #endif /* PY_MAJOR_VERSION >= 3 */
     FILE *fp;
     PyObject *python_path, *path, *module_main, *globals, *rc;
-    char *weechat_sharedir, *weechat_home;
+    char *weechat_sharedir, *weechat_data_dir;
     char *str_sharedir, *str_home;
     int len;
 
@@ -889,15 +889,15 @@ weechat_python_load (const char *filename, const char *code)
         free (weechat_sharedir);
     }
 
-    /* adding $weechat_dir/python in $PYTHONPATH */
-    weechat_home = weechat_info_get ("weechat_dir", "");
-    if (weechat_home)
+    /* add {weechat_data_dir}/python in $PYTHONPATH */
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
+    if (weechat_data_dir)
     {
-        len = strlen (weechat_home) + 1 + strlen (PYTHON_PLUGIN_NAME) + 1;
+        len = strlen (weechat_data_dir) + 1 + strlen (PYTHON_PLUGIN_NAME) + 1;
         str_home = malloc (len);
         if (str_home)
         {
-            snprintf (str_home, len, "%s/python", weechat_home);
+            snprintf (str_home, len, "%s/python", weechat_data_dir);
 #if PY_MAJOR_VERSION >= 3
             /* python >= 3.x */
             path = PyUnicode_FromString (str_home);
@@ -912,7 +912,7 @@ weechat_python_load (const char *filename, const char *code)
             }
             free (str_home);
         }
-        free (weechat_home);
+        free (weechat_data_dir);
     }
 
 

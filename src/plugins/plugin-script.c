@@ -134,26 +134,22 @@ plugin_script_info_version_cb (const void *pointer, void *data,
 }
 
 /*
- * Creates directories for plugin in WeeChat home:
- * - ~/.weechat/XXX/
- * - ~/.weechat/XXX/autoload/
+ * Creates directories for plugin in WeeChat data directory:
+ *   - ${weechat_data_dir}/xxx
+ *   - ${weechat_data_dir}/xxx/autoload
  */
 
 void
 plugin_script_create_dirs (struct t_weechat_plugin *weechat_plugin)
 {
-    char *string;
-    int length;
+    char path[PATH_MAX];
 
-    weechat_mkdir_home (weechat_plugin->name, 0755);
-    length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
-    string = malloc (length);
-    if (string)
-    {
-        snprintf (string, length, "%s/autoload", weechat_plugin->name);
-        weechat_mkdir_home (string, 0755);
-        free (string);
-    }
+    snprintf (path, sizeof (path),
+              "${weechat_data_dir}/%s", weechat_plugin->name);
+    weechat_mkdir_home (path, 0755);
+    snprintf (path, sizeof (path),
+              "${weechat_data_dir}/%s/autoload", weechat_plugin->name);
+    weechat_mkdir_home (path, 0755);
 }
 
 /*
@@ -461,26 +457,26 @@ plugin_script_auto_load (struct t_weechat_plugin *weechat_plugin,
                          void (*callback)(void *data,
                                           const char *filename))
 {
-    char *dir_home, *dir_name;
+    char *weechat_data_dir, *dir_name;
     int dir_length;
 
-    /* build directory, adding WeeChat home */
-    dir_home = weechat_info_get ("weechat_dir", "");
-    if (!dir_home)
+    /* build directory, adding WeeChat data directory */
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
+    if (!weechat_data_dir)
         return;
-    dir_length = strlen (dir_home) + strlen (weechat_plugin->name) + 16;
+    dir_length = strlen (weechat_data_dir) + strlen (weechat_plugin->name) + 16;
     dir_name = malloc (dir_length);
     if (!dir_name)
     {
-        free (dir_home);
+        free (weechat_data_dir);
         return;
     }
 
     snprintf (dir_name, dir_length,
-              "%s/%s/autoload", dir_home, weechat_plugin->name);
+              "%s/%s/autoload", weechat_data_dir, weechat_plugin->name);
     weechat_exec_on_files (dir_name, 0, 0, callback, NULL);
 
-    free (dir_home);
+    free (weechat_data_dir);
     free (dir_name);
 }
 
@@ -542,64 +538,64 @@ char *
 plugin_script_search_path (struct t_weechat_plugin *weechat_plugin,
                            const char *filename)
 {
-    char *final_name, *dir_home, *dir_system;
+    char *final_name, *weechat_data_dir, *dir_system;
     int length;
     struct stat st;
 
     if (filename[0] == '~')
         return weechat_string_expand_home (filename);
 
-    dir_home = weechat_info_get ("weechat_dir", "");
-    if (dir_home)
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
+    if (weechat_data_dir)
     {
         /* try WeeChat user's autoload dir */
-        length = strlen (dir_home) + strlen (weechat_plugin->name) + 8 +
+        length = strlen (weechat_data_dir) + strlen (weechat_plugin->name) + 8 +
             strlen (filename) + 16;
         final_name = malloc (length);
         if (final_name)
         {
             snprintf (final_name, length,
                       "%s/%s/autoload/%s",
-                      dir_home, weechat_plugin->name, filename);
+                      weechat_data_dir, weechat_plugin->name, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
             {
-                free (dir_home);
+                free (weechat_data_dir);
                 return final_name;
             }
             free (final_name);
         }
 
         /* try WeeChat language user's dir */
-        length = strlen (dir_home) + strlen (weechat_plugin->name) +
+        length = strlen (weechat_data_dir) + strlen (weechat_plugin->name) +
             strlen (filename) + 16;
         final_name = malloc (length);
         if (final_name)
         {
             snprintf (final_name, length,
-                      "%s/%s/%s", dir_home, weechat_plugin->name, filename);
+                      "%s/%s/%s", weechat_data_dir, weechat_plugin->name, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
             {
-                free (dir_home);
+                free (weechat_data_dir);
                 return final_name;
             }
             free (final_name);
         }
 
         /* try WeeChat user's dir */
-        length = strlen (dir_home) + strlen (filename) + 16;
+        length = strlen (weechat_data_dir) + strlen (filename) + 16;
         final_name = malloc (length);
         if (final_name)
         {
             snprintf (final_name, length,
-                      "%s/%s", dir_home, filename);
+                      "%s/%s", weechat_data_dir, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
             {
-                free (dir_home);
+                free (weechat_data_dir);
                 return final_name;
             }
             free (final_name);
         }
-        free (dir_home);
+        free (weechat_data_dir);
     }
 
     /* try WeeChat system dir */
@@ -1218,7 +1214,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                               char **list)
 {
     char **argv, *name, *ptr_base_name, *base_name, *new_path, *autoload_path;
-    char *symlink_path, str_signal[128], *ptr_list, *dir_home, *dir_separator;
+    char *symlink_path, str_signal[128], *ptr_list, *weechat_data_dir, *dir_separator;
     int argc, i, length, rc, autoload, existing_script, script_loaded;
     struct t_plugin_script *ptr_script;
 
@@ -1283,20 +1279,20 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                                                  *quiet, 0);
 
                     /* move file from install dir to language dir */
-                    dir_home = weechat_info_get ("weechat_dir", "");
-                    length = strlen (dir_home) + strlen (weechat_plugin->name) +
+                    weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
+                    length = strlen (weechat_data_dir) + strlen (weechat_plugin->name) +
                         strlen (base_name) + 16;
                     new_path = malloc (length);
                     if (new_path)
                     {
                         snprintf (new_path, length, "%s/%s/%s",
-                                  dir_home, weechat_plugin->name, base_name);
+                                  weechat_data_dir, weechat_plugin->name, base_name);
                         if (rename (name, new_path) == 0)
                         {
                             /* make link in autoload dir */
                             if (autoload)
                             {
-                                length = strlen (dir_home) +
+                                length = strlen (weechat_data_dir) +
                                     strlen (weechat_plugin->name) + 8 +
                                     strlen (base_name) + 16;
                                 autoload_path = malloc (length);
@@ -1304,7 +1300,7 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                                 {
                                     snprintf (autoload_path, length,
                                               "%s/%s/autoload/%s",
-                                              dir_home, weechat_plugin->name,
+                                              weechat_data_dir, weechat_plugin->name,
                                               base_name);
                                     dir_separator = weechat_info_get ("dir_separator", "");
                                     length = 2 + strlen (dir_separator) +
@@ -1347,8 +1343,8 @@ plugin_script_action_install (struct t_weechat_plugin *weechat_plugin,
                         free (new_path);
                     }
                     free (base_name);
-                    if (dir_home)
-                        free (dir_home);
+                    if (weechat_data_dir)
+                        free (weechat_data_dir);
                 }
                 free (name);
             }
@@ -1442,7 +1438,7 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                                char **list)
 {
     char **argv, *name, *ptr_base_name, *base_name, *autoload_path;
-    char *symlink_path, *ptr_list, *dir_home, *dir_separator;
+    char *symlink_path, *ptr_list, *weechat_data_dir, *dir_separator;
     int argc, i, length, rc, autoload;
 
     if (!*list)
@@ -1490,8 +1486,8 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                 base_name = strdup (ptr_base_name);
                 if (base_name)
                 {
-                    dir_home = weechat_info_get ("weechat_dir", "");
-                    length = strlen (dir_home) +
+                    weechat_data_dir = weechat_info_get ("weechat_data_dir", "");
+                    length = strlen (weechat_data_dir) +
                         strlen (weechat_plugin->name) + 8 +
                         strlen (base_name) + 16;
                     autoload_path = malloc (length);
@@ -1499,7 +1495,7 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                     {
                         snprintf (autoload_path, length,
                                   "%s/%s/autoload/%s",
-                                  dir_home, weechat_plugin->name,
+                                  weechat_data_dir, weechat_plugin->name,
                                   base_name);
                         if (autoload)
                         {
@@ -1525,8 +1521,8 @@ plugin_script_action_autoload (struct t_weechat_plugin *weechat_plugin,
                         free (autoload_path);
                     }
                     free (base_name);
-                    if (dir_home)
-                        free (dir_home);
+                    if (weechat_data_dir)
+                        free (weechat_data_dir);
                 }
                 free (name);
             }

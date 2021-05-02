@@ -49,15 +49,25 @@ relay_network_set_ssl_cert_key (int verbose)
 {
     char *certkey_path;
     int ret;
+    struct t_hashtable *options;
 
     gnutls_certificate_free_credentials (relay_gnutls_x509_cred);
     gnutls_certificate_allocate_credentials (&relay_gnutls_x509_cred);
 
     relay_network_init_ssl_cert_key_ok = 0;
 
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "config");
     certkey_path = weechat_string_eval_path_home (
         weechat_config_string (relay_config_network_ssl_cert_key),
-        NULL, NULL, NULL);
+        NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     if (certkey_path)
     {
         ret = gnutls_certificate_set_x509_key_file (relay_gnutls_x509_cred,

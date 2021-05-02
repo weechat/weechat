@@ -161,7 +161,7 @@ debug_sigsegv_cb ()
         string_fprintf (stderr,
                         "*** Full crash dump was saved to %s/weechat.log file."
                         "\n",
-                        weechat_home);
+                        weechat_data_dir);
     }
     string_fprintf (
         stderr,
@@ -590,19 +590,27 @@ debug_libs_cb (const void *pointer, void *data,
 void
 debug_directories ()
 {
-    char *extra_libdir;
-    const char *ptr_home = WEECHAT_HOME;
+    char *extra_libdir, str_temp[1024];
 
     extra_libdir = getenv (WEECHAT_EXTRA_LIBDIR);
 
+    if (weechat_home_temp)
+    {
+        snprintf (str_temp, sizeof (str_temp),
+                  " (%s)", _("TEMPORARY, deleted on exit"));
+    }
+    else
+    {
+        str_temp[0] = '\0';
+    }
+
     gui_chat_printf (NULL, "");
     gui_chat_printf (NULL, _("Directories:"));
-    gui_chat_printf (NULL, "  home: %s%s%s",
-                     weechat_home,
-                     (weechat_home_temp) ? " " : "",
-                     (weechat_home_temp) ? _("(TEMPORARY, deleted on exit)") : "");
-    gui_chat_printf (NULL, _("        (default: %s)"),
-                     (ptr_home && ptr_home[0]) ? ptr_home : "~/.weechat");
+    gui_chat_printf (NULL, "  home:");
+    gui_chat_printf (NULL, "    config: %s%s", weechat_config_dir, str_temp);
+    gui_chat_printf (NULL, "    data: %s%s", weechat_data_dir, str_temp);
+    gui_chat_printf (NULL, "    cache: %s%s", weechat_cache_dir, str_temp);
+    gui_chat_printf (NULL, "    runtime: %s%s", weechat_runtime_dir, str_temp);
     gui_chat_printf (NULL, "  lib: %s", WEECHAT_LIBDIR);
     gui_chat_printf (NULL, "  lib (extra): %s",
                      (extra_libdir && extra_libdir[0]) ? extra_libdir : "-");

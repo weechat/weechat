@@ -165,28 +165,28 @@ script_repo_search_by_name_ext (const char *name_with_extension)
 char *
 script_repo_get_filename_loaded (struct t_script_repo *script)
 {
-    char *weechat_home, *filename, resolved_path[PATH_MAX];
+    char *weechat_data_dir, *filename, resolved_path[PATH_MAX];
     int length;
     struct stat st;
 
-    weechat_home = weechat_info_get ("weechat_dir", NULL);
-    length = strlen (weechat_home) + strlen (script->name_with_extension) + 64;
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
+    length = strlen (weechat_data_dir) + strlen (script->name_with_extension) + 64;
     filename = malloc (length);
     if (!filename)
     {
-        if (weechat_home)
-            free (weechat_home);
+        if (weechat_data_dir)
+            free (weechat_data_dir);
         return NULL;
     }
 
     snprintf (filename, length, "%s/%s/autoload/%s",
-              weechat_home,
+              weechat_data_dir,
               script_language[script->language],
               script->name_with_extension);
     if (stat (filename, &st) != 0)
     {
         snprintf (filename, length, "%s/%s/%s",
-                  weechat_home,
+                  weechat_data_dir,
                   script_language[script->language],
                   script->name_with_extension);
         if (stat (filename, &st) != 0)
@@ -195,8 +195,8 @@ script_repo_get_filename_loaded (struct t_script_repo *script)
         }
     }
 
-    if (weechat_home)
-        free (weechat_home);
+    if (weechat_data_dir)
+        free (weechat_data_dir);
 
     if (!filename[0])
     {
@@ -798,7 +798,7 @@ void
 script_repo_update_status (struct t_script_repo *script)
 {
     const char *version;
-    char *weechat_home, *filename, *sha512sum;
+    char *weechat_data_dir, *filename, *sha512sum;
     struct stat st;
     int length;
     struct t_script_repo *ptr_script;
@@ -807,13 +807,13 @@ script_repo_update_status (struct t_script_repo *script)
     sha512sum = NULL;
 
     /* check if script is installed (file found on disk) */
-    weechat_home = weechat_info_get ("weechat_dir", NULL);
-    length = strlen (weechat_home) + strlen (script->name_with_extension) + 64;
+    weechat_data_dir = weechat_info_get ("weechat_data_dir", NULL);
+    length = strlen (weechat_data_dir) + strlen (script->name_with_extension) + 64;
     filename = malloc (length);
     if (filename)
     {
         snprintf (filename, length, "%s/%s/autoload/%s",
-                  weechat_home,
+                  weechat_data_dir,
                   script_language[script->language],
                   script->name_with_extension);
         if (stat (filename, &st) == 0)
@@ -825,7 +825,7 @@ script_repo_update_status (struct t_script_repo *script)
         else
         {
             snprintf (filename, length, "%s/%s/%s",
-                      weechat_home,
+                      weechat_data_dir,
                       script_language[script->language],
                       script->name_with_extension);
             if (stat (filename, &st) == 0)
@@ -837,8 +837,8 @@ script_repo_update_status (struct t_script_repo *script)
         free (filename);
     }
 
-    if (weechat_home)
-        free (weechat_home);
+    if (weechat_data_dir)
+        free (weechat_data_dir);
 
     /* check if script is held */
     if (script_repo_script_is_held (script))

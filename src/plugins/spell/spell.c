@@ -195,9 +195,9 @@ spell_warning_aspell_config ()
     char *aspell_filename, *spell_filename;
 
     aspell_filename = weechat_string_eval_path_home (
-        "%h/aspell.conf", NULL, NULL, NULL);
+        "${weechat_config_dir}/aspell.conf", NULL, NULL, NULL);
     spell_filename = weechat_string_eval_path_home (
-        "%h/" SPELL_CONFIG_NAME ".conf", NULL, NULL, NULL);
+        "${weechat_config_dir}/" SPELL_CONFIG_NAME ".conf", NULL, NULL, NULL);
 
     /* if aspell.conf is there and not spell.conf, display a warning */
     if (aspell_filename && spell_filename

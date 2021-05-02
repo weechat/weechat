@@ -37,12 +37,32 @@ TEST_GROUP(CoreDir)
 
 /*
  * Tests functions:
+ *   dir_get_temp_dir
+ */
+
+TEST(CoreDir, GetTempDir)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
  *   dir_mkdir_home
  *   dir_mkdir
  *   dir_mkdir_parents
  */
 
 TEST(CoreDir, Mkdir)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_rmtree
+ */
+
+TEST(CoreDir, Rmtree)
 {
     /* TODO: write tests */
 }
@@ -62,7 +82,7 @@ TEST(CoreDir, ExecOnFiles)
  *   dir_search_full_lib_name
  */
 
-TEST(CoreDir, LibName)
+TEST(CoreDir, SearchFullLibName)
 {
     /* TODO: write tests */
 }
@@ -84,7 +104,8 @@ TEST(CoreDir, FileGetContent)
     POINTERS_EQUAL(NULL, dir_file_get_content (""));
     POINTERS_EQUAL(NULL, dir_file_get_content ("/tmp/does/not/exist.xyz"));
 
-    path = string_eval_path_home ("%h/test_file.txt", NULL, NULL, NULL);
+    path = string_eval_path_home ("${weechat_data_dir}/test_file.txt",
+                                  NULL, NULL, NULL);
 
     /* small file */
     length = strlen (content_small);
@@ -125,6 +146,37 @@ TEST(CoreDir, FileGetContent)
 
 TEST(CoreDir, SetHomePath)
 {
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_temp_dir
+ */
+
+TEST(CoreDir, CreateHomeTempDir)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_find_xdg_dirs
+ */
+
+TEST(CoreDir, FindXdgDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_find_home_dirs
+ */
+
+TEST(CoreDir, FindHomeDirs)
+{
+    /* TODO: write tests */
 }
 
 /*
@@ -134,4 +186,35 @@ TEST(CoreDir, SetHomePath)
 
 TEST(CoreDir, CreateHomeDir)
 {
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_create_home_dirs
+ */
+
+TEST(CoreDir, CreateHomeDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_remove_home_dirs
+ */
+
+TEST(CoreDir, RemoveHomeDirs)
+{
+    /* TODO: write tests */
+}
+
+/*
+ * Tests functions:
+ *   dir_get_string_home_dirs
+ */
+
+TEST(CoreDir, GetStringHomeDirs)
+{
+    /* TODO: write tests */
 }

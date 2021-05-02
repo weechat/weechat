@@ -148,8 +148,7 @@ script_config_get_diff_command ()
 }
 
 /*
- * Gets filename with script
- * (by default "/home/xxx/.weechat/script/plugins.xml.gz").
+ * Gets filename with list of scripts.
  *
  * Note: result must be freed after use.
  */
@@ -159,9 +158,19 @@ script_config_get_xml_filename ()
 {
     char *path, *filename;
     int length;
+    struct t_hashtable *options;
 
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "cache");
     path = weechat_string_eval_path_home (
-        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
+        weechat_config_string (script_config_scripts_path), NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     length = strlen (path) + 64;
     filename = malloc (length);
     if (filename)
@@ -172,10 +181,7 @@ script_config_get_xml_filename ()
 
 /*
  * Gets filename for a script to download.
- *
  * If suffix is not NULL, it is added to filename.
- *
- * Example: "/home/xxx/.weechat/script/go.py"
  *
  * Note: result must be freed after use.
  */
@@ -186,9 +192,19 @@ script_config_get_script_download_filename (struct t_script_repo *script,
 {
     char *path, *filename;
     int length;
+    struct t_hashtable *options;
 
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "cache");
     path = weechat_string_eval_path_home (
-        weechat_config_string (script_config_scripts_path), NULL, NULL, NULL);
+        weechat_config_string (script_config_scripts_path), NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     length = strlen (path) + 1 + strlen (script->name_with_extension)
         + ((suffix) ? strlen (suffix) : 0) + 1;
     filename = malloc (length);

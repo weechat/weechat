@@ -664,13 +664,17 @@ TEST(CoreString, ExpandHome)
 TEST(CoreString, EvalPathHome)
 {
     char *home, *result;
-    int length_home, length_weechat_home;
-    struct t_hashtable *extra_vars;
+    int length_home, length_weechat_config_dir, length_weechat_data_dir;
+    int length_weechat_cache_dir, length_weechat_runtime_dir;
+    struct t_hashtable *extra_vars, *options;
 
     home = getenv ("HOME");
     length_home = strlen (home);
 
-    length_weechat_home = strlen (weechat_home);
+    length_weechat_config_dir = strlen (weechat_config_dir);
+    length_weechat_data_dir = strlen (weechat_data_dir);
+    length_weechat_cache_dir = strlen (weechat_cache_dir);
+    length_weechat_runtime_dir = strlen (weechat_runtime_dir);
 
     POINTERS_EQUAL(NULL, string_eval_path_home (NULL, NULL, NULL, NULL));
 
@@ -684,19 +688,91 @@ TEST(CoreString, EvalPathHome)
     STRCMP_EQUAL(result + length_home, "/test");
     free (result);
 
+    /* "%h" is weechat_data_dir by default */
     result = string_eval_path_home ("%h/test", NULL, NULL, NULL);
-    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
-    LONGS_EQUAL(length_weechat_home + 5, strlen (result));
-    STRCMP_EQUAL(result + length_weechat_home, "/test");
+    CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
+    LONGS_EQUAL(length_weechat_data_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_data_dir, "/test");
+    free (result);
+
+    options = hashtable_new (32,
+                             WEECHAT_HASHTABLE_STRING,
+                             WEECHAT_HASHTABLE_STRING,
+                             NULL, NULL);
+
+    /* "%h" with forced config dir */
+    hashtable_set (options, "directory", "config");
+    result = string_eval_path_home ("%h/test", NULL, NULL, options);
+    CHECK(strncmp (result, weechat_config_dir, length_weechat_config_dir) == 0);
+    LONGS_EQUAL(length_weechat_config_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_config_dir, "/test");
+    free (result);
+
+    /* "%h" with forced data dir */
+    hashtable_set (options, "directory", "data");
+    result = string_eval_path_home ("%h/test", NULL, NULL, options);
+    CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
+    LONGS_EQUAL(length_weechat_data_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_data_dir, "/test");
+    free (result);
+
+    /* "%h" with forced cache dir */
+    hashtable_set (options, "directory", "cache");
+    result = string_eval_path_home ("%h/test", NULL, NULL, options);
+    CHECK(strncmp (result, weechat_cache_dir, length_weechat_cache_dir) == 0);
+    LONGS_EQUAL(length_weechat_cache_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_cache_dir, "/test");
+    free (result);
+
+    /* "%h" with forced runtime dir */
+    hashtable_set (options, "directory", "runtime");
+    result = string_eval_path_home ("%h/test", NULL, NULL, options);
+    CHECK(strncmp (result, weechat_runtime_dir, length_weechat_runtime_dir) == 0);
+    LONGS_EQUAL(length_weechat_runtime_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_runtime_dir, "/test");
+    free (result);
+
+    hashtable_free (options);
+
+    /* config dir */
+    result = string_eval_path_home ("${weechat_config_dir}/path",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_config_dir, length_weechat_config_dir) == 0);
+    LONGS_EQUAL(length_weechat_config_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_config_dir, "/path");
+    free (result);
+
+    /* data dir */
+    result = string_eval_path_home ("${weechat_data_dir}/path",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
+    LONGS_EQUAL(length_weechat_data_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_data_dir, "/path");
+    free (result);
+
+    /* cache dir */
+    result = string_eval_path_home ("${weechat_cache_dir}/path",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_cache_dir, length_weechat_cache_dir) == 0);
+    LONGS_EQUAL(length_weechat_cache_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_cache_dir, "/path");
+    free (result);
+
+    /* runtime dir */
+    result = string_eval_path_home ("${weechat_runtime_dir}/path",
+                                    NULL, NULL, NULL);
+    CHECK(strncmp (result, weechat_runtime_dir, length_weechat_runtime_dir) == 0);
+    LONGS_EQUAL(length_weechat_runtime_dir + 5, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_runtime_dir, "/path");
     free (result);
 
     setenv ("WEECHAT_TEST_PATH", "path1", 1);
 
     result = string_eval_path_home ("%h/${env:WEECHAT_TEST_PATH}/path2",
                                     NULL, NULL, NULL);
-    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
-    LONGS_EQUAL(length_weechat_home + 12, strlen (result));
-    STRCMP_EQUAL(result + length_weechat_home, "/path1/path2");
+    CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
+    LONGS_EQUAL(length_weechat_data_dir + 12, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_data_dir, "/path1/path2");
     free (result);
 
     extra_vars = hashtable_new (32,
@@ -708,9 +784,9 @@ TEST(CoreString, EvalPathHome)
 
     result = string_eval_path_home ("%h/${env:WEECHAT_TEST_PATH}/${path2}",
                                     NULL, extra_vars, NULL);
-    CHECK(strncmp (result, weechat_home, length_weechat_home) == 0);
-    LONGS_EQUAL(length_weechat_home + 12, strlen (result));
-    STRCMP_EQUAL(result + length_weechat_home, "/path1/value");
+    CHECK(strncmp (result, weechat_data_dir, length_weechat_data_dir) == 0);
+    LONGS_EQUAL(length_weechat_data_dir + 12, strlen (result));
+    STRCMP_EQUAL(result + length_weechat_data_dir, "/path1/value");
     free (result);
 
     hashtable_free (extra_vars);

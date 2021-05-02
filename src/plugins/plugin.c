@@ -1017,6 +1017,7 @@ plugin_auto_load (char *force_plugin_autoload,
     struct t_weechat_plugin *ptr_plugin;
     struct t_plugin_args plugin_args;
     struct t_arraylist *arraylist;
+    struct t_hashtable *options;
     int length, i;
 
     plugin_args.argc = argc;
@@ -1046,8 +1047,17 @@ plugin_auto_load (char *force_plugin_autoload,
         && CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
+        options = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (options)
+            hashtable_set (options, "directory", "data");
         plugin_path = string_eval_path_home (CONFIG_STRING(config_plugin_path),
-                                             NULL, NULL, NULL);
+                                             NULL, NULL, options);
+        if (options)
+            hashtable_free (options);
         if (plugin_path)
         {
             dir_exec_on_files (plugin_path, 1, 0,

@@ -791,6 +791,7 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
                   int ipv4, int ipv6, int ssl, int unix_socket)
 {
     struct t_relay_server *new_server, *dup_server;
+    struct t_hashtable *options;
 
     if (!protocol_string)
         return NULL;
@@ -823,8 +824,17 @@ relay_server_new (const char *protocol_string, enum t_relay_protocol protocol,
         new_server->protocol_args =
             (protocol_args) ? strdup (protocol_args) : NULL;
         new_server->port = port;
+        options = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (options)
+            weechat_hashtable_set (options, "directory", "runtime");
         new_server->path = weechat_string_eval_path_home (path,
-                                                          NULL, NULL, NULL);
+                                                          NULL, NULL, options);
+        if (options)
+            weechat_hashtable_free (options);
         new_server->ipv4 = ipv4;
         new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
@@ -862,8 +872,18 @@ void
 relay_server_update_path (struct t_relay_server *server, const char *path)
 {
     char *new_path;
+    struct t_hashtable *options;
 
-    new_path = weechat_string_eval_path_home (path, NULL, NULL, NULL);
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "runtime");
+    new_path = weechat_string_eval_path_home (path, NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     if (!new_path)
         return;
 

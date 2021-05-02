@@ -4481,6 +4481,7 @@ irc_server_gnutls_callback (const void *pointer, void *data,
     char *ssl_password;
     const char *ptr_cert_path, *ptr_fingerprint;
     int rc, ret, fingerprint_match, hostname_match, cert_temp_init;
+    struct t_hashtable *options;
 #if LIBGNUTLS_VERSION_NUMBER >= 0x010706 /* 1.7.6 */
     gnutls_datum_t cinfo;
     int rinfo;
@@ -4724,8 +4725,17 @@ irc_server_gnutls_callback (const void *pointer, void *data,
                                                  IRC_SERVER_OPTION_SSL_CERT);
         if (ptr_cert_path && ptr_cert_path[0])
         {
+            options = weechat_hashtable_new (
+                32,
+                WEECHAT_HASHTABLE_STRING,
+                WEECHAT_HASHTABLE_STRING,
+                NULL, NULL);
+            if (options)
+                weechat_hashtable_set (options, "directory", "config");
             cert_path = weechat_string_eval_path_home (ptr_cert_path,
-                                                       NULL, NULL, NULL);
+                                                       NULL, NULL, options);
+            if (options)
+                weechat_hashtable_free (options);
             if (cert_path)
             {
                 cert_str = weechat_file_get_content (cert_path);

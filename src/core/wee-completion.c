@@ -573,7 +573,7 @@ completion_list_add_filename_cb (const void *pointer, void *data,
                 }
             }
             if (!real_prefix)
-                real_prefix = strdup (weechat_home);
+                real_prefix = strdup (weechat_data_dir);
             prefix = strdup ("");
         }
         else
@@ -984,6 +984,7 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
 {
     char *plugin_path, *dir_name, *extra_libdir;
     int length;
+    struct t_hashtable *options;
 
     /* make C compiler happy */
     (void) pointer;
@@ -1011,8 +1012,17 @@ completion_list_add_plugins_installed_cb (const void *pointer, void *data,
     if (CONFIG_STRING(config_plugin_path)
         && CONFIG_STRING(config_plugin_path)[0])
     {
+        options = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (options)
+            hashtable_set (options, "directory", "data");
         plugin_path = string_eval_path_home (CONFIG_STRING(config_plugin_path),
-                                             NULL, NULL, NULL);
+                                             NULL, NULL, options);
+        if (options)
+            hashtable_free (options);
         if (plugin_path)
         {
             dir_exec_on_files (plugin_path, 1, 0,

@@ -2366,13 +2366,13 @@ config_file_write_internal (struct t_config_file *config_file,
         return WEECHAT_CONFIG_WRITE_ERROR;
 
     /* build filename */
-    filename_length = strlen (weechat_home) +
-        strlen (config_file->filename) + 2;
+    filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
+        strlen (config_file->filename) + 1;
     filename = malloc (filename_length);
     if (!filename)
         return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
-              weechat_home, DIR_SEPARATOR, config_file->filename);
+              weechat_config_dir, DIR_SEPARATOR, config_file->filename);
 
     /*
      * build temporary filename, this temp file will be renamed to filename
@@ -2561,13 +2561,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
         return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
 
     /* build filename */
-    filename_length = strlen (weechat_home) + strlen (DIR_SEPARATOR) +
+    filename_length = strlen (weechat_config_dir) + strlen (DIR_SEPARATOR) +
         strlen (config_file->filename) + 1;
     filename = malloc (filename_length);
     if (!filename)
         return WEECHAT_CONFIG_READ_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
-              weechat_home, DIR_SEPARATOR, config_file->filename);
+              weechat_config_dir, DIR_SEPARATOR, config_file->filename);
 
     /* create file with default options if it does not exist */
     if (access (filename, F_OK) != 0)

@@ -925,7 +925,7 @@ upgrade_weechat_end ()
     long long time_diff;
 
     /* remove .upgrade files */
-    dir_exec_on_files (weechat_home,
+    dir_exec_on_files (weechat_data_dir,
                        0, 0,
                        &upgrade_weechat_remove_file_cb, NULL);
 

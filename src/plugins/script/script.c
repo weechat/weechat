@@ -371,7 +371,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     script_config_read ();
 
-    weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755);
+    weechat_mkdir_home ("${weechat_cache_dir}/" SCRIPT_PLUGIN_NAME, 0755);
 
     script_command_init ();
     script_completion_init ();

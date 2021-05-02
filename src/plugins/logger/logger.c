@@ -59,8 +59,7 @@ struct t_hook *logger_hook_print = NULL;
  * Gets logger file path option.
  *
  * Special vars are replaced:
- *   - "%h" (at beginning of string): WeeChat home
- *   - "~": user home
+ *   - with call to function string_eval_path_home
  *   - date/time specifiers (see man strftime)
  *
  * Note: result must be freed after use.
@@ -73,13 +72,23 @@ logger_get_file_path ()
     int length;
     time_t seconds;
     struct tm *date_tmp;
+    struct t_hashtable *options;
 
     path = NULL;
     path2 = NULL;
 
-    /* replace %h and "~", evaluate path */
+    /* evaluate path */
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "data");
     path = weechat_string_eval_path_home (
-        weechat_config_string (logger_config_file_path), NULL, NULL, NULL);
+        weechat_config_string (logger_config_file_path), NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     if (!path)
         goto end;
 

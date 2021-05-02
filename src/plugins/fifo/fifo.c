@@ -65,16 +65,26 @@ void
 fifo_create ()
 {
     struct stat st;
+    struct t_hashtable *options;
 
     if (!weechat_config_boolean (fifo_config_file_enabled))
         return;
 
     if (!fifo_filename)
     {
-        /* replace %h and "~", evaluate path */
+        /* evaluate path */
+        options = weechat_hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (options)
+            weechat_hashtable_set (options, "directory", "runtime");
         fifo_filename = weechat_string_eval_path_home (
             weechat_config_string (fifo_config_file_path),
-            NULL, NULL, NULL);
+            NULL, NULL, options);
+        if (options)
+            weechat_hashtable_free (options);
     }
 
     if (!fifo_filename)

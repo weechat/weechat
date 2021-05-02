@@ -106,9 +106,13 @@ volatile sig_atomic_t weechat_quit_signal = 0; /* signal received,          */
                                        /* WeeChat must quit                 */
 volatile sig_atomic_t weechat_reload_signal = 0; /* signal received,        */
                                        /* WeeChat must reload configuration */
-char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
+char *weechat_home_force = NULL;       /* forced home (with -d/--dir)       */
 int weechat_home_temp = 0;             /* 1 if using a temporary home       */
 int weechat_home_delete_on_exit = 0;   /* 1 if home is deleted on exit      */
+char *weechat_config_dir = NULL;       /* config directory                  */
+char *weechat_data_dir = NULL;         /* data directory                    */
+char *weechat_cache_dir = NULL;        /* cache directory                   */
+char *weechat_runtime_dir = NULL;      /* runtime directory                 */
 int weechat_locale_ok = 0;             /* is locale OK?                     */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
@@ -164,8 +168,7 @@ weechat_display_usage ()
         _("  -a, --no-connect         disable auto-connect to servers at "
           "startup\n"
           "  -c, --colors             display default colors in terminal\n"
-          "  -d, --dir <path>         set WeeChat home directory "
-          "(default: ~/.weechat)\n"
+          "  -d, --dir <path>         force a single WeeChat home directory\n"
           "                           (environment variable WEECHAT_HOME is "
           "read if this option is not given)\n"
           "  -t, --temp-dir           create a temporary WeeChat home"
@@ -255,7 +258,7 @@ weechat_parse_args (int argc, char *argv[])
 
     weechat_argv0 = (argv[0]) ? strdup (argv[0]) : NULL;
     weechat_upgrading = 0;
-    weechat_home = NULL;
+    weechat_home_force = NULL;
     weechat_home_temp = 0;
     weechat_home_delete_on_exit = 0;
     weechat_server_cmd_line = 0;
@@ -280,16 +283,16 @@ weechat_parse_args (int argc, char *argv[])
                 break;
             case 'd': /* -d / --dir */
                 weechat_home_temp = 0;
-                if (weechat_home)
-                    free (weechat_home);
-                weechat_home = strdup (optarg);
+                if (weechat_home_force)
+                    free (weechat_home_force);
+                weechat_home_force = strdup (optarg);
                 break;
             case 't': /* -t / --temp-dir */
                 weechat_home_temp = 1;
-                if (weechat_home)
+                if (weechat_home_force)
                 {
-                    free (weechat_home);
-                    weechat_home = NULL;
+                    free (weechat_home_force);
+                    weechat_home_force = NULL;
                 }
                 break;
             case 'h': /* -h / --help */
@@ -545,13 +548,21 @@ weechat_shutdown (int return_code, int crash)
     if (!crash && weechat_home_delete_on_exit)
     {
         /* remove temporary home (only if not crashing) */
-        dir_rmtree (weechat_home);
+        dir_remove_home_dirs ();
     }
 
     if (weechat_argv0)
         free (weechat_argv0);
-    if (weechat_home)
-        free (weechat_home);
+    if (weechat_home_force)
+        free (weechat_home_force);
+    if (weechat_config_dir)
+        free (weechat_config_dir);
+    if (weechat_data_dir)
+        free (weechat_data_dir);
+    if (weechat_cache_dir)
+        free (weechat_cache_dir);
+    if (weechat_runtime_dir)
+        free (weechat_runtime_dir);
     if (weechat_local_charset)
         free (weechat_local_charset);
     if (weechat_force_plugin_autoload)
@@ -614,7 +625,7 @@ weechat_init (int argc, char *argv[], void (*gui_init_cb)())
     if (!config_weechat_init ())        /* init WeeChat options (weechat.*) */
         weechat_shutdown (EXIT_FAILURE, 0);
     weechat_parse_args (argc, argv);    /* parse command line args          */
-    dir_create_home_dir ();             /* create WeeChat home directory    */
+    dir_create_home_dirs ();            /* create WeeChat home directories  */
     log_init ();                        /* init log file                    */
     plugin_api_init ();                 /* create some hooks (info,hdata,..)*/
     secure_config_read ();              /* read secured data options        */

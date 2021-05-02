@@ -210,13 +210,23 @@ void
 xfer_file_find_filename (struct t_xfer *xfer)
 {
     char *dir_separator, *path;
+    struct t_hashtable *options;
 
     if (!XFER_IS_FILE(xfer->type))
         return;
 
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "data");
     path = weechat_string_eval_path_home (
         weechat_config_string (xfer_config_file_download_path),
-        NULL, NULL, NULL);
+        NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
     if (!path)
         return;
 

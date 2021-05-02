@@ -57,6 +57,7 @@
 #include "weechat.h"
 #include "wee-network.h"
 #include "wee-eval.h"
+#include "wee-hashtable.h"
 #include "wee-hook.h"
 #include "wee-config.h"
 #include "wee-proxy.h"
@@ -93,13 +94,24 @@ void
 network_set_gnutls_ca_file ()
 {
     char *ca_path;
+    struct t_hashtable *options;
 
     if (weechat_no_gnutls)
         return;
 
+    options = hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        hashtable_set (options, "directory", "config");
     ca_path = string_eval_path_home (
         CONFIG_STRING(config_network_gnutls_ca_file),
-        NULL, NULL, NULL);
+        NULL, NULL, options);
+    if (options)
+        hashtable_free (options);
+
     if (ca_path)
     {
         if (access (ca_path, R_OK) == 0)

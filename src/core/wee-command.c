@@ -6483,7 +6483,7 @@ COMMAND_CALLBACK(upgrade)
 
     /* execute binary */
     exec_args[0] = ptr_binary;
-    exec_args[3] = strdup (weechat_home);
+    exec_args[3] = dir_get_string_home_dirs ();
     execvp (exec_args[0], exec_args);
 
     /* this code should not be reached if execvp is OK */
@@ -8332,7 +8332,7 @@ command_init ()
            "IMPORTANT: you must restore the session with exactly same "
            "configuration (files *.conf).\n"
            "It is possible to restore WeeChat session on another machine if you "
-           "copy the content of directory \"~/.weechat\"."),
+           "copy the content of WeeChat home directories (see /debug dirs)."),
         "%(filename)|-dummy|-quit",
         &command_upgrade, NULL, NULL);
     hook_command (

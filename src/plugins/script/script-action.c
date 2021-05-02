@@ -1523,7 +1523,7 @@ script_action_schedule (const char *action,
                         int quiet)
 {
     /* create again "script" directory, just in case it has been removed */
-    if (!weechat_mkdir_home (SCRIPT_PLUGIN_NAME, 0755))
+    if (!weechat_mkdir_home ("${weechat_cache_dir}/" SCRIPT_PLUGIN_NAME, 0755))
         return;
 
     script_action_add (action);

@@ -203,7 +203,7 @@ upgrade_file_new (const char *filename,
     if (new_upgrade_file)
     {
         /* build name of file */
-        length = strlen (weechat_home) + 1 + strlen (filename) + 16 + 1;
+        length = strlen (weechat_data_dir) + 1 + strlen (filename) + 16 + 1;
         new_upgrade_file->filename = malloc (length);
         if (!new_upgrade_file->filename)
         {
@@ -211,7 +211,7 @@ upgrade_file_new (const char *filename,
             return NULL;
         }
         snprintf (new_upgrade_file->filename, length, "%s/%s.upgrade",
-                  weechat_home, filename);
+                  weechat_data_dir, filename);
         new_upgrade_file->callback_read = callback_read;
         new_upgrade_file->callback_read_pointer = callback_read_pointer;
         new_upgrade_file->callback_read_data = callback_read_data;

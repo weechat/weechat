@@ -160,8 +160,9 @@ TEST(Scripts, API)
               test_scripts_dir,
               DIR_SEPARATOR,
               "testapi.py");
-    path_testapi_output_dir = string_eval_path_home ("%h/testapi",
-                                                     NULL, NULL, NULL);
+    path_testapi_output_dir = string_eval_path_home (
+        "${weechat_data_dir}/testapi",
+        NULL, NULL, NULL);
     CHECK(path_testapi_output_dir);
 
     api_tests_ok = 0;

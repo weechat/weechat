@@ -774,7 +774,7 @@ string_expand_home (const char *path)
 
 /*
  * Evaluate a path by replacing (in this order):
- *   1. "%h" (at beginning of string) by WeeChat home directory.
+ *   1. "%h" (at beginning of string) by WeeChat home directory (deprecated)
  *   2. "~" by user home directory (call to string_expand_home)
  *   3. evaluated variables (see /help eval)
  *
@@ -790,6 +790,7 @@ string_eval_path_home (const char *path,
                        struct t_hashtable *options)
 {
     char *path1, *path2, *path3;
+    const char *ptr_option_directory, *ptr_directory;
     int length;
 
     if (!path)
@@ -799,13 +800,29 @@ string_eval_path_home (const char *path,
     path2 = NULL;
     path3 = NULL;
 
-    /* replace "%h" by WeeChat home */
+    /*
+     * replace "%h" by WeeChat home
+     * (deprecated: "%h" should not be used any more with WeeChat ≥ 3.2)
+     */
     if (strncmp (path, "%h", 2) == 0)
     {
-        length = strlen (weechat_home) + strlen (path + 2) + 1;
+        ptr_directory = weechat_data_dir;
+        ptr_option_directory = hashtable_get (options, "directory");
+        if (ptr_option_directory)
+        {
+            if (strcmp (ptr_option_directory, "config") == 0)
+                ptr_directory = weechat_config_dir;
+            else if (strcmp (ptr_option_directory, "data") == 0)
+                ptr_directory = weechat_data_dir;
+            else if (strcmp (ptr_option_directory, "cache") == 0)
+                ptr_directory = weechat_cache_dir;
+            else if (strcmp (ptr_option_directory, "runtime") == 0)
+                ptr_directory = weechat_runtime_dir;
+        }
+        length = strlen (ptr_directory) + strlen (path + 2) + 1;
         path1 = malloc (length);
         if (path1)
-            snprintf (path1, length, "%s%s", weechat_home, path + 2);
+            snprintf (path1, length, "%s%s", ptr_directory, path + 2);
     }
     else
         path1 = strdup (path);

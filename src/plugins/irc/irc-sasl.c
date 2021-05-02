@@ -95,13 +95,23 @@ char *
 irc_sasl_get_key_content (struct t_irc_server *server, const char *sasl_key)
 {
     char *key_path, *content;
+    struct t_hashtable *options;
 
     if (!sasl_key)
         return NULL;
 
     content = NULL;
 
-    key_path = weechat_string_eval_path_home (sasl_key, NULL, NULL, NULL);
+    options = weechat_hashtable_new (
+        32,
+        WEECHAT_HASHTABLE_STRING,
+        WEECHAT_HASHTABLE_STRING,
+        NULL, NULL);
+    if (options)
+        weechat_hashtable_set (options, "directory", "config");
+    key_path = weechat_string_eval_path_home (sasl_key, NULL, NULL, options);
+    if (options)
+        weechat_hashtable_free (options);
 
     if (key_path)
         content = weechat_file_get_content (key_path);

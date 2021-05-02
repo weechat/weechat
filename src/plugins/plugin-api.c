@@ -431,13 +431,36 @@ plugin_api_modifier_eval_path_home_cb (const void *pointer, void *data,
                                        const char *modifier_data,
                                        const char *string)
 {
+    struct t_hashtable *options;
+    const char *ptr_directory;
+    char *result;
+
     /* make C compiler happy */
     (void) pointer;
     (void) data;
     (void) modifier;
-    (void) modifier_data;
 
-    return string_eval_path_home (string, NULL, NULL, NULL);
+    options = NULL;
+    ptr_directory = (modifier_data
+                     && (strncmp (modifier_data, "directory=", 10) == 0)) ?
+        modifier_data + 10 : NULL;
+    if (ptr_directory)
+    {
+        options = hashtable_new (
+            32,
+            WEECHAT_HASHTABLE_STRING,
+            WEECHAT_HASHTABLE_STRING,
+            NULL, NULL);
+        if (options)
+            hashtable_set (options, "directory", ptr_directory);
+    }
+
+    result = string_eval_path_home (string, NULL, NULL, options);
+
+    if (options)
+        hashtable_free (options);
+
+    return result;
 }
 
 /*
