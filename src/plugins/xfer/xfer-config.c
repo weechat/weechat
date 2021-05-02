@@ -397,10 +397,9 @@ xfer_config_init ()
     xfer_config_file_upload_path = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "upload_path", "string",
-        N_("path for reading files when sending (when no path is specified "
-           "by user): \"%h\" at beginning of string is replaced by WeeChat "
-           "home (\"~/.weechat\" by default) "
-           "(note: content is evaluated, see /help eval)"),
+        N_("path for reading files when sending "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
         NULL, 0, 0, "~", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_use_nick_in_filename = weechat_config_new_option (
