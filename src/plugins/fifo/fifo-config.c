@@ -118,11 +118,11 @@ fifo_config_init ()
     fifo_config_file_path = weechat_config_new_option (
         fifo_config_file, ptr_section,
         "path", "string",
-        N_("path for FIFO file; \"%h\" at beginning of string is "
-           "replaced by WeeChat home (\"~/.weechat\" by default); "
+        N_("path for FIFO file; "
            "WeeChat PID can be used in path with ${info:pid} "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/weechat_fifo", NULL, 0,
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
+        NULL, 0, 0, "${weechat_runtime_dir}/weechat_fifo", NULL, 0,
         NULL, NULL, NULL,
         fifo_config_change_file_path, NULL, NULL,
         NULL, NULL, NULL);
