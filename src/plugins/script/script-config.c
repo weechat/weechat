@@ -800,10 +800,10 @@ script_config_init ()
     script_config_scripts_path = weechat_config_new_option (
         script_config_file, ptr_section,
         "path", "string",
-        N_("local cache directory for scripts; \"%h\" at beginning of string "
-           "is replaced by WeeChat home (\"~/.weechat\" by default) "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/script", NULL, 0,
+        N_("local cache directory for scripts "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
+        NULL, 0, 0, "${weechat_cache_dir}/script", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     script_config_scripts_url = weechat_config_new_option (
         script_config_file, ptr_section,
