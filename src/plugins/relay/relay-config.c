@@ -1143,7 +1143,7 @@ relay_config_init ()
            "with SSL) "
            "(path is evaluated, see function string_eval_path_home in "
            "plugin API reference)"),
-        NULL, 0, 0, "%h/ssl/relay.pem", NULL, 0,
+        NULL, 0, 0, "${weechat_config_dir}/ssl/relay.pem", NULL, 0,
         NULL, NULL, NULL,
         &relay_config_change_network_ssl_cert_key, NULL, NULL,
         NULL, NULL, NULL);
