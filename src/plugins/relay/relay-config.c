@@ -827,9 +827,9 @@ relay_config_create_option_port_path (const void *pointer, void *data,
                 weechat_config_new_option (
                     config_file, section,
                     option_name, "string",
-                    _("path to a socket file; \"%h\" at beginning of string "
-                      "is replaced by WeeChat home (\"~/.weechat\" by default), "
-                      "content is evaluated (see /help eval)"),
+                    _("path to a socket file "
+                      "(path is evaluated, see function string_eval_path_home "
+                      "in plugin API reference)"),
                     NULL, 0, 0, "", value, 0,
                     &relay_config_check_path_cb, NULL, NULL,
                     &relay_config_change_path_cb, NULL, NULL,
