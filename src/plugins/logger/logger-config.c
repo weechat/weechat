@@ -560,11 +560,11 @@ logger_config_init ()
     logger_config_file_path = weechat_config_new_option (
         logger_config_file, ptr_section,
         "path", "string",
-        N_("path for WeeChat log files; \"%h\" at beginning of string is "
-           "replaced by WeeChat home (\"~/.weechat\" by default); date "
-           "specifiers are permitted (see man strftime) "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/logs/", NULL, 0,
+        N_("path for WeeChat log files; "
+           "date specifiers are permitted (see man strftime) "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
+        NULL, 0, 0, "${weechat_data_dir}/logs", NULL, 0,
         NULL, NULL, NULL,
         &logger_config_change_file_option_restart_log, NULL, NULL,
         NULL, NULL, NULL);
