@@ -381,10 +381,10 @@ xfer_config_init ()
     xfer_config_file_download_path = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "download_path", "string",
-        N_("path for writing incoming files: \"%h\" at beginning of string is "
-           "replaced by WeeChat home (\"~/.weechat\" by default) "
-           "(note: content is evaluated, see /help eval)"),
-        NULL, 0, 0, "%h/xfer", NULL, 0,
+        N_("path for writing incoming files "
+           "(path is evaluated, see function string_eval_path_home in "
+           "plugin API reference)"),
+        NULL, 0, 0, "${weechat_data_dir}/xfer", NULL, 0,
         NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_download_temporary_suffix = weechat_config_new_option (
         xfer_config_file, ptr_section,
