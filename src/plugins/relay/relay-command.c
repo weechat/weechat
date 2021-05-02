@@ -413,8 +413,8 @@ relay_command_init ()
            "         name: relay name (see format below)\n"
            "         port: port used for relay\n"
            "         path: path used for relay (for UNIX domain socket only); "
-           "\"%h\" at beginning of string is replaced by WeeChat home "
-           "(\"~/.weechat\" by default), content is evaluated (see /help eval)\n"
+           "path is evaluated (see function string_eval_path_home in "
+           "plugin API reference)\n"
            "          raw: open buffer with raw Relay data\n"
            "   sslcertkey: set SSL certificate/key using path in option "
            "relay.network.ssl_cert_key\n"
@@ -457,7 +457,7 @@ relay_command_init ()
            "  weechat protocol with SSL, using IPv4 + IPv6:\n"
            "    /relay add ipv4.ipv6.ssl.weechat 9001\n"
            "  weechat protocol over UNIX domain socket:\n"
-           "    /relay add unix.weechat %h/relay_socket"),
+           "    /relay add unix.weechat ${weechat_runtime_dir}/relay_socket"),
         "list %(relay_relays)"
         " || listfull %(relay_relays)"
         " || listrelay"
