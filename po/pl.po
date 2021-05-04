@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-05-04 20:34+0200\n"
 "PO-Revision-Date: 2021-03-14 13:37+0100\n"
 "Last-Translator: Krzysztof Korościk <soltys@soltys.info>\n"
 "Language-Team: Polish <kde-i18n-doc@kde.org>\n"
@@ -5003,6 +5003,14 @@ msgstr ""
 "Błąd: nie można utworzyć/dopisać do pliku z logiem (weechat.log)\n"
 "Jeżeli inny proces WeeChat używa tego pliku, spróbuj uruchomić WeeChat\n"
 "w innym katalogu domowym używając w linii komend opcji \"--dir\".\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: failed to load certificate authorities from file %s"
+msgstr "%sgnutls: nie udało się wyliczyć odcisku certyfikatu (%s)"
+
+#, c-format
+msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+msgstr ""
 
 msgid "set server name indication (SNI) failed"
 msgstr "ustawianie wskaźnika nazwy serwera (SNI) się nie powiodło"

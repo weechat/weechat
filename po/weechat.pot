@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-05-04 20:34+0200\n"
 "PO-Revision-Date: 2014-08-16 10:27+0200\n"
 "Last-Translator: Sébastien Helleu <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3507,6 +3507,14 @@ msgid ""
 "Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using the \"--dir\" command line option.\n"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: failed to load certificate authorities from file %s"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
 msgstr ""
 
 msgid "set server name indication (SNI) failed"

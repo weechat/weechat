@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-05-04 20:34+0200\n"
 "PO-Revision-Date: 2021-04-13 11:40+0200\n"
 "Last-Translator: Nils Görs <weechatter@arcor.de>\n"
 "Language-Team: German <kde-i18n-de@kde.org>\n"
@@ -5248,6 +5248,15 @@ msgstr ""
 "durch die\n"
 "Verwendung der \"--dir\" Kommandozeilenoption, WeeChat in einem anderen "
 "Verzeichnis zu starten.\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: failed to load certificate authorities from file %s"
+msgstr ""
+"%sgnutls: Zertifikat für Fingerprint (%s) konnte nicht berechnet werden"
+
+#, c-format
+msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+msgstr ""
 
 msgid "set server name indication (SNI) failed"
 msgstr "Server Name Indication (SNI) konnte nicht gesetzt werden"

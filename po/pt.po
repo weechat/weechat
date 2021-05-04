@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-05-04 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: Vasco Almeida <vascomalmeida@sapo.pt>\n"
 "Language-Team: Portuguese <>\n"
@@ -4892,6 +4892,14 @@ msgstr ""
 "Se outro processo WeeChat está a usar este ficheiro, tente executar o "
 "WeeChat\n"
 "com outro diretório usando a opção \"--dir\" na linha de comandos.\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: failed to load certificate authorities from file %s"
+msgstr "%sgnutls: falha ao calcular impressão digital do certificado (%s)"
+
+#, c-format
+msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+msgstr ""
 
 msgid "set server name indication (SNI) failed"
 msgstr "falha ao definir indicação do nome de servidor (SNI)"

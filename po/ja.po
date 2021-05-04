@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2021-04-11 09:28+0200\n"
+"POT-Creation-Date: 2021-05-04 20:34+0200\n"
 "PO-Revision-Date: 2021-02-06 15:55+0100\n"
 "Last-Translator: AYANOKOUZI, Ryuunosuke <i38w7i3@yahoo.co.jp>\n"
 "Language-Team: Japanese <https://github.com/l/weechat/tree/master/"
@@ -4857,6 +4857,14 @@ msgstr ""
 "エラー: ログファイルを作成/追記できません (weechat.log)\n"
 "他の WeeChat プロセスがこのファイルを使用している場合は、\n"
 "\"--dir\" コマンドラインオプションをつけて WeeChat を起動してみてください。\n"
+
+#, fuzzy, c-format
+msgid "%sWarning: failed to load certificate authorities from file %s"
+msgstr "%sgnutls: 証明書指紋の計算に失敗しました (%s)"
+
+#, c-format
+msgid "%sWarning: no certificate authorities loaded (file not found: %s)"
+msgstr ""
 
 msgid "set server name indication (SNI) failed"
 msgstr "サーバ名表示 (SNI) の設定に失敗しました"

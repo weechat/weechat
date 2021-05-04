@@ -61,6 +61,7 @@
 #include "wee-config.h"
 #include "wee-proxy.h"
 #include "wee-string.h"
+#include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
 
@@ -102,8 +103,28 @@ network_set_gnutls_ca_file ()
         ca_path2 = string_replace (ca_path, "%h", weechat_home);
         if (ca_path2)
         {
-            gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path2,
-                                                    GNUTLS_X509_FMT_PEM);
+            if (access (ca_path2, R_OK) == 0)
+            {
+                if (gnutls_certificate_set_x509_trust_file (gnutls_xcred, ca_path2,
+                                                            GNUTLS_X509_FMT_PEM) < 0)
+                {
+                    gui_chat_printf (
+                        NULL,
+                        _("%sWarning: failed to load certificate authorities "
+                          "from file %s"),
+                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                          ca_path2);
+                }
+            }
+            else
+            {
+                gui_chat_printf (
+                    NULL,
+                    _("%sWarning: no certificate authorities loaded "
+                      "(file not found: %s)"),
+                    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                    ca_path2);
+            }
             free (ca_path2);
         }
         free (ca_path);
