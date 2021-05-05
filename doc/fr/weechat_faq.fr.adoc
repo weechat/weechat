@@ -1281,7 +1281,8 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 [[supported_os]]
 === Quelle est la liste des plates-formes supportées par WeeChat ? Sera-t-il porté sur d'autres systèmes d'exploitation ?
 
-La liste complète est sur cette page : https://weechat.org/download
+WeeChat tourne bien sur la plupart des distributions Linux/BSD, GNU/Hurd, Mac OS
+et Windows (Cygwin et Windows Subsystem for Linux).
 
 Nous faisons le maximum pour supporter le plus de plates-formes possible.
 Toute aide est la bienvenue pour les systèmes que nous n'avons pas, pour y

@@ -1234,7 +1234,9 @@ $ LD_PRELOAD=/lib/libpthread.so.0 gdb /path/to/weechat
 [[supported_os]]
 === WeeChat をサポートするプラットフォームのリストを教えてください。他のオペレーティングシステムへの移植予定はありますか。
 
-完全なリストはこのページにあります: https://weechat.org/download
+// TRANSLATION MISSING
+WeeChat runs fine on most Linux/BSD distributions, GNU/Hurd, Mac OS and Windows
+(Cygwin and Windows Subsystem for Linux).
 
 我々は可能な限り多くのプラットフォームに移植することに最善を尽くしています。我々が持っていない
 OS で WeeChat をテストすることを歓迎します。
