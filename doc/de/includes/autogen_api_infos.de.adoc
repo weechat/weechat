@@ -60,7 +60,7 @@
 
 | php | php_version | Version des verwendeten Interpreters | -
 
-| python | python2_bin | path to Python 2.x interpreter (*deprecated* since version 2.6, scripts must use Python 3 only) | -
+| python | python2_bin | Pfad zum Python 2.x Interpreter (*veraltet*, seit WeeChat Version 2.6 müssen Skripten Python3 verwenden) | -
 
 | python | python_eval | Evaluierung des Quelltextes | Quelltext welcher ausgeführt werden soll
 
