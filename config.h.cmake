@@ -5,6 +5,7 @@
 #cmakedefine HAVE_BACKTRACE
 #cmakedefine ICONV_2ARG_IS_CONST 1
 #cmakedefine HAVE_MALLINFO
+#cmakedefine HAVE_MALLINFO2
 #cmakedefine HAVE_EAT_NEWLINE_GLITCH
 #cmakedefine HAVE_ASPELL_VERSION_STRING
 #cmakedefine HAVE_ENCHANT_GET_VERSION
