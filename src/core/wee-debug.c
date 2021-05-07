@@ -24,7 +24,7 @@
 #endif
 
 #include <stdlib.h>
-#ifdef HAVE_MALLINFO
+#if defined(HAVE_MALLINFO) || defined(HAVE_MALLINFO2)
 #include <malloc.h>
 #endif
 #include <string.h>
@@ -255,6 +255,24 @@ debug_windows_tree ()
 void
 debug_memory ()
 {
+#ifdef HAVE_MALLINFO2
+    struct mallinfo2 info;
+
+    info = mallinfo2 ();
+
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, _("Memory usage (see \"man mallinfo\" for help):"));
+    gui_chat_printf (NULL, "  arena   :%10zu", info.arena);
+    gui_chat_printf (NULL, "  ordblks :%10zu", info.ordblks);
+    gui_chat_printf (NULL, "  smblks  :%10zu", info.smblks);
+    gui_chat_printf (NULL, "  hblks   :%10zu", info.hblks);
+    gui_chat_printf (NULL, "  hblkhd  :%10zu", info.hblkhd);
+    gui_chat_printf (NULL, "  usmblks :%10zu", info.usmblks);
+    gui_chat_printf (NULL, "  fsmblks :%10zu", info.fsmblks);
+    gui_chat_printf (NULL, "  uordblks:%10zu", info.uordblks);
+    gui_chat_printf (NULL, "  fordblks:%10zu", info.fordblks);
+    gui_chat_printf (NULL, "  keepcost:%10zu", info.keepcost);
+#else
 #ifdef HAVE_MALLINFO
     struct mallinfo info;
 
@@ -277,6 +295,7 @@ debug_memory ()
                      _("Memory usage not available (function \"mallinfo\" not "
                        "found)"));
 #endif /* HAVE_MALLINFO */
+#endif /* HAVE_MALLINFO2 */
 }
 
 /*
