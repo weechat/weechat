@@ -130,6 +130,7 @@ Le cœur de WeeChat est situé dans les répertoires suivants :
 |    wee-config.c                 | Options de configuration du cœur de WeeChat (fichier weechat.conf).
 |    wee-crypto.c                 | Fonctions de cryptographie.
 |    wee-debug.c                  | Quelques fonctions de debug.
+|    wee-dir.c                    | Fonctions sur les répertoires/fichiers.
 |    wee-eval.c                   | Évaluation d'expressions avec des références à des variables internes.
 |    wee-hashtable.c              | Tables de hachage.
 |    wee-hdata.c                  | Hdata (accès direct aux données en utilisant des tables de hachage).

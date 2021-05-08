@@ -137,6 +137,8 @@ WeeChat "core" は以下のディレクトリに配置されています:
 // TRANSLATION MISSING
 |    wee-crypto.c                 | Cryptographic functions.
 |    wee-debug.c                  | デバッグ用関数
+// TRANSLATION MISSING
+|    wee-dir.c                    | Directory/file functions.
 |    wee-eval.c                   | 内部変数へのリファレンスを含む式を評価
 |    wee-hashtable.c              | ハッシュテーブル
 |    wee-hdata.c                  | hdata (ハッシュテーブルを用いて直接データを読む)
