@@ -98,6 +98,7 @@ AC_MSG_RESULT($ac_cv_type_socklen_t)
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([mallinfo])
+AC_CHECK_FUNCS([mallinfo2])
 
 # Variables in config.h
 
