@@ -122,7 +122,7 @@ fifo_config_init ()
            "WeeChat PID can be used in path with ${info:pid} "
            "(path is evaluated, see function string_eval_path_home in "
            "plugin API reference)"),
-        NULL, 0, 0, "${weechat_runtime_dir}/weechat_fifo", NULL, 0,
+        NULL, 0, 0, "${weechat_runtime_dir}/weechat_fifo_${info:pid}", NULL, 0,
         NULL, NULL, NULL,
         fifo_config_change_file_path, NULL, NULL,
         NULL, NULL, NULL);

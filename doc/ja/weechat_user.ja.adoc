@@ -2816,7 +2816,7 @@ include::includes/autogen_user_options.ja.adoc[tag=exec_options]
 
 // TRANSLATION MISSING
 The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_ by default.
+_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
 
 FIFO パイプに書き込むコマンド/テキストの文法は以下の例の一つです:
 
@@ -2830,26 +2830,26 @@ FIFO パイプに書き込むコマンド/テキストの文法は以下の例�
 * IRC サーバ freenode で使うニックネームを "newnick" に変更する:
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * IRC チャンネル #weechat に対してテキストを送信:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * 現在のバッファに対してテキストを送信:
 
 ----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Python スクリプトのアンロードとロードを行う 2 つのコマンドを送信
   (複数のコマンドは "\n" で分割してください):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]

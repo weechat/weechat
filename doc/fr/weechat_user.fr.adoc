@@ -2837,8 +2837,8 @@ Vous pouvez contrôler WeeChat à distance, en envoyant des commandes ou du
 texte dans un tube FIFO (si l'option _fifo.file.enabled_ est activée,
 elle l'est par défaut).
 
-Le tube FIFO est dans le répertoire WeeChat "runtime" et s'appelle _weechat_fifo_
-par défaut.
+Le tube FIFO est dans le répertoire WeeChat "runtime" et s'appelle
+_weechat_fifo_12345_ par défaut (où _12345_ est le process id de WeeChat).
 
 La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO est une
 des suivantes :
@@ -2853,26 +2853,26 @@ Quelques exemples :
 * Changer le pseudo sur freenode en "autrepseudo" :
 
 ----
-$ echo 'irc.server.freenode */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.server.freenode */nick autrepseudo' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Envoyer un message sur le canal IRC #weechat :
 
 ----
-$ echo 'irc.freenode.#weechat *bonjour !' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Envoyer un message sur le tampon courant :
 
 ----
-$ echo '*bonjour !' >/run/user/1000/weechat/weechat_fifo
+$ echo '*bonjour !' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Envoyer deux commandes pour décharger/recharger les scripts Python (vous devez
   les séparer par "\n") :
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]

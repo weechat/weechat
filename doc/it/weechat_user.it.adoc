@@ -2946,7 +2946,7 @@ pipe FIFO (se l'opzione "fifo.file.enabled" è abilitata, e lo è per default).
 
 // TRANSLATION MISSING
 The FIFO pipe is located in WeeChat runtime directory and is called
-_weechat_fifo_ by default.
+_weechat_fifo_12345_ by default (where _12345_ is the WeeChat process id).
 
 La sintassi per i comandi/testo della pipe FIFO è una delle seguenti:
 
@@ -2961,28 +2961,28 @@ Alcuni esempi:
 * Change nick on IRC server freenode to "newnick":
 
 ----
-$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.server.freenode */nick newnick' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 // TRANSLATION MISSING
 * Send a message on IRC #weechat channel:
 
 ----
-$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo
+$ echo 'irc.freenode.#weechat *hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 // TRANSLATION MISSING
 * Send a message on current buffer:
 
 ----
-$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo
+$ echo '*hello!' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 * Inviare due comandi per scaricare/caricare gli script Python (è necessario
   separarli con "\n"):
 
 ----
-$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo
+$ printf '%b' '*/python unload\n*/python autoload\n' >/run/user/1000/weechat/weechat_fifo_12345
 ----
 
 [[fifo_commands]]
