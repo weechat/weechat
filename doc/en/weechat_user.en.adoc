@@ -2826,7 +2826,7 @@ connection is fully trusted.
 Some options are used to control SSL connection:
 
 weechat.network.gnutls_ca_file::
-    path to file with certificate authorities (by default: "%h/ssl/CAs.pem")
+    path to file with certificate authorities
 
 irc.server.xxx.ssl_cert::
     SSL certificate file used to automatically identify your nick (for example

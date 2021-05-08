@@ -2851,7 +2851,7 @@ jest w pełni zaufane.
 Niektóre opcje są używane do kontroli połączenia SSL:
 
 weechat.network.gnutls_ca_file::
-    ścieżka do pliku z organami certyfikującymi (domyślnie: "%h/ssl/CAs.pem")
+    ścieżka do pliku z organami certyfikującymi
 
 irc.server.xxx.ssl_cert::
     certyfikat SSL używany do automatycznej identyfikacji twojego nicka (na

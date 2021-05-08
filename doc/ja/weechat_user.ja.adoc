@@ -2893,7 +2893,7 @@ SSL を使って IRC サーバに接続する場合、WeeChat
 以下のオプションで SSL 接続を設定します:
 
 weechat.network.gnutls_ca_file::
-    認証局ファイルへのパス (デフォルト: "%h/ssl/CAs.pem")
+    認証局ファイルへのパス
 
 irc.server.xxx.ssl_cert::
     自動的にニックネームを確認するために利用される SSL 証明書ファイル (例えば

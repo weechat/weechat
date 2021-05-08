@@ -3040,7 +3040,7 @@ maniera predefinita che la connessione sia completamente fidata.
 Esistono alcune opzioni per controllare la connessione SSL:
 
 weechat.network.gnutls_ca_file::
-    path del file con il certificato delle autorità (predefinito: "%h/ssl/CAs.pem")
+    path del file con il certificato delle autorità
 
 irc.server.xxx.ssl_cert::
     file del certificato SSL usato per identificare automaticamente il proprio

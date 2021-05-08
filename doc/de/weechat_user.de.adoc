@@ -2876,7 +2876,7 @@ WeeChat immer ob dieser Verbindung sicher ist.
 Einige Optionen dienen dazu eine SSL Verbindung zu nutzen:
 
 weechat.network.gnutls_ca_file::
-    Pfad zu einer Datei mit SSL Zertifikaten (Standardpfad: "%h/ssl/CAs.pem")
+    Pfad zu einer Datei mit SSL Zertifikaten
 
 irc.server.xxx.ssl_cert::
     Datei mit den SSL Zertifikaten die genutzt werden um automatisch Ihren Nick
