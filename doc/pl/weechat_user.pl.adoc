@@ -197,8 +197,13 @@ Lista popularnych opcji:
 | CMAKE_INSTALL_PREFIX | katalog | /usr/local |
   Katalog, do którego zostanie zainstalowany WeeChat.
 
-| WEECHAT_HOME | katalog | ~/.weechat |
-  Domyślny katalog domowy dla WeeChat.
+// TRANSLATION MISSING
+| WEECHAT_HOME | katalog | (empty string) |
+  Domyślny katalog domowy dla WeeChat. +
+  With an empty value (recommended), XDG directories are used by default.
+  If non empty, a single directory for all files is used.
+  The value can also  be 4 directories separated by colons, in this order:
+  config, data, cache, runtime.
 
 | CA_FILE | plik | /etc/ssl/certs/ca-certificates.crt |
   Plik zawierający urzędy certyfikacji.

@@ -199,8 +199,13 @@ Liste von häufig verwendeten Optionen:
 | CMAKE_INSTALL_PREFIX | Verzeichnis | /usr/local |
   Verzeichnis in welchem WeeChat installiert wird.
 
-| WEECHAT_HOME | Verzeichnis | ~/.weechat |
-  Standard-Verzeichnis in welchem die Daten liegen.
+// TRANSLATION MISSING
+| WEECHAT_HOME | Verzeichnis | (empty string) |
+  Standard-Verzeichnis in welchem die Daten liegen. +
+  With an empty value (recommended), XDG directories are used by default.
+  If non empty, a single directory for all files is used.
+  The value can also  be 4 directories separated by colons, in this order:
+  config, data, cache, runtime.
 
 | CA_FILE | Datei | /etc/ssl/certs/ca-certificates.crt |
   Datei enthält die Zertifizierungen.

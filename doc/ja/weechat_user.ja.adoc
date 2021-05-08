@@ -200,8 +200,13 @@ CMake に対するオプションを指定するには、以下の書式を使�
 | CMAKE_INSTALL_PREFIX | directory | /usr/local |
   WeeChat をインストールするディレクトリ。
 
-| WEECHAT_HOME | directory | ~/.weechat |
-  WeeChat 実行時のホームディレクトリ。
+// TRANSLATION MISSING
+| WEECHAT_HOME | directory | (empty string) |
+  WeeChat 実行時のホームディレクトリ。 +
+  With an empty value (recommended), XDG directories are used by default.
+  If non empty, a single directory for all files is used.
+  The value can also  be 4 directories separated by colons, in this order:
+  config, data, cache, runtime.
 
 | CA_FILE | file | /etc/ssl/certs/ca-certificates.crt |
   認証局を含むファイル。これは

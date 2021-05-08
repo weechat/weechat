@@ -195,8 +195,12 @@ Liste des options couramment utilisées :
 | CMAKE_INSTALL_PREFIX | répertoire | /usr/local |
   Le répertoire dans lequel WeeChat sera installé.
 
-| WEECHAT_HOME | répertoire | ~/.weechat |
-  Le répertoire "maison" par défaut lors du lancement de WeeChat.
+| WEECHAT_HOME | répertoire | (chaîne vide) |
+  Le répertoire "maison" par défaut lors du lancement de WeeChat. +
+  Avec une valeur vide (recommandé), les répertoires XDG sont utilisés par défaut.
+  Si non vide, un répertoire unique est utilisé pour tous les fichiers.
+  La valeur peut aussi être 4 répertoires séparés par ":", dans cet order :
+  config, data, cache, runtime.
 
 | CA_FILE | fichier | /etc/ssl/certs/ca-certificates.crt |
   Fichier contenant les autorités de certification.
