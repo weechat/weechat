@@ -2992,7 +2992,7 @@ Konfiguration der SASL Optionen des Servers:
 ----
 /set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode.sasl_username "your_nickname"
-/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+/set irc.server.freenode.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 Erneut mit dem Server verbinden:
@@ -3044,7 +3044,7 @@ privaten Schlüssel zu generieren):
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
+/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 Zum Abschluss stellt man eine Verbindung zum Server her:

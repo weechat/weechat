@@ -3004,7 +3004,7 @@ $ openssl ec -noout -text -conv_form compressed -in ~/.weechat/ecdsa.pem | grep 
 ----
 /set irc.server.freenode.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode.sasl_username "your_nickname"
-/set irc.server.freenode.sasl_key "%h/ecdsa.pem"
+/set irc.server.freenode.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 サーバに再接続:
@@ -3056,7 +3056,7 @@ ECDSA-NIST256P-CHALLENGE メカニズムで SASL 認証を設定 (秘密鍵を�
 ----
 /set irc.server.freenode-tor.sasl_mechanism ecdsa-nist256p-challenge
 /set irc.server.freenode-tor.sasl_username "your_nickname"
-/set irc.server.freenode-tor.sasl_key "%h/ecdsa.pem"
+/set irc.server.freenode-tor.sasl_key "${weechat_config_dir}/ecdsa.pem"
 ----
 
 最後に、サーバに接続してください:
