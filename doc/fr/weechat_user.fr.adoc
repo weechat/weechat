@@ -577,6 +577,7 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 ==== Redémarrage après mise à jour
 
+[[restart_release_notes]]
 ===== Notes de version
 
 Après une mise à jour, il est *fortement recommandé* de lire les
@@ -589,6 +590,7 @@ et votre nouvelle version (incluse). +
 Par exemple si vous passez de la version 3.0 à 3.2, vous devez lire les notes
 des versions 3.1 et 3.2.
 
+[[restart_configuration_upgrade]]
 ===== Mise à jour de la configuration
 
 WeeChat a un système de mise à jour automatique des fichiers de configuration
@@ -624,10 +626,12 @@ Lorsque vous lancez WeeChat pour la première fois, les fichiers de configuratio
 par défaut sont créés dans _~/.config/weechat_ avec les options et valeurs par défaut
 (voir <<files_and_directories,Fichiers et répertoires>>).
 
+[[command_line_options]]
 ==== Options de ligne de commande
 
 include::includes/cmdline_options.fr.adoc[tag=standard]
 
+[[extra_debug_options]]
 ==== Options supplémentaires de debug
 
 [WARNING]
@@ -644,7 +648,7 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 |===
 | Nom                  | Description
 | WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.). Même comportement que <<compile_with_cmake,l'option CMake>> `WEECHAT_HOME`.
-| WEECHAT_PASSPHRASE   | La phrase de chiffrement utilisée pour déchiffrer les données sécurisées.
+| WEECHAT_PASSPHRASE   | La phrase secrète utilisée pour déchiffrer les données sécurisées.
 | WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
 |===
 
@@ -2398,14 +2402,15 @@ données sont stockées sous forme de texte en clair dans le fichier.
 /secure passphrase ceci est ma phrase secrète
 ----
 
-===== Passphrase on startup
+[[secured_data_passphrase_on_startup]]
+===== Phrase secrète au démarrage
 
 Lorsqu'une phrase secrète est définie, WeeChat vous demandera de la saisir lors
 du démarrage (mais pas sur `/upgrade`).
 
 Si vous utilisez un gestionnaire de mots de passe, vous pouvez lancer
-un programme externe pour lire la phrase de chiffrement au lieu d'avoir
-à l'entrer manuellement au démarrage de WeeChat. +
+un programme externe pour lire la phrase secrète au lieu d'avoir à l'entrer
+manuellement au démarrage de WeeChat. +
 Par exemple avec password-store (command `pass`) :
 
 ----
@@ -2413,11 +2418,11 @@ Par exemple avec password-store (command `pass`) :
 ----
 
 Le programme peut vous demander de déverrouiller votre clé GPG ou d'entrer une
-autre phrase de chiffrement. WeeChat attendra la fin de la commande pour lire
-la phrase de chiffrement sur la sortie standard (elle doit être sur la première
-ligne et sans caractère supplémentaire). +
-Si la sortie ne contient pas de phrase de chiffrement ou si celle-ci est
-erronée, WeeChat vous demandera alors de la saisir.
+autre phrase secrète. WeeChat attendra la fin de la commande pour lire la phrase
+secrète sur la sortie standard (elle doit être sur la première ligne et sans
+caractère supplémentaire). +
+Si la sortie ne contient pas de phrase secrète ou si celle-ci est erronée,
+WeeChat vous demandera alors de la saisir.
 
 [[secured_data_encryption]]
 ===== Chiffrement

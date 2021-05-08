@@ -584,6 +584,7 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 ==== Restart after upgrade
 
+[[restart_release_notes]]
 ===== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
@@ -596,6 +597,7 @@ your new version (included). +
 For example if you switch from version 3.0 to 3.2, you must read release notes
 of versions 3.1 and 3.2.
 
+[[restart_configuration_upgrade]]
 ===== Configuration upgrade
 
 WeeChat has an automatic upgrade of configuration files (`*.conf`):
@@ -630,10 +632,12 @@ WeeChat の初回起動時にデフォルトのオプション設定を含む設
 _~/.config/weechat_ ディレクトリの中に作成されます
 (<<files_and_directories,ファイルとディレクトリ>>を参照してください)。
 
+[[command_line_options]]
 ==== コマンドラインオプション
 
 include::includes/cmdline_options.ja.adoc[tag=standard]
 
+[[extra_debug_options]]
 ==== デバッグオプション
 
 [WARNING]
@@ -2390,6 +2394,7 @@ _sec.conf_
 ----
 
 // TRANSLATION MISSING
+[[secured_data_passphrase_on_startup]]
 ===== Passphrase on startup
 
 When a passphrase is set, WeeChat will ask you to enter it on startup

@@ -574,6 +574,7 @@ $ weechat --upgrade
 [[restart_after_upgrade]]
 ==== Restart after upgrade
 
+[[restart_release_notes]]
 ===== Release notes
 
 After an upgrade, it is *strongly recommended* to read the
@@ -586,6 +587,7 @@ your new version (included). +
 For example if you switch from version 3.0 to 3.2, you must read release notes
 of versions 3.1 and 3.2.
 
+[[restart_configuration_upgrade]]
 ===== Configuration upgrade
 
 WeeChat has an automatic upgrade of configuration files (`*.conf`):
@@ -620,10 +622,12 @@ Podczas pierwszego uruchomienia WeeChat tworzone są domyślne pliki konfiguracy
 w  _~/.config/weechat_ z domyślnymi opcjami i wartościami
 (zobacz <<files_and_directories,Pliki i foldery>>).
 
+[[command_line_options]]
 ==== Argumenty linii poleceń
 
 include::includes/cmdline_options.pl.adoc[tag=standard]
 
+[[extra_debug_options]]
 ==== Dodatkowe opcje do debugowania
 
 [WARNING]
@@ -2348,6 +2352,7 @@ zwykły tekst.
 /secure passphrase to jest moje hasło
 ----
 
+[[secured_data_passphrase_on_startup]]
 ===== Hasło przy uruchomieniu
 
 Kiedy ustawione jest hasło WeeChat poprosi o nie podczas uruchomieina
