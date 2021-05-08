@@ -2900,9 +2900,14 @@ die Verbindung mit einer vorherigen Version (<0.3.1) funktioniert hat.
 * Importieren Sie die Zertifikate in einer Shell:
 
 ----
-$ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/ssl
+$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
 
 [NOTE]
 Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
@@ -2919,10 +2924,15 @@ Es ist möglich mehrere Zertifikate in der Datei CAs.pem zu verwenden.
 * Erstellen Sie ein Zertifikat in der Shell:
 
 ----
-$ mkdir -p ~/.weechat/ssl
-$ cd ~/.weechat/ssl
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
 
 * In WeeChat, sofern der Server "oftc" schon hinzufügt wurde:
 

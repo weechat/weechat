@@ -3065,9 +3065,14 @@ la 0.3.1.
 * Importare certificati nella shell:
 
 ----
-$ mkdir -p ~/.weechat/ssl
-$ wget -O ~/.weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
+$ mkdir -p ~/.config/weechat/ssl
+$ wget -O ~/.config/weechat/ssl/CAs.pem https://www.spi-inc.org/ca/spi-cacert.crt
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
 
 // TRANSLATION MISSING
 [NOTE]
@@ -3086,10 +3091,15 @@ E possibile concatenare più certificati nel file CAs.pem.
 * Creare un certificato nella shell:
 
 ----
-$ mkdir -p ~/.weechat/ssl
-$ cd ~/.weechat/ssl
+$ mkdir -p ~/.config/weechat/ssl
+$ cd ~/.config/weechat/ssl
 $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick.pem
 ----
+
+// TRANSLATION MISSING
+[NOTE]
+You must replace `~/.config/weechat` by the path to your WeeChat config directory
+which can also be for example `~/.weechat`.
 
 // TRANSLATION MISSING
 * In WeeChat, with "oftc" server already added:
