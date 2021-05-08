@@ -2943,7 +2943,7 @@ $ openssl req -nodes -newkey rsa:2048 -keyout nick.pem -x509 -days 365 -out nick
 * WeeChat では、"oftc" サーバが既に追加されています:
 
 ----
-/set irc.server.oftc.ssl_cert "%h/ssl/nick.pem"
+/set irc.server.oftc.ssl_cert "${weechat_config_dir}/ssl/nick.pem"
 /connect oftc
 /msg nickserv cert add
 ----
