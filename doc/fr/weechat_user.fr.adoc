@@ -2374,7 +2374,6 @@ données sont stockées sous forme de texte en clair dans le fichier.
 /secure passphrase ceci est ma phrase secrète
 ----
 
-// TRANSLATION MISSING
 ===== Passphrase on startup
 
 Lorsqu'une phrase secrète est définie, WeeChat vous demandera de la saisir lors
