@@ -144,7 +144,7 @@ if(NOT DEFINED CA_FILE OR "${CA_FILE}" STREQUAL "")
   set(CA_FILE "/etc/ssl/certs/ca-certificates.crt")
 endif()
 set(CA_FILE "${CA_FILE}" CACHE
-  STRING "File containing the certificate authorities (default is \"/etc/ssl/certs/ca-certificates.crt\"). This is the default value of option \"weechat.network.gnutls_ca_file\"."
+  STRING "File containing the certificate authorities (default is \"/etc/ssl/certs/ca-certificates.crt\"). This is the default value of option \"weechat.network.gnutls_ca_file\". It is evaluated with function string_eval_path_home each time it is used."
   FORCE)
 mark_as_advanced(CLEAR CA_FILE)
 

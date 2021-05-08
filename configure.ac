@@ -173,7 +173,7 @@ AC_ARG_ENABLE(man,          [  --enable-man            turn on build of man page
 AC_ARG_ENABLE(doc,          [  --enable-doc            turn on build of documentation (default=not built)],enable_doc=$enableval,enable_doc=no)
 
 AC_ARG_VAR(WEECHAT_HOME, [Force a single WeeChat home directory for config, logs, scripts, etc.])
-AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file".])
+AC_ARG_VAR(CA_FILE, [File containing the certificate authorities (default is "/etc/ssl/certs/ca-certificates.crt"). This is the default value of option "weechat.network.gnutls_ca_file". It is evaluated with function string_eval_path_home each time it is used.])
 
 AC_DEFINE_UNQUOTED(WEECHAT_HOME, "$WEECHAT_HOME")
 
