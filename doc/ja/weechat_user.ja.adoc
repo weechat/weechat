@@ -649,7 +649,8 @@ include::includes/cmdline_options.ja.adoc[tag=debug]
 [width="100%",cols="1m,6",options="header"]
 |===
 | 変数名               | 説明
-| WEECHAT_HOME         | WeeChat ホームディレクトリ (ここには設定ファイル、ログ、スクリプトなどがあります)
+// TRANSLATION MISSING
+| WEECHAT_HOME         | WeeChat ホームディレクトリ (ここには設定ファイル、ログ、スクリプトなどがあります) Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | 暗号化データを復号化するためのパスフレーズ
 | WEECHAT_EXTRA_LIBDIR | プラグインをロードするための追加ディレクトリパス (設定したパス内の "plugins" ディレクトリからロードします)
 |===

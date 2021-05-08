@@ -639,7 +639,8 @@ Niektóre zmienne śwodowiskowe są używane przez WeeChat o ile zostały zdefin
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nazwa                | Opis
-| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...).
+// TRANSLATION MISSING
+| WEECHAT_HOME         | Katalog domowy WeeChat (z plikami konfiguracyjnymi, logami, skryptami, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Hasło używane do odszyfrowania zabezpieczonych danych.
 | WEECHAT_EXTRA_LIBDIR | Dodatkowy katalog do ładowania wtyczek (z katalogu "plugins" znajdującego się pod tą ścieżką).
 |===

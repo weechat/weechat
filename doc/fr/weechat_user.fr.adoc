@@ -643,7 +643,7 @@ Des variables d'environnement sont utilisées par WeeChat si elles sont définie
 [width="100%",cols="1m,6",options="header"]
 |===
 | Nom                  | Description
-| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.).
+| WEECHAT_HOME         | Le répertoire "maison" de WeeChat (avec les fichiers de configuration, logs, scripts, etc.). Même comportement que <<compile_with_cmake,l'option CMake>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | La phrase de chiffrement utilisée pour déchiffrer les données sécurisées.
 | WEECHAT_EXTRA_LIBDIR | Un répertoire supplémentaire pour charger les extensions (depuis le répertoire "plugins" sous ce chemin).
 |===

@@ -639,7 +639,8 @@ Einige Umgebungsvariablen werden von WeeChat genutzt, sofern sie definiert wurde
 [width="100%",cols="1m,6",options="header"]
 |===
 | Name                 | Beschreibung
-| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...).
+// TRANSLATION MISSING
+| WEECHAT_HOME         | Das WeeChat Verzeichnis (beinhaltet Konfigurationsdateien, Protokolldateien, Skripten, ...). Same behavior as <<compile_with_cmake,CMake option>> `WEECHAT_HOME`.
 | WEECHAT_PASSPHRASE   | Die Passphrase zum Entschlüsseln von schutzwürdigen Daten.
 | WEECHAT_EXTRA_LIBDIR | Ein zusätzliches Verzeichnis um Erweiterungen zu installieren (vom "plugins" Verzeichnis in dieses Verzeichnis).
 |===
