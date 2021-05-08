@@ -28,6 +28,7 @@ New features::
 
 Bug fixes::
 
+  * core: use function mallinfo2 instead of mallinfo when available (issue #1636)
   * core: display a warning when the file with certificate authorities is not found (option weechat.network.gnutls_ca_file)
   * core: evaluate left/right part of comparison after split on the comparison operator in ${if:xxx} (issue #1627)
   * core: prevent switching to start of visited buffers when jumping to next (issue #1591, issue #1592)
